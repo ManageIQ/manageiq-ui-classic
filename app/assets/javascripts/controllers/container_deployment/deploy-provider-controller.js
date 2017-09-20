@@ -2,11 +2,11 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
   ['$rootScope', '$scope', 'miqService', 'API', '$timeout',
   function($rootScope, $scope, miqService, API, $timeout) {
     'use strict';
-
-    $scope.showDeploymentWizard = false;
-    ManageIQ.angular.scope = $scope;
-    $scope.data = {};
-    $scope.nodeData = {
+    var vm = this;
+    vm.showDeploymentWizard = false;
+    ManageIQ.angular.scope = vm;
+    vm.data = {};
+    vm.nodeData = {
       allNodes: [],
       filteredNodes: [],
       providerVMs: [],
@@ -14,16 +14,16 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
       userDefinedVMs: []
     };
 
-    $scope.deployProviderReady = false;
-    $scope.deployComplete = false;
-    $scope.deployInProgress = false;
-    $scope.deploySuccess = false;
-    $scope.deployFailed = false;
-    $scope.deploymentDetailsGeneralComplete = false;
-    $scope.nextButtonTitle = __("Next >");
+    vm.deployProviderReady = false;
+    vm.deployComplete = false;
+    vm.deployInProgress = false;
+    vm.deploySuccess = false;
+    vm.deployFailed = false;
+    vm.deploymentDetailsGeneralComplete = false;
+    vm.nextButtonTitle = __("Next >");
 
     var initializeDeploymentWizard = function () {
-      $scope.data = {
+      vm.data = {
         providerName: '',
         providerType: 'openshiftEnterprise',
         provisionOn: 'existingVms',
@@ -36,59 +36,59 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
         }
       };
 
-      $scope.data.existingProviders = $scope.deploymentData.providers;
-      $scope.data.newVmProviders = $scope.deploymentData.provision;
-      $scope.originAvailable = $scope.deploymentData.deployment_types.includes("origin");
-      $scope.deployProviderReady = true;
+      vm.data.existingProviders = vm.deploymentData.providers;
+      vm.data.newVmProviders = vm.deploymentData.provision;
+      vm.originAvailable = vm.deploymentData.deployment_types.includes("origin");
+      vm.deployProviderReady = true;
     };
 
     var create_auth_object = function () {
       var auth = {};
-      switch ($scope.data.authentication.mode) {
+      switch (vm.data.authentication.mode) {
         case 'all':
           auth.type = "AuthenticationAllowAll";
           break;
         case 'htPassword':
           auth.type = 'AuthenticationHtpasswd';
-          auth.htpassd_users = $scope.data.authentication.htPassword.users;
+          auth.htpassd_users = vm.data.authentication.htPassword.users;
           break;
         case 'ldap':
           auth.type = 'AuthenticationLdap';
-          auth.id = $scope.data.authentication.ldap.id;
-          auth.email = $scope.data.authentication.ldap.email;
-          auth.name = $scope.data.authentication.ldap.name;
-          auth.username = $scope.data.authentication.ldap.username;
-          auth.bind_dn = $scope.data.authentication.ldap.bindDN;
-          auth.password = $scope.data.authentication.ldap.bindPassword;
-          auth.certificate_authority = $scope.data.authentication.ldap.ca;
-          auth.insecure = $scope.data.authentication.ldap.insecure;
-          auth.url = $scope.data.authentication.ldap.url;
+          auth.id = vm.data.authentication.ldap.id;
+          auth.email = vm.data.authentication.ldap.email;
+          auth.name = vm.data.authentication.ldap.name;
+          auth.username = vm.data.authentication.ldap.username;
+          auth.bind_dn = vm.data.authentication.ldap.bindDN;
+          auth.password = vm.data.authentication.ldap.bindPassword;
+          auth.certificate_authority = vm.data.authentication.ldap.ca;
+          auth.insecure = vm.data.authentication.ldap.insecure;
+          auth.url = vm.data.authentication.ldap.url;
           break;
         case 'requestHeader':
           auth.type = 'AuthenticationRequestHeader';
-          auth.request_header_challenge_url = $scope.data.authentication.requestHeader.challengeUrl;
-          auth.request_header_login_url = $scope.data.authentication.requestHeader.loginUrl;
-          auth.certificate_authority = $scope.data.authentication.requestHeader.clientCA;
-          auth.request_header_headers = $scope.data.authentication.requestHeader.headers;
+          auth.request_header_challenge_url = vm.data.authentication.requestHeader.challengeUrl;
+          auth.request_header_login_url = vm.data.authentication.requestHeader.loginUrl;
+          auth.certificate_authority = vm.data.authentication.requestHeader.clientCA;
+          auth.request_header_headers = vm.data.authentication.requestHeader.headers;
           break;
         case 'openId':
           auth.type = 'AuthenticationOpenId';
-          auth.userid = $scope.data.authentication.openId.clientId;
-          auth.password = $scope.data.authentication.openId.clientSecret;
-          auth.open_id_sub_claim = $scope.data.authentication.openId.subClaim;
-          auth.open_id_authorization_endpoint = $scope.data.authentication.openId.authEndpoint;
-          auth.open_id_token_endpoint = $scope.data.authentication.openId.tokenEndpoint;
+          auth.userid = vm.data.authentication.openId.clientId;
+          auth.password = vm.data.authentication.openId.clientSecret;
+          auth.open_id_sub_claim = vm.data.authentication.openId.subClaim;
+          auth.open_id_authorization_endpoint = vm.data.authentication.openId.authEndpoint;
+          auth.open_id_token_endpoint = vm.data.authentication.openId.tokenEndpoint;
           break;
         case 'google':
           auth.type = 'AuthenticationGoogle';
-          auth.userid = $scope.data.authentication.google.clientId;
-          auth.password = $scope.data.authentication.google.clientSecret;
-          auth.google_hosted_domain = $scope.data.authentication.google.hostedDomain;
+          auth.userid = vm.data.authentication.google.clientId;
+          auth.password = vm.data.authentication.google.clientSecret;
+          auth.google_hosted_domain = vm.data.authentication.google.hostedDomain;
           break;
         case 'github':
           auth.type = 'AuthenticationGithub';
-          auth.userid = $scope.data.authentication.github.clientId;
-          auth.password = $scope.data.authentication.github.clientSecret;
+          auth.userid = vm.data.authentication.github.clientId;
+          auth.password = vm.data.authentication.github.clientSecret;
           break;
       }
       return auth;
@@ -96,13 +96,13 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
 
     var create_nodes_object = function() {
       var nodes = [];
-      $scope.nodeData.allNodes.forEach(function(item) {
+      vm.nodeData.allNodes.forEach(function(item) {
         var name = "";
-        if ($scope.data.provisionOn == 'existingVms') {
+        if (vm.data.provisionOn == 'existingVms') {
           var id = item.id;
           name = item.name;
         }
-        else if ($scope.data.provisionOn == 'noProvider') {
+        else if (vm.data.provisionOn == 'noProvider') {
           name = item.vmName;
           var publicName = item.publicName;
         }
@@ -135,113 +135,113 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
       };
 
       var resource = {
-        provider_name: $scope.data.providerName,
-        provider_type: $scope.data.providerType,
-        method_type: method_types[$scope.data.provisionOn],
+        provider_name: vm.data.providerName,
+        provider_type: vm.data.providerType,
+        method_type: method_types[vm.data.provisionOn],
         rhsm_authentication: {
-          userid: $scope.data.rhnUsername,
-          password: $scope.data.rhnPassword,
-          rhsm_sku: $scope.data.rhnSKU,
-          rhsm_server: $scope.data.rhnSatelliteUrl
+          userid: vm.data.rhnUsername,
+          password: vm.data.rhnPassword,
+          rhsm_sku: vm.data.rhnSKU,
+          rhsm_server: vm.data.rhnSatelliteUrl
         },
         ssh_authentication: {
-          userid: $scope.data.deploymentUsername,
-          auth_key: $scope.data.deploymentKey
+          userid: vm.data.deploymentUsername,
+          auth_key: vm.data.deploymentKey
         },
         nodes: create_nodes_object(),
         identity_authentication: create_auth_object()
       };
 
-      if ($scope.data.provisionOn == 'existingVms') {
-        resource.underline_provider_id = $scope.data.existingProviderId;
-      } else if ($scope.data.provisionOn == 'newVms') {
-        resource.underline_provider_id = $scope.data.newVmProviderId;
-        resource.masters_creation_template_id = $scope.data.masterCreationTemplateId;
-        resource.nodes_creation_template_id = $scope.data.nodeCreationTemplateId;
-        resource.master_base_name = $scope.data.createMasterBaseName;
-        resource.node_base_name = $scope.data.createNodesBaseName;
+      if (vm.data.provisionOn == 'existingVms') {
+        resource.underline_provider_id = vm.data.existingProviderId;
+      } else if (vm.data.provisionOn == 'newVms') {
+        resource.underline_provider_id = vm.data.newVmProviderId;
+        resource.masters_creation_template_id = vm.data.masterCreationTemplateId;
+        resource.nodes_creation_template_id = vm.data.nodeCreationTemplateId;
+        resource.master_base_name = vm.data.createMasterBaseName;
+        resource.node_base_name = vm.data.createNodesBaseName;
       }
       return resource;
     };
 
-    $scope.ready = false;
+    vm.ready = false;
 
-    $scope.data = {};
-    $scope.deployComplete = false;
-    $scope.deployInProgress = false;
+    vm.data = {};
+    vm.deployComplete = false;
+    vm.deployInProgress = false;
 
     var startDeploy = function () {
-      $scope.deployInProgress = true;
-      $scope.deployComplete = false;
-      $scope.deploySuccess = false;
-      $scope.deployFailed = false;
+      vm.deployInProgress = true;
+      vm.deployComplete = false;
+      vm.deploySuccess = false;
+      vm.deployFailed = false;
 
       var url = '/api/container_deployments';
       var resource = create_deployment_resource();
       API.post(url, {"action" : "create", "resource" : resource}).then(function (response) {
         'use strict';
-        $scope.deployInProgress = false;
-        $scope.deployComplete = true;
-        $scope.deployFailed = response.error !== undefined;
+        vm.deployInProgress = false;
+        vm.deployComplete = true;
+        vm.deployFailed = response.error !== undefined;
         if (response.error) {
           if (response.error.message) {
-            $scope.deployFailureMessage = response.error.message;
+            vm.deployFailureMessage = response.error.message;
           }
           else {
-            $scope.deployFailureMessage = __("An unknown error has occurred.");
+            vm.deployFailureMessage = __("An unknown error has occurred.");
           }
         }
       });
     };
 
-    $scope.nextCallback = function(step) {
+    vm.nextCallback = function(step) {
       if (step.stepId === 'review-summary') {
         startDeploy();
       }
       return true;
     };
-    $scope.backCallback = function(step) {
+    vm.backCallback = function(step) {
       return true;
     };
 
     $scope.$on("wizard:stepChanged", function(e, parameters) {
       if (parameters.step.stepId == 'review-summary') {
-        $scope.nextButtonTitle = __("Deploy");
+        vm.nextButtonTitle = __("Deploy");
       } else if (parameters.step.stepId == 'review-progress') {
-        $scope.nextButtonTitle = __("Close");
+        vm.nextButtonTitle = __("Close");
       } else {
-        $scope.nextButtonTitle = __("Next >");
+        vm.nextButtonTitle = __("Next >");
       }
     });
 
-    $scope.showDeploymentWizard = false;
-    $scope.showListener = function() {
-      if (!$scope.showDeploymentWizard) {
+    vm.showDeploymentWizard = false;
+    vm.showListener = function() {
+      if (!vm.showDeploymentWizard) {
         var url = '/api/container_deployments';
         API.options(url).then(function (response) {
           'use strict';
-          $scope.deploymentData = response.data;
+          vm.deploymentData = response.data;
           initializeDeploymentWizard();
-          $scope.ready = true;
+          vm.ready = true;
         });
-        $scope.showDeploymentWizard = true;
+        vm.showDeploymentWizard = true;
       }
     };
 
-    $scope.cancelDeploymentWizard = function () {
-      if (!$scope.deployInProgress) {
-        $scope.showDeploymentWizard = false;
+    vm.cancelDeploymentWizard = function () {
+      if (!vm.deployInProgress) {
+        vm.showDeploymentWizard = false;
       }
     };
 
-    $scope.cancelWizard = function () {
-      $scope.showDeploymentWizard = false;
+    vm.cancelWizard = function () {
+      vm.showDeploymentWizard = false;
       return true;
     };
 
-    $scope.finishedWizard = function () {
+    vm.finishedWizard = function () {
       $rootScope.$emit('deployProvider.finished');
-      $scope.showDeploymentWizard = false;
+      vm.showDeploymentWizard = false;
       return true;
     };
 
@@ -252,7 +252,7 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
 
       $timeout(function() {
         if (event.name === 'showListener') {
-          $scope.showListener();
+          vm.showListener();
         }
       });
     });
