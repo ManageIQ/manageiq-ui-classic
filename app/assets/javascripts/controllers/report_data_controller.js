@@ -1,6 +1,6 @@
 /* global add_flash */
 (function() {
-  var COTNROLLER_NAME = 'reportDataController';
+  var CONTROLLER_NAME = 'reportDataController';
   var MAIN_CONTETN_ID = 'main-content';
   var EXPAND_TREES = ['savedreports_treebox', 'widgets_treebox'];
   var TREES_WITHOUT_PARENT = ['pxe', 'ops'];
@@ -80,15 +80,15 @@
   */
   function subscribeToSubject() {
     this.subscription = ManageIQ.angular.rxSubject.subscribe(function(event) {
-      if (event.initController && event.initController.name === COTNROLLER_NAME) {
+      if (event.initController && event.initController.name === CONTROLLER_NAME) {
         this.initController(event.initController.data);
-      } else if (event.unsubscribe && event.unsubscribe === COTNROLLER_NAME) {
+      } else if (event.unsubscribe && event.unsubscribe === CONTROLLER_NAME) {
         this.onUnsubscribe();
       } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
         this.setExtraClasses();
       }
 
-      if (event.controller === COTNROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
+      if (event.controller === CONTROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
         var actionCallback = this.apiFunctions[event.action];
         var resultData = actionCallback.apply(this, event.data);
         if (event.eventCallback) {
@@ -452,5 +452,5 @@
     '$window',
   ];
   window.miqHttpInject(angular.module('ManageIQ.report_data'))
-    .controller(COTNROLLER_NAME, ReportDataController);
+    .controller(CONTROLLER_NAME, ReportDataController);
 })();
