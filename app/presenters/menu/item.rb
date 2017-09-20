@@ -26,11 +26,12 @@ module Menu
       ApplicationHelper.role_allows?(rbac_feature)
     end
 
-    def url
-      case type
-      when :big_iframe then "/dashboard/iframe?id=#{id}"
-      else                  href
-      end
+    def link_params
+      params = case type
+               when :big_iframe then {:href => "/dashboard/iframe?id=#{id}"}
+               else                  {:href => href}
+               end
+      params.merge(:onclick => 'return miqCheckForChanges();')
     end
 
     def leaf?
