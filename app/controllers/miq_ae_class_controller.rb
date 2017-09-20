@@ -977,7 +977,7 @@ class MiqAeClassController < ApplicationController
 
   def method_form_fields
     method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find_by(:id => params[:id])
-    data = method.data ? JSON.parse(method.data) : {}
+    data = method.data ? YAML.load(method.data) : {}
     method_hash = {
       :name                => method.name,
       :display_name        => method.display_name,
@@ -988,14 +988,14 @@ class MiqAeClassController < ApplicationController
       :scope               => "instance",
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
       :config_info         => {
-        :repository_id         => data['repository_id'] || '',
-        :playbook_id           => data['playbook_id'] || '',
-        :credential_id         => data['credential_id'] || '',
-        :network_credential_id => data['network_credential_id'] || '',
-        :cloud_credential_id   => data['cloud_credential_id'] || '',
-        :hosts                 => data['hosts'],
-        :verbosity             => data['verbosity'],
-        :become_enabled        => data['become_enabled'] || false,
+        :repository_id         => data[:repository_id] || '',
+        :playbook_id           => data[:playbook_id] || '',
+        :credential_id         => data[:credential_id] || '',
+        :network_credential_id => data[:network_credential_id] || '',
+        :cloud_credential_id   => data[:cloud_credential_id] || '',
+        :hosts                 => data[:hosts],
+        :verbosity             => data[:verbosity],
+        :become_enabled        => data[:become_enabled] || false,
         :extra_vars            => method.inputs
       }
     }
@@ -1159,7 +1159,7 @@ class MiqAeClassController < ApplicationController
       method.language = params["language"]
       method.scope = params["scope"]
       method.class_id = params[:class_id]
-      method.data = set_playbook_data.to_json
+      method.data =  YAML.dump(set_playbook_data)
       begin
         MiqAeMethod.transaction do
           to_save, to_delete = playbook_inputs(method)
@@ -1178,39 +1178,6 @@ class MiqAeClassController < ApplicationController
         return
       end
     end
-  end
-
-  def playbook_inputs(method)
-    existing_inputs = method.inputs
-    new_inputs = params[:extra_vars]
-    inputs_to_save = []
-    inputs_to_delete = []
-    new_inputs.each do |i, input|
-      field = input.length == 4 ? MiqAeField.find_by(:id => input.last) : MiqAeField.new
-      field.name = input[0]
-      field.default_value = input[1] == "" ? nil : input[1]
-      field.datatype = input[2]
-      field.priority = i
-      inputs_to_save.push(field)
-    end
-    existing_inputs.each do |existing_input|
-      inputs_to_delete.push(existing_input.id) unless inputs_to_save.any? { |i| i.id == existing_input.id }
-    end
-    return inputs_to_save, inputs_to_delete
-  end
-
-  def set_playbook_data
-    data = {
-      :repository_id  => params['repository_id'],
-      :playbook_id    => params['playbook_id'],
-      :credential_id  => params['credential_id'],
-      :hosts          => params['hosts'],
-      :become_enabled => params['become_enabled'],
-      :verbosity      => params['verbosity'],
-    }
-    data[:network_credential_id] = params['network_credential_id'] if params['network_credential_id']
-    data[:cloud_credential_id] = params['cloud_credential_id'] if params['cloud_credential_id']
-    data
   end
 
   def update_method
@@ -1738,6 +1705,39 @@ class MiqAeClassController < ApplicationController
   end
 
   private
+
+  def playbook_inputs(method)
+    existing_inputs = method.inputs
+    new_inputs = params[:extra_vars]
+    inputs_to_save = []
+    inputs_to_delete = []
+    new_inputs.each do |i, input|
+      field = input.length == 4 ? MiqAeField.find_by(:id => input.last) : MiqAeField.new
+      field.name = input[0]
+      field.default_value = input[1] == "" ? nil : input[1]
+      field.datatype = input[2]
+      field.priority = i
+      inputs_to_save.push(field)
+    end
+    existing_inputs.each do |existing_input|
+      inputs_to_delete.push(existing_input.id) unless inputs_to_save.any? { |i| i.id == existing_input.id }
+    end
+    return inputs_to_save, inputs_to_delete
+  end
+
+  def set_playbook_data
+    data = {
+      :repository_id  => params['repository_id'],
+      :playbook_id    => params['playbook_id'],
+      :credential_id  => params['credential_id'],
+      :hosts          => params['hosts'],
+      :become_enabled => params['become_enabled'],
+      :verbosity      => params['verbosity'],
+    }
+    data[:network_credential_id] = params['network_credential_id'] if params['network_credential_id']
+    data[:cloud_credential_id] = params['cloud_credential_id'] if params['cloud_credential_id']
+    data
+  end
 
   def angular_form_specific_data
     @record = @ae_method
@@ -2682,15 +2682,15 @@ class MiqAeClassController < ApplicationController
 
   def fetch_playbook_details
     @playbook_details = {}
-    data = JSON.parse(@record.data)
-    @playbook_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, data['repository_id'])
-    @playbook_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, data['playbook_id'])
-    @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, data['credential_id'])
-    @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, data['network_credential_id']) if data['network_credential_id']
-    @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, data['cloud_credential_id']) if data['cloud_credential_id']
-    @playbook_details[:verbosity] = data['verbosity']
-    @playbook_details[:become_enabled] = data['become_enabled'] == 'true' ? _("Yes") : _("No")
-    @playbook_details[:hosts] = data['hosts']
+    data = YAML.load(@record.data)
+    @playbook_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, data[:repository_id])
+    @playbook_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, data[:playbook_id])
+    @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, data[:credential_id])
+    @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, data[:network_credential_id]) if data[:network_credential_id]
+    @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, data[:cloud_credential_id]) if data[:cloud_credential_id]
+    @playbook_details[:verbosity] = data[:verbosity]
+    @playbook_details[:become_enabled] = data[:become_enabled] == 'true' ? _("Yes") : _("No")
+    @playbook_details[:hosts] = data[:hosts]
     @playbook_details
   end
 

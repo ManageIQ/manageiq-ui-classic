@@ -98,7 +98,6 @@
     .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_inventory.$invalid}"}
       %label.col-md-3.control-label
         = _("Hosts")
-        {{vm.aeMethodModel.provisioning_become_enabled}}
       .col-md-9
         %input.form-control{:type         => "text",
                             'ng-model'    => "#{ng_model}.#{prefix}_inventory",
