@@ -231,7 +231,7 @@ module MiqAeCustomizationController::OldDialogs
       if !@dialog || @dialog.id.blank?
         add_flash(_("Add of new %{record} was cancelled by the user") % {:record => ui_lookup(:model => "MiqDialog")})
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqDialog"), :name => @dialog.name})
+        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqDialog"), :name => get_record_display_name(@dialog)})
       end
       get_node_info
       replace_right_cell(:nodetype => x_node)
@@ -267,9 +267,9 @@ module MiqAeCustomizationController::OldDialogs
         javascript_flash
       else
         if params[:button] == "add"
-          add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqDialog"), :name => dialog.name})
+          add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqDialog"), :name => get_record_display_name(dialog)})
         else
-          add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqDialog"), :name => dialog.name})
+          add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqDialog"), :name => get_record_display_name(dialog)})
         end
         AuditEvent.success(build_saved_audit(dialog, @edit))
         @edit = session[:edit] = nil  # clean out the saved info
