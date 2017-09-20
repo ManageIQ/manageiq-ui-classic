@@ -11,7 +11,10 @@ angular.module( 'patternfly.charts' ).controller( 'recentHostsLineChartControlle
     });
 
     $q.all([hostsDataPromise]).then(function() {
-      vm.data = chartsMixin.processData(vm.data.recentHosts, 'dates', vm.data.recentHosts.config.label)
+      if (vm.data.recentHosts.dataAvailable === false)
+        vm.data.dataAvailable = false;
+      else
+        vm.data = chartsMixin.processData(vm.data.recentHosts, 'dates', vm.data.recentHosts.config.label)
     });
 
     vm.custShowXAxis = false;
