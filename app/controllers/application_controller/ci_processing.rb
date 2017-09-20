@@ -716,7 +716,7 @@ module ApplicationController::CiProcessing
       end
 
     else # showing 1 cluster
-      if params[:id].nil? || EmsCluster.find_by_id(params[:id]).nil?
+      if params[:id].nil? || !EmsCluster.exists?(params[:id])
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => "ems_cluster")}, :error)
       else
         clusters.push(find_id_with_rbac(EmsCluster, params[:id]))
@@ -849,7 +849,7 @@ module ApplicationController::CiProcessing
       end
 
     else # showing 1 storage
-      if params[:id].nil? || Storage.find_by_id(params[:id]).nil?
+      if params[:id].nil? || !Storage.exists?(params[:id])
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => "storage")}, :error)
       else
         storages.push(find_id_with_rbac(Storage, params[:id]))
@@ -916,7 +916,7 @@ module ApplicationController::CiProcessing
       end
       ds_to_delete = []
       datastores.each do |s|
-        ds = Storage.find_by_id(s)
+        ds = Storage.find(s)
         if ds.vms_and_templates.length <= 0 && ds.hosts.length <= 0
           ds_to_delete.push(s)
         else
@@ -926,7 +926,7 @@ module ApplicationController::CiProcessing
       end
       process_storage(ds_to_delete, "destroy")  unless ds_to_delete.empty?
     else # showing 1 datastore, delete it
-      if params[:id].nil? || Storage.find_by_id(params[:id]).nil?
+      if params[:id].nil? || !Storage.exists?(params[:id])
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => "storage")}, :error)
       else
         datastores.push(find_id_with_rbac(Storage, params[:id]))
@@ -959,7 +959,7 @@ module ApplicationController::CiProcessing
          :model   => ui_lookup(:table => model_name),
          :models  => ui_lookup(:tables => model_name)}) unless flash_errors?
     else # showing 1 element, delete it
-      if params[:id].nil? || model_class.find_by_id(params[:id]).nil?
+      if params[:id].nil? || !model_class.exists?(params[:id])
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => model_name)}, :error)
       else
         elements.push(find_id_with_rbac(model_class, params[:id]))
