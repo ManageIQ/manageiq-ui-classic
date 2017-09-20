@@ -8,14 +8,6 @@ class EmsInfraDashboardService
     @controller = controller
   end
 
-  def all_data
-    {
-      :providers_link => get_url_to_entity(:ems_infra),
-      :status         => status,
-      :providers      => providers
-    }.compact
-  end
-
   def cluster_heatmap_data
     {
       :heatmaps => heatmaps
@@ -38,79 +30,6 @@ class EmsInfraDashboardService
     {
       :ems_utilization => ems_utilization
     }.compact
-  end
-
-  def status
-    status_hsh = {
-      :ems_clusters  => {
-        :title        => openstack? ? _('Deployment Roles') : _('Cluster'),
-        :count        => @ems.present? ? @ems.ems_clusters.count : EmsCluster.count,
-        :errorCount   => 0,
-        :warningCount => 0,
-        :href         => get_url_to_entity(:ems_cluster)
-      },
-      :hosts         => {
-        :title        => openstack? ? _('Nodes') : _('Hosts'),
-        :count        => @ems.present? ? @ems.hosts.count : Host.where.not(:ext_management_system => nil).count,
-        :errorCount   => 0,
-        :warningCount => 0,
-        :href         => get_url_to_entity(:host)
-      },
-      :vms           => {
-        :count        => @ems.present? ? @ems.vms.count : VmInfra.where.not(:ext_management_system => nil).count,
-        :errorCount   => 0,
-        :warningCount => 0,
-        :href         => get_url_to_entity(:vm)
-      },
-      :miq_templates => {
-        :count        => @ems.present? ?
-          @ems.miq_templates.count : MiqTemplate.where.not(:ext_management_system => nil).count,
-        :errorCount   => 0,
-        :warningCount => 0,
-        :href         => get_url_to_entity(:miq_template)
-      }
-    }
-    unless openstack?
-      status_hsh[:datastores] = {
-        :count        => @ems.present? ? @ems.storages.count : Storage.count,
-        :errorCount   => 0,
-        :warningCount => 0,
-        :href         => get_url_to_entity(:storage)
-      }
-    end
-
-    status_hsh
-  end
-
-  def providers
-    provider_classes_to_ui_types = ManageIQ::Providers::InfraManager.subclasses.each_with_object({}) { |subclass, h|
-      name = subclass.name.split('::')[2]
-      h[subclass.name] = name.to_sym
-    }
-    providers = @ems.present? ? {@ems.type => 1} : ManageIQ::Providers::InfraManager.group(:type).count
-
-    result = {}
-    providers.each do |provider, count|
-      ui_type = provider_classes_to_ui_types[provider]
-      (result[ui_type] ||= build_provider_status(ui_type))[:count] += count
-    end
-    result.values
-  end
-
-  def build_provider_status(provider_type)
-    {
-      :count     => 0,
-      :iconImage => icons[provider_type][:icon]
-    }
-  end
-
-  def get_url_to_entity(entity)
-    if @ems.present?
-      @controller.polymorphic_url(@ems, :display => entity.to_s.pluralize)
-    else
-      @controller.url_for_only_path(:action     => 'show_list',
-                          :controller => entity)
-    end
   end
 
   def heatmaps
