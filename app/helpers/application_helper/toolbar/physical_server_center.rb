@@ -115,4 +115,22 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
       ),
     ]
   )
+
+   button_group('physical_server_monitoring', [
+    select(
+      :physical_server_monitoring_choice,
+      'ff ff-monitoring fa-lg',
+      t = N_('Monitoring'),
+      t,
+      :items => [
+        button(
+          :ems_physical_infra_timeline,
+          'ff ff-timeline fa-lg',
+          N_('Show Timelines for this Physical Server'),
+          N_('Timelines'),
+          :klass     => ApplicationHelper::Button::PhysicalServerTimeline,
+          :url_parms => "?display=timeline"),
+      ]
+    ),
+  ])
 end
