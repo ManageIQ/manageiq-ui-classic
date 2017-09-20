@@ -29,6 +29,8 @@ module Menu
     def link_params
       params = case type
                when :big_iframe then {:href => "/dashboard/iframe?id=#{id}"}
+               when :new_window then {:href => href, :target => '_new'}
+               when :modal      then {'data-toggle' => 'modal', 'data-target' => href}
                else                  {:href => href}
                end
       params.merge(:onclick => 'return miqCheckForChanges();')

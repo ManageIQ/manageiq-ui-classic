@@ -278,8 +278,8 @@ module Menu
       def help_menu_section
         Menu::Section.new(:help, N_('Help'), 'pficon pficon-help', [
           Menu::Item.new('documentation', N_('Documentation'), 'documentation',  {:feature => 'documentation'}, '/support/index?support_tab=about'),
-          Menu::Item.new('product',       N_('ManageIQ.org'),  'product',        {:feature => 'product'},       '/support/index'),
-          Menu::Item.new('about',         N_('About'),         'about',          {:feature => 'about'},         '/support/index')
+          Menu::Item.new('product',       N_('ManageIQ.org'),  'product',        {:feature => 'product'},       I18n.t("product.support_website").html_safe, :new_window),
+          Menu::Item.new('about',         N_('About'),         'about',          {:feature => 'about'},         '#aboutModal', :modal)
         ], :help)
       end
 

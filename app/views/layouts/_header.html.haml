@@ -30,20 +30,6 @@
                   %li
                     %a{menu_item.link_params}
                       = _(menu_item.name)
-      -#%li.dropdown
-      -#  %a{:class => "dropdown-toggle nav-item-iconic", :id => "dropdownMenu1",  "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
-      -#    %span.fa.pficon-help{:title => _("Help")}
-      -#    %span.caret
-      -#  %ul.dropdown-menu{"aria-labelledby" => "DocdropdownMenu1"}
-      -#    %li
-      -#      %a{:href => "/support/index?support_tab=about"}
-      -#        = _('Documentation')
-      -#    %li
-      -#      %a{:href => I18n.t("product.support_website").html_safe, :target => "_new"}
-      -#        = I18n.t("product.support_website_text").html_safe
-      -#    %li
-      -#      %a{"data-toggle" => "modal", "data-target" => "#aboutModal"}
-      -#        = _('About')
 
       = render :partial => "layouts/user_options"
 
