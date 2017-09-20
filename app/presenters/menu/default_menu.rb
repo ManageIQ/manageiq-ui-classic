@@ -275,19 +275,19 @@ module Menu
         ], :top_right)
       end
 
-      def documentation_menu_section
-        Menu::Section.new(:doc_section, N_('Documentation'), 'pficon pficon-settings', [
+      def help_menu_section
+        Menu::Section.new(:help, N_('Help'), 'pficon pficon-help', [
           Menu::Item.new('documentation', N_('Documentation'), 'documentation',  {:feature => 'documentation'}, '/support/index?support_tab=about'),
           Menu::Item.new('product',       N_('ManageIQ.org'),  'product',        {:feature => 'product'},       '/support/index'),
           Menu::Item.new('about',         N_('About'),         'about',          {:feature => 'about'},         '/support/index')
-        ], :documentation)
+        ], :help)
       end
 
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, middleware_menu_section, datawarehouse_menu_section, storage_menu_section,
          control_menu_section, automation_menu_section, optimize_menu_section, monitor_menu_section,
-         settings_menu_section, documentation_menu_section].compact
+         settings_menu_section, help_menu_section].compact
       end
     end
   end

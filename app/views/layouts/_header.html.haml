@@ -18,17 +18,18 @@
           %span.badge.info{"ng-show" => "vm.newNotifications"}
             -# Small circle
             &#8226;
-      - Menu::Manager.menu(:documentation) do |menu_section|
+      - Menu::Manager.menu(:help) do |menu_section|
         - if menu_section.visible?
           %li.dropdown
-            %a{:class => "dropdown-toggle nav-item-iconic", :id => "dropdownMenu1",  "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
+            %a#help-menu.dropdown-toggle.nav-item-iconic{"data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
               %span.fa.pficon-help{:title => _("Help")}
               %span.caret
-            %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu1"}
+            %ul.dropdown-menu{"aria-labelledby" => "help-menu"}
               - menu_section.items.each do |menu_item|
                 - if menu_item.visible?
                   %li
-                    %a{:href => menu_item.url}= _(menu_item.name)
+                    %a{:href => menu_item.url}
+                      = _(menu_item.name)
       -#%li.dropdown
       -#  %a{:class => "dropdown-toggle nav-item-iconic", :id => "dropdownMenu1",  "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
       -#    %span.fa.pficon-help{:title => _("Help")}
