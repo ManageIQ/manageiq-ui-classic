@@ -1175,11 +1175,10 @@ class CatalogController < ApplicationController
   end
 
   def st_catalog_get_form_vars
-    if params[:button]
-      move_cols_left_right("right") if params[:button] == "right"
-      move_cols_left_right("left") if params[:button] == "left"
-    else
-      copy_params_if_set(@edit[:new], params, %i(name description))
+    case params[:button]
+    when 'right' then move_cols_left_right('right')
+    when 'left' then  move_cols_left_right('left')
+    else copy_params_if_set(@edit[:new], params, %i(name description))
     end
   end
 

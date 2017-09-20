@@ -724,24 +724,15 @@ module ApplicationController::Buttons
   end
 
   def group_get_form_vars
-    if params[:button]
-      move_cols_right if params[:button] == "right"
-      move_cols_left if params[:button] == "left"
-      move_cols_up if params[:button] == "up"
-      move_cols_down if params[:button] == "down"
-      move_cols_top if params[:button] == "top"
-      move_cols_bottom if params[:button] == "bottom"
-    else
-      copy_params_if_set(@edit[:new], params, %i(name description display button_icon button_color))
+    case params[:button]
+    when 'right'  then move_cols_left_right('right')
+    when 'left'   then move_cols_left_right('left')
+    when 'up'     then move_cols_up
+    when 'down'   then move_cols_down
+    when 'top'    then move_cols_top
+    when 'bottom' then move_cols_bottom
+    else copy_params_if_set(@edit[:new], params, %i(name description display button_icon button_color))
     end
-  end
-
-  def move_cols_left
-    move_cols_left_right("left")
-  end
-
-  def move_cols_right
-    move_cols_left_right("right")
   end
 
   def move_cols_top
