@@ -275,7 +275,7 @@
   *     modelName: string,
   *     gtlType: string,
   *     activeTree: string,
-  *     currId: string,
+  *     parentId: string,
   *     isExplorer: Boolean
   *   }
   * ```
@@ -289,7 +289,7 @@
     this.setExtraClasses(initObject.gtlType);
     return this.getData(initObject.modelName,
                         initObject.activeTree,
-                        initObject.currId,
+                        initObject.parentId,
                         initObject.isExplorer,
                         this.settings,
                         initObject.records)
@@ -402,20 +402,21 @@
   * Method for fetching data from server. gtlData, settings and pePage is selected after fetching data.
   * @param {String} modelName name of current model.
   * @param {Number} activeTree ID of active tree node.
-  * @param {Number} currId current Id, if some nested items are displayed.
+  * @param {Number} parentId parent Id, if some nested items are displayed.
   * @param {Boolean} isExplorer true | false if we are in explorer part of application.
   * @param {Object} settings settings object.
   * @param {Array} records array of reccords.
   * @returns {Object} promise of retriveRowsAndColumnsFromUrl of MiQDataTableService.
   */
-  ReportDataController.prototype.getData = function(modelName, activeTree, currId, isExplorer, settings, records) {
+  ReportDataController.prototype.getData = function(modelName, activeTree, parentId, isExplorer, settings, records) {
     var basicSettings = {
       current: 1,
       perpage: 20,
       sort_col: 0,
       sort_dir: 'DESC',
     };
-    return this.MiQDataTableService.retrieveRowsAndColumnsFromUrl(modelName, activeTree, currId, isExplorer, settings, records)
+    return this.MiQDataTableService
+      .retrieveRowsAndColumnsFromUrl(modelName, activeTree, parentId, isExplorer, settings, records)
       .then(function(gtlData) {
         this.settings = gtlData.settings || basicSettings;
         if (this.settings.sort_col === -1) {

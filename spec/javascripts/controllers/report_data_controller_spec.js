@@ -9,7 +9,7 @@ describe('reportDataController', function () {
     modelName: 'manageiq/providers/infra_manager/vms',
     activeTree: 'vandt_tree',
     gtlType: 'grid',
-    currId: '',
+    parent_id: '',
     sortColIdx: '0',
     sortDir: 'DESC',
     isExplorer: false,
@@ -44,7 +44,7 @@ describe('reportDataController', function () {
     it('should get data', function(done) {
       var settings = {isLoading: true};
       var result = $controller
-          .getData(initObject.modelName, initObject.activeTree, initObject.currId, initObject.isExplorer, settings);
+          .getData(initObject.modelName, initObject.activeTree, initObject.parent_id, initObject.isExplorer, settings);
       result.then(function(data) {
         expect(angular.equals($controller.gtlData.cols, report_data.data.head)).toBeTruthy();
         expect(angular.equals($controller.gtlData.rows, report_data.data.rows)).toBeTruthy();

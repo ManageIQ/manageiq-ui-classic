@@ -410,10 +410,10 @@ class ApplicationController < ActionController::Base
     {
       :controller_name => controller_name,
       :data            => {
-        :modelName  => @display.nil? && !self.class.model.nil? ? self.class.model.to_s.tableize : @display,
+        :model_name => @display.nil? && !self.class.model.nil? ? self.class.model.to_s.tableize : @display,
         :activeTree => x_active_tree.to_s,
         :gtlType    => @gtl_type,
-        :currId     => params[:id],
+        :parent_id  => params[:id],
         :sortColIdx => @sortcol,
         :sortDir    => @sortdir,
         :isExplorer => @explorer,
@@ -444,8 +444,8 @@ class ApplicationController < ActionController::Base
     end
 
     # handle exceptions
-    if params[:model]
-      options = case params[:model]
+    if params[:model_name]
+      options = case params[:model_name]
                 when 'miq_requests'
                   page_params
                 when 'miq_tasks'
@@ -459,15 +459,15 @@ class ApplicationController < ActionController::Base
                 end
     end
 
-    if params[:model_id] && !params[:active_tree]
-      curr_model_id = from_cid(params[:model_id])
-      unless curr_model_id.nil?
-        options[:parent] = identify_record(curr_model_id, controller_to_model) if curr_model_id && options[:parent].nil?
+    if params[:id] && !params[:active_tree]
+      parent_id = from_cid(params[:parent_id])
+      unless parent_id.nil?
+        options[:parent] = identify_record(parent_id, controller_to_model) if parent_id && options[:parent].nil?
       end
     end
 
     options[:parent] = options[:parent] || @parent
-    options[:association] = HAS_ASSOCATION[params[:model]] if HAS_ASSOCATION.include?(params[:model])
+    options[:association] = HAS_ASSOCATION[params[:model_name]] if HAS_ASSOCATION.include?(params[:model_name])
     options[:selected_ids] = params[:records]
     options
   end
@@ -483,15 +483,15 @@ class ApplicationController < ActionController::Base
   # @option options :model [Object]
   #     If model was chosen somehow before calling this method use this model instead of finding it.
   def process_params_model_view(params, options)
-    if options[:model]
-      model_view = options[:model].constantize
+    if options[:model_name]
+      model_view = options[:model_name].constantize
     end
 
     if model_view.nil? && params[:active_tree]
       model_view = model_from_active_tree(params[:active_tree].to_sym)
     end
-    if model_view.nil? && params[:model]
-      model_view = model_string_to_constant(params[:model])
+    if model_view.nil? && params[:model_name]
+      model_view = model_string_to_constant(params[:model_name])
     end
 
     if model_view.nil?
