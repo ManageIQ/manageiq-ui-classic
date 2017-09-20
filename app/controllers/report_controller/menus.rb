@@ -505,13 +505,13 @@ module ReportController::Menus
       @edit[:idx] = @edit[:new].index(@edit[:temp_arr])
     end
 
-    if params[:button]
-      move_menu_cols_right if params[:button] == "right"
-      move_menu_cols_left if params[:button] == "left"
-      move_menu_cols_up if params[:button] == "up"
-      move_menu_cols_down if params[:button] == "down"
-      move_menu_cols_top if params[:button] == "top"
-      move_menu_cols_bottom if params[:button] == "bottom"
+    case params[:button]
+    when 'right'  then move_menu_cols_right
+    when 'left'   then move_menu_cols_left
+    when 'up'     then move_menu_cols_up
+    when 'down'   then move_menu_cols_down
+    when 'top'    then move_menu_cols_top
+    when 'bottom' then move_menu_cols_bottom
     end
   end
 
