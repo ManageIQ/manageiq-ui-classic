@@ -15,21 +15,20 @@
             = single_relationship_link(@record, :ems_storage, "ext_management_system")
         - if role_allows?(:feature => "availability_zone_show") && @record.availability_zone
           %li
-            = link_to("#{ui_lookup(:table => "availability_zone")}: #{@record.availability_zone.name}",
+            = link_to(_("Availability Zone: %{name}") % {:name => @record.availability_zone.name},
               {:action => 'show', :id => @record.availability_zone.id, :controller => 'availability_zone'},
-              :title => _("Show this Cloud Volume's parent %{parent}") % {:parent => ui_lookup(:table => "availability_zone")})
+              :title => _("Show this Cloud Volume's parent Availability Zone"))
         - if role_allows?(:feature => "cloud_tenant_show") && @record.cloud_tenant
           %li
-            = link_to("#{ui_lookup(:table => "cloud_tenant")}: #{@record.cloud_tenant.name}",
+            = link_to(_("Cloud Tenant: %{name}") % {:name => @record.cloud_tenant.name},
               {:action => 'show', :id => @record.cloud_tenant.id, :controller => 'cloud_tenant'},
-              :title => _("Show this Cloud Volume's parent %{parent}") % {:parent => ui_lookup(:table => "cloud_tenant")})
+              :title => _("Show this Cloud Volume's parent Cloud Tenant"))
         - if role_allows?(:feature => "cloud_volume_snapshot_show")
           - if @record.number_of(:cloud_volume_snapshots) == 0
             %li.disabled
-              = link_to(_("%{children} (0)") % {:children => ui_lookup(:tables => "cloud_volume_snapshots")}, "#")
+              = link_to(_("Cloud Volume Snapshots (0)"), "#")
           - else
             %li
-              = link_to(_("%{children} (%{count})") % {:children => ui_lookup(:tables => "cloud_volume_snapshots"),
-                                                                              :count  => @record.number_of(:cloud_volume_snapshots)},
+              = link_to(_("Cloud Volume Snapshots (%{count})") % {:count  => @record.number_of(:cloud_volume_snapshots)},
                 {:action => 'show', :id => @record, :display => 'cloud_volume_snapshots'},
-                :title => _("Show all %{children}") % {:children => ui_lookup(:tables => "cloud_volume_snapshots")})
+                :title => _("Show all Cloud Volume Snapshots"))

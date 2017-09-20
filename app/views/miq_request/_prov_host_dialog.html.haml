@@ -44,7 +44,7 @@
     = render(:partial => "prov_dialog_fieldset",
       :locals         => {:workflow => wf,
         :dialog                     => dialog,
-        :label                      => ui_lookup(:tables => "ext_management_system"),
+        :label                      => _("Provider"),
         :prefix                     => "miq_request/",
         :keys                       => keys})
     - keys = [:placement_cluster_name]

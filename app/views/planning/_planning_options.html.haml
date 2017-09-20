@@ -45,7 +45,7 @@
                       "data-miq_sparkle_off" => true,
                       "data-miq_observe"     => {:url => url}.to_json)
       - elsif @sb[:options][:filter_typ] == "ems"
-        - options = [["<#{_('Choose a %{provider}')}>" % {:provider => ui_lookup(:table => "ext_management_systems")}, "<Choose>"]] + Array(@sb[:emss].invert).sort_by { |a| a.first.downcase }
+        - options = [["<#{_('Choose a Provider')}>", "<#{_('Choose')}>"]] + Array(@sb[:emss].invert).sort_by { |a| a.first.downcase }
         = select_tag("filter_value",
                       options_for_select(options, @sb[:options][:filter_value]),
                       :disabled              => @sb[:options][:vm_mode] == :manual,
@@ -55,7 +55,7 @@
                       "data-miq_sparkle_off" => true,
                       "data-miq_observe"     => {:url => url}.to_json)
       - elsif @sb[:options][:filter_typ] == "filter"
-        - options = [["<#{_('Choose a Filter')}>", "<Choose>"]] + Array(@sb[:vm_filters].invert).sort_by { |a| a.first.downcase }
+        - options = [["<#{_('Choose a Filter')}>", "<#{_('Choose')}>"]] + Array(@sb[:vm_filters].invert).sort_by { |a| a.first.downcase }
         = select_tag("filter_value",
                       options_for_select(options, @sb[:options][:filter_value]),
                       :disabled              => @sb[:options][:vm_mode] == :manual,

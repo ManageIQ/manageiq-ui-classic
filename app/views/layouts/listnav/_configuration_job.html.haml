@@ -22,9 +22,9 @@
               :title => _("Show parent %s for this Job") % ui_lookup(:model => @record.ext_management_system.class.to_s))
         - if role_allows?(:feature => "service_view") && @record.service
           %li
-            = link_to("#{ui_lookup(:table => "service")}: #{@record.service.name}",
+            = link_to(_("Service: %{name}") % {:name => @record.service.name},
               {:controller => "service", :action => 'show', :id => to_cid(@record.service.id)},
-              :title => _("Show service %s for this Job") % ui_lookup(:table => "service"))
+              :title => _("Show Service for this Job"))
         = li_link(:count => @record.number_of(:parameters),
           :text          => _("Parameters"),
           :action        => 'parameters',

@@ -182,7 +182,7 @@
     .col-md-8
       - if @edit
         - if @edit[:emss].length == 0
-          = _("No %{types} found") % {:types => ui_lookup(:tables => "ext_management_system")}
+          = _("No Providers found")
         - elsif @edit[:emss].length == 1
           = h(@edit[:emss][@edit[:new][:expression][:options][:ems_id]])
         - else
@@ -218,7 +218,7 @@
                 miqInitSelectPicker();
                 miqSelectPickerEvent('select_ems_alarm_mor', '#{url}', {beforeSend: true, complete: true})
           - else
-            = _("Choose a %{provider} first") % {:provider => ui_lookup(:table => "ext_management_system")}
+            = _("Choose a Provider first")
         - else
           = h(@alert.expression[:options][:ems_alarm_name])
   - when :mw_operator

@@ -21,6 +21,6 @@
                     :title     => _("Show all Instances"))
         - if role_allows?(:feature => "orchestration_stack_show") && @record.orchestration_stack
           %li
-            = link_to("#{ui_lookup(:table => "orchestration_stack")}: #{@record.orchestration_stack.name}",
+            = link_to(_("Stack: %{name}") % {:name => @record.orchestration_stack.name},
               {:controller => "orchestration_stack", :action => 'show', :id => @record.orchestration_stack.id.to_s},
               :title => _("Show parent Orchestration Stack for this Security Group"))

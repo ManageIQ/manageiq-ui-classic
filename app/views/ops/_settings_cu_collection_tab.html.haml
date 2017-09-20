@@ -38,7 +38,7 @@
               .note= _("VM data will be collected for VMs under selected %{hosts} only. Data is collected for a %{cluster} and all of its %{hosts} when at least one %{host} is selected.") % {:hosts => title_for_hosts, :cluster => cluster_title, :host => title_for_host}
       .col-md-12.col-lg-6
         %fieldset
-          %h3= ui_lookup(:tables => "storages")
+          %h3= _("Datastores")
           .form-group
             %label.col-md-4.control-label
               = _("Collect for All Datastores")

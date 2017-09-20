@@ -73,9 +73,9 @@
       %ul.nav.nav-pills.nav-stacked
         - if role_allows?(:feature => "ems_infra_show") && !@record.ext_management_system.nil?
           %li
-            = link_to("#{ui_lookup(:table => "ems_infra")}: #{@record.ext_management_system.name}",
+            = link_to(_("Infrastructure Provider: %{name}") % {:name => @record.ext_management_system.name},
               ems_infra_path(@record.ext_management_system),
-              :title => _("Show this parent %{provider} for this %{host}") % {:host => host_title, :provider => ui_lookup(:table => "ems_infra")})
+              :title => _("Show parent Infrastructure Provider for this %{host}") % {:host => host_title})
 
         - if role_allows?(:feature => "ems_cluster_show") && !@record.ems_cluster.nil?
           - cluster_title = title_for_cluster
@@ -125,12 +125,12 @@
         - if role_allows?(:feature => "physical_server_show") && !@record.physical_server.nil?
           %li
             - physical_server_show = {:controller => "physical_server", :action => 'show', :id => @record.physical_server.id}
-            = link_to("#{ui_lookup(:model => "PhysicalServer")}: #{@record.physical_server.name}",
+            = link_to(_("Physical Server: %{name}") % {:name => @record.physical_server.name},
               physical_server_show,
               :title => _("Show Physical Server"))
 
         - if role_allows?(:feature => "physical_server_show") && @record.physical_server.nil?
-          = li_link(:if => false, :text => "#{ui_lookup(:model => "PhysicalServer")}: #{_('None')}")
+          = li_link(:if => false, :text => _("Physical Server: None"))
 
     = miq_accordion_panel(_("Security"), false, "host_sec") do
       %ul.nav.nav-pills.nav-stacked
