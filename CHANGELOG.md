@@ -5,6 +5,67 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 69 ending 2017-09-18
+
+### Added
+- Automate
+  - Adding dialog validations in Dialog Editor [(#2055)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2055)
+- Compute
+  - Container Provider: change authentication status labels [(#2104)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2104)
+  - Set the metrics auth status to the metrics tab [(#2102)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2102)
+  - Consider archived nodes for single provider dashboard [(#2084)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2084)
+  - Use endpoint's name instead of role [(#2080)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2080)
+  - Hide Archived Container Nodes [(#1524)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1524)
+- Middleware
+  - Adding UI for JDR feature on server page [(#1764)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1764)
+- Services
+  - Fix display for catalog items in service catalog tree [(#2140)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2140)
+- Settings
+  - Edit divs for Available and Selected Groups [(#2120)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2120)
+- Tagging
+  - Add live search to value dropdown on tag edit screen [(#2121)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2121)
+- Trees
+  - Store the expanded state of the explorer trees locally [(#2143)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2143)
+
+### Fixed
+- Automation
+  - Added missing gettext to Dialog Editor labels [(#2134)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2134)
+  - Updated style for Dialog Editor [(#2116)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2116)
+- Charts
+  - Change <Other(x)> to Others in C&U pie chart labels [(#2171)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2171)
+  - Fix chart layout when single chart displayed [(#2115)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2115)
+- Compute
+  - Only count unresolved alerts [(#2175)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2175)
+  - Add missing kubernetes icon to alert screens [(#2129)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2129)
+  - Fix limit and request labels for containers [(#2111)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2111)
+  - Add alerts drop down to provider view [(#1918)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1918)
+- Configuration Management
+  - Fix selection of configured system [(#2160)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2160)
+  - Fix pdf download for configuration profiles [(#1937)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1937)
+- Expressions
+  - Fix saving filter in Advanced search [(#2105)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2105)
+- Formating
+  - Fix table cell issue on report styling tab [(#2122)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2122)
+  - Fix margin of expanded alerts [(#2117)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2117)
+  - Update monitor screen styling [(#2113)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2113)
+- REST API
+  - API.login - don't show error modal on login error [(#2093)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2093)
+- Services
+  - Fix "Show Past Dates" didn't work for datepicker [(#1762)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1762)
+- User Interface
+  - Ensure the 'required' property gets saved for dynamic drop down fields [(#2185)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2185)
+  - Check hosts when rendering EMS quadicon [(#2164)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2164)
+  - Fix focus in policy tree after adding condition [(#2109)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2109)
+  - miq-tree-view - provide missing reselect - the tree already has that info [(#2108)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2108)
+  - ReportData - use dropdownClass instead of dropDownClass [(#2107)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2107)
+  - Reload listnav explorer trees from explorers using RxJS [(#2100)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2100)
+  - Fix a regression in alerts. [(#2099)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2099)
+  - Fix based_volumes sublist [(#2094)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2094)
+  - Dialog editor - don't show error modal when validation failed [(#2075)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2075)
+  - Clear Search box text [(#1893)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1893)
+  - Redirecting to 'show list' after deleting a 'cloud network' [(#1809)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1809)
+  - Showing network list of a specific network manager [(#1808)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1808)
+
 ## Unreleased as of Sprint 68 ending 2017-09-04
 
 ### Added
