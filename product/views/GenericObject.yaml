@@ -20,6 +20,7 @@ db: GenericObject
 # Columns to fetch from the main table
 cols:
 - name
+- generic_object_definition_name
 - created_at
 - updated_at
 
@@ -31,12 +32,14 @@ include_for_find:
 # Order of columns (from all tables)
 col_order:
 - name
+- generic_object_definition_name
 - created_at
 - updated_at
 
 # Column titles, in order
 headers:
 - Name
+- Definition
 - Created
 - Updated
 
@@ -49,6 +52,7 @@ order: Ascending
 # Columns to sort the report on, in order
 sortby:
 - name
+- generic_object_definition_name
 - created_at
 - updated_at
 
