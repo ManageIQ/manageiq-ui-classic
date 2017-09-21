@@ -1,16 +1,19 @@
 ManageIQ.angular.app.directive('validationStatus', ['$rootScope', function($rootScope) {
   return {
     require: 'ngModel',
-    link: function (scope, elem, attrs, ctrl) {
-      ctrl.$validators.validationRequired = function (modelValue, viewValue) {
-        if (viewValue !== undefined && viewValue === true) {
-          _.get(scope, attrs.mainScope).postValidationModelRegistry(attrs.prefix);
+    scope: {
+      postValidationModelRegistry: '<?',
+      prefix: '@?',
+    },
+    link: function(scope, _elem, _attrs, ctrl) {
+      ctrl.$validators.validationRequired = function(_modelValue, viewValue) {
+        if (viewValue) {
+          scope.postValidationModelRegistry(scope.prefix);
           return true;
-        } else {
-          $rootScope.$broadcast('setErrorOnTab', {tab: attrs.prefix});
-          return false;
         }
+        $rootScope.$broadcast('setErrorOnTab', {tab: scope.prefix});
+        return false;
       };
-    }
-  }
+    },
+  };
 }]);
