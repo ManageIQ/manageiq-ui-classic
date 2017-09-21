@@ -171,7 +171,7 @@
                 - col_span = 10
                 - if prev_group != r.group_idx && i < resources.length
                   - prev_group = r.group_idx
-                  %tr#new_tr.separator
+                  %tr.separator
                     %td{:colspan => col_span}
                 %tr{:title       => _("Click to this Catalog Item"),
                     :onclick     => remote_function(:loading  => "miqSparkle(true);",

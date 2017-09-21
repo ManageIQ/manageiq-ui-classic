@@ -1,6 +1,6 @@
 - if edit
   - if entry == "new"
-    %tr#new_tr
+    %tr
       %td
         = image_submit_tag(image_path('toolbars/import.png'),
           :class => "rollover small",
@@ -22,7 +22,7 @@
         = hidden_field("entry", "id", "value" => h(idx))
 - else
   - if entry == "new"
-    %tr#new_tr{:title => _("Click to add a new entry"),
+    %tr{:title => _("Click to add a new entry"),
       :onclick => remote_function(:url => {:action => 'field_value_select', :id => "#{@record.id || 'new'}", :entry_id => 'new'})}
       %td
         = image_tag(image_path('toolbars/new.png'), :class => "rollover small")
