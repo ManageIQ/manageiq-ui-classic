@@ -46,7 +46,7 @@ describe ReportController do
         end
 
         it "creates widget with widget.id in 'value' field from cond. of MiqExpression (in MiqSchedule.filter)" do
-          expect(new_widget.id).to be_instance_of(Fixnum)
+          expect(new_widget.id).to be_a_kind_of(Integer)
           expect(miq_schedule.filter.exp["="]["value"]).to eq(new_widget.id)
         end
       end
