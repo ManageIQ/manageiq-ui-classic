@@ -186,4 +186,22 @@ describe ApplicationController do
       expect(assigns(:edit)[:new][:target_class]).to eq(ui_lookup(:model => "Vm"))
     end
   end
+
+  context "#button_valid?" do
+    it "check button_validity and display appropriate flash messages" do
+      edit = {
+        :new => {}
+      }
+
+      controller.send(:button_valid?, edit[:new])
+      flash_messages = [
+        {:message => "Button Text is required", :level => :error},
+        {:message => "Button Image must be selected", :level => :error},
+        {:message => "Button Hover Text is required", :level => :error},
+        {:message => "Starting Process is required", :level => :error},
+        {:message => "Request is required", :level => :error}
+      ]
+      expect(assigns(:flash_array)).to eq(flash_messages)
+    end
+  end
 end
