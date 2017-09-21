@@ -14,11 +14,6 @@ module Menu
       @menu.each { |section| yield section }
     end
 
-    private
-
-    class InvalidMenuDefinition < Exception
-    end
-
     def menu(placement = :default)
       @menu.each do |menu_section|
         yield menu_section if menu_section.placement == placement
@@ -54,6 +49,20 @@ module Menu
 
     def item_in_section?(item_id, section_id)
       @id_to_section[section_id].contains_item_id?(item_id)
+    end
+
+    #
+    # Takes section id as string and returns section id symbol or null.
+    #
+    # Prevent calling to_sym on user input by using this method.
+    #
+    def section_id_string_to_symbol(section_id_string)
+      valid_sections[section_id_string]
+    end
+
+    private
+
+    class InvalidMenuDefinition < Exception
     end
 
     def initialize
@@ -103,15 +112,6 @@ module Menu
       @menu.each do |section|
         section.preprocess_sections(@id_to_section)
       end
-    end
-
-    #
-    # Takes section id as string and returns section id symbol or null.
-    #
-    # Prevent calling to_sym on user input by using this method.
-    #
-    def section_id_string_to_symbol(section_id_string)
-      valid_sections[section_id_string]
     end
 
     def valid_sections

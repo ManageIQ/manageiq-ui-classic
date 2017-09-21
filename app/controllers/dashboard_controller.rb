@@ -670,32 +670,6 @@ class DashboardController < ApplicationController
     add_flash(_("Press your browser's Back button or click a tab to continue"))
   end
 
-  private
-
-  # Authenticate external user and generate API token
-  def authenticate_external_user_generate_api_token
-    if @user_name.blank? && request.headers["X-Remote-User"].present?
-      @user_name = params[:user_name] = request.headers["X-Remote-User"].split("@").first
-    end
-
-    authenticate(true)
-  end
-
-  def tl_toggle_button_enablement(button_id, enablement, typ)
-    if enablement == :enabled
-      tooltip = _("Download this Timeline data in %{typ} format") % {:typ => typ}
-      "ManageIQ.toolbars.enableItem('#center_tb', '#{button_id}'); ManageIQ.toolbars.setItemTooltip('#center_tb', '#{button_id}', '#{tooltip}');"
-    else
-      tooltip = _('No records found for this timeline')
-      "ManageIQ.toolbars.disableItem('#center_tb', '#{button_id}'); ManageIQ.toolbars.setItemTooltip('#center_tb', '#{button_id}', '#{tooltip}');"
-    end
-  end
-  helper_method(:tl_toggle_button_enablement)
-
-  def validate_user(user, task_id = nil, request = nil, authenticate_options = {})
-    UserValidationService.new(self).validate_user(user, task_id, request, authenticate_options)
-  end
-
   def session_reset
     # save some fields to recover back into session hash after session is cleared
     keys_to_restore = [:browser, :user_TZO]
@@ -735,6 +709,32 @@ class DashboardController < ApplicationController
       session[:browser][:os] = params[:browser_os].to_s.downcase
       session[:browser][:os_ui] = params[:browser_os]
     end
+  end
+
+  private
+
+  # Authenticate external user and generate API token
+  def authenticate_external_user_generate_api_token
+    if @user_name.blank? && request.headers["X-Remote-User"].present?
+      @user_name = params[:user_name] = request.headers["X-Remote-User"].split("@").first
+    end
+
+    authenticate(true)
+  end
+
+  def tl_toggle_button_enablement(button_id, enablement, typ)
+    if enablement == :enabled
+      tooltip = _("Download this Timeline data in %{typ} format") % {:typ => typ}
+      "ManageIQ.toolbars.enableItem('#center_tb', '#{button_id}'); ManageIQ.toolbars.setItemTooltip('#center_tb', '#{button_id}', '#{tooltip}');"
+    else
+      tooltip = _('No records found for this timeline')
+      "ManageIQ.toolbars.disableItem('#center_tb', '#{button_id}'); ManageIQ.toolbars.setItemTooltip('#center_tb', '#{button_id}', '#{tooltip}');"
+    end
+  end
+  helper_method(:tl_toggle_button_enablement)
+
+  def validate_user(user, task_id = nil, request = nil, authenticate_options = {})
+    UserValidationService.new(self).validate_user(user, task_id, request, authenticate_options)
   end
 
   # Create a user's dashboard, pass in dashboard id if that is used to copy else use default dashboard
