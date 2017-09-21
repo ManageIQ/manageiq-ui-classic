@@ -617,7 +617,7 @@ class CloudVolumeController < ApplicationController
   helper_method :textual_group_list
 
   def form_params
-    options = copy_param_if_set({}, params, %i(name size cloud_tenant_id vm_id device_path))
+    options = copy_params_if_set({}, params, %i(name size cloud_tenant_id vm_id device_path))
     options[:volume_type] = params[:aws_volume_type] if params[:aws_volume_type]
     # Only set IOPS if io1 (provisioned IOPS) and IOPS available
     options[:iops] = params[:aws_iops] if options[:volume_type] == 'io1' && params[:aws_iops]
