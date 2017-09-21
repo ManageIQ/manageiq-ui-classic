@@ -54,7 +54,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       $scope.newRecord = true;
       playbookReusableCodeMixin.formOptions(vm);
       playbookReusableCodeMixin.formCloudCredentials(vm, null, null);
-      vm.afterGet = true;
       vm.modelCopy = angular.copy(vm.catalogItemModel);
     } else {
       vm.newRecord = false;
@@ -68,7 +67,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         playbookReusableCodeMixin.formOptions(vm);
         playbookReusableCodeMixin.formCloudCredentials(vm, catalogItemData.config_info.provision.cloud_credential_id, catalogItemData.config_info.retirement.cloud_credential_id);
         getConfigInfo(catalogItemData.config_info);
-        vm.afterGet = true;
         vm.modelCopy = angular.copy(vm.catalogItemModel);
       });
     }
@@ -270,7 +268,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   $scope.$watch('vm._retirement_repository', function(value) {
     if (value) {
-      vm.repositoryChanged(vm, 'retirement', value.id);
+      playbookReusableCodeMixin.repositoryChanged(vm, 'retirement', value.id);
     } else {
       vm.catalogItemModel['retirement_playbook_id'] = '';
       vm.catalogItemModel['retirement_repository_id'] = '';

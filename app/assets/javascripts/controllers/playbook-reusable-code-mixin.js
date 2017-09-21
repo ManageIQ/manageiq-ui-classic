@@ -1,5 +1,6 @@
-ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', function(API) {
+ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqService', function(API, $q, miqService) {
   var sortOptions = "&sort_by=name&sort_order=ascending";
+  var allApiPromises = [];
 
   var getSortedHash = function(inputHash) {
     var sortedHash = Object.keys(inputHash)
@@ -38,10 +39,15 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', function(API) 
   var getCloudCredentialsforType = function(prefix, typ, vm) {
     // list of cloud credentials based upon selected cloud type
     var url = '/api/authentications?collection_class=' + typ + '&expand=resources&attributes=id,name' + sortOptions;
-    API.get(url).then(function(data) {
-      vm[prefix + '_cloud_credentials'] = data.resources;
-      findObjectForDropDown(prefix, '_cloud_credential', '_cloud_credentials', vm);
-    });
+    allApiPromises.push(API.get(url)
+      .then(function(data) {
+        vm[prefix + '_cloud_credentials'] = data.resources;
+        findObjectForDropDown(prefix, '_cloud_credential', '_cloud_credentials', vm);
+      })
+    );
+
+    $q.all(allApiPromises)
+      .then(retrievedFormData(vm));
   };
 
   var findObjectForDropDown = function(prefix, fieldName, listName, vm) {
@@ -71,67 +77,91 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', function(API) 
 
   var getCredentialType = function(prefix, credentialId, vm) {
     var url = '/api/authentications/' + credentialId;
-    API.get(url).then(function(data) {
-      vm[prefix + '_cloud_type'] = data.type;
-      if (vm.cloudTypes[vm[prefix + '_cloud_type']] !== 'undefined') {
-        vm['_' + prefix + '_cloud_type'] = data.type;
-        getCloudCredentialsforType(prefix, data.type, vm);
-      }
-    });
+    allApiPromises.push(API.get(url)
+      .then(function(data) {
+        vm[prefix + '_cloud_type'] = data.type;
+        if (vm.cloudTypes[vm[prefix + '_cloud_type']] !== 'undefined') {
+          vm['_' + prefix + '_cloud_type'] = data.type;
+          getCloudCredentialsforType(prefix, data.type, vm);
+        }
+      })
+    );
   };
 
   // list of service catalogs
   var formOptions = function(vm) {
+    miqService.sparkleOn();
     if (vm[vm.model].catalog_id !== undefined) {
-      API.get('/api/service_catalogs/?expand=resources&attributes=id,name' + sortOptions).then(function(data) {
-        vm.catalogs = data.resources;
-        vm._catalog = _.find(vm.catalogs, {id: vm[vm.model].catalog_id});
-      });
+      allApiPromises.push(API.get('/api/service_catalogs/?expand=resources&attributes=id,name' + sortOptions)
+        .then(function(data) {
+          vm.catalogs = data.resources;
+          vm._catalog = _.find(vm.catalogs, {id: vm[vm.model].catalog_id});
+        })
+      );
     }
 
     // list of service dialogs
     if (vm[vm.model].provisioning_dialog_id !== undefined) {
-      API.get('/api/service_dialogs/?expand=resources&attributes=id,label&sort_by=label&sort_order=ascending').then(
-        function(data) {
+      allApiPromises.push(API.get('/api/service_dialogs/?expand=resources&attributes=id,label&sort_by=label&sort_order=ascending')
+        .then(function(data) {
           vm.dialogs = data.resources;
           vm._provisioning_dialog = _.find(vm.dialogs, {id: vm[vm.model].provisioning_dialog_id});
-        });
+        })
+      );
     }
 
     // list of repositories
-    API.get('/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name&filter[]=region_number=' + vm.currentRegion + sortOptions).then(function(data) {
-      vm.repositories = data.resources;
-      vm._retirement_repository = _.find(vm.repositories, {id: vm[vm.model].retirement_repository_id});
-      vm._provisioning_repository = _.find(vm.repositories, {id: vm[vm.model].provisioning_repository_id});
-    });
+    allApiPromises.push(API.get('/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name&filter[]=region_number=' + vm.currentRegion + sortOptions)
+      .then(function(data) {
+        vm.repositories = data.resources;
+        vm._retirement_repository = _.find(vm.repositories, {id: vm[vm.model].retirement_repository_id});
+        vm._provisioning_repository = _.find(vm.repositories, {id: vm[vm.model].provisioning_repository_id});
+      })
+    );
 
     // list of machine credentials
-    API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name' + sortOptions).then(function(data) {
-      vm.machine_credentials = data.resources;
-      vm._retirement_machine_credential = _.find(vm.machine_credentials, {id: vm[vm.model].retirement_machine_credential_id});
-      vm._provisioning_machine_credential = _.find(vm.machine_credentials, {id: vm[vm.model].provisioning_machine_credential_id});
-    });
+    allApiPromises.push(API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name' + sortOptions)
+      .then(function(data) {
+        vm.machine_credentials = data.resources;
+        vm._retirement_machine_credential = _.find(vm.machine_credentials, {id: vm[vm.model].retirement_machine_credential_id});
+        vm._provisioning_machine_credential = _.find(vm.machine_credentials, {id: vm[vm.model].provisioning_machine_credential_id});
+      })
+    );
 
     // list of network credentials
-    API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential&expand=resources&attributes=id,name' + sortOptions).then(function(data) {
-      vm.network_credentials = data.resources;
-      vm._retirement_network_credential = _.find(vm.network_credentials, {id: vm[vm.model].retirement_network_credential_id});
-      vm._provisioning_network_credential = _.find(vm.network_credentials, {id: vm[vm.model].provisioning_network_credential_id});
-    });
+    allApiPromises.push(API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential&expand=resources&attributes=id,name' + sortOptions)
+      .then(function(data) {
+        vm.network_credentials = data.resources;
+        vm._retirement_network_credential = _.find(vm.network_credentials, {id: vm[vm.model].retirement_network_credential_id});
+        vm._provisioning_network_credential = _.find(vm.network_credentials, {id: vm[vm.model].provisioning_network_credential_id});
+      })
+    );
+
+    $q.all(allApiPromises)
+      .then(retrievedFormData(vm));
   };
+
+  function retrievedFormData(vm) {
+    vm.afterGet = true;
+    miqService.sparkleOff();
+  }
 
   // list of cloud credentials
   var formCloudCredentials = function(vm, provisionCredentialId, retirementCredentialId) {
-    API.options('/api/authentications').then(function(data) {
-      var cloudTypes = {};
-      angular.forEach(data.data.credential_types.embedded_ansible_credential_types, function(credObject, credType) {
-        if (credObject.type === 'cloud') {
-          cloudTypes[credType] = credObject.label;
-        }
-      });
-      vm.cloudTypes = getSortedHash(cloudTypes);
-      cloudCredentialsList(vm, provisionCredentialId, retirementCredentialId);
-    });
+    allApiPromises.push(API.options('/api/authentications')
+      .then(function(data) {
+        var cloudTypes = {};
+        angular.forEach(data.data.credential_types.embedded_ansible_credential_types, function(credObject, credType) {
+          if (credObject.type === 'cloud') {
+            cloudTypes[credType] = credObject.label;
+          }
+        });
+        vm.cloudTypes = getSortedHash(cloudTypes);
+        cloudCredentialsList(vm, provisionCredentialId, retirementCredentialId);
+      })
+    );
+    $q.all(allApiPromises)
+      .then(retrievedFormData(vm));
   };
 
   // get playbooks for selected repository

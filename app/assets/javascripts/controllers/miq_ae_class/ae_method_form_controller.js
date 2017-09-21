@@ -44,7 +44,6 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     if (aeMethodFormId === 'new') {
       playbookReusableCodeMixin.formOptions(vm);
     }
-    vm.afterGet = true;
   };
 
   function getMethodFormData(response) {
