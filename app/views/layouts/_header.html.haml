@@ -18,20 +18,18 @@
           %span.badge.info{"ng-show" => "vm.newNotifications"}
             -# Small circle
             &#8226;
-      %li.dropdown
-        %a{:class => "dropdown-toggle nav-item-iconic", :id => "dropdownMenu1",  "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
-          %span.fa.pficon-help{:title => _("Help")}
-          %span.caret
-        %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu1"}
-          %li
-            %a{:href => "/support/index?support_tab=about"}
-              = _('Documentation')
-          %li
-            %a{:href => I18n.t("product.support_website").html_safe, :target => "_new"}
-              = I18n.t("product.support_website_text").html_safe
-          %li
-            %a{"data-toggle" => "modal", "data-target" => "#aboutModal"}
-              = _('About')
+      - Menu::Manager.menu(:help) do |menu_section|
+        - if menu_section.visible?
+          %li.dropdown
+            %a#help-menu.dropdown-toggle.nav-item-iconic{"data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
+              %span.fa.pficon-help{:title => _("Help")}
+              %span.caret
+            %ul.dropdown-menu{"aria-labelledby" => "help-menu"}
+              - menu_section.items.each do |menu_item|
+                - if menu_item.visible?
+                  %li
+                    %a{menu_item.link_params}
+                      = _(menu_item.name)
 
       = render :partial => "layouts/user_options"
 
