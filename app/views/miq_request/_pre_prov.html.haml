@@ -36,18 +36,36 @@
             = h(row.name)
           - if @edit[:vm_headers].include?("image?")
             %td.text-nowrap
-              - if row.respond_to?(:image?)
+              - if row.respond_to?(:volume_template?)
+                = h(_("Volume"))
+              - elsif row.respond_to?(:image?)
                 = h(row.image? ? _("Image") : _("Snapshot"))
+
           %td
-            = h(row.operating_system.try(:product_name))
+            - if row.respond_to?(:volume_template?)
+              = h(_("N/A"))
+            - else
+              = h(row.operating_system.try(:product_name))
           %td
-            = h(row.platform)
+            - if row.respond_to?(:volume_template?)
+              = h(_("N/A"))
+            - else
+              = h(row.platform)
           %td
-            = h(row.cpu_total_cores)
+            - if row.respond_to?(:volume_template?)
+              = h(_("N/A"))
+            - else
+              = h(row.cpu_total_cores)
           %td
-            = h(number_to_human_size(row.mem_cpu.to_i * 1024 * 1024))
+            - if row.respond_to?(:volume_template?)
+              = h(_("N/A"))
+            - else
+              = h(number_to_human_size(row.mem_cpu.to_i * 1024 * 1024))
           %td
-            = h(number_to_human_size(row.allocated_disk_storage))
+            - if row.respond_to?(:volume_template?)
+              = h(_("N/A"))
+            - else
+              = h(number_to_human_size(row.allocated_disk_storage))
           %td
             = h(row.deprecated ? _("true") : _("false"))
           %td
