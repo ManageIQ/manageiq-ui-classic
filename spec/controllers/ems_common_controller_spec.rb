@@ -48,6 +48,17 @@ describe EmsCloudController do
         expect(response.body).to include('orchestration_stack/retire')
       end
 
+      it "when the Tagging Button is pressed for a Cloud provider Instance" do
+        allow(controller).to receive(:role_allows?).and_return(true)
+        ems = FactoryGirl.create("ems_vmware")
+        vm = FactoryGirl.create(:vm_vmware,
+                                :ext_management_system => ems,
+                                :storage               => FactoryGirl.create(:storage))
+        post :button, :params => { :pressed => "instance_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
+        expect(response.status).to eq 200
+        expect(response.body).to include('ems_cloud/tagging_edit')
+      end
+
       it "when Delete Button is pressed for CloudObjectStoreContainer" do
         expect(controller).to receive(:process_cloud_object_storage_buttons)
         post :button, :params => { :pressed => "cloud_object_store_container_delete" }
