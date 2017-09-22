@@ -132,7 +132,7 @@ describe MiqRequestController do
     end
 
     it "MiqRequest-type" do
-      content = %w(MiqProvisionRequest MiqProvisionConfiguredSystemRequest VmReconfigureRequest VmMigrateRequest ServiceTemplateProvisionRequest ServiceReconfigureRequest).collect do |type|
+      content = %w(MiqProvisionRequest MiqProvisionConfiguredSystemRequest VmReconfigureRequest VmCloudReconfigureRequest VmMigrateRequest ServiceTemplateProvisionRequest ServiceReconfigureRequest).collect do |type|
         {"=" => {"value" => type, "field" => "MiqRequest-type"}}
       end
 
