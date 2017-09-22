@@ -410,7 +410,7 @@ describe CatalogController do
     before(:each) do
       @new_name = "New Name"
       new_description = "New Description"
-      new_type = "OrchestrationTemplateCfn"
+      new_type = "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate"
       @new_content = '{"AWSTemplateFormatVersion" : "2010-09-09"}'
       edit = {
         :new => {
@@ -578,7 +578,7 @@ describe CatalogController do
       expect(controller).to receive(:get_view_calculate_gtl_type).with(:orchestrationtemplate) do
         expect(controller.instance_variable_get(:@settings)).to include(:views => {:orchestrationtemplate => "tile"})
       end
-      controller.send(:get_view, "OrchestrationTemplateCfn", {:gtl_dbname => :orchestrationtemplate})
+      controller.send(:get_view, "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate", {:gtl_dbname => :orchestrationtemplate})
     end
 
     it "Renders list of orchestration templates using correct GTL type" do

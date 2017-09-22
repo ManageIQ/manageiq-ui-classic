@@ -531,7 +531,7 @@ class TreeBuilder
     "co"  => "Condition",
     "cbg" => "CustomButtonSet",
     "cb"  => "CustomButton",
-    "cfn" => "OrchestrationTemplateCfn",
+    "cfn" => "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate",
     "cm"  => "Compliance",
     "cd"  => "ComplianceDetail",
     "cp"  => "ConfigurationProfile",

@@ -32,7 +32,7 @@
           = _('Template Type')
         .col-md-8
           = select_tag("type",
-                       options_for_select({"Amazon CloudFormation" => "OrchestrationTemplateCfn",
+                       options_for_select({"Amazon CloudFormation" => "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate",
                                            "OpenStack Heat" => "OrchestrationTemplateHot",
                                            "Microsoft Azure" => "OrchestrationTemplateAzure",
                                            "VNF" => "OrchestrationTemplateVnfd",
