@@ -25,11 +25,14 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def button
-    if params[:pressed] == 'generic_object_definition_new'
-      javascript_redirect :action => 'new'
-    elsif params[:pressed] == 'generic_object_definition_edit'
-      javascript_redirect :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks])
-    end
+    javascript_redirect(
+      case params[:pressed]
+        when 'generic_object_definition_new'
+          { :action => 'new' }
+        when 'generic_object_definition_edit'
+          { :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
+      end
+    )
   end
 
   def new
