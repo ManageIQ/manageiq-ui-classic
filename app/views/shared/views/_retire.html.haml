@@ -4,25 +4,21 @@
                                "ng-controller" => "retirementFormController as vm",
                                "miq-form"      => true,
                                "model"         => "vm.retirementInfo",
-                               "model-copy"    => "vm.modelCopy" }
+                               "model-copy"    => "vm.modelCopy",
+                               "form-changed"  => true }
   %h3
     = _('Set/Remove Retirement Date')
   %tbody
     .form-group
       %label.col-md-2.control-label
-        = _('Retirement Date')
-      .col-md-8#retirement_date_div
-        = datepicker_input_tag("retirementDate", nil,
-                                :id                  => "retirement_date",
-                                :class               => "css1",
-                                "ng-model"           => "vm.retirementInfo.retirementDate",
-                                "miq-calendar"       => true,
-                                "miq-cal-date-from"  => "vm.datepickerStartDate",
-                                "checkchange"        => true)
-        %a{'href'              => '#',
-           'ng-click'          => 'vm.retirementInfo.retirementDate = null; vm.retirementInfo.retirementWarning = ""',
-           'ng-hide'           => '!vm.retirementInfo.retirementDate'}
-          = image_tag(image_path('16/clear.png'), :border => "0", :alt => _("Set to blank"))
+        = _('Retirement Date and Time')
+      .col-md-4#retirement_date_div
+        .form-group
+          = datetimepicker_input_tag('retirement_date', nil,
+                                     'id'         => 'retirement_date',
+                                     'class'      => 'form-control',
+                                     'ng-model'   => 'vm.retirementInfo.retirementDate',
+                                     'start-date' => 'vm.datepickerStartDate')
     .form-group
       %label.col-md-2.control-label
         = _('Retirement Warning')
@@ -36,7 +32,6 @@
                      "ng-options"  => "item.value as item.label for item in #{select_options.to_json.gsub('"', '\'')}",
                      "ng-model"    => "vm.retirementInfo.retirementWarning",
                      "ng-disabled" => "!vm.retirementInfo.retirementDate",
-                     "checkchange" => true,
                      "pf-select"   => true)
         :javascript
           miqInitSelectPicker();

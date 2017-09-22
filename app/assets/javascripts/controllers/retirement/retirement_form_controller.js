@@ -31,7 +31,7 @@ ManageIQ.angular.app.controller('retirementFormController', ['$http', 'objectIds
     var data = response.data;
 
     if (data.retirement_date != null) {
-      vm.retirementInfo.retirementDate = moment.utc(data.retirement_date, 'MM-DD-YYYY').toDate();
+      vm.retirementInfo.retirementDate = moment.utc(data.retirement_date).toDate();
     }
     vm.retirementInfo.retirementWarning = data.retirement_warning || '';
     vm.modelCopy = _.extend({}, vm.retirementInfo);

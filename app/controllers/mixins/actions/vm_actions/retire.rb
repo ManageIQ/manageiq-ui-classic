@@ -59,7 +59,7 @@ module Mixins
           end
           obj = kls.find_by(:id => params[:id])
           render :json => {
-            :retirement_date    => obj.retires_on.try(:strftime, '%m/%d/%Y'),
+            :retirement_date    => obj.retires_on,
             :retirement_warning => obj.retirement_warn
           }
         end
