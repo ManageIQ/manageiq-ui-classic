@@ -20,7 +20,7 @@ module Mixins::CustomButtons
   end
 
   def custom_toolbar_simple
-    if @record && @lastaction == "show" && @display == "main"
+    if @record && %w(show show_dashboard).include?(@lastaction) && %w(dashboard main).include?(@display)
       Mixins::CustomButtons::Result.new(:single)
     elsif @lastaction == "show_list"
       Mixins::CustomButtons::Result.new(:list)
