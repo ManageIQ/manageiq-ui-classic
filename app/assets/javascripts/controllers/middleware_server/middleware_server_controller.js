@@ -175,6 +175,7 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
   // //////////////////////////////////////////////////////////////////////
 
   $scope.deleteSelectedDr = function() {
+    $document.find('#dr_btn_delete').prop('disabled', true);
     $document.find('#mw_dr_reports').submit();
   };
 
