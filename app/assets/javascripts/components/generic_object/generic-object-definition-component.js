@@ -105,7 +105,9 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
       vm.genericObjectDefinitionModel.association_names,
       vm.genericObjectDefinitionModel.association_classes);
 
-    vm.genericObjectDefinitionModel.properties.methods = vm.genericObjectDefinitionModel.method_names;
+    if (vm.genericObjectDefinitionModel.method_names[0] !== '') {
+      vm.genericObjectDefinitionModel.properties.methods = vm.genericObjectDefinitionModel.method_names;
+    }
 
     return {
       name: vm.genericObjectDefinitionModel.name,
@@ -119,18 +121,6 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     API[method](url, saveObject)
       .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
       .catch(miqService.handleFailure);
-  };
-
-  vm.methodsArrayEmpty = function() {
-    var bArrayEmpty = true;
-    _.forEach(vm.genericObjectDefinitionModel.method_names, function(item) {
-      if (item !== '' && item !== null && item !== undefined) {
-        bArrayEmpty = false;
-        return false;
-      }
-      return true;
-    });
-    return bArrayEmpty;
   };
 
   vm.uniqueProperty = function(keyType) {
