@@ -11,12 +11,14 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Generic Object Class'),
           t,
+          :klass => ApplicationHelper::Button::GenericObjectDefinition,
         ),
         button(
           :generic_object_definition_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Generic Object Classes from Inventory'),
           t,
+          :klass => ApplicationHelper::Button::GenericObjectDefinition,
           :confirm => N_("Warning: This Generic Object Class will be permanently removed!"),
         )
       ]
