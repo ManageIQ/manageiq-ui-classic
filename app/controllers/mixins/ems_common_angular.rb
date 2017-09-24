@@ -468,10 +468,6 @@ module Mixins
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
         default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
         if params[:metrics_selection] == 'hawkular'
-          if metrics_hostname.blank?
-            default_key = params[:default_password] || ems.authentication_key
-            metrics_hostname = get_hostname_from_routes(ems, default_endpoint, default_key)
-          end
           params[:cred_type] = "hawkular"
           hawkular_endpoint = {:role => :hawkular, :hostname => metrics_hostname, :port => metrics_port}
           hawkular_endpoint.merge!(endpoint_security_options(metrics_security_protocol, metrics_tls_ca_certs))

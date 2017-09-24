@@ -284,7 +284,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.isDetectionEnabled = function() {
-    return ($scope.emsCommonModel.metrics_selection == "hawkular" && $scope.emsCommonModel.ems_controller == "ems_container") &&
+    return ($scope.emsCommonModel.ems_controller == "ems_container") &&
       ($scope.emsCommonModel.emstype == "openshift") &&
       ($scope.emsCommonModel.default_hostname && $scope.emsCommonModel.default_api_port) &&
       ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid);
