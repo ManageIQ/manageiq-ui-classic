@@ -162,7 +162,7 @@ class CatalogController < ApplicationController
         # when display in catalog is checked, replace div so tabs can be redrawn
         page.replace("form_div", :partial => "st_form") if params[:st_prov_type] ||
           (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
-        page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:display] ||
+        page.replace("basic_info_div", :partial => "form_basic_info") if params[:display] ||
           params[:template_id] || params[:manager_id]
         if params[:display]
           page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
@@ -364,8 +364,8 @@ class CatalogController < ApplicationController
     build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree
     render :update do |page|
       page << javascript_prologue
-      page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:resource_id] || params[:display]
-      page.replace_html("resources_info_div", :partial => "form_resources_info") if params[:resource_id] || @group_idx
+      page.replace("basic_info_div", :partial => "form_basic_info") if params[:resource_id] || params[:display]
+      page.replace("resources_info_div", :partial => "form_resources_info") if params[:resource_id] || @group_idx
       if params[:display]
         page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
       end
@@ -437,8 +437,8 @@ class CatalogController < ApplicationController
     changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      page.replace_html("basic_info_div", :partial => "form_basic_info")
-      page.replace_html("resources_info_div", :partial => "form_resources_info")
+      page.replace("basic_info_div", :partial => "form_basic_info")
+      page.replace("resources_info_div", :partial => "form_resources_info")
       if changed != session[:changed]
         session[:changed] = changed
         page << "ManageIQ.changes = true;"
