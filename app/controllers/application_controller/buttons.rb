@@ -798,12 +798,19 @@ module ApplicationController::Buttons
       add_flash(_("At least one Role must be selected"), :error)
     end
 
-    if button_hash[:open_url] == true && button_hash[:display_for] != 'single'
-      add_flash(_('URL can be opened only by buttons for a single entity'), :error)
-    end
+    # Check values that should not be present when not having a single entity
+    unless button_hash[:display_for] == 'single'
+      # URL should not be present
+      if button_hash[:open_url] == true
+        add_flash(_('URL can be opened only by buttons for a single entity'), :error)
+      end
 
-    if !button_hash[:dialog_id].blank? && button_hash[:display_for] != 'single'
-      add_flash(_('Dialog can be opened only by buttons for a single entity'), :error)
+      # Dialog should not be present
+      # Checking for zero, since some code further above does .to_i
+      # TODO: What exact values can come here?
+      unless [nil, 0, '', '0'].include?(button_hash[:dialog_id])
+        add_flash(_('Dialog can be opened only by buttons for a single entity'), :error)
+      end
     end
 
     !flash_errors?
