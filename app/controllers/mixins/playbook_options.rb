@@ -26,7 +26,7 @@ module Mixins
     end
 
     def dialog_for_service_template(service_template)
-        service_template.resource_actions.each do |ra|
+      service_template.resource_actions.each do |ra|
         d = Dialog.where(:id => ra.dialog_id).first
         @edit[:new][:dialog_id] = d.id if d
       end

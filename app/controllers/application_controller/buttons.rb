@@ -281,6 +281,21 @@ module ApplicationController::Buttons
     end
   end
 
+  def sync_playbook_dialog(button)
+    service_template = ServiceTemplate.find_by(:name => button.uri_attributes[:service_template_name])
+    dialog_id = nil
+    if service_template
+      service_template.resource_actions.each do |ra|
+        d = Dialog.where(:id => ra.dialog_id).first
+        dialog_id = d.id if d
+      end
+    end
+    if dialog_id && button.resource_action.dialog_id != dialog_id
+      button.resource_action.dialog_id = dialog_id
+      button.save
+    end
+  end
+
   def custom_buttons
     button = CustomButton.find_by_id(params[:button_id])
     cls = applies_to_class_model(button.applies_to_class)
@@ -303,6 +318,7 @@ module ApplicationController::Buttons
     @right_cell_text = _("%{record} - \"%{button_text}\"") % {:record => obj.name, :button_text => button.name}
 
     if button.resource_action.dialog_id
+      sync_playbook_dialog(button) if button.options.try(:[], :button_type) == 'ansible_playbook'
       options = {
         :header     => @right_cell_text,
         :target_id  => obj.id,
@@ -815,11 +831,11 @@ module ApplicationController::Buttons
       add_flash(_('URL can be opened only by buttons for a single entity'), :error)
     end
 
-    if (!button_hash[:dialog_id].blank? && !button_hash[:dialog_id].zero?) && button_hash[:display_for] != 'single'
+    if (!button_hash[:dialog_id].blank? && !button_hash[:dialog_id].to_i.zero?) && button_hash[:display_for] != 'single'
       add_flash(_('Dialog can be opened only by buttons for a single entity'), :error)
     end
 
-    validate_playbook_button(button_hash)
+    validate_playbook_button(button_hash) if button_hash[:button_type] == "ansible_playbook"
 
     !flash_errors?
   end
