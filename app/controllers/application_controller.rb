@@ -1012,7 +1012,7 @@ class ApplicationController < ActionController::Base
       data.where.not(:timeline => nil) if tree_type == "timeline"
       data.each do |r|
         r_group = r.rpt_group == "Custom" ? "#{@sb[:grp_title]} - Custom" : r.rpt_group # Get the report group
-        title = r_group.split('-').collect(&:strip)
+        title = r_group.reverse.split('-', 2).collect(&:reverse).collect(&:strip).reverse
         if @temp_title != title[0]
           @temp_title = title[0]
           reports = []
