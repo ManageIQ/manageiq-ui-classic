@@ -25,11 +25,23 @@ module Mixins
       end
     end
 
+    def dialog_for_service_template(service_template)
+        service_template.resource_actions.each do |ra|
+        d = Dialog.where(:id => ra.dialog_id).first
+        @edit[:new][:dialog_id] = d.id if d
+      end
+    end
+
     def playbook_box_edit
       if params[:inventory_manual] || params[:inventory_localhost] || params[:inventory_event_target]
         update_playbook_variables(params)
       end
-      @edit[:new][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
+      if params[:service_template_id]
+        @edit[:new][:service_template_id] = params[:service_template_id].to_i
+        service_template = ServiceTemplate.find_by(:id => @edit[:new][:service_template_id])
+        dialog_for_service_template(service_template) if service_template
+      end
+
       @edit[:new][:hosts] = params[:hosts] if params[:hosts]
     end
 

@@ -926,7 +926,16 @@ module ApplicationController::Buttons
 
   def button_set_playbook_form_vars
     @edit[:ansible_playbooks] = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id) || []
-    @edit[:new][:service_template_id] = ServiceTemplate.find_by(:name => @custom_button.uri_attributes[:service_template_name]).try(:id)
+    service_template = ServiceTemplate.find_by(:name => @custom_button.uri_attributes[:service_template_name])
+    @edit[:new][:service_template_id] = service_template.try(:id)
+
+    if service_template
+      service_template.resource_actions.each do |ra|
+        d = Dialog.where(:id => ra.dialog_id).first
+        @edit[:new][:dialog_id] = d.id if d
+      end
+    end
+
     @edit[:new][:inventory_type] = if @custom_button.uri_attributes[:hosts].blank?
                                      'localhost'
                                    else
@@ -1011,7 +1020,6 @@ module ApplicationController::Buttons
     )
     button_set_expression_vars(:enablement_expression, :enablement_expression_table)
     button_set_expression_vars(:visibility_expression, :visibility_expression_table)
-    button_set_playbook_form_vars
 
     @edit[:current] = copy_hash(@edit[:new])
 
@@ -1037,6 +1045,8 @@ module ApplicationController::Buttons
     end
     @edit[:new][:dialog_id] = @custom_button.resource_action.dialog_id.to_i
     get_available_dialogs
+
+    button_set_playbook_form_vars
 
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit] = @edit
