@@ -9,6 +9,10 @@ module MiddlewareSummaryHelper
     @record.nativeid
   end
 
+  def textual_status
+    @record.status
+  end
+
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i(tags))
   end
