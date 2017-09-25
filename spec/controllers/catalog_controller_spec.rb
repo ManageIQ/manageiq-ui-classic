@@ -95,6 +95,16 @@ describe CatalogController do
     end
   end
 
+  describe 'replace_right_cell' do
+    it "Can build all the trees" do
+      seed_session_trees('catalog', :sandt_tree, '-Unassigned')
+      session_to_sb
+
+      allow(controller).to receive(:render)
+      controller.send(:replace_right_cell, :replace_trees => %i(stcat sandt svccat))
+    end
+  end
+
   context "#atomic_st_edit" do
     it "Atomic Service Template and its valid Resource Actions are saved" do
       controller.instance_variable_set(:@sb, {})
@@ -149,7 +159,6 @@ describe CatalogController do
       }
       controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit
-      allow(controller).to receive(:replace_right_cell)
       controller.send(:atomic_st_edit)
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
@@ -584,6 +593,7 @@ describe CatalogController do
     it "Renders list of orchestration templates using correct GTL type" do
       %w(root xx-otcfn xx-othot xx-otazu).each do |id|
         post :tree_select, :params => { :id => id, :format => :js }
+        expect(response).to have_http_status 200
         expect(response).to render_template('layouts/angular/_gtl')
       end
     end
