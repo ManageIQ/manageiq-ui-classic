@@ -2,11 +2,10 @@
 .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.max-height{:style => "overflow: hidden !important"}
   - if !@in_a_form && taskbar_in_header?
     .row.toolbar-pf#toolbar.miq-toolbar-menu
-      .col-md-12
-        .toolbar-pf-actions
-          - if @layout == "dashboard"
-            = render :partial => "/layouts/tabs"
-          = render :partial => "layouts/angular/toolbar"
+      .col-sm-12
+        - if @layout == "dashboard"
+          = render :partial => "/layouts/tabs"
+        = render :partial => "layouts/angular/toolbar"
   .row.max-height
     .col-sm-10.col-md-9.col-sm-push-2.col-md-push-3.max-height
       #main-content.row

@@ -451,23 +451,6 @@ table.table.table-summary-screen tbody td img {
   }
 }
 
-/// begin toolbar styling
-
-.toolbar-pf .toolbar-pf-actions { /* sets margin to zero to compensate for margin added to form groups (for proper spacing when wrapped) */
-  margin-bottom: 0px;
-}
-
-.toolbar-pf .form-group { /*compensates for filter-pf not being implemented */
-  padding-left: 0;
-}
-
-.toolbar-pf .toolbar-pf-actions .form-group { /* adds padding between buttons when they wrap */
-  margin-bottom: 10px;
-  white-space: nowrap;
-}
-
-/// end toolbar styling
-
 /// begin paginator styling
 
 @media (min-width: $screen-sm) {
