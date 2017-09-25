@@ -25,7 +25,7 @@ module TextualSummaryHelper
         end
       when ActiveRecord::Relation, ActiveRecord::Base
         textual_link(result, :label => automatic_label)
-      when String, Fixnum, true, false, nil
+      when String, Integer, true, false, nil
         {:label => automatic_label, :value => result.to_s} unless result.to_s.blank?
       end
     when nil

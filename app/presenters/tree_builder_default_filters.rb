@@ -62,7 +62,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
   end
 
   def x_get_tree_hash_kids(parent, count_only)
-    unless parent[:id].kind_of?(Fixnum)
+    unless parent[:id].kind_of?(Integer)
       path = parent[:id].split('_')
       kids = @data.fetch_path(path)
       nodes = if kids.kind_of?(Hash)

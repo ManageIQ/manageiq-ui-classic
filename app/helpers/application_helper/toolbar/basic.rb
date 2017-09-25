@@ -5,18 +5,12 @@ class ApplicationHelper::Toolbar::Basic
 
   attr_reader :definition
 
-  private
-
   def custom_content(name, args)
     @definition[name] = ApplicationHelper::Toolbar::Custom.new(name, args)
   end
 
   def button_group(name, buttons)
     @definition[name] = ApplicationHelper::Toolbar::Group.new(name, buttons)
-  end
-
-  def initialize
-    @definition = {}
   end
 
   def button(id, icon, title, text, keys = {})
@@ -31,6 +25,16 @@ class ApplicationHelper::Toolbar::Basic
     generic_button(:buttonTwoState, id, icon, title, text, keys)
   end
 
+  def separator
+    {:separator => true}
+  end
+
+  private
+
+  def initialize
+    @definition = {}
+  end
+
   def generic_button(type, id, icon, title, text, keys)
     if text.kind_of?(Hash)
       keys = text
@@ -43,9 +47,5 @@ class ApplicationHelper::Toolbar::Basic
       :title => title,
       :text  => text
     }.merge(keys)
-  end
-
-  def separator
-    {:separator => true}
   end
 end

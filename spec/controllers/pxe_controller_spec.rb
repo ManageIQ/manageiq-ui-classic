@@ -80,10 +80,6 @@ describe PxeController do
     subject { post :tree_select, :params => {:id => 'root'} }
 
     render_views
-    it "renders the pxe partial" do
-      is_expected.to have_http_status 200
-      is_expected.to render_template(:partial => "pxe_server_details",
-                                     :locals  => {:action_url => "pxe_server_list"})
-    end
+    it { is_expected.to have_http_status 200 }
   end
 end

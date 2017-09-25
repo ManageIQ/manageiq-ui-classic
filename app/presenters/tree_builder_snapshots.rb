@@ -49,7 +49,7 @@ class TreeBuilderSnapshots < TreeBuilder
     id = kid_id
     while parent_id(kid_id).present?
       kid_id = parent_id(kid_id)
-      id = to_cid(id) if id.kind_of?(Fixnum)
+      id = to_cid(id) if id.kind_of?(Integer)
       id = "#{to_cid(kid_id)}_sn-#{id}"
     end
     "sn-#{id}"
