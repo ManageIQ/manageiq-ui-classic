@@ -1,5 +1,8 @@
-describe('automationManagerFormController', function() {
-  var $scope, $httpBackend, miqService, vm;
+describe('configurationManagerFormController', function() {
+  var $scope;
+  var $httpBackend;
+  var miqService;
+  var vm;
 
   beforeEach(module('ManageIQ'));
 
@@ -25,10 +28,12 @@ describe('automationManagerFormController', function() {
     $httpBackend = _$httpBackend_;
     $httpBackend.whenGET('/automation_manager/form_fields/new').respond(automationManagerFormResponse);
 
-    vm = _$controller_('automationManagerFormController as vm', {
+    vm = _$controller_('configurationManagerFormController as vm', {
       $scope: $scope,
-      automationManagerFormId: 'new',
+      configurationManagerFormId: 'new',
       miqService: miqService,
+      modelName: 'configurationManagerModel',
+      url: '/automation_manager',
     });
 
     $httpBackend.flush();
@@ -40,33 +45,33 @@ describe('automationManagerFormController', function() {
   });
 
   describe('initialization', function() {
-    describe('when the automationManagerFormId is new', function() {
+    describe('when the configurationManagerFormId is new', function() {
       it('sets the name to blank', function() {
-        expect(vm.automationManagerModel.name).toEqual('');
+        expect(vm.configurationManagerModel.name).toEqual('');
       });
 
       it('sets the zone to blank', function() {
-        expect(vm.automationManagerModel.zone).toEqual('foo_zone');
+        expect(vm.configurationManagerModel.zone).toEqual('foo_zone');
       });
 
       it('sets the url to blank', function() {
-        expect(vm.automationManagerModel.url).toEqual('');
+        expect(vm.configurationManagerModel.url).toEqual('');
       });
 
       it('sets the verify_ssl to blank', function() {
-        expect(vm.automationManagerModel.verify_ssl).toBeFalsy();
+        expect(vm.configurationManagerModel.verify_ssl).toBeFalsy();
       });
 
       it('sets the default_userid to blank', function() {
-        expect(vm.automationManagerModel.default_userid).toEqual('');
+        expect(vm.configurationManagerModel.default_userid).toEqual('');
       });
 
       it('sets the default_password to blank', function() {
-        expect(vm.automationManagerModel.default_password).toEqual('');
+        expect(vm.configurationManagerModel.default_password).toEqual('');
       });
     });
 
-    describe('when the automationManagerFormId is an Id', function() {
+    describe('when the configurationManagerFormId is an Id', function() {
       var automationManagerFormResponse = {
         name: 'Ansible',
         url: '10.10.10.10',
@@ -78,37 +83,39 @@ describe('automationManagerFormController', function() {
       beforeEach(inject(function(_$controller_) {
         $httpBackend.whenGET('/automation_manager/form_fields/12345').respond(automationManagerFormResponse);
 
-        vm = _$controller_('automationManagerFormController as vm', {
+        vm = _$controller_('configurationManagerFormController as vm', {
           $scope: $scope,
-          automationManagerFormId: '12345',
+          configurationManagerFormId: '12345',
           miqService: miqService,
+          modelName: 'configurationManagerModel',
+          url: '/automation_manager',
         });
 
         $httpBackend.flush();
       }));
 
       it('sets the name to the value returned from http request', function() {
-        expect(vm.automationManagerModel.name).toEqual('Ansible');
+        expect(vm.configurationManagerModel.name).toEqual('Ansible');
       });
 
       it('sets the zone to the value returned from the http request', function() {
-        expect(vm.automationManagerModel.zone).toEqual('My Test Zone');
+        expect(vm.configurationManagerModel.zone).toEqual('My Test Zone');
       });
 
       it('sets the url to the value returned from http request', function() {
-        expect(vm.automationManagerModel.url).toEqual('10.10.10.10');
+        expect(vm.configurationManagerModel.url).toEqual('10.10.10.10');
       });
 
       it('sets the verify_ssl to the value returned from http request', function() {
-        expect(vm.automationManagerModel.verify_ssl).toBeTruthy();
+        expect(vm.configurationManagerModel.verify_ssl).toBeTruthy();
       });
 
       it('sets the default_userid to the value returned from http request', function() {
-        expect(vm.automationManagerModel.default_userid).toEqual('admin');
+        expect(vm.configurationManagerModel.default_userid).toEqual('admin');
       });
 
       it('sets the default_password to the value returned from http request', function() {
-        expect(vm.automationManagerModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
+        expect(vm.configurationManagerModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
       });
     });
   });
@@ -169,9 +176,9 @@ describe('automationManagerFormController', function() {
       var angularForm;
       var element = angular.element(
         '<form name="angularForm">' +
-        '<input ng-model="automationManagerModel.url" name="url" required />' +
-        '<input ng-model="automationManagerModel.default_userid" name="default_userid" required />' +
-        '<input ng-model="automationManagerModel.default_password" name="default_password" required />' +
+        '<input ng-model="configurationManagerModel.url" name="url" required />' +
+        '<input ng-model="configurationManagerModel.default_userid" name="default_userid" required />' +
+        '<input ng-model="configurationManagerModel.default_password" name="default_password" required />' +
         '</form>'
       );
 

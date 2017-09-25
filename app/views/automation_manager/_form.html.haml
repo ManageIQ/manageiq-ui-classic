@@ -2,10 +2,10 @@
 
 .form-horizontal
   %form#form_div{:name           => "angularForm",
-                 'ng-controller' => "automationManagerFormController as vm",
+                 'ng-controller' => "configurationManagerFormController as vm",
                  'ng-show'       => "vm.afterGet",
                  "miq-form"      => true,
-                 "model"         => "vm.automationManagerModel",
+                 "model"         => "vm.configurationManagerModel",
                  "model-copy"    => "vm.modelCopy",
                  "form-changed"  => "",
                  :novalidate     => true}
@@ -17,7 +17,7 @@
       .col-md-8
         %input.form-control{:type            => "text",
                             :name            => "name",
-                            'ng-model'       => "vm.automationManagerModel.name",
+                            'ng-model'       => "vm.configurationManagerModel.name",
                             :maxlength       => ViewHelper::MAX_NAME_LEN,
                             :required        => "",
                             "auto-focus"     => ""}
@@ -32,7 +32,7 @@
           %input.form-control{"type"        => "text",
                               "id"          => "prov_zone",
                               "name"        => "zone",
-                              "ng-model"    => "vm.automationManagerModel.zone",
+                              "ng-model"    => "vm.configurationManagerModel.zone",
                               "maxlength"   => 15,
                               "required"    => "",
                               "readonly"    => true,
@@ -40,7 +40,7 @@
         - else
           = select_tag('zone',
                        options_for_select(@server_zones.sort_by { |name, _name| name }),
-                       "ng-model"                    => "vm.automationManagerModel.zone",
+                       "ng-model"                    => "vm.configurationManagerModel.zone",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
 
@@ -50,7 +50,7 @@
       .col-md-8
         %input.form-control{:type                     => "text",
                             :name                     => "url",
-                            'ng-model'                => "vm.automationManagerModel.url",
+                            'ng-model'                => "vm.configurationManagerModel.url",
                             :maxlength                => ViewHelper::MAX_DESC_LEN,
                             "id"                      => "url",
                             :required                 => "",
@@ -69,7 +69,7 @@
       .col-md-8
         %input{:type                     => "checkbox",
                :name                     => "verify_ssl",
-               'ng-model'                => "vm.automationManagerModel.verify_ssl",
+               'ng-model'                => "vm.configurationManagerModel.verify_ssl",
                :prefix                   => "default",
                "main-scope"              => "vm",
                "reset-validation-status" => "default_auth_status"}
@@ -80,7 +80,7 @@
     = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
              :locals  => {:ng_show           => true,
                           :vm_scope          => true,
-                          :ng_model          => "automationManagerModel",
+                          :ng_model          => "configurationManagerModel",
                           :ng_reqd_userid    => true,
                           :ng_reqd_password  => true,
                           :validate_url      => "authentication_validate",
@@ -92,5 +92,6 @@
     %span{:style => "color:black"}= _("Required. Should have privileged access, such as root or administrator.")
 
 :javascript
-  ManageIQ.angular.app.value('automationManagerFormId', '#{@provider_manager.id || "new"}');
+  ManageIQ.angular.app.value('configurationManagerModel', '#{@provider_manager.id || "new"}');
+  ManageIQ.angular.app.value('url', '/automation_manager');
   miq_bootstrap('#form_div');
