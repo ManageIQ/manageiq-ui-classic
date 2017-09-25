@@ -2,6 +2,7 @@ describe TreeBuilderOpsRbacFeatures do
   let(:features) do
     %w(
       all_vm_rules
+      api_exclusive
       instance
       instance_view
       instance_show_list
