@@ -19,7 +19,8 @@ describe GenericObjectController do
   describe "#show_list" do
     before(:each) do
       stub_user(:features => :all)
-      FactoryGirl.create(:generic_object)
+      generic_obj_defn = FactoryGirl.create(:generic_object_definition)
+      FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
       get :show_list
     end
     it { expect(response.status).to eq(200) }
