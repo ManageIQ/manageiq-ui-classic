@@ -18,7 +18,6 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
       provisioning_machine_credential_id: '',
       provisioning_network_credential_id: '',
       provisioning_cloud_credential_id: '',
-      provisioning_inventory: 'localhost',
       provisioning_key: '',
       provisioning_value: '',
       provisioning_type: 'string',
@@ -68,7 +67,6 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     vm.aeMethodModel.provisioning_machine_credential_id = configData.credential_id;
     vm.aeMethodModel.provisioning_network_credential_id = configData.network_credential_id;
     vm.aeMethodModel.provisioning_cloud_credential_id = playbookReusableCodeMixin.setIfDefined(configData.cloud_credential_id);
-    vm.aeMethodModel.provisioning_inventory = configData.hosts ? configData.hosts : 'localhost';
     vm.aeMethodModel.provisioning_become_enabled = configData.become_enabled === 'true' ? true : false;
     vm.aeMethodModel.provisioning_key = '';
     vm.aeMethodModel.provisioning_value = '';
@@ -133,7 +131,6 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
       repository_id: configData.provisioning_repository_id,
       playbook_id: configData.provisioning_playbook_id,
       credential_id: configData.provisioning_machine_credential_id,
-      hosts: configData.provisioning_inventory,
       verbosity: configData.provisioning_verbosity,
       become_enabled: configData.provisioning_become_enabled,
       extra_vars: configData.provisioning_inputs,

@@ -993,7 +993,6 @@ class MiqAeClassController < ApplicationController
         :credential_id         => data[:credential_id] || '',
         :network_credential_id => data[:network_credential_id] || '',
         :cloud_credential_id   => data[:cloud_credential_id] || '',
-        :hosts                 => data[:hosts],
         :verbosity             => data[:verbosity],
         :become_enabled        => data[:become_enabled] || false,
         :extra_vars            => method.inputs
@@ -1730,7 +1729,6 @@ class MiqAeClassController < ApplicationController
       :repository_id  => params['repository_id'],
       :playbook_id    => params['playbook_id'],
       :credential_id  => params['credential_id'],
-      :hosts          => params['hosts'],
       :become_enabled => params['become_enabled'],
       :verbosity      => params['verbosity'],
     }
@@ -2690,7 +2688,6 @@ class MiqAeClassController < ApplicationController
     @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, data[:cloud_credential_id]) if data[:cloud_credential_id]
     @playbook_details[:verbosity] = data[:verbosity]
     @playbook_details[:become_enabled] = data[:become_enabled] == 'true' ? _("Yes") : _("No")
-    @playbook_details[:hosts] = data[:hosts]
     @playbook_details
   end
 
