@@ -203,5 +203,22 @@ describe ApplicationController do
       ]
       expect(assigns(:flash_array)).to eq(flash_messages)
     end
+
+    it "display appropriate error messages for display = list" do
+      edit = {
+        :new => {:name           => 'testCB',
+                 :description    => 'testCB',
+                 :button_icon    => 'img',
+                 :object_request => 'request',
+                 :dialog_id      => 0,
+                 :open_url       => true,
+                 :display_for    => :list}
+      }
+      flash_errors = [{:message => "Starting Process is required", :level => :error},
+                      {:message => 'URL can be opened only by buttons for a single entity', :level => :error}]
+
+      controller.send(:button_valid?, edit[:new])
+      expect(assigns(:flash_array)).to match(flash_errors)
+    end
   end
 end

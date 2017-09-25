@@ -802,7 +802,7 @@ module ApplicationController::Buttons
       add_flash(_('URL can be opened only by buttons for a single entity'), :error)
     end
 
-    if !button_hash[:dialog_id].blank? && button_hash[:display_for] != 'single'
+    if (!button_hash[:dialog_id].blank? && !button_hash[:dialog_id].zero?) && button_hash[:display_for] != 'single'
       add_flash(_('Dialog can be opened only by buttons for a single entity'), :error)
     end
 
