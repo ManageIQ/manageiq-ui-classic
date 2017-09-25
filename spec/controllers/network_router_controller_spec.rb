@@ -1,23 +1,6 @@
 describe NetworkRouterController do
   include_examples :shared_examples_for_network_router_controller, %w(openstack azure google amazon)
 
-  context "#button" do
-    before(:each) do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-
-      ApplicationController.handle_exceptions = true
-    end
-
-    it "when Edit Tag is pressed" do
-      # TODO: Fix
-      skip "Not ready yet"
-      expect(controller).to receive(:tag)
-      post :button, :params => { :pressed => "edit_tag", :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-  end
-
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
     before(:each) do
