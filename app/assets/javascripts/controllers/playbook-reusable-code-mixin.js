@@ -44,10 +44,8 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
         vm[prefix + '_cloud_credentials'] = data.resources;
         findObjectForDropDown(prefix, '_cloud_credential', '_cloud_credentials', vm);
       })
+      .catch(miqService.handleFailure)
     );
-
-    $q.all(allApiPromises)
-      .then(retrievedFormData(vm));
   };
 
   var findObjectForDropDown = function(prefix, fieldName, listName, vm) {
@@ -85,6 +83,7 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
           getCloudCredentialsforType(prefix, data.type, vm);
         }
       })
+      .catch(miqService.handleFailure)
     );
   };
 
@@ -97,6 +96,7 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
           vm.catalogs = data.resources;
           vm._catalog = _.find(vm.catalogs, {id: vm[vm.model].catalog_id});
         })
+        .catch(miqService.handleFailure)
       );
     }
 
@@ -107,6 +107,7 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
           vm.dialogs = data.resources;
           vm._provisioning_dialog = _.find(vm.dialogs, {id: vm[vm.model].provisioning_dialog_id});
         })
+        .catch(miqService.handleFailure)
       );
     }
 
@@ -117,6 +118,7 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
         vm._retirement_repository = _.find(vm.repositories, {id: vm[vm.model].retirement_repository_id});
         vm._provisioning_repository = _.find(vm.repositories, {id: vm[vm.model].provisioning_repository_id});
       })
+      .catch(miqService.handleFailure)
     );
 
     // list of machine credentials
@@ -126,6 +128,7 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
         vm._retirement_machine_credential = _.find(vm.machine_credentials, {id: vm[vm.model].retirement_machine_credential_id});
         vm._provisioning_machine_credential = _.find(vm.machine_credentials, {id: vm[vm.model].provisioning_machine_credential_id});
       })
+      .catch(miqService.handleFailure)
     );
 
     // list of network credentials
@@ -135,10 +138,8 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
         vm._retirement_network_credential = _.find(vm.network_credentials, {id: vm[vm.model].retirement_network_credential_id});
         vm._provisioning_network_credential = _.find(vm.network_credentials, {id: vm[vm.model].provisioning_network_credential_id});
       })
+      .catch(miqService.handleFailure)
     );
-
-    $q.all(allApiPromises)
-      .then(retrievedFormData(vm));
   };
 
   function retrievedFormData(vm) {
@@ -159,6 +160,7 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
         vm.cloudTypes = getSortedHash(cloudTypes);
         cloudCredentialsList(vm, provisionCredentialId, retirementCredentialId);
       })
+      .catch(miqService.handleFailure)
     );
     $q.all(allApiPromises)
       .then(retrievedFormData(vm));
@@ -166,19 +168,21 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
 
   // get playbooks for selected repository
   var repositoryChanged = function(vm, prefix, id) {
-    API.get('/api/configuration_script_sources/' + id + '/configuration_script_payloads?expand=resources&filter[]=region_number=' + vm.currentRegion + sortOptions).then(function(data) {
-      vm[prefix + '_playbooks'] = data.resources;
-      // if repository has changed
-      if (id !== vm[vm.model][prefix + '_repository_id']) {
-        vm[vm.model][prefix + '_playbook_id'] = '';
-        vm[vm.model][prefix + '_repository_id'] = id;
-        if (vm[vm.model].retirement_remove_resources !== undefined) {
-          getRemoveResourcesTypes();
+    API.get('/api/configuration_script_sources/' + id + '/configuration_script_payloads?expand=resources&filter[]=region_number=' + vm.currentRegion + sortOptions)
+      .then(function(data) {
+        vm[prefix + '_playbooks'] = data.resources;
+        // if repository has changed
+        if (id !== vm[vm.model][prefix + '_repository_id']) {
+          vm[vm.model][prefix + '_playbook_id'] = '';
+          vm[vm.model][prefix + '_repository_id'] = id;
+          if (vm[vm.model].retirement_remove_resources !== undefined) {
+            getRemoveResourcesTypes();
+          }
+        } else {
+          findObjectForDropDown(prefix, '_playbook', '_playbooks', vm);
         }
-      } else {
-        findObjectForDropDown(prefix, '_playbook', '_playbooks', vm);
-      }
-    });
+      })
+      .catch(miqService.handleFailure);
   };
 
   var getRemoveResourcesTypes = function(vm) {

@@ -181,13 +181,13 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     var valid = validateInputName(vm.aeMethodModel.provisioning_key, 0);
     if (! valid) {
       return miqService.miqFlash("error", __("Inputs name must be unique"));
-    } else {
-      vm.aeMethodModel.provisioning_inputs.push(
-        [vm.aeMethodModel.provisioning_key, vm.aeMethodModel.provisioning_value, vm.aeMethodModel.provisioning_type]);
-      vm.aeMethodModel.provisioning_key = '';
-      vm.aeMethodModel.provisioning_value = '';
-      vm.aeMethodModel.provisioning_type = 'string';
     }
+    vm.aeMethodModel.provisioning_inputs.push(
+      [vm.aeMethodModel.provisioning_key, vm.aeMethodModel.provisioning_value, vm.aeMethodModel.provisioning_type]);
+    vm.aeMethodModel.provisioning_key = '';
+    vm.aeMethodModel.provisioning_value = '';
+    vm.aeMethodModel.provisioning_type = 'string';
+    return true;
   };
 
   vm.provisioning_repository_selected = function() {
@@ -228,6 +228,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     vm.aeMethodModel.provisioning_inputs[index][0] = vm.aeMethodModel.key;
     vm.aeMethodModel.provisioning_inputs[index][1] = vm.aeMethodModel.key_value;
     vm.aeMethodModel.provisioning_inputs[index][2] = vm.aeMethodModel.key_type;
+    return true;
   };
 
   var validateInputName = function(inputName, index) {

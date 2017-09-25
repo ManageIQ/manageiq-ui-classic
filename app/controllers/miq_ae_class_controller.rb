@@ -976,7 +976,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def method_form_fields
-    method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find_by(:id => params[:id])
+    method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find(params[:id])
     data = method.data ? YAML.load(method.data) : {}
     method_hash = {
       :name                => method.name,
