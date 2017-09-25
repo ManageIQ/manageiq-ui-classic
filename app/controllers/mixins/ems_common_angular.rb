@@ -59,14 +59,40 @@ module Mixins
       end
     end
 
-    def update_ems_button_validate(verify_ems = nil)
+    def update_ems_button_validate
+      result, details = realtime_authentication_check
+      render_validation_result(result, details)
+    end
+
+    def realtime_authentication_check(verify_ems = nil)
       verify_ems ||= find_record_with_rbac(model, params[:id])
       set_ems_record_vars(verify_ems, :validate)
       @in_a_form = true
-      result, details = verify_ems.authentication_check(params[:cred_type],
-                                                        :save     => false,
-                                                        :database => params[:metrics_database_name])
+      verify_ems.authentication_check(params[:cred_type], :save => false, :database => params[:metrics_database_name])
+    end
 
+    def realtime_raw_connect(ems_type)
+      ems_type.raw_connect(*get_task_args(ems_type))
+      true
+    rescue => err
+      [false, err.message]
+    end
+
+    def create_ems_button_validate
+      @in_a_form = true
+      ems_type = model.model_from_emstype(params[:emstype])
+      # TODO: queue authentication for ALL types when selected role isn't the UI role
+      result, details = if params[:controller] == "ems_cloud" && session[:selected_roles].try(:include?, 'user_interface')
+                          realtime_raw_connect(ems_type)
+                        elsif params[:controller] == "ems_cloud"
+                          ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
+                        else
+                          realtime_authentication_check(ems_type.new)
+                        end
+      render_validation_result(result, details)
+    end
+
+    def render_validation_result(result, details)
       if result
         msg = _("Credential validation was successful")
       else
@@ -84,6 +110,23 @@ module Mixins
       when "add" then create_ems_button_add
       when "validate" then create_ems_button_validate
       when "cancel" then create_ems_button_cancel
+      end
+    end
+
+    def get_task_args(ems)
+      user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
+      case ems.to_s
+      when 'ManageIQ::Providers::Openstack::CloudManager'
+        auth_url = ems.auth_url(params[:default_hostname], params[:default_api_port])
+        [user, password, auth_url]
+      when 'ManageIQ::Providers::Amazon::CloudManager'
+        [user, password, :EC2, params[:provider_region], nil, true]
+      when 'ManageIQ::Providers::Azure::CloudManager'
+        [user, password, params[:azure_tenant_id], params[:subscription], nil, params[:provider_region]]
+      when 'ManageIQ::Providers::Vmware::CloudManager'
+        [params[:default_hostname], params[:default_api_port], user, password, true]
+      when 'ManageIQ::Providers::Google::CloudManager'
+        [params[:project], params[:service_account], {:service => "compute"}]
       end
     end
 
@@ -107,11 +150,6 @@ module Mixins
                         :url  => new_ems_path)
         javascript_flash
       end
-    end
-
-    def create_ems_button_validate
-      ems = model.model_from_emstype(params[:emstype]).new
-      update_ems_button_validate(ems)
     end
 
     def create_ems_button_cancel
