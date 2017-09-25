@@ -4,15 +4,15 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
     values: '=',
     keyType: '@',
     tableHeaders: '=',
-    valueOptions: '=',
-    newRecord: '=',
+    valueOptions: '<',
+    newRecord: '<',
     noOfRows: '=',
-    origKeysValues: '=',
+    origKeysValues: '<',
     tableChanged: '=',
     requiredRule: '@?',
     tableRendered: '=',
     uniqueProperty: '&',
-    angularForm: '=',
+    angularForm: '<',
   },
   controllerAs: 'vm',
   controller: genericObjectTableController,
@@ -43,7 +43,7 @@ function genericObjectTableController($timeout) {
     if (! addFromOtherSource) {
       $timeout(function() {
         angular.element('#' + element).focus();
-      }, -1);
+      });
     }
   };
 
