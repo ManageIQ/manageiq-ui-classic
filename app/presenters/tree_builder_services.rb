@@ -32,6 +32,16 @@ class TreeBuilderServices < TreeBuilder
                  :icon          => "pficon pficon-folder-close",
                  :load_children => true,
                  :tip           => _("Retired Services"))
+    objects.push(:id         => "global",
+                 :text       => _("Global Filters"),
+                 :icon       => "pficon pficon-folder-close",
+                 :selectable => false,
+                 :tip        => _("Global Shared Filters"))
+    objects.push(:id         => "my",
+                 :text       => _("My Filters"),
+                 :icon       => "pficon pficon-folder-close",
+                 :selectable => false,
+                 :tip        => _("My Personal Filters"))
     count_only_or_objects(count_only, objects)
   end
 
