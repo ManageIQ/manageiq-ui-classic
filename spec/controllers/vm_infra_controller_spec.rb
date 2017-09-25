@@ -162,6 +162,19 @@ describe VmInfraController do
     expect(response.status).to eq(200)
   end
 
+  it 'can cancel Manage Policies' do
+    post :explorer
+    expect(response.status).to eq(200)
+
+    post :x_button, :params => { :pressed => 'vm_protect', :id => vm_vmware.id }
+    expect(response.status).to eq(200)
+
+    controller.instance_variable_set(:@in_a_form, nil)
+    post :protect, :params => { :button => 'cancel' }
+
+    expect(response.body).to include("Edit policy assignments was cancelled by the user")
+  end
+
   it 'can open Policies Simulation' do
     vm = FactoryGirl.create(:vm_vmware,
                             :host     => host_1x1,

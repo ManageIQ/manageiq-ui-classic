@@ -25,7 +25,7 @@ module ApplicationController::AdvancedSearch
       @edit[@expkey][:use_mytags] = true                                # Include mytags in tag search atoms
       @edit[:custom_search] = false                                     # setting default to false
       @edit[:new] ||= {}
-      if @edit[:new][@expkey]
+      if !@edit[:new][@expkey].nil? && @edit[:new][@expkey] != 0
         @edit[@expkey][:expression] = @edit[:new][@expkey]                # Copy to new exp
       else
         @edit[:new][@expkey] = @edit[@expkey][:expression]                # Copy to new exp

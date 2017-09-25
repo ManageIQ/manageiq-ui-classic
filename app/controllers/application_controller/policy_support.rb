@@ -57,8 +57,8 @@ module ApplicationController::PolicySupport
         add_flash(_("Policy assignments successfully changed"))
         @sb[:action] = nil
       end
-      session[:flash_msgs] = @flash_array
       if @edit[:explorer]
+        @edit = nil if %w(cancel save).include?(params[:button])
         replace_right_cell
       else
         @edit = nil                                       # Clear out the session :edit hash
