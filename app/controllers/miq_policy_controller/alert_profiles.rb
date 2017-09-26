@@ -130,7 +130,7 @@ module MiqPolicyController::AlertProfiles
   def alert_profile_delete
     alert_profiles = []
     # showing 1 alert set, delete it
-    if params[:id].nil? || !MiqAlertSet.exist?(params[:id])
+    if params[:id].nil? || !MiqAlertSet.exists?(params[:id])
       add_flash(_("Alert Profile no longer exists"), :error)
     else
       alert_profiles.push(params[:id])
