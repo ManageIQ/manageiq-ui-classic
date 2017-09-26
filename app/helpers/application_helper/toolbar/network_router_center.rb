@@ -15,6 +15,8 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
             t,
             :url_parms    => 'main_div',
             :send_checked => true,
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :update}
           ),
           button(
             :network_router_add_interface,
@@ -44,6 +46,8 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
             :url_parms    => 'main_div',
             :send_checked => true,
             :confirm      => N_('Warning: This Router and ALL of its components will be removed!'),
+            :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options   => {:feature => :delete}
           )
         ]
       )
