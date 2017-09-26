@@ -422,6 +422,10 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def rbac_params
+    {:match_via_descendants => ManageIQ::Providers::NetworkManager}
+  end
+
   # Private method for processing params.
   # params can contain these options:
   # @param params parameters object.
