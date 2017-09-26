@@ -125,7 +125,7 @@
               'ng-value' => 'vm.fqname',
               'ng-init'  => "vm.fqname = '#{@edit[:new][:fqname]}'")
             %span.input-group-btn
-              %button.btn.btn-default{'ng-click' => "vm.openModal('fqname');"}
+              %button.btn.btn-default{'ng-click' => "vm.openModal('fqname', true, false);"}
                 %i.ff.ff-load-balancer
               %button.btn.btn-default{'ng-click' => "vm.resetField('fqname');"}
                 %i.fa.fa-close
@@ -141,7 +141,7 @@
                 'ng-value' => 'vm.reconfigure_fqname',
                 'ng-init'  => "vm.reconfigure_fqname = '#{@edit[:new][:reconfigure_fqname]}'")
               %span.input-group-btn
-                %button.btn.btn-default{'ng-click' => "vm.openModal('reconfigure_fqname');"}
+                %button.btn.btn-default{'ng-click' => "vm.openModal('reconfigure_fqname', true, false);"}
                   %i.ff.ff-load-balancer
                 %button.btn.btn-default{'ng-click' => "vm.resetField('reconfigure_fqname');"}
                   %i.fa.fa-close
@@ -156,7 +156,7 @@
                 'ng-value' => 'vm.retire_fqname',
                 'ng-init'  => "vm.retire_fqname = '#{@edit[:new][:retire_fqname]}'")
               %span.input-group-btn
-                %button.btn.btn-default{'ng-click' => "vm.openModal('retire_fqname');"}
+                %button.btn.btn-default{'ng-click' => "vm.openModal('retire_fqname', true, false);"}
                   %i.ff.ff-load-balancer
                 %button.btn.btn-default{'ng-click' => "vm.resetField('retire_fqname');"}
                   %i.fa.fa-close

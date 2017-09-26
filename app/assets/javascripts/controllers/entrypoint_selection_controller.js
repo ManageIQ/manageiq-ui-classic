@@ -20,8 +20,11 @@
       });
     };
 
-    vm.openModal = function(field) {
+    vm.openModal = function(field, showInclude, includeDomain) {
       vm.field = field;
+      vm.showInclude = showInclude;
+      vm.includeDomain = includeDomain;
+
       if (vm[vm.field]) {
         var items = vm[vm.field].split('/');
         var selected = items.map(function(_item, index) {
@@ -53,7 +56,11 @@
     };
 
     vm.onSelect = function(node) {
-      vm[vm.field] = node.fqname;
+      var fqname = node.fqname.split('/');
+      if (vm.includeDomain === false) {
+        fqname.splice(1, 1);
+      }
+      vm[vm.field] = fqname.join('/');
       angular.element('#' + vm.field).trigger('change');
       vm.closeModal();
     };
