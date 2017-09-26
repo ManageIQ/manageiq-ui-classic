@@ -12,6 +12,12 @@ class EmsContainerController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  OPENSHIFT_ROUTES = {
+    "hawkular"   => %w(hawkular-metrics openshift-infra),
+    "prometheus" => %w(prometheus prometheus)
+  }.freeze
+  OPENSHIFT_DEFAULT_ROUTE = %w(hawkular-metrics openshift-infra).freeze
+
   def self.model
     ManageIQ::Providers::ContainerManager
   end
@@ -61,15 +67,16 @@ class EmsContainerController < ApplicationController
   end
 
   def update_ems_button_detect(verify_ems = nil)
+    route, project = OPENSHIFT_ROUTES.fetch(params[:metrics_selection], OPENSHIFT_DEFAULT_ROUTE)
     verify_ems ||= find_record_with_rbac(model, params[:id])
     set_ems_record_vars(verify_ems, :validate)
     @in_a_form = true
 
-    result, details = get_hostname_from_routes(verify_ems)
+    result, details = get_hostname_from_routes(verify_ems, route, project)
     if result
-      add_flash(_("Hawkular Route Detection: success"))
+      add_flash(_("Route Detection: success"))
     else
-      add_flash(_("Hawkular Route Detection: failure [%{details}]") % {:details => details}, :error)
+      add_flash(_("Route Detection: failure [%{details}]") % {:details => details}, :error)
     end
 
     render :json => {
@@ -80,10 +87,10 @@ class EmsContainerController < ApplicationController
   end
 
   # TODO: move to backend
-  def get_hostname_from_routes(ems)
+  def get_hostname_from_routes(ems, route, project)
     return nil, "Route detection not applicable for provider type" unless ems.class.respond_to?(:openshift_connect)
     [
-      ems.connect(:service => :openshift).get_route('hawkular-metrics', 'openshift-infra').try(:spec).try(:host),
+      ems.connect(:service => :openshift).get_route(route, project).try(:spec).try(:host),
       nil
     ]
   rescue StandardError => e

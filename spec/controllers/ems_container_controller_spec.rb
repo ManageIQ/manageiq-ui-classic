@@ -71,7 +71,7 @@ describe EmsContainerController do
 
       expect(controller.send(:flash_errors?)).to be_truthy
       expect(assigns(:flash_array).first[:message]).to eq(
-        'Hawkular Route Detection: failure [Route detection not applicable for provider type]'
+        'Route Detection: failure [Route detection not applicable for provider type]'
       )
     end
 
@@ -87,7 +87,7 @@ describe EmsContainerController do
       controller.send(:update_ems_button_detect)
 
       expect(controller.send(:flash_errors?)).to be_falsey
-      expect(assigns(:flash_array).first[:message]).to eq('Hawkular Route Detection: success')
+      expect(assigns(:flash_array).first[:message]).to eq('Route Detection: success')
     end
 
     it "tolerates detection exceptions" do
@@ -103,7 +103,7 @@ describe EmsContainerController do
 
       expect(controller.send(:flash_errors?)).to be_truthy
       expect(assigns(:flash_array).first[:message]).to include(
-        'Hawkular Route Detection: failure [message]'
+        'Route Detection: failure [message]'
       )
     end
   end
