@@ -7,6 +7,7 @@
     var vm = this;
     vm.$http = $http;
     vm.$uibModal = $uibModal;
+    vm.cache = {};
 
     vm.$http.get('/tree/automate_entrypoint').then(function(response) {
       vm.data = response.data;
@@ -15,6 +16,7 @@
     vm.lazyLoad = function(node) {
       return new Promise(function(resolve) {
         vm.$http.get('/tree/automate_entrypoint?id=' + encodeURIComponent(node.key)).then(function(response) {
+          vm.cache[node.key] = response.data;
           resolve(response.data);
         });
       });
@@ -26,7 +28,8 @@
       vm.includeDomain = includeDomain;
 
       if (vm[vm.field]) {
-        var items = vm[vm.field].split('/');
+        var fqname = vm[vm.field + '_selected'] || vm[vm.field];
+        var items = fqname.split('/');
         var selected = items.map(function(_item, index) {
           return {
             fqname: items.slice(0, index + 1).join('/'),
@@ -53,6 +56,30 @@
     vm.closeModal = function() {
       delete vm.field;
       vm.modal.close();
+
+      // Traverse the tree data
+      var stack = vm.data.slice();
+      var item = stack.pop();
+      while (item) {
+        if (item.key && vm.cache[item.key]) {
+          // Store the lazily loaded data
+          item.nodes = vm.cache[item.key];
+          item.state.expanded = true;
+          // Turn off the lazyLoading
+          delete item.lazyLoad;
+        }
+
+        if (item.nodes) {
+          item.nodes.forEach(function(n) {
+            stack.push(n);
+          });
+        }
+
+        item = stack.pop();
+      }
+
+      // Clear the cache
+      vm.cache = {};
     };
 
     vm.onSelect = function(node) {
@@ -60,6 +87,7 @@
       if (vm.includeDomain === false) {
         fqname.splice(1, 1);
       }
+      vm[vm.field + '_selected'] = node.fqname;
       vm[vm.field] = fqname.join('/');
       angular.element('#' + vm.field).trigger('change');
       vm.closeModal();
