@@ -81,10 +81,10 @@ module Mixins
     def create_ems_button_validate
       @in_a_form = true
       ems_type = model.model_from_emstype(params[:emstype])
-      # TODO: queue authentication for ALL types when selected role isn't the UI role
-      result, details = if params[:controller] == "ems_cloud" && session[:selected_roles].try(:include?, 'user_interface')
+      # TODO: queue authentication for container providers
+      result, details = if params[:controller] != "ems_container" && session[:selected_roles].try(:include?, 'user_interface')
                           realtime_raw_connect(ems_type)
-                        elsif params[:controller] == "ems_cloud"
+                        elsif params[:controller] != "ems_container"
                           ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
                         else
                           realtime_authentication_check(ems_type.new)
@@ -127,6 +127,15 @@ module Mixins
         [params[:default_hostname], params[:default_api_port], user, password, true]
       when 'ManageIQ::Providers::Google::CloudManager'
         [params[:project], params[:service_account], {:service => "compute"}]
+      when 'ManageIQ::Providers::Microsoft::InfraManager'
+        [{:endpoint => params[:default_hostname], :user => user, :password => password}, true]
+      when 'ManageIQ::Providers::Openstack::InfraManager'
+        auth_url = ems.auth_url(params[:default_hostname], params[:default_api_port])
+        [user, password, auth_url]
+      when 'ManageIQ::Providers::Redhat::InfraManager'
+        [{:username => user, :password => password, :server => params[:default_hostname], :port => params[:default_api_port], :scheme => "http", :version => 4}]
+      when 'ManageIQ::Providers::Vmware::InfraManager'
+        [{:pass => password, :user => user, :ip => params[:default_hostname]}]
       end
     end
 
