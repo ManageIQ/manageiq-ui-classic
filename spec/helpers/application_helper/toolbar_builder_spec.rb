@@ -503,7 +503,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
       it "includes the button group" do
         expect(_toolbar_builder.build_toolbar(toolbar_to_build).first).to include(
-          :id    => "generic_object_definition_choice",
+          :id    => "generic_object_definition_configuration",
           :type  => :buttonSelect,
           :icon  => "fa fa-cog fa-lg",
           :title => "Configuration",
@@ -511,45 +511,23 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         )
       end
 
-      it "includes the correct button items" do
+      it "includes the correct button items in the show screen" do
         items = _toolbar_builder.build_toolbar(toolbar_to_build).first[:items]
         expect(items[0]).to include(
-          :id    => "generic_object_definition_choice__generic_object_definition_create",
+          :id    => "generic_object_definition_configuration__generic_object_definition_edit",
           :type  => :button,
-          :icon  => "pficon pficon-add-circle-o fa-lg",
-          :title => "Create a new Generic Object Definition",
-          :text  => "Create a new Generic Object Definition",
-          :data  => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "showAddForm"}'
-          }
+          :icon  => "pficon pficon-edit fa-lg",
+          :title => "Edit this Generic Object Class",
+          :text  => "Edit this Generic Object Class",
         )
         expect(items[1]).to include(
-          :id      => "generic_object_definition_choice__generic_object_definition_edit",
-          :type    => :button,
-          :icon    => "pficon pficon-edit fa-lg",
-          :title   => "Edit this Generic Object Definition",
-          :text    => "Edit this Generic Object Definition",
-          :onwhen  => "1",
-          :enabled => false,
-          :data    => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "showEditForm"}'
-          }
-        )
-        expect(items[2]).to include(
-          :id      => "generic_object_definition_choice__generic_object_definition_delete",
+          :id      => "generic_object_definition_configuration__generic_object_definition_delete",
           :type    => :button,
           :icon    => "pficon pficon-delete fa-lg",
-          :title   => "Delete this Generic Object Definition",
-          :text    => "Delete this Generic Object Definition",
-          :onwhen  => "1",
-          :enabled => false,
-          :confirm => "Are you sure you want to delete this Generic Object Definition?",
-          :data    => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "deleteGenericObject"}'
-          }
+          :title   => "Remove this Generic Object Classes from Inventory",
+          :text    => "Remove this Generic Object Classes from Inventory",
+          :onwhen  => nil,
+          :enabled => true,
         )
       end
     end
@@ -565,7 +543,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     context "when the toolbar to be built is a generic object toolbar" do
-      let(:toolbar_to_build) { ApplicationHelper::Toolbar::GenericObjectDefinitionCenter }
+      let(:toolbar_to_build) { ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter }
 
       before do
         allow(Rbac).to receive(:role_allows?).and_return(true)
@@ -573,7 +551,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
       it "includes the button group" do
         expect(_toolbar_builder.build_toolbar_by_class(toolbar_to_build).first).to include(
-          :id    => "generic_object_definition_choice",
+          :id    => "generic_object_definition_configuration",
           :type  => :buttonSelect,
           :icon  => "fa fa-cog fa-lg",
           :title => "Configuration",
@@ -581,44 +559,32 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         )
       end
 
-      it "includes the correct button items" do
+      it "includes the correct button items in the show_list screen" do
         items = _toolbar_builder.build_toolbar_by_class(toolbar_to_build).first[:items]
         expect(items[0]).to include(
-          :id    => "generic_object_definition_choice__generic_object_definition_create",
+          :id    => "generic_object_definition_configuration__generic_object_definition_new",
           :type  => :button,
           :icon  => "pficon pficon-add-circle-o fa-lg",
-          :title => "Create a new Generic Object Definition",
-          :text  => "Create a new Generic Object Definition",
-          :data  => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "showAddForm"}'
-          }
+          :title => "Add a new Generic Object Class",
+          :text  => "Add a new Generic Object Class",
         )
         expect(items[1]).to include(
-          :id      => "generic_object_definition_choice__generic_object_definition_edit",
+          :id      => "generic_object_definition_configuration__generic_object_definition_edit",
           :type    => :button,
           :icon    => "pficon pficon-edit fa-lg",
-          :title   => "Edit this Generic Object Definition",
-          :text    => "Edit this Generic Object Definition",
+          :title   => "Edit Selected Generic Object Class",
+          :text    => "Edit Selected Generic Object Class",
           :onwhen  => "1",
           :enabled => false,
-          :data    => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "showEditForm"}'
-          }
         )
         expect(items[2]).to include(
-          :id      => "generic_object_definition_choice__generic_object_definition_delete",
+          :id      => "generic_object_definition_configuration__generic_object_definition_delete",
           :type    => :button,
           :icon    => "pficon pficon-delete fa-lg",
-          :title   => "Delete this Generic Object Definition",
-          :text    => "Delete this Generic Object Definition",
-          :onwhen  => "1",
+          :title   => "Remove selected Generic Object Classes from Inventory",
+          :text    => "Remove selected Generic Object Classes from Inventory",
+          :onwhen  => "1+",
           :enabled => false,
-          :data    => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "deleteGenericObject"}'
-          }
         )
       end
     end
