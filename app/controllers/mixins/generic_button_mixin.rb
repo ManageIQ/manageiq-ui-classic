@@ -22,18 +22,19 @@ module Mixins
 
     def handle_tag_buttons(pressed)
       case pressed
-      when "#{self.class.table_name}_tag"  then tag(self.class.model)
-      when 'cloud_network_tag'             then tag(CloudNetwork)
-      when 'cloud_object_store_object_tag' then tag(CloudObjectStoreObject)
-      when 'cloud_subnet_tag'              then tag(CloudSubnet)
-      when 'cloud_tenant_tag'              then tag(CloudTenant)
-      when 'cloud_volume_snapshot_tag'     then tag(CloudVolumeSnapshot)
-      when 'cloud_volume_tag'              then tag(CloudVolume)
-      when 'floating_ip_tag'               then tag(FloatingIp)
-      when 'load_balancer_tag'             then tag(LoadBalancer)
-      when 'network_port_tag'              then tag(NetworkPort)
-      when 'network_router_tag'            then tag(NetworkRouter)
-      when 'security_group_tag'            then tag(SecurityGroup)
+      when "#{self.class.table_name}_tag"     then tag(self.class.model)
+      when 'cloud_network_tag'                then tag(CloudNetwork)
+      when 'cloud_object_store_container_tag' then tag(CloudObjectStoreContainer)
+      when 'cloud_object_store_object_tag'    then tag(CloudObjectStoreObject)
+      when 'cloud_subnet_tag'                 then tag(CloudSubnet)
+      when 'cloud_tenant_tag'                 then tag(CloudTenant)
+      when 'cloud_volume_snapshot_tag'        then tag(CloudVolumeSnapshot)
+      when 'cloud_volume_tag'                 then tag(CloudVolume)
+      when 'floating_ip_tag'                  then tag(FloatingIp)
+      when 'load_balancer_tag'                then tag(LoadBalancer)
+      when 'network_port_tag'                 then tag(NetworkPort)
+      when 'network_router_tag'               then tag(NetworkRouter)
+      when 'security_group_tag'               then tag(SecurityGroup)
       end
 
       @flash_array.nil? ? :finished : :continue
