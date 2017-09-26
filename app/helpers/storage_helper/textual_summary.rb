@@ -125,17 +125,24 @@ module StorageHelper::TextualSummary
     h
   end
 
-  def textual_disk_files
-    num   = @record.number_of(:disk_files)
-    value = num == 0 ? 0 :
-                     n_("%{number} (%{percentage} of Used Space, %{amount} file)",
-                        "%{number} (%{percentage} of Used Space, %{amount} files)",
-                        @record.number_of(:disk_files)) %
-                       {:number     => number_to_human_size(@record.v_total_disk_size, :precision => 2),
-                        :percentage => @record.v_disk_percent_of_used.to_s + "%",
-                        :amount     => @record.number_of(:disk_files)}
+  def textual_format_used_space(number, percentage, amount)
+    return 0 if amount.zero?
 
-    h     = {:label => _("VM Provisioned Disk Files"), :icon => "fa fa-file-o", :value => value}
+    n_("%{number} (%{percentage} of Used Space, %{amount} file)",
+       "%{number} (%{percentage} of Used Space, %{amount} files)",
+       amount) %
+    {:number     => number_to_human_size(number, :precision => 2),
+     :percentage => percentage.to_s + '%',
+     :amount     => amount}
+  end
+
+  def textual_disk_files
+    value = textual_format_used_space(
+      @record.v_total_disk_size,
+      @record.v_disk_percent_of_used,
+      num = @record.number_of(:disk_files)
+    )
+    h = {:label => _("VM Provisioned Disk Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
       h[:title] = _("Show VM Provisioned Disk Files installed on this %{table}") %
                   {:table => ui_lookup(:table => "storages")}
@@ -145,15 +152,12 @@ module StorageHelper::TextualSummary
   end
 
   def textual_snapshot_files
-    num   = @record.number_of(:snapshot_files)
-    value = num == 0 ? 0 :
-                    n_("%{number} (%{percentage} of Used Space, %{amount} file)",
-                       "%{number} (%{percentage} of Used Space, %{amount} files)",
-                       @record.number_of(:snapshot_files)) %
-                    {:number     => number_to_human_size(@record.v_total_snapshot_size, :precision => 2),
-                     :percentage => @record.v_snapshot_percent_of_used.to_s + "%",
-                     :amount     => @record.number_of(:snapshot_files)}
-    h     = {:label => _("VM Snapshot Files"), :icon => "fa fa-file-o", :value => value}
+    value = textual_format_used_space(
+      @record.v_total_snapshot_size,
+      @record.v_snapshot_percent_of_used,
+      num = @record.number_of(:snapshot_files)
+    )
+    h = {:label => _("VM Snapshot Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
       h[:title] = _("Show VM Snapshot Files installed on this %{storage}") %
                   {:storage => ui_lookup(:table => "storages")}
@@ -163,15 +167,12 @@ module StorageHelper::TextualSummary
   end
 
   def textual_vm_ram_files
-    num   = @record.number_of(:vm_ram_files)
-    value = num == 0 ? 0 :
-                    n_("%{number} (%{percentage} of Used Space, %{amount} file)",
-                       "%{number} (%{percentage} of Used Space, %{amount} files)",
-                       @record.number_of(:vm_ram_files)) %
-                    {:number     => number_to_human_size(@record.v_total_memory_size, :precision => 2),
-                     :percentage => @record.v_memory_percent_of_used.to_s + "%",
-                     :amount     => @record.number_of(:vm_ram_files)}
-    h     = {:label => _("VM Memory Files"), :icon => "fa fa-file-o", :value => value}
+    value = textual_format_used_space(
+      @record.v_total_memory_size,
+      @record.v_memory_percent_of_used,
+      num = @record.number_of(:vm_ram_files)
+    )
+    h = {:label => _("VM Memory Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
       h[:title] = _("Show VM Memory Files installed on this %{storage}") % {:storage => ui_lookup(:table => "storages")}
       h[:link]  = url_for_only_path(:action => 'vm_ram_files', :id => @record)
@@ -180,15 +181,12 @@ module StorageHelper::TextualSummary
   end
 
   def textual_vm_misc_files
-    num   = @record.number_of(:vm_misc_files)
-    value = num == 0 ? 0 :
-                    n_("%{number} (%{percentage} of Used Space, %{amount} file)",
-                       "%{number} (%{percentage} of Used Space, %{amount} files)",
-                       @record.number_of(:vm_misc_files)) %
-                    {:number     => number_to_human_size(@record.v_total_vm_misc_size, :precision => 2),
-                     :percentage => @record.v_vm_misc_percent_of_used.to_s + "%",
-                     :amount     => @record.number_of(:vm_misc_files)}
-    h     = {:label => _("Other VM Files"), :icon => "fa fa-file-o", :value => value}
+    value = textual_format_used_space(
+      @record.v_total_vm_misc_size,
+      @record.v_vm_misc_percent_of_used,
+      num = @record.number_of(:vm_misc_files)
+    )
+    h = {:label => _("Other VM Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
       h[:title] = _("Show Other VM Files installed on this %{storage}") % {:storage => ui_lookup(:table => "storages")}
       h[:link]  = url_for_only_path(:action => 'vm_misc_files', :id => @record)
@@ -197,15 +195,12 @@ module StorageHelper::TextualSummary
   end
 
   def textual_debris_files
-    num   = @record.number_of(:debris_files)
-    value = num == 0 ? 0 :
-                    n_("%{number} (%{percentage} of Used Space, %{amount} file)",
-                       "%{number} (%{percentage} of Used Space, %{amount} files)",
-                       @record.number_of(:debris_files)) %
-                    {:number     => number_to_human_size(@record.v_total_debris_size, :precision => 2),
-                     :percentage => @record.v_debris_percent_of_used.to_s + "%",
-                     :amount     => @record.number_of(:debris_files)}
-    h     = {:label => _("Non-VM Files"), :icon => "fa fa-file-o", :value => value}
+    value = textual_format_used_space(
+      @record.v_total_debris_size,
+      @record.v_debris_percent_of_used,
+      num = @record.number_of(:debris_files)
+    )
+    h = {:label => _("Non-VM Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
       h[:title] = _("Show Non-VM Files installed on this %{storage}") % {:storage => ui_lookup(:table => "storages")}
       h[:link]  = url_for_only_path(:action => 'debris_files', :id => @record)
