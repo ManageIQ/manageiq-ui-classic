@@ -178,7 +178,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
   });
 
   vm.addKeyValue = function() {
-    var valid = validateInputName(vm.aeMethodModel.provisioning_key, 0);
+    var valid = validateInputName(vm.aeMethodModel.provisioning_key, 0, "add");
     if (! valid) {
       return miqService.miqFlash("error", __("Inputs name must be unique"));
     }
@@ -219,7 +219,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
   };
 
   vm.saveKeyValue = function(index) {
-    var valid = validateInputName(vm.aeMethodModel.key, index);
+    var valid = validateInputName(vm.aeMethodModel.key, index, "edit");
     if (! valid) {
       return miqService.miqFlash("error", __("Input Name must be unique"));
     }
@@ -231,12 +231,12 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     return true;
   };
 
-  var validateInputName = function(inputName, index) {
+  var validateInputName = function(inputName, index, type) {
     var valid = true;
-    vm.aeMethodModel.provisioning_inputs.forEach(function(input) {
+    vm.aeMethodModel.provisioning_inputs.forEach(function(input, i) {
       // validate input name if input name is changed for current input parameter
       // or when new one is being added
-      if (inputName !== vm.aeMethodModel.provisioning_inputs[index][0] && input[0] === inputName) {
+      if ((type === "add" && input[0] === inputName) || (type === "edit" && index !== i && input[0] === inputName)) {
         valid = false;
       }
     });
