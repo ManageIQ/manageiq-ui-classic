@@ -137,7 +137,7 @@ describe MiddlewareServerController do
       expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect(mw_dr_erred.reload).to be_truthy
       expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
-      expect(assigns(:flash_array).first[:message]).to include (
+      expect(assigns(:flash_array).first[:message]).to include(
         _('Deletion of one JDR report succeeded.')
       )
     end
@@ -151,7 +151,7 @@ describe MiddlewareServerController do
       expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { mw_dr_erred.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
-      expect(assigns(:flash_array).first[:message]).to include (
+      expect(assigns(:flash_array).first[:message]).to include(
         _('Deletion of 2 JDR reports succeeded.')
       )
     end
