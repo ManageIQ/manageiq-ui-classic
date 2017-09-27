@@ -39,7 +39,8 @@ module StorageHelper::TextualSummary
     return nil if @record["free_space"].nil? && @record["total_space"].nil?
     return nil if @record["free_space"].nil?
     {:label => _("Free Space"),
-     :value => "#{number_to_human_size(@record["free_space"], :precision => 2)} (#{@record.free_space_percent_of_total}%)"}
+     :value => "#{number_to_human_size(@record["free_space"], :precision => 2)} "\
+               "(#{@record.free_space_percent_of_total}%)"}
   end
 
   def textual_used_space
@@ -67,7 +68,8 @@ module StorageHelper::TextualSummary
   def textual_used_uncommitted_space
     return nil if @record["total_space"].nil?
     {:label => _("Used + Uncommitted Space"),
-     :value => "#{number_to_human_size(@record.v_total_provisioned, :precision => 2)} (#{@record.v_provisioned_percent_of_total}%)"}
+     :value => "#{number_to_human_size(@record.v_total_provisioned, :precision => 2)} "\
+               "(#{@record.v_provisioned_percent_of_total}%)"}
   end
 
   def textual_hosts
@@ -104,11 +106,15 @@ module StorageHelper::TextualSummary
   end
 
   def textual_registered_vms
-    {:label => _("Managed/Registered VMs"), :icon => "pficon pficon-virtual-machine", :value => @record.total_managed_registered_vms}
+    {:label => _("Managed/Registered VMs"),
+     :icon  => "pficon pficon-virtual-machine",
+     :value => @record.total_managed_registered_vms}
   end
 
   def textual_unregistered_vms
-    {:label => _("Managed/Unregistered VMs"), :icon => "pficon pficon-virtual-machine", :value => @record.total_managed_unregistered_vms}
+    {:label => _("Managed/Unregistered VMs"),
+     :icon  => "pficon pficon-virtual-machine",
+     :value => @record.total_managed_unregistered_vms}
   end
 
   def textual_unmanaged_vms
@@ -130,10 +136,11 @@ module StorageHelper::TextualSummary
 
     n_("%{number} (%{percentage} of Used Space, %{amount} file)",
        "%{number} (%{percentage} of Used Space, %{amount} files)",
-       amount) %
-    {:number     => number_to_human_size(number, :precision => 2),
-     :percentage => percentage.to_s + '%',
-     :amount     => amount}
+       amount) % {
+         :number     => number_to_human_size(number, :precision => 2),
+         :percentage => percentage.to_s + '%',
+         :amount     => amount
+       }
   end
 
   def textual_disk_files
