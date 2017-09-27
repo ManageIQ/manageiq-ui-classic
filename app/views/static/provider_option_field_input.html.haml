@@ -1,0 +1,15 @@
+.form-group{"ng-class" => "{{ \"{'has_error': angularForm.\"  + $ctrl.elemID + \".$invalid}\" }}"}
+  %label.col-md-2.control-label{"for" => "{{ $ctrl.elemID }}"}
+    {{ $ctrl.option.label }}
+  .col-md-4
+    %input.form-control{"type"          => "text",
+                        "id"            => "{{ $ctrl.elemID }}",
+                        "name"          => "{{ $ctrl.elemID }}",
+                        "ng-model"      => "$ctrl.option.value",
+                        "ng-trim"       => false,
+                        "detect_spaces" => "",
+                        "placeholder"   => "{{ $ctrl.option.global_default }}",
+                        "title"         => "{{ $ctrl.option.help_text }}",
+                        "prefix"        => "{{ 'provider_options_' + $ctrl.sectionName }}"}
+    %span.help-block{"ng-show" => '{{ "angularForm." + $ctrl.elemID + ".$error.detectedSpaces" }}'}
+      = _("Spaces are prohibited")
