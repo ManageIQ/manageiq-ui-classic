@@ -31,9 +31,10 @@
         = _('Select a Group:')
       .col-md-8
         - if @ownershipitems.length > 1
-          - opts = [["<#{_("Don't change")}>", 'dont-change']] + @groups.sort
+          - opts = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No Group')}>", '']] + @groups.sort
         - else
-          - opts = @groups.sort
+          - opts =  [["<#{_('No Group')}>", '']]
+        - opts += @groups.sort
         = select_tag("group",
                       options_for_select(opts, @group),
                       "ng-model"                    => "vm.ownershipModel.group",
