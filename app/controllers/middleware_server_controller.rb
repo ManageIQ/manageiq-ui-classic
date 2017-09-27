@@ -193,16 +193,18 @@ class MiddlewareServerController < ApplicationController
                    else
                      [from_cid(params['mw_dr_selected'])]
                    end
-    reports = mw_server.middleware_diagnostic_reports.find(selected_drs)
-    mw_server.middleware_diagnostic_reports.destroy(reports)
-
-    flash_msg = n_('Deletion of one JDR report succeeded.',
+    begin
+      reports = mw_server.middleware_diagnostic_reports.find(selected_drs)
+    rescue ActiveRecord::RecordNotFound
+      add_flash(_("Unable to locate all reports in database, please try again."), :error)
+    else
+      mw_server.middleware_diagnostic_reports.destroy(reports)
+      add_flash(n_('Deletion of one JDR report succeeded.',
                    "Deletion of %{count} JDR reports succeeded.",
-                   reports.count) % {:count => reports.count}
-
-    redirect_to(:action    => 'show',
-                :id        => to_cid(mw_server.id),
-                :flash_msg => flash_msg)
+                   reports.count) % {:count => reports.count})
+    end
+    session[:flash_msgs] = @flash_array
+    redirect_to(:action => 'show', :id => to_cid(mw_server.id))
   end
 
   def dr_report_download

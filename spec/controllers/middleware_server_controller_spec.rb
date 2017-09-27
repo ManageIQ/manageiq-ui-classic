@@ -119,6 +119,9 @@ describe MiddlewareServerController do
       report.save!
       report
     end
+    let!(:mw_dr_missing) do
+      FactoryGirl.build(:hawkular_jdr_report, :middleware_server => mw_server)
+    end
 
     it 'should stream diagnostic report file to client for download' do
       get :dr_download, :params => {:id => mw_server.compressed_id, :key => mw_dr.compressed_id }
@@ -133,10 +136,9 @@ describe MiddlewareServerController do
 
       expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect(mw_dr_erred.reload).to be_truthy
-      expect(action).to redirect_to(
-        :action    => 'show',
-        :id        => mw_server.compressed_id,
-        :flash_msg => _('Deletion of one JDR report succeeded.')
+      expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
+      expect(assigns(:flash_array).first[:message]).to include(
+        _('Deletion of one JDR report succeeded.')
       )
     end
 
@@ -148,10 +150,23 @@ describe MiddlewareServerController do
 
       expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { mw_dr_erred.reload }.to raise_exception(ActiveRecord::RecordNotFound)
-      expect(action).to redirect_to(
-        :action    => 'show',
-        :id        => mw_server.compressed_id,
-        :flash_msg => _('Deletion of 2 JDR reports succeeded.')
+      expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
+      expect(assigns(:flash_array).first[:message]).to include(
+        _('Deletion of 2 JDR reports succeeded.')
+      )
+    end
+
+    it 'should not delete a nonexistent report if requested' do
+      action = post :dr_delete, :params => {
+        :id             => mw_server.compressed_id,
+        :mw_dr_selected => mw_dr_missing.compressed_id
+      }
+
+      expect(mw_dr.reload).to be_truthy
+      expect(mw_dr_erred.reload).to be_truthy
+      expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
+      expect(assigns(:flash_array)).to eq(
+        [{:message => "Unable to locate all reports in database, please try again.", :level => :error}]
       )
     end
   end
