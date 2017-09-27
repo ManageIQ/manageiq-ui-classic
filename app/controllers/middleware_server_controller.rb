@@ -29,7 +29,7 @@ class MiddlewareServerController < ApplicationController
                                    :msg  => N_('Resume')
     },
     :middleware_dr_generate    => {:op   => :generate_diagnostic_report,
-                                   :skip => true,
+                                   :skip => false,
                                    :hawk => N_('generating JDR report'),
                                    :msg  => N_('Generate JDR report')}
   }.freeze
