@@ -1192,7 +1192,7 @@ module OpsController::Settings::Common
   end
 
   # Build the main Settings tree
-  def settings_build_tree
+  def build_settings_tree
     TreeBuilderOpsSettings.new("settings_tree", "settings", @sb)
   end
 

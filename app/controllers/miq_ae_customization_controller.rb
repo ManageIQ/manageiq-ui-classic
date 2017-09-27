@@ -501,10 +501,6 @@ class MiqAeCustomizationController < ApplicationController
     TreeBuilderButtons.new("ab_tree", "ab", @sb)
   end
 
-  def build_dialog_edit_tree
-    dialog_edit_build_tree
-  end
-
   def dialog_import_export_build_tree
     TreeBuilderAeCustomization.new("dialog_import_export_tree", "dialog_import_export", @sb)
   end

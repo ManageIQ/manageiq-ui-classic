@@ -449,7 +449,7 @@ module PxeController::PxeServers
   end
 
   # Get information for an event
-  def pxe_server_build_tree
+  def build_pxe_server_tree
     TreeBuilderPxeServers.new("pxe_servers_tree", "pxe_servers", @sb)
   end
 
