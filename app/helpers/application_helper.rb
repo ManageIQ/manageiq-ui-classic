@@ -229,7 +229,8 @@ module ApplicationHelper
     "chargebacks"                            => ChargebackRate,
     "playbooks"                              => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook,
     "physical_servers_with_host"             => PhysicalServer,
-    "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
+    "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript,
+    "vms"                                    => VmOrTemplate
   }.freeze
 
   HAS_ASSOCATION = {
