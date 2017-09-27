@@ -1,5 +1,5 @@
 class MiqWorkerDecorator < MiqDecorator
-  def fileicon
-    "100/processmanager-#{normalized_type}.png"
+  def self.fonticon
+    'fa fa-cogs'
   end
 end
