@@ -1360,7 +1360,7 @@ module ApplicationHelper
                         retired
                         scan_profile
                         security_group
-                        service
+                        services
                         storage
                         templates
                       )

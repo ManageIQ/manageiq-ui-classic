@@ -33,8 +33,12 @@ class ServiceController < ApplicationController
   # Service show selected, redirect to proper controller
   def show
     @record = Service.find(from_cid(params[:id]))
-    @display = params[:display]
-    if @display
+
+    @gtl_url = "/show"
+    @display = params[:display] if params[:display]
+
+    if self.class.display_methods.include?(@display)
+      params[:display] = @display
       display_nested_list(@display)
       return
     end
