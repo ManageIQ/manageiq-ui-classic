@@ -162,7 +162,7 @@
                   %i.fa.fa-close
 
     :javascript
-      miq_bootstrap('#entrypoint-selection', 'ManageIQ.treeSelector');
+      miq_bootstrap('#entrypoint-selection', 'ManageIQ.entrypointSelector');
       // FIXME: drop this while angularizing as it is a bad practice
       $(function() {
         $('#entrypoint-selection input[type="text"]').on('change', _.debounce(function() {

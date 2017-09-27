@@ -100,5 +100,5 @@
   };
 
   EntrypointSelectionController.$inject = ['$http', '$uibModal'];
-  window.miqHttpInject(angular.module('ManageIQ.treeSelector')).controller(CONTROLLER_NAME, EntrypointSelectionController);
+  window.miqHttpInject(angular.module('ManageIQ.entrypointSelector')).controller(CONTROLLER_NAME, EntrypointSelectionController);
 })();
