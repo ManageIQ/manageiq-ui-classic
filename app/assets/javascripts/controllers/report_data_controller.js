@@ -6,6 +6,7 @@
   var TREES_WITHOUT_PARENT = ['pxe', 'ops'];
   var TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
   var USE_TREE_ID = ['automation_manager'];
+  var DEFAULT_VIEW = 'grid';
 
   function isAllowedParent(initObject) {
     return TREES_WITHOUT_PARENT.indexOf(ManageIQ.controller) === -1 &&
@@ -259,7 +260,7 @@
     } else if (this.initObject.showUrl === 'false') {
       this.initObject.showUrl = false;
     }
-    this.gtlType = initObject.gtlType || 'grid';
+    this.gtlType = initObject.gtlType || DEFAULT_VIEW;
     this.settings.isLoading = true;
     ManageIQ.gridChecks = [];
     this.$window.sendDataWithRx({setCount: 0});

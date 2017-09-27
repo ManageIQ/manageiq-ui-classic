@@ -1454,6 +1454,7 @@ class ApplicationController < ActionController::Base
   def get_view_calculate_gtl_type(db_sym)
     gtl_type = settings(:views, db_sym) unless %w(scanitemset miqschedule pxeserver customizationtemplate).include?(db_sym.to_s)
     gtl_type = 'grid' if ['vm'].include?(db_sym.to_s) && request.parameters[:controller] == 'service'
+    gtl_type = 'grid' if params[:records] && params[:records].kind_of?(Array)
     gtl_type ||= 'list' # return a sane default
     gtl_type
   end
