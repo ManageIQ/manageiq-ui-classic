@@ -54,7 +54,7 @@ module ReportController::Dashboards
   def db_edit
     case params[:button]
     when "cancel"
-      @db = MiqWidgetSet.find_by_id(session[:edit][:db_id]) if session[:edit] && session[:edit][:db_id]
+      @db = MiqWidgetSet.find_by(:id => session[:edit][:db_id]) if session[:edit] && session[:edit][:db_id]
       if !@db || @db.id.blank?
         add_flash(_("Add of new Dashboard was cancelled by the user"))
       else
@@ -305,19 +305,9 @@ module ReportController::Dashboards
   end
 
   def db_save_members
-    widgets = []
-    @db.set_data[:col1].each do |w|
-      wg = MiqWidget.find_by_id(w)
-      widgets.push(wg) if wg
-    end
-    @db.set_data[:col2].each do |w|
-      wg = MiqWidget.find_by_id(w)
-      widgets.push(wg) if wg
-    end
-    @db.set_data[:col3].each do |w|
-      wg = MiqWidget.find_by_id(w)
-      widgets.push(wg) if wg
-    end
+    widget_ids = %i(col1 col2 col3).collect { |key| @db.set_data[key] }.flatten
+    widgets = Array(MiqWidget.find_by(:id => widget_ids))
+
     @db.replace_children(widgets)
     @db.members.each { |w| w.create_initial_content_for_user(session[:userid]) } # Generate content if not there
   end

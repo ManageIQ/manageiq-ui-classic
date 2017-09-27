@@ -569,7 +569,7 @@ module ApplicationController::Performance
     get_time_profiles(@perf_record) # Get time profiles list (global and user specific). Pass record so that profiles can be limited to its region.
     # Get the time zone from the time profile, if one is in use
     if @perf_options[:time_profile]
-      tp = TimeProfile.find_by_id(@perf_options[:time_profile])
+      tp = TimeProfile.find_by(:id => @perf_options[:time_profile])
       set_time_profile_vars(tp, @perf_options)
     else
       set_time_profile_vars(selected_time_profile_for_pull_down, @perf_options)
@@ -820,7 +820,7 @@ module ApplicationController::Performance
 
     charts = []
     chart_data = []
-    cat_desc = Classification.find_by_name(@perf_options[:cat]).description
+    cat_desc = Classification.find_by(:name => @perf_options[:cat]).description
 
     layout_name = case @perf_options[:typ]
                   when "Hourly" then 'hourly_tag_charts'
