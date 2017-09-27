@@ -63,8 +63,13 @@ module MiqAeCustomizationController::CustomButtons
       build_resolve_screen
       @resolve[:new][:attrs] = []
       if @custom_button.uri_attributes
+        default_attributes = if @custom_button[:options].try(:[], :button_type)
+                               %w(request service_template_name hosts)
+                             else
+                               %w(request)
+                             end
         @custom_button.uri_attributes.each do |attr|
-          if attr[0] != "object_name" && attr[0] != "request"
+          if attr[0] != "object_name" && attr[0] != "request" && !default_attributes.include?(attr[0].to_s)
             @resolve[:new][:attrs].push(attr) unless @resolve[:new][:attrs].include?(attr)
           end
         end
