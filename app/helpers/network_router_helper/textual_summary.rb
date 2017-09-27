@@ -28,7 +28,7 @@ module NetworkRouterHelper::TextualSummary
     return nil if @record.main_route_table.nil?
 
     if @record.main_route_table
-      message = "(Subnets not explicitely assigned to a route table are assigned to this main route table, for this VPC)"
+      message = _("(Subnets not explicitely assigned to a route table are assigned to this main route table, for this VPC)")
     end
 
     {:label => _('Main Route Table'), :value => "#{@record.main_route_table} #{message}"}
