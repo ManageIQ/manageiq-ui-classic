@@ -45,7 +45,7 @@ module NetworkRouterHelper::TextualSummary
   end
 
   def textual_routes
-    # TODO Should be TextualTable if possible
+    # TODO: Should be TextualTable if possible
     # AWS compatible fields, add another format for another provider or comply with AWS format
     labels = {
       "destination_cidr_block" => _("Destination CIDR"),
