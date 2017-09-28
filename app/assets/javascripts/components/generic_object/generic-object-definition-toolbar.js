@@ -7,9 +7,9 @@ ManageIQ.angular.app.component('genericObjectDefinitionToolbar', {
   controller: genericObjectDefinitionToolbarController,
 });
 
-genericObjectDefinitionToolbarController.$inject = ['API', 'miqService'];
+genericObjectDefinitionToolbarController.$inject = ['API', 'miqService', '$window'];
 
-function genericObjectDefinitionToolbarController(API, miqService) {
+function genericObjectDefinitionToolbarController(API, miqService, $window) {
   var toolbar = this;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
@@ -45,7 +45,7 @@ function genericObjectDefinitionToolbarController(API, miqService) {
       miqService.miqFlashLater(
         { message: sprintf(__('Generic Object Class "%s" with %s instances cannot be deleted'), response.name, response.generic_objects_count),
           level: 'warning'});
-      miqService.miqFlashSaved();
+      $window.location.reload(true);
     }
   }
 
@@ -61,7 +61,7 @@ function genericObjectDefinitionToolbarController(API, miqService) {
       miqService.redirectBack(saveMsg, 'success', toolbar.redirectUrl);
     } else {
       miqService.miqFlashLater({message: saveMsg});
-      miqService.miqFlashSaved();
+      $window.location.reload(true);
     }
   }
 }
