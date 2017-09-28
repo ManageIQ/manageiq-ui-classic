@@ -41,15 +41,6 @@ module Mixins
           render :action => "show" unless @explorer
         end
 
-        def add_security_group_form_fields
-          assert_privileges("instance_add_security_group")
-          @record = find_record_with_rbac(VmCloud, params[:id])
-          security_groups = @record.cloud_tenant.nil? ? [] : @record.cloud_tenant.security_groups - @record.security_groups
-          render :json => {
-            :security_groups => security_groups
-          }
-        end
-
         def add_security_group_vm
           assert_privileges("instance_add_security_group")
           @record = find_record_with_rbac(VmCloud, params[:id])

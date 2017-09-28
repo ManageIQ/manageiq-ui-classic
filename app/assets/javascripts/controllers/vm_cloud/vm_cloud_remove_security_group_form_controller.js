@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('vmCloudRemoveSecurityGroupFormController', ['$http', 'vmCloudRemoveSecurityGroupFormId', 'miqService', function($http, vmCloudRemoveSecurityGroupFormId, miqService) {
+ManageIQ.angular.app.controller('vmCloudRemoveSecurityGroupFormController', ['vmCloudRemoveSecurityGroupFormId', 'miqService', 'API', function(vmCloudRemoveSecurityGroupFormId, miqService, API) {
   var vm = this;
 
   var init = function() {
@@ -11,9 +11,8 @@ ManageIQ.angular.app.controller('vmCloudRemoveSecurityGroupFormController', ['$h
     vm.model = "vmCloudModel";
     vm.saveable = miqService.saveable;
     miqService.sparkleOn();
-    $http.get('/vm_cloud/remove_security_group_form_fields/' + vmCloudRemoveSecurityGroupFormId).then(function(response) {
-      var data = response.data;
-      vm.security_groups = data.security_groups;
+    API.get("/api/vms/" + vmCloudRemoveSecurityGroupFormId + "/security_groups?expand=resources&attributes=id,name").then(function(data) {
+      vm.security_groups = data.resources;
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.vmCloudModel );
     }).catch(miqService.handleFailure);

@@ -41,20 +41,6 @@ module Mixins
           render :action => "show" unless @explorer
         end
 
-        def remove_security_group_form_fields
-          assert_privileges("instance_remove_security_group")
-          @record = find_record_with_rbac(VmCloud, params[:id])
-          security_groups = []
-          unless @record.ext_management_system.nil?
-            @record.security_groups.each do |security_group|
-              security_groups << security_group
-            end
-          end
-          render :json => {
-            :security_groups => security_groups
-          }
-        end
-
         def remove_security_group_vm
           assert_privileges("instance_remove_security_group")
           @record = find_record_with_rbac(VmCloud, params[:id])
