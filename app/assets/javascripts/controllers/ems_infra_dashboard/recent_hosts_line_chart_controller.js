@@ -1,26 +1,27 @@
 /* global miqHttpInject */
-angular.module( 'patternfly.charts' ).controller( 'recentHostsLineChartController', ['$scope', 'pfUtils', '$q', 'providerId', '$http', 'chartsMixin', function( $scope, pfUtils, $q, providerId, $http, chartsMixin ) {
+angular.module( 'patternfly.charts' ).controller( 'recentHostsLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', function($q, providerId, $http, chartsMixin ) {
   var vm = this;
 
   var init = function() {
     ManageIQ.angular.scope = vm;
-    vm.config = chartsMixin.chartConfig['recentHostsConfig'];
+    vm.config = chartsMixin.chartConfig.recentHostsConfig;
     var url = '/ems_infra_dashboard/recent_hosts_data/' + providerId;
     var hostsDataPromise = $http.get(url).then(function(response) {
       vm.data = response.data.data;
     });
 
     $q.all([hostsDataPromise]).then(function() {
-      if (vm.data.recentHosts.dataAvailable === false)
+      if (vm.data.recentHosts.dataAvailable === false) {
         vm.data.dataAvailable = false;
-      else
-        vm.data = chartsMixin.processData(vm.data.recentHosts, 'dates', vm.data.recentHosts.config.label)
+      } else {
+        vm.data = chartsMixin.processData(vm.data.recentHosts, 'dates', vm.data.recentHosts.config.label);
+      }
     });
 
     vm.custShowXAxis = false;
     vm.custShowYAxis = false;
     vm.custAreaChart = true;
-  }
+  };
 
   init();
 }]);

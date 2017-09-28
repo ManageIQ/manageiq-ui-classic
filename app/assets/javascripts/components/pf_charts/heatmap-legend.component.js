@@ -1,48 +1,48 @@
 angular.module('patternfly.charts').component('pfHeatmapLegend', {
   bindings: {
     legend: '<?',
-    legendColors: '<?'
+    legendColors: '<?',
   },
   templateUrl: '/static/pf_charts/heatmap-legend.html.haml',
-  controller: function () {
+  controller: function() {
     'use strict';
     var vm = this;
 
     var heatmapColorPatternDefaults = ['#d4f0fa', '#F9D67A', '#EC7A08', '#CE0000'];
     var legendLabelDefaults = ['< 70%', '70-80%', '80-90%', '> 90%'];
 
-    vm.$onInit = function () {
+    vm.$onInit = function() {
       vm.updateAll();
     };
 
-    vm.updateAll = function () {
+    vm.updateAll = function() {
       var items = [];
       var index;
 
-      //Allow overriding of defaults
-      if (!vm.legendColors) {
+      // Allow overriding of defaults
+      if (! vm.legendColors) {
         vm.legendColors = heatmapColorPatternDefaults;
       }
-      if (!vm.legend) {
+      if (! vm.legend) {
         vm.legend = legendLabelDefaults;
       }
       for (index = vm.legend.length - 1; index >= 0; index--) {
         items.push({
           text: vm.legend[index],
-          color: vm.legendColors[index]
+          color: vm.legendColors[index],
         });
       }
       vm.legendItems = items;
     };
 
-    vm.$onChanges = function (changesObj) {
-      if (changesObj.legend && !changesObj.legend.isFirstChange()) {
+    vm.$onChanges = function(changesObj) {
+      if (changesObj.legend && ! changesObj.legend.isFirstChange()) {
         vm.updateAll();
       }
-      if (changesObj.legendColors && !changesObj.legendColors.isFirstChange()) {
+      if (changesObj.legendColors && ! changesObj.legendColors.isFirstChange()) {
         vm.updateAll();
       }
     };
-  }
+  },
 });
 

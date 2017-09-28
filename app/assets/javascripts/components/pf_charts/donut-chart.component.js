@@ -2,115 +2,116 @@ angular.module('patternfly.charts').component('pfDonutChart', {
   bindings: {
     config: '<',
     data: '<',
-    chartHeight: '<?'
+    chartHeight: '<?',
   },
   templateUrl: '/static/pf_charts/donut-chart.html.haml',
-  controller: donutChartController
+  controller: donutChartController,
 });
-donutChartController.$inject = ['pfUtils', '$element', '$timeout', '$log']
+donutChartController.$inject = ['pfUtils', '$element', '$timeout', '$log'];
 
 function donutChartController(pfUtils, $element, $timeout, $log) {
   'use strict';
-  var vm = this, prevData;
+  var vm = this;
+  var prevData;
 
-  vm.$onInit = function () {
+  vm.$onInit = function() {
     vm.donutChartId = 'donutChart';
-      if (vm.config.chartId) {
-        vm.donutChartId = vm.config.chartId + vm.donutChartId;
-      }
+    if (vm.config.chartId) {
+      vm.donutChartId = vm.config.chartId + vm.donutChartId;
+    }
 
     vm.updateAll();
   };
 
-  vm.getDonutData = function () {
-      return {
-        type: 'donut',
-        columns: vm.data,
-        order: null,
-        colors: vm.config.colors
-      };
+  vm.getDonutData = function() {
+    return {
+      type: 'donut',
+      columns: vm.data,
+      order: null,
+      colors: vm.config.colors,
     };
+  };
 
-  vm.updateAll = function () {
-      // Need to deep watch changes in chart data
-      prevData = angular.copy(vm.data);
+  vm.updateAll = function() {
+    // Need to deep watch changes in chart data
+    prevData = angular.copy(vm.data);
 
     vm.config = pfUtils.merge(patternfly.c3ChartDefaults().getDefaultDonutConfig(), vm.config);
     vm.config.tooltip = { contents: patternfly.pfDonutTooltipContents };
     vm.config.data = vm.getDonutData();
     vm.config.data.onclick = vm.config.onClickFn;
+  };
 
-    };
-
-  vm.getTotal = function () {
-      var total = 0;
-      angular.forEach(vm.data, function (value) {
-        angular.forEach(value, function (value) {
-          if (!isNaN(value)) {
-            total += Number(value);
-          }
-        });
+  vm.getTotal = function() {
+    var total = 0;
+    angular.forEach(vm.data, function(value) {
+      angular.forEach(value, function(value) {
+        if (! isNaN(value)) {
+          total += Number(value);
+        }
       });
-      return total;
-    };
+    });
+    return total;
+  };
 
-  vm.getCenterLabelText = function () {
-      var centerLabelText;
+  vm.getCenterLabelText = function() {
+    var centerLabelText;
 
-      // default
-      centerLabelText = { bigText: vm.getTotal(),
-        smText:  vm.config.donut.title};
+    // default
+    centerLabelText = { bigText: vm.getTotal(),
+      smText: vm.config.donut.title};
 
-      if (vm.config.centerLabelFn) {
-        centerLabelText.bigText = vm.config.centerLabelFn();
-        centerLabelText.smText = '';
-      }
+    if (vm.config.centerLabelFn) {
+      centerLabelText.bigText = vm.config.centerLabelFn();
+      centerLabelText.smText = '';
+    }
 
-      return centerLabelText;
-    };
+    return centerLabelText;
+  };
 
-  vm.setupDonutChartTitle = function () {
-      var donutChartTitle, centerLabelText;
+  vm.setupDonutChartTitle = function() {
+    var donutChartTitle;
+    var centerLabelText;
 
-      if (angular.isUndefined(vm.chart)) {
-        return;
-      }
+    if (angular.isUndefined(vm.chart)) {
+      return;
+    }
 
-      donutChartTitle = d3.select(vm.chart.element).select('text.c3-chart-arcs-title');
-      if (!donutChartTitle) {
-        return;
-      }
+    donutChartTitle = d3.select(vm.chart.element).select('text.c3-chart-arcs-title');
+    if (! donutChartTitle) {
+      return;
+    }
 
-      centerLabelText = vm.getCenterLabelText();
+    centerLabelText = vm.getCenterLabelText();
 
-      // Remove any existing title.
-      donutChartTitle.text('');
-      if (centerLabelText.bigText && !centerLabelText.smText) {
-        donutChartTitle.text(centerLabelText.bigText);
-      } else {
-        donutChartTitle.insert('tspan').text(centerLabelText.bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0);
-        donutChartTitle.insert('tspan').text(centerLabelText.smText).classed('donut-title-small-pf', true).attr('dy', 20).attr('x', 0);
-      }
-    };
+    // Remove any existing title.
+    donutChartTitle.text('');
+    if (centerLabelText.bigText && ! centerLabelText.smText) {
+      donutChartTitle.text(centerLabelText.bigText);
+    } else {
+      donutChartTitle.insert('tspan').text(centerLabelText.bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0);
+      donutChartTitle.insert('tspan').text(centerLabelText.smText).classed('donut-title-small-pf', true).attr('dy', 20).attr('x', 0);
+    }
+  };
 
-  vm.setChart = function (chart) {
+  vm.setChart = function(chart) {
     vm.chart = chart;
     vm.setupDonutChartTitle();
-    };
+  };
 
-  vm.$onChanges = function (changesObj) {
-      if (changesObj.config || changesObj.data) {
-        vm.updateAll();
-      }
-      if (changesObj.chartHeight) {
-        vm.config.size.height = changesObj.chartHeight.currentValue;
-      }
-    };
+  vm.$onChanges = function(changesObj) {
+    if (changesObj.config || changesObj.data) {
+      vm.updateAll();
+    }
+    if (changesObj.chartHeight) {
+      vm.config.size.height = changesObj.chartHeight.currentValue;
+    }
+  };
 
-  vm.$doCheck = function () {
-      // do a deep compare on data
-      if (!angular.equals(vm.data, prevData)) {
-        vm.updateAll();
-      }
-    };
+  vm.$doCheck = function() {
+    // do a deep compare on data
+    if (! angular.equals(vm.data, prevData)) {
+      vm.updateAll();
+    }
+  };
 }

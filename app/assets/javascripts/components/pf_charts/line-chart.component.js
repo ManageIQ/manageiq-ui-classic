@@ -4,18 +4,19 @@ angular.module('patternfly.charts').component('pfLineChart', {
     chartData: '<',
     showXAxis: '<?',
     showYAxis: '<?',
-    setAreaChart: '<?'
+    setAreaChart: '<?',
   },
   templateUrl: '/static/pf_charts/line-chart.html',
-  controller: lineChartController
+  controller: lineChartController,
 });
-lineChartController.$inject = ['pfUtils']
+lineChartController.$inject = ['pfUtils'];
 
 function lineChartController(pfUtils) {
   'use strict';
-  var vm = this, prevChartData;
+  var vm = this;
+  var prevChartData;
 
-  vm.updateAll = function () {
+  vm.updateAll = function() {
     // Need to deep watch changes in chart data
     prevChartData = angular.copy(vm.chartData);
 
@@ -50,19 +51,19 @@ function lineChartController(pfUtils) {
         show: vm.showXAxis === true,
         type: 'timeseries',
         tick: {
-          format: function () {
+          format: function() {
             return '';
-          }
-        }
+          },
+        },
       },
       y: {
         show: vm.showYAxis === true,
         tick: {
-          format: function () {
+          format: function() {
             return '';
-          }
-        }
-      }
+          },
+        },
+      },
     };
 
     /*
@@ -85,15 +86,15 @@ function lineChartController(pfUtils) {
   /*
    * Convert the config data to C3 Data
    */
-  vm.getLineData = function (chartData) {
+  vm.getLineData = function(chartData) {
     var lineData = {
-      type: vm.setAreaChart ? "area" : "line"
+      type: vm.setAreaChart ? "area" : "line",
     };
 
     if (chartData && chartData.dataAvailable !== false && chartData.xData) {
       lineData.x = chartData.xData[0];
       // Convert the chartData dictionary into a C3 columns data arrays
-      lineData.columns = Object.keys(chartData).map(function (key) {
+      lineData.columns = Object.keys(chartData).map(function(key) {
         return chartData[key];
       });
     }
@@ -101,13 +102,13 @@ function lineChartController(pfUtils) {
     return lineData;
   };
 
-  vm.$onChanges = function (changesObj) {
+  vm.$onChanges = function(changesObj) {
     vm.updateAll();
   };
 
-  vm.$doCheck = function () {
+  vm.$doCheck = function() {
     // do a deep compare on chartData
-    if (!angular.equals(vm.chartData, prevChartData)) {
+    if (! angular.equals(vm.chartData, prevChartData)) {
       vm.updateAll();
     }
   };

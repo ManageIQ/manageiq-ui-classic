@@ -1,4 +1,4 @@
-angular.module( 'patternfly.charts' ).controller('utilizationTrendChartController', ['$scope', '$q', 'providerId', 'chartsMixin', '$http', function($scope, $q, providerId, chartsMixin, $http) {
+angular.module( 'patternfly.charts' ).controller('utilizationTrendChartController', ['$q', 'providerId', 'chartsMixin', '$http', function($q, providerId, chartsMixin, $http) {
   var vm = this;
 
   var init = function() {
@@ -8,10 +8,10 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
     var url = '/ems_infra_dashboard/ems_utilization_data/' + providerId;
     var metricsPromise = $http.get(url).then(function(response) {
       vm.metricsData = response.data.data;
-    })
+    });
 
     $q.all([metricsPromise]).then(function() {
-      vm.data = processMetricsData(vm.data, vm.metricsData.ems_utilization)
+      vm.data = processMetricsData(vm.data, vm.metricsData.ems_utilization);
     });
 
     vm.title = "Global Utilization";
@@ -21,7 +21,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
     vm.custChartHeight = 60;
     vm.dataAvailable = false;
 
-    vm.addDataPoint = function () {
+    vm.addDataPoint = function() {
       var newData = Math.round(Math.random() * 100);
       var newDate = new Date(vm.data.xData[vm.data.xData.length - 1].getTime() + (24 * 60 * 60 * 1000));
       vm.data.used = newData;
@@ -34,31 +34,30 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
     metricsDataStruct.data = {};
     if (data) {
       var keys = Object.keys(data);
-      for (i in keys) {
+      for (var i in keys) {
         if (data[keys[i]] === null) {
-          var metricsDataStructData = [];
           metricsDataStruct.data[keys[i]] = {
             'data': {dataAvailable: false},
             'config': {
-              'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title
-            }
+              'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
+            },
           };
         } else {
           metricsDataStruct.data[keys[i]] = {
             'data': chartsMixin.processData(data[keys[i]], 'dates', chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units),
             'config': {
               'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
-              'units': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units
+              'units': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units,
             },
             'donutConfig': chartsMixin.chartConfig[keys[i] + 'UsageDonutConfig'],
-            'sparklineConfig': chartsMixin.chartConfig[keys[i] + 'UsageSparklineConfig']
-          }
+            'sparklineConfig': chartsMixin.chartConfig[keys[i] + 'UsageSparklineConfig'],
+          };
         }
       }
     } else {
       metricsDataStruct.data = {dataAvailable: false};
     }
-    return metricsDataStruct.data
+    return metricsDataStruct.data;
   };
 
   init();

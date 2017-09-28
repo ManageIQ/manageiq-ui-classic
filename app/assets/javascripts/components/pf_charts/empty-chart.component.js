@@ -1,26 +1,26 @@
 angular.module('patternfly.charts').component('pfEmptyChart', {
   bindings: {
-    chartHeight: '<?'
+    chartHeight: '<?',
   },
   templateUrl: '/static/pf_charts/empty-chart.html.haml',
-  controller: function () {
+  controller: function() {
     'use strict';
     var vm = this;
 
-    vm.setSizeStyles = function () {
+    vm.setSizeStyles = function() {
       var height = vm.chartHeight || 40;
       var topPadding = Math.min(Math.round((height - 40) / 2), 20);
       vm.sizeStyles = {
         height: height + 'px',
-        'padding-top': topPadding + 'px'
+        'padding-top': topPadding + 'px',
       };
     };
     vm.setSizeStyles();
 
-    vm.$onChanges =  function (changesObj) {
+    vm.$onChanges =  function(changesObj) {
       if (changesObj.chartHeight) {
         vm.setSizeStyles();
       }
     };
-  }
+  },
 });

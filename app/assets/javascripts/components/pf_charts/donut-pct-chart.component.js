@@ -4,18 +4,19 @@ angular.module('patternfly.charts').component('pfDonutPctChart', {
     data: '<',
     chartHeight: '<?',
     centerLabel: '<?',
-    onThresholdChange: '&'
+    onThresholdChange: '&',
   },
   templateUrl: '/static/pf_charts/donut-pct-chart.html.haml',
-  controller: donutPctChartController
+  controller: donutPctChartController,
 });
-donutPctChartController.$inject = ['pfUtils', '$element', '$timeout']
+donutPctChartController.$inject = ['pfUtils', '$element', '$timeout'];
 
 function donutPctChartController(pfUtils, $element, $timeout) {
   'use strict';
-  var vm = this, prevData;
+  var vm = this;
+  var prevData;
 
-  vm.$onInit = function () {
+  vm.$onInit = function() {
     vm.donutChartId = 'donutPctChart';
     if (vm.config.chartId) {
       vm.donutChartId = vm.config.chartId + vm.donutChartId;
@@ -24,11 +25,11 @@ function donutPctChartController(pfUtils, $element, $timeout) {
     vm.updateAll();
   };
 
-  vm.updateAvailable = function () {
+  vm.updateAvailable = function() {
     vm.data.available = vm.data.total - vm.data.used;
   };
 
-  vm.getStatusColor = function (used, thresholds) {
+  vm.getStatusColor = function(used, thresholds) {
     var threshold = "none";
     var color = pfUtils.colorPalette.blue;
 
@@ -44,7 +45,7 @@ function donutPctChartController(pfUtils, $element, $timeout) {
       }
     }
 
-    if (!vm.threshold || vm.threshold !== threshold) {
+    if (! vm.threshold || vm.threshold !== threshold) {
       vm.threshold = threshold;
       vm.onThresholdChange({ threshold: vm.threshold });
     }
@@ -52,8 +53,9 @@ function donutPctChartController(pfUtils, $element, $timeout) {
     return color;
   };
 
-  vm.statusDonutColor = function () {
-    var color, percentUsed;
+  vm.statusDonutColor = function() {
+    var color;
+    var percentUsed;
 
     color = { pattern: [] };
     percentUsed = vm.data.used / vm.data.total * 100.0;
@@ -62,9 +64,9 @@ function donutPctChartController(pfUtils, $element, $timeout) {
     return color;
   };
 
-  vm.donutTooltip = function () {
+  vm.donutTooltip = function() {
     return {
-      contents: function (d) {
+      contents: function(d) {
         var tooltipHtml;
 
         if (vm.config.tooltipFn) {
@@ -78,35 +80,35 @@ function donutPctChartController(pfUtils, $element, $timeout) {
         }
 
         return tooltipHtml;
-      }
+      },
     };
   };
 
-  vm.getDonutData = function () {
+  vm.getDonutData = function() {
     return {
       columns: [
         ['Used', vm.data.used],
-        ['Available', vm.data.available]
+        ['Available', vm.data.available],
       ],
       type: 'donut',
       donut: {
         label: {
-          show: false
-        }
+          show: false,
+        },
       },
       groups: [
-        ['used', 'available']
+        ['used', 'available'],
       ],
-      order: null
+      order: null,
     };
   };
 
-  vm.getCenterLabelText = function () {
+  vm.getCenterLabelText = function() {
     var centerLabelText;
 
     // default to 'used' info.
     centerLabelText = { bigText: vm.data.used,
-      smText:  vm.config.units + ' Used' };
+      smText: vm.config.units + ' Used' };
 
     if (vm.config.centerLabelFn) {
       centerLabelText.bigText = vm.config.centerLabelFn();
@@ -125,7 +127,7 @@ function donutPctChartController(pfUtils, $element, $timeout) {
     return centerLabelText;
   };
 
-  vm.updateAll = function () {
+  vm.updateAll = function() {
     // Need to deep watch changes in chart data
     prevData = angular.copy(vm.data);
 
@@ -137,15 +139,16 @@ function donutPctChartController(pfUtils, $element, $timeout) {
     vm.config.data.onclick = vm.config.onClickFn;
   };
 
-  vm.setupDonutChartTitle = function () {
-    var donutChartTitle, centerLabelText;
+  vm.setupDonutChartTitle = function() {
+    var donutChartTitle;
+    var centerLabelText;
 
     if (angular.isUndefined(vm.chart)) {
       return;
     }
 
     donutChartTitle = d3.select(vm.chart.element).select('text.c3-chart-arcs-title');
-    if (!donutChartTitle) {
+    if (! donutChartTitle) {
       return;
     }
 
@@ -153,7 +156,7 @@ function donutPctChartController(pfUtils, $element, $timeout) {
 
     // Remove any existing title.
     donutChartTitle.selectAll('*').remove();
-    if (centerLabelText.bigText && !centerLabelText.smText) {
+    if (centerLabelText.bigText && ! centerLabelText.smText) {
       donutChartTitle.text(centerLabelText.bigText);
     } else {
       donutChartTitle.insert('tspan').text(centerLabelText.bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0);
@@ -161,12 +164,12 @@ function donutPctChartController(pfUtils, $element, $timeout) {
     }
   };
 
-  vm.setChart = function (chart) {
+  vm.setChart = function(chart) {
     vm.chart = chart;
     vm.setupDonutChartTitle();
   };
 
-  vm.$onChanges = function (changesObj) {
+  vm.$onChanges = function(changesObj) {
     if (changesObj.config || changesObj.data) {
       vm.updateAll();
     }
@@ -178,9 +181,9 @@ function donutPctChartController(pfUtils, $element, $timeout) {
     }
   };
 
-  vm.$doCheck = function () {
+  vm.$doCheck = function() {
     // do a deep compare on data
-    if (!angular.equals(vm.data, prevData)) {
+    if (! angular.equals(vm.data, prevData)) {
       vm.updateAll();
     }
   };

@@ -4,18 +4,19 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
     chartData: '<',
     chartHeight: '<?',
     showXAxis: '<?',
-    showYAxis: '<?'
+    showYAxis: '<?',
   },
   templateUrl: '/static/pf_charts/sparkline-chart.html.haml',
-  controller: sparklineChartController
+  controller: sparklineChartController,
 });
-sparklineChartController.$inject = ['pfUtils']
+sparklineChartController.$inject = ['pfUtils'];
 
 function sparklineChartController(pfUtils) {
   'use strict';
-  var vm = this, prevChartData;
+  var vm = this;
+  var prevChartData;
 
-  vm.updateAll = function () {
+  vm.updateAll = function() {
     // Need to deep watch changes in chart data
     prevChartData = angular.copy(vm.chartData);
 
@@ -50,19 +51,19 @@ function sparklineChartController(pfUtils) {
         show: vm.showXAxis === true,
         type: 'timeseries',
         tick: {
-          format: function () {
+          format: function() {
             return '';
-          }
-        }
+          },
+        },
       },
       y: {
         show: vm.showYAxis === true,
         tick: {
-          format: function () {
+          format: function() {
             return '';
-          }
-        }
-      }
+          },
+        },
+      },
     };
 
     // Setup the default configuration
@@ -82,23 +83,23 @@ function sparklineChartController(pfUtils) {
   /*
    * Convert the config data to C3 Data
    */
-  vm.getSparklineData = function (chartData) {
+  vm.getSparklineData = function(chartData) {
     var sparklineData  = {
-      type: 'area'
+      type: 'area',
     };
 
     if (chartData && chartData.dataAvailable !== false && chartData.xData && chartData.yData) {
       sparklineData.x = chartData.xData[0];
       sparklineData.columns = [
         chartData.xData,
-        chartData.yData
+        chartData.yData,
       ];
     }
 
     return sparklineData;
   };
 
-  vm.getTooltipTableHTML = function (tipRows) {
+  vm.getTooltipTableHTML = function(tipRows) {
     return '<div class="module-triangle-bottom">' +
       '  <table class="c3-tooltip">' +
       '    <tbody>' +
@@ -108,9 +109,9 @@ function sparklineChartController(pfUtils) {
       '</div>';
   };
 
-  vm.sparklineTooltip = function () {
+  vm.sparklineTooltip = function() {
     return {
-      contents: function (d) {
+      contents: function(d) {
         var tipRows;
         var percentUsed = 0;
 
@@ -151,7 +152,7 @@ function sparklineChartController(pfUtils) {
         }
         return vm.getTooltipTableHTML(tipRows);
       },
-      position: function (data, width, height, element) {
+      position: function(data, width, height, element) {
         var center;
         var top;
         var chartBox;
@@ -167,21 +168,21 @@ function sparklineChartController(pfUtils) {
 
           return {
             top: top - height,
-            left: Math.min(x, chartBox.width - width)
+            left: Math.min(x, chartBox.width - width),
           };
         } catch (e) {
         }
-      }
+      },
     };
   };
 
-  vm.$onChanges = function (changesObj) {
+  vm.$onChanges = function(changesObj) {
     vm.updateAll();
   };
 
-  vm.$doCheck = function () {
+  vm.$doCheck = function() {
     // do a deep compare on chartData
-    if (!angular.equals(vm.chartData, prevChartData)) {
+    if (! angular.equals(vm.chartData, prevChartData)) {
       vm.updateAll();
     }
   };
