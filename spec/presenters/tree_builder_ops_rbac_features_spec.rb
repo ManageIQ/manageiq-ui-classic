@@ -8,6 +8,7 @@ describe TreeBuilderOpsRbacFeatures do
       instance_show_list
       instance_control
       instance_scan
+      sui
     )
   end
 

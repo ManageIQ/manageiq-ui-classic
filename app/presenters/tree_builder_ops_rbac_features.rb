@@ -45,6 +45,10 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       top_nodes << MiqProductFeature.obj_features[additional_feature][:feature]
     end
 
+    %w(all_vm_rules sui).each do |additional_feature|
+      top_nodes << MiqProductFeature.obj_features[additional_feature][:feature]
+    end
+
     count_only_or_objects(count_only, top_nodes)
   end
 
