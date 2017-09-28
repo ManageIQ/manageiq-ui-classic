@@ -1,4 +1,7 @@
-ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqService', function(API, $q, miqService) {
+ManageIQ.angular.app.service('playbookReusableCodeMixin', playbookReusableCodeMixin);
+playbookReusableCodeMixin.$inject = ['API', '$q', 'miqService'];
+
+function playbookReusableCodeMixin(API, $q, miqService) {
   var sortOptions = "&sort_by=name&sort_order=ascending";
   var allApiPromises = [];
 
@@ -230,4 +233,4 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', ['API', '$q', 'miqServ
     repositoryChanged: repositoryChanged,
     setIfDefined: setIfDefined,
   };
-}]);
+}

@@ -1,4 +1,7 @@
-ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'aeMethodFormId', 'currentRegion', 'miqService', 'playbookReusableCodeMixin', function($http, $scope, aeMethodFormId, currentRegion, miqService, playbookReusableCodeMixin) {
+ManageIQ.angular.app.controller('aeMethodFormController', aeMethodFormController);
+aeMethodFormController.$inject = ['$http', '$scope', 'aeMethodFormId', 'currentRegion', 'miqService', 'playbookReusableCodeMixin'];
+
+function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, miqService, playbookReusableCodeMixin) {
   var vm = this;
   var init = function() {
     vm.aeMethodModel = {
@@ -257,4 +260,4 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
   }
 
   init();
-}]);
+}
