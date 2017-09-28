@@ -21,8 +21,8 @@ cols:
 - ipaddress
 - emstype_description
 - port
+- total_physical_servers
 - total_hosts
-- total_storages
 - total_vms
 - total_miq_templates
 - region_description
@@ -42,8 +42,8 @@ col_order:
 - ipaddress
 - emstype_description
 - zone.name
+- total_physical_servers
 - total_hosts
-- total_storages
 - total_vms
 - total_miq_templates
 - region_description
@@ -54,8 +54,8 @@ headers:
 - Discovered IP Address
 - Type
 - EVM Zone
+- Physical Servers
 - Hosts
-- Datastores
 - VMs
 - Templates
 - Region
