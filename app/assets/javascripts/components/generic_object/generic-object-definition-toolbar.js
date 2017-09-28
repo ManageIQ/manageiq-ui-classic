@@ -27,8 +27,25 @@ function genericObjectDefinitionToolbarController(API, miqService) {
 
   // private functions
   function postGenericObjectDefinitionAction() {
-    if (toolbar.action === 'delete' && toolbar.genericObjectDefinitionId) {
+    if (toolbar.action === 'delete' && ! toolbar.genericObjectDefinitionId) {
+      _.forEach(toolbar.genericObjectDefinitions, function(genericObjectDefinitionId) {
+        API.get('/api/generic_object_definitions/' + genericObjectDefinitionId + '?attributes=generic_objects_count')
+          .then(checkGenericObjectCountAndDelete)
+          .catch(miqService.handleFailure);
+      });
+    } else if (toolbar.action === 'delete' && toolbar.genericObjectDefinitionId) {
       deleteWithAPI(toolbar.genericObjectDefinitionId);
+    }
+  }
+
+  function checkGenericObjectCountAndDelete(response) {
+    if (response.generic_objects_count === 0) {
+      deleteWithAPI(response.id);
+    } else {
+      miqService.miqFlashLater(
+        { message: sprintf(__('Generic Object Class "%s" with %s instances cannot be deleted'), response.name, response.generic_objects_count),
+          level: 'warning'});
+      miqService.miqFlashSaved();
     }
   }
 
@@ -40,6 +57,11 @@ function genericObjectDefinitionToolbarController(API, miqService) {
 
   function postAction(response) {
     var saveMsg = sprintf(__('Generic Object Class:"%s" was successfully deleted'), response.name);
-    miqService.redirectBack(saveMsg, 'success', toolbar.redirectUrl);
+    if (toolbar.redirectUrl) {
+      miqService.redirectBack(saveMsg, 'success', toolbar.redirectUrl);
+    } else {
+      miqService.miqFlashLater({message: saveMsg});
+      miqService.miqFlashSaved();
+    }
   }
 }
