@@ -5,6 +5,7 @@
 - options = @options ? @options : @edit[:new]
 - field_hash = wf.get_field(field, dialog)
 - return if field_hash.blank?
+- field_hash_values = field_hash.key?(:values_from) ? wf.send("#{dialog}_#{field}_values") : field_hash[:values]
 - field_id = dialog.to_s + "__" + field.to_s
 - disabled ||= false
 
@@ -14,7 +15,7 @@
     ManageIQ.calendar.calDateFrom = miqCalendarDateConversion("#{@timezone_offset}");
   - if [:cluster_filter, :ds_filter, :host_filter, :rp_filter, :vm_filter, :placement_storage_profile].include?(field)
     -# Filter Pull Down fields, show them only if there are any values
-    - unless field_hash[:values].blank?
+    - unless field_hash_values.blank?
       .form-group
         %label.col-md-2.control-label
           = field_hash[:description]
@@ -25,9 +26,9 @@
             -# Allow editing of this pulldown field
             - opts = [["<#{_('ALL')}>", 0]]
             - if field_hash[:data_type] == :integer
-              - opts += Array(field_hash[:values].invert).sort_by(&:last)
+              - opts += Array(field_hash_values.invert).sort_by(&:last)
             - else
-              - opts += Array(field_hash[:values].invert).sort_by(&:first)
+              - opts += Array(field_hash_values.invert).sort_by(&:first)
             = select_tag(field_id,
                          options_for_select(opts, options[field].kind_of?(Array) ? options[field].first : options[field]),
                          :style                 => "width: auto;",
@@ -159,21 +160,21 @@
       - elsif [:vm_memory].include?(field)
         -# text field or a Pull down for vm memory, depending upon existence of :values hash
         .col-md-8
-          - if @edit && field_hash[:display] == :edit && !field_hash[:values] && !@edit[:stamp_typ]
+          - if @edit && field_hash[:display] == :edit && !field_hash_values && !@edit[:stamp_typ]
             -# Allow editing of the text field
             = text_field_tag(field_id, options[field].kind_of?(Array) ? options[field].last : options[field],
               :maxlength         => ViewHelper::MAX_NAME_LEN,
               "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-          - elsif @edit && field_hash[:display] == :edit && field_hash[:values] && !@edit[:stamp_typ]
+          - elsif @edit && field_hash[:display] == :edit && field_hash_values && !@edit[:stamp_typ]
             -# Allow editing of the text field
-            - if field_hash[:values].blank?
+            - if field_hash_values.blank?
               - opts = [["<#{_('No Choices Available')}>", nil]]
             - else
               - if field_hash[:default]
                 - opts = []
               - else
                 - opts = [["<#{_('Choose')}>", nil]]
-              - opts += (Array(field_hash[:values].invert).sort_by { |a| a.first.to_i })
+              - opts += (Array(field_hash_values.invert).sort_by { |a| a.first.to_i })
             = select_tag(field_id,
                           options_for_select(opts, options[field].kind_of?(Array) ? options[field].first : options[field]),
                           :disabled              => disabled,
@@ -200,7 +201,7 @@
         .col-md-8
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
             -# Allow editing of this pulldown field
-            - if field_hash[:values].blank?
+            - if field_hash_values.blank?
               - opts = [["<#{_('No Choices Available')}>", nil]]
             - else
               - if field_hash[:required]
@@ -211,9 +212,9 @@
               - else
                 - opts = [["<#{_('None')}>", nil]]
               - if field_hash[:data_type] == :integer
-                - opts += Array(field_hash[:values].invert).sort_by(&:first)
+                - opts += Array(field_hash_values.invert).sort_by(&:first)
               - else
-                - opts += Array(field_hash[:values].invert).sort_by { |a| a.first.downcase }
+                - opts += Array(field_hash_values.invert).sort_by { |a| a.first.downcase }
             = select_tag(field_id,
                          options_for_select(opts, options[field].kind_of?(Array) ? options[field].first : options[field]),
                          :disabled              => disabled,
@@ -246,7 +247,7 @@
         .col-md-8{:class => td_class}
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
             -# Allow editing of this pulldown field
-            - if field_hash[:values].blank?
+            - if field_hash_values.blank?
               - opts = [["<#{_('No Choices Available')}>", nil]]
             - else
               - if field_hash[:required]
@@ -259,9 +260,9 @@
               - if field_hash[:sort_by] == :none
                 - opts += Array(field_hash[:values].invert)
               - elsif field_hash[:data_type] == :integer
-                - opts += Array(field_hash[:values].invert).sort_by(&:last)
+                - opts += Array(field_hash_values.invert).sort_by(&:last)
               - else
-                - opts += Array(field_hash[:values].invert).sort_by { |a| a.first.downcase }
+                - opts += Array(field_hash_values.invert).sort_by { |a| a.first.downcase }
             = select_tag(field_id,
                          options_for_select(opts, (options[field].kind_of?(Array) && !multiple) ? options[field].first : options[field]),
                          :multiple              => multiple,
@@ -276,7 +277,7 @@
             -# Just show the field value
             - if multiple
               - options[field].each_with_index do |val, i|
-                = field_hash[:values][val]
+                = field_hash_values[val]
                 - if i < options[field].length - 1
                   %br
             - else
@@ -345,7 +346,7 @@
             - elsif field == :windows_image_id
               = render :partial => "miq_request/prov_windows_image_grid", :locals => {:field_id => field_id}
             - else
-              - if field_hash[:values].blank?
+              - if field_hash_values.blank?
                 - opts = [["<#{_('No Choices Available')}>", nil]]
               - else
                 - if field_hash[:required]
@@ -355,7 +356,7 @@
                     - opts = [["<#{_('Choose')}>", nil]]
                 - else
                   - opts = [["<#{_('None')}>", nil]]
-                - opts += Array(field_hash[:values].invert).sort_by { |a| a.first.downcase }
+                - opts += Array(field_hash_values.invert).sort_by { |a| a.first.downcase }
               = select_tag(field_id,
                            options_for_select(opts, options[field].kind_of?(Array) ? options[field].first : options[field]),
                            :style                 => "width: auto;",
@@ -387,7 +388,7 @@
         .col-md-8
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
             -# Allow editing of this pulldown field
-            - if field_hash[:values].blank?
+            - if field_hash_values.blank?
               - opts = [["<#{_('No Choices Available')}>", nil]]
             - else
               - if field_hash[:default]
@@ -397,9 +398,9 @@
               - if field == :sysprep_timezone
                 - opts += Array(field_hash[:values].invert)
               - elsif field_hash[:data_type] == :integer
-                - opts += Array(field_hash[:values].invert).sort_by(&:last)
+                - opts += Array(field_hash_values.invert).sort_by(&:last)
               - else
-                - opts += Array(field_hash[:values].invert).sort_by(&:first)
+                - opts += Array(field_hash_values.invert).sort_by(&:first)
             = select_tag(field_id,
                          options_for_select(opts, options[field].kind_of?(Array) ? options[field].first : options[field]),
                          :disabled              => disabled,
@@ -419,6 +420,43 @@
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
             = field_hash[:notes]
+<<<<<<< HEAD
+=======
+      - elsif [:sysprep_timezone].include?(field)
+        -# Pull down with Array of Arrays
+        .col-md-8
+          - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
+            -# Allow editing of this pulldown field
+            - if field_hash_values.length == 1
+              -# Only 1 choice, show the value
+              = options[field].last
+              -# Description is in the second, last, array element
+            - else
+              - if field_hash_values.blank?
+                - opts = [["<#{_('No Choices Available')}>", nil]]
+              - else
+                - if field_hash[:required]
+                  - if field_hash[:default]
+                    - opts = []
+                  - else
+                    - opts = [["<#{_('Choose')}>", nil]]
+                - else
+                  - opts = [["<#{_('None')}>", nil]]
+                - opts += field_hash_values
+              = select_tag(field_id,
+                           options_for_select(opts, options[field].kind_of?(Array) ? options[field].first : options[field]),
+                           :disabled              => disabled,
+                           "data-miq_sparkle_on"  => true,
+                           "data-miq_sparkle_off" => true,
+                           :class                 => "selectpicker")
+              :javascript
+                miqInitSelectPicker();
+                miqSelectPickerEvent("#{field_id}", "#{url}")
+          - else
+            -# Just show the field value %>
+            -# Description is in the second, last, array element
+            = options[field].last
+>>>>>>> Get the possible values for the fields by calling [dialogname]_[fieldname]_values methods.
       - elsif [:linked_clone, :placement_auto, :stateless, :sysprep_auto_logon, :sysprep_change_sid,
                :sysprep_delete_accounts, :sysprep_spec_override, :vm_auto_start, :vm_dynamic_memory, :is_preemptible].include?(field)
         -# ### Checkbox fields
@@ -446,7 +484,7 @@
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
             -# Allow editing of the text field
             -# need to specify Checked/Disabled to check or disable a checkbox, so need separate lines for each depending upon radio button state
-            - field_hash[:values].each do |f|
+            - field_hash_values.each do |f|
               - checked = options[field] && options[field][0] == f[0]
               - current_div = "#{@edit[:new][:current_tab_key]}"
               - onclick = remote_function(:with => "miqSerializeField('#{current_div}', '#{field_id}')", :url => url, :loading => "miqSparkle(true);", :complete => "miqSparkle(false);")
