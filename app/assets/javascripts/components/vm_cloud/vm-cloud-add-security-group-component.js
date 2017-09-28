@@ -1,19 +1,30 @@
-ManageIQ.angular.app.controller('vmCloudAddSecurityGroupFormController', ['vmCloudAddSecurityGroupFormId', 'miqService', 'API', function(vmCloudAddSecurityGroupFormId, miqService, API) {
+ManageIQ.angular.app.component('vmCloudAddSecurityGroupComponent', {
+  bindings: {
+    recordId: '@',
+  },
+  controllerAs: 'vm',
+  controller: vmCloudAddSecurityGroupFormController,
+  templateUrl: '/static/vm_cloud/add_security_group.html.haml',
+});
+
+vmCloudAddSecurityGroupFormController.$inject = ['API', 'miqService'];
+
+function vmCloudAddSecurityGroupFormController(API, miqService) {
   var vm = this;
 
-  var init = function() {
+  vm.$onInit = function() {
     vm.afterGet = false;
     vm.vmCloudModel = {
       security_group: null,
     };
     vm.security_groups = [];
-    vm.formId = vmCloudAddSecurityGroupFormId;
+    vm.formId = vm.recordId;
     vm.model = "vmCloudModel";
     vm.saveable = miqService.saveable;
     miqService.sparkleOn();
-    API.get("/api/vms/" + vmCloudAddSecurityGroupFormId).then(function(data) {
+    API.get("/api/vms/" + vm.recordId).then(function(data) {
       tenantId = data.cloud_tenant_id;
-      API.get("/api/vms/" + vmCloudAddSecurityGroupFormId + "/security_groups?expand=resources&attributes=id,name").then(function(data) {
+      API.get("/api/vms/" + vm.recordId + "/security_groups?expand=resources&attributes=id,name").then(function(data) {
         currentSecurityGroups = data.resources;      
         API.get("/api/cloud_tenants/" + tenantId + "/security_groups?expand=resources&attributes=id,name").then(function(data) {
           vm.security_groups = data.resources.filter(function (securityGroup) {
@@ -33,7 +44,7 @@ ManageIQ.angular.app.controller('vmCloudAddSecurityGroupFormController', ['vmClo
   };
 
   vm.cancelClicked = function() {
-    var url = '/vm_cloud/add_security_group_vm/' + vmCloudAddSecurityGroupFormId + '?button=cancel';
+    var url = '/vm_cloud/add_security_group_vm/' + vm.recordId + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
@@ -44,9 +55,7 @@ ManageIQ.angular.app.controller('vmCloudAddSecurityGroupFormController', ['vmClo
   };
 
   vm.saveClicked = function() {
-    var url = '/vm_cloud/add_security_group_vm/' + vmCloudAddSecurityGroupFormId + '?button=submit';
+    var url = '/vm_cloud/add_security_group_vm/' + vm.recordId + '?button=submit';
     miqService.miqAjaxButton(url, vm.vmCloudModel, { complete: false });
   };
-
-  init();
-}]);
+}
