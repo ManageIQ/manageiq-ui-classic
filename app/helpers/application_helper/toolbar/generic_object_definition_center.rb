@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Generic Object Classes from Inventory'),
           t,
-          :klass => ApplicationHelper::Button::GenericObjectDefinition,
+          :klass => ApplicationHelper::Button::GenericObjectDefinitionDeleteButton,
           :confirm => N_("Warning: This Generic Object Class will be permanently removed!"),
         )
       ]
