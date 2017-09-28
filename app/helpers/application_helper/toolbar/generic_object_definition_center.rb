@@ -20,7 +20,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           t,
           :data    => {'function'      => 'sendDataWithRx',
                        'function-data' => '{"type": "delete", "controller": "genericObjectDefinitionToolbarController"}'},
-          :klass => ApplicationHelper::Button::GenericObjectDefinitionDeleteButton,
+          :klass   => ApplicationHelper::Button::GenericObjectDefinitionDeleteButton,
           :confirm => N_("Warning: This Generic Object Class will be permanently removed!"),
         )
       ]
