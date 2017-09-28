@@ -38,31 +38,33 @@
             %td.text-nowrap
               - if row.respond_to?(:volume_template?)
                 = h(_("Volume"))
+              - elsif row.respond_to?(:volume_snapshot_template?)
+                = h(_("Volume Snapshot"))
               - elsif row.respond_to?(:image?)
                 = h(row.image? ? _("Image") : _("Snapshot"))
 
           %td
-            - if row.respond_to?(:volume_template?)
+            - if row.respond_to?(:volume_template?) || row.respond_to?(:volume_snapshot_template?)
               = h(_("N/A"))
             - else
               = h(row.operating_system.try(:product_name))
           %td
-            - if row.respond_to?(:volume_template?)
+            - if row.respond_to?(:volume_template?) || row.respond_to?(:volume_snapshot_template?)
               = h(_("N/A"))
             - else
               = h(row.platform)
           %td
-            - if row.respond_to?(:volume_template?)
+            - if row.respond_to?(:volume_template?) || row.respond_to?(:volume_snapshot_template?)
               = h(_("N/A"))
             - else
-              = h(row.cpu_total_cores)
+              = h(row.cpu_total_cores) || row.respond_to?(:volume_snapshot_template?)
           %td
-            - if row.respond_to?(:volume_template?)
+            - if row.respond_to?(:volume_template?) || row.respond_to?(:volume_snapshot_template?)
               = h(_("N/A"))
             - else
               = h(number_to_human_size(row.mem_cpu.to_i * 1024 * 1024))
           %td
-            - if row.respond_to?(:volume_template?)
+            - if row.respond_to?(:volume_template?) || row.respond_to?(:volume_snapshot_template?)
               = h(_("N/A"))
             - else
               = h(number_to_human_size(row.allocated_disk_storage))
