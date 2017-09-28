@@ -28,19 +28,6 @@ module EmsContainerHelper::TextualSummary
     )
   end
 
-  def textual_group_component_statuses
-    labels = [_("Name"), _("Healthy"), _("Error")]
-    h = {:labels => labels}
-    h[:values] = @record.container_component_statuses.collect do |cs|
-      [
-        cs.name,
-        cs.status,
-        (cs.error || "")
-      ]
-    end
-    TextualMultilabel.new(_("Component Statuses"), h)
-  end
-
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i(zone tags))
   end
