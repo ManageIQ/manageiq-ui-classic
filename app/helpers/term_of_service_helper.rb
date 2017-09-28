@@ -21,10 +21,11 @@ module TermOfServiceHelper
       "vm-tags"            => N_("Tagged VMs and Instances")
     },
     "Storage" => {
-      "enterprise"   => N_("The Enterprise"),
-      "storage"      => N_("Selected Datastores"),
-      "storage-tags" => N_("Tagged Datastores"),
-      "tenant"       => N_("Tenants")
+      "enterprise"    => N_("The Enterprise"),
+      "storage"       => N_("Selected Datastores"),
+      "storage-tags"  => N_("Tagged Datastores"),
+      "ems_container" => N_("Selected Containers Providers"),
+      "tenant"        => N_("Tenants")
     },
     "MiqServer" => {
       "miq_server" => N_("Selected Servers"),
