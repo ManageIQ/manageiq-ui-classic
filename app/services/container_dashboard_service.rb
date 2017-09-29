@@ -1,7 +1,5 @@
-class ContainerDashboardService
-  include UiServiceMixin
+class ContainerDashboardService < DashboardService
   include ContainerServiceMixin
-
 
   def initialize(provider_id, controller)
     @provider_id = provider_id
@@ -83,20 +81,7 @@ class ContainerDashboardService
     }
   end
 
-  def providers
-    provider_classes_to_ui_types = ManageIQ::Providers::ContainerManager.subclasses.each_with_object({}) { |subclass, h|
-      name = subclass.name.split('::')[2]
-      h[subclass.name] = name.to_sym
-    }
-    providers = @ems.present? ? {@ems.type => 1} : ManageIQ::Providers::ContainerManager.group(:type).count
-
-    result = {}
-    providers.each do |provider, count|
-      ui_type = provider_classes_to_ui_types[provider]
-      (result[ui_type] ||= build_provider_status(ui_type))[:count] += count
-    end
-    result.values
-  end
+  @provider_base_class = ManageIQ::Providers::ContainerManager
 
   def alerts
     provider_ids = ManageIQ::Providers::ContainerManager.all.pluck(:id)
