@@ -1,4 +1,32 @@
 class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Toolbar::Basic
+  button_group('physical_server_vmdb', [
+    select(
+      :physical_server_vmdb_choice,
+      'fa fa-cog fa-lg',
+      t = N_('Configuration'),
+      t,
+      :items => [
+        button(
+          :physical_server_refresh,
+          'fa fa-refresh fa-lg',
+          N_('Refresh relationships and power states for all items related to the selected Physical Servers'),
+          N_('Refresh Relationships and Power States'),
+          :url_parms => "main_div",
+          :confirm   => N_("Refresh relationships and power states for all items related to the selected Physical Servers?"),
+          :enabled   => false,
+          :onwhen    => "1+"),
+        button(
+          :physical_server_delete,
+          'pficon pficon-delete fa-lg',
+          N_('Remove selected Physical Servers from Inventory'),
+          N_('Remove Physical Servers from Inventory'),
+          :url_parms => "main_div",
+          :confirm   => N_("Warning: The selected Physical Servers and ALL of their components will be permanently removed!"),
+          :enabled   => false,
+          :onwhen    => "1+"),
+      ]
+    ),
+  ])
   button_group(
     'physical_server_operations',
     [
