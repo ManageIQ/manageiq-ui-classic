@@ -232,6 +232,7 @@ module ApplicationHelper
     "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript,
     "vms"                                    => VmOrTemplate,
     "ServiceCatalog"                         => ServiceTemplate
+    "middleware_diagnostic_report"           => "middleware_diagnostic_report"
   }.freeze
 
   HAS_ASSOCATION = {
