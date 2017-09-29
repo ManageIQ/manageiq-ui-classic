@@ -9,13 +9,13 @@
 #
 
 # Report title
-title: Azure Orchestration Templates
+title: CloudFormations Orchestration Templates
 
 # Menu name
-name: Azure Orchestration Template
+name: CloudFormations Orchestration Template
 
 # Main DB table report is based on
-db: OrchestrationTemplateAzure
+db: ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate
 
 # Columns to fetch from the main table
 cols:

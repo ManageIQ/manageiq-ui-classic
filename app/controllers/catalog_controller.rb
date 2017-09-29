@@ -45,11 +45,11 @@ class CatalogController < ApplicationController
   }.freeze
 
   ORCHESTRATION_TEMPLATES_NODES = {
-    'OrchestrationTemplateCfn'                                         => "otcfn",
-    'OrchestrationTemplateHot'                                         => "othot",
-    'OrchestrationTemplateAzure'                                       => "otazu",
-    'OrchestrationTemplateVnfd'                                        => "otvnf",
-    'ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate' => "otvap"
+    'ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate'    => "otcfn",
+    'ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate' => "othot",
+    'ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate'     => "otazu",
+    'ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate'          => "otvnf",
+    'ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate'    => "otvap"
   }.freeze
 
   def x_button
@@ -734,7 +734,7 @@ class CatalogController < ApplicationController
 
   def ot_add
     assert_privileges("orchestration_template_add")
-    ot_type = x_node == "root" ? "OrchestrationTemplateCfn" : node_name_to_template_name(x_node)
+    ot_type = x_node == "root" ? "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate" : node_name_to_template_name(x_node)
     @edit = {:new => {:name        => "",
                       :description => "",
                       :content     => "",
@@ -1112,7 +1112,14 @@ class CatalogController < ApplicationController
   def ot_add_submit_save
     assert_privileges("orchestration_template_add")
     load_edit("ot_add__new", "replace_cell__explorer")
-    if !%w(OrchestrationTemplateHot OrchestrationTemplateCfn OrchestrationTemplateAzure OrchestrationTemplateVnfd ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate).include?(@edit[:new][:type])
+    template_types = %w(
+      ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate
+      ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate
+      ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate
+      ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate
+      ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate
+    )
+    if !template_types.include?(@edit[:new][:type])
       render_flash(_("\"%{type}\" is not a valid Orchestration Template type") % {:type => @edit[:new][:type]}, :error)
     elsif params[:content].nil? || params[:content].strip == ""
       render_flash(_("Error during Orchestration Template creation: new template content cannot be empty"), :error)
@@ -1160,7 +1167,7 @@ class CatalogController < ApplicationController
     load_edit("ot_edit__#{params[:id]}", "replace_cell__explorer")
     begin
       ot = OrchestrationTemplate.find_by_id(params[:id])
-      OrchestrationTemplateDialogService.new.create_dialog(@edit[:new][:dialog_name], ot)
+      Dialog::OrchestrationTemplateServiceDialog.new.create_dialog(@edit[:new][:dialog_name], ot)
     rescue => bang
       add_flash(_("Error when creating a Service Dialog from Orchestration Template: %{error_message}") %
         {:error_message => bang.message}, :error)

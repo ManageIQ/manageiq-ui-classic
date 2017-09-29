@@ -9,13 +9,13 @@
 #
 
 # Report title
-title: HOT Orchestration Templates
+title: VNF Orchestration Templates
 
 # Menu name
-name: HOT Orchestration Template
+name: VNF Orchestration Template
 
 # Main DB table report is based on
-db: OrchestrationTemplateHot
+db: ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate
 
 # Columns to fetch from the main table
 cols:
