@@ -1166,7 +1166,7 @@ class MiqAeClassController < ApplicationController
       method.language = params["language"]
       method.scope = params["scope"]
       method.class_id = params[:class_id]
-      method.data =  YAML.dump(set_playbook_data)
+      method.data = YAML.dump(set_playbook_data)
       begin
         MiqAeMethod.transaction do
           to_save, to_delete = playbook_inputs(method)
@@ -2688,7 +2688,14 @@ class MiqAeClassController < ApplicationController
 
   def fetch_playbook_details
     @playbook_details = {}
-    data = YAML.load(@record.data)
+    whitelist_symbols = [:repository_id,
+                         :playbook_id,
+                         :credential_id,
+                         :network_credential_id,
+                         :cloud_credential_id,
+                         :verbosity,
+                         :become_enabled]
+    data = YAML.safe_load(@record.data, [Symbol], whitelist_symbols, false, nil)
     @playbook_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, data[:repository_id])
     @playbook_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, data[:playbook_id])
     @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, data[:credential_id])

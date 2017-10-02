@@ -70,7 +70,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel.provisioning_machine_credential_id = configData.credential_id;
     vm.aeMethodModel.provisioning_network_credential_id = configData.network_credential_id;
     vm.aeMethodModel.provisioning_cloud_credential_id = playbookReusableCodeMixin.setIfDefined(configData.cloud_credential_id);
-    vm.aeMethodModel.provisioning_become_enabled = configData.become_enabled === 'true' ? true : false;
+    vm.aeMethodModel.provisioning_become_enabled = configData.become_enabled === 'true';
     vm.aeMethodModel.provisioning_key = '';
     vm.aeMethodModel.provisioning_value = '';
 

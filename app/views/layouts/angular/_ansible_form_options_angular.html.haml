@@ -107,7 +107,7 @@
                             "checkchange" => true}
           %span.help-block{"ng-show" => "angularForm.#{prefix}_inventory.$error.miqrequired"}
             = _("Required")
-    .form-group{"ng-if" =>"#{ng_model}.#{prefix}_execution_ttl!==undefined","ng-class" => "{'has-error': angularForm.#{prefix}_execution_ttl.$invalid}"}
+    .form-group{"ng-if" =>"#{ng_model}.#{prefix}_execution_ttl!==undefined", "ng-class" => "{'has-error': angularForm.#{prefix}_execution_ttl.$invalid}"}
       %label.col-md-3.control-label{"for" => "#{prefix}_execution_ttl"}
         = _("Max TTL (mins)")
       .col-md-9
