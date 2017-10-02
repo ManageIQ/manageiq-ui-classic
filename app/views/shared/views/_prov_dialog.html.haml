@@ -30,7 +30,7 @@
         :prefix                     => "/miq_request/",
         :keys                       => keys})
   - when :service
-    - keys = wf.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow) ? [:src_vm_id, :provision_type, :linked_clone] : [:vm_filter, :src_vm_id, :provision_type, :linked_clone, :snapshot]
+    - keys = wf.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow) ? [:src_vm_id, :provision_type, :linked_clone, :seal_template] : [:vm_filter, :src_vm_id, :provision_type, :linked_clone, :snapshot]
     - label = wf.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow) ? _("Selected VM") : _("Select")
     = render(:partial => "/miq_request/prov_dialog_fieldset",
       :locals         => {:workflow => wf,
