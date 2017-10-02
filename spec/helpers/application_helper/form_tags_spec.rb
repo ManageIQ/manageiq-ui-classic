@@ -8,4 +8,12 @@ describe ApplicationHelper::FormTags do
     expect(input).to include('data-date-format=')
     expect(input).to include('data-date-language=')
   end
+
+  it "#datetimepicker_input_tag sets correct date / time, datetime-format" do
+    input = helper.datetimepicker_input_tag('id01', Time.at(1_170_361_845).utc)
+
+    expect(input).to include('datetimepicker="true"')
+    expect(input).to include('datetime-format=')
+    expect(input).to include('value="2007-02-01 20:30:45 UTC"')
+  end
 end
