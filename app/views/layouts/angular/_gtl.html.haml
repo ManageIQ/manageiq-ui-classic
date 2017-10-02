@@ -1,4 +1,4 @@
-- current_model = model_to_report_data
+- model_name = model_to_report_data
 - no_flash_div ||= false
 - gtl_type_string = j_str(@gtl_type)
 - active_tree = x_active_tree unless params[:display] || @use_action
@@ -40,10 +40,10 @@
   sendDataWithRx({initController: {
     name: 'reportDataController',
     data: {
-      modelName: '#{h(j_str(current_model))}',
+      modelName: '#{h(j_str(model_name))}',
       activeTree: '#{active_tree}',
       gtlType: '#{h(gtl_type_string)}',
-      currId: '#{h(j_str(params[:id])) unless @display.nil?}',
+      parent_id: '#{h(j_str(params[:id])) unless @display.nil?}',
       sortColIdx: '#{@sortcol}',
       sortDir: '#{@sortdir}',
       isExplorer: '#{@explorer}' === 'true' ? true : false,

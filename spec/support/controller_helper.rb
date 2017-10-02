@@ -63,7 +63,7 @@ module Spec
           expect(response.body).to include("modelName: '#{relation}'")
           expect(response.body).to include("activeTree: ''")
           expect(response.body).to include("gtlType: '#{gtl_types.first}'")
-          expect(response.body).to include("currId: '#{parent.id}'")
+          expect(response.body).to include("parent_id: '#{parent.id}'")
           expect(response.body).to include("showUrl: '/#{child_route}/'")
         end
 
