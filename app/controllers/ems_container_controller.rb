@@ -132,4 +132,6 @@ class EmsContainerController < ApplicationController
   public :restful?
 
   menu_section :cnt
+
+  has_custom_buttons
 end
