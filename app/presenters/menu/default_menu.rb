@@ -277,9 +277,24 @@ module Menu
 
       def help_menu_section
         Menu::Section.new(:help, N_('Help'), 'pficon pficon-help', [
-          Menu::Item.new('documentation', N_('Documentation'), 'documentation',  {:feature => 'documentation'}, '/support/index?support_tab=about'),
-          Menu::Item.new('product',       N_('ManageIQ.org'),  'product',        {:feature => 'product'},       I18n.t("product.support_website").html_safe, :new_window),
-          Menu::Item.new('about',         N_('About'),         'about',          {:feature => 'about'},         '#aboutModal', :modal)
+          Menu::Item.new('documentation',
+                         Settings.help_menu.try(:documentation).try(:title) || N_('Documentation'),
+                         'documentation',
+                         {:feature => 'documentation'},
+                         Settings.help_menu.try(:documentation).try(:link) || '/support/index?support_tab=about',
+                         Settings.help_menu.try(:documentation).try(:type)),
+          Menu::Item.new('product',
+                         Settings.help_menu.try(:product).try(:title) || N_('ManageIQ.org'),
+                         'product',
+                         {:feature => 'product'},
+                         Settings.help_menu.try(:product).try(:link) || I18n.t("product.support_website").html_safe,
+                         Settings.help_menu.try(:product).try(:type) || :new_window),
+          Menu::Item.new('about',
+                         Settings.help_menu.try(:about).try(:title) || N_('About'),
+                         'about',
+                         {:feature => 'about'},
+                         Settings.help_menu.try(:about).try(:link) || '#aboutModal',
+                         Settings.help_menu.try(:about).try(:type) || :modal)
         ], :help)
       end
 
