@@ -290,7 +290,7 @@ module PxeController::IsoDatastores
   end
 
   # Get information for an event
-  def build_iso_datastore_tree
+  def build_iso_datastores_tree
     TreeBuilderIsoDatastores.new("iso_datastores_tree", "iso_datastores", @sb)
   end
 
