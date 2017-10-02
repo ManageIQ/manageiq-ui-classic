@@ -1,7 +1,7 @@
 /* global miqHttpInject */
 angular.module( 'patternfly.charts' ).controller( 'lineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'objectType', function($q, providerId, $http, chartsMixin, objectType ) {
   var vm = this;
-
+  vm.id = "lineChart_" + providerId;
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.config = chartsMixin.chartConfig['recent' + objectType + 'Config'];

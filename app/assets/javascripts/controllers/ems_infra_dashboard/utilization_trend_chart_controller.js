@@ -45,6 +45,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
         } else {
           metricsDataStruct.data[keys[i]] = {
             'data': chartsMixin.processData(data[keys[i]], 'dates', chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units),
+            'id': keys[i] + 'UsageConfig_' + providerId,
             'config': {
               'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
               'units': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units,

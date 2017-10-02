@@ -2,6 +2,7 @@
 
 angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'providerId', '$http', function($q, providerId, $http) {
   var vm = this;
+  vm.id = "heatmap_" + providerId;
   vm.data = {};
 
   var init = function() {
@@ -52,7 +53,7 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'pr
                   d.total, d.unit);
             }
             return {
-              "id": d.id,
+              "id": keys[i] + '_' + d.id,
               "tooltip": tooltip,
               "value": percent,
             };
