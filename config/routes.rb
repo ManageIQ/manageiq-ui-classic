@@ -1335,6 +1335,7 @@ Rails.application.routes.draw do
 
     :ems_container            => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         perf_top_chart
@@ -1366,6 +1367,7 @@ Rails.application.routes.draw do
       ) +
                adv_search_post +
                compare_post +
+               dialog_runner_post +
                exp_post +
                perf_post +
                save_post
