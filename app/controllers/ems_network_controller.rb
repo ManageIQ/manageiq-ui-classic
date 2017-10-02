@@ -18,10 +18,6 @@ class EmsNetworkController < ApplicationController
     @table_name ||= "ems_network"
   end
 
-  def rbac_params
-    {:match_via_descendants => ManageIQ::Providers::NetworkManager}
-  end
-
   def ems_path(*args)
     path_hash = {:action => 'show', :id => args[0].id.to_s }
     path_hash.merge(args[1])
