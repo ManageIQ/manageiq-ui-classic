@@ -3,11 +3,9 @@ describe MiddlewareServerController do
     FactoryGirl.create(:hawkular_middleware_server, :properties              => {},
                                                     :middleware_server_group => nil)
   end
+  let!(:user) { stub_user(:features => :all) }
 
   render_views
-  before(:each) do
-    stub_user(:features => :all)
-  end
 
   it 'renders index' do
     get :index
@@ -179,6 +177,61 @@ describe MiddlewareServerController do
       expect(assigns(:flash_array)).to eq(
         [{:message => "Unable to locate all reports in database, please try again.", :level => :error}]
       )
+    end
+  end
+
+  describe('Standalone server operations:') do
+    def expected_event_hash(operation_info, mw_server)
+      {
+        :ems_id          => ems.id,
+        :source          => 'EVM',
+        :event_type      => operation_info.fetch(:log_timeline),
+        :message         => _('%{operation} requested for server %{server}') %
+          {:operation => operation_info.fetch(:msg), :server => mw_server.name},
+        :middleware_ref  => mw_server.ems_ref,
+        :middleware_type => 'MiddlewareServer',
+        :username        => user.userid
+      }
+    end
+
+    let(:ems) { FactoryGirl.create(:ems_middleware) }
+    let(:mw_server) { FactoryGirl.create(:hawkular_middleware_server, :ext_management_system => ems) }
+
+    before(:each) do
+      allow(controller).to receive(:trigger_mw_operation)
+    end
+
+    %w(reload suspend resume stop shutdown restart).each do |operation|
+      it("#{operation} button operation should queue creation of timeline event") do
+        op_name = "middleware_server_#{operation}"
+        operation_info = described_class::ALL_OPERATIONS.fetch(op_name.to_sym)
+
+        expect(EmsEvent).to receive(:add_queue).with(
+          'add', ems.id,
+          hash_including(expected_event_hash(operation_info, mw_server))
+        )
+
+        post :button, :params => {
+          :id      => mw_server.id,
+          :pressed => op_name,
+          :timeout => 10
+        }
+      end
+
+      it("#{operation} dialog operation should queue creation of timeline event") do
+        operation_info = described_class::ALL_OPERATIONS.fetch("middleware_server_#{operation}".to_sym)
+
+        expect(EmsEvent).to receive(:add_queue).with(
+          'add', ems.id,
+          hash_including(expected_event_hash(operation_info, mw_server))
+        )
+
+        post :run_operation, :params => {
+          :id        => mw_server.id,
+          :operation => operation,
+          :timeout   => 10
+        }
+      end
     end
   end
 end
