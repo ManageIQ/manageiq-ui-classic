@@ -10,35 +10,15 @@
       = _('Main Info')
     .form-horizontal.static
       .form-group
-        %label.col-md-2.control-label
-          = _('Type')
-        .col-md-8
-          %p.form-control-static
-            = @ae_method.location
+        = format_form_group(_('Type'), @ae_method.location)
       .form-group
-        %label.col-md-2.control-label
-          = Dictionary.gettext('fqname', :type => :column, :notfound => :titleize)
-        .col-md-8
-          %p.form-control-static
-            = h(@sb[:namespace_path])
+        = format_form_group(Dictionary.gettext('fqname', :type => :column, :notfound => :titleize), @sb[:namespace_path])
       .form-group
-        %label.col-md-2.control-label
-          = _('Name')
-        .col-md-8
-          %p.form-control-static
-            = @ae_method.name
+        = format_form_group(_('Name'), @ae_method.name)
       .form-group
-        %label.col-md-2.control-label
-          = _('Display Name')
-        .col-md-8
-          %p.form-control-static
-            = @ae_method.display_name
+        = format_form_group(_('Display Name'), @ae_method.display_name)
       .form-group
-        %label.col-md-2.control-label
-          = _('Created On')
-        .col-md-8
-          %p.form-control-static
-            = h(format_timezone(@ae_method.created_on, Time.zone, "gtl"))
+        = format_form_group(_('Created On'), format_timezone(@ae_method.created_on, Time.zone, "gtl"))
     = render :partial => "domain_overrides", :locals => {:node_prefix => "aem", :model => "Method"}
     %h3= (@ae_method.location == 'builtin') ? _('Builtin name') : _('Data')
     - if @ae_method.location == "inline"
@@ -59,35 +39,17 @@
     - elsif @ae_method.location == 'playbook'
       .form-horizontal.static
         .form-group
-          %label.col-md-2.control-label
-            = _('Repository')
-          .col-md-8
-            = h(@playbook_details[:repository])
+          = format_form_group(_('Repository'), @playbook_details[:repository])
         .form-group
-          %label.col-md-2.control-label
-            = _('Playbook')
-          .col-md-8
-            = h(@playbook_details[:playbook])
+          = format_form_group(_('Playbook'), @playbook_details[:playbook])
         .form-group
-          %label.col-md-2.control-label
-            = _('Machine Credential')
-          .col-md-8
-            = h(@playbook_details[:machine_credential])
+          = format_form_group(_('Machine Credential'), @playbook_details[:machine_credential])
         .form-group
-          %label.col-md-2.control-label
-            = _('Cloud Credential')
-          .col-md-8
-            = h(@playbook_details[:cloud_credential])
+          = format_form_group(_('Cloud Credential'), @playbook_details[:cloud_credential])
         .form-group
-          %label.col-md-2.control-label
-            = _('Escalate Privilege')
-          .col-md-8
-            = h(@playbook_details[:become_enabled])
+          = format_form_group(_('Escalate Privilege'), @playbook_details[:become_enabled])
         .form-group
-          %label.col-md-2.control-label
-            = _('Verbosity')
-          .col-md-8
-            = h(verbosity_display(@playbook_details[:verbosity]))
+          = format_form_group(_('Verbosity'), verbosity_display(@playbook_details[:verbosity]))
     - else
       = @ae_method.data
     -# show inputs parameters grid if there are any inputs

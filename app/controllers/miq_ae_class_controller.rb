@@ -1733,16 +1733,14 @@ class MiqAeClassController < ApplicationController
   end
 
   def set_playbook_data
-    data = {
-      :repository_id  => params['repository_id'],
-      :playbook_id    => params['playbook_id'],
-      :credential_id  => params['credential_id'],
-      :become_enabled => params['become_enabled'],
-      :verbosity      => params['verbosity'],
-    }
-    data[:network_credential_id] = params['network_credential_id'] if params['network_credential_id']
-    data[:cloud_credential_id] = params['cloud_credential_id'] if params['cloud_credential_id']
-    data
+    params_list = %i(repository_id
+                     playbook_id
+                     credential_id
+                     become_enabled
+                     verbosity
+                     network_credential_id
+                     cloud_credential_id)
+    copy_params_if_set({}, params, params_list)
   end
 
   def angular_form_specific_data

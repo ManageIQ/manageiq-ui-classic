@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
   helper JsHelper
   helper QuadiconHelper
   helper ImageEncodeHelper
+  helper ViewFormattingHelper
 
   helper CloudResourceQuotaHelper
 
