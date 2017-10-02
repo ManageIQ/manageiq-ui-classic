@@ -378,7 +378,11 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.providerTypeChanged = function() {
     if ($scope.emsCommonModel.ems_controller === 'ems_container') {
-      $scope.emsCommonModel.default_api_port = "8443"; // TODO: correct per-type port
+      if ($scope.emsCommonModel.emstype === 'kubernetes') {
+        $scope.emsCommonModel.default_api_port = "6443";
+      } else {
+        $scope.emsCommonModel.default_api_port = "8443";
+      }
       return;
     }
     $scope.emsCommonModel.default_api_port = "";
