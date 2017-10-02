@@ -2339,6 +2339,7 @@ class MiqAeClassController < ApplicationController
                          @edit[:new][:data]
                        end
     miqaemethod.class_id = from_cid(@edit[:ae_class_id])
+    miqaemethod.embedded_methods = @edit[:new][:embedded_methods]
   end
 
   # Set record variables to new values
