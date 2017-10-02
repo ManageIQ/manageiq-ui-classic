@@ -1,5 +1,5 @@
 .col-md-12
-  .toolbar-pf-actions
+  .pagination.content-view-pf-pagination
     - action_url = "saved_report_paging"
     - url = url_for_only_path(:action => action_url)
     - @pb_occ ||= 0
@@ -8,17 +8,16 @@
                 :current => 1,
                 :total   => @sb[:pages][:total],
                 :items   => @sb[:pages][:items]}
+    .form-group
+    .form-group{:id => "rpb_div_#{@pb_occ}", :style => "justify-content: flex-end;"}
+      = select_tag("ppsetting",
+                  options_for_select(@pp_choices, pages[:perpage]),
+                  "data-width" => "auto",
+                  :class       => "selectpicker dropup")
 
-    %div{:id => "rpb_div_#{@pb_occ}"}
+      :javascript
+        miqSelectPickerEvent("ppsetting", "#{url}", {beforeSend: true, complete: true})
       = render :partial => '/layouts/paging_bar',
                :locals => {:pages => pages, :action_url => action_url, :action_id => ''}
-      .form-group.pull-right
-        = _('Items per page:')
-        = select_tag("ppsetting",
-                    options_for_select(@pp_choices, pages[:perpage]),
-                    "data-width" => "auto",
-                    :class       => "selectpicker dropup")
-        :javascript
-          miqSelectPickerEvent("ppsetting", "#{url}", {beforeSend: true, complete: true})
     :javascript
       miqInitSelectPicker();

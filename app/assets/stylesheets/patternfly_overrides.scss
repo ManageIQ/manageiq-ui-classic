@@ -454,32 +454,21 @@ table.table.table-summary-screen tbody td img {
 /// begin paginator styling
 
 @media (min-width: $screen-sm) {
-  .toolbar-pf#paging_div { /* sets paging_div at bottom of screen and styles */
-    bottom: 0;
-    border-top: 1px solid #c7c7c7;
-    height: 44px;
-    background-image: linear-gradient(to bottom, #FAFAFA 0%, #EDEDED 100%);
-  }
   #paging_div { /* sets paging_div at bottom of screen and styles */
-    height: 40px;
+    border-top: 1px solid #d1d1d1;
     margin-top: 0;
     top:0;
     .col-md-12 {
       padding: 0;
     }
     .content-view-pf-pagination {
+      border: 0;
+      height: 44px;
       margin: 0;
-      padding: 0;
+      padding: 3px 0 0 0;
     }
   }
 }
-
-#paging_div {
-  border-top: 1px solid #c7c7c7;
-  background-image: linear-gradient(to bottom, #FAFAFA 0%, #EDEDED 100%);
-}
-
-
 
 /// end paginator styling
 
