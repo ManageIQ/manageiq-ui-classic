@@ -971,7 +971,8 @@ module VmCommon
   def parent_choices(ids)
     @parent_choices = {}
     @parent_choices[Digest::MD5.hexdigest(ids.inspect)] ||= begin
-      parent_item_scope = Rbac.filtered(VmOrTemplate.where.not(:id => ids).order(:name))
+      ems_ids = VmOrTemplate.where(:id => ids).distinct.pluck(:ems_id).compact
+      parent_item_scope = Rbac.filtered(VmOrTemplate.where(:ems_id => ems_ids).where.not(:id => ids).order(:name))
 
       parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
         memo[vm[0] + " -- #{vm[1]}"] = vm[2]
@@ -1402,14 +1403,9 @@ module VmCommon
     vms.each { |vm| @edit[:new][:kids][vm.name + " -- #{vm.location}"] = vm.id }      # Build a hash for the kids list box
 
     @edit[:choices] = {}
-    # items with parents
-    ids_with_parents = Relationship.filtered(VmOrTemplate, nil)
-                                   .where.not(:ancestry => ['', nil])
-                                   .in_relationship('genealogy')
-                                   .pluck(:resource_id)
 
     # Build a hash for the VMs to choose from, only if they have no parent
-    @edit[:choices] = parent_choices(ids_with_parents + [@record.id] + vms.pluck(:id))
+    @edit[:choices] = parent_choices([@record.id] + vms.pluck(:id))
 
     @edit[:current][:parent] = @edit[:new][:parent]
     @edit[:current][:kids] = @edit[:new][:kids].dup
