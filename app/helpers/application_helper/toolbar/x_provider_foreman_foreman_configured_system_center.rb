@@ -25,7 +25,7 @@ class ApplicationHelper::Toolbar::XProviderForemanForemanConfiguredSystemCenter 
       :enabled => true,
       :items   => [
         button(
-          :provider_foreman_configured_system_tag,
+          :configured_system_tag,
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Configured System'),
           N_('Edit Tags'),
