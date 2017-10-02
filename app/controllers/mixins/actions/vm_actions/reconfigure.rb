@@ -254,8 +254,8 @@ module Mixins
           if params[:cb_cpu] == 'true'
             options[:cores_per_socket]  = params[:cores_per_socket_count].nil? ? 1 : params[:cores_per_socket_count].to_i
             options[:number_of_sockets] = params[:socket_count].nil? ? 1 : params[:socket_count].to_i
-            vccores = params[:cores_per_socket_count].zero? ? 1 : params[:cores_per_socket_count].to_i
-            vsockets = params[:socket_count].zero? ? 1 : params[:socket_count].to_i
+            vccores = params[:cores_per_socket_count].to_i.zero? ? 1 : params[:cores_per_socket_count].to_i
+            vsockets = params[:socket_count].to_i.zero? ? 1 : params[:socket_count].to_i
             options[:number_of_cpus] = vccores * vsockets
           end
 
