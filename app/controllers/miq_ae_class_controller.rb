@@ -977,7 +977,15 @@ class MiqAeClassController < ApplicationController
 
   def method_form_fields
     method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find(params[:id])
-    data = method.data ? YAML.load(method.data) : {}
+    whitelist_symbols = [:repository_id,
+                         :playbook_id,
+                         :credential_id,
+                         :network_credential_id,
+                         :cloud_credential_id,
+                         :verbosity,
+                         :become_enabled]
+    data = method.data ? YAML.safe_load(method.data, [Symbol], whitelist_symbols, false, nil) : {}
+
     method_hash = {
       :name                => method.name,
       :display_name        => method.display_name,
