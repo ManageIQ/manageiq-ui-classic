@@ -100,7 +100,15 @@ describe CatalogController do
       seed_session_trees('catalog', :sandt_tree, '-Unassigned')
       session_to_sb
 
-      allow(controller).to receive(:render)
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderCatalogs),
+          instance_of(TreeBuilderCatalogItems),
+          instance_of(TreeBuilderServiceCatalog),
+        )
+      )
+      expect(controller).to receive(:render)
       controller.send(:replace_right_cell, :replace_trees => %i(stcat sandt svccat))
     end
   end
