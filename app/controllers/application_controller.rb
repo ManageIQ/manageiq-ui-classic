@@ -422,10 +422,6 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def rbac_params
-    {:match_via_descendants => ManageIQ::Providers::NetworkManager}
-  end
-
   # Private method for processing params.
   # params can contain these options:
   # @param params parameters object.
@@ -454,8 +450,6 @@ class ApplicationController < ActionController::Base
                   page_params
                 when 'miq_tasks'
                   jobs_info
-                when 'cloud_networks'
-                  rbac_params
                 when 'physical_servers_with_host'
                   options.merge!(generate_options)
                 else
