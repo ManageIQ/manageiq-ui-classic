@@ -934,7 +934,7 @@ module OpsController::OpsRbac
   end
 
   def rbac_group_get_details(id)
-    @record = @group = MiqGroup.find(from_cid(id))
+    @record = @group = MiqGroup.find_by(:id => from_cid(id))
     @belongsto = {}
     @filters = {}
     if @record.present?
