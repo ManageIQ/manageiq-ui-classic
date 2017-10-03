@@ -1309,6 +1309,7 @@ Rails.application.routes.draw do
         protect
         show_list
         show
+        tagging_edit
       ) + compare_get,
 
       :post   =>  %w(
@@ -1317,6 +1318,9 @@ Rails.application.routes.draw do
         create
         create_del
         listnav_search_selected
+        protect
+        tagging_edit
+        tag_edit_form_field_changed
         update
         update_del
         quick_search
