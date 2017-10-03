@@ -223,8 +223,6 @@ describe OpsController do
   describe "#settings_update" do
     context "when the zone is changed" do
       it "updates the server's zone" do
-        pending("temporary skip as something is broken with config revamp")
-
         server = MiqServer.first
 
         zone = FactoryGirl.create(:zone,
@@ -232,15 +230,7 @@ describe OpsController do
                                   :description => "Not the Default Zone")
 
         current = double("current", :[] => {:server => {:zone => "default"}}).as_null_object
-        new = double("new").as_null_object
-
-        allow(new).to receive(:[]) do |arg|
-          case arg
-          when :authentication then {}
-          when :server then {:zone => zone.name}
-          else double.as_null_object
-          end
-        end
+        new = Settings.to_hash.deep_merge(:server => {:zone => zone.name})
 
         edit = {:new => new, :current => current}
         sb = {:active_tab => "settings_server", :selected_server_id => server.id}
