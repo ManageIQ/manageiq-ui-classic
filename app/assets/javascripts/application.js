@@ -50,6 +50,7 @@
 //= require bootstrap-select
 //= require bootstrap-hover-dropdown
 //= require bootstrap-switch
+//= require bootstrap-touchspin
 //= require angular-bootstrap-switch
 //= require angular-ui-codemirror
 //= require patternfly-bootstrap-treeview
