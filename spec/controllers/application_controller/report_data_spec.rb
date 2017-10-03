@@ -19,7 +19,7 @@ describe ApplicationController do
     end
     it "should return report data for VM" do
       controller.instance_variable_set(:@_params, :active_tree => "vandt_tree")
-      controller.instance_variable_set(:@_params, :model => "manageiq/providers/infra_manager/vms")
+      controller.instance_variable_set(:@_params, :model_name => "manageiq/providers/infra_manager/vms")
       report_data = JSON.parse(controller.report_data)
       expect(report_data["settings"]).to eql(basic_settings)
       headder = report_data["data"]["head"]
@@ -57,12 +57,13 @@ describe ApplicationController do
     end
 
     it "should return correct model from params" do
-      options = controller.send(:process_params_model_view, {:model => "manageiq/providers/middleware_managers"}, {})
+      options = controller.send(:process_params_model_view,
+                                {:model_name => "manageiq/providers/middleware_managers"}, {})
       expect(options).to eql(ManageIQ::Providers::MiddlewareManager)
     end
 
     it "should return correct model from options" do
-      options = controller.send(:process_params_model_view, {}, {:model => "ManageIQ::Providers::MiddlewareManager"})
+      options = controller.send(:process_params_model_view, {}, {:model_name => "ManageIQ::Providers::MiddlewareManager"})
       expect(options).to eql(ManageIQ::Providers::MiddlewareManager)
     end
   end
