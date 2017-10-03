@@ -3,3 +3,9 @@
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     = render :partial => 'layouts/textual_groups_generic'
+
+  %generic-object-definition-toolbar#generic_object_definition_show_form{'generic-object-definition-id' => @record.id,
+                                                                         'redirect-url'                 => "/#{controller_name}/show_list",}
+:javascript
+  miq_bootstrap('#generic_object_definition_show_form');
+

@@ -24,6 +24,8 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           'pficon pficon-delete fa-lg',
           t = N_('Remove selected Generic Object Classes from Inventory'),
           t,
+          :data    => {'function'      => 'sendDataWithRx',
+                       'function-data' => '{"type": "delete", "controller": "genericObjectDefinitionToolbarController"}'},
           :enabled   => false,
           :onwhen => "1+",
           :confirm   => N_("Warning: The selected Generic Object Classes will be permanently removed!")),
