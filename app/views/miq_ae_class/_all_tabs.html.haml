@@ -71,6 +71,6 @@
   if (ManageIQ.editor !== null) ManageIQ.editor.refresh();
 
 -# disable any other tabs on screen when in edit
-- if @in_a_form
+- if @in_a_form || @angular_form
   :javascript
     miq_tabs_disable_inactive('#ae_tabs');

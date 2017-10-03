@@ -270,7 +270,7 @@ class MiqAeClassController < ApplicationController
                                                                  (%w(save add).include?(params[:button]) && replace_trees)
     add_nodes = open_parent_nodes(@record) if params[:button] == "copy" ||
                                               params[:action] == "x_show"
-    get_node_info(x_node) if !@in_a_form && @button != "reset"
+    get_node_info(x_node) if !@in_a_form && !@angular_form && @button != "reset"
 
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
     h_tb = build_toolbar("x_history_tb")
@@ -304,7 +304,7 @@ class MiqAeClassController < ApplicationController
 
     presenter.replace('flash_msg_div', r[:partial => "layouts/flash_msg"]) if @flash_array
 
-    if @in_a_form
+    if @in_a_form && !@angular_form
       action_url = create_action_url(nodes.first)
       # incase it was hidden for summary screen, and incase there were no records on show_list
       presenter.show(:paging_div, :form_buttons_div)
@@ -325,7 +325,7 @@ class MiqAeClassController < ApplicationController
 
     presenter[:lock_sidebar] = @in_a_form && @edit
 
-    if @record.kind_of?(MiqAeMethod) && !@in_a_form
+    if @record.kind_of?(MiqAeMethod) && !@in_a_form && !@angular_form
       presenter.set_visibility(!@record.inputs.blank?, :params_div)
     end
 
@@ -497,8 +497,12 @@ class MiqAeClassController < ApplicationController
       id = x_node.split('-')
     end
     @ae_method = find_record_with_rbac(MiqAeMethod, from_cid(id[1]))
-    set_method_form_vars
-    @in_a_form = true
+    if @ae_method.location == "playbook"
+      angular_form_specific_data
+    else
+      set_method_form_vars
+      @in_a_form = true
+    end
     session[:changed] = @changed = false
     replace_right_cell
   end
@@ -899,10 +903,17 @@ class MiqAeClassController < ApplicationController
                            end
       @changed = (@edit[:new] != @edit[:current])
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
+      angular_form_specific_data if @edit[:new][:location] == "playbook"
       render :update do |page|
         page << javascript_prologue
         page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
-        page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
+        if @edit[:new][:location] == "playbook"
+          page.replace_html(@refresh_div, :partial => 'angular_method_form')
+          page << javascript_hide("form_buttons_div")
+        elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
+          page.replace_html(@refresh_div, :partial => @refresh_partial)
+        end
+
         if params[:cls_field_datatype]
           if session[:field_data][:datatype] == "password"
             page << javascript_hide("cls_field_default_value")
@@ -962,6 +973,40 @@ class MiqAeClassController < ApplicationController
         page << "miqSparkle(false)"
       end
     end
+  end
+
+  def method_form_fields
+    method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find(params[:id])
+    whitelist_symbols = [:repository_id,
+                         :playbook_id,
+                         :credential_id,
+                         :network_credential_id,
+                         :cloud_credential_id,
+                         :verbosity,
+                         :become_enabled]
+    data = method.data ? YAML.safe_load(method.data, [Symbol], whitelist_symbols, false, nil) : {}
+
+    method_hash = {
+      :name                => method.name,
+      :display_name        => method.display_name,
+      :namespace_path      => @sb[:namespace_path],
+      :class_id            => method.id ? method.class_id : MiqAeClass.find(from_cid(x_node.split("-").last)).id,
+      :location            => 'playbook',
+      :language            => 'ruby',
+      :scope               => "instance",
+      :available_datatypes => MiqAeField.available_datatypes_for_ui,
+      :config_info         => {
+        :repository_id         => data[:repository_id] || '',
+        :playbook_id           => data[:playbook_id] || '',
+        :credential_id         => data[:credential_id] || '',
+        :network_credential_id => data[:network_credential_id] || '',
+        :cloud_credential_id   => data[:cloud_credential_id] || '',
+        :verbosity             => data[:verbosity],
+        :become_enabled        => data[:become_enabled] || false,
+        :extra_vars            => method.inputs
+      }
+    }
+    render :json => method_hash
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -1099,6 +1144,46 @@ class MiqAeClassController < ApplicationController
     else
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
       replace_right_cell(:replace_trees => [:ae])
+    end
+  end
+
+  def add_update_method
+    assert_privileges("miq_ae_method_edit")
+    case params[:button]
+    when "cancel"
+      if params[:id] && params[:id] != "new"
+        method = find_record_with_rbac(MiqAeMethod, params[:id])
+        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => method.name})
+      else
+        add_flash(_("Add of %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeMethod")})
+      end
+      replace_right_cell
+    when "add", "save"
+      method = params[:id] != "new" ? find_record_with_rbac(MiqAeMethod, params[:id]) : MiqAeMethod.new
+      method.name = params["name"]
+      method.display_name = params["display_name"]
+      method.location = params["location"]
+      method.language = params["language"]
+      method.scope = params["scope"]
+      method.class_id = params[:class_id]
+      method.data = YAML.dump(set_playbook_data)
+      begin
+        MiqAeMethod.transaction do
+          to_save, to_delete = playbook_inputs(method)
+          method.inputs.destroy(MiqAeField.where(:id => to_delete))
+          method.inputs = to_save
+          method.save!
+        end
+      rescue => bang
+        add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
+        javascript_flash
+      else
+        old_method_attributes = method.attributes.clone
+        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => method.name})
+        AuditEvent.success(build_saved_audit_hash_angular(old_method_attributes, method, params[:button] == "add"))
+        replace_right_cell(:replace_trees => [:ae])
+        return
+      end
     end
   end
 
@@ -1627,6 +1712,43 @@ class MiqAeClassController < ApplicationController
   end
 
   private
+
+  def playbook_inputs(method)
+    existing_inputs = method.inputs
+    new_inputs = params[:extra_vars]
+    inputs_to_save = []
+    inputs_to_delete = []
+    new_inputs.each do |i, input|
+      field = input.length == 4 ? MiqAeField.find_by(:id => input.last) : MiqAeField.new
+      field.name = input[0]
+      field.default_value = input[1] == "" ? nil : input[1]
+      field.datatype = input[2]
+      field.priority = i
+      inputs_to_save.push(field)
+    end
+    existing_inputs.each do |existing_input|
+      inputs_to_delete.push(existing_input.id) unless inputs_to_save.any? { |i| i.id == existing_input.id }
+    end
+    return inputs_to_save, inputs_to_delete
+  end
+
+  def set_playbook_data
+    params_list = %i(repository_id
+                     playbook_id
+                     credential_id
+                     become_enabled
+                     verbosity
+                     network_credential_id
+                     cloud_credential_id)
+    copy_params_if_set({}, params, params_list)
+  end
+
+  def angular_form_specific_data
+    @record = @ae_method
+    @ae_class = ae_class_for_instance_or_method(@ae_method)
+    @current_region = MiqRegion.my_region.region
+    @angular_form = true
+  end
 
   def validate_expression(task)
     if @edit[@expkey][:expression]["???"] == "???"
@@ -2195,7 +2317,6 @@ class MiqAeClassController < ApplicationController
     miqaemethod.scope = @edit[:new][:scope]
     miqaemethod.location = @edit[:new][:location]
     miqaemethod.language = @edit[:new][:language]
-    miqaemethod.data = @edit[:new][:data]
     miqaemethod.data = if @edit[:new][:location] == 'expression'
                          data_for_expression
                        else
@@ -2556,9 +2677,31 @@ class MiqAeClassController < ApplicationController
     if @record.location == 'expression'
       hash = YAML.load(@record.data)
       @expression = hash[:expression] ? MiqExpression.new(hash[:expression]).to_human : ""
+    elsif @record.location == "playbook"
+      fetch_playbook_details
     end
     domain_overrides
     set_right_cell_text(x_node, @record)
+  end
+
+  def fetch_playbook_details
+    @playbook_details = {}
+    whitelist_symbols = [:repository_id,
+                         :playbook_id,
+                         :credential_id,
+                         :network_credential_id,
+                         :cloud_credential_id,
+                         :verbosity,
+                         :become_enabled]
+    data = YAML.safe_load(@record.data, [Symbol], whitelist_symbols, false, nil)
+    @playbook_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, data[:repository_id])
+    @playbook_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, data[:playbook_id])
+    @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, data[:credential_id])
+    @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, data[:network_credential_id]) if data[:network_credential_id]
+    @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, data[:cloud_credential_id]) if data[:cloud_credential_id]
+    @playbook_details[:verbosity] = data[:verbosity]
+    @playbook_details[:become_enabled] = data[:become_enabled] == 'true' ? _("Yes") : _("No")
+    @playbook_details
   end
 
   def get_class_node_info(id)

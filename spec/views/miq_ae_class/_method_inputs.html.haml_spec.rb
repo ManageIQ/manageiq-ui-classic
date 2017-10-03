@@ -1,5 +1,6 @@
 describe "miq_ae_class/_method_inputs.html.haml" do
   include Spec::Support::AutomationHelper
+  helper(ViewFormattingHelper)
 
   context 'display method inputs' do
     before do

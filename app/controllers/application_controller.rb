@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
   helper JsHelper
   helper QuadiconHelper
   helper ImageEncodeHelper
+  helper ViewFormattingHelper
 
   helper CloudResourceQuotaHelper
 
@@ -1794,6 +1795,35 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def build_saved_audit_hash_angular(old_record_attributes, new_record, add)
+    name  = new_record.respond_to?(:name) ? new_record.name : new_record.description
+    msg   = if add
+              _("[%{name}] Record added (") % {:name => name}
+            else
+              _("[%{name}] Record updated (") % {:name => name}
+            end
+    event = "#{new_record.class.to_s.downcase}_record_#{add ? "add" : "update"}"
+
+    attribute_difference = new_record.attributes.to_a - old_record_attributes.to_a
+    attribute_difference = Hash[*attribute_difference.flatten]
+
+    difference_messages = []
+
+    attribute_difference.each do |key, value|
+      difference_messages << _("%{key} changed to %{value}") % {:key => key, :value => value}
+    end
+
+    msg = msg + difference_messages.join(", ") + ")"
+
+    {
+      :event        => event,
+      :target_id    => new_record.id,
+      :target_class => new_record.class.base_class.name,
+      :userid       => session[:userid],
+      :message      => msg
+    }
+  end
+
   # Build the audit object when a record is saved, including all of the changed fields
   #   params - rec = db record, eh = edit hash containing current and new values
   def build_saved_audit(rec, eh)
@@ -2275,7 +2305,7 @@ class ApplicationController < ActionController::Base
   public :validate_before_save?
 
   def determine_record_id_for_presenter
-    if @in_a_form
+    if @in_a_form && !@angular_form
       @edit && @edit[:rec_id]
     else
       @record.try!(:id)
@@ -2307,4 +2337,22 @@ class ApplicationController < ActionController::Base
     @accords = allowed_features.map(&:accord_hash)
     set_active_elements(allowed_features.first)
   end
+
+  def fetch_name_from_object(klass, id)
+    klass.find_by(:id => from_cid(id)).try(:name)
+  end
+
+  def verbosity_display(verbosity)
+    verbosity ||= "0"
+    verbosity_hsh = {
+      "0" => _("0 (Normal)"),
+      "1" => _("1 (Verbose)"),
+      "2" => _("2 (More Verbose)"),
+      "3" => _("3 (Debug)"),
+      "4" => _("4 (Connection Debug)"),
+      "5" => _("5 (WinRM Debug)")
+    }
+    verbosity_hsh[verbosity.to_s]
+  end
+  helper_method :verbosity_display
 end
