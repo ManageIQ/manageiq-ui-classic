@@ -39,11 +39,13 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window
         });
       });
 
-      scope.$watch('drawerHidden', function() {
+      scope.$watch('drawerHidden', updateAccordionSizing);
+
+      function updateAccordionSizing() {
         $timeout(function() {
           angular.element($window).triggerHandler('resize');
         }, 100);
-      });
+      }
 
       scope.toggleCollapse = function(selectedGroup) {
         if (selectedGroup.open) {
@@ -54,6 +56,8 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window
           });
           selectedGroup.open = true;
         }
+
+        updateAccordionSizing();
       };
 
       scope.toggleExpandDrawer = function() {
