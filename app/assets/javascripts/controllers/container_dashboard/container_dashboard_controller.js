@@ -88,6 +88,7 @@
           }
         }
 
+        $scope.hasAlerts = data.alerts.dataAvailable;
         dashboardUtilsFactory.updateAlertsStatus($scope.objectStatus.alerts, data.alerts);
         dashboardUtilsFactory.updateStatus($scope.objectStatus.nodes, data.status.nodes);
         dashboardUtilsFactory.updateStatus($scope.objectStatus.containers, data.status.containers);

@@ -49,6 +49,15 @@
     padding-left: 0px;
 }
 
+.alerts-card-no-data .card-pf, .provider-card .card-pf {
+  min-height: 132px;
+  text-align: center;
+}
+
+.alerts-no-data-title {
+  padding-bottom: 14px;
+}
+
 .provider-card {
     min-height: 140px;
     padding-left: 0px;

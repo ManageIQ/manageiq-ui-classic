@@ -99,9 +99,14 @@ class ContainerDashboardService
   end
 
   def alerts
-    provider_ids = ManageIQ::Providers::ContainerManager.all.pluck(:id)
-    relation = @ems ? @ems.miq_alert_statuses : MiqAlertStatus.where(:ems_id => provider_ids)
-    alerts_status = relation.present? ? relation.where(:resolved => [false, nil]).group(:severity).count.values_at('error', 'warning') : [nil, nil]
+    providers = @ems.present? ? [@ems] : ManageIQ::Providers::ContainerManager.includes(:authentications)
+
+    has_alerts = providers.any? do |prov|
+      prov.monitoring_manager.present?
+    end
+
+    relation = MiqAlertStatus.where(:ems_id => providers.pluck(:id))
+    alerts_status = relation.present? && has_alerts ? relation.where(:resolved => [false, nil]).group(:severity).count.values_at('error', 'warning') : [nil, nil]
 
     errors = alerts_status[0] || 0
     warnings = alerts_status[1] || 0
@@ -117,7 +122,8 @@ class ContainerDashboardService
     {
       :count         => (errors + warnings) > 0 ? (errors + warnings) : nil,
       :href          => @controller.url_for_only_path(:action => 'show', :controller => :alerts_overview),
-      :notifications => notifications
+      :notifications => notifications,
+      :dataAvailable => has_alerts
     }
   end
 

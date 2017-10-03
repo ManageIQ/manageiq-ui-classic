@@ -16,7 +16,15 @@
       .alerts-card{:layout                     => "tall",
                   "pf-aggregate-status-card"  => "",
                   "show-top-border"           => "true",
-                  :status                     => "objectStatus.alerts"}
+                  :status                     => "objectStatus.alerts",
+                  "ng-if"                     => "hasAlerts"}
+      .alerts-card-no-data{"show-top-border"           => "true",
+                           "pf-card"      => "",
+                           "ng-if"                     => "!hasAlerts",
+                           :layout                     => "tall"}
+        .alerts-no-data-title
+          = _("Alerts")
+        %div{"pf-empty-chart" => ""}
     .col-xs-12.col-sm-12.col-md-8
       .row
         .col-xs-6.col-sm-6.col-md-3
