@@ -272,7 +272,7 @@ describe CatalogController do
     end
 
     it "Azure Orchestration Template name and description are edited" do
-      ot = FactoryGirl.create(:orchestration_template_azure_with_content)
+      ot = FactoryGirl.create(:orchestration_template_azure_in_json)
       controller.instance_variable_set(:@record, ot)
       controller.params.merge!(:id => ot.id, :template_content => @new_content)
       session[:edit][:key] = "ot_edit__#{ot.id}"
