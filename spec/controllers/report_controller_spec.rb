@@ -1103,7 +1103,8 @@ describe ReportController do
                                        :trees => {'reports_tree'      => {:active_node => "root"},
                                                   'savedreports_tree' => {:active_node => "root"},
                                                   'widgets_tree'      => {:active_node => "root"},
-                                                  'db_tree'           => {:active_node => "root"}},
+                                                  'db_tree'           => {:active_node => "root"},
+                                                  'schedules_tree'    => {:active_node => "root"}},
                                        :active_tree => :reports_tree)
 
       allow(controller).to receive(:x_node) { 'root' }
@@ -1170,6 +1171,25 @@ describe ReportController do
       expect(controller).not_to receive(:build_widgets_tree)
 
       controller.send(:replace_right_cell, :replace_trees => [:reports])
+    end
+
+    it "Can build all the trees" do
+      allow(User).to receive(:server_timezone).and_return("UTC")
+      sb[:rep_tree_build_time] = Time.now.utc
+      MiqWidgetSet.seed
+      @rpt = create_and_generate_report_for_user("Vendor and Guest OS", "User2")
+
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderReportReports),
+          instance_of(TreeBuilderReportSavedReports),
+          instance_of(TreeBuilderReportSchedules),
+          instance_of(TreeBuilderReportWidgets),
+          instance_of(TreeBuilderReportDashboards)
+        )
+      )
+      controller.send(:replace_right_cell, :replace_trees => %i(reports schedules savedreports db widgets))
     end
   end
 
