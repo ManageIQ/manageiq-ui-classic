@@ -135,7 +135,7 @@
     .col-md-8
       - opts = [["#{_('Date')}", "date"], ["#{_(@edit[:new][:cb_model])}", "vm"]]
       - opts += [["#{_('Tag')}", "tag"]] unless @edit[:new][:model] == "ChargebackContainerImage"
-      - opts += [["#{_('Project')}", "project"]] if @edit[:new][:model] == "ChargebackContainerImage"
+      - opts += [["#{_('Project')}", "project"], [_('Label'), 'label']] if @edit[:new][:model] == "ChargebackContainerImage"
       = select_tag("cb_groupby",
         options_for_select(opts, @edit[:new][:cb_groupby]),
         :class                 => "selectpicker")
@@ -154,6 +154,18 @@
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('cb_groupby_tag', '#{url}', {beforeSend: true, complete: true});
+  - if @edit[:new][:cb_groupby] == "label"
+    .form-group
+      %label.control-label.col-md-2
+        = _('Group by Label')
+      .col-md-8
+        - opts = [["<#{_('Choose a Label')}>", nil]] + Array(cb_image_labels.invert).sort_by { |a| a.first.downcase }
+        = select_tag("cb_groupby_label",
+          options_for_select(opts, @edit[:new][:cb_groupby_label]),
+          :class                 => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent('cb_groupby_label', '#{url}', {beforeSend: true, complete: true});
 
 %h3
   = _('Chargeback Interval')
