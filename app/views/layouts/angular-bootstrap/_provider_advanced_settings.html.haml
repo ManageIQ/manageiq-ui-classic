@@ -1,7 +1,3 @@
-%h3
-  {{ emsOptionsModel.provider_options.advanced_settings.label }}
-%p
-  {{ emsOptionsModel.provider_options.advanced_settings.help_text }}
 %provider-option-section{"ng-repeat" => "section in emsOptionsModel.provider_options.advanced_settings.settings",
   "label"        => "{{ section.label }}",
   "help_text"    => "{{ section.help_text }}",
