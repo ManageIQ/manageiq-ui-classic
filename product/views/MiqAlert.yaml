@@ -27,6 +27,7 @@ cols:
 - notify_snmp
 - notify_evm_event
 - notify_automate
+- severity
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -41,6 +42,7 @@ col_order:
 - notify_snmp
 - notify_evm_event
 - notify_automate
+- severity
 
 # Column titles, in order
 headers:
@@ -52,6 +54,7 @@ headers:
 - SNMP
 - Event on Timeline
 - Management Event Raised
+- Severity
 
 # Condition(s) string for the SQL query
 conditions:

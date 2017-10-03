@@ -20,6 +20,9 @@ class GtlFormatter
         "image?" => :cloud_manager_template_format,
       }),
       "MiqSchedule" => :timezone, # all fields have same specific format
+      "MiqAlert"    => {
+        "severity" => :alert_severity_format,
+      },
       "OpenscapRuleResult" => {
         "result"   => :result_format,
         "severity" => :severity_format,
@@ -103,5 +106,9 @@ class GtlFormatter
              "label label-low-severity center-block"
            end
     [value.titleize, span]
+  end
+
+  def self.alert_severity_format(value)
+    [_(MiqPolicyController::Alerts::SEVERITIES[value]), nil]
   end
 end
