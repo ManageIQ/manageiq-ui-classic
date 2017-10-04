@@ -13,6 +13,11 @@
     padding: 0px;
     overflow: hidden;
   }
+
+  #listnav_div .panel:first-child { /* hides panel top border to prevent double border with toolbar  */
+    border-top: 0;
+  }
+
   #main-content { /* inserts height calculation for scrollable area */
     overflow: auto;
   }
