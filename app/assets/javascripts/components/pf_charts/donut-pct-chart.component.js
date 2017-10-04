@@ -1,3 +1,4 @@
+/* global patternfly */
 angular.module('patternfly.charts').component('pfDonutPctChart', {
   bindings: {
     config: '<',
@@ -9,9 +10,9 @@ angular.module('patternfly.charts').component('pfDonutPctChart', {
   templateUrl: '/static/pf_charts/donut-pct-chart.html.haml',
   controller: donutPctChartController,
 });
-donutPctChartController.$inject = ['pfUtils', '$element', '$timeout'];
+donutPctChartController.$inject = ['pfUtils'];
 
-function donutPctChartController(pfUtils, $element, $timeout) {
+function donutPctChartController(pfUtils) {
   'use strict';
   var vm = this;
   var prevData;

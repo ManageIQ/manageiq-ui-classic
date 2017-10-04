@@ -114,23 +114,23 @@ function heatmapController($element, $window, $compile, $scope, $timeout) {
       }
     };
 
-    var svg = window.d3.select(vm.thisComponent);
+    var svg = $window.d3.select(vm.thisComponent);
     svg.selectAll('*').remove();
     blocks = svg.selectAll('rect').data(data).enter().append('rect');
-    blocks.attr('x', function(d, i) {
+    blocks.attr('x', function(_d, i) {
       return Math.floor(i / numberOfRows) * blockSize;
-    }).attr('y', function(d, i) {
+    }).attr('y', function(_d, i) {
       return i % numberOfRows * blockSize;
     }).attr('width', fillSize).attr('height', fillSize).style('fill', function(d) {
       return color(d.value);
-    }).attr('uib-tooltip-html', function(d, i) { // tooltip-html is throwing an exception
+    }).attr('uib-tooltip-html', function(d, _i) { // tooltip-html is throwing an exception
       if (vm.rangeOnHover && fillSize <= vm.rangeHoverSize) {
         return '"' + rangeTooltip(d.value) + '"';
       }
       return "'" + d.tooltip + "'";
-    }).attr('tooltip-append-to-body', function(d, i) {
+    }).attr('tooltip-append-to-body', function() {
       return true;
-    }).attr('tooltip-animation', function(d, i) {
+    }).attr('tooltip-animation', function() {
       return false;
     });
 
@@ -177,7 +177,7 @@ function heatmapController($element, $window, $compile, $scope, $timeout) {
     if (vm.maxBlockSize === undefined || isNaN(vm.maxBlockSize)) {
       vm.maxSize = 64;
     } else {
-      vm.maxSize = parseInt(vm.maxBlockSize);
+      vm.maxSize = parseInt(vm.maxBlockSize, 10);
       if (vm.maxSize < 5) {
         vm.maxSize = 5;
       } else if (vm.maxSize > 50) {
@@ -188,19 +188,19 @@ function heatmapController($element, $window, $compile, $scope, $timeout) {
     if (vm.minBlockSize === undefined || isNaN(vm.minBlockSize)) {
       vm.minSize = 2;
     } else {
-      vm.minSize = parseInt(vm.minBlockSize);
+      vm.minSize = parseInt(vm.minBlockSize, 10);
     }
 
     if (vm.blockPadding === undefined || isNaN(vm.blockPadding)) {
       vm.padding = 2;
     } else {
-      vm.padding = parseInt(vm.blockPadding);
+      vm.padding = parseInt(vm.blockPadding, 10);
     }
 
     if (vm.rangeHoverSize === undefined || isNaN(vm.rangeHoverSize)) {
       vm.rangeHoverSize = 15;
     } else {
-      vm.rangeHoverSize = parseInt(vm.rangeHoverSize);
+      vm.rangeHoverSize = parseInt(vm.rangeHoverSize, 10);
     }
 
     vm.rangeOnHover = (vm.rangeOnHover === undefined || vm.rangeOnHover) ? true : false;

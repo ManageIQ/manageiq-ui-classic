@@ -1,4 +1,4 @@
-angular.module('miq.util').factory('chartsMixin', [function() {
+angular.module('miq.util').factory('chartsMixin', ['$document', function($document) {
   'use strict';
 
   var dailyTimeTooltip = function(data) {
@@ -16,8 +16,8 @@ angular.module('miq.util').factory('chartsMixin', [function() {
       try {
         var center = parseInt(element.getAttribute('x'), 10);
         var top = parseInt(element.getAttribute('y'), 10);
-        var chartBox = document.querySelector(elementQuery).getBoundingClientRect();
-        var graphOffsetX = document.querySelector(elementQuery + ' g.c3-axis-y').getBoundingClientRect().right;
+        var chartBox = $document[0].querySelector(elementQuery).getBoundingClientRect();
+        var graphOffsetX = $document[0].querySelector(elementQuery + ' g.c3-axis-y').getBoundingClientRect().right;
 
         var x = Math.max(0, center + graphOffsetX - chartBox.left - Math.floor(width / 2));
 

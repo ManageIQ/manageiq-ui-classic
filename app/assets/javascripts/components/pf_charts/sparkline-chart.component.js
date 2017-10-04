@@ -1,3 +1,4 @@
+/* global patternfly */
 angular.module('patternfly.charts').component('pfSparklineChart', {
   bindings: {
     config: '<',
@@ -9,9 +10,9 @@ angular.module('patternfly.charts').component('pfSparklineChart', {
   templateUrl: '/static/pf_charts/sparkline-chart.html.haml',
   controller: sparklineChartController,
 });
-sparklineChartController.$inject = ['pfUtils'];
+sparklineChartController.$inject = ['pfUtils', '$document'];
 
-function sparklineChartController(pfUtils) {
+function sparklineChartController(pfUtils, $document) {
   'use strict';
   var vm = this;
   var prevChartData;
@@ -152,7 +153,7 @@ function sparklineChartController(pfUtils) {
         }
         return vm.getTooltipTableHTML(tipRows);
       },
-      position: function(data, width, height, element) {
+      position: function(_data, width, height, element) {
         var center;
         var top;
         var chartBox;
@@ -160,23 +161,24 @@ function sparklineChartController(pfUtils) {
         var x;
 
         try {
-          center = parseInt(element.getAttribute('x'));
-          top = parseInt(element.getAttribute('y'));
-          chartBox = document.querySelector('#' + vm.sparklineChartId).getBoundingClientRect();
-          graphOffsetX = document.querySelector('#' + vm.sparklineChartId + ' g.c3-axis-y').getBoundingClientRect().right;
+          center = parseInt(element.getAttribute('x'), 10);
+          top = parseInt(element.getAttribute('y'), 10);
+          chartBox = $document[0].querySelector('#' + vm.sparklineChartId).getBoundingClientRect();
+          graphOffsetX = $document[0].querySelector('#' + vm.sparklineChartId + ' g.c3-axis-y').getBoundingClientRect().right;
           x = Math.max(0, center + graphOffsetX - chartBox.left - Math.floor(width / 2));
 
           return {
             top: top - height,
             left: Math.min(x, chartBox.width - width),
           };
-        } catch (e) {
+        } catch (_e) {
+          // empty catch
         }
       },
     };
   };
 
-  vm.$onChanges = function(changesObj) {
+  vm.$onChanges = function() {
     vm.updateAll();
   };
 

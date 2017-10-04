@@ -36,28 +36,31 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'pr
     var heatmapsStructData = [];
     if (data) {
       var keys = Object.keys(data);
+
+      var heatmapData = function(d) {
+        var percent = -1;
+        var tooltip = __("Cluster: ") + d.node + "<br>" + __("Provider: ") + d.provider;
+        if (d.percent === null || d.total === null) {
+          tooltip += "<br> " + __("Usage: Unknown");
+        } else {
+          percent = d.percent;
+          tooltip += "<br>" + __("Usage: ") + sprintf(__("%d%% in use of %d %s total"), (percent * 100).toFixed(0),
+              d.total, d.unit);
+        }
+        return {
+          "id": keys[i] + '_' + d.id,
+          "tooltip": tooltip,
+          "value": percent,
+        };
+      };
+
       for (var i in keys) {
         if (keys[i] === 'title') { continue; }
         if (data[keys[i]] === null) {
           heatmapsStruct.data[heatmapTitles[keys[i]]] = [];
           vm.dataAvailable = false;
         } else {
-          heatmapsStructData = data[keys[i]].map(function(d) {
-            var percent = -1;
-            var tooltip = __("Cluster: ") + d.node + "<br>" + __("Provider: ") + d.provider;
-            if (d.percent === null || d.total === null) {
-              tooltip += "<br> " + __("Usage: Unknown");
-            } else {
-              percent = d.percent;
-              tooltip += "<br>" + __("Usage: ") + sprintf(__("%d%% in use of %d %s total"), (percent * 100).toFixed(0),
-                  d.total, d.unit);
-            }
-            return {
-              "id": keys[i] + '_' + d.id,
-              "tooltip": tooltip,
-              "value": percent,
-            };
-          });
+          heatmapsStructData = data[keys[i]].map(heatmapData);
         }
         heatmapsStruct.data[heatmapTitles[keys[i]]] = _.sortBy(heatmapsStructData, 'value').reverse();
       }

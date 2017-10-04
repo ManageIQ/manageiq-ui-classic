@@ -1,3 +1,4 @@
+/* global patternfly */
 angular.module('patternfly.charts').component('pfLineChart', {
   bindings: {
     config: '<',
@@ -102,7 +103,7 @@ function lineChartController(pfUtils) {
     return lineData;
   };
 
-  vm.$onChanges = function(changesObj) {
+  vm.$onChanges = function() {
     vm.updateAll();
   };
 

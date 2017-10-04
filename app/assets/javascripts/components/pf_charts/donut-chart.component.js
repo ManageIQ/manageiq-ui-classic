@@ -1,3 +1,4 @@
+/* global patternfly */
 angular.module('patternfly.charts').component('pfDonutChart', {
   bindings: {
     config: '<',
@@ -7,9 +8,9 @@ angular.module('patternfly.charts').component('pfDonutChart', {
   templateUrl: '/static/pf_charts/donut-chart.html.haml',
   controller: donutChartController,
 });
-donutChartController.$inject = ['pfUtils', '$element', '$timeout', '$log'];
+donutChartController.$inject = ['pfUtils'];
 
-function donutChartController(pfUtils, $element, $timeout, $log) {
+function donutChartController(pfUtils) {
   'use strict';
   var vm = this;
   var prevData;
@@ -45,9 +46,9 @@ function donutChartController(pfUtils, $element, $timeout, $log) {
   vm.getTotal = function() {
     var total = 0;
     angular.forEach(vm.data, function(value) {
-      angular.forEach(value, function(value) {
-        if (! isNaN(value)) {
-          total += Number(value);
+      angular.forEach(value, function(innerValue) {
+        if (! isNaN(innerValue)) {
+          total += Number(innerValue);
         }
       });
     });

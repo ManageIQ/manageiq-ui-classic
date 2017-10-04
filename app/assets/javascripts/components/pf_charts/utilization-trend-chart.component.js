@@ -14,7 +14,7 @@ angular.module('patternfly.charts').component('pfUtilizationTrendChart', {
 });
 utilizationTrendChartController.$inject = ['pfUtils'];
 
-function utilizationTrendChartController(pfUtils) {
+function utilizationTrendChartController() {
   'use strict';
   var vm = this;
   var prevChartData;
@@ -29,7 +29,7 @@ function utilizationTrendChartController(pfUtils) {
       vm.centerLabel = 'used';
     }
 
-    if (vm.donutConfig.units === undefined) {
+    if (vm.config.units !== undefined && vm.donutConfig.units === undefined) {
       vm.donutConfig.units = vm.config.units;
     }
 
@@ -48,7 +48,7 @@ function utilizationTrendChartController(pfUtils) {
     }
   };
 
-  vm.$onChanges = function(changesObj) {
+  vm.$onChanges = function() {
     vm.updateAll();
   };
 

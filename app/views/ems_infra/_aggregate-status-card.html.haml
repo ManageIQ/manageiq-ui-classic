@@ -6,4 +6,4 @@
       .col-xs-12.col-sm-12.col-md-10
         .row
           .col-xs-6.col-sm-6.col-md-3{"ng-repeat" => "status in vm.AggStatus"}
-            %pf-aggregate-status-card{:id => "status.id", "status" => "status", "show-top-border" => "true"}
+            %pf-aggregate-status-card{'ng-attr-id' => "{{status.id}}", "status" => "status", "show-top-border" => "true"}
