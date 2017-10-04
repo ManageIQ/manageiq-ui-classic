@@ -367,36 +367,20 @@ class MiddlewareServerController < ApplicationController
   def trigger_mw_operation(operation, mw_server, params = nil)
     mw_manager = mw_server.ext_management_system
 
-    args = [operation, mw_server.ems_ref]
-    if mw_server.instance_of?(MiddlewareDeployment)
-      args << mw_server.name
-    elsif params
-      args << params
-    end
+    if mw_server.kind_of?(MiddlewareDeployment)
+      mw_manager.public_send(operation, mw_server.ems_ref, mw_server.name)
+    else
+      target_resource = mw_server.ems_ref
 
-    # in domain mode case we want to run the operation on the server-config DMR resource
-    if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
-      args << {:original_resource_path => args[1]}
-      args[1] = args[1].sub(/%2Fserver%3D/, '%2Fserver-config%3D')
-    end
+      extra_params = []
+      extra_params << params if params
 
-    mw_manager.public_send(*args)
-  end
+      if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
+        extra_params << {:original_resource_path => target_resource}
+        target_resource = target_resource.sub(/%2Fserver%3D/, '%2Fserver-config%3D')
+      end
 
-  def log_operation_in_timeline(operation_info, mw_server)
-    if operation_info.fetch(:log_timeline, false)
-      EmsEvent.add_queue(
-        'add', mw_server.ext_management_system.id,
-        :ems_id          => mw_server.ext_management_system.id,
-        :source          => 'EVM',
-        :timestamp       => Time.zone.now,
-        :event_type      => operation_info.fetch(:log_timeline),
-        :message         => _('%{operation} requested for server %{server}') %
-          {:operation => operation_info.fetch(:msg), :server => mw_server.name},
-        :middleware_ref  => mw_server.ems_ref,
-        :middleware_type => 'MiddlewareServer',
-        :username        => current_userid
-      )
+      mw_manager.public_send(operation, target_resource, *extra_params)
     end
   end
 
