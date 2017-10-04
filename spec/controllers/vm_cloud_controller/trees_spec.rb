@@ -2,6 +2,7 @@ describe VmCloudController do
   render_views
   before :each do
     stub_user(:features => :all)
+    MiqRegion.seed
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
