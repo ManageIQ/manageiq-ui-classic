@@ -77,6 +77,26 @@ describe ServiceController do
       expect(response.status).to eq(200)
       expect(response.body).to include('Smart Management')
     end
+
+    it 'displays generic objects as a nested list' do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as FactoryGirl.create(:user)
+      controller.instance_variable_set(:@breadcrumbs, [])
+      service = FactoryGirl.create(:service, :name => "Abc")
+      definition = FactoryGirl.create(:generic_object_definition,
+                                      :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
+      go = FactoryGirl.create(
+        :generic_object,
+        :generic_object_definition => definition,
+        :name                      => 'go_assoc',
+        :services                  => [service]
+      )
+      service.add_resource(go)
+
+      get :show, :params => { :id => service.id, :display => 'generic_objects'}
+      expect(response.status).to eq(200)
+      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"}])
+    end
   end
 
   context "#sanitize_output" do
