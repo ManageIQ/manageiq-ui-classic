@@ -10,7 +10,7 @@ module MiddlewareSummaryHelper
   end
 
   def textual_state
-    @record.properties['Availability']
+    _(@record.properties['Availability'])
   end
 
   def textual_group_smart_management
