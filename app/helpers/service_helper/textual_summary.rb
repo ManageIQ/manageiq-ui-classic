@@ -74,7 +74,7 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_group_generic_objects
-    TextualGroup.new(_("Generic Object"), %i(generic_object_instances))
+    TextualGroup.new(_("Generic Objects"), %i(generic_object_instances))
   end
 
   #
