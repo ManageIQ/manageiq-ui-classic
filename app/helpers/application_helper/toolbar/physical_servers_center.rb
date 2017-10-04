@@ -118,16 +118,6 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             :onwhen    => "1+"
           ),
           button(
-            :physical_server_policy_sim,
-            'fa fa-play-circle-o fa-lg',
-            N_('View Policy Simulation for the selected items'),
-            N_('Policy Simulation'),
-            :url_parms => "main_div",
-            :enabled   => false,
-            :onwhen    => "1+",
-            :klass     => ApplicationHelper::Button::PhysicalServerPolicySimulation
-          ),
-          button(
             :physical_server_tag,
             'pficon pficon-edit fa-lg',
             N_('Edit tags for the selected items'),
