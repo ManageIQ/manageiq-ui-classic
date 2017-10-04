@@ -1,7 +1,7 @@
 ManageIQ.angular.app.directive('formChanged', function() {
   return {
     require: 'form',
-    link: function(scope, _elem, _attr, ctrl) {
+    link: function(scope, _elem, attr, ctrl) {
       var model = function() {
         return scope.$eval(ctrl.model || scope.model);
       };
@@ -32,14 +32,18 @@ ManageIQ.angular.app.directive('formChanged', function() {
         return undefined;
       };
 
-      scope.$watchCollection(ctrl.model || scope.model, function() {
+      var updateDirty = function() {
         // TODO in lodash 4 it's _.isEqualWith
         if (_.isEqual(model(), modelCopy(), compare)) {
           ctrl.$setPristine();
         } else {
           ctrl.$setDirty();
         }
-      });
+      };
+
+      scope.$watchCollection(ctrl.model || scope.model, updateDirty);
+      // for form elements which do not change the model (but do make the form dirty)
+      scope.$watch(attr.name + '.$dirty', updateDirty);
     },
   };
 });
