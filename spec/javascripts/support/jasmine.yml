@@ -11,13 +11,13 @@
 #   - dist/**/*.js
 #
 src_files:
-  - __spec__/helpers/i18n-test.js
-  - assets/phantomjs-polyfill/bind-polyfill
-  - assets/application
-  - assets/jasmine-jquery
-  - assets/angular-mocks
-  - __spec__/helpers/fixtures-fix.js
-  - packs/manageiq-ui-classic/application-common.js
+- __spec__/helpers/i18n-test.js
+- assets/phantomjs-polyfill/bind-polyfill
+- assets/application
+- assets/jasmine-jquery
+- assets/angular-mocks
+- __spec__/helpers/fixtures-fix.js
+- packs/manageiq-ui-classic/application-common.js
 
 # stylesheets
 #
@@ -43,7 +43,7 @@ stylesheets:
 #   - helpers/**/*.js
 #
 helpers:
-  - 'helpers/**/*.js'
+- 'helpers/**/*.js'
 
 # spec_files
 #
@@ -56,7 +56,7 @@ helpers:
 #   - **/*[sS]pec.js
 #
 spec_files:
-  - '**/*[sS]pec.js'
+- '**/*[sS]pec.js'
 
 # src_dir
 #

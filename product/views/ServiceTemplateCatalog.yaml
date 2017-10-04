@@ -26,7 +26,7 @@ cols:
 include:
   tenant:
     columns:
-      - name
+    - name
 
 # Included tables and columns for query performance
 include_for_find:
