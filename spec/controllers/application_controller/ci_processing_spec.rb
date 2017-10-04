@@ -334,6 +334,36 @@ describe ApplicationController do
     end
   end
 
+  context "Delete object store object" do
+    let :object1 do
+      FactoryGirl.create(:cloud_object_store_object)
+    end
+
+    before do
+      allow(controller).to receive(:assert_rbac).and_return(nil)
+      controller.params[:pressed] = "cloud_object_store_object_delete"
+      controller.params[:miq_grid_checks] = object1.id.to_s
+      request.parameters["controller"] = "cloud_object_store_container"
+      controller.instance_variable_set(:@display, "cloud_object_store_objects")
+    end
+
+    it "invokes delete for a selected CloudObjectStoreObject" do
+      controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+      expect(assigns(:flash_array).first[:message]).to include(
+                                                         "Delete initiated for 1 Cloud Object Store Object from the ManageIQ Database"
+                                                       )
+
+    end
+
+    it "flash - task not supported" do
+      allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
+      controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+      expect(assigns(:flash_array).first[:message]).to include(
+                                                         "Delete does not apply to this item"
+                                                       )
+    end
+  end
+
   context "Clear object store container" do
     before do
       allow(controller).to receive(:assert_rbac).and_return(nil)
