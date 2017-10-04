@@ -1,5 +1,5 @@
 /*
- * The 'miq-calendar' anngular calendar directive takes care of:
+ * The 'miq-calendar' angular calendar directive takes care of:
  * 1. data conversion (String <-> Date) between datepicker input and model
  * 2. re-configuring datepicker (start date, end date, skip days), whenever
  *    the model changes.
