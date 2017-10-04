@@ -9,10 +9,6 @@ module MiddlewareSummaryHelper
     @record.nativeid
   end
 
-  def textual_state
-    _(@record.properties['Availability'])
-  end
-
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i(tags))
   end
