@@ -1245,7 +1245,7 @@ module OpsController::OpsRbac
     @expkey = field_expression # Set expression key to expression
     @edit[field_expression].history.reset(@edit[field_expression][:expression])
     @edit[field_expression][:exp_table] = exp_build_table(@edit[field_expression][:expression])
-    @edit[field_expression][:exp_model] = @group.class # Set model for the exp editor
+    @edit[field_expression][:exp_model] = @group.class.to_s # Set model for the exp editor
   end
 
   # Set group record variables to new values
