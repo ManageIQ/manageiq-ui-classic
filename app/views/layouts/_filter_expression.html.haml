@@ -7,7 +7,7 @@
       %label.control-label.col-md-2
         = title
       .col-md-8
-        =_("Choose an element of the expression to edit")
+        = _("Choose an element of the expression to edit")
         = render :partial => 'layouts/exp_editor'
   - else
     .form-group
@@ -15,7 +15,6 @@
         = title
       .col-md-8
         = link_to({:action => action,
-                   :id => id,
                    :button => expression_type},
                    "data-miq_sparkle_on" => true,
                    "data-miq_sparkle_off" => true,

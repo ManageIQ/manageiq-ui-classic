@@ -469,7 +469,6 @@ module OpsController::OpsRbac
     session[:changed] = false
   end
 
-
   def move_cols_up
     return unless load_edit("rbac_group_edit__seq", "replace_cell__explorer")
     if !params[:seq_fields] || params[:seq_fields].empty? || params[:seq_fields][0] == ""
@@ -1162,6 +1161,7 @@ module OpsController::OpsRbac
       @edit[:new][:use_filter_expression] = params[:use_filter_expression]
       if params[:use_filter_expression] == 'false'
         @edit[:new][:use_filter_expression] = false
+        @group = MiqGroup.find_by(:id => @edit[:group_id])
         rbac_group_right_tree(@edit[:new][:belongsto].keys)
       elsif params[:use_filter_expression] == 'true'
         @edit[:use_filter_expression] = true
@@ -1228,7 +1228,11 @@ module OpsController::OpsRbac
   end
 
   def rbac_group_filter_expression_vars(field_expression, field_expression_table)
-    @edit[:new][field_expression] = @group.entitlement[field_expression].kind_of?(MiqExpression) ?  @group.entitlement[field_expression].exp : nil if @group
+    @edit[:new][field_expression] = if @group && @group.entitlement && @group.entitlement[field_expression].kind_of?(MiqExpression)
+                                      @group.entitlement[field_expression].exp
+                                    else
+                                      nil
+                                    end
     @edit[:new][:use_filter_expression] = true
     # Populate exp editor fields for the expression column
     @edit[field_expression] ||= ApplicationController::Filter::Expression.new
@@ -1256,7 +1260,6 @@ module OpsController::OpsRbac
     group.tenant = Tenant.find(@edit[:new][:group_tenant]) if @edit[:new][:group_tenant]
     rbac_group_set_filters(group) # Go set the filters for the group
     rbac_group_set_filter_expression(group) # Go set the filters for the group
-
   end
 
   # Set filters in the group record from the @edit[:new] hash values
@@ -1275,7 +1278,6 @@ module OpsController::OpsRbac
     group.entitlement ||= Entitlement.new
     exp_remove_tokens(@edit[:new][:filter_expression])
     group.entitlement.filter_expression = @edit[:new][:filter_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:filter_expression])
-    #group.save
   end
 
   # Need to make arrays by category containing arrays of items so the filtering logic can apply
@@ -1297,8 +1299,7 @@ module OpsController::OpsRbac
     vmr = @record.settings.fetch_path(:restrictions, :vms) if @record.settings
     @edit[:new][:vm_restriction] = vmr || :none
     @edit[:new][:features] = rbac_expand_features(@record.feature_identifiers).sort
-    @expkey = :filter_expression
-    @edit[:filter_expression_table] = exp_build_table_or_nil(@edit[:new][:filter_expression])
+
     @edit[:current] = copy_hash(@edit[:new])
 
     @role_features = @record.feature_identifiers.sort
@@ -1421,8 +1422,8 @@ module OpsController::OpsRbac
 
   # Validate some of the role fields
   def rbac_group_validate?
-    @assigned_filters = [] if @edit[:new][:filters].empty?
-    @filter_expression = [] if @edit[:new][:filter_expression].empty?
+    @assigned_filters = [] if @edit[:new][:filters].empty? || @edit[:new][:use_filter_expression]
+    @filter_expression = [] if @edit[:new][:filter_expression].empty? || @edit[:new][:use_filter_expression] == false
     if @edit[:new][:role].nil? || @edit[:new][:role] == ""
       add_flash(_("A User Group must be assigned a Role"), :error)
       return false
