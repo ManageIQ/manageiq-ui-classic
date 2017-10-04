@@ -1,7 +1,7 @@
 module MiqPolicyController::Alerts
   extend ActiveSupport::Concern
 
-  SEVERITIES = {nil => '', "info" => _('Info'), "warning" => _('Warninig'), "error" => _('Error')}.freeze
+  SEVERITIES = {"info" => _('Info'), "warning" => _('Warninig'), "error" => _('Error')}.freeze
 
   def alert_edit_cancel
     @edit = nil
@@ -18,9 +18,9 @@ module MiqPolicyController::Alerts
   def alert_edit_save_add
     id = params[:id] && params[:button] != "add" ? params[:id] : "new"
     return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
+
     alert = @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
     alert_set_record_vars(alert)
-
     unless alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
       alert.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -88,6 +88,7 @@ module MiqPolicyController::Alerts
 
     @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
     @edit[:new][:enabled] = params[:enabled_cb] == "1" if params.key?(:enabled_cb)
+    @edit[:new][:severity] = params[:miq_alert_severity] if params.key?(:miq_alert_severity)
     if params[:exp_event]
       @edit[:new][:exp_event] = params[:exp_event] == "_hourly_timer_" ? params[:exp_event] : params[:exp_event].to_i
       @edit[:new][:repeat_time] = alert_default_repeat_time
@@ -300,6 +301,7 @@ module MiqPolicyController::Alerts
 
     @edit[:new][:description] = @alert.description
     @edit[:new][:enabled] = @alert.enabled == true
+    @edit[:new][:severity] = @alert.severity
     @edit[:new][:db] = @alert.db.nil? ? "Vm" : @alert.db
     @edit[:expression_types] = MiqAlert.expression_types(@edit[:new][:db])
 
@@ -520,6 +522,7 @@ module MiqPolicyController::Alerts
   def alert_set_record_vars(alert)
     alert.description = @edit[:new][:description]
     alert.enabled = @edit[:new][:enabled]
+    alert.severity = @edit[:new][:severity]
     alert.db = @edit[:new][:db]
     unless @edit[:new][:expression][:eval_method]
       alert.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
@@ -559,6 +562,9 @@ module MiqPolicyController::Alerts
   def alert_valid_record?(alert)
     if alert.expression.nil?
       add_flash(_("A valid expression must be present"), :error)
+    end
+    if alert.severity.nil?
+      add_flash(_('Severity must be selected'), :error)
     end
     unless @edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing"
       add_flash(_("A Driving Event must be selected"), :error) if alert.responds_to_events.blank?
