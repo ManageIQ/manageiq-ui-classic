@@ -1,6 +1,8 @@
 module MiqPolicyController::Alerts
   extend ActiveSupport::Concern
 
+  SEVERITIES = {nil => '', "info" => _('Info'), "warning" => _('Warninig'), "error" => _('Error')}.freeze
+
   def alert_edit_cancel
     @edit = nil
     @alert = session[:edit][:alert_id] ? MiqAlert.find(session[:edit][:alert_id]) : MiqAlert.new

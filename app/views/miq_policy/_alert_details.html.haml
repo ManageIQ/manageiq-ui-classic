@@ -32,6 +32,16 @@
             .col-md-8
               %p.form-control-static
                 = @alert.enabled ? _("Yes") : _("No")
+        .form-group
+          %label.control-label.col-md-2
+            = _("Severity")
+          - if @edit
+            .col-md-8
+              = check_box_tag("enabled_cb", "1", @edit[:new][:enabled], "data-miq_observe_checkbox" => observe)
+          - else
+            .col-md-8
+              %p.form-control-static
+                = controller.class::SEVERITIES[@alert.severity]
         -# Based on (model)
         .form-group
           %label.control-label.col-md-2

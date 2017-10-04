@@ -1169,7 +1169,7 @@ class ApplicationController < ActionController::Base
           new_row[:cells] << {:span => result_span_class(row[col]), :text => row[col].titleize}
         when "severity"
           value = row[col].nil? ? ' ' : row[col]
-          new_row[:cells] << {:span => severity_span_class(value), :text => value.titleize}
+          new_row[:cells] << {:span => severity_span_class(value), :text => severity_title(value)}
         when 'state'
           celltext = row[col].titleize
         when 'hardware.bitness'
@@ -1218,6 +1218,14 @@ class ApplicationController < ActionController::Base
       "label label-warning center-block"
     else
       "label label-low-severity center-block"
+    end
+  end
+
+  def severity_title(value)
+    if self.class == MiqPolicyController
+      self.class::SEVERITIES[value]
+    else
+      value.titleize
     end
   end
 
