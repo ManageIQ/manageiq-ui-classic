@@ -7,7 +7,7 @@ describe ApplicationHelper do
     it 'should substitute dynamic function values' do
       req        = ActionDispatch::Request.new Rack::MockRequest.env_for '/?controller=foo'
       menu_info  = helper.build_toolbar 'storages_center_tb'
-      title_text = ui_lookup(:tables => "storages")
+      title_text = "Datastores"
 
       menu_info[0][:items].collect do |value|
         ['title', :confirm].each do |field|
@@ -26,7 +26,7 @@ describe ApplicationHelper do
                                        :mode        => 'foo')
 
       menu_info  = helper.build_toolbar 'miq_policies_center_tb'
-      title_text = ui_lookup(:model => "Storage")
+      title_text = "Datastore"
 
       menu_info[0][:items].collect do |value|
         next unless value['title']
