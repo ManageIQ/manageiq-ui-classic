@@ -9,8 +9,8 @@ module MiddlewareSummaryHelper
     @record.nativeid
   end
 
-  def textual_status
-    @record.status
+  def textual_state
+    @record.properties['Availability']
   end
 
   def textual_group_smart_management

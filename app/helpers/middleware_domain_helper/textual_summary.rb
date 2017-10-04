@@ -1,6 +1,6 @@
 module MiddlewareDomainHelper::TextualSummary
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name nativeid status))
+    TextualGroup.new(_("Properties"), %i(name nativeid state))
   end
 
   def textual_group_relationships
