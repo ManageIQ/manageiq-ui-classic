@@ -5,7 +5,7 @@
 }
 
 .topology .legend { /* prevents tooltip from conflicting with the nav bar*/
-  margin-left: 40px;
+  margin-left: 55px;
 }
 
 .kube-topology g text.glyph {
