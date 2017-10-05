@@ -491,6 +491,7 @@ class ProviderForemanController < ApplicationController
 
   def process_show_list(options = {})
     options.merge!(update_options)
+    process_show_list_options(options)
     super
   end
 

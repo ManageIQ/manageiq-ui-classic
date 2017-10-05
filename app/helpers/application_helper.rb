@@ -1612,6 +1612,13 @@ module ApplicationHelper
     end
   end
 
+  def process_show_list_options(options)
+    # Warning: Please do not add any SQL options here.
+    @report_data_additiona_options = {
+      :named_scope => options[:named_scope]
+    }.freeze
+  end
+
   # Wrapper around jquery-rjs' remote_function which adds an extra .html_safe()
   # Remove if merged: https://github.com/amatsuda/jquery-rjs/pull/3
   def remote_function(options)

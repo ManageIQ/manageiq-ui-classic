@@ -40,6 +40,7 @@
   sendDataWithRx({initController: {
     name: 'reportDataController',
     data: {
+      additionalOptions: #{@report_data_additiona_options.to_json},
       modelName: '#{h(j_str(model_name))}',
       activeTree: '#{active_tree}',
       gtlType: '#{h(gtl_type_string)}',
