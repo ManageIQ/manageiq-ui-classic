@@ -73,7 +73,11 @@ class ReportController < ApplicationController
     if params[:upload] && params[:upload][:file] && params[:upload][:file].respond_to?(:read)
       @sb[:overwrite] = !params[:overwrite].nil?
       begin
-        reps, mri = MiqReport.import(params[:upload][:file], :save => true, :overwrite => @sb[:overwrite], :userid => session[:userid])
+        reps, mri = MiqReport.import(params[:upload][:file],
+                                     :save           => true,
+                                     :overwrite      => @sb[:overwrite],
+                                     :userid         => session[:userid],
+                                     :expected_class => 'MiqReport')
       rescue => bang
         add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
         @sb[:flash_msg] = @flash_array
