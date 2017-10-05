@@ -137,7 +137,7 @@ describe MiddlewareServerController do
       expect(action).to redirect_to(
         :action      => 'show',
         :id          => mw_server.compressed_id,
-        :flash_msg   => 'Unable to locate all reports in database, please try again.',
+        :flash_msg   => 'Unable to locate a report in database, please try again.',
         :flash_error => true
       )
     end

@@ -178,7 +178,7 @@ class MiddlewareServerController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       redirect_to(:action      => 'show',
                   :id          => to_cid(mw_server.id),
-                  :flash_msg   =>_("Unable to locate all reports in database, please try again."),
+                  :flash_msg   => _("Unable to locate a report in database, please try again."),
                   :flash_error => true)
       return
     end
