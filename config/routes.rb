@@ -2967,12 +2967,16 @@ Rails.application.routes.draw do
       :post => %w(
         button
         explorer
+        listnav_search_selected
         ownership_field_changed
         ownership_update
+        quick_search
         reload
         retire
         service_edit
         service_tag
+        show
+        show_list
         tag_edit_form_field_changed
         tagging_edit
         tree_autoload
@@ -2982,7 +2986,11 @@ Rails.application.routes.draw do
         x_show
         ownership_form_fields
       ) +
-               dialog_runner_post
+               dialog_runner_post +
+               adv_search_post +
+               exp_post +
+               save_post +
+               x_post
     },
 
     :storage                  => {
