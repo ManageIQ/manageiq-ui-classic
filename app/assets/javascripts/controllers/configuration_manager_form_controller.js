@@ -26,17 +26,17 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
     vm.configurationManagerModel.default_password = '';
 
     $http.get(url + '/form_fields/' + configurationManagerFormId)
-      .then(getAutomationManagerNewFormDataComplete)
+      .then(newFormDataComplete)
       .catch(miqService.handleFailure);
   } else {
     vm.newRecord = false;
 
     $http.get(url + '/form_fields/' + configurationManagerFormId)
-      .then(getAutomationManagerFormDataComplete)
+      .then(editFormDataComplete)
       .catch(miqService.handleFailure);
   }
 
-  function getAutomationManagerNewFormDataComplete(response) {
+  function newFormDataComplete(response) {
     var data = response.data;
 
     vm.configurationManagerModel.zone = data.zone;
@@ -46,7 +46,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
     miqService.sparkleOff();
   }
 
-  function getAutomationManagerFormDataComplete(response) {
+  function editFormDataComplete(response) {
     var data = response.data;
 
     vm.configurationManagerModel.name = data.name;
@@ -75,7 +75,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
       $scope.angularForm.default_password.$valid;
   };
 
-  var automationManagerEditButtonClicked = function(buttonName, serializeFields) {
+  var editButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
 
     var editUrl = url + '/edit/' + configurationManagerFormId + '?button=' + buttonName;
@@ -87,7 +87,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
   };
 
   vm.cancelClicked = function() {
-    automationManagerEditButtonClicked('cancel');
+    editButtonClicked('cancel');
     $scope.angularForm.$setPristine(true);
   };
 
@@ -99,7 +99,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
   };
 
   vm.saveClicked = function() {
-    automationManagerEditButtonClicked('save', true);
+    editButtonClicked('save', true);
     $scope.angularForm.$setPristine(true);
   };
 
