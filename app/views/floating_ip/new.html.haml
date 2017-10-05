@@ -52,8 +52,8 @@
         = _('Floating IP Address (optional)')
       .col-md-8
         %input.form-control{:type          => "text",
-                            :name          => "name",
-                            'ng-model'     => "vm.floatingIpModel.name",
+                            :name          => "floating_ip_address",
+                            'ng-model'     => "vm.floatingIpModel.floating_ip_address",
                             'ng-maxlength' => 40,
                             :checkchange   => true}
     .form-group

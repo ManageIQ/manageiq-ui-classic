@@ -76,14 +76,14 @@ class FloatingIpController < ApplicationController
 
   def create_finished
     task_id = session[:async][:params][:task_id]
-    floating_ip_name = session[:async][:params][:name]
+    floating_ip_address = session[:async][:params][:floating_ip_address]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Floating IP \"%{name}\" created") % { :name  => floating_ip_name })
+      add_flash(_("Floating IP \"%{address}\" created") % { :address => floating_ip_address })
     else
       add_flash(
-        _("Unable to create Floating IP \"%{name}\": %{details}") % { :name    => floating_ip_name,
-                                                                      :details => task.message }, :error)
+        _("Unable to create Floating IP \"%{address}\": %{details}") % { :address => floating_ip_address,
+                                                                         :details => task.message }, :error)
     end
 
     @breadcrumbs.pop if @breadcrumbs
@@ -126,7 +126,7 @@ class FloatingIpController < ApplicationController
     @floating_ip = find_record_with_rbac(FloatingIp, params[:id])
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Associate Floating IP \"%{name}\"") % { :name  => @floating_ip.name },
+      :name => _("Associate Floating IP \"%{address}\"") % { :address => @floating_ip.address },
       :url  => "/floating_ip/edit/#{@floating_ip.id}")
   end
 
@@ -181,7 +181,7 @@ class FloatingIpController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Floating IP \"%{name}\" was cancelled by the user") % { :name  => @floating_ip.name })
+      cancel_action(_("Edit of Floating IP \"%{address}\" was cancelled by the user") % { :name => @floating_ip.address })
 
     when "save"
       if @floating_ip.supports_update?
@@ -200,8 +200,8 @@ class FloatingIpController < ApplicationController
           initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
         end
       else
-        add_flash(_("Couldn't initiate update of Floating IP \"%{name}\": %{details}") % {
-          :name    => @floating_ip.name,
+        add_flash(_("Couldn't initiate update of Floating IP \"%{address}\": %{details}") % {
+          :address => @floating_ip.address,
           :details => @floating_ip.unsupported_reason(:update)
         }, :error)
       end
@@ -211,13 +211,13 @@ class FloatingIpController < ApplicationController
   def update_finished
     task_id = session[:async][:params][:task_id]
     floating_ip_id = session[:async][:params][:id]
-    floating_ip_name = session[:async][:params][:name]
+    floating_ip_address = session[:async][:params][:floating_ip_address]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Floating IP \"%{name}\" updated") % { :name  => floating_ip_name })
+      add_flash(_("Floating IP \"%{address}\" updated") % { :address => floating_ip_address })
     else
-      add_flash(_("Unable to update Floating IP \"%{name}\": %{details}") % {
-        :name    => floating_ip_name,
+      add_flash(_("Unable to update Floating IP \"%{address}\": %{details}") % {
+        :address => floating_ip_address,
         :details => task.message }, :error)
     end
 
@@ -254,7 +254,7 @@ class FloatingIpController < ApplicationController
       floating_ips.each do |floating_ip|
         audit = {
           :event        => "floating_ip_record_delete_initiated",
-          :message      => "[#{floating_ip.name}] Record delete initiated",
+          :message      => "[#{floating_ip.address}] Record delete initiated",
           :target_id    => floating_ip.id,
           :target_class => "FloatingIp",
           :userid       => session[:userid]
