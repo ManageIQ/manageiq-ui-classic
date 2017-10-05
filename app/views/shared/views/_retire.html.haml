@@ -13,12 +13,11 @@
       %label.col-md-2.control-label
         = _('Retirement Date and Time')
       .col-md-4#retirement_date_div
-        .form-group
-          = datetimepicker_input_tag('retirement_date', nil,
-                                     'id'         => 'retirement_date',
-                                     'class'      => 'form-control',
-                                     'ng-model'   => 'vm.retirementInfo.retirementDate',
-                                     'start-date' => 'vm.datepickerStartDate')
+        = datetimepicker_input_tag('retirement_date', nil,
+                                   'id'         => 'retirement_date',
+                                   'class'      => 'form-control',
+                                   'ng-model'   => 'vm.retirementInfo.retirementDate',
+                                   'start-date' => 'vm.datepickerStartDate')
     .form-group
       %label.col-md-2.control-label
         = _('Retirement Warning')
