@@ -1535,8 +1535,19 @@ function rbacGroupLoadTab(id) {
 }
 
 function chartData(type, data, data2) {
+  var empty = {
+    data: {
+      columns: [],
+    },
+  };
+
   if (type === undefined) {
-    return;
+    return empty;
+  }
+
+  var config = _.cloneDeep(ManageIQ.charts.c3config[type]);
+  if (config === undefined) {
+    return empty;
   }
 
   if (_.isObject(data.miq)) {
@@ -1607,7 +1618,7 @@ function chartData(type, data, data2) {
     };
   }
 
-  var config = _.cloneDeep(ManageIQ.charts.c3config[type]);
+
   // some PatternFly default configs define contents function, but it breaks formatting
   if (_.isObject(config.tooltip)) {
     config.tooltip.contents = undefined;
