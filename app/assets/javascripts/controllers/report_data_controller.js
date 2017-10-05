@@ -292,7 +292,8 @@
                         initObject.parentId,
                         initObject.isExplorer,
                         this.settings,
-                        initObject.records)
+                        initObject.records,
+                        initObject.additionalOptions)
       .then(function(data) {
         this.settings.hideSelect = initObject.hideSelect;
         var start = (this.settings.current - 1) * this.settings.perpage;
@@ -406,9 +407,16 @@
   * @param {Boolean} isExplorer true | false if we are in explorer part of application.
   * @param {Object} settings settings object.
   * @param {Array} records array of reccords.
+  * @param {Object} additionalOptions
   * @returns {Object} promise of retriveRowsAndColumnsFromUrl of MiQDataTableService.
   */
-  ReportDataController.prototype.getData = function(modelName, activeTree, parentId, isExplorer, settings, records) {
+  ReportDataController.prototype.getData = function(modelName,
+                                                    activeTree,
+                                                    parentId,
+                                                    isExplorer,
+                                                    settings,
+                                                    records,
+                                                    additionalOptions) {
     var basicSettings = {
       current: 1,
       perpage: 20,
@@ -416,7 +424,7 @@
       sort_dir: 'DESC',
     };
     return this.MiQDataTableService
-      .retrieveRowsAndColumnsFromUrl(modelName, activeTree, parentId, isExplorer, settings, records)
+      .retrieveRowsAndColumnsFromUrl(modelName, activeTree, parentId, isExplorer, settings, records, additionalOptions)
       .then(function(gtlData) {
         this.settings = gtlData.settings || basicSettings;
         if (this.settings.sort_col === -1) {
