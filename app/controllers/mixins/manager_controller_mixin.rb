@@ -280,7 +280,7 @@ module Mixins
       assert_privileges("#{privilege_prefix}_edit_provider")
       # set value of read only zone text box, when there is only single zone
       if params[:id] == "new"
-        return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}
+        return render(:json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil})
       end
 
       manager = find_record(concrete_model, params[:id])
