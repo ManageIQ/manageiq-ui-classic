@@ -4,7 +4,7 @@ module MiddlewareDomainHelper::TextualSummary
   end
 
   def textual_state
-    _(@record.properties['Availability'])
+    @record.properties['Availability']
   end
 
   def textual_group_relationships
