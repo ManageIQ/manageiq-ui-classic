@@ -231,13 +231,12 @@ class MiddlewareServerController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       add_flash(_("Unable to locate all reports in database, please try again."), :error)
     else
-      mw_server.middleware_diagnostic_reports.destroy(reports)
+      # mw_server.middleware_diagnostic_reports.destroy(reports)
       add_flash(n_('Deletion of one JDR report succeeded.',
                    "Deletion of %{count} JDR reports succeeded.",
                    reports.count) % {:count => reports.count})
     end
-    session[:flash_msgs] = @flash_array
-    redirect_to(:action => 'show', :id => to_cid(mw_server.id))
+    render :json => {:msg => @flash_array}
   end
 
   def dr_report_download

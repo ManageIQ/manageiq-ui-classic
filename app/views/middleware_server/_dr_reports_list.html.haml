@@ -31,7 +31,9 @@
     .col-md-12
       .form-group
         #jdr-table
-          %jdr-report{"server-id" => to_cid(@record.id)}
+          %jdr-report{"server-id"    => to_cid(@record.id),
+                      "download-url" => url_for(:action => 'dr_download'),
+                      "delete-url"   => url_for(:action => 'dr_delete')}
 = javascript_pack_tag "manageiq-ui-classic/middleware"
 :javascript
   miq_bootstrap('#jdr-table', 'ManageIQ.middleware');

@@ -72,6 +72,10 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
         }
       });
     }
+
+    if (event.type === 'jdr_selected') {
+      $scope.drChecked(event.payload);
+    }
   });
 
   // //////////////////////////////////////////////////////////////////////
@@ -176,12 +180,11 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
 
   $scope.deleteSelectedDr = function() {
     $document.find('#dr_btn_delete').prop('disabled', true);
-    $document.find('#mw_dr_reports').submit();
+    sendDataWithRx({type: 'delete_jdr'})
   };
 
-  $scope.drChecked = function() {
-    var checkedCount = $document.find('#mw_dr_reports input[type=checkbox]:checked').length;
-    $document.find('#dr_btn_delete').prop('disabled', checkedCount === 0);
+  $scope.drChecked = function(payload) {
+    $document.find('#dr_btn_delete').prop('disabled', payload.countSelected === 0);
   };
 
   $scope.toggleShowDiagnosticReports = function() {
