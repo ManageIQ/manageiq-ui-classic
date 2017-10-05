@@ -40,13 +40,12 @@ module FloatingIpHelper::TextualSummary
   def textual_instance
     return unless @record.vm
 
-    label    = ui_lookup(:table => "vm_cloud")
     instance = @record.vm
-    h        = {:label => label, :icon => "pficon pficon-virtual-machine"}
+    h        = {:label => _('Instance'), :icon => "pficon pficon-virtual-machine"}
     if instance && role_allows?(:feature => "vm_show")
       h[:value] = instance.name
       h[:link]  = url_for_only_path(:controller => 'vm_cloud', :action => 'show', :id => instance.id)
-      h[:title] = _("Show %{label}") % {:label => label}
+      h[:title] = _("Show Instance")
     end
     h
   end

@@ -78,23 +78,21 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_instances
-    label = ui_lookup(:tables => "vm_cloud")
     num   = @record.number_of(:vms)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
+    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
       h[:link]  = ems_cloud_path(@record.id, :display => 'instances')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Instances")
     end
     h
   end
 
   def textual_images
-    label = ui_lookup(:tables => "template_cloud")
     num = @record.number_of(:miq_templates)
-    h = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
+    h = {:label => _('Images'), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "miq_template_show_list")
       h[:link] = ems_cloud_path(@record.id, :display => 'images')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Images")
     end
     h
   end
@@ -108,11 +106,10 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_storage_managers
-    label = _("Storage Managers")
     num   = @record.try(:storage_managers) ? @record.number_of(:storage_managers) : 0
-    h     = {:label => label, :icon => "fa fa-database", :value => num}
+    h     = {:label => _('Storage Managers'), :icon => "fa fa-database", :value => num}
     if num > 0 && role_allows?(:feature => "ems_storage_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Storage Managers")
       h[:link] = ems_cloud_path(@record.id, :display => 'storage_managers')
     end
     h
@@ -139,12 +136,11 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_security_groups
-    label = ui_lookup(:tables => "security_group")
     num = @record.number_of(:security_groups)
-    h = {:label => label, :icon => "pficon pficon-cloud-security", :value => num}
+    h = {:label => _('Security Groups'), :icon => "pficon pficon-cloud-security", :value => num}
     if num > 0 && role_allows?(:feature => "security_group_show_list")
       h[:link] = ems_cloud_path(@record.id, :display => 'security_groups')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Security Groups")
     end
     h
   end

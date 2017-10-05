@@ -270,12 +270,11 @@ module HostHelper::TextualSummary
   def textual_availability_zone
     return nil unless @record.openstack_host?
     availability_zone = @record.availability_zone
-    label = ui_lookup(:table => "availability_zone")
-    h = {:label => label,
+    h = {:label => _('Availability Zone'),
          :icon  => "pficon pficon-zone",
          :value => (availability_zone.nil? ? _("None") : availability_zone.name)}
     if availability_zone && role_allows?(:feature => "availability_zone_show")
-      h[:title] = _("Show this %{title}'s %{label}") % {:title => host_title, :label => label}
+      h[:title] = _("Show this %{title}'s Availability Zone") % {:title => host_title}
       h[:link]  = url_for_only_path(:controller => 'availability_zone', :action => 'show', :id => availability_zone)
     end
     h

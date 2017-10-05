@@ -33,10 +33,9 @@ module CloudVolumeBackupHelper::TextualSummary
 
   def textual_cloud_tenant
     cloud_tenant = @record.try(:cloud_tenant)
-    label = ui_lookup(:table => "cloud_tenants")
-    h = {:label => label, :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.try(:name) || _("None"))}
+    h = {:label => _('Cloud Tenants'), :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.try(:name) || _("None"))}
     if cloud_tenant && role_allows?(:feature => "cloud_tenant_show")
-      h[:title] = _("Show this Backup's %{parent}") % {:parent => label}
+      h[:title] = _("Show this Backup's Cloud Tenants")
       h[:link]  = url_for_only_path(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
     end
     h

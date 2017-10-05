@@ -14,23 +14,21 @@ module HostAggregateHelper::TextualSummary
   #
 
   def textual_hosts
-    label = ui_lookup(:tables => "host")
     num   = @record.number_of(:hosts)
-    h     = {:label => label, :icon => "pficon pficon-screen", :value => num}
+    h     = {:label => _('Hosts'), :icon => "pficon pficon-screen", :value => num}
     if num > 0 && role_allows?(:feature => "host_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'hosts')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Hosts")
     end
     h
   end
 
   def textual_instances
-    label = ui_lookup(:tables => "vm_cloud")
     num   = @record.number_of(:vms)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
+    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Instances")
     end
     h
   end

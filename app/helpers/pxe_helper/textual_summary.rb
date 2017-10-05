@@ -125,7 +125,7 @@ module PxeHelper::TextualSummary
   end
 
   def textual_iso_datastore_name
-    {:label => ui_lookup(:table => "ext_management_system"), :value => @isd.name}
+    {:label => _('Providers'), :value => @isd.name}
   end
 
   def textual_iso_datastore_last_refresh_on
