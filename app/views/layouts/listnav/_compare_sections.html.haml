@@ -16,7 +16,7 @@
         - if %w(MiqTemplate VmOrTemplate Vm).include?(@sb[:compare_db])
           - if settings(:quadicons, :vm)
             .flobj
-              %img{:src => image_path("layout/base.png")}
+              %img{:src => image_path("layout/base.svg")}
             %div{:class => "flobj b72"}
               - if @drift_obj.template?
                 - if @drift_obj.host
@@ -44,7 +44,7 @@
         - elsif @sb[:compare_db] == "Host"
           - if settings(:quadicons, :host)
             .flobj
-              %img{:src => image_path("layout/base.png")}
+              %img{:src => image_path("layout/base.svg")}
             %div{:class => "flobj c72"}
               %img{:src => image_path("svg/vendor-#{h(@drift_obj.vmm_vendor_display.downcase)}.svg")}
             - unless @drift_obj.power_state.blank?

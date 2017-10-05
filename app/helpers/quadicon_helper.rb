@@ -228,7 +228,7 @@ module QuadiconHelper
   def render_physical_server_quadicon(item, options)
     output = []
     if settings(:quadicons, :physical_server)
-      output << flobj_img_simple("layout/base.png")
+      output << flobj_img_simple("layout/base.svg")
 
       output << flobj_p_simple("a72", (item.host ? 1 : 0))
       output << flobj_img_simple("svg/currentstate-#{h(item.power_state.try(:downcase))}.svg", "b72")
@@ -434,7 +434,7 @@ module QuadiconHelper
   end
 
   def flobj_img_simple(image = nil, cls = '', size = 72)
-    image ||= "layout/base-single.png"
+    image ||= "layout/base-single.svg"
 
     content_tag(:div, :class => "flobj #{cls}") do
       encodable_image_tag(image, :size => size)
@@ -510,7 +510,7 @@ module QuadiconHelper
     output = []
 
     if settings(:quadicons, :host)
-      output << flobj_img_simple("layout/base.png")
+      output << flobj_img_simple("layout/base.svg")
 
       output << flobj_p_simple("a72", item.vms.size)
       output << currentstate_icon(item.normalized_state.downcase)
@@ -556,7 +556,7 @@ module QuadiconHelper
     output = []
 
     if settings(:quadicons, db_for_quadicon)
-      output << flobj_img_simple("layout/base.png")
+      output << flobj_img_simple("layout/base.svg")
       item_count = case item
                    when EmsPhysicalInfra then item.physical_servers.size
                    when EmsCloud         then item.total_vms
@@ -572,7 +572,7 @@ module QuadiconHelper
       output << flobj_img_simple(img_for_auth_status(item), "d72")
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
-      output << flobj_img_simple("layout/base-single.png")
+      output << flobj_img_simple("layout/base-single.svg")
       output << flobj_img_small("svg/vendor-#{h(item.image_name)}.svg", "e72")
     end
 
@@ -598,7 +598,7 @@ module QuadiconHelper
   def render_ems_cluster_quadicon(item, options)
     output = []
 
-    output << flobj_img_simple("layout/base-single.png")
+    output << flobj_img_simple("layout/base-single.svg")
     output << flobj_img_small("100/emscluster.png", "e72")
     output << flobj_img_simple("100/shield.png", "g72") unless item.get_policies.empty?
 
@@ -620,7 +620,7 @@ module QuadiconHelper
 
     img_path = item.try(:decorate).try(:fileicon) || "100/#{item.class.base_class.to_s.underscore}.png"
 
-    output << flobj_img_simple("layout/base-single.png")
+    output << flobj_img_simple("layout/base-single.svg")
     output << flobj_img_simple(img_path, "e72")
 
     unless options[:typ] == :listnav
@@ -662,7 +662,7 @@ module QuadiconHelper
   def render_listicon_single_quadicon(item, options)
     output = []
 
-    output << flobj_img_simple("layout/base-single.png")
+    output << flobj_img_simple("layout/base-single.svg")
     output << flobj_img_small("100/#{@listicon}.png", "e72")
 
     unless options[:typ] == :listnav
@@ -718,7 +718,7 @@ module QuadiconHelper
     output = []
 
     if settings(:quadicons, :storage)
-      output << flobj_img_simple("layout/base.png")
+      output << flobj_img_simple("layout/base.svg")
       output << flobj_img_simple("100/storagetype-#{item.store_type.nil? ? "unknown" : h(item.store_type.to_s.downcase)}.png", "a72")
       output << flobj_p_simple("b72", item.v_total_vms)
       output << flobj_p_simple("c72", item.v_total_hosts)
@@ -727,7 +727,7 @@ module QuadiconHelper
       output << flobj_img_simple("100/piecharts/datastore/#{h(space_percent)}.png", "d72")
     else
       space_percent = (item.used_space_percent_of_total.to_i + 9) / 10
-      output << flobj_img_simple("layout/base-single.png")
+      output << flobj_img_simple("layout/base-single.svg")
       output << flobj_img_simple("100/datastore-#{h(space_percent)}.png", "e72")
     end
 
@@ -785,7 +785,7 @@ module QuadiconHelper
     output = []
 
     if settings(:quadicons, item.class.base_model.name.underscore.to_sym)
-      output << flobj_img_simple("layout/base.png")
+      output << flobj_img_simple("layout/base.svg")
       output << flobj_img_simple("svg/os-#{h(item.os_image_name.downcase)}.svg", "a72")
       output << currentstate_icon(item.normalized_state.downcase)
       output << flobj_img_simple("svg/vendor-#{h(item.vendor.downcase)}.svg", "c72")
@@ -802,7 +802,7 @@ module QuadiconHelper
         output << flobj_p_simple("d72", h(item.v_total_snapshots))
       end
     else
-      output << flobj_img_simple("layout/base-single.png")
+      output << flobj_img_simple("layout/base-single.svg")
 
       if quadicon_policy_sim? && !session[:policies].empty?
         output << flobj_img_small(img_for_compliance(item), "e72")
