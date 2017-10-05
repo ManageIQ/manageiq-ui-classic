@@ -8,13 +8,13 @@
         = _('Network Manager')
       .col-md-8
         = select_tag("ems_id",
-                      options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
+                      options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
                       "ng-model"                    => "cloudSubnetModel.ems_id",
                       "required"                    => "",
-                      :miqrequired                  => true,
-                      :checkchange                  => true,
                       "ng-change"                   => "filterNetworkManagerChanged(cloudSubnetModel.ems_id)",
                       "selectpicker-for-select-tag" => "")
+        %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
+          = _("Required")
 
   %h3
     = _('Cloud Subnet details')
