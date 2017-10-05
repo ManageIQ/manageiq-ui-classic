@@ -90,7 +90,7 @@ class JdrReportController {
   }
 
   public onDonwloadClick(rowId) {
-    this.$http.get(this.downloadUrl, {params: {id: this.serverId, key: rowId}});
+    DoNav(`${this.downloadUrl}?id=${this.serverId}&key=${rowId}`);
   }
 
   public onDeleteClick() {
@@ -151,6 +151,7 @@ class JdrReportController {
       title: __('Download'),
       text: __('Download'),
       onclick: `this.onDonwloadClick("${row.id}")`,
+      disabled: row.cells[2].text.indexOf('N/A') !== -1,
       bindTo: this
     }];
   }
