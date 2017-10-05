@@ -18,6 +18,7 @@ src_files:
   - assets/angular-mocks
   - __spec__/helpers/fixtures-fix.js
   - packs/manageiq-ui-classic/application-common.js
+  - packs/manageiq-ui-classic/extensible-componenets-common.js
 
 # stylesheets
 #
@@ -126,4 +127,3 @@ boot_files:
 #
 # rack_options:
 #   server: 'thin'
-

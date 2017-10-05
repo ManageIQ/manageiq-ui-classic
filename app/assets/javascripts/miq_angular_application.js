@@ -11,6 +11,7 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miq.compat',
   'miq.util',
   'kubernetesUI',
+  'ngRedux',
   'miqStaticAssets.dialogEditor',
 ]);
 miqHttpInject(ManageIQ.angular.app);

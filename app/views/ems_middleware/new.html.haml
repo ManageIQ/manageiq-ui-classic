@@ -12,8 +12,14 @@
   %input{:type => 'hidden', :id => "button_name", :name => "button", :value => "add"}
   %input{:type => 'hidden', :id => "cred_type", :name => "cred_type", :value => "default"}
 
-  = render :partial => "form"
 
+  = render :partial => "form"
+  %new-provider-form{"create-url" => "asd",
+                     "form-fields-url" => "rrr",
+                     "types" => "#{[[_('Choose'), nil]] + @ems_types}",
+                     "zones" => "#{@server_zones}",
+                     :novalidate => "true"}
+= javascript_pack_tag 'manageiq-ui-classic/middleware_forms'
 :javascript
   ManageIQ.angular.app.value('emsCommonFormId', '#{@ems.id || "new"}');
   miq_bootstrap($('#form_id').val());
