@@ -101,8 +101,8 @@ module ApplicationController::AdvancedSearch
     begin
       s.destroy
     rescue => bang
-      add_flash(_("%{model} \"%{name}\": Error during 'delete': %{error_message}") %
-        {:model => ui_lookup(:model => "MiqSearch"), :name => sname, :error_message => bang.message}, :error)
+      add_flash(_("Search \"%{name}\": Error during 'delete': %{error_message}") %
+        {:name => sname, :error_message => bang.message}, :error)
     else
       if (def_search = settings(:default_search, @edit[@expkey][:exp_model].to_s.to_sym)) # See if a default search exists
         if id.to_i == def_search.to_i

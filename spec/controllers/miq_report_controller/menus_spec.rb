@@ -16,7 +16,7 @@ describe ReportController do
       expect(controller).to receive(:replace_right_cell)
 
       controller.menu_update
-      expect(assigns(:edit)[:new]).to eq([["foo - bar (EVM Group): #{@user.current_group.description}", [["Custom", [@report.name]]]]])
+      expect(assigns(:edit)[:new]).to eq([["foo - bar (Group): #{@user.current_group.description}", [["Custom", [@report.name]]]]])
       expect(assigns(:flash_array).first[:message]).to include("default")
     end
   end

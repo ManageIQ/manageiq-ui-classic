@@ -989,11 +989,10 @@ class ApplicationController < ActionController::Base
   def reports_group_title
     tenant_name = current_tenant.name
     if current_user.admin_user?
-      _("%{tenant_name} (All %{groups})") % {:tenant_name => tenant_name, :groups => ui_lookup(:models => "MiqGroup")}
+      _("%{tenant_name} (All Groups)") % {:tenant_name => tenant_name}
     else
-      _("%{tenant_name} (%{group}): %{group_description}") %
+      _("%{tenant_name} (Group): %{group_description}") %
         {:tenant_name       => tenant_name,
-         :group             => ui_lookup(:model => "MiqGroup"),
          :group_description => current_user.current_group.description}
     end
   end
