@@ -25,8 +25,8 @@ cols:
 # Included tables (joined, has_one, has_many) and columns
 include:
   vmdb_table:
-   columns:
-   - type
+    columns:
+    - type
   latest_hourly_metric:
     columns:
     - rows
@@ -35,7 +35,7 @@ include:
     - percent_bloat
 
 # Order of columns (from all tables)
-col_order: 
+col_order:
 - name
 - latest_hourly_metric.rows
 - latest_hourly_metric.size
@@ -82,8 +82,8 @@ group: n
 #   StackedColumn
 #   StackedThreedColumn
 
-graph: 
+graph:
 
 # Dimensions of graph (1 or 2)
 #   Note: specifying 2 for a single dimension graph may not return expected results
-dims: 
+dims:

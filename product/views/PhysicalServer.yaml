@@ -1,5 +1,5 @@
 #Report title
-title:  Physical Servers
+title: Physical Servers
 
 #Menu name
 name: Physical Server
@@ -26,7 +26,7 @@ include:
 include_for_find:
   :ext_management_system: {}
   :compliances: {}
-  :tags:  {}
+  :tags: {}
 
 
 col_order:
@@ -64,7 +64,6 @@ sortby:
 - name
 
 group: n
-
 
 
 graph:

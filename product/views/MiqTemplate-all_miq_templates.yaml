@@ -41,9 +41,9 @@ include_for_find:
   :operating_system: {}
   :hardware: {}
   :tags: {}
-  
+
 # Order of columns (from all tables)
-col_order: 
+col_order:
 - name
 - ems_cluster_name
 - host.name
@@ -63,7 +63,7 @@ headers:
 - Last Analysis Time
 
 # Condition(s) string for the SQL query
-conditions: 
+conditions:
 
 # Order string for the SQL query
 order: Ascending
@@ -86,8 +86,8 @@ group: n
 #   StackedColumn
 #   StackedThreedColumn
 
-graph: 
+graph:
 
 # Dimensions of graph (1 or 2)
 #   Note: specifying 2 for a single dimension graph may not return expected results
-dims: 
+dims:

@@ -30,8 +30,8 @@ cols:
 include:
   binary_blob:
     columns:
-      - name
-      - size
+    - name
+    - size
 
 # Included tables and columns for query performance
 

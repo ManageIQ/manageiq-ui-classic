@@ -25,11 +25,6 @@ cols:
 - hostname
 - ext_management_system.name
 
-include:
-  ext_management_system:
-    columns:
-      - name
-
 # Included tables (joined, has_one, has_many) and columns
 include:
   ext_management_system:

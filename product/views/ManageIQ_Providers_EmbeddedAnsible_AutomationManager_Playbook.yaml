@@ -29,7 +29,7 @@ cols:
 include:
   configuration_script_source:
     columns:
-      - name
+    - name
 
 # Order of columns (from all tables)
 col_order:
