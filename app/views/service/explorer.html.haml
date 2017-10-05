@@ -1,3 +1,6 @@
+- content_for :search do
+  = render(:partial => "layouts/x_adv_searchbox")
+  = render(:partial => 'layouts/quick_search')
 - if TreeBuilder.get_model_for_prefix(@nodetype) == "Service"
   -# Showing a specific Service
   #main_div

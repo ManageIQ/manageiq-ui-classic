@@ -904,6 +904,7 @@ module ApplicationHelper
        retired
        security_group
        service
+       services
        storage
        templates
        vm
@@ -1577,6 +1578,7 @@ module ApplicationHelper
        instances_filter
        providers
        storage
+       svcs
        templates_filter
        templates_images_filter
        vandt
