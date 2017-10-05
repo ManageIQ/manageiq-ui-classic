@@ -1535,13 +1535,19 @@ function rbacGroupLoadTab(id) {
 }
 
 function chartData(type, data, data2) {
+  var empty = {
+    data: {
+      columns: [],
+    },
+  };
+
   if (type === undefined) {
-    return {data :{columns: []}};
+    return empty;
   }
 
   var config = _.cloneDeep(ManageIQ.charts.c3config[type]);
   if (config === undefined) {
-    return {data :{columns: []}};
+    return empty;
   }
 
   if (_.isObject(data.miq)) {
