@@ -1,5 +1,6 @@
 class ServiceController < ApplicationController
   include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -31,15 +32,25 @@ class ServiceController < ApplicationController
 
   # Service show selected, redirect to proper controller
   def show
-    record = Service.find_by_id(from_cid(params[:id]))
+    @record = Service.find(from_cid(params[:id]))
+
+    @gtl_url = "/show"
+    @display = params[:display] if params[:display]
+
+    if self.class.display_methods.include?(@display)
+      params[:display] = @display
+      display_nested_list(@display)
+      return
+    end
+
     unless @explorer
-      tree_node_id = TreeBuilder.build_node_id(record)
+      tree_node_id = TreeBuilder.build_node_id(@record)
       redirect_to :controller => "service",
                   :action     => "explorer",
                   :id         => tree_node_id
       return
     end
-    redirect_to :action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id
+    redirect_to(:action => 'show', :controller => @record.class.base_model.to_s.underscore, :id => @record.id)
   end
 
   def show_list
@@ -139,6 +150,14 @@ class ServiceController < ApplicationController
     }
   end
 
+  def self.display_methods
+    %w(generic_objects)
+  end
+
+  def display_generic_objects
+    nested_list("generic_object", GenericObject)
+  end
+
   private
 
   def sanitize_output(stdout)
@@ -158,7 +177,7 @@ class ServiceController < ApplicationController
     if @record.type == "ServiceAnsiblePlaybook"
       [%i(properties), %i(lifecycle tags)]
     else
-      [%i(properties lifecycle relationships miq_custom_attributes), %i(vm_totals tags)]
+      [%i(properties lifecycle relationships generic_objects miq_custom_attributes), %i(vm_totals tags)]
     end
   end
   helper_method :textual_group_list
