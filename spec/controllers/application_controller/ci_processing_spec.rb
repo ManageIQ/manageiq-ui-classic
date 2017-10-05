@@ -348,6 +348,7 @@ describe ApplicationController do
     end
 
     it "invokes delete for a selected CloudObjectStoreObject" do
+      allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(true)
       controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
       expect(assigns(:flash_array).first[:message]).to include(
                                                          "Delete initiated for 1 Cloud Object Store Object from the ManageIQ Database"
