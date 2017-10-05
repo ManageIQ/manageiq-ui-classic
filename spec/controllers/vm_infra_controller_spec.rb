@@ -12,6 +12,7 @@ describe VmInfraController do
     allow(controller).to receive(:protect_build_tree).and_return(nil)
     controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
 
+    MiqRegion.seed
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
