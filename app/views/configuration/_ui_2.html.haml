@@ -118,6 +118,7 @@
                     = view_name
                   .col-md-8
                     %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
+
         - if has_any_role?(%w(ems_infra_show_list ems_cluster_show_list host_show_list resource_pool_show_list storage_show_list vandt_accord vms_filter_accord templates_filter_accord))
           %fieldset
             %h3
@@ -141,4 +142,19 @@
                     = view_name
                   .col-md-8
                     %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
+
+        - if has_any_role?(%w(ems_physical_infra_show_list physical_server_show_list))
+          %fieldset
+            %h3
+              = _('Phyisical Infrascructure')
+            - {:manageiq_providers_physicalinframanager => ["ems_physical_infra_show_list", _('Providers')],
+              :physicalserver                           => ["physical_server_show_list",    _('Servers')],
+              }.each do |resource, (feature, view_name)|
+              - if has_any_role?(Array(feature))
+                .form-group
+                  %label.col-md-3.control-label
+                    = view_name
+                  .col-md-8
+                    %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])  
+
     = render :partial => "/layouts/form_buttons"
