@@ -223,6 +223,25 @@
           = h(@alert.expression[:options][:ems_alarm_name])
   - when :mw_operator
     -# Skip this, handled by value_mw_garbage_collector
+  - when :value_mw_threshold
+    %label.control-label.col-md-2
+      = h(option[:description])
+    .col-md-8
+      - if @edit
+        = select_tag('select_mw_operator',
+          options_for_select(@edit[:operators], @edit[:new][:expression][:options][:mw_operator]),
+          :class => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent('select_mw_operator', '#{url}', {beforeSend: true, complete: true})
+        = text_field_tag("value_mw_threshold",
+          @edit[:new][:expression][:options][:value_mw_threshold],
+          :maxlength         => ViewHelper::MAX_NAME_LEN,
+          :class             => "form-control",
+          "data-miq_observe" => observe_with_interval)
+      - else
+        = h(@alert.expression[:options][:mw_operator])
+        = h(@alert.expression[:options][:value_mw_threshold])
   - when :value_mw_garbage_collector
     %label.control-label.col-md-2
       = h(option[:description])
