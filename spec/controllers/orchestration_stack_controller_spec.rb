@@ -139,6 +139,15 @@ describe OrchestrationStackController do
   end
 
   describe "#button" do
+    let(:non_orderable_template) do
+      stub_const('OrchestrationTemplateTest', Class.new(OrchestrationTemplate) do
+        def validate_format
+          nil
+        end
+      end)
+      FactoryGirl.create(:orchestration_template, :type => 'OrchestrationTemplateTest', :orderable => false)
+    end
+
     context "make stack's orchestration template orderable" do
       it "won't allow making stack's orchestration template orderable when already orderable" do
         record = FactoryGirl.create(:orchestration_stack_cloud_with_template)
@@ -149,8 +158,8 @@ describe OrchestrationStackController do
         expect(assigns(:flash_array).first[:message]).to include('is already orderable')
       end
 
-      skip "makes stack's orchestration template orderable" do
-        record = FactoryGirl.create(:orchestration_stack_amazon_with_non_orderable_template)
+      it "makes stack's orchestration template orderable" do
+        record = FactoryGirl.create(:orchestration_stack_cloud, :orchestration_template => non_orderable_template)
         post :button, :params => {:id => record.id, :pressed => "make_ot_orderable"}
         expect(record.orchestration_template.orderable?).to be_falsey
         expect(response.status).to eq(200)
@@ -169,8 +178,8 @@ describe OrchestrationStackController do
         expect(assigns(:flash_array).first[:message]).to include('is already orderable')
       end
 
-      skip "renders orchestration template copying form" do
-        record = FactoryGirl.create(:orchestration_stack_amazon_with_non_orderable_template)
+      it "renders orchestration template copying form" do
+        record = FactoryGirl.create(:orchestration_stack_cloud, :orchestration_template => non_orderable_template)
         post :button, :params => {:id => record.id, :pressed => "orchestration_template_copy"}
         expect(record.orchestration_template.orderable?).to be_falsey
         expect(response.status).to eq(200)
