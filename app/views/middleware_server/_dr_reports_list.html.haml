@@ -28,6 +28,9 @@
           %button#dr_btn_delete.btn.btn-default{'onclick' => 'miqCallAngular({name: "deleteSelectedDr", args: []});', :disabled => 'disabled'}
             %span.pficon.pficon-delete.fa
             = _('Delete')
+          %button#dr_btn_refresh.btn.btn-default{'onclick' => 'sendDataWithRx({type: "refresh_jdr"});'}
+            %span.fa.fa-refresh
+            = _('Refresh')
     .col-md-12
       .form-group
         #jdr-table

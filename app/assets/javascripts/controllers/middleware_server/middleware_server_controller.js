@@ -180,7 +180,7 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
 
   $scope.deleteSelectedDr = function() {
     $document.find('#dr_btn_delete').prop('disabled', true);
-    sendDataWithRx({type: 'delete_jdr'})
+    sendDataWithRx({type: 'delete_jdr'});
   };
 
   $scope.drChecked = function(payload) {

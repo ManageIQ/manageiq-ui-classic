@@ -35,8 +35,12 @@ class JdrReportController {
   private fetchData() {
     this.settings.isLoading = true;
     this.rows = [];
-    this.MiQDataTableService
-      .retrieveRowsAndColumnsFromUrl('middleware_diagnostic_report', null, this.serverId, false, this.settings)
+    return this.MiQDataTableService
+      .retrieveRowsAndColumnsFromUrl('ManageIQ::Providers::Hawkular::MiddlewareManager::MiddlewareDiagnosticReport',
+                                     null,
+                                     this.serverId,
+                                     false,
+                                     this.settings)
       .then(payload => this.onFetchData(payload));
   }
 
@@ -60,6 +64,12 @@ class JdrReportController {
     this.settings.selectAllTitle = 'select all';
     this.settings.columns = this.cols;
     this.updateSort();
+    this.settings.translateTotalOf = (start, end, total) => {
+      if (typeof start !== 'undefined' && typeof end !== 'undefined' && typeof total !== 'undefined') {
+        return __(`${start} - ${end} of ${total}`);
+      }
+      return start + ' - ' + end + ' of ' + total;
+    };
     this.settings.isLoading = false;
   }
 
@@ -104,14 +114,34 @@ class JdrReportController {
         const msg = status.data.msg[0];
         add_flash(msg.message, msg.level);
         this.$window.sendDataWithRx({type: 'jdr_selected', payload: {countSelected: 0}});
-        this.fetchData();
+        this.fetchData().then(() => this.selectItems(status.data.selected_drs));
       });
+  }
+
+  private selectItems(itemsToSelect) {
+    if (itemsToSelect) {
+      this.rows.forEach(item => {
+        if (itemsToSelect.indexOf(item.long_id) !== -1) {
+          item.selected = true;
+          item.checked= true;
+          this.$window.sendDataWithRx({type: 'jdr_selected', payload: {
+            item: item,
+            countSelected: _.filter(this.rows, {selected: true}).length,
+            isSelected: true
+          }});
+        }
+      });
+    }
+    
   }
 
   private bindToRx() {
     this.$window.ManageIQ.angular.rxSubject.subscribe((action) => {
       if (action.type === 'delete_jdr') {
         this.onDeleteClick();
+      }
+      if (action.type === 'refresh_jdr') {
+        this.fetchData();
       }
     });
   }
