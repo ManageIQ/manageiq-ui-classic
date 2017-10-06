@@ -32,7 +32,7 @@ module StorageHelper::TextualSummary
   #
 
   def textual_store_type
-    {:label => _("%{storage} Type") % {:storage => ui_lookup(:table => "storages")}, :value => @record.store_type}
+    {:label => _("Datastore Type"), :value => @record.store_type}
   end
 
   def textual_free_space
@@ -95,12 +95,11 @@ module StorageHelper::TextualSummary
   end
 
   def textual_managed_miq_templates
-    label = _("Managed %{tables}") % {:tables => ui_lookup(:tables => "miq_template")}
     num   = @record.number_of(:all_miq_templates)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
+    h     = {:label => _("Managed VM Templates"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "miq_template_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'all_miq_templates')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Managed VM Templates")
     end
     h
   end
@@ -125,7 +124,7 @@ module StorageHelper::TextualSummary
     num   = @record.number_of(:files)
     h     = {:label => _("All Files"), :icon => "fa fa-file-o", :value => num}
     if num > 0
-      h[:title] = _("Show all files installed on this %{table}") % {:table => ui_lookup(:table => "storages")}
+      h[:title] = _("Show all files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'files', :id => @record)
     end
     h
@@ -151,8 +150,7 @@ module StorageHelper::TextualSummary
     )
     h = {:label => _("VM Provisioned Disk Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
-      h[:title] = _("Show VM Provisioned Disk Files installed on this %{table}") %
-                  {:table => ui_lookup(:table => "storages")}
+      h[:title] = _("Show VM Provisioned Disk Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'disk_files', :id => @record)
     end
     h
@@ -166,8 +164,7 @@ module StorageHelper::TextualSummary
     )
     h = {:label => _("VM Snapshot Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
-      h[:title] = _("Show VM Snapshot Files installed on this %{storage}") %
-                  {:storage => ui_lookup(:table => "storages")}
+      h[:title] = _("Show VM Snapshot Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'snapshot_files', :id => @record)
     end
     h
@@ -181,7 +178,7 @@ module StorageHelper::TextualSummary
     )
     h = {:label => _("VM Memory Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
-      h[:title] = _("Show VM Memory Files installed on this %{storage}") % {:storage => ui_lookup(:table => "storages")}
+      h[:title] = _("Show VM Memory Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'vm_ram_files', :id => @record)
     end
     h
@@ -195,7 +192,7 @@ module StorageHelper::TextualSummary
     )
     h = {:label => _("Other VM Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
-      h[:title] = _("Show Other VM Files installed on this %{storage}") % {:storage => ui_lookup(:table => "storages")}
+      h[:title] = _("Show Other VM Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'vm_misc_files', :id => @record)
     end
     h
@@ -209,7 +206,7 @@ module StorageHelper::TextualSummary
     )
     h = {:label => _("Non-VM Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
-      h[:title] = _("Show Non-VM Files installed on this %{storage}") % {:storage => ui_lookup(:table => "storages")}
+      h[:title] = _("Show Non-VM Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'debris_files', :id => @record)
     end
     h

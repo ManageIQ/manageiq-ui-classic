@@ -68,10 +68,9 @@ module OrchestrationStackHelper::TextualSummary
     if num == 1 && role_allows(:feature => "orchestration_stack_show")
       @record.children.first
     elsif num > 1 && role_allows(:feature => "orchestration_stack_show_list")
-      label     = _("Child Orchestration Stacks")
-      h         = {:label => label, :icon => "ff ff-stack", :value => num}
+      h         = {:label => _("Child Orchestration Stacks"), :icon => "ff ff-stack", :value => num}
       h[:link]  = url_for_only_path(:action => 'show', :id => @record.id, :display => 'children')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Child Orchestration Stacks")
       h
     end
   end
@@ -79,8 +78,7 @@ module OrchestrationStackHelper::TextualSummary
   def textual_orchestration_template
     template = @record.try(:orchestration_template)
     return nil if template.nil?
-    label = ui_lookup(:table => "orchestration_template")
-    h = {:label => label, :icon => "ff ff-template", :value => template.name}
+    h = {:label => _('Orchestration Template'), :icon => "ff ff-template", :value => template.name}
     if role_allows?(:feature => "orchestration_templates_view")
       h[:title] = _("Show this Orchestration Template")
       h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'stack_orchestration_template')
@@ -89,12 +87,11 @@ module OrchestrationStackHelper::TextualSummary
   end
 
   def textual_instances
-    label = ui_lookup(:tables => "vm_cloud")
     num   = @record.number_of(:vms)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
+    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Instances")
     end
     h
   end
@@ -106,7 +103,7 @@ module OrchestrationStackHelper::TextualSummary
   def textual_cloud_networks
     num = @record.number_of(:cloud_networks)
     return nil if num <= 0
-    {:label => ui_lookup(:tables => "cloud_network"), :icon => "ff ff-cloud-network", :value => num}
+    {:label => _('Cloud Networks'), :icon => "ff ff-cloud-network", :value => num}
   end
 
   def textual_parameters

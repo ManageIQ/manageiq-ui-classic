@@ -35,14 +35,13 @@ module CloudVolumeHelper::TextualSummary
 
   def textual_availability_zone
     availability_zone = @record.availability_zone
-    label = ui_lookup(:table => "availability_zone")
     h = {
-      :label => label,
+      :label => _('Availability Zone'),
       :icon  => "pficon pficon-zone",
       :value => (availability_zone.nil? ? _("None") : availability_zone.name)
     }
     if availability_zone && role_allows?(:feature => "availability_zone_show")
-      h[:title] = _("Show this Volume's %{availability_zone}") % {:availability_zone => label}
+      h[:title] = _("Show this Volume's Availability Zone")
       h[:link]  = url_for_only_path(:controller => 'availability_zone', :action => 'show', :id => availability_zone)
     end
     h
@@ -50,14 +49,13 @@ module CloudVolumeHelper::TextualSummary
 
   def textual_base_snapshot
     base_snapshot = @record.base_snapshot if @record.respond_to?(:base_snapshot)
-    label = ui_lookup(:table => "base_snapshot")
     h = {
-      :label => label,
+      :label => _('Base Snapshot'),
       :icon  => "fa fa-camera",
       :value => (base_snapshot.nil? ? _("None") : base_snapshot.name)
     }
     if base_snapshot && role_allows?(:feature => "cloud_volume_snapshot_show")
-      h[:title] = _("Show this Volume's %{parent}") % {:parent => label}
+      h[:title] = _("Show this Volume's Base Snapshot")
       h[:link]  = url_for_only_path(:controller => 'cloud_volume_snapshot', :action => 'show', :id => base_snapshot)
     end
     h
@@ -65,45 +63,39 @@ module CloudVolumeHelper::TextualSummary
 
   def textual_cloud_tenant
     cloud_tenant = @record.cloud_tenant if @record.respond_to?(:cloud_tenant)
-    label = ui_lookup(:table => "cloud_tenants")
-    h = {:label => label, :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? _("None") : cloud_tenant.name)}
+    h = {:label => _('Cloud Tenants'), :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? _("None") : cloud_tenant.name)}
     if cloud_tenant && role_allows?(:feature => "cloud_tenant_show")
-      h[:title] = _("Show this Volume's %{cloud_tenant}") % {:cloud_tenant => label}
+      h[:title] = _("Show this Volume's Cloud Tenants")
       h[:link]  = url_for_only_path(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
     end
     h
   end
 
   def textual_cloud_volume_snapshots
-    label = ui_lookup(:tables => "cloud_volume_snapshots")
     num   = @record.number_of(:cloud_volume_snapshots)
-    h     = {:label => label, :icon => "fa fa-camera", :value => num}
+    h     = {:label => _('Cloud Volume Snapshots'), :icon => "fa fa-camera", :value => num}
     if num > 0 && role_allows?(:feature => "cloud_volume_snapshot_show_list")
-      label = ui_lookup(:tables => "cloud_volume_snapshots")
-      h[:title] = _("Show all %{models}") % {:models => label}
+      h[:title] = _("Show all Cloud Volume Snapshots")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volume_snapshots')
     end
     h
   end
 
   def textual_cloud_volume_backups
-    label = ui_lookup(:tables => "cloud_volume_backup")
     num   = @record.number_of(:cloud_volume_backups)
-    h     = {:label => label, :icon => "pficon pficon-volume", :value => num}
+    h     = {:label => _('Cloud Volume Backups'), :icon => "pficon pficon-volume", :value => num}
     if num > 0 && role_allows?(:feature => "cloud_volume_backup_show_list")
-      label = ui_lookup(:tables => "cloud_volume_backups")
-      h[:title] = _("Show all %{models}") % {:models => label}
+      h[:title] = _("Show all Cloud Volume Backups")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volume_backups')
     end
     h
   end
 
   def textual_attachments
-    label = ui_lookup(:tables => "vm_cloud")
     num   = @record.number_of(:attachments)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
+    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
-      h[:title] = _("Show all attached %{models}") % {:models => label}
+      h[:title] = _("Show all attached Instances")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
     end
     h

@@ -235,14 +235,13 @@ module VmHelper::TextualSummary
 
   def textual_storage
     storages = @record.storages
-    label = ui_lookup(:table => "storages")
-    h = {:label => label, :icon => "fa fa-database"}
+    h = {:label => _('Datastores'), :icon => "fa fa-database"}
     if storages.empty?
       h[:value] = _("None")
     elsif storages.length == 1
       storage = storages.first
       h[:value] = storage.name
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Datastores")
       h[:link]  = url_for_only_path(:controller => 'storage', :action => 'show', :id => storage)
     else
       h.delete(:image) # Image will be part of each line item, instead
@@ -250,7 +249,7 @@ module VmHelper::TextualSummary
       h[:value] = storages.sort_by { |s| s.name.downcase }.collect do |s|
         {:icon  => "fa fa-database",
          :value => "#{s.name}#{" (main)" if s == main}",
-         :title => _("Show this VM's %{label}") % {:label => label},
+         :title => _("Show this VM's Datastores"),
          :link  => url_for_only_path(:controller => 'storage', :action => 'show', :id => s)}
       end
     end
@@ -267,12 +266,11 @@ module VmHelper::TextualSummary
 
   def textual_availability_zone
     availability_zone = @record.availability_zone
-    label = ui_lookup(:table => "availability_zone")
-    h = {:label => label,
+    h = {:label => _('Availability Zone'),
          :icon  => "pficon pficon-zone",
          :value => (availability_zone.nil? ? _("None") : availability_zone.name)}
     if availability_zone && role_allows?(:feature => "availability_zone_show")
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Availability Zone")
       h[:link]  = url_for_only_path(:controller => 'availability_zone', :action => 'show', :id => availability_zone)
     end
     h
@@ -280,10 +278,9 @@ module VmHelper::TextualSummary
 
   def textual_flavor
     flavor = @record.flavor
-    label = ui_lookup(:table => "flavor")
-    h = {:label => label, :icon => "pficon-flavor", :value => (flavor.nil? ? _("None") : flavor.name)}
+    h = {:label => _('Flavor'), :icon => "pficon-flavor", :value => (flavor.nil? ? _("None") : flavor.name)}
     if flavor && role_allows?(:feature => "flavor_show")
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Flavor")
       h[:link]  = url_for_only_path(:controller => 'flavor', :action => 'show', :id => flavor)
     end
     h
@@ -291,10 +288,9 @@ module VmHelper::TextualSummary
 
   def textual_vm_template
     vm_template = @record.genealogy_parent
-    label = ui_lookup(:table => "miq_template")
-    h = {:label => label, :icon => "ff ff-template", :value => (vm_template.nil? ? _("None") : vm_template.name)}
+    h = {:label => _('VM Template'), :icon => "ff ff-template", :value => (vm_template.nil? ? _("None") : vm_template.name)}
     if vm_template && role_allows?(:feature => "miq_template_show")
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Template")
       h[:link]  = url_for_only_path(:controller => 'miq_template', :action => 'show', :id => vm_template)
     end
     h
@@ -318,10 +314,9 @@ module VmHelper::TextualSummary
 
   def textual_orchestration_stack
     stack = @record.orchestration_stack
-    label = ui_lookup(:table => "orchestration_stack")
-    h = {:label => label, :icon => "ff ff-stack", :value => (stack.nil? ? _("None") : stack.name)}
+    h = {:label => _('Orchestration Stack'), :icon => "ff ff-stack", :value => (stack.nil? ? _("None") : stack.name)}
     if stack && role_allows?(:feature => "orchestration_stack_show")
-      h[:title] = _("Show this VM's %{label} '%{name}'") % {:label => label, :name => stack.name}
+      h[:title] = _("Show this VM's Orchestration Stack '%{name}'") % {:name => stack.name}
       h[:link]  = url_for_only_path(:controller => 'orchestration_stack', :action => 'show', :id => stack)
     end
     h
@@ -341,11 +336,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_security_groups
-    label = ui_lookup(:tables => "security_group")
     num   = @record.number_of(:security_groups)
-    h     = {:label => label, :icon => "pficon pficon-cloud-security", :value => num}
+    h     = {:label => _('Security Groups'), :icon => "pficon pficon-cloud-security", :value => num}
     if num > 0 && role_allows?(:feature => "security_group_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Security Groups")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'security_groups', :id => @record, :display => "security_groups")
     end
@@ -353,11 +347,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_floating_ips
-    label = ui_lookup(:tables => "floating_ip")
     num   = @record.number_of(:floating_ips)
-    h     = {:label => label, :icon => "ff ff-floating-ip", :value => num}
+    h     = {:label => _('Floating IPs'), :icon => "ff ff-floating-ip", :value => num}
     if num > 0 && role_allows?(:feature => "floating_ip_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Floating IPs")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'floating_ips', :id => @record, :display => "floating_ips")
     end
@@ -365,11 +358,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_network_routers
-    label = ui_lookup(:tables => "network_router")
     num   = @record.number_of(:network_routers)
-    h     = {:label => label, :icon => "pficon pficon-route", :value => num}
+    h     = {:label => _('Network Routers'), :icon => "pficon pficon-route", :value => num}
     if num > 0 && role_allows?(:feature => "network_router_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Network Routers")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'network_routers', :id => @record, :display => "network_routers")
     end
@@ -377,11 +369,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_cloud_subnets
-    label = ui_lookup(:tables => "cloud_subnet")
     num   = @record.number_of(:cloud_subnets)
-    h     = {:label => label, :icon => "pficon pficon-network", :value => num}
+    h     = {:label => _('Cloud Subnets'), :icon => "pficon pficon-network", :value => num}
     if num > 0 && role_allows?(:feature => "cloud_subnet_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Cloud Subnets")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'cloud_subnets', :id => @record, :display => "cloud_subnets")
     end
@@ -389,11 +380,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_network_ports
-    label = ui_lookup(:tables => "network_port")
     num   = @record.number_of(:network_ports)
-    h     = {:label => label, :icon => "ff ff-network-port", :value => num}
+    h     = {:label => _('Network Ports'), :icon => "ff ff-network-port", :value => num}
     if num > 0 && role_allows?(:feature => "network_port_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Network Ports")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'network_ports', :id => @record, :display => "network_ports")
     end
@@ -403,11 +393,10 @@ module VmHelper::TextualSummary
   def textual_load_balancers
     return nil if @record.try(:load_balancers).nil?
 
-    label = ui_lookup(:tables => "load_balancer")
     num   = @record.number_of(:load_balancers)
-    h     = {:label => label, :icon => "ff ff-load-balancer", :value => num}
+    h     = {:label => _('Load Balancers'), :icon => "ff ff-load-balancer", :value => num}
     if num > 0 && role_allows?(:feature => "load_balancer_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Load Balancers")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'load_balancers', :id => @record, :display => "load_balancers")
     end
@@ -415,11 +404,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_cloud_networks
-    label = ui_lookup(:tables => "cloud_network")
     num   = @record.number_of(:cloud_networks)
-    h     = {:label => label, :icon => "ff ff-cloud-network", :value => num}
+    h     = {:label => _('Cloud Networks'), :icon => "ff ff-cloud-network", :value => num}
     if num > 0 && role_allows?(:feature => "cloud_network_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Cloud Networks")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'cloud_networks', :id => @record, :display => "cloud_networks")
     end
@@ -428,19 +416,17 @@ module VmHelper::TextualSummary
 
   def textual_cloud_tenant
     cloud_tenant = @record.cloud_tenant if @record.respond_to?(:cloud_tenant)
-    label = ui_lookup(:table => "cloud_tenants")
-    h = {:label => label, :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? _("None") : cloud_tenant.name)}
+    h = {:label => _('Cloud Tenants'), :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? _("None") : cloud_tenant.name)}
     if cloud_tenant && role_allows?(:feature => "cloud_tenant_show")
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Cloud Tenants")
       h[:link]  = url_for_only_path(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
     end
     h
   end
 
   def textual_cloud_volumes
-    label = ui_lookup(:tables => "cloud_volumes")
     num = @record.number_of(:cloud_volumes)
-    h = {:label => label, :icon => "pficon pficon-volume", :value => num}
+    h = {:label => _('Cloud Volumes'), :icon => "pficon pficon-volume", :value => num}
     if num > 0 && role_allows?(:feature => "cloud_volume_show_list")
       h[:title]    = _("Show all Cloud Volumes attached to this VM.")
       h[:explorer] = true

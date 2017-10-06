@@ -33,12 +33,11 @@ module NetworkRouterHelper::TextualSummary
   end
 
   def textual_instances
-    label = ui_lookup(:tables => "vm_cloud")
     num   = @record.number_of(:vms)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
+    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Instances")
     end
     h
   end
