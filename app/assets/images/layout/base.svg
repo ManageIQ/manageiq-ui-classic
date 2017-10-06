@@ -1,0 +1,62 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="72.19" height="72" viewBox="0 0 72.19 72">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: #191919;
+      }
+
+      .cls-3 {
+        fill: #f4efef;
+      }
+
+      .cls-3, .cls-4 {
+        opacity: 0.24;
+      }
+
+      .cls-3, .cls-4, .cls-5, .cls-6 {
+        isolation: isolate;
+      }
+
+      .cls-4 {
+        fill: #020202;
+      }
+
+      .cls-5 {
+        fill: #3f3f3f;
+        opacity: 0.2;
+      }
+
+      .cls-6 {
+        fill: #f9f9f9;
+        opacity: 0.25;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="35.97" y1="74.02" x2="36.03" y2="1.98" gradientTransform="matrix(1, 0, 0, -1, 0, 74)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#909090"/>
+      <stop offset="0.47" stop-color="#707070"/>
+      <stop offset="0.66" stop-color="#515151"/>
+      <stop offset="0.87" stop-color="#424242"/>
+      <stop offset="1" stop-color="#404040"/>
+    </linearGradient>
+  </defs>
+  <title>base</title>
+  <rect class="cls-1" width="72" height="72" rx="12" ry="12"/>
+  <g id="Layer_2_copy" data-name="Layer 2 copy">
+    <path class="cls-2" d="M36.5,0V72h-1V0Z"/>
+    <rect class="cls-2" y="34.5" width="72" height="1"/>
+  </g>
+  <polygon class="cls-3" points="34.54 36.5 0 36.5 0 35.5 35.48 35.5 34.54 36.5"/>
+  <polygon class="cls-3" points="36.58 35.5 71.74 35.5 71.74 36.5 37.54 36.54 36.58 35.5"/>
+  <polygon class="cls-4" points="36.64 34.41 36.63 0.13 37.63 0.13 37.68 33.45 36.64 34.41"/>
+  <g id="Layer_4" data-name="Layer 4">
+    <polygon class="cls-5" points="35.53 34.52 0.25 34.52 0.25 33.52 34.58 33.54 35.53 34.52"/>
+    <polygon class="cls-5" points="37.69 33.5 72.19 33.42 72.19 34.42 36.48 34.42 37.69 33.5"/>
+    <polygon class="cls-5" points="35.38 35.56 35.52 71.79 34.52 71.79 34.52 36.51 35.38 35.56"/>
+    <polygon class="cls-5" points="35.48 0.06 35.44 34.31 34.48 33.52 34.48 0.06 35.48 0.06"/>
+  </g>
+  <path class="cls-6" d="M0,12A12,12,0,0,1,12,0H60A12,12,0,0,1,72,12S70.08,1.83,60.25,1.5,19.08,1.5,11,1.5,0,12,0,12Z"/>
+</svg>
