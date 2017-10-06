@@ -1,7 +1,7 @@
 module MiqPolicyController::Alerts
   extend ActiveSupport::Concern
 
-  SEVERITIES = {"info" => _('Info'), "warning" => _('Warninig'), "error" => _('Error')}.freeze
+  SEVERITIES = {"info" => _('Info'), "warning" => _('Warning'), "error" => _('Error')}.freeze
 
   def alert_edit_cancel
     @edit = nil

@@ -1168,7 +1168,7 @@ class ApplicationController < ActionController::Base
         when "result"
           new_row[:cells] << {:span => result_span_class(row[col]), :text => row[col].titleize}
         when "severity"
-          value = row[col].nil? ? ' ' : row[col]
+          value = row[col] || ' '
           new_row[:cells] << {:span => severity_span_class(value), :text => severity_title(value)}
         when 'state'
           celltext = row[col].titleize
@@ -1222,7 +1222,7 @@ class ApplicationController < ActionController::Base
   end
 
   def severity_title(value)
-    if self.class == MiqPolicyController
+    if self.class.instance_of?(MiqPolicyController)
       self.class::SEVERITIES[value]
     else
       value.titleize
