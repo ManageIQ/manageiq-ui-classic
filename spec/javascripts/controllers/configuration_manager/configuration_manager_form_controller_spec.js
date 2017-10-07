@@ -1,8 +1,5 @@
 describe('configurationManagerFormController', function() {
-  var $scope;
-  var $httpBackend;
-  var miqService;
-  var vm;
+  var $scope, $httpBackend, miqService, vm;
 
   beforeEach(module('ManageIQ'));
 
