@@ -282,7 +282,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         $scope.emsCommonModel.metrics_api_port) ||
        ($scope.currentTab === "alerts" &&
         $scope.emsCommonModel.prometheus_alerts_hostname !== '' &&
-        $scope.emsCommonModel.prometheus_alerts_api_port !== ''))) {
+        $scope.emsCommonModel.prometheus_alerts_api_port !== '') ||
+      ($scope.currentTab === "proxy_settings") || ($scope.currentTab === "advanced_settings"))) {
       return true;
     } else if($scope.emsCommonModel.emstype == "gce" && $scope.emsCommonModel.project != '' &&
       ($scope.currentTab == "default" ||
