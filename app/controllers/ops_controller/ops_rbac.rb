@@ -1258,26 +1258,32 @@ module OpsController::OpsRbac
     group.description = @edit[:new][:description]
     group.miq_user_role = role
     group.tenant = Tenant.find(@edit[:new][:group_tenant]) if @edit[:new][:group_tenant]
+    if @edit[:new][:use_filter_expression]
+      @edit[:new][:filters].clear
+    else
+      exp_remove_tokens(@edit[:new][:filter_expression])
+      @edit[:new][:filter_expression] = nil
+    end
+
     rbac_group_set_filters(group) # Go set the filters for the group
-    rbac_group_set_filter_expression(group) # Go set the filters for the group
   end
 
   # Set filters in the group record from the @edit[:new] hash values
   def rbac_group_set_filters(group)
-    @set_filter_values = []
-    @edit[:new][:filters].each do |_key, value|
-      @set_filter_values.push(value)
+    group.entitlement ||= Entitlement.new
+    if @edit[:new][:use_filter_expression]
+      group.entitlement.set_managed_filters(nil) if group.entitlement.get_managed_filters.present?
+      group.entitlement.filter_expression = @edit[:new][:filter_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:filter_expression])
+    else
+      group.entitlement.filter_expression = nil if group.entitlement.filter_expression
+      @set_filter_values = []
+      @edit[:new][:filters].each do |_key, value|
+        @set_filter_values.push(value)
+      end
+      rbac_group_make_subarrays # Need to have category arrays of item arrays for and/or logic
+      group.entitlement.set_managed_filters(@set_filter_values)
     end
-    rbac_group_make_subarrays # Need to have category arrays of item arrays for and/or logic
-    group.entitlement ||= Entitlement.new
-    group.entitlement.set_managed_filters(@set_filter_values)
     group.entitlement.set_belongsto_filters(@edit[:new][:belongsto].values) # Set belongs to to hash values
-  end
-
-  def rbac_group_set_filter_expression(group)
-    group.entitlement ||= Entitlement.new
-    exp_remove_tokens(@edit[:new][:filter_expression])
-    group.entitlement.filter_expression = @edit[:new][:filter_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:filter_expression])
   end
 
   # Need to make arrays by category containing arrays of items so the filtering logic can apply
