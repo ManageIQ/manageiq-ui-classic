@@ -55,6 +55,14 @@ class TopologyService
       remove_list << remove_ids.map { |x| node_of_resource[x] } if remove_ids.present?
     end
 
+    # remove nodes and edges
+    remove_list.flatten.each do |x|
+      nodes.delete(x)
+      edges = edges.select do |edge|
+        !(edge[:source] == x || edge[:target] == x)
+      end
+    end
+
     {
       :items     => nodes,
       :relations => edges,
