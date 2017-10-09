@@ -101,10 +101,18 @@ class TreeBuilderDatacenter < TreeBuilder
   end
 
   def x_get_tree_cluster_kids(parent, count_only = false)
-    count_only_or_many_objects(count_only, parent.resource_pools, parent.hosts, parent.vms, "name")
+    if parent.authorized_for_user?(@user_id)
+      count_only_or_many_objects(count_only, parent.resource_pools, parent.hosts, parent.vms, "name")
+    else
+      count_only ? 0 : []
+    end
   end
 
   def x_get_resource_pool_kids(parent, count_only = false)
-    count_only_or_many_objects(count_only, parent.resource_pools, parent.vms, "name")
+    if parent.authorized_for_user?(@user_id)
+      count_only_or_many_objects(count_only, parent.resource_pools, parent.vms, "name")
+    else
+      count_only ? 0 : []
+    end
   end
 end
