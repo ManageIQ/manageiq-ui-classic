@@ -175,6 +175,9 @@ module MiqPolicyController::Alerts
     if params[:value_mw_garbage_collector]
       @edit[:new][:expression][:options][:value_mw_garbage_collector] = params[:value_mw_garbage_collector]
     end
+    if params[:value_mw_threshold]
+      @edit[:new][:expression][:options][:value_mw_threshold] = params[:value_mw_threshold]
+    end
     if params[:select_mw_operator]
       @edit[:new][:expression][:options][:mw_operator] = params[:select_mw_operator]
     end
@@ -613,6 +616,12 @@ module MiqPolicyController::Alerts
       value_mw_garbage_collector = @edit.fetch_path(:new, :expression, :options, :value_mw_garbage_collector)
       unless value_mw_garbage_collector && is_integer?(value_mw_garbage_collector)
         add_flash(_("Duration Per Minute must be an integer"), :error)
+      end
+    end
+    if %w(mw_tx_committed mw_tx_timeout mw_tx_heuristics mw_tx_application_rollbacks mw_tx_resource_rollbacks mw_tx_aborted).include?(@edit.fetch_path(:new, :expression, :eval_method))
+      value_mw_threshold = @edit.fetch_path(:new, :expression, :options, :value_mw_threshold)
+      unless value_mw_threshold && is_integer?(value_mw_threshold)
+        add_flash(_("Number must be an integer"), :error)
       end
     end
     unless alert.options[:notifications][:email] ||
