@@ -4,6 +4,15 @@
   - else
     = render :partial => 'layouts/textual_groups_generic'
 
+  - if @record.picture
+    %hr
+      %h3
+        = _('Custom Image')
+      .form-horizontal
+        .form-group
+          .col-md-9
+            %img{:src => "#{@record.picture.url_path}", :style => "width:100px; height:100px;"}
+
   %generic-object-definition-toolbar#generic_object_definition_show_form{'generic-object-definition-id' => @record.id,
                                                                          'redirect-url'                 => "/#{controller_name}/show_list",}
 :javascript
