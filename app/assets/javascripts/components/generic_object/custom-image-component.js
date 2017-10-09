@@ -4,6 +4,7 @@ ManageIQ.angular.app.component('customImageComponent', {
     newRecord: '<',
     angularForm: '<',
     pictureUrlPath: '@',
+    pictureUploaded: '=',
   },
   controllerAs: 'vm',
   controller: customImageComponentController,
@@ -50,6 +51,7 @@ function customImageComponentController($timeout) {
       $timeout(function(){
         vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", true);
         vm.imageUploadStatus = __("Image upload complete");
+        vm.pictureUploaded = true;
       });
     };
 

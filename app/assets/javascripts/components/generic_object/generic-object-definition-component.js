@@ -30,6 +30,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
       description: '',
       properties: {},
       picture: {},
+      pictureUploaded: false,
       attribute_names: [],
       attribute_types: [],
       attributesTableChanged: false,
