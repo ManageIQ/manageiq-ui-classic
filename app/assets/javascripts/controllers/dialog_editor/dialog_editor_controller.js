@@ -61,6 +61,21 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
 
   vm.saveDialogDetails = saveDialogDetails;
   vm.dismissChanges = dismissChanges;
+  vm.setupModalOptions = setupModalOptions;
+
+  function setupModalOptions(type, tab, box, field) {
+    var templates = {
+      tab: '<dialog-editor-modal-tab></dialog-editor-modal-tab>',
+      box: '<dialog-editor-modal-box></dialog-editor-modal-box>',
+      field: '<dialog-editor-modal-field></dialog-editor-modal-field>',
+    }
+    vm.modalOptions = {
+      template: templates[type],
+      size: 'lg',
+    };
+    vm.elementData = { type: type, tabId: tab, boxId: box, fieldId: field, }
+    vm.visible = true
+  }
 
   var beingCloned = null; // hack that solves recursion problem for cloneDeep
   function customizer(value) {
