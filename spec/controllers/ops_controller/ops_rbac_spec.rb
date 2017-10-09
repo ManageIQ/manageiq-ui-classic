@@ -392,7 +392,7 @@ describe OpsController do
 
       stub_user(:features => :all)
       @group = FactoryGirl.create(:miq_group)
-      @role = MiqUserRole.find_by(:name, "EvmRole-operator")
+      @role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @exp = MiqExpression.new("=" => {:field => "name", :value => "Test"}, :token => 1)
     end
 
