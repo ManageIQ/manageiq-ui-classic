@@ -34,6 +34,15 @@ class TopologyService
     }
   end
 
+  def group_nodes_by_model(nodes)
+    return unless block_given?
+    nodes_grouped_by_model = nodes.group_by { |_, v| v[:model] }
+
+    nodes_grouped_by_model.each do |klass, entity_data|
+      yield(klass, entity_data.map { |x| [x.second[:miq_id], x.second[:key]] }.to_h)
+    end
+  end
+
   def build_topology
     included_relations = self.class.instance_variable_get(:@included_relations)
     preloaded = @providers.includes(included_relations)
