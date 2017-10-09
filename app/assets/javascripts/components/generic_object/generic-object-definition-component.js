@@ -49,7 +49,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     if (vm.recordId) {
       vm.newRecord = false;
       miqService.sparkleOn();
-      var dataPromise = API.get('/api/generic_object_definitions/' + vm.recordId)
+      var dataPromise = API.get('/api/generic_object_definitions/' + vm.recordId + '?attributes=picture_url_path')
         .then(getGenericObjectDefinitionFormData)
         .catch(miqService.handleFailure);
 

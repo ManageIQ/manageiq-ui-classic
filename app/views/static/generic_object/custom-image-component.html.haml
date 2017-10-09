@@ -1,4 +1,4 @@
-.form-group{"ng-show" => "vm.newRecord", "ng-class" => "{'has-error': vm.angularForm.generic_object_definition_image_file_status.$invalid}"}
+.form-group{"ng-show" => "vm.newRecord || vm.changeImage", "ng-class" => "{'has-error': vm.angularForm.generic_object_definition_image_file_status.$invalid}"}
   %label.col-md-2.control-label{"for" => "generic_object_definition_image_file_status"}
     = _("Custom Image File")
   .col-md-4
@@ -19,6 +19,22 @@
                   :alt       => t,
                   :enabled   => "true",
                   'on-click' => "vm.uploadClicked(angularForm)"}
+.form-group{'ng-if' => "vm.pictureUrlPath !== '' && !vm.changeImage"}
+  %label.col-md-2.control-label{"for" => "custom_image"}
+    = _("Current Custom Image File")
+  .col-md-4
+    %img.form-control{'ng-src' => "{{vm.pictureUrlPath}}", :style => "width:100px; height:100px;"}
+.form-group{'ng-if' => "vm.pictureUrlPath !== ''"}
+  %label.col-md-2.control-label{"for" => "update_image"}
+    = _("Update Current Image")
+  .col-md-4
+    %input.form-control{"type"      => "checkbox",
+                        "id"        => "update_image",
+                        "name"      => "update_image",
+                        "bs-switch" => "",
+                        :data       => {:on_text => _('Yes'), :off_text => _('No')},
+                        "ng-change" => "vm.changeImageSelected()",
+                        "ng-model"  => "vm.changeImage"}
 
 :javascript
   $(":file").filestyle({placeholder: _("No file chosen"), icon: false});

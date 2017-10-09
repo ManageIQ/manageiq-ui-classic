@@ -3,6 +3,7 @@ ManageIQ.angular.app.component('customImageComponent', {
     picture: '=',
     newRecord: '<',
     angularForm: '<',
+    pictureUrlPath: '@',
   },
   controllerAs: 'vm',
   controller: customImageComponentController,
@@ -16,6 +17,7 @@ function customImageComponentController($timeout) {
 
   vm.$onInit = function() {
     vm.imageUploadStatus = "";
+    vm.changeImage = false;
   };
 
   vm.uploadClicked = function() {
@@ -53,6 +55,14 @@ function customImageComponentController($timeout) {
 
     if (imageFile) {
       reader.readAsBinaryString(imageFile);
+    }
+  };
+
+  vm.changeImageSelected = function() {
+    if (!vm.changeImage) {
+      vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", true);
+      vm.imageUploadStatus = "";
+      angular.element(":file").filestyle('clear');
     }
   };
 }
