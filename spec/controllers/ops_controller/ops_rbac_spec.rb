@@ -392,32 +392,32 @@ describe OpsController do
 
       stub_user(:features => :all)
       @group = FactoryGirl.create(:miq_group)
-      @role = MiqUserRole.find_by_name("EvmRole-operator")
+      @role = MiqUserRole.find_by(:name, "EvmRole-operator")
       @exp = MiqExpression.new("=" => {:field => "name", :value => "Test"}, :token => 1)
     end
 
     it "saves the filters when use_filter_expression is false" do
       @group.entitlement = Entitlement.create!
-      controller.instance_variable_set(:@edit, {:new => {:use_filter_expression => false,
-                                                         :name                  => 'Name',
-                                                         :description           => "Test",
-                                                         :role                  => @role.id,
-                                                         :filter_expression     => @exp.exp,
-                                                         :belongsto             => {},
-                                                         :filters               => {'managed/application/abrt' => '/managed/application/abrt'}}})
+      controller.instance_variable_set(:@edit, :new => {:use_filter_expression => false,
+                                                        :name                  => 'Name',
+                                                        :description           => "Test",
+                                                        :role                  => @role.id,
+                                                        :filter_expression     => @exp.exp,
+                                                        :belongsto             => {},
+                                                        :filters               => {'managed/application/abrt' => '/managed/application/abrt'}})
       controller.send(:rbac_group_set_record_vars, @group)
       expect(@group.entitlement.filter_expression).to be_nil
       expect(@group.entitlement.get_managed_filters).to match([["/managed/application/abrt"]])
     end
 
     it "saves the filter_expression when use_filter_expression true" do
-      controller.instance_variable_set(:@edit, {:new => {:use_filter_expression => true,
-                                                         :name                  => 'Name',
-                                                         :description           => "Test",
-                                                         :role                  => @role.id,
-                                                         :filter_expression     => @exp.exp,
-                                                         :belongsto             => {},
-                                                         :filters               => {'managed/application/abrt' => '/managed/application/abrt'}}})
+      controller.instance_variable_set(:@edit, :new => {:use_filter_expression => true,
+                                                        :name                  => 'Name',
+                                                        :description           => "Test",
+                                                        :role                  => @role.id,
+                                                        :filter_expression     => @exp.exp,
+                                                        :belongsto             => {},
+                                                        :filters               => {'managed/application/abrt' => '/managed/application/abrt'}})
       controller.send(:rbac_group_set_record_vars, @group)
       expect(@group.entitlement.get_managed_filters).to eq([])
       expect(@group.entitlement.filter_expression.exp).to match(@exp.exp)
