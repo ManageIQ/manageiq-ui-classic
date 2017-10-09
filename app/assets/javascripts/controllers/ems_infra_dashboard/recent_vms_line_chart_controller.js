@@ -1,14 +1,16 @@
 /* global miqHttpInject */
-angular.module( 'patternfly.charts' ).controller( 'recentVmsLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', function($q, providerId, $http, chartsMixin ) {
+angular.module( 'patternfly.charts' ).controller( 'recentVmsLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
   var vm = this;
   vm.id = "recentVmsLineChart_" + providerId;
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.config = chartsMixin.chartConfig.recentVmsConfig;
     var url = '/ems_infra_dashboard/recent_vms_data/' + providerId;
-    var vmsDataPromise = $http.get(url).then(function(response) {
-      vm.data = response.data.data;
-    });
+    var vmsDataPromise = $http.get(url)
+      .then(function(response) {
+        vm.data = response.data.data;
+      })
+      .catch(miqService.handleFailure);
 
     $q.all([vmsDataPromise]).then(function() {
       if (vm.data.recentVms.dataAvailable === false) {

@@ -1,14 +1,16 @@
 /* global miqHttpInject */
-angular.module( 'patternfly.charts' ).controller( 'lineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'objectType', function($q, providerId, $http, chartsMixin, objectType ) {
+angular.module( 'patternfly.charts' ).controller( 'lineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'objectType', 'miqService', function($q, providerId, $http, chartsMixin, objectType, miqService) {
   var vm = this;
   vm.id = "lineChart_" + providerId;
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.config = chartsMixin.chartConfig['recent' + objectType + 'Config'];
     var url = '/ems_infra_dashboard/recent_objects_data/' + providerId + '?object_type=' + objectType;
-    var dataPromise = $http.get(url).then(function(response) {
-      vm.data = response.data.data;
-    });
+    var dataPromise = $http.get(url)
+      .then(function(response) {
+        vm.data = response.data.data;
+      })
+      .catch(miqService.handleFailure);
 
     $q.all([dataPromise]).then(function() {
       vm.data = chartsMixin.processData(vm.data.recentData, 'dates', vm.data.recentData.config.label);

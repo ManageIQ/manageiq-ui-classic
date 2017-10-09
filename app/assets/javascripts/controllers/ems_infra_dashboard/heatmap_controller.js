@@ -1,6 +1,6 @@
 /* global miqHttpInject */
 
-angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'providerId', '$http', function($q, providerId, $http) {
+angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'providerId', '$http', 'miqService', function($q, providerId, $http, miqService) {
   var vm = this;
   vm.id = "heatmap_" + providerId;
   vm.data = {};
@@ -8,9 +8,11 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'pr
   var init = function() {
     ManageIQ.angular.scope = vm;
     var url = '/ems_infra_dashboard/cluster_metrics_data/' + providerId;
-    var heatmapPromise = $http.get(url).then(function(response) {
-      vm.heatmapData = response.data.data;
-    });
+    var heatmapPromise = $http.get(url)
+      .then(function(response) {
+        vm.heatmapData = response.data.data;
+      })
+      .catch(miqService.handleFailure);
 
     $q.all([heatmapPromise]).then(function() {
       vm.title = vm.heatmapData.heatmaps.title;

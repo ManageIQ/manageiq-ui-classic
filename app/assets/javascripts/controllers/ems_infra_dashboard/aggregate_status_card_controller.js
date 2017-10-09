@@ -1,6 +1,6 @@
 /* global miqHttpInject */
 
-angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', ['$q', 'providerId', 'API', function($q, providerId, API) {
+angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', ['$q', 'providerId', 'API', 'miqService', function($q, providerId, API, miqService) {
   var vm = this;
   var attributes = ["ems_clusters", "hosts", "storages", "vms", "miq_templates"];
   var attrHsh = {
@@ -29,9 +29,11 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', 
 
   var init = function() {
     ManageIQ.angular.scope = vm;
-    var promiseProviderData = API.get("/api/providers/" + providerId + "?attributes=" + attributes).then(function(data) {
-      vm.provider = data;
-    });
+    var promiseProviderData = API.get("/api/providers/" + providerId + "?attributes=" + attributes)
+      .then(function(data) {
+        vm.provider = data;
+      })
+      .catch(miqService.handleFailure);
 
     $q.all([promiseProviderData]).then(function() {
       vm.status = {

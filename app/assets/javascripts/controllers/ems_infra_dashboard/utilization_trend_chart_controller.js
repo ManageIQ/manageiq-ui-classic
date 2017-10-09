@@ -1,4 +1,4 @@
-angular.module( 'patternfly.charts' ).controller('utilizationTrendChartController', ['$q', 'providerId', 'chartsMixin', '$http', function($q, providerId, chartsMixin, $http) {
+angular.module( 'patternfly.charts' ).controller('utilizationTrendChartController', ['$q', 'providerId', 'chartsMixin', '$http', 'miqService', function($q, providerId, chartsMixin, $http, miqService) {
   var vm = this;
 
   var init = function() {
@@ -6,9 +6,11 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
     vm.data = {};
 
     var url = '/ems_infra_dashboard/ems_utilization_data/' + providerId;
-    var metricsPromise = $http.get(url).then(function(response) {
-      vm.metricsData = response.data.data;
-    });
+    var metricsPromise = $http.get(url)
+      .then(function(response) {
+        vm.metricsData = response.data.data;
+      })
+      .catch(miqService.handleFailure);
 
     $q.all([metricsPromise]).then(function() {
       vm.data = processMetricsData(vm.data, vm.metricsData.ems_utilization);
