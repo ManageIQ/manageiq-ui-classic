@@ -48,6 +48,13 @@ class TopologyService
     preloaded = @providers.includes(included_relations)
     nodes, edges = map_to_graph(preloaded, build_entity_relationships(included_relations))
 
+    remove_list = []
+    group_nodes_by_model(nodes) do |klass, node_of_resource| # node is hash { 10001 => 'CloudNetwork1r0001'}
+      node_resource_ids = node_of_resource.keys
+      remove_ids = node_resource_ids - Rbac::Filterer.filtered(klass.safe_constantize.where(:id => node_resource_ids)).map(&:id)
+      remove_list << remove_ids.map { |x| node_of_resource[x] } if remove_ids.present?
+    end
+
     {
       :items     => nodes,
       :relations => edges,
