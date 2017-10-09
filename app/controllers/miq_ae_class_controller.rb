@@ -1715,7 +1715,7 @@ class MiqAeClassController < ApplicationController
 
   def playbook_inputs(method)
     existing_inputs = method.inputs
-    new_inputs = params[:extra_vars]
+    new_inputs = params[:extra_vars] ? params[:extra_vars] : []
     inputs_to_save = []
     inputs_to_delete = []
     new_inputs.each do |i, input|
