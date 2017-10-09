@@ -60,7 +60,9 @@ describe MiddlewareTopologyService do
                                                                        :kind         => "MiddlewareManager",
                                                                        :display_kind => "Hawkular",
                                                                        :miq_id       => ems_hawkular.id,
-                                                                       :icon         => match(/vendor-hawkular/)}
+                                                                       :icon         => match(/vendor-hawkular/),
+                                                                       :model        => ems_hawkular.class.name,
+                                                                       :key          => "MiddlewareManager" + ems_hawkular.compressed_id.to_s}
       )
 
       expect(subject[:items]).to include(
@@ -69,7 +71,9 @@ describe MiddlewareTopologyService do
                                                                        :kind         => "MiddlewareServer",
                                                                        :display_kind => "MiddlewareServer",
                                                                        :miq_id       => mw_server.id,
-                                                                       :icon         => match(/vendor-wildfly/)}
+                                                                       :icon         => match(/vendor-wildfly/),
+                                                                       :model        => mw_server.class.name,
+                                                                       :key          => "MiddlewareServer" + mw_server.compressed_id.to_s}
       )
 
       expect(subject[:items]).to include(
@@ -77,7 +81,9 @@ describe MiddlewareTopologyService do
                                                                        :status       => "Enabled",
                                                                        :kind         => "MiddlewareDeployment",
                                                                        :display_kind => "MiddlewareDeploymentWar",
-                                                                       :miq_id       => mw_deployment1.id}
+                                                                       :miq_id       => mw_deployment1.id,
+                                                                       :model        => mw_deployment1.class.name,
+                                                                       :key          => "MiddlewareDeployment" + mw_deployment1.compressed_id.to_s}
       )
 
       expect(subject[:items]).to include(
@@ -85,7 +91,9 @@ describe MiddlewareTopologyService do
                                                                        :status       => "Disabled",
                                                                        :kind         => "MiddlewareDeployment",
                                                                        :display_kind => "MiddlewareDeploymentWar",
-                                                                       :miq_id       => mw_deployment2.id}
+                                                                       :miq_id       => mw_deployment2.id,
+                                                                       :model        => mw_deployment2.class.name,
+                                                                       :key          => "MiddlewareDeployment" + mw_deployment2.compressed_id.to_s}
       )
 
       expect(subject[:items]).to include(
@@ -93,7 +101,9 @@ describe MiddlewareTopologyService do
                                                                        :status       => "Unknown",
                                                                        :kind         => "MiddlewareDatasource",
                                                                        :display_kind => "MiddlewareDatasource",
-                                                                       :miq_id       => mw_datasource.id}
+                                                                       :miq_id       => mw_datasource.id,
+                                                                       :model        => mw_datasource.class.name,
+                                                                       :key          => "MiddlewareDatasource" + mw_datasource.compressed_id.to_s}
       )
 
       expect(subject[:items]).to include(
@@ -101,7 +111,9 @@ describe MiddlewareTopologyService do
                                                                        :status       => "Unknown",
                                                                        :kind         => "MiddlewareMessaging",
                                                                        :display_kind => "MiddlewareMessaging",
-                                                                       :miq_id       => mw_messaging.id}
+                                                                       :miq_id       => mw_messaging.id,
+                                                                       :model        => mw_messaging.class.name,
+                                                                       :key          => "MiddlewareMessaging" + mw_messaging.compressed_id.to_s}
       )
 
       expect(subject[:relations].size).to eq(5)
@@ -129,7 +141,9 @@ describe MiddlewareTopologyService do
                                                               :kind         => "MiddlewareServer",
                                                               :display_kind => "MiddlewareServer",
                                                               :miq_id       => mw_server.id,
-                                                              :icon         => match(/vendor-wildfly/)}
+                                                              :icon         => match(/vendor-wildfly/),
+                                                              :model        => mw_server.class.name,
+                                                              :key          => "MiddlewareServer" + mw_server.compressed_id.to_s}
       )
     end
   end
