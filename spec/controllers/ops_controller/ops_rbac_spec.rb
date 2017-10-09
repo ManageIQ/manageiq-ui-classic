@@ -389,22 +389,38 @@ describe OpsController do
       MiqUserRole.seed
       MiqGroup.seed
       MiqRegion.seed
+
       stub_user(:features => :all)
+      @group = FactoryGirl.create(:miq_group)
+      @role = MiqUserRole.find_by_name("EvmRole-operator")
+      @exp = MiqExpression.new("=" => {:field => "name", :value => "Test"}, :token => 1)
     end
 
-    it "does not display tenant default groups in Edit Sequence" do
-      tg = FactoryGirl.create(:tenant).default_miq_group
-      g  = FactoryGirl.create(:miq_group)
+    it "saves the filters when use_filter_expression is false" do
+      @group.entitlement = Entitlement.create!
+      controller.instance_variable_set(:@edit, {:new => {:use_filter_expression => false,
+                                                         :name                  => 'Name',
+                                                         :description           => "Test",
+                                                         :role                  => @role.id,
+                                                         :filter_expression     => @exp.exp,
+                                                         :belongsto             => {},
+                                                         :filters               => {'managed/application/abrt' => '/managed/application/abrt'}}})
+      controller.send(:rbac_group_set_record_vars, @group)
+      expect(@group.entitlement.filter_expression).to be_nil
+      expect(@group.entitlement.get_managed_filters).to match([["/managed/application/abrt"]])
+    end
 
-      expect(MiqGroup.tenant_groups).to include(tg)
-      expect(MiqGroup.tenant_groups).not_to include(g)
-      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-      allow(controller).to receive(:replace_right_cell)
-      controller.send(:rbac_group_seq_edit)
-      expect(response.status).to eq(200)
-      edit = controller.instance_variable_get(:@edit)
-      expect(edit[:current][:ldap_groups].find { |lg| lg.group_type == 'tenant' }).to be(nil)
-      expect(edit[:current][:ldap_groups].find { |lg| lg.group_type == 'user' }).not_to be(nil)
+    it "saves the filter_expression when use_filter_expression true" do
+      controller.instance_variable_set(:@edit, {:new => {:use_filter_expression => true,
+                                                         :name                  => 'Name',
+                                                         :description           => "Test",
+                                                         :role                  => @role.id,
+                                                         :filter_expression     => @exp.exp,
+                                                         :belongsto             => {},
+                                                         :filters               => {'managed/application/abrt' => '/managed/application/abrt'}}})
+      controller.send(:rbac_group_set_record_vars, @group)
+      expect(@group.entitlement.get_managed_filters).to eq([])
+      expect(@group.entitlement.filter_expression.exp).to match(@exp.exp)
     end
   end
 
