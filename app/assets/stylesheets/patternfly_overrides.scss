@@ -896,6 +896,12 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
   border: none !important;
 }
 
+.sortable-placeholder {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px dashed #ddd;
+}
+
 /// ===================================================================
 /// end misc styling
 /// ===================================================================
+
