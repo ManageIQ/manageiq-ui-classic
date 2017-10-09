@@ -131,6 +131,17 @@ describe MiddlewareServerController do
       expect(response.body).to eq('Report content')
     end
 
+    it 'should not stream deleted diagnostic report file to client for download' do
+      action = get :dr_download, :params => {:id => mw_server.compressed_id, :key => mw_dr_missing.compressed_id }
+
+      expect(action).to redirect_to(
+        :action      => 'show',
+        :id          => mw_server.compressed_id,
+        :flash_msg   => 'Unable to locate a report in database, please try again.',
+        :flash_error => true
+      )
+    end
+
     it 'should delete one report if requested' do
       action = post :dr_delete, :params => { :id => mw_server.compressed_id, :mw_dr_selected => mw_dr.compressed_id }
 

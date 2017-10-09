@@ -173,7 +173,15 @@ class MiddlewareServerController < ApplicationController
 
   def dr_download
     mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
-    diagnostic_report = mw_server.middleware_diagnostic_reports.find(from_cid(params[:key]))
+    begin
+      diagnostic_report = mw_server.middleware_diagnostic_reports.find(from_cid(params[:key]))
+    rescue ActiveRecord::RecordNotFound
+      redirect_to(:action      => 'show',
+                  :id          => to_cid(mw_server.id),
+                  :flash_msg   => _("Unable to locate a report in database, please try again."),
+                  :flash_error => true)
+      return
+    end
 
     response.headers['Content-Type'] = 'application/zip'
     response.headers['Content-Disposition'] = "attachment; filename=#{diagnostic_report.binary_blob.name}"
