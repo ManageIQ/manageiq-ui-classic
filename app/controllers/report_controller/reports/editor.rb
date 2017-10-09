@@ -650,6 +650,8 @@ module ReportController::Reports::Editor
       @refresh_partial = "form_filter"
     elsif params.key?(:cb_groupby_tag)
       @edit[:new][:cb_groupby_tag] = params[:cb_groupby_tag]
+    elsif params.key?(:cb_groupby_label)
+      @edit[:new][:cb_groupby_label] = params[:cb_groupby_label]
     elsif params[:cb_interval]
       @edit[:new][:cb_interval] = params[:cb_interval]
       @edit[:new][:cb_interval_size] = 1
@@ -1035,6 +1037,7 @@ module ReportController::Reports::Editor
       options[:include_metrics] = @edit[:new][:cb_include_metrics]
       options[:groupby] = @edit[:new][:cb_groupby]
       options[:groupby_tag] = @edit[:new][:cb_groupby] == 'tag' ? @edit[:new][:cb_groupby_tag] : nil
+      options[:groupby_label] = @edit[:new][:cb_groupby] == 'label' ? @edit[:new][:cb_groupby_label] : nil
 
       rpt.db_options[:options] = options
     end
@@ -1081,9 +1084,10 @@ module ReportController::Reports::Editor
 
     # Add in the chargeback static fields
     if Chargeback.db_is_chargeback?(rpt.db) # For chargeback, add in specific chargeback report options
-      header = @edit[:cb_cats].try(:[], @edit[:new][:cb_groupby_tag])
+      tag_header = @edit[:cb_cats].try(:[], @edit[:new][:cb_groupby_tag])
+      groupby_label = @edit[:new][:cb_groupby_label]
       chargeback_model = @edit[:new][:model].constantize
-      rpt = chargeback_model.set_chargeback_report_options(rpt, @edit[:new][:cb_groupby], header, @edit[:new][:tz])
+      rpt = chargeback_model.set_chargeback_report_options(rpt, @edit[:new][:cb_groupby], tag_header, groupby_label, @edit[:new][:tz])
     end
 
     # Remove when we support user sorting of trend reports
@@ -1318,6 +1322,7 @@ module ReportController::Reports::Editor
       @edit[:new][:cb_include_metrics] = options[:include_metrics].nil? || options[:include_metrics]
       @edit[:new][:method_for_allocated_metrics] = options[:method_for_allocated_metrics].try(:to_sym) || default_chargeback_allocated_method
       @edit[:new][:cb_groupby_tag] = options[:groupby_tag] if options.key?(:groupby_tag)
+      @edit[:new][:cb_groupby_label] = options[:groupby_label] if options.key?(:groupby_label)
       @edit[:new][:cb_model] = Chargeback.report_cb_model(@rpt.db)
       @edit[:new][:cb_interval] = options[:interval]
       @edit[:new][:cb_interval_size] = options[:interval_size]
@@ -1449,6 +1454,10 @@ module ReportController::Reports::Editor
       @edit[:cb_providers][:container_project][provider_name] = provider_id
       @edit[:cb_providers][:container_image][provider_name] = provider_id
     end
+  end
+
+  def cb_docker_image_labels
+    CustomAttribute.where(:section => "docker_labels").pluck(:name).uniq
   end
 
   def categories_hash
@@ -1662,9 +1671,12 @@ module ReportController::Reports::Editor
                 _("A specific %{chargeback} or all must be selected") % {:chargeback => ui_lookup(:model => @edit[:new][:cb_model])}
               end
             end
-
       if @edit[:new][:cb_groupby] == "tag" && !@edit[:new][:cb_groupby_tag].present?
         msg = _('A Group by Tag must be selected')
+      elsif @edit[:new][:cb_groupby] == "label" && !@edit[:new][:cb_groupby_label].present?
+        msg = _('A Group by Label must be selected')
+      elsif @edit[:new][:cb_groupby] == "label" && rpt.cols.any? { |x| x.include? (CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX) }
+        msg = _('Can not add label columns when grouping by label')
       end
 
       if msg

@@ -9,4 +9,8 @@ module ReportHelper::Editor
       provider.container_images.order(:name).pluck(:name, :id)
     end
   end
+
+  def cb_image_labels
+    CustomAttribute.where(:section => "docker_labels").distinct('name').pluck(:name).each_with_object({}) { |l, h| h[l] = l }
+  end
 end
