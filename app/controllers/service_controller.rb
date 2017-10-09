@@ -321,6 +321,10 @@ class ServiceController < ApplicationController
 
   # Replace the right cell of the explorer
   def replace_right_cell(options = {})
+    if @flash_array && @refresh_partial == "layouts/flash_msg"
+      javascript_flash
+      return
+    end
     action, replace_trees = options.values_at(:action, :replace_trees)
     @explorer = true
     partial, action_url, @right_cell_text = set_right_cell_vars(action) if action # Set partial name, action and cell header
