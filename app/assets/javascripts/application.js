@@ -2,7 +2,7 @@
 //= require es6-shim
 //= require array-includes
 //= require fetch
-//= require jquery
+//= require jquery/dist/jquery.js
 //= require jquery_overrides
 //= require i18n
 //= require patternfly
@@ -42,7 +42,7 @@
 //= require automate_import_export
 //= require dialog_field_refresh
 //= require miq_c3_config
-//= require jquery-ui
+//= require jquery-ui/jquery-ui.js
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require eonasdan-bootstrap-datetimepicker
