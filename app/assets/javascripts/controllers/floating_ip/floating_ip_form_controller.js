@@ -1,6 +1,6 @@
 ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 'floatingIpFormId', 'miqService', function($http, $scope, floatingIpFormId, miqService) {
   var vm = this;
-  vm.floatingIpModel = { name: '' };
+  vm.floatingIpModel = { floating_ip_address: '' };
   vm.formId = floatingIpFormId;
   vm.afterGet = false;
   vm.modelCopy = angular.copy( vm.floatingIpModel );
@@ -10,7 +10,7 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
   vm.saveable = miqService.saveable;
 
   if (floatingIpFormId == 'new') {
-    vm.floatingIpModel.name = "";
+    vm.floatingIpModel.floating_ip_address = "";
     vm.floatingIpModel.description = "";
     vm.newRecord = true;
   } else {
