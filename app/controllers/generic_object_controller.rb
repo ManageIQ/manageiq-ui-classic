@@ -10,6 +10,7 @@ class GenericObjectController < ApplicationController
   include Mixins::GenericShowMixin
 
   menu_section :automate
+  toolbar :generic_object
 
   def self.model
     GenericObject
