@@ -107,15 +107,12 @@ describe EmsInfraController do
       stub_user(:features => :all)
       @ems = instance_double("mock_infra_provider", :id => 1, :hosts => [1, 2])
       allow(controller).to receive(:get_infra_provider).and_return(@ems)
-      allow(controller).to receive(:can_use_scale_up_workflow?).and_return(false)
       p1 = instance_double("mock_stack_parameter1", :name => "compute-1::count", :value => 1)
       p2 = instance_double("mock_stack_parameter2", :name => "controller-1::count", :value => 1)
       stack_parameters = [p1, p2]
       @orchestration_stack = instance_double("mock stack", :id => 1, :parameters => stack_parameters, :update_ready? => true)
       allow(@ems).to receive(:direct_orchestration_stacks).and_return([@orchestration_stack])
       @orchestration_stack_parameter_compute = FactoryGirl.create(:orchestration_stack_parameter_openstack_infra_compute)
-      allow(@orchestration_stack)
-        .to receive(:raw_status).and_return(["CREATE_COMPLETE", nil])
     end
 
     it "when values are not changed" do
@@ -135,21 +132,7 @@ describe EmsInfraController do
         "Assigning #{@ems.hosts.count * 2} but only have #{@ems.hosts.count} hosts available.")
     end
 
-    it "when values are changed, values do not exceed number of hosts available, and not using workflows" do
-      expect(@orchestration_stack).to receive(:update_stack_queue)
-      expect(@orchestration_stack).not_to receive(:queue_post_scaledown_task)
-      allow(controller)
-        .to receive(:can_use_scale_up_workflow?).and_return(false)
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
-           @orchestration_stack_parameter_compute.name => 2 }
-      expect(controller.send(:flash_errors?)).to be_falsey
-      expect(response.body).to include("redirected")
-      expect(response.body).to include("ems_infra")
-      expect(response.body).to include("1+to+2")
-    end
-
-    it "when values are changed, values do not exceed number of hosts available, and using workflows" do
-      allow(controller).to receive(:can_use_scale_up_workflow?).and_return(true)
+    it "when values are changed, values do not exceed number of hosts available" do
       expect(@orchestration_stack).to receive(:scale_up_queue)
       post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
                                   @orchestration_stack_parameter_compute.name => 2 }
@@ -166,26 +149,6 @@ describe EmsInfraController do
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Orchestration stack could not be found.")
     end
-
-    it "when patch operation fails, an error message should be displayed" do
-      allow(@orchestration_stack).to receive(:update_stack_queue) { raise "my error" }
-      allow(controller).to receive(:can_use_scale_up_workflow?).and_return(false)
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
-           @orchestration_stack_parameter_compute.name => 2 }
-      expect(controller.send(:flash_errors?)).to be_truthy
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Unable to initiate scale up: my error")
-    end
-
-    it "when operation in progress, an error message should be displayed" do
-      allow(@orchestration_stack).to receive(:update_ready?).and_return(false)
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
-           @orchestration_stack_parameter_compute.name => 2 }
-      expect(controller.send(:flash_errors?)).to be_truthy
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include(
-        "Provider stack is not ready to be updated, another operation is in progress.")
-    end
   end
 
   describe "#scaledown" do
@@ -195,7 +158,6 @@ describe EmsInfraController do
       @host2 = instance_double("mock_host1", :name => "Compute2-xxx", :id => 1, :maintenance => true, :number_of => 0, :uid_ems => 1, :ems_ref_obj => "openstack-perf-host-nova-instance", :cloud_services => "")
       @ems = instance_double("mock_infra_provider", :id => 1, :hosts => [@host1, @host2])
       allow(controller).to receive(:get_infra_provider).and_return(@ems)
-      allow(controller).to receive(:can_use_scale_down_workflow?).and_return(false)
       allow(controller).to receive(:get_hosts_to_scaledown_from_ids).and_return([@host2])
       p1 = instance_double("mock_stack_parameter1", :name => "compute-1::count", :value => 1)
       p2 = instance_double("mock_stack_parameter2", :name => "controller-1::count", :value => 1)
@@ -208,8 +170,6 @@ describe EmsInfraController do
       allow(@ems).to receive(:orchestration_stacks).and_return([@orchestration_stack])
       allow(controller).to receive(:find_record_with_rbac).and_return(@orchestration_stack)
       @orchestration_stack_parameter_compute = FactoryGirl.create(:orchestration_stack_parameter_openstack_infra_compute)
-      allow(@orchestration_stack)
-        .to receive(:raw_status).and_return(["CREATE_COMPLETE", nil])
     end
 
     it "when no compute hosts are selected" do
@@ -230,19 +190,7 @@ describe EmsInfraController do
         "Not all hosts can be removed from the deployment.")
     end
 
-    it "when values are changed, selected host is in correct state, and workflows are not used" do
-      expect(@orchestration_stack).to receive(:update_stack_queue)
-      expect(@orchestration_stack).to receive(:queue_post_scaledown_task)
-      post :scaledown, :params => {:id => @ems.id, :scaledown => "",
-           :orchestration_stack_id => @orchestration_stack.id, :host_ids => [@ems.hosts[1].id]}
-      expect(controller.send(:flash_errors?)).to be_falsey
-      expect(response.body).to include("redirected")
-      expect(response.body).to include("ems_infra")
-      expect(response.body).to include("down+to+1")
-    end
-
-    it "when values are changed, selected host is in correct state, and workflows are used" do
-      allow(controller).to receive(:can_use_scale_down_workflow?).and_return(true)
+    it "when values are changed, selected host is in correct state" do
       expect(@orchestration_stack).to receive(:scale_down_queue)
       post :scaledown, :params => {:id => @ems.id, :scaledown => "",
                                    :orchestration_stack_id => @orchestration_stack.id, :host_ids => [@ems.hosts[1].id]}
@@ -259,25 +207,6 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Orchestration stack could not be found.")
-    end
-
-    it "when patch operation fails, an error message should be displayed" do
-      expect(@orchestration_stack).to receive(:update_stack_queue) { raise "my error" }
-      post :scaledown, :params => {:id => @ems.id, :scaledown => "",
-           :orchestration_stack_id => @orchestration_stack.id, :host_ids => [@ems.hosts[1].id]}
-      expect(controller.send(:flash_errors?)).to be_truthy
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Unable to initiate scale down: my error")
-    end
-
-    it "when operation in progress, an error message should be displayed" do
-      allow(@orchestration_stack).to receive(:update_ready?).and_return(false)
-      post :scaledown, :params => {:id => @ems.id, :scaledown => "",
-           :orchestration_stack_id => @orchestration_stack.id, :host_ids => [@ems.hosts[1].id]}
-      expect(controller.send(:flash_errors?)).to be_truthy
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include(
-        "Provider stack is not ready to be updated, another operation is in progress.")
     end
   end
 
