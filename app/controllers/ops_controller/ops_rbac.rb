@@ -824,7 +824,7 @@ module OpsController::OpsRbac
   # AJAX driven routine to check for changes in ANY field on the form
   def rbac_field_changed(rec_type)
     id = params[:id].split('__').first # Get the record id
-    id = from_cid(id) unless %w(new seq).include?(id) || !cid?(id)
+    id = from_cid(id) unless %w(new seq).include?(id)
     return unless load_edit("rbac_#{rec_type}_edit__#{id}", "replace_cell__explorer")
 
     case rec_type
@@ -917,7 +917,7 @@ module OpsController::OpsRbac
       @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "User"), :name => User.find(from_cid(id)).name}
       rbac_user_get_details(id)
     when "g"
-      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqGroup"), :name => MiqGroup.find(cid?(id) ? from_cid(id) : id).description}
+      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqGroup"), :name => MiqGroup.find(from_cid(id)).description}
       @edit = nil
       rbac_group_get_details(id)
     when "ur"
@@ -950,7 +950,7 @@ module OpsController::OpsRbac
   end
 
   def rbac_group_get_details(id)
-    @record = @group = MiqGroup.find_by(:id => cid?(id) ? from_cid(id) : id)
+    @record = @group = MiqGroup.find_by(:id => from_cid(id))
     @belongsto = {}
     @filters = {}
     @filter_expression = []
