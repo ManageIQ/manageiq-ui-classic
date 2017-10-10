@@ -7,19 +7,19 @@
       %label.control-label.col-md-2
         = title
       .col-md-8
-        =_("Choose an element of the expression to edit")
+        = _("Choose an element of the expression to edit")
         = render :partial => 'layouts/exp_editor'
   - else
     .form-group
       %label.control-label.col-md-2
         = title
       .col-md-8
-        = link_to({:action => "button_update",
-                      :button => expression_type},
-                      "data-miq_sparkle_on" => true,
-                      "data-miq_sparkle_off" => true,
-                      :remote => true,
-                      "data-method" => :post) do
+        = link_to({:action => action,
+                   :button => expression_type},
+                   "data-miq_sparkle_on" => true,
+                   "data-miq_sparkle_off" => true,
+                   :remote => true,
+                   "data-method" => :post) do
           %button.btn.btn-default
             - if @edit[table_key].nil?
               = _("Define Expression")
