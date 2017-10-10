@@ -28,18 +28,50 @@ class TopologyService
     {
       :name   => entity.name,
       :kind   => entity_type(entity),
-      :miq_id => entity.id
+      :model  => entity.class.to_s,
+      :miq_id => entity.id,
+      :key    => entity_id(entity)
     }
   end
 
+  def group_nodes_by_model(nodes)
+    return unless block_given?
+    nodes_grouped_by_model = nodes.group_by { |_, v| v[:model] }
+
+    nodes_grouped_by_model.each do |klass, entity_data|
+      yield(klass, entity_data.map { |x| [x.second[:miq_id], x.second[:key]] }.to_h)
+    end
+  end
+
+  def disallowed_nodes(nodes)
+    remove_list = []
+    group_nodes_by_model(nodes) do |klass, node_of_resource| # node is hash { 10001 => 'CloudNetwork1r0001'}
+      node_resource_ids = node_of_resource.keys
+      remove_ids = node_resource_ids - Rbac::Filterer.filtered(klass.safe_constantize.where(:id => node_resource_ids)).map(&:id)
+      remove_list << remove_ids.map { |x| node_of_resource[x] } if remove_ids.present?
+    end
+    remove_list
+  end
+
+  def rbac_filter_nodes_and_edges(nodes, edges)
+    disallowed_nodes(nodes).flatten.each do |x|
+      nodes.delete(x)
+      edges = edges.select do |edge|
+        !(edge[:source] == x || edge[:target] == x)
+      end
+    end
+    [nodes, edges]
+  end
+
   def build_topology
-    included_relations = self.class.instance_variable_get(:@included_relations)
-    preloaded = @providers.includes(included_relations)
-    nodes, edges = map_to_graph(preloaded, build_entity_relationships(included_relations))
+    included_relations             = self.class.instance_variable_get(:@included_relations)
+    preloaded                      = @providers.includes(included_relations)
+    nodes, edges                   = map_to_graph(preloaded, build_entity_relationships(included_relations))
+    filtered_nodes, filtered_edges = rbac_filter_nodes_and_edges(nodes, edges)
 
     {
-      :items     => nodes,
-      :relations => edges,
+      :items     => filtered_nodes,
+      :relations => filtered_edges,
       :kinds     => build_kinds,
       :icons     => icons
     }
