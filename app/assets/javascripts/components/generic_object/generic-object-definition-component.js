@@ -18,6 +18,8 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     vm.saveable = miqService.saveable;
     vm.afterGet = false;
 
+    vm.pictureReset = false;
+
     vm.attributeTableHeaders = [__("Name"), __("Type")];
     vm.associationTableHeaders = [__("Name"), __("Class")];
     vm.methodTableHeaders = [__("Name")];
@@ -77,6 +79,8 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     vm.genericObjectDefinitionModel = Object.assign({}, vm.modelCopy);
 
     assignAllObjectsToKeyValueArrays(true);
+
+    vm.pictureReset = ! vm.pictureReset;
 
     angularForm.$setUntouched(true);
     angularForm.$setPristine(true);

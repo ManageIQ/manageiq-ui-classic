@@ -5,6 +5,7 @@ ManageIQ.angular.app.component('customImageComponent', {
     angularForm: '<',
     pictureUrlPath: '@',
     pictureUploaded: '=',
+    pictureReset: '<',
   },
   controllerAs: 'vm',
   controller: customImageComponentController,
@@ -19,6 +20,11 @@ function customImageComponentController($timeout) {
   vm.$onInit = function() {
     vm.imageUploadStatus = "";
     vm.changeImage = false;
+  };
+
+  vm.$onChanges = function() {
+    vm.changeImage = false;
+    restoreOriginalStatus();
   };
 
   vm.uploadClicked = function() {
@@ -42,6 +48,7 @@ function customImageComponentController($timeout) {
     } else {
       vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", false);
       vm.imageUploadStatus = __("Incompatible image type");
+      vm.pictureUploaded = true;
       return;
     }
 
@@ -62,9 +69,15 @@ function customImageComponentController($timeout) {
 
   vm.changeImageSelected = function() {
     if (!vm.changeImage) {
-      vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", true);
-      vm.imageUploadStatus = "";
-      angular.element(":file").filestyle('clear');
+      restoreOriginalStatus();
     }
   };
+
+  function restoreOriginalStatus() {
+    if (vm.angularForm.generic_object_definition_image_file_status) {
+      vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", true);
+    }
+    vm.imageUploadStatus = "";
+    angular.element(":file").filestyle('clear');
+  }
 }
