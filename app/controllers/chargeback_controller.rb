@@ -834,10 +834,8 @@ class ChargebackController < ApplicationController
     c_tb = build_toolbar(center_toolbar_filename)
 
     # Build a presenter to render the JS
-    presenter = ExplorerPresenter.new(
-      :active_tree => x_active_tree,
-    )
-    reload_trees_by_presenter(presenter, :cb_rates => cb_rates_build_tree) if replace_trees.include?(:cb_rates)
+    presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
+    reload_trees_by_presenter(presenter, [cb_rates_build_tree]) if replace_trees.include?(:cb_rates)
 
     # FIXME
     #  if params[:action].ends_with?("_delete")

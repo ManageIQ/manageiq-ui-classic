@@ -290,7 +290,7 @@ describe ProviderForemanController do
   end
 
   it "builds foreman child tree" do
-    controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
+    controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
     tree_builder = TreeBuilderConfigurationManager.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_custom_kids, {:id => "fr"}, false, {})
     expected_objects = [@config_mgr, @config_mgr2]
@@ -466,7 +466,7 @@ describe ProviderForemanController do
   end
 
   it "renders tree_select as js" do
-    controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
+    controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
 
     allow(controller).to receive(:process_show_list)
     allow(controller).to receive(:add_unassigned_configuration_profile_record)
@@ -497,7 +497,7 @@ describe ProviderForemanController do
     end
 
     it "does not hide Configuration button in the toolbar" do
-      controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
+      controller.send(:build_configuration_manager_providers_tree, :providers)
       key = ems_key_for_provider(@provider)
       post :tree_select, :params => { :id => key }
       expect(response.status).to eq(200)
@@ -581,8 +581,8 @@ describe ProviderForemanController do
     it "builds foreman tree with no nodes after rbac filtering" do
       user_filters = {'belongs' => [], 'managed' => [tags]}
       allow_any_instance_of(User).to receive(:get_filters).and_return(user_filters)
-      controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
-      first_child = find_treenode_for_foreman_provider(@provider)
+      tree = controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
+      first_child = find_treenode_for_foreman_provider(tree, @provider)
       expect(first_child).to eq(nil)
     end
 
@@ -595,9 +595,9 @@ describe ProviderForemanController do
                                        :object_ids => @configured_system.id,
                                        :add_ids    => quota_2gb_tag.id,
                                        :delete_ids => [])
-      controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
-      node1 = find_treenode_for_foreman_provider(@provider)
-      node2 = find_treenode_for_foreman_provider(@provider2)
+      tree = controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
+      node1 = find_treenode_for_foreman_provider(tree, @provider)
+      node2 = find_treenode_for_foreman_provider(tree, @provider2)
       expect(node1).not_to be_nil
       expect(node2).to be_nil
     end
@@ -641,10 +641,10 @@ describe ProviderForemanController do
     FactoryGirl.create(:user, :features => features)
   end
 
-  def find_treenode_for_foreman_provider(provider)
+  def find_treenode_for_foreman_provider(tree, provider)
     key = ems_key_for_provider(provider)
-    tree = JSON.parse(controller.instance_variable_get(:@configuration_manager_providers_tree))
-    tree[0]['nodes'][0]['nodes'].find { |c| c['key'] == key } unless tree[0]['nodes'][0]['nodes'].nil?
+    tree_nodes = JSON.parse(tree.tree_nodes)
+    tree_nodes[0]['nodes'][0]['nodes'].find { |c| c['key'] == key } unless tree_nodes[0]['nodes'][0]['nodes'].nil?
   end
 
   def ems_key_for_provider(provider)

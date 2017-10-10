@@ -31,7 +31,7 @@ module StorageController::StorageD
   private #######################
 
   # Get information for an event
-  def storage_build_tree
+  def build_storage_tree
     TreeBuilderStorage.new("storage_tree", "storage", @sb)
   end
 

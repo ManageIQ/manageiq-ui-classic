@@ -387,11 +387,8 @@ class StorageController < ApplicationController
     return if @in_a_form
     record_showing = leaf_record
 
-    trees = {}
-    if replace_trees
-      trees[:storage]     = storage_build_tree     if replace_trees.include?(:storage)
-      trees[:storage_pod] = storage_pod_build_tree if replace_trees.include?(:storage_pod)
-    end
+    trees = build_replaced_trees(replace_trees, %i(storage storage_pod))
+
     presenter = rendering_objects
     update_partials(record_showing, presenter)
     replace_search_box(presenter)

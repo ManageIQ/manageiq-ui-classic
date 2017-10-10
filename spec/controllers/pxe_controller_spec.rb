@@ -82,4 +82,24 @@ describe PxeController do
     render_views
     it { is_expected.to have_http_status 200 }
   end
+
+  describe 'replace_right_cell' do
+    it "Can build all the trees" do
+      seed_session_trees('pxe', :pxe_tree, 'root')
+      session_to_sb
+
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderPxeServers),
+          instance_of(TreeBuilderPxeImageTypes),
+          instance_of(TreeBuilderPxeImageTypes),
+          instance_of(TreeBuilderPxeCustomizationTemplates),
+          instance_of(TreeBuilderIsoDatastores)
+        )
+      )
+      expect(controller).to receive(:render)
+      controller.send(:replace_right_cell, :replace_trees => %i(pxe_servers pxe_image_types customization_templates iso_datastores))
+    end
+  end
 end

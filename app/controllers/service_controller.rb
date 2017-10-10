@@ -344,9 +344,7 @@ class ServiceController < ApplicationController
       :right_cell_text => @right_cell_text
     )
 
-    if Array(replace_trees).include?(:svcs)
-      reload_trees_by_presenter(presenter, :svcs => build_svcs_tree)
-    end
+    reload_trees_by_presenter(presenter, build_replaced_trees(replace_trees, %i(svcs)))
 
     # Replace right cell divs
     presenter.update(:main_div,

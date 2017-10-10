@@ -535,4 +535,27 @@ describe MiqAeCustomizationController do
       expect(response.body).to include("main_div")
     end
   end
+
+  describe 'replace_right_cell' do
+    it "Can build all the trees" do
+      seed_session_trees('miq_ae_customization', :ab, 'root')
+      session_to_sb
+      controller.instance_variable_set(:@edit, :new => {})
+
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderButtons),
+          instance_of(TreeBuilderProvisioningDialogs),
+          instance_of(TreeBuilderServiceDialogs),
+        )
+      )
+
+      # FIXME: this tree is an exceptional one, it's going to be removed when we replace the
+      # dialog editor.
+      expect(controller).to receive(:build_dialog_edit_tree)
+      expect(controller).to receive(:render)
+      controller.send(:replace_right_cell, :replace_trees => %i(ab old_dialogs dialogs dialog_edit))
+    end
+  end
 end

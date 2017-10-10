@@ -666,8 +666,8 @@ module OpsController::Diagnostics
     @explorer = true
     if params[:pressed] == "delete_server" || params[:pressed] == "zone_delete_server"
       @sb[:diag_selected_id] = nil
-      settings_build_tree
-      diagnostics_build_tree
+      build_settings_tree
+      build_diagnostics_tree
     end
     if x_node == "root"
       parent = MiqRegion.my_region
@@ -893,7 +893,7 @@ module OpsController::Diagnostics
     end
   end
 
-  def diagnostics_build_tree
+  def build_diagnostics_tree
     TreeBuilderOpsDiagnostics.new("diagnostics_tree", "diagnostics", @sb)
   end
 

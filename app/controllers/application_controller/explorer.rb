@@ -2,6 +2,22 @@
 module ApplicationController::Explorer
   extend ActiveSupport::Concern
 
+  def build_replaced_trees(replace_trees, valid_values)
+    return [] unless replace_trees
+    valid_values.find_all { |tree| replace_trees.include?(tree) }
+                .collect { |tree| try_build_tree(tree) }
+                .compact
+  end
+
+  def try_build_tree(tree_symbol)
+    method_name = "build_#{tree_symbol}_tree"
+    return unless respond_to?(method_name, true)
+    build_method = method(method_name)
+    # FIXME: This is temporary, we actually need to remove all the build_*_tree methods and
+    # use the Feature::build_tree instead.
+    build_method.arity == 1 ? build_method.call(tree_symbol) : build_method.call
+  end
+
   # Historical tree item selected
   def x_history
     @hist = x_tree_history[params[:item].to_i]  # Set instance var so we know hist button was pressed

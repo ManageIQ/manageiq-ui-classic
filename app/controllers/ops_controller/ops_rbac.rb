@@ -879,7 +879,7 @@ module OpsController::OpsRbac
   end
 
   # Build the main Access Control tree
-  def rbac_build_tree
+  def build_rbac_tree
     TreeBuilderOpsRbac.new("rbac_tree", "rbac", @sb)
   end
 

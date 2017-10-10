@@ -300,10 +300,10 @@ describe ApplicationController do
     end
   end
 
-  describe "#reload_trees_by_presenter" do
-    let(:tree_1) { double(:name => 'tree_1') }
-    let(:tree_2) { double(:name => 'tree_2') }
-    let(:trees) { {'tree_1' => tree_1, 'tree_2' => tree_2, 'tree_3' => nil} }
+  describe "#replace_trees_by_presenter" do
+    let(:tree_1) { double(:name => 'tree_1', :type => 'tree_1') }
+    let(:tree_2) { double(:name => 'tree_2', :type => 'tree_2') }
+    let(:trees) { [tree_1, tree_2, nil] }
     let(:presenter) { double(:presenter) }
 
     it "calls render and passes data to presenter for each pair w/ value" do

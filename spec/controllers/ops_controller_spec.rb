@@ -14,13 +14,13 @@ describe OpsController do
       OpsController::OPS_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
         it "calls the appropriate method: '#{method}' for action '#{action_name}'" do
           expect(controller).to receive(method)
-          get :x_button, :params => { :pressed => action_name }
+          get :x_button, :params => {:pressed => action_name}
         end
       end
     end
 
     it 'exception is raised for unknown action' do
-      get :x_button, :params => { :pressed => 'random_dude', :format => :html }
+      get :x_button, :params => {:pressed => 'random_dude', :format => :html}
       expect(response).to render_template('layouts/exception')
     end
 
@@ -37,7 +37,7 @@ describe OpsController do
 
       it 'rbac role add' do
         MiqProductFeature.seed
-        session[:sandboxes] = { "ops" => { :trees => {} } }
+        session[:sandboxes] = {"ops" => {:trees => {}}}
         post :x_button, :params => {:pressed => 'rbac_role_add'}
         expect(response.status).to eq(200)
       end
@@ -50,7 +50,7 @@ describe OpsController do
     session[:sandboxes] = {"ops" => {:active_tree => :vmdb_tree,
                                      :active_tab  => 'db_settings',
                                      :trees       => {:vmdb_tree => {:active_node => 'root'}}}}
-    post :change_tab, :params => { :tab_id => 'db_settings', :format => :json }
+    post :change_tab, :params => {:tab_id => 'db_settings', :format => :json}
   end
 
   it 'can view the db_connections tab' do
@@ -60,7 +60,7 @@ describe OpsController do
                                      :active_tab  => 'db_connections',
                                      :trees       => {:vmdb_tree => {:active_node => 'root'}}}}
     expect(controller).to receive(:head)
-    post :change_tab, :params => { :tab_id => 'db_connections', :format => :json }
+    post :change_tab, :params => {:tab_id => 'db_connections', :format => :json}
     expect(response.status).to eq(200)
   end
 
@@ -84,7 +84,7 @@ describe OpsController do
         }
       }
       expect(controller).to receive(:replace_right_cell)
-      get :rbac_user_edit, :params => { :button => 'add' }
+      get :rbac_user_edit, :params => {:button => 'add'}
     end
 
     it 'cannot add a user w/o matching passwords' do
@@ -101,7 +101,7 @@ describe OpsController do
       }
 
       expect(controller).to receive(:render_flash)
-      get :rbac_user_edit, :params => { :button => 'add' }
+      get :rbac_user_edit, :params => {:button => 'add'}
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to eq("Password/Verify Password do not match")
       expect(flash_messages.first[:level]).to eq(:error)
@@ -121,7 +121,7 @@ describe OpsController do
       }
 
       expect(controller).to receive(:render_flash)
-      get :rbac_user_edit, :params => { :button => 'add' }
+      get :rbac_user_edit, :params => {:button => 'add'}
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to eq("A User must be assigned to a Group")
       expect(flash_messages.first[:level]).to eq(:error)
@@ -138,8 +138,7 @@ describe OpsController do
                                         :towhat      => "DatabaseBackup",
                                         :run_at      => {:start_time => "2015-04-19 00:00:00 UTC",
                                                          :tz         => "UTC",
-                                                         :interval   => {:unit => "once", :value => ""}
-                                                        })
+                                                         :interval   => {:unit => "once", :value => ""}})
       post :db_backup, :params => {
         :backup_schedule => miq_schedule.id,
         :uri             => "nfs://test_location",
@@ -273,8 +272,18 @@ describe OpsController do
     it "build trees that are passed in and met other conditions" do
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:x_build_dyna_tree)
-      replace_trees = [:settings, :diagnostics]
+      allow(VmdbDatabase).to receive_message_chain(:my_database, :evm_tables) { [] }
+      replace_trees = %i(settings diagnostics rbac vmdb)
       presenter = ExplorerPresenter.new
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderOpsSettings),
+          instance_of(TreeBuilderOpsDiagnostics),
+          instance_of(TreeBuilderOpsRbac),
+          instance_of(TreeBuilderOpsVmdb),
+        )
+      )
       controller.send(:replace_explorer_trees, replace_trees, presenter)
       expect(response.status).to eq(200)
     end
@@ -286,24 +295,25 @@ describe OpsController do
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
       seed_session_trees('ops', :diagnostics_tree, "z-#{ApplicationRecord.compress_id(@zone.id)}")
-      post :change_tab, :params => { :tab_id => "diagnostics_collect_logs" }
+      post :change_tab, :params => {:tab_id => "diagnostics_collect_logs"}
     end
+
     it "does not render toolbar buttons when edit is clicked" do
-      post :x_button, :params => { :id => @miq_server.id, :pressed => 'log_depot_edit', :format => :js }
+      post :x_button, :params => {:id => @miq_server.id, :pressed => 'log_depot_edit', :format => :js}
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)['reloadToolbars']).to match([nil])
     end
 
     it "renders toolbar buttons when cancel is clicked" do
       allow(controller).to receive(:diagnostics_set_form_vars)
-      post :x_button, :params => { :id => @miq_server.id, :pressed => 'log_depot_edit', :button => "cancel", :format => :js }
+      post :x_button, :params => {:id => @miq_server.id, :pressed => 'log_depot_edit', :button => "cancel", :format => :js}
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)['reloadToolbars'].length).to eq(1)
     end
 
     it "renders toolbar buttons when save is clicked" do
       allow(controller).to receive(:diagnostics_set_form_vars)
-      post :x_button, :params => { :id => @miq_server.id, :pressed => 'log_depot_edit', :button => "save", :format => :js }
+      post :x_button, :params => {:id => @miq_server.id, :pressed => 'log_depot_edit', :button => "save", :format => :js}
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)['reloadToolbars'].length).to eq(1)
     end

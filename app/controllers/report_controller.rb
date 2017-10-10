@@ -653,26 +653,14 @@ class ReportController < ApplicationController
     @sb[:active_tab] = params[:tab_id] ? params[:tab_id] : "report_info" if x_active_tree == :reports_tree &&
                                                                             params[:action] != "reload" && !["miq_report_run", "saved_report_delete"].include?(params[:pressed]) # do not reset if reload saved reports buttons is pressed
 
-    trees                = {}
-    rebuild              = @in_a_form ? false : rebuild_trees
-
-    {
-      :reports      => :build_reports_tree,
-      :schedules    => :build_schedules_tree,
-      :savedreports => :build_savedreports_tree,
-      :db           => :build_db_tree,
-      :widgets      => :build_widgets_tree,
-    }.each do |tree, method|
-      next unless tree_exists?(tree.to_s + "_tree")
-
-      if replace_trees.include?(tree) || rebuild
-        trees[tree] = send(method)
-      end
+    rebuild = @in_a_form ? false : rebuild_trees
+    valid_trees = %i(reports schedules savedreports db widgets).find_all do |tree|
+      tree_exists?(tree.to_s + "_tree")
     end
+    trees = build_replaced_trees(rebuild ? valid_trees : replace_trees, valid_trees)
 
-    presenter = ExplorerPresenter.new(
-      :active_tree => x_active_tree,
-    )
+    presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
+
     # Clicked on right cell record, open the tree enough to show the node, if not already showing
     # Open the parent nodes of selected record, if not open
     # Showing a report

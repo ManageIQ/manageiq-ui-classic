@@ -237,13 +237,7 @@ class MiqAeCustomizationController < ApplicationController
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
     # fixme, don't call all the time
     build_ae_tree(:automate, :automate_tree) # Build Catalog Items tree
-    trees = {}
-    if replace_trees
-      trees[:ab]           = ab_build_tree                if replace_trees.include?(:ab)
-      trees[:old_dialogs]  = old_dialogs_build_tree       if replace_trees.include?(:old_dialogs)
-      trees[:dialogs]      = dialog_build_tree            if replace_trees.include?(:dialogs)
-      trees[:dialog_edit]  = dialog_edit_build_tree       if replace_trees.include?(:dialog_edit)
-    end
+    trees = build_replaced_trees(replace_trees, %i(ab old_dialogs dialogs dialog_edit))
 
     @explorer = true
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
@@ -495,15 +489,15 @@ class MiqAeCustomizationController < ApplicationController
     end
   end
 
-  def old_dialogs_build_tree
+  def build_old_dialogs_tree
     TreeBuilderProvisioningDialogs.new("old_dialogs_tree", "old_dialogs", @sb)
   end
 
-  def dialog_build_tree
+  def build_dialogs_tree
     TreeBuilderServiceDialogs.new("dialogs_tree", "dialogs", @sb)
   end
 
-  def ab_build_tree
+  def build_ab_tree
     TreeBuilderButtons.new("ab_tree", "ab", @sb)
   end
 

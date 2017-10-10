@@ -594,4 +594,20 @@ describe ChargebackController do
       expect(fetched_report).to eq(chargeback_report)
     end
   end
+
+  context "#replace_right_cell" do
+    it "Can build the :cb_rates tree" do
+      seed_session_trees('chargeback', :cb_rates, 'root')
+      session_to_sb
+
+      expect(controller).to receive(:render)
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderChargebackRates),
+        )
+      )
+      controller.send(:replace_right_cell, :replace_trees => %i(cb_rates))
+    end
+  end
 end

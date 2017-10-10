@@ -217,15 +217,12 @@ class ProviderForemanController < ApplicationController
     end
   end
 
-  def build_configuration_manager_tree(type, name)
-    tree = case name
-           when :configuration_manager_providers_tree
-             TreeBuilderConfigurationManager.new(name, type, @sb)
-           when :configuration_manager_cs_filter_tree
-             TreeBuilderConfigurationManagerConfiguredSystems.new(name, type, @sb)
-           end
-    instance_variable_set :"@#{name}", tree.tree_nodes
-    tree
+  def build_configuration_manager_providers_tree(_type)
+    TreeBuilderConfigurationManager.new(:configuration_manager_providers, :configuration_manager_providers_tree, @sb)
+  end
+
+  def build_configuration_manager_cs_filter_tree(_type)
+    TreeBuilderConfigurationManagerConfiguredSystems.new(:configuration_manager_cs_filter, :configuration_manager_cs_filter_tree, @sb)
   end
 
   def get_node_info(treenodeid, show_list = true)
@@ -334,13 +331,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def rebuild_trees(replace_trees)
-    trees = {}
-    if replace_trees
-      trees[:configuration_manager_providers] = build_configuration_manager_tree(:configuration_manager_providers,
-                                                                                 :configuration_manager_providers_tree) if replace_trees.include?(:configuration_manager_providers)
-      trees[:configuration_manager_cs_filter] = build_configuration_manager_tree(:configuration_manager_cs_filter, :configuration_manager_cs_filter_tree) if replace_trees.include?(:configuration_manager_cs_filter)
-    end
-    trees
+    build_replaced_trees(replace_trees, %i(configuration_manager_providers configuration_manager_cs_filter))
   end
 
   def leaf_record

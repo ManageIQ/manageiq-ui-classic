@@ -34,6 +34,11 @@ module Spec
         session[:sandboxes][a_controller][:trees][active_tree][:active_node] = node unless node.nil?
       end
 
+      def session_to_sb(a_controller = nil)
+        a_controller ||= controller.controller_name
+        controller.instance_variable_set(:@sb, session[:sandboxes][a_controller])
+      end
+
       def assert_nested_list(parent, children, relation, label, child_path: nil, gtl_types: nil)
         gtl_types    ||= [:list, :tile, :grid]
         child_path   ||= relation.singularize
