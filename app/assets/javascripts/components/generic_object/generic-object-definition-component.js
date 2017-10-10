@@ -53,7 +53,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     if (vm.recordId) {
       vm.newRecord = false;
       miqService.sparkleOn();
-      var dataPromise = API.get('/api/generic_object_definitions/' + vm.recordId + '?attributes=picture_url_path')
+      var dataPromise = API.get('/api/generic_object_definitions/' + vm.recordId + '?attributes=picture.image_href')
         .then(getGenericObjectDefinitionFormData)
         .catch(miqService.handleFailure);
 
@@ -114,6 +114,10 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
 
     if (vm.genericObjectDefinitionModel.method_names[0] !== '') {
       vm.genericObjectDefinitionModel.properties.methods = vm.genericObjectDefinitionModel.method_names;
+    }
+
+    if (vm.genericObjectDefinitionModel.picture.image_href) {
+      vm.genericObjectDefinitionModel.picture.image_href = undefined;
     }
 
     return {
