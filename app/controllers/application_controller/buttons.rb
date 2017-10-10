@@ -19,7 +19,7 @@ module ApplicationController::Buttons
     assert_privileges("ab_group_reorder")
     case params[:button]
     when "cancel"
-      add_flash(_("%{model_name} Group Reorder cancelled") % {:model_name => ui_lookup(:model => "CustomButton")})
+      add_flash(_("Button Group Reorder cancelled"))
       @edit = session[:edit] = nil  # clean out the saved info
       ab_get_node_info(x_node) if x_active_tree == :ab_tree
       replace_right_cell(:nodetype => x_node)
@@ -44,7 +44,7 @@ module ApplicationController::Buttons
         st.options[:button_order] = button_order
         st.save
       end
-      add_flash(_("%{model_name} Group Reorder saved") % {:model_name => ui_lookup(:model => "CustomButton")})
+      add_flash(_("Button Group Reorder saved"))
       @edit = session[:edit] = nil  # clean out the saved info
       ab_get_node_info(x_node) if x_active_tree == :ab_tree
       replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
@@ -155,7 +155,7 @@ module ApplicationController::Buttons
     end
     if custom_button.destroy
       AuditEvent.success(audit)
-      add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => ui_lookup(:model => "CustomButton"), :name => description})
+      add_flash(_("Button \"%{name}\": Delete successful") % {:name => description})
       id = x_node.split('_')
       id.pop
       self.x_node = id.join("_")
@@ -232,7 +232,7 @@ module ApplicationController::Buttons
 
     if custom_button_set.destroy
       AuditEvent.success(audit)
-      add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => ui_lookup(:model => "CustomButtonSet"), :name => description})
+      add_flash(_("Button Group \"%{name}\": Delete successful") % {:name => description})
       id = x_node.split('_')
       id.pop
       self.x_node = id.join("_")
@@ -356,11 +356,9 @@ module ApplicationController::Buttons
 
   def group_button_cancel(typ)
     if typ == "update"
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-        {:model => ui_lookup(:model => "CustomButtonSet"), :name => @edit[:current][:name]})
+      add_flash(_("Edit of Button Group \"%{name}\" was cancelled by the user") % {:name => @edit[:current][:name]})
     else
-      add_flash(_("Add of new %{model_name} was cancelled by the user") %
-        {:model_name => ui_lookup(:model => "CustomButtonSet")})
+      add_flash(_("Add of new Button Group was cancelled by the user"))
     end
     @edit = session[:edit] = nil  # clean out the saved info
     ab_get_node_info(x_node) if x_active_tree == :ab_tree
@@ -399,7 +397,7 @@ module ApplicationController::Buttons
         else                  # remove members if nothing was selected
           @custom_button_set.remove_all_children
         end
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "CustomButtonSet"), :name => @edit[:new][:description]})
+        add_flash(_("Button Group \"%{name}\" was saved") % {:name => @edit[:new][:description]})
         @edit = session[:edit] = nil  # clean out the saved info
         ab_get_node_info(x_node) if x_active_tree == :ab_tree
         replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
@@ -434,7 +432,7 @@ module ApplicationController::Buttons
           end
         end
 
-        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "CustomButtonSet"), :name => @edit[:new][:description]})
+        add_flash(_("Button Group \"%{name}\" was added") % {:name => @edit[:new][:description]})
         @edit = session[:edit] = nil  # clean out the saved info
         ab_get_node_info(x_node) if x_active_tree == :ab_tree
         replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])

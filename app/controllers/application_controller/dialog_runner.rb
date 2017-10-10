@@ -24,7 +24,7 @@ module ApplicationController::DialogRunner
   def dialog_form_button_pressed
     case params[:button]
     when "cancel"
-      flash = _("%{model} Order was cancelled by the user") % {:model => ui_lookup(:model => 'Service')}
+      flash = _("Service Order was cancelled by the user")
       dialog_cancel_form(flash)
     when "submit"
       return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")

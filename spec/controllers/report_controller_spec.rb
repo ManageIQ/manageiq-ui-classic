@@ -1268,7 +1268,7 @@ describe ReportController do
       allow(controller).to receive(:get_node_info)
       controller.send(:reports_menu_in_sb)
       rpt_menu = controller.instance_variable_get(:@sb)[:rpt_menu]
-      expect(rpt_menu.first.first).to eq("#{user.current_tenant.name} (EVM Group): #{user.current_group.name}")
+      expect(rpt_menu.first.first).to eq("#{user.current_tenant.name} (Group): #{user.current_group.name}")
     end
   end
 

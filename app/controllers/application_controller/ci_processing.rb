@@ -656,13 +656,12 @@ module ApplicationController::CiProcessing
         begin
           cluster.send(task.to_sym) if cluster.respond_to?(task)    # Run the task
         rescue => err
-          add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
-            {:model         => ui_lookup(:model => "EmsCluster"),
-             :name          => cluster_name,
+          add_flash(_("Cluster / Deployment Role \"%{name}\": Error during '%{task}': %{error_message}") %
+            {:name          => cluster_name,
              :task          => task,
              :error_message => err.message}, :error) # Push msg and error flag
         else
-          add_flash(_("%{model}: %{task} successfully initiated") % {:model => ui_lookup(:model => "EmsCluster"), :task => task})
+          add_flash(_("Cluster / Deployment Role: %{task} successfully initiated") % {:task => task})
         end
       end
     end
@@ -687,13 +686,12 @@ module ApplicationController::CiProcessing
         begin
           rp.send(task.to_sym) if rp.respond_to?(task)    # Run the task
         rescue => err
-          add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
-            {:model         => ui_lookup(:model => "ResourcePool"),
-             :name          => rp_name,
+          add_flash(_("Resource Pool \"%{name}\": Error during '%{task}': %{error_message}") %
+            {:name          => rp_name,
              :task          => task,
              :error_message => err.message}, :error)
         else
-          add_flash(_("%{model} \"%{name}\": %{task} successfully initiated") % {:model => ui_lookup(:model => "ResourcePool"), :name => rp_name, :task => task})
+          add_flash(_("Resource Pool \"%{name}\": %{task} successfully initiated") % {:name => rp_name, :task => task})
         end
       end
     end
@@ -705,7 +703,7 @@ module ApplicationController::CiProcessing
     if @lastaction == "show_list" || @layout != "ems_cluster"
       clusters = find_checked_ids_with_rbac(EmsCluster)
       if clusters.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "ems_clusters"), :task => display_name}, :error)
+        add_flash(_("No Clusters / Deployment Roles were selected for %{task}") % {:task => display_name}, :error)
       else
         process_clusters(clusters, method)
       end
@@ -717,7 +715,7 @@ module ApplicationController::CiProcessing
 
     else # showing 1 cluster
       if params[:id].nil? || !EmsCluster.exists?(params[:id])
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => "ems_cluster")}, :error)
+        add_flash(_("Cluster / Deployment Role no longer exists"), :error)
       else
         clusters.push(find_id_with_rbac(EmsCluster, params[:id]))
         process_clusters(clusters, method)  unless clusters.empty?
@@ -811,9 +809,8 @@ module ApplicationController::CiProcessing
             storage.send(task.to_sym) if storage.respond_to?(task)    # Run the task
           end
         rescue => err
-          add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
-            {:model         => ui_lookup(:model => "Storage"),
-             :name          => storage_name,
+          add_flash(_("Datastore \"%{name}\": Error during '%{task}': %{error_message}") %
+            {:name          => storage_name,
              :task          => task,
              :error_message => err.message}, :error) # Push msg and error flag
         else
@@ -838,7 +835,7 @@ module ApplicationController::CiProcessing
         return
       end
       if storages.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "storage"), :task => display_name}, :error)
+        add_flash(_("No Datastores were selected for %{task}") % {:task => display_name}, :error)
       else
         process_storage(storages, method)
       end
@@ -850,7 +847,7 @@ module ApplicationController::CiProcessing
 
     else # showing 1 storage
       if params[:id].nil? || !Storage.exists?(params[:id])
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => "storage")}, :error)
+        add_flash(_("Datastore no longer exists"), :error)
       else
         storages.push(find_id_with_rbac(Storage, params[:id]))
         process_storage(storages, method)  unless storages.empty?
@@ -912,7 +909,7 @@ module ApplicationController::CiProcessing
     if %w(show_list storage_list storage_pod_list).include?(@lastaction) || (@lastaction == "show" && @layout != "storage") # showing a list, scan all selected hosts
       datastores = storages
       if datastores.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "storage"), :task => display_name}, :error)
+        add_flash(_("No Datastores were selected for %{task}") % {:task => display_name}, :error)
       end
       ds_to_delete = []
       datastores.each do |s|
@@ -927,14 +924,13 @@ module ApplicationController::CiProcessing
       process_storage(ds_to_delete, "destroy")  unless ds_to_delete.empty?
     else # showing 1 datastore, delete it
       if params[:id].nil? || !Storage.exists?(params[:id])
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => "storage")}, :error)
+        add_flash(_("Datastore no longer exists"), :error)
       else
         datastores.push(find_id_with_rbac(Storage, params[:id]))
       end
       process_storage(datastores, "destroy")  unless datastores.empty?
       @single_delete = true unless flash_errors?
-      add_flash(_("The selected %{record} was deleted") %
-        {:record => ui_lookup(:table => "storages")}) if @flash_array.nil?
+      add_flash(_("The selected Datastore was deleted")) if @flash_array.nil?
     end
     if @lastaction == "show_list"
       show_list
