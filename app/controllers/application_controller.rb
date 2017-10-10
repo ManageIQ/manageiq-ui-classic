@@ -435,7 +435,7 @@ class ApplicationController < ActionController::Base
   # @option params :model_id [String]
   #     String value of model's ID to be filtered with.
   def process_params_options(params)
-    options = {}
+    options = params[:additional_options] || {}
     if params[:explorer]
       params[:action] = "explorer"
       @explorer = params[:explorer] == "true"
@@ -460,7 +460,7 @@ class ApplicationController < ActionController::Base
                 end
     end
 
-    if params[:id] && !params[:active_tree]
+    if params[:parent_id] && !params[:active_tree]
       parent_id = from_cid(params[:parent_id])
       unless parent_id.nil?
         options[:parent] = identify_record(parent_id, controller_to_model) if parent_id && options[:parent].nil?
@@ -1606,7 +1606,7 @@ class ApplicationController < ActionController::Base
       :match_via_descendants     => options[:match_via_descendants]
     }
     # Call paged_view_search to fetch records and build the view.table and additional attrs
-    view.table, attrs = view.paged_view_search(session[:paged_view_search_options])
+    view.table, attrs = generate_paged_view_search(view, session[:paged_view_search_options])
 
     # adding filters/conditions for download reports
     view.user_categories = attrs[:user_filters]["managed"] if attrs && attrs[:user_filters] && attrs[:user_filters]["managed"]
@@ -1615,12 +1615,24 @@ class ApplicationController < ActionController::Base
     @targets_hash             = attrs[:targets_hash] if attrs[:targets_hash]
 
     # Set up the grid variables for list view, with exception models below
-    if grid_hash_conditions(view)
+    if grid_hash_conditions(view) && @in_report_data
       @grid_hash = view_to_hash(view)
     end
 
     [view, get_view_pages(dbname, view)]
   end
+
+  # FIXME: This is hotfix for building table and it's settings, however this has to be run only once and if in
+  # report_data.
+  def generate_paged_view_search(view, paged_search_options)
+    if @in_report_data
+      view.paged_view_search(paged_search_options)
+    else
+      [{}, {}]
+    end
+  end
+
+  private :generate_paged_view_search
 
   def grid_hash_conditions(view)
     !%w(Job MiqProvision MiqReportResult MiqTask).include?(view.db) &&
@@ -1672,7 +1684,9 @@ class ApplicationController < ActionController::Base
       :current => params[:page].nil? ? 1 : params[:page].to_i,
       :items   => view.extras[:auth_count]
     }
-    pages[:total] = (pages[:items] + pages[:perpage] - 1) / pages[:perpage]
+    if pages[:items] && pages[:perpage]
+      pages[:total] = (pages[:items] + pages[:perpage] - 1) / pages[:perpage]
+    end
     pages
   end
 
