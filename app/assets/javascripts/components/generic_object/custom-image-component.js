@@ -33,9 +33,9 @@ function customImageComponentController($timeout) {
 
     if (angular.element('#generic_object_definition_image_file')[0].files.length === 0) {
       return;
-    } else {
-      imageFile = angular.element('#generic_object_definition_image_file')[0].files[0];
     }
+
+    imageFile = angular.element('#generic_object_definition_image_file')[0].files[0];
 
     var reader = new FileReader();
     vm.imageUploadStatus = "";
@@ -56,7 +56,7 @@ function customImageComponentController($timeout) {
     reader.onload = function(event) {
       vm.picture.content = btoa(event.target.result);
 
-      $timeout(function(){
+      $timeout(function() {
         vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", true);
         vm.imageUploadStatus = __("Image upload complete");
         vm.pictureUploaded = true;
@@ -69,7 +69,7 @@ function customImageComponentController($timeout) {
   };
 
   vm.changeImageSelected = function() {
-    if (!vm.changeImage) {
+    if (! vm.changeImage) {
       restoreOriginalStatus();
     }
   };
