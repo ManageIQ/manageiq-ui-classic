@@ -1223,6 +1223,7 @@ describe ReportController do
         end
 
         it "is allowed to see report created under Group1 for User 1(with current group Group2)" do
+          controller.instance_variable_set(:@in_report_data, true)
           controller.instance_variable_set(:@_params, :controller => "report", :action => "explorer")
           seed_session_trees('report', :saved_reports)
           allow(controller).to receive(:get_view_calculate_gtl_type).and_return("list")

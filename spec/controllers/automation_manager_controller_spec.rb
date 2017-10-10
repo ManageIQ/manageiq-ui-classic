@@ -308,6 +308,7 @@ describe AutomationManagerController do
     end
 
     it "renders the list view based on the nodetype(root,provider) and the search associated with it" do
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => "root")
       controller.instance_variable_set(:@search_text, "manager")
       controller.send(:tree_select)
@@ -358,6 +359,7 @@ describe AutomationManagerController do
 
     it "renders tree_select for ansible tower job templates tree node" do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => "configuration_scripts")
       controller.send(:accordion_select)
       controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@automation_manager1.id))

@@ -407,7 +407,7 @@
   * @param {Boolean} isExplorer true | false if we are in explorer part of application.
   * @param {Object} settings settings object.
   * @param {Array} records array of reccords.
-  * @param {Object} additionalOptions
+  * @param {Object} additionalOptions specific options for current view.
   * @returns {Object} promise of retriveRowsAndColumnsFromUrl of MiQDataTableService.
   */
   ReportDataController.prototype.getData = function(modelName,

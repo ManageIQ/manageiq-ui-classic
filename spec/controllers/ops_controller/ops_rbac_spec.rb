@@ -128,6 +128,7 @@ describe OpsController do
       it "gets the list of tenants" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@settings, {})
+        controller.instance_variable_set(:@in_report_data, true)
         expect(response.status).to eq(200)
         controller.send(:rbac_tenants_list)
         expect(assigns(:view)).not_to be_nil
