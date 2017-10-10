@@ -65,7 +65,7 @@ class ContainerTopologyService < TopologyService
     elsif entity.kind_of?(ContainerGroup)
       status = entity.phase
     elsif entity.kind_of?(Container)
-      status = entity.state.capitalize
+      status = entity.state.try(:capitalize)
     elsif entity.kind_of?(ContainerReplicator)
       status = entity.current_replicas == entity.replicas ? 'OK' : 'Warning'
     elsif entity.kind_of?(ManageIQ::Providers::ContainerManager)
