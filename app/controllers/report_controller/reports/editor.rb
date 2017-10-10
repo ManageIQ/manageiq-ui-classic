@@ -1675,7 +1675,7 @@ module ReportController::Reports::Editor
         msg = _('A Group by Tag must be selected')
       elsif @edit[:new][:cb_groupby] == "label" && !@edit[:new][:cb_groupby_label].present?
         msg = _('A Group by Label must be selected')
-      elsif @edit[:new][:cb_groupby] == "label" && rpt.cols.any? { |x| x.include? (CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX) }
+      elsif @edit[:new][:cb_groupby] == "label" && rpt.cols.any? { |x| x.include?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX) }
         msg = _('Can not add label columns when grouping by label')
       end
 
