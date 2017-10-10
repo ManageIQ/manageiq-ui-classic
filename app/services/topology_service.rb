@@ -53,23 +53,28 @@ class TopologyService
     remove_list
   end
 
-  def build_topology
-    included_relations = self.class.instance_variable_get(:@included_relations)
-    preloaded = @providers.includes(included_relations)
-    nodes, edges = map_to_graph(preloaded, build_entity_relationships(included_relations))
-
+  def rbac_filter_nodes_and_edges(nodes, edges)
     remove_list = disallowed_nodes(nodes)
-    # remove nodes and edges
+
     remove_list.flatten.each do |x|
       nodes.delete(x)
       edges = edges.select do |edge|
         !(edge[:source] == x || edge[:target] == x)
       end
     end
+    [nodes, edges]
+  end
+
+  def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
+    preloaded = @providers.includes(included_relations)
+    nodes, edges = map_to_graph(preloaded, build_entity_relationships(included_relations))
+
+    filtered_nodes, filtered_edges = rbac_filter_nodes_and_edges(nodes, edges)
 
     {
-      :items     => nodes,
-      :relations => edges,
+      :items     => filtered_nodes,
+      :relations => filtered_edges,
       :kinds     => build_kinds,
       :icons     => icons
     }
