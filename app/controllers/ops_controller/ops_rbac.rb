@@ -727,16 +727,19 @@ module OpsController::OpsRbac
     case key
     when :user
       record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
-      rbac_user_set_record_vars(record) if rbac_user_validate?
+      validated = rbac_user_validate?
+      rbac_user_set_record_vars(record)
     when :group then
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
-      rbac_group_set_record_vars(record) if rbac_group_validate?
+      validated = rbac_group_validate?
+      rbac_group_set_record_vars(record)
     when :role  then
       record = @edit[:role_id] ? MiqUserRole.find_by(:id => @edit[:role_id]) : MiqUserRole.new
-      rbac_role_set_record_vars(record) if rbac_role_validate?
+      validated = rbac_role_validate?
+      rbac_role_set_record_vars(record)
     end
 
-    if record.valid? && !flash_errors? && record.save!
+    if record.valid? && validated && record.save!
       populate_role_features(record) if what == "role"
       self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, add_pressed))
@@ -755,11 +758,13 @@ module OpsController::OpsRbac
       # Get selected Node
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
-    else
-      @changed = session[:changed] = (@edit[:new] != @edit[:current])
-      record.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
-      render_flash
+      return
     end
+
+    @changed = session[:changed] = (@edit[:new] != @edit[:current])
+    record.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
+
+    render_flash
   end
 
   # Show the main Users/Gropus/Roles list views
@@ -1042,7 +1047,7 @@ module OpsController::OpsRbac
   # Get array of group ids
   def rbac_user_get_group_ids
     case @edit[:new][:group]
-    when 'null'
+    when 'null', nil
       []
     when String
       @edit[:new][:group].split(',').delete_if(&:blank?)
