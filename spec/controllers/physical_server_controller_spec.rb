@@ -29,4 +29,20 @@ describe PhysicalServerController do
     end
     it { expect(response.status).to eq(200) }
   end
+
+  context "#button" do
+    it "when Physical Server Manage Policies is pressed" do
+      controller.instance_variable_set(:@_params, :pressed => "physical_server_protect")
+      expect(controller).to receive(:assign_policies).with(PhysicalServer)
+      controller.button
+      expect(controller.send(:flash_errors?)).not_to be_truthy
+    end
+
+    it "when Physical Server Tag is pressed" do
+      controller.instance_variable_set(:@_params, :pressed => "physical_server_tag")
+      expect(controller).to receive(:tag).with(PhysicalServer)
+      controller.button
+      expect(controller.send(:flash_errors?)).not_to be_truthy
+    end
+  end
 end

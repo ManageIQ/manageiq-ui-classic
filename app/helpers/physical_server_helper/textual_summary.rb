@@ -50,6 +50,10 @@ module PhysicalServerHelper::TextualSummary
     )
   end
 
+  def textual_group_smart_management
+    TextualTags.new(_("Smart Management"), %i(tags))
+  end
+
   def textual_host
     {:label => _("Host"), :value => @record.host.try(:name), :icon => "pficon pficon-virtual-machine", :link => url_for(:controller => 'host', :action => 'show', :id => @record.host.try(:id))}
   end
