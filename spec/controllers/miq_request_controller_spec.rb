@@ -37,7 +37,7 @@ describe MiqRequestController do
       login_as user_parent_tenant
       controller.instance_variable_set(:@settings, {})
       allow_any_instance_of(MiqRequestController).to receive(:fileicon)
-
+      controller.instance_variable_set(:@in_report_data, true)
       view, _pages = controller.send(:get_view, MiqRequest, {})
       expect(view.table.data.count).to eq(1)
     end
