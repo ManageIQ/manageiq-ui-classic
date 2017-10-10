@@ -8,6 +8,7 @@ class GenericObjectController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::GenericButtonMixin
 
   menu_section :automate
   toolbar :generic_object

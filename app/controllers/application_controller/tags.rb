@@ -39,7 +39,6 @@ module ApplicationController::Tags
   alias_method :miq_template_tag, :tagging_edit
   alias_method :storage_tag, :tagging_edit
   alias_method :infra_networking_tag, :tagging_edit
-  alias_method :generic_object_tag, :tagging_edit
 
   # Handle tag edit field changes
   def tag_edit_form_field_changed

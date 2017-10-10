@@ -10,7 +10,10 @@ class GenericObjectDefinitionController < ApplicationController
   include Mixins::GenericShowMixin
 
   menu_section :automate
-  toolbar :generic_object_definition
+
+  def toolbar_singular
+    @display == 'generic_objects' ? :generic_objects : :generic_object_definition
+  end
 
   def self.display_methods
     %w(generic_objects)
@@ -31,6 +34,8 @@ class GenericObjectDefinitionController < ApplicationController
         { :action => 'new' }
       when 'generic_object_definition_edit'
         { :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
+      when 'generic_object_tag'
+        { :controller => 'generic_object', :action => 'tag', :id => params[:miq_grid_checks]}
       end
     )
   end
@@ -48,6 +53,9 @@ class GenericObjectDefinitionController < ApplicationController
     @in_a_form = true
   end
 
+  def default_show_template
+    "generic_object_definition/show"
+  end
   private
 
   def textual_group_list

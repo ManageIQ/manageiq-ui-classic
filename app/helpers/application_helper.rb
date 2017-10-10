@@ -1327,6 +1327,7 @@ module ApplicationHelper
                         event
                         flavor
                         floating_ip
+                        generic_object
                         generic_object_definition
                         host
                         host_aggregate
