@@ -1,4 +1,5 @@
-.form-group{"ng-show" => "vm.newRecord || vm.changeImage", "ng-class" => "{'has-error': vm.angularForm.generic_object_definition_image_file_status.$invalid}"}
+.form-group{"ng-show" => "vm.newRecord || vm.changeImage || vm.pictureUrlPath === '' || vm.pictureRemove",
+            "ng-class" => "{'has-error': vm.angularForm.generic_object_definition_image_file_status.$invalid}"}
   %label.col-md-2.control-label{"for" => "generic_object_definition_image_file_status"}
     = _("Custom Image File")
   .col-md-4
@@ -19,12 +20,14 @@
                   :alt       => t,
                   :enabled   => "true",
                   'on-click' => "vm.uploadClicked(angularForm)"}
-.form-group{'ng-if' => "vm.pictureUrlPath !== '' && !vm.changeImage"}
+.form-group{'ng-if' => "vm.pictureUrlPath !== '' && !vm.changeImage && !vm.pictureRemove"}
   %label.col-md-2.control-label{"for" => "custom_image"}
     = _("Current Custom Image File")
   .col-md-4
     %img.form-control{'ng-src' => "{{vm.pictureUrlPath}}", :style => "width:100px; height:100px;"}
-.form-group{'ng-if' => "vm.pictureUrlPath !== ''"}
+      .btn.btn-default{:alt => t = _("Remove Custom Image"), :title => t, "ng-click" => "vm.removeImage()"}
+        %i.pficon.pficon-delete
+.form-group{'ng-if' => "vm.pictureUrlPath !== '' && !vm.pictureRemove"}
   %label.col-md-2.control-label{"for" => "update_image"}
     = _("Update Current Image")
   .col-md-4

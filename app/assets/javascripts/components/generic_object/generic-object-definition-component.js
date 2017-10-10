@@ -33,6 +33,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
       properties: {},
       picture: {},
       pictureUploaded: false,
+      pictureRemove: false,
       attribute_names: [],
       attribute_types: [],
       attributesTableChanged: false,
@@ -115,17 +116,12 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
       vm.genericObjectDefinitionModel.properties.methods = vm.genericObjectDefinitionModel.method_names;
     }
 
-    var preppedObject =  {
+    return {
       name: vm.genericObjectDefinitionModel.name,
       description: vm.genericObjectDefinitionModel.description,
       properties: vm.genericObjectDefinitionModel.properties,
+      picture: vm.genericObjectDefinitionModel.picture,
     };
-
-    if (! angular.equals(vm.genericObjectDefinitionModel.picture, {})) {
-      preppedObject.picture = vm.genericObjectDefinitionModel.picture;
-    }
-
-    return preppedObject;
   };
 
   vm.saveWithAPI = function(method, url, saveObject, saveMsg) {

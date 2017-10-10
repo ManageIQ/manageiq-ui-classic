@@ -5,6 +5,7 @@ ManageIQ.angular.app.component('customImageComponent', {
     angularForm: '<',
     pictureUrlPath: '@',
     pictureUploaded: '=',
+    pictureRemove: '=',
     pictureReset: '<',
   },
   controllerAs: 'vm',
@@ -71,6 +72,11 @@ function customImageComponentController($timeout) {
     if (!vm.changeImage) {
       restoreOriginalStatus();
     }
+  };
+
+  vm.removeImage = function() {
+    Object.assign(vm.picture, {});
+    vm.pictureRemove = true;
   };
 
   function restoreOriginalStatus() {
