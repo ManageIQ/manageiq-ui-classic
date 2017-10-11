@@ -45,10 +45,8 @@ class CloudVolumeController < ApplicationController
     elsif params[:pressed] == "cloud_volume_detach"
       @volume = find_record_with_rbac(CloudVolume, checked_item_id)
       if @volume.attachments.empty?
-        render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
-                     :volume      => ui_lookup(:table => 'cloud_volume'),
-                     :volume_name => @volume.name,
-                     :instances   => ui_lookup(:tables => 'vm_cloud')}, :error)
+        render_flash(_("Cloud Volume \"%{volume_name}\" is not attached to any Instances") % {
+                     :volume_name => @volume.name}, :error)
       else
         javascript_redirect :action => "detach", :id => checked_item_id
       end
@@ -81,10 +79,7 @@ class CloudVolumeController < ApplicationController
 
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Attach %{model} \"%{name}\"") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
-      },
+      :name => _("Attach Cloud Volume \"%{name}\"") % {:name => @volume.name},
       :url  => "/cloud_volume/attach")
   end
 
@@ -96,10 +91,7 @@ class CloudVolumeController < ApplicationController
 
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Detach %{model} \"%{name}\"") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
-      },
+      :name => _("Detach Cloud Volume \"%{name}\"") % {:name => @volume.name},
       :url  => "/cloud_volume/detach")
   end
 
@@ -109,9 +101,8 @@ class CloudVolumeController < ApplicationController
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Attaching %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
+      cancel_action(_("Attaching Cloud Volume \"%{name}\" was cancelled by the user") % {
+        :name => @volume.name
       })
     when "attach"
       options = form_params
@@ -165,9 +156,8 @@ class CloudVolumeController < ApplicationController
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Detaching %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
+      cancel_action(_("Detaching Cloud Volume \"%{name}\" was cancelled by the user") % {
+        :name => @volume.name
       })
 
     when "detach"
@@ -224,7 +214,7 @@ class CloudVolumeController < ApplicationController
       @storage_manager = find_record_with_rbac(ExtManagementSystem, params[:storage_manager_id])
     end
     drop_breadcrumb(
-      :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'cloud_volume')},
+      :name => _("Add New Cloud Volume"),
       :url  => "/cloud_volume/new"
     )
   end
@@ -233,7 +223,7 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_new")
     case params[:button]
     when "cancel"
-      cancel_action(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:table => 'cloud_volume')})
+      cancel_action(_("Add of new Cloud Volume was cancelled by the user"))
 
     when "add"
       @volume = CloudVolume.new
@@ -253,7 +243,7 @@ class CloudVolumeController < ApplicationController
         @in_a_form = true
         add_flash(_(action_details), :error) unless action_details.nil?
         drop_breadcrumb(
-          :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'cloud_volume')},
+          :name => _("Add New Cloud Volume"),
           :url  => "/cloud_volume/new"
         )
         javascript_flash
@@ -300,7 +290,7 @@ class CloudVolumeController < ApplicationController
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Edit %{model} \"%{name}\"") % {:model => ui_lookup(:table => 'cloud_volume'), :name => @volume.name},
+      :name => _("Edit Cloud Volume \"%{name}\"") % {:name => @volume.name},
       :url  => "/cloud_volume/edit/#{@volume.id}"
     )
   end
@@ -311,10 +301,7 @@ class CloudVolumeController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
-      })
+      cancel_action(_("Edit of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
 
     when "save"
       options = form_params
@@ -374,27 +361,22 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_delete")
     volumes = find_records_with_rbac(CloudVolume, checked_or_params)
     if volumes.empty?
-      add_flash(_("No %{models} were selected for deletion.") % {
-        :models => ui_lookup(:tables => "cloud_volume")
-      }, :error)
+      add_flash(_("No Cloud Volumes were selected for deletion."), :error)
     end
 
     volumes_to_delete = []
     volumes.each do |volume|
       if volume.nil?
-        add_flash(_("%{model} no longer exists.") % {:model => ui_lookup(:table => "cloud_volume")}, :error)
+        add_flash(_("Cloud Volume no longer exists."), :error)
       elsif !volume.attachments.empty?
-        add_flash(_("%{model} \"%{name}\" cannot be removed because it is attached to one or more %{instances}") % {
-          :model     => ui_lookup(:table => 'cloud_volume'),
-          :name      => volume.name,
-          :instances => ui_lookup(:tables => 'vm_cloud')}, :warning)
+        add_flash(_("Cloud Volume \"%{name}\" cannot be removed because it is attached to one or more Instances") % {
+          :name => volume.name}, :warning)
       else
         valid_delete = volume.validate_delete_volume
         if valid_delete[:available]
           volumes_to_delete.push(volume)
         else
-          add_flash(_("Couldn't initiate deletion of %{model} \"%{name}\": %{details}") % {
-            :model   => ui_lookup(:table => 'cloud_volume'),
+          add_flash(_("Couldn't initiate deletion of Cloud Volume \"%{name}\": %{details}") % {
             :name    => volume.name,
             :details => valid_delete[:message]}, :error)
         end
@@ -409,7 +391,7 @@ class CloudVolumeController < ApplicationController
     elsif @lastaction == "show" && @layout == "cloud_volume"
       @single_delete = true unless flash_errors?
       if @flash_array.nil?
-        add_flash(_("The selected %{model} was deleted") % {:model => ui_lookup(:table => "cloud_volume")})
+        add_flash(_("The selected Cloud Volume was deleted"))
       end
     else
       drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
@@ -423,10 +405,7 @@ class CloudVolumeController < ApplicationController
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Create Backup for %{model} \"%{name}\"") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
-      },
+      :name => _("Create Backup for Cloud Volume \"%{name}\"") % {:name => @volume.name},
       :url  => "/cloud_volume/backup_new/#{@volume.id}"
     )
   end
@@ -437,10 +416,7 @@ class CloudVolumeController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Backup of %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
-      })
+      cancel_action(_("Backup of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
 
     when "create"
       options = {}
@@ -469,13 +445,9 @@ class CloudVolumeController < ApplicationController
     task = MiqTask.find(task_id)
     @volume = find_record_with_rbac(CloudVolume, volume_id)
     if task.results_ready?
-      add_flash(_("Backup for %{model} \"%{name}\" created") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
-      })
+      add_flash(_("Backup for Cloud Volume \"%{name}\" created") % {:name => @volume.name})
     else
-      add_flash(_("Unable to create backup for %{model} \"%{name}\": %{details}") % {
-        :model   => ui_lookup(:table => 'cloud_volume'),
+      add_flash(_("Unable to create backup for Cloud Volume \"%{name}\": %{details}") % {
         :name    => @volume.name,
         :details => task.message
       }, :error)
@@ -496,10 +468,7 @@ class CloudVolumeController < ApplicationController
     end
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Restore %{model} \"%{name}\" from a Backup") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
-      },
+      :name => _("Restore Cloud Volume \"%{name}\" from a Backup") % {:name => @volume.name},
       :url  => "/cloud_volume/backup_select/#{@volume.id}"
     )
   end
@@ -510,10 +479,7 @@ class CloudVolumeController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Restore of %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
-      })
+      cancel_action(_("Restore of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
 
     when "restore"
       @backup = find_record_with_rbac(CloudVolumeBackup, params[:backup_id])
@@ -536,13 +502,9 @@ class CloudVolumeController < ApplicationController
     task = MiqTask.find(task_id)
     @volume = find_record_with_rbac(CloudVolume, volume_id)
     if task.results_ready?
-      add_flash(_("Restoring %{model} \"%{name}\" from backup") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @volume.name
-      })
+      add_flash(_("Restoring Cloud Volume \"%{name}\" from backup") % {:name => @volume.name})
     else
-      add_flash(_("Unable to restore %{model} \"%{name}\" from backup: %{details}") % {
-        :model   => ui_lookup(:table => 'cloud_volume'),
+      add_flash(_("Unable to restore Cloud Volume \"%{name}\" from backup: %{details}") % {
         :name    => @volume.name,
         :details => task.message
       }, :error)
