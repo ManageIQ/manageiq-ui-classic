@@ -108,7 +108,7 @@ class BottlenecksController < ApplicationController
     get_nodetype_and_record(treenodeid)
 
     @right_cell_text = if @record.kind_of?(MiqEnterprise)
-                         ui_lookup(:model => "MiqEnterprise")
+                         _("Enterprise")
                        else
                          _("%{model} \"%{name}\" Bottlenecks Summary") % {:model => ui_lookup(:model => @record.class.base_class.to_s), :name => @record.name}
                        end
