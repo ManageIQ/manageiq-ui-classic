@@ -10,7 +10,7 @@ class CloudObjectStoreContainerController < ApplicationController
   include Mixins::GenericFormMixin
 
   def breadcrumb_name(_model)
-    ui_lookup(:tables => "cloud_object_store_container")
+    _('Cloud Object Store Containers')
   end
 
   # handle buttons pressed on the button bar
@@ -47,7 +47,7 @@ class CloudObjectStoreContainerController < ApplicationController
     end
     @provider_regions = retrieve_provider_regions
     drop_breadcrumb(
-      :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'cloud_object_store_container')},
+      :name => _("Add New Cloud Object Store Container"),
       :url  => "/cloud_object_store_container/new"
     )
   end
