@@ -539,15 +539,17 @@ module OpsController::Settings::Common
     end
   end
 
-  private def save_ntp_server_settings
+  private def new_ntp_servers
     old_ntp_servers = @edit[:new][:ntp][:server] || []
-    new_ntp_servers = [1,2,3].collect.with_index do |i, position|
+    [1, 2, 3].collect.with_index do |i, position|
       field = "ntp_server_#{i}"
       @edit[:new][:ntp].key?(field) ? @edit[:new][:ntp].delete(field).presence : old_ntp_servers[position]
     end.compact
+  end
 
-    if new_ntp_servers.present?
-      @update.config[:ntp] = {:server => new_ntp_servers}
+  private def save_ntp_server_settings
+    if (new_servers = new_ntp_servers).present?
+      @update.config[:ntp] = {:server => new_servers}
     else
       @update.config.delete(:ntp)
       MiqServer.find(@sb[:selected_server_id]).remove_settings_path_for_resource(:ntp)
