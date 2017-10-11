@@ -5,6 +5,7 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkForm
     vm.afterGet = false;
     vm.cloudNetworkModel = { name: '' };
     vm.providers_network_types = {
+      "None": "",
       "Local": "local",
       "Flat": "flat",
       "GRE": "gre",
