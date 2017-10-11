@@ -179,7 +179,7 @@ function playbookReusableCodeMixin(API, $q, miqService) {
           vm[vm.model][prefix + '_playbook_id'] = '';
           vm[vm.model][prefix + '_repository_id'] = id;
           if (vm[vm.model].retirement_remove_resources !== undefined) {
-            getRemoveResourcesTypes();
+            getRemoveResourcesTypes(vm);
           }
         } else {
           findObjectForDropDown(prefix, '_playbook', '_playbooks', vm);

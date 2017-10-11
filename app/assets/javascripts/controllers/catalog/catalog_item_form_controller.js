@@ -297,7 +297,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   });
 
   $scope.$watch('vm._retirement_cloud_type', function(value) {
-    $scope.cloudTypeChanged(vm, 'retirement', value);
+    playbookReusableCodeMixin.cloudTypeChanged(vm, 'retirement', value);
     playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
   });
 
