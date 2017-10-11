@@ -19,10 +19,7 @@ class CloudVolumeBackupController < ApplicationController
     @in_a_form = true
 
     drop_breadcrumb(
-      :name => _("Restore %{model} \"%{name}\"") % {
-        :model => ui_lookup(:table => 'cloud_volume_backup'),
-        :name  => @backup.name
-      },
+      :name => _("Restore Cloud Volume Backup \"%{name}\"") % {:name => @backup.name},
       :url  => "/cloud_volume_backup/volume_select/#{@backup.id}"
     )
   end
@@ -41,10 +38,7 @@ class CloudVolumeBackupController < ApplicationController
     @backup = find_record_with_rbac(CloudVolumeBackup, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Restore to %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @backup.name
-      })
+      cancel_action(_("Restore to Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @backup.name})
 
     when "restore"
       task_id = @backup.restore_queue(session[:userid], params[:volume][:ems_ref])
@@ -65,13 +59,9 @@ class CloudVolumeBackupController < ApplicationController
     @backup = find_record_with_rbac(CloudVolumeBackup, session[:async][:params][:id])
 
     if task.results_ready?
-      add_flash(_("Restoring %{model} \"%{name}\"") % {
-        :model => ui_lookup(:table => 'cloud_volume'),
-        :name  => @backup.name
-      })
+      add_flash(_("Restoring Cloud Volume \"%{name}\"") % {:name => @backup.name})
     else
-      add_flash(_("Unable to restore %{model} \"%{name}\": %{details}") % {
-        :model   => ui_lookup(:table => 'cloud_volume'),
+      add_flash(_("Unable to restore Cloud Volume \"%{name}\": %{details}") % {
         :name    => @backup.name,
         :details => task.message
       }, :error)
