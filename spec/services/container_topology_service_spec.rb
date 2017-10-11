@@ -220,4 +220,18 @@ describe ContainerTopologyService do
       )
     end
   end
+
+  describe '#entity_status' do
+    context 'entity is a container' do
+      let(:entity) { FactoryGirl.create(:container) }
+
+      context 'state is not defined' do
+        before { allow(entity).to receive(:state).and_return(nil) }
+
+        it 'returns with nil' do
+          expect(container_topology_service.entity_status(entity)).to be_nil
+        end
+      end
+    end
+  end
 end
