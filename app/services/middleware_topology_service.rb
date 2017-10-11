@@ -49,20 +49,14 @@ class MiddlewareTopologyService < TopologyService
 
   def build_entity_data(entity)
     data = build_base_entity_data(entity)
-    data[:status] = 'Unknown'
+    set_entity_status(data, entity)
     data[:display_kind] = entity_display_type(entity)
 
     unless glyph? entity
       data[:icon] = ActionController::Base.helpers.image_path(entity.decorate.try(:fileicon))
     end
 
-    case entity
-    when MiddlewareServer
-      data[:status] = entity.properties['Calculated Server State'].underscore.humanize if entity.properties['Calculated Server State']
-    when MiddlewareDeployment
-      data[:status] = entity.status.capitalize if entity.status
-    when Vm
-      data[:status] = entity.power_state.capitalize
+    if entity.kind_of?(Vm)
       data[:provider] = entity.ext_management_system.name
     end
 
@@ -72,5 +66,18 @@ class MiddlewareTopologyService < TopologyService
   def glyph?(entity)
     [MiddlewareDatasource, MiddlewareDeployment, Vm, Container, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
       .any? { |klass| entity.kind_of? klass }
+  end
+
+  def entity_status(entity)
+    case entity
+    when MiddlewareServer
+      entity.properties['Calculated Server State'].underscore.humanize if entity.properties['Calculated Server State']
+    when MiddlewareDeployment
+      entity.status.capitalize if entity.status
+    when Vm
+      entity.power_state.capitalize
+    else
+      'Unknown'
+    end
   end
 end

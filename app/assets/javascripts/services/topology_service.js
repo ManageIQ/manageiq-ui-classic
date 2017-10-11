@@ -166,7 +166,12 @@ ManageIQ.angular.app.service('topologyService', function() {
     return { x: 0, y: 9, r: 17 };
   };
 
+  // TODO this needs to go server-side
   this.getItemStatusClass = function(d) {
+    if (d.item.status_class) {
+      return d.item.status_class;
+    }
+
     switch (d.item.status) {
       case 'OK':
       case 'Active':

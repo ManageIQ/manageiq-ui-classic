@@ -39,7 +39,7 @@ class ContainerTopologyService < TopologyService
 
   def build_entity_data(entity)
     data = build_base_entity_data(entity)
-    data[:status] = entity_status(entity)
+    set_entity_status(data, entity)
     data[:display_kind] = entity_display_type(entity)
 
     if (entity.kind_of?(Host) || entity.kind_of?(Vm)) && entity.ext_management_system.present?

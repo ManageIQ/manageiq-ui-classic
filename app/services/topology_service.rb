@@ -132,4 +132,19 @@ class TopologyService
     end
     hash
   end
+
+  def set_entity_status(data, entity)
+    status = entity_status(entity)
+
+    if status.nil?
+      data[:status] = _("Unknown")
+      data[:status_class] = 'unknown'
+    elsif status.kind_of?(Array)
+      # FIXME replace TopologyService.getItemStatusClass completely
+      data[:status] = status[0]
+      data[:status_class] = status[1]
+    else # String
+      data[:status] = status
+    end
+  end
 end
