@@ -14,6 +14,7 @@
 //= require angular-bootstrap/ui-bootstrap-tpls
 //= require angular-sanitize
 //= require angular.validators
+//= require ng-redux/dist/ng-redux
 //= require moment
 //= require moment-strftime/lib/moment-strftime
 //= require moment-timezone

@@ -22,6 +22,7 @@
     "sendDataWithRx": false,
     "vanillaJsAPI": false, // local: miq_api.js
     "ManageIQ": false, // local: mig_global.js
+    "miqApp": false, // alias: ManageIQ.angular.app
     "Promise": false, // bower: es6-shim
     "_": false, // bower: lodash
     "__": false, // local: i18n.js
