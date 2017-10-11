@@ -19,7 +19,16 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
   def x_get_tree_roots(_count_only, _options)
     @sb[:target_classes] = {}
     buttons = CustomButton.button_classes.map do |klass|
-      name = ui_lookup(:model => klass)
+      name = case klass
+             when 'ContainerGroup'
+               _('Container Pod')
+             when 'ContainerProject'
+               _('Container Project')
+             when 'Switch'
+               _('Virtual Infra Switch')
+             else
+               ui_lookup(:model => klass)
+             end
       # FIXME: This is probably a session backed caching of a small hash and it should be removed
       @sb[:target_classes][name] = klass
 
