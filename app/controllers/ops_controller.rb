@@ -761,7 +761,7 @@ class OpsController < ApplicationController
       end
       presenter.show(:paging_div)
     else
-      presenter.hide(:paging_div)
+      presenter.hide(:paging_div).hide(:form_buttons_div)
     end
   end
 
