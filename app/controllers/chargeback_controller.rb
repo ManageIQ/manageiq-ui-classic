@@ -95,11 +95,10 @@ class ChargebackController < ApplicationController
     assert_privileges(params[:pressed]) if params[:pressed]
     case params[:button]
     when "cancel"
-      add_flash((params[:id] ?
-        _("Edit of %{model} \"%{name}\" was cancelled by the user") %
-          {:model => ui_lookup(:model => "ChargebackRate"), :name => session[:edit][:new][:description]} :
-        _("Add of new %{model} was cancelled by the user") %
-          {:model => ui_lookup(:model => "ChargebackRate")}).to_s)
+      add_flash(params[:id] ?
+        _("Edit of Chargeback Rate \"%{name}\" was cancelled by the user") %
+          {:name => session[:edit][:new][:description]} :
+        _("Add of new Chargeback Rate was cancelled by the user"))
       get_node_info(x_node)
       @edit = session[:edit] = nil  # clean out the saved info
       session[:changed] =  false
@@ -132,10 +131,10 @@ class ChargebackController < ApplicationController
       if tiers_valid && @rate.save
         if params[:button] == "add"
           AuditEvent.success(build_created_audit(@rate, @edit))
-          add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "ChargebackRate"), :name => @rate.description})
+          add_flash(_("Chargeback Rate \"%{name}\" was added") % {:name => @rate.description})
         else
           AuditEvent.success(build_saved_audit(@rate, @edit))
-          add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "ChargebackRate"), :name => @rate.description})
+          add_flash(_("Chargeback Rate \"%{name}\" was saved") % {:name => @rate.description})
         end
         @edit = session[:edit] = nil  # clean out the saved info
         session[:changed] =  @changed = false
@@ -206,13 +205,12 @@ class ChargebackController < ApplicationController
     if !params[:id] # showing a list
       rates = find_checked_items
       if rates.empty?
-        render_flash(_("No %{records} were selected for deletion") %
-          {:records => ui_lookup(:models => "ChargebackRate")}, :error)
+        render_flash(_("No Chargeback Rate were selected for deletion"), :error)
       end
     else # showing 1 rate, delete it
       cb_rate = ChargebackRate.find_by_id(params[:id])
       if cb_rate.nil?
-        render_flash(_("%{record} no longer exists") % {:record => ui_lookup(:model => "ChargebackRate")}, :error)
+        render_flash(_("Chargeback Rate no longer exists"), :error)
       else
         rates.push(params[:id])
         self.x_node = "xx-#{cb_rate.rate_type}"
@@ -223,8 +221,7 @@ class ChargebackController < ApplicationController
       javascript_flash
     else
       cb_rates_list
-      @right_cell_text = _("%{typ} %{model}") % {:typ   => x_node.split('-').last,
-                                                 :model => ui_lookup(:models => 'ChargebackRate')}
+      @right_cell_text = _("%{typ} Chargeback Rate") % {:typ => x_node.split('-').last}
       replace_right_cell(:replace_trees => [:cb_rates])
     end
   end
@@ -387,7 +384,7 @@ class ChargebackController < ApplicationController
     if x_active_tree == :cb_rates_tree
       if node == "root"
         @record = nil
-        @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "ChargebackRate")}
+        @right_cell_text = _("All Chargeback Rate")
       elsif ["xx-Compute", "xx-Storage"].include?(node)
         @record = nil
         @right_cell_text = case node
