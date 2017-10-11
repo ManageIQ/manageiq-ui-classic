@@ -444,8 +444,9 @@ module OpsController::Settings::Common
       @update.config.each_key do |category|
         @update.config[category] = @edit[:new][category].dup
       end
-      @update.config[:ntp] = @edit[:new][:ntp].dup if @edit[:new][:ntp]
-      @update.config[:ntp][:server].reject!(&:blank?) if @update.config[:ntp]
+
+      save_ntp_server_settings
+
       if @update.validate                                           # Have VMDB class validate the settings
         if ["settings_server", "settings_authentication"].include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
@@ -535,6 +536,21 @@ module OpsController::Settings::Common
       @changed = false
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype)
+    end
+  end
+
+  private def save_ntp_server_settings
+    old_ntp_servers = @edit[:new][:ntp][:server] || []
+    new_ntp_servers = [1,2,3].collect.with_index do |i, position|
+      field = "ntp_server_#{i}"
+      @edit[:new][:ntp].key?(field) ? @edit[:new][:ntp].delete(field).presence : old_ntp_servers[position]
+    end.compact
+
+    if new_ntp_servers.present?
+      @update.config[:ntp] = {:server => new_ntp_servers}
+    else
+      @update.config.delete(:ntp)
+      MiqServer.find(@sb[:selected_server_id]).remove_settings_path_for_resource(:ntp)
     end
   end
 
@@ -698,10 +714,7 @@ module OpsController::Settings::Common
       @host_choices = session[:host_choices]
       new[:server][:remote_console_type] = params[:console_type] if params[:console_type]
 
-      new[:ntp][:server] ||= []
-      new[:ntp][:server][0] = params[:ntp_server_1] if params[:ntp_server_1]
-      new[:ntp][:server][1] = params[:ntp_server_2] if params[:ntp_server_2]
-      new[:ntp][:server][2] = params[:ntp_server_3] if params[:ntp_server_3]
+      settings_get_form_vars_sync_ntp
 
       new[:server][:custom_support_url] = params[:custom_support_url].strip if params[:custom_support_url]
       new[:server][:custom_support_url_description] = params[:custom_support_url_description] if params[:custom_support_url_description]
@@ -866,6 +879,14 @@ module OpsController::Settings::Common
     end
   end
 
+  private def settings_get_form_vars_sync_ntp
+    [1, 2, 3].each do |field_num|
+      field = "ntp_server_#{field_num}"
+      next unless params.key?(field)
+      @edit[:new][:ntp][field] = params[field]
+    end
+  end
+
   # Load the @edit object from session based on which config screen we are on
   def settings_load_edit
     if x_node.split("-").first == "z"
@@ -916,7 +937,6 @@ module OpsController::Settings::Common
       @edit[:current].config[:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current].config[:smtp][:enable_starttls_auto].nil?
       @edit[:current].config[:smtp][:openssl_verify_mode] ||= nil
       @edit[:current].config[:ntp] ||= {}
-      @edit[:current].config[:ntp][:server] ||= []
       @in_a_form = true
     when "settings_authentication"        # Authentication tab
       @edit = {}
