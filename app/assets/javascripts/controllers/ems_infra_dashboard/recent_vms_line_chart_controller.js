@@ -4,6 +4,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentVmsLineChartController'
   vm.id = "recentVmsLineChart_" + providerId;
   var init = function() {
     ManageIQ.angular.scope = vm;
+    vm.loadingDone = false;
     vm.config = chartsMixin.chartConfig.recentVmsConfig;
     var url = '/ems_infra_dashboard/recent_vms_data/' + providerId;
     var vmsDataPromise = $http.get(url)
@@ -18,6 +19,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentVmsLineChartController'
       } else {
         vm.data = chartsMixin.processData(vm.data.recentVms, 'dates', vm.data.recentVms.config.label);
       }
+      vm.loadingDone = true;
     });
 
     vm.custShowXAxis = false;

@@ -4,6 +4,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentHostsLineChartControlle
   vm.id = "recentHostsLineChart_" + providerId;
   var init = function() {
     ManageIQ.angular.scope = vm;
+    vm.loadingDone = false;
     vm.config = chartsMixin.chartConfig.recentHostsConfig;
     var url = '/ems_infra_dashboard/recent_hosts_data/' + providerId;
     var hostsDataPromise = $http.get(url)
@@ -18,6 +19,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentHostsLineChartControlle
       } else {
         vm.data = chartsMixin.processData(vm.data.recentHosts, 'dates', vm.data.recentHosts.config.label);
       }
+      vm.loadingDone = true;
     });
 
     vm.custShowXAxis = false;

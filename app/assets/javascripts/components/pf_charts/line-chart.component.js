@@ -20,7 +20,7 @@ function lineChartController(pfUtils) {
   vm.updateAll = function() {
     // Need to deep watch changes in chart data
     prevChartData = angular.copy(vm.chartData);
-
+    vm.loadingDone = false;
     // Create an ID for the chart based on the chartId in the config if given
     if (vm.lineChartId === undefined) {
       vm.lineChartId = 'lineChart';
@@ -105,6 +105,7 @@ function lineChartController(pfUtils) {
 
   vm.$onChanges = function() {
     vm.updateAll();
+    vm.loadingDone = true;
   };
 
   vm.$doCheck = function() {

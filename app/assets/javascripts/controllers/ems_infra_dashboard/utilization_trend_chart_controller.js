@@ -4,6 +4,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.data = {};
+    vm.loadingDone = false;
 
     var url = '/ems_infra_dashboard/ems_utilization_data/' + providerId;
     var metricsPromise = $http.get(url)
@@ -14,6 +15,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
 
     $q.all([metricsPromise]).then(function() {
       vm.data = processMetricsData(vm.data, vm.metricsData.ems_utilization);
+      vm.loadingDone = true;
     });
 
     vm.title = "Global Utilization";
