@@ -70,14 +70,12 @@ class MiddlewareTopologyService < TopologyService
 
   def entity_status(entity)
     case entity
+    when MiddlewareDeployment
+      entity.status.try(:capitalize)
     when MiddlewareServer
       entity.properties['Calculated Server State'].underscore.humanize if entity.properties['Calculated Server State']
-    when MiddlewareDeployment
-      entity.status.capitalize if entity.status
-    when Vm
-      entity.power_state.capitalize
     else
-      'Unknown'
+      super
     end
   end
 end

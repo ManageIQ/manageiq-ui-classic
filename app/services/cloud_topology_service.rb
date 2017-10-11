@@ -33,18 +33,4 @@ class CloudTopologyService < TopologyService
 
     data
   end
-
-  def entity_status(entity)
-    if entity.kind_of?(ManageIQ::Providers::CloudManager)
-      entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
-    elsif entity.kind_of?(Vm)
-      entity.power_state.nil? ? 'Unknown' : entity.power_state.capitalize
-    elsif entity.kind_of?(AvailabilityZone)
-      'OK'
-    elsif entity.kind_of?(CloudTenant)
-      entity.enabled? ? 'OK' : 'Unknown'
-    else
-      'Unknown'
-    end
-  end
 end

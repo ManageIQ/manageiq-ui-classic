@@ -133,6 +133,21 @@ class TopologyService
     hash
   end
 
+  def entity_status(entity)
+    case entity
+    when ExtManagementSystem
+      entity.default_authentication.status.try(:capitalize) if entity.authentications.present?
+    when Vm, Host
+      entity.power_state.try(:capitalize)
+    when CloudTenant
+      'OK' if entity.enabled?
+    when AvailabilityZone
+      'OK'
+    when Container
+      entity.state.try(:capitalize)
+    end
+  end
+
   def set_entity_status(data, entity)
     status = entity_status(entity)
 
