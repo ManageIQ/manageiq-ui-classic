@@ -17,7 +17,7 @@ class AuthKeyPairCloudController < ApplicationController
   end
 
   def breadcrumb_name(_model)
-    ui_lookup(:tables => "auth_key_pair_cloud")
+    _("Key Pairs")
   end
 
   def self.table_name
@@ -88,7 +88,7 @@ class AuthKeyPairCloudController < ApplicationController
     @in_a_form = true
     session[:changed] = nil
     drop_breadcrumb(
-      :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'auth_key_pair_cloud')},
+      :name => _("Add New Key Pair"),
       :url  => "/auth_key_pair_cloud/new"
     )
   end
@@ -106,8 +106,7 @@ class AuthKeyPairCloudController < ApplicationController
     case params[:button]
     when "cancel"
       javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new %{model} was cancelled by the user") %
-                          {:model => ui_lookup(:table => 'auth_key_pair_cloud')}
+                          :flash_msg => _("Add of new Key Pair was cancelled by the user")
     when "save"
       ext_management_system = find_record_with_rbac(ManageIQ::Providers::CloudManager, options[:ems_id])
       kls = kls.class_by_ems(ext_management_system)
@@ -124,7 +123,7 @@ class AuthKeyPairCloudController < ApplicationController
         @in_a_form = true
         add_flash(kls.is_available_now_error_message(:create_key_pair, ext_management_system, kls))
         drop_breadcrumb(
-          :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'auth_key_pair_cloud')},
+          :name => _("Add New Key Pair"),
           :url  => "/auth_key_pair_cloud/new"
         )
         javascript_flash
@@ -182,8 +181,7 @@ class AuthKeyPairCloudController < ApplicationController
       if key_pair.is_available?(:delete_key_pair)
         key_pairs_to_delete.push(key_pair.id)
       else
-        add_flash(_("Couldn't initiate deletion of %{model} \"%{name}\": %{details}") % {
-          :model   => ui_lookup(:table => 'auth_key_pair_cloud'),
+        add_flash(_("Couldn't initiate deletion of Key Pair \"%{name}\": %{details}") % {
           :name    => key_pair.name,
           :details => key_pair.is_available_now_error_message(:delete_key_pair)
         }, :error)
@@ -197,9 +195,7 @@ class AuthKeyPairCloudController < ApplicationController
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "auth_key_pair_cloud"
       @single_delete = true unless flash_errors?
-      add_flash(_("The selected %{model} was deleted") % {
-        :model => ui_lookup(:table => "auth_key_pair_cloud")
-      }) if @flash_array.nil?
+      add_flash(_("The selected Key Pair was deleted")) if @flash_array.nil?
     end
   end
 
