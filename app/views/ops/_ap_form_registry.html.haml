@@ -79,7 +79,7 @@
             = hidden_field("item", "type2", :value => "registry")
             = hidden_field("entry", "id", :value => i)
         - else
-          %tr{:id => "#{i}_tr"}
+          %tr{:id => "registry_row_#{i}"}
             - url = {:action     => 'ap_ce_select',
                      :entry_id   => i,
                      :item2      => "registry",
