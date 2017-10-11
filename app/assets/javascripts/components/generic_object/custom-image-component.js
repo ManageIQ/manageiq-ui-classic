@@ -23,9 +23,11 @@ function customImageComponentController($timeout) {
     vm.changeImage = false;
   };
 
-  vm.$onChanges = function() {
-    vm.changeImage = false;
-    restoreOriginalStatus();
+  vm.$onChanges = function(changes) {
+    if (changes.pictureReset) {
+      vm.changeImage = false;
+      restoreOriginalStatus();
+    }
   };
 
   vm.uploadClicked = function() {
@@ -42,10 +44,10 @@ function customImageComponentController($timeout) {
 
     if (imageFile.type === 'image/png') {
       vm.picture.extension = 'png';
-    } else if (imageFile.type === 'image/jpg') {
+    } else if (imageFile.type === 'image/jpg' || imageFile.type === 'image/jpeg') {
       vm.picture.extension = 'jpg';
-    } else if (imageFile.type === 'image/jpeg') {
-      vm.picture.extension = 'jpeg';
+    } else if (imageFile.type === 'image/svg') {
+      vm.picture.extension = 'svg';
     } else {
       vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", false);
       vm.imageUploadStatus = __("Incompatible image type");
@@ -58,7 +60,7 @@ function customImageComponentController($timeout) {
 
       $timeout(function() {
         vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", true);
-        vm.imageUploadStatus = __("Image upload complete");
+        vm.imageUploadStatus = __("Image is ready to be uploaded");
         vm.pictureUploaded = true;
       });
     };
