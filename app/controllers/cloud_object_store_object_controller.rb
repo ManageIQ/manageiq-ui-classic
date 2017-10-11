@@ -10,7 +10,7 @@ class CloudObjectStoreObjectController < ApplicationController
   include Mixins::GenericShowMixin
 
   def breadcrumb_name(_model)
-    ui_lookup(:tables => "cloud_object_store_object")
+    _('Cloud Object Store Objects')
   end
 
   def button
