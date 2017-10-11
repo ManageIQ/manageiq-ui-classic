@@ -53,9 +53,9 @@ class ContainerTopologyService < TopologyService
     case entity
     when ContainerReplicator
       if entity.current_replicas == entity.replicas
-        'OK'
+        [_('OK'), 'success']
       else
-        'Warning'
+        [_('Warning'), 'warning']
       end
 
     when ContainerGroup
@@ -64,9 +64,9 @@ class ContainerTopologyService < TopologyService
     when ContainerNode
       case entity.container_conditions.find_by(:name => 'Ready').try(:status)
       when 'True'
-        'Ready'
+        [_('Ready'), 'success']
       when 'False'
-        'NotReady'
+        [_('NotReady'), 'error']
       end
 
     else

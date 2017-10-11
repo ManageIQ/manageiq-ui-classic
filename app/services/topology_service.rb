@@ -140,9 +140,9 @@ class TopologyService
     when Vm, Host
       entity.power_state.try(:capitalize)
     when CloudTenant
-      'OK' if entity.enabled?
+      [_('OK'), 'success'] if entity.enabled?
     when AvailabilityZone
-      'OK'
+      [_('OK'), 'success']
     when Container
       entity.state.try(:capitalize)
     end
