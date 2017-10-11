@@ -166,41 +166,8 @@ ManageIQ.angular.app.service('topologyService', function() {
     return { x: 0, y: 9, r: 17 };
   };
 
-  // TODO this needs to go server-side
   this.getItemStatusClass = function(d) {
-    if (d.item.status_class) {
-      return d.item.status_class;
-    }
-
-    switch (d.item.status) {
-      case 'OK':
-      case 'Active':
-      case 'Available':
-      case 'On':
-      case 'Ready':
-      case 'Running':
-      case 'Succeeded':
-      case 'Valid':
-      case 'Enabled':
-        return 'success';
-      case 'NotReady':
-      case 'Failed':
-      case 'Error':
-      case 'Unreachable':
-      case 'Down':
-        return 'error';
-      case 'Warning':
-      case 'Waiting':
-      case 'Pending':
-      case 'Disabled':
-      case 'Reload required':
-        return 'warning';
-      case 'Starting':
-        return 'information'; // defined in middleware_topology.css
-      case 'Unknown':
-      case 'Terminated':
-        return 'unknown';
-    }
+    return d.item.status_class;
   };
 
   this.reduce_kinds = function(items, kinds, size_limit, remove_hierarchy) {
