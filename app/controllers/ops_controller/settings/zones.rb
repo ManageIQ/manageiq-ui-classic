@@ -112,12 +112,12 @@ module OpsController::Settings::Zones
     zone.settings[:proxy_server_ip] = @edit[:new][:proxy_server_ip]
     zone.settings[:concurrent_vm_scans] = @edit[:new][:concurrent_vm_scans]
 
-    save_ntp_server_settings(zone)
+    zone_save_ntp_server_settings(zone)
 
     zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, :save => (mode != :validate))
   end
 
-  private def save_ntp_server_settings(zone)
+  private def zone_save_ntp_server_settings(zone)
     if (new_servers = new_ntp_servers).present?
       zone.add_settings_for_resource(:ntp => {:server => new_servers})
     else
