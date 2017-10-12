@@ -119,7 +119,7 @@ describe StorageController do
         expect(response.body).to include("modelName: '#{session_storage[:active_accord].to_s.pluralize}'")
         expect(response.body).to include("activeTree: '#{session_storage[:active_tree]}'")
         expect(response.body).to include("gtlType: 'list'")
-        expect(response.body).to include("parent_id: ''")
+        expect(response.body).to include("parentId: ''")
         expect(response.body).to include("sortColIdx: '0'")
         expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
         expect(response.body).to include("showUrl: '/#{session_storage[:active_accord]}/x_show/'")

@@ -416,7 +416,7 @@ class ApplicationController < ActionController::Base
         :model_name => @display.nil? && !self.class.model.nil? ? self.class.model.to_s.tableize : @display,
         :activeTree => x_active_tree.to_s,
         :gtlType    => @gtl_type,
-        :parent_id  => params[:id],
+        :parentId   => params[:id],
         :sortColIdx => @sortcol,
         :sortDir    => @sortdir,
         :isExplorer => @explorer,
@@ -460,7 +460,7 @@ class ApplicationController < ActionController::Base
                 end
     end
 
-    if params[:id] && !params[:active_tree]
+    if params[:parent_id] && !params[:active_tree]
       parent_id = from_cid(params[:parent_id])
       unless parent_id.nil?
         options[:parent] = identify_record(parent_id, controller_to_model) if parent_id && options[:parent].nil?
