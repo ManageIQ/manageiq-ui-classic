@@ -18,6 +18,8 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     vm.saveable = miqService.saveable;
     vm.afterGet = false;
 
+    vm.pictureReset = false;
+
     vm.attributeTableHeaders = [__("Name"), __("Type")];
     vm.associationTableHeaders = [__("Name"), __("Class")];
     vm.methodTableHeaders = [__("Name")];
@@ -29,6 +31,9 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
       name: '',
       description: '',
       properties: {},
+      picture: {},
+      pictureUploaded: false,
+      pictureRemove: false,
       attribute_names: [],
       attribute_types: [],
       attributesTableChanged: false,
@@ -48,7 +53,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     if (vm.recordId) {
       vm.newRecord = false;
       miqService.sparkleOn();
-      var dataPromise = API.get('/api/generic_object_definitions/' + vm.recordId)
+      var dataPromise = API.get('/api/generic_object_definitions/' + vm.recordId + '?attributes=picture.image_href')
         .then(getGenericObjectDefinitionFormData)
         .catch(miqService.handleFailure);
 
@@ -75,6 +80,8 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     vm.genericObjectDefinitionModel = Object.assign({}, vm.modelCopy);
 
     assignAllObjectsToKeyValueArrays(true);
+
+    vm.pictureReset = ! vm.pictureReset;
 
     angularForm.$setUntouched(true);
     angularForm.$setPristine(true);
@@ -109,10 +116,15 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
       vm.genericObjectDefinitionModel.properties.methods = vm.genericObjectDefinitionModel.method_names;
     }
 
+    if (vm.genericObjectDefinitionModel.picture.image_href) {
+      vm.genericObjectDefinitionModel.picture.image_href = undefined;
+    }
+
     return {
       name: vm.genericObjectDefinitionModel.name,
       description: vm.genericObjectDefinitionModel.description,
       properties: vm.genericObjectDefinitionModel.properties,
+      picture: vm.genericObjectDefinitionModel.picture,
     };
   };
 

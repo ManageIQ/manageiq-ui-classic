@@ -79,4 +79,12 @@
                                       "table-rendered"   => "vm.tableRendered",
                                       "unique-property"  => "vm.uniqueProperty('Methods')",
                                       "angular-form"     => "angularForm"}
+  %custom-image-component{'new-record'       => "vm.newRecord",
+                          'angular-form'     => 'angularForm',
+                          'picture'          => 'vm.genericObjectDefinitionModel.picture',
+                          'picture-uploaded' => 'vm.genericObjectDefinitionModel.pictureUploaded',
+                          'picture-remove'   => 'vm.genericObjectDefinitionModel.pictureRemove',
+                          'picture-reset'    => 'vm.pictureReset',
+                          'picture-url-path' => '{{vm.genericObjectDefinitionModel.picture.image_href}}'}
+
 = render :partial => "layouts/angular/generic_form_buttons"
