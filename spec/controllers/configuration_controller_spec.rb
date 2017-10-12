@@ -28,10 +28,10 @@ describe ConfigurationController do
       controller.send(:build_tabs)
 
       expect(assigns(:tabs)).to eq([
-                                     ["1", _("Visual")],
-                                     ["2", _("Default Views")],
-                                     ["3", _("Default Filters")],
-                                     ["4", _("Time Profiles")]
+                                     ["1", "Visual"],
+                                     ["2", "Default Views"],
+                                     ["3", "Default Filters"],
+                                     ["4", "Time Profiles"]
                                    ])
     end
   end

@@ -40,9 +40,9 @@ describe TreeBuilderClusters do
                                         :nodes      => @ho_enabled + @ho_disabled)
       # non-cluster-node
       expect(cluster_nodes.last).to eq(:id         => "NonCluster",
-                                       :text       => _("Non-clustered Hosts"),
+                                       :text       => "Non-clustered Hosts",
                                        :icon       => 'pficon pficon-screen',
-                                       :tip        => _("Non-clustered Hosts"),
+                                       :tip        => "Non-clustered Hosts",
                                        :select     => true,
                                        :selectable => false,
                                        :nodes      => @non_cluster_hosts)
@@ -66,7 +66,7 @@ describe TreeBuilderClusters do
       cluster_hosts_expected = @ho_enabled.map do |node|
         {:id         => "#{cluster_nodes.first[:id]}_#{node[:id]}",
          :text       => node[:name],
-         :tip        => _("Host: %{name}") % {:name => node[:name]},
+         :tip        => "Host: %{name}" % {:name => node[:name]},
          :icon       => 'pficon pficon-screen',
          :select     => true,
          :selectable => false,
@@ -75,7 +75,7 @@ describe TreeBuilderClusters do
       cluster_hosts_expected += @ho_disabled.map do |node|
         {:id         => "#{cluster_nodes.first[:id]}_#{node[:id]}",
          :text       => node[:name],
-         :tip        => _("Host: %{name}") % {:name => node[:name]},
+         :tip        => "Host: %{name}" % {:name => node[:name]},
          :icon       => 'pficon pficon-screen',
          :select     => false,
          :selectable => false,

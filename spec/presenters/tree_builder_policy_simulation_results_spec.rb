@@ -33,7 +33,7 @@ describe TreeBuilderPolicySimulationResults do
     it 'sets root correctly' do
       root_options = @rsop_tree.send(:root_options)
       expect(root_options).to eq(
-        :text       => _("Policy Simulation Results for Event [%{description}]") % {:description => @event.description},
+        :text       => "Policy Simulation Results for Event [%{description}]" % {:description => @event.description},
         :icon       => @event.decorate.fonticon,
         :selectable => false
       )

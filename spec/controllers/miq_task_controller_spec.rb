@@ -817,8 +817,8 @@ describe MiqTaskController do
       it 'sets the available tabs' do
         controller.build_jobs_tab
         expect(assigns(:tabs)).to eq([
-                                       ["1", _("My Tasks")],
-                                       ["2", _("All Tasks")],
+                                       ["1", "My Tasks"],
+                                       ["2", "All Tasks"],
                                      ])
       end
     end
