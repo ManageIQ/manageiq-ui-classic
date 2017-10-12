@@ -1,16 +1,17 @@
-.ems-infra-dashboard
-  = render :partial => "aggregate-status-card"
+.container-fluid.container-tiles-pf.ems-infra-dashboard
   .row.row-tile-pf
-    .col-xs-12.col-sm-6.col-md-6
+    = render :partial => "aggregate-status-card"
+  .row.row-tile-pf
+    .col-xs-12.col-sm-12.col-md-6
       = render :partial => "utilization-trend-chart"
-    .col-xs-12.col-sm-6.col-md-6
+    .col-xs-12.col-sm-12.col-md-6
       = render :partial => "heatmap"
   .row.row-tile-pf
-    .col-xs-12.col-sm-6.col-md-6
+    .col-xs-12.col-sm-12.col-md-6
       = render :partial => "recent-hosts-line-chart"
-    .col-xs-12.col-sm-6.col-md-6
+    .col-xs-12.col-sm-12.col-md-6
       = render :partial => "recent-vms-line-chart"
 
-:javascript
-  ManageIQ.angular.app.value('providerId', '#{@record.id}');
-  miq_bootstrap('.ems-infra-dashboard');
+  :javascript
+    ManageIQ.angular.app.value('providerId', '#{@record.id}');
+    miq_bootstrap('.ems-infra-dashboard');

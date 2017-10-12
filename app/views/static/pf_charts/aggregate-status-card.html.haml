@@ -53,7 +53,7 @@
           %span{"ng-if" => "$ctrl.status.notification.count"}
             {{$ctrl.status.notification.count}}
 
-        %span{"ng-if" => "!$ctrl.status.notification.href"}
+        %span{"ng-if" => "!$ctrl.status.notification.href && $ctrl.status.notification.count"}
           %image{"ng-if" =>"$ctrl.status.notification.iconImage", "ng-src" => "{{$ctrl.status.notification.iconImage}}", :alt => "", :class => "card-pf-icon-image"}
           %span{"ng-if" => "$ctrl.status.notification.iconClass", :class => "{{$ctrl.status.notification.iconClass}}"}
           %span{"ng-if" => "$ctrl.status.notification.count"}
