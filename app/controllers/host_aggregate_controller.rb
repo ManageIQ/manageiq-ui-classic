@@ -110,7 +110,7 @@ class HostAggregateController < ApplicationController
     end
 
     drop_breadcrumb(
-      :name => _("Create New %{model}") % {:model => ui_lookup(:table => 'host_aggregate')},
+      :name => _("Create New Host Aggregate"),
       :url  => "/host_aggregate/new"
     )
   end
@@ -120,9 +120,7 @@ class HostAggregateController < ApplicationController
     case params[:button]
     when "cancel"
       javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Creation of new %{model} was cancelled by the user") % {
-                            :model => ui_lookup(:table => 'host_aggregate')
-                          }
+                          :flash_msg => _("Creation of new Host Aggregate was cancelled by the user")
 
     when "add"
       @host_aggregate = HostAggregate.new
@@ -154,13 +152,9 @@ class HostAggregateController < ApplicationController
     host_aggregate_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("%{model} \"%{name}\" created") % {
-        :model => ui_lookup(:table => 'host_aggregate'),
-        :name  => host_aggregate_name
-      })
+      add_flash(_("Host Aggregate \"%{name}\" created") % {:name => host_aggregate_name})
     else
-      add_flash(_("Unable to create %{model} \"%{name}\": %{details}") % {
-        :model   => ui_lookup(:table => 'host_aggregate'),
+      add_flash(_("Unable to create Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
@@ -178,8 +172,7 @@ class HostAggregateController < ApplicationController
     @host_aggregate = find_record_with_rbac(HostAggregate, params[:id])
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Edit %{model} \"%{name}\"") % {:model => ui_lookup(:table => 'host_aggregate'),
-                                                 :name  => @host_aggregate.name},
+      :name => _("Edit Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
       :url  => "/host_aggregate/edit/#{@host_aggregate.id}"
     )
   end
@@ -190,9 +183,8 @@ class HostAggregateController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'host_aggregate'),
-        :name  => @host_aggregate.name
+      cancel_action(_("Edit of Host Aggregate \"%{name}\" was cancelled by the user") % {
+        :name => @host_aggregate.name
       })
 
     when "save"
@@ -202,10 +194,9 @@ class HostAggregateController < ApplicationController
         task_id = @host_aggregate.update_aggregate_queue(session[:userid], options)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Edit of %{model} \"%{name}\" failed: Task start failed: ID [%{id}]") % {
-            :model => ui_lookup(:table => 'host_aggregate'),
-            :name  => @host_aggregate.name,
-            :id    => task_id.to_s
+          add_flash(_("Edit of Host Aggregate \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+            :name => @host_aggregate.name,
+            :id   => task_id.to_s
           }, :error)
         end
 
@@ -216,9 +207,8 @@ class HostAggregateController < ApplicationController
         end
       else
         @in_a_form = true
-        add_flash(_("Update aggregate not supported by %{model} \"%{name}\"") % {
-          :model => ui_lookup(:table => 'host_aggregate'),
-          :name  => @host_aggregate.name
+        add_flash(_("Update aggregate not supported by Host Aggregate \"%{name}\"") % {
+          :name => @host_aggregate.name
         }, :error)
         @breadcrumbs.pop if @breadcrumbs
         javascript_flash
@@ -232,13 +222,9 @@ class HostAggregateController < ApplicationController
     host_aggregate_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("%{model} \"%{name}\" updated") % {
-        :model => ui_lookup(:table => 'host_aggregate'),
-        :name  => host_aggregate_name
-      })
+      add_flash(_("Host Aggregate \"%{name}\" updated") % {:name => host_aggregate_name})
     else
-      add_flash(_("Unable to update %{model} \"%{name}\": %{details}") % {
-        :model   => ui_lookup(:table => 'host_aggregate'),
+      add_flash(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
@@ -261,19 +247,16 @@ class HostAggregateController < ApplicationController
                       end
 
     if host_aggregates.empty?
-      add_flash(_("No %{models} were selected for deletion.") % {
-        :models => ui_lookup(:tables => "host_aggregate")
-      }, :error)
+      add_flash(_("No Host Aggregates were selected for deletion."), :error)
     end
 
     host_aggregates_to_delete = []
     host_aggregates.each do |host_aggregate_id|
       host_aggregate = HostAggregate.find(host_aggregate_id)
       if host_aggregate.nil?
-        add_flash(_("%{model} no longer exists.") % {:model => ui_lookup(:table => "host_aggregate")}, :error)
+        add_flash(_("Host Aggregate no longer exists."), :error)
       elsif !host_aggregate.supports?(:delete_aggregate)
-        add_flash(_("Delete aggregate not supported by %{model} \"%{name}\"") % {
-          :model => ui_lookup(:table => 'host_aggregate'),
+        add_flash(_("Delete aggregate not supported by Host Aggregate \"%{name}\"") % {
           :name  => host_aggregate.name
         }, :error)
       else
@@ -289,7 +272,7 @@ class HostAggregateController < ApplicationController
     elsif @lastaction == "show" && @layout == "host_aggregate"
       @single_delete = true unless flash_errors?
       if @flash_array.nil?
-        add_flash(_("The selected %{model} was deleted") % {:model => ui_lookup(:table => "host_aggregate")})
+        add_flash(_("The selected Host Aggregate was deleted"))
       end
     end
   end
@@ -309,9 +292,8 @@ class HostAggregateController < ApplicationController
       end
     end
     if @host_choices.empty?
-      add_flash(_("No hosts available to add to %{model} \"%{name}\"") % {
-        :model => ui_lookup(:table => 'host_aggregate'),
-        :name  => @host_aggregate.name
+      add_flash(_("No hosts available to add to Host Aggregate \"%{name}\"") % {
+        :name => @host_aggregate.name
       }, :error)
       session[:flash_msgs] = @flash_array
       @in_a_form = false
@@ -322,8 +304,7 @@ class HostAggregateController < ApplicationController
       end
     else
       drop_breadcrumb(
-        :name => _("Add Host to %{model} \"%{name}\"") % {:model => ui_lookup(:table => 'host_aggregate'),
-                                                          :name  => @host_aggregate.name},
+        :name => _("Add Host to Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
         :url  => "/host_aggregate/add_host/#{@host_aggregate.id}"
       )
     end
@@ -335,9 +316,8 @@ class HostAggregateController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Add Host to %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'host_aggregate'),
-        :name  => @host_aggregate.name
+      cancel_action(_("Add Host to Host Aggregate \"%{name}\" was cancelled by the user") % {
+        :name => @host_aggregate.name
       })
 
     when "addHost"
@@ -348,10 +328,9 @@ class HostAggregateController < ApplicationController
         task_id = @host_aggregate.add_host_queue(session[:userid], host)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Add Host to %{model} \"%{name}\" failed: Task start failed: ID [%{id}]") % {
-            :model => ui_lookup(:table => 'host_aggregate'),
-            :name  => @host_aggregate.name,
-            :id    => task_id.to_s
+          add_flash(_("Add Host to Host Aggregate \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+            :name => @host_aggregate.name,
+            :id   => task_id.to_s
           }, :error)
         end
 
@@ -362,9 +341,8 @@ class HostAggregateController < ApplicationController
         end
       else
         @in_a_form = true
-        add_flash(_("Add Host not supported by %{model} \"%{name}\"") % {
-          :model => ui_lookup(:table => 'host_aggregate'),
-          :name  => @host_aggregate.name
+        add_flash(_("Add Host not supported by Host Aggregate \"%{name}\"") % {
+          :name => @host_aggregate.name
         }, :error)
         @breadcrumbs.pop if @breadcrumbs
         javascript_flash
@@ -381,14 +359,12 @@ class HostAggregateController < ApplicationController
     task = MiqTask.find(task_id)
     host = Host.find(host_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Host \"%{hostname}\" added to %{model} \"%{name}\"") % {
+      add_flash(_("Host \"%{hostname}\" added to Host Aggregate \"%{name}\"") % {
         :hostname => host.name,
-        :model    => ui_lookup(:table => 'host_aggregate'),
         :name     => host_aggregate_name
       })
     else
-      add_flash(_("Unable to update %{model} \"%{name}\": %{details}") % {
-        :model   => ui_lookup(:table => 'host_aggregate'),
+      add_flash(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
@@ -411,9 +387,8 @@ class HostAggregateController < ApplicationController
     end
 
     if @host_choices.empty?
-      add_flash(_("No hosts to remove from %{model} \"%{name}\"") % {
-        :model => ui_lookup(:table => 'host_aggregate'),
-        :name  => @host_aggregate.name
+      add_flash(_("No hosts to remove from Host Aggregate \"%{name}\"") % {
+        :name => @host_aggregate.name
       }, :error)
       session[:flash_msgs] = @flash_array
       @in_a_form = false
@@ -424,8 +399,7 @@ class HostAggregateController < ApplicationController
       end
     else
       drop_breadcrumb(
-        :name => _("Remove Host from %{model} \"%{name}\"") % {:model => ui_lookup(:table => 'host_aggregate'),
-                                                               :name  => @host_aggregate.name},
+        :name => _("Remove Host from Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
         :url  => "/host_aggregate/remove_host/#{@host_aggregate.id}"
       )
     end
@@ -437,9 +411,8 @@ class HostAggregateController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Remove Host from %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'host_aggregate'),
-        :name  => @host_aggregate.name
+      cancel_action(_("Remove Host from Host Aggregate \"%{name}\" was cancelled by the user") % {
+        :name => @host_aggregate.name
       })
 
     when "removeHost"
@@ -450,10 +423,9 @@ class HostAggregateController < ApplicationController
         task_id = @host_aggregate.remove_host_queue(session[:userid], host)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Remove Host to %{model} \"%{name}\" failed: Task start failed: ID [%{id}]") % {
-            :model => ui_lookup(:table => 'host_aggregate'),
-            :name  => @host_aggregate.name,
-            :id    => task_id.to_s
+          add_flash(_("Remove Host to Host Aggregate \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+            :name => @host_aggregate.name,
+            :id   => task_id.to_s
           }, :error)
         end
 
@@ -464,9 +436,8 @@ class HostAggregateController < ApplicationController
         end
       else
         @in_a_form = true
-        add_flash(_("Remove Host not supported by %{model} \"%{name}\"") % {
-          :model => ui_lookup(:table => 'host_aggregate'),
-          :name  => @host_aggregate.name
+        add_flash(_("Remove Host not supported by Host Aggregate \"%{name}\"") % {
+          :name => @host_aggregate.name
         }, :error)
         @breadcrumbs.pop if @breadcrumbs
         javascript_flash
@@ -483,14 +454,12 @@ class HostAggregateController < ApplicationController
     task = MiqTask.find(task_id)
     host = Host.find(host_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Host \"%{hostname}\" removed from %{model} \"%{name}\"") % {
+      add_flash(_("Host \"%{hostname}\" removed from Host Aggregate \"%{name}\"") % {
         :hostname => host.name,
-        :model    => ui_lookup(:table => 'host_aggregate'),
         :name     => host_aggregate_name
       })
     else
-      add_flash(_("Unable to update %{model} \"%{name}\": %{details}") % {
-        :model   => ui_lookup(:table => 'host_aggregate'),
+      add_flash(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
