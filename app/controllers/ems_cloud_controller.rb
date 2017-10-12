@@ -35,6 +35,10 @@ class EmsCloudController < ApplicationController
     ems_path(ems.id, options)
   end
 
+  def generate_options
+    {:association => 'storage_managers'}
+  end
+
   def restful?
     true
   end

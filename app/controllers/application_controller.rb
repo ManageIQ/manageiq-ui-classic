@@ -453,7 +453,7 @@ class ApplicationController < ActionController::Base
                   page_params
                 when 'miq_tasks'
                   jobs_info
-                when 'physical_servers_with_host'
+                when 'physical_servers_with_host', 'storage_managers'
                   options.merge!(generate_options)
                 else
                   options
@@ -1686,7 +1686,8 @@ class ApplicationController < ActionController::Base
 
   def get_db_view(db, options = {})
     if %w(ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm)
-       .include?(db) && options[:association] == "all_vms_and_templates"
+       .include?(db) && options[:association] == "all_vms_and_templates" ||
+      db == 'ManageIQ_Providers_StorageManager' && options[:association] == "storage_managers"
       options[:association] = nil
     end
 

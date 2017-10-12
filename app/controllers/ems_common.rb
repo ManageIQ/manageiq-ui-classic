@@ -62,7 +62,7 @@ module EmsCommon
   end
 
   def display_storage_managers
-    nested_list('storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :storage_managers)
+    nested_list("storage_managers", ManageIQ::Providers::StorageManager, generate_options)
   end
 
   def display_ems_clusters

@@ -230,6 +230,7 @@ module ApplicationHelper
     "playbooks"                              => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook,
     "physical_servers_with_host"             => PhysicalServer,
     "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript,
+    "storage_managers"                       => ManageIQ::Providers::StorageManager,
     "vms"                                    => VmOrTemplate
   }.freeze
 
