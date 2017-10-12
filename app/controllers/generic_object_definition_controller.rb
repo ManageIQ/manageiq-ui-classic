@@ -11,31 +11,21 @@ class GenericObjectDefinitionController < ApplicationController
 
   menu_section :automate
 
-  def toolbar_singular
-    @display == 'generic_objects' ? :generic_objects : :generic_object_definition
-  end
-
-  def self.display_methods
-    %w(generic_objects)
-  end
-
-  def display_generic_objects
-    nested_list("generic_object", GenericObject)
-  end
-
   def self.model
     GenericObjectDefinition
   end
 
   def button
+    if @display == 'generic_objects' && params[:pressed] == 'generic_object_tag'
+      tag(GenericObject)
+      return
+    end
     javascript_redirect(
       case params[:pressed]
       when 'generic_object_definition_new'
         { :action => 'new' }
       when 'generic_object_definition_edit'
         { :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
-      when 'generic_object_tag'
-        { :controller => 'generic_object', :action => 'tag', :id => params[:miq_grid_checks]}
       end
     )
   end
@@ -53,9 +43,14 @@ class GenericObjectDefinitionController < ApplicationController
     @in_a_form = true
   end
 
+  def self.display_methods
+    %w(generic_objects)
+  end
+
   def default_show_template
     "generic_object_definition/show"
   end
+
   private
 
   def textual_group_list

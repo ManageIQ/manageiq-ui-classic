@@ -2109,6 +2109,7 @@ Rails.application.routes.draw do
         update_del
         quick_search
         show_list
+        tag_edit_form_field_changed
         tagging_edit
       ) +
         adv_search_post +

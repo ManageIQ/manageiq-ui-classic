@@ -2264,6 +2264,8 @@ class ApplicationController < ActionController::Base
       "automation_manager_provider"
     when 'provider_foreman'
       "configuration_manager_provider"
+    when "generic_object_definition" # tagging for nested list on the generic object class
+      "generic_object"
     else
       controller_name
     end

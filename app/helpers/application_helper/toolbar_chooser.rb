@@ -535,7 +535,7 @@ class ApplicationHelper::ToolbarChooser
               ems_object_storage
               timeline
               usage
-              generic_object).include?(@layout)
+              generic_object_definition).include?(@layout)
           if ["show_list"].include?(@lastaction)
             return "#{@layout.pluralize}_center_tb"
           else
