@@ -31,10 +31,8 @@ class CloudTenantController < ApplicationController
         if action == 'detach'
           volume = find_record_with_rbac(CloudVolume, from_cid(params[:miq_grid_checks]))
           if volume.attachments.empty?
-            render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
-                :volume      => ui_lookup(:table => 'cloud_volume'),
-                :volume_name => volume.name,
-                :instances   => ui_lookup(:tables => 'vm_cloud')}, :error)
+            render_flash(_("Cloud Volume \"%{volume_name}\" is not attached to any Instances") % {
+              :volume_name => volume.name}, :error)
             return
           end
         end
@@ -202,9 +200,8 @@ class CloudTenantController < ApplicationController
     tenants_to_delete = []
     tenants.each do |tenant|
       if tenant.vms.present?
-        add_flash(_("Cloud Tenant \"%{name}\" cannot be removed because it is attached to one or more %{instances}") % {
-          :name      => tenant.name,
-          :instances => ui_lookup(:tables => 'vm_cloud')}, :warning)
+        add_flash(_("Cloud Tenant \"%{name}\" cannot be removed because it is attached to one or more Instances") % {
+          :name => tenant.name}, :warning)
       else
         tenants_to_delete.push(tenant)
       end
