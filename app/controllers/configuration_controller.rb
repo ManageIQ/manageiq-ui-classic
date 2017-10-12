@@ -267,19 +267,16 @@ class ConfigurationController < ApplicationController
     unless params[:id] # showing a list, scan all selected timeprofiles
       timeprofiles = find_checked_items
       if timeprofiles.empty?
-        add_flash(_("No %{records} were selected for deletion") %
-          {:records => ui_lookup(:models => "TimeProfile")}, :error)
+        add_flash(_("No Time Profiles were selected for deletion"), :error)
       else
         selected_timeprofiles = TimeProfile.where(:id => timeprofiles)
         selected_timeprofiles.each do |tp|
           if tp.description == "UTC"
             timeprofiles.delete(tp.id.to_s)
-            add_flash(_("Default %{model} \"%{name}\" cannot be deleted") % {:model => ui_lookup(:model => "TimeProfile"), :name  => tp.description},
-                      :error)
+            add_flash(_("Default Time Profile \"%{name}\" cannot be deleted") % {:name => tp.description}, :error)
           elsif tp.profile_type == "global" && !admin_user?
             timeprofiles.delete(tp.id.to_s)
-            add_flash(_("\"%{name}\": Global %{model} cannot be deleted") % {:name  => tp.description, :model => ui_lookup(:models => "TimeProfile")},
-                      :error)
+            add_flash(_("\"%{name}\": Global Time Profiles cannot be deleted") % {:name => tp.description}, :error)
           elsif !tp.miq_reports.empty?
             timeprofiles.delete(tp.id.to_s)
             add_flash(n_("\"%{name}\": In use by %{rep_count} Report, cannot be deleted",
@@ -351,7 +348,7 @@ class ConfigurationController < ApplicationController
       @timeprofile = TimeProfile.new
     end
     if params[:button] == "cancel"
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "TimeProfile"), :name => @timeprofile.description})
+      add_flash(_("Edit of Time Profile \"%{name}\" was cancelled by the user") % {:name => @timeprofile.description})
       params[:id] = @timeprofile.id.to_s
       session[:flash_msgs] = @flash_array.dup                 # Put msgs in session for next transaction
       javascript_redirect :action => 'change_tab', :typ => "timeprofiles", :tab => 4, :id => @timeprofile.id.to_s
@@ -388,8 +385,7 @@ class ConfigurationController < ApplicationController
       else
         construct_edit_for_audit(@timeprofile)
         AuditEvent.success(build_created_audit(@timeprofile, @edit))
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "TimeProfile"),
-                                                         :name  => @timeprofile.description})
+        add_flash(_("Time Profile \"%{name}\" was saved") % {:name => @timeprofile.description})
         session[:flash_msgs] = @flash_array.dup                 # Put msgs in session for next transaction
         javascript_redirect :action => 'change_tab', :typ => "timeprofiles", :tab => 4, :id => @timeprofile.id.to_s
       end
