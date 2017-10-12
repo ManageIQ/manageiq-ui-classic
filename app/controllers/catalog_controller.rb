@@ -81,11 +81,10 @@ class CatalogController < ApplicationController
     case params[:button]
     when "cancel"
       if session[:edit][:rec_id]
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-          {:model => ui_lookup(:model => 'ServiceTemplate'), :name => session[:edit][:new][:description]})
+        add_flash(_("Edit of Service Catalog Item \"%{name}\" was cancelled by the user") %
+          {:name => session[:edit][:new][:description]})
       else
-        add_flash(_("Add of new %{model} was cancelled by the user") %
-          {:model => ui_lookup(:model => 'ServiceTemplate')})
+        add_flash(_("Add of new Service Catalog Item was cancelled by the user"))
       end
       @edit = @record = nil
       @in_a_form = false
@@ -230,7 +229,7 @@ class CatalogController < ApplicationController
     @pages = false
     @edit[:explorer] = true
     @sb[:st_form_active_tab] = "request"
-    @right_cell_text = _("Adding a new %{model}") % {:model => ui_lookup(:model => "ServiceTemplate")}
+    @right_cell_text = _("Adding a new Service Catalog Item")
     @x_edit_buttons_locals = {:action_url => "servicetemplate_edit"}
   end
 
@@ -274,8 +273,7 @@ class CatalogController < ApplicationController
     else # showing 1 element, delete it
       elements = find_checked_ids_with_rbac(ServiceTemplate)
       if elements.empty?
-        add_flash(_("No %{model} were selected for deletion") %
-          {:model => ui_lookup(:tables => "service_template")}, :error)
+        add_flash(_("No Service Catalog Items were selected for deletion"), :error)
       end
       process_sts(elements, 'destroy') unless elements.empty?
       add_flash(n_("The selected %{number} Catalog Item was deleted",
@@ -528,8 +526,7 @@ class CatalogController < ApplicationController
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
     st = find_record_with_rbac(ServiceTemplate, checked[0])
-    @right_cell_text = _("Order %{model} \"%{name}\"") % {:name  => st.name,
-                                                          :model => ui_lookup(:model => "Service")}
+    @right_cell_text = _("Order Service \"%{name}\"") % {:name => st.name}
     ra = nil
     st.resource_actions.each do |r|
       if r.action.downcase == "provision" && r.dialog_id
@@ -556,11 +553,9 @@ class CatalogController < ApplicationController
     case params[:button]
     when "cancel"
       if session[:edit][:rec_id]
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-          {:model => ui_lookup(:model => "ServiceTemplateCatalog"), :name => session[:edit][:new][:name]})
+        add_flash(_("Edit of Catalog \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:name]})
       else
-        add_flash(_("Add of new %{model} was cancelled by the user") %
-          {:model => ui_lookup(:model => "ServiceTemplateCatalog")})
+        add_flash(_("Add of new Catalog was cancelled by the user"))
       end
       @edit = nil
       @in_a_form = false
@@ -577,9 +572,7 @@ class CatalogController < ApplicationController
         add_flash(_("Error during 'Catalog Edit': %{error_message}") % {:error_message => bang.message}, :error)
       else
         if @stc.errors.empty?
-          add_flash(_("%{model} \"%{name}\" was saved") %
-                      {:model => ui_lookup(:model => 'ServiceTemplateCatalog'),
-                       :name  => @edit[:new][:name]})
+          add_flash(_("Catalog \"%{name}\" was saved") % {:name => @edit[:new][:name]})
         else
           @stc.errors.each do |field, msg|
             add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -625,12 +618,11 @@ class CatalogController < ApplicationController
                :target_id    => id,
                :target_class => "ServiceTemplate",
                :userid       => session[:userid]}
-      model_name = ui_lookup(:model => "ServiceTemplate")  # Lookup friendly model name in dictionary
       begin
         st.public_send(task.to_sym) if st.respond_to?(task)    # Run the task
       rescue => bang
-        add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
-          {:model => model_name, :name => st_name, :task => task, :error_message => bang.message}, :error)
+        add_flash(_("Service Catalog Item \"%{name}\": Error during '%{task}': %{error_message}") %
+          {:name => st_name, :task => task, :error_message => bang.message}, :error)
       else
         if st.errors
           st.errors.each do |field, msg|
@@ -933,8 +925,8 @@ class CatalogController < ApplicationController
 
     if st.save
       set_resource_action(st) unless st.kind_of?(ServiceTemplateContainerTemplate)
-      flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") : _("%{model} \"%{name}\" was added")
-      add_flash(flash_key % {:model => ui_lookup(:model => "ServiceTemplate"), :name => @edit[:new][:name]})
+      flash_key = params[:button] == "save" ? _("Service Catalog Item \"%{name}\" was saved") : _("Service Catalog Item \"%{name}\" was added")
+      add_flash(flash_key % {:name => @edit[:new][:name]})
       @changed = session[:changed] = false
       @in_a_form = false
       @edit = session[:edit] = @record = nil
@@ -1018,9 +1010,7 @@ class CatalogController < ApplicationController
         render_flash(_("Error during 'Orchestration Template Edit': %{error_message}") %
           {:error_message => bang.message}, :error)
       else
-        add_flash(_("%{model} \"%{name}\" was saved") %
-                  {:model => ui_lookup(:model => 'OrchestrationTemplate'),
-                   :name  => @edit[:new][:name]})
+        add_flash(_("Orchestration Template \"%{name}\" was saved") % {:name => @edit[:new][:name]})
         @changed = session[:changed] = false
         @in_a_form = false
         @edit = session[:edit] = nil
@@ -1071,9 +1061,7 @@ class CatalogController < ApplicationController
         render_flash(_("Error during 'Orchestration Template Copy': %{error_message}") %
           {:error_message => bang.message}, :error)
       else
-        add_flash(_("%{model} \"%{name}\" was saved") %
-                    {:model => ui_lookup(:model => 'OrchestrationTemplate'),
-                     :name  => @edit[:new][:name]})
+        add_flash(_("Orchestration Template \"%{name}\" was saved") % {:name => @edit[:new][:name]})
         x_node_elems = x_node.split('-')
         if !x_node_elems[2].nil? && x_node_elems[2] != to_cid(ot.id)
           x_node_elems[2] = to_cid(ot.id)
@@ -1124,9 +1112,7 @@ class CatalogController < ApplicationController
         render_flash(_("Error during 'Orchestration Template creation': %{error_message}") %
           {:error_message => bang.message}, :error)
       else
-        add_flash(_("%{model} \"%{name}\" was saved") %
-                    {:model => ui_lookup(:model => 'OrchestrationTemplate'),
-                     :name  => @edit[:new][:name]})
+        add_flash(_("Orchestration Template \"%{name}\" was saved") % {:name => @edit[:new][:name]})
         subtree = template_to_node_name(ot)
         x_tree[:open_nodes].push(subtree) unless x_tree[:open_nodes].include?(subtree)
         ot_type = template_to_node_name(ot)
@@ -1181,8 +1167,7 @@ class CatalogController < ApplicationController
 
     @record = checked[0] ? find_record_with_rbac(ServiceTemplateCatalog, checked[0]) : ServiceTemplateCatalog.new
     @right_cell_text = @record.id ?
-        _("Editing %{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => "ServiceTemplateCatalog")} :
-        _("Adding a new %{model}") % {:model => ui_lookup(:model => "ServiceTemplateCatalog")}
+        _("Editing Catalog \"%{name}\"") % {:name => @record.name} : _("Adding a new Catalog")
     @edit = {}
     @edit[:key] = "st_catalog_edit__#{@record.id || "new"}"
     @edit[:new] = {}
@@ -1217,8 +1202,7 @@ class CatalogController < ApplicationController
     else # showing 1 element, delete it
       elements = find_checked_items
       if elements.empty?
-        add_flash(_("No %{model} were selected for deletion") %
-          {:model => ui_lookup(:models => "ServiceTemplateCatalog")}, :error)
+        add_flash(_("No Catalogs were selected for deletion"), :error)
       end
       process_elements(elements, ServiceTemplateCatalog, "destroy") unless elements.empty?
     end
@@ -1338,9 +1322,9 @@ class CatalogController < ApplicationController
     end
     get_available_dialogs
     if @record.id.blank?
-      @right_cell_text = _("Adding a new %{model}") % {:model => ui_lookup(:model => "ServiceTemplate")}
+      @right_cell_text = _("Adding a new Service Catalog Item")
     else
-      @right_cell_text = _("Editing %{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => "ServiceTemplate")}
+      @right_cell_text = _("Editing Service Catalog Item \"%{name}\"") % {:name => @record.name}
     end
     build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree
   end
@@ -1757,9 +1741,7 @@ class CatalogController < ApplicationController
               if id == "Unassigned"
                 condition = ["service_template_catalog_id IS NULL"]
                 service_template_list(condition, :model => model, :no_order_button => true)
-                @right_cell_text = _("%{typ} in %{model} \"Unassigned\"") %
-                                   {:typ   => ui_lookup(:models => "Service"),
-                                    :model => ui_lookup(:model => "ServiceTemplateCatalog")}
+                @right_cell_text = _("Services in Catalog \"Unassigned\"")
               else
                 if x_active_tree == :sandt_tree
                   # catalog items accordion also shows the non-"Display in Catalog" items
@@ -1769,7 +1751,7 @@ class CatalogController < ApplicationController
                 end
                 service_template_list(condition, :model => model, :no_order_button => true)
                 stc = ServiceTemplateCatalog.find_by_id(from_cid(id))
-                @right_cell_text = _("%{typ} in %{model} \"%{name}\"") % {:name => stc.name, :typ => ui_lookup(:models => "Service"), :model => ui_lookup(:model => "ServiceTemplateCatalog")}
+                @right_cell_text = _("Services in Catalog \"%{name}\"") % {:name => stc.name}
               end
             else
               show_record(from_cid(id))
