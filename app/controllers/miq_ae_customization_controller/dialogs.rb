@@ -195,9 +195,9 @@ module MiqAeCustomizationController::Dialogs
     when 'cancel'
       if params[:id]
         dialog_label = session[:edit][:current][:label]
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "Dialog"), :name => dialog_label})
+        add_flash(_("Edit of Dialog \"%{name}\" was cancelled by the user") % {:name => dialog_label})
       else
-        add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "Dialog")})
+        add_flash(_("Add of new Dialog was cancelled by the user"))
       end
       @edit = session[:edit] = nil # clean out the saved info
       self.x_active_tree = :dialogs_tree
@@ -226,9 +226,9 @@ module MiqAeCustomizationController::Dialogs
         render_flash
       else
         if params[:button] == "add"
-          add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqDialog"), :name => dialog.label})
+          add_flash(_("Dialog \"%{name}\" was added") % {:name => dialog.label})
         else
-          add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqDialog"), :name => dialog.label})
+          add_flash(_("Dialog \"%{name}\" was saved") % {:name => dialog.label})
         end
 
         AuditEvent.success(build_saved_audit(dialog, @edit))
@@ -1401,7 +1401,7 @@ module MiqAeCustomizationController::Dialogs
     if !params[:id]
       dialogs = find_checked_items
       if dialogs.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:model => "Dialog"), :task => display_name}, :error)
+        add_flash(_("No Dialogs were selected for %{task}") % {:task => display_name}, :error)
       else
         process_dialogs(dialogs, method)
       end
@@ -1409,7 +1409,7 @@ module MiqAeCustomizationController::Dialogs
       replace_right_cell(:nodetype => x_node, :replace_trees => [:dialogs])
     else # showing 1 dialog
       if params[:id].nil? || Dialog.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:model => "Dialog")}, :error)
+        add_flash(_("Dialog no longer exists"), :error)
         dialog_list
         @refresh_partial = "layouts/gtl"
       else
@@ -1430,7 +1430,7 @@ module MiqAeCustomizationController::Dialogs
   def dialog_get_node_info(treenodeid)
     if treenodeid == "root"
       dialog_list
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "Dialog")}
+      @right_cell_text = _("All Dialogs")
     else
       @sb[:active_tab] = "sample_tab" unless params[:tab_id]     # reset active tab if not coming in from change_tab
       @record = Dialog.find_by_id(from_cid(treenodeid.split('-').last))
@@ -1439,7 +1439,7 @@ module MiqAeCustomizationController::Dialogs
         self.x_node = "root"
         dialog_get_node_info(x_node)
       else
-        @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "Dialog"), :name => @record.label}
+        @right_cell_text = _("Dialog \"%{name}\"") % {:name => @record.label}
       end
     end
     {:pages => @pages, :view => @view}

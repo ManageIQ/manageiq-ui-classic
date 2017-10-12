@@ -59,14 +59,14 @@ module MiqAeCustomizationController::OldDialogs
     if !params[:id]
       dialogs = find_checked_items
       if dialogs.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:model => "MiqDialog"), :task => display_name}, :error)
+        add_flash(_("No Dialogs were selected for %{task}") % {:task => display_name}, :error)
       else
         to_delete = []
         dialogs.each do |d|
           dialog = MiqDialog.find(d)
           if dialog.default == true
             to_delete.push(d)
-            add_flash(_("Default %{model} \"%{name}\" cannot be deleted") % {:model => ui_lookup(:model => "MiqDialog"), :name => dialog.name}, :error)
+            add_flash(_("Default Dialog \"%{name}\" cannot be deleted") % {:name => dialog.name}, :error)
           end
         end
         # deleting elements in temporary array, had to create temp array to hold id's to be deleted from dialogs array, .each gets confused if i deleted them in above loop
@@ -80,15 +80,14 @@ module MiqAeCustomizationController::OldDialogs
       replace_right_cell(:nodetype => x_node, :replace_trees => [:old_dialogs])
     else # showing 1 vm
       if params[:id].nil? || MiqDialog.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:model => "MiqDialog")}, :error)
+        add_flash(_("Dialog no longer exists"), :error)
         old_dialogs_list
         @refresh_partial = "layouts/gtl"
       else
         dialogs.push(params[:id])
         dialog = MiqDialog.find_by_id(from_cid(params[:id]))  if method == 'destroy'        # need to set this for destroy method so active node can be set to image_type folder node after record is deleted
         if dialog.default
-          add_flash(_("Default %{model} \"%{name}\" cannot be deleted") % {:model => ui_lookup(:model => "MiqDialog"),
-                                                                           :name  => dialog.name}, :error)
+          add_flash(_("Default Dialog \"%{name}\" cannot be deleted") % {:name => dialog.name}, :error)
         else
           process_old_dialogs(dialogs, method)  unless dialogs.empty?
         end
@@ -104,21 +103,21 @@ module MiqAeCustomizationController::OldDialogs
   def old_dialogs_get_node_info(treenodeid)
     if treenodeid == "root"
       old_dialogs_list
-      @right_cell_text = _("All %{dialogs}") % {:dialogs => ui_lookup(:models => "MiqDialog")}
+      @right_cell_text = _("All Dialogs")
       @right_cell_div  = "old_dialogs_list"
     else
       nodes = treenodeid.split("_")
       if nodes[0].split('-').first == "odg"
         @right_cell_div = "dialogs_details"
         @record = @dialog = MiqDialog.find_by_id(from_cid(nodes[0].split('-').last))
-        @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:models => "MiqDialog"), :name => @dialog.description}
+        @right_cell_text = _("Dialogs \"%{name}\"") % {:name => @dialog.description}
       else
         old_dialogs_list
         img_typ = ""
         MiqDialog::DIALOG_TYPES.each do |typ|
           img_typ = typ[0] if typ[1] == nodes[1]
         end
-        @right_cell_text = _("%{typ} %{model}") % {:typ => img_typ, :model => ui_lookup(:models => "MiqDialog")}
+        @right_cell_text = _("%{typ} Dialogs") % {:typ => img_typ}
         @right_cell_div  = "old_dialogs_list"
       end
     end
@@ -200,7 +199,7 @@ module MiqAeCustomizationController::OldDialogs
       session[:changed] = false
     end
     if @dialog.default == true
-      add_flash(_("Default %{model} \"%{name}\" can not be edited") % {:model => ui_lookup(:model => "MiqDialog"), :name => @dialog.name}, :error)
+      add_flash(_("Default Dialog \"%{name}\" can not be edited") % {:name => @dialog.name}, :error)
       get_node_info
       replace_right_cell(:nodetype => x_node)
       return
@@ -229,9 +228,9 @@ module MiqAeCustomizationController::OldDialogs
     when "cancel"
       @edit = session[:edit] = nil # clean out the saved info
       if !@dialog || @dialog.id.blank?
-        add_flash(_("Add of new %{record} was cancelled by the user") % {:record => ui_lookup(:model => "MiqDialog")})
+        add_flash(_("Add of new Dialog was cancelled by the user"))
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqDialog"), :name => get_record_display_name(@dialog)})
+        add_flash(_("Edit of Dialog \"%{name}\" was cancelled by the user") % {:name => get_record_display_name(@dialog)})
       end
       get_node_info
       replace_right_cell(:nodetype => x_node)
@@ -267,9 +266,9 @@ module MiqAeCustomizationController::OldDialogs
         javascript_flash
       else
         if params[:button] == "add"
-          add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqDialog"), :name => get_record_display_name(dialog)})
+          add_flash(_("Dialog \"%{name}\" was added") % {:name => get_record_display_name(dialog)})
         else
-          add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqDialog"), :name => get_record_display_name(dialog)})
+          add_flash(_("Dialog \"%{name}\" was saved") % {:name => get_record_display_name(dialog)})
         end
         AuditEvent.success(build_saved_audit(dialog, @edit))
         @edit = session[:edit] = nil  # clean out the saved info

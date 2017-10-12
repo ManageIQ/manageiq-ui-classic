@@ -418,7 +418,7 @@ class MiqAeCustomizationController < ApplicationController
     when 'group_edit'
       @right_cell_text = right_cell_text_for_node(@custom_button_set, "CustomButtonSet")
     when 'group_reorder'
-      @right_cell_text = _("%{models} Group Reorder") % {:models => ui_lookup(:models => "CustomButton")}
+      @right_cell_text = _("Buttons Group Reorder")
     end
 
     # Replace right side with based on selected tree node type
@@ -431,10 +431,9 @@ class MiqAeCustomizationController < ApplicationController
     presenter[:cell_a_view] = 'custom'
 
     @right_cell_text = if @record.id.blank?
-                         _("Adding a new %{model}") % {:model => ui_lookup(:model => "Dialog")}
+                         _("Adding a new Dialog")
                        else
-                         _("Editing %{model} \"%{name}\"") % {:name  => @record.label.to_s,
-                                                              :model => ui_lookup(:model => "Dialog")}
+                         _("Editing Dialog \"%{name}\"") % {:name => @record.label.to_s}
                        end
     @right_cell_text << _(" [%{text} Information]") % {:text => @sb[:txt]}
 
@@ -470,18 +469,13 @@ class MiqAeCustomizationController < ApplicationController
     else
       presenter.update(:main_div, render_proc[:partial => 'old_dialogs_details'])
       if @dialog.id.blank? && !@dialog.dialog_type
-        @right_cell_text = _("Adding a new %{model}") % {:model => ui_lookup(:model => "MiqDialog")}
+        @right_cell_text = _("Adding a new Dialog")
       else
-        title = if @edit
-                  if params[:typ] == "copy"
-                    _("Copy ")
-                  else
-                    _("Editing ")
-                  end
-                else
-                  ""
-                end
-        @right_cell_text = _("Editing %{model} \"%{name}\"") % {:name => @dialog.description, :model => "#{title} #{ui_lookup(:model => "MiqDialog")}"}
+        @right_cell_text = if @edit && params[:typ] == "copy"
+                             _("Copying Dialog \"%{name}\"") % {:name => @dialog.description}
+                           else
+                             _("Editing Dialog \"%{name}\"") % {:name => @dialog.description}
+                           end
       end
 
       presenter.reset_one_trans
