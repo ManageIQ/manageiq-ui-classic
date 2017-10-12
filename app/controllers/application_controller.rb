@@ -1685,13 +1685,15 @@ class ApplicationController < ActionController::Base
   end
 
   def get_db_view(db, options = {})
-    if %w(ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm)
-       .include?(db) && options[:association] == "all_vms_and_templates" ||
-      db == 'ManageIQ_Providers_StorageManager' && options[:association] == "storage_managers"
-      options[:association] = nil
-    end
+    options[:association] = nil if unrequired_association_exists?(db, options)
 
     MiqReport.load_from_view_options(db, current_user, options, db_view_yaml_cache)
+  end
+
+  def unrequired_association_exists?(db, options)
+    %w(ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm)
+      .include?(db) && options[:association] == "all_vms_and_templates" ||
+      db == 'ManageIQ_Providers_StorageManager' && options[:association] == "storage_managers"
   end
 
   def db_view_yaml_cache
