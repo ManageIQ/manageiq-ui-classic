@@ -89,10 +89,10 @@ class MiqAeClassController < ApplicationController
       txt = _("Datastore")
       @sb[:namespace_path] = ""
     when "aec"
-      txt = ui_lookup(:model => "MiqAeClass")
+      txt = _('Automate Class')
       @sb[:namespace_path] = rec.fqname
     when "aei"
-      txt = ui_lookup(:model => "MiqAeInstance")
+      txt = _('Automate Instance')
       updated_by = rec.updated_by ? _(" by %{user}") % {:user => rec.updated_by} : ""
       @sb[:namespace_path] = rec.fqname
       @right_cell_text = _("%{model} [%{name} - Updated %{time}%{update}]") % {
@@ -102,7 +102,7 @@ class MiqAeClassController < ApplicationController
         :update => updated_by
       }
     when "aem"
-      txt = ui_lookup(:model => "MiqAeMethod")
+      txt = _('Automate Method')
       updated_by = rec.updated_by ? _(" by %{user}") % {:user => rec.updated_by} : ""
       @sb[:namespace_path] = rec.fqname
       @right_cell_text = _("%{model} [%{name} - Updated %{time}%{update}]") % {
@@ -112,7 +112,7 @@ class MiqAeClassController < ApplicationController
         :update => updated_by
       }
     when "aen"
-      txt = ui_lookup(:model => rec.domain? ? "MiqAeDomain" : "MiqAeNamespace")
+      txt = rec.domain? ? _('Automate Domain') : _('Automate Namespace')
       @sb[:namespace_path] = rec.fqname
     end
     @sb[:namespace_path].gsub!(%r{\/}, " / ") if @sb[:namespace_path]
@@ -536,10 +536,9 @@ class MiqAeClassController < ApplicationController
 
     @edit[:current] = copy_hash(@edit[:new])
     @right_cell_text = if @edit[:rec_id].nil?
-                         _("Adding a new %{model}") % {:model => ui_lookup(:model => "MiqAeInstance")}
+                         _("Adding a new Automate Instance")
                        else
-                         _("Editing %{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqAeInstance"),
-                                                              :name  => @ae_inst.name}
+                         _("Editing Automate Instance \"%{name}\"") % {:name => @ae_inst.name}
                        end
     session[:edit] = @edit
   end
@@ -559,7 +558,7 @@ class MiqAeClassController < ApplicationController
     case params[:button]
     when "cancel"
       session[:edit] = nil # clean out the saved info
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeInstance"), :name => @ae_inst.name})
+      add_flash(_("Edit of Automate Instance \"%{name}\" was cancelled by the user") % {:name => @ae_inst.name})
       @in_a_form = false
       replace_right_cell
     when "save"
@@ -587,7 +586,7 @@ class MiqAeClassController < ApplicationController
         AuditEvent.success(build_saved_audit(@ae_class, @edit))
         session[:edit] = nil # clean out the saved info
         @in_a_form = false
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeInstance"), :name => @ae_inst.name})
+        add_flash(_("Automate Instance \"%{name}\" was saved") % {:name => @ae_inst.name})
         replace_right_cell(:replace_trees => [:ae])
         return
       end
@@ -605,7 +604,7 @@ class MiqAeClassController < ApplicationController
     case params[:button]
     when "cancel"
       session[:edit] = nil # clean out the saved info
-      add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeInstance")})
+      add_flash(_("Add of new Automate Instance was cancelled by the user"))
       @in_a_form = false
       replace_right_cell
     when "add"
@@ -632,7 +631,7 @@ class MiqAeClassController < ApplicationController
         render_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
       else
         AuditEvent.success(build_created_audit(add_aeinst, @edit))
-        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqAeInstance"), :name => add_aeinst.name})
+        add_flash(_("Automate Instance \"%{name}\" was added") % {:name => add_aeinst.name})
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
         return
@@ -661,10 +660,9 @@ class MiqAeClassController < ApplicationController
     @edit[:inherits_from] = MiqAeClass.all.collect { |c| [c.fqname, c.fqname] }
     @edit[:current] = @edit[:new].dup
     @right_cell_text = if @edit[:rec_id].nil?
-                         _("Adding a new %{model}") % {:model => ui_lookup(:model => "Class")}
+                         _("Adding a new Class")
                        else
-                         _("Editing %{model} \"%{name}\"") % {:model => ui_lookup(:model => "Class"),
-                                                              :name  => @ae_class.name}
+                         _("Editing Class \"%{name}\"") % {:name => @ae_class.name}
                        end
     session[:edit] = @edit
     @in_a_form = true
@@ -699,10 +697,9 @@ class MiqAeClassController < ApplicationController
     @dtype_combo_xml = build_dtype_options
     @edit[:current] = copy_hash(@edit[:new])
     @right_cell_text = if @edit[:rec_id].nil?
-                         _("Adding a new %{model}") % {:model => ui_lookup(:model => "Class Schema")}
+                         _("Adding a new Class Schema")
                        else
-                         _("Editing %{model} \"%{name}\"") % {:model => ui_lookup(:model => "Class Schema"),
-                                                              :name  => @ae_class.name}
+                         _("Editing Class Schema \"%{name}\"") % {:name => @ae_class.name}
                        end
     session[:edit] = @edit
   end
@@ -749,10 +746,9 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:available_datatypes] = MiqAeField.available_datatypes_for_ui
     @edit[:current] = copy_hash(@edit[:new])
     @right_cell_text = if @edit[:rec_id].nil?
-                         _("Adding a new %{model}") % {:model => ui_lookup(:model => "MiqAeMethod")}
+                         _("Adding a new Automate Method")
                        else
-                         _("Editing %{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqAeMethod"),
-                                                              :name  => @ae_method.name}
+                         _("Editing Automate Method \"%{name}\"") % {:name => @ae_method.name}
                        end
     session[:log_depot_default_verify_status] = false
     session[:edit] = @edit
@@ -1028,7 +1024,7 @@ class MiqAeClassController < ApplicationController
     case params[:button]
     when "cancel"
       session[:edit] = nil # clean out the saved info
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeClass"), :name => @ae_class.name})
+      add_flash(_("Edit of Automate Class \"%{name}\" was cancelled by the user") % {:name => @ae_class.name})
       @in_a_form = false
       replace_right_cell
     when "save"
@@ -1044,7 +1040,7 @@ class MiqAeClassController < ApplicationController
         @changed = true
         javascript_flash
       else
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeClass"), :name => ae_class.fqname})
+        add_flash(_("Automate Class \"%{name}\" was saved") % {:name => ae_class.fqname})
         AuditEvent.success(build_saved_audit(ae_class, @edit))
         session[:edit] = nil # clean out the saved info
         @in_a_form = false
@@ -1070,7 +1066,7 @@ class MiqAeClassController < ApplicationController
     case params[:button]
     when "cancel"
       session[:edit] = nil  # clean out the saved info
-      add_flash(_("Edit of schema for %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeClass"), :name => @ae_class.name})
+      add_flash(_("Edit of schema for Automate Class \"%{name}\" was cancelled by the user") % {:name => @ae_class.name})
       @in_a_form = false
       replace_right_cell
     when "save"
@@ -1087,7 +1083,7 @@ class MiqAeClassController < ApplicationController
         session[:changed] = @changed = true
         javascript_flash
       else
-        add_flash(_("Schema for %{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeClass"), :name => ae_class.name})
+        add_flash(_("Schema for Automate Class \"%{name}\" was saved") % {:name => ae_class.name})
         AuditEvent.success(build_saved_audit(ae_class, @edit))
         session[:edit] = nil  # clean out the saved info
         @in_a_form = false
@@ -1153,9 +1149,9 @@ class MiqAeClassController < ApplicationController
     when "cancel"
       if params[:id] && params[:id] != "new"
         method = find_record_with_rbac(MiqAeMethod, params[:id])
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => method.name})
+        add_flash(_("Edit of Automate Method \"%{name}\" was cancelled by the user") % {:name => method.name})
       else
-        add_flash(_("Add of %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeMethod")})
+        add_flash(_("Add of Automate Method was cancelled by the user"))
       end
       replace_right_cell
     when "add", "save"
@@ -1179,7 +1175,7 @@ class MiqAeClassController < ApplicationController
         javascript_flash
       else
         old_method_attributes = method.attributes.clone
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => method.name})
+        add_flash(_("Automate Method \"%{name}\" was saved") % {:name => method.name})
         AuditEvent.success(build_saved_audit_hash_angular(old_method_attributes, method, params[:button] == "add"))
         replace_right_cell(:replace_trees => [:ae])
         return
@@ -1195,7 +1191,7 @@ class MiqAeClassController < ApplicationController
     case params[:button]
     when "cancel"
       session[:edit] = nil # clean out the saved info
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => @ae_method.name})
+      add_flash(_("Edit of Automate Method \"%{name}\" was cancelled by the user") % {:name => @ae_method.name})
       @sb[:form_vars_set] = false
       @in_a_form = false
       replace_right_cell
@@ -1219,7 +1215,7 @@ class MiqAeClassController < ApplicationController
         @changed = true
         javascript_flash
       else
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => ae_method.name})
+        add_flash(_("Automate Method \"%{name}\" was saved") % {:name => ae_method.name})
         AuditEvent.success(build_saved_audit(ae_method, @edit))
         session[:edit] = nil # clean out the saved info
         @sb[:form_vars_set] = false
@@ -1271,7 +1267,7 @@ class MiqAeClassController < ApplicationController
     @in_a_form = true
     case params[:button]
     when "cancel"
-      add_flash(_("Add of new %{record} was cancelled by the user") % {:record => ui_lookup(:model => "MiqAeClass")})
+      add_flash(_("Add of new Automate Class was cancelled by the user"))
       @in_a_form = false
       replace_right_cell(:replace_trees => [:ae])
     when "add"
@@ -1289,7 +1285,7 @@ class MiqAeClassController < ApplicationController
           page.replace("flash_msg", :partial => "layouts/flash_msg")
         end
       else
-        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqAeClass"), :name => add_aeclass.fqname})
+        add_flash(_("Automate Class \"%{name}\" was added") % {:name => add_aeclass.fqname})
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
       end
@@ -1309,7 +1305,7 @@ class MiqAeClassController < ApplicationController
     @in_a_form = true
     case params[:button]
     when "cancel"
-      add_flash(_("Add of new %{record} was cancelled by the user") % {:record => ui_lookup(:model => "MiqAeMethod")})
+      add_flash(_("Add of new Automate Method was cancelled by the user"))
       @sb[:form_vars_set] = false
       @in_a_form = false
       replace_right_cell
@@ -1334,7 +1330,7 @@ class MiqAeClassController < ApplicationController
         @in_a_form = true
         javascript_flash
       else
-        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => add_aemethod.name})
+        add_flash(_("Automate Method \"%{name}\" was added") % {:name => add_aemethod.name})
         @sb[:form_vars_set] = false
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
@@ -1632,8 +1628,7 @@ class MiqAeClassController < ApplicationController
   def copy_objects
     ids = objects_to_copy
     if ids.blank?
-      add_flash(_("Copy does not apply to selected %{model}") %
-        {:model => ui_lookup(:model => "MiqAeNamespace")}, :error)
+      add_flash(_("Copy does not apply to selected Automate Namespace"), :error)
       @sb[:action] = session[:edit] = nil
       @in_a_form = false
       replace_right_cell
@@ -2025,8 +2020,8 @@ class MiqAeClassController < ApplicationController
         if domain.editable_properties?
           domain.git_enabled? ? git_domains.push(domain) : aedomains.push(domain.id)
         else
-          add_flash(_("Read Only %{model} \"%{name}\" cannot be deleted") %
-            {:model => ui_lookup(:model => "MiqAeDomain"), :name => get_record_display_name(domain)}, :error)
+          add_flash(_("Read Only Automate Domain \"%{name}\" cannot be deleted") %
+            {:name => get_record_display_name(domain)}, :error)
         end
       end
     end
@@ -2074,8 +2069,8 @@ class MiqAeClassController < ApplicationController
         if (record.domain? && record.editable_properties?) || record.editable?
           ns_list.push(from_cid(item[1]))
         else
-          add_flash(_("\"%{field}\" %{model} cannot be deleted") %
-                      {:model => ui_lookup(:model => "MiqAeDomain"), :field => get_record_display_name(record)},
+          add_flash(_("\"%{field}\" Automate Domain cannot be deleted") %
+                      {:field => get_record_display_name(record)},
                     :error)
         end
       else
@@ -2496,8 +2491,8 @@ class MiqAeClassController < ApplicationController
     typ = params[:pressed] == "miq_ae_domain_edit" ? MiqAeDomain : MiqAeNamespace
     @ae_ns = find_record_with_rbac(typ, from_cid(obj[0].split('-')[1]))
     if @ae_ns.domain? && !@ae_ns.editable_properties?
-      add_flash(_("Read Only %{model} \"%{name}\" cannot be edited") %
-                  {:model => ui_lookup(:model => "MiqAeDomain"), :name => get_record_display_name(@ae_ns)},
+      add_flash(_("Read Only Automate Domain \"%{name}\" cannot be edited") %
+                  {:name => get_record_display_name(@ae_ns)},
                 :error)
     else
       ns_set_form_vars
@@ -2573,13 +2568,12 @@ class MiqAeClassController < ApplicationController
     assert_privileges("miq_ae_domain_#{locked ? 'lock' : 'unlock'}")
     action = locked ? _("Locked") : _("Unlocked")
     if params[:id].nil?
-      add_flash(_("No %{model} were selected to be marked as %{action}") % {:model => ui_lookup(:model => "MiqAeDomain"), :action => action},
-                :error)
+      add_flash(_("No Automate Domain were selected to be marked as %{action}") % {:action => action}, :error)
       javascript_flash
     end
     domain_toggle_lock(params[:id], locked)
     unless flash_errors?
-      add_flash(_("The selected %{model} were marked as %{action}") % {:model => ui_lookup(:model => "MiqAeDomain"), :action => action}, :info, true)
+      add_flash(_("The selected Automate Domain were marked as %{action}") % {:action => action}, :info, true)
     end
     replace_right_cell(:replace_trees => [:ae])
   end
