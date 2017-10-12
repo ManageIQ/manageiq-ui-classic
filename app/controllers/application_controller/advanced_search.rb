@@ -159,18 +159,24 @@ module ApplicationController::AdvancedSearch
     @edit[@expkey][:selected] = nil                           # Clear selected search
   end
 
-  def adv_search_redraw_tree(tree)
+  def adv_search_redraw_tree_and_main(tree)
+    display_mode = params[:button] == 'save' ? params[:button] : nil
+    tree_name = x_active_tree.to_s
     render :update do |page|
       page << javascript_prologue
-      tree_name = x_active_tree.to_s
-      page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {:tree => tree, :name => tree_name})
+      page.replace("#{tree_name}_div",  :partial => "shared/tree",               :locals => {:tree => tree, :name => tree_name})
+      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode})
+      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode})
     end
   end
 
-  def adv_search_redraw_listnav
+  def adv_search_redraw_listnav_and_main
+    display_mode = params[:button] == 'save' ? params[:button] : nil
     render :update do |page|
       page << javascript_prologue
       page.replace(:listnav_div, :partial => "layouts/listnav")
+      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode})
+      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode})
     end
   end
 
