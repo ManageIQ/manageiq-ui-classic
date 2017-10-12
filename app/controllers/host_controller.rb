@@ -145,8 +145,7 @@ class HostController < ApplicationController
     case params[:button]
     when "cancel"
       javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new %{model} was cancelled by the user") %
-                          {:model => ui_lookup(:model => "Host")}
+                          :flash_msg => _("Add of new Host / Node was cancelled by the user")
     when "add"
       @host = Host.new
       old_host_attributes = @host.attributes.clone
@@ -155,7 +154,7 @@ class HostController < ApplicationController
       if valid_record? && @host.save
         set_record_vars(@host)                                 # Save the authentication records for this host
         AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, params[:button] == "add"))
-        message = _("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "Host"), :name => @host.name}
+        message = _("Host / Node \"%{name}\" was added") % {:name => @host.name}
         javascript_redirect :action    => 'show_list',
                             :flash_msg => message
       else
@@ -220,13 +219,12 @@ class HostController < ApplicationController
       flash = "Edit for Host \""
       @breadcrumbs.pop if @breadcrumbs
       if !session[:host_items].nil?
-        flash = _("Edit of credentials for selected %{models} was cancelled by the user") %
-          {:models => ui_lookup(:models => "Host")}
+        flash = _("Edit of credentials for selected Hosts / Nodes was cancelled by the user")
         # redirect_to :action => @lastaction, :display=>session[:host_display], :flash_msg=>flash
         javascript_redirect :action => @lastaction, :display => session[:host_display], :flash_msg => flash
       else
         @host = find_record_with_rbac(Host, params[:id])
-        flash = _("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "Host"), :name => @host.name}
+        flash = _("Edit of Host / Node \"%{name}\" was cancelled by the user") % {:name => @host.name}
         javascript_redirect :action => @lastaction, :id => @host.id, :display => session[:host_display], :flash_msg => flash
       end
 
@@ -237,7 +235,7 @@ class HostController < ApplicationController
         valid_host = find_record_with_rbac(Host, params[:id])
         set_record_vars(valid_host, :validate)                      # Set the record variables, but don't save
         if valid_record? && set_record_vars(@host) && @host.save
-          add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "Host"), :name => @host.name})
+          add_flash(_("Host / Node \"%{name}\" was saved") % {:name => @host.name})
           @breadcrumbs.pop if @breadcrumbs
           AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, false))
           session[:flash_msgs] = @flash_array.dup                 # Put msgs in session for next transaction
