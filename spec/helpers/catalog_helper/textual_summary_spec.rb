@@ -6,9 +6,9 @@ describe CatalogHelper::TextualSummary do
     end
     it 'returns Hash if no tags found' do
       tag = textual_tags
-      expect(tag[:label]).to eq(_("%{name} Tags") % {:name => session[:customer_name]})
+      expect(tag[:label]).to eq("%{name} Tags" % {:name => session[:customer_name]})
       expect(tag[:icon]).to eq("fa fa-tag")
-      expect(tag[:value]).to eq(_("No %{label} Tags have been assigned") % {:label => session[:customer_name]})
+      expect(tag[:value]).to eq("No %{label} Tags have been assigned" % {:label => session[:customer_name]})
     end
   end
   context '#textual_tags with tags' do
@@ -24,7 +24,7 @@ describe CatalogHelper::TextualSummary do
     end
     it 'returns tags correctly' do
       tag = textual_tags
-      expect(tag[:label]).to eq(_("%{name} Tags") % {:name => session[:customer_name]})
+      expect(tag[:label]).to eq("%{name} Tags" % {:name => session[:customer_name]})
       expect(tag[:value]).to be_a_kind_of(Array)
       expect(tag[:value].first).to eq(:icon => "fa fa-tag", :label => "Label", :value => ["Value"])
     end

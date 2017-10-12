@@ -982,7 +982,7 @@ describe ReportController do
     end
 
     context "when the commit button is used" do
-      let(:params) { {:import_file_upload_id => "123", :widgets_to_import => ["potato"], :commit => _('Commit')} }
+      let(:params) { {:import_file_upload_id => "123", :widgets_to_import => ["potato"], :commit => 'Commit'} }
 
       before do
         allow(ImportFileUpload).to receive(:where).with(:id => "123").and_return([import_file_upload])
@@ -1031,7 +1031,7 @@ describe ReportController do
     end
 
     context "when the cancel button is used" do
-      let(:params) { {:import_file_upload_id => "123", :commit => _('Cancel')} }
+      let(:params) { {:import_file_upload_id => "123", :commit => 'Cancel'} }
 
       before do
         allow(WidgetImportService).to receive(:new).and_return(widget_import_service)

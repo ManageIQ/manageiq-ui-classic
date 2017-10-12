@@ -252,7 +252,7 @@ describe('dialogFieldRefresh', function() {
 
       it('adds a flash message', function() {
         dialogFieldRefresh.refreshField(options, callback);
-        expect(window.add_flash).toHaveBeenCalledWith(__("Field type is not a supported type!"), 'error');
+        expect(window.add_flash).toHaveBeenCalledWith("Field type is not a supported type!", 'error');
       });
     });
   });

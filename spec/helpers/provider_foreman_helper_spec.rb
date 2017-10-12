@@ -14,8 +14,8 @@ describe ProviderForemanHelper do
   context ".textual_configuration_script_survey" do
     subject { textual_configuration_script_survey }
     it 'shows the survey spec paramters' do
-      expect(subject[:headers]).to match_array([_('Question Name'), _('Question Description'), _('Variable'),
-                                                _('Type'), _('Min'), _('Max'), _('Default'), _('Required'), _('Choices')])
+      expect(subject[:headers]).to match_array(['Question Name', 'Question Description', 'Variable',
+                                                'Type', 'Min', 'Max', 'Default', 'Required', 'Choices'])
       expect(subject[:value]).to match_array([{:title => 0, :question_name => 'Survey',
                                                :question_description => 'Survey', :variable => 'test',
                                                :type => 'text', :min => nil, :max => nil, :default => nil,

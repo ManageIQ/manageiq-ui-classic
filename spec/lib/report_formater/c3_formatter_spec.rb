@@ -158,7 +158,7 @@ describe ReportFormatter::C3Formatter do
     end
 
     it "has right empty data description" do
-      expect(report.chart[:data][:empty][:label][:text]).to eq(_("No data available."))
+      expect(report.chart[:data][:empty][:label][:text]).to eq("No data available.")
     end
   end
 end

@@ -134,7 +134,7 @@ describe AutomationManagerController do
       post :edit, :params => { :id => @automation_manager1.id }
       expect(response.status).to eq(200)
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
-      expect(right_cell_text).to eq(_("Edit Provider"))
+      expect(right_cell_text).to eq("Edit Provider")
     end
 
     it "should display the zone field" do

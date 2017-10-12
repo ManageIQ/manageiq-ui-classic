@@ -799,7 +799,7 @@ describe HostController do
       vm2 = FactoryGirl.create(:vm_vmware)
       vm3 = FactoryGirl.create(:vm_vmware)
       vms = [vm1.id, vm2.id, vm3.id]
-      controller.send(:process_objects, vms, 'refresh_ems', _('Refresh Provider'))
+      controller.send(:process_objects, vms, 'refresh_ems', 'Refresh Provider')
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include "Refresh Provider initiated for #{vms.length} VMs"
     end

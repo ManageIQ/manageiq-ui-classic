@@ -54,7 +54,7 @@ describe ApplicationHelper::Button::InstanceDisassociateFloatingIp do
         )}, {}
       )
       button.calculate_properties
-      expect(button[:title]).to eq(_("Instance \"TestVm\" does not have any associated Floating IPs"))
+      expect(button[:title]).to eq("Instance \"TestVm\" does not have any associated Floating IPs")
     end
 
     it "when there are instances to detach from and the action is available, the button has no error in the title" do

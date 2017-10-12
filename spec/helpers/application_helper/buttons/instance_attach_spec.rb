@@ -28,7 +28,7 @@ describe ApplicationHelper::Button::InstanceAttach do
       record = FactoryGirl.create(:vm_openstack, :cloud_tenant => tenant)
       button = described_class.new(view_context, {}, {"record" => record}, {})
       button.calculate_properties
-      expect(button[:title]).to eq(_("There are no Cloud Volumes available to attach to this Instance."))
+      expect(button[:title]).to eq("There are no Cloud Volumes available to attach to this Instance.")
     end
 
     it "when there are available volumes, the button has no error in the title" do

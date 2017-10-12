@@ -156,7 +156,7 @@ describe ProviderForemanController do
       post :edit, :params => { :id => @config_mgr.id }
       expect(response.status).to eq(200)
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
-      expect(right_cell_text).to eq(_("Edit Provider"))
+      expect(right_cell_text).to eq("Edit Provider")
     end
 
     it "should display the zone field" do
@@ -389,8 +389,8 @@ describe ProviderForemanController do
       expect(gtl_init_data[:data][:parentId]).to eq(ems_id)
       expect(gtl_init_data[:data][:isExplorer]).to eq(true)
       expect(view.table.data[0].data).to include('description' => "testprofile")
-      expect(view.table.data[2]).to include('description' => _("Unassigned Profiles Group"),
-                                            'name'        => _("Unassigned Profiles Group"))
+      expect(view.table.data[2]).to include('description' => "Unassigned Profiles Group",
+                                            'name'        => "Unassigned Profiles Group")
     end
 
     it "renders tree_select for a ConfigurationManagerForeman node that contains only an unassigned profile" do
@@ -398,8 +398,8 @@ describe ProviderForemanController do
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0]).to include('description' => _("Unassigned Profiles Group"),
-                                            'name'        => _("Unassigned Profiles Group"))
+      expect(view.table.data[0]).to include('description' => "Unassigned Profiles Group",
+                                            'name'        => "Unassigned Profiles Group")
     end
 
     it "renders tree_select for an 'Unassigned Profiles Group' node for the first provider" do

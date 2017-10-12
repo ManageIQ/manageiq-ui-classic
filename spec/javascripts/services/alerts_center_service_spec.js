@@ -27,51 +27,51 @@ describe('alertsCenterService', function() {
     it('should give the correct severity titles', function() {
       var titles = testService.severityTitles;
       expect(titles.length).toBe(3);
-      expect(titles[0]).toBe(__("Information"));
-      expect(titles[1]).toBe(__("Warning"));
-      expect(titles[2]).toBe(__("Error"));
+      expect(titles[0]).toBe("Information");
+      expect(titles[1]).toBe("Warning");
+      expect(titles[2]).toBe("Error");
     });
 
     it('should give the correct filter choices', function() {
       var filters = testService.alertListFilterFields;
       expect(filters.length).toBe(7);
 
-      expect(filters[0].title).toBe(__("Severity"));
+      expect(filters[0].title).toBe("Severity");
       expect(filters[0].filterValues).toBe(testService.severityTitles);
-      expect(filters[1].title).toBe(__("Host Name"));
-      expect(filters[2].title).toBe(__("Provider Name"));
-      expect(filters[3].title).toBe(__("Provider Type"));
+      expect(filters[1].title).toBe("Host Name");
+      expect(filters[2].title).toBe("Provider Name");
+      expect(filters[3].title).toBe("Provider Type");
       expect(filters[3].filterValues).toBe(testService.objectTypes);
-      expect(filters[4].title).toBe(__("Message Text"));
-      expect(filters[5].title).toBe(__("Owner"));
-      expect(filters[6].title).toBe(__("Acknowledged"));
+      expect(filters[4].title).toBe("Message Text");
+      expect(filters[5].title).toBe("Owner");
+      expect(filters[6].title).toBe("Acknowledged");
       expect(filters[6].filterValues.length).toBe(2);
-      expect(filters[6].filterValues[0]).toBe(__('Acknowledged'));
-      expect(filters[6].filterValues[1]).toBe(__('Unacknowledged'));
+      expect(filters[6].filterValues[0]).toBe('Acknowledged');
+      expect(filters[6].filterValues[1]).toBe('Unacknowledged');
     });
 
     it('should give the correct sort options', function() {
       var sortFields = testService.alertListSortFields;
       expect(sortFields.length).toBe(7);
 
-      expect(sortFields[0].title).toBe(__("Time"));
-      expect(sortFields[1].title).toBe(__("Severity"));
-      expect(sortFields[2].title).toBe(__("Host Name"));
-      expect(sortFields[3].title).toBe(__("Provider Name"));
-      expect(sortFields[4].title).toBe(__("Provider Type"));
-      expect(sortFields[5].title).toBe(__("Owner"));
-      expect(sortFields[6].title).toBe(__("Acknowledged"));
+      expect(sortFields[0].title).toBe("Time");
+      expect(sortFields[1].title).toBe("Severity");
+      expect(sortFields[2].title).toBe("Host Name");
+      expect(sortFields[3].title).toBe("Provider Name");
+      expect(sortFields[4].title).toBe("Provider Type");
+      expect(sortFields[5].title).toBe("Owner");
+      expect(sortFields[6].title).toBe("Acknowledged");
     });
 
     it('should give the correct menu actions', function() {
       var menuActions = testService.menuActions;
       expect(menuActions.length).toBe(5);
 
-      expect(menuActions[0].name).toBe(__("Acknowledge"));
-      expect(menuActions[1].name).toBe(__("Add Note"));
-      expect(menuActions[2].name).toBe(__("Assign"));
-      expect(menuActions[3].name).toBe(__("Unacknowledge"));
-      expect(menuActions[4].name).toBe(__("Unassign"));
+      expect(menuActions[0].name).toBe("Acknowledge");
+      expect(menuActions[1].name).toBe("Add Note");
+      expect(menuActions[2].name).toBe("Assign");
+      expect(menuActions[3].name).toBe("Unacknowledge");
+      expect(menuActions[4].name).toBe("Unassign");
     });
   });
 
