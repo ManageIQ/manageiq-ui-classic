@@ -315,7 +315,7 @@ class InfraNetworkingController < ApplicationController
   def miq_search_node
     options = {:model => "Switch"}
     process_show_list(options) if @show_list
-    @right_cell_text = _("All %{title} ") % {:title => ui_lookup(:ui_title => model)}
+    @right_cell_text = _("All Switches")
     options
   end
 
@@ -399,7 +399,6 @@ class InfraNetworkingController < ApplicationController
   def set_right_cell_vars
     @sb[:action] = params[:action]
     name = @record.try(:name).to_s
-    table = 'switch'
     partial = if ["details"].include?(@showtype)
                 "layouts/x_gtl"
               elsif @showtype == "item"
@@ -408,16 +407,14 @@ class InfraNetworkingController < ApplicationController
                 @showtype.to_s
               end
     if @showtype == "item"
-      header = _("%{action} \"%{item_name}\" for %{switch} \"%{name}\"") % {
-        :switch    => ui_lookup(:table => table),
+      header = _("%{action} \"%{item_name}\" for Switch \"%{name}\"") % {
         :name      => name,
         :item_name => @item.name,
         :action    => action_type(@sb[:action], 1)
       }
       x_history_add_item(:id => x_node, :text => header, :action => @sb[:action], :item => @item.id)
     else
-      header = _("\"%{action}\" for %{switch} \"%{name}\"") % {
-        :switch => ui_lookup(:table => table),
+      header = _("\"%{action}\" for Switch \"%{name}\"") % {
         :name   => name,
         :action => action_type(@sb[:action], 2)
       }
@@ -593,7 +590,7 @@ class InfraNetworkingController < ApplicationController
   end
 
   def breadcrumb_name(_model)
-    ui_lookup(:model => 'Switch').to_s
+    _("Switch")
   end
 
   def valid_switch_record?(switch_record)
