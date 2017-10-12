@@ -1731,11 +1731,12 @@ class MiqAeClassController < ApplicationController
     params_list = %i(repository_id
                      playbook_id
                      credential_id
-                     become_enabled
                      verbosity
                      network_credential_id
                      cloud_credential_id)
-    copy_params_if_set({}, params, params_list)
+    boolean_params_list = %i(become_enabled)
+    params_hash = copy_params_if_set({}, params, params_list)
+    copy_boolean_params(params_hash, params, boolean_params_list)
   end
 
   def angular_form_specific_data
@@ -2694,7 +2695,7 @@ class MiqAeClassController < ApplicationController
     @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, data[:network_credential_id]) if data[:network_credential_id]
     @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, data[:cloud_credential_id]) if data[:cloud_credential_id]
     @playbook_details[:verbosity] = data[:verbosity]
-    @playbook_details[:become_enabled] = data[:become_enabled] == 'true' ? _("Yes") : _("No")
+    @playbook_details[:become_enabled] = data[:become_enabled] == true ? _("Yes") : _("No")
     @playbook_details
   end
 
