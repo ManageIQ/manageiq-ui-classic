@@ -52,7 +52,7 @@ module VmHelper::TextualSummary
     TextualGroup.new(
       _("Relationships"),
       %i(
-        ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service
+        ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service genealogy
         cloud_network cloud_subnet orchestration_stack cloud_networks cloud_subnets network_routers security_groups
         floating_ips network_ports load_balancers cloud_volumes
       )
@@ -60,7 +60,7 @@ module VmHelper::TextualSummary
   end
 
   def textual_group_template_cloud_relationships
-    TextualGroup.new(_("Relationships"), %i(ems parent_vm drift scan_history cloud_tenant))
+    TextualGroup.new(_("Relationships"), %i(ems parent_vm genealogy drift scan_history cloud_tenant))
   end
 
   def textual_group_security
