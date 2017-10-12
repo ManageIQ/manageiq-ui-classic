@@ -17,6 +17,7 @@ class OpsController < ApplicationController
   OPS_X_BUTTON_ALLOWED_ACTIONS = {
     'collect_logs'              => :logs_collect,
     'collect_current_logs'      => :collect_current_logs,
+    'custom_button'             => :custom_buttons,
     'db_refresh'                => :db_refresh,
     'delete_server'             => :delete_server,
     'demote_server'             => :demote_server,
@@ -761,9 +762,15 @@ class OpsController < ApplicationController
     } if @ajax_action
   end
 
+  def choose_custom_toolbar
+    if x_tree && x_tree[:tree] == :rbac_tree && x_node != 'root'
+      build_toolbar(@record ? Mixins::CustomButtons::Result.new(:single) : Mixins::CustomButtons::Result.new(:list))
+    end
+  end
+
   def rebuild_toolbars(presenter)
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
-    presenter.reload_toolbars(:center => c_tb)
+    presenter.reload_toolbars(:center => c_tb, :custom => choose_custom_toolbar)
     presenter[:record_id] = determine_record_id_for_presenter
   end
 
@@ -839,4 +846,6 @@ class OpsController < ApplicationController
   end
 
   menu_section :set
+
+  has_custom_buttons
 end
