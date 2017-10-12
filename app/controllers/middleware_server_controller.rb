@@ -116,7 +116,7 @@ class MiddlewareServerController < ApplicationController
 
     run_server_operation(STANDALONE_SERVER_OPERATIONS.fetch(:middleware_add_jdbc_driver), selected_server)
     render :json => {
-      :status => :success, :msg => _("JDBC Driver \"%s\" has been installed on this server.") % params["driverName"]
+      :status => :success, :msg => _("JDBC Driver \"%s\" has been submitted for installation on this server.") % params["driverName"]
     }
   end
 
