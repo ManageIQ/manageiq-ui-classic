@@ -412,6 +412,19 @@ class MiqRequestController < ApplicationController
     head :ok
   end
 
+  # Caution: The params[:typ] argument needs to match value from ?typ=VALUE
+  # from app/presenters/menu/default_menu.rb
+  #   Example: '/miq_request?typ=service' --> "'service'".
+  # The returned value needs to be equal to the first argument to Menu::Section.new(...)
+  #   Example:  Menu::Section.new(:clo, N_("Clouds"), 'fa fa-plus', [ ... --> ":clo"
+  def menu_section_id(parms)
+    case parms[:typ]
+    when 'ae'      then :automate
+    when 'service' then :svc
+    when 'host'    then :inf
+    end
+  end
+
   private ############################
 
   def get_request_tab_type
@@ -615,18 +628,5 @@ class MiqRequestController < ApplicationController
     session[:edit]                 = @edit unless @edit.nil?
     session[:request_tab]          = @request_tab unless @request_tab.nil?
     session[:prov_options]         = @options if @options
-  end
-
-  # Caution: The params[:typ] argument needs to match value from ?typ=VALUE
-  # from app/presenters/menu/default_menu.rb
-  #   Example: '/miq_request?typ=service' --> "'service'".
-  # The returned value needs to be equal to the first argument to Menu::Section.new(...)
-  #   Example:  Menu::Section.new(:clo, N_("Clouds"), 'fa fa-plus', [ ... --> ":clo"
-  def menu_section(parms)
-    case parms[:typ]
-    when 'ae'      then :automate
-    when 'service' then :svc
-    when 'host'    then :inf
-    end
   end
 end
