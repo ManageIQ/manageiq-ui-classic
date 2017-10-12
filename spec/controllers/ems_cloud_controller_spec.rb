@@ -415,6 +415,13 @@ describe EmsCloudController do
         is_expected.to render_template(:partial => "layouts/listnav/_ems_cloud")
       end
     end
+
+    it 'displays only associated storage_managers' do
+      FactoryGirl.create(:ems_storage, :name => 'abc', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
+      FactoryGirl.create(:ems_storage, :name => 'xyz', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
+      get :show, :params => { :display => "storage_managers", :id => @ems.id, :format => :js }
+      expect(response.status).to eq(200)
+    end
   end
 
   describe "#dialog_form_button_pressed" do
