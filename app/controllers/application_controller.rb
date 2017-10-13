@@ -523,12 +523,11 @@ class ApplicationController < ActionController::Base
   # From these options and model we get view (for fetching data) and settings (will hold info about paging).
   # Then this method will return JSON object with settings and data.
   def report_data
-    @in_report_data = true
     options = process_params_options(params)
     if options.nil? || options[:view].nil?
       model_view = process_params_model_view(params, options)
       @edit = session[:edit]
-      @view, settings = get_view(model_view, options)
+      @view, settings = get_view(model_view, options, true)
     else
       @view = options[:view]
       settings = options[:pages]
@@ -543,7 +542,7 @@ class ApplicationController < ActionController::Base
     end
     render :json => {
       :settings => settings,
-      :data     => view_to_hash(@view),
+      :data     => view_to_hash(@view, true),
       :messages => @flash_array
     }
   end
@@ -1085,7 +1084,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Render the view data to a Hash structure for the list view
-  def view_to_hash(view)
+  def view_to_hash(view, in_report_data = false)
     # Get the time zone in effect for this view
     tz = (view.db.downcase == 'miqschedule') ? server_timezone : Time.zone
 
@@ -1122,7 +1121,7 @@ class ApplicationController < ActionController::Base
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
-      if @in_report_data && defined?(@gtl_type) && @gtl_type != "list"
+      if in_report_data && defined?(@gtl_type) && @gtl_type != "list"
         quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
       end
       new_row = {
@@ -1512,7 +1511,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Create view and paginator for a DB records with/without tags
-  def get_view(db, options = {})
+  def get_view(db, options = {}, in_report_data = false)
     unless @edit.nil?
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
@@ -1613,8 +1612,13 @@ class ApplicationController < ActionController::Base
       :selected_ids              => object_ids,
       :match_via_descendants     => options[:match_via_descendants]
     }
-    # Call paged_view_search to fetch records and build the view.table and additional attrs
-    view.table, attrs = generate_paged_view_search(view, session[:paged_view_search_options])
+
+    view.table, attrs = if in_report_data
+                          # Call paged_view_search to fetch records and build the view.table and additional attrs
+                          view.paged_view_search(session[:paged_view_search_options])
+                        else
+                          [{}, {}]
+                        end
 
     # adding filters/conditions for download reports
     view.user_categories = attrs[:user_filters]["managed"] if attrs && attrs[:user_filters] && attrs[:user_filters]["managed"]
@@ -1623,24 +1627,12 @@ class ApplicationController < ActionController::Base
     @targets_hash             = attrs[:targets_hash] if attrs[:targets_hash]
 
     # Set up the grid variables for list view, with exception models below
-    if grid_hash_conditions(view) && @in_report_data
-      @grid_hash = view_to_hash(view)
+    if grid_hash_conditions(view) && in_report_data
+      @grid_hash = view_to_hash(view, in_report_data)
     end
 
     [view, get_view_pages(dbname, view)]
   end
-
-  # FIXME: This is hotfix for building table and it's settings, however this has to be run only once and if in
-  # report_data.
-  def generate_paged_view_search(view, paged_search_options)
-    if @in_report_data
-      view.paged_view_search(paged_search_options)
-    else
-      [{}, {}]
-    end
-  end
-
-  private :generate_paged_view_search
 
   def grid_hash_conditions(view)
     !%w(Job MiqProvision MiqReportResult MiqTask).include?(view.db) &&
