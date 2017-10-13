@@ -20,11 +20,7 @@ class VmCloudController < ApplicationController
 
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Attach %{volume} to %{instance_model} \"%{instance_name}\"") % {
-        :volume         => ui_lookup(:table => 'cloud_volume'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
-        :instance_name  => @vm.name
-      },
+      :name => _("Attach Cloud Volume to Instance \"%{instance_name}\"") % {:instance_name => @vm.name},
       :url  => "/vm_cloud/attach")
     @in_a_form = true
     @refresh_partial = "vm_common/attach"
@@ -38,20 +34,13 @@ class VmCloudController < ApplicationController
     attached_volumes = @vm.hardware.disks.select(&:backing).map(&:backing)
     attached_volumes.each { |volume| @volume_choices[volume.name] = volume.id }
     if attached_volumes.empty?
-      add_flash(_("%{instance_model} \"%{instance_name}\" has no attached %{volumes}") % {
-        :volumes        => ui_lookup(:tables => 'cloud_volumes'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
-        :instance_name  => @vm.name})
+      add_flash(_("Instance \"%{instance_name}\" has no attached Cloud Volumes") % {:instance_name => @vm.name})
       javascript_flash
     end
 
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Detach %{volume} from %{instance_model} \"%{instance_name}\"") % {
-        :volume         => ui_lookup(:table => 'cloud_volume'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
-        :instance_name  => @vm.name
-      },
+      :name => _("Detach Cloud Volume from Instance \"%{instance_name}\"") % {:instance_name => @vm.name},
       :url  => "/vm_cloud/detach")
     @in_a_form = true
     @refresh_partial = "vm_common/detach"
@@ -64,9 +53,7 @@ class VmCloudController < ApplicationController
     @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Attaching %{volume_model} to %{instance_model} \"%{instance_name}\" was cancelled by the user") % {
-        :volume_model   => ui_lookup(:table => 'cloud_volume'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
+      cancel_action(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {
         :instance_name  => @vm.name
       })
     when "attach"
@@ -120,9 +107,7 @@ class VmCloudController < ApplicationController
     @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Detaching a %{volume} from %{instance_model} \"%{instance_name}\" was cancelled by the user") % {
-        :volume         => ui_lookup(:table => 'cloud_volume'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
+      cancel_action(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {
         :instance_name  => @vm.name
       })
 
