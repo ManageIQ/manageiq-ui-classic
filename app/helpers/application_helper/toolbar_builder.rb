@@ -133,13 +133,14 @@ class ApplicationHelper::ToolbarBuilder
   # Set properties for button
   def apply_common_props(button, input)
     button.update(
-      :icon    => input[:icon],
-      :color   => input[:color],
-      :name    => button[:id],
-      :hidden  => button[:hidden] || !!input[:hidden],
-      :pressed => input[:pressed],
-      :onwhen  => input[:onwhen],
-      :data    => input[:data]
+      :color        => input[:color],
+      :data         => input[:data],
+      :hidden       => button[:hidden] || !!input[:hidden],
+      :icon         => input[:icon],
+      :name         => button[:id],
+      :onwhen       => input[:onwhen],
+      :pressed      => input[:pressed],
+      :send_checked => input[:send_checked],
     )
 
     button[:enabled] = input[:enabled]
