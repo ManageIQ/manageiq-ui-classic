@@ -11,26 +11,29 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
           'pficon pficon-edit fa-lg',
           N_('Select a single item to edit'),
           N_('Edit the selected item'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1"),
         button(
           :rbac_tenant_delete,
           'pficon pficon-delete fa-lg',
           N_('Select one or more items to delete'),
           N_('Delete selected items'),
-          :url_parms => "main_div",
-          :confirm   => N_("Delete all selected items and all of their children?"),
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Delete all selected items and all of their children?"),
+          :enabled      => false,
+          :onwhen       => "1+"),
         button(
           :rbac_tenant_manage_quotas,
           'pficon pficon-edit fa-lg',
           N_('Select a single item to manage quotas'),
           N_('Manage Quotas for the Selected Item'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1"),
       ]
     ),
   ])
@@ -42,7 +45,7 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
       t,
       :enabled => false,
       :onwhen  => "1+",
-      :items => [
+      :items   => [
         button(
           :rbac_tenant_tags_edit,
           'pficon pficon-edit fa-lg',
@@ -50,9 +53,10 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
             _('Edit \'%{customer_name}\' Tags for the selected Tenant') % {:customer_name => @view_context.session[:customer_name]}
           end,
           t,
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

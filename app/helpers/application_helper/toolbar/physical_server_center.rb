@@ -13,16 +13,18 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             'fa fa-refresh fa-lg',
             N_('Refresh relationships and power states for all items related to the selected Physical Servers'),
             N_('Refresh Relationships and Power States'),
-            :url_parms => "main_div",
-            :confirm   => N_("Refresh relationships and power states for all items related to the selected Physical Servers?"),
+            :url_parms    => "main_div",
+            :send_checked => true,
+            :confirm      => N_("Refresh relationships and power states for all items related to the selected Physical Servers?"),
           ),
           button(
             :physical_server_delete,
             'pficon pficon-delete fa-lg',
             N_('Remove selected Physical Servers from Inventory'),
             N_('Remove Physical Servers from Inventory'),
-            :url_parms => "main_div",
-            :confirm   => N_("Warning: The selected Physical Servers and ALL of their components will be permanently removed!"),
+            :url_parms    => "main_div",
+            :send_checked => true,
+            :confirm      => N_("Warning: The selected Physical Servers and ALL of their components will be permanently removed!"),
           )
         ]
       ),
@@ -42,33 +44,33 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             nil,
             N_('Power on the server'),
             N_('Power On'),
-            :image   => "power_on",
-            :data    => {'function'      => 'sendDataWithRx',
+            :image                       => "power_on",
+            :data                        => {'function'      => 'sendDataWithRx',
                          'function-data' => '{"type": "power_on", "controller": "physicalServerToolbarController"}'},
-            :confirm => N_("Power on the server?"),
-            :options => {:feature => :power_on}
+            :confirm                     => N_("Power on the server?"),
+            :options                     => {:feature => :power_on}
           ),
           button(
             :physical_server_power_off,
             nil,
             N_('Power off the server'),
             N_('Power Off'),
-            :image   => "power_off",
-            :data    => {'function'      => 'sendDataWithRx',
+            :image                       => "power_off",
+            :data                        => {'function'      => 'sendDataWithRx',
                          'function-data' => '{"type": "power_off", "controller": "physicalServerToolbarController"}'},
-            :confirm => N_("Power off the server?"),
-            :options => {:feature => :power_off}
+            :confirm                     => N_("Power off the server?"),
+            :options                     => {:feature => :power_off}
           ),
           button(
             :physical_server_restart,
             nil,
             N_('Restart the server'),
             N_('Restart'),
-            :image   => "power_reset",
-            :data    => {'function'      => 'sendDataWithRx',
+            :image                       => "power_reset",
+            :data                        => {'function'      => 'sendDataWithRx',
                          'function-data' => '{"type": "restart", "controller": "physicalServerToolbarController"}'},
-            :confirm => N_("Restart the server?"),
-            :options => {:feature => :restart}
+            :confirm                     => N_("Restart the server?"),
+            :options                     => {:feature => :restart}
           ),
         ]
       ),
@@ -83,33 +85,33 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             nil,
             N_('Blink the Identify LED'),
             N_('Blink LED'),
-            :image   => "blank_button",
-            :data    => {'function'      => 'sendDataWithRx',
+            :image                       => "blank_button",
+            :data                        => {'function'      => 'sendDataWithRx',
                          'function-data' => '{"type": "blink_loc_led", "controller": "physicalServerToolbarController"}'},
-            :confirm => N_("Blink the Identify LED?"),
-            :options => {:feature => :blink_loc_led}
+            :confirm                     => N_("Blink the Identify LED?"),
+            :options                     => {:feature => :blink_loc_led}
           ),
           button(
             :physical_server_turn_on_loc_led,
             nil,
             N_('Turn on the Idenfity LED'),
             N_('Turn On LED'),
-            :image   => "blank_button",
-            :data    => {'function'      => 'sendDataWithRx',
+            :image                       => "blank_button",
+            :data                        => {'function'      => 'sendDataWithRx',
                          'function-data' => '{"type": "turn_on_loc_led", "controller": "physicalServerToolbarController"}'},
-            :confirm => N_("Turn on the Identify LED?"),
-            :options => {:feature => :turn_on_loc_led}
+            :confirm                     => N_("Turn on the Identify LED?"),
+            :options                     => {:feature => :turn_on_loc_led}
           ),
           button(
             :physical_server_turn_off_loc_led,
             nil,
             N_('Turn off the Identify LED'),
             N_('Turn Off LED'),
-            :image   => "blank_button",
-            :data    => {'function'      => 'sendDataWithRx',
+            :image                       => "blank_button",
+            :data                        => {'function'      => 'sendDataWithRx',
                          'function-data' => '{"type": "turn_off_loc_led", "controller": "physicalServerToolbarController"}'},
-            :confirm => N_("Turn off the Identify LED?"),
-            :options => {:feature => :turn_off_loc_led}
+            :confirm                     => N_("Turn off the Identify LED?"),
+            :options                     => {:feature => :turn_off_loc_led}
           ),
         ]
       ),
