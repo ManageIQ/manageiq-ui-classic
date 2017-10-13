@@ -16,20 +16,22 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           'pficon pficon-edit fa-lg',
           N_('Select a single Group to edit'),
           N_('Edit the selected Group'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1",
-          :klass     => ApplicationHelper::Button::RbacGroupEdit),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1",
+          :klass        => ApplicationHelper::Button::RbacGroupEdit),
         button(
           :rbac_group_delete,
           'pficon pficon-delete fa-lg',
           N_('Select one or more Groups to delete'),
           N_('Delete selected Groups'),
-          :url_parms => "main_div",
-          :confirm   => N_("Delete all selected Groups?"),
-          :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::RbacGroupDelete),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Delete all selected Groups?"),
+          :enabled      => false,
+          :onwhen       => "1+",
+          :klass        => ApplicationHelper::Button::RbacGroupDelete),
         separator,
         button(
           :rbac_group_seq_edit,
@@ -47,7 +49,7 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
       t,
       :enabled => false,
       :onwhen  => "1+",
-      :items => [
+      :items   => [
         button(
           :rbac_group_tags_edit,
           'pficon pficon-edit fa-lg',
@@ -55,9 +57,10 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
             _('Edit \'%{customer_name}\' Tags for the selected Groups') % {:customer_name => @view_context.session[:customer_name]}
           end,
           t,
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])
