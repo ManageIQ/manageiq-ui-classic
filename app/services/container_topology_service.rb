@@ -39,7 +39,7 @@ class ContainerTopologyService < TopologyService
 
   def build_entity_data(entity)
     data = build_base_entity_data(entity)
-    data[:status] = entity_status(entity)
+    set_entity_status(data, entity)
     data[:display_kind] = entity_display_type(entity)
 
     if (entity.kind_of?(Host) || entity.kind_of?(Vm)) && entity.ext_management_system.present?
@@ -50,29 +50,27 @@ class ContainerTopologyService < TopologyService
   end
 
   def entity_status(entity)
-    if entity.kind_of?(Host) || entity.kind_of?(Vm)
-      status = entity.power_state.capitalize
-    elsif entity.kind_of?(ContainerNode)
-      node_ready_status = entity.container_conditions.find_by(:name => 'Ready').try(:status)
-      status = case node_ready_status
-               when 'True'
-                 'Ready'
-               when 'False'
-                 'NotReady'
-               else
-                 'Unknown'
-               end
-    elsif entity.kind_of?(ContainerGroup)
-      status = entity.phase
-    elsif entity.kind_of?(Container)
-      status = entity.state.try(:capitalize)
-    elsif entity.kind_of?(ContainerReplicator)
-      status = entity.current_replicas == entity.replicas ? 'OK' : 'Warning'
-    elsif entity.kind_of?(ManageIQ::Providers::ContainerManager)
-      status = entity.authentications.empty? ? 'Unknown' : entity.default_authentication.status.capitalize
+    case entity
+    when ContainerReplicator
+      if entity.current_replicas == entity.replicas
+        [_('OK'), 'success']
+      else
+        [_('Warning'), 'warning']
+      end
+
+    when ContainerGroup
+      entity.phase
+
+    when ContainerNode
+      case entity.container_conditions.find_by(:name => 'Ready').try(:status)
+      when 'True'
+        [_('Ready'), 'success']
+      when 'False'
+        [_('NotReady'), 'error']
+      end
+
     else
-      status = 'Unknown'
+      super
     end
-    status
   end
 end

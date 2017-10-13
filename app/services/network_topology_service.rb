@@ -57,7 +57,7 @@ class NetworkTopologyService < TopologyService
 
   def build_entity_data(entity)
     data = build_base_entity_data(entity)
-    data[:status]       = entity_status(entity)
+    set_entity_status(data, entity)
     data[:display_kind] = entity_display_type(entity)
 
     if entity.kind_of?(Host) || entity.kind_of?(Vm)
@@ -69,16 +69,13 @@ class NetworkTopologyService < TopologyService
 
   def entity_status(entity)
     case entity
-    when Vm
-      entity.power_state.nil? ? "Unknown" : entity.power_state.capitalize
-    when ManageIQ::Providers::NetworkManager
-      entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
-    when NetworkRouter, CloudSubnet, CloudNetwork, FloatingIp
-      entity.status ? entity.status.downcase.capitalize : 'Unknown'
-    when CloudTenant
-      entity.enabled? ? "OK" : "Unknown"
+    when CloudNetwork,
+         CloudSubnet,
+         FloatingIp,
+         NetworkRouter
+      entity.status.try(:capitalize)
     else
-      'Unknown'
+      super
     end
   end
 end

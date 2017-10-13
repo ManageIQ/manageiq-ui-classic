@@ -37,7 +37,7 @@ class PhysicalInfraTopologyService < TopologyService
 
   def build_entity_data(entity)
     data = build_base_entity_data(entity)
-    data[:status]       = entity_status(entity)
+    set_entity_status(data, entity)
     data[:display_kind] = entity_display_type(entity)
 
     if entity.try(:ems_id)
@@ -45,14 +45,5 @@ class PhysicalInfraTopologyService < TopologyService
     end
 
     data
-  end
-
-  def entity_status(entity)
-    case entity
-    when ManageIQ::Providers::PhysicalInfraManager
-      entity.authentications.blank? ? _('Unknown') : entity.authentications.first.status.try(:capitalize)
-    else
-      _('Unknown')
-    end
   end
 end

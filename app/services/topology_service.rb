@@ -132,4 +132,70 @@ class TopologyService
     end
     hash
   end
+
+  def entity_status(entity)
+    case entity
+    when ExtManagementSystem
+      entity.default_authentication.status.try(:capitalize) if entity.authentications.present?
+    when Vm, Host
+      entity.power_state.try(:capitalize)
+    when CloudTenant
+      [_('OK'), 'success'] if entity.enabled?
+    when AvailabilityZone
+      [_('OK'), 'success']
+    when Container
+      entity.state.try(:capitalize)
+    end
+  end
+
+  # FIXME: split by source
+  def entity_status_klass(text)
+    case text
+    when 'OK',
+         'Active',
+         'Available',
+         'On',
+         'Ready',
+         'Running',
+         'Succeeded',
+         'Valid',
+         'Enabled'
+      'success'
+    when 'NotReady',
+         'Failed',
+         'Error',
+         'Unreachable',
+         'Down'
+      'error'
+    when 'Warning',
+         'Waiting',
+         'Pending',
+         'Disabled',
+         'Reload required'
+      'warning'
+    when 'Starting'
+      'information' # defined in middleware_topology.css
+    when 'Unknown',
+         'Terminated'
+      'unknown'
+    end
+  end
+
+  def set_entity_status(data, entity)
+    status = entity_status(entity)
+    klasses = %w(success error warning information unknown) << nil
+
+    if status.nil?
+      data[:status] = _("Unknown")
+      data[:status_class] = 'unknown'
+    elsif status.kind_of?(Array)
+      data[:status] = status[0]
+      data[:status_class] = status[1]
+    else # String
+      data[:status] = status
+      data[:status_class] = entity_status_klass(status)
+    end
+
+    raise "Unknown entity status class #{data[:status_class]}" unless klasses.include? data[:status_class]
+  end
 end

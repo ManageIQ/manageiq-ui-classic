@@ -41,7 +41,7 @@ class InfraTopologyService < TopologyService
 
   def build_entity_data(entity)
     data = build_base_entity_data(entity)
-    data[:status]       = entity_status(entity)
+    set_entity_status(data, entity)
     data[:display_kind] = entity_display_type(entity)
 
     if entity.try(:ems_id)
@@ -49,18 +49,5 @@ class InfraTopologyService < TopologyService
     end
 
     data
-  end
-
-  def entity_status(entity)
-    case entity
-    when ManageIQ::Providers::InfraManager
-      entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
-    when Host
-      entity.state ? entity.state.downcase.capitalize : 'Unknown'
-    when Vm
-      entity.power_state.capitalize
-    else
-      'Unknown'
-    end
   end
 end
