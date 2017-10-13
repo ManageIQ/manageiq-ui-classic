@@ -13,9 +13,10 @@ module ApplicationHelper::Toolbar::ConfiguredSystem::AutomationPolicyMixin
              'pficon pficon-edit fa-lg',
              N_('Edit Tags for this Configured System'),
              N_('Edit Tags'),
-             :url       => "tagging",
-             :url_parms => "main_div",
-             :enabled   => true
+             :url          => "tagging",
+             :url_parms    => "main_div",
+             :send_checked => true,
+             :enabled      => true
            ),
          ]
        ),
