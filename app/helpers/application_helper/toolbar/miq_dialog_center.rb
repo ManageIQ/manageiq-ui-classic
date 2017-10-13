@@ -17,8 +17,8 @@ class ApplicationHelper::Toolbar::MiqDialogCenter < ApplicationHelper::Toolbar::
           'fa fa-files-o fa-lg',
           t = N_('Copy this Dialog'),
           t,
-          :url_parms    => "main_div"),
-          :send_checked => true,
+          :url_parms    => "main_div",
+          :send_checked => true),
         button(
           :old_dialogs_delete,
           'pficon pficon-delete fa-lg',

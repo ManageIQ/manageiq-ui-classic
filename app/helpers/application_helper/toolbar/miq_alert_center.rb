@@ -11,8 +11,8 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Alert'),
           t,
-          :url_parms    => "main_div"),
-          :send_checked => true,
+          :url_parms    => "main_div",
+          :send_checked => true),
         button(
           :alert_copy,
           'fa fa-files-o fa-lg',
