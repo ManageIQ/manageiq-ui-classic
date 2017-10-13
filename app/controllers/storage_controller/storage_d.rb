@@ -25,7 +25,7 @@ module StorageController::StorageD
   def miq_search_node
     options = {:model => "Storage"}
     process_show_list(options)
-    @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "Datastore")}
+    @right_cell_text = _("All Datastores")
   end
 
   private #######################
@@ -39,13 +39,13 @@ module StorageController::StorageD
     if treenodeid == "root"
       options = {:model => "Storage"}
       process_show_list(options)
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "Storage")}
+      @right_cell_text = _("All Datastores")
     else
       nodes = treenodeid.split("-")
       if nodes[0] == "ds"
         @right_cell_div = "storage_details"
         @record = Storage.find_by_id(from_cid(nodes.last))
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => "Storage")}
+        @right_cell_text = _("Datastore \"%{name}\"") % {:name => @record.name}
       else
         miq_search_node
        end

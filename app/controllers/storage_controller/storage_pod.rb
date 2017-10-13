@@ -36,7 +36,7 @@ module StorageController::StoragePod
       if nodes[0] == "ds"
         @right_cell_div = "storage_details"
         @record = Storage.find_by_id(from_cid(nodes[1]))
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => "Storage")}
+        @right_cell_text = _("Datastore \"%{name}\"") % {:name => @record.name}
       else
         storage_pod_list
         dsc_id= x_node.split('-').last
