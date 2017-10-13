@@ -13,7 +13,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t,
                        :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
                        :options      => {:feature => :backup_create},
-                       :url_parms    => 'main_div'
+                       :url_parms    => 'main_div',
                        :send_checked => true,
                      ),
                      button(
@@ -23,7 +23,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t,
                        :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
                        :options      => {:feature => :backup_restore},
-                       :url_parms    => 'main_div'
+                       :url_parms    => 'main_div',
                        :send_checked => true,
                      ),
                      button(
@@ -33,7 +33,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t,
                        :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
                        :options      => {:feature => :snapshot_create},
-                       :url_parms    => 'main_div'
+                       :url_parms    => 'main_div',
                        :send_checked => true,
                      ),
                      button(
@@ -43,7 +43,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t,
                        :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
                        :options      => {:feature => :attach_volume},
-                       :url_parms    => 'main_div'
+                       :url_parms    => 'main_div',
                        :send_checked => true,
                      ),
                      button(
@@ -52,7 +52,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t = N_('Detach this Cloud Volume from an Instance'),
                        t,
                        :klass        => ApplicationHelper::Button::VolumeDetach,
-                       :url_parms    => 'main_div'
+                       :url_parms    => 'main_div',
                        :send_checked => true,
                      ),
                      button(
@@ -60,7 +60,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        'pficon pficon-edit fa-lg',
                        t = N_('Edit this Cloud Volume'),
                        t,
-                       :url_parms    => 'main_div'
+                       :url_parms    => 'main_div',
                        :send_checked => true,
                      ),
                      button(
