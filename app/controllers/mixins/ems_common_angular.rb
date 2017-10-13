@@ -117,8 +117,7 @@ module Mixins
       user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
       case ems.to_s
       when 'ManageIQ::Providers::Openstack::CloudManager'
-        auth_url = ems.auth_url(params[:default_hostname], params[:default_api_port])
-        [user, password, auth_url]
+        [password, params.except(:default_password)]
       when 'ManageIQ::Providers::Amazon::CloudManager'
         [user, password, :EC2, params[:provider_region], nil, true]
       when 'ManageIQ::Providers::Azure::CloudManager'
