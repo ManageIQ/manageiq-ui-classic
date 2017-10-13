@@ -13,7 +13,7 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
             'pficon pficon-edit fa-lg',
             t = N_('Edit this Router'),
             t,
-            :url_parms    => 'main_div'
+            :url_parms    => 'main_div',
             :send_checked => true,
           ),
           button(
