@@ -14,9 +14,10 @@ class ApplicationHelper::Toolbar::MiddlewareMessagingsCenter < ApplicationHelper
                        'pficon pficon-edit fa-lg',
                        N_('Edit Tags for these Middleware mesagings'),
                        N_('Edit Tags'),
-                       :url_parms => "main_div",
-                       :enabled   => false,
-                       :onwhen    => "1+"),
+                       :url_parms    => "main_div",
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => "1+"),
                    ]
                  ),
                ])
