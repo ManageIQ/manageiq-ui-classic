@@ -2618,6 +2618,7 @@ Rails.application.routes.draw do
 
     :ops                      => {
       :get  => %w(
+        dialog_load
         explorer
         fetch_audit_log
         fetch_build
@@ -2643,6 +2644,7 @@ Rails.application.routes.draw do
         ap_set_active_tab
         aps_list
         automate_schedules_set_vars
+        button
         category_delete
         category_edit
         category_field_changed

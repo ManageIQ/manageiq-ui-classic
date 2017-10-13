@@ -94,6 +94,10 @@ class OpsController < ApplicationController
     generic_x_button(OPS_X_BUTTON_ALLOWED_ACTIONS)
   end
 
+  def button
+    custom_buttons if params[:pressed] == 'custom_button'
+  end
+
   def explorer
     @explorer = true
     @trees = []
