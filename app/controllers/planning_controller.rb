@@ -179,7 +179,7 @@ class PlanningController < ApplicationController
 
     @sb = {}
 
-    planning_build_options
+    build_options
   end
 
   private

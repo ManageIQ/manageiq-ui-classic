@@ -48,5 +48,29 @@ describe PlanningController do
       sb = controller.instance_variable_get(:@sb)
       expect(sb[:vms]).to eq(@vm1.id.to_s => @vm1.name, @vm3.id.to_s => @vm3.name, @vm4.id.to_s => @vm4.name)
     end
+
+    it 'successfully resets data' do
+      allow(controller).to receive(:render)
+      controller.instance_variable_set(:@sb, :vms => {}, :options => {})
+      controller.send(:reset)
+      sb = controller.instance_variable_get(:@sb)
+      sb_result = {
+        :options    => {
+          :time_profile      => nil,
+          :time_profile_tz   => nil,
+          :time_profile_days => nil,
+          :tz                => nil
+        },
+        :emss       => {},
+        :clusters   => {},
+        :hosts      => {
+          @host1.id.to_s => "Host1",
+          @host2.id.to_s => "Host2"
+        },
+        :datastores => {},
+        :vm_filters => {}
+      }
+      expect(sb).to eq(sb_result)
+    end
   end
 end
