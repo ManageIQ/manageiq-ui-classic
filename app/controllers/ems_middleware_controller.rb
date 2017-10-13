@@ -14,6 +14,10 @@ class EmsMiddlewareController < ApplicationController
     ManageIQ::Providers::MiddlewareManager
   end
 
+  def self.default_show_template
+    "ems_middleware/show"
+  end
+
   def self.table_name
     @table_name ||= "ems_middleware"
   end

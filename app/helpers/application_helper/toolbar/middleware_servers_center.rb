@@ -45,4 +45,54 @@ class ApplicationHelper::Toolbar::MiddlewareServersCenter < ApplicationHelper::T
       ]
     ),
   ])
+  button_group('middleware_servers_datasources',
+               [
+                 select(
+                   :middleware_servers_datasources_choice,
+                   'fa fa-database fa-lg',
+                   t = N_('Datasources'),
+                   t,
+                   :enabled => false,
+                   :onwhen  => "1+",
+                   :items   => [
+                     button(
+                       :middleware_datasource_add,
+                       'fa fa-database fa-lg',
+                       N_('Add a new Middleware Datasource on selected servers'),
+                       N_('Add Datasource'),
+                       :data    => {'toggle'        => 'modal',
+                                    'target'        => '#modal_ds_div',
+                                    'function'      => 'miqCallAngular',
+                                    'function-data' => '{"name": "showDatasourceListener", "args": []}'},
+                       :enabled => false,
+                       :onwhen  => "1+"
+                     )
+                   ]
+                 )
+               ])
+  button_group('middleware_servers_jdbc_drivers',
+               [
+                 select(
+                   :middleware_servers_jdbc_drivers_choice,
+                   'fa fa-plug fa-lg',
+                   t = N_('JDBC Drivers'),
+                   t,
+                   :enabled => false,
+                   :onwhen  => "1+",
+                   :items   => [
+                     button(
+                       :middleware_jdbc_driver_add,
+                       'fa fa-plug fa-lg',
+                       N_('Add a new Middleware JDBC Driver on selected servers'),
+                       N_('Add JDBC Driver'),
+                       :data    => {'toggle'        => 'modal',
+                                    'target'        => '#modal_jdbc_div',
+                                    'function'      => 'miqCallAngular',
+                                    'function-data' => '{"name": "showJdbcDriverListener", "args": []}'},
+                       :enabled => false,
+                       :onwhen  => "1+"
+                     )
+                   ]
+                 )
+               ])
 end
