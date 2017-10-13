@@ -311,7 +311,7 @@ module MiqPolicyController::AlertProfiles
       [ui_lookup(:model => db), db]
     end
     #   @folders = ["Compliance", "Control"]
-    @right_cell_text = _("All %{records}") % {:records => ui_lookup(:models => "MiqAlertSet")}
+    @right_cell_text = _("All Alert Profiles")
     @right_cell_div = "alert_profile_folders"
   end
 
@@ -319,7 +319,7 @@ module MiqPolicyController::AlertProfiles
     @alert_profiles = MiqAlertSet.all.sort_by { |as| as.description.downcase }
     set_search_text
     @alert_profiles = apply_search_filter(@search_text, @alert_profiles) unless @search_text.blank?
-    @right_cell_text = _("All %{records}") % {:records => ui_lookup(:models => "MiqAlertSet")}
+    @right_cell_text = _("All Alert Profiles")
     @right_cell_div = "alert_profile_list"
   end
 
