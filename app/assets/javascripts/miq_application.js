@@ -1411,22 +1411,7 @@ function miqToolbarOnClick(_e) {
   }
 
   // put url_parms into params var, if defined
-  var params;
-  if (button.data('url_parms')) {
-    if (button.data('url_parms').match('_div$')) {
-      if (ManageIQ.gridChecks.length) {
-        params = 'miq_grid_checks=' + ManageIQ.gridChecks.join(',');
-      } else {
-        params = miqSerializeForm(button.data('url_parms'));
-      }
-    } else if (button.data('url_parms').match('id=LIST')) {
-      // this is used by custom buttons in lists
-      params = button.data('url_parms').split("?")[1] +
-        '&miq_grid_checks=' + ManageIQ.gridChecks.join(',');
-    } else {
-      params = button.data('url_parms').split('?')[1];
-    }
-  }
+  var params = getParams(button.data('url_parms'));
 
   // TODO:
   // Checking for perf_reload button to not turn off spinning Q (will be done after charts are drawn).
@@ -1448,6 +1433,27 @@ function miqToolbarOnClick(_e) {
 
   miqJqueryRequest(tb_url, options);
   return false;
+
+  function getParams(url_parms) {
+    if (! url_parms) {
+      return undefined;
+    }
+
+    if (url_parms.match('_div$')) {
+      if (ManageIQ.gridChecks.length) {
+        return 'miq_grid_checks=' + ManageIQ.gridChecks.join(',');
+      }
+
+      return miqSerializeForm(url_parms);
+    }
+
+    if (url_parms.match('id=LIST')) {
+      // this is used by custom buttons in lists
+      return url_parms.split("?")[1] + '&miq_grid_checks=' + ManageIQ.gridChecks.join(',');
+    }
+
+    return url_parms.split('?')[1];
+  }
 }
 
 function miqSupportCasePrompt(tb_url) {
