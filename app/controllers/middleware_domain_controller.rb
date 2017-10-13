@@ -10,10 +10,13 @@ class MiddlewareDomainController < ApplicationController
   after_action :set_session_data
 
   OPERATIONS = {
-    :middleware_domain_stop => {:op   => :stop_middleware_server,
-                                :skip => true,
-                                :hawk => N_('stopping'),
-                                :msg  => N_('Stopping selected domain(s)')}
+    :middleware_domain_stop => {
+      :op           => :stop_middleware_server,
+      :log_timeline => 'MwDomain.Stop.UserRequest',
+      :skip         => true,
+      :hawk         => N_('stopping'),
+      :msg          => N_('Stopping selected domain(s)')
+    }
   }.freeze
 
   def self.display_methods

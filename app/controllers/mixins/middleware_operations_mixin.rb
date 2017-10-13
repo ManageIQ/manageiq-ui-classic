@@ -93,8 +93,26 @@ module Mixins::MiddlewareOperationsMixin
       else
         run_operation_on_record(operation_info, item_record)
         operation_triggered = true
+        log_operation_in_timeline(operation_info, item_record)
       end
     end
     operation_triggered
+  end
+
+  def log_operation_in_timeline(operation_info, mw_item)
+    if operation_info.fetch(:log_timeline, false)
+      EmsEvent.add_queue(
+        'add', mw_item.ext_management_system.id,
+        :ems_id          => mw_item.ext_management_system.id,
+        :source          => 'EVM',
+        :timestamp       => Time.zone.now,
+        :event_type      => operation_info.fetch(:log_timeline),
+        :message         => _('%{server} will be %{operation} per user request') %
+          {:operation => operation_info.fetch(:hawk), :server => mw_item.name},
+        :middleware_ref  => mw_item.ems_ref,
+        :middleware_type => mw_item.class.name.demodulize,
+        :username        => current_userid
+      )
+    end
   end
 end

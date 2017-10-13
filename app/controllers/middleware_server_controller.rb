@@ -12,84 +12,109 @@ class MiddlewareServerController < ApplicationController
   after_action :set_session_data
 
   COMMON_OPERATIONS = {
-    :middleware_server_reload  => {:op   => :reload_middleware_server,
-                                   :skip => true,
-                                   :hawk => N_('reloading'),
-                                   :msg  => N_('Reload')
+    :middleware_server_reload  => {
+      :op           => :reload_middleware_server,
+      :log_timeline => 'MwServer.Reload.UserRequest',
+      :skip         => true,
+      :hawk         => N_('reloading'),
+      :msg          => N_('Reload')
     },
-    :middleware_server_suspend => {:op    => :suspend_middleware_server,
-                                   :skip  => true,
-                                   :hawk  => N_('suspending'),
-                                   :msg   => N_('Suspend'),
-                                   :param => :timeout
+    :middleware_server_suspend => {
+      :op           => :suspend_middleware_server,
+      :log_timeline => 'MwServer.Suspend.UserRequest',
+      :skip         => true,
+      :hawk         => N_('suspending'),
+      :msg          => N_('Suspend'),
+      :param        => :timeout
     },
-    :middleware_server_resume  => {:op   => :resume_middleware_server,
-                                   :skip => true,
-                                   :hawk => N_('resuming'),
-                                   :msg  => N_('Resume')
+    :middleware_server_resume  => {
+      :op           => :resume_middleware_server,
+      :log_timeline => 'MwServer.Resume.UserRequest',
+      :skip         => true,
+      :hawk         => N_('resuming'),
+      :msg          => N_('Resume')
     },
-    :middleware_dr_generate    => {:op   => :generate_diagnostic_report,
-                                   :skip => false,
-                                   :hawk => N_('generating JDR report'),
-                                   :msg  => N_('Generate JDR report')}
+    :middleware_dr_generate    => {
+      :op   => :generate_diagnostic_report,
+      :skip => false,
+      :hawk => N_('generating JDR report'),
+      :msg  => N_('Generate JDR report')
+    }
   }.freeze
 
   STANDALONE_ONLY = {
-    :middleware_server_stop     => {:op   => :stop_middleware_server,
-                                    :skip => true,
-                                    :hawk => N_('stopping'),
-                                    :msg  => N_('Stop')
+    :middleware_server_stop     => {
+      :op           => :stop_middleware_server,
+      :log_timeline => 'MwServer.Shutdown.UserRequest',
+      :skip         => true,
+      :hawk         => N_('stopping'),
+      :msg          => N_('Stop')
     },
-    :middleware_server_shutdown => {:op    => :shutdown_middleware_server,
-                                    :skip  => true,
-                                    :hawk  => N_('shutting down'),
-                                    :msg   => N_('Shutdown'),
-                                    :param => :timeout
+    :middleware_server_shutdown => {
+      :op           => :shutdown_middleware_server,
+      :log_timeline => 'MwServer.Shutdown.UserRequest',
+      :skip         => true,
+      :hawk         => N_('shutting down'),
+      :msg          => N_('Shutdown'),
+      :param        => :timeout
     },
-    :middleware_server_restart  => {:op   => :restart_middleware_server,
-                                    :skip => true,
-                                    :hawk => N_('restarting'),
-                                    :msg  => N_('Restart')
+    :middleware_server_restart  => {
+      :op           => :restart_middleware_server,
+      :log_timeline => 'MwServer.Restart.UserRequest',
+      :skip         => true,
+      :hawk         => N_('restarting'),
+      :msg          => N_('Restart')
     },
-    :middleware_add_deployment  => {:op    => :add_middleware_deployment,
-                                    :skip  => false,
-                                    :hawk  => N_('Not deploying to Hawkular server'),
-                                    :msg   => N_('Deployment initiated for selected server(s)'),
-                                    :param => :file
+    :middleware_add_deployment  => {
+      :op    => :add_middleware_deployment,
+      :skip  => false,
+      :hawk  => N_('Not deploying to Hawkular server'),
+      :msg   => N_('Deployment initiated for selected server(s)'),
+      :param => :file
     },
-    :middleware_add_jdbc_driver => {:op    => :add_middleware_jdbc_driver,
-                                    :skip  => false,
-                                    :msg   => N_('JDBC Driver installation'),
-                                    :param => :driver
+    :middleware_add_jdbc_driver => {
+      :op    => :add_middleware_jdbc_driver,
+      :skip  => false,
+      :msg   => N_('JDBC Driver installation'),
+      :param => :driver
     },
-    :middleware_add_datasource  => {:op    => :add_middleware_datasource,
-                                    :skip  => false,
-                                    :hawk  => N_('Not adding new datasource to Hawkular server'),
-                                    :msg   => N_('New datasource initiated for selected server(s)'),
-                                    :param => :datasource
+    :middleware_add_datasource  => {
+      :op    => :add_middleware_datasource,
+      :skip  => false,
+      :hawk  => N_('Not adding new datasource to Hawkular server'),
+      :msg   => N_('New datasource initiated for selected server(s)'),
+      :param => :datasource
     }
   }.freeze
 
   DOMAIN_ONLY = {
-    :middleware_domain_server_start   => {:op   => :start_middleware_domain_server,
-                                          :skip => true,
-                                          :hawk => N_('starting'),
-                                          :msg  => N_('Start')
+    :middleware_domain_server_start   => {
+      :op           => :start_middleware_domain_server,
+      :log_timeline => 'MwServer.Start.UserRequest',
+      :skip         => true,
+      :hawk         => N_('starting'),
+      :msg          => N_('Start')
     },
-    :middleware_domain_server_stop    => {:op   => :stop_middleware_domain_server,
-                                          :skip => true,
-                                          :hawk => N_('stopping'),
-                                          :msg  => N_('Stop')
+    :middleware_domain_server_stop    => {
+      :op           => :stop_middleware_domain_server,
+      :log_timeline => 'MwServer.Stop.UserRequest',
+      :skip         => true,
+      :hawk         => N_('stopping'),
+      :msg          => N_('Stop')
     },
-    :middleware_domain_server_restart => {:op   => :restart_middleware_domain_server,
-                                          :skip => true,
-                                          :hawk => N_('restarting'),
-                                          :msg  => N_('Restart')
+    :middleware_domain_server_restart => {
+      :op           => :restart_middleware_domain_server,
+      :log_timeline => 'MwServer.Restart.UserRequest',
+      :skip         => true,
+      :hawk         => N_('restarting'),
+      :msg          => N_('Restart')
     },
-    :middleware_domain_server_kill    => {:op   => :kill_middleware_domain_server,
-                                          :skip => true,
-                                          :hawk => N_('killing'),
-                                          :msg  => N_('Kill')
+    :middleware_domain_server_kill    => {
+      :op           => :kill_middleware_domain_server,
+      :log_timeline => 'MwServer.Kill.UserRequest',
+      :skip         => true,
+      :hawk         => N_('killing'),
+      :msg          => N_('Kill')
     },
   }.freeze
 
@@ -295,6 +320,7 @@ class MiddlewareServerController < ApplicationController
         render :json => {:status => :ok, :msg => skip_message}
       else
         operation_triggered = trigger_param_operation(operation_info, mw_server, :param)
+        log_operation_in_timeline(operation_info, mw_server)
       end
       if operation_triggered
         initiated_msg = _("%{operation} initiated for selected server(s)") % {:operation => operation_info.fetch(:msg)}
@@ -332,6 +358,7 @@ class MiddlewareServerController < ApplicationController
           run_operation_on_record(operation_info, mw_server)
         end
         operation_triggered = true
+        log_operation_in_timeline(operation_info, mw_server)
       end
     end
     add_flash(_("%{operation} initiated for selected server(s)") % {:operation => operation_info.fetch(:msg)}) if operation_triggered
@@ -339,21 +366,22 @@ class MiddlewareServerController < ApplicationController
 
   def trigger_mw_operation(operation, mw_server, params = nil)
     mw_manager = mw_server.ext_management_system
-    path = mw_server.ems_ref
 
-    # in domain mode case we want to run the operation on the server-config DMR resource
-    if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
-      path = path.sub(/%2Fserver%3D/, '%2Fserver-config%3D')
+    if mw_server.kind_of?(MiddlewareDeployment)
+      mw_manager.public_send(operation, mw_server.ems_ref, mw_server.name)
+    else
+      target_resource = mw_server.ems_ref
+
+      extra_params = []
+      extra_params << params if params
+
+      if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
+        extra_params << {:original_resource_path => target_resource}
+        target_resource = target_resource.sub(/%2Fserver%3D/, '%2Fserver-config%3D')
+      end
+
+      mw_manager.public_send(operation, target_resource, *extra_params)
     end
-
-    args = [operation, path]
-    if mw_server.instance_of?(MiddlewareDeployment)
-      args << mw_server.name
-    elsif params
-      args << params
-    end
-
-    mw_manager.public_send(*args)
   end
 
   menu_section :mdl
