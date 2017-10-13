@@ -60,7 +60,6 @@ module ApplicationHelper::PageLayouts
       all_tasks
       miq_request_ae
       miq_request_host
-      miq_request_service
       miq_request_vm
       my_tasks
     ).include?(@layout) && params[:action] != 'show'

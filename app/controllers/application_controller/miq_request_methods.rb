@@ -520,7 +520,6 @@ module ApplicationController::MiqRequestMethods
     case tab_name
     when "ae"                then "miq_request_ae"
     when "host"              then "miq_request_host"
-    when "service"           then "miq_request_service"
     else                          "miq_request_vm"  # Includes "vm"
     end
   end
