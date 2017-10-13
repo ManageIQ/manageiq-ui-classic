@@ -183,6 +183,7 @@ ManageIQ.angular.app.service('topologyService', function() {
       case 'Error':
       case 'Unreachable':
       case 'Down':
+      case 'Inactive':
         return 'error';
       case 'Warning':
       case 'Waiting':
