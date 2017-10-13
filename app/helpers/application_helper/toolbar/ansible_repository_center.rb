@@ -5,8 +5,9 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
       'fa fa-repeat fa-lg',
       N_('Reload the current display'),
       N_('Reload'),
-      :url_parms => "main_div",
-      :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck),
+      :url_parms    => "main_div",
+      :send_checked => true,
+      :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck),
   ])
   button_group('ansible_repository', [
     select(
@@ -20,11 +21,11 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
           'fa fa-refresh fa-lg',
           N_('Refresh this Repository'),
           N_('Refresh this Repository'),
-          :klass => ApplicationHelper::Button::EmbeddedAnsible,
-          :url       => "repository_refresh",
-          :confirm   => N_("Refresh this Repository?"),
-          :enabled   => true,
-          :onwhen    => "1"),
+          :klass   => ApplicationHelper::Button::EmbeddedAnsible,
+          :url     => "repository_refresh",
+          :confirm => N_("Refresh this Repository?"),
+          :enabled => true,
+          :onwhen  => "1"),
         separator,
         button(
           :embedded_configuration_script_source_edit,
@@ -32,13 +33,13 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
           t = N_('Edit this Repository'),
           t,
           :klass => ApplicationHelper::Button::EmbeddedAnsible,
-          :url => "/edit"),
+          :url   => "/edit"),
         button(
           :embedded_configuration_script_source_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Repository from Inventory'),
           t,
-          :klass => ApplicationHelper::Button::EmbeddedAnsible,
+          :klass     => ApplicationHelper::Button::EmbeddedAnsible,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: The selected Repository will be permanently removed!")),
       ]
