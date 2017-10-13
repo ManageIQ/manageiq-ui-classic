@@ -5,8 +5,8 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
       'fa fa-repeat fa-lg',
       N_('Reload the current display'),
       N_('Reload'),
-      :url_parms    => "main_div"),
-      :send_checked => true,
+      :url_parms    => "main_div",
+      :send_checked => true),
   ])
   button_group('miq_task_delete', [
     select(

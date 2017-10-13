@@ -12,8 +12,8 @@ class ApplicationHelper::Toolbar::ServicetemplatecatalogCenter < ApplicationHelp
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Item'),
           t,
-          :url_parms    => "main_div"),
-          :send_checked => true,
+          :url_parms    => "main_div",
+          :send_checked => true),
         button(
           :st_catalog_delete,
           'pficon pficon-delete fa-lg',

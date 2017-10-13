@@ -141,8 +141,8 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           t,
           :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options      => {:feature => :live_migrate},
-          :url_parms    => 'main_div'),
-          :send_checked => true,
+          :url_parms    => 'main_div',
+          :send_checked => true),
         button(
           :instance_evacuate,
           'fa fa-reply fa-rotate-90 fa-lg',
@@ -150,8 +150,8 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           t,
           :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options      => {:feature => :evacuate},
-          :url_parms    => 'main_div')
-          :send_checked => true,
+          :url_parms    => 'main_div',
+          :send_checked => true),
       ]
     ),
   ])

@@ -49,8 +49,8 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Service'),
           N_('Edit Tags'),
-          :url_parms    => "main_div"),
-          :send_checked => true,
+          :url_parms    => "main_div",
+          :send_checked => true),
       ]
     ),
   ])

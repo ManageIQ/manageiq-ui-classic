@@ -18,8 +18,8 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           t,
           :enabled      => false,
           :onwhen       => "1",
-          :url_parms    => "edit_div"),
-          :send_checked => true,
+          :url_parms    => "edit_div",
+          :send_checked => true),
         button(
           :generic_object_definition_delete,
           'pficon pficon-delete fa-lg',
