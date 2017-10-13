@@ -9,4 +9,11 @@ module ParamsHelper
     end
     target
   end
+
+  def copy_boolean_params(target, source, list)
+    list.each do |key|
+      target[key] = source[key] == "true"
+    end
+    target
+  end
 end
