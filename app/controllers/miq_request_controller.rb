@@ -550,21 +550,19 @@ class MiqRequestController < ApplicationController
     if @lastaction == "show_list" # showing a list
       miq_requests = find_checked_items
       if miq_requests.empty?
-        add_flash(_("No %{model} were selected for deletion") % {:model => ui_lookup(:tables => "miq_request")}, :error)
+        add_flash(_("No Requests were selected for deletion"), :error)
       end
       process_requests(miq_requests, "destroy") unless miq_requests.empty?
-      add_flash(_("The selected %{tables} were deleted") %
-        {:tables => ui_lookup(:tables => "miq_request")}) unless flash_errors?
+      add_flash(_("The selected Requests were deleted")) unless flash_errors?
     else # showing 1 request, delete it
       if params[:id].nil? || MiqRequest.find_by_id(params[:id]).nil?
-        add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "miq_request")}, :error)
+        add_flash(_("Request no longer exists"), :error)
       else
         miq_requests.push(params[:id])
       end
       @single_delete = true
       process_requests(miq_requests, "destroy") unless miq_requests.empty?
-      add_flash(_("The selected %{table} was deleted") %
-        {:table => ui_lookup(:table => "miq_request")}) unless flash_errors?
+      add_flash(_("The selected Request was deleted")) unless flash_errors?
     end
     show_list
     @refresh_partial = "layouts/gtl"
@@ -585,18 +583,17 @@ class MiqRequestController < ApplicationController
       begin
         miq_request.public_send(task.to_sym) if miq_request.respond_to?(task)    # Run the task
       rescue => bang
-        add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{message}") %
-                      {:model   => ui_lookup(:model => "MiqRequest"),
-                       :name    => request_name,
+        add_flash(_("Request \"%{name}\": Error during '%{task}': %{message}") %
+                      {:name    => request_name,
                        :task    => task,
                        :message => bang.message},
                   :error)
       else
         if task == "destroy"
           AuditEvent.success(audit)
-          add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => ui_lookup(:model => "MiqRequest"), :name => request_name})
+          add_flash(_("Request \"%{name}\": Delete successful") % {:name => request_name})
         else
-          add_flash(_("%{model} \"%{name}\": %{task} successfully initiated") % {:model => ui_lookup(:model => "MiqRequest"), :name => request_name, :task => task})
+          add_flash(_("Request \"%{name}\": %{task} successfully initiated") % {:name => request_name, :task => task})
         end
       end
     end
