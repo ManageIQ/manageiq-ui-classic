@@ -44,7 +44,7 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
   };
 
   this.isModelValueNil = function(value) {
-    return value === null || value === '';
+    return value === undefined || value === null || value === '';
   };
 
   this.resetAll = function(model) {
