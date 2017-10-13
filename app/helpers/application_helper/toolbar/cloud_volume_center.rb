@@ -11,59 +11,66 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        'pficon pficon-volume fa-lg',
                        t = N_('Create a Backup of this Cloud Volume'),
                        t,
-                       :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-                       :options   => {:feature => :backup_create},
-                       :url_parms => 'main_div'
+                       :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+                       :options      => {:feature => :backup_create},
+                       :url_parms    => 'main_div'
+                       :send_checked => true,
                      ),
                      button(
                        :cloud_volume_backup_restore,
                        'pficon pficon-volume fa-lg',
                        t = N_('Restore from a Backup of this Cloud Volume'),
                        t,
-                       :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-                       :options   => {:feature => :backup_restore},
-                       :url_parms => 'main_div'
+                       :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+                       :options      => {:feature => :backup_restore},
+                       :url_parms    => 'main_div'
+                       :send_checked => true,
                      ),
                      button(
                        :cloud_volume_snapshot_create,
                        'pficon pficon-volume fa-lg',
                        t = N_('Create a Snapshot of this Cloud Volume'),
                        t,
-                       :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-                       :options   => {:feature => :snapshot_create},
-                       :url_parms => 'main_div'
+                       :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+                       :options      => {:feature => :snapshot_create},
+                       :url_parms    => 'main_div'
+                       :send_checked => true,
                      ),
                      button(
                        :cloud_volume_attach,
                        'pficon pficon-volume fa-lg',
                        t = N_('Attach this Cloud Volume to an Instance'),
                        t,
-                       :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-                       :options   => {:feature => :attach_volume},
-                       :url_parms => 'main_div'
+                       :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+                       :options      => {:feature => :attach_volume},
+                       :url_parms    => 'main_div'
+                       :send_checked => true,
                      ),
                      button(
                        :cloud_volume_detach,
                        'pficon pficon-volume fa-lg',
                        t = N_('Detach this Cloud Volume from an Instance'),
                        t,
-                       :klass     => ApplicationHelper::Button::VolumeDetach,
-                       :url_parms => 'main_div'
+                       :klass        => ApplicationHelper::Button::VolumeDetach,
+                       :url_parms    => 'main_div'
+                       :send_checked => true,
                      ),
                      button(
                        :cloud_volume_edit,
                        'pficon pficon-edit fa-lg',
                        t = N_('Edit this Cloud Volume'),
                        t,
-                       :url_parms => 'main_div'
+                       :url_parms    => 'main_div'
+                       :send_checked => true,
                      ),
                      button(
                        :cloud_volume_delete,
                        'pficon pficon-delete fa-lg',
                        t = N_('Delete this Cloud Volume'),
                        t,
-                       :url_parms => 'main_div',
-                       :confirm   => N_('Warning: This Cloud Volume and ALL of its components will be removed!')
+                       :url_parms    => 'main_div',
+                       :send_checked => true,
+                       :confirm      => N_('Warning: This Cloud Volume and ALL of its components will be removed!')
                      ),
                    ]
                  )
