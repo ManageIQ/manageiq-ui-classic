@@ -36,7 +36,8 @@ class ApplicationHelper::Toolbar::ContainerCenter < ApplicationHelper::Toolbar::
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Container'),
           N_('Edit Tags'),
-          :url_parms => "main_div"),
+          :url_parms    => "main_div",
+          :send_checked => true),
       ]
     ),
   ])

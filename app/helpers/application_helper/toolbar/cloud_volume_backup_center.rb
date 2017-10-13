@@ -11,7 +11,8 @@ class ApplicationHelper::Toolbar::CloudVolumeBackupCenter < ApplicationHelper::T
                        'pficon pficon-volume fa-lg',
                        t = N_('Restore backup to Cloud Volume'),
                        t,
-                       :url_parms => 'main_div',
+                       :url_parms    => 'main_div',
+                       :send_checked => true,
                      ),
                    ]
                  )

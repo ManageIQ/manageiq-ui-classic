@@ -17,18 +17,20 @@ class ApplicationHelper::Toolbar::CloudTenantsCenter < ApplicationHelper::Toolba
           'pficon pficon-edit fa-lg',
           N_('Select a single Cloud Tenant to edit'),
           N_('Edit Selected Cloud Tenant'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1"),
         button(
           :cloud_tenant_delete,
           'pficon pficon-delete fa-lg',
           N_('Delete selected Cloud Tenants'),
           N_('Delete Cloud Tenants'),
-          :url_parms => "main_div",
-          :confirm   => N_("Warning: The selected Cloud Tenants will be permanently deleted!"),
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Warning: The selected Cloud Tenants will be permanently deleted!"),
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])
@@ -40,15 +42,16 @@ class ApplicationHelper::Toolbar::CloudTenantsCenter < ApplicationHelper::Toolba
       t,
       :enabled => false,
       :onwhen  => "1+",
-      :items => [
+      :items   => [
         button(
           :cloud_tenant_tag,
           'pficon pficon-edit fa-lg',
           N_('Edit tags for the selected items'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

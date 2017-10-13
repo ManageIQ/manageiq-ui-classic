@@ -11,9 +11,10 @@ class ApplicationHelper::Toolbar::CloudVolumeBackupsCenter < ApplicationHelper::
                        'pficon pficon-volume fa-lg',
                        t = N_('Restore backup to Cloud Volume'),
                        t,
-                       :url_parms => 'main_div',
-                       :enabled   => false,
-                       :onwhen    => '1'
+                       :url_parms    => 'main_div',
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => '1'
                      ),
                      separator,
                      button(
@@ -21,10 +22,11 @@ class ApplicationHelper::Toolbar::CloudVolumeBackupsCenter < ApplicationHelper::
                        'pficon pficon-delete fa-lg',
                        t = N_('Delete selected Backups'),
                        t,
-                       :url_parms => 'main_div',
-                       :confirm   => N_('Warning: The selected Cloud Volume Backups will be removed!'),
-                       :enabled   => false,
-                       :onwhen    => '1+'
+                       :url_parms    => 'main_div',
+                       :send_checked => true,
+                       :confirm      => N_('Warning: The selected Cloud Volume Backups will be removed!'),
+                       :enabled      => false,
+                       :onwhen       => '1+'
                      ),
                    ]
                  )
@@ -43,9 +45,10 @@ class ApplicationHelper::Toolbar::CloudVolumeBackupsCenter < ApplicationHelper::
           'pficon pficon-edit fa-lg',
           N_('Edit tags for the selected items'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])
