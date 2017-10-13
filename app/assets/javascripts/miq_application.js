@@ -1411,7 +1411,7 @@ function miqToolbarOnClick(_e) {
   }
 
   // put url_parms into params var, if defined
-  var params = getParams(button.data('url_parms'));
+  var params = getParams(button.data('url_parms'), !! button.data('send_checked'));
 
   // TODO:
   // Checking for perf_reload button to not turn off spinning Q (will be done after charts are drawn).
@@ -1434,25 +1434,24 @@ function miqToolbarOnClick(_e) {
   miqJqueryRequest(tb_url, options);
   return false;
 
-  function getParams(url_parms) {
-    if (! url_parms) {
-      return undefined;
+  function getParams(url_parms, send_checked) {
+    var params = [];
+
+    if (url_parms && (url_parms[0] === '?')) {
+      params.push( url_parms.slice(1) );
     }
 
-    if (url_parms.match('_div$')) {
-      if (ManageIQ.gridChecks.length) {
-        return 'miq_grid_checks=' + ManageIQ.gridChecks.join(',');
-      }
-
-      return miqSerializeForm(url_parms);
+    // FIXME - don't depend on length
+    // (but then params[:miq_grid_checks] || params[:id] does the wrong thing)
+    if (send_checked && ManageIQ.gridChecks.length) {
+      params.push('miq_grid_checks=' + ManageIQ.gridChecks.join(','));
     }
 
-    if (url_parms.match('id=LIST')) {
-      // this is used by custom buttons in lists
-      return url_parms.split("?")[1] + '&miq_grid_checks=' + ManageIQ.gridChecks.join(',');
+    if (url_parms && url_parms.match('_div$')) {
+      params.push(miqSerializeForm(url_parms));
     }
 
-    return url_parms.split('?')[1];
+    return _.filter(params).join('&') || undefined;
   }
 }
 
