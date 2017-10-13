@@ -12,8 +12,8 @@ class ApplicationHelper::Toolbar::CatalogitemButtonsCenter < ApplicationHelper::
           t = N_('Edit this Button Group'),
           t,
           :klass        => ApplicationHelper::Button::CatalogItemButton,
-          :url_parms    => "main_div"),
-          :send_checked => true,
+          :url_parms    => "main_div",
+          :send_checked => true),
         button(
           :ab_button_new,
           'pficon pficon-add-circle-o fa-lg',

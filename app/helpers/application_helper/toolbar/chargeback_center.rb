@@ -61,8 +61,8 @@ class ApplicationHelper::Toolbar::ChargebackCenter < ApplicationHelper::Toolbar:
           t = N_('Copy this Chargeback Rate'),
           t,
           :klass        => ApplicationHelper::Button::ChargebackRates,
-          :url_parms    => "main_div"),
-          :send_checked => true,
+          :url_parms    => "main_div",
+          :send_checked => true),
         button(
           :chargeback_rates_delete,
           'pficon pficon-delete fa-lg',

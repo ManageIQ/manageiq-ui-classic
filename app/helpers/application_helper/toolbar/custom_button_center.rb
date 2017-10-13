@@ -11,8 +11,8 @@ class ApplicationHelper::Toolbar::CustomButtonCenter < ApplicationHelper::Toolba
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Button'),
           t,
-          :url_parms    => "main_div"),
-          :send_checked => true,
+          :url_parms    => "main_div",
+          :send_checked => true),
         button(
           :ab_button_delete,
           'pficon pficon-delete fa-lg',
