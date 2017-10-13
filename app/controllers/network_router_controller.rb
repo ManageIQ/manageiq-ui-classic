@@ -98,7 +98,7 @@ class NetworkRouterController < ApplicationController
       @network_provider_choices[network_manager.name] = network_manager.id
     end
     drop_breadcrumb(
-      :name => _("Add New Router") % {:model => ui_lookup(:table => 'network_router')},
+      :name => _("Add New Network Router"),
       :url  => "/network_router/new"
     )
   end
@@ -108,8 +108,7 @@ class NetworkRouterController < ApplicationController
     case params[:button]
     when "cancel"
       javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Router was cancelled by the user") %
-                          {:model => ui_lookup(:table => 'network_router')}
+                          :flash_msg => _("Add of new Network Router was cancelled by the user")
 
     when "add"
       @router = NetworkRouter.new
