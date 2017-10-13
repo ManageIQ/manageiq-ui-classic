@@ -292,14 +292,20 @@ module ApplicationController::MiqRequestMethods
   def build_configured_system_grid(configured_systems, sort_order = nil, sort_by = nil)
     sort_by ||= "hostname"
     sort_order ||= "ASC"
-
-    headers = {
-      "hostname"                        => _("Hostname"),
-      "configuration_location_name"     => _("Configuration Location"),
-      "configuration_organization_name" => _("Configuration Organization"),
-      "operating_system_flavor_name"    => _("Operating System"),
-      "provider_name"                   => _("Provider"),
-    }
+    headers = {}
+    if @edit[:wf].kind_of?(PhysicalServerProvisionWorkflow)
+      headers = {
+        "name" => _("Server Name")
+      }
+    else
+      headers = {
+        "hostname"                        => _("Hostname"),
+        "configuration_location_name"     => _("Configuration Location"),
+        "configuration_organization_name" => _("Configuration Organization"),
+        "operating_system_flavor_name"    => _("Operating System"),
+        "provider_name"                   => _("Provider"),
+      }
+    end
 
     @configured_systems = _build_whatever_grid('configured_system', configured_systems, headers, sort_order, sort_by)
   end
@@ -513,6 +519,7 @@ module ApplicationController::MiqRequestMethods
     when ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow then "prov_configured_system_foreman_dialog"
     when MiqHostProvisionWorkflow                    then "prov_host_dialog"
     when VmMigrateWorkflow                           then "prov_vm_migrate_dialog"
+    when PhysicalServerProvisionWorkflow             then "prov_physical_server_dialog"
     end
   end
 
@@ -845,7 +852,8 @@ module ApplicationController::MiqRequestMethods
         @edit[:new] = @edit[:new].merge pre_prov_values.select { |k| !@edit[:new].keys.include?(k) }
       end
 
-      if @edit[:wf].kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow)
+      if @edit[:wf].kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow) ||
+         @edit[:wf].kind_of?(PhysicalServerProvisionWorkflow)
         # BD TODO
       else
         @edit[:ds_sortdir] ||= "DESC"
@@ -944,6 +952,10 @@ module ApplicationController::MiqRequestMethods
       @edit[:prov_type] = "ConfiguredSystem"
       @edit[:new][:src_configured_system_ids] = params[:prov_id].kind_of?(Array) ? params[:prov_id] : [params[:prov_id]]
       wf_type = ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow
+    elsif @edit[:org_controller] == "physical_server"
+      @edit[:prov_type] = "PhysicalServer"
+      @edit[:new][:src_configured_system_ids] = params[:prov_id].kind_of?(Array) ? params[:prov_id] : [params[:prov_id]]
+      wf_type = PhysicalServerProvisionWorkflow
     else
       @edit[:prov_type] = "Host"
       if @edit[:new].empty?
