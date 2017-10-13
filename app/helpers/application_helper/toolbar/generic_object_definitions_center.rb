@@ -16,19 +16,20 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           'pficon pficon-edit fa-lg',
           t = N_('Edit Selected Generic Object Class'),
           t,
-          :enabled   => false,
-          :onwhen => "1",
-          :url_parms => "edit_div"),
+          :enabled      => false,
+          :onwhen       => "1",
+          :url_parms    => "edit_div"),
+          :send_checked => true,
         button(
           :generic_object_definition_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove selected Generic Object Classes from Inventory'),
           t,
-          :data    => {'function'      => 'sendDataWithRx',
+          :data                        => {'function'      => 'sendDataWithRx',
                        'function-data' => '{"type": "delete", "controller": "genericObjectDefinitionToolbarController"}'},
-          :enabled   => false,
-          :onwhen => "1+",
-          :confirm   => N_("Warning: The selected Generic Object Classes will be permanently removed!")),
+          :enabled                     => false,
+          :onwhen                      => "1+",
+          :confirm                     => N_("Warning: The selected Generic Object Classes will be permanently removed!")),
       ]
     )
   ])

@@ -13,9 +13,10 @@ class ApplicationHelper::Toolbar::PersistentVolumesCenter < ApplicationHelper::T
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for these Persistent Volumes'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

@@ -13,19 +13,21 @@ class ApplicationHelper::Toolbar::SecurityGroupCenter < ApplicationHelper::Toolb
             'pficon pficon-edit fa-lg',
             t = N_('Edit this Security Group'),
             t,
-            :url_parms => 'main_div',
-            :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-            :options   => {:feature => :update}
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :update}
           ),
           button(
             :security_group_delete,
             'pficon pficon-delete fa-lg',
             t = N_('Delete this Security Group'),
             t,
-            :url_parms => 'main_div',
-            :confirm   => N_('Warning: This Security Group and ALL of its components will be removed!'),
-            :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-            :options   => {:feature => :delete}
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :confirm      => N_('Warning: This Security Group and ALL of its components will be removed!'),
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :delete}
           )
         ]
       )
