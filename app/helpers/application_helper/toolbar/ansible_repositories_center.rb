@@ -35,8 +35,8 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
           t = N_('Add New Repository'),
           t,
           :klass        => ApplicationHelper::Button::EmbeddedAnsible,
-          :url_parms    => "unused_div"),
-          :send_checked => true,
+          :url_parms    => "unused_div",
+          :send_checked => true),
         button(
           :embedded_configuration_script_source_edit,
           'pficon pficon-edit fa-lg',
@@ -45,8 +45,8 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
           :klass        => ApplicationHelper::Button::EmbeddedAnsible,
           :enabled      => false,
           :onwhen       => "1",
-          :url_parms    => "unused_div"),
-          :send_checked => true,
+          :url_parms    => "unused_div",
+          :send_checked => true),
         button(
           :embedded_configuration_script_source_delete,
           'pficon pficon-delete fa-lg',

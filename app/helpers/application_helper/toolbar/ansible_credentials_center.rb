@@ -12,8 +12,8 @@ class ApplicationHelper::Toolbar::AnsibleCredentialsCenter < ApplicationHelper::
           t = N_('Add New Credential'),
           t,
           :klass        => ApplicationHelper::Button::EmbeddedAnsible,
-          :url_parms    => "new_div"),
-          :send_checked => true,
+          :url_parms    => "new_div",
+          :send_checked => true),
         button(
           :embedded_automation_manager_credentials_edit,
           'pficon pficon-edit fa-lg',
@@ -22,8 +22,8 @@ class ApplicationHelper::Toolbar::AnsibleCredentialsCenter < ApplicationHelper::
           :klass        => ApplicationHelper::Button::EmbeddedAnsible,
           :enabled      => false,
           :onwhen       => "1",
-          :url_parms    => "edit_div"),
-          :send_checked => true,
+          :url_parms    => "edit_div",
+          :send_checked => true),
         button(
           :embedded_automation_manager_credentials_delete,
           'pficon pficon-delete fa-lg',
