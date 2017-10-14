@@ -24,6 +24,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
     vm.custShowYAxis = false;
     vm.custChartHeight = 60;
     vm.dataAvailable = false;
+    vm.timeframeLabel = __('Last 30 Days');
 
     vm.addDataPoint = function() {
       var newData = Math.round(Math.random() * 100);

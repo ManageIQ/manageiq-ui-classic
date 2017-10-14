@@ -6,6 +6,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentHostsLineChartControlle
     ManageIQ.angular.scope = vm;
     vm.loadingDone = false;
     vm.config = chartsMixin.chartConfig.recentHostsConfig;
+    vm.timeframeLabel = __('Last 30 Days');
     var url = '/ems_infra_dashboard/recent_hosts_data/' + providerId;
     var hostsDataPromise = $http.get(url)
       .then(function(response) {

@@ -13,5 +13,5 @@
             'show-sparkline-x-axis' => "vm.custShowXAxis",
             'show-sparkline-y-axis' => "vm.custShowYAxis"}
           %span.trend-footer-pf{{"ng-class" => "{ 'chart-transparent-text': data_hash.data.dataAvailable === false }"}}
-            = _("Last 30 Days")
+            {{vm.timeframeLabel}}
 

@@ -6,6 +6,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentVmsLineChartController'
     ManageIQ.angular.scope = vm;
     vm.loadingDone = false;
     vm.config = chartsMixin.chartConfig.recentVmsConfig;
+    vm.timeframeLabel = __('Last 30 Days');
     var url = '/ems_infra_dashboard/recent_vms_data/' + providerId;
     var vmsDataPromise = $http.get(url)
       .then(function(response) {

@@ -7,6 +7,7 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'pr
 
   var init = function() {
     ManageIQ.angular.scope = vm;
+    vm.timeframeLabel = __('Last 30 Days');
     var url = '/ems_infra_dashboard/cluster_metrics_data/' + providerId;
     var heatmapPromise = $http.get(url)
       .then(function(response) {

@@ -6,4 +6,4 @@
     .card-pf-body
       %pf-line-chart{'ng-if' => "vm.loadingDone", 'ng-attr-id' => "{{vm.id}}", 'config' => "vm.config", 'chart-data' => "vm.data", 'set-area-chart' => "vm.custAreaChart", 'show-x-axis' => "vm.custShowXAxis", 'show-y-axis' => "vm.custShowYAxis"}
       %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': vm.data.dataAvailable === false }"}
-        = _("Last 30 Days")
+        {{vm.timeframeLabel}}
