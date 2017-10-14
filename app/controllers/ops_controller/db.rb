@@ -7,16 +7,11 @@ module OpsController::Db
     @lastaction = "db_list"
     @force_no_grid_xml = true
     model = case @sb[:active_tab] # Build view based on tab selected
-            when "db_connections"
-              VmdbDatabaseConnection
-            when "db_details"
-              VmdbTableEvm
-            when "db_indexes"
-              VmdbIndex
-            when "db_settings"
-              VmdbDatabaseSetting
+            when "db_connections" then VmdbDatabaseConnection
+            when "db_details"     then VmdbTableEvm
+            when "db_indexes"     then VmdbIndex
+            when "db_settings"    then VmdbDatabaseSetting
             end
-    # @explorer = true if model == VmdbIndex
 
     if model == VmdbIndex
       # building a filter with expression to show VmdbTableEvm tables only
@@ -100,21 +95,17 @@ module OpsController::Db
       elsif @sb[:active_tab] == "db_utilization"
         @record = VmdbDatabase.my_database
         if @record
-          perf_gen_init_options               # Initialize perf chart options, charts will be generated async
-          @sb[:record_class] = @record.class.base_class.name  # Hang on to record class/id for async trans
+          perf_gen_init_options # Initialize perf chart options, charts will be generated async
+          @sb[:record_class] = @record.class.base_class.name # Hang on to record class/id for async trans
           @sb[:record_id] = @record.id
         end
         @right_cell_text = _("VMDB Utilization")
       else
         @right_cell_text = case @sb[:active_tab]
-                           when "db_connections"
-                             @right_cell_text = _("VMDB Client Connections")
-                           when "db_details"
-                             @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "VmdbTable")}
-                           when "db_indexes"
-                             @right_cell_text = _("All VMDB Indexes")
-                           else
-                             @right_cell_text = _("VMDB Settings")
+                           when "db_connections" then _("VMDB Client Connections")
+                           when "db_details"     then _("All %{models}") % {:models => ui_lookup(:models => "VmdbTable")}
+                           when "db_indexes"     then _("All VMDB Indexes")
+                           else                       _("VMDB Settings")
                            end
         @force_no_grid_xml = true
         db_list
