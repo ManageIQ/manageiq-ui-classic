@@ -307,7 +307,10 @@ describe AutomationManagerController do
       controller.send(:build_accordions_and_trees)
     end
 
-    it "renders the list view based on the nodetype(root,provider) and the search associated with it" do
+    # FIXME: This needs to be splin into separate tests.
+    # Also: we cannot directly test data rendered in the grid as this goes
+    # throught the GTL component and the /report_data JSON endpoint.
+    pending "renders the list view based on the nodetype(root,provider) and the search associated with it" do
       controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => "root")
       controller.instance_variable_set(:@search_text, "manager")
@@ -364,14 +367,14 @@ describe AutomationManagerController do
       controller.send(:accordion_select)
       controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@automation_manager1.id))
       controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
+      # view = controller.instance_variable_get(:@view)
       show_adv_search = controller.instance_variable_get(:@show_adv_search)
       expect(show_adv_search).to eq(true)
-      expect(view.table.data.size).to eq(2)
+      # expect(view.table.data.size).to eq(2)
       expect(show_adv_search).to eq(true)
 
-      expect(view.table.data[0].name).to eq("ConfigScript1")
-      expect(view.table.data[1].name).to eq("ConfigScript3")
+      # expect(view.table.data[0].name).to eq("ConfigScript1")
+      # expect(view.table.data[1].name).to eq("ConfigScript3")
     end
 
     it 'renders tree_select for one job template' do

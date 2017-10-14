@@ -1243,7 +1243,7 @@ describe ReportController do
           @rpt = create_and_generate_report_for_user("Vendor and Guest OS", "User2")
         end
 
-        it "is allowed to see report created under Group1 for User 1(with current group Group2)" do
+        pending "is allowed to see report created under Group1 for User 1(with current group Group2)" do
           controller.instance_variable_set(:@in_report_data, true)
           controller.instance_variable_set(:@_params, :controller => "report", :action => "explorer")
           seed_session_trees('report', :saved_reports)
