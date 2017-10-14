@@ -99,9 +99,11 @@ module OpsController::Db
         @right_cell_text = _("VMDB Summary")
       elsif @sb[:active_tab] == "db_utilization"
         @record = VmdbDatabase.my_database
-        perf_gen_init_options               # Initialize perf chart options, charts will be generated async
-        @sb[:record_class] = @record.class.base_class.name  # Hang on to record class/id for async trans
-        @sb[:record_id] = @record.id
+        if @record
+          perf_gen_init_options               # Initialize perf chart options, charts will be generated async
+          @sb[:record_class] = @record.class.base_class.name  # Hang on to record class/id for async trans
+          @sb[:record_id] = @record.id
+        end
         @right_cell_text = _("VMDB Utilization")
       else
         @right_cell_text = case @sb[:active_tab]

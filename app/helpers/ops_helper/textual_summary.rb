@@ -6,6 +6,8 @@ module OpsHelper::TextualSummary
   TOP_TABLES_BY_COUNT = 5
 
   def textual_group_vmdb_connection_properties
+    return if @record.nil?
+
     TextualGroup.new(
       _("Properties"),
       %i(
@@ -16,18 +18,26 @@ module OpsHelper::TextualSummary
   end
 
   def textual_group_vmdb_tables_most_rows
+    return if @record.nil?
+
     TextualListview.new_from_hash(textual_vmdb_tables_most_rows)
   end
 
   def textual_group_vmdb_tables_largest_size
+    return if @record.nil?
+
     TextualListview.new_from_hash(textual_vmdb_tables_largest_size)
   end
 
   def textual_group_vmdb_tables_most_wasted_space
+    return if @record.nil?
+
     TextualListview.new_from_hash(textual_vmdb_tables_most_wasted_space)
   end
 
   def textual_group_vmdb_connection_capacity_data
+    return if @record.nil?
+
     TextualGroup.new(
       _("Capacity Data"),
       %i(
