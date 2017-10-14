@@ -25,7 +25,7 @@ class TreeBuilderOpsVmdb < TreeBuilderOps
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    objects = Rbac.filtered(VmdbDatabase.my_database.evm_tables).to_a
+    objects = Rbac.filtered(VmdbDatabase.my_database.try(:evm_tables).to_a).to_a
     # storing table names and their id in hash so they can be used to build links on summary screen in top 5 boxes
     @sb[:vmdb_tables] = {}
     objects.each do |o|

@@ -229,7 +229,7 @@
             = render :partial => "db_details_tab"
       - if tree_node == "root" || tree_node.split("-").first == TreeBuilder.get_prefix_for_model("VmdbTable")
         = miq_tab_content("db_utilization", @sb[:active_tab]) do
-          - if @sb[:active_tab] == "db_utilization"
+          - if @sb[:active_tab] == "db_utilization" && @record
             = render(:partial => "layouts/performance")
 :javascript
   miq_tabs_init("#ops_tabs", "/ops/change_tab");
