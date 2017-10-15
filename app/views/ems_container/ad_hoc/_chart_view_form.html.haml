@@ -1,10 +1,10 @@
 .col-md-12.ad-hoc-tenant
-  .form-group.pull-left.ad-hoc-tenant
+  .form-group.pull-left.ad-hoc-back-button
     %button.btn.btn-default{"type"     => "button",
                             "ng-click" => "dash.viewMetrics()"}
       = _("Return to list view")
 
-%div{"pf-toolbar" => "", "config" => "dash.graphToolbarConfig"}
+.ad-hoc-chart-toolbar{"pf-toolbar" => "", "config" => "dash.graphToolbarConfig"}
   %actions
     .input-group.bootstrap-touchspin.timeline-stepper.pull-left
       %span.input-group-btn
