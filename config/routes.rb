@@ -2944,6 +2944,7 @@ Rails.application.routes.draw do
         retire
         service_form_fields
         show
+        tagging_edit
       ),
       :post => %w(
         button
@@ -2955,6 +2956,7 @@ Rails.application.routes.draw do
         service_edit
         service_tag
         tag_edit_form_field_changed
+        tagging_edit
         tree_autoload
         tree_select
         x_button

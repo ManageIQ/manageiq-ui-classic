@@ -97,6 +97,36 @@ describe ServiceController do
       expect(response.status).to eq(200)
       expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"}])
     end
+
+    context "#button" do
+      render_views
+
+      before(:each) do
+        stub_user(:features => :all)
+        EvmSpecHelper.create_guid_miq_server_zone
+        ApplicationController.handle_exceptions = true
+      end
+
+      it "when Generic Object Tag is pressed for the generic object nested list" do
+        service = FactoryGirl.create(:service, :name => "Service with Generic Objects")
+        definition = FactoryGirl.create(:generic_object_definition,
+                                        :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
+        go = FactoryGirl.create(
+          :generic_object,
+          :generic_object_definition => definition,
+          :name                      => 'go_assoc',
+          :services                  => [service]
+        )
+        service.add_resource(go)
+
+        get :show, :params => { :id => service.id, :display => 'generic_objects'}
+        expect(response.status).to eq(200)
+
+        post :button, :params => {:pressed => "generic_object_tag", "check_#{go.id}" => "1", :format => :js, :id => service.id, :display => 'generic_objects' }
+        expect(response.status).to eq(200)
+        expect(response.body).to include('service/tagging_edit')
+      end
+    end
   end
 
   context "#sanitize_output" do
