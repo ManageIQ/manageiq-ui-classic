@@ -1084,7 +1084,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Render the view data to a Hash structure for the list view
-  def view_to_hash(view, in_report_data = false)
+  def view_to_hash(view, fetch_data = false)
     # Get the time zone in effect for this view
     tz = (view.db.downcase == 'miqschedule') ? server_timezone : Time.zone
 
@@ -1121,7 +1121,7 @@ class ApplicationController < ActionController::Base
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
-      if in_report_data && defined?(@gtl_type) && @gtl_type != "list"
+      if fetch_data && defined?(@gtl_type) && @gtl_type != "list"
         quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
       end
       new_row = {
@@ -1511,7 +1511,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Create view and paginator for a DB records with/without tags
-  def get_view(db, options = {}, in_report_data = false)
+  def get_view(db, options = {}, fetch_data = false)
     unless @edit.nil?
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
@@ -1613,7 +1613,7 @@ class ApplicationController < ActionController::Base
       :match_via_descendants     => options[:match_via_descendants]
     }
 
-    view.table, attrs = if in_report_data
+    view.table, attrs = if fetch_data
                           # Call paged_view_search to fetch records and build the view.table and additional attrs
                           view.paged_view_search(session[:paged_view_search_options])
                         else
@@ -1627,8 +1627,8 @@ class ApplicationController < ActionController::Base
     @targets_hash             = attrs[:targets_hash] if attrs[:targets_hash]
 
     # Set up the grid variables for list view, with exception models below
-    if grid_hash_conditions(view) && in_report_data
-      @grid_hash = view_to_hash(view, in_report_data)
+    if grid_hash_conditions(view) && fetch_data
+      @grid_hash = view_to_hash(view, fetch_data)
     end
 
     [view, get_view_pages(dbname, view)]
