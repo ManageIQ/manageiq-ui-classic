@@ -73,20 +73,20 @@ class ContainerProjectDashboardService
   end
 
   def quota
-    # Until https://github.com/ManageIQ/manageiq/pull/15639 is resolved
-    parser = ManageIQ::Providers::Kubernetes::ContainerManager::RefreshParser.new
-
     @project.container_quota_items.collect do |quota_item|
-      enforced = parser.parse_quantity(quota_item.quota_enforced)
-      observed = parser.parse_quantity(quota_item.quota_observed)
+      enforced = quota_item.quota_enforced
+      observed = quota_item.quota_observed
+      enforced = (enforced % 1).zero? ? enforced.to_i : enforced
+      observed = (observed % 1).zero? ? observed.to_i : observed
+
       units = ""
 
       if quota_item.resource.include?("cpu")
         units = "Cores"
       elsif quota_item.resource.include?("memory")
-        units = "MB"
-        enforced /= 1.megabytes
-        observed /= 1.megabytes
+        units = "GB"
+        enforced /= 1.gigabytes
+        observed /= 1.gigabytes
       end
 
       {
