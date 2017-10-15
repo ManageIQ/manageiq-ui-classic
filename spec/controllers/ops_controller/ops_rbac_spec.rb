@@ -124,15 +124,24 @@ describe OpsController do
       end
     end
 
-    pending "#rbac_tenants_list" do
-      it "gets the list of tenants" do
+    context "#rbac_tenants_list" do
+      it "gets the list of tenants by calling get_view with correct args" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@settings, {})
-        controller.instance_variable_set(:@in_report_data, true)
-        expect(response.status).to eq(200)
+        expect(controller).to receive(:get_view).with(Tenant, :named_scope => :in_my_region).and_return(
+          [double('view', :table => double('table', :data => [])), {}])
         controller.send(:rbac_tenants_list)
+        expect(response.status).to eq(200)
         expect(assigns(:view)).not_to be_nil
         expect(assigns(:pages)).not_to be_nil
+      end
+
+      context 'get_view' do
+        it "returns the list of tenants" do
+          view, pages = controller.send(:get_view, Tenant, {:named_scope => :in_my_region}, true)
+          expect(view).not_to be_nil
+          expect(pages).not_to be_nil
+        end
       end
     end
 

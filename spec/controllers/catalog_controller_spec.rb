@@ -18,26 +18,25 @@ describe CatalogController do
     allow_any_instance_of(ApplicationController).to receive(:fetch_path)
   end
 
-  pending "returns all catalog items related to current tenant and root tenant when non-self service user is logged" do
-    login_as child_tenant_user
-    controller.instance_variable_set(:@in_report_data, true)
-    view, _pages = controller.send(:get_view, ServiceTemplate, {})
-    expect(view.table.data.count).to eq(2)
-  end
+  context 'get_view' do
+    it "returns all catalog items related to current tenant and root tenant when non-self service user is logged" do
+      login_as child_tenant_user
+      view, _pages = controller.send(:get_view, ServiceTemplate, {}, true)
+      expect(view.table.data.count).to eq(2)
+    end
 
-  pending "returns all catalog items related to current user's groups when self service user is logged" do
-    allow_any_instance_of(MiqGroup).to receive_messages(:self_service? => true)
-    login_as child_tenant_user
-    controller.instance_variable_set(:@in_report_data, true)
-    view, _pages = controller.send(:get_view, ServiceTemplate, {})
-    expect(view.table.data.count).to eq(1)
-  end
+    it "returns all catalog items related to current user's groups when self service user is logged" do
+      allow_any_instance_of(MiqGroup).to receive_messages(:self_service? => true)
+      login_as child_tenant_user
+      view, _pages = controller.send(:get_view, ServiceTemplate, {}, true)
+      expect(view.table.data.count).to eq(1)
+    end
 
-  pending "returns all catalog items when admin user is logged" do
-    login_as admin_user
-    controller.instance_variable_set(:@in_report_data, true)
-    view, _pages = controller.send(:get_view, ServiceTemplate, {})
-    expect(view.table.data.count).to eq(2)
+    it "returns all catalog items when admin user is logged" do
+      login_as admin_user
+      view, _pages = controller.send(:get_view, ServiceTemplate, {}, true)
+      expect(view.table.data.count).to eq(2)
+    end
   end
 
   # some methods should not be accessible through the legacy routes
