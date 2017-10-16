@@ -35,9 +35,9 @@ module ContainerProjectHelper::TextualSummary
       rows << [
         item.container_quota.name,
         item.resource,
-        item.quota_desired,
-        item.quota_enforced,
-        item.quota_observed,
+        item.quota_desired_display,
+        item.quota_enforced_display,
+        item.quota_observed_display,
       ]
     end
     rows
