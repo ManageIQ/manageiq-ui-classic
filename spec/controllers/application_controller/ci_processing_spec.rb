@@ -806,15 +806,26 @@ describe HostController do
   end
 
   context "#process_hosts" do
-    it "initiates host destroy" do
-      host = FactoryGirl.create(:host)
-      allow(controller).to receive(:filter_ids_in_region).and_return([[host], nil])
+    before do
+      @host1 = FactoryGirl.create(:host)
+      @host2 = FactoryGirl.create(:host)
+      allow(controller).to receive(:filter_ids_in_region).and_return([[@host1, @host2], nil])
       allow(MiqServer).to receive(:my_zone).and_return("default")
-      controller.send(:process_hosts, [host], 'destroy')
+    end
+
+    it "initiates host destroy" do
+      controller.send(:process_hosts, [@host1], 'destroy')
       audit_event = AuditEvent.all.first
-      task = MiqQueue.find_by_class_name("Host")
+      task = MiqQueue.find_by(:class_name => "Host")
       expect(audit_event['message']).to include "Record delete initiated"
       expect(task.method_name).to eq 'destroy'
+    end
+
+    it "initiates refresh for selected hosts" do
+      controller.send(:process_hosts, [@host1, @host2], 'refresh_ems')
+      audit_event = AuditEvent.all.first
+      MiqQueue.find_by(:class_name => "Host")
+      expect(audit_event['message']).to include "'Refresh Provider' successfully initiated for 2 Hosts"
     end
   end
 
