@@ -2,10 +2,10 @@ describe MiqAeClassController do
   include CompressedIds
   context "#set_record_vars" do
     it "Namespace remains unchanged when a class is edited" do
-      ns = factorygirl.create(:miq_ae_namespace)
-      cls = factorygirl.create(:miq_ae_class, :namespace_id => ns.id)
+      ns = FactoryGirl.create(:miq_ae_namespace)
+      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
       ns_id = cls.namespace_id
-      new = {:name => "new name", :description => "new description", :display_name => "display name", :inherits => "some_class"}
+      new = {:name => "New Name", :description => "New Description", :display_name => "Display Name", :inherits => "Some_Class"}
       controller.instance_variable_set(:@sb,
                                        :trees       => {
                                          :ae_tree => {:active_node => "aec-#{cls.id}"}

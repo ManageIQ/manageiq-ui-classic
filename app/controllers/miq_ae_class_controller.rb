@@ -282,7 +282,7 @@ class MiqAeClassController < ApplicationController
       :add_nodes       => add_nodes,
     )
 
-    reload_trees_by_presenter(presenter, :ae => build_ae_tree) unless replace_trees.blank?
+    reload_trees_by_presenter(presenter, [build_ae_tree]) unless replace_trees.blank?
 
     if @sb[:action] == "miq_ae_field_seq"
       presenter.update(:class_fields_div, r[:partial => "fields_seq_form"])
