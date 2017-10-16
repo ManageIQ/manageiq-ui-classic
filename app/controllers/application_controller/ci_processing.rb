@@ -1047,8 +1047,6 @@ module ApplicationController::CiProcessing
     when "#{pfx}_live_migrate"              then livemigratevms
     when "#{pfx}_associate_floating_ip"     then associate_floating_ip_vms
     when "#{pfx}_disassociate_floating_ip"  then disassociate_floating_ip_vms
-    when "#{pfx}_add_security_group"        then add_security_group_vms
-    when "#{pfx}_remove_security_group"     then remove_security_group_vms
     when "#{pfx}_retire"                    then retirevms
     when "#{pfx}_retire_now"                then retirevms_now
     when "#{pfx}_right_size"                then vm_right_size
@@ -1061,6 +1059,8 @@ module ApplicationController::CiProcessing
     when "#{pfx}_migrate"                   then prov_redirect("migrate")
     when "#{pfx}_publish"                   then prov_redirect("publish")
     when "#{pfx}_terminate"                 then terminatevms
+    when "instance_add_security_group"      then add_security_group_vms
+    when "instance_remove_security_group"   then remove_security_group_vms
     end
   end
 
