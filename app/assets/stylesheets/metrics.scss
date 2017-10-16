@@ -21,7 +21,7 @@
     line-height: 27px;
   }
   .ad-hoc-toolbar {
-    margin-left: 15px;
+    margin-left: 20px;
   }
   .toolbar-pf {
     border: 0;
@@ -44,6 +44,7 @@
     overflow-y: hidden;
     .rate-switch {
       margin-left: 5px;
+      margin-right: 5px;
     }
     .bootstrap-select.btn-group {
       .dropdown-menu {
@@ -109,6 +110,7 @@
     }
     .form-group.toolbar-actions.ng-scope {
       border: 0;
+      padding-left: 0;
     }
     .dropdown-kebab-pf {
       .dropdown-menu {
@@ -127,8 +129,13 @@
       }
     }
   }
+  .ad-hoc-back-button {
+    margin-bottom: 10px;
+  }
+  .ad-hoc-chart-toolbar{
+    margin-left: -18px;
+  }
   .ad-hoc-tenant {
-    margin-left: 5px;
     input {
       display: inline;
       width: 190px;
@@ -186,6 +193,7 @@
     margin-bottom: 0;
   }
   .timeline-date-input {
+    padding-left: 5px;
     width: 300px;
   }
   .list-group {
@@ -201,10 +209,9 @@
     }
   }
   .timeline-stepper {
-    margin-left: 5px;
+    margin-right: 5px;
   }
   .toolbar-pf-include-actions.ng-scope {
-    margin-left: 10px;
     width: 100%;
   }
   .toolbar-pf-actions.ng-pristine.ng-valid.no-filter-results {
