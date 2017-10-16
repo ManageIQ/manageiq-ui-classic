@@ -13,16 +13,17 @@ module Mixins
             else
               render :update do |page|
                 page << javascript_prologue
-                page.redirect_to :controller => 'vm',
+                page.redirect_to(:controller => 'vm',
                                  :action     => 'remove_security_group',
                                  :rec_id     => @record.id,
-                                 :escape     => false
+                                 :escape     => false)
               end
             end
           else
             add_flash(_("Unable to remove Security Group from Instance \"%{name}\": %{details}") % {
               :name    => @record.name,
-              :details => @record.unsupported_reason(:remove_security_group)}, :error)
+              :details => @record.unsupported_reason(:remove_security_group)
+            }, :error)
           end
         end
 
@@ -31,10 +32,12 @@ module Mixins
         def remove_security_group
           assert_privileges("instance_remove_security_group")
           @record ||= find_record_with_rbac(VmCloud, params[:rec_id])
-          drop_breadcrumb(
-            :name => _("Remove Security Group to '%{name}'") % {:name => @record.name},
-            :url  => "/vm_cloud/remove_security_group"
-          ) unless @explorer
+          unless @explorer
+            drop_breadcrumb(
+              :name => _("Remove Security Group to '%{name}'") % {:name => @record.name},
+              :url  => "/vm_cloud/remove_security_group"
+            )
+          end
           @sb[:explorer] = @explorer
           @in_a_form = true
           @remove_security_group = true
@@ -88,7 +91,7 @@ module Mixins
             session[:flash_msgs] = @flash_array.dup
             render :update do |page|
               page << javascript_prologue
-              page.redirect_to previous_breadcrumb_url
+              page.redirect_to(previous_breadcrumb_url)
             end
           end
         end

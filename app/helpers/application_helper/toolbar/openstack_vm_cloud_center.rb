@@ -74,14 +74,16 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           t = N_('Add a Security Group to this Instance'),
           t,
           :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-          :options => {:feature => :add_security_group}),
+          :options => {:feature => :add_security_group}
+        ),
         button(
           :instance_remove_security_group,
           'pficon pficon-cloud-security fa-lg',
           t = N_('Remove a Security Group from this Instance'),
           t,
           :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-          :options => {:feature => :remove_security_group}),
+          :options => {:feature => :remove_security_group}
+        ),
         button(
           :instance_resize,
           'pficon pficon-edit fa-lg',
