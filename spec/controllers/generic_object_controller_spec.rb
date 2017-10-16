@@ -45,11 +45,11 @@ describe GenericObjectController do
       session[:tag_db] = "GenericObject"
       session[:tag_items] = "GenericObject"
       session[:assigned_filters] = []
-      edit = { :key        => "GenericObject_edit_tags__#{@gobj.id}",
-               :tagging    => "GenericObject",
-               :tag_items  => [@gobj.id],
-               :current    => {:assignments => []},
-               :new        => {:assignments => [@tag1.id, @tag2.id]}}
+      edit = { :key       => "GenericObject_edit_tags__#{@gobj.id}",
+               :tagging   => "GenericObject",
+               :tag_items => [@gobj.id],
+               :current   => {:assignments => []},
+               :new       => {:assignments => [@tag1.id, @tag2.id]}}
       session[:edit] = edit
       controller.instance_variable_set(:@settings, {})
       allow(controller).to receive(:fetch_path)

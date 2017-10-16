@@ -37,7 +37,7 @@ describe GenericObjectDefinitionController do
       definition = FactoryGirl.create(:generic_object_definition)
       go = FactoryGirl.create(:generic_object, :generic_object_definition_id => definition.id)
       get :show, :params => {:id => definition.id, :display => 'generic_objects'}
-      post :button, :params => {:pressed => "generic_object_tag", "check_#{go.id}" => "1", :id => definition.id, :display => 'generic_objects',  :format => :js}
+      post :button, :params => {:pressed => "generic_object_tag", "check_#{go.id}" => "1", :id => definition.id, :display => 'generic_objects', :format => :js}
       expect(response.status).to eq(200)
       expect(response.body).to include('generic_object_definition/tagging_edit')
     end
