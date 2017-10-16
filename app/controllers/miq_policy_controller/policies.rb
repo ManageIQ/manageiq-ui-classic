@@ -93,18 +93,13 @@ module MiqPolicyController::Policies
     case params[:button]
     when "cancel"
       policy_edit_cancel
-      return
     when "reset", nil # Reset or first time in
       policy_edit_reset
-      return
-    end
-
-    @policy = policy_edit_load_policy
-
-    case params[:button]
     when "save", "add"
+      @policy = policy_edit_load_policy
       policy_edit_save
     when "move_right", "move_left", "move_allleft"
+      @policy = policy_edit_load_policy
       policy_edit_move
     end
   end
