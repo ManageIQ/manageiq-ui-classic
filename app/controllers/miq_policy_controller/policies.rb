@@ -82,6 +82,13 @@ module MiqPolicyController::Policies
     replace_right_cell(:nodetype => "p")
   end
 
+  def policy_edit_load_policy
+    # Load @edit/vars for other buttons
+    id = params[:id] ? params[:id] : "new"
+    return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
+    @edit[:policy_id] ? MiqPolicy.find_by(:id => @edit[:policy_id]) : MiqPolicy.new
+  end
+
   def policy_edit
     case params[:button]
     when "cancel"
@@ -92,10 +99,7 @@ module MiqPolicyController::Policies
       return
     end
 
-    # Load @edit/vars for other buttons
-    id = params[:id] ? params[:id] : "new"
-    return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
-    @policy = @edit[:policy_id] ? MiqPolicy.find_by(:id => @edit[:policy_id]) : MiqPolicy.new
+    @policy = policy_edit_load_policy
 
     case params[:button]
     when "save", "add"
