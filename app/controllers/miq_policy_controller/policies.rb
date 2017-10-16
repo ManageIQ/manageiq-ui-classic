@@ -28,9 +28,13 @@ module MiqPolicyController::Policies
     assert_privileges("policy_#{@policy.id ? "edit" : "new"}")
     policy = @policy.id.blank? ? MiqPolicy.new : MiqPolicy.find(@policy.id) # Get new or existing record
     policy.mode = @edit[:new][:mode]
-    policy.towhat = @edit[:new][:towhat] if @policy.id.blank?               # Set model if new record
-    policy.created_by = session[:userid] if @policy.id.blank?               # Set created user if new record
     policy.updated_by = session[:userid]
+
+    if @policy.id.blank?
+      policy.towhat = @edit[:new][:towhat]
+      policy.created_by = session[:userid]
+    end
+
     case @edit[:typ]
     when "basic"
       policy.description = @edit[:new][:description]
@@ -42,37 +46,40 @@ module MiqPolicyController::Policies
       policy.conditions.collect { |pc| pc }.each { |c| policy.conditions.delete(c) unless mems.keys.include?(c.id) }  # Remove any conditions no longer in members
       mems.each_key { |m| policy.conditions.push(Condition.find(m)) unless policy.conditions.collect(&:id).include?(m) }    # Add any new conditions
     end
-    if policy.valid? && !@flash_array && policy.save
-      if @policy.id.blank? && policy.mode == "compliance"   # New compliance policy
-        event = MiqEventDefinition.find_by(:name => "#{policy.towhat.downcase}_compliance_check") # Get the compliance event record
-        policy.sync_events([event])                           # Set the default compliance event in the policy
-        action_list = [[MiqAction.find_by_name("compliance_failed"), {:qualifier => :failure, :synchronous => true}]]
-        policy.replace_actions_for_event(event, action_list)  # Add in the default action for the compliance event
-      end
-      policy.sync_events(@edit[:new][:events].collect { |e| MiqEventDefinition.find(e) }) if @edit[:typ] == "events"
-      AuditEvent.success(build_saved_audit(policy, params[:button] == "add"))
-      flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                              _("%{model} \"%{name}\" was added")
-      add_flash(flash_key % {:model => ui_lookup(:model => "MiqPolicy"), :name => @edit[:new][:description]})
-      policy_get_info(MiqPolicy.find(policy.id))
-      @edit = nil
-      @nodetype = "p"
-      case x_active_tree
-      when :policy_profile_tree
-        replace_right_cell(:nodetype => "p", :replace_trees => [:policy_profile, :policy])
-      when :policy_tree
-        @nodetype = "p"
-        if params[:button] == "add"
-          self.x_node = @new_policy_node = policy_node(policy)
-          get_node_info(@new_policy_node)
-        end
-        replace_right_cell(:nodetype => "p", :replace_trees => params[:button] == "save" ? [:policy_profile, :policy] : [:policy])
-      end
-    else
+
+    unless policy.valid? && !@flash_array && policy.save
       policy.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
       replace_right_cell(:nodetype => "p")
+      return
+    end
+
+    if @policy.id.blank? && policy.mode == "compliance"   # New compliance policy
+      event = MiqEventDefinition.find_by(:name => "#{policy.towhat.downcase}_compliance_check") # Get the compliance event record
+      policy.sync_events([event])                           # Set the default compliance event in the policy
+      action_list = [[MiqAction.find_by_name("compliance_failed"), {:qualifier => :failure, :synchronous => true}]]
+      policy.replace_actions_for_event(event, action_list)  # Add in the default action for the compliance event
+    end
+    policy.sync_events(@edit[:new][:events].collect { |e| MiqEventDefinition.find(e) }) if @edit[:typ] == "events"
+    AuditEvent.success(build_saved_audit(policy, params[:button] == "add"))
+    flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
+                                            _("%{model} \"%{name}\" was added")
+    add_flash(flash_key % {:model => ui_lookup(:model => "MiqPolicy"), :name => @edit[:new][:description]})
+    policy_get_info(MiqPolicy.find(policy.id))
+    @edit = nil
+    @nodetype = "p"
+
+    case x_active_tree
+    when :policy_profile_tree
+      replace_right_cell(:nodetype => "p", :replace_trees => [:policy_profile, :policy])
+    when :policy_tree
+      @nodetype = "p"
+      if params[:button] == "add"
+        self.x_node = @new_policy_node = policy_node(policy)
+        get_node_info(@new_policy_node)
+      end
+      replace_right_cell(:nodetype => "p", :replace_trees => params[:button] == "save" ? [:policy_profile, :policy] : [:policy])
     end
   end
 
