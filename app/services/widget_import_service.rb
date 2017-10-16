@@ -28,6 +28,7 @@ class WidgetImportService
   end
 
   def import_widgets(import_file_upload, widgets_to_import)
+    number_imported_widgets = 0
     unless widgets_to_import.nil?
       widgets = YAML.load(import_file_upload.uploaded_content)
 
@@ -38,12 +39,13 @@ class WidgetImportService
       raise ParsedNonWidgetYamlError if widgets.empty?
 
       widgets.each do |widget|
-        import_widget_from_hash(widget["MiqWidget"])
+        number_imported_widgets += 1 if import_widget_from_hash(widget["MiqWidget"])
       end
     end
 
     destroy_queued_deletion(import_file_upload.id)
     import_file_upload.destroy
+    number_imported_widgets
   end
 
   def store_for_import(file_contents)

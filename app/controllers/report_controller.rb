@@ -247,8 +247,16 @@ class ReportController < ApplicationController
       import_file_upload = ImportFileUpload.where(:id => params[:import_file_upload_id]).first
       if import_file_upload
         $log.info("[#{session[:userid]}] initiated import")
-        widget_import_service.import_widgets(import_file_upload, params[:widgets_to_import])
-        add_flash(_("Widgets imported successfully"), :success)
+        if params[:widgets_to_import].nil?
+          add_flash(_("Error: No widget was selected to be imported."), :error)
+        else
+          number = widget_import_service.import_widgets(import_file_upload, params[:widgets_to_import])
+          if number == 1
+            add_flash(_("1 widget imported successfully"), :success)
+          else
+            add_flash(_("%{number} widgets imported successfully") % {:number => number}, :success)
+          end
+        end
       else
         add_flash(_("Error: Widget import file upload expired"), :error)
       end
