@@ -5,6 +5,8 @@ class GenericObjectController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  before_action :create_display_methods, only: [:show]
+
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
@@ -23,6 +25,17 @@ class GenericObjectController < ApplicationController
       end
       associations
     end
+  end
+
+  def create_display_methods
+    key = params[:display] || params[:model]
+    define_singleton_method("display_#{key}") do
+      nested_list(key, @record.generic_object_definition.properties[:associations][key], generate_options(key))
+    end
+  end
+
+  def generate_options(key)
+    {:breadcrumb_title => _("#{key.upcase}"), :association => key}
   end
 
   private
