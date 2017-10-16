@@ -5,7 +5,7 @@ class GenericObjectController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  before_action :create_display_methods, only: [:show]
+  before_action :create_display_methods, :only => [:show]
 
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
