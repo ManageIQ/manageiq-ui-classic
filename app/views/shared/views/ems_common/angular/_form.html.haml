@@ -300,7 +300,6 @@
                             :validate_url           => @ems.id ? "update" : "create",
                             :id                     => @ems.id || "new",
                             :basic_info_needed      => true,
-                            :guid_regex             => true,
                             :verify_title_off       => _("Domain, Compute API URL, Username and matching Password fields are needed to perform verification of credentials")}
     %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype != 'azure' && emsCommonModel.emstype != 'oracle_cloud'"}
       = render :partial => "/layouts/angular/multi_auth_credentials", :locals  => {:record => @ems, :ng_model => "emsCommonModel"}

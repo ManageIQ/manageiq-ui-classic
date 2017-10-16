@@ -245,8 +245,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
        $scope.emsCommonModel.default_verify != '' && $scope.angularForm.default_verify.$valid)) {
       return true;
     } else if(($scope.currentTab == "default" && $scope.emsCommonModel.emstype == "oracle_cloud") &&
-      ($scope.emsCommonModel.oracle_cloud_domain != '' && $scope.angularForm.oracle_cloud_domain.$valid) &&
-      ($scope.emsCommonModel.oracle_compute_api != '' && $scope.angularForm.oracle_compute_api.$valid) &&
+      ($scope.emsCommonModel.oracle_cloud_domain != '' && $scope.angularForm.oracle_cloud_domain.$valid &&
+       $scope.emsCommonModel.oracle_compute_api != '' && $scope.angularForm.oracle_compute_api.$valid) &&
       ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
         $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid &&
         $scope.emsCommonModel.default_verify != '' && $scope.angularForm.default_verify.$valid)) {
