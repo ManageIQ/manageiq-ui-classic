@@ -47,11 +47,11 @@ module MiqPolicyController::Policies
       mems.each_key { |m| policy.conditions.push(Condition.find(m)) unless policy.conditions.collect(&:id).include?(m) }    # Add any new conditions
     end
 
-    unless policy.valid? && !@flash_array && policy.save
+    if !policy.valid? || @flash_array || !policy.save
       policy.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
-      replace_right_cell(:nodetype => "p")
+      javascript_flash
       return
     end
 
