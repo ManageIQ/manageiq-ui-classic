@@ -854,4 +854,29 @@ describe MiqAeClassController do
       expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name02)", "(name01)"])
     end
   end
+
+  context "#replace_right_cell" do
+    before do
+      ns = FactoryGirl.create(:miq_ae_namespace)
+      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
+      seed_session_trees('miq_ae_class', :ae, "aec-#{cls.id}")
+      session_to_sb
+    end
+
+    it "Can build the AE tree" do
+      allow(User).to receive(:current_tenant).and_return(Tenant.first)
+      allow(User.current_tenant).to receive(:visible_domains).and_return([])
+      allow(controller).to receive(:domain_overrides)
+
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderAeClass),
+        )
+      )
+      expect(controller).to receive(:render)
+
+      controller.send(:replace_right_cell, :replace_trees => %i(ae))
+    end
+  end
 end
