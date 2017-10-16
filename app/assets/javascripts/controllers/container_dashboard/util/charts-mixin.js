@@ -1,4 +1,4 @@
-angular.module('miq.util').factory('chartsMixin', ['pfUtils', function(pfUtils) {
+angular.module('miq.util').factory('containerChartsMixin', ['pfUtils', function(pfUtils) {
   'use strict';
 
   var dailyTimeTooltip = function(data) {

@@ -6,7 +6,7 @@
         .row.toolbar-pf#toolbar
           .col-sm-12
             = render :partial => "layouts/angular/toolbar"
-      .row#main-content
+      .row#main-content{:class => @lastaction == "show_dashboard" ? 'miq-sand-paper' : ''}
         .col-md-12
           = render :partial => "layouts/breadcrumbs"
         - if layout_uses_tabs?

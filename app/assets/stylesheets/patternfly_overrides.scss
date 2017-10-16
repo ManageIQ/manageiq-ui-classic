@@ -210,7 +210,7 @@ li.brand-white-label.whitelabeled {
 
 
 /// ===================================================================
-/// begin main dashboard styling
+/// begin dashboard styling
 /// ===================================================================
 
 /// make it possible to drop a dashboard widget into a previously empty column
@@ -230,10 +230,20 @@ body#dashboard .blank-slate-pf {
   color: #9c9c9c;
 }
 
-/// ===================================================================
-/// end main dashboard styling
-/// ===================================================================
+/// styling for object card on angular dashboards
 
+@media (min-width: $screen-md) {
+  .aggregate-object-card .card-pf {
+    min-height: 137px;
+    img {
+      margin-top:20px;
+    }
+  }
+}
+
+/// ===================================================================
+/// end dashboard styling
+/// ===================================================================
 
 /// ===================================================================
 /// begin summary screen styling
