@@ -10,21 +10,16 @@ class GenericObjectDefinitionController < ApplicationController
   include Mixins::GenericShowMixin
 
   menu_section :automate
-  toolbar :generic_object_definition
-
-  def self.display_methods
-    %w(generic_objects)
-  end
-
-  def display_generic_objects
-    nested_list("generic_object", GenericObject)
-  end
 
   def self.model
     GenericObjectDefinition
   end
 
   def button
+    if @display == 'generic_objects' && params[:pressed] == 'generic_object_tag'
+      tag(GenericObject)
+      return
+    end
     javascript_redirect(
       case params[:pressed]
       when 'generic_object_definition_new'
@@ -46,6 +41,14 @@ class GenericObjectDefinitionController < ApplicationController
     drop_breadcrumb(:name => _("Edit Generic Object Class"), :url => "/generic_object_definition/edit/#{params[:id]}")
     @generic_object_definition = GenericObjectDefinition.find(params[:id])
     @in_a_form = true
+  end
+
+  def self.display_methods
+    %w(generic_objects)
+  end
+
+  def default_show_template
+    "generic_object_definition/show"
   end
 
   private

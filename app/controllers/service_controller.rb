@@ -20,6 +20,7 @@ class ServiceController < ApplicationController
   def button
     custom_buttons if params[:pressed] == "custom_button"
     return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
+    tag(GenericObject) if @display == 'generic_objects' && params[:pressed] == 'generic_object_tag'
   end
 
   def x_button

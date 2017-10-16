@@ -25,4 +25,57 @@ describe GenericObjectController do
     end
     it { expect(response.status).to eq(200) }
   end
+
+  describe "#tags_edit" do
+    before(:each) do
+      EvmSpecHelper.create_guid_miq_server_zone
+      user = FactoryGirl.create(:user_with_group)
+      stub_user(:features => :all)
+      generic_obj_defn = FactoryGirl.create(:generic_object_definition)
+      @gobj = FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+      allow(@gobj).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryGirl.create(:classification_tag,
+                                 :name   => "tag_1",
+                                 :parent => classification)
+      @tag2 = FactoryGirl.create(:classification_tag,
+                                 :name   => "tag_2",
+                                 :parent => classification)
+      allow(Classification).to receive(:find_assigned_entries).with(@gobj).and_return([@tag1, @tag2])
+      session[:tag_db] = "GenericObject"
+      session[:tag_items] = "GenericObject"
+      session[:assigned_filters] = []
+      edit = { :key       => "GenericObject_edit_tags__#{@gobj.id}",
+               :tagging   => "GenericObject",
+               :tag_items => [@gobj.id],
+               :current   => {:assignments => []},
+               :new       => {:assignments => [@tag1.id, @tag2.id]}}
+      session[:edit] = edit
+      controller.instance_variable_set(:@settings, {})
+      allow(controller).to receive(:fetch_path)
+    end
+
+    after(:each) do
+      expect(response.status).to eq(200)
+    end
+
+    it "builds tagging screen" do
+      post :button, :params => { :pressed => "generic_object_tag", :format => :js, :id => @gobj.id }
+      expect(assigns(:flash_array)).to be_nil
+    end
+
+    it "cancels tags edit" do
+      session[:breadcrumbs] = [{:url => "generic_object/show/#{@gobj.id}"}, 'placeholder']
+      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => @gobj.id }
+      expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
+      expect(assigns(:edit)).to be_nil
+    end
+
+    it "save tags" do
+      session[:breadcrumbs] = [{:url => "generic_object/show/#{@gobj.id}"}, 'placeholder']
+      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @gobj.id }
+      expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
+      expect(assigns(:edit)).to be_nil
+    end
+  end
 end

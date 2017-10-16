@@ -2082,8 +2082,12 @@ Rails.application.routes.draw do
       :get => %w(
         show
         show_list
+        tagging_edit
       ),
       :post => %w(
+        button
+        tag_edit_form_field_changed
+        tagging_edit
       )
     },
 
@@ -2095,6 +2099,7 @@ Rails.application.routes.draw do
         new
         show
         show_list
+        tagging_edit
       ),
       :post => %w(
         button
@@ -2108,6 +2113,8 @@ Rails.application.routes.draw do
         update_del
         quick_search
         show_list
+        tag_edit_form_field_changed
+        tagging_edit
       ) +
         adv_search_post +
         save_post
@@ -2941,6 +2948,7 @@ Rails.application.routes.draw do
         retire
         service_form_fields
         show
+        tagging_edit
       ),
       :post => %w(
         button
@@ -2952,6 +2960,7 @@ Rails.application.routes.draw do
         service_edit
         service_tag
         tag_edit_form_field_changed
+        tagging_edit
         tree_autoload
         tree_select
         x_button
