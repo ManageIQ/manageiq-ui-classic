@@ -598,25 +598,29 @@ module ApplicationController::MiqRequestMethods
 
     if request
       @breadcrumbs.pop if @breadcrumbs
-      typ = @edit[:org_controller]
-      case typ
-      when "vm"
-        title = _("VMs")
-      when "miq_template"
-        title = _("Templates")
-      else
-        title = _("Hosts")
-      end
-      flash = @edit[:req_id].nil? ? _("%{typ} Request was Submitted, you will be notified when your %{title} are ready") % {:typ => @edit[:prov_type], :title => title} : _("%{typ} Request was re-submitted, you will be notified when your %{title} are ready") % {:typ => @edit[:prov_type], :title => title}
+      org_controller = @edit[:org_controller]
+      title = case org_controller
+              when "vm"           then _("VMs")
+              when "miq_template" then _("Templates")
+              else                     _("Hosts")
+              end
+
+      flash_message = if @edit[:req_id].nil?
+                        _("%{typ} Request was Submitted, you will be notified when your %{title} are ready")
+                      else
+                        _("%{typ} Request was re-submitted, you will be notified when your %{title} are ready")
+                      end
+      flash_message = flash_message % {:typ => @edit[:prov_type], :title => title}
       @explorer = @edit[:explorer] ? @edit[:explorer] : false
-      @sb[:action] = @edit = session[:edit] =  nil                                                # Clear out session[:edit]
+      @sb[:action] = @edit = session[:edit] = nil
+      add_flash(flash_message)
+
       if role_allows?(:feature => "miq_request_show_list", :any => true)
+        session[:flash_msgs] = @flash_array.dup
         javascript_redirect :controller => 'miq_request',
                             :action     => 'show_list',
-                            :flash_msg  => flash,
-                            :typ        => typ
+                            :typ        => org_controller
       else
-        add_flash(flash)
         prov_request_cancel_submit_response
       end
     else
