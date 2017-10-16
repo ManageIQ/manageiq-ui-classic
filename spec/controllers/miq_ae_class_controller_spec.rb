@@ -2,10 +2,10 @@ describe MiqAeClassController do
   include CompressedIds
   context "#set_record_vars" do
     it "Namespace remains unchanged when a class is edited" do
-      ns = FactoryGirl.create(:miq_ae_namespace)
-      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
+      ns = factorygirl.create(:miq_ae_namespace)
+      cls = factorygirl.create(:miq_ae_class, :namespace_id => ns.id)
       ns_id = cls.namespace_id
-      new = {:name => "New Name", :description => "New Description", :display_name => "Display Name", :inherits => "Some_Class"}
+      new = {:name => "new name", :description => "new description", :display_name => "display name", :inherits => "some_class"}
       controller.instance_variable_set(:@sb,
                                        :trees       => {
                                          :ae_tree => {:active_node => "aec-#{cls.id}"}
@@ -852,6 +852,31 @@ describe MiqAeClassController do
       expect(controller).to receive(:render)
       controller.fields_seq_field_changed
       expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name02)", "(name01)"])
+    end
+  end
+
+  context "#replace_right_cell" do
+    before do
+      ns = FactoryGirl.create(:miq_ae_namespace)
+      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
+      seed_session_trees('miq_ae_class', :ae, "aec-#{cls.id}")
+      session_to_sb
+    end
+
+    it "Can build the AE tree" do
+      allow(User).to receive(:current_tenant).and_return(Tenant.first)
+      allow(User.current_tenant).to receive(:visible_domains).and_return([])
+      allow(controller).to receive(:domain_overrides)
+
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderAeClass),
+        )
+      )
+      expect(controller).to receive(:render)
+
+      controller.send(:replace_right_cell, :replace_trees => %i(ae))
     end
   end
 end
