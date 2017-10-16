@@ -33,7 +33,8 @@ module Menu
                when :modal      then {'data-toggle' => 'modal', 'data-target' => href}
                else                  {:href => href}
                end
-      params.merge(:onclick => 'return miqCheckForChanges();')
+      params[:onclick] = 'return miqCheckForChanges();' unless type == :modal
+      params
     end
 
     def leaf?
