@@ -192,7 +192,8 @@ module EmsCommon
                                      "orchestration_stack_",
                                      "security_group_",
                                      "storage_",
-                                     "vm_")
+                                     "vm_",
+                                     "physical_server_")
 
       case params[:pressed]
       # Clusters
@@ -232,6 +233,10 @@ module EmsCommon
       when "network_router_tag"               then tag(NetworkRouter)
       when "orchestration_stack_tag"          then tag(OrchestrationStack)
       when "security_group_tag"               then tag(SecurityGroup)
+
+      when "physical_server_protect"          then assign_policies(PhysicalServer)
+      when "physical_server_tag"              then tag(PhysicalServer)
+
       end
 
       return if params[:pressed].include?("tag") && !%w(host_tag vm_tag miq_template_tag instance_tag).include?(params[:pressed])
