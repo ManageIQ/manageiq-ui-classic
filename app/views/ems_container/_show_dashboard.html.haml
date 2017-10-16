@@ -7,7 +7,7 @@
           %img.provider-icon-small{"ng-src" =>"{{providerTypeIconImage}}"}
           {{providerTypeName}}
           %img.provider-icon-small{"ng-src" =>"{{providerStatusIconImage}}"}
-      %div{:layout                     => "tall",
+      .provider-card{:layout          => "tall",
           "pf-aggregate-status-card"  => "",
           "show-top-border"           => "true",
           :status                     => "objectStatus.providers",
