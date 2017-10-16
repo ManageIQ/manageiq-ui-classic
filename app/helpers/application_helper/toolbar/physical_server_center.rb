@@ -117,4 +117,38 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
       ),
     ]
   )
+  button_group(
+    'physical_server_policy',
+    [
+      select(
+        :physical_server_policy_choice,
+        'fa fa-shield fa-lg',
+        N_('Policy'),
+        :enabled => true,
+        :onwhen  => "1+",
+        :items   => [
+          button(
+            :physical_server_protect,
+            'pficon pficon-edit fa-lg',
+            N_('Manage Policies for the selected items'),
+            N_('Manage Policies'),
+            :url_parms    => "main_div",
+            :send_checked => true,
+            :enabled      => true,
+            :onwhen       => "1+"
+          ),
+          button(
+            :physical_server_tag,
+            'pficon pficon-edit fa-lg',
+            N_('Edit tags for the selected items'),
+            N_('Edit Tags'),
+            :url_parms    => "main_div",
+            :send_checked => true,
+            :enabled      => true,
+            :onwhen       => "1+"
+          ),
+        ]
+      ),
+    ]
+  )
 end
