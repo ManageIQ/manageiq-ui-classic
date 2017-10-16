@@ -42,10 +42,9 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
         });
 
         vm.afterGet = true;
-       vm.modelCopy = angular.copy(vm.vmCloudModel);
-       miqService.sparkleOff();
-    })
-    .catch(miqService.handleFailure);
+        vm.modelCopy = angular.copy(vm.vmCloudModel);
+        miqService.sparkleOff();
+      }).catch(miqService.handleFailure);
   };
 
   vm.cancelClicked = function() {
