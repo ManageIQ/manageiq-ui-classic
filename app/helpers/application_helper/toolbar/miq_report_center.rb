@@ -31,7 +31,8 @@ class ApplicationHelper::Toolbar::MiqReportCenter < ApplicationHelper::Toolbar::
           'fa fa-files-o fa-lg',
           t = N_('Copy this Report'),
           t,
-          :klass => ApplicationHelper::Button::MiqReportAction),
+          :klass => ApplicationHelper::Button::MiqReportCopy
+        ),
         button(
           :saved_report_delete,
           'pficon pficon-delete fa-lg',
