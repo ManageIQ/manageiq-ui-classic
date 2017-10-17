@@ -75,13 +75,8 @@ module ReportController::Schedules
   def miq_report_schedule_delete
     assert_privileges("miq_report_schedule_delete")
     scheds = find_checked_records_with_rbac(MiqSchedule)
-    if params[:id]
-      if MiqSchedule.exists?(from_cid(params[:id]))
-        scheds.push(from_cid(params[:id]))
-      else
-        add_flash(_("Schedule no longer exists"), :error)
-      end
-    end
+    scheds = [find_record_with_rbac(MiqSchedule, params[:id])] if scheds.empty? && params[:id] # sched. summary screen
+    add_flash(_("Schedule is not available or no longer exists"), :error) if scheds.empty?
     single_name = scheds.first.name if scheds.length == 1
     process_schedules(scheds, "destroy") unless scheds.empty?
     unless flash_errors?
