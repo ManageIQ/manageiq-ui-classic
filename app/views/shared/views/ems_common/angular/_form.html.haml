@@ -104,6 +104,39 @@
         %span.help-block{"ng-show" => "angularForm.subscription.$error.isUuid"}
           = _("Invalid input format, please enter a GUID")
 
+    .form-group{"ng-class" => "{'has-error': angularForm.oracle_cloud_domain.$invalid}", "ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'oracle_cloud'"}
+      %label.col-md-2.control-label{"for" => "ems_domain"}
+        = _('Domain')
+      .col-md-4
+        %input.form-control{"type"                    => "text",
+                            "id"                      => "ems_domain",
+                            "name"                    => "oracle_cloud_domain",
+                            "ng-model"                => "emsCommonModel.oracle_cloud_domain",
+                            "required"                => "",
+                            "checkchange"             => "",
+                            "prefix"                  => "default",
+                            "reset-validation-status" => "default_auth_status"}
+        %span.help-block{"ng-show" => "angularForm.oracle_cloud_domain.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.oracle_compute_api.$invalid}", "ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'oracle_cloud'"}
+      %label.col-md-2.control-label{"for" => "ems_compute_api"}
+        = _('Compute API URL')
+      .col-md-4
+        %input.form-control{"type"                    => "url",
+                            "id"                      => "ems_compute_api",
+                            "name"                    => "oracle_compute_api",
+                            "ng-model"                => "emsCommonModel.oracle_compute_api",
+                            "required"                => "",
+                            "checkchange"             => "",
+                            "is-url"                  => "",
+                            "prefix"                  => "default",
+                            "reset-validation-status" => "default_auth_status"}
+        %span.help-block{"ng-show" => "angularForm.oracle_compute_api.$error.required"}
+          = _("Required")
+        %span.help-block{"ng-show" => "angularForm.oracle_compute_api.$error.isUrl"}
+          = _("Invalid input format, please enter a URL")
+
     .form-group{"ng-class" => "{'has-error': angularForm.api_version.$invalid}", "ng-if" => "emsCommonModel.emstype == 'openstack' || emsCommonModel.emstype == 'openstack_infra'"}
       %label.col-md-2.control-label{"for" => "ems_api_version"}
         = _("API Version")
@@ -254,7 +287,21 @@
                             :change_stored_password => _("Change stored client key"),
                             :cancel_password_change => _("Cancel client key change"),
                             :verify_title_off       => _("Tenant ID, Client ID and matching Client Key fields are needed to perform verification of credentials")}
-    %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype != 'azure'"}
+    %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'oracle_cloud'"}
+      %h3
+        = _("Credentials")
+      = render :partial => "/layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
+               :locals  => {:record                 => @ems,
+                            :ng_model               => "emsCommonModel",
+                            :ng_reqd_userid         => true,
+                            :ng_reqd_password       => true,
+                            :ng_reqd_verify         => true,
+                            :prefix                 => "default",
+                            :validate_url           => @ems.id ? "update" : "create",
+                            :id                     => @ems.id || "new",
+                            :basic_info_needed      => true,
+                            :verify_title_off       => _("Domain, Compute API URL, Username and matching Password fields are needed to perform verification of credentials")}
+    %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype != 'azure' && emsCommonModel.emstype != 'oracle_cloud'"}
       = render :partial => "/layouts/angular/multi_auth_credentials", :locals  => {:record => @ems, :ng_model => "emsCommonModel"}
 
   = render :partial => "layouts/angular/x_edit_buttons_angular", :locals => {:record => @ems, :restful => true}

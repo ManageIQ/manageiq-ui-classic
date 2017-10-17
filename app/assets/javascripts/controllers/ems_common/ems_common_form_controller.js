@@ -56,7 +56,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       metrics_auth_status: '',
       ssh_keypair_auth_status: '',
       hawkular_auth_status: '',
-      vmware_cloud_api_version: ''
+      vmware_cloud_api_version: '',
+      oracle_cloud_domain: '',
+      oracle_compute_api: ''
     };
     $scope.formId = emsCommonFormId;
     $scope.afterGet = false;
@@ -132,6 +134,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.azure_tenant_id                 = data.azure_tenant_id;
       $scope.emsCommonModel.keystone_v3_domain_id           = data.keystone_v3_domain_id;
       $scope.emsCommonModel.subscription                    = data.subscription;
+
+      $scope.emsCommonModel.oracle_cloud_domain             = data.oracle_cloud_domain;
+      $scope.emsCommonModel.oracle_compute_api              = data.oracle_compute_api;
 
       $scope.emsCommonModel.host_default_vnc_port_start     = data.host_default_vnc_port_start;
       $scope.emsCommonModel.host_default_vnc_port_end       = data.host_default_vnc_port_end;
@@ -238,6 +243,13 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
        $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid &&
        $scope.emsCommonModel.default_verify != '' && $scope.angularForm.default_verify.$valid)) {
+      return true;
+    } else if(($scope.currentTab == "default" && $scope.emsCommonModel.emstype == "oracle_cloud") &&
+      ($scope.emsCommonModel.oracle_cloud_domain != '' && $scope.angularForm.oracle_cloud_domain.$valid &&
+       $scope.emsCommonModel.oracle_compute_api != '' && $scope.angularForm.oracle_compute_api.$valid) &&
+      ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
+        $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid &&
+        $scope.emsCommonModel.default_verify != '' && $scope.angularForm.default_verify.$valid)) {
       return true;
     } else if(($scope.currentTab == "ssh_keypair" && $scope.emsCommonModel.emstype == "openstack_infra") &&
       ($scope.emsCommonModel.ssh_keypair_userid != '' && $scope.angularForm.ssh_keypair_userid.$valid &&
@@ -445,7 +457,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         realm:                     $scope.emsCommonModel.realm,
         azure_tenant_id:           $scope.emsCommonModel.azure_tenant_id,
         subscription:              $scope.emsCommonModel.subscription,
-        provider_region:           $scope.emsCommonModel.provider_region
+        provider_region:           $scope.emsCommonModel.provider_region,
+        oracle_cloud_domain:       $scope.emsCommonModel.oracle_cloud_domain,
+        oracle_compute_api:        $scope.emsCommonModel.oracle_compute_api
       };
     } else if (prefix === "amqp") {
       if ($scope.newRecord) {

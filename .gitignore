@@ -13,3 +13,4 @@ tmp/
 .rubocop-*
 .idea/
 .ruby-version
+*.iml
