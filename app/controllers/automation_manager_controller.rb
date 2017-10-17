@@ -264,8 +264,8 @@ class AutomationManagerController < ApplicationController
                  :gtl_dbname            => "automation_manager_providers"}
       process_show_list(options)
       record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
-      @right_cell_text = _("%{model} \"%{name}\"") % {:name  => provider.name,
-                                                      :model => "#{ui_lookup(:tables => "inventory_group")} under #{record_model} Provider"}
+      @right_cell_text = _("Inventory Groups under %{record_model} Provider \"%{name}\"") %
+        {:name => provider.name, :record_model => record_model}
     end
   end
 
@@ -276,8 +276,7 @@ class AutomationManagerController < ApplicationController
                :gtl_dbname            => "automation_manager_configuration_scripts"}
     @show_adv_search = true
     process_show_list(options)
-    @right_cell_text = _("%{model} \"%{name}\"") % {:name  => provider.name,
-                                                    :model => "#{ui_lookup(:tables => "job_templates")} under "}
+    @right_cell_text = _("Job Templates under \"%{name}\"") % {:name => provider.name}
   end
 
   def inventory_group_node(id, model)
@@ -435,14 +434,11 @@ class AutomationManagerController < ApplicationController
     inventory_group_record.try(:id)
   end
 
-  def inventory_group_right_cell_text(model)
+  def inventory_group_right_cell_text(_model)
     return if @sb[:active_tab] != 'configured_systems'
     if valid_managed_group_record?(@inventory_group_record)
-      record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))
-      @right_cell_text = _("%{model} under Inventory Group \"%{name}\"") %
-                         {:model        => ui_lookup(:tables => "configured_system"),
-                          :record_model => record_model,
-                          :name         => @inventory_group_record.name}
+      @right_cell_text = _("Configured Systems under Inventory Group \"%{name}\"") %
+        {:name => @inventory_group_record.name}
     end
   end
 
