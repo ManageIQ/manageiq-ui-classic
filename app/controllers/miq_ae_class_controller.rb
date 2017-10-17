@@ -745,7 +745,7 @@ class MiqAeClassController < ApplicationController
       end
     end
     @edit[:new][:available_datatypes] = MiqAeField.available_datatypes_for_ui
-    @edit[:new][:embedded_methods] = @ae_method.embedded_methods
+    @edit[:new][:embedded_methods] = @ae_method.embedded_methods if @ae_method.location == 'inline'
     @edit[:current] = copy_hash(@edit[:new])
     @right_cell_text = if @edit[:rec_id].nil?
                          _("Adding a new Automate Method")
@@ -1210,7 +1210,7 @@ class MiqAeClassController < ApplicationController
           set_input_vars(ae_method)
           ae_method.inputs.destroy(MiqAeField.where(:id => @edit[:fields_to_delete]))
           ae_method.inputs.each { |fld| fld.default_value = nil if fld.default_value == "" }
-          ae_method.embedded_methods = @edit[:new][:embedded_methods]
+          ae_method.embedded_methods = @edit[:new][:embedded_methods] if @edit[:new][:location] == 'inline'
           ae_method.save!
         end
       rescue => bang
@@ -2340,7 +2340,7 @@ class MiqAeClassController < ApplicationController
                          @edit[:new][:data]
                        end
     miqaemethod.class_id = from_cid(@edit[:ae_class_id])
-    miqaemethod.embedded_methods = @edit[:new][:embedded_methods]
+    miqaemethod.embedded_methods = @edit[:new][:embedded_methods] if @edit[:new][:location] == 'inline'
   end
 
   # Set record variables to new values
