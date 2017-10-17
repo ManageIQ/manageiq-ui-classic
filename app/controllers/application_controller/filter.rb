@@ -665,11 +665,11 @@ module ApplicationController::Filter
   def exp_commit(token)
     exp = exp_find_by_token(@edit[@expkey][:expression], token.to_i)
     case @edit[@expkey][:exp_typ]
-    when "field"  then exp_commit_field(exp)
-    when "count"  then exp_commit_count(exp)
-    when "tag"    then exp_commit_tag(exp)
-    when "regkey" then exp_commit_regkey(exp)
-    when "find"   then exp_commit_find(exp)
+    when "field"       then exp_commit_field(exp)
+    when "count"       then exp_commit_count(exp)
+    when "tag", "tags" then exp_commit_tag(exp)
+    when "regkey"      then exp_commit_regkey(exp)
+    when "find"        then exp_commit_find(exp)
     else
       add_flash(_("Select an expression element type"), :error)
     end
