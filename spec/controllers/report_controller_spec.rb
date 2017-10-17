@@ -1011,9 +1011,10 @@ describe ReportController do
         end
 
         it "returns the flash message" do
+          allow(widget_import_service).to receive(:import_widgets).and_return(1)
           post :import_widgets, :params => params, :xhr => true
           expect(controller.instance_variable_get(:@flash_array))
-            .to include(:message => "Widgets imported successfully", :level => :success)
+            .to include(:message => "1 widget imported successfully", :level => :success)
         end
       end
 
