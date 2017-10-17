@@ -30,7 +30,7 @@ module Mixins
              :product => I18n.t('product.name'),
              :count   => hosts.length})
           AuditEvent.success(:userid => session[:userid], :event => "host_#{task}",
-              :message => "'#{task_name}' successfully initiated for #{pluralize(hosts.length, "Host")}",
+              :message => "'#{task_name(task)}' successfully initiated for #{pluralize(hosts.length, "Host")}",
               :target_class => "Host")
         end
 
