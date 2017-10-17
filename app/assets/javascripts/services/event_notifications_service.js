@@ -47,6 +47,13 @@ function eventNotifications($timeout, API) {
     });
   };
 
+  var levelToType = function(level) {
+    if (level === 'error') {
+      return 'danger';
+    }
+    return level;
+  };
+
   this.doReset = function(seed) {
     state.groups.splice(0, state.groups.length);
     var events = {
@@ -117,7 +124,7 @@ function eventNotifications($timeout, API) {
       id: id,
       notificationType: notificationType,
       unread: true,
-      type: type,
+      type: levelToType(type),
       message: message,
       data: notificationData,
       href: id ? '/api/notifications/' + id : undefined,
@@ -154,7 +161,7 @@ function eventNotifications($timeout, API) {
         if (showToast) {
           notification.unread = true;
         }
-        notification.type = type;
+        notification.type = levelToType(type);
         notification.message = message;
         notification.data = notificationData;
         notification.timeStamp = (new Date()).getTime();
