@@ -42,9 +42,9 @@ module MiqPolicyController::Policies
       policy.notes = @edit[:new][:notes]
       policy.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
     when "conditions"
-      mems = @edit[:new][:conditions].invert                  # Get the ids from the member list box
-      policy.conditions.collect { |pc| pc }.each { |c| policy.conditions.delete(c) unless mems.keys.include?(c.id) }  # Remove any conditions no longer in members
-      mems.each_key { |m| policy.conditions.push(Condition.find(m)) unless policy.conditions.collect(&:id).include?(m) }    # Add any new conditions
+      mems = @edit[:new][:conditions].invert # Get the ids from the member list box
+      policy.conditions.collect { |pc| pc }.each { |c| policy.conditions.delete(c) unless mems.keys.include?(c.id) } # Remove any conditions no longer in members
+      mems.each_key { |m| policy.conditions.push(Condition.find(m)) unless policy.conditions.collect(&:id).include?(m) } # Add any new conditions
     end
 
     if !policy.valid? || @flash_array || !policy.save
@@ -55,11 +55,11 @@ module MiqPolicyController::Policies
       return
     end
 
-    if @policy.id.blank? && policy.mode == "compliance"   # New compliance policy
+    if @policy.id.blank? && policy.mode == "compliance" # New compliance policy
       event = MiqEventDefinition.find_by(:name => "#{policy.towhat.downcase}_compliance_check") # Get the compliance event record
-      policy.sync_events([event])                           # Set the default compliance event in the policy
-      action_list = [[MiqAction.find_by_name("compliance_failed"), {:qualifier => :failure, :synchronous => true}]]
-      policy.replace_actions_for_event(event, action_list)  # Add in the default action for the compliance event
+      policy.sync_events([event]) # Set the default compliance event in the policy
+      action_list = [[MiqAction.find_by(:name => 'compliance_failed'), {:qualifier => :failure, :synchronous => true}]]
+      policy.replace_actions_for_event(event, action_list) # Add in the default action for the compliance event
     end
     policy.sync_events(@edit[:new][:events].collect { |e| MiqEventDefinition.find(e) }) if @edit[:typ] == "events"
     AuditEvent.success(build_saved_audit(policy, params[:button] == "add"))
