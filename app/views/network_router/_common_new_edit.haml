@@ -7,11 +7,11 @@
                "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
 
-  %div{"ng-if" => "vm.newRecord"}
+  %div
     %h3
       = _('Network Provider')
     .form-horizontal
-      .form-group{"ng-class" => "{'has-error': angularForm.ems_id.$invalid}"}
+      .form-group
         %label.col-md-2.control-label
           = _('Network Manager')
         .col-md-8
@@ -26,9 +26,40 @@
               = "<#{_('Choose')}>"
           %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
             = _('Required')
+        .col-md-8{"ng-if" => "!vm.newRecord"}
+          %input.form-control{"type"         => "text",
+            "name"         => "ems_name",
+            "ng-maxlength" => 128,
+            "ng-model"     => "vm.networkRouterModel.ems_name",
+            "ng-disabled"  => true}
+  %div
+    %h3
+      = _('Placement')
+    .form-horizontal
+      .form-group
+        %label.col-md-2.control-label
+          = _('Cloud Tenant')
+        .col-md-8{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}", "ng-if" => "vm.newRecord"}
+          %select{"name"                        => "cloud_tenant_id",
+                  "ng-disabled"                 => "!vm.newRecord",
+                  "ng-model"                    => "vm.networkRouterModel.cloud_tenant_id",
+                  'ng-options'                  => 'tenant.id as tenant.name for tenant in vm.available_tenants',
+                  'pf-select'                   => true,
+                  "required"                    => "",
+                  "selectpicker-for-select-tag" => ""}
+            %option{"value" => ""}
+              = "<#{_('Choose')}>"
+          %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
+            = _("Required")
+        .col-md-8{"ng-if" => "!vm.newRecord"}
+          %input.form-control{"type"         => "text",
+                              "name"         => "cloud_tenant_name",
+                              "ng-maxlength" => 128,
+                              "ng-model"     => "vm.networkRouterModel.cloud_tenant_name",
+                              "ng-disabled"  => true}
 
   %h3
-    = _('Basic Information')
+    = _('Router Information')
   .form-horizontal
     .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
       %label.col-md-2.control-label
@@ -41,11 +72,12 @@
                             "required"     => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
-  %h3
+  %h4
     = _('External Gateway')
   .form-horizontal
     .form-group
       %label.col-md-2.control-label{"for" => "network_router_enable_snat"}
+        = _('Enabled')
       .col-md-8
         %input{"bs-switch"   => "",
                :data         => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
@@ -57,7 +89,7 @@
   .form-horizontal{"ng-if" => "vm.networkRouterModel.external_gateway"}
     .form-group{"ng-if" => "vm.networkRouterModel.ems_id"}
       %label.col-md-2.control-label{"for" => "network_router_enable_snat"}
-        = _('Enable Source NAT')
+        = _('Source NAT')
       .col-md-8
         %input{"bs-switch"   => "",
                :data         => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
@@ -76,46 +108,24 @@
                 "ng-change"                   => "vm.filterCloudNetworkChanged(vm.networkRouterModel.cloud_network_id)",
                 "pf-select"                   => true,
                 "ng-selected"                 => "vm.networkRouterModel.cloud_network_id",
-                "ng-required"                 => "vm.networkRouterModel.enable_snat == true",
                 "selectpicker-for-select-tag" => ""}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
         %span.help-block{"ng-show" => "angularForm.cloud_network_id.$error.required"}
           = _("Required")
 
-    %h3
-      = _('Fixed IPs')
-    .form-horizontal{"ng-if" => "vm.networkRouterModel.cloud_network_id"}
-      .form-group
-        %label.col-md-2.control-label
-          = _('Subnet')
-        .col-md-8
-          %select{"name"                        => "cloud_subnet_id",
-                  "ng-model"                    => "vm.networkRouterModel.cloud_subnet_id",
-                  "ng-options"                  => "subnet.id as subnet.name for subnet in vm.available_subnets",
-                  "pf-select"                   => true,
-                  "ng-selected"                 => "vm.networkRouterModel.cloud_subnet_id",
-                  "selectpicker-for-select-tag" => ""}
-            %option{"value" => ""}
-              = "<#{_('Choose')}>"
-  %div{"ng-if" => "vm.newRecord"}
-    %h3
-      = _('Placement')
-    .form-horizontal
-      .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}", "ng-if" => "vm.networkRouterModel.ems_id"}
-        %label.col-md-2.control-label
-          = _('Cloud Tenant')
-        .col-md-8
-          %select{"name"                        => "cloud_tenant_id",
-                  "ng-model"                    => "vm.networkRouterModel.cloud_tenant_id",
-                  "required"                    => "",
-                  'ng-options'                  => 'tenant.id as tenant.name for tenant in vm.available_tenants',
-                  'pf-select'                   => true,
-                  "selectpicker-for-select-tag" => ""}
-            %option{"value" => ""}
-              = "<#{_('Choose')}>"
-          %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
-            = _("Required")
+    .form-group{"ng-if" => "vm.networkRouterModel.cloud_network_id"}
+      %label.col-md-2.control-label
+        = _('Fixed IPs subnet')
+      .col-md-8
+        %select{"name"                        => "cloud_subnet_id",
+                "ng-model"                    => "vm.networkRouterModel.cloud_subnet_id",
+                "ng-options"                  => "subnet.id as subnet.name for subnet in vm.available_subnets",
+                "pf-select"                   => true,
+                "ng-selected"                 => "vm.networkRouterModel.cloud_subnet_id",
+                "selectpicker-for-select-tag" => ""}
+          %option{"value" => ""}
+            = "<#{_('Choose')}>"
 
   = render :partial => "layouts/angular/generic_form_buttons"
 

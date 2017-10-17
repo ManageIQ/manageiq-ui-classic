@@ -46,57 +46,6 @@ class NetworkRouterController < ApplicationController
     end
   end
 
-  def network_router_form_fields
-    assert_privileges("network_router_edit")
-    router = find_record_with_rbac(NetworkRouter, params[:id])
-    available_networks = get_networks_by_ems(router.ems_id)
-    network_id = nil
-    subnet_id = nil
-    external_gateway = false
-    enable_snat = true
-    available_subnets = {}
-
-    unless router.external_gateway_info.nil? || router.external_gateway_info.empty?
-      external_gateway = true
-      cloud_network_ref = router.external_gateway_info["network_id"]
-      enable_snat = router.external_gateway_info["enable_snat"]
-      network = CloudNetwork.where(:ems_ref => cloud_network_ref).first
-      network_id = network.id
-      available_subnets = get_subnets_by_network(network_id)
-      external_fixed_ips = router.external_gateway_info["external_fixed_ips"]
-      unless external_fixed_ips.nil? || external_fixed_ips.empty?
-        # TODO: Replace with array/table
-        subnet = CloudSubnet.where(:ems_ref => external_fixed_ips[0]["subnet_id"]).first
-        subnet_id = subnet.id
-      end
-    end
-
-    render :json => {
-      :name               => router.name,
-      :ems_id             => router.ems_id,
-      :cloud_network_id   => network_id,
-      :cloud_subnet_id    => subnet_id,
-      :external_gateway   => external_gateway,
-      :enable_snat        => enable_snat,
-      :available_networks => available_networks,
-      :available_subnets  => available_subnets
-    }
-  end
-
-  def network_router_networks_by_ems
-    assert_privileges("network_router_new")
-    render :json => {
-      :available_networks => get_networks_by_ems(params[:id])
-    }
-  end
-
-  def network_router_subnets_by_network
-    assert_privileges("network_router_new")
-    render :json => {
-      :available_subnets => get_subnets_by_network(params[:id])
-    }
-  end
-
   def new
     @router = NetworkRouter.new
     assert_privileges("network_router_new")
