@@ -795,7 +795,7 @@ module ApplicationController::MiqRequestMethods
       @options = @miq_request.options
       @options[:memory], @options[:mem_typ] = reconfigure_calculations(@options[:vm_memory][0]) if @options[:vm_memory]
       @force_no_grid_xml   = true
-      @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :where_clause => ["vms.id IN (?)", @miq_request.options[:src_ids]]) # Get the records (into a view) and the paginator
+      @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :selected_ids => @miq_request.options[:src_ids]) # Get the records (into a view) and the paginator
     end
     @user = User.find_by_userid(@miq_request.stamped_by)
   end

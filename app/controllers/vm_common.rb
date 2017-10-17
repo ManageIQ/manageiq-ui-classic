@@ -1091,7 +1091,7 @@ module VmCommon
       if x_node == "root"
         if x_active_tree == :vandt_tree
           klass = ManageIQ::Providers::InfraManager::VmOrTemplate
-          options[:where_clause] = ["vms.type IN (?)", klass.vm_descendants.collect(&:name)]
+          options[:named_scope] = [[:with_type, klass.vm_descendants.collect(&:name)]]
         end
         process_show_list(options) if show_list # Get all VMs & Templates
         # :model=>ui_lookup(:models=>"VmOrTemplate"))
@@ -1105,10 +1105,10 @@ module VmCommon
         if TreeBuilder.get_model_for_prefix(@nodetype) == "Hash"
           if x_active_tree == :vandt_tree
             klass = ManageIQ::Providers::InfraManager::VmOrTemplate
-            options[:where_clause] = ["vms.type IN (?)", klass.vm_descendants.collect(&:name)]
+            options[:named_scope] = [[:with_type, klass.vm_descendants.collect(&:name)]]
           end
           if id == "orph"
-            options[:where_clause] = MiqExpression.merge_where_clauses(options[:where_clause], VmOrTemplate::ORPHANED_CONDITIONS)
+            options[:named_scope] << :orphaned
             process_show_list(options) if show_list
             @right_cell_text = if model
                                  _("Orphaned %{models}") % {:models => ui_lookup(:models => model)}
@@ -1116,7 +1116,7 @@ module VmCommon
                                  _("Orphaned VMs & Templates")
                                end
           elsif id == "arch"
-            options[:where_clause] = MiqExpression.merge_where_clauses(options[:where_clause], VmOrTemplate::ARCHIVED_CONDITIONS)
+            options[:named_scope] << :archived
             process_show_list(options) if show_list
             @right_cell_text = if model
                                  _("Archived %{models}") % {:models => ui_lookup(:models => model)}
@@ -1134,9 +1134,7 @@ module VmCommon
         else
           rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(from_cid(id))
           options.merge!({:association => (@nodetype == "az" ? "vms" : "all_vms_and_templates"), :parent => rec})
-          options[:where_clause] = MiqExpression.merge_where_clauses(
-            options[:where_clause], VmOrTemplate::NOT_ARCHIVED_NOR_OPRHANED_CONDITIONS
-          )
+          options[:named_scope] << :with_ems
           process_show_list(options) if show_list
           model_name = @nodetype == "d" ? _("Datacenter") : ui_lookup(:model => rec.class.base_class.to_s)
           @right_cell_text = _("%{object_types} under %{datastore_or_provider} \"%{provider_or_datastore_name}\"") % {

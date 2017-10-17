@@ -5,8 +5,8 @@ module TreeBuilderArchived
                 [] # hidden all VMs
               else
                 case object[:id]
-                when "orph" then  klass.all_orphaned
-                when "arch" then  klass.all_archived
+                when "orph" then  klass.orphaned
+                when "arch" then  klass.archived
                 end
               end
     count_only_or_objects_filtered(count_only, objects, "name")

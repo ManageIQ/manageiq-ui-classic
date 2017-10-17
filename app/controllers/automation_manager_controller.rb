@@ -260,7 +260,7 @@ class AutomationManagerController < ApplicationController
       @no_checkboxes = true
       options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryRootGroup",
                  :match_via_descendants => ConfiguredSystem,
-                 :where_clause          => ["ems_id IN (?)", provider.id],
+                 :named_scope           => [[:with_provider, provider.id]],
                  :gtl_dbname            => "automation_manager_providers"}
       process_show_list(options)
       record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
@@ -272,7 +272,7 @@ class AutomationManagerController < ApplicationController
   def cs_provider_node(provider)
     options = {:model                 => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
                :match_via_descendants => ConfigurationScript,
-               :where_clause          => ["manager_id IN (?)", provider.id],
+               :named_scope           => [[:with_manager, provider.id]],
                :gtl_dbname            => "automation_manager_configuration_scripts"}
     @show_adv_search = true
     process_show_list(options)
@@ -289,7 +289,7 @@ class AutomationManagerController < ApplicationController
       @show_adv_search = true
       options = {:model                 => "ConfiguredSystem",
                  :match_via_descendants => ConfiguredSystem,
-                 :where_clause          => ["inventory_root_group_id IN (?)", from_cid(@inventory_group_record.id)],
+                 :named_scope           => [[:with_inventory_root_group, from_cid(@inventory_group_record.id)]],
                  :gtl_dbname            => "automation_manager_configured_systems"}
       process_show_list(options)
       record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))

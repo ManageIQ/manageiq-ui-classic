@@ -43,7 +43,7 @@ class TreeBuilderInstances < TreeBuilder
   # Get AvailabilityZone children count/array
   def x_get_tree_az_kids(object, count_only)
     count_only_or_objects_filtered(count_only,
-                                   TreeBuilder.hide_vms ? [] : object.vms.not_archived_nor_orphaned,
+                                   TreeBuilder.hide_vms ? [] : object.vms.with_ems,
                                    "name")
   end
 end

@@ -940,7 +940,7 @@ class CatalogController < ApplicationController
     end
   end
 
-  def service_template_list(condition, options = {})
+  def service_template_list(scope, options = {})
     @no_checkboxes = x_active_tree == :svccat_tree
     if x_active_tree == :svccat_tree
       @gtl_buttons = ["view_list", "view_tile"]
@@ -951,7 +951,7 @@ class CatalogController < ApplicationController
                        :title    => _("Order this Service")} # Show a button instead of the checkbox
       end
     end
-    options[:where_clause] = condition
+    options[:named_scope] = scope
     process_show_list(options)
   end
 
@@ -1696,11 +1696,10 @@ class CatalogController < ApplicationController
     typ = root_node_model(x_active_tree)
     @no_checkboxes = true if x_active_tree == :svcs_tree
     if x_active_tree == :svccat_tree
-      condition = ["display=TRUE and service_template_catalog_id IS NOT NULL"]
-      service_template_list(condition, :no_checkboxes => true)
+      service_template_list([:displayed, :with_existent_service_template_catalog_id], :no_checkboxes => true)
     else
       options = {:model => typ.constantize}
-      options[:where_clause] = ["orderable=TRUE"] if x_active_tree == :ot_tree
+      options[:named_scope] = :orderable if x_active_tree == :ot_tree
       process_show_list(options)
     end
     @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
@@ -1709,9 +1708,9 @@ class CatalogController < ApplicationController
   def get_node_info_handle_ot_folder_nodes
     typ = node_name_to_template_name(x_node)
     @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
-    options = {:model        => typ.constantize,
-               :gtl_dbname   => :orchestrationtemplate,
-               :where_clause => ["orderable=TRUE"]}
+    options = {:model       => typ.constantize,
+               :gtl_dbname  => :orchestrationtemplate,
+               :named_scope => :orderable}
     process_show_list(options)
   end
 
@@ -1721,19 +1720,19 @@ class CatalogController < ApplicationController
   end
 
   def get_node_info_handle_unassigned_node
-    condition = ["service_template_catalog_id IS NULL"]
-    service_template_list(condition, :no_order_button => true)
+    scope = [[:with_service_template_catalog_id, nil]]
+    service_template_list(scope, :no_order_button => true)
     @right_cell_text = _("Services in Catalog \"Unassigned\"")
   end
 
   def get_node_info_handle_stc_node(id)
     if x_active_tree == :sandt_tree
       # catalog items accordion also shows the non-"Display in Catalog" items
-      condition = ["service_template_catalog_id=?", from_cid(id)]
+      scope = [[:with_service_template_catalog_id, from_cid(id)]]
     else
-      condition = ["display=TRUE and service_template_catalog_id=?", from_cid(id)]
+      scope = [:displayed, [:with_service_template_catalog_id, from_cid(id)]]
     end
-    service_template_list(condition, :no_order_button => true)
+    service_template_list(scope, :no_order_button => true)
     stc = ServiceTemplateCatalog.find(from_cid(id))
     @right_cell_text = _("Services in Catalog \"%{name}\"") % {:name => stc.name}
   end
