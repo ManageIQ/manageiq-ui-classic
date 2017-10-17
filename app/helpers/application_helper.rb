@@ -230,7 +230,8 @@ module ApplicationHelper
     "playbooks"                              => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook,
     "physical_servers_with_host"             => PhysicalServer,
     "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript,
-    "vms"                                    => VmOrTemplate
+    "vms"                                    => VmOrTemplate,
+    "ServiceCatalog"                         => ServiceTemplate
   }.freeze
 
   HAS_ASSOCATION = {
@@ -243,7 +244,10 @@ module ApplicationHelper
   }.freeze
 
   def model_to_report_data
-    current_model = if !@display.nil? && @display != "main"
+    # @report_data_additional_options[:model] is most important, others can be removed
+    current_model = if @report_data_additional_options[:model]
+                      @report_data_additional_options[:model]
+                    elsif !@display.nil? && @display != "main"
                       @display
                     elsif params[:db]
                       params[:db]
@@ -392,7 +396,7 @@ module ApplicationHelper
               %w(report automation_manager).include?(request.parameters[:controller])
           suffix = ''
           suffix = x_node if params[:tab_id] == "saved_reports"
-          return "/" + request.parameters[:controller] + "/tree_select/?id=" + suffix
+          return "/" + request.parameters[:controller] + "/tree_select?id=" + suffix
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
@@ -1617,11 +1621,17 @@ module ApplicationHelper
     end
   end
 
-  def process_show_list_options(options)
-    # Warning: Please do not add any SQL options here.
-    @report_data_additiona_options = {
-      :named_scope => options[:named_scope]
-    }.freeze
+  def process_show_list_options(options, curr_model = nil)
+    @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
+    @report_data_additional_options.with_model(curr_model) if curr_model
+    @report_data_additional_options.freeze
+  end
+
+  def from_additional_options(additional_options)
+    if !additional_options[:match_via_descendants].nil?
+      additional_options[:match_via_descendants] = additional_options[:match_via_descendants].constantize
+    end
+    additional_options
   end
 
   # Wrapper around jquery-rjs' remote_function which adds an extra .html_safe()

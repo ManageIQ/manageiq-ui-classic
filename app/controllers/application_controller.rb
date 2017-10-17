@@ -435,16 +435,16 @@ class ApplicationController < ActionController::Base
   # @option params :model_id [String]
   #     String value of model's ID to be filtered with.
   def process_params_options(params)
-    options = params[:additional_options] || {}
+    options = from_additional_options(params[:additional_options]) || {}
     if params[:explorer]
       params[:action] = "explorer"
       @explorer = params[:explorer] == "true"
     end
 
-    if params[:active_tree] && defined? get_node_info
-      node_info = get_node_info(x_node, false)
-      options.merge!(node_info) if node_info.kind_of?(Hash)
-    end
+    # if params[:active_tree] && defined? get_node_info
+    #   node_info = get_node_info(x_node, false)
+    #   options.merge!(node_info) if node_info.kind_of?(Hash)
+    # end
 
     # handle exceptions
     if params[:model_name]
@@ -460,7 +460,7 @@ class ApplicationController < ActionController::Base
                 end
     end
 
-    if params[:parent_id] && !params[:active_tree]
+    if params[:parent_id]
       parent_id = from_cid(params[:parent_id])
       unless parent_id.nil?
         options[:parent] = identify_record(parent_id, controller_to_model) if parent_id && options[:parent].nil?
@@ -1512,6 +1512,9 @@ class ApplicationController < ActionController::Base
 
   # Create view and paginator for a DB records with/without tags
   def get_view(db, options = {}, fetch_data = false)
+    if !fetch_data && @report_data_additional_options.nil? 
+      process_show_list_options(options, db)
+    end
     unless @edit.nil?
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?

@@ -7,6 +7,7 @@
 - selected_records = params[:rec_ids] unless params.nil? || params[:rec_ids].nil?
 - selected_records = selected_records.map(&:to_i) if !selected_records.nil? && selected_records.first.kind_of?(String)
 - selected_records = selected_records.map(&:id) if !selected_records.nil? && !selected_records.first.kind_of?(Integer)
+- parent_id = @report_data_additional_options[:parent_id] || params[:id]
 #miq-gtl-view{"ng-controller" => "reportDataController as dataCtrl"}
   - unless no_flash_div
     = render :partial => "layouts/flash_msg"
@@ -40,11 +41,11 @@
   sendDataWithRx({initController: {
     name: 'reportDataController',
     data: {
-      additionalOptions: #{@report_data_additiona_options.to_json},
+      additionalOptions: #{@report_data_additional_options.to_json},
       modelName: '#{h(j_str(model_name))}',
       activeTree: '#{active_tree}',
       gtlType: '#{h(gtl_type_string)}',
-      parentId: '#{h(j_str(params[:id])) unless @display.nil?}',
+      parentId: '#{h(j_str(parent_id)) unless @display.nil?}',
       sortColIdx: '#{@sortcol}',
       sortDir: '#{@sortdir}',
       isExplorer: '#{@explorer}' === 'true' ? true : false,
