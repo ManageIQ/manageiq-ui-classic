@@ -70,6 +70,19 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             :options                     => {:feature => :power_off}
           ),
           button(
+            :physical_server_power_off_now,
+            nil,
+            N_('Power off the servers immediately'),
+            N_('Power Off Immediately'),
+            :image   => "power_off",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "power_off_now", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Power off the servers immediately?"),
+            :enabled => false,
+            :onwhen  => "1+",
+            :options => {:feature => :power_off_now}
+          ),
+          button(
             :physical_server_restart,
             nil,
             N_('Restart the selected servers'),
@@ -82,6 +95,45 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             :onwhen                      => "1+",
             :options                     => {:feature => :restart}
           ),
+          button(
+            :physical_server_restart_now,
+            nil,
+            N_('Restart Servers Immediately'),
+            N_('Restart Immediately'),
+            :image   => "power_reset",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "restart_now", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Restart the servers immediately?"),
+            :enabled => false,
+            :onwhen  => "1+",
+            :options => {:feature => :restart_now}
+          ),
+          button(
+            :physical_server_restart_to_sys_setup,
+            nil,
+            N_('Restart Servers to System Setup'),
+            N_('Restart to System Setup'),
+            :image   => "power_reset",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "restart_to_sys_setup", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Restart the servers to system setup?"),
+            :enabled => false,
+            :onwhen  => "1+",
+            :options => {:feature => :restart_to_sys_setup}
+          ),
+          button(
+            :physical_server_restart_mgmt_controller,
+            nil,
+            N_('Restart Management Controller'),
+            N_('Restart Management Controller'),
+            :image   => "power_reset",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "restart_mgmt_controller", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Restart management controller for the selected servers?"),
+            :enabled => false,
+            :onwhen  => "1+",
+            :options => {:feature => :restart_mgmt_controller}
+          )
         ]
       ),
       select(
