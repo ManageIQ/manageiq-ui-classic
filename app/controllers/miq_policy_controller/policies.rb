@@ -6,9 +6,9 @@ module MiqPolicyController::Policies
     return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
     @policy = MiqPolicy.find_by(:id => @edit[:policy_id]) if @edit[:policy_id]
     if @policy && @policy.id
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqPolicy"), :name => @policy.description})
+      add_flash(_("Edit of Policy \"%{name}\" was cancelled by the user") % {:name => @policy.description})
     else
-      add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqPolicy")})
+      add_flash(_("Add of new Policy was cancelled by the user"))
     end
     @edit = nil
     get_node_info(x_node)
@@ -63,9 +63,11 @@ module MiqPolicyController::Policies
     end
     policy.sync_events(@edit[:new][:events].collect { |e| MiqEventDefinition.find(e) }) if @edit[:typ] == "events"
     AuditEvent.success(build_saved_audit(policy, params[:button] == "add"))
-    flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                            _("%{model} \"%{name}\" was added")
-    add_flash(flash_key % {:model => ui_lookup(:model => "MiqPolicy"), :name => @edit[:new][:description]})
+    if params[:button] == "save"
+      add_flash(_("Policy \"%{name}\" was saved") % {:name => @edit[:new][:description]})
+    else
+      add_flash(_("Policy \"%{name}\" was added") % {:name => @edit[:new][:description]})
+    end
     policy_get_info(MiqPolicy.find(policy.id))
     @edit = nil
     @nodetype = "p"
@@ -117,7 +119,7 @@ module MiqPolicyController::Policies
     policy = MiqPolicy.find(params[:id])
     new_desc = truncate("Copy of #{policy.description}", :length => 255, :omission => "")
     if MiqPolicy.find_by_description(new_desc)
-      add_flash(_("%{model} \"%{name}\" already exists") % {:model => ui_lookup(:model => "MiqPolicy"), :name => new_desc}, :error)
+      add_flash(_("Policy \"%{name}\" already exists") % {:name => new_desc}, :error)
       javascript_flash
     else
       new_pol = policy.copy(:description => new_desc, :created_by => session[:userid], :read_only => nil)
@@ -127,7 +129,7 @@ module MiqPolicyController::Policies
                          :userid       => session[:userid],
                          :message      => "New Policy ID %{new_id} was copied from Policy ID %{old_id}" %
                                           {:new_id => new_pol.id, :old_id => policy.id})
-      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqPolicy"), :name => new_desc})
+      add_flash(_("Policy \"%{name}\" was added") % {:name => new_desc})
       @new_policy_node = policy_node(policy)
       get_node_info(@new_policy_node)
       replace_right_cell(:nodetype => "p", :replace_trees => [:policy])
@@ -140,20 +142,17 @@ module MiqPolicyController::Policies
     # showing 1 policy, delete it
     pol = MiqPolicy.find_by(:id => params[:id])
     if params[:id].nil? || pol.nil?
-      add_flash(_("%{models} no longer exists") % {:models => ui_lookup(:model => "MiqPolicy")},
-                :error)
+      add_flash(_("Policy no longer exists"), :error)
     else
       if pol.read_only
-        add_flash(_("%{models} is read only") % {:models => ui_lookup(:model => "MiqPolicy")},
-        :error)
+        add_flash(_("Policy is read only"), :error)
       else
         policies.push(params[:id])
       end
       self.x_node = @new_policy_node = policies_node(pol.mode, pol.towhat)
     end
     process_policies(policies, "destroy") unless policies.empty?
-    add_flash(_("The selected %{models} was deleted") %
-      {:models => ui_lookup(:models => "MiqPolicy")}) if @flash_array.nil?
+    add_flash(_("The selected Policies were deleted")) if @flash_array.nil?
     get_node_info(@new_policy_node)
     replace_right_cell(:nodetype => "xx", :replace_trees => [:policy, :policy_profile])
   end
