@@ -186,7 +186,7 @@ module ApplicationController::AdvancedSearch
 
   def adv_search_redraw_left_div
     if x_active_tree.to_s == "configuration_manager_cs_filter_tree"
-      build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
+      build_configuration_manager_cs_filter_tree(x_active_tree)
       build_accordions_and_trees
       load_or_clear_adv_search
     elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree svcs_tree).include?(x_active_tree.to_s)
