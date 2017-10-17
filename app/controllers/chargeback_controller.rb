@@ -515,12 +515,11 @@ class ChargebackController < ApplicationController
       temp[:per_time] ||= "hourly"
 
       temp[:currency] = detail.detail_currency.id
-      temp[:detail_measure] = detail.detail_measure
 
-      if detail.detail_measure.present?
+      if detail.chargeable_field.detail_measure.present?
         temp[:detail_measure] = {}
-        temp[:detail_measure][:measures] = detail.detail_measure.measures
-        temp[:chargeback_rate_detail_measure_id] = detail.detail_measure.id
+        temp[:detail_measure][:measures] = detail.chargeable_field.detail_measure.measures
+        temp[:chargeback_rate_detail_measure_id] = detail.chargeable_field.detail_measure.id
       end
 
       temp[:id] = params[:pressed] == 'chargeback_rates_copy' ? nil : detail.id
