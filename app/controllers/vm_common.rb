@@ -452,7 +452,7 @@ module VmCommon
           flash_error = true
         #         AuditEvent.failure(audit.merge(:message=>"[#{@record.name} -- #{@record.location}] Update returned: #{bang}"))
         else
-          flash = _("Create Snapshot for %{model} \"%{name}\" was started") % {:model => ui_lookup(:model => "Vm"), :name => @record.name}
+          flash = _("Create Snapshot for VM and Instance \"%{name}\" was started") % {:name => @record.name}
           #         AuditEvent.success(build_saved_vm_audit(@record))
         end
         params[:id] = @record.id.to_s   # reset id in params for show
@@ -690,7 +690,7 @@ module VmCommon
       redirect_to :action => @lastaction, :id => @record.id, :flash_msg => flash
     else
       chosen = params[:chosen_service].to_i
-      flash = _("%{model} \"%{name}\" successfully added to Service \"%{to_name}\"") % {:model => ui_lookup(:model => "Vm"), :name => @record.name, :to_name => Service.find(chosen).name}
+      flash = _("VM and Instance \"%{name}\" successfully added to Service \"%{to_name}\"") % {:name => @record.name, :to_name => Service.find(chosen).name}
       begin
         @record.add_to_vsc(Service.find(chosen).name)
       rescue => bang
@@ -765,7 +765,7 @@ module VmCommon
         @record = @sb[:action] = nil
         replace_right_cell
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "Vm"), :name => @record.name})
+        add_flash(_("Edit of VM and Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
         session[:flash_msgs] = @flash_array.dup
         javascript_redirect previous_breadcrumb_url
       end
