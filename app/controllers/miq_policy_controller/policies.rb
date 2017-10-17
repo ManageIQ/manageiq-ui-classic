@@ -1,91 +1,113 @@
 module MiqPolicyController::Policies
   extend ActiveSupport::Concern
 
-  def policy_edit
-    case params[:button]
-    when "cancel"
-      id = params[:id] ? params[:id] : "new"
-      return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
-      @policy = MiqPolicy.find_by(:id => @edit[:policy_id]) if @edit[:policy_id]
-      if @policy && @policy.id
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqPolicy"), :name => @policy.description})
-      else
-        add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqPolicy")})
+  def policy_edit_cancel
+    id = params[:id] ? params[:id] : "new"
+    return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
+    @policy = MiqPolicy.find_by(:id => @edit[:policy_id]) if @edit[:policy_id]
+    if @policy && @policy.id
+      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqPolicy"), :name => @policy.description})
+    else
+      add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqPolicy")})
+    end
+    @edit = nil
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype)
+  end
+
+  def policy_edit_reset
+    @sb[:action] = "policy_edit"
+    policy_build_edit_screen(session[:edit].try(:key?, :typ) ? session[:edit][:typ] : params[:typ])
+    if params[:button] == "reset"
+      add_flash(_("All changes have been reset"), :warning)
+    end
+    replace_right_cell(:nodetype => "p")
+  end
+
+  def policy_edit_save
+    assert_privileges("policy_#{@policy.id ? "edit" : "new"}")
+    policy = @policy.id.blank? ? MiqPolicy.new : MiqPolicy.find(@policy.id) # Get new or existing record
+    policy.mode = @edit[:new][:mode]
+    policy.updated_by = session[:userid]
+
+    if @policy.id.blank?
+      policy.towhat = @edit[:new][:towhat]
+      policy.created_by = session[:userid]
+    end
+
+    case @edit[:typ]
+    when "basic"
+      policy.description = @edit[:new][:description]
+      policy.active = @edit[:new][:active]
+      policy.notes = @edit[:new][:notes]
+      policy.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
+    when "conditions"
+      mems = @edit[:new][:conditions].invert # Get the ids from the member list box
+      policy.conditions.collect { |pc| pc }.each { |c| policy.conditions.delete(c) unless mems.keys.include?(c.id) } # Remove any conditions no longer in members
+      mems.each_key { |m| policy.conditions.push(Condition.find(m)) unless policy.conditions.collect(&:id).include?(m) } # Add any new conditions
+    end
+
+    if !policy.valid? || @flash_array || !policy.save
+      policy.errors.each do |field, msg|
+        add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
-      @edit = nil
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
-      return
-    when "reset", nil # Reset or first time in
-      @sb[:action] = "policy_edit"
-      policy_build_edit_screen(session[:edit].try(:key?, :typ) ? session[:edit][:typ] : params[:typ])
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell(:nodetype => "p")
+      javascript_flash
       return
     end
 
+    if @policy.id.blank? && policy.mode == "compliance" # New compliance policy
+      event = MiqEventDefinition.find_by(:name => "#{policy.towhat.downcase}_compliance_check") # Get the compliance event record
+      policy.sync_events([event]) # Set the default compliance event in the policy
+      action_list = [[MiqAction.find_by(:name => 'compliance_failed'), {:qualifier => :failure, :synchronous => true}]]
+      policy.replace_actions_for_event(event, action_list) # Add in the default action for the compliance event
+    end
+    policy.sync_events(@edit[:new][:events].collect { |e| MiqEventDefinition.find(e) }) if @edit[:typ] == "events"
+    AuditEvent.success(build_saved_audit(policy, params[:button] == "add"))
+    flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
+                                            _("%{model} \"%{name}\" was added")
+    add_flash(flash_key % {:model => ui_lookup(:model => "MiqPolicy"), :name => @edit[:new][:description]})
+    policy_get_info(MiqPolicy.find(policy.id))
+    @edit = nil
+    @nodetype = "p"
+
+    case x_active_tree
+    when :policy_profile_tree
+      replace_right_cell(:nodetype => "p", :replace_trees => [:policy_profile, :policy])
+    when :policy_tree
+      @nodetype = "p"
+      if params[:button] == "add"
+        self.x_node = @new_policy_node = policy_node(policy)
+        get_node_info(@new_policy_node)
+      end
+      replace_right_cell(:nodetype => "p", :replace_trees => params[:button] == "save" ? [:policy_profile, :policy] : [:policy])
+    end
+  end
+
+  def policy_edit_move
+    handle_selection_buttons(:conditions)
+    session[:changed] = (@edit[:new] != @edit[:current])
+    replace_right_cell(:nodetype => "p")
+  end
+
+  def policy_edit_load_policy
     # Load @edit/vars for other buttons
     id = params[:id] ? params[:id] : "new"
     return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
-    @policy = @edit[:policy_id] ? MiqPolicy.find_by(:id => @edit[:policy_id]) : MiqPolicy.new
+    @edit[:policy_id] ? MiqPolicy.find_by(:id => @edit[:policy_id]) : MiqPolicy.new
+  end
 
+  def policy_edit
     case params[:button]
+    when "cancel"
+      policy_edit_cancel
+    when "reset", nil # Reset or first time in
+      policy_edit_reset
     when "save", "add"
-      assert_privileges("policy_#{@policy.id ? "edit" : "new"}")
-      policy = @policy.id.blank? ? MiqPolicy.new : MiqPolicy.find(@policy.id) # Get new or existing record
-      policy.mode = @edit[:new][:mode]
-      policy.towhat = @edit[:new][:towhat] if @policy.id.blank?               # Set model if new record
-      policy.created_by = session[:userid] if @policy.id.blank?               # Set created user if new record
-      policy.updated_by = session[:userid]
-      case @edit[:typ]
-      when "basic"
-        policy.description = @edit[:new][:description]
-        policy.active = @edit[:new][:active]
-        policy.notes = @edit[:new][:notes]
-        policy.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
-      when "conditions"
-        mems = @edit[:new][:conditions].invert                  # Get the ids from the member list box
-        policy.conditions.collect { |pc| pc }.each { |c| policy.conditions.delete(c) unless mems.keys.include?(c.id) }  # Remove any conditions no longer in members
-        mems.each_key { |m| policy.conditions.push(Condition.find(m)) unless policy.conditions.collect(&:id).include?(m) }    # Add any new conditions
-      end
-      if policy.valid? && !@flash_array && policy.save
-        if @policy.id.blank? && policy.mode == "compliance"   # New compliance policy
-          event = MiqEventDefinition.find_by(:name => "#{policy.towhat.downcase}_compliance_check") # Get the compliance event record
-          policy.sync_events([event])                           # Set the default compliance event in the policy
-          action_list = [[MiqAction.find_by_name("compliance_failed"), {:qualifier => :failure, :synchronous => true}]]
-          policy.replace_actions_for_event(event, action_list)  # Add in the default action for the compliance event
-        end
-        policy.sync_events(@edit[:new][:events].collect { |e| MiqEventDefinition.find(e) }) if @edit[:typ] == "events"
-        AuditEvent.success(build_saved_audit(policy, params[:button] == "add"))
-        flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                                _("%{model} \"%{name}\" was added")
-        add_flash(flash_key % {:model => ui_lookup(:model => "MiqPolicy"), :name => @edit[:new][:description]})
-        policy_get_info(MiqPolicy.find(policy.id))
-        @edit = nil
-        @nodetype = "p"
-        case x_active_tree
-        when :policy_profile_tree
-          replace_right_cell(:nodetype => "p", :replace_trees => [:policy_profile, :policy])
-        when :policy_tree
-          @nodetype = "p"
-          if params[:button] == "add"
-            self.x_node = @new_policy_node = policy_node(policy)
-            get_node_info(@new_policy_node)
-          end
-          replace_right_cell(:nodetype => "p", :replace_trees => params[:button] == "save" ? [:policy_profile, :policy] : [:policy])
-        end
-      else
-        policy.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        replace_right_cell(:nodetype => "p")
-      end
+      @policy = policy_edit_load_policy
+      policy_edit_save
     when "move_right", "move_left", "move_allleft"
-      handle_selection_buttons(:conditions)
-      session[:changed] = (@edit[:new] != @edit[:current])
-      replace_right_cell(:nodetype => "p")
+      @policy = policy_edit_load_policy
+      policy_edit_move
     end
   end
 
