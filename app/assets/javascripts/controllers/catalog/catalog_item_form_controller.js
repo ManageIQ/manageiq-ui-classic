@@ -418,6 +418,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.retirement_variables = angular.copy(vm.catalogItemModel.provisioning_variables);
     playbookReusableCodeMixin.getRemoveResourcesTypes(vm);
     playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
+    miqService.sparkleOff();
   };
 
   var closeConfirmationModal = function() {
