@@ -79,7 +79,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
     return $scope.angularForm.url.$valid;
   };
 
-  var editButtonCliked = function(buttonName, serializeFields) {
+  var editButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
 
     var editUrl = url + '/edit/' + configurationManagerFormId + '?button=' + buttonName;
@@ -91,7 +91,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
   };
 
   vm.cancelClicked = function() {
-    editButtonCliked('cancel');
+    editButtonClicked('cancel');
   };
 
   vm.resetClicked = function() {
@@ -102,7 +102,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
   };
 
   vm.saveClicked = function() {
-    editButtonCliked('save', true);
+    editButtonClicked('save', true);
   };
 
   vm.addClicked = function() {
