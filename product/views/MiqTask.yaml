@@ -33,6 +33,10 @@ include:
   miq_server:
     columns:
     - name
+  job:
+    columns:
+    - target_class
+    - target_id
 
 # Order of columns (from all tables)
 col_order:
