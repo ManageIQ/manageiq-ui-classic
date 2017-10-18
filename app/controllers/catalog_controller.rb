@@ -1710,7 +1710,7 @@ class CatalogController < ApplicationController
           typ = types[x_active_tree]
           @no_checkboxes = true if x_active_tree == :svcs_tree
           if x_active_tree == :svccat_tree
-            condition = ["display=? and service_template_catalog_id IS NOT NULL", true]
+            condition = ["display=TRUE and service_template_catalog_id IS NOT NULL"]
             service_template_list(condition, :no_checkboxes => true)
           else
             options = {:model => typ.constantize}
@@ -1745,9 +1745,9 @@ class CatalogController < ApplicationController
               else
                 if x_active_tree == :sandt_tree
                   # catalog items accordion also shows the non-"Display in Catalog" items
-                  condition = ["service_template_catalog_id=? and service_template_catalog_id IS NOT NULL", from_cid(id)]
+                  condition = ["service_template_catalog_id=?", from_cid(id)]
                 else
-                  condition = ["display=? and service_template_catalog_id=? and service_template_catalog_id IS NOT NULL", true, from_cid(id)]
+                  condition = ["display=TRUE and service_template_catalog_id=?", from_cid(id)]
                 end
                 service_template_list(condition, :model => model, :no_order_button => true)
                 stc = ServiceTemplateCatalog.find_by_id(from_cid(id))
