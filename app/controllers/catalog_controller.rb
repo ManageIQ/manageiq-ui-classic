@@ -1714,7 +1714,7 @@ class CatalogController < ApplicationController
             service_template_list(condition, :no_checkboxes => true)
           else
             options = {:model => typ.constantize}
-            options[:where_clause] = ["orderable=?", true] if x_active_tree == :ot_tree
+            options[:where_clause] = ["orderable=TRUE"] if x_active_tree == :ot_tree
             process_show_list(options)
           end
           @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
@@ -1723,7 +1723,7 @@ class CatalogController < ApplicationController
           @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
           options = {:model        => typ.constantize,
                      :gtl_dbname   => :orchestrationtemplate,
-                     :where_clause => ["orderable=?", true]}
+                     :where_clause => ["orderable=TRUE"]}
           process_show_list(options)
         else
           if x_active_tree == :stcat_tree
