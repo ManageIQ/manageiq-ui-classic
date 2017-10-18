@@ -40,7 +40,6 @@ module ReportFormatter
     # C&U performance charts (Cluster, Host, VM based)
     def build_performance_chart_area(maxcols)
       tz = mri.get_time_zone(Time.zone.name)
-      nils2zero = false # Allow gaps in charts for nil values
 
       mri.graph[:columns].each_with_index do |col, col_idx|
 
@@ -59,14 +58,14 @@ module ReportFormatter
           else
             categories.push(rec_time.hour.to_s + ":00")
           end
-          val = r[col].nil? && (nils2zero) ? 0 : r[col]
+          val = r[col].nil? && false ? 0 : r[col]
 
           if d_idx == mri.table.data.length - 1 && !tip.nil?
             series.push(:value => val, :tooltip => tip)
           else
             series.push(:value => val)
           end
-          allnil = false if !val.nil? || nils2zero
+          allnil = false if !val.nil? || false
         end
         series.set_to_zero(-1) if allnil # XML/SWF Charts can't handle all nils, set the last value to 0
         add_axis_category_text(categories)
