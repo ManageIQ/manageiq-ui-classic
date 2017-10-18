@@ -189,7 +189,7 @@ module ApplicationController::AdvancedSearch
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, tree_type, @sb)
-      adv_search_redraw_tree(tree)
+      adv_search_redraw_tree_and_main(tree)
       return
     elsif %w(ems_cloud ems_infra).include?(@layout)
       build_listnav_search_list(@view.db)
@@ -197,7 +197,7 @@ module ApplicationController::AdvancedSearch
       build_listnav_search_list(@edit[@expkey][:exp_model])
     end
 
-    adv_search_redraw_listnav
+    adv_search_redraw_listnav_and_main
   end
 
   def adv_search_redraw_search_partials(display_mode = nil)
