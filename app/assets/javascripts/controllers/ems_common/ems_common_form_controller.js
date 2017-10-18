@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '$attrs', 'emsCommonFormId', 'miqService', function($http, $scope, $attrs, emsCommonFormId, miqService) {
+ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '$attrs', 'emsCommonFormId', 'miqService', '$timeout', function($http, $scope, $attrs, emsCommonFormId, miqService, $timeout) {
   var init = function() {
     $scope.emsCommonModel = {
       name: '',
@@ -555,14 +555,16 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     $scope.authType = authType;
     miqService.validateWithREST($event, authType, $scope.actionUrl, formSubmit)
       .then(function success(data) {
-        $scope.$apply(function() {
-          if(data.level == "error") {
-            $scope.updateAuthStatus(false);
-          } else {
-            $scope.updateAuthStatus(true);
-          }
-          miqService.miqFlash(data.level, data.message);
-          miqSparkleOff();
+        $timeout(function() {
+          $scope.$apply(function() {
+            if(data.level == "error") {
+              $scope.updateAuthStatus(false);
+            } else {
+              $scope.updateAuthStatus(true);
+            }
+            miqService.miqFlash(data.level, data.message);
+            miqSparkleOff();
+          });
         });
       });
   };

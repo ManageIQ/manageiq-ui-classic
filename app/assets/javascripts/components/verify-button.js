@@ -26,7 +26,8 @@ ManageIQ.angular.app.component('verifyButton', {
           {target: '.validate_button:visible'},
           vm.valtype,
           true,
-          vm.findScope(), vm.validateUrl
+          vm.findScope,
+          vm.validateUrl,
         );
       } else {
         vm.validate(vm.validateUrl);

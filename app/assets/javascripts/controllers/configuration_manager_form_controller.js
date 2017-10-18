@@ -2,23 +2,21 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
   var vm = this;
 
   vm.configurationManagerModel = angular.copy(configurationManagerService.managerModel);
-
   vm.postValidationModel = {};
-
   vm.formId = configurationManagerFormId;
+  vm.model = 'configurationManagerModel';
   vm.afterGet = false;
   vm.saveable = miqService.saveable;
-  vm.validateClicked = configurationManagerService.validateClicked;
   vm.modelCopy = angular.copy(vm.configurationManagerModel);
-  vm.model = 'configurationManagerModel';
   vm.checkAuthentication = true;
+  vm.validationUrl = url + '/authentication_validate/' + configurationManagerFormId + '?button=validate';
+  vm.prefix = 'default';
 
   ManageIQ.angular.scope = vm;
 
   miqService.sparkleOn();
   if (configurationManagerFormId === 'new') {
     vm.newRecord = true;
-
     vm.configurationManagerModel.name = '';
     vm.configurationManagerModel.url = '';
     vm.configurationManagerModel.verify_ssl = false;
@@ -30,7 +28,6 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
       .catch(miqService.handleFailure);
   } else {
     vm.newRecord = false;
-
     $http.get(url + '/form_fields/' + configurationManagerFormId)
       .then(editFormDataComplete)
       .catch(miqService.handleFailure);
@@ -40,7 +37,6 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
     var data = response.data;
 
     vm.configurationManagerModel.zone = data.zone;
-
     vm.modelCopy = angular.copy(vm.configurationManagerModel);
     vm.afterGet = true;
     miqService.sparkleOff();
@@ -65,14 +61,22 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
     miqService.sparkleOff();
   }
 
+  vm.validateClicked = function() {
+    var event = {target: '.validate_button:visible'};
+    miqService.validateWithREST(event, vm.prefix, vm.validationUrl, true)
+      .then(function success(data) {
+        vm.configurationManagerModel.default_auth_status = data.level !== 'error';
+        miqService.miqFlash(data.level, data.message);
+        miqService.sparkleOff();
+      });
+  };
+
   vm.canValidateBasicInfo = function() {
     return vm.isBasicInfoValid();
   };
 
   vm.isBasicInfoValid = function() {
-    return $scope.angularForm.url.$valid &&
-      $scope.angularForm.default_userid.$valid &&
-      $scope.angularForm.default_password.$valid;
+    return $scope.angularForm.url.$valid;
   };
 
   var editButtonClicked = function(buttonName, serializeFields) {
@@ -88,7 +92,6 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
 
   vm.cancelClicked = function() {
     editButtonClicked('cancel');
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.resetClicked = function() {
@@ -100,7 +103,6 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
 
   vm.saveClicked = function() {
     editButtonClicked('save', true);
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.addClicked = function() {
