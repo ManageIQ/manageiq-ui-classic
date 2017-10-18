@@ -92,8 +92,9 @@ module ApplicationController::DialogRunner
     @record = Dialog.find_by_id(@edit[:rec_id])
     @dialog_prov = true
     @in_a_form = true
-    @showtype = "dialog_provision"
-    render :action => "show"
+    #@showtype = "dialog_provision"
+    render :template => "shared/dialogs/dialog_provision"
+      #render :action => "show"
   end
 
   def dynamic_radio_button_refresh
