@@ -282,9 +282,9 @@ class ProviderForemanController < ApplicationController
         unassigned_profiles = add_unassigned_configuration_profile_record(provider.id)
         options.merge!(unassigned_profiles) unless unassigned_profiles.nil?
         record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
-        @right_cell_text = _("%{model} \"%{name}\"") %
-        {:name => provider.name,
-         :model => "#{ui_lookup(:tables => "configuration_profile")} under #{record_model} Provider"}
+        @right_cell_text = _("Configuration Profiles under %{record_model} Provider \"%{name}\"") % {
+          :name         => provider.name,
+          :record_model => record_model}
       end
     end
     options
@@ -420,13 +420,11 @@ class ProviderForemanController < ApplicationController
     record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))
     return if @sb[:active_tab] != 'configured_systems'
     if valid_configuration_profile_record?(@configuration_profile_record)
-      @right_cell_text = _("%{model} under %{record_model} \"%{name}\"") %
-                         {:model        => ui_lookup(:tables => "configured_system"),
-                          :record_model => record_model,
+      @right_cell_text = _("Configured Systems under %{record_model} \"%{name}\"") %
+                         {:record_model => record_model,
                           :name         => @configuration_profile_record.name}
     else
-      @right_cell_text = _("%{model} under Unassigned Profiles Group") %
-                         {:model => ui_lookup(:tables => "configured_system")}
+      @right_cell_text = _("Configured Systems under Unassigned Profiles Group")
     end
   end
 
