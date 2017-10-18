@@ -109,8 +109,7 @@ module ContainersCommonMixin
     ids = showlist ? find_checked_ids_with_rbac(ContainerImage) : find_current_item(ContainerImage)
 
     if ids.empty?
-      add_flash(_("No %{model} were selected for Analysis") % {:model => ui_lookup(:tables => "container_image")},
-                :error)
+      add_flash(_("No Images were selected for Analysis"), :error)
     else
       process_scan_images(ids)
     end
@@ -150,9 +149,8 @@ module ContainersCommonMixin
       begin
         image.scan
       rescue => bang
-        add_flash(_("%{model} \"%{name}\": Error during 'Analysis': %{message}") %
-                      {:model   => ui_lookup(:model => "ContainerImage"),
-                       :name    => image_name,
+        add_flash(_("Image \"%{name}\": Error during 'Analysis': %{message}") %
+                      {:name    => image_name,
                        :message => bang.message},
                   :error) # Push msg and error flag
       else

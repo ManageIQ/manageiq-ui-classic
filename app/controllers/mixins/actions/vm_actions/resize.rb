@@ -15,10 +15,9 @@ module Mixins
               javascript_redirect :controller => 'vm', :action => 'resize', :rec_id => @record.id, :escape => false # redirect to build the retire screen
             end
           else
-            add_flash(_("Unable to reconfigure %{instance} \"%{name}\": %{details}") % {
-              :instance => ui_lookup(:table => 'vm_cloud'),
-              :name     => @record.name,
-              :details  => @record.unsupported_reason(:resize)}, :error)
+            add_flash(_("Unable to reconfigure Instance \"%{name}\": %{details}") % {
+              :name    => @record.name,
+              :details => @record.unsupported_reason(:resize)}, :error)
           end
         end
 
@@ -45,8 +44,7 @@ module Mixins
 
           case params[:button]
           when "cancel"
-            add_flash(_("Reconfigure of %{model} \"%{name}\" was cancelled by the user") % {
-              :model => ui_lookup(:table => "vm_cloud"), :name => @record.name})
+            add_flash(_("Reconfigure of Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
             @record = @sb[:action] = nil
           when "submit"
             if @record.supports_resize?
@@ -55,22 +53,19 @@ module Mixins
                 flavor = find_record_with_rbac(Flavor, flavor_id)
                 old_flavor_name = @record.flavor.try(:name) || _("unknown")
                 @record.resize_queue(session[:userid], flavor)
-                add_flash(_("Reconfiguring %{instance} \"%{name}\" from %{old_flavor} to %{new_flavor}") % {
-                  :instance   => ui_lookup(:table => 'vm_cloud'),
+                add_flash(_("Reconfiguring Instance \"%{name}\" from %{old_flavor} to %{new_flavor}") % {
                   :name       => @record.name,
                   :old_flavor => old_flavor_name,
                   :new_flavor => flavor.name})
               rescue => ex
-                add_flash(_("Unable to reconfigure %{instance} \"%{name}\": %{details}") % {
-                  :instance => ui_lookup(:table => 'vm_cloud'),
-                  :name     => @record.name,
-                  :details  => get_error_message_from_fog(ex.to_s)}, :error)
+                add_flash(_("Unable to reconfigure Instance \"%{name}\": %{details}") % {
+                  :name    => @record.name,
+                  :details => get_error_message_from_fog(ex.to_s)}, :error)
               end
             else
-              add_flash(_("Unable to reconfigure %{instance} \"%{name}\": %{details}") % {
-                :instance => ui_lookup(:table => 'vm_cloud'),
-                :name     => @record.name,
-                :details  => @record.unsupported_reason(:resize)}, :error)
+              add_flash(_("Unable to reconfigure Instance \"%{name}\": %{details}") % {
+                :name    => @record.name,
+                :details => @record.unsupported_reason(:resize)}, :error)
             end
             params[:id] = @record.id.to_s # reset id in params for show
             @record = nil

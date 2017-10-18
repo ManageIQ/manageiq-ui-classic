@@ -224,7 +224,7 @@ module Mixins
           if @lastaction == "show_list" || @layout != "host"
             hosts = find_checked_ids_with_rbac(Host)
             if hosts.empty?
-              add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "host"), :task => display_name}, :error)
+              add_flash(_("No Hosts were selected for %{task}") % {:task => display_name}, :error)
             else
               process_hosts(hosts, method, display_name)
             end
@@ -236,7 +236,7 @@ module Mixins
 
           else # showing 1 host
             if params[:id].nil? || Host.find_by(:id => params[:id]).nil?
-              add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => "host")}, :error)
+              add_flash(_("Host no longer exists"), :error)
             else
               hosts.push(find_id_with_rbac(Host, params[:id]))
               process_hosts(hosts, method, display_name) unless hosts.empty?

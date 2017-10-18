@@ -47,7 +47,7 @@ module Mixins
         AuditEvent.success(build_created_audit(@provider, @edit))
         @in_a_form = false
         @sb[:action] = nil
-        model = "#{self.class.model_to_name(@provider.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
+        model = "#{self.class.model_to_name(@provider.type)} #{_('Provider')}"
         if params[:id] == "new"
           add_flash(_("%{model} \"%{name}\" was added") % {:model => model, :name => @provider.name})
           process_managers([@provider.instance_eval(manager_prefix).id], "refresh_ems")
@@ -68,11 +68,9 @@ module Mixins
       @in_a_form = false
       @sb[:action] = nil
       if params[:id] == "new"
-        add_flash(_("Add of %{provider} was cancelled by the user") %
-          {:provider => ui_lookup(:model => 'ExtManagementSystem')})
+        add_flash(_("Add of Provider was cancelled by the user"))
       else
-        add_flash(_("Edit of %{provider} was cancelled by the user") %
-          {:provider => ui_lookup(:model => 'ExtManagementSystem')})
+        add_flash(_("Edit of Provider was cancelled by the user"))
       end
       replace_right_cell
     end
@@ -249,7 +247,7 @@ module Mixins
       checked_items.push(params[:id]) if checked_items.empty? && params[:id]
       providers = Rbac.filtered(concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider))
       if providers.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "providers"), :task => "deletion"}, :error)
+        add_flash(_("No Providers were selected for deletion"), :error)
       else
         providers.each do |provider|
           AuditEvent.success(
@@ -502,7 +500,7 @@ module Mixins
     end
 
     def breadcrumb_name(_model)
-      "#{ui_lookup(:ui_title => 'foreman')} #{ui_lookup(:model => 'ExtManagementSystem')}"
+      "#{ui_lookup(:ui_title => 'foreman')} #{_('Provider')}"
     end
 
     def tagging_explorer_controller?
