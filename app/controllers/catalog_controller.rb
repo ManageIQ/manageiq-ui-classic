@@ -1752,53 +1752,41 @@ class CatalogController < ApplicationController
   end
 
   def get_node_info_handle_leaf_node(id)
-    if x_active_tree == :stcat_tree
-      get_node_info_handle_leaf_node_stcat(id)
-    elsif x_active_tree == :ot_tree
-      get_node_info_handle_leaf_node_ot(id)
-    else
-      if id == "Unassigned"
-        get_node_info_handle_unassigned_node
-      elsif @nodetype == "stc"
-        get_node_info_handle_stc_node(id)
-      else
-        show_record(from_cid(id))
-        if @record.atomic? && need_prov_dialogs?(@record.prov_type)
-          @miq_request = MiqRequest.find_by_id(@record.service_resources[0].resource_id)
-          prov_set_show_vars
+    show_record(from_cid(id))
+    if @record.atomic? && need_prov_dialogs?(@record.prov_type)
+      @miq_request = MiqRequest.find_by_id(@record.service_resources[0].resource_id)
+      prov_set_show_vars
+    end
+    unless @record.prov_type == "generic_ansible_playbook"
+      @sb[:dialog_label]       = _("No Dialog")
+      @sb[:fqname]             = nil
+      @sb[:reconfigure_fqname] = nil
+      @sb[:retire_fqname]      = nil
+      @record.resource_actions.each do |ra|
+        d = Dialog.where(:id => ra.dialog_id).first
+        @sb[:dialog_label] = d.label if d
+        case ra.action.downcase
+        when 'provision'
+          @sb[:fqname] = ra.fqname
+        when 'reconfigure'
+          @sb[:reconfigure_fqname] = ra.fqname
+        when 'retirement'
+          @sb[:retire_fqname] = ra.fqname
         end
-        unless @record.prov_type == "generic_ansible_playbook"
-          @sb[:dialog_label]       = _("No Dialog")
-          @sb[:fqname]             = nil
-          @sb[:reconfigure_fqname] = nil
-          @sb[:retire_fqname]      = nil
-          @record.resource_actions.each do |ra|
-            d = Dialog.where(:id => ra.dialog_id).first
-            @sb[:dialog_label] = d.label if d
-            case ra.action.downcase
-            when 'provision'
-              @sb[:fqname] = ra.fqname
-            when 'reconfigure'
-              @sb[:reconfigure_fqname] = ra.fqname
-            when 'retirement'
-              @sb[:retire_fqname] = ra.fqname
-            end
-          end
-          # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link
-          @sb[:stc_nodes] = {}
-          @record.service_resources.each do |r|
-            st = ServiceTemplate.find_by(:id => r.resource_id)
-            @sb[:stc_nodes][r.resource_id] = st.service_template_catalog_id ? st.service_template_catalog_id : "Unassigned" unless st.nil?
-          end
-        end
-        if params[:action] == "x_show"
-          prefix = @record.service_template_catalog_id ? "stc-#{to_cid(@record.service_template_catalog_id)}" : "-Unassigned"
-          self.x_node = "#{prefix}_#{params[:id]}"
-        end
-        typ = x_active_tree == :svccat_tree ? "Service" : TreeBuilder.get_model_for_prefix(@nodetype)
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
+      end
+      # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link
+      @sb[:stc_nodes] = {}
+      @record.service_resources.each do |r|
+        st = ServiceTemplate.find_by(:id => r.resource_id)
+        @sb[:stc_nodes][r.resource_id] = st.service_template_catalog_id ? st.service_template_catalog_id : "Unassigned" unless st.nil?
       end
     end
+    if params[:action] == "x_show"
+      prefix = @record.service_template_catalog_id ? "stc-#{to_cid(@record.service_template_catalog_id)}" : "-Unassigned"
+      self.x_node = "#{prefix}_#{params[:id]}"
+    end
+    typ = x_active_tree == :svccat_tree ? "Service" : TreeBuilder.get_model_for_prefix(@nodetype)
+    @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
   end
 
   # Get all info for the node about to be displayed
@@ -1820,6 +1808,14 @@ class CatalogController < ApplicationController
         get_node_info_handle_root_node
       elsif %w(xx-otcfn xx-othot xx-otazu xx-otvnf xx-otvap).include?(x_node)
         get_node_info_handle_ot_folder_nodes
+      elsif x_active_tree == :stcat_tree
+        get_node_info_handle_leaf_node_stcat(id)
+      elsif x_active_tree == :ot_tree
+        get_node_info_handle_leaf_node_ot(id)
+      elsif id == "Unassigned"
+        get_node_info_handle_unassigned_node
+      elsif @nodetype == "stc"
+        get_node_info_handle_stc_node(id)
       else
         get_node_info_handle_leaf_node(id)
       end
