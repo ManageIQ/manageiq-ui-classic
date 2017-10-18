@@ -1682,10 +1682,10 @@ class CatalogController < ApplicationController
   end
 
   ROOT_NODE_MODELS = {
-    :sandt_tree  => "ServiceTemplate",
-    :svccat_tree => "Service",
-    :stcat_tree  => "ServiceTemplateCatalog",
-    :ot_tree     => "OrchestrationTemplate"
+    :svccat_tree => "Service",                # TreeBuilderServiceCatalog "Service Catalogs"
+    :sandt_tree  => "ServiceTemplate",        # TreeBuilderCatalogItems   "Catalog Items"
+    :ot_tree     => "OrchestrationTemplate",  # TreeBuilderOrchestrationTemplates "Orch. Templates"
+    :stcat_tree  => "ServiceTemplateCatalog", # TreeBuilderCatalogs       "Catalogs"
   }.freeze
 
   def root_node_model(tree)
