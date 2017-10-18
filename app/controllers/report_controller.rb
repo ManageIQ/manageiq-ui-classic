@@ -251,11 +251,7 @@ class ReportController < ApplicationController
           add_flash(_("Error: No widget was selected to be imported."), :error)
         else
           number = widget_import_service.import_widgets(import_file_upload, params[:widgets_to_import])
-          if number == 1
-            add_flash(_("1 widget imported successfully"), :success)
-          else
-            add_flash(_("%{number} widgets imported successfully") % {:number => number}, :success)
-          end
+          add_flash(n_("%{number} widget imported successfully", "%{number} widgets imported successfully", number) % {:number => number})
         end
       else
         add_flash(_("Error: Widget import file upload expired"), :error)
