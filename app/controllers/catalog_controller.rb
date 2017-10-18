@@ -1692,6 +1692,107 @@ class CatalogController < ApplicationController
     ROOT_NODE_MODELS[tree]
   end
 
+  def get_node_info_handle_root_node
+    typ = root_node_model(x_active_tree)
+    @no_checkboxes = true if x_active_tree == :svcs_tree
+    if x_active_tree == :svccat_tree
+      condition = ["display=TRUE and service_template_catalog_id IS NOT NULL"]
+      service_template_list(condition, :no_checkboxes => true)
+    else
+      options = {:model => typ.constantize}
+      options[:where_clause] = ["orderable=TRUE"] if x_active_tree == :ot_tree
+      process_show_list(options)
+    end
+    @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
+  end
+
+  def get_node_info_handle_ot_folder_nodes
+    typ = node_name_to_template_name(x_node)
+    @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
+    options = {:model        => typ.constantize,
+               :gtl_dbname   => :orchestrationtemplate,
+               :where_clause => ["orderable=TRUE"]}
+    process_show_list(options)
+  end
+
+  def get_node_info_handle_simple_leaf_node(id)
+    show_record(from_cid(id))
+    @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => TreeBuilder.get_model_for_prefix(@nodetype))}
+  end
+
+  def get_node_info_handle_unassigned_node
+    condition = ["service_template_catalog_id IS NULL"]
+    service_template_list(condition, :no_order_button => true)
+    @right_cell_text = _("Services in Catalog \"Unassigned\"")
+  end
+
+  def get_node_info_handle_stc_node(id)
+    if x_active_tree == :sandt_tree
+      # catalog items accordion also shows the non-"Display in Catalog" items
+      condition = ["service_template_catalog_id=?", from_cid(id)]
+    else
+      condition = ["display=TRUE and service_template_catalog_id=?", from_cid(id)]
+    end
+    service_template_list(condition, :no_order_button => true)
+    stc = ServiceTemplateCatalog.find_by_id(from_cid(id))
+    @right_cell_text = _("Services in Catalog \"%{name}\"") % {:name => stc.name}
+  end
+
+  def get_node_info_handle_leaf_node(id)
+    if x_active_tree == :stcat_tree
+      @record = ServiceTemplateCatalog.find_by_id(from_cid(id))
+      @record_service_templates = Rbac.filtered(@record.service_templates)
+      typ = TreeBuilder.get_model_for_prefix(@nodetype)
+      @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
+    elsif x_active_tree == :ot_tree
+      @record = OrchestrationTemplate.find_by_id(from_cid(id))
+      @right_cell_text = _("%{model} \"%{name}\"") % {:name  => @record.name,
+                                                      :model => ui_lookup(:model => @record.class.name)}
+    else
+      if id == "Unassigned"
+        get_node_info_handle_unassigned_node
+      elsif @nodetype == "stc"
+        get_node_info_handle_stc_node(id)
+      else
+        show_record(from_cid(id))
+        if @record.atomic? && need_prov_dialogs?(@record.prov_type)
+          @miq_request = MiqRequest.find_by_id(@record.service_resources[0].resource_id)
+          prov_set_show_vars
+        end
+        unless @record.prov_type == "generic_ansible_playbook"
+          @sb[:dialog_label]       = _("No Dialog")
+          @sb[:fqname]             = nil
+          @sb[:reconfigure_fqname] = nil
+          @sb[:retire_fqname]      = nil
+          @record.resource_actions.each do |ra|
+            d = Dialog.where(:id => ra.dialog_id).first
+            @sb[:dialog_label] = d.label if d
+            case ra.action.downcase
+            when 'provision'
+              @sb[:fqname] = ra.fqname
+            when 'reconfigure'
+              @sb[:reconfigure_fqname] = ra.fqname
+            when 'retirement'
+              @sb[:retire_fqname] = ra.fqname
+            end
+          end
+          # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link
+          @sb[:stc_nodes] = {}
+          @record.service_resources.each do |r|
+            st = ServiceTemplate.find_by(:id => r.resource_id)
+            @sb[:stc_nodes][r.resource_id] = st.service_template_catalog_id ? st.service_template_catalog_id : "Unassigned" unless st.nil?
+          end
+        end
+        if params[:action] == "x_show"
+          prefix = @record.service_template_catalog_id ? "stc-#{to_cid(@record.service_template_catalog_id)}" : "-Unassigned"
+          self.x_node = "#{prefix}_#{params[:id]}"
+        end
+        typ = x_active_tree == :svccat_tree ? "Service" : TreeBuilder.get_model_for_prefix(@nodetype)
+        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
+      end
+    end
+  end
+
   # Get all info for the node about to be displayed
   def get_node_info(treenodeid, _show_list = true)
     @explorer ||= true
@@ -1706,94 +1807,15 @@ class CatalogController < ApplicationController
     else
       @sb[:buttons_node] = false
       case TreeBuilder.get_model_for_prefix(@nodetype)
-      when "Vm", "MiqTemplate", "ServiceResource"  # VM or Template record, show the record
-        show_record(from_cid(id))
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => TreeBuilder.get_model_for_prefix(@nodetype))}
-      else      # Get list of child Catalog Items/Services of this node
+      when "Vm", "MiqTemplate", "ServiceResource"
+        get_node_info_handle_simple_leaf_node(id)
+      else
         if x_node == "root"
-          typ = root_node_model(x_active_tree)
-          @no_checkboxes = true if x_active_tree == :svcs_tree
-          if x_active_tree == :svccat_tree
-            condition = ["display=TRUE and service_template_catalog_id IS NOT NULL"]
-            service_template_list(condition, :no_checkboxes => true)
-          else
-            options = {:model => typ.constantize}
-            options[:where_clause] = ["orderable=TRUE"] if x_active_tree == :ot_tree
-            process_show_list(options)
-          end
-          @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
+          get_node_info_handle_root_node
         elsif ["xx-otcfn", "xx-othot", "xx-otazu", "xx-otvnf", "xx-otvap"].include?(x_node)
-          typ = node_name_to_template_name(x_node)
-          @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
-          options = {:model        => typ.constantize,
-                     :gtl_dbname   => :orchestrationtemplate,
-                     :where_clause => ["orderable=TRUE"]}
-          process_show_list(options)
+          get_node_info_handle_ot_folder_nodes
         else
-          if x_active_tree == :stcat_tree
-            @record = ServiceTemplateCatalog.find_by_id(from_cid(id))
-            @record_service_templates = Rbac.filtered(@record.service_templates)
-            typ = TreeBuilder.get_model_for_prefix(@nodetype)
-            @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
-          elsif x_active_tree == :ot_tree
-            @record = OrchestrationTemplate.find_by_id(from_cid(id))
-            @right_cell_text = _("%{model} \"%{name}\"") % {:name  => @record.name,
-                                                            :model => ui_lookup(:model => @record.class.name)}
-          else
-            if id == "Unassigned" || @nodetype == "stc"
-              if id == "Unassigned"
-                condition = ["service_template_catalog_id IS NULL"]
-                service_template_list(condition, :no_order_button => true)
-                @right_cell_text = _("Services in Catalog \"Unassigned\"")
-              else
-                if x_active_tree == :sandt_tree
-                  # catalog items accordion also shows the non-"Display in Catalog" items
-                  condition = ["service_template_catalog_id=?", from_cid(id)]
-                else
-                  condition = ["display=TRUE and service_template_catalog_id=?", from_cid(id)]
-                end
-                service_template_list(condition, :no_order_button => true)
-                stc = ServiceTemplateCatalog.find_by_id(from_cid(id))
-                @right_cell_text = _("Services in Catalog \"%{name}\"") % {:name => stc.name}
-              end
-            else
-              show_record(from_cid(id))
-              if @record.atomic? && need_prov_dialogs?(@record.prov_type)
-                @miq_request = MiqRequest.find_by_id(@record.service_resources[0].resource_id)
-                prov_set_show_vars
-              end
-              unless @record.prov_type == "generic_ansible_playbook"
-                @sb[:dialog_label]       = _("No Dialog")
-                @sb[:fqname]             = nil
-                @sb[:reconfigure_fqname] = nil
-                @sb[:retire_fqname]      = nil
-                @record.resource_actions.each do |ra|
-                  d = Dialog.where(:id => ra.dialog_id).first
-                  @sb[:dialog_label] = d.label if d
-                  case ra.action.downcase
-                  when 'provision'
-                    @sb[:fqname] = ra.fqname
-                  when 'reconfigure'
-                    @sb[:reconfigure_fqname] = ra.fqname
-                  when 'retirement'
-                    @sb[:retire_fqname] = ra.fqname
-                  end
-                end
-                # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link
-                @sb[:stc_nodes] = {}
-                @record.service_resources.each do |r|
-                  st = ServiceTemplate.find_by(:id => r.resource_id)
-                  @sb[:stc_nodes][r.resource_id] = st.service_template_catalog_id ? st.service_template_catalog_id : "Unassigned" unless st.nil?
-                end
-              end
-              if params[:action] == "x_show"
-                prefix = @record.service_template_catalog_id ? "stc-#{to_cid(@record.service_template_catalog_id)}" : "-Unassigned"
-                self.x_node = "#{prefix}_#{params[:id]}"
-              end
-              typ = x_active_tree == :svccat_tree ? "Service" : TreeBuilder.get_model_for_prefix(@nodetype)
-              @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
-            end
-          end
+          get_node_info_handle_leaf_node(id)
         end
       end
     end
