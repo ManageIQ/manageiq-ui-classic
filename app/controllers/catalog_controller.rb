@@ -1806,17 +1806,14 @@ class CatalogController < ApplicationController
       buttons_get_node_info(treenodeid)
     else
       @sb[:buttons_node] = false
-      case TreeBuilder.get_model_for_prefix(@nodetype)
-      when "Vm", "MiqTemplate", "ServiceResource"
+      if %w(Vm MiqTemplate ServiceResource).include?(TreeBuilder.get_model_for_prefix(@nodetype))
         get_node_info_handle_simple_leaf_node(id)
+      elsif x_node == "root"
+        get_node_info_handle_root_node
+      elsif %w(xx-otcfn xx-othot xx-otazu xx-otvnf xx-otvap).include?(x_node)
+        get_node_info_handle_ot_folder_nodes
       else
-        if x_node == "root"
-          get_node_info_handle_root_node
-        elsif ["xx-otcfn", "xx-othot", "xx-otazu", "xx-otvnf", "xx-otvap"].include?(x_node)
-          get_node_info_handle_ot_folder_nodes
-        else
-          get_node_info_handle_leaf_node(id)
-        end
+        get_node_info_handle_leaf_node(id)
       end
     end
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
