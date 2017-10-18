@@ -951,7 +951,6 @@ class CatalogController < ApplicationController
                        :title    => _("Order this Service")} # Show a button instead of the checkbox
       end
     end
-    options[:model] = "ServiceCatalog" unless options[:model]
     options[:where_clause] = condition
     process_show_list(options)
   end
@@ -1742,10 +1741,9 @@ class CatalogController < ApplicationController
                                                             :model => ui_lookup(:model => @record.class.name)}
           else
             if id == "Unassigned" || @nodetype == "stc"
-              model = x_active_tree == :svccat_tree ? "ServiceCatalog" : "ServiceTemplate"
               if id == "Unassigned"
                 condition = ["service_template_catalog_id IS NULL"]
-                service_template_list(condition, :model => model, :no_order_button => true)
+                service_template_list(condition, :no_order_button => true)
                 @right_cell_text = _("Services in Catalog \"Unassigned\"")
               else
                 if x_active_tree == :sandt_tree
@@ -1754,7 +1752,7 @@ class CatalogController < ApplicationController
                 else
                   condition = ["display=TRUE and service_template_catalog_id=?", from_cid(id)]
                 end
-                service_template_list(condition, :model => model, :no_order_button => true)
+                service_template_list(condition, :no_order_button => true)
                 stc = ServiceTemplateCatalog.find_by_id(from_cid(id))
                 @right_cell_text = _("Services in Catalog \"%{name}\"") % {:name => stc.name}
               end
