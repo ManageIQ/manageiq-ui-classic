@@ -81,12 +81,6 @@ module ReportFormatter
       else
         mri.extras[:tl_position] = format_timezone(etime.to_time, tz, 'raw') if format_timezone(etime.to_time, tz, 'raw') > format_timezone(mri.extras[:tl_position], tz, 'raw')
       end
-      #     mri.extras[:tl_position] ||= etime.to_time
-      #     if mri.timeline[:position] && mri.timeline[:position] == "First"
-      #       mri.extras[:tl_position] = etime.to_time if etime.to_time < mri.extras[:tl_position]
-      #     else
-      #       mri.extras[:tl_position] = etime.to_time if etime.to_time > mri.extras[:tl_position]
-      #     end
       #     END of TIMELINE TIMEZONE Code
       if row["id"]  # Make sure id column is present
         rec = mri.db.constantize.find_by_id(row['id'])
@@ -94,9 +88,7 @@ module ReportFormatter
       unless rec.nil?
         case mri.db
         when "BottleneckEvent"
-          #         e_title = "#{ui_lookup(:model=>rec[:resource_type])}: #{rec[:resource_name]}"
           e_title = rec[:resource_name]
-        #         e_text = e_title # Commented out since name is showing in the columns anyway
         when "Vm"
           e_title = rec[:name]
         when "Host"
