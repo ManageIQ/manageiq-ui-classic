@@ -1,5 +1,4 @@
 class TreeBuilderServiceCatalog < TreeBuilderCatalogsClass
-  has_kids_for Dialog, [:x_get_tree_dialog_kids, :type]
   has_kids_for ServiceTemplateCatalog, [:x_get_tree_stc_kids]
 
   private
