@@ -58,14 +58,14 @@ module ReportFormatter
           else
             categories.push(rec_time.hour.to_s + ":00")
           end
-          val = r[col].nil? && false ? 0 : r[col]
+          val = r[col]
 
           if d_idx == mri.table.data.length - 1 && !tip.nil?
             series.push(:value => val, :tooltip => tip)
           else
             series.push(:value => val)
           end
-          allnil = false if !val.nil? || false
+          allnil = false if !val.nil?
         end
         series.set_to_zero(-1) if allnil # XML/SWF Charts can't handle all nils, set the last value to 0
         add_axis_category_text(categories)
