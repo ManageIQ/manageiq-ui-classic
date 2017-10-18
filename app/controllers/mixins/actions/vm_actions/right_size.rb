@@ -14,8 +14,7 @@ module Mixins
             @refresh_partial = "layouts/flash_msg"
             return
           elsif record.template?
-            add_flash(_("Right-Size Recommendations does not apply to selected %{model}") %
-              {:model => ui_lookup(:table => "miq_template")}, :error)
+            add_flash(_("Right-Size Recommendations does not apply to selected VM Template"), :error)
             javascript_flash(:scroll_top => true)
             return
           end

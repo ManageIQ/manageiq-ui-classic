@@ -15,8 +15,7 @@ module Mixins
           records = find_records_with_rbac(VmOrTemplate, checked_or_params)
 
           if records.length < 1
-            add_flash(_("At least 1 %{model} must be selected for Policy Simulation") %
-              {:model => ui_lookup(:model => "Vm")}, :error)
+            add_flash(_("At least 1 VM must be selected for Policy Simulation"), :error)
             @refresh_div = "flash_msg_div"
             @refresh_partial = "layouts/flash_msg"
           else

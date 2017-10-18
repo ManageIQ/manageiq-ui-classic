@@ -55,8 +55,7 @@ module Mixins
           else
 
             if VmOrTemplate.includes_template?(recs)
-              add_flash(_("Reconfigure does not apply because you selected at least one %{model}") %
-                {:model => ui_lookup(:table => "miq_template")}, :error)
+              add_flash(_("Reconfigure does not apply because you selected at least one VM Template"), :error)
               javascript_flash(:scroll_top => true)
               return
             end
