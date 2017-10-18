@@ -273,7 +273,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     ManageIQ.explorer.clearSearchToggle(data.clearSearch);
   }
 
-  miqInitMainContent();
+  setTimeout(miqInitMainContent);
   miqInitAccordions();
 
   if (data.hideModal) { $('#quicksearchbox').modal('hide'); }
