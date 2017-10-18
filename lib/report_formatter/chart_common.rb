@@ -134,15 +134,6 @@ module ReportFormatter
           end
         end
 
-        #     # Remove categories (and associated series values) that have all zero or nil values
-        #     (categories.length - 1).downto(0) do |i|            # Go thru all cats
-        #       t = 0.0
-        #       series.each{|s| t += s[:data][i][:value].to_f}    # Add up the values for this cat across all series
-        #       next if t != 0                                    # Not zero, keep this cat
-        #       categories.delete_at(i)                           # Remove this cat
-        #       series.each{|s| s[:data].delete_at(i)}            # Remove the data for this cat across all series
-        #     end
-        #
         # Remove any series where all values are zero or nil
         series.delete_if { |s| s[:data].sum == 0 }
 
