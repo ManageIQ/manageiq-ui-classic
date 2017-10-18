@@ -183,6 +183,15 @@ describe EmsContainerController do
           test_setting_few_fields
           expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('10.10.10.10')
         end
+
+        it 'updates provider options' do
+          @type = 'openshift'
+          @ems  = ManageIQ::Providers::Openshift::ContainerManager.new
+          controller.instance_variable_set(:@_params,
+                                           :provider_options_image_inspector_options_http_proxy => "example.com")
+          controller.send(:set_ems_record_vars, @ems)
+          expect(@ems.options[:image_inspector_options][:http_proxy]).to eq("example.com")
+        end
       end
     end
 

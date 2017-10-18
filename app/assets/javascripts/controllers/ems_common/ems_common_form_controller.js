@@ -633,6 +633,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     }
   };
 
+  // Sets the values and names of the options in sourceSection and destSection from
+  // $scope.emsOptionsModel.provider_options_original_values if they exist there.
   $scope.updateProviderOptionsOldValues = function(sourceSection, destSection) {
     var section_name = _.snakeCase(sourceSection.label);
     sourceSection.section_name = section_name;

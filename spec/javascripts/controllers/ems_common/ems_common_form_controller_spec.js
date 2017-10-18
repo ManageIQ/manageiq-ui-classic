@@ -380,6 +380,129 @@ describe('emsCommonFormController', function() {
       expect($scope.canValidateBasicInfo()).toBe(true);
     });
   });
+});
+
+describe('emsCommonFormController in the context of container provider', function() {
+  var $scope, $controller, $httpBackend, miqService, compile, API;
+
+  beforeEach(module('ManageIQ'));
+
+  beforeEach(inject(function (_$httpBackend_, $rootScope, _$controller_, _miqService_, _$compile_, _API_) {
+    miqService = _miqService_;
+    API = _API_;
+    compile = _$compile_;
+    spyOn(miqService, 'miqAjaxButton');
+    spyOn(miqService, 'restAjaxButton');
+    spyOn(miqService, 'sparkleOn');
+    spyOn(miqService, 'sparkleOff');
+    spyOn(API, 'options').and.callFake(function(url){ return Promise.resolve({});});
+    $scope = $rootScope.$new();
+
+    var emsCommonFormResponse = {
+      name: '',
+      emstype: '',
+      zone: 'default',
+      emstype_vm: false,
+      default_api_port: '',
+      api_version: 'v2'
+    };
+    $httpBackend = _$httpBackend_;
+    $httpBackend.whenGET('/ems_container/ems_container_form_fields/new').respond(emsCommonFormResponse);
+    $controller = _$controller_('emsCommonFormController',
+      {
+        $scope: $scope,
+        $attrs: {
+          'formFieldsUrl': '/ems_container/ems_container_form_fields/',
+          'createUrl': '/ems_container',
+          'updateUrl': '/ems_container/12345'
+        },
+        emsCommonFormId: 'new',
+          miqService: miqService,
+          API: API
+      });
+  }));
+
+  afterEach(function () {
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+  });
+
+  describe('when the emsCommonFormId is new', function () {
+    beforeEach(inject(function () {
+      $httpBackend.flush();
+    }));
+
+    it('sets the name to blank', function () {
+      expect($scope.emsCommonModel.name).toEqual('');
+    });
+
+    it('sets the type to kubernetes', function () {
+      expect($scope.emsCommonModel.emstype).toEqual('');
+    });
+
+    it('sets the zone to default', function () {
+      expect($scope.emsCommonModel.zone).toEqual('default');
+    });
+
+    it('sets the api_port to blank', function () {
+      expect($scope.emsCommonModel.default_api_port).toEqual('');
+    });
+
+    it('sets the api_version to v2', function () {
+      expect($scope.emsCommonModel.api_version).toEqual('v2');
+    });
+  });
+
+  describe('when the emsCommonFormId of existing provider', function () {
+    var basic_options_example = {
+      image_inspector_options: { http_proxy: 'example.com'},
+      proxy_settings: { http_proxy: 'example2.com' }
+    };
+
+    var emsCommonFormResponse = {
+      name: 'osp1',
+      emstype: 'kubernetes',
+      zone: 'default',
+      emstype_vm: false,
+      default_api_port: '',
+      provider_options: basic_options_example,
+      api_version: 'v2'
+    };
+
+    beforeEach(inject(function (_$controller_) {
+      $httpBackend.whenGET('/ems_container/ems_container_form_fields/12345').respond(emsCommonFormResponse);
+
+      $controller = _$controller_('emsCommonFormController',
+        {
+          $scope: $scope,
+          $attrs: {
+            'formFieldsUrl': '/ems_container/ems_container_form_fields/',
+            'createUrl': '/ems_container',
+            'updateUrl': '/ems_container/12345'
+          },
+          emsCommonFormId: 12345,
+          miqService: miqService,
+          API: API
+        });
+      $httpBackend.flush();
+    }));
+
+    it('sets the name to osp1', function () {
+      expect($scope.emsCommonModel.name).toEqual(emsCommonFormResponse.name);
+    });
+
+    it('sets the type to kubernetes', function () {
+      expect($scope.emsCommonModel.emstype).toEqual(emsCommonFormResponse.emstype);
+    });
+
+    it('sets the api_version to v2', function () {
+      expect($scope.emsCommonModel.api_version).toEqual('v2');
+    });
+
+    it('sets the provider options to expected value', function () {
+      expect($scope.emsOptionsModel.provider_options_original_values).toEqual(basic_options_example);
+    });
+  });
 
   describe('#updateProviderOptionsOldValues', function () {
     it('sets sourceSection options in destSection', function () {

@@ -108,6 +108,37 @@ describe EmsContainerController do
     end
   end
 
+  describe "create with provider options" do
+    let(:zone) { FactoryGirl.build(:zone) }
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+
+    before do
+      allow(controller).to receive(:check_privileges).and_return(true)
+      allow(controller).to receive(:assert_privileges).and_return(true)
+    end
+
+    it "Creates a provider with provider options" do
+      params = {
+        "button"                    => "add",
+        "name"                      => "openshift_no_hawkular",
+        "emstype"                   => "openshift",
+        "zone"                      => 'default',
+        "default_security_protocol" => "ssl-without-validation",
+        "default_hostname"          => "default_hostname",
+        "default_api_port"          => "5000",
+        "default_userid"            => "",
+        "default_password"          => "",
+        "provider_region"           => "",
+        "metrics_selection"         => "hawkular_disabled",
+      }
+      params["provider_options_image_inspector_options_http_proxy"] = "hello.com"
+      post :create, :params => params
+      expect(response.status).to eq(200)
+      ems_openshift = ManageIQ::Providers::ContainerManager.first
+      expect(ems_openshift.options[:image_inspector_options][:http_proxy]).to eq("hello.com")
+    end
+  end
+
   describe "Hawkular Disabled/Enabled" do
     let(:zone) { FactoryGirl.build(:zone) }
     let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
