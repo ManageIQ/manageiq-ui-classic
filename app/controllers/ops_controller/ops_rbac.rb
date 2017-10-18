@@ -309,7 +309,7 @@ module OpsController::OpsRbac
       ids = find_checked_items.collect { |r| from_cid(r.to_s.split("-").last) }
       users = User.where(:id => ids).compact
       if users.empty?
-        add_flash(_("Default %{model} \"%{name}\" cannot be deleted") % {:model => ui_lookup(:model => "User"), :name => "Administrator"}, :error)
+        add_flash(_("Default EVM User \"Administrator\" cannot be deleted"), :error)
         javascript_flash
         return
       else
@@ -578,7 +578,7 @@ module OpsController::OpsRbac
   private ############################
 
   def tenant_type_title_string(divisible)
-    divisible ? ui_lookup(:model => "Tenant") : _("Project")
+    divisible ? _("Tenant") : _("Project")
   end
 
   # super administrator user with `userid` == "admin" can not be deleted
@@ -671,9 +671,9 @@ module OpsController::OpsRbac
       record = find_record_with_rbac(klass, checked_or_params_id)
       if %i(group role).include?(key) && record && record.read_only && operation != 'copy'
         model, name = if key == :role
-                        [ui_lookup(:model => "MiqUserRole"), record.name]
+                        [_('Role'), record.name]
                       else
-                        [ui_lookup(:model => "MiqGroup"), record.description]
+                        [_('EVM Group'), record.description]
                       end
         add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => model, :name => name }, :warning)
         javascript_flash
@@ -901,36 +901,35 @@ module OpsController::OpsRbac
     when "xx"
       case id
       when "u"
-        @right_cell_text = _("Access Control %{model}") % {:model => ui_lookup(:models => "User")}
+        @right_cell_text = _("Access Control EVM Users")
         rbac_users_list
       when "g"
-        @right_cell_text = _("Access Control %{model}") % {:model => ui_lookup(:models => "MiqGroup")}
+        @right_cell_text = _("Access Control EVM Groups")
         rbac_groups_list
       when "ur"
-        @right_cell_text = _("Access Control %{model}") % {:model => ui_lookup(:models => "MiqUserRole")}
+        @right_cell_text = _("Access Control Roles")
         rbac_roles_list
       when "tn"
-        @right_cell_text = _("Access Control %{model}") % {:model => ui_lookup(:models => "Tenant")}
+        @right_cell_text = _("Access Control Tenants")
         rbac_tenants_list
       end
     when "u"
-      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "User"), :name => User.find(from_cid(id)).name}
+      @right_cell_text = _("EVM User \"%{name}\"") % {:name => User.find(from_cid(id)).name}
       rbac_user_get_details(id)
     when "g"
-      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqGroup"), :name => MiqGroup.find(from_cid(id)).description}
+      @right_cell_text = _("EVM Group \"%{name}\"") % {:name => MiqGroup.find(from_cid(id)).description}
       @edit = nil
       rbac_group_get_details(id)
     when "ur"
-      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqUserRole"), :name => MiqUserRole.find(from_cid(id)).name}
+      @right_cell_text = _("Role \"%{name}\"") % {:name => MiqUserRole.find(from_cid(id)).name}
       rbac_role_get_details(id)
     when "tn"
       rbac_tenant_get_details(id)
       @right_cell_text = _("%{model} \"%{name}\"") % {:model => tenant_type_title_string(@tenant.divisible),
                                                       :name  => @tenant.name}
     else # Root node
-      @right_cell_text = _("Access Control %{model} \"%{name}\"") %
-                         {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
-                          :model => ui_lookup(:model => "MiqRegion")}
+      @right_cell_text = _("Access Control Region \"%{name}\"") %
+                         {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]"}
       @users_count   = Rbac.filtered(User.in_my_region).count
       @groups_count  = Rbac.filtered(MiqGroup.non_tenant_groups).count
       @roles_count   = Rbac.filtered(MiqUserRole).count

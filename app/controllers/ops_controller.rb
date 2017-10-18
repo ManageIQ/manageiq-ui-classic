@@ -284,7 +284,7 @@ class OpsController < ApplicationController
       @sb[:active_tab] ||= "db_summary"
     end
 
-    @sb[:tab_label] ||= ui_lookup(:models => "Zone")
+    @sb[:tab_label] ||= _('Zones')
     @sb[:active_node] ||= {}
 
     if MiqServer.my_server(true).logon_status != :ready
@@ -571,12 +571,12 @@ class OpsController < ApplicationController
       # when editing zone in settings tree
       if @zone.id.blank?
         partial_div = :settings_list
-        @right_cell_text = _("Adding a new %{model}") % {:model => ui_lookup(:model => "Zone")}
+        @right_cell_text = _("Adding a new Zone")
       else
         partial_div = :settings_evm_servers
         @right_cell_text = @edit ?
-          _("Editing %{model} \"%{name}\"") % {:name => @zone.description, :model => ui_lookup(:model => "Zone")} :
-          _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "Zone"), :name => @zone.description}
+          _("Editing Zone \"%{name}\"") % {:name => @zone.description} :
+          _("Zone \"%{name}\"") % {:name => @zone.description}
       end
       presenter[:update_partials][partial_div] = r[:partial => "zone_form"]
     when "ce"     # category edit
@@ -599,11 +599,11 @@ class OpsController < ApplicationController
       #  editing/adding scanitem in settings tree
       presenter.update(:settings_list, r[:partial => "ap_form"])
       if !@scan.id
-        @right_cell_text = _("Adding a new %{model}") % {:model => ui_lookup(:model => "ScanItemSet")}
+        @right_cell_text = _("Adding a new Analysis Profile")
       else
         @right_cell_text = @edit ?
-          _("Editing %{model} \"%{name}\"") % {:name => @scan.name, :model => ui_lookup(:model => "ScanItemSet")} :
-          _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "ScanItemSet"), :name => @scan.name}
+          _("Editing Analysis Profile \"%{name}\"") % {:name => @scan.name} :
+          _("Analysis Profile \"%{name}\"") % {:name => @scan.name}
       end
     when "se"         # schedule edit
       # when editing/adding schedule in settings tree
@@ -612,9 +612,9 @@ class OpsController < ApplicationController
         :date_from => (Time.zone.now - 1.month).in_time_zone(@edit[:tz]),
       }
       if !@schedule.id
-        @right_cell_text = _("Adding a new %{model}") % {:model => ui_lookup(:model => "MiqSchedule")}
+        @right_cell_text = _("Adding a new Schedule")
       else
-        model = ui_lookup(:model => "MiqSchedule")
+        model = _('Schedule')
         @right_cell_text = @edit ?
           _("Editing %{model} \"%{name}\"") % {:name => @schedule.name, :model => model} :
           _("%{model} \"%{name}\"") % {:model => model, :name => @schedule.name}
@@ -623,9 +623,9 @@ class OpsController < ApplicationController
       # when editing/adding ldap domain in settings tree
       presenter.update(:settings_list, r[:partial => "ldap_domain_form"])
       if !@ldap_domain.id
-        @right_cell_text = _("Adding a new %{model}") % {:model => ui_lookup(:model => "LdapDomain")}
+        @right_cell_text = _("Adding a new LDAP Domain")
       else
-        model = ui_lookup(:model => "LdapDomain")
+        model = _('LDAP Domain')
         @right_cell_text = @edit ?
           _("Editing %{model} \"%{name}\"") % {:name => @ldap_domain.name, :model => model} :
           _("%{model} \"%{name}\"") % {:model => model, :name => @ldap_domain.name}
@@ -634,9 +634,9 @@ class OpsController < ApplicationController
       # when edi ting/adding ldap region in settings tree
       presenter.update(:settings_list, r[:partial => "ldap_region_form"])
       if !@ldap_region.id
-        @right_cell_text = _("Adding a new %{model}") % {:model => ui_lookup(:model => "LdapRegion")}
+        @right_cell_text = _("Adding a new LDAP Region")
       else
-        model = ui_lookup(:model => "LdapRegion")
+        model = _('LDAP Region')
         @right_cell_text = @edit ?
           _("Editing %{model} \"%{name}\"") % {:name => @ldap_region.name, :model => model} :
           _("%{model} \"%{name}\"") % {:model => model, :name => @ldap_region.name}

@@ -39,9 +39,9 @@ module OpsController::Settings::Schedules
     when "cancel"
       @schedule = MiqSchedule.find_by_id(params[:id])
       if !@schedule || @schedule.id.blank?
-        add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqSchedule")})
+        add_flash(_("Add of new Schedule was cancelled by the user"))
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqSchedule"), :name => @schedule.name})
+        add_flash(_("Edit of Schedule \"%{name}\" was cancelled by the user") % {:name => @schedule.name})
       end
       get_node_info(x_node)
       @schedule = nil
@@ -71,8 +71,7 @@ module OpsController::Settings::Schedules
         javascript_flash
       else
         AuditEvent.success(build_saved_audit_hash_angular(old_schedule_attributes, schedule, params[:button] == "add"))
-        add_flash(_("%{model} \"%{name}\" was saved") %
-                      {:model => ui_lookup(:model => "MiqSchedule"), :name => schedule.name})
+        add_flash(_("Schedule \"%{name}\" was saved") % {:name => schedule.name})
         if params[:button] == "add"
           self.x_node  = "xx-msc"
           schedules_list
@@ -187,8 +186,7 @@ module OpsController::Settings::Schedules
     if !params[:id] # showing a list
       schedules = find_checked_items
       if schedules.empty?
-        add_flash(_("No %{model} were selected for deletion") % {:model => ui_lookup(:tables => "miq_schedule")},
-                  :error)
+        add_flash(_("No Schedules were selected for deletion"), :error)
         javascript_flash
       end
       process_schedules(schedules, "destroy") unless schedules.empty?
@@ -197,7 +195,7 @@ module OpsController::Settings::Schedules
       replace_right_cell(:nodetype => "root", :replace_trees => [:settings])
     else # showing 1 schedule, delete it
       if params[:id].nil? || MiqSchedule.find_by_id(params[:id]).nil?
-        add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "miq_schedule")}, :error)
+        add_flash(_("Schedule no longer exists"), :error)
         javascript_flash
       else
         schedules.push(params[:id])
@@ -584,8 +582,8 @@ module OpsController::Settings::Schedules
       [_("Template Analysis"), "miq_template"],
       [_("Host Analysis"), "host"],
       [_("Container Image Analysis"), "container_image"],
-      [_("%{model} Analysis") % {:model => ui_lookup(:model => 'EmsCluster')}, "emscluster"],
-      [_("%{model} Analysis") % {:model => ui_lookup(:model => 'Storage')}, "storage"]
+      [_("Cluster / Deployment Role Analysis"), "emscluster"],
+      [_("Datastore Analysis"), "storage"]
     ]
     if role_allows?(:feature => "vm_check_compliance") || role_allows?(:feature => "miq_template_check_compliance")
       @action_type_options_for_select.push([_("VM Compliance Check"), "vm_check_compliance"])
@@ -604,8 +602,8 @@ module OpsController::Settings::Schedules
 
     @vm_options_for_select = [
       [_("All VMs"), "all"],
-      [_("All VMs for %{table}") % {:table => ui_lookup(:table => "ext_management_systems")}, "ems"],
-      [_("All VMs for %{table}") % {:table => ui_lookup(:table => "ems_clusters")}, "cluster"],
+      [_("All VMs for Providers"), "ems"],
+      [_("All VMs for Clusters / Deployment Roles"), "cluster"],
       [_("All VMs for Host"), "host"],
       [_("A single VM"), "vm"]
     ] +
@@ -614,8 +612,8 @@ module OpsController::Settings::Schedules
 
     @template_options_for_select = [
       [_("All Templates"), "all"],
-      [_("All Templates for %{table}") % {:table => ui_lookup(:table => "ext_management_systems")}, "ems"],
-      [_("All Templates for %{table}") % {:table => ui_lookup(:table => "ems_clusters")}, "cluster"],
+      [_("All Templates for Providers"), "ems"],
+      [_("All Templates for Clusters / Deployment Roles"), "cluster"],
       [_("All Templates for Host"), "host"],
       [_("A single Template"), "miq_template"]
     ] +
@@ -624,8 +622,8 @@ module OpsController::Settings::Schedules
 
     @host_options_for_select = [
       [_("All Hosts"), "all"],
-      [_("All Hosts for %{table}") % {:table => ui_lookup(:table => "ems_infra")}, "ems"],
-      [_("All Hosts for %{table}") % {:table => ui_lookup(:table => "ems_clusters")}, "cluster"],
+      [_("All Hosts for Infrastructure Provider"), "ems"],
+      [_("All Hosts for Clusters / Deployment Roles"), "cluster"],
       [_("A single Host"), "host"]
     ] +
                                (@host_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +
@@ -640,7 +638,7 @@ module OpsController::Settings::Schedules
 
     @cluster_options_for_select = [
       [_("All Clusters"), "all"],
-      [_("All Clusters for %{table}") % {:table => ui_lookup(:table => "ems_infra")}, "ems"],
+      [_("All Clusters for Infrastructure Provider"), "ems"],
       [_("A single Cluster"), "cluster"]
     ] +
                                   (@cluster_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +
@@ -649,7 +647,7 @@ module OpsController::Settings::Schedules
     @storage_options_for_select = [
       [_("All Datastores"), "all"],
       [_("All Datastores for Host"), "host"],
-      [_("All Datastores for %{table}") % {:table => ui_lookup(:table => "ems_infra")}, "ems"],
+      [_("All Datastores for Infrastructure Provider"), "ems"],
       [_("A single Datastore"), "storage"]
     ] +
                                   (@storage_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +

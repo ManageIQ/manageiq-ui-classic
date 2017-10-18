@@ -6,8 +6,11 @@ module OpsController::Settings::Zones
     when "cancel"
       @edit = nil
       @zone = Zone.find_by_id(session[:edit][:zone_id]) if session[:edit] && session[:edit][:zone_id]
-      add_flash((@zone && @zone.id) ? _("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:table => "miq_zone"), :name => @zone.name} :
-          _("Add of new %{table} was cancelled by the user") % {:table => ui_lookup(:table => "miq_zone")})
+      if @zone && @zone.id
+        add_flash(_("Edit of Zone \"%{name}\" was cancelled by the user") % {:name => @zone.name})
+      else
+        add_flash(_("Add of new Zone was cancelled by the user") % {:name => @zone.name})
+      end
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype)
     when "save", "add"
@@ -29,9 +32,11 @@ module OpsController::Settings::Zones
       zone_set_record_vars(@zone)
       if valid_record?(@zone) && @zone.save
         AuditEvent.success(build_created_audit(@zone, @edit))
-        flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                                _("%{model} \"%{name}\" was added")
-        add_flash(flash_key % {:model => ui_lookup(:model => "Zone"), :name => @edit[:new][:name]})
+        if params[:button] == "save"
+          add_flash(_("Zone \"%{name}\" was saved") % {:name => @edit[:new][:name]})
+        else
+          add_flash(_("Zone \"%{name}\" was added") % {:name => @edit[:new][:name]})
+        end
         @edit = nil
         self.x_node = params[:button] == "save" ?
               "z-#{@zone.id}" : "xx-z"
@@ -67,7 +72,7 @@ module OpsController::Settings::Zones
       self.x_node = "z-#{zone.id}"
       get_node_info(x_node)
     else
-      add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => ui_lookup(:model => "Zone"), :name => zonename})
+      add_flash(_("Zone \"%{name}\": Delete successful") % {:name => zonename})
       @sb[:active_tab] = "settings_list"
       self.x_node = "xx-z"
       get_node_info(x_node)

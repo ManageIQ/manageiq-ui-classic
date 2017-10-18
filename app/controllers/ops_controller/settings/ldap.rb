@@ -27,9 +27,9 @@ module OpsController::Settings::Ldap
     case params[:button]
     when "cancel"
       if !session[:edit][:ldap_region_id]
-        add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "LdapRegion")})
+        add_flash(_("Add of new LDAP Region was cancelled by the user"))
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "LdapRegion"), :name => session[:edit][:new][:name]})
+        add_flash(_("Edit of LDAP Region \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:name]})
       end
       get_node_info(x_node)
       @ldap_region = nil
@@ -51,7 +51,7 @@ module OpsController::Settings::Ldap
       ldap_region_set_record_vars(@ldap_region)
       if @ldap_region.valid? && !flash_errors? && @ldap_region.save
         AuditEvent.success(build_saved_audit(@ldap_region, params[:button] == "add"))
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "LdapRegion"), :name => @ldap_region.name})
+        add_flash(_("LDAP Region \"%{name}\" was saved") % {:name => @ldap_region.name})
         @edit = session[:edit] = nil  # clean out the saved info
         if params[:button] == "add"
           self.x_node  = "xx-l"  # reset node to show list
@@ -100,13 +100,13 @@ module OpsController::Settings::Ldap
     if !params[:id] # showing a list
       ldap_regions = find_checked_ids_with_rbac(LdapRegion)
       if ldap_regions.empty?
-        add_flash(_("No %{model} were selected for deletion") % {:model => ui_lookup(:tables => "ldap_region")}, :error)
+        add_flash(_("No LDAP Regions were selected for deletion"), :error)
         javascript_flash
       end
       process_ldap_regions(ldap_regions, "destroy") unless ldap_regions.empty?
     else # showing 1 ldap_region, delete it
       if params[:id].nil? || LdapRegion.find_by_id(params[:id]).nil?
-        add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "ldap_region")}, :error)
+        add_flash(_("LDAP Region no longer exists"), :error)
         javascript_flash
       else
         ldap_regions.push(params[:id])
@@ -143,9 +143,9 @@ module OpsController::Settings::Ldap
     elsif params[:button] == "cancel"
       @ldap_domain = session[:edit][:ldap_domain] if session[:edit] && session[:edit][:ldap_domain]
       if !@ldap_domain || @ldap_domain.id.blank?
-        add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "LdapDomain")})
+        add_flash(_("Add of new LDAP Domain was cancelled by the user"))
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "LdapDomain"), :name => @ldap_domain.name})
+        add_flash(_("Edit of LDAP Domain \"%{name}\" was cancelled by the user") % {:name => @ldap_domain.name})
       end
       get_node_info(x_node)
       @ldap_domain = nil
@@ -171,7 +171,7 @@ module OpsController::Settings::Ldap
       ldap_domain_set_record_vars(@ldap_domain)
       if @ldap_domain.valid? && !flash_errors? && @ldap_domain.save
         AuditEvent.success(build_saved_audit(@ldap_domain, params[:button] == "add"))
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "LdapDomain"), :name => @ldap_domain.name})
+        add_flash(_("LDAP Domain \"%{name}\" was saved") % {:name => @ldap_domain.name})
         @in_a_form = @edit = session[:edit] = nil # clean out the saved info
         if params[:button] == "add"
           self.x_node  = "lr-#{to_cid(@ldap_domain.ldap_region_id)}"  # reset node to show list
@@ -273,7 +273,7 @@ module OpsController::Settings::Ldap
   def ldap_domain_delete
     ldap_domains = []
     if params[:id].nil? || LdapDomain.find_by_id(params[:id]).nil?
-      add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "ldap_domain")}, :error)
+      add_flash(_("LDAP Domain no longer exists"), :error)
       javascript_flash
     else
       ldap_domains.push(params[:id])

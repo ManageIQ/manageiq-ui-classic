@@ -224,9 +224,9 @@ module OpsController::Settings::AnalysisProfiles
       when "cancel"
         @scan = ScanItemSet.find_by_id(session[:edit][:scan_id]) if session[:edit][:scan_id]
         if @scan
-          add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "ScanItemSet"), :name => @scan.name})
+          add_flash(_("Edit of Analysis Profile \"%{name}\" was cancelled by the user") % {:name => @scan.name})
         else
-          add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "ScanItemSet")})
+          add_flash(_("Add of new Analysis Profile was cancelled by the user"))
         end
         get_node_info(x_node)
         #       @scan = @edit[:scan] = nil
@@ -269,7 +269,7 @@ module OpsController::Settings::AnalysisProfiles
             else
               AuditEvent.success(ap_build_created_audit_set(scanitemset))
             end
-            add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "ScanItemSet"), :name => @edit[:new][:name]})
+            add_flash(_("Analysis Profile \"%{name}\" was saved") % {:name => @edit[:new][:name]})
             aps_list
             @scan = @edit[:scan_id] = nil
             @edit = session[:edit] = nil  # clean out the saved info
@@ -295,7 +295,7 @@ module OpsController::Settings::AnalysisProfiles
             @scan = ScanItemSet.find(@obj[0])           # Get existing or new record
             @sb[:miq_tab] = @scan.mode == "Host" ? "edit_2" : "edit_1"
             if @scan.read_only
-              add_flash(_("Sample %{model} \"%{name}\" can not be edited") % {:model => ui_lookup(:model => "ScanItemSet"), :name => @scan.name}, :error)
+              add_flash(_("Sample Analysis Profile \"%{name}\" can not be edited") % {:name => @scan.name}, :error)
               get_node_info(x_node)
               replace_right_cell(:nodetype => @nodetype)
               return
@@ -378,14 +378,14 @@ module OpsController::Settings::AnalysisProfiles
     if !params[:id] # showing a list
       scanitemsets = find_checked_ids_with_rbac(ScanItemSet)
       if scanitemsets.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:models => "ScanItemSet"), :task => "deletion"}, :error)
+        add_flash(_("No Analysis Profiles were selected for deletion"), :error)
       else
         to_delete = []
         scanitemsets.each do |s|
           scan = ScanItemSet.find(s)
           if scan.read_only
             to_delete.push(s)
-            add_flash(_("Default %{model} \"%{name}\" can not be deleted") % {:model => ui_lookup(:model => "ScanItemSet"), :name => scan.name}, :error)
+            add_flash(_("Default Analysis Profile \"%{name}\" can not be deleted") % {:name => scan.name}, :error)
           end
         end
         # deleting elements in temporary array, had to create temp array to hold id's to be delete, .each gets confused if i deleted them in above loop
@@ -409,14 +409,14 @@ module OpsController::Settings::AnalysisProfiles
       ap_process_scanitemsets(scanitemsets, "destroy")  unless scanitemsets.empty?
     else # showing 1 scanitemset, delete it
       if params[:id].nil? || ScanItemSet.find_by_id(params[:id]).nil?
-        add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "ScanItemSet")}, :error)
+        add_flash(_("Analysis Profile no longer exists"), :error)
       else
         scanitemsets.push(params[:id])
       end
       @single_delete = true
       ap_process_scanitemsets(scanitemsets, "destroy")  unless scanitemsets.empty?
       if @flash_array.nil?
-        add_flash(_("The selected %{model} was deleted") % {:model => ui_lookup(:models => "ScanItemSet")})
+        add_flash(_("The selected Analysis Profile was deleted"))
       end
     end
     self.x_node = "xx-sis"
@@ -511,10 +511,8 @@ module OpsController::Settings::AnalysisProfiles
             # resetting flash_array to not show a message for each memmber that is saved for a scanitemset
             @flash_array = []
           rescue => bang
-            add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{message}") %
-                        {:model => ui_lookup(:model => "ScanItemSet"),
-                         :name  => scanitem.name, :task => "update", :message => bang.message},
-                      :error)
+            add_flash(_("Analysis Profile \"%{name}\": Error during 'update': %{message}") %
+                        {:name => scanitem.name, :message => bang.message}, :error)
           end
         end
       end
