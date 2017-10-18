@@ -1738,16 +1738,24 @@ class CatalogController < ApplicationController
     @right_cell_text = _("Services in Catalog \"%{name}\"") % {:name => stc.name}
   end
 
+  def get_node_info_handle_leaf_node_stcat(id)
+    @record = ServiceTemplateCatalog.find_by_id(from_cid(id))
+    @record_service_templates = Rbac.filtered(@record.service_templates)
+    typ = TreeBuilder.get_model_for_prefix(@nodetype)
+    @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
+  end
+
+  def get_node_info_handle_leaf_node_ot(id)
+    @record = OrchestrationTemplate.find_by_id(from_cid(id))
+    @right_cell_text = _("%{model} \"%{name}\"") % {:name  => @record.name,
+                                                    :model => ui_lookup(:model => @record.class.name)}
+  end
+
   def get_node_info_handle_leaf_node(id)
     if x_active_tree == :stcat_tree
-      @record = ServiceTemplateCatalog.find_by_id(from_cid(id))
-      @record_service_templates = Rbac.filtered(@record.service_templates)
-      typ = TreeBuilder.get_model_for_prefix(@nodetype)
-      @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
+      get_node_info_handle_leaf_node_stcat(id)
     elsif x_active_tree == :ot_tree
-      @record = OrchestrationTemplate.find_by_id(from_cid(id))
-      @right_cell_text = _("%{model} \"%{name}\"") % {:name  => @record.name,
-                                                      :model => ui_lookup(:model => @record.class.name)}
+      get_node_info_handle_leaf_node_ot(id)
     else
       if id == "Unassigned"
         get_node_info_handle_unassigned_node
