@@ -1085,9 +1085,8 @@ module OpsController::Settings::Common
     nodes = nodetype.downcase.split("-")
     case nodes[0]
     when "root"
-      @right_cell_text = _("Settings %{model} \"%{name}\"") %
-                         {:name  => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
-                          :model => ui_lookup(:model => "MiqRegion")}
+      @right_cell_text = _("Settings Region \"%{name}\"") %
+                         {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]"}
       case @sb[:active_tab]
       when "settings_details"
         settings_set_view_vars
@@ -1132,16 +1131,16 @@ module OpsController::Settings::Common
     when "xx"
       case nodes[1]
       when "z"
-        @right_cell_text = _("Settings %{model}") % {:model => ui_lookup(:models => "Zone")}
+        @right_cell_text = _("Settings Zones")
         @zones = Zone.in_my_region
       when "sis"
-        @right_cell_text = _("Settings %{model}") % {:model => ui_lookup(:models => "ScanItemSet")}
+        @right_cell_text = _("Settings Analysis Profiles")
         aps_list
       when "msc"
-        @right_cell_text = _("Settings %{model}") % {:model => ui_lookup(:models => "MiqSchedule")}
+        @right_cell_text = _("Settings Schedules")
         schedules_list
       when "l"
-        @right_cell_text = _("Settings %{model}") % {:model => ui_lookup(:models => "LdapRegion")}
+        @right_cell_text = _("Settings LDAP Regions")
         ldap_regions_list
       end
     when "svr"
@@ -1152,26 +1151,22 @@ module OpsController::Settings::Common
       settings_set_form_vars
     when "msc"
       @record = @selected_schedule = MiqSchedule.find(from_cid(nodes.last))
-      @right_cell_text = _("Settings %{model} \"%{name}\"") % {:name  => @selected_schedule.name,
-                                                               :model => ui_lookup(:model => "MiqSchedule")}
+      @right_cell_text = _("Settings Schedule \"%{name}\"") % {:name => @selected_schedule.name}
       schedule_show
     when "ld", "lr"
       nodes = nodetype.split('-')
       if nodes[0] == "lr"
         @record = @selected_lr = LdapRegion.find(from_cid(nodes[1]))
-        @right_cell_text = _("Settings %{model} \"%{name}\"") % {:name  => @selected_lr.name,
-                                                                 :model => ui_lookup(:model => "LdapRegion")}
+        @right_cell_text = _("Settings LDAP Region \"%{name}\"") % {:name => @selected_lr.name}
         ldap_region_show
       else
         @record = @selected_ld = LdapDomain.find(from_cid(nodes[1]))
-        @right_cell_text = _("Settings %{model} \"%{name}\"") % {:name  => @selected_ld.name,
-                                                                 :model => ui_lookup(:model => "LdapDomain")}
+        @right_cell_text = _("Settings LDAP Domain \"%{name}\"") % {:name => @selected_ld.name}
         ldap_domain_show
       end
     when "sis"
       @record = @selected_scan = ScanItemSet.find(from_cid(nodes.last))
-      @right_cell_text = _("Settings %{model} \"%{name}\"") % {:name  => @selected_scan.name,
-                                                               :model => ui_lookup(:model => "ScanItemSet")}
+      @right_cell_text = _("Settings Analysis Profile \"%{name}\"") % {:name => @selected_scan.name}
       ap_show
     when "z"
       @servers = []

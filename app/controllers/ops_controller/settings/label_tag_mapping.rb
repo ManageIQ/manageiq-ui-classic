@@ -33,11 +33,9 @@ module OpsController::Settings::LabelTagMapping
     when "cancel"
       @lt_map = session[:edit][:lt_map] if session[:edit] && session[:edit][:lt_map]
       if !@lt_map || @lt_map.id.blank?
-        add_flash(_("Add of new %{model} was cancelled by the user") %
-                    {:model => ui_lookup(:model => "ContainerLabelTagMapping")})
+        add_flash(_("Add of new Container Label Tag Mapping was cancelled by the user"))
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-                    {:model => ui_lookup(:model => "ContainerLabelTagMapping"), :name => @lt_map.label_name})
+        add_flash(_("Edit of Container Label Tag Mapping \"%{name}\" was cancelled by the user"))
       end
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
@@ -201,8 +199,7 @@ module OpsController::Settings::LabelTagMapping
       add_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
       javascript_flash
     else
-      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "ContainerLabelTagMapping"),
-                                                       :name  => label_name})
+      add_flash(_("Container Label Tag Mapping \"%{name}\" was added") % {:name => label_name})
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
       replace_right_cell(:nodetype => "root")
@@ -219,8 +216,7 @@ module OpsController::Settings::LabelTagMapping
       add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
       javascript_flash
     else
-      add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "ContainerLabelTagMapping"),
-                                                       :name  => mapping.label_name})
+      add_flash(_("Container Label Tag Mapping \"%{name}\" was saved") % {:name => mapping.label_name})
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
       replace_right_cell(:nodetype => "root")
@@ -239,8 +235,7 @@ module OpsController::Settings::LabelTagMapping
     end
 
     if deleted
-      add_flash(_("%{model} \"%{name}\": Delete successful") %
-                  {:model => ui_lookup(:model => "ContainerLabelTagMapping"), :name => label_name})
+      add_flash(_("Container Label Tag Mapping \"%{name}\": Delete successful") % {:name => label_name})
       label_tag_mapping_get_all
       render :update do |page|
         page << javascript_prologue

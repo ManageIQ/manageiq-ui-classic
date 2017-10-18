@@ -135,9 +135,8 @@ module OpsController::Settings
 
   def region_edit
     settings_set_view_vars
-    @right_cell_text = _("Settings %{model} \"%{name}\"") %
-                       {:name  => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
-                        :model => ui_lookup(:model => "MiqRegion")}
+    @right_cell_text = _("Settings Region \"%{name}\"") %
+                       {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]"}
     case params[:button]
     when "cancel"
       session[:edit] = @edit = nil
@@ -162,7 +161,7 @@ module OpsController::Settings
         @changed = true
         javascript_flash
       else
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqRegion"), :name => @edit[:region].description})
+        add_flash(_("Region \"%{name}\" was saved") % {:name => @edit[:region].description})
         AuditEvent.success(build_saved_audit(@edit[:region], params[:button] == "edit"))
         @edit = session[:edit] = nil  # clean out the saved info
         replace_right_cell(:nodetype => "root", :replace_trees => [:settings])

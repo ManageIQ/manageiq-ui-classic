@@ -599,20 +599,19 @@ module OpsController::Diagnostics
   def delete_server
     assert_privileges("delete_server")
     if @sb[:diag_selected_id].nil?
-      add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "evm_server")}, :error)
+      add_flash(_("EVM Server no longer exists"), :error)
     else
       server = MiqServer.find_by(:id => @sb[:diag_selected_id])
       process_server_deletion(server) if server
     end
-    add_flash(_("The selected %{table} was deleted") %
-                {:table => ui_lookup(:table => "evm_server")}) if @flash_array.nil?
+    add_flash(_("The selected EVM Server was deleted")) if @flash_array.nil?
     refresh_screen
   end
 
   def process_server_deletion(server)
     server.destroy
   rescue => bang
-    add_flash(_("%{model} \"%{name}\": Error during '%{task}': ") % {:model => ui_lookup(:model => "MiqServer"), :name => server.name, :task => "destroy"} << bang.message,
+    add_flash(_("Server \"%{name}\": Error during 'destroy': ") % {:name => server.name} << bang.message,
               :error)
   else
     AuditEvent.success(
@@ -622,7 +621,7 @@ module OpsController::Diagnostics
       :target_class => "MiqServer",
       :userid       => session[:userid]
     )
-    add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => ui_lookup(:model => "MiqServer"), :name => "#{server.name} [#{server.id}]"})
+    add_flash(_("Server \"%{name}\": Delete successful") % {:name => "#{server.name} [#{server.id}]"})
   end
 
   def promote_server
@@ -762,9 +761,8 @@ module OpsController::Diagnostics
       elsif @sb[:active_tab] == "diagnostics_server_list"
         diagnostics_server_list
       end
-      @right_cell_text = _("Diagnostics %{model} \"%{name}\"") %
-                         {:name  => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
-                          :model => ui_lookup(:model => "MiqRegion")}
+      @right_cell_text = _("Diagnostics Region \"%{name}\"") %
+                         {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]"}
     elsif active_node && active_node.split('-').first == "svr"
       @selected_server ||= MiqServer.find(@sb[:selected_server_id])  # Reread the server record
       if @sb[:selected_server_id] == my_server.id

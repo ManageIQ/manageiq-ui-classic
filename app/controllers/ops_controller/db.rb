@@ -103,7 +103,7 @@ module OpsController::Db
       else
         @right_cell_text = case @sb[:active_tab]
                            when "db_connections" then _("VMDB Client Connections")
-                           when "db_details"     then _("All %{models}") % {:models => ui_lookup(:models => "VmdbTable")}
+                           when "db_details"     then _("All VMDB Tables")
                            when "db_indexes"     then _("All VMDB Indexes")
                            else                       _("VMDB Settings")
                            end
@@ -118,11 +118,11 @@ module OpsController::Db
         if nodes.first == "xx"
           tb = VmdbTableEvm.find_by_id(from_cid(nodes.last))
           @indexes = get_indexes(tb)
-          @right_cell_text = _("Indexes for %{model} \"%{name}\"") % {:model => ui_lookup(:model => "VmdbTable"), :name => tb.name}
+          @right_cell_text = _("Indexes for VMDB Table \"%{name}\"") % {:name => tb.name}
           @tab_text = "%{table_name} Indexes" % {:table_name => tb.name}
         else
           @vmdb_index = VmdbIndex.find_by_id(from_cid(nodes.last))
-          @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "VmdbIndex"), :name => @vmdb_index.name}
+          @right_cell_text = _("VMDB Index \"%{name}\"") % {:name => @vmdb_index.name}
           @tab_text = @vmdb_index.name
         end
       elsif @sb[:active_tab] == "db_utilization"
@@ -136,7 +136,7 @@ module OpsController::Db
         @sb[:active_tab] = "db_details"
         @table = VmdbTable.find_by_id(from_cid(x_node.split('-').last))
         @indexes = get_indexes(@table)
-        @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "VmdbTable"), :name => @table.name}
+        @right_cell_text = _("VMDB Table \"%{name}\"") % {:name => @table.name}
         @tab_text = @table.name
       end
     end
