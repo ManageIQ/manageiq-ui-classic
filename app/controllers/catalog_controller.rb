@@ -1729,7 +1729,7 @@ class CatalogController < ApplicationController
           if x_active_tree == :stcat_tree
             @record = ServiceTemplateCatalog.find_by_id(from_cid(id))
             @record_service_templates = Rbac.filtered(@record.service_templates)
-            typ = x_active_tree == :svccat_tree ? "Service" : TreeBuilder.get_model_for_prefix(@nodetype)
+            typ = TreeBuilder.get_model_for_prefix(@nodetype)
             @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
           elsif x_active_tree == :ot_tree
             @record = OrchestrationTemplate.find_by_id(from_cid(id))
