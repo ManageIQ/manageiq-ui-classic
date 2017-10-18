@@ -42,16 +42,6 @@ module ReportFormatter
       tz = mri.get_time_zone(Time.zone.name)
       nils2zero = false # Allow gaps in charts for nil values
 
-      #### To do - Uncomment to handle long term averages
-      #   if mri.extras && mri.extras[:long_term_averages]  # If averages are present
-      #     mri.extras[:long_term_averages].keys.each do |avg_col|
-      #       if mri.graph[:columns].include?(avg_col.to_s)
-      #         mri.graph[:columns].push("avg__#{avg_col.to_s}")
-      #       end
-      #     end
-      #   end
-      ####
-
       mri.graph[:columns].each_with_index do |col, col_idx|
 
         next if col_idx >= maxcols
@@ -69,15 +59,7 @@ module ReportFormatter
           else
             categories.push(rec_time.hour.to_s + ":00")
           end
-          #           r[col] = nil if rec_time.day == 12  # Test code, uncomment to skip 12th day of the month
-
-          #### To do - Uncomment to handle long term averages
-          #       if col.starts_with?("avg__")
-          #         val = mri.extras[:long_term_averages][col.split("__").last.to_sym]
-          #       else
           val = r[col].nil? && (nils2zero) ? 0 : r[col]
-          #       end
-          ####
 
           if d_idx == mri.table.data.length - 1 && !tip.nil?
             series.push(:value => val, :tooltip => tip)
@@ -89,13 +71,7 @@ module ReportFormatter
         series.set_to_zero(-1) if allnil # XML/SWF Charts can't handle all nils, set the last value to 0
         add_axis_category_text(categories)
 
-        #### To do - Uncomment to handle long term averages
-        #     if col.starts_with?("avg__")
-        #       head = "#{col.split("__").last.titleize}"
-        #     else
         head = mri.graph[:legends] ? mri.graph[:legends][col_idx] : mri.headers[mri.col_order.index(col)] # Use legend overrides, if present
-        #     end
-        ####
 
         add_series(head, series)
       end
