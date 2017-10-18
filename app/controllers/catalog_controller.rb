@@ -1682,6 +1682,17 @@ class CatalogController < ApplicationController
     end
   end
 
+  ROOT_NODE_MODELS = {
+    :sandt_tree  => "ServiceTemplate",
+    :svccat_tree => "Service",
+    :stcat_tree  => "ServiceTemplateCatalog",
+    :ot_tree     => "OrchestrationTemplate"
+  }.freeze
+
+  def root_node_model(tree)
+    ROOT_NODE_MODELS[tree]
+  end
+
   # Get all info for the node about to be displayed
   def get_node_info(treenodeid, _show_list = true)
     @explorer ||= true
@@ -1701,13 +1712,7 @@ class CatalogController < ApplicationController
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => TreeBuilder.get_model_for_prefix(@nodetype))}
       else      # Get list of child Catalog Items/Services of this node
         if x_node == "root"
-          types = {
-            :sandt_tree  => "ServiceTemplate",
-            :svccat_tree => "Service",
-            :stcat_tree  => "ServiceTemplateCatalog",
-            :ot_tree     => "OrchestrationTemplate"
-          }
-          typ = types[x_active_tree]
+          typ = root_node_model(x_active_tree)
           @no_checkboxes = true if x_active_tree == :svcs_tree
           if x_active_tree == :svccat_tree
             condition = ["display=TRUE and service_template_catalog_id IS NOT NULL"]
