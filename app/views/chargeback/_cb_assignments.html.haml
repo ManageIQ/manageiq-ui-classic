@@ -30,7 +30,7 @@
     - if !@edit[:new][:cbshow_typ].blank? && @edit[:new][:cbshow_typ].ends_with?("-labels")
       .form-group
         %label.col-md-2.control-label
-          = _('Docker Labels')
+          = _('Image Labels')
         .col-md-8
           - options = Array(@edit[:cb_assign][:docker_label_keys].invert).sort_by { |a| a.first.downcase }
           = select_tag("cblabel_key", options_for_select([["<#{_('Choose a Label')}>", ""]] + options, @edit[:new][:cblabel_key].to_s),
