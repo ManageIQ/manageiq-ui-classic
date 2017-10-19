@@ -75,12 +75,7 @@
 
                             - if field.type == "DialogFieldDropDownList"
                               - if field.required
-                                - if field.default_value.nil?
-                                  = select_tag(field_id,
-                                    options_for_select(val.collect(&:reverse), field.default_value))
-                                - else
-                                  = select_tag(field_id,
-                                              options_for_select(val.collect(&:reverse), field.default_value))
+                                = select_tag(field_id, options_for_select(val.collect(&:reverse), field.default_value))
 
                               - else
                                 -# NOT REQUIRED
