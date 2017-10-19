@@ -14,6 +14,7 @@
       .form-group
         %label.col-md-2.control-label
           = _('Network Manager')
+<<<<<<< HEAD
         .col-md-8
           %select{'id'         => 'ems_id',
                   'name'       => 'ems_id',
@@ -24,13 +25,22 @@
                   'required'   => ''}
             %option{:value => ""}
               = "<#{_('Choose')}>"
+=======
+        .col-md-8{"ng-class" => "{'has-error': angularForm.ems_id.$invalid}", "ng-if" => "vm.newRecord"}
+          = select_tag("ems_id",
+              options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
+              "ng-change"                   => "vm.filterNetworkManagerChanged(angularForm.ems_id)",
+              "ng-model"                    => "vm.networkRouterModel.ext_management_system.id",
+              "required"                    => "",
+              "selectpicker-for-select-tag" => "")
+>>>>>>> Use Object.assign
           %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
             = _('Required')
         .col-md-8{"ng-if" => "!vm.newRecord"}
           %input.form-control{"type"         => "text",
             "name"         => "ems_name",
             "ng-maxlength" => 128,
-            "ng-model"     => "vm.networkRouterModel.ems_name",
+            "ng-model"     => "vm.networkRouterModel.ext_management_system.name",
             "ng-disabled"  => true}
   %div
     %h3
@@ -55,7 +65,7 @@
           %input.form-control{"type"         => "text",
                               "name"         => "cloud_tenant_name",
                               "ng-maxlength" => 128,
-                              "ng-model"     => "vm.networkRouterModel.cloud_tenant_name",
+                              "ng-model"     => "vm.networkRouterModel.cloud_tenant.name",
                               "ng-disabled"  => true}
 
   %h3
@@ -87,7 +97,7 @@
                "ng-model"    => "vm.networkRouterModel.external_gateway"}
 
   .form-horizontal{"ng-if" => "vm.networkRouterModel.external_gateway"}
-    .form-group{"ng-if" => "vm.networkRouterModel.ems_id"}
+    .form-group{"ng-if" => "vm.networkRouterModel.ext_management_system.id"}
       %label.col-md-2.control-label{"for" => "network_router_enable_snat"}
         = _('Source NAT')
       .col-md-8
@@ -105,7 +115,7 @@
         %select{"name"                        => "cloud_network_id",
                 "ng-model"                    => "vm.networkRouterModel.cloud_network_id",
                 "ng-options"                  => "network.id as network.name for network in vm.available_networks",
-                "ng-change"                   => "vm.filterCloudNetworkChanged(vm.networkRouterModel.cloud_network_id)",
+                "ng-change"                   => "vm.filterCloudNetworkChanged(angularForm.cloud_network_id)",
                 "pf-select"                   => true,
                 "ng-selected"                 => "vm.networkRouterModel.cloud_network_id",
                 "selectpicker-for-select-tag" => ""}

@@ -5,11 +5,10 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   vm.networkRouterModel = {
     name: '',
     cloud_subnet_id: null,
-    cloud_tenant_name: null,
+    cloud_tenant: null,
     enable_snat: true,
     external_gateway: false,
-    external_fixed_ips: [],
-    extra_attributes: null
+    extra_attributes: null,
   };
 
   vm.formId = networkRouterFormId;
@@ -35,25 +34,16 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   } else {
     miqService.sparkleOn();
     API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,ems_id,admin_state_up,cloud_network_id,extra_attributes,cloud_tenant,ext_management_system,cloud_subnets").then(function(data) {
-      vm.networkRouterModel.name = data.name;
-      vm.networkRouterModel.cloud_network_id = data.cloud_network_id;
-      vm.networkRouterModel.ems_id = data.ext_management_system.id;
-      vm.networkRouterModel.ems_name = data.ext_management_system.name;
-      vm.networkRouterModel.cloud_tenant_name = data.cloud_tenant.name;
-      vm.networkRouterModel.extra_attributes = data.extra_attributes;
-    }).then(function() {
-      if (data.extra_attributes.external_gateway_info && data.networkRouterModel.extra_attributes.external_gateway_info !== {}) {
+      Object.assign(vm.networkRouterModel, data);
+      if (data.extra_attributes.external_gateway_info && data.extra_attributes.external_gateway_info !== {}) {
         vm.networkRouterModel.external_gateway = true;
-        vm.networkRouterModel.enable_snat = vm.networkRouterModel.extra_attributes.external_gateway_info.enable_snat;
-        vm.networkRouterModel.external_fixed_ips = vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips;
       }
     }).then(function() {
       if (vm.networkRouterModel.external_gateway) {
-        var ref = vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id;
-        getSubnetByRef(ref);
+        getSubnetByRef(vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id);
       }
     }).then(function() {
-      getCloudNetworksByEms(vm.networkRouterModel.ems_id);
+      getCloudNetworksByEms(vm.networkRouterModel.ext_management_system.id);
     }).then(function() {
       getCloudSubnetsByNetworkID(vm.networkRouterModel.cloud_network_id);
     }).then(function() {
