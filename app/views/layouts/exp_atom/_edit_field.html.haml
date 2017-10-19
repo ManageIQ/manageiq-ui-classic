@@ -9,7 +9,9 @@
   -# Use list in @edit for reporting display filter
   - opts += @edit[@expkey][:exp_available_fields]
 - else
-  - opts += MiqExpression.miq_adv_search_lists(exp_model, :exp_available_fields)
+  - extra_opts = {}
+  - extra_opts.merge!(:include_id_columns => true) if @edit.fetch(:expression_method, false)
+  - opts += MiqExpression.miq_adv_search_lists(exp_model, :exp_available_fields, extra_opts)
 
 = select_tag('chosen_field', options_for_select(opts, @edit[@expkey][:exp_field]),
   :multiple              => false,
