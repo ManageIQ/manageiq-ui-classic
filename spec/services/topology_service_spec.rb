@@ -49,8 +49,8 @@ describe TopologyService do
       expect(subject.entity_id(host)).to start_with(host.class.to_s)
     end
 
-    it 'output ends with compressed id' do
-      expect(subject.entity_id(host)).to end_with(host.compressed_id)
+    it 'output ends with id' do
+      expect(subject.entity_id(host)).to end_with(host.id.to_s)
     end
   end
 

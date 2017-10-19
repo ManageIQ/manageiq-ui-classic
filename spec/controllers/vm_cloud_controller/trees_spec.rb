@@ -39,7 +39,7 @@ describe VmCloudController do
         session[:settings] = {}
         seed_session_trees('vm_cloud', 'instances_tree')
 
-        post :tree_select, :params => { :id => "v-#{instance.compressed_id}", :format => :js }
+        post :tree_select, :params => { :id => "v-#{instance.id}", :format => :js }
 
         expect(response).to render_template('layouts/_textual_groups_generic')
         expect(response).to render_template('shared/summary/_textual_tags')

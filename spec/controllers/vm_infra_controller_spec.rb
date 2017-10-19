@@ -113,7 +113,7 @@ describe VmInfraController do
 
   it 'can open the reconfigure tab' do
     vm = FactoryGirl.create(:vm_vmware, :host => host_1x1, :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
     expect(response).to redirect_to(:action => 'explorer')
@@ -132,7 +132,7 @@ describe VmInfraController do
     post :x_button, :params => {:pressed => 'vm_protect', :id => vm_vmware.id}
     expect(response.status).to eq(200)
 
-    allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.id}")
 
     post :x_button, :params => {:pressed => 'vm_edit', :id => vm_vmware.id}
     expect(response.status).to eq(200)
@@ -146,7 +146,7 @@ describe VmInfraController do
     post :x_button, :params => {:pressed => 'vm_protect', :id => vm_vmware.id}
     expect(response.status).to eq(200)
 
-    allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.id}")
 
     post :x_button, :params => {:pressed => 'vm_ownership', :id => vm_vmware.id}
     expect(response.status).to eq(200)
@@ -174,7 +174,7 @@ describe VmInfraController do
                                     :col_order     => %w(name boot_time disks_aligned),
                                     :cols          => %w(name boot_time disks_aligned))
 
-    allow(controller).to receive(:x_node).and_return("v-#{vm.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
@@ -228,7 +228,7 @@ describe VmInfraController do
     vm = FactoryGirl.create(:vm_vmware,
                             :host     => host_1x1,
                             :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
@@ -353,7 +353,7 @@ describe VmInfraController do
     vm = FactoryGirl.create(:vm_vmware,
                             :host     => host_1x1,
                             :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
@@ -447,7 +447,7 @@ describe VmInfraController do
     vm = FactoryGirl.create(:vm_vmware,
                             :host     => host_1x1,
                             :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
     expect(response).to redirect_to(:action => 'explorer')
@@ -464,7 +464,7 @@ describe VmInfraController do
     vm = FactoryGirl.create(:vm_vmware,
                             :host     => host_2x2,
                             :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
     expect(response).to redirect_to(:action => 'explorer')
@@ -481,7 +481,7 @@ describe VmInfraController do
     vm = FactoryGirl.create(:vm_vmware,
                             :host     => host_2x2,
                             :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
     expect(response).to redirect_to(:action => 'explorer')
@@ -498,7 +498,7 @@ describe VmInfraController do
     vm = FactoryGirl.create(:vm_vmware,
                             :host     => host_2x2,
                             :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
-    allow(controller).to receive(:x_node).and_return("v-#{vm.compressed_id}")
+    allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
     expect(response).to redirect_to(:action => 'explorer')
@@ -534,14 +534,14 @@ describe VmInfraController do
 
       it 'it clears the existing breadcrumb path and assigns the new explorer path when controllers are switched' do
         session[:breadcrumbs] = [{:name => "Instances", :url => "/vm_cloud/explorer"}]
-        allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.compressed_id}")
+        allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.id}")
         get :explorer
         expect(subject).to eq([{:name => "VM or Templates", :url => "/vm_infra/explorer"}])
       end
 
       it 'retains the breadcrumb path when cancel is pressed from a VM action' do
         get :explorer
-        allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.compressed_id}")
+        allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.id}")
         post :x_button, :params => {:id => vm_vmware.id, :pressed => 'vm_ownership'}
 
         controller.instance_variable_set(:@in_a_form, nil)

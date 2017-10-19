@@ -21,7 +21,7 @@ class TopologyService
   end
 
   def entity_id(entity)
-    entity_type(entity) + entity.compressed_id.to_s
+    entity_type(entity) + entity.id.to_s
   end
 
   def entity_name(entity)

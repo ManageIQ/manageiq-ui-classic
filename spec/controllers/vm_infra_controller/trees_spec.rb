@@ -46,7 +46,7 @@ describe VmInfraController do
       session[:settings] = {}
       seed_session_trees('vm_infra', 'vandt_tree')
 
-      post :tree_select, :params => { :id => "v-#{vm.compressed_id}", :format => :js }
+      post :tree_select, :params => { :id => "v-#{vm.id}", :format => :js }
 
       expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
       expect(response).to render_template('shared/summary/_textual_tags')
@@ -59,7 +59,7 @@ describe VmInfraController do
       session[:settings] = {}
       seed_session_trees('vm_infra', 'vandt_tree')
 
-      post :tree_select, :params => { :id => "t-#{template.compressed_id}", :format => :js }
+      post :tree_select, :params => { :id => "t-#{template.id}", :format => :js }
 
       expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
       expect(response).to render_template('shared/summary/_textual_tags')

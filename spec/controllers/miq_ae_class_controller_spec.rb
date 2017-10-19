@@ -692,7 +692,7 @@ describe MiqAeClassController do
                                        :trees       => {},
                                        :active_tree => :ae_tree)
       allow(controller).to receive(:replace_right_cell)
-      controller.x_node = "aen-#{@namespace.compressed_id}"
+      controller.x_node = "aen-#{@namespace.id}"
     end
 
     it "Should delete multiple selected items from list" do
@@ -756,7 +756,7 @@ describe MiqAeClassController do
                                        :trees       => {},
                                        :active_tree => :ae_tree)
       allow(controller).to receive(:replace_right_cell)
-      controller.x_node = "aen-#{@namespace.compressed_id}"
+      controller.x_node = "aen-#{@namespace.id}"
       allow(controller).to receive(:find_records_with_rbac).and_return([@namespace])
     end
 
@@ -783,7 +783,7 @@ describe MiqAeClassController do
     end
 
     it "Should delete selected class in the tree" do
-      controller.x_node = "aec-#{@ae_class.compressed_id}"
+      controller.x_node = "aec-#{@ae_class.id}"
       controller.instance_variable_set(:@_params,
                                        :id => @namespace.id
                                       )
