@@ -29,8 +29,8 @@ module ReportController::Reports
     savedreports = view.table.data
     r = savedreports.first
     @right_cell_div  = "report_list"
-    @right_cell_text ||= _("%{model} \"%{name}\"") % {:name => r.name, :model => "Saved Report"}
-    add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqReport"), :name => r.name})
+    @right_cell_text ||= _("Saved Report \"%{name}\"") % {:name => r.name}
+    add_flash(_("Report \"%{name}\" was saved") % {:name => r.name})
     replace_right_cell(:replace_trees => [:reports, :savedreports])
   end
 
@@ -87,18 +87,18 @@ module ReportController::Reports
       render_flash(_("Report cannot be deleted if it's being used by one or more Widgets"), :error)
     else
       begin
-        raise StandardError, "Default %{model} \"%{name}\" cannot be deleted" % {:model => ui_lookup(:model => "MiqReport"), :name => rpt.name} if rpt.rpt_type == "Default"
+        raise StandardError, "Default Report \"%{name}\" cannot be deleted" % {:name => rpt.name} if rpt.rpt_type == "Default"
         rpt_name = rpt.name
         audit = {:event => "report_record_delete", :message => "[#{rpt_name}] Record deleted", :target_id => rpt.id, :target_class => "MiqReport", :userid => session[:userid]}
         rpt.destroy
       rescue => bang
-        add_flash(_("%{model} \"%{name}\": Error during 'miq_report_delete': %{message}") %
-                    {:model => ui_lookup(:model => "MiqReport"), :name => rpt_name, :message =>  bang.message}, :error)
+        add_flash(_("Report \"%{name}\": Error during 'miq_report_delete': %{message}") %
+                    {:name => rpt_name, :message => bang.message}, :error)
         javascript_flash
         return
       else
         AuditEvent.success(audit)
-        add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => ui_lookup(:model => "MiqReport"), :name => rpt_name})
+        add_flash(_("Report \"%{name}\": Delete successful") % {:name => rpt_name})
       end
       params[:id] = nil
       nodes = x_node.split('_')
@@ -186,7 +186,7 @@ module ReportController::Reports
     end
 
     @sb[:tree_typ]   = "reports"
-    @right_cell_text = _("%{model} \"%{name}\"") % {:name => @miq_report.name, :model => ui_lookup(:model => "MiqReport")}
+    @right_cell_text = _("Report \"%{name}\"") % {:name => @miq_report.name}
   end
 
   def rep_change_tab

@@ -646,9 +646,7 @@ module ReportController::Menus
     roles.sort_by { |a| a.name.downcase }.each do |r|
       @sb[:menu][r.id] = r.name
     end
-    @right_cell_text = title == "My #{ui_lookup(:model => "MiqGroup")}" ?
-      title :
-      _("All %{models}") % {:models => ui_lookup(:models => "MiqGroup")}
+    @right_cell_text = title
     @right_cell_div = "role_list"
     @menu_roles_tree = nil
   end
@@ -657,15 +655,15 @@ module ReportController::Menus
     # build menu for selected role
     get_tree_data
     @right_cell_div  = "role_list"
-    @right_cell_text = _("Editing %{model} \"%{name}\"") % {:name => session[:role_choice], :model => ui_lookup(:model => "MiqGroup")}
+    @right_cell_text = _("Editing EVM Group \"%{name}\"") % {:name => session[:role_choice]}
   end
 
   def get_group_roles
     if super_admin_user?
       roles = MiqGroup.non_tenant_groups
-      title  = "All #{ui_lookup(:models => "MiqGroup")}"
+      title  = _("All EVM Groups")
     else
-      title  = "My #{ui_lookup(:model => "MiqGroup")}"
+      title  = _("My EVM Group")
       roles = [current_user.current_group]
     end
     return roles, title

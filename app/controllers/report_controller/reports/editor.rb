@@ -63,8 +63,8 @@ module ReportController::Reports::Editor
     case params[:button]
     when "cancel"
       @edit[:rpt_id] ?
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqReport"), :name => @edit[:rpt_title]}) :
-        add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqReport")})
+        add_flash(_("Edit of Report \"%{name}\" was cancelled by the user") % {:name => @edit[:rpt_title]}) :
+        add_flash(_("Add of new Report was cancelled by the user"))
       @edit = session[:edit] = nil # clean out the saved info
       replace_right_cell
     when "add", "save"
@@ -92,8 +92,8 @@ module ReportController::Reports::Editor
         menu_repname_update(@edit[:current][:name], @edit[:new][:name]) if @edit[:current][:name] != @edit[:new][:name]
         AuditEvent.success(build_saved_audit(@rpt, @edit))
         @edit[:rpt_id] ?
-          add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqReport"), :name => @rpt.name}) :
-          add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqReport"), :name => @rpt.name})
+          add_flash(_("Report \"%{name}\" was saved") % {:name => @rpt.name}) :
+          add_flash(_("Report \"%{name}\" was added") % {:name => @rpt.name})
         # only do this for new reports
         unless @edit[:rpt_id]
           self.x_node = "xx-#{@sb[:rpt_menu].length}_xx-#{@sb[:rpt_menu].length}-0"

@@ -227,7 +227,7 @@ module ReportController::Dashboards
       # All groups node is selected
       @miq_groups = Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region)
       @right_cell_div  = "db_list"
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "MiqGroup")}
+      @right_cell_text = _("All EVM Groups")
     elsif @sb[:nodes].length == 3 && @sb[:nodes][1] == "g_g"
       g = MiqGroup.find(from_cid(@sb[:nodes].last))
       @right_cell_text = _("Dashboards for \"%{name}\"") % {:name => g.description}
