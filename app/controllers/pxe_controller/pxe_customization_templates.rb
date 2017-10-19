@@ -91,9 +91,11 @@ module PxeController::PxeCustomizationTemplates
     changed = (@edit[:new] != @edit[:current])
     if params[:button] == "cancel"
       @edit = session[:edit] = nil # clean out the saved info
-      @ct.id ? add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "PxeCustomizationTemplate"), :name => @ct.name}) :
-              add_flash(_("Add of new %{model} was cancelled by the user") %
-                         {:model => ui_lookup(:model => "PxeCustomizationTemplate")})
+      if @ct.id
+        add_flash(_("Edit of Customization Template \"%{name}\" was cancelled by the user") % {:name => @ct.name})
+      else
+        add_flash(_("Add of new Customization Template was cancelled by the user"))
+      end
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
     elsif ["add", "save"].include?(params[:button])
@@ -117,8 +119,11 @@ module PxeController::PxeCustomizationTemplates
       template_set_record_vars(ct)
 
       if !flash_errors? && ct.valid? && ct.save
-        flash_key = ct.id ? _("%{model} \"%{name}\" was saved") : _("%{model} \"%{name}\" was added")
-        add_flash(flash_key % {:model => ui_lookup(:model => "PxeCustomizationTemplate"), :name  => ct.name})
+        if ct.id
+          add_flash(_("Customization Template \"%{name}\" was saved") % {:name => ct.name})
+        else
+          add_flash(_("Customization Template \"%{name}\" was added") % {:name => ct.name})
+        end
         AuditEvent.success(build_created_audit(ct, @edit))
         @edit = session[:edit] = nil # clean out the saved info
         self.x_node = "xx-xx-#{to_cid(ct.pxe_image_type.id)}"
@@ -203,8 +208,7 @@ module PxeController::PxeCustomizationTemplates
     if !params[:id]
       templates = find_checked_items
       if templates.empty?
-        add_flash(_("No %{model} were selected to %{button}") % {:model => ui_lookup(:models => "PxeCustomizationTemplate"), :button => display_name},
-                  :error)
+        add_flash(_("No Customization Templates were selected to %{button}") % {:button => display_name}, :error)
       else
         process_templates(templates, method)
       end
@@ -213,8 +217,7 @@ module PxeController::PxeCustomizationTemplates
       replace_right_cell(:nodetype => x_node, :replace_trees => [:customization_templates])
     else # showing 1 vm
       if params[:id].nil? || CustomizationTemplate.find_by_id(params[:id]).nil?
-        add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "PxeCustomizationTemplate")},
-                  :error)
+        add_flash(_("Customization Template no longer exists"), :error)
         template_list
         @refresh_partial = "layouts/gtl"
       else
@@ -236,21 +239,21 @@ module PxeController::PxeCustomizationTemplates
   def template_get_node_info(treenodeid)
     if treenodeid == "root"
       @folders = PxeImageType.all.sort
-      @right_cell_text = _("All %{model} - %{group}") % {:model => ui_lookup(:models => "PxeCustomizationTemplate"), :group => ui_lookup(:models => "PxeImageType")}
+      @right_cell_text = _("All Customization Templates - System Image Types")
       @right_cell_div  = "template_list"
     else
       nodes = treenodeid.split("-")
       if nodes[0] == "ct"
         @right_cell_div = "template_details"
         @record = @ct = CustomizationTemplate.find_by_id(from_cid(nodes[1]))
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @ct.name, :model => ui_lookup(:model => "PxeCustomizationTemplate")}
+        @right_cell_text = _("Customization Template \"%{name}\"") % {:name => @ct.name}
       else
         template_list
         pxe_img_id = x_node.split('-').last
 
         pxe_img_type = PxeImageType.find_by_id(from_cid(pxe_img_id)) if pxe_img_id != "system"
         @right_cell_text = pxe_img_id == "system" ? _("Examples (read only)") :
-                                    _("%{model} for %{group} \"%{name}\"") % {:name => pxe_img_type.name, :model => ui_lookup(:models => "PxeCustomizationTemplate"), :group => ui_lookup(:model => "PxeImageType")}
+                                    _("Customization Templates for System Image Types \"%{name}\"") % {:name => pxe_img_type.name}
         @right_cell_div  = "template_list"
       end
     end

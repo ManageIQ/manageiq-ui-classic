@@ -26,9 +26,9 @@ module PxeController::PxeImageTypes
       id = params[:id] || "new"
       return unless load_edit("pxe_image_type_edit__#{id}", "replace_cell__explorer")
       if @edit[:pxe_id]
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "PxeImageType"), :name => @edit[:current][:name]})
+        add_flash(_("Edit of System Image Type \"%{name}\" was cancelled by the user") % {:name => @edit[:current][:name]})
       else
-        add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "PxeImageType")})
+        add_flash(_("Add of new System Image Type was cancelled by the user"))
       end
       @edit = session[:edit] = nil # clean out the saved info
       get_node_info(x_node)
@@ -49,7 +49,7 @@ module PxeController::PxeImageTypes
       if add_pxe.save
         AuditEvent.success(build_created_audit(add_pxe, @edit))
         @edit = session[:edit] = nil # clean out the saved info
-        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "PxeImageType"), :name => add_pxe.name})
+        add_flash(_("System Image Type \"%{name}\" was added") % {:name => add_pxe.name})
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node, :replace_trees => [:pxe_image_types, :customization_templates])
       else
@@ -89,8 +89,7 @@ module PxeController::PxeImageTypes
       # Either a list or coming from a different controller (eg from host screen, go to its vms)
       pxes = find_checked_ids_with_rbac(PxeImageType)
       if pxes.empty?
-        add_flash(_("No %{model} were selected to %{button}") % {:model => ui_lookup(:models => "PxeImageType"),
-                                                                 :button => display_name}, :error)
+        add_flash(_("No System Image Types were selected to %{button}") % {:button => display_name}, :error)
       else
         process_pxe_image_type(pxes, method)
       end
@@ -98,7 +97,7 @@ module PxeController::PxeImageTypes
       replace_right_cell(:nodetype => "root", :replace_trees => [:pxe_image_types, :customization_templates])
     elsif params[:id].nil? || find_id_with_rbac(PxeImageType, params[:id]).nil?
       # showing 1 vm
-      add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "PxeImageType")}, :error)
+      add_flash(_("System Image Type no longer exists"), :error)
       pxe_image_type_list
       @refresh_partial = "layouts/x_gtl"
     else
@@ -170,7 +169,7 @@ module PxeController::PxeImageTypes
   def pxe_image_type_set_form_vars
     @edit = {}
     @edit[:pxe_id] = @pxe_image_type.id
-    @edit[:prov_types] = {:host => ui_lookup(:model => "Host"), :vm => ui_lookup(:model => "Vm")}
+    @edit[:prov_types] = {:host => _('Host'), :vm => _('VM and Instance')}
     @edit[:new] = {}
     @edit[:current] = {}
     @edit[:key] = "pxe_image_type_edit__#{@pxe_image_type.id || "new"}"
@@ -195,13 +194,13 @@ module PxeController::PxeImageTypes
   def pxe_image_type_get_node_info(treenodeid)
     if treenodeid == "root"
       pxe_image_type_list
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "PxeImageType")}
+      @right_cell_text = _("All System Image Types")
       @right_cell_div  = "pxe_image_type_list"
     else
       @right_cell_div = "pxe_image_type_details"
       nodes = treenodeid.split("-")
       @record = @pxe_image_type = PxeImageType.find_by_id(from_cid(nodes.last))
-      @right_cell_text = _("%{model} \"%{name}\"") % {:name => @pxe_image_type.name, :model => ui_lookup(:model => "PxeImageType")}
+      @right_cell_text = _("System Image Types \"%{name}\"") % {:name => @pxe_image_type.name}
     end
   end
 end
