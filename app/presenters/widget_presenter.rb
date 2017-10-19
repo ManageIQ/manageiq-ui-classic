@@ -30,6 +30,7 @@ class WidgetPresenter
                      :confirm    => _("Are you sure you want to remove '%{title}'" \
                                       "from the Dashboard?") % {:title => @widget.title},
                      :dataRemote => true,
+                     :sparkleOn  => true,
                      :href       => '/dashboard/widget_close?widget=' + @widget.id.to_s,
                      :fonticon   => 'fa fa-times fa-fw',
                      :dataMethod => 'post')
@@ -80,6 +81,7 @@ class WidgetPresenter
                    :href       => '/dashboard/widget_zoom?widget=' + @widget.id.to_s,
                    :fonticon   => 'fa  fa-plus fa-fw',
                    :dataRemote => true,
+                   :sparkleOn  => true,
                    :dataMethod => 'post')
     end
     buttons.to_json
