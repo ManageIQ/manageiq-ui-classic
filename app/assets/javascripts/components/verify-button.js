@@ -27,7 +27,7 @@ ManageIQ.angular.app.component('verifyButton', {
           vm.valtype,
           true,
           vm.findScope,
-          vm.validateUrl,
+          vm.validateUrl
         );
       } else {
         vm.validate(vm.validateUrl);
