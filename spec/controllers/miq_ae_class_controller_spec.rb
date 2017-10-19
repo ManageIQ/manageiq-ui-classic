@@ -864,8 +864,7 @@ describe MiqAeClassController do
     end
 
     it "Can build the AE tree" do
-      allow(User).to receive(:current_tenant).and_return(Tenant.first)
-      allow(User.current_tenant).to receive(:visible_domains).and_return([])
+      allow(User).to receive_message_chain(:current_tenant, :visible_domains).and_return([])
       allow(controller).to receive(:domain_overrides)
 
       expect(controller).to receive(:reload_trees_by_presenter).with(

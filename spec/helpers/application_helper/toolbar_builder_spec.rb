@@ -498,8 +498,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       let(:toolbar_to_build) { 'generic_object_definition_center_tb' }
 
       before do
+        @record = double(:generic_objects => [])
         allow(Rbac).to receive(:role_allows?).and_return(true)
-        allow(@record).to receive(:generic_objects).and_return([])
       end
 
       it "includes the button group" do
