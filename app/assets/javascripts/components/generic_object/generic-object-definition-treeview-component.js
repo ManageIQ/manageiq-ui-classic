@@ -26,7 +26,7 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
   // private functions
 
   function setGenericObjectDefinitionNodes() {
-    API.get('/api/generic_object_definitions?expand=resources&attributes=name,picture.image_href,custom_button_sets&sort_by=name&sort_options=ignore_case&sort_order=asc')
+    API.get('/api/generic_object_definitions?expand=resources&attributes=name,picture.image_href,custom_button_sets,custom_buttons&sort_by=name&sort_options=ignore_case&sort_order=asc')
       .then(setNodes)
       .catch(miqService.handleFailure);
   }
@@ -53,7 +53,7 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
         image: image,
         icon: icon,
         state: {expanded: false},
-        nodes: createCustomButtonSetNodes(resource.custom_button_sets, resource.id),
+        nodes: createCustomButtonAndSetNodes(resource.custom_button_sets, resource.custom_buttons, resource.id),
       });
     });
 
@@ -69,10 +69,10 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
     vm.treeData = JSON.stringify(treeDataObj);
   }
 
-  function createCustomButtonSetNodes(cbs, parentId) {
+  function createCustomButtonAndSetNodes(cbs, cb, parentId) {
     var childNodes = [];
 
-    if (cbs.length > 0) {
+    if (cbs.length > 0 || cb.length > 0) {
       _.forEach(cbs, function(set) {
         childNodes.push({
           key: 'cbs_' + set.id,
@@ -83,8 +83,18 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
         });
       });
 
+      _.forEach(cb, function(button) {
+        childNodes.push({
+          key: 'cb_' + button.id,
+          text: button.name,
+          tooltip: button.description,
+          icon: button.options.button_icon,
+          state: {expanded: false}
+        });
+      });
+
       return [{
-        key: 'cbs_root',
+        key: 'actions_' + parentId,
         text: __('Actions'),
         tooltip: __('All Actions'),
         icon: 'pficon pficon-folder-close',
