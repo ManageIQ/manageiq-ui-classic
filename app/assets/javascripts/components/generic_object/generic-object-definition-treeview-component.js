@@ -18,12 +18,18 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window) {
   vm.activeNode = {};
 
   vm.$onInit = function() {
-    setGenericObjectDefinitionNodes();
+    if ($window.top.name !== '') {
+      vm.treeData = $window.top.name;
+      $window.top.name = '';
+    } else {
+      setGenericObjectDefinitionNodes();
+    }
     vm.setActiveNode();
   };
 
   vm.nodeSelect = function(node) {
     var key = node.key.split('_');
+
     miqService.sparkleOn();
     switch(key[0]) {
       case 'god':
@@ -67,6 +73,10 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window) {
 
     vm.activeNode =  { key: activeNode };
   };
+
+  vm.$onDestroy = function() {
+    $window.top.name = '';
+  }
 
   // private functions
 
@@ -112,6 +122,8 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window) {
     }];
 
     vm.treeData = JSON.stringify(treeDataObj);
+
+    $window.top.name = vm.treeData;
   }
 
   function createCustomButtonAndSetNodes(cbs, cb, parentNodeId) {
