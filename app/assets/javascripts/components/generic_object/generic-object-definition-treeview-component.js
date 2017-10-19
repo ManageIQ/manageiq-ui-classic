@@ -9,9 +9,9 @@ ManageIQ.angular.app.component('genericObjectDefinitionTreeviewComponent', {
   templateUrl: '/static/generic_object/generic_object_definition_treeview.html.haml',
 });
 
-genericObjectDefinitionTreeviewController.$inject = ['API', 'miqService'];
+genericObjectDefinitionTreeviewController.$inject = ['API', 'miqService', '$window'];
 
-function genericObjectDefinitionTreeviewController(API, miqService) {
+function genericObjectDefinitionTreeviewController(API, miqService, $window) {
   var vm = this;
 
   vm.treeData = [];
@@ -21,6 +21,28 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
   };
 
   vm.nodeSelect = function(node) {
+    var key = node.key.split('_');
+    miqService.sparkleOn();
+    switch(key[0]) {
+      case 'god':
+        if (key[1] === 'root') {
+          $window.location.href = vm.showListUrl;
+        } else {
+          $window.location.href = vm.showUrl + '/' + key[1];
+        }
+        break;
+      case 'cbs':
+        $window.location.href = vm.showUrl + '/' + node.parentNodeId + '?cbs=' + key[1];
+        break;
+      case 'cb':
+        $window.location.href = vm.showUrl + '/' + node.parentNodeId + '?cb=' + key[1];
+        break;
+      case 'actions':
+        $window.location.href = vm.showUrl + '/' + node.parentNodeId + '?actions=true';
+        break;
+      default:
+        $window.location.href = vm.showListUrl;
+    }
   };
 
   // private functions
@@ -69,13 +91,14 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
     vm.treeData = JSON.stringify(treeDataObj);
   }
 
-  function createCustomButtonAndSetNodes(cbs, cb, parentId) {
+  function createCustomButtonAndSetNodes(cbs, cb, parentNodeId) {
     var childNodes = [];
 
     if (cbs.length > 0 || cb.length > 0) {
       _.forEach(cbs, function(set) {
         childNodes.push({
           key: 'cbs_' + set.id,
+          parentNodeId: parentNodeId,
           text: set.name + ' ' + __('(Group)'),
           tooltip: __('Button Group: ') + set.description,
           icon: set.set_data.button_icon,
@@ -86,6 +109,7 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
       _.forEach(cb, function(button) {
         childNodes.push({
           key: 'cb_' + button.id,
+          parentNodeId: parentNodeId,
           text: button.name,
           tooltip: button.description,
           icon: button.options.button_icon,
@@ -94,7 +118,8 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
       });
 
       return [{
-        key: 'actions_' + parentId,
+        key: 'actions_' + parentNodeId,
+        parentNodeId: parentNodeId,
         text: __('Actions'),
         tooltip: __('All Actions'),
         icon: 'pficon pficon-folder-close',
