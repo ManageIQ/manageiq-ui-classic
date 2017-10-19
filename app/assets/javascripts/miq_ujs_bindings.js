@@ -41,13 +41,19 @@ $(document).ready(function () {
   // Bind the MIQ spinning Q to configured links
   $(document).on('ajax:beforeSend', 'a[data-miq_sparkle_on]', function () {
     // Return only if data-miq_sparkle_on is set to false
-    if ($(this).data('miq_sparkle_on') === false) { return; }
+    if ($(this).data('miq_sparkle_on') === false) {
+      return;
+    }
+
     // Call to miqSparkleOn since miqSparkle(true) checks XHR count, which is 0 before send
     miqSparkleOn();
   });
   $(document).on('ajax:complete', 'a[data-miq_sparkle_off]', function () {
     // Return only if data-miq_sparkle_off is set to false
-    if ($(this).data('miq_sparkle_off') === false) { return; }
+    if ($(this).data('miq_sparkle_off') === false) {
+      return;
+    }
+
     miqSparkle(false);
   });
 
