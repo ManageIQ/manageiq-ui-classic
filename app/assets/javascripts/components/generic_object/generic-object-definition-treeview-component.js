@@ -15,9 +15,11 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window) {
   var vm = this;
 
   vm.treeData = [];
+  vm.activeNode = {};
 
   vm.$onInit = function() {
     setGenericObjectDefinitionNodes();
+    vm.setActiveNode();
   };
 
   vm.nodeSelect = function(node) {
@@ -43,6 +45,27 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window) {
       default:
         $window.location.href = vm.showListUrl;
     }
+  };
+
+  vm.setActiveNode = function() {
+    var nodeType;
+    var activeNode;
+
+    var urlParams = new URLSearchParams(window.location.search);
+
+    if (nodeType = urlParams.get('cbs')) {
+      activeNode = 'cbs_' + nodeType;
+    } else if (nodeType = urlParams.get('cb')) {
+      activeNode = 'cb_' + nodeType;
+    } else if (nodeType = urlParams.get('actions')) {
+      activeNode = 'actions_' + window.location.href.split("/").pop().split('?')[0];
+    } else if (window.location.href.includes(vm.showListUrl)) {
+      activeNode = 'god_root';
+    } else if (window.location.href.includes(vm.showUrl)) {
+      activeNode = 'god_' + window.location.href.split("/").pop();
+    }
+
+    vm.activeNode =  { key: activeNode };
   };
 
   // private functions
