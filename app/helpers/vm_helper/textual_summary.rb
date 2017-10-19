@@ -180,7 +180,7 @@ module VmHelper::TextualSummary
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Template)
     {:label => _("Retirement Date"),
      :icon  => "fa fa-clock-o",
-     :value => (@record.retires_on.nil? ? _("Never") : @record.retires_on.strftime("%x %R %Z"))}
+     :value => @record.retires_on.nil? ? _("Never") : format_timezone(@record.retires_on)}
   end
 
   def textual_retirement_state
