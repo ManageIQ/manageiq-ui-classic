@@ -791,7 +791,7 @@ describe MiqAeClassController do
       controller.send(:deleteclasses)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Class \"foo_class\": Delete successful")
-      expect(controller.x_node).to eq("aen-#{@namespace.compressed_id}")
+      expect(controller.x_node).to eq("aen-#{@namespace.id}")
     end
   end
 

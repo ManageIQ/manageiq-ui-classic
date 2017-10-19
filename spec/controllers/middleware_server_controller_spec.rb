@@ -113,7 +113,7 @@ describe MiddlewareServerController do
 
       expect(action).to redirect_to(
         :action      => 'show',
-        :id          => mw_server.compressed_id,
+        :id          => mw_server.id,
         :flash_msg   => 'Unable to locate a report in database, please try again.',
         :flash_error => true
       )
@@ -124,7 +124,7 @@ describe MiddlewareServerController do
 
       expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect(mw_dr_erred.reload).to be_truthy
-      expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
+      expect(action).to redirect_to(:action => 'show', :id => mw_server.id)
       expect(assigns(:flash_array).first[:message]).to include(
         'Deletion of one JDR report succeeded.'
       )
@@ -138,7 +138,7 @@ describe MiddlewareServerController do
 
       expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { mw_dr_erred.reload }.to raise_exception(ActiveRecord::RecordNotFound)
-      expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
+      expect(action).to redirect_to(:action => 'show', :id => mw_server.id)
       expect(assigns(:flash_array).first[:message]).to include(
         'Deletion of 2 JDR reports succeeded.'
       )
@@ -152,7 +152,7 @@ describe MiddlewareServerController do
 
       expect(mw_dr.reload).to be_truthy
       expect(mw_dr_erred.reload).to be_truthy
-      expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
+      expect(action).to redirect_to(:action => 'show', :id => mw_server.id)
       expect(assigns(:flash_array)).to eq(
         [{:message => "Unable to locate all reports in database, please try again.", :level => :error}]
       )

@@ -6,7 +6,7 @@ module CompressedIds
   #
 
   def to_cid(id)
-    ApplicationRecord.compress_id(id)
+    id.to_s
   end
 
   def from_cid(cid)
