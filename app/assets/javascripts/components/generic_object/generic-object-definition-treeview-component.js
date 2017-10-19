@@ -26,7 +26,7 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
   // private functions
 
   function setGenericObjectDefinitionNodes() {
-    API.get('/api/generic_object_definitions?expand=resources&attributes=name,picture.image_href&sort_by=name&sort_options=ignore_case&sort_order=asc')
+    API.get('/api/generic_object_definitions?expand=resources&attributes=name,picture.image_href,custom_button_sets&sort_by=name&sort_options=ignore_case&sort_order=asc')
       .then(setNodes)
       .catch(miqService.handleFailure);
   }
@@ -53,6 +53,7 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
         image: image,
         icon: icon,
         state: {expanded: false},
+        nodes: createCustomButtonSetNodes(resource.custom_button_sets, resource.id),
       });
     });
 
@@ -66,5 +67,32 @@ function genericObjectDefinitionTreeviewController(API, miqService) {
     }];
 
     vm.treeData = JSON.stringify(treeDataObj);
+  }
+
+  function createCustomButtonSetNodes(cbs, parentId) {
+    var childNodes = [];
+
+    if (cbs.length > 0) {
+      _.forEach(cbs, function(set) {
+        childNodes.push({
+          key: 'cbs_' + set.id,
+          text: set.name + ' ' + __('(Group)'),
+          tooltip: __('Button Group: ') + set.description,
+          icon: set.set_data.button_icon,
+          state: {expanded: false}
+        });
+      });
+
+      return [{
+        key: 'cbs_root',
+        text: __('Actions'),
+        tooltip: __('All Actions'),
+        icon: 'pficon pficon-folder-close',
+        state: {expanded: false},
+        nodes: childNodes,
+      }];
+    } else {
+      return undefined;
+    }
   }
 }
