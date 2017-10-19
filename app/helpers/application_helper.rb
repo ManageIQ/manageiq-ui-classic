@@ -1540,10 +1540,7 @@ module ApplicationHelper
 
   def miq_tab_header(id, active = nil, options = {}, &_block)
     tag_options = {:class => "#{options[:class]} #{active == id ? 'active' : ''}",
-                   :id    => "#{id}_tab"}
-
-    tag_options['ng-click'] = options['ng-click'] if options.key?('ng-click')
-    tag_options[:onclick] = options[:onclick] if options.key?(:onclick)
+                   :id    => "#{id}_tab"}.merge!(options)
 
     content_tag(:li, tag_options) do
       content_tag(:a, :href => "##{id}", 'data-toggle' => 'tab') do
@@ -1560,7 +1557,10 @@ module ApplicationHelper
     classname << 'active' if active == id
     classname << 'lazy' if lazy
 
-    content_tag(:div, :id => id, :class => classname.join(' ')) do
+    options.delete(:lazy)
+    options.delete(:class)
+
+    content_tag(:div, :id => id, :class => classname.join(' '), **options) do
       yield unless lazy
     end
   end

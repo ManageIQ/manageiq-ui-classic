@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '$attrs', 'emsCommonFormId', 'miqService', '$timeout', function($http, $scope, $attrs, emsCommonFormId, miqService, $timeout) {
+ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '$attrs', 'emsCommonFormId', 'miqService', '$timeout', 'API', function($http, $scope, $attrs, emsCommonFormId, miqService, $timeout, API) {
   var init = function() {
     $scope.emsCommonModel = {
       name: '',
@@ -10,6 +10,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       hostname: '',
       default_hostname: '',
       amqp_hostname: '',
+      provider_options: {},
       metrics_hostname: '',
       metrics_selection: '',
       metrics_api_port: '',
@@ -59,6 +60,12 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       prometheus_alerts_security_protocol: '',
       alerts_selection: '',
     };
+
+    $scope.emsOptionsModel = {
+      provider_options: {},
+      provider_options_original_values: {},
+    };
+
     $scope.formId = emsCommonFormId;
     $scope.afterGet = false;
     $scope.modelCopy = angular.copy( $scope.emsCommonModel );
@@ -177,6 +184,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.populatePostValidationModel();
 
       miqService.sparkleOff();
+
+      $scope.emsOptionsModel.provider_options_original_values = data.provider_options;
+      $scope.updateProviderOptionsDescription();
     }
 
     function getNewEmsFormDataComplete(response) {
@@ -272,7 +282,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         $scope.emsCommonModel.metrics_api_port) ||
        ($scope.currentTab === "alerts" &&
         $scope.emsCommonModel.prometheus_alerts_hostname !== '' &&
-        $scope.emsCommonModel.prometheus_alerts_api_port !== ''))) {
+        $scope.emsCommonModel.prometheus_alerts_api_port !== '') ||
+      ($scope.currentTab === "proxy_settings") || ($scope.currentTab === "advanced_settings"))) {
       return true;
     } else if($scope.emsCommonModel.emstype == "gce" && $scope.emsCommonModel.project != '' &&
       ($scope.currentTab == "default" ||
@@ -377,6 +388,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.providerTypeChanged = function() {
+    $scope.updateProviderOptionsDescription();
     if ($scope.emsCommonModel.ems_controller === 'ems_container') {
       if ($scope.emsCommonModel.emstype === 'kubernetes') {
         $scope.emsCommonModel.default_api_port = "6443";
@@ -588,6 +600,55 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         $scope.emsCommonModel.amqp_password = $scope.postValidationModel.amqp.amqp_password;
       }
       $scope.$broadcast('clearErrorOnTab', {tab: "amqp"});
+    }
+  };
+
+  $scope.updateProviderOptionsDescription = function() {
+    API.options('/api/providers').then(function(response) {
+      $scope.setProviderOptionsDescription(response.data);
+    });
+  };
+
+  $scope.setProviderOptionsDescription = function(apiResponse) {
+    if (! apiResponse.hasOwnProperty("provider_settings")) return;
+    if (! apiResponse.provider_settings.hasOwnProperty($scope.emsCommonModel.emstype)) {
+      return;
+    }
+    $scope.emsOptionsModel.provider_options = apiResponse.provider_settings[$scope.emsCommonModel.emstype];
+    if ($scope.emsOptionsModel.provider_options.hasOwnProperty('advanced_settings')) {
+      var advanced_settings = $scope.emsOptionsModel.provider_options.advanced_settings.settings;
+      $scope.emsCommonModel.provider_options.advanced_settings = {};
+      for (var section in advanced_settings) {
+        if (advanced_settings.hasOwnProperty(section)) {
+          $scope.emsCommonModel.provider_options.advanced_settings[section] = {};
+          $scope.updateProviderOptionsOldValues(advanced_settings[section],
+            $scope.emsCommonModel.provider_options.advanced_settings[section]);
+        }
+      }
+    }
+    if ($scope.emsOptionsModel.provider_options.hasOwnProperty('proxy_settings')) {
+      $scope.emsCommonModel.provider_options.proxy_settings = {};
+      $scope.updateProviderOptionsOldValues($scope.emsOptionsModel.provider_options.proxy_settings,
+        $scope.emsCommonModel.provider_options.proxy_settings);
+    }
+  };
+
+  // Sets the values and names of the options in sourceSection and destSection from
+  // $scope.emsOptionsModel.provider_options_original_values if they exist there.
+  $scope.updateProviderOptionsOldValues = function(sourceSection, destSection) {
+    var section_name = _.snakeCase(sourceSection.label);
+    sourceSection.section_name = section_name;
+    for (var option in sourceSection.settings) {
+      if (sourceSection.settings.hasOwnProperty(option)) {
+        if ($scope.emsOptionsModel.provider_options_original_values.hasOwnProperty(section_name) &&
+          $scope.emsOptionsModel.provider_options_original_values[section_name].hasOwnProperty(option)) {
+          sourceSection.settings[option].value = $scope.emsOptionsModel.provider_options_original_values[section_name][option];
+        } else {
+          sourceSection.settings[option].value = "";
+        }
+        sourceSection.settings[option].name = option;
+        destSection[option] = sourceSection.settings[option];
+      }
     }
   };
 

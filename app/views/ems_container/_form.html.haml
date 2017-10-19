@@ -89,4 +89,8 @@
   %hr
   = render :partial => "layouts/angular/multi_auth_credentials", :locals => {:record => @ems, :ng_model => "emsCommonModel"}
 
+  %div{"ng-if" => "emsOptionsModel.provider_options.hasOwnProperty('proxy_settings') || emsOptionsModel.provider_options.hasOwnProperty('advanced_settings')"}
+    %hr
+    = render :partial => "/layouts/angular/per_provider_settings"
+
   = render :partial => "layouts/angular/x_edit_buttons_angular", :locals => {:record => @ems, :restful => true}
