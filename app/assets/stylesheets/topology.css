@@ -16,7 +16,6 @@ kubernetes-topology-graph {
 .topology .legend label {
   font-weight: 400;
   cursor: pointer;
-  vertical-align: 10px;
 }
 
 .topology #selected {
@@ -27,6 +26,7 @@ kubernetes-topology-graph {
 
 kubernetes-topology-icon {
   opacity: 0.4;
+  padding-bottom: 0;
 }
 
 kubernetes-topology-icon.active {
@@ -37,11 +37,6 @@ kubernetes-topology-icon svg {
   width: 39px !important;
   height: 39px !important;
   display: inline-block;
-}
-
-_:-ms-fullscreen, :root kubernetes-topology-icon svg,  /* IE11 hack */
-_:-ms-lang(x), _:-webkit-full-screen, kubernetes-topology-icon svg /* Edge hack */{
-  padding: 20px 0 0 20px;  
 }
 
 .kube-topology g text.attached-label {
