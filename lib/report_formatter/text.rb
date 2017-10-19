@@ -5,8 +5,6 @@ module ReportFormatter
     # determines the text widths for each column.
     def calculate_max_col_widths
       mri = options.mri
-      # allow override
-      #     return if max_col_width
       tz = mri.get_time_zone(Time.zone.name)
 
       @max_col_width = []
