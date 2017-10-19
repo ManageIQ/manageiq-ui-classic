@@ -1734,19 +1734,19 @@ class CatalogController < ApplicationController
       condition = ["display=TRUE and service_template_catalog_id=?", from_cid(id)]
     end
     service_template_list(condition, :no_order_button => true)
-    stc = ServiceTemplateCatalog.find_by_id(from_cid(id))
+    stc = ServiceTemplateCatalog.find(from_cid(id))
     @right_cell_text = _("Services in Catalog \"%{name}\"") % {:name => stc.name}
   end
 
   def get_node_info_handle_leaf_node_stcat(id)
-    @record = ServiceTemplateCatalog.find_by_id(from_cid(id))
+    @record = ServiceTemplateCatalog.find(from_cid(id))
     @record_service_templates = Rbac.filtered(@record.service_templates)
     typ = TreeBuilder.get_model_for_prefix(@nodetype)
     @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
   end
 
   def get_node_info_handle_leaf_node_ot(id)
-    @record = OrchestrationTemplate.find_by_id(from_cid(id))
+    @record = OrchestrationTemplate.find(from_cid(id))
     @right_cell_text = _("%{model} \"%{name}\"") % {:name  => @record.name,
                                                     :model => ui_lookup(:model => @record.class.name)}
   end
@@ -1754,7 +1754,7 @@ class CatalogController < ApplicationController
   def get_node_info_handle_leaf_node(id)
     show_record(from_cid(id))
     if @record.atomic? && need_prov_dialogs?(@record.prov_type)
-      @miq_request = MiqRequest.find_by_id(@record.service_resources[0].resource_id)
+      @miq_request = MiqRequest.find(@record.service_resources[0].resource_id)
       prov_set_show_vars
     end
     unless @record.prov_type == "generic_ansible_playbook"
