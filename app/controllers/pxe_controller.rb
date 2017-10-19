@@ -117,46 +117,48 @@ class PxeController < ApplicationController
     when :pxe_servers_tree
       presenter.update(:main_div, r[:partial => "pxe_server_list"])
       if nodetype == "root"
-        right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "PxeServer")}
+        right_cell_text = _("All PXE Servers")
       else
         right_cell_text = case nodetype
                           when 'ps'
                             if @ps.id.blank?
-                              _("Adding a new %{model}") % {:model => ui_lookup(:model => "PxeServer")}
+                              _("Adding a new PXE Server")
+                            elsif @edit
+                              _("Editing PXE Server \"%{name}\"") % {:name => @ps.name}
                             else
-                              temp = _("%{model} \"%{name}\"") % {:name  => @ps.name, :model => ui_lookup(:model => "PxeServer")}
-                              @edit ? "Editing #{temp}" : temp
+                              _("PXE Server \"%{name}\"") % {:name => @ps.name}
                             end
                           when 'pi'
-                            _("%{model} \"%{name}\"") % {:name  => @img.name, :model => ui_lookup(:model => "PxeImage")}
+                            _("PXE Image \"%{name}\"") % {:name => @img.name}
                           when 'wi'
-                            _("%{model} \"%{name}\"") % {:name  => @wimg.name, :model => ui_lookup(:model => "WindowsImage")}
+                            _("Windows Image \"%{name}\"") % {:name => @wimg.name}
                           end
       end
     when :pxe_image_types_tree
       presenter.update(:main_div, r[:partial => "pxe_image_type_list"])
       right_cell_text = case nodetype
                         when 'root'
-                          _("All %{models}") % {:models => ui_lookup(:models => "PxeImageType")}
+                          _("All System Image Types")
                         when 'pit'
                           if @pxe_image_type.id.blank?
-                            _("Adding a new %{models}") % {:models => ui_lookup(:model => "PxeImageType")}
+                            _("Adding a new System Image Types")
                           else
-                            temp = _("%{model} \"%{name}\"") % {:name  => @pxe_image_type.name, :model => ui_lookup(:model => "PxeImageType")}
+                            temp = _("System Image Type \"%{name}\"") % {:name => @pxe_image_type.name}
                             @edit ? "Editing #{temp}" : temp
                           end
                         else
-                          _("%{model} \"%{name}\"") % {:name  => @pxe_image_type.name, :model => ui_lookup(:model => "PxeImageType")}
+                          _("System Image Type \"%{name}\"") % {:name => @pxe_image_type.name}
                         end
     when :customization_templates_tree
       presenter.update(:main_div, r[:partial => "template_list"])
       if @in_a_form
         right_cell_text =
           if @ct.id.blank?
-            _("Adding a new %{model}") % {:model => ui_lookup(:model => "PxeCustomizationTemplate")}
+            _("Adding a new Customization Template")
+          elsif @edit
+            _("Editing Customization Template \"%{name}\"") % {:name => @ct.name}
           else
-            @edit ? _("Editing %{model} \"%{name}\"") % {:name => @ct.name, :model => ui_lookup(:model => "PxeCustomizationTemplate")} :
-                    _("%{model} \"%{name}\"") % {:name => @ct.name, :model => ui_lookup(:model => "PxeCustomizationTemplate")}
+            _("Customization Template \"%{name}\"") % {:name => @ct.name}
           end
         # resetting ManageIQ.oneTransition.oneTrans when tab loads
         presenter.reset_one_trans
@@ -166,9 +168,9 @@ class PxeController < ApplicationController
       presenter.update(:main_div, r[:partial => "iso_datastore_list"])
       right_cell_text =
         case nodetype
-        when 'root' then _("All %{models}") % {:models => ui_lookup(:models => "IsoDatastore")}
-        when 'isd'  then _("Adding a new %{models}") % {:models => ui_lookup(:model => "IsoDatastore")}
-        when 'isi'  then _("%{model} \"%{name}\"") % {:name => @img.name, :model => ui_lookup(:model => "IsoImage")}
+        when 'root' then _("All ISO Datastores")
+        when 'isd'  then _("Adding a new ISO Datastore")
+        when 'isi'  then _("ISO Image \"%{name}\"") % {:name => @img.name}
         end
     end
 

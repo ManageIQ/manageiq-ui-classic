@@ -40,7 +40,7 @@ module PxeController::IsoDatastores
     iso_datastore_get_form_vars
     if params[:button] == "cancel"
       @edit = session[:edit] = nil # clean out the saved info
-      add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "IsoDatastore")})
+      add_flash(_("Add of new ISO Datastore was cancelled by the user"))
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
     elsif params[:button] == "add"
@@ -54,7 +54,7 @@ module PxeController::IsoDatastores
       end
       iso_datastore_set_record_vars(isd)
 
-      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "IsoDatastore"), :name => @edit[:ems_name]})
+      add_flash(_("ISO Datastore \"%{name}\" was added") % {:name => @edit[:ems_name]})
 
       if !flash_errors? && isd.save!
         AuditEvent.success(build_created_audit(isd, @edit))
@@ -101,7 +101,7 @@ module PxeController::IsoDatastores
     if !params[:id]
       isds = find_checked_items
       if isds.empty?
-        add_flash(_("No %{model} were selected to %{button}") % {:model => ui_lookup(:models => "IsoDatastore"), :button => display_name},
+        add_flash(_("No ISO Datastores were selected to %{button}") % {:button => display_name},
                   :error)
       else
         process_iso_datastores(isds, method, display_name)
@@ -111,8 +111,7 @@ module PxeController::IsoDatastores
       replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
     else # showing 1 vm
       if params[:id].nil? || IsoDatastore.find_by_id(params[:id]).nil?
-        add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "IsoDatastore")},
-                  :error)
+        add_flash(_("ISO Datastore no longer exists"), :error)
         iso_datastore_list
         @refresh_partial = "layouts/x_gtl"
       else
@@ -162,7 +161,7 @@ module PxeController::IsoDatastores
     assert_privileges("iso_image_edit")
     case params[:button]
     when "cancel"
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "IsoImage"), :name => session[:edit][:img].name})
+      add_flash(_("Edit of ISO Image \"%{name}\" was cancelled by the user") % {:name => session[:edit][:img].name})
       @edit = session[:edit] = nil  # clean out the saved info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
@@ -171,7 +170,7 @@ module PxeController::IsoDatastores
       update_img = find_record_with_rbac(IsoImage, params[:id])
       iso_img_set_record_vars(update_img)
       if update_img.valid? && !flash_errors? && update_img.save!
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "IsoImage"), :name => update_img.name})
+        add_flash(_("ISO Image \"%{name}\" was saved") % {:name => update_img.name})
         AuditEvent.success(build_saved_audit(update_img, @edit))
         refresh_tree = @edit[:new][:default_for_windows] == @edit[:current][:default_for_windows] ? [] : [:iso_datastore]
         @edit = session[:edit] = nil  # clean out the saved info
@@ -297,7 +296,7 @@ module PxeController::IsoDatastores
   def iso_datastore_get_node_info(treenodeid)
     if treenodeid == "root"
       iso_datastore_list
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "IsoDatastore")}
+      @right_cell_text = _("All ISO Datastores")
       @right_cell_div  = "iso_datastore_list"
     else
       @right_cell_div = "iso_datastore_details"
@@ -305,10 +304,10 @@ module PxeController::IsoDatastores
       if (nodes[0] == "isd" && nodes.length == 2) || (["isd_xx"].include?(nodes[1]) && nodes.length == 3)
         # on iso_datastore node OR folder node is selected
         @record = @isd = IsoDatastore.find_by_id(from_cid(nodes.last))
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @isd.name, :model => ui_lookup(:model => "IsoDatastore")}
+        @right_cell_text = _("ISO Datastore \"%{name}\"") % {:name => @isd.name}
       elsif nodes[0] == "isi"
         @record = @img = IsoImage.find_by_id(from_cid(nodes.last))
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @img.name, :model => ui_lookup(:model => "IsoImage")}
+        @right_cell_text = _("ISO Image \"%{name}\"") % {:name => @img.name}
       end
     end
   end
