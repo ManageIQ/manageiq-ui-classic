@@ -40,17 +40,6 @@ module ReportFormatter
     # C&U performance charts (Cluster, Host, VM based)
     def build_performance_chart_area(maxcols)
       tz = mri.get_time_zone(Time.zone.name)
-      nils2zero = false # Allow gaps in charts for nil values
-
-      #### To do - Uncomment to handle long term averages
-      #   if mri.extras && mri.extras[:long_term_averages]  # If averages are present
-      #     mri.extras[:long_term_averages].keys.each do |avg_col|
-      #       if mri.graph[:columns].include?(avg_col.to_s)
-      #         mri.graph[:columns].push("avg__#{avg_col.to_s}")
-      #       end
-      #     end
-      #   end
-      ####
 
       mri.graph[:columns].each_with_index do |col, col_idx|
 
@@ -69,33 +58,19 @@ module ReportFormatter
           else
             categories.push(rec_time.hour.to_s + ":00")
           end
-          #           r[col] = nil if rec_time.day == 12  # Test code, uncomment to skip 12th day of the month
-
-          #### To do - Uncomment to handle long term averages
-          #       if col.starts_with?("avg__")
-          #         val = mri.extras[:long_term_averages][col.split("__").last.to_sym]
-          #       else
-          val = r[col].nil? && (nils2zero) ? 0 : r[col]
-          #       end
-          ####
+          val = r[col]
 
           if d_idx == mri.table.data.length - 1 && !tip.nil?
             series.push(:value => val, :tooltip => tip)
           else
             series.push(:value => val)
           end
-          allnil = false if !val.nil? || nils2zero
+          allnil = false if !val.nil?
         end
         series.set_to_zero(-1) if allnil # XML/SWF Charts can't handle all nils, set the last value to 0
         add_axis_category_text(categories)
 
-        #### To do - Uncomment to handle long term averages
-        #     if col.starts_with?("avg__")
-        #       head = "#{col.split("__").last.titleize}"
-        #     else
         head = mri.graph[:legends] ? mri.graph[:legends][col_idx] : mri.headers[mri.col_order.index(col)] # Use legend overrides, if present
-        #     end
-        ####
 
         add_series(head, series)
       end
@@ -159,15 +134,6 @@ module ReportFormatter
           end
         end
 
-        #     # Remove categories (and associated series values) that have all zero or nil values
-        #     (categories.length - 1).downto(0) do |i|            # Go thru all cats
-        #       t = 0.0
-        #       series.each{|s| t += s[:data][i][:value].to_f}    # Add up the values for this cat across all series
-        #       next if t != 0                                    # Not zero, keep this cat
-        #       categories.delete_at(i)                           # Remove this cat
-        #       series.each{|s| s[:data].delete_at(i)}            # Remove the data for this cat across all series
-        #     end
-        #
         # Remove any series where all values are zero or nil
         series.delete_if { |s| s[:data].sum == 0 }
 
