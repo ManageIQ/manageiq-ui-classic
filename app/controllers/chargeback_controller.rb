@@ -336,7 +336,7 @@ class ChargebackController < ApplicationController
   end
 
   def cb_rpts_fetch_saved_report(id)
-    rr = MiqReportResult.for_user(current_user).find_by_id(from_cid(id.split('-').last))
+    rr = MiqReportResult.for_user(current_user).find_by_id(from_cid(id.to_s.split('-').last))
     if rr.nil?  # Saved report no longer exists
       @report = nil
       return

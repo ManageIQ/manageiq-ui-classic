@@ -2207,7 +2207,7 @@ class ApplicationController < ActionController::Base
   end
 
   def list_row_id(row)
-    to_cid(row['id'])
+    to_cid(row['id']).to_s
   end
 
   def render_flash_not_applicable_to_model(type, model_type = nil)

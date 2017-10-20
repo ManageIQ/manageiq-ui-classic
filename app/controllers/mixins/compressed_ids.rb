@@ -6,7 +6,7 @@ module CompressedIds
   #
 
   def to_cid(id)
-    id.to_s
+    id
   end
 
   def from_cid(cid)

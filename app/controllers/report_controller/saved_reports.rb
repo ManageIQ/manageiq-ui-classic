@@ -10,7 +10,7 @@ module ReportController::SavedReports
   end
 
   def show_saved_report
-    @sb[:last_savedreports_id] = params[:id].split('-').last if params[:id] && params[:id] != "savedreports"
+    @sb[:last_savedreports_id] = params[:id].to_s.split('-').last if params[:id] && params[:id] != "savedreports"
     fetch_saved_report(@sb[:last_savedreports_id])
   end
 
