@@ -2,7 +2,8 @@
 
 = render :partial => "layouts/flash_msg"
 
-%vm-cloud-remove-security-group-component{"record-id" => @record.id,}
+%vm-cloud-remove-security-group-component{"record-id"    => @record.id,
+                                          "redirect-url" => "/#{controller_name}/explorer",}
 
 :javascript
   miq_bootstrap('vm-cloud-remove-security-group-component');

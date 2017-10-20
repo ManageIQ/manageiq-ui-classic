@@ -2,7 +2,9 @@
 
 = render :partial => "layouts/flash_msg"
 
-%vm-cloud-add-security-group-component{"record-id" => @record.id,}
+%vm-cloud-add-security-group-component{"record-id"    => @record.id,
+                                       "redirect-url" => "/#{controller_name}/explorer",}
+}
 
 :javascript
   miq_bootstrap('vm-cloud-add-security-group-component');

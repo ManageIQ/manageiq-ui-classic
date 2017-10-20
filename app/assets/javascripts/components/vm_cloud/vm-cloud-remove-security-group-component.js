@@ -1,6 +1,7 @@
 ManageIQ.angular.app.component('vmCloudRemoveSecurityGroupComponent', {
   bindings: {
     recordId: '@',
+    redirectUrl: '@',
   },
   controllerAs: 'vm',
   controller: vmCloudRemoveSecurityGroupFormController,
@@ -32,8 +33,8 @@ function vmCloudRemoveSecurityGroupFormController(API, miqService) {
   };
 
   vm.cancelClicked = function() {
-    var url = '/vm_cloud/remove_security_group_vm/' + vm.recordId + '?button=cancel';
-    miqService.miqAjaxButton(url);
+    miqService.sparkleOn();
+    miqService.redirectBack(sprintf(__('Removal of security group was canceled by the user.')), 'warning', vm.redirectUrl);
   };
 
   vm.addClicked = function() {

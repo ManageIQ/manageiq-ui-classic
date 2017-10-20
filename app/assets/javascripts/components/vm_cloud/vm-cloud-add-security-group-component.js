@@ -1,6 +1,7 @@
 ManageIQ.angular.app.component('vmCloudAddSecurityGroupComponent', {
   bindings: {
     recordId: '@',
+    redirectUrl: '@',
   },
   controllerAs: 'vm',
   controller: vmCloudAddSecurityGroupFormController,
@@ -48,8 +49,8 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
   };
 
   vm.cancelClicked = function() {
-    var url = '/vm_cloud/add_security_group_vm/' + vm.recordId + '?button=cancel';
-    miqService.miqAjaxButton(url);
+    miqService.sparkleOn();
+    miqService.redirectBack(sprintf(__('Addition of security group was canceled by the user.')), 'warning', vm.redirectUrl);
   };
 
   vm.addClicked = function() {
