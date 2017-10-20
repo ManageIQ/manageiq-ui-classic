@@ -11,7 +11,7 @@ module Mixins
     # "check_xxx" where xxx is the item id or index)
     def find_checked_items(prefix = nil)
       if params[:miq_grid_checks].present?
-        params[:miq_grid_checks].split(",").collect { |c| from_cid(c) }
+        params[:miq_grid_checks].split(",").collect { |c| from_cid(c).to_i }
       else
         prefix = "check" if prefix.nil?
         params.each_with_object([]) do |(var, val), items|

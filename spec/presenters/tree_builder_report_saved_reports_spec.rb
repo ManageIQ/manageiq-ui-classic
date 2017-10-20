@@ -34,7 +34,7 @@ describe TreeBuilderReportSavedReports do
           end
 
           # logged User1 can see report with Group1
-          expect(displayed_report_ids).to include(@rpt.id)
+          expect(displayed_report_ids).to include(@rpt.id.to_s)
         end
       end
 

@@ -6,6 +6,6 @@ module CompressedIds
   #
 
   def from_cid(cid)
-    ApplicationRecord.uncompress_id(cid)
+    cid
   end
 end
