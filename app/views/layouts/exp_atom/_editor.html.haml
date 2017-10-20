@@ -59,12 +59,15 @@
         - else
           - opts += exptypes
 
-        = select_tag('chosen_typ', options_for_select(opts, @edit[@expkey][:exp_typ]),
-          :multiple              => false,
-          :class                 => 'selectpicker',
-          'data-miq_sparkle_on'  => true,
-          'data-miq_sparkle_off' => true,
-          'data-miq_observe'     => {:url => url}.to_json)
+        - if @edit[@expkey][:exp_typ] == 'tags'
+          = _('Tag')
+        - else
+          = select_tag('chosen_typ', options_for_select(opts, @edit[@expkey][:exp_typ]),
+            :multiple              => false,
+            :class                 => 'selectpicker',
+            'data-miq_sparkle_on'  => true,
+            'data-miq_sparkle_off' => true,
+            'data-miq_observe'     => {:url => url}.to_json)
 
       %br
       - if @edit[@expkey][:exp_typ]
