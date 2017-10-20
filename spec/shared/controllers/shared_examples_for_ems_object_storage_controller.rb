@@ -1,7 +1,6 @@
 require_relative 'shared_storage_manager_context'
 
 shared_examples :shared_examples_for_ems_object_storage_controller do |providers|
-  include CompressedIds
   render_views
   before :each do
     stub_user(:features => :all)

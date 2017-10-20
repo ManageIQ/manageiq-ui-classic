@@ -1,7 +1,6 @@
 require_relative 'shared_network_manager_context'
 
 shared_examples :shared_examples_for_network_port_controller do |providers|
-  include CompressedIds
   render_views
   before :each do
     stub_user(:features => :all)

@@ -3,7 +3,6 @@ module ApplicationHelper
   include_concern 'PageLayouts'
   include_concern 'Tasks'
   include Sandbox
-  include CompressedIds
   include JsHelper
   include StiRoutingHelper
   include ToolbarHelper

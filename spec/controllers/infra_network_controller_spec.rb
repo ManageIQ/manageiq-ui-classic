@@ -1,6 +1,4 @@
 describe InfraNetworkingController do
-  include CompressedIds
-
   let(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'true') }
   let(:host) { FactoryGirl.create(:host, :name => 'test_host1') }
   let(:ems_vmware) { FactoryGirl.create(:ems_vmware, :name => 'test_vmware') }

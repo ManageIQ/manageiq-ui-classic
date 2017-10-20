@@ -1,8 +1,6 @@
 require ManageIQ::UI::Classic::Engine.root.join("spec/helpers/report_helper_spec.rb")
 
 describe TreeBuilderReportSavedReports do
-  include CompressedIds
-
   context "User1 has Group1(current group: Group1), User2 has Group1, Group2(current group: Group2)" do
     context "User2 generates report under Group1" do
       before do

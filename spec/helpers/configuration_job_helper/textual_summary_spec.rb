@@ -1,5 +1,4 @@
 describe ConfigurationJobHelper::TextualSummary do
-  include CompressedIds
   include ApplicationHelper
 
   let(:zone) { EvmSpecHelper.local_miq_server.zone }

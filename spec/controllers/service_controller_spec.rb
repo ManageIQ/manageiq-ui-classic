@@ -1,6 +1,4 @@
 describe ServiceController do
-  include CompressedIds
-
   before(:each) do
     stub_user(:features => :all)
   end

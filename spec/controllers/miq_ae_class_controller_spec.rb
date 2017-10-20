@@ -1,5 +1,4 @@
 describe MiqAeClassController do
-  include CompressedIds
   context "#set_record_vars" do
     it "Namespace remains unchanged when a class is edited" do
       ns = FactoryGirl.create(:miq_ae_namespace)

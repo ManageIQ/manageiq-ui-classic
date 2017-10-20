@@ -1,6 +1,4 @@
 describe PhysicalServerController do
-  include CompressedIds
-
   render_views
 
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }

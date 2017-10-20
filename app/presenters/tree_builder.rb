@@ -1,6 +1,4 @@
 class TreeBuilder
-  include CompressedIds
-  extend CompressedIds
   include TreeKids
 
   attr_reader :name, :type, :tree_nodes

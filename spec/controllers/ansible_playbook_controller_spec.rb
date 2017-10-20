@@ -1,6 +1,4 @@
 describe AnsiblePlaybookController do
-  include CompressedIds
-
   before do
     EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryGirl.create(:user_admin)

@@ -1,6 +1,4 @@
 describe ConfigurationJobController do
-  include CompressedIds
-
   let!(:user) { stub_user(:features => :all) }
 
   before(:each) do

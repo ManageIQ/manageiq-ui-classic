@@ -285,7 +285,6 @@ describe VmOrTemplateController do
     let(:vm_common) do
       Class.new do
         extend VmCommon
-        extend CompressedIds
       end
     end
     before do
