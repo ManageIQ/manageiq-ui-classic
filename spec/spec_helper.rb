@@ -67,8 +67,4 @@ RSpec.configure do |config|
   config.before(:each) do |example|
     ApplicationController.handle_exceptions = false if %w(controller requests).include?(example.metadata[:type])
   end
-
-  config.around(:each) do |example|
-    EvmSpecHelper.clear_caches { example.run }
-  end
 end
