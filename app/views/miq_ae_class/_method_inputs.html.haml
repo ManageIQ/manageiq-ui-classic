@@ -12,7 +12,7 @@
       .form-group
         = format_form_group(_('Type'), @ae_method.location)
       .form-group
-        = format_form_group(Dictionary.gettext('fqname', :type => :column, :notfound => :titleize), @sb[:namespace_path])
+        = format_form_group(_('Fully Qualified Name'), @sb[:namespace_path])
       .form-group
         = format_form_group(_('Name'), @ae_method.name)
       .form-group

@@ -2,7 +2,7 @@
 - if rec.class == MiqServer
   .form-horizontal.static
     .form-group
-      %label.col-md-3.control-label= Dictionary.gettext('MiqServer', :type => :model, :notfound => :titleize)
+      %label.col-md-3.control-label= _('Server')
       .col-md-9
         %p.form-control-static
           = h("#{rec.name}(#{rec.id})")
@@ -69,10 +69,9 @@
         .form-group
           %label.col-md-3.control-label= _("Role")
           .col-md-9
-            = _("%{role} on %{model}: %{name} [%{id}]") % {:role => rec.server_role.description,   |
-              :model => Dictionary.gettext('MiqServer', :type => :model, :notfound => :titleize),  |
-              :name => rec.miq_server.name,                                                        |
-              :id => rec.miq_server.id}                                                            |
+            = _("%{role} on Server: %{name} [%{id}]") % {:role => rec.server_role.description,   |
+              :name => rec.miq_server.name,                                                      |
+              :id => rec.miq_server.id}                                                          |
         .form-group
           %label.col-md-3.control-label= _("Status")
           .col-md-9
