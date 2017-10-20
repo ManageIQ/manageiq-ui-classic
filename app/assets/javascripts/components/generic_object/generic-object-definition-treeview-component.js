@@ -33,7 +33,7 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window, $ti
     var key = node.key.split('_');
 
     miqService.sparkleOn();
-    switch(key[0]) {
+    switch (key[0]) {
       case 'god':
         if (key[1] === 'root') {
           $window.location.href = vm.showListUrl;
@@ -56,21 +56,20 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window, $ti
   };
 
   vm.setActiveNode = function() {
-    var nodeType;
     var activeNode;
 
-    var urlParams = new URLSearchParams(window.location.search);
+    var urlParams = new URLSearchParams($window.location.search);
 
-    if (nodeType = urlParams.get('cbs')) {
-      activeNode = 'cbs_' + nodeType;
-    } else if (nodeType = urlParams.get('cb')) {
-      activeNode = 'cb_' + nodeType;
-    } else if (nodeType = urlParams.get('actions')) {
-      activeNode = 'actions_' + window.location.href.split("/").pop().split('?')[0];
-    } else if (window.location.href.includes(vm.showListUrl)) {
+    if (urlParams.get('cbs')) {
+      activeNode = 'cbs_' + urlParams.get('cbs');
+    } else if (urlParams.get('cb')) {
+      activeNode = 'cb_' + urlParams.get('cb');
+    } else if (urlParams.get('actions')) {
+      activeNode = 'actions_' + $window.location.href.split("/").pop().split('?')[0];
+    } else if ($window.location.href.includes(vm.showListUrl)) {
       activeNode = 'god_root';
-    } else if (window.location.href.includes(vm.showUrl)) {
-      activeNode = 'god_' + window.location.href.split("/").pop();
+    } else if ($window.location.href.includes(vm.showUrl)) {
+      activeNode = 'god_' + $window.location.href.split("/").pop();
     }
 
     vm.activeNode =  { key: activeNode };
@@ -78,7 +77,7 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window, $ti
 
   vm.$onDestroy = function() {
     $window.top.name = '';
-  }
+  };
 
   // private functions
 
@@ -139,7 +138,7 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window, $ti
           text: set.name + ' ' + __('(Group)'),
           tooltip: __('Button Group: ') + set.description,
           icon: set.set_data.button_icon,
-          state: {expanded: false}
+          state: {expanded: false},
         });
       });
 
@@ -150,7 +149,7 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window, $ti
           text: button.name,
           tooltip: button.description,
           icon: button.options.button_icon,
-          state: {expanded: false}
+          state: {expanded: false},
         });
       });
 
@@ -163,8 +162,7 @@ function genericObjectDefinitionTreeviewController(API, miqService, $window, $ti
         state: {expanded: false},
         nodes: childNodes,
       }];
-    } else {
-      return undefined;
     }
+    return undefined;
   }
 }
