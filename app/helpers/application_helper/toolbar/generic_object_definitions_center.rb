@@ -27,7 +27,8 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           t,
           :enabled   => false,
           :onwhen    => "1",
-          :url_parms => "custom_button_group_new_div"),
+          :url_parms => "custom_button_group_new_div"
+        ),
         button(
           :generic_object_definition_custom_button_new,
           'pficon pficon-add-circle-o fa-lg',
@@ -35,7 +36,8 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           t,
           :enabled   => false,
           :onwhen    => "1",
-          :url_parms => "custom_button_new_div"),
+          :url_parms => "custom_button_new_div"
+        ),
         button(
           :generic_object_definition_delete,
           'pficon pficon-delete fa-lg',
