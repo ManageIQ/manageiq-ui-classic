@@ -74,7 +74,7 @@ describe EmsInfraController do
       allow(controller).to receive(:find_records_with_rbac) { [vm] }
       post :button, :params => { :pressed => "vm_right_size", :id => ems_infra.id, :display => 'vms', "check_#{vm.id}" => '1' }
       expect(controller.send(:flash_errors?)).not_to be_truthy
-      expect(response.body).to include("/vm/right_size/#{ApplicationRecord.uncompress_id(vm.id)}")
+      expect(response.body).to include("/vm/right_size/#{vm.id}")
     end
 
     it "when Host Analyze then Check Compliance is pressed" do
