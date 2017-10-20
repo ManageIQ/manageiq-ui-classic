@@ -97,6 +97,40 @@
     });
   };
 
+  API.wait_for_task = function(task_id) {
+    var deferred = {};
+    deferred.promise = new Promise(function(resolve, reject) {
+      deferred.resolve = resolve;
+      deferred.reject = reject;
+    });
+
+    var retry = function() {
+      API.get('/api/tasks/' + task_id + '?attributes=task_results')
+        .then(function(result) {
+          if (result.state === 'Finished') {  // MiqTask::STATE_FINISHED
+            deferred.resolve(result);
+          } else {
+            setTimeout(retry, 1000);
+          }
+        })
+        .catch(function(error) {
+          deferred.reject(error);
+        });
+    };
+
+    var failOnBadStatus = function(result) {
+      if (! result.status || ['Error', 'Timeout', 'Expired'].includes(result.status)) {
+        return Promise.reject(result);
+      }
+
+      return result;
+    };
+
+    retry();
+    return deferred.promise
+      .then(failOnBadStatus);
+  };
+
   window.vanillaJsAPI = API;
 
 
@@ -223,6 +257,7 @@ angular.module('miq.api', [])
     put: angularify(vanillaJsAPI.put),
     patch: angularify(vanillaJsAPI.patch),
     options: angularify(vanillaJsAPI.options),
+    wait_for_task: angularify(vanillaJsAPI.wait_for_task),
     login: angularify(vanillaJsAPI.login),
     logout: vanillaJsAPI.logout,
     autorenew: vanillaJsAPI.autorenew,
