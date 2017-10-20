@@ -1689,14 +1689,6 @@ function miqScrollToSelected(div_name) {
   }
 }
 
-function miqUncompressedId(id) {
-  if (id.match(/r/)) {
-    var splat = id.split('r');
-    return sprintf('%s%012s', splat[0], splat[1]);
-  }
-  return id;
-}
-
 function queryParam(name) { return QS(window.location.href).get(name); }
 
 function miqFormatNotification(text, bindings) {

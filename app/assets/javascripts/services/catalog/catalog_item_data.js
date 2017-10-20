@@ -3,8 +3,7 @@ ManageIQ.angular.app.service('catalogItemDataFactory', ['API', function(API) {
 
   this.getCatalogItemData = function(st_id) {
     if (st_id !== undefined) {
-      return API.get(urlBase + '/' + miqUncompressedId(st_id));
+      return API.get(urlBase + '/' + st_id);
     }
   };
 }]);
-
