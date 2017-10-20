@@ -2,14 +2,15 @@ require 'simplecov'
 SimpleCov.start
 
 ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../manageiq/config/environment", __FILE__)
+require 'pathname'
+require Pathname.new(__dir__).join("manageiq/config/environment").to_s
 require 'application_helper'
 require 'rails-controller-testing'
 require 'rspec/rails'
 
 require 'manageiq-ui-classic'
 
-support_path = Pathname.new(__FILE__) / '../support'
+support_path = Pathname.new(__dir__).join('support')
 Dir[support_path.join("**/*.rb")].each { |f| require f }
 
 # TODO: isolate the helpers we need for UI specs instead of general Dir glob
