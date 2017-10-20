@@ -202,7 +202,7 @@ class MiddlewareServerController < ApplicationController
       diagnostic_report = mw_server.middleware_diagnostic_reports.find(from_cid(params[:key]))
     rescue ActiveRecord::RecordNotFound
       redirect_to(:action      => 'show',
-                  :id          => to_cid(mw_server.id),
+                  :id          => mw_server.id,
                   :flash_msg   => _("Unable to locate a report in database, please try again."),
                   :flash_error => true)
       return
@@ -237,7 +237,7 @@ class MiddlewareServerController < ApplicationController
                    reports.count) % {:count => reports.count})
     end
     session[:flash_msgs] = @flash_array
-    redirect_to(:action => 'show', :id => to_cid(mw_server.id))
+    redirect_to(:action => 'show', :id => mw_server.id)
   end
 
   def dr_report_download

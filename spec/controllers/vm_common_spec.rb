@@ -60,7 +60,7 @@ describe VmOrTemplateController do
       allow(controller).to receive(:x_node).and_return('f-' + @folder.id.to_s)
       controller.instance_variable_set(:@_params, :id => @vm.id.to_s)
       controller.reload
-      expect(controller.params[:id]).to eq("v-#{TreeBuilder.to_cid(@vm.id)}")
+      expect(controller.params[:id]).to eq("v-#{@vm.id}")
     end
 
     it 'sets params[:id] to x_node if vms are displayed in a tree' do

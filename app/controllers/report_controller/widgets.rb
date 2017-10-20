@@ -356,21 +356,21 @@ module ReportController::Widgets
           @edit[:new][:roles] = ["_ALL_"]
         else
           roles = Rbac.filtered(MiqUserRole.where(:name => @widget.visibility[:roles]))
-          @edit[:new][:roles] = roles.collect { |role| to_cid(role.id) }.sort
+          @edit[:new][:roles] = roles.collect { |role| role.id }.sort
         end
       elsif @widget.visibility[:groups]
         @edit[:new][:visibility_typ] = "group"
         groups = Rbac.filtered(MiqGroup.in_my_region.where(:description => @widget.visibility[:groups]))
-        @edit[:new][:groups] = groups.collect { |group| to_cid(group.id) }.sort
+        @edit[:new][:groups] = groups.collect { |group| group.id }.sort
       end
     end
     @edit[:sorted_user_roles] =
       Rbac.filtered(MiqUserRole).sort_by { |r| r.name.downcase }
-      .collect { |r| {r.name => to_cid(r.id)} }
+      .collect { |r| {r.name => r.id} }
 
     @edit[:sorted_groups] =
       Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).sort_by { |g| g.description.downcase }
-      .collect { |g| {g.description => to_cid(g.id)} }
+      .collect { |g| {g.description => g.id} }
 
     # Schedule Box - create new sched for copy/new, use existing for edit
     @edit[:schedule] = @widget.id && !@widget.miq_schedule.nil? ?

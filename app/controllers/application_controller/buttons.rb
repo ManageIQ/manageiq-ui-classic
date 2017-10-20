@@ -1054,7 +1054,7 @@ module ApplicationController::Buttons
         @edit[:new][:roles] ||= []
         @custom_button.visibility[:roles].each do |r|
           role = MiqUserRole.find_by_name(r)
-          @edit[:new][:roles].push(to_cid(role.id)) if role
+          @edit[:new][:roles].push(role.id) if role
         end
       end
       @edit[:new][:roles].sort! unless @edit[:new][:roles].blank?
@@ -1062,7 +1062,7 @@ module ApplicationController::Buttons
 
     @edit[:sorted_user_roles] = []
     MiqUserRole.all.sort_by { |ur| ur.name.downcase }.each do |r|
-      @edit[:sorted_user_roles].push(r.name => to_cid(r.id))
+      @edit[:sorted_user_roles].push(r.name => r.id)
     end
     @edit[:new][:dialog_id] = @custom_button.resource_action.dialog_id.to_i
     get_available_dialogs
@@ -1078,7 +1078,7 @@ module ApplicationController::Buttons
   def group_set_record_vars(group)
     group.description = @edit[:new][:description]
     applies_to_id = @sb[:applies_to_id].to_i if x_active_tree == :sandt_tree
-    group.name = "#{@edit[:new][:name]}|#{@edit[:new][:applies_to_class]}|#{to_cid(applies_to_id)}" unless @edit[:new][:name].blank?
+    group.name = "#{@edit[:new][:name]}|#{@edit[:new][:applies_to_class]}|#{applies_to_id}" unless @edit[:new][:name].blank?
     group.set_data ||= {}
     group.set_data[:button_order] = @edit[:new][:fields].collect { |field| field[1] }
     group.set_data[:button_icon] = @edit[:new][:button_icon] unless @edit[:new][:button_icon].blank?

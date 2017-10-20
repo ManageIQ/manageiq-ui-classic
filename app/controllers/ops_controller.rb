@@ -308,7 +308,7 @@ class OpsController < ApplicationController
     end
 
     if x_active_tree == :diagnostics_tree
-      x_node_set("svr-#{to_cid(my_server.id)}", :diagnostics_tree) unless x_node(:diagnostics_tree)
+      x_node_set("svr-#{my_server.id}", :diagnostics_tree) unless x_node(:diagnostics_tree)
       @sb[:active_tab] ||= "diagnostics_summary"
     end
 

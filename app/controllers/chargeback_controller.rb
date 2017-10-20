@@ -459,7 +459,7 @@ class ChargebackController < ApplicationController
     @parent_reports = {}
 
     MiqReportResult.with_saved_chargeback_reports.select_distinct_results.each_with_index do |sr, sr_idx|
-      @parent_reports[sr.miq_report.name] = "#{to_cid(sr.miq_report_id)}-#{sr_idx}"
+      @parent_reports[sr.miq_report.name] = "#{sr.miq_report_id}-#{sr_idx}"
     end
   end
 

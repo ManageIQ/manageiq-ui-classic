@@ -300,7 +300,7 @@ class StorageController < ApplicationController
       # treebuilder initializes x_node to root first time in locals_for_render,
       # need to set this here to force & activate node when link is clicked outside of explorer.
       self.x_active_tree = :storage_tree
-      self.x_node = "#{nodetype}-#{to_cid(id)}"
+      self.x_node = "#{nodetype}-#{id}"
     end
 
     build_accordions_and_trees

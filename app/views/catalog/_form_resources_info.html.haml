@@ -63,7 +63,7 @@
                   - if @edit[:new][:selected_resources].length <= 1
                     = h(@edit[:new][:selected_resources].length)
                   - else
-                    = select_tag("gidx_#{to_cid(sr[:id])}",
+                    = select_tag("gidx_#{sr[:id]}",
                       options_for_select((1..@edit[:new][:rsc_groups].length).to_a, (i + 1).to_s),
                       "data-miq_sparkle_on" => true,
                       "data-miq_observe" => {:url => url}.to_json)

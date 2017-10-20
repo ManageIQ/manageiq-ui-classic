@@ -399,13 +399,13 @@ describe EmsCloudController do
 
     it 'edit selected cloud provider' do
       ems = FactoryGirl.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => to_cid(ems.id), :pressed => "ems_cloud_edit" }
+      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_edit" }
       expect(response.status).to eq(200)
     end
 
     it 'edit cloud provider tags' do
       ems = FactoryGirl.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => to_cid(ems.id), :pressed => "ems_cloud_tag" }
+      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_tag" }
       expect(response.status).to eq(200)
     end
 
@@ -413,7 +413,7 @@ describe EmsCloudController do
       allow(controller).to receive(:protect_build_tree).and_return(nil)
       controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
       ems = FactoryGirl.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => to_cid(ems.id), :pressed => "ems_cloud_protect" }
+      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_protect" }
       expect(response.status).to eq(200)
 
       get :protect
@@ -432,7 +432,7 @@ describe EmsCloudController do
 
     it 'edit cloud providers' do
       ems = FactoryGirl.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => to_cid(ems.id), :pressed => "ems_cloud_edit" }
+      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_edit" }
       expect(response.status).to eq(200)
     end
   end

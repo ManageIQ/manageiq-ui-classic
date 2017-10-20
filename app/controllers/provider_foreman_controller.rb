@@ -418,7 +418,7 @@ class ProviderForemanController < ApplicationController
     if row['name'] == _("Unassigned Profiles Group") && row['id'].nil?
       "-#{row['manager_id']}-unassigned"
     else
-      to_cid(row['id'])
+      row['id']
     end
   end
 

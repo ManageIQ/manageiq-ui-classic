@@ -126,7 +126,7 @@ module PxeController::PxeCustomizationTemplates
         end
         AuditEvent.success(build_created_audit(ct, @edit))
         @edit = session[:edit] = nil # clean out the saved info
-        self.x_node = "xx-xx-#{to_cid(ct.pxe_image_type.id)}"
+        self.x_node = "xx-xx-#{ct.pxe_image_type.id}"
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node, :replace_trees => [:customization_templates])
       else
@@ -222,7 +222,7 @@ module PxeController::PxeCustomizationTemplates
         # TODO: tells callers to go back to show_list because this record may be gone
         # Should be refactored into calling show_list right here
         if method == 'destroy'
-          self.x_node = "xx-xx-#{to_cid(ct.pxe_image_type_id)}"
+          self.x_node = "xx-xx-#{ct.pxe_image_type_id}"
         end
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node, :replace_trees => [:customization_templates])

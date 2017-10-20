@@ -16,7 +16,7 @@ describe GenericObjectDefinitionController do
       get :show, :params => {:id => generic_obj_defn.id}
       expect(response.status).to eq(302)
       expect(response).to redirect_to(:action => 'show_list')
-      expect(controller.x_node).to eq("god-#{to_cid(generic_obj_defn.id)}")
+      expect(controller.x_node).to eq("god-#{generic_obj_defn.id}")
     end
 
     context "#show when display=main" do

@@ -585,7 +585,7 @@ describe ChargebackController do
     end
 
     it "fetch existing report" do
-      controller.send(:cb_rpts_fetch_saved_report, controller.to_cid(miq_report_result.id))
+      controller.send(:cb_rpts_fetch_saved_report, miq_report_result.id)
 
       fetched_report = controller.instance_variable_get(:@report)
 

@@ -646,7 +646,7 @@ describe CatalogController do
 
     it "Renders an orchestration template textual summary" do
       ot = FactoryGirl.create(:orchestration_template_amazon)
-      seed_session_trees('catalog', :ot_tree, "xx-otcfn_ot-#{controller.to_cid(ot.id)}")
+      seed_session_trees('catalog', :ot_tree, "xx-otcfn_ot-#{ot.id}")
       post :explorer
 
       expect(response).to have_http_status 200

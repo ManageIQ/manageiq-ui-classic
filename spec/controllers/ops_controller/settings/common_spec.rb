@@ -178,7 +178,7 @@ describe OpsController do
                                          :selected_server_id => miq_server.id,
                                          :active_tab         => 'settings_authentication'
                                         )
-        controller.x_node = "svr-#{controller.to_cid(miq_server.id)}"
+        controller.x_node = "svr-#{miq_server.id}"
       end
 
       it "sets ldap_role to false to make forest entries div hidden" do

@@ -533,12 +533,6 @@ describe ApplicationHelper do
     end
   end
 
-  context "#to_cid" do
-    it "converts record id to compressed id" do
-      expect(helper.to_cid(12_000_000_000_056)).to eq(12_000_000_000_056)
-    end
-  end
-
   context "#from_cid" do
     it "converts compressed id to record id" do
       expect(helper.from_cid("12r56")).to eq(12_000_000_000_056)

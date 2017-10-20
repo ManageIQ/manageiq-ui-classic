@@ -73,7 +73,7 @@
                     "data-miq_observe" => {:url => url}.to_json)
     %tbody
       - table.data.each do |row|
-        - @id = to_cid(row['id'])
+        - @id = row['id']
         - classes = []
         - if %w(MiqEventDefinition MiqTask VmdbDatabaseConnection VmdbDatabaseSetting).include?(view.db) || @embedded
           - classes.append("no-hover")
@@ -92,68 +92,68 @@
             - when "MiqProvision"
               - rec = @targets_hash[row['id']] if @targets_hash
               - unless rec.destination_id.blank?
-                - click = "DoNav('/vm/show/#{to_cid(rec.destination_id)}');"
+                - click = "DoNav('/vm/show/#{rec.destination_id}');"
                 - title = _("Click to view this VM")
             - when "Job"
-              - click = "DoNav('/#{row['target_class'].underscore}/show/#{to_cid(row["target_id"])}');"
+              - click = "DoNav('/#{row['target_class'].underscore}/show/#{row["target_id"]}');"
             - when @vm && view.db
               - click = "DoNav('/vm/#{@listicon.pluralize}/#{@vm.id}?show=#{@id}');"
             - when "Action"
               - click = "DoNav('#{url_for_db("miq_action")}');"
             - when "LdapRegion"
-              - click = "miqTreeActivateNode('settings_tree', 'lr-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('settings_tree', 'lr-#{row['id']}');"
             - when "MiqAction"
-              - click = "miqTreeActivateNode('action_tree', 'a-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('action_tree', 'a-#{row['id']}');"
             - when "MiqAlert"
-              - click = "miqTreeActivateNode('alert_tree', 'al-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('alert_tree', 'al-#{row['id']}');"
             - when "MiqPolicy"
-              - click = "miqTreeActivateNode('policy_tree', '#{x_node}_p-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('policy_tree', '#{x_node}_p-#{row['id']}');"
             - when  "User"
-              - click = "miqTreeActivateNode('rbac_tree', 'u-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('rbac_tree', 'u-#{row['id']}');"
             - when "MiqGroup"
-              - click = "miqTreeActivateNode('rbac_tree', 'g-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('rbac_tree', 'g-#{row['id']}');"
             - when "MiqUserRole"
-              - click = "miqTreeActivateNode('rbac_tree', 'ur-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('rbac_tree', 'ur-#{row['id']}');"
             - when "Tenant"
-              - click = "miqTreeActivateNode('rbac_tree', 'tn-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('rbac_tree', 'tn-#{row['id']}');"
             - when "VmdbTableEvm"
-              - click = "miqTreeActivateNode('vmdb_tree', 'tb-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('vmdb_tree', 'tb-#{row['id']}');"
             - when "VmdbIndex"
-              - click = remote_function(:url => "/ops/x_show/#{to_cid(row['id'])}?list=true")
+              - click = remote_function(:url => "/ops/x_show/#{row['id']}?list=true")
             - when "MiqServer"
-              - click = "miqTreeActivateNode('diagnostics_tree', 'svr-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('diagnostics_tree', 'svr-#{row['id']}');"
             - when "MiqSchedule"
               - if x_active_tree == :settings_tree
-                - click = "miqTreeActivateNode('settings_tree', 'msc-#{to_cid(row['id'])}');"
+                - click = "miqTreeActivateNode('settings_tree', 'msc-#{row['id']}');"
               - elsif x_active_tree == "schedule"
-                - click = "miqTreeActivateNode('schedules_tree','msc-#{to_cid(row['id'])}');"
+                - click = "miqTreeActivateNode('schedules_tree','msc-#{row['id']}');"
             - when "MiqReportResult"
               - if x_active_tree == :savedreports_tree
                 - if x_node.split('-').length == 1
                   - click = remote_function(:loading => "miqSparkle(true);",
                     :complete => "miqSparkle(false);",
-                    :url      => {:action => 'get_report', :id => "xx-#{to_cid(row['miq_report_id'])}_rr-#{to_cid(row['id'])}"})
+                    :url      => {:action => 'get_report', :id => "xx-#{row['miq_report_id']}_rr-#{row['id']}"})
                 - else
-                  - click = "miqTreeActivateNode('savedreports_tree', 'xx-#{to_cid(row['miq_report_id'])}_rr-#{to_cid(row['id'])}');"
+                  - click = "miqTreeActivateNode('savedreports_tree', 'xx-#{row['miq_report_id']}_rr-#{row['id']}');"
               - elsif x_active_tree == :reports_tree
-                - click = "miqTreeActivateNode('reports_tree', '#{x_node}_rr-#{to_cid(row['id'])}');"
+                - click = "miqTreeActivateNode('reports_tree', '#{x_node}_rr-#{row['id']}');"
             - when "MiqWidget"
               - typ = ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[row['content_type']]
-              - click = "miqTreeActivateNode('widgets_tree', 'xx-#{typ}_-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('widgets_tree', 'xx-#{typ}_-#{row['id']}');"
             - when "IsoDatastore"
-              - click = "miqTreeActivateNode('iso_datastores_tree', 'isd-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('iso_datastores_tree', 'isd-#{row['id']}');"
             - when "PxeServer"
-              - click = "miqTreeActivateNode('pxe_servers_tree', 'ps-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('pxe_servers_tree', 'ps-#{row['id']}');"
             - when "PxeImageType"
-              - click = "miqTreeActivateNode('pxe_image_types_tree', 'pit-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('pxe_image_types_tree', 'pit-#{row['id']}');"
             - when "CustomizationTemplate"
-              - click = "miqTreeActivateNode('customization_templates_tree', 'ct-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('customization_templates_tree', 'ct-#{row['id']}');"
             - when "ScanItemSet"
-              - click = "miqTreeActivateNode('settings_tree', 'sis-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('settings_tree', 'sis-#{row['id']}');"
             - when "ChargebackRate"
-              - click = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_cr-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_cr-#{row['id']}');"
             - when "MiqDialog"
-              - click = "miqTreeActivateNode('old_dialogs_tree', '#{TreeBuilder.get_prefix_for_model("MiqDialog")}-#{to_cid(row['id'])}');"
+              - click = "miqTreeActivateNode('old_dialogs_tree', '#{TreeBuilder.get_prefix_for_model("MiqDialog")}-#{row['id']}');"
             - else
               - click = "DoNav('#{url_for_db(view.db)}');"
           %td.table-view-pf-select{:title => title, :onclick => click}
@@ -166,7 +166,7 @@
               - elsif view.db == "MiqProvision"
                 - rec = @targets_hash[row['id']] if @targets_hash
                 - unless rec.destination_id.blank?
-                  - click = "DoNav('/vm/show/#{to_cid(rec.destination_id)}');"
+                  - click = "DoNav('/vm/show/#{rec.destination_id}');"
                   - title = _("Click to view this VM")
               - elsif view.db == "Job"
                 - if row['target_id'].blank?
@@ -174,7 +174,7 @@
                 - else
                   - target_class = row['target_class']
                   - action = target_class.to_s == "VmOrTemplate" ? "vm_show" : "show"
-                  - click = "DoNav('/#{target_class.constantize.base_class.name.underscore.downcase}/#{action}/#{to_cid(row['target_id'])}');"
+                  - click = "DoNav('/#{target_class.constantize.base_class.name.underscore.downcase}/#{action}/#{row['target_id']}');"
                   - title = _("Click to view target %{model}") % {:model => h(ui_lookup(:model => target_class.constantize.base_class.name))}
               - elsif %w(total_space free_space).include?(col)
                 - title = _("%{number} bytes") % {:number => number_with_delimiter(h(row[col]), :delimiter => ",", :separator => ".")}
@@ -192,62 +192,62 @@
                   - when "VmdbDatabaseConnection", "VmdbDatabaseSetting"
                     -# No onclick for DB settings
                   - when "LdapRegion"
-                    - click = "miqTreeActivateNode('settings_tree', 'lr-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('settings_tree', 'lr-#{row['id']}');"
                   - when "MiqAction"
-                    - click = "miqTreeActivateNode('action_tree', 'a-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('action_tree', 'a-#{row['id']}');"
                   - when "MiqAlert"
-                    - click = "miqTreeActivateNode('alert_tree', 'al-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('alert_tree', 'al-#{row['id']}');"
                   - when "MiqPolicy"
-                    - click = "miqTreeActivateNode('policy_tree', '#{x_node}_p-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('policy_tree', '#{x_node}_p-#{row['id']}');"
                   - when "User"
-                    - click = "miqTreeActivateNode('rbac_tree', 'u-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('rbac_tree', 'u-#{row['id']}');"
                   - when "MiqGroup"
-                    - click = "miqTreeActivateNode('rbac_tree', 'g-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('rbac_tree', 'g-#{row['id']}');"
                   - when "MiqUserRole"
-                    - click = "miqTreeActivateNode('rbac_tree', 'ur-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('rbac_tree', 'ur-#{row['id']}');"
                   - when "Tenant"
-                    - click = "miqTreeActivateNode('rbac_tree', 'tn-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('rbac_tree', 'tn-#{row['id']}');"
                   - when "VmdbTableEvm"
-                    - click = "miqTreeActivateNode('vmdb_tree', 'tb-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('vmdb_tree', 'tb-#{row['id']}');"
                   - when "VmdbIndex"
-                    - click = remote_function(:url => "/ops/x_show/#{to_cid(row['id'])}?list=true")
+                    - click = remote_function(:url => "/ops/x_show/#{row['id']}?list=true")
                   - when "MiqServer"
-                    - click = "miqTreeActivateNode('diagnostics_tree', 'svr-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('diagnostics_tree', 'svr-#{row['id']}');"
                   - when "MiqSchedule"
                     - rec = @targets_hash[row['id']] if @targets_hash
                     - if x_active_tree == :settings_tree
-                      - click = "miqTreeActivateNode('settings_tree', 'msc-#{to_cid(row['id'])}');"
+                      - click = "miqTreeActivateNode('settings_tree', 'msc-#{row['id']}');"
                     - elsif x_active_tree == :schedules_tree
-                      - click = "miqTreeActivateNode('schedules_tree', 'msc-#{to_cid(row['id'])}');"
+                      - click = "miqTreeActivateNode('schedules_tree', 'msc-#{row['id']}');"
                   - when "MiqReportResult"
                     - if x_active_tree == :savedreports_tree
                       - if x_node.split('-').length == 1
                         - click = remote_function(:loading => "miqSparkle(true);",
                           :complete => "miqSparkle(false);",
-                          :url      => {:action => 'get_report', :id => "xx-#{to_cid(row['miq_report_id'])}_rr-#{to_cid(row['id'])}"})
+                          :url      => {:action => 'get_report', :id => "xx-#{row['miq_report_id']}_rr-#{row['id']}"})
                       - else
-                        - click = "miqTreeActivateNode('savedreports_tree', 'xx-#{to_cid(row['miq_report_id'])}_rr-#{to_cid(row['id'])}');"
+                        - click = "miqTreeActivateNode('savedreports_tree', 'xx-#{row['miq_report_id']}_rr-#{row['id']}');"
                     - elsif x_active_tree == :reports_tree
-                      - click = "miqTreeActivateNode('reports_tree', '#{x_node}_rr-#{to_cid(row['id'])}');"
+                      - click = "miqTreeActivateNode('reports_tree', '#{x_node}_rr-#{row['id']}');"
                   - when "MiqWidget"
                     - typ = ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[row['content_type']]
                     - click = remote_function(:loading  => "miqSparkle(true);",
                                               :complete => "miqSparkle(false);",
-                                              :url      => {:action => 'x_show', :id => "xx-#{typ}_-#{to_cid(row['id'])}"})
+                                              :url      => {:action => 'x_show', :id => "xx-#{typ}_-#{row['id']}"})
                   - when "IsoDatastore"
-                    - click = "miqTreeActivateNode('iso_datastores_tree', 'isd-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('iso_datastores_tree', 'isd-#{row['id']}');"
                   - when "PxeServer"
-                    - click = "miqTreeActivateNode('pxe_servers_tree', 'ps-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('pxe_servers_tree', 'ps-#{row['id']}');"
                   - when "PxeImageType"
-                    - click = "miqTreeActivateNode('pxe_image_types_tree', 'pit-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('pxe_image_types_tree', 'pit-#{row['id']}');"
                   - when "CustomizationTemplate"
-                    - click = "miqTreeActivateNode('customization_templates_tree', 'ct-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('customization_templates_tree', 'ct-#{row['id']}');"
                   - when "ScanItemSet"
-                    - click = "miqTreeActivateNode('settings_tree', 'sis-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('settings_tree', 'sis-#{row['id']}');"
                   - when "ChargebackRate"
-                    - click = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_cr-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_cr-#{row['id']}');"
                   - when "MiqDialog"
-                    - click = "miqTreeActivateNode('old_dialogs_tree', '#{TreeBuilder.get_prefix_for_model("MiqDialog")}-#{to_cid(row['id'])}');"
+                    - click = "miqTreeActivateNode('old_dialogs_tree', '#{TreeBuilder.get_prefix_for_model("MiqDialog")}-#{row['id']}');"
                   - else
                     - if view.db == "Action"
                       - click = "DoNav('#{url_for_db("miq_action")}');"

@@ -84,7 +84,7 @@ class TreeBuilder
       prefix = get_prefix_for_model(record_or_id.class.base_model)
       id = record_or_id.id
     end
-    "#{prefix}-#{to_cid(id)}"
+    "#{prefix}-#{id}"
   end
 
   def self.hide_vms

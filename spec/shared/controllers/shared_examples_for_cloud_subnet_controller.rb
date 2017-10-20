@@ -56,7 +56,7 @@ shared_examples :shared_examples_for_cloud_subnet_controller do |providers|
 
       describe "#test_toolbars" do
         it 'edit cloud subnet tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@cloud_subnet.id), :pressed => "cloud_subnet_tag"}
+          post :button, :params => {:miq_grid_checks => @cloud_subnet.id, :pressed => "cloud_subnet_tag"}
           expect(response.status).to eq(200)
         end
       end

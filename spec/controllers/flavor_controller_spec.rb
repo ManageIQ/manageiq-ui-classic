@@ -29,7 +29,7 @@ describe FlavorController do
       it 'queues deletion of selected flavors' do
         expect(controller).to receive(:delete_flavors).and_call_original
         expect_any_instance_of(Flavor).to receive(:delete_flavor_queue)
-        post :button, :params => {:pressed => 'flavor_delete', :miq_grid_checks => controller.to_cid(@flavor.id)}
+        post :button, :params => {:pressed => 'flavor_delete', :miq_grid_checks => @flavor.id}
       end
     end
 

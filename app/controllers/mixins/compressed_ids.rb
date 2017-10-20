@@ -5,10 +5,6 @@ module CompressedIds
   #   for use in UI controls (i.e. tree node ids, pulldown list items, etc)
   #
 
-  def to_cid(id)
-    id
-  end
-
   def from_cid(cid)
     ApplicationRecord.uncompress_id(cid)
   end

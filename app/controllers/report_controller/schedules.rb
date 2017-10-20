@@ -227,7 +227,7 @@ module ReportController::Schedules
 
         self.x_active_tree   = "schedules_tree"
         self.x_active_accord = "schedules"
-        self.x_node = "msc-#{to_cid(schedule.id)}"
+        self.x_node = "msc-#{schedule.id}"
         @_params[:accord] = "schedules"
         replace_right_cell(:replace_trees => [:schedules])
       else

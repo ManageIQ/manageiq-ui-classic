@@ -23,7 +23,7 @@
           %table.table.table-striped.table-bordered.table-hover
             %tbody
               - @event_policies.each do |p|
-                - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{to_cid(p.id)}"
+                - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{p.id}"
                 %tr{:title => _("Click to view Policy"),
                   :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=policy")}
                   %td.table-view-pf-select
@@ -110,7 +110,7 @@
                   %th= _("Type")
               %tbody
                 - @event_true_actions.each do |a|
-                  - id = "a-#{to_cid(a.id)}"
+                  - id = "a-#{a.id}"
                   - t = remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")
                   - f = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_#{id}');"
                   %tr{:title => _("View this Event Action"),
@@ -205,7 +205,7 @@
                   %th= _('Type')
               %tbody
                 - @event_false_actions.each do |a|
-                  - id = "a-#{to_cid(a.id)}"
+                  - id = "a-#{a.id}"
                   - t = remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")
                   - f = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_#{id}');"
                   %tr{:title => _("View this Event Action"),

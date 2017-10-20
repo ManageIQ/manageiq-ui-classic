@@ -67,15 +67,15 @@ module MiqPolicyController::Conditions
           condition_get_info(condition)
           case x_active_tree
           when :condition_tree
-            @new_condition_node = "xx-#{condition.towhat.downcase}_co-#{to_cid(condition.id)}"
+            @new_condition_node = "xx-#{condition.towhat.downcase}_co-#{condition.id}"
             replace_right_cell(:nodetype => "co", :replace_trees => [:condition])
           when :policy_tree
             node_ids = @sb[:node_ids][x_active_tree]  # Get the selected node ids
-            @new_policy_node = "xx-#{policy.mode.downcase}_xx-#{policy.mode.downcase}-#{policy.towhat.downcase}_p-#{node_ids["p"]}_co-#{to_cid(condition.id)}"
+            @new_policy_node = "xx-#{policy.mode.downcase}_xx-#{policy.mode.downcase}-#{policy.towhat.downcase}_p-#{node_ids["p"]}_co-#{condition.id}"
             replace_right_cell(:nodetype => "co", :replace_trees => [:policy_profile, :policy, :condition])
           when :policy_profile_tree
             node_ids = @sb[:node_ids][x_active_tree]  # Get the selected node ids
-            @new_profile_node = "pp-#{node_ids["pp"]}_p-#{node_ids["p"]}_co-#{to_cid(condition.id)}"
+            @new_profile_node = "pp-#{node_ids["pp"]}_p-#{node_ids["p"]}_co-#{condition.id}"
             replace_right_cell(:nodetype => "co", :replace_trees => [:policy_profile, :policy, :condition])
           end
         else

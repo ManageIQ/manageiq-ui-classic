@@ -50,7 +50,7 @@ module MiqPolicyController::MiqActions
         action_get_info(MiqAction.find(action.id))
         @edit = nil
         @nodetype = "a"
-        @new_action_node = "a-#{to_cid(action.id)}"
+        @new_action_node = "a-#{action.id}"
         replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? [:policy_profile, :policy, :action] : [:action])
         @sb[:action] = nil
       else

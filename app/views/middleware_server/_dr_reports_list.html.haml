@@ -15,20 +15,20 @@
             %li{:role => 'presentation'}
               %a.pointer{:role     => 'menuitem',
                          :tabindex => '-1',
-                         :onclick  => "DoNav('#{url_for(:action => 'dr_report_download', :id => to_cid(@record.id), 'download_type' => 'text')}');"}
+                         :onclick  => "DoNav('#{url_for(:action => 'dr_report_download', :id => @record.id, 'download_type' => 'text')}');"}
                 %span.fa.fa-file-text-o
                 = _('Download as Text')
             %li{:role => 'presentation'}
               %a.pointer{:role     => 'menuitem',
                          :tabindex => '-1',
-                         :onclick  => "DoNav('#{url_for(:action => 'dr_report_download', :id => to_cid(@record.id), 'download_type' => 'csv')}');"}
+                         :onclick  => "DoNav('#{url_for(:action => 'dr_report_download', :id => @record.id, 'download_type' => 'csv')}');"}
                 %span.fa.fa-file-text-o
                 = _('Download as CSV')
         - if role_allows?(:feature => :middleware_dr_delete)
           %button#dr_btn_delete.btn.btn-default{'onclick' => 'miqCallAngular({name: "deleteSelectedDr", args: []});', :disabled => 'disabled'}
             %span.pficon.pficon-delete.fa
             = _('Delete')
-      = form_tag url_for(:action => 'dr_delete', :id => to_cid(@record.id)), :method => :post, :id => 'mw_dr_reports' do
+      = form_tag url_for(:action => 'dr_delete', :id => @record.id), :method => :post, :id => 'mw_dr_reports' do
         %table.table.table-bordered.table-striped.table-summary-screen
           %thead
             %tr
@@ -47,7 +47,7 @@
                   %input{:type     => "checkbox",
                          :disabled => !item.ran?,
                          :name     => 'mw_dr_selected[]',
-                         :value    => to_cid(item.id),
+                         :value    => item.id,
                          :onclick  => 'miqCallAngular({name: "drChecked", args: []});'}
                 %td
                   - if item.ready?
@@ -66,7 +66,6 @@
                   %button{'class'    => 'btn btn-default btn-block btn-sm',
                           'type'     => 'button',
                           'disabled' => item.ready? ? nil : 'disabled',
-                          'onclick'  => "DoNav('#{url_for(:action => 'dr_download', :id => to_cid(@record.id), :key => to_cid(item.id))}');",
+                          'onclick'  => "DoNav('#{url_for(:action => 'dr_download', :id => @record.id, :key => item.id)}');",
                           'title'    => _('Download JDR file')}
                     = _('Download')
-

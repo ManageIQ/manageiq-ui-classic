@@ -154,7 +154,7 @@ describe StorageController do
                                    :parent => classification
                                   )
         allow(Classification).to receive(:find_assigned_entries).and_return([@tag1, @tag2])
-        post :x_button, :params => {:miq_grid_checks => to_cid(datastore.id), :pressed => "storage_tag", :format => :js}
+        post :x_button, :params => {:miq_grid_checks => datastore.id, :pressed => "storage_tag", :format => :js}
         expect(response.status).to eq(200)
 
         main_content = JSON.parse(response.body)['updatePartials']['main_div']
@@ -176,7 +176,7 @@ describe StorageController do
         storage
         seed_session_trees('storage', :storage_tree, 'root')
         get :explorer
-        post :x_button, :params => {:pressed => 'storage_scan', :miq_grid_checks => to_cid(storage.id), :format => :js}
+        post :x_button, :params => {:pressed => 'storage_scan', :miq_grid_checks => storage.id, :format => :js}
         expect(response.status).to eq(200)
         flash_messages = assigns(:flash_array)
         expect(flash_messages.first[:message]).to_not include("Datastores no longer exists")
@@ -186,9 +186,9 @@ describe StorageController do
         storage
         storage_cluster
         seed_session_trees('storage', :storage_pod_tree, 'root')
-        post :tree_select, :params => {:id => "xx-#{to_cid(storage_cluster.id)}", :format => :js}
+        post :tree_select, :params => {:id => "xx-#{storage_cluster.id}", :format => :js}
         expect(response.status).to eq(200)
-        post :x_button, :params => {:pressed => 'storage_scan', :miq_grid_checks => to_cid(storage.id), :format => :js}
+        post :x_button, :params => {:pressed => 'storage_scan', :miq_grid_checks => storage.id, :format => :js}
         expect(response.status).to eq(200)
         flash_messages = assigns(:flash_array)
         expect(flash_messages.first[:message]).to_not include("Datastores no longer exists")
@@ -198,10 +198,10 @@ describe StorageController do
         storage
         storage_cluster
         seed_session_trees('storage', :storage_pod_tree, 'root')
-        post :tree_select, :params => {:id => "xx-#{to_cid(storage_cluster.id)}", :format => :js}
+        post :tree_select, :params => {:id => "xx-#{storage_cluster.id}", :format => :js}
         expect(response.status).to eq(200)
         post :x_button, :params => {:pressed         => 'storage_delete',
-                                    :miq_grid_checks => to_cid(storage.id),
+                                    :miq_grid_checks => storage.id,
                                     :format          => :js}
         expect(response.status).to eq(200)
         flash_messages = assigns(:flash_array)
@@ -278,7 +278,7 @@ describe StorageController do
           }
         )
 
-        post :tree_select, :params => {:id => "xx-#{to_cid(storage_cluster.id)}", :format => :js}
+        post :tree_select, :params => {:id => "xx-#{storage_cluster.id}", :format => :js}
         expect(response.status).to eq(200)
       end
     end

@@ -33,7 +33,7 @@
             %th= _('Source')
         %tbody
           - @saved_reports.each do |row|
-            - row_id = "#{x_node}_rr-#{to_cid(row['id'])}"
+            - row_id = "#{x_node}_rr-#{row['id']}"
             %tr
               - t = _("Click to view saved report")
               %td.table-view-pf-select{:title => t, :onclick => remote_function(:loading => "miqSparkle(true);",

@@ -98,7 +98,7 @@
           - if @record.current_group
             - if role_allows?(:feature => "rbac_group_show")
               - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('g-#{to_cid(@record.current_group.id)}');",
+                          :onclick => "miqOnClickSelectRbacTreeNode('g-#{@record.current_group.id}');",
                           :title => _("View this Group")}
             %i.ff.ff-group{params}
             = link_to(@record.current_group.description, "#", params)
@@ -114,7 +114,7 @@
           - if role_allows?(:feature => "rbac_group_show")
             - groups.each do |group|
               - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('g-#{to_cid(group.id)}');",
+                          :onclick => "miqOnClickSelectRbacTreeNode('g-#{group.id}');",
                           :title => _("View this Group")}
               %i.ff.ff-group{params}
               = link_to(group.description, "#", params)
@@ -155,7 +155,7 @@
           - if @record.current_group && @record.current_group.miq_user_role
             - if role_allows?(:feature => "rbac_user_show")
               - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{to_cid(@record.current_group.miq_user_role.id)}');",
+                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{@record.current_group.miq_user_role.id}');",
                           :title => _("View this Role")}
             - else
               - params = {}

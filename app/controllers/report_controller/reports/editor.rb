@@ -1624,7 +1624,7 @@ module ReportController::Reports::Editor
           # check if at least one report exists underneath it
           if level2_nodes[0].downcase == "custom" && level2_nodes[1].count > 1
             level2_nodes[1].each_with_index do |report|
-              self.x_node = "xx-#{i}_xx-#{i}-#{k}_rep-#{to_cid(@rpt.id)}" if report == @rpt.name
+              self.x_node = "xx-#{i}_xx-#{i}-#{k}_rep-#{@rpt.id}" if report == @rpt.name
             end
           end
         end

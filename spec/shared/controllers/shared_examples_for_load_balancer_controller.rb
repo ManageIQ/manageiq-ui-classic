@@ -52,7 +52,7 @@ shared_examples :shared_examples_for_load_balancer_controller do |providers|
 
       describe "#test_toolbars" do
         it 'edit cloud subnet tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@load_balancer.id), :pressed => "load_balancer_tag"}
+          post :button, :params => {:miq_grid_checks => @load_balancer.id, :pressed => "load_balancer_tag"}
           expect(response.status).to eq(200)
         end
       end

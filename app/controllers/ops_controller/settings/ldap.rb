@@ -58,7 +58,7 @@ module OpsController::Settings::Ldap
           ldap_regions_list
           settings_get_info("st")
         else          # set selected ldap_region
-          self.x_node = "lr-#{to_cid(@ldap_region.id)}"
+          self.x_node = "lr-#{@ldap_region.id}"
           get_node_info(x_node)
         end
         replace_right_cell(:nodetype => "root", :replace_trees => [:settings])
@@ -174,9 +174,9 @@ module OpsController::Settings::Ldap
         add_flash(_("LDAP Domain \"%{name}\" was saved") % {:name => @ldap_domain.name})
         @in_a_form = @edit = session[:edit] = nil # clean out the saved info
         if params[:button] == "add"
-          self.x_node  = "lr-#{to_cid(@ldap_domain.ldap_region_id)}"  # reset node to show list
+          self.x_node  = "lr-#{@ldap_domain.ldap_region_id}"  # reset node to show list
         else          # set selected ldap_domain
-          self.x_node = "ld-#{to_cid(@ldap_domain.id)}"
+          self.x_node = "ld-#{@ldap_domain.id}"
         end
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node, :replace_trees => [:settings])

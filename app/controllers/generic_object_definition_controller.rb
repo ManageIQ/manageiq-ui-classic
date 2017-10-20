@@ -28,7 +28,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def show
-    self.x_node = "god-#{to_cid(params[:id])}"
+    self.x_node = "god-#{params[:id]}"
     if params[:display] || @display
       super
     else

@@ -56,7 +56,7 @@ shared_examples :shared_examples_for_network_router_controller do |providers|
 
       describe "#test_toolbars" do
         it 'edit network router tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@network_router.id), :pressed => "network_router_tag"}
+          post :button, :params => {:miq_grid_checks => @network_router.id, :pressed => "network_router_tag"}
           expect(response.status).to eq(200)
         end
       end

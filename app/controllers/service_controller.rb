@@ -98,7 +98,7 @@ class ServiceController < ApplicationController
     if params[:id] # Tree node id came in, show it in the tree.
       @find_with_aggregates = true
       nodetype, id = params[:id].split("-")
-      x_node_to_set = "#{nodetype}-#{to_cid(id)}"
+      x_node_to_set = "#{nodetype}-#{id}"
     end
 
     @breadcrumbs.clear if @breadcrumbs.present?

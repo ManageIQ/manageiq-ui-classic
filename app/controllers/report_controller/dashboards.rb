@@ -213,7 +213,7 @@ module ReportController::Dashboards
       @db_nodes_order = [@default_ws.name, "All Groups"]
 
       @db_nodes[@default_ws.name] = {}
-      @db_nodes[@default_ws.name][:id] = "xx-#{to_cid(@default_ws.id)}"
+      @db_nodes[@default_ws.name][:id] = "xx-#{@default_ws.id}"
       @db_nodes[@default_ws.name][:text] = "#{@default_ws.description} (#{@default_ws.name})"
       @db_nodes[@default_ws.name][:title] = "#{@default_ws.description} (#{@default_ws.name})"
       @db_nodes[@default_ws.name][:glyph] = "fa fa-dashboard"

@@ -23,7 +23,7 @@
               %table.table.table-striped.table-bordered.table-hover
                 %tbody
                   - child_services.sort_by { |o| o.name.downcase }.each do |s|
-                    %tr{:onclick => "miqTreeActivateNode('svcs_tree', 's-#{to_cid(s.id)}');", :title => _("View this Service")}
+                    %tr{:onclick => "miqTreeActivateNode('svcs_tree', 's-#{s.id}');", :title => _("View this Service")}
                       %td.table-view-pf-select
                         %i.pficon.pficon-service
                       %td

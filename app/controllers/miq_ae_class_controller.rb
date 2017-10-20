@@ -214,7 +214,7 @@ class MiqAeClassController < ApplicationController
       if i == nodes.length - 1
         selected_node = x_node.split("-")
         parents.push(record.ae_class) if %w(aei aem).include?(selected_node[0])
-        self.x_node = "#{selected_node[0]}-#{to_cid(record.id)}"
+        self.x_node = "#{selected_node[0]}-#{record.id}"
         parents.push(record)
       else
         ns = MiqAeNamespace.find_by_fqname(nodes[0..i].join("/"))
@@ -231,9 +231,9 @@ class MiqAeClassController < ApplicationController
     # set x_node after building tree nodes so parent node of new nodes can be selected in the tree.
     unless params[:action] == "x_show"
       self.x_node = if @record.kind_of?(MiqAeClass)
-                      "aen-#{to_cid(@record.namespace_id)}"
+                      "aen-#{@record.namespace_id}"
                     else
-                      "aec-#{to_cid(@record.class_id)}"
+                      "aec-#{@record.class_id}"
                     end
     end
     {:key => existing_node, :nodes => children}
@@ -410,7 +410,7 @@ class MiqAeClassController < ApplicationController
         rec_name = ERB::Util.html_escape(rec_name)
         rec_name = rec_name.gsub(/\\/, "&#92;")
       end
-      srow = root.add_element("row", "id" => "#{cls}-#{to_cid(kids.id)}", "style" => "border-bottom: 1px solid #CCCCCC;color:black; text-align: center")
+      srow = root.add_element("row", "id" => "#{cls}-#{kids.id}", "style" => "border-bottom: 1px solid #CCCCCC;color:black; text-align: center")
       srow.add_element("cell").text = "0" # Checkbox column unchecked
       srow.add_element("cell", "image" => "blank.png", "title" => cls.to_s, "style" => "border-bottom: 1px solid #CCCCCC;text-align: left;height:28px;").text = REXML::CData.new("<i class='#{glyphicon}' alt='#{cls}' title='#{cls}'></i>")
       srow.add_element("cell", "image" => "blank.png", "title" => rec_name.to_s, "style" => "border-bottom: 1px solid #CCCCCC;text-align: left;height:28px;").text = rec_name
@@ -439,7 +439,7 @@ class MiqAeClassController < ApplicationController
     set_form_vars
     # have to get name and set node info, to load multiple tabs correctly
     # rec_name = get_rec_name(@ae_class)
-    # get_node_info("aec-#{to_cid(@ae_class.id)}")
+    # get_node_info("aec-#{@ae_class.id}")
     @in_a_form = true
     @in_a_form_props = true
     session[:changed] = @changed = false
@@ -1852,7 +1852,7 @@ class MiqAeClassController < ApplicationController
     model = @edit[:selected_items].count > 1 ? :models : :model
     add_flash(_("Copy selected %{record} was saved") % {:record => ui_lookup(model => @edit[:typ].to_s)})
     @record = res.kind_of?(Array) ? @edit[:typ].find(res.first) : res
-    self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{to_cid(@record.id)}"
+    self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{@record.id}"
     @in_a_form = @changed = session[:changed] = false
     @sb[:action] = @edit = session[:edit] = nil
     replace_right_cell
@@ -1987,7 +1987,7 @@ class MiqAeClassController < ApplicationController
       node = x_node.split('-')
       aeinstances.push(from_cid(node[1]))
       inst = find_record_with_rbac(MiqAeInstance, from_cid(node[1]))
-      self.x_node = "aec-#{to_cid(inst.class_id)}"
+      self.x_node = "aec-#{inst.class_id}"
     end
 
     process_aeinstances(aeinstances, "destroy") unless aeinstances.empty?
@@ -2014,7 +2014,7 @@ class MiqAeClassController < ApplicationController
       node = x_node.split('-')
       aemethods.push(from_cid(node[1]))
       inst = find_record_with_rbac(MiqAeMethod, from_cid(node[1]))
-      self.x_node = "aec-#{to_cid(inst.class_id)}"
+      self.x_node = "aec-#{inst.class_id}"
     end
 
     process_aemethods(aemethods, "destroy") unless aemethods.empty?
@@ -2068,13 +2068,13 @@ class MiqAeClassController < ApplicationController
     if params[:id] && params[:miq_grid_checks].blank? && node.first == "aen"
       ae_ns.push(params[:id])
       ns = find_record_with_rbac(MiqAeNamespace, from_cid(node[1]))
-      self.x_node = ns.parent_id ? "aen-#{to_cid(ns.parent_id)}" : "root"
+      self.x_node = ns.parent_id ? "aen-#{ns.parent_id}" : "root"
     elsif selected
       ae_ns, ae_cs = items_to_delete(selected)
     else
       ae_cs.push(from_cid(node[1]))
       cls = find_record_with_rbac(MiqAeClass, from_cid(node[1]))
-      self.x_node = "aen-#{to_cid(cls.namespace_id)}"
+      self.x_node = "aen-#{cls.namespace_id}"
     end
     process_ae_ns(ae_ns, "destroy")     unless ae_ns.empty?
     process_aeclasses(ae_cs, "destroy") unless ae_cs.empty?

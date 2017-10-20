@@ -81,8 +81,8 @@ module VmCommon
 
   # to reload currently displayed summary screen in explorer
   def reload
-    @_params[:id] = if hide_vms && x_node.split('-')[1] != to_cid(params[:id]) && params[:id].present?
-                      'v-' + to_cid(params[:id])
+    @_params[:id] = if hide_vms && x_node.split('-')[1] != params[:id] && params[:id].present?
+                      'v-' + params[:id]
                     else
                       x_node
                     end
@@ -1014,9 +1014,9 @@ module VmCommon
       @vm = VmOrTemplate.find(id)
       self.x_node = parent_folder_id(@vm)
     else
-      self.x_node = "#{nodetype}-#{to_cid(id)}"
+      self.x_node = "#{nodetype}-#{id}"
     end
-    get_node_info("#{nodetype}-#{to_cid(id)}")
+    get_node_info("#{nodetype}-#{id}")
   end
   public :resolve_node_info
 

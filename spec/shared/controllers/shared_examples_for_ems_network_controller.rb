@@ -99,12 +99,12 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
         end
 
         it 'edit selected network provider' do
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_network_edit"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_network_edit"}
           expect(response.status).to eq(200)
         end
 
         it 'edit network provider tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_network_tag"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_network_tag"}
           expect(response.status).to eq(200)
         end
 
@@ -112,7 +112,7 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
           allow(controller).to receive(:protect_build_tree).and_return(nil)
           controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
 
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_network_protect"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_network_protect"}
           expect(response.status).to eq(200)
 
           get :protect
@@ -126,7 +126,7 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
         end
 
         it 'edit network providers' do
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_network_edit"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_network_edit"}
           expect(response.status).to eq(200)
         end
       end

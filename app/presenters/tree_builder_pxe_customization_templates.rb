@@ -31,7 +31,7 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
                    :icon  => "pficon pficon-folder-close",
                    :tip   => _("Examples (read only)"))
       PxeImageType.all.sort.each do |item, _idx|
-        objects.push(:id => "xx-#{to_cid(item.id)}", :text => item.name, :icon => "pficon pficon-folder-close", :tip => item.name)
+        objects.push(:id => "xx-#{item.id}", :text => item.name, :icon => "pficon pficon-folder-close", :tip => item.name)
       end
       objects
     end

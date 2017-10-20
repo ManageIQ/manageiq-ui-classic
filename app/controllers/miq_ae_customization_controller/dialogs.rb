@@ -249,7 +249,7 @@ module MiqAeCustomizationController::Dialogs
 
         if params[:button] == "add"
           d = Dialog.find_by_label(dialog.label)
-          self.x_node = "dg-#{to_cid(d.id)}"
+          self.x_node = "dg-#{d.id}"
         end
 
         get_node_info

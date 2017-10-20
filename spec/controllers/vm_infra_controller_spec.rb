@@ -184,10 +184,10 @@ describe VmInfraController do
     controller.instance_variable_set(:@settings, :views => {:compare => "compressed"})
     controller.instance_variable_set(:@export_reports, [])
     post :x_button, :params => {
-      :pressed                  => 'vm_compare',
-      "check_#{to_cid(vm.id)}"  => "1",
-      "check_#{to_cid(vm2.id)}" => "1",
-      "type"                    => "compressed"
+      :pressed          => 'vm_compare',
+      "check_#{vm.id}"  => "1",
+      "check_#{vm2.id}" => "1",
+      "type"            => "compressed"
     }
     expect(response.status).to eq(200)
     expect(response).to render_template(:partial => 'layouts/_compare')

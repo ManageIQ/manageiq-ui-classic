@@ -374,7 +374,7 @@ module OpsController::OpsRbac
     else # showing 1 tenant, delete it
       tenants.push(params[:id])
       parent_id = Tenant.find(params[:id]).parent.id
-      self.x_node = "tn-#{to_cid(parent_id)}"
+      self.x_node = "tn-#{parent_id}"
     end
     process_tenants(tenants, "destroy") unless tenants.empty?
     get_node_info(x_node)

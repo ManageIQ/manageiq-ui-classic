@@ -11,7 +11,7 @@ class TreeBuilderOps < TreeBuilder
     when :vmdb_tree
       @tree_state.x_node_set("root", @name)
     else
-      @tree_state.x_node_set("svr-#{to_cid(MiqServer.my_server(true).id)}", @name) unless @tree_state.x_node(@name)
+      @tree_state.x_node_set("svr-#{MiqServer.my_server(true).id}", @name) unless @tree_state.x_node(@name)
     end
   end
 

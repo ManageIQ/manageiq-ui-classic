@@ -653,14 +653,14 @@ class ApplicationController < ActionController::Base
           # show this as selected/expanded node when tree loads
           if inst
             @open_nodes.push("aei-#{inst.id}")
-            @active_node = "aei-#{to_cid(inst.id)}"
+            @active_node = "aei-#{inst.id}"
           end
         elsif i == nodes.length - 2
           @cls = MiqAeClass.find_by(:namespace_id => @ns.id, :name => nodes[i])
-          @open_nodes.push("aec-#{to_cid(@cls.id)}") if @cls
+          @open_nodes.push("aec-#{@cls.id}") if @cls
         else
           @ns = MiqAeNamespace.find_by(:name => nodes[i])
-          @open_nodes.push("aen-#{to_cid(@ns.id)}") if @ns
+          @open_nodes.push("aen-#{@ns.id}") if @ns
         end
       end
     end
@@ -1037,7 +1037,7 @@ class ApplicationController < ActionController::Base
         :quadicon => quadicon
       }
       if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
-        new_row[:parent_id] = "xx-#{to_cid(row.data['miq_report_id'])}" if row.data['miq_report_id']
+        new_row[:parent_id] = "xx-#{row.data['miq_report_id']}" if row.data['miq_report_id']
       end
       new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
       new_row[:tree_id] = TreeBuilder.build_node_cid(target) if target
@@ -2207,7 +2207,7 @@ class ApplicationController < ActionController::Base
   end
 
   def list_row_id(row)
-    to_cid(row['id']).to_s
+    row['id'].to_s
   end
 
   def render_flash_not_applicable_to_model(type, model_type = nil)

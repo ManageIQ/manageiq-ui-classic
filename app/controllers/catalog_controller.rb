@@ -209,8 +209,8 @@ class CatalogController < ApplicationController
       self.x_active_tree   = 'sandt_tree'
       self.x_active_accord = 'sandt'
       st = ServiceTemplate.find_by_id(from_cid(params[:id].split("-").last))
-      prefix = st.service_template_catalog_id ? "stc-#{to_cid(st.service_template_catalog_id)}_st-" : "-Unassigned_st-"
-      self.x_node = "#{prefix}#{to_cid(id)}"
+      prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
+      self.x_node = "#{prefix}#{id}"
       get_node_info(x_node)
     else
       @in_a_form = false
@@ -804,7 +804,7 @@ class CatalogController < ApplicationController
     x_tree_init(:ot_tree, :ot, "OrchestrationTemplate") unless x_tree
     ot_type = template_to_node_name(ot)
     x_tree[:open_nodes].push("xx-#{ot_type}") unless x_tree[:open_nodes].include?("xx-#{ot_type}")
-    self.x_node = "ot-#{to_cid(ot.id)}"
+    self.x_node = "ot-#{ot.id}"
     x_tree[:open_nodes].push(x_node)
     add_flash(params[:flash_message]) if params.key?(:flash_message)
     explorer
@@ -1071,8 +1071,8 @@ class CatalogController < ApplicationController
       else
         add_flash(_("Orchestration Template \"%{name}\" was saved") % {:name => @edit[:new][:name]})
         x_node_elems = x_node.split('-')
-        if !x_node_elems[2].nil? && x_node_elems[2] != to_cid(ot.id)
-          x_node_elems[2] = to_cid(ot.id)
+        if !x_node_elems[2].nil? && x_node_elems[2] != ot.id
+          x_node_elems[2] = ot.id
           self.x_node = x_node_elems.join('-')
         end
 
@@ -1125,7 +1125,7 @@ class CatalogController < ApplicationController
         x_tree[:open_nodes].push(subtree) unless x_tree[:open_nodes].include?(subtree)
         ot_type = template_to_node_name(ot)
         self.x_node = "xx-%{type}_ot-%{cid}" % {:type => ot_type,
-                                                :cid  => to_cid(ot.id)}
+                                                :cid  => ot.id}
         x_tree[:open_nodes].push(x_node)
         @changed = session[:changed] = false
         @in_a_form = false
@@ -1790,7 +1790,7 @@ class CatalogController < ApplicationController
       end
     end
     if params[:action] == "x_show"
-      prefix = @record.service_template_catalog_id ? "stc-#{to_cid(@record.service_template_catalog_id)}" : "-Unassigned"
+      prefix = @record.service_template_catalog_id ? "stc-#{@record.service_template_catalog_id}" : "-Unassigned"
       self.x_node = "#{prefix}_#{params[:id]}"
     end
     typ = x_active_tree == :svccat_tree ? "Service" : TreeBuilder.get_model_for_prefix(@nodetype)
@@ -1895,7 +1895,7 @@ class CatalogController < ApplicationController
       if parent_rec.nil?
         parents = [parent_rec, :id => "-Unassigned"]
       else
-        parents = [parent_rec, :id => "stc-#{to_cid(record.service_template_catalog_id)}"]
+        parents = [parent_rec, :id => "stc-#{record.service_template_catalog_id}"]
       end
     end
     # Go up thru the parents and find the highest level unopened, mark all as opened along the way
@@ -1913,9 +1913,9 @@ class CatalogController < ApplicationController
     end
     add_nodes = {:key => existing_node, :nodes => tree_add_child_nodes(existing_node)} if existing_node
     self.x_node = if params[:rec_id]
-                    "stc-#{to_cid(record.service_template_catalog_id)}_st-#{to_cid(record.id)}"
+                    "stc-#{record.service_template_catalog_id}_st-#{record.id}"
                   elsif record.kind_of?(OrchestrationTemplate)
-                    "xx-#{parents.last[:id]}_ot-#{to_cid(record.id)}"
+                    "xx-#{parents.last[:id]}_ot-#{record.id}"
                   else
                     "#{parents.last[:id]}_#{params[:id]}"
                   end

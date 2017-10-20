@@ -46,10 +46,10 @@ class TreeBuilderOpsVmdb < TreeBuilderOps
       1 # each table has any index
     else
       # load this node expanded on autoload
-      @tree_state.x_tree(@name)[:open_nodes].push("xx-#{to_cid(object.id.to_s)}") unless @tree_state.x_tree(@name)[:open_nodes].include?("xx-#{to_cid(object.id.to_s)}")
+      @tree_state.x_tree(@name)[:open_nodes].push("xx-#{object.id}") unless @tree_state.x_tree(@name)[:open_nodes].include?("xx-#{object.id}")
       [
         {
-          :id            => to_cid(object.id.to_s).to_s,
+          :id            => object.id.to_s,
           :text          => _("Indexes"),
           :icon          => "pficon pficon-folder-close",
           :tip           => _("Indexes"),
