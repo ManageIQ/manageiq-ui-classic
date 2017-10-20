@@ -76,6 +76,25 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
       ]
     ),
   ])
+  button_group('ems_physical_infra_console_access', [
+    select(
+      :ems_physical_infra_console_choice,
+      'fa pficon-screen fa-lg',
+      N_('Remote Access'),
+      N_('Access'),
+      :items => [
+        button(
+          :ems_physical_infra_console,
+          'pficon pficon-screen fa-lg',
+          N_('Open a web-based console for this provider'),
+          N_('Management Console'),
+          :url     => "launch_console",
+          :confirm => N_("Open management console for this provider"),
+          :klass   => ApplicationHelper::Button::PhInfraConsole,
+          :options => {:feature => :console})
+      ]
+    ),
+  ])
   button_group('ems_physical_infra_authentication', [
     select(
       :ems_physical_infra_authentication_choice,
