@@ -74,9 +74,9 @@ module ReportController::Widgets
     when "cancel"
       @widget = MiqWidget.find_by_id(session[:edit][:widget_id]) if session[:edit] && session[:edit][:widget_id]
       if !@widget || @widget.id.blank?
-        add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqWidget")})
+        add_flash(_("Add of new Widget was cancelled by the user"))
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqWidget"), :name => @widget.name})
+        add_flash(_("Edit of Widget \"%{name}\" was cancelled by the user") % {:name => @widget.name})
       end
       get_node_info
       @widget = nil
@@ -90,8 +90,7 @@ module ReportController::Widgets
       widget_set_record_vars(@widget)
       if widget_validate_entries && @widget.save_with_shortcuts(@edit[:new][:shortcuts].to_a)
         AuditEvent.success(build_saved_audit(@widget, @edit))
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqWidget"),
-                                                         :name  => @widget.title})
+        add_flash(_("Widget \"%{name}\" was saved") % {:name => @widget.title})
         params[:id] = @widget.id.to_s   # reset id in params for show
         # Build the filter expression and attach widget to schedule filter
         exp = {}
@@ -124,8 +123,7 @@ module ReportController::Widgets
     assert_privileges("widget_delete")
     widgets = find_checked_items
     if !params[:id].nil? && MiqWidget.find_by_id(params[:id]).nil?
-      add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:models => "MiqWidget")},
-                :error)
+      add_flash(_("Widget no longer exists"), :error)
     else
       widgets.push(params[:id]) if params[:id]
     end
@@ -279,19 +277,19 @@ module ReportController::Widgets
     @sb[:nodes] = x_node.split('-')
     if @sb[:nodes].length == 1
       get_all_widgets
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "MiqWidget")}
+      @right_cell_text = _("All Widgets")
       @right_cell_div  = "widget_list"
     elsif @sb[:nodes].length == 2
       # If a folder node is selected
       get_all_widgets(WIDGET_CONTENT_TYPE[@sb[:nodes][1]])
       @right_cell_div  = "widget_list"
-      @right_cell_text = _("%{typ} %{model}") % {:typ => _(SINGULAR_WIDGET_TYPES[@sb[:nodes][1]]), :model => ui_lookup(:models => "MiqWidget")}
+      @right_cell_text = _("%{typ} Widgets") % {:typ => _(SINGULAR_WIDGET_TYPES[@sb[:nodes][1]])}
     else
       @record = @widget = MiqWidget.find_by_id(from_cid(@sb[:nodes].last))
       @widget_running = true if ["running", "queued"].include?(@widget.status.downcase)
       typ = WIDGET_CONTENT_TYPE.invert[@widget.content_type]
       content_type = _(SINGULAR_WIDGET_TYPES[typ])
-      @right_cell_text = _("%{typ} %{model} \"%{name}\"") % {:typ => content_type, :name => @widget.title, :model => ui_lookup(:model => "MiqWidget")}
+      @right_cell_text = _("%{typ} Widget \"%{name}\"") % {:typ => content_type, :name => @widget.title}
       @right_cell_div  = "widget_list"
       @sb[:wtype] = WIDGET_CONTENT_TYPE.invert[@widget.content_type]
       @sb[:col_order] = []

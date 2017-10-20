@@ -48,7 +48,7 @@ module ReportController::Schedules
     session[:schedule_sortdir] = @sortdir
 
     @sb[:tree_typ]   = "schedules"
-    @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "MiqSchedule")}
+    @right_cell_text = _("All Schedules")
     @right_cell_div  = "schedule_list"
   end
 
@@ -79,16 +79,16 @@ module ReportController::Schedules
       if MiqSchedule.exists?(from_cid(params[:id]))
         scheds.push(from_cid(params[:id]))
       else
-        add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "MiqSchedule")}, :error)
+        add_flash(_("Schedule no longer exists"), :error)
       end
     end
     single_name = scheds.first.name if scheds.length == 1
     process_schedules(scheds, "destroy") unless scheds.empty?
     unless flash_errors?
       if single_name
-        add_flash(_("%{schedule} %{name} was deleted") % {:schedule => ui_lookup(:model => "MiqSchedule"), :name => single_name}, :success, true)
+        add_flash(_("Schedule %{name} was deleted") % {:name => single_name}, :success, true)
       else
-        add_flash(_("The selected %{schedules} were deleted") % {:schedules => ui_lookup(:models => "MiqSchedule")}, :success, true)
+        add_flash(_("The selected Schedules were deleted"), :success, true)
       end
     end
     self.x_node = "root"
@@ -125,21 +125,19 @@ module ReportController::Schedules
   def schedule_toggle(enable)
     assert_privileges("miq_report_schedule_#{enable ? 'enable' : 'disable'}")
     msg1, msg2 = if enable
-                   [_("No %{schedules} were selected to be enabled"),
-                    _("The selected %{schedules} were enabled")]
+                   [_("No Report Schedules were selected to be enabled"),
+                    _("The selected Report Schedules were enabled")]
                  else
-                   [_("No %{schedules} were selected to be disabled"),
-                    _("The selected %{schedules} were disabled")]
+                   [_("No Report Schedules were selected to be disabled"),
+                    _("The selected Report Schedules were disabled")]
                  end
     scheds = find_records_with_rbac(MiqSchedule, checked_or_params)
     if scheds.empty?
-      add_flash(msg1 % {:schedules => "#{ui_lookup(:model => "MiqReport")} #{ui_lookup(:models => "MiqSchedule")}"},
-                :error)
+      add_flash(msg1, :error)
       javascript_flash
     end
     schedule_enable_disable(scheds, enable) unless scheds.empty?
-    add_flash(msg2 % {:schedules => "#{ui_lookup(:model => "MiqReport")} #{ui_lookup(:models => "MiqSchedule")}"},
-              :info, true) unless flash_errors?
+    add_flash(msg2, :info, true) unless flash_errors?
     schedule_get_all
     replace_right_cell
   end
@@ -212,9 +210,9 @@ module ReportController::Schedules
     when "cancel"
       @schedule = MiqSchedule.find_by_id(session[:edit][:sched_id]) if session[:edit] && session[:edit][:sched_id]
       if !@schedule || @schedule.id.blank?
-        add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqSchedule")})
+        add_flash(_("Add of new Schedule was cancelled by the user"))
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqSchedule"), :name => @schedule.name})
+        add_flash(_("Edit of Schedule \"%{name}\" was cancelled by the user") % {:name => @schedule.name})
       end
       @schedule = nil
       @edit = session[:edit] = nil  # clean out the saved info
@@ -233,8 +231,8 @@ module ReportController::Schedules
       if schedule.valid? && !flash_errors? && schedule.save
         AuditEvent.success(build_saved_audit(schedule, @edit))
         @edit[:sched_id] ?
-          add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqSchedule"), :name => schedule.name}) :
-          add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqSchedule"), :name => schedule.name})
+          add_flash(_("Schedule \"%{name}\" was saved") % {:name => schedule.name}) :
+          add_flash(_("Schedule \"%{name}\" was added") % {:name => schedule.name})
         params[:id] = schedule.id.to_s    # reset id in params for show
         @edit = session[:edit] = nil # clean out the saved info
 
@@ -486,7 +484,7 @@ module ReportController::Schedules
   def get_schedule(nodeid)
     @record = @schedule = MiqSchedule.find(from_cid(nodeid.split('__').last).to_i)
     show_schedule
-    @right_cell_text = _("%{model} \"%{name}\"") % {:name => @schedule.name, :model => ui_lookup(:model => "MiqSchedule")}
+    @right_cell_text = _("Schedule \"%{name}\"") % {:name => @schedule.name}
     @right_cell_div  = "schedule_list"
   end
 end

@@ -143,7 +143,7 @@ class ReportController < ApplicationController
     x_node_set("root", :roles_tree) if params[:load_edit_err] && tree_exists?(:roles_tree)
     @flash_array = @sb[:flash_msg] unless @sb[:flash_msg].blank?
     get_node_info
-    @right_cell_text ||= _("All %{reports}") % {:reports => ui_lookup(:models => "MiqReport")}
+    @right_cell_text ||= _("All Reports")
     @sb[:rep_tree_build_time] = Time.now.utc
     @sb[:active_tab] = "report_info"
     @right_cell_text.gsub!(/'/, "&apos;")      # Need to escape single quote in title to load in right cell
@@ -462,7 +462,7 @@ class ReportController < ApplicationController
     nodes = x_node.split('-')
 
     if nodes.length == 2
-      @right_cell_text ||= _("%{typ} %{model}") % {:typ   => @sb[:rpt_menu][nodes[1].to_i][0], :model => ui_lookup(:models => "MiqReport")}
+      @right_cell_text ||= _("%{typ} Reports") % {:typ => @sb[:rpt_menu][nodes[1].to_i][0]}
 
     elsif nodes.length == 4 && @sb[:rpt_menu][nodes[1].to_i].present?
       @sb[:rep_details] = {}
@@ -482,7 +482,7 @@ class ReportController < ApplicationController
         end
       end
 
-      @right_cell_text ||= _("%{typ} %{model}") % {:typ   => @sb[:rpt_menu][nodes[1].to_i][1][nodes[3].to_i][0], :model => ui_lookup(:models => "MiqReport")}
+      @right_cell_text ||= _("%{typ} Reports") % {:typ => @sb[:rpt_menu][nodes[1].to_i][1][nodes[3].to_i][0]}
 
     elsif nodes.length == 4 && @sb[:rpt_menu][nodes[1].to_i].nil?
       x_node_set("root", x_active_tree)
@@ -502,7 +502,7 @@ class ReportController < ApplicationController
     end
 
     @right_cell_div ||= "report_list"
-    @right_cell_text ||= _("All %{models}") % {:models => ui_lookup(:models => "MiqReport")}
+    @right_cell_text ||= _("All Reports")
   end
 
   # Get all info for the node about to be displayed
@@ -709,16 +709,15 @@ class ReportController < ApplicationController
           if @in_a_form
             presenter[:build_calendar] = true
             @right_cell_text = @schedule.id ?
-                _("Editing %{model} \"%{name}\"") % {:name => @schedule.name, :model => ui_lookup(:model => "MiqSchedule")} :
-                _("Adding a new %{model}") % {:model => ui_lookup(:model => "MiqSchedule")}
+                _("Editing Schedule \"%{name}\"") % {:name => @schedule.name} :
+                _("Adding a new Schedule")
           end
         else
           if @in_a_form
             @right_cell_text = if @rpt.id
-                                 _("Editing %{model} \"%{name}\"") % {:name  => @rpt.name,
-                                                                      :model => ui_lookup(:model => "MiqReport")}
+                                 _("Editing Report \"%{name}\"") % {:name => @rpt.name}
                                else
-                                 _("Adding a new %{model}") % {:model => ui_lookup(:model => "MiqReport")}
+                                 _("Adding a new Report")
                                end
           end
         end
@@ -726,8 +725,8 @@ class ReportController < ApplicationController
         if @in_a_form
           presenter[:build_calendar] = true
           @right_cell_text = @schedule.id ?
-              _("Editing %{model} \"%{name}\"") % {:name => @schedule.name, :model => ui_lookup(:model => 'MiqSchedule')} :
-              _("Adding a new %{model}") % {:model => ui_lookup(:model => 'MiqSchedule')}
+              _("Editing Schedule \"%{name}\"") % {:name => @schedule.name} :
+              _("Adding a new Schedule")
         end
       when :widgets_tree
         if @in_a_form
@@ -741,8 +740,8 @@ class ReportController < ApplicationController
             presenter[:init_dashboard] = true
           end
           @right_cell_text = @widget.id ?
-              _("Editing %{model} \"%{name}\"") % {:name => @widget.name, :model => ui_lookup(:model => 'MiqWidget')} :
-              _("Adding a new %{model}") % {:model => ui_lookup(:model => 'MiqWidget')}
+              _("Editing Widget \"%{name}\"") % {:name => @widget.name} :
+              _("Adding a new Widget")
         end
       end
     elsif nodetype == "g"
@@ -853,7 +852,7 @@ class ReportController < ApplicationController
     end
 
     if x_active_tree == :roles_tree && x_node != "root"
-      @right_cell_text = _("Editing %{model} \"%{name}\"") % {:name => session[:role_choice], :model => ui_lookup(:model => "MiqGroup")}
+      @right_cell_text = _("Editing EVM Group \"%{name}\"") % {:name => session[:role_choice]}
     end
     presenter[:right_cell_text] = @right_cell_text
 
