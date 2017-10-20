@@ -467,7 +467,7 @@ module ReportController::Schedules
   end
 
   def get_schedule(nodeid)
-    @record = @schedule = MiqSchedule.find(from_cid(nodeid.split('__').last).to_i)
+    @record = @schedule = MiqSchedule.find(nodeid.split('__').last.to_i)
     show_schedule
     @right_cell_text = _("Schedule \"%{name}\"") % {:name => @schedule.name}
     @right_cell_div  = "schedule_list"

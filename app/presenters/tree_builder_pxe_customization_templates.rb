@@ -50,7 +50,7 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
       pxe_img_id = nil
     else
       # root node was clicked or if folder node was clicked
-      pxe_img_id = from_cid(get_pxe_image_id(nodes))
+      pxe_img_id = get_pxe_image_id(nodes)
     end
     objects = CustomizationTemplate.where(:pxe_image_type_id => pxe_img_id)
     count_only_or_objects(count_only, objects, "name")

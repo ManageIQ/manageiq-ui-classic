@@ -407,19 +407,19 @@ class MiqPolicyController < ApplicationController
     folder_get_info(treenodeid) if treenodeid != "root"         # Get folder info for all node types
     case @nodetype
     when "pp" # Policy Profile
-      profile_get_info(MiqPolicySet.find(from_cid(nodeid)))
+      profile_get_info(MiqPolicySet.find(nodeid))
     when "p"  # Policy
-      policy_get_info(MiqPolicy.find(from_cid(nodeid)))
+      policy_get_info(MiqPolicy.find(nodeid))
     when "co" # Condition
-      condition_get_info(Condition.find(from_cid(nodeid)))
+      condition_get_info(Condition.find(nodeid))
     when "ev" # Event
-      event_get_info(MiqEventDefinition.find(from_cid(nodeid)))
+      event_get_info(MiqEventDefinition.find(nodeid))
     when "a", "ta", "fa" # Action or True/False Action
-      action_get_info(MiqAction.find(from_cid(nodeid)))
+      action_get_info(MiqAction.find(nodeid))
     when "ap" # Alert Profile
-      alert_profile_get_info(MiqAlertSet.find(from_cid(nodeid)))
+      alert_profile_get_info(MiqAlertSet.find(nodeid))
     when "al" # Alert
-      alert_get_info(MiqAlert.find(from_cid(nodeid)))
+      alert_get_info(MiqAlert.find(nodeid))
     end
     @show_adv_search = (@nodetype == "xx"   && !@folders) ||
                        (@nodetype == "root" && ![:alert_profile_tree, :condition_tree, :policy_tree].include?(x_active_tree))

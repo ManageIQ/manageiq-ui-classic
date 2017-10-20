@@ -268,7 +268,7 @@ module ApplicationController::Explorer
     kls = modelname.constantize
     return treenodeid if kls == Hash
 
-    unless kls.where(:id => from_cid(rec_id)).exists?
+    unless kls.where(:id => rec_id).exists?
       @replace_trees = [@sb[:active_accord]] # refresh trees
       self.x_node = "root"
       unless @report_deleted

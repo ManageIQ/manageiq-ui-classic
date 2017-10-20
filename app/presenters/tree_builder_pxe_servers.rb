@@ -54,7 +54,7 @@ class TreeBuilderPxeServers < TreeBuilder
 
   def x_get_tree_custom_kids(object, count_only, _options)
     nodes = (object[:full_id] || object[:id]).split('_')
-    ps = PxeServer.find_by_id(from_cid(nodes.last.split('-').last))
+    ps = PxeServer.find_by_id(nodes.last.split('-').last)
     objects = if nodes[0].end_with?("pxe")
                 ps.pxe_images
               elsif nodes[0].end_with?("win")

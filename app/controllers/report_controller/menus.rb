@@ -3,7 +3,7 @@ module ReportController::Menus
 
   def get_tree_data
     # build tree for selected role in left div of the right cell
-    session[:role_choice]   = MiqGroup.find(from_cid(x_node(:roles_tree).split('-').last)).description unless x_node(:roles_tree).split('-').last.blank?
+    session[:role_choice]   = MiqGroup.find(x_node(:roles_tree).split('-').last).description unless x_node(:roles_tree).split('-').last.blank?
     session[:node_selected] = "" if params[:action] != "menu_field_changed"
     @sb[:menu_default] = false
     if @changed || @menu_lastaction == "discard_changes"

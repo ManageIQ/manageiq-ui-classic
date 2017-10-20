@@ -203,7 +203,7 @@ class StorageController < ApplicationController
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
       if x_tree[:type] == :storage && (@nodetype == "root" || @nodetype == "ms")
-        search_id = @nodetype == "root" ? 0 : from_cid(id)
+        search_id = @nodetype == "root" ? 0 : id
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
            MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
@@ -255,7 +255,7 @@ class StorageController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "xx"  then @record = find_record(Storage, params[:id])
-    when "dsc" then @storage_record = find_record(EmsFolder, from_cid(params[:id]))
+    when "dsc" then @storage_record = find_record(EmsFolder, params[:id])
     end
   end
 

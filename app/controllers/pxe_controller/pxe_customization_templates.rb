@@ -35,7 +35,7 @@ module PxeController::PxeCustomizationTemplates
     @sortdir = session[:ct_sortdir].nil? ? "ASC" : session[:ct_sortdir]
     pxe_img_id = x_node.split('-').last == "system" ? nil : x_node.split('-').last
     if pxe_img_id
-      @view, @pages = get_view(CustomizationTemplate, :named_scope => [[:with_pxe_image_type_id, from_cid(pxe_img_id)]]) # Get the records (into a view) and the paginator
+      @view, @pages = get_view(CustomizationTemplate, :named_scope => [[:with_pxe_image_type_id, pxe_img_id]]) # Get the records (into a view) and the paginator
     else
       @view, @pages = get_view(CustomizationTemplate, :named_scope => [:with_system]) # Get the records (into a view) and the paginator
     end
@@ -217,7 +217,7 @@ module PxeController::PxeCustomizationTemplates
         @refresh_partial = "layouts/gtl"
       else
         templates.push(params[:id])
-        ct = CustomizationTemplate.find_by_id(from_cid(params[:id]))  if method == 'destroy'        # need to set this for destroy method so active node can be set to image_type folder node after record is deleted
+        ct = CustomizationTemplate.find_by_id(params[:id])  if method == 'destroy'        # need to set this for destroy method so active node can be set to image_type folder node after record is deleted
         process_templates(templates, method)  unless templates.empty?
         # TODO: tells callers to go back to show_list because this record may be gone
         # Should be refactored into calling show_list right here
@@ -240,13 +240,13 @@ module PxeController::PxeCustomizationTemplates
       nodes = treenodeid.split("-")
       if nodes[0] == "ct"
         @right_cell_div = "template_details"
-        @record = @ct = CustomizationTemplate.find_by_id(from_cid(nodes[1]))
+        @record = @ct = CustomizationTemplate.find_by_id(nodes[1])
         @right_cell_text = _("Customization Template \"%{name}\"") % {:name => @ct.name}
       else
         template_list
         pxe_img_id = x_node.split('-').last
 
-        pxe_img_type = PxeImageType.find_by_id(from_cid(pxe_img_id)) if pxe_img_id != "system"
+        pxe_img_type = PxeImageType.find_by_id(pxe_img_id) if pxe_img_id != "system"
         @right_cell_text = pxe_img_id == "system" ? _("Examples (read only)") :
                                     _("Customization Templates for System Image Types \"%{name}\"") % {:name => pxe_img_type.name}
         @right_cell_div  = "template_list"

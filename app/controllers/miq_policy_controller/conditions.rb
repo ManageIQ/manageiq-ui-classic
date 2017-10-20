@@ -35,7 +35,7 @@ module MiqPolicyController::Conditions
     case params[:button]
     when "save", "add"
       assert_privileges("condition_#{@condition.id ? "edit" : "new"}")
-      policy = MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"])) unless x_active_tree == :condition_tree
+      policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]) unless x_active_tree == :condition_tree
       adding = @condition.id.blank?
       condition = adding ? Condition.new : Condition.find(@condition.id)  # Get new or existing record
       condition.description = @edit[:new][:description]
@@ -168,7 +168,7 @@ module MiqPolicyController::Conditions
     if params[:id] && params[:typ] != "new"   # If editing existing condition, grab model
       @edit[:new][:towhat] = Condition.find(params[:id]).towhat
     else
-      @edit[:new][:towhat] = x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"])).towhat
+      @edit[:new][:towhat] = x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).towhat
     end
 
     @edit[:condition_id] = @condition.id
@@ -236,7 +236,7 @@ module MiqPolicyController::Conditions
     if x_active_tree == :condition_tree
       @condition_policies = @condition.miq_policies.sort_by { |p| p.description.downcase }
     else
-      @condition_policy = MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"]))
+      @condition_policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"])
     end
     add_flash(_("Ruby scripts are no longer supported in expressions, please change or remove them."), :warning) if @condition.expression.exp.key?('RUBY')
   end

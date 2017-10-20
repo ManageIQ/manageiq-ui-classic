@@ -385,7 +385,7 @@ class ApplicationController < ActionController::Base
     end
 
     if params[:parent_id]
-      parent_id = from_cid(params[:parent_id])
+      parent_id = params[:parent_id]
       unless parent_id.nil?
         options[:parent] = identify_record(parent_id, controller_to_model) if parent_id && options[:parent].nil?
       end
@@ -491,7 +491,7 @@ class ApplicationController < ActionController::Base
     params[:display] = "event_logs"
     if !params[:show].nil? || !params[:x_show].nil?
       id = params[:show] ? params[:show] : params[:x_show]
-      @item = @record.event_logs.find(from_cid(id))
+      @item = @record.event_logs.find(id)
       drop_breadcrumb(:name => @record.name + " (#{bc_text})", :url => "/#{obj}/event_logs/#{@record.id}?page=#{@current_page}")
       drop_breadcrumb(:name => @item.name, :url => "/#{obj}/show/#{@record.id}?show=#{@item.id}")
       show_item
@@ -1223,7 +1223,7 @@ class ApplicationController < ActionController::Base
   end
 
   def rbac_free_for_custom_button?(task, button_id)
-    task == "custom_button" && CustomButton.find_by(:id => from_cid(button_id))
+    task == "custom_button" && CustomButton.find_by(:id => button_id)
   end
 
   def check_button_rbac
@@ -2294,6 +2294,6 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_name_from_object(klass, id)
-    klass.find_by(:id => from_cid(id)).try(:name)
+    klass.find_by(:id => id).try(:name)
   end
 end

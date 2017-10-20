@@ -30,7 +30,7 @@ describe TreeBuilderReportSavedReports do
           saved_reports_in_tree = JSON.parse(tree.tree_nodes).first['nodes']
 
           displayed_report_ids = saved_reports_in_tree.map do |saved_report|
-            from_cid(saved_report["key"].gsub("xx-", ""))
+            saved_report["key"].gsub("xx-", "")
           end
 
           # logged User1 can see report with Group1

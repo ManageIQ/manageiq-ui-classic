@@ -1269,7 +1269,7 @@ describe ReportController do
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
           :model_name                     => 'MiqReportResult',
           :report_data_additional_options => {
-            :named_scope => [[:with_current_user_groups_and_report, rpt.id]],
+            :named_scope => [[:with_current_user_groups_and_report, rpt.id.to_s]],
             :model       => 'MiqReportResult'
           }
         )

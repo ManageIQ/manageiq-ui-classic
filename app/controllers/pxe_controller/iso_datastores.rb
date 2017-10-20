@@ -174,7 +174,7 @@ module PxeController::IsoDatastores
         return
       end
     when "reset", nil
-      @img = IsoImage.find_by_id(from_cid(params[:id]))
+      @img = IsoImage.find_by_id(params[:id])
       iso_img_set_form_vars
       @in_a_form = true
       session[:changed] = false
@@ -277,10 +277,10 @@ module PxeController::IsoDatastores
       nodes = treenodeid.split("-")
       if (nodes[0] == "isd" && nodes.length == 2) || (["isd_xx"].include?(nodes[1]) && nodes.length == 3)
         # on iso_datastore node OR folder node is selected
-        @record = @isd = IsoDatastore.find_by_id(from_cid(nodes.last))
+        @record = @isd = IsoDatastore.find_by_id(nodes.last)
         @right_cell_text = _("ISO Datastore \"%{name}\"") % {:name => @isd.name}
       elsif nodes[0] == "isi"
-        @record = @img = IsoImage.find_by_id(from_cid(nodes.last))
+        @record = @img = IsoImage.find_by_id(nodes.last)
         @right_cell_text = _("ISO Image \"%{name}\"") % {:name => @img.name}
       end
     end

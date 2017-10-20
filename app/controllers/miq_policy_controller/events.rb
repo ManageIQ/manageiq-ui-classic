@@ -24,7 +24,7 @@ module MiqPolicyController::Events
     id = params[:id] ? params[:id] : "new"
     return unless load_edit("event_edit__#{id}", "replace_cell__explorer")
     @event = @edit[:event_id] ? MiqEventDefinition.find_by_id(@edit[:event_id]) : MiqEventDefinition.new
-    policy = MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"]))
+    policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"])
     @policy = policy
 
     case params[:button]
@@ -64,7 +64,7 @@ module MiqPolicyController::Events
     @edit[:current] = {}
 
     @event = MiqEventDefinition.find(params[:id])                                         # Get event record
-    policy = MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"]))   # Get the policy above this event
+    policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"])   # Get the policy above this event
     @policy = policy                                 # Save for use in the view
     @edit[:key] = "event_edit__#{@event.id || "new"}"
     @edit[:rec_id] = @event.id || nil
@@ -118,15 +118,15 @@ module MiqPolicyController::Events
   # Get information for an event
   def event_get_info(event)
     @record = @event = event
-    @policy = MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"])) unless x_active_tree == :event_tree
+    @policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]) unless x_active_tree == :event_tree
     @right_cell_text = _("Event \"%{name}\"") % {:name => event.description}
     @right_cell_div = "event_details"
 
     if x_active_tree == :event_tree
       @event_policies = @event.miq_policies.sort_by { |p| p.description.downcase }
     else
-      @event_true_actions = MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"])).actions_for_event(event, :success)
-      @event_false_actions = MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"])).actions_for_event(event, :failure)
+      @event_true_actions = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).actions_for_event(event, :success)
+      @event_false_actions = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).actions_for_event(event, :failure)
     end
   end
 end

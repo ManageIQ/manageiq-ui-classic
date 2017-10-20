@@ -146,7 +146,7 @@ class MiddlewareServerController < ApplicationController
   end
 
   def jdbc_drivers
-    mw_server = MiddlewareServer.find(from_cid(params[:server_id]))
+    mw_server = MiddlewareServer.find(params[:server_id])
     mw_manager = mw_server.ext_management_system
     drivers = mw_manager.jdbc_drivers(mw_server.feed)
 
@@ -199,7 +199,7 @@ class MiddlewareServerController < ApplicationController
   def dr_download
     mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
     begin
-      diagnostic_report = mw_server.middleware_diagnostic_reports.find(from_cid(params[:key]))
+      diagnostic_report = mw_server.middleware_diagnostic_reports.find(params[:key])
     rescue ActiveRecord::RecordNotFound
       redirect_to(:action      => 'show',
                   :id          => mw_server.id,
@@ -222,9 +222,9 @@ class MiddlewareServerController < ApplicationController
   def dr_delete
     mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
     selected_drs = if params['mw_dr_selected'].respond_to?(:map)
-                     params['mw_dr_selected'].map { |item| from_cid(item) }
+                     params['mw_dr_selected']
                    else
-                     [from_cid(params['mw_dr_selected'])]
+                     [params['mw_dr_selected']]
                    end
     begin
       reports = mw_server.middleware_diagnostic_reports.find(selected_drs)

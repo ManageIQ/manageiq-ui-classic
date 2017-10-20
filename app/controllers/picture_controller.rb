@@ -4,7 +4,7 @@ class PictureController < ApplicationController
 
   def show # GET /pictures/:basename
     id, extension = params[:basename].split('.')
-    picture = Picture.find_by_id(from_cid(id))
+    picture = Picture.find_by_id(id)
     if picture && picture.extension == extension
       render_picture_content(picture)
     else

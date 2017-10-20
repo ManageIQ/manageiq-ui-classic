@@ -73,7 +73,7 @@ module OpsController::Db
   # VM clicked on in the explorer right cell
   def x_show
     # @explorer = true
-    @record = VmdbIndex.find_by_id(from_cid(params[:id]))
+    @record = VmdbIndex.find_by_id(params[:id])
     params[:id] = x_build_node_id(@record)  # Get the tree node id
     tree_select
   end
@@ -116,17 +116,17 @@ module OpsController::Db
       if @sb[:active_tab] == "db_indexes" || params[:action] == "x_show"
         nodes = x_node.split('-')
         if nodes.first == "xx"
-          tb = VmdbTableEvm.find_by_id(from_cid(nodes.last))
+          tb = VmdbTableEvm.find_by_id(nodes.last)
           @indexes = get_indexes(tb)
           @right_cell_text = _("Indexes for VMDB Table \"%{name}\"") % {:name => tb.name}
           @tab_text = "%{table_name} Indexes" % {:table_name => tb.name}
         else
-          @vmdb_index = VmdbIndex.find_by_id(from_cid(nodes.last))
+          @vmdb_index = VmdbIndex.find_by_id(nodes.last)
           @right_cell_text = _("VMDB Index \"%{name}\"") % {:name => @vmdb_index.name}
           @tab_text = @vmdb_index.name
         end
       elsif @sb[:active_tab] == "db_utilization"
-        @record = VmdbTable.find_by_id(from_cid(x_node.split('-').last))
+        @record = VmdbTable.find_by_id(x_node.split('-').last)
         perf_gen_init_options               # Initialize perf chart options, charts will be generated async
         @sb[:record_class] = @record.class.base_class.name  # Hang on to record class/id for async trans
         @sb[:record_id] = @record.id
@@ -134,7 +134,7 @@ module OpsController::Db
         @tab_text = @record.name
       else
         @sb[:active_tab] = "db_details"
-        @table = VmdbTable.find_by_id(from_cid(x_node.split('-').last))
+        @table = VmdbTable.find_by_id(x_node.split('-').last)
         @indexes = get_indexes(@table)
         @right_cell_text = _("VMDB Table \"%{name}\"") % {:name => @table.name}
         @tab_text = @table.name

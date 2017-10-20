@@ -50,7 +50,7 @@ class TreeBuilderRegion < TreeBuilder
 
   def x_get_tree_custom_kids(object, count_only, _options)
     nodes = object[:id].split('_')
-    id = from_cid(nodes.last.split('-').last)
+    id = nodes.last.split('-').last
     if object_ems?(nodes, object)
       rec = MiqRegion.find_by_id(id)
       objects = rbac_filtered_sorted_objects(rec.ems_infras, "name")

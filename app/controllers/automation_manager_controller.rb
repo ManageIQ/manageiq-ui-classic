@@ -68,7 +68,7 @@ class AutomationManagerController < ApplicationController
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
       if filtering? && %w(xx-csa ms).include?(@nodetype)
-        search_id = from_cid(id)
+        search_id = id
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
            MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
@@ -120,7 +120,7 @@ class AutomationManagerController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "root", "xx" then find_record(ConfiguredSystem, params[:id])
-    when "ms"         then find_record(ConfiguredSystem, from_cid(params[:id]))
+    when "ms"         then find_record(ConfiguredSystem, params[:id])
     end
   end
 
@@ -300,7 +300,7 @@ class AutomationManagerController < ApplicationController
       @show_adv_search = true
       options = {:model                 => "ConfiguredSystem",
                  :match_via_descendants => 'ConfiguredSystem',
-                 :named_scope           => [[:with_inventory_root_group, from_cid(@inventory_group_record.id)]],
+                 :named_scope           => [[:with_inventory_root_group, @inventory_group_record.id]],
                  :gtl_dbname            => "automation_manager_configured_systems"}
       process_show_list(options)
       record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))

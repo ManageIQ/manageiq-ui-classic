@@ -179,7 +179,7 @@ module ApplicationController::CiProcessing
   # find the record that was chosen
   def identify_record(id, klass = self.class.model)
     begin
-      record = find_record_with_rbac(klass, from_cid(id))
+      record = find_record_with_rbac(klass, id)
     rescue => @bang
       self.x_node = "root" if @explorer
       add_flash(@bang.message, :error, true)

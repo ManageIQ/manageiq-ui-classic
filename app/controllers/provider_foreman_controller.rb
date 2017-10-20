@@ -85,7 +85,7 @@ class ProviderForemanController < ApplicationController
 
     if x_active_tree == :configuration_manager_cs_filter_tree && params[:button] != 'saveit' # Configured Systems accordion
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
-      search_id = @nodetype == "root" ? 0 : from_cid(id)
+      search_id = @nodetype == "root" ? 0 : id
       search_id = @edit[@expkey][:selected][:id] if params[:button] == "save"
       listnav_search_selected(search_id) if !params.key?(:search_text) && params[:action] != 'x_show' # Clear or set the adv search filter
       if @edit[:adv_search_applied] &&
@@ -160,7 +160,7 @@ class ProviderForemanController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "root", "xx" then find_record(ConfiguredSystem, params[:id])
-    when "ms"         then find_record(ConfiguredSystem, from_cid(params[:id]))
+    when "ms"         then find_record(ConfiguredSystem, params[:id])
     end
   end
 

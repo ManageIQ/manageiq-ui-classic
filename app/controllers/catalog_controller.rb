@@ -180,7 +180,7 @@ class CatalogController < ApplicationController
   # VM or Template show selected, redirect to proper controller
   def show
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
-    record = ServiceTemplate.find_by_id(from_cid(params[:id]))
+    record = ServiceTemplate.find_by_id(params[:id])
     if !@explorer
       tree_node_id = TreeBuilder.build_node_id(record)
       redirect_to :controller => "catalog",
@@ -208,7 +208,7 @@ class CatalogController < ApplicationController
       @nodetype, id = parse_nodetype_and_id(params[:id])
       self.x_active_tree   = 'sandt_tree'
       self.x_active_accord = 'sandt'
-      st = ServiceTemplate.find_by_id(from_cid(params[:id].split("-").last))
+      st = ServiceTemplate.find_by_id(params[:id].split("-").last)
       prefix = st.service_template_catalog_id ? "stc-#{st.service_template_catalog_id}_st-" : "-Unassigned_st-"
       self.x_node = "#{prefix}#{id}"
       get_node_info(x_node)
@@ -248,15 +248,15 @@ class CatalogController < ApplicationController
         # link to Catalog Item clicked on catalog summary screen
         self.x_active_tree = :sandt_tree
         self.x_active_accord = 'sandt'
-        @record = ServiceTemplate.find_by_id(from_cid(params[:rec_id]))
+        @record = ServiceTemplate.find_by_id(params[:rec_id])
       else
-        @record = ServiceTemplateCatalog.find_by_id(from_cid(params[:id]))
+        @record = ServiceTemplateCatalog.find_by_id(params[:id])
       end
     elsif x_active_tree == :ot_tree
-      @record ||= OrchestrationTemplate.find_by_id(from_cid(params[:id]))
+      @record ||= OrchestrationTemplate.find_by_id(params[:id])
     else
-      identify_catalog(from_cid(params[:id]))
-      @record ||= ServiceTemplateCatalog.find_by_id(from_cid(params[:id]))
+      identify_catalog(params[:id])
+      @record ||= ServiceTemplateCatalog.find_by_id(params[:id])
     end
     params[:id] = x_build_node_id(@record, x_tree(x_active_tree))  # Get the tree node id
     tree_select
@@ -1598,7 +1598,7 @@ class CatalogController < ApplicationController
       params.each do |var, val|
         vars = var.split("_")
         if vars[0] == "gidx"
-          rid = from_cid(vars[1])
+          rid = vars[1]
           # push a new resource into highest existing/populated group
           @group_changed = false
           @edit[:new][:rsc_groups].each_with_index do |groups, i|
@@ -1724,7 +1724,7 @@ class CatalogController < ApplicationController
   end
 
   def get_node_info_handle_simple_leaf_node(id)
-    show_record(from_cid(id))
+    show_record(id)
     @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => TreeBuilder.get_model_for_prefix(@nodetype))}
   end
 
@@ -1737,30 +1737,30 @@ class CatalogController < ApplicationController
   def get_node_info_handle_stc_node(id)
     if x_active_tree == :sandt_tree
       # catalog items accordion also shows the non-"Display in Catalog" items
-      scope = [[:with_service_template_catalog_id, from_cid(id)]]
+      scope = [[:with_service_template_catalog_id, id]]
     else
-      scope = [:displayed, [:with_service_template_catalog_id, from_cid(id)]]
+      scope = [:displayed, [:with_service_template_catalog_id, id]]
     end
     service_template_list(scope, :no_order_button => true)
-    stc = ServiceTemplateCatalog.find(from_cid(id))
+    stc = ServiceTemplateCatalog.find(id)
     @right_cell_text = _("Services in Catalog \"%{name}\"") % {:name => stc.name}
   end
 
   def get_node_info_handle_leaf_node_stcat(id)
-    @record = ServiceTemplateCatalog.find(from_cid(id))
+    @record = ServiceTemplateCatalog.find(id)
     @record_service_templates = Rbac.filtered(@record.service_templates)
     typ = TreeBuilder.get_model_for_prefix(@nodetype)
     @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
   end
 
   def get_node_info_handle_leaf_node_ot(id)
-    @record = OrchestrationTemplate.find(from_cid(id))
+    @record = OrchestrationTemplate.find(id)
     @right_cell_text = _("%{model} \"%{name}\"") % {:name  => @record.name,
                                                     :model => ui_lookup(:model => @record.class.name)}
   end
 
   def get_node_info_handle_leaf_node(id)
-    show_record(from_cid(id))
+    show_record(id)
     if @record.atomic? && need_prov_dialogs?(@record.prov_type)
       @miq_request = MiqRequest.find(@record.service_resources[0].resource_id)
       prov_set_show_vars
@@ -1802,7 +1802,7 @@ class CatalogController < ApplicationController
     @explorer ||= true
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
     # saving this so it can be used while adding buttons/groups in buttons editor
-    @sb[:applies_to_id] = from_cid(id)
+    @sb[:applies_to_id] = id
     tree_nodes = treenodeid.split('_')
     if tree_nodes.length >= 3 && tree_nodes[2].split('-').first == "xx"
       # buttons folder or nodes under that were clicked

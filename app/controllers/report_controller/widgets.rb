@@ -285,7 +285,7 @@ module ReportController::Widgets
       @right_cell_div  = "widget_list"
       @right_cell_text = _("%{typ} Widgets") % {:typ => _(SINGULAR_WIDGET_TYPES[@sb[:nodes][1]])}
     else
-      @record = @widget = MiqWidget.find_by_id(from_cid(@sb[:nodes].last))
+      @record = @widget = MiqWidget.find_by_id(@sb[:nodes].last)
       @widget_running = true if ["running", "queued"].include?(@widget.status.downcase)
       typ = WIDGET_CONTENT_TYPE.invert[@widget.content_type]
       content_type = _(SINGULAR_WIDGET_TYPES[typ])
@@ -356,12 +356,12 @@ module ReportController::Widgets
           @edit[:new][:roles] = ["_ALL_"]
         else
           roles = Rbac.filtered(MiqUserRole.where(:name => @widget.visibility[:roles]))
-          @edit[:new][:roles] = roles.collect { |role| role.id }.sort
+          @edit[:new][:roles] = roles.collect(&:id).sort
         end
       elsif @widget.visibility[:groups]
         @edit[:new][:visibility_typ] = "group"
         groups = Rbac.filtered(MiqGroup.in_my_region.where(:description => @widget.visibility[:groups]))
-        @edit[:new][:groups] = groups.collect { |group| group.id }.sort
+        @edit[:new][:groups] = groups.collect(&:id).sort
       end
     end
     @edit[:sorted_user_roles] =
@@ -613,8 +613,8 @@ module ReportController::Widgets
     if @edit[:new][:visibility_typ] == "group"
       groups = []
       @edit[:new][:groups].each do |g|
-        group = MiqGroup.find_by_id(from_cid(g))
-        groups.push(group.description) if from_cid(g) == group.id
+        group = MiqGroup.find_by_id(g)
+        groups.push(group.description) if g == group.id
       end
       widget.visibility[:groups] =  groups
       widget.visibility.delete(:roles) if widget.visibility[:roles]
@@ -622,8 +622,8 @@ module ReportController::Widgets
       if @edit[:new][:visibility_typ] == "role"
         roles = []
         @edit[:new][:roles].each do |r|
-          role = MiqUserRole.find_by_id(from_cid(r))
-          roles.push(role.name) if from_cid(r) == role.id
+          role = MiqUserRole.find_by_id(r)
+          roles.push(role.name) if r == role.id
         end
         widget.visibility[:roles] =  roles
       else

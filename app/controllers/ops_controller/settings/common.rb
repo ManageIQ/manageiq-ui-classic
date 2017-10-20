@@ -588,7 +588,7 @@ module OpsController::Settings::Common
     server_id, child = id.split('__')
 
     if server_id.include?('svr')
-      server_id = from_cid(server_id.sub('svr-', ''))
+      server_id = server_id.sub('svr-', '')
     else
       server_id.sub!('xx-', '')
     end
@@ -674,7 +674,7 @@ module OpsController::Settings::Common
     new = @edit[:new]
 
     # WTF? here we can have a Zone or a MiqServer, what about Region? --> rescue from exception
-    @selected_server = (cls.find(from_cid(nodes.last)) rescue nil)
+    @selected_server = (cls.find(nodes.last) rescue nil)
 
     case @sb[:active_tab]                                               # No @edit[:current].config for Filters since there is no config file
     when 'settings_rhn_edit'
@@ -1181,32 +1181,32 @@ module OpsController::Settings::Common
       end
     when "svr"
       # @sb[:tabform] = "operations_1" if @sb[:selected_server] && @sb[:selected_server].id != nodetype.downcase.split("-").last.to_i #reset tab if server node was changed, current server has 10 tabs, current active tab may not be available for other server nodes.
-      #     @sb[:selected_server] = MiqServer.find(from_cid(nodetype.downcase.split("-").last))
-      @selected_server = MiqServer.find(from_cid(nodes.last))
+      #     @sb[:selected_server] = MiqServer.find(nodetype.downcase.split("-").last)
+      @selected_server = MiqServer.find(nodes.last)
       @sb[:selected_server_id] = @selected_server.id
       settings_set_form_vars
     when "msc"
-      @record = @selected_schedule = MiqSchedule.find(from_cid(nodes.last))
+      @record = @selected_schedule = MiqSchedule.find(nodes.last)
       @right_cell_text = _("Settings Schedule \"%{name}\"") % {:name => @selected_schedule.name}
       schedule_show
     when "ld", "lr"
       nodes = nodetype.split('-')
       if nodes[0] == "lr"
-        @record = @selected_lr = LdapRegion.find(from_cid(nodes[1]))
+        @record = @selected_lr = LdapRegion.find(nodes[1])
         @right_cell_text = _("Settings LDAP Region \"%{name}\"") % {:name => @selected_lr.name}
         ldap_region_show
       else
-        @record = @selected_ld = LdapDomain.find(from_cid(nodes[1]))
+        @record = @selected_ld = LdapDomain.find(nodes[1])
         @right_cell_text = _("Settings LDAP Domain \"%{name}\"") % {:name => @selected_ld.name}
         ldap_domain_show
       end
     when "sis"
-      @record = @selected_scan = ScanItemSet.find(from_cid(nodes.last))
+      @record = @selected_scan = ScanItemSet.find(nodes.last)
       @right_cell_text = _("Settings Analysis Profile \"%{name}\"") % {:name => @selected_scan.name}
       ap_show
     when "z"
       @servers = []
-      @record = @zone = @selected_zone = Zone.find(from_cid(nodes.last))
+      @record = @zone = @selected_zone = Zone.find(nodes.last)
       @right_cell_text = my_zone_name == @selected_zone.name ?
           _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
                                                           :model => ui_lookup(:model => @selected_zone.class.to_s)} :

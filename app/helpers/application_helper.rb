@@ -1657,7 +1657,7 @@ module ApplicationHelper
       additional_options[:match_via_descendants] = additional_options[:match_via_descendants].constantize
     end
     if additional_options[:parent_id].present? && additional_options[:parent_class_name].present?
-      parent_id = from_cid(additional_options[:parent_id])
+      parent_id = additional_options[:parent_id]
       parent_class = additional_options[:parent_class_name].constantize
       additional_options[:parent] = parent_class.find(parent_id) if parent_class < ActiveRecord::Base
     end

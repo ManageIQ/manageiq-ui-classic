@@ -162,7 +162,7 @@ module MiqPolicyController::MiqActions
     @edit = session[:edit]
     @action = @edit[:action_id] ? MiqAction.find_by_id(@edit[:action_id]) : MiqAction.new
     _, id = parse_nodetype_and_id(params[:id])
-    tag_name = Classification.find(from_cid(id)).tag.name
+    tag_name = Classification.find(id).tag.name
     @tag_selected = Classification.tag2human(tag_name)
     @edit[:new][:options][:tags] = {} unless tag_name.nil?
     @edit[:new][:options][:tags] = [tag_name] unless tag_name.nil?

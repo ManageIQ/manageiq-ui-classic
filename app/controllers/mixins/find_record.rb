@@ -1,9 +1,9 @@
 module Mixins
   module FindRecord
     def find_record(model, id)
-      raise _("Invalid input") unless is_integer?(from_cid(id))
+      raise _("Invalid input") unless is_integer?(id)
       begin
-        record = Rbac.filtered(model.where(:id => from_cid(id))).first
+        record = Rbac.filtered(model.where(:id => id)).first
       rescue ActiveRecord::RecordNotFound, StandardError => ex
         if @explorer
           self.x_node = "root"

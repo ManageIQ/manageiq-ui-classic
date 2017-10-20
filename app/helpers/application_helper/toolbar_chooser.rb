@@ -58,7 +58,7 @@ class ApplicationHelper::ToolbarChooser
 
   private
 
-  delegate :session, :from_cid, :x_node, :x_active_tree, :super_admin_user?, :render_gtl_view_tb?,
+  delegate :session, :x_node, :x_active_tree, :super_admin_user?, :render_gtl_view_tb?,
            :parse_nodetype_and_id, :to => :@view_context
 
   def initialize(view_context, view_binding, instance_data)
@@ -155,7 +155,7 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def domain_or_namespace_toolbar(node_id)
-    ns = MiqAeNamespace.find(from_cid(node_id))
+    ns = MiqAeNamespace.find(node_id)
     if ns.domain?
       "miq_ae_domain_center_tb"
     elsif !ns.domain?

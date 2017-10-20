@@ -57,7 +57,7 @@ module VmShowMixin
 
   # VM or Template show selected, redirect to proper controller, to get links on tasks screen working
   def vm_show
-    record = VmOrTemplate.find_by_id(from_cid(params[:id]))
+    record = VmOrTemplate.find_by_id(params[:id])
     redirect_to :action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id
   end
 

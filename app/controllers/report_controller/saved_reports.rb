@@ -15,7 +15,7 @@ module ReportController::SavedReports
   end
 
   def fetch_saved_report(id)
-    rr = MiqReportResult.for_user(current_user).find_by_id(from_cid(id.split('-').last))
+    rr = MiqReportResult.for_user(current_user).find_by_id(id.split('-').last)
     if rr.nil?  # Saved report no longer exists
       @report = nil
       return
@@ -89,7 +89,7 @@ module ReportController::SavedReports
     unless savedreports.present?
       report_result = x_node.split('_').last
       savedreport = report_result.split('-').last
-      savedreports = Array.wrap(from_cid(savedreport))
+      savedreports = Array.wrap(savedreport)
     end
 
     if savedreports.empty? && params[:id].present? && !MiqReportResult.for_user(current_user).exists?(params[:id].to_i)

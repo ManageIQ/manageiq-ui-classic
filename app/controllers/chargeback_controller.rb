@@ -336,7 +336,7 @@ class ChargebackController < ApplicationController
   end
 
   def cb_rpts_fetch_saved_report(id)
-    rr = MiqReportResult.for_user(current_user).find_by_id(from_cid(id.to_s.split('-').last))
+    rr = MiqReportResult.for_user(current_user).find_by_id(id.to_s.split('-').last)
     if rr.nil?  # Saved report no longer exists
       @report = nil
       return
@@ -393,7 +393,7 @@ class ChargebackController < ApplicationController
                            end
         cb_rates_list
       else
-        @record = ChargebackRate.find(from_cid(parse_nodetype_and_id(node).last))
+        @record = ChargebackRate.find(parse_nodetype_and_id(node).last)
         @sb[:action] = nil
         @right_cell_text = case @record.rate_type
                            when "Compute" then _("Compute Chargeback Rate \"%{name}\"") % {:name => @record.description}
@@ -425,7 +425,7 @@ class ChargebackController < ApplicationController
         # On a saved report node
         cb_rpts_show_saved_report
         if @report
-          s = MiqReportResult.for_user(current_user).find_by_id(from_cid(nodes.last.split('-').last))
+          s = MiqReportResult.for_user(current_user).find_by_id(nodes.last.split('-').last)
 
           @right_cell_div = "reports_list_div"
           @right_cell_text = _("Saved Chargeback Report \"%{last_run_on}\"") % {:last_run_on => format_timezone(s.last_run_on, Time.zone, "gtl")}
@@ -465,7 +465,7 @@ class ChargebackController < ApplicationController
 
   def cb_rpts_get_all_reps(nodeid)
     return [] if nodeid.blank?
-    @sb[:miq_report_id] = from_cid(nodeid)
+    @sb[:miq_report_id] = nodeid
     miq_report = MiqReport.for_user(current_user).find(@sb[:miq_report_id])
     saved_reports = miq_report.miq_report_results.with_current_user_groups
                               .select("id, miq_report_id, name, last_run_on, report_source")

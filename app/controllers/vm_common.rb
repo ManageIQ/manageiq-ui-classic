@@ -93,7 +93,7 @@ module VmCommon
     db = get_rec_cls
     @display = "timeline"
     session[:tl_record_id] = params[:id] if params[:id]
-    @record = find_record_with_rbac(db, from_cid(session[:tl_record_id]))
+    @record = find_record_with_rbac(db, session[:tl_record_id])
     @timeline = @timeline_filter = true
     @lastaction = "show_timeline"
     tl_build_timeline                       # Create the timeline report
@@ -213,7 +213,7 @@ module VmCommon
       @sb[@sb[:active_accord]] = TreeBuilder.build_node_id(@record)
       @snapshot_tree = TreeBuilderSnapshots.new(:snapshot_tree, :snapshot, @sb, true, :root => @record)
       @active = if @snapshot_tree.selected_node
-                  snap_selected = Snapshot.find(from_cid(@snapshot_tree.selected_node.split('-').last))
+                  snap_selected = Snapshot.find(@snapshot_tree.selected_node.split('-').last)
                   session[:snap_selected] = snap_selected.id
                   snap_selected.current?
                 else
@@ -273,7 +273,7 @@ module VmCommon
   end
 
   def node_id(id)
-    id == 'root' ? session[:genealogy_tree_root_id] : from_cid(parse_nodetype_and_id(id).last)
+    id == 'root' ? session[:genealogy_tree_root_id] : parse_nodetype_and_id(id).last
   end
 
   def genealogy_tree_selected
@@ -283,7 +283,7 @@ module VmCommon
   end
 
   def snap_pressed
-    session[:snap_selected] = from_cid(params[:id])
+    session[:snap_selected] = params[:id]
     @snap_selected = Snapshot.find_by(:id => session[:snap_selected])
     @vm = @record = identify_record(x_node_right_cell.split('-').last, VmOrTemplate)
     if @snap_selected.nil?
@@ -872,7 +872,7 @@ module VmCommon
     params[:display] = "scan_histories"
     if !params[:show].nil? || !params[:x_show].nil?
       id = params[:show] ? params[:show] : params[:x_show]
-      @item = ScanHistory.find(from_cid(id))
+      @item = ScanHistory.find(id)
       drop_breadcrumb(:name => time_ago_in_words(@item.started_on.in_time_zone(Time.zone)).titleize, :url => "/vm/scan_history/#{@scan_history.vm_or_template_id}?show=#{@item.id}")
       @view = get_db_view(ScanHistory)          # Instantiate the MIQ Report view object
       show_item
@@ -924,7 +924,7 @@ module VmCommon
     # Handle filtered tree nodes
     if x_active_tree.to_s =~ /_filter_tree$/ && !record_requested
 
-      search_id = @nodetype == "root" ? 0 : from_cid(id)
+      search_id = @nodetype == "root" ? 0 : id
       adv_search_build(model_from_active_tree(x_active_tree))
       session[:edit] = @edit              # Set because next method will restore @edit from session
       listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
@@ -1055,7 +1055,7 @@ module VmCommon
                     end
     case TreeBuilder.get_model_for_prefix(@nodetype)
     when "Vm", "MiqTemplate"  # VM or Template record, show the record
-      show_record(from_cid(id))
+      show_record(id)
       if @record.nil?
         self.x_node = "root"
         get_node_info("root")
@@ -1118,7 +1118,7 @@ module VmCommon
                                _("All VMs & Templates")
                              end
         else
-          rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(from_cid(id))
+          rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(id)
           options.merge!({:association => (@nodetype == "az" ? "vms" : "all_vms_and_templates"), :parent => rec})
           options[:named_scope] ||= []
           options[:named_scope] << :with_ems

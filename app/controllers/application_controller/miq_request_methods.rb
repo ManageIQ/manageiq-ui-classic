@@ -181,7 +181,7 @@ module ApplicationController::MiqRequestMethods
   # Add/edit a provision request
   def prov_edit
     if params[:button] == "cancel"
-      req = MiqRequest.find_by_id(from_cid(session[:edit][:req_id])) if session[:edit] && session[:edit][:req_id]
+      req = MiqRequest.find_by_id(session[:edit][:req_id]) if session[:edit] && session[:edit][:req_id]
       add_flash(if req && req.id
                   _("Edit of %{model} Request \"%{name}\" was cancelled by the user") %
                     {:model => session[:edit][:prov_type], :name => req.description}

@@ -38,7 +38,7 @@ class TreeBuilder
       # Creating empty record to show items under unassigned catalog node
       ConfigurationProfile.new
     else
-      model.constantize.find(from_cid(rec_id))
+      model.constantize.find(rec_id)
     end
   end
 

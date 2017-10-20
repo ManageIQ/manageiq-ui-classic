@@ -138,7 +138,7 @@ module ApplicationController::Buttons
   # AJAX driven routine to delete a user
   def ab_button_delete
     assert_privileges("ab_button_delete")
-    custom_button = CustomButton.find(from_cid(params[:id]))
+    custom_button = CustomButton.find(params[:id])
     description = custom_button.description
     audit = {:event => "custom_button_record_delete", :message => "[#{custom_button.description}] Record deleted", :target_id => custom_button.id, :target_class => "CustomButton", :userid => session[:userid]}
     if custom_button.parent
@@ -212,7 +212,7 @@ module ApplicationController::Buttons
       replace_right_cell(:nodetype => x_node)
       return
     end
-    custom_button_set = CustomButtonSet.find(from_cid(params[:id]))
+    custom_button_set = CustomButtonSet.find(params[:id])
     description = custom_button_set.description
     audit = {:event => "custom_button_set_record_delete", :message => "[#{custom_button_set.description}] Record deleted", :target_id => custom_button_set.id, :target_class => "CustomButtonSet", :userid => session[:userid]}
 
@@ -535,7 +535,7 @@ module ApplicationController::Buttons
       if x_active_tree == :ab_tree || nodes.length > 3
         # find custombutton set in ab_tree or when adding button under a group
         group_id = x_active_tree == :ab_tree ? nodes[2].split('-').last : nodes[3].split('-').last
-        @aset = CustomButtonSet.find(from_cid(group_id))
+        @aset = CustomButtonSet.find(group_id)
         mems = @aset.members
       end
     end
@@ -661,7 +661,7 @@ module ApplicationController::Buttons
   def group_new_edit(typ)
     @record = @custom_button_set = typ == "new" ?
         CustomButtonSet.new :
-        CustomButtonSet.find(from_cid(params[:id]))
+        CustomButtonSet.find(params[:id])
     if typ == "edit" && x_node.split('_').last == "ub"
       add_flash(_("'Unassigned Button Group' can not be edited"), :error)
       get_node_info
@@ -691,7 +691,7 @@ module ApplicationController::Buttons
   def button_new_edit(typ)
     @record = @custom_button = typ == "new" ?
         CustomButton.new :
-        CustomButton.find(from_cid(params[:id]))
+        CustomButton.find(params[:id])
     @sb[:active_tab] = "ab_options_tab"
     button_set_form_vars
     @in_a_form = true
@@ -875,8 +875,8 @@ module ApplicationController::Buttons
     if @edit[:new][:visibility_typ] == "role"
       roles = []
       @edit[:new][:roles].each do |r|
-        role = MiqUserRole.find_by_id(from_cid(r))
-        roles.push(role.name) if role && from_cid(r) == role.id
+        role = MiqUserRole.find_by_id(r)
+        roles.push(role.name) if role && r == role.id
       end
       button.visibility[:roles] =  roles
     else
@@ -1130,7 +1130,7 @@ module ApplicationController::Buttons
       end
     elsif nodetype.length == 4 && nodetype[3].split('-').first == "cbg"       # buttons group selected
       @sb[:applies_to_class] = "ServiceTemplate"
-      @record = CustomButtonSet.find(from_cid(nodetype[3].split('-').last))
+      @record = CustomButtonSet.find(nodetype[3].split('-').last)
       # saving id of catalogitem to use it in view to build id for right cell
       @sb[:rec_id] = @record.id
       @right_cell_text = _("Button Group \"%{name}\"") % {:name => @record.name.split("|").first}
@@ -1153,7 +1153,7 @@ module ApplicationController::Buttons
       end
     elsif nodetype.length >= 4 && (nodetype[3].split('-').first == "cb" || nodetype[4].split('-').first == "cb")        # button selected
       id = nodetype[3].split('-').first == "cb" ? nodetype[3].split('-').last : nodetype[4].split('-').last
-      @record = @custom_button = CustomButton.find(from_cid(id))
+      @record = @custom_button = CustomButton.find(id)
       build_resolve_screen
       @resolve[:new][:attrs] = []
       if @custom_button.uri_attributes

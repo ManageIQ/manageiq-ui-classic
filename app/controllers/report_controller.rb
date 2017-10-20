@@ -426,7 +426,7 @@ class ReportController < ApplicationController
   def determine_rr_node_info
     nodes = x_node.split('-')
     show_saved_report
-    @record = MiqReportResult.for_user(current_user).find(from_cid(nodes.last))
+    @record = MiqReportResult.for_user(current_user).find(nodes.last)
     @right_cell_text = _("Saved Report \"%{name} - %{timestamp}\"") % {
       :name      => @record.name,
       :timestamp => format_timezone(@record.created_on, Time.zone, "gt")}
@@ -484,10 +484,10 @@ class ReportController < ApplicationController
       x_node_set("root", x_active_tree)
 
     elsif nodes.length == 5
-      @sb[:selected_rep_id] = from_cid(nodes[4])
+      @sb[:selected_rep_id] = nodes[4]
       if role_allows?(:feature => "miq_report_widget_editor")
         # all widgets for this report
-        get_all_widgets("report", from_cid(nodes[4]))
+        get_all_widgets("report", nodes[4])
       end
       get_all_reps(nodes[4])
 
