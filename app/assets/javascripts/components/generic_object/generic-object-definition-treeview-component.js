@@ -9,22 +9,24 @@ ManageIQ.angular.app.component('genericObjectDefinitionTreeviewComponent', {
   templateUrl: '/static/generic_object/generic_object_definition_treeview.html.haml',
 });
 
-genericObjectDefinitionTreeviewController.$inject = ['API', 'miqService', '$window'];
+genericObjectDefinitionTreeviewController.$inject = ['API', 'miqService', '$window', '$timeout'];
 
-function genericObjectDefinitionTreeviewController(API, miqService, $window) {
+function genericObjectDefinitionTreeviewController(API, miqService, $window, $timeout) {
   var vm = this;
 
   vm.treeData = [];
   vm.activeNode = {};
 
   vm.$onInit = function() {
-    if ($window.top.name !== '') {
-      vm.treeData = $window.top.name;
-      $window.top.name = '';
-    } else {
-      setGenericObjectDefinitionNodes();
-    }
-    vm.setActiveNode();
+    $timeout(function() {
+      if ($window.top.name !== '') {
+        vm.treeData = $window.top.name;
+        $window.top.name = '';
+      } else {
+        setGenericObjectDefinitionNodes();
+      }
+      vm.setActiveNode();
+    });
   };
 
   vm.nodeSelect = function(node) {
