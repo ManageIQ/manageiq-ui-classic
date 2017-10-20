@@ -17,7 +17,15 @@ describe EmsMiddlewareController do
       session[:settings] = {:views => {}, :quadicons => {}}
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
-      @middleware = FactoryGirl.create(:ems_hawkular)
+      auth = AuthToken.new(
+        :name     => "test",
+        :auth_key => "valid-token",
+        :userid   => "jdoe",
+        :password => "password",
+        :authtype => :default
+      )
+      @middleware = FactoryGirl.create(:ems_hawkular,
+                                       :authentications => [auth])
       MiddlewareDatasource.create(:ext_management_system => @middleware, :name => "Test Middleware")
     end
 

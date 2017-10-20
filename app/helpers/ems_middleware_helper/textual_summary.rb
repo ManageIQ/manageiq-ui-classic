@@ -17,7 +17,7 @@ module EmsMiddlewareHelper::TextualSummary
   end
 
   def textual_group_status
-    TextualGroup.new(_("Status"), %i(refresh_status refresh_date))
+    TextualGroup.new(_("Status"), %i(authentication_status refresh_status refresh_date))
   end
 
   def textual_group_smart_management
@@ -55,5 +55,12 @@ module EmsMiddlewareHelper::TextualSummary
      :icon  => "pficon pficon-topology",
      :link  => url_for_only_path(:controller => 'middleware_topology', :action => 'show', :id => @record.id),
      :title => _('Show topology')}
+  end
+
+  def textual_authentication_status
+    auth_status = @record.authentication_for_summary.first
+
+    short_status = auth_status[:status] || _('None')
+    "#{short_status} - #{auth_status[:status_details]}" unless auth_status[:status_details].blank?
   end
 end
