@@ -1,3 +1,4 @@
+- return if @display == 'generic_objects'
 = miq_accordion_panel(_("Generic Object Classes"), true, "god") do
   %generic-object-definition-treeview-component{{"record-id"     => @generic_object_definition.try(:id),
                                                  "show-list-url" => "/generic_object_definition/show_list",
