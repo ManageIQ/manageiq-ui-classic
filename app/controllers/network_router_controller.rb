@@ -27,6 +27,8 @@ class NetworkRouterController < ApplicationController
       javascript_redirect :action => "edit", :id => checked_item_id
     elsif params[:pressed] == "network_router_new"
       javascript_redirect :action => "new"
+    elsif params[:pressed] == "custom_button"
+      custom_buttons
     elsif params[:pressed] == "network_router_add_interface"
       javascript_redirect :action => "add_interface_select", :id => checked_item_id
     elsif params[:pressed] == "network_router_remove_interface"
