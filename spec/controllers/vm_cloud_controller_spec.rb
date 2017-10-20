@@ -147,7 +147,7 @@ describe VmCloudController do
     it 'can open the instance Ownership form from a list' do
       post :explorer
       expect(response.status).to eq(200)
-      post :x_button, :params => { :pressed => 'instance_ownership', "check_#{ApplicationRecord.compress_id(vm_openstack.id)}" => "1"}
+      post :x_button, :params => { :pressed => 'instance_ownership', "check_#{vm_openstack.id}" => "1"}
       expect(response.status).to eq(200)
       expect(response).to render_template(:partial => 'shared/views/_ownership')
     end

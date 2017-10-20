@@ -199,7 +199,7 @@ describe ProviderForemanController do
     end
 
     it "renders the edit page when the configuration manager id is selected from a grid/tile" do
-      post :edit, :params => { "check_#{ApplicationRecord.compress_id(@config_mgr.id)}" => "1" }
+      post :edit, :params => { "check_#{@config_mgr.id}" => "1" }
       expect(response.status).to eq(200)
     end
   end
@@ -225,8 +225,8 @@ describe ProviderForemanController do
 
     it "it refreshes a provider when the configuration manager id is selected from a grid/tile" do
       allow(controller).to receive(:replace_right_cell)
-      post :refresh, :params => { "check_#{ApplicationRecord.compress_id(@config_mgr.id)}"  => "1",
-                                  "check_#{ApplicationRecord.compress_id(@config_mgr2.id)}" => "1" }
+      post :refresh, :params => { "check_#{@config_mgr.id}"  => "1",
+                                  "check_#{@config_mgr2.id}" => "1" }
       expect(assigns(:flash_array).first[:message]).to include("Refresh Provider initiated for 2 providers")
     end
   end
@@ -250,7 +250,7 @@ describe ProviderForemanController do
 
     it "it deletes a provider when the configuration manager id is selected from a grid/tile" do
       allow(controller).to receive(:replace_right_cell)
-      post :delete, :params => { "check_#{ApplicationRecord.compress_id(@config_mgr.id)}" => "1" }
+      post :delete, :params => { "check_#{@config_mgr.id}" => "1" }
       expect(assigns(:flash_array).first[:message]).to include("Delete initiated for 1 Provider")
     end
   end
@@ -545,7 +545,7 @@ describe ProviderForemanController do
   it "renders textual summary for a configured system" do
     stub_user(:features => :all)
 
-    tree_node_id = ApplicationRecord.compress_id(@configured_system.id)
+    tree_node_id = @configured_system.id
 
     # post to x_show sets session variables and redirects to explorer
     # then get to explorer renders the data for the active node
@@ -731,12 +731,12 @@ describe ProviderForemanController do
 
   def ems_key_for_provider(provider)
     ems = ExtManagementSystem.where(:provider_id => provider.id).first
-    "fr-" + ApplicationRecord.compress_id(ems.id)
+    "fr-#{ems.id}"
   end
 
   def config_profile_key(config_profile)
     cp = ConfigurationProfile.where(:id => config_profile.id).first
-    "cp-" + ApplicationRecord.compress_id(cp.id)
+    "cp-#{cp.id}"
   end
 
   def ems_id_for_provider(provider)

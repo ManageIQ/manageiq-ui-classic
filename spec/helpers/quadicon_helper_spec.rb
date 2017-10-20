@@ -195,7 +195,7 @@ describe QuadiconHelper do
         @embedded = false
         @explorer = true
         allow(controller).to receive(:list_row_id).with(item) do
-          ApplicationRecord.compress_id(item.id)
+          item.id
         end
         allow(controller).to receive(:default_url_options) do
           {:controller => "provider_foreman"}
@@ -429,7 +429,7 @@ describe QuadiconHelper do
       context "when controller is not service or view.db is not Vm" do
         before(:each) do
           allow(controller).to receive(:list_row_id).with(row) do
-            ApplicationRecord.compress_id(vm.id)
+            vm.id
           end
         end
 
@@ -876,7 +876,7 @@ describe QuadiconHelper do
       @embedded = false
       @explorer = true
       allow(controller).to receive(:list_row_id).with(item) do
-        ApplicationRecord.compress_id(item.id)
+        item.id
       end
       allow(controller).to receive(:default_url_options) do
         {:controller => "provider_foreman"}

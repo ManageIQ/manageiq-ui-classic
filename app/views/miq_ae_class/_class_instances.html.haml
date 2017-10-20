@@ -12,7 +12,7 @@
           %tbody{'data-click-url' => '/miq_ae_class/tree_select/'}
             - @record.ae_instances.order(:name).each do |record|
               - next if record.name == '$'
-              - cls_cid = "#{class_prefix(record.class)}-#{ApplicationRecord.compress_id(record.id)}"
+              - cls_cid = "#{class_prefix(record.class)}-#{record.id}"
               %tr{'data-click-id' => cls_cid}
                 %td.table-view-pf-select.noclick
                   %input{:type => 'checkbox', :value => cls_cid}

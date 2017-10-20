@@ -164,7 +164,7 @@ describe AutomationManagerController do
     end
 
     it "renders the edit page when the ansible tower manager id is selected from a grid/tile" do
-      post :edit, :params => { "check_#{ApplicationRecord.compress_id(@automation_manager1.id)}" => "1" }
+      post :edit, :params => { "check_#{@automation_manager1.id}" => "1" }
       expect(response.status).to eq(200)
     end
   end
@@ -190,8 +190,8 @@ describe AutomationManagerController do
 
     it "it refreshes a provider when the manager id is selected from a grid/tile" do
       allow(controller).to receive(:replace_right_cell)
-      post :refresh, :params => { "check_#{ApplicationRecord.compress_id(@automation_manager1.id)}" => "1",
-                                  "check_#{ApplicationRecord.compress_id(@automation_manager2.id)}" => "1" }
+      post :refresh, :params => { "check_#{@automation_manager1.id}" => "1",
+                                  "check_#{@automation_manager2.id}" => "1" }
       expect(assigns(:flash_array).first[:message]).to include("Refresh Provider initiated for 2 providers")
     end
   end
@@ -215,7 +215,7 @@ describe AutomationManagerController do
 
     it "it deletes a provider when the manager id is selected from a grid/tile" do
       allow(controller).to receive(:replace_right_cell)
-      post :delete, :params => { "check_#{ApplicationRecord.compress_id(@automation_manager1.id)}" => "1" }
+      post :delete, :params => { "check_#{@automation_manager1.id}" => "1" }
       expect(assigns(:flash_array).first[:message]).to include("Delete initiated for 1 Provider")
     end
   end
@@ -365,7 +365,7 @@ describe AutomationManagerController do
       controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => "configuration_scripts")
       controller.send(:accordion_select)
-      controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@automation_manager1.id))
+      controller.instance_variable_set(:@_params, :id => "at-#{@automation_manager1.id}")
       controller.send(:tree_select)
       # view = controller.instance_variable_get(:@view)
       show_adv_search = controller.instance_variable_get(:@show_adv_search)
@@ -385,7 +385,7 @@ describe AutomationManagerController do
       stub_user(:features => :all)
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
-      controller.instance_variable_set(:@_params, :id => "cf-" + ApplicationRecord.compress_id(record.id))
+      controller.instance_variable_set(:@_params, :id => "cf-#{record.id}")
       controller.send(:tree_select)
       show_adv_search = controller.instance_variable_get(:@show_adv_search)
       title = controller.instance_variable_get(:@right_cell_text)
@@ -480,7 +480,7 @@ describe AutomationManagerController do
     it "renders textual summary for a configured system" do
       stub_user(:features => :all)
 
-      tree_node_id = ApplicationRecord.compress_id(@ans_configured_system.id)
+      tree_node_id = @ans_configured_system.id
 
       # post to x_show sets session variables and redirects to explorer
       # then get to explorer renders the data for the active node
@@ -510,7 +510,7 @@ describe AutomationManagerController do
                                                                 'question_name' => 'Survey', 'required' => false,
                                                                 'variable' => 'test', 'choices' => nil,
                                                                 'type' => 'text'}]})
-      tree_node_id = "cf-" + ApplicationRecord.compress_id(@record.id)
+      tree_node_id = "cf-#{@record.id}"
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
       allow(controller).to receive(:x_node).and_return(tree_node_id)
@@ -697,12 +697,12 @@ describe AutomationManagerController do
 
   def ems_key_for_provider(provider)
     ems = ExtManagementSystem.where(:provider_id => provider.id).first
-    "at-" + ApplicationRecord.compress_id(ems.id)
+    "at-#{ems.id}"
   end
 
   def inventory_group_key(inv_group)
     ig =  ManageIQ::Providers::AutomationManager::InventoryGroup.where(:id => inv_group.id).first
-    "f-" + ApplicationRecord.compress_id(ig.id)
+    "f-#{ig.id}"
   end
 
   def ems_id_for_provider(provider)

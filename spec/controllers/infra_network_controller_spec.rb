@@ -68,7 +68,7 @@ describe InfraNetworkingController do
                                   :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).with(switch).and_return([tag1, tag2])
 
-        tree_node_id = "sw-#{ApplicationRecord.compress_id(switch.id)}"
+        tree_node_id = "sw-#{switch.id}"
         seed_session_trees('infra_networking', :infra_networking_tree)
         post :tree_select, :params => { :id => tree_node_id, :tree => :infra_networking_tree, :format => :js }
 

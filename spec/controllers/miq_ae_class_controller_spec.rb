@@ -942,10 +942,10 @@ describe MiqAeClassController do
       )
       tree_node = controller.send(:open_parent_nodes, method)
       node_to_add = {
-        :key   => "aen-#{ApplicationRecord.compress_id(ns.id)}",
+        :key   => "aen-#{ns.id}",
         :nodes => [
           {
-            :key        => "aec-#{ApplicationRecord.compress_id(cls.id)}",
+            :key        => "aec-#{cls.id}",
             :text       => "foo_cls",
             :tooltip    => "Automate Class: foo_cls",
             :icon       => "ff ff-class",

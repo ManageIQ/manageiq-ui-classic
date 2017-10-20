@@ -52,18 +52,18 @@ describe TreeBuilderRolesByServer do
     end
 
     it 'returns Roles by Servers' do
-      nodes = [{'key'        => "svr-#{MiqRegion.compress_id(@miq_server.id)}",
+      nodes = [{'key'        => "svr-#{@miq_server.id}",
                 'tooltip'    => "Server: #{@miq_server.name} [#{@miq_server.id}] (current) (started)",
                 'icon'       => "pficon pficon-server",
                 'text'       => "<strong>Server: #{@miq_server.name} [#{@miq_server.id}] (current) (started)</strong>",
                 'selectable' => true,
-                'nodes'      => [{'key'        => "asr-#{MiqRegion.compress_id(@assigned_server_role1.id)}",
+                'nodes'      => [{'key'        => "asr-#{@assigned_server_role1.id}",
                                   'image'      => ActionController::Base.helpers.image_path('svg/currentstate-on.svg'),
                                   'text'       => "<strong>Role: SmartProxy</strong> (primary, active, PID=)",
                                   'state'      => {'expanded' => true},
                                   'selectable' => true,
                                   'class'      => ''},
-                                 {'key'        => "asr-#{MiqRegion.compress_id(@assigned_server_role2.id)}",
+                                 {'key'        => "asr-#{@assigned_server_role2.id}",
                                   'image'      => ActionController::Base.helpers.image_path('svg/currentstate-on.svg'),
                                   'text'       => "<strong>Role: SmartProxy</strong> (secondary, active, PID=)",
                                   'state'      => {'expanded' => true},
