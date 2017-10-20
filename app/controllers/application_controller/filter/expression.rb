@@ -210,7 +210,7 @@ module ApplicationController::Filter
           if params[:user_input]
             self.exp_value = params[:user_input] == '1' ? :user_input : nil
           end
-        when 'tag'
+        when 'tag', 'tags'
           if params[:chosen_tag] && params[:chosen_tag] != exp_tag
             self.exp_tag = params[:chosen_tag] == '<Choose>' ? nil : params[:chosen_tag]
             self.exp_key = exp_model == '_display_filter_' ? '=' : 'CONTAINS'

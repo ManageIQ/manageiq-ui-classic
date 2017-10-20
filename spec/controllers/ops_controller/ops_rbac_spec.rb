@@ -389,11 +389,19 @@ describe OpsController do
       MiqUserRole.seed
       MiqGroup.seed
       MiqRegion.seed
+      Tenant.seed
 
       stub_user(:features => :all)
       @group = FactoryGirl.create(:miq_group)
       @role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @exp = MiqExpression.new("=" => {:field => "name", :value => "Test"}, :token => 1)
+      FactoryGirl.create(
+        :classification,
+        :name        => "env",
+        :description => "Environment",
+        :children    => [FactoryGirl.create(:classification)]
+      )
+      @exp = MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1)
+      allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
     end
 
     it "saves the filters when use_filter_expression is false" do
@@ -404,10 +412,10 @@ describe OpsController do
                                                         :role                  => @role.id,
                                                         :filter_expression     => @exp.exp,
                                                         :belongsto             => {},
-                                                        :filters               => {'managed/application/abrt' => '/managed/application/abrt'}})
+                                                        :filters               => {'managed/env' => '/managed/env'}})
       controller.send(:rbac_group_set_record_vars, @group)
       expect(@group.entitlement.filter_expression).to be_nil
-      expect(@group.entitlement.get_managed_filters).to match([["/managed/application/abrt"]])
+      expect(@group.entitlement.get_managed_filters).to match([["/managed/env"]])
     end
 
     it "saves the filter_expression when use_filter_expression true" do
@@ -417,10 +425,45 @@ describe OpsController do
                                                         :role                  => @role.id,
                                                         :filter_expression     => @exp.exp,
                                                         :belongsto             => {},
-                                                        :filters               => {'managed/application/abrt' => '/managed/application/abrt'}})
+                                                        :filters               => {'managed/env' => '/managed/env'}})
       controller.send(:rbac_group_set_record_vars, @group)
       expect(@group.entitlement.get_managed_filters).to eq([])
       expect(@group.entitlement.filter_expression.exp).to match(@exp.exp)
+    end
+
+    render_views
+
+    it "calls MiqExpression.tag_details to get only the My Company type tag categories" do
+      new = {:use_filter_expression => true,
+             :name                  => 'Name',
+             :description           => "Test",
+             :role                  => @role.id,
+             :belongsto             => {},
+             :filters               => {'managed/env' => '/managed/env'}}
+      allow(controller).to receive(:replace_right_cell)
+      controller.instance_variable_set(:@_params, :use_filter_expression => "true", :id => "new")
+
+      edit = {:key      => "rbac_group_edit__new",
+              :new      => new,
+              :current  => new,
+              :edit_exp => {:key => '???'}}
+      edit[:filter_expression] ||= ApplicationController::Filter::Expression.new
+      edit[:filter_expression][:expression] = {"???" => "???"}
+      edit[:new][:filter_expression] = copy_hash(edit[:filter_expression][:expression])
+      edit[:filter_expression].history.reset(edit[:filter_expression][:expression])
+      controller.instance_variable_set(:@edit, edit)
+      controller.instance_variable_set(:@expkey, :filter_expression)
+      edit[:filter_expression][:exp_table] = controller.send(:exp_build_table, edit[:filter_expression][:expression])
+      edit[:filter_expression][:exp_model] = @group.class.to_s
+      session[:edit] = edit
+      session[:expkey] = :filter_expression
+      controller.instance_variable_set(:@edit, edit)
+      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
+      allow(controller).to receive(:replace_right_cell)
+
+      post :tree_select, :params => { :id => 'root', :format => :js }
+      expect(MiqExpression).to receive(:tag_details)
+      post :rbac_group_field_changed, :params => { :id => 'new',  :use_filter_expression => "true"}
     end
   end
 
