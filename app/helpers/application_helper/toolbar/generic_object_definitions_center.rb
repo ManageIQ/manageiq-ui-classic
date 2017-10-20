@@ -21,6 +21,22 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           :url_parms    => "edit_div",
           :send_checked => true),
         button(
+          :generic_object_definition_custom_button_group_new,
+          'pficon pficon-add-circle-o fa-lg',
+          t = N_('Add a new Button Group'),
+          t,
+          :enabled   => false,
+          :onwhen    => "1",
+          :url_parms => "custom_button_group_new_div"),
+        button(
+          :generic_object_definition_custom_button_new,
+          'pficon pficon-add-circle-o fa-lg',
+          t = N_('Add a new Button'),
+          t,
+          :enabled   => false,
+          :onwhen    => "1",
+          :url_parms => "custom_button_new_div"),
+        button(
           :generic_object_definition_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove selected Generic Object Classes from Inventory'),
