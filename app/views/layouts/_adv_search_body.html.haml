@@ -48,6 +48,7 @@
               %font{:color => "black"}
                 = _("Choose a %{model} report filter") % {:model => ui_lookup(:model => @edit[@expkey][:exp_model])}
   - elsif mode == "save"
+    = render :partial => 'layouts/flash_msg', :locals => {:flash_div_id => 'exp_editor_flash'}
     .modal-body
       .form-horizontal.static
         .form-group
