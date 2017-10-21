@@ -1,10 +1,9 @@
-%form#form_div{:name           => "angularForm",
-   "form-changed"  => true,
-   "miq-form"      => true,
-   "model"         => "vm.vmCloudModel",
-   "model-copy"    => "vm.modelCopy",
-   "ng-cloak"      => "",
-   "ng-show"       => "vm.afterGet"}
+%form#form_div{"name"         => "angularForm",
+               "form-changed" => true,
+               "miq-form"     => true,
+               "model"        => "vm.vmCloudModel",
+               "ng-cloak"     => "",
+               "ng-show"      => "vm.afterGet"}
 
   = render :partial => "layouts/flash_msg"
 
@@ -15,11 +14,11 @@
       %label.col-md-2.control-label
         = _('Security Group')
       .col-md-8
-        %select{:name                         => 'security_group',
-                'ng-model'                    => 'vm.vmCloudModel.security_group',
-                'ng-options'                  => 'security_group.name for security_group in vm.security_groups',
-                'pf-select'                   => true,
-                'required'                    => "",
-                'selectpicker-for-select-tag' => ""}
+        %select{"name"                        => "security_group",
+                "ng-model"                    => "vm.vmCloudModel.security_group",
+                "ng-options"                  => "security_group.name as security_group.name for security_group in vm.security_groups",
+                "pf-select"                   => true,
+                "required"                    => "",
+                "selectpicker-for-select-tag" => ""}
 
   = render :partial => "layouts/angular/generic_form_buttons"

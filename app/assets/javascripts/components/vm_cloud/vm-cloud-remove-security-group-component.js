@@ -16,18 +16,17 @@ function vmCloudRemoveSecurityGroupFormController(API, miqService) {
   vm.$onInit = function() {
     vm.afterGet = false;
     vm.vmCloudModel = {
-      security_group: null,
+      security_group: '',
     };
     vm.security_groups = [];
     vm.formId = vm.recordId;
     vm.model = "vmCloudModel";
     vm.saveable = miqService.saveable;
-    vm.newRecord = true;
+    vm.newRecord = false;
     miqService.sparkleOn();
-    API.get("/api/vms/" + vm.recordId + "/security_groups?expand=resources&attributes=id,name").then(function(data) {
+    API.get("/api/instances/" + vm.recordId + "/security_groups?expand=resources&attributes=id,name").then(function(data) {
       vm.security_groups = data.resources;
       vm.afterGet = true;
-      vm.modelCopy = angular.copy( vm.vmCloudModel );
       miqService.sparkleOff();
     }).catch(miqService.handleFailure);
   };
@@ -37,8 +36,15 @@ function vmCloudRemoveSecurityGroupFormController(API, miqService) {
     miqService.redirectBack(sprintf(__('Removal of security group was canceled by the user.')), 'warning', vm.redirectUrl);
   };
 
-  vm.addClicked = function() {
-    var url = '/vm_cloud/remove_security_group_vm/' + vm.recordId + '?button=submit';
-    miqService.miqAjaxButton(url, vm.vmCloudModel, { complete: false });
+  vm.saveClicked = function() {
+    var saveObject = {
+      security_group: vm.vmCloudModel.security_group,
+      action: 'remove',
+    };
+    var saveMsg = sprintf(__('%s has been successfully removed.'), vm.vmCloudModel.security_group);
+    miqService.sparkleOn();
+    API.post('/api/instances/' + vm.recordId + '/security_groups/', saveObject)
+      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
+      .catch(miqService.handleFailure);
   };
 }

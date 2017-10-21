@@ -37,54 +37,6 @@ module Mixins
           @add_security_group = true
           render :action => "show" unless @explorer
         end
-
-        def add_security_group_vm
-          assert_privileges("instance_add_security_group")
-          @record = find_record_with_rbac(VmCloud, params[:id])
-          case params[:button]
-          when "cancel" then add_handle_cancel_button
-          when "submit" then add_handle_submit_button
-          end
-
-          if @sb[:explorer]
-            replace_right_cell
-          else
-            session[:flash_msgs] = @flash_array.dup
-            javascript_redirect previous_breadcrumb_url
-          end
-        end
-
-        def add_handle_cancel_button
-          add_flash(_("Addition of Security Group to Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
-          @record = @sb[:action] = nil
-        end
-
-        def add_handle_submit_button
-          if @record.supports_add_security_group?
-            security_group = params[:security_group]["name"]
-            begin
-              @record.add_security_group_queue(session[:userid], security_group)
-              add_flash(_("Adding Security Group %{security_group} to Instance \"%{name}\"") % {
-                :security_group => security_group,
-                :name           => @record.name
-              })
-            rescue => ex
-              add_flash(_("Unable to add Security Group %{security_group} to Instance \"%{name}\": %{details}") % {
-                :security_group => security_group,
-                :name           => @record.name,
-                :details        => get_error_message_from_fog(ex.to_s)
-              }, :error)
-            end
-          else
-            add_flash(_("Unable to add Security Group to Instance \"%{name}\": %{details}") % {
-              :name    => @record.name,
-              :details => @record.unsupported_reason(:add_security_group)
-            }, :error)
-          end
-          params[:id] = @record.id.to_s # reset id in params for show
-          @record = nil
-          @sb[:action] = nil
-        end
       end
     end
   end

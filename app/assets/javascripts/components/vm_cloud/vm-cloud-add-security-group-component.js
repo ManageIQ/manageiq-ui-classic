@@ -16,11 +16,10 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
   vm.$onInit = function() {
     vm.afterGet = false;
     vm.vmCloudModel = {
-      security_group: null,
+      security_group: '',
     };
     vm.security_groups = [];
     vm.formId = vm.recordId;
-    vm.model = "vmCloudModel";
     vm.saveable = miqService.saveable;
     vm.newRecord = true;
     miqService.sparkleOn();
@@ -28,14 +27,14 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
     var currentSecurityGroups;
 
     $q.all([
-      API.get("/api/vms/" + vm.recordId),
-      API.get("/api/vms/" + vm.recordId + "/security_groups?expand=resources&attributes=id,name"),
+      API.get("/api/instances/" + vm.recordId),
+      API.get("/api/instances/" + vm.recordId + "/security_groups?expand=resources&attributes=id,name"),
     ])
       .then(function(data) {
         var tenantId = data[0].cloud_tenant_id;
         currentSecurityGroups = data[1].resources;
-
-        return API.get("/api/cloud_tenants/" + tenantId + "/security_groups?expand=resources&attributes=id,name");
+ 
+       return API.get("/api/cloud_tenants/" + tenantId + "/security_groups?expand=resources&attributes=id,name");
       })
       .then(function(data) {
         vm.security_groups = data.resources.filter(function(securityGroup) {
@@ -43,7 +42,6 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
         });
 
         vm.afterGet = true;
-        vm.modelCopy = angular.copy(vm.vmCloudModel);
         miqService.sparkleOff();
       }).catch(miqService.handleFailure);
   };
@@ -54,7 +52,14 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
   };
 
   vm.addClicked = function() {
-    var url = '/vm_cloud/add_security_group_vm/' + vm.recordId + '?button=submit';
-    miqService.miqAjaxButton(url, vm.vmCloudModel, { complete: false });
+    var saveObject = {
+      security_group: vm.vmCloudModel.security_group,
+      action: 'add',
+    };
+    var saveMsg = sprintf(__('%s has been successfully added.'), vm.vmCloudModel.security_group);
+    miqService.sparkleOn();
+    API.post('/api/instances/' + vm.recordId + '/security_groups/', saveObject)
+      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
+      .catch(miqService.handleFailure);
   };
 }

@@ -27,8 +27,8 @@ describe('vm-cloud-add-security-group-component', function() {
     }));
 
     it('calls API.get with the appropriate URL', function () {
-      expect(API.get).toHaveBeenCalledWith('/api/vms/1111');
-      expect(API.get).toHaveBeenCalledWith('/api/vms/1111/security_groups?expand=resources&attributes=id,name');
+      expect(API.get).toHaveBeenCalledWith('/api/instances/1111');
+      expect(API.get).toHaveBeenCalledWith('/api/instances/1111/security_groups?expand=resources&attributes=id,name');
     });
   });
 });
