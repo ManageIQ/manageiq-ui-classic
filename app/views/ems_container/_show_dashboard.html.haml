@@ -1,163 +1,17 @@
-.container-fluid.container-tiles-pf.containers-dashboard.miq-dashboard-view{"ng-controller" => "containerDashboardController as dashboard"}
-  = render :partial => "layouts/flash_msg"
+.container-fluid.container-tiles-pf.containers-dashboard
   .row.row-tile-pf
-    .col-xs-12.col-sm-12.col-md-2
-      .card-pf.card-pf-accented.card-pf-aggregate-status.provider-status-card{"ng-if" => "isSingleProvider"}
-        %h2.card-pf-title
-          %img.provider-icon-small{"ng-src" =>"{{providerTypeIconImage}}"}
-          {{providerTypeName}}
-          %img.provider-icon-small{"ng-src" =>"{{providerStatusIconImage}}"}
-      .provider-card{:layout          => "tall",
-          "pf-aggregate-status-card"  => "",
-          "show-top-border"           => "true",
-          :status                     => "objectStatus.providers",
-          "ng-if"                     => "!isSingleProvider"}
-    .col-xs-12.col-sm-12.col-md-2
-      .alerts-card{:layout                     => "tall",
-                  "pf-aggregate-status-card"  => "",
-                  "show-top-border"           => "true",
-                  :status                     => "objectStatus.alerts",
-                  "ng-if"                     => "hasAlerts"}
-      .alerts-card-no-data{"show-top-border"           => "true",
-                           "pf-card"      => "",
-                           "ng-if"                     => "!hasAlerts",
-                           :layout                     => "tall"}
-        .alerts-no-data-title
-          = _("Alerts")
-        %div{"pf-empty-chart" => ""}
-    .col-xs-12.col-sm-12.col-md-8
-      .row
-        .col-xs-6.col-sm-6.col-md-3
-          %div{:layout                    => "mini",
-              "pf-aggregate-status-card" => "",
-              "show-top-border"          => "true",
-              :status                    => "objectStatus.nodes",
-              :url                       => "navigation"}
-        .col-xs-6.col-sm-6.col-md-3
-          %div{:layout                    => "mini",
-              "pf-aggregate-status-card" => "",
-              "show-top-border"          => "true",
-              :status                    => "objectStatus.containers",
-              :url                       => "navigation"}
-        .col-xs-6.col-sm-6.col-md-3
-          %div{:layout                    => "mini",
-              "pf-aggregate-status-card" => "",
-              "show-top-border"          => "true",
-              :status                    => "objectStatus.registries",
-              :url                       => "navigation"}
-        .col-xs-6.col-sm-6.col-md-3
-          %div{:layout                    => "mini",
-              "pf-aggregate-status-card" => "",
-              "show-top-border"          => "true",
-              :status                    => "objectStatus.projects",
-              :url                       => "navigation"}
-        .col-xs-6.col-sm-6.col-md-3
-          %div{:layout                    => "mini",
-              "pf-aggregate-status-card" => "",
-              "show-top-border"          => "true",
-              :status                    => "objectStatus.pods",
-              :url                       => "navigation"}
-        .col-xs-6.col-sm-6.col-md-3
-          %div{:layout                    => "mini",
-              "pf-aggregate-status-card" => "",
-              "show-top-border"          => "true",
-              :status                    => "objectStatus.services",
-              :url                       => "navigation"}
-        .col-xs-6.col-sm-6.col-md-3
-          %div{:layout                    => "mini",
-              "pf-aggregate-status-card" => "",
-              "show-top-border"          => "true",
-              :status                    => "objectStatus.images",
-              :url                       => "navigation"}
-        .col-xs-6.col-sm-6.col-md-3
-          %div{:layout                    => "mini",
-              "pf-aggregate-status-card" => "",
-              "show-top-border"          => "true",
-              :status                    => "objectStatus.routes",
-              :url                       => "navigation"}
-
+    = render :partial => "aggregate-status-card"
   .row.row-tile-pf
-    .col-xs-12.col-sm-6.col-md-8
-      %div{"head-title"   => _("Aggregated Node Utilization"),
-          :hidetopborder => "true",
-          "pf-card"      => ""}
+    .col-xs-12.col-sm-12.col-md-6
+      = render :partial => "utilization-trend-chart"
+    .col-xs-12.col-sm-12.col-md-6
+      = render :partial => "recent-images-line-chart"
+  .row.row-tile-pf
+    .col-xs-12.col-sm-12.col-md-6
+      = render :partial => "heatmap"
+    .col-xs-12.col-sm-12.col-md-6
+      = render :partial => "recent-pods-line-chart"
 
-        .spinner.spinner-lg.loading{"ng-if" => "!loadingDone"}
-        .row{"ng-if" => "loadingDone"}
-
-          .col-xs-6.col-sm-6.col-md-6
-            %div{"ng-if" => "cpuUsageData"}
-              %div{"chart-data"                 => "cpuUsageData",
-                  :config                      => "cpuUsageConfig",
-                  "donut-config"               => "cpuUsageDonutConfig",
-                  "pf-utilization-trend-chart" => "",
-                  "sparkline-config"           => "cpuUsageSparklineConfig"}
-            %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': !cpuUsageData }"}
-              {{cpuUsageConfig.timeFrame}}
-
-          .col-xs-6.col-sm-6.col-md-6
-            %div{"ng-if" => "memoryUsageData"}
-              %div{"chart-data"                 => "memoryUsageData",
-                  :config                      => "memoryUsageConfig",
-                  "donut-config"               => "memoryUsageDonutConfig",
-                  "pf-utilization-trend-chart" => "",
-                  "sparkline-config"           => "memoryUsageSparklineConfig"}
-            %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': !memoryUsageData }"}
-              {{memoryUsageConfig.timeFrame}}
-
-    .col-xs-12.col-sm-6.col-md-4
-      .row.row-tile-pf
-        .col-xs-12.col-sm-12.col-md-12
-          %div{"head-title" => "{{networkUtilizationConfig.headTitle}}",
-              "pf-card" => ""}
-
-            .spinner.spinner-lg.loading{"ng-if" => "!loadingDone"}
-            %div{"chart-data" => "networkUtilization",
-                "chart-height" => "chartHeight",
-                :config => "networkUtilizationConfig",
-                "ng-if" => "loadingDone",
-                "pf-trends-chart" => ""}
-
-      .row.row-tile-pf
-        .col-xs-12.col-sm-12.col-md-12
-          %div{"head-title" => "{{imageEntityTrendConfig.headTitle}}",
-              "pf-card" => ""}
-
-            .spinner.spinner-lg.loading{"ng-if" => "!imageEntityTrendConfig"}
-            %div{"chart-data" => "imageEntityTrend",
-                "chart-height" => "chartHeight",
-                :config => "imageEntityTrendConfig",
-                "ng-if" => "loadingDone",
-                "pf-line-chart" => ""}
-
-            %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': !imageEntityTrendConfig }"}
-              {{imageEntityTrendConfig.timeFrame}}
-
-  .row.row-tile-pf.row-tile-pf-last
-    .col-xs-12.col-sm-6.col-md-8
-      %div{"column-sizing-class"          => "col-xs-8 col-sm-6 col-md-6",
-          "heat-map-usage-legend-labels" => "nodeHeatMapUsageLegendLabels",
-          "heatmap-chart-height"         => "dashboardHeatmapChartHeight",
-          :heatmaps                      => "heatmaps",
-          "heatmaps-card"                => "",
-          :hidetopborder                 => "true",
-          :title                         => _("Node Utilization")}
-
-    .col-xs-12.col-sm-6.col-md-4
-      .row.row-tile-pf
-        .col-xs-12.col-sm-12.col-md-12
-          %div{"head-title" => "{{podEntityTrendConfig.headTitle}}",
-              "pf-card" => ""}
-
-            .spinner.spinner-lg.loading{"ng-if" => "!podEntityTrendConfig"}
-            %div{"chart-data" => "podEntityTrend",
-                "chart-height" => "chartHeight",
-                :config => "podEntityTrendConfig",
-                "ng-if" => "loadingDone",
-                "pf-line-chart" => ""}
-
-            %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': !podEntityTrendConfig }"}
-              {{podEntityTrendConfig.timeFrame}}
-
-:javascript
-  miq_bootstrap('.containers-dashboard');
+  :javascript
+    ManageIQ.angular.app.value('providerId', '#{@record.id}');
+    miq_bootstrap('.containers-dashboard');

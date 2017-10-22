@@ -16,6 +16,7 @@ module ContainerServiceMixin
 
     if daily_pod_create_trend.size > 1
       {
+        :dataAvailable => true,
         :interval_name => "daily",
         :xy_data       => create_delete_data(daily_pod_create_trend, daily_pod_delete_trend)
       }
@@ -23,7 +24,7 @@ module ContainerServiceMixin
   end
 
   def pod_metrics
-    daily_pod_metrics || hourly_pod_metrics
+    daily_pod_metrics || hourly_pod_metrics || empty_metrics_data
   end
 
   def fill_pod_metrics(m, time, pod_create_trend, pod_delete_trend)
@@ -40,6 +41,7 @@ module ContainerServiceMixin
     end
 
     {
+      :dataAvailable => true,
       :interval_name => "hourly",
       :xy_data       => create_delete_data(hourly_pod_create_trend, hourly_pod_delete_trend)
     }
@@ -202,6 +204,6 @@ module ContainerServiceMixin
 
     @daily_metrics ||= Metric::Helper.find_for_interval_name('daily', tp)
                                      .where(:resource => @resource)
-                                     .where('timestamp > ?', 30.days.ago.utc).order('timestamp')
+                                     .where('timestamp > ?', 3000.days.ago.utc).order('timestamp')
   end
 end

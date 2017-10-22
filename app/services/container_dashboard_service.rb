@@ -14,15 +14,39 @@ class ContainerDashboardService < DashboardService
 
   def all_data
     {
-      :providers_link  => get_url_to_entity(:ems_container),
       :status          => status,
       :providers       => providers,
       :alerts          => alerts,
-      :heatmaps        => heatmaps,
-      :ems_utilization => ems_utilization,
-      :network_metrics => network_metrics,
-      :pod_metrics     => pod_metrics,
-      :image_metrics   => image_metrics
+    }.compact
+  end
+
+  def all_heatmaps_data
+    {
+      :heatmaps => heatmaps
+    }.compact
+  end
+
+  def ems_utilization_data
+    {
+      :ems_utilization => ems_utilization
+    }.compact
+  end
+
+  def network_metrics_data
+    {
+      :network_metrics => network_metrics
+    }.compact
+  end
+
+  def pod_metrics_data
+    {
+      :pod_metrics => pod_metrics
+    }.compact
+  end
+
+  def image_metrics_data
+    {
+      :image_metrics => image_metrics
     }.compact
   end
 
@@ -201,7 +225,8 @@ class ContainerDashboardService < DashboardService
 
     {
       :nodeCpuUsage    => node_cpu_usage.presence,
-      :nodeMemoryUsage => node_memory_usage.presence
+      :nodeMemoryUsage => node_memory_usage.presence,
+      :title           => _("Node Utilization")
     }
   end
 
@@ -227,6 +252,7 @@ class ContainerDashboardService < DashboardService
     end
 
     {
+      :dataAvailable => true,
       :interval_name => "hourly",
       :xy_data       => trend_data(hourly_image_metrics)
     }
@@ -242,14 +268,19 @@ class ContainerDashboardService < DashboardService
 
     if daily_image_metrics.size > 1
       {
+        :dataAvailable => true,
         :interval_name => "daily",
         :xy_data       => trend_data(daily_image_metrics)
       }
     end
   end
 
+  def empty_metrics_data
+    {:dataAvailable => false}
+  end
+
   def image_metrics
-    daily_image_metrics || hourly_image_metrics
+    daily_image_metrics || hourly_image_metrics || empty_metrics_data
   end
 
   # ems has no realtime metrics but its nodes do.
