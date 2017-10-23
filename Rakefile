@@ -79,6 +79,14 @@ namespace :spec do
 
   desc "Run all javascript specs"
   task :javascript => ["app:test:initialize", :environment, "jasmine:ci"]
+
+  namespace :compile do
+    desc "Does nothing, needed by Travis"
+    task :setup
+  end
+
+  desc "Try to compile assets"
+  task :compile => ["app:assets:precompile"]
 end
 
 task :default => :spec

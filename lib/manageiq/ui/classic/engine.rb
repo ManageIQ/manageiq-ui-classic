@@ -33,7 +33,7 @@ module ManageIQ
       class Engine < ::Rails::Engine
         config.autoload_paths << root.join('app', 'controllers', 'mixins')
         config.autoload_paths << root.join('lib')
-        if Rails.env.production?
+        if Rails.env.production? || Rails.env.test?
           require 'uglifier'
           config.assets.js_compressor = Uglifier.new(
             :compress => {
