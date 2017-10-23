@@ -993,6 +993,8 @@ module ApplicationHelper
       "ManageIQ::Providers::CloudManager::Vm"
     when :images_filter_tree
       "ManageIQ::Providers::CloudManager::Template"
+    when :svcs_tree
+      "Service"
     when :vms_filter_tree
       "ManageIQ::Providers::InfraManager::Vm"
     when :templates_filter_tree

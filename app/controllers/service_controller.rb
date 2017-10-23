@@ -273,6 +273,9 @@ class ServiceController < ApplicationController
         process_show_list(:named_scope => [:retired, :displayed])
         @right_cell_text = _("Retired Services")
       end
+    when "MiqSearch"
+      load_adv_search # Select/load filter from Global/My Filters
+      @right_cell_text = _("All Services")
     else      # Get list of child Catalog Items/Services of this node
       if x_node == "root"
         process_show_list(:where_clause => "ancestry is null")
@@ -287,8 +290,33 @@ class ServiceController < ApplicationController
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
       end
     end
-    x_history_add_item(:id => treenodeid, :text => @right_cell_text)
-    {:view => @view, :pages => @pages}
+    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
+
+    if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
+      x_history_add_item(:id     => x_node,
+                         :qs_exp => @edit[:adv_search_applied][:qs_exp],
+                         :text   => @right_cell_text)
+    else
+      x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
+    end
+  end
+
+  # Select/load filter from Global/My Filters
+  def load_adv_search
+    adv_search_build("Service")
+    session[:edit] = @edit
+    @explorer = true
+    @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
+
+    if @nodetype == "ms"
+      listnav_search_selected(from_cid(id)) unless params.key?(:search_text)
+      if @edit[:adv_search_applied] &&
+         MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
+         %w(reload tree_select).include?(params[:action])
+        self.x_node = params[:id]
+        quick_search_show
+      end
+    end
   end
 
   # set partial name and cell header for edit screens
