@@ -1,6 +1,6 @@
 /* global miqHttpInject */
 
-ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope', 'dashboardUtilsFactory', 'containerChartsMixin', 'dashboardService',
+ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope', 'dashboardUtilsFactory', 'chartsMixin', 'dashboardService',
   function($scope, dashboardUtilsFactory, chartsMixin, dashboardService) {
     document.getElementById("center_div").className += " miq-body";
 
@@ -48,11 +48,11 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
         });
       }
 
-      $scope.cpuUsageData = chartsMixin.processUtilizationData(data.project_utilization.xy_data.cpu,
+      $scope.cpuUsageData = chartsMixin.processData(data.project_utilization.xy_data.cpu,
         'dates',
         $scope.cpuUsageConfig.units);
 
-      $scope.memoryUsageData = chartsMixin.processUtilizationData(data.project_utilization.xy_data.memory,
+      $scope.memoryUsageData = chartsMixin.processData(data.project_utilization.xy_data.memory,
         'dates',
         $scope.memoryUsageConfig.units);
 
@@ -72,7 +72,7 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
         });
       }
 
-      $scope.networkUtilization = chartsMixin.processUtilizationData(data.network_metrics.xy_data,
+      $scope.networkUtilization = chartsMixin.processData(data.network_metrics.xy_data,
         'dates',
         $scope.networkUtilizationConfig.units);
 
@@ -81,7 +81,7 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
       $scope.barChartLayoutInline = { 'type': 'inline' };
       angular.forEach(data.quota, function(item) {
         $scope.quotas.push({
-          'title': __(item.resource),
+          'title': item.resource,
           'units': item.units,
           'data': {
             'used': item.quota_observed,
