@@ -204,6 +204,6 @@ module ContainerServiceMixin
 
     @daily_metrics ||= Metric::Helper.find_for_interval_name('daily', tp)
                                      .where(:resource => @resource)
-                                     .where('timestamp > ?', 3000.days.ago.utc).order('timestamp')
+                                     .where('timestamp > ?', 30.days.ago.utc).order('timestamp')
   end
 end
