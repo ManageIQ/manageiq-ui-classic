@@ -127,6 +127,7 @@
           %th= _('Name')
           %th= _('Type')
           %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Mode')
+          %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Controller Type')
           %th= _('Size')
           %th
           %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Dependent')
@@ -154,6 +155,13 @@
                             "required"                    => "",
                             "selectpicker-for-select-tag" => "",
                             "width"                       => "10")
+            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+              = select_tag('Controller',
+                           options_for_select(%w(VirtualLsiLogicController ParaVirtualSCSIController VirtualBusLogicController VirtualLsiLogicSASController)),
+                           "ng-model"                    => "vm.reconfigureModel.new_controller_type",
+                           "data-width"                  => "auto",
+                           "required"                    => "",
+                           "selectpicker-for-select-tag" => "")
             %td
               %input.form-control{"type"        => "text",
                                   "id"          => "dvcSize",
@@ -195,6 +203,8 @@
               {{disk.hdType}}
             %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
               {{disk.hdMode}}
+            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+              {{disk.new_controller_type}}
             %td
               {{disk.hdSize}}
             %td
