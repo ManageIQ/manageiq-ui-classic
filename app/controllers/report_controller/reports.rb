@@ -25,7 +25,7 @@ module ReportController::Reports
     rr               = MiqReportResult.for_user(current_user).find(@sb[:pages][:rr_id])
     rr.save_for_user(session[:userid])                # Save the current report results for this user
     @_params[:sortby] = "last_run_on"
-    view, _page = get_view(MiqReportResult, :named_scope => [:with_current_user_groups_and_report, @sb[:miq_report_id]])
+    view, _page = get_view(MiqReportResult, :named_scope => [[:with_current_user_groups_and_report, @sb[:miq_report_id]]])
     savedreports = view.table.data
     r = savedreports.first
     @right_cell_div  = "report_list"
@@ -169,7 +169,7 @@ module ReportController::Reports
       @sortdir = session["#{x_active_tree}_sortdir".to_sym].nil? ? "DESC" : session["#{x_active_tree}_sortdir".to_sym]
 
       report_id = from_cid(nodeid.split('_')[0])
-      @view, @pages = get_view(MiqReportResult, :named_scope => [:with_current_user_groups_and_report, report_id])
+      @view, @pages = get_view(MiqReportResult, :named_scope => [[:with_current_user_groups_and_report, report_id]])
       @sb[:timezone_abbr] = @timezone_abbr if @timezone_abbr
 
       @current_page = @pages[:current] unless @pages.nil? # save the current page number
