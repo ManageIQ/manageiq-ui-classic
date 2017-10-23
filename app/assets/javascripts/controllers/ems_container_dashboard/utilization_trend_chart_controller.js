@@ -52,10 +52,10 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainer
 
     if (all_data.xy_data.cpu != null) {
       all_data.xy_data.cpu.xData = all_data.xy_data.cpu.xData.map(function(date) {
-        return dashboardUtilsFactory.parseDate(date);
+        return chartsMixin.parseDate(date);
       });
       all_data.xy_data.memory.xData = all_data.xy_data.memory.xData.map(function(date) {
-        return dashboardUtilsFactory.parseDate(date);
+        return chartsMixin.parseDate(date);
       });
     }
 

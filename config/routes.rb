@@ -1061,6 +1061,7 @@ Rails.application.routes.draw do
         ems_utilization_data
         heatmaps_data
         image_metrics_data
+        network_metrics_data
         pod_metrics_data
         project_data
       )

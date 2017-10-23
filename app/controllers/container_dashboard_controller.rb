@@ -89,6 +89,10 @@ class ContainerDashboardController < ApplicationController
     ContainerDashboardService.new(provider_id, self).image_metrics_data
   end
 
+  def collect_network_metrics_data(provider_id)
+    ContainerDashboardService.new(provider_id, self).network_metrics_data
+  end
+
   def collect_live_data(provider_id, query)
     ems = ExtManagementSystem.find(provider_id)
 

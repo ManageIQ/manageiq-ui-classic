@@ -28,7 +28,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentPodsLineChartController
 
         if (vm.data.pod_metrics.xy_data != null) {
           vm.data.pod_metrics.xy_data.xData = vm.data.pod_metrics.xy_data.xData.map(function(date) {
-            return dashboardUtilsFactory.parseDate(date);
+            return chartsMixin.parseDate(date);
           });
         }
         vm.data = chartsMixin.processPodUtilizationData(vm.data.pod_metrics.xy_data, 'dates', __("Created"), __("Deleted"));

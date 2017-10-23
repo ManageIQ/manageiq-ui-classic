@@ -196,6 +196,11 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
     },
   };
 
+  var parseDate = function(date) {
+    var myDate = Date.parse(date);
+    return isNaN(myDate) ? date : myDate;
+  };
+
   var processData = function(data, xDataLabel, yDataLabel) {
     if (! data) {
       return { dataAvailable: false };
@@ -221,6 +226,7 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
     dashboardHeatmapChartHeight: 90,
     nodeHeatMapUsageLegendLabels: ['< 70%', '70-80%', '80-90%', '> 90%'],
     chartConfig: chartConfig,
+    parseDate: parseDate,
     processPodUtilizationData: processPodUtilizationData,
     processData: processData,
     dailyTimeTooltip: dailyTimeTooltip,

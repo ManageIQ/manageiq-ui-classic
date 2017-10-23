@@ -1,0 +1,3 @@
+.trend_chart{"ng-controller" => "trendsChartController as vm", :class => "row", 'style' => "display:inline-block; width: 100%;"}
+  %div{:class => "col-md-12"}
+    %pf-trends-chart{'config' => "vm.config", 'chart-data' => "vm.data", 'show-x-axis' => "vm.custShowXAxis", 'show-y-axis' => "vm.custShowYAxis"}
