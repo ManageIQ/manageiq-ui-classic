@@ -35,7 +35,7 @@ module Mixins
           @origin_ownership_items = recs.collect(&:to_i)
           @ownershipitems = filter_ownership_items(get_class_from_controller_param(controller), recs)
 
-          if @ownershipitems.empty?
+          if @ownershipitems.nil? || @ownershipitems.empty?
             add_flash(_('None of the selected items allow ownership changes'), :error)
             @refresh_div = "flash_msg_div"
             @refresh_partial = "layouts/flash_msg"
