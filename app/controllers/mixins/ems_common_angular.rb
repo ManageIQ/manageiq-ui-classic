@@ -506,16 +506,15 @@ module Mixins
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
         default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
         if params[:metrics_selection] == 'hawkular'
-          params[:cred_type] = "hawkular"
+          params[:cred_type] = "hawkular" if params[:cred_type] == "metrics"
           hawkular_endpoint = {:role => :hawkular, :hostname => metrics_hostname, :port => metrics_port}
           hawkular_endpoint.merge!(endpoint_security_options(metrics_security_protocol, metrics_tls_ca_certs))
         elsif params[:metrics_selection] == 'prometheus'
-          params[:cred_type] = "prometheus"
+          params[:cred_type] = "prometheus" if params[:cred_type] == "metrics"
           prometheus_endpoint = {:role => :prometheus, :hostname => metrics_hostname, :port => metrics_port}
           prometheus_endpoint.merge!(endpoint_security_options(metrics_security_protocol, metrics_tls_ca_certs))
         end
         if params[:alerts_selection] == 'prometheus'
-          params[:cred_type] = "prometheus_alerts"
           prometheus_alerts_endpoint = {:role => :prometheus_alerts, :hostname => prometheus_alerts_hostname, :port => prometheus_alerts_api_port}
           prometheus_alerts_endpoint.merge!(endpoint_security_options(prometheus_alerts_security_protocol, prometheus_alerts_tls_ca_certs))
         end
