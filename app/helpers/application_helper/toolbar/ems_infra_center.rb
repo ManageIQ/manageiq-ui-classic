@@ -114,4 +114,22 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
       ]
     ),
   ])
+  button_group('ems_infra_access', [
+    select(
+      :ems_infra_remote_access_choice,
+      'pficon pficon-screen fa-lg',
+      N_('Infrastructure Provider Remote Access'),
+      N_('Access'),
+      :items => [
+        button(
+          :ems_infra_admin_ui,
+          'pficon pficon-screen fa-lg',
+          N_('Open Admin UI for this Infrastructure Provider'),
+          N_('Admin UI'),
+          :url     => "open_admin_ui",
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
+          :options => {:feature => :admin_ui}),
+      ]
+    ),
+  ])
 end

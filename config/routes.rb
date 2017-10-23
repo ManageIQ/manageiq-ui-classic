@@ -1255,6 +1255,8 @@ Rails.application.routes.draw do
         scaling
         scaledown
         squash_toggle
+        open_admin_ui
+        open_admin_ui_done
       ) +
                adv_search_post +
                compare_post +
