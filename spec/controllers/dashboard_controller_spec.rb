@@ -165,8 +165,9 @@ describe DashboardController do
       MiqShortcut.seed
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
       allow(controller).to receive(:check_privileges).and_return(true)
-      EvmSpecHelper.seed_specific_product_features("containers")
-      feature_id = MiqProductFeature.find_all_by_identifier(["containers"])
+      skip_data_checks
+      EvmSpecHelper.seed_specific_product_features("container")
+      feature_id = MiqProductFeature.find_all_by_identifier(["container"])
       user = FactoryGirl.create(:user, :features => feature_id)
       allow(User).to receive(:authenticate).and_return(user)
       validation = controller.send(:validate_user, user)
