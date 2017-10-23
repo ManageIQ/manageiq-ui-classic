@@ -283,8 +283,14 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           N_('Web Console'),
           # :image   => "cockpit",
           :url   => "launch_cockpit",
-          :klass => ApplicationHelper::Button::CockpitConsole
-        ),
+          :klass => ApplicationHelper::Button::CockpitConsole),
+        button(
+          :ovirt_ui,
+          'pficon pficon-screen fa-lg',
+          N_('Open the oVirt UI for this VM'),
+          N_('oVirt UI'),
+          :url   => 'post_ovirt_ui',
+          :klass => ApplicationHelper::Button::OvirtUI),
       ]
     ),
   ])

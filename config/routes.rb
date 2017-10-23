@@ -3274,6 +3274,7 @@ Rails.application.routes.draw do
         win32_services
         ownership_update
         ownership_form_fields
+        post_ovirt_ui
       ) +
                adv_search_post +
                compare_post +
