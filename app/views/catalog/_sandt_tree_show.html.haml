@@ -256,7 +256,7 @@
               %label.col-md-3.control-label
                 = _('Verbosity')
               .col-md-9
-                = h(verbosity_display(provisioning[:verbosity]))
+                = _(ViewHelper::VERBOSITY_LEVELS[provisioning[:verbosity]])
         .col-md-12.col-lg-6
           .form-horizontal.static
             .form-group
@@ -345,7 +345,7 @@
                 %label.col-md-3.control-label
                   = _('Verbosity')
                 .col-md-9
-                  = h(verbosity_display(retirement[:verbosity]))
+                  = _(ViewHelper::VERBOSITY_LEVELS[retirement[:verbosity]])
           .col-md-12.col-lg-6
             .form-horizontal.static
               .form-group

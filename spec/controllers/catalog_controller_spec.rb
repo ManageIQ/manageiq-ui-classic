@@ -880,18 +880,6 @@ describe CatalogController do
     end
   end
 
-  context "#verbosity_display" do
-    it "returns readable display text for Verbosity field" do
-      verbosity = controller.send(:verbosity_display, '2')
-      expect(verbosity).to eq('2 (More Verbose)')
-    end
-
-    it "returns readable display text for Verbosity field" do
-      verbosity = controller.send(:verbosity_display, nil)
-      expect(verbosity).to eq('0 (Normal)')
-    end
-  end
-
   context "#atomic_req_submit" do
     let(:ems) { FactoryGirl.create(:ems_openshift) }
     let(:container_template) {

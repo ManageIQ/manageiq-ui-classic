@@ -118,6 +118,15 @@ module ViewHelper
     N_('4 Years Ago')
   ].freeze
 
+  VERBOSITY_LEVELS = {
+    '0' => N_('0 (Normal)'),
+    '1' => N_('1 (Verbose)'),
+    '2' => N_('2 (More Verbose)'),
+    '3' => N_('3 (Debug)'),
+    '4' => N_('4 (Connection Debug)'),
+    '5' => N_('5 (WinRM Debug)')
+  }.freeze
+
   class << self
     def concat_tag(*args, &block)
       concat content_tag(*args, &block)
