@@ -13,7 +13,9 @@
 //= require angular-bootstrap/ui-bootstrap
 //= require angular-bootstrap/ui-bootstrap-tpls
 //= require angular-sanitize
+//= require angular-formly/dist/formly
 //= require angular.validators
+//= require api-check/dist/api-check
 //= require moment
 //= require moment-strftime/lib/moment-strftime
 //= require moment-timezone

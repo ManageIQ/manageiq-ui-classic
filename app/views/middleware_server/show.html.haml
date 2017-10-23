@@ -7,6 +7,7 @@
   = render :partial => 'dr_reports_list'
 
 - @angular_form = true
+%generic-properties-component
 %ng-form#mw_server_form{"name"          => "mw_server_form",
                         "ng-controller" => "mwServerController",
                         "novalidate"    => "true"}
@@ -16,4 +17,4 @@
   = render :partial => 'add_datasource'
 
 :javascript
-  miq_bootstrap('#mw_server_form');
+  miq_bootstrap('generic-properties-component');
