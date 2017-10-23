@@ -1,18 +1,18 @@
 .container-fluid.container-tiles-pf.containers-dashboard
   .row.row-tile-pf
-    = render :partial => "aggregate-status-card"
+    = render :partial => "ems_container/aggregate-status-card"
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "utilization-trend-chart"
+      = render :partial => "ems_container/utilization-trend-chart"
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "trends-chart"
-      = render :partial => "recent-images-line-chart"
+      = render :partial => "ems_container/trends-chart"
+      = render :partial => "ems_container/recent-images-line-chart"
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "heatmap"
+      = render :partial => "ems_container/heatmap"
     .col-xs-12.col-sm-12.col-md-6
-      = render :partial => "recent-pods-line-chart"
+      = render :partial => "ems_container/recent-pods-line-chart"
 
   :javascript
-    ManageIQ.angular.app.value('providerId', '#{@record.id}');
+    ManageIQ.angular.app.value('providerId', '#{@record ? @record.id : ''}');
     miq_bootstrap('.containers-dashboard');
