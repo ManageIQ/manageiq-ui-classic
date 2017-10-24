@@ -119,7 +119,7 @@
     };
 
     var failOnBadStatus = function(result) {
-      if (! result.status || ['Error', 'Timeout', 'Expired'].includes(result.status)) {
+      if (result.status !== 'Ok') {
         return Promise.reject(result);
       }
 
