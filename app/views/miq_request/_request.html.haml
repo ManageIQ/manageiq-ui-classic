@@ -3,107 +3,104 @@
 #request_div
   %h3
     = _("Request Details")
-  .row
-    .form-horizontal.static
+
+  .form-horizontal
+    .form-group
+      %label.control-label.col-md-2
+        = _("Request ID")
+      .col-md-8
+        = h(number_with_delimiter(@miq_request.id))
+    .form-group
+      %label.control-label.col-md-2
+        = _("Status")
+      .col-md-8
+        = h(@miq_request.status)
+    .form-group
+      %label.control-label.col-md-2
+        = _("Request State")
+      .col-md-8
+        = h(@miq_request.state.titleize)
+    - if @miq_request.requester
       .form-group
         %label.control-label.col-md-2
-          = _("Request ID")
+          = _("Requester")
         .col-md-8
-          = h(number_with_delimiter(@miq_request.id))
+          = h(@miq_request.requester_name)
+    .form-group
+      %label.control-label.col-md-2
+        = _("Request Type")
+      .col-md-8
+        = h(@miq_request.request_type_display)
+    .form-group
+      %label.control-label.col-md-2
+        = _("Description")
+      .col-md-8
+        = h(@miq_request.description)
+    .form-group
+      %label.control-label.col-md-2
+        = _("Last Message")
+      .col-md-8
+        = h(@miq_request.message)
+    .form-group
+      %label.control-label.col-md-2
+        = _("Created On")
+      .col-md-8
+        = h(format_timezone(@miq_request.created_on))
+    .form-group
+      %label.control-label.col-md-2
+        = _("Last Update")
+      .col-md-8
+        = h(format_timezone(@miq_request.updated_on))
+    - if @miq_request.fulfilled_on
       .form-group
         %label.control-label.col-md-2
-          = _("Status")
+          = _("Completed")
         .col-md-8
-          = h(@miq_request.status)
+          = h(format_timezone(@miq_request.fulfilled_on))
+    .form-group
+      %label.control-label.col-md-2
+        = _("Approval State")
+      .col-md-8
+        = h(@miq_request.approval_state.titleize)
+    - if @miq_request.stamped_by
       .form-group
         %label.control-label.col-md-2
-          = _("Request State")
+          = _("Approved/Denied by")
         .col-md-8
-          = h(@miq_request.state.titleize)
-      - if @miq_request.requester
+          = h(@miq_request.stamped_by + (@user && " (#{@user.name})"))
+    .form-group
+      %label.control-label.col-md-2
+        = _("Approved/Denied on")
+      .col-md-8
+        = h(format_timezone(@miq_request.stamped_on))
+    .form-group
+      %label.control-label.col-md-2
+        = _("Reason")
+      - if @edit && @edit[:stamp_typ]
+        .col-md-8
+          = text_field_tag("reason", @edit[:reason],
+            :class             => "form-control",
+            :maxlength         => ViewHelper::MAX_NAME_LEN,
+            "data-miq_focus"   => true,
+            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+      - else
+        .col-md-8
+          = h(@miq_request.reason)
+    - if !@edit && @miq_request.approval_state.downcase == "approved"
+      - if @miq_request.resource_type == "MiqProvisionRequest" && @miq_request.resource.miq_provisions.length > 0
         .form-group
           %label.control-label.col-md-2
-            = _("Requester")
-          .col-md-8
-            = h(@miq_request.requester_name)
-      .form-group
-        %label.control-label.col-md-2
-          = _("Request Type")
-        .col-md-8
-          = h(@miq_request.request_type_display)
-    .form-horizontal.static
-      .form-group
-        %label.control-label.col-md-2
-          = _("Description")
-        .col-md-8
-          = h(@miq_request.description)
-      .form-group
-        %label.control-label.col-md-2
-          = _("Last Message")
-        .col-md-8
-          = h(@miq_request.message)
-      .form-group
-        %label.control-label.col-md-2
-          = _("Created On")
-        .col-md-8
-          = h(format_timezone(@miq_request.created_on))
-      .form-group
-        %label.control-label.col-md-2
-          = _("Last Update")
-        .col-md-8
-          = h(format_timezone(@miq_request.updated_on))
-      - if @miq_request.fulfilled_on
+            = _("Provisioned VMs")
+          .col-md-8{:onclick => "DoNav('#{'/miq_request/show/' << @miq_request.id.to_s << '?display=miq_provisions'}');",
+                    :title   => _("Click to view details")}
+            = h(@miq_request.resource.miq_provisions.length)
+      - if @miq_request.resource_type == "MiqHostProvisionRequest" && @miq_request.resource.miq_host_provisions.length > 0
         .form-group
           %label.control-label.col-md-2
-            = _("Completed")
-          .col-md-8
-            = h(format_timezone(@miq_request.fulfilled_on))
-  .row
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Approval State")
-        .col-md-8
-          = h(@miq_request.approval_state.titleize)
-      - if @miq_request.stamped_by
-        .form-group
-          %label.control-label.col-md-2
-            = _("Approved/Denied by")
-          .col-md-8
-            = h(@miq_request.stamped_by + (@user && " (#{@user.name})"))
-      .form-group
-        %label.control-label.col-md-2
-          = _("Approved/Denied on")
-        .col-md-8
-          = h(format_timezone(@miq_request.stamped_on))
-      .form-group
-        %label.control-label.col-md-2
-          = _("Reason")
-        - if @edit && @edit[:stamp_typ]
-          .col-md-8
-            = text_field_tag("reason", @edit[:reason],
-              :class             => "form-control",
-              :maxlength         => ViewHelper::MAX_NAME_LEN,
-              "data-miq_focus"   => true,
-              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-        - else
-          .col-md-8
-            = h(@miq_request.reason)
-      - if !@edit && @miq_request.approval_state.downcase == "approved"
-        - if @miq_request.resource_type == "MiqProvisionRequest" && @miq_request.resource.miq_provisions.length > 0
-          .form-group
-            %label.control-label.col-md-2
-              = _("Provisioned VMs")
-            .col-md-8{:onclick => "DoNav('#{'/miq_request/show/' << @miq_request.id.to_s << '?display=miq_provisions'}');",
-                      :title   => _("Click to view details")}
-              = h(@miq_request.resource.miq_provisions.length)
-        - if @miq_request.resource_type == "MiqHostProvisionRequest" && @miq_request.resource.miq_host_provisions.length > 0
-          .form-group
-            %label.control-label.col-md-2
-              = _("Provisioned Hosts")
-            .col-md-8{:title => _("Click to view details"),
-                      :onclick => "DoNav('#{'/miq_request/show/' << @miq_request.id.to_s << '?display=miq_provisions'}');"}
-              = h(@miq_request.resource.miq_host_provisions.length)
+            = _("Provisioned Hosts")
+          .col-md-8{:title => _("Click to view details"),
+                    :onclick => "DoNav('#{'/miq_request/show/' << @miq_request.id.to_s << '?display=miq_provisions'}');"}
+            = h(@miq_request.resource.miq_host_provisions.length)
   - if @edit && @edit[:stamp_typ]
     %table{:width => "100%"}
       %tr
