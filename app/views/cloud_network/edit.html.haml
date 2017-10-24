@@ -1,0 +1,6 @@
+= render :partial => "layouts/flash_msg"
+
+%cloud-network-form{'cloud-network-form-id' => @network.id}
+
+:javascript
+  miq_bootstrap('cloud-network-form');
