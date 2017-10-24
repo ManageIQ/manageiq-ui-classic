@@ -90,12 +90,12 @@ class VmInfraController < ApplicationController
     if @edit[:explorer]
       replace_right_cell(:action => "dialog_provision")
     else
-      javascript_redirect :action => 'dialog_load'
+      javascript_redirect(:action => 'dialog_load')
     end
   end
 
   def vm_transform
-    if params.has_key?(:id)
+    if params.key?(:id)
       vm = Vm.find_by(:id => params[:id].to_i)
       @right_cell_text = _("Transform VM %{name} to RHV") % {:name => vm.name}
       dialog = Dialog.find_by(:label => 'Transform VM')

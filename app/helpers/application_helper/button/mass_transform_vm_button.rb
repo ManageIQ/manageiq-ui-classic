@@ -1,5 +1,4 @@
 class ApplicationHelper::Button::MassTransformVmButton < ApplicationHelper::Button::Basic
-
   def visible?
     true
   end
@@ -13,5 +12,4 @@ class ApplicationHelper::Button::MassTransformVmButton < ApplicationHelper::Butt
     # Is there a provider that supports import?
     !EmsInfra.all.select(&:validate_import_vm).empty?
   end
-
 end
