@@ -1,7 +1,7 @@
 - wf = @edit[:wf] if @edit && @edit[:wf]
 = render :partial => "layouts/flash_msg"
 
-- if Settings.product.new_dialog_user_ui
+- if Settings.product.new_dialog_user_ui && action_name == "svc_catalog_provision"
   = render :partial => "shared/dialogs/dialog_user", :locals => {:wf => wf}
 
 - else

@@ -2,6 +2,20 @@
   .col-md-12.col-lg-12{'ng-if' => 'vm.dialog'}
     %dialog-user{"dialog" =>"vm.dialog", "refresh-field" => "vm.refreshField(field)", "on-update" => "vm.setDialogData(data)"}
 
+  .clearfix
+  .pull-right.button-group
+    %miq-button{:name      => t = _("Submit"),
+                :title     => t,
+                :alt       => t,
+                :enabled   => 'vm.saveable()',
+                'on-click' => "vm.submitButtonClicked()",
+                :primary   => 'true'}
+    %miq-button{:name      => t = _("Cancel"),
+                :title     => t,
+                :alt       => t,
+                :enabled   => 'true',
+                'on-click' => "vm.cancelClicked($event)"}
+
 :javascript
   ManageIQ.angular.app.value('serviceTemplateId', '#{wf.target.id}');
   ManageIQ.angular.app.value('serviceTemplateCatalogId', '#{wf.target.service_template_catalog.id}');

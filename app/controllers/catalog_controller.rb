@@ -2050,7 +2050,18 @@ class CatalogController < ApplicationController
             }
           end
         end
-        presenter.update(:form_buttons_div, r[:partial => "layouts/x_dialog_buttons", :locals => {:action_url => "dialog_form_button_pressed", :record_id => @edit[:rec_id]}])
+        unless Settings.product.new_dialog_user_ui && action_name == "svc_catalog_provision"
+          presenter.update(
+            :form_buttons_div,
+            r[
+              :partial => "layouts/x_dialog_buttons",
+              :locals  => {
+                :action_url => "dialog_form_button_pressed",
+                :record_id  => @edit[:rec_id]
+              }
+            ]
+          )
+        end
       elsif %w(ot_edit ot_copy ot_add service_dialog_from_ot).include?(action)
         presenter.hide(:toolbar).show(:paging_div, :form_buttons_div).hide(:pc_div_1)
         locals = {:record_id  => @edit[:rec_id],
