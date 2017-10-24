@@ -28,6 +28,8 @@ class GenericObjectDefinitionController < ApplicationController
         { :action => 'new' }
       when 'generic_object_definition_edit'
         { :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
+      when 'generic_object_definition_custom_button_group_new'
+        { :action => 'custom_button_group_new', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
       end
     )
   end
@@ -61,6 +63,13 @@ class GenericObjectDefinitionController < ApplicationController
     @cb_group = params[:cbs]
     @cb = params[:cb]
     @cb_group_actions = params[:actions]
+  end
+
+  def custom_button_group_new
+    assert_privileges('generic_object_definition_custom_button_group_new')
+    drop_breadcrumb(:name => _("Add a new Custom Button Group"), :url => "/generic_object_definition/custom_button_group_new")
+    @generic_object_definition = GenericObjectDefinition.find(params[:id])
+    @in_a_form = true
   end
 
   private

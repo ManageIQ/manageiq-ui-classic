@@ -25,9 +25,10 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Button Group'),
           t,
-          :enabled   => false,
-          :onwhen    => "1",
-          :url_parms => "custom_button_group_new_div"
+          :enabled      => false,
+          :onwhen       => "1",
+          :url_parms    => "custom_button_group_new_div",
+          :send_checked => true
         ),
         button(
           :generic_object_definition_custom_button_new,
