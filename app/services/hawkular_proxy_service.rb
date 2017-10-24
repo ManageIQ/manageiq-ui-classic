@@ -163,7 +163,12 @@ class HawkularProxyService
   end
 
   def labelize(id)
-    TENANT_LABEL_SPECIAL_CASES.fetch(id, id.truncate(TENANT_LABEL_MAX_LEN))
+    tenant_labels = TENANT_LABEL_SPECIAL_CASES.symbolize_keys
+    if Settings.hawkular_tenant_labels
+      tenant_labels.merge!(Settings.hawkular_tenant_labels.to_hash)
+    end
+
+    tenant_labels.fetch(id.to_sym, id.truncate(TENANT_LABEL_MAX_LEN))
   end
 
   def _metric_definitions(params)
