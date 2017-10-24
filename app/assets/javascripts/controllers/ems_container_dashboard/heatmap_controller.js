@@ -8,6 +8,7 @@ angular.module( 'patternfly.charts' ).controller('heatmapContainerController', [
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.timeframeLabel = __('Last 30 Days');
+    vm.loadingDone = false;
     var url = '/container_dashboard/heatmaps_data/' + providerId;
     var heatmapPromise = $http.get(url)
       .then(function(response) {
@@ -18,6 +19,7 @@ angular.module( 'patternfly.charts' ).controller('heatmapContainerController', [
     $q.all([heatmapPromise]).then(function() {
       vm.title = vm.heatmapData.heatmaps.title;
       vm.data = processHeatmapData(vm.data, vm.heatmapData.heatmaps);
+      vm.loadingDone = true;
     });
 
     vm.dataAvailable = true;

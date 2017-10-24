@@ -4,6 +4,7 @@
       %h2.card-pf-title
         {{vm.title}}
     .card-pf-body
+      .spinner.spinner-lg.loading{"ng-if" => "!vm.loadingDone"}
       .row
         .col-xs-12.col-sm-12.col-md-12.col-lg-6.example-trend-container{"ng-repeat" => "(key, data_hash) in vm.data"}
           %pf-utilization-trend-chart{'ng-if' => "vm.loadingDone", 'ng-attr-id' => "{{data_hash.id}}" , 'config' => "data_hash.config",

@@ -1,6 +1,4 @@
 %ng-switch{'on' => "$ctrl.config.layout", 'ng-class' => "{'data-unavailable-pf': $ctrl.chartData.dataAvailable === false}"}
-  .h3{'ng-if' => "$ctrl.chartData.dataAvailable === false"}
-    {{$ctrl.config.headTitle}}
   %div{:class => 'ng-switch-default', 'ng-class' => "{'trend-card-large-pf': $ctrl.showLargeCardLayout,'trend-card-small-pf': $ctrl.showSmallCardLayout}"}
 
     %span{:class => "trend-header-pf", 'ng-if' => "$ctrl.config.title"}
@@ -54,16 +52,4 @@
         %pf-sparkline-chart{'ng-if' => "$ctrl.chartData.dataAvailable !== false", 'config' => "$ctrl.config", 'chart-data' => "$ctrl.chartData", 'chart-height' => "$ctrl.getChartHeight()",
           'show-x-axis' => "$ctrl.showXAxis", 'show-y-axis' => "$ctrl.showYAxis"}
         %pf-empty-chart{'ng-if' => "$ctrl.chartData.dataAvailable === false", 'chart-height' => "$ctrl.getChartHeight()"}
-
-      %div{:class => "col-sm-4 trend-flat-col"}
-        %div{:class =>"trend-flat-details"}
-          %div{:class => "trend-flat-details-cell"}
-            %span{:class => "trend-title-flat-big-pf"}
-              {{$ctrl.getPercentageValue() + '%'}}
-
-          %div{:class => "trend-flat-details-cell"}
-            %span{:class => "trend-label-flat-strong-pf"}
-              {{$ctrl.config.trendLabel}}
-            %span{:class => "trend-label-flat-pf"}
-              {{$ctrl.getLatestValue()}} of {{$ctrl.chartData.total + ' ' + $ctrl.config.units}}
 

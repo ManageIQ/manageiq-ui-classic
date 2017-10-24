@@ -38,6 +38,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
 
   var init = function() {
     ManageIQ.angular.scope = vm;
+    vm.loadingDone = false;
     var url = '/container_dashboard/data/' + providerId;
     var promiseProviderData = $http.get(url)
       .then(function(data) {
@@ -82,6 +83,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
           },
         });
       }
+      vm.loadingDone = true;
     });
   };
 
