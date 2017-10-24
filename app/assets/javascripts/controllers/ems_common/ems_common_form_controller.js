@@ -290,7 +290,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.currentTab == "service_account" && $scope.emsCommonModel.service_account != ''))) {
       return true;
     } else {
-      return false;
+      return true;
     }
   };
 

@@ -114,6 +114,9 @@ module Mixins
     end
 
     def get_task_args(ems)
+      if ems.respond_to?(:validate_authentication_args)
+        return ems.validate_authentication_args(params)
+      end
       user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
       case ems.to_s
       when 'ManageIQ::Providers::Openstack::CloudManager'
