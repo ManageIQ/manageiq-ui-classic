@@ -145,7 +145,7 @@ class InfraNetworkingController < ApplicationController
   def button
     if params[:pressed] == "custom_button"
       custom_buttons
-    end  
+    end
   end
 
   private
