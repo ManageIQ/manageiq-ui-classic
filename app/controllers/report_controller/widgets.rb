@@ -253,7 +253,7 @@ module ReportController::Widgets
     else
       # show only specific type
       if !rep_id
-        @view, @pages = get_view(MiqWidget, :where_clause => ["content_type=?", nodeid])
+        @view, @pages = get_view(MiqWidget, :named_scope => [[:with_content_type, nodeid]])
       else
         # get all widgets for passed in report id
         @widget_nodes = MiqWidget.where(:content_type => "report", :resource_id => rep_id)

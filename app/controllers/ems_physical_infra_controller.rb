@@ -51,7 +51,7 @@ class EmsPhysicalInfraController < ApplicationController
   end
 
   def generate_options
-    {:where_clause     => "physical_servers.id in (select hosts.physical_server_id from hosts)",
+    {:named_scope      => :with_hosts,
      :breadcrumb_title => _("Physical Servers with Host")}
   end
 

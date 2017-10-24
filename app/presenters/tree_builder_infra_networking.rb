@@ -44,7 +44,7 @@ class TreeBuilderInfraNetworking < TreeBuilder
   def x_get_tree_cluster_kids(object, count_only)
     hosts = object.hosts
     switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
-    count_only_or_objects(count_only, Rbac.filtered(Switch, :where_clause => ["shared = true and id in(?)", switch_ids.flatten.uniq]))
+    count_only_or_objects(count_only, Rbac.filtered(Switch, :named_scope => [:shareable, [:with_id, switch_ids.flatten.uniq]]))
   end
 
   def x_get_tree_host_kids(object, count_only)

@@ -248,7 +248,7 @@ class InfraNetworkingController < ApplicationController
   def dvswitches_list(id, model)
     return dvswitch_node(id, model) if id
     if x_active_tree == :infra_networking_tree
-      options = {:model => "Switch", :where_clause => ["shared = true"]}
+      options = {:model => "Switch", :named_scope => :shareable}
       @right_cell_text = _("All %{title}") % {:title => model_to_name(model)}
       process_show_list(options) if @show_list
     end
@@ -267,7 +267,7 @@ class InfraNetworkingController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      options = {:model => "Switch", :where_clause => ["shared = true and id in(?)", @host_record.switches.pluck(:id)]}
+      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => @host_record.switches.pluck(:id)}
       process_show_list(options) if @show_list
       @showtype        = 'main'
       @pages           = nil
@@ -285,7 +285,7 @@ class InfraNetworkingController < ApplicationController
     else
       hosts = @cluster_record.hosts
       switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
-      options = {:model => "Switch", :where_clause => ["shared = true and id in(?)", switch_ids.flatten.uniq]}
+      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => switch_ids.flatten.uniq}
       process_show_list(options) if @show_list
       @showtype        = 'main'
       @pages           = nil
@@ -303,7 +303,7 @@ class InfraNetworkingController < ApplicationController
     else
       hosts = Host.where(:ems_id => @provider_record.id)
       switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
-      options = {:model => "Switch", :where_clause => ["shared = true and id in(?)", switch_ids.flatten.uniq]}
+      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => switch_ids.flatten.uniq}
       process_show_list(options) if @show_list
       @showtype        = 'main'
       @pages           = nil
@@ -321,7 +321,7 @@ class InfraNetworkingController < ApplicationController
 
   def default_node
     return unless x_node == "root"
-    options = {:model => "Switch", :where_clause => ["shared = true"]}
+    options = {:model => "Switch", :named_scope => :shareable}
     process_show_list(options) if @show_list
     @right_cell_text = _("All Switches")
     options

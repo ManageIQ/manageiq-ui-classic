@@ -26,7 +26,7 @@ class OrchestrationStackController < ApplicationController
 
   def show_list
     process_show_list(
-      :where_clause => "orchestration_stacks.type != 'ManageIQ::Providers::AnsibleTower::AutomationManager::Job'"
+      :named_scope => [[:without_type, 'ManageIQ::Providers::AnsibleTower::AutomationManager::Job']]
     )
   end
 

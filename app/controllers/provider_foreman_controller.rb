@@ -277,7 +277,7 @@ class ProviderForemanController < ApplicationController
       @no_checkboxes = true
       case @record.type
       when "ManageIQ::Providers::Foreman::ConfigurationManager"
-        options = {:model => "ConfigurationProfile", :match_via_descendants => ConfiguredSystem, :where_clause => ["manager_id IN (?)", provider.id]}
+        options = {:model => "ConfigurationProfile", :match_via_descendants => ConfiguredSystem, :named_scope => [[:with_manager, provider.id]]}
         @show_list ? process_show_list(options) : options.merge!(update_options)
         unassigned_profiles = add_unassigned_configuration_profile_record(provider.id)
         options.merge!(unassigned_profiles) unless unassigned_profiles.nil?
@@ -298,9 +298,9 @@ class ProviderForemanController < ApplicationController
     else
       options = {:model => "ConfiguredSystem", :match_via_descendants => ConfiguredSystem}
       if empty_configuration_profile_record?(@configuration_profile_record)
-        options[:where_clause] = ["manager_id IN (?) AND configuration_profile_id IS NULL", id]
+        options[:named_scope] = [[:with_manager, id], [:with_configuration_profile_id, nil]]
       else
-        options[:where_clause] = ["configuration_profile_id IN (?)", @configuration_profile_record.id]
+        options[:named_scope] = [[:with_configuration_profile_id, @configuration_profile_record.id]]
       end
       @show_list ? process_show_list(options) : options.merge!(update_options)
       record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))

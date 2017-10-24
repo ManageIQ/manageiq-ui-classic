@@ -37,8 +37,8 @@ describe TreeBuilderArchived do
     template_orph = FactoryGirl.create(:template_infra, :storage => FactoryGirl.create(:storage))
     vm_arch = FactoryGirl.create(:vm_infra)
     template_arch = FactoryGirl.create(:template_infra)
-    allow(ManageIQ::Providers::InfraManager::VmOrTemplate).to receive(:all_orphaned) { [vm_orph, template_orph] }
-    allow(ManageIQ::Providers::InfraManager::VmOrTemplate).to receive(:all_archived) { [vm_arch, template_arch] }
+    allow(ManageIQ::Providers::InfraManager::VmOrTemplate).to receive(:orphaned) { [vm_orph, template_orph] }
+    allow(ManageIQ::Providers::InfraManager::VmOrTemplate).to receive(:archived) { [vm_arch, template_arch] }
     nodes_orph = archived.x_get_tree_custom_kids({:id => 'orph'},
                                                  false,
                                                  :leaf => 'ManageIQ::Providers::InfraManager::VmOrTemplate')
