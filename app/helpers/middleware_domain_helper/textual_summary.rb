@@ -1,10 +1,12 @@
 module MiddlewareDomainHelper::TextualSummary
+  include TextualMixins::TextualAvailability
+
   def textual_group_properties
     TextualGroup.new(_("Properties"), %i(name nativeid state))
   end
 
   def textual_state
-    @record.properties['Availability']
+    translated_status(@record.properties['Availability'])
   end
 
   def textual_group_relationships

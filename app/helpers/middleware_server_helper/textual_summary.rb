@@ -1,4 +1,6 @@
 module MiddlewareServerHelper::TextualSummary
+  include TextualMixins::TextualAvailability
+
   #
   # Groups
   #
@@ -45,7 +47,7 @@ module MiddlewareServerHelper::TextualSummary
   def textual_server_state
     {
       :label => _('Server State'),
-      :value => (@record.properties['Calculated Server State'] || @record.properties['Server State']).to_s.capitalize
+      :value => translated_status(@record.properties['Calculated Server State'] || @record.properties['Server State'])
     }
   end
 

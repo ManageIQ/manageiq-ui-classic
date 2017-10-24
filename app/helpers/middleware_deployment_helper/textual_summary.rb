@@ -1,4 +1,6 @@
 module MiddlewareDeploymentHelper::TextualSummary
+  include TextualMixins::TextualAvailability
+
   #
   # Groups
   #
@@ -13,6 +15,6 @@ module MiddlewareDeploymentHelper::TextualSummary
   end
 
   def textual_status
-    @record.status
+    translated_status(@record.status)
   end
 end
