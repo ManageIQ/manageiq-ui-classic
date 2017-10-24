@@ -1,0 +1,44 @@
+= render :partial => "layouts/flash_msg"
+= form_tag('/ems_cloud/sync_users', :method => :post)
+= hidden_field_tag('id', @ems.id)
+- unless @ems.nil?
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Number of New Users')
+      .col-md-8
+        = @number_of_new_users
+    .form-group
+      %label.col-md-2.control-label
+        = _('Admin Role')
+      .col-md-8
+        = select_tag('admin_role',
+            options_for_select(@admin_roles.sort, @selected_admin_role),
+            :class  => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+    .form-group
+      %label.col-md-2.control-label
+        = _('Member Role')
+      .col-md-8
+        = select_tag('member_role',
+            options_for_select(@member_roles.sort, @selected_member_role),
+            :class  => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+  %table{:width => "100%"}
+    %tr
+      %td{:align => "right"}
+        #buttons_on
+          = button_tag(_("Sync"),
+                       :name  => "sync",
+                       :class => "btn btn-primary",
+                       :alt   => t = _("Sync Users"),
+                       :title => t,
+                       :type  => "submit")
+          = button_tag(_("Cancel"),
+                       :name  => "cancel",
+                       :class => "btn btn-default",
+                       :alt   => t = _("Cancel"),
+                       :title => t,
+                       :type  => "submit")

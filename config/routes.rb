@@ -1140,6 +1140,7 @@ Rails.application.routes.draw do
         ems_cloud_form_fields
         protect
         show_list
+        sync_users
         tagging_edit
       ) +
                compare_get,
@@ -1158,6 +1159,7 @@ Rails.application.routes.draw do
         sections_field_changed
         show
         show_list
+        sync_users
         tag_edit_form_field_changed
         tagging_edit
         tl_chooser

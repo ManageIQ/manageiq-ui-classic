@@ -19,6 +19,13 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
           :confirm => N_("Refresh relationships and power states for all items related to this Cloud Provider?")),
         separator,
         button(
+          :ems_cloud_user_sync,
+          'pficon pficon-edit fa-lg',
+          t = N_('Sync Users from Cloud Provider'),
+          t,
+          :url   => "/sync_users",
+          :klass => ApplicationHelper::Button::ProviderUserSync),
+        button(
           :ems_cloud_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Cloud Provider'),
