@@ -2353,18 +2353,4 @@ class ApplicationController < ActionController::Base
   def fetch_name_from_object(klass, id)
     klass.find_by(:id => from_cid(id)).try(:name)
   end
-
-  def verbosity_display(verbosity)
-    verbosity ||= "0"
-    verbosity_hsh = {
-      "0" => _("0 (Normal)"),
-      "1" => _("1 (Verbose)"),
-      "2" => _("2 (More Verbose)"),
-      "3" => _("3 (Debug)"),
-      "4" => _("4 (Connection Debug)"),
-      "5" => _("5 (WinRM Debug)")
-    }
-    verbosity_hsh[verbosity.to_s]
-  end
-  helper_method :verbosity_display
 end
