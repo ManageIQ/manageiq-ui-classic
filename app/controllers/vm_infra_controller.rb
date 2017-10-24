@@ -74,15 +74,44 @@ class VmInfraController < ApplicationController
   menu_section :inf
   has_custom_buttons
 
+  def simple_dialog_initialize(ra, options)
+    @edit = {}
+    @edit[:new] = options[:dialog] || {}
+    @edit[:wf] = ResourceActionWorkflow.new(@edit[:new], current_user, ra, {})
+    @record = Dialog.find_by_id(ra.dialog_id.to_i)
+    @edit[:rec_id]   = @record.id
+    @edit[:key]      = "dialog_edit__#{@edit[:rec_id] || "new"}"
+    @edit[:explorer] = @explorer ? @explorer : false
+    @edit[:dialog_mode] = options[:dialog_mode]
+    @edit[:current] = copy_hash(@edit[:new])
+    @edit[:right_cell_text] = options[:header].to_s
+    @in_a_form = true
+    @changed = session[:changed] = true
+    if @edit[:explorer]
+      replace_right_cell(:action => "dialog_provision")
+    else
+      javascript_redirect :action => 'dialog_load'
+    end
+  end
+
   def vm_transform
-    vm = Vm.find_by(:id => params[:id].to_i)
-    @right_cell_text = _("Transform VM %{name} to RHV") % {:name => vm.name}
-    dialog = Dialog.find_by(:label => 'Transform VM')
-    dialog_initialize(
-      dialog.resource_actions.first,
-      :header     => @right_cell_text,
-      :target_id  => vm.id,
-      :target_kls => Vm.name
-    )
+    if params.has_key?(:id)
+      vm = Vm.find_by(:id => params[:id].to_i)
+      @right_cell_text = _("Transform VM %{name} to RHV") % {:name => vm.name}
+      dialog = Dialog.find_by(:label => 'Transform VM')
+      dialog_initialize(
+        dialog.resource_actions.first,
+        :header     => @right_cell_text,
+        :target_id  => vm.id,
+        :target_kls => Vm.name
+      )
+    else
+      @right_cell_text = _("Transform VMs to RHV")
+      dialog = Dialog.find_by(:label => 'Transform VM')
+      simple_dialog_initialize(
+        dialog.resource_actions.first,
+        :header => @right_cell_text
+      )
+    end
   end
 end
