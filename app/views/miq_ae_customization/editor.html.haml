@@ -24,8 +24,8 @@
           .draggable
             %dialog-editor-field-static
         .editable-fields-container
-          %dialog-editor-tabs
-          %dialog-editor-boxes
+          %dialog-editor-tabs{"setup-modal-options" => "vm.setupModalOptions(type, tab, box, field)"}
+          %dialog-editor-boxes{"setup-modal-options" => "vm.setupModalOptions(type, tab, box, field)"}
 
     .pull-right
       %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
