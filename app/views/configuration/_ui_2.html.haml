@@ -146,7 +146,7 @@
         - if has_any_role?(%w(ems_physical_infra_show_list physical_server_show_list))
           %fieldset
             %h3
-              = _('Phyisical Infrascructure')
+              = _('Physical Infrastructure')
             - {:manageiq_providers_physicalinframanager => ["ems_physical_infra_show_list", _('Providers')],
               :physicalserver                           => ["physical_server_show_list",    _('Servers')],
               }.each do |resource, (feature, view_name)|
