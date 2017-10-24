@@ -23,7 +23,7 @@
       %th= _("Variable")
   %tbody
     /Currency code is the same for all the chargeback_rate_details
-    - @record.chargeback_rate_details.to_a.sort_by { |rd| [rd.chargeable_field[:group].downcase, rd.chargeable_field[:description].downcase] }.each_with_index do |detail, detail_index|
+    - @record.chargeback_rate_details.to_a.sort_by { |rd| [rd.chargeable_field[:group].downcase, rd.chargeable_field[:description].downcase, rd[:sub_metric].to_s.downcase] }.each_with_index do |detail, detail_index|
     - tiers = detail.chargeback_tiers.order(:start)
       - @cur_group = detail.chargeable_field[:group] if @cur_group.nil?
       - if @cur_group != detail.chargeable_field[:group]
