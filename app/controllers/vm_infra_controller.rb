@@ -78,7 +78,7 @@ class VmInfraController < ApplicationController
     @edit = {}
     @edit[:new] = options[:dialog] || {}
     @edit[:wf] = ResourceActionWorkflow.new(@edit[:new], current_user, ra, {})
-    @record = Dialog.find_by_id(ra.dialog_id.to_i)
+    @record = Dialog.find_by(:id => ra.dialog_id.to_i)
     @edit[:rec_id]   = @record.id
     @edit[:key]      = "dialog_edit__#{@edit[:rec_id] || "new"}"
     @edit[:explorer] = @explorer ? @explorer : false
