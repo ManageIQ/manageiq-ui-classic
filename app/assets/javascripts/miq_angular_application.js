@@ -12,6 +12,7 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miq.util',
   'kubernetesUI',
   'ManageIQ.treeView',
+  'ManageIQ.fonticonPicker',
   'miqStaticAssets.dialogEditor',
 ]);
 miqHttpInject(ManageIQ.angular.app);
