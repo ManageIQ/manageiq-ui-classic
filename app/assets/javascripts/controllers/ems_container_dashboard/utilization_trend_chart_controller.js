@@ -37,11 +37,6 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainer
   var processMetricsData = function(metricsDataStruct, all_data) {
     var data = all_data.xy_data;
 
-    if (all_data.interval_name !== 'daily') {
-      vm.cpuUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
-      vm.memoryUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
-    }
-
     if (all_data.interval_name === 'hourly') {
       vm.timeframeLabel = __('Last 24 hours');
     } else if (all_data.interval_name === 'realtime') {
@@ -71,6 +66,10 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainer
             },
           };
         } else {
+          if (all_data.interval_name !== 'daily') {
+            vm.cpuUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
+            vm.memoryUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
+          }
           metricsDataStruct.data[keys[i]] = {
             'data': chartsMixin.processData(data[keys[i]], 'dates', chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units),
             'id': keys[i] + 'UsageConfig_' + providerId,

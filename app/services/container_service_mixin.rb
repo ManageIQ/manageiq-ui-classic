@@ -86,6 +86,7 @@ module ContainerServiceMixin
 
     if realtime_metrics.size > 1
       {
+        :dataAvailable => true,
         :interval_name => "realtime",
         :xy_data       => trend_data(realtime_network_metrics)
       }
@@ -101,6 +102,7 @@ module ContainerServiceMixin
 
     if hourly_network_metrics.size > 1
       {
+        :dataAvailable => true,
         :interval_name => "hourly",
         :xy_data       => trend_data(hourly_network_metrics)
       }
@@ -109,6 +111,7 @@ module ContainerServiceMixin
 
   def empty_utilization_trend_data
     {
+      :dataAvailable => false,
       :interval_name => "",
       :xy_data       => {:cpu => nil, :memory => nil}
     }
@@ -116,6 +119,7 @@ module ContainerServiceMixin
 
   def empty_network_trend_data
     {
+      :dataAvailable => false,
       :interval_name => "",
       :xy_data       => nil
     }
@@ -130,6 +134,7 @@ module ContainerServiceMixin
 
     if daily_network_metrics.size > 1
       {
+        :dataAvailable => true,
         :interval_name => "daily",
         :xy_data       => trend_data(daily_network_metrics)
       }

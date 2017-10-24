@@ -5,7 +5,6 @@ angular.module( 'patternfly.charts' ).controller( 'recentImagesLineChartControll
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.loadingDone = false;
-    vm.config = chartsMixin.chartConfig.recentHostsConfig;
     vm.timeframeLabel = __('Last 30 Days');
     var url = '/container_dashboard/image_metrics_data/' + providerId;
     var imagesDataPromise = $http.get(url)
@@ -18,6 +17,12 @@ angular.module( 'patternfly.charts' ).controller( 'recentImagesLineChartControll
       if (vm.data.image_metrics.dataAvailable === false) {
         vm.data.dataAvailable = false;
       } else {
+        // Image metrics
+        if (vm.data.image_metrics.interval_name === 'daily') {
+          vm.config = chartsMixin.chartConfig.dailyImageUsageConfig;
+        } else {
+          vm.config = chartsMixin.chartConfig.hourlyImageUsageConfig;
+        }
         vm.data = chartsMixin.processData(vm.data.image_metrics.xy_data, 'dates', __("Images"));
       }
       vm.loadingDone = true;

@@ -1,4 +1,6 @@
 %ng-switch{'on' => "$ctrl.config.layout", 'ng-class' => "{'data-unavailable-pf': $ctrl.chartData.dataAvailable === false}"}
+  .h3{'ng-if' => "$ctrl.chartData.dataAvailable === false"}
+    {{$ctrl.config.headTitle}}
   %div{:class => 'ng-switch-default', 'ng-class' => "{'trend-card-large-pf': $ctrl.showLargeCardLayout,'trend-card-small-pf': $ctrl.showSmallCardLayout}"}
 
     %span{:class => "trend-header-pf", 'ng-if' => "$ctrl.config.title"}
