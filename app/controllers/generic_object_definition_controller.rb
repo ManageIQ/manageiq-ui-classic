@@ -33,6 +33,8 @@ class GenericObjectDefinitionController < ApplicationController
         { :action => 'new' }
       when 'generic_object_definition_edit'
         { :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
+      when 'ab_group_new'
+        { :action => 'custom_button_group_new', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
       end
     )
   end
@@ -64,6 +66,13 @@ class GenericObjectDefinitionController < ApplicationController
 
   def x_show
     tree_select
+  end
+
+  def custom_button_group_new
+    assert_privileges('ab_group_new')
+    drop_breadcrumb(:name => _("Add a new Custom Button Group"), :url => "/generic_object_definition/custom_button_group_new")
+    @generic_object_definition = GenericObjectDefinition.find(params[:id] || @god_node)
+    @in_a_form = true
   end
 
   private
