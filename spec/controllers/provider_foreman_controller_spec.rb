@@ -281,6 +281,7 @@ describe ProviderForemanController do
     end
 
     it "renders right cell text for ConfigurationManagerForeman node" do
+      controller.instance_variable_set(:@in_report_data, true)
       ems_id = ems_key_for_provider(@provider)
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
@@ -320,6 +321,7 @@ describe ProviderForemanController do
     it "renders the list view based on the nodetype(root,provider,config_profile) and the search associated with it" do
       controller.instance_variable_set(:@_params, :id => "root")
       controller.instance_variable_set(:@search_text, "manager")
+      controller.instance_variable_set(:@in_report_data, true)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data.size).to eq(2)
@@ -380,6 +382,7 @@ describe ProviderForemanController do
 
     it "renders tree_select for a ConfigurationManagerForeman node that contains an unassigned profile" do
       ems_id = ems_key_for_provider(@provider)
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
@@ -395,6 +398,7 @@ describe ProviderForemanController do
 
     it "renders tree_select for a ConfigurationManagerForeman node that contains only an unassigned profile" do
       ems_id = ems_key_for_provider(@provider2)
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
@@ -404,12 +408,14 @@ describe ProviderForemanController do
 
     it "renders tree_select for an 'Unassigned Profiles Group' node for the first provider" do
       controller.instance_variable_set(:@_params, :id => "-#{ems_id_for_provider(@provider)}-unassigned")
+      controller.instance_variable_set(:@in_report_data, true)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].data).to include('hostname' => "configured_system_unprovisioned")
     end
 
     it "renders tree_select for an 'Unassigned Profiles Group' node for the second provider" do
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => "-#{ems_id_for_provider(@provider2)}-unassigned")
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
@@ -438,6 +444,7 @@ describe ProviderForemanController do
     end
 
     it "does not display an automation manger configured system in the Configured Systems accordion" do
+      controller.instance_variable_set(:@in_report_data, true)
       stub_user(:features => :all)
       FactoryGirl.create(:configured_system_ansible_tower)
       allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_cs_filter_tree)

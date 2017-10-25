@@ -209,6 +209,7 @@ module ApplicationController::CiProcessing
     end
     @layout = session["#{self.class.session_key_prefix}_type".to_sym] if session["#{self.class.session_key_prefix}_type".to_sym]
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
+    process_show_list_options(options)
     build_listnav_search_list(@view.db) if !["miq_task"].include?(@layout) && !session[:menu_click]
   end
 

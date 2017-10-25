@@ -20,6 +20,7 @@ describe CatalogController do
 
   it "returns all catalog items related to current tenant and root tenant when non-self service user is logged" do
     login_as child_tenant_user
+    controller.instance_variable_set(:@in_report_data, true)
     view, _pages = controller.send(:get_view, ServiceTemplate, {})
     expect(view.table.data.count).to eq(2)
   end
@@ -27,12 +28,14 @@ describe CatalogController do
   it "returns all catalog items related to current user's groups when self service user is logged" do
     allow_any_instance_of(MiqGroup).to receive_messages(:self_service? => true)
     login_as child_tenant_user
+    controller.instance_variable_set(:@in_report_data, true)
     view, _pages = controller.send(:get_view, ServiceTemplate, {})
     expect(view.table.data.count).to eq(1)
   end
 
   it "returns all catalog items when admin user is logged" do
     login_as admin_user
+    controller.instance_variable_set(:@in_report_data, true)
     view, _pages = controller.send(:get_view, ServiceTemplate, {})
     expect(view.table.data.count).to eq(2)
   end
