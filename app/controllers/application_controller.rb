@@ -518,6 +518,23 @@ class ApplicationController < ActionController::Base
   end
   private :set_variables_report_data
 
+  def allowed_tenant_names
+    current_tenant = User.current_user.current_tenant
+    (current_tenant.descendants + [current_tenant]).map(&:name)
+  end
+  private :allowed_tenant_names
+
+  # Exception: Model Tenant and named_scope :in_my_region need to filter out the parent name if current user has no access to it.
+  # This can be removed once this is somehow fixed on the backend.
+  def filter_parent_name_tenant(table)
+    table.data.map! do |x|
+      x['parent_name'] = '' unless allowed_tenant_names.include?(x['parent_name'])
+      x
+    end
+    table
+  end
+  private :filter_parent_name_tenant
+
   # Method for fetching report data. These data can be displayed in Grid/Tile/List.
   # This method will first process params for options and then for current model.
   # From these options and model we get view (for fetching data) and settings (will hold info about paging).
@@ -533,6 +550,10 @@ class ApplicationController < ActionController::Base
       settings = options[:pages]
     end
     settings = set_variables_report_data(settings, @view)
+
+    if (options[:named_scope] == "in_my_region" && options[:model] == "Tenant")
+      @view.table = filter_parent_name_tenant(@view.table)
+    end
 
     # Foreman has some unassigned rows which needs to be added after view is fetched
     if options && options[:unassigned_profile_row] && options[:unassigned_configuration_profile]
