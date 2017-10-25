@@ -73,7 +73,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       template: templates[type],
       size: 'lg',
     };
-    vm.elementData = { type: type, tabId: tab, boxId: box, fieldId: field };
+    vm.elementInfo = { type: type, tabId: tab, boxId: box, fieldId: field };
     vm.visible = true;
   }
 

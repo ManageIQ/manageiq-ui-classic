@@ -17,7 +17,7 @@
               {{ vm.dialog.content[0].description }}
     .dialog-designer-container
       %dialog-editor-modal{"modal-options" => "vm.modalOptions",
-                           "dialog-data" => "vm.dialogData",
+                           "element-info" => "vm.elementInfo",
                            :visible => "vm.modalVisible"}
       .toolbox-container
         #toolbox.static-field-container
