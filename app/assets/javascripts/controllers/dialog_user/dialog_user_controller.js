@@ -46,6 +46,6 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   }
 
   function saveable() {
-    return !dialogFieldRefreshService.areFieldsBeingRefreshed;
+    return ! dialogFieldRefreshService.areFieldsBeingRefreshed;
   }
 }]);

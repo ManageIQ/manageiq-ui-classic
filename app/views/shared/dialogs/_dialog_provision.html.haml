@@ -1,10 +1,7 @@
 - wf = @edit[:wf] if @edit && @edit[:wf]
 = render :partial => "layouts/flash_msg"
 
-- if Settings.product.new_dialog_user_ui && action_name == "svc_catalog_provision"
-  = render :partial => "shared/dialogs/dialog_user", :locals => {:wf => wf}
-
-- else
+- if Settings.product.old_dialog_user_ui || action_name != "svc_catalog_provision"
   :javascript
     dialogFieldRefresh.unbindAllPreviousListeners();
 
@@ -31,3 +28,6 @@
                             :record_id  => @edit[:rec_id]}
   :javascript
     miq_tabs_init('#dialog_tabs')
+
+- else
+  = render :partial => "shared/dialogs/dialog_user", :locals => {:wf => wf}
