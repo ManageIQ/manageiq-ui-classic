@@ -228,7 +228,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         tl_chooser
         wait_for_task
-      ) + adv_search_post + compare_post + exp_post + perf_post + save_post
+      ) + adv_search_post + compare_post + exp_post + perf_post + save_post + dialog_runner_post
     },
 
     :host_aggregate           => {
@@ -425,12 +425,13 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         create
         wait_for_task
-      ) + compare_post + adv_search_post + exp_post + save_post
+      ) + compare_post + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :cloud_tenant             => {
       :get => %w(
         cloud_tenant_form_fields
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -456,7 +457,7 @@ Rails.application.routes.draw do
         update
         wait_for_task
       ) +
-               compare_post + adv_search_post + exp_post + save_post
+               compare_post + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :cloud_object_store_object => {
@@ -483,7 +484,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         update
-      ) + compare_post + adv_search_post + exp_post + save_post
+      ) + compare_post + adv_search_post + exp_post
     },
 
     :cloud_volume             => {
@@ -524,7 +525,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         update
         wait_for_task
-      ) + compare_post + adv_search_post + exp_post + save_post
+      ) + compare_post + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :cloud_volume_snapshot    => {
@@ -678,7 +679,8 @@ Rails.application.routes.draw do
                adv_search_post +
                exp_post +
                perf_post +
-               save_post
+               save_post +
+               dialog_runner_post
     },
 
     :container_node           => {
@@ -793,7 +795,7 @@ Rails.application.routes.draw do
         openscap_rule_results
         protect
         squash_toggle
-      ) + adv_search_post + exp_post + save_post
+      ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :container_image_registry => {
@@ -891,7 +893,8 @@ Rails.application.routes.draw do
                adv_search_post +
                exp_post +
                perf_post +
-               save_post
+               save_post +
+               dialog_runner_post
     },
 
     :container_route          => {
@@ -948,7 +951,7 @@ Rails.application.routes.draw do
         update
         tagging_edit
         tag_edit_form_field_changed
-      ) + adv_search_post + exp_post + save_post
+      ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :container_build          => {
@@ -1004,7 +1007,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) + adv_search_post + exp_post + save_post
+      ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :container_topology       => {
@@ -1732,7 +1735,8 @@ Rails.application.routes.draw do
         adv_search_post +
         compare_post +
         save_post +
-        exp_post
+        exp_post +
+        dialog_runner_post
     },
 
     :floating_ip              => {
@@ -1801,7 +1805,8 @@ Rails.application.routes.draw do
         adv_search_post +
         compare_post +
         save_post +
-        exp_post
+        exp_post +
+        dialog_runner_post
     },
 
     :cloud_network             => {
@@ -1834,7 +1839,8 @@ Rails.application.routes.draw do
         adv_search_post +
         compare_post +
         save_post +
-        exp_post
+        exp_post +
+        dialog_runner_post
     },
 
     :network_port             => {
@@ -1906,7 +1912,8 @@ Rails.application.routes.draw do
         adv_search_post +
         compare_post +
         save_post +
-        exp_post
+        exp_post +
+        dialog_runner_post
     },
 
     :load_balancer             => {
@@ -1932,7 +1939,8 @@ Rails.application.routes.draw do
         adv_search_post +
         compare_post +
         save_post +
-        exp_post
+        exp_post +
+        dialog_runner_post
     },
 
     :flavor                   => {
@@ -2075,7 +2083,8 @@ Rails.application.routes.draw do
         adv_search_post +
         exp_post +
         save_post +
-        x_post
+        x_post +
+        dialog_runner_post
     },
 
     :generic_object => {
@@ -2761,7 +2770,8 @@ Rails.application.routes.draw do
       ) +
                adv_search_post +
                exp_post +
-               save_post
+               save_post +
+               dialog_runner_post
     },
 
     :provider_foreman         => {

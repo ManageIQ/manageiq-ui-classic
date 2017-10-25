@@ -1,7 +1,5 @@
 #main_div
-  - if @dialog_prov
-    = render :partial => "shared/dialogs/dialog_provision"
-  - elsif %w(all_vms hosts miq_proxies all_miq_templates storage_extents storage_systems).include?(@display) && @showtype != "compare"
+  - if %w(all_vms hosts miq_proxies all_miq_templates storage_extents storage_systems).include?(@display) && @showtype != "compare"
     = render :partial => "layouts/x_gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     - case @showtype
@@ -11,7 +9,5 @@
       = render :partial => "layouts/item"
     - when "performance"
       = render :partial => "layouts/performance_async"
-    - when "dialog_provision"
-      = render :partial => "shared/dialogs/dialog_provision"
     - when "main"
       = render :partial => "layouts/textual_groups_generic"
