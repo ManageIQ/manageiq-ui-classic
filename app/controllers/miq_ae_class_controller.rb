@@ -976,15 +976,6 @@ class MiqAeClassController < ApplicationController
 
   def method_form_fields
     method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find(params[:id])
-    whitelist_symbols = [:repository_id,
-                         :playbook_id,
-                         :credential_id,
-                         :network_credential_id,
-                         :cloud_credential_id,
-                         :verbosity,
-                         :become_enabled]
-    data = method.data ? YAML.safe_load(method.data, [Symbol], whitelist_symbols, false, nil) : {}
-
     method_hash = {
       :name                => method.name,
       :display_name        => method.display_name,
@@ -995,13 +986,13 @@ class MiqAeClassController < ApplicationController
       :scope               => "instance",
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
       :config_info         => {
-        :repository_id         => data[:repository_id] || '',
-        :playbook_id           => data[:playbook_id] || '',
-        :credential_id         => data[:credential_id] || '',
-        :network_credential_id => data[:network_credential_id] || '',
-        :cloud_credential_id   => data[:cloud_credential_id] || '',
-        :verbosity             => data[:verbosity],
-        :become_enabled        => data[:become_enabled] || false,
+        :repository_id         => method.options[:repository_id] || '',
+        :playbook_id           => method.options[:playbook_id] || '',
+        :credential_id         => method.options[:credential_id] || '',
+        :network_credential_id => method.options[:network_credential_id] || '',
+        :cloud_credential_id   => method.options[:cloud_credential_id] || '',
+        :verbosity             => method.options[:verbosity],
+        :become_enabled        => method.options[:become_enabled] || false,
         :extra_vars            => method.inputs
       }
     }
@@ -1165,7 +1156,7 @@ class MiqAeClassController < ApplicationController
       method.language = params["language"]
       method.scope = params["scope"]
       method.class_id = params[:class_id]
-      method.data = YAML.dump(set_playbook_data)
+      method.options = set_playbook_data
       begin
         MiqAeMethod.transaction do
           to_save, to_delete = playbook_inputs(method)
@@ -2703,21 +2694,14 @@ class MiqAeClassController < ApplicationController
 
   def fetch_playbook_details
     @playbook_details = {}
-    whitelist_symbols = [:repository_id,
-                         :playbook_id,
-                         :credential_id,
-                         :network_credential_id,
-                         :cloud_credential_id,
-                         :verbosity,
-                         :become_enabled]
-    data = YAML.safe_load(@record.data, [Symbol], whitelist_symbols, false, nil)
-    @playbook_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, data[:repository_id])
-    @playbook_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, data[:playbook_id])
-    @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, data[:credential_id])
-    @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, data[:network_credential_id]) if data[:network_credential_id]
-    @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, data[:cloud_credential_id]) if data[:cloud_credential_id]
-    @playbook_details[:verbosity] = data[:verbosity]
-    @playbook_details[:become_enabled] = data[:become_enabled] == true ? _("Yes") : _("No")
+    options = @record.options
+    @playbook_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, options[:repository_id])
+    @playbook_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, options[:playbook_id])
+    @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, options[:credential_id])
+    @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
+    @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
+    @playbook_details[:verbosity] = options[:verbosity]
+    @playbook_details[:become_enabled] = options[:become_enabled] == true ? _("Yes") : _("No")
     @playbook_details
   end
 
