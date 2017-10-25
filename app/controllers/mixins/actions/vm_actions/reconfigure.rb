@@ -151,15 +151,14 @@ module Mixins
                   end
                 end
                 dsize, dunit = reconfigure_calculations(disk.size / (1024 * 1024))
-                vmdisk =  {:hdFilename     => disk.filename,
-                           :hdType         => disk.disk_type.to_s,
-                           :hdMode         => disk.mode.to_s,
-                           :hdSize         => dsize.to_s,
-                           :hdUnit         => dunit.to_s,
-                           :delete_backing => delbacking,
-                           :cb_bootable    => disk.bootable,
-                           :add_remove     => removing}
-                vmdisk[:new_controller_type] = reconfig_item.first.scsi_controller_default_type if reconfig_item.first.respond_to?(:scsi_controller_default_type)
+                vmdisk = {:hdFilename     => disk.filename,
+                          :hdType         => disk.disk_type.to_s,
+                          :hdMode         => disk.mode.to_s,
+                          :hdSize         => dsize.to_s,
+                          :hdUnit         => dunit.to_s,
+                          :delete_backing => delbacking,
+                          :cb_bootable    => disk.bootable,
+                          :add_remove     => removing}
                 vmdisks << vmdisk
               end
             end
@@ -218,18 +217,6 @@ module Mixins
 
         def supports_reconfigure_disks?
           @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disks?
-        end
-
-        def supports_new_scsi_controller?
-          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.respond_to?(:scsi_controller_types)
-        end
-
-        def scsi_controller_types
-          @reconfigitems.first.scsi_controller_types
-        end
-
-        def scsi_controller_default_type
-          @reconfigitems.first.scsi_controller_default_type
         end
 
         private
