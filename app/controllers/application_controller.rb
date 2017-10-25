@@ -1607,7 +1607,7 @@ class ApplicationController < ActionController::Base
       :page                      => options[:all_pages] ? 1 : @current_page,
       :per_page                  => options[:all_pages] ? ONE_MILLION : @items_per_page,
       :where_clause              => get_view_where_clause(options[:where_clause]),
-      :named_scope               => options[:named_scope] || (:without_volume_templates if db == "MiqTemplate"),
+      :named_scope               => options[:named_scope],
       :display_filter_hash       => options[:display_filter_hash],
       :userid                    => session[:userid],
       :selected_ids              => object_ids,
