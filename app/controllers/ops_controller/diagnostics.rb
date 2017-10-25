@@ -406,7 +406,7 @@ module OpsController::Diagnostics
     @force_no_grid_xml = true
     if x_node.split("-").first == "z"
       zone = Zone.find_by_id(from_cid(x_node.split("-").last))
-      @view, @pages = get_view(MiqServer, :conditions => ["zone_id=?", zone.id]) # Get the records (into a view) and the paginator
+      @view, @pages = get_view(MiqServer, :named_scope => [[:with_zone_id, zone.id]]) # Get the records (into a view) and the paginator
     else
       @view, @pages = get_view(MiqServer) # Get the records (into a view) and the paginator
     end
@@ -556,7 +556,7 @@ module OpsController::Diagnostics
     @showlinks = true
     status = ["started", "ready", "working"]
     # passing all_pages option to show all records on same page
-    @view, @pages = get_view(MiqWorker, :conditions => ["(miq_server_id = ? and status IN (?))", @sb[:selected_server_id], status], :all_pages => true) # Get the records (into a view) and the paginator
+    @view, @pages = get_view(MiqWorker, :named_scope => [[:with_miq_server_id, @sb[:selected_server_id]], [:with_status, status]], :all_pages => true) # Get the records (into a view) and the paginator
     # setting @embedded and @pages to nil, we don't want to show sorting/paging bar on the screen'
     @embedded = @pages = nil
   end

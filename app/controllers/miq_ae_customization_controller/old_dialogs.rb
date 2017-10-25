@@ -155,7 +155,7 @@ module MiqAeCustomizationController::OldDialogs
     if x_node == "root"
       @view, @pages = get_view(MiqDialog) # Get the records (into a view) and the paginator
     else
-      @view, @pages = get_view(MiqDialog, :conditions => ["dialog_type=?", x_node.split('_').last]) # Get the records (into a view) and the paginator
+      @view, @pages = get_view(MiqDialog, :named_scope => [[:with_dialog_type, x_node.split('_').last]]) # Get the records (into a view) and the paginator
     end
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number

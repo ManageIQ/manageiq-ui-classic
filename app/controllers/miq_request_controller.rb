@@ -181,7 +181,7 @@ class MiqRequestController < ApplicationController
       @listicon = "miq_request"
       @no_checkboxes = true
       @showlinks = true
-      @view, @pages = get_view(MiqProvision, :conditions => ["miq_request_id=?", @miq_request.id])  # Get all requests
+      @view, @pages = get_view(MiqProvision, :named_scope => [[:with_miq_request_id, @miq_request.id]]) # Get all requests
       drop_breadcrumb(:name => _("Provisioned VMs [%{description}]") % {:description => @miq_request.description},
                       :url  => "/miq_request/show/#{@miq_request.id}?display=#{@display}")
     end

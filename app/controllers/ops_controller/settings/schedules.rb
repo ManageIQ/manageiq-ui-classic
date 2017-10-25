@@ -393,7 +393,7 @@ module OpsController::Settings::Schedules
     @sortcol = session[:schedule_sortcol].nil? ? 0 : session[:schedule_sortcol].to_i
     @sortdir = session[:schedule_sortdir].nil? ? "ASC" : session[:schedule_sortdir]
 
-    @view, @pages = get_view(MiqSchedule, :conditions => ["prod_default!=? or prod_default IS NULL And adhoc IS NULL", "system"]) # Get the records (into a view) and the paginator
+    @view, @pages = get_view(MiqSchedule, :named_scope => [[:with_prod_default_not_in, "system"], [:with_adhoc, nil]]) # Get the records (into a view) and the paginator
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:schedule_sortcol] = @sortcol
