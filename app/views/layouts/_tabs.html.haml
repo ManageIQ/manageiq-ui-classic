@@ -47,6 +47,7 @@
                 = link_to(tab[1], {:action => 'change_tab', :tab => tab[0], :id => @tab_id}, :onclick => "return miqCheckForChanges()")
   %br{:clear => "all"}/
 - if !@tabs && (@lastaction == "show_list" || !@edit && !session[:menu_click])
+  - p "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   - if @edit && @edit[:adv_search_applied] != nil && !session[:menu_click]
     %h1
       = h(@title + @edit[:adv_search_applied][:text] + " ")
@@ -56,5 +57,10 @@
     - if %w(container_topology middleware_topology network_topology cloud_topology).include?(@layout)
       = ''
     - else
-      %h1
-        = @title
+      - if @right_cell_text
+        %h1#explorer_title
+          %span#explorer_title_text
+            = URI.unescape(@right_cell_text)
+      - else
+        %h1
+          = @title

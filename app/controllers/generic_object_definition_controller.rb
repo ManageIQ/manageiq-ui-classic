@@ -15,6 +15,11 @@ class GenericObjectDefinitionController < ApplicationController
     GenericObjectDefinition
   end
 
+  def show_list
+    super
+    @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
+  end
+
   def button
     if @display == 'generic_objects' && params[:pressed] == 'generic_object_tag'
       tag(GenericObject)
@@ -82,8 +87,6 @@ class GenericObjectDefinitionController < ApplicationController
     end
     # Hide/show searchbox depending on if a list is showing
     presenter.set_visibility(!(@record || @in_a_form), :searchbox)
-
-    p "xxxxxx #{@right_cell_text}"
 
     presenter[:right_cell_text] = @right_cell_text
 
