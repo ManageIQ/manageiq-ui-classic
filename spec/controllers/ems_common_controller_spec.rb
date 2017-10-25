@@ -1,5 +1,3 @@
-require 'kubeclient'
-
 describe EmsCloudController do
   context "::EmsCommon" do
     context "#new" do
