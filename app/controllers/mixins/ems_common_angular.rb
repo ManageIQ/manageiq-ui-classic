@@ -429,6 +429,9 @@ module Mixins
     end
 
     def set_ems_record_vars(ems, mode = nil)
+      if ems.respond_to?(:populate_record)
+        return ems.populate_record(params, session, mode)
+      end
       ems.name                   = params[:name].strip if params[:name]
       ems.provider_region        = params[:provider_region]
       ems.api_version            = params[:api_version].strip if params[:api_version]
