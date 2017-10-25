@@ -199,13 +199,13 @@ module Mixins
           @reconfigureitems.first.hardware.disks.each do |disk|
             next if disk.device_type != 'disk'
             dsize, dunit = reconfigure_calculations(disk.size / (1024 * 1024))
-            vmdisks << {:hdFilename          => disk.filename,
-                        :hdType              => disk.disk_type,
-                        :hdMode              => disk.mode,
-                        :hdSize              => dsize,
-                        :hdUnit              => dunit,
-                        :add_remove          => '',
-                        :cb_bootable         => disk.bootable}
+            vmdisks << {:hdFilename  => disk.filename,
+                        :hdType      => disk.disk_type,
+                        :hdMode      => disk.mode,
+                        :hdSize      => dsize,
+                        :hdUnit      => dunit,
+                        :add_remove  => '',
+                        :cb_bootable => disk.bootable}
           end
 
           {:objectIds              => reconfigure_ids,
