@@ -156,8 +156,9 @@
                             "selectpicker-for-select-tag" => "",
                             "width"                       => "10")
             %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+              - options = @reconfigitems.first.scsi_controller_types
               = select_tag('Controller',
-                           options_for_select(%w(VirtualLsiLogicController ParaVirtualSCSIController VirtualBusLogicController VirtualLsiLogicSASController)),
+                           options_for_select(options),
                            "ng-model"                    => "vm.reconfigureModel.new_controller_type",
                            "data-width"                  => "auto",
                            "required"                    => "",

@@ -150,17 +150,17 @@ module Mixins
                     end
                   end
                 end
-                new_controller_type = 'VirtualLsiLogicController'
                 dsize, dunit = reconfigure_calculations(disk.size / (1024 * 1024))
-                vmdisks << {:hdFilename          => disk.filename,
-                            :hdType              => disk.disk_type.to_s,
-                            :hdMode              => disk.mode.to_s,
-                            :hdSize              => dsize.to_s,
-                            :hdUnit              => dunit.to_s,
-                            :new_controller_type => new_controller_type,
-                            :delete_backing      => delbacking,
-                            :cb_bootable         => disk.bootable,
-                            :add_remove          => removing}
+                vmdisk =  {:hdFilename     => disk.filename,
+                           :hdType         => disk.disk_type.to_s,
+                           :hdMode         => disk.mode.to_s,
+                           :hdSize         => dsize.to_s,
+                           :hdUnit         => dunit.to_s,
+                           :delete_backing => delbacking,
+                           :cb_bootable    => disk.bootable,
+                           :add_remove     => removing}
+                vmdisk[:new_controller_type] = reconfig_item.first.scsi_controller_default_type if reconfig_item.first.respond_to?(:scsi_controller_default_type)
+                vmdisks << vmdisk
               end
             end
             @reconfig_values[:disks] = vmdisks
@@ -218,6 +218,18 @@ module Mixins
 
         def supports_reconfigure_disks?
           @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disks?
+        end
+
+        def supports_new_scsi_controller?
+          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.respond_to?(:scsi_controller_types)
+        end
+
+        def scsi_controller_types
+          @reconfigitems.first.scsi_controller_types
+        end
+
+        def scsi_controller_default_type
+          @reconfigitems.first.scsi_controller_default_type
         end
 
         private
