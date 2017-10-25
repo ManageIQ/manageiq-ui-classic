@@ -453,6 +453,11 @@ class TreeBuilder
     ### Configured Systems
     :configuration_manager_cs_filter => "TreeBuilderConfigurationManagerConfiguredSystems",
 
+    # Automation
+    ## Automate
+    ### Generic Objects
+    :generic_object_definition       => "TreeBuilderConfigurationManager",
+
     # Control
     ## Explorer
     ### Policy Profiles
@@ -551,6 +556,7 @@ class TreeBuilder
     "fr"  => "ManageIQ::Providers::Foreman::ConfigurationManager",
     "g"   => "MiqGroup",
     "gd"  => "GuestDevice",
+    "god" => "GenericObjectDefinition",
     "h"   => "Host",
     "hot" => "ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate",
     "isd" => "IsoDatastore",
