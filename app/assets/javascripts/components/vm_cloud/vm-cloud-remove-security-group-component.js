@@ -38,7 +38,7 @@ function vmCloudRemoveSecurityGroupFormController(API, miqService) {
 
   vm.saveClicked = function() {
     var saveObject = {
-      security_group: vm.vmCloudModel.security_group,
+      name: vm.vmCloudModel.security_group,
       action: 'remove',
     };
     var saveMsg = sprintf(__('%s has been successfully removed.'), vm.vmCloudModel.security_group);

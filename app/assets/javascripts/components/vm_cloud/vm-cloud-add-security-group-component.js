@@ -33,8 +33,8 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
       .then(function(data) {
         var tenantId = data[0].cloud_tenant_id;
         currentSecurityGroups = data[1].resources;
- 
-       return API.get("/api/cloud_tenants/" + tenantId + "/security_groups?expand=resources&attributes=id,name");
+
+        return API.get("/api/cloud_tenants/" + tenantId + "/security_groups?expand=resources&attributes=id,name");
       })
       .then(function(data) {
         vm.security_groups = data.resources.filter(function(securityGroup) {
@@ -53,7 +53,7 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
 
   vm.addClicked = function() {
     var saveObject = {
-      security_group: vm.vmCloudModel.security_group,
+      name: vm.vmCloudModel.security_group,
       action: 'add',
     };
     var saveMsg = sprintf(__('%s has been successfully added.'), vm.vmCloudModel.security_group);
