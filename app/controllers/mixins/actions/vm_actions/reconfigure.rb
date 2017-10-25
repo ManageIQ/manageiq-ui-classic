@@ -44,6 +44,7 @@ module Mixins
           # if coming in to edit from miq_request list view
           recs = checked_or_params
           if !session[:checked_items].nil? && (@lastaction == "set_checked_items" || params[:pressed] == "miq_request_edit")
+            recs = session[:checked_items]
             request_id = params[:id]
           end
 
@@ -128,7 +129,7 @@ module Mixins
                             :hdMode              => disk[:persistent] ? 'persistent' : 'nonpersistent',
                             :hdSize              => adsize.to_s,
                             :hdUnit              => adunit,
-                            :new_controller_type => disk[:new_controller_type],
+                            :new_controller_type => disk[:new_controller_type].to_s,
                             :cb_dependent        => disk[:dependent],
                             :cb_bootable         => disk[:bootable],
                             :add_remove          => 'add'}
