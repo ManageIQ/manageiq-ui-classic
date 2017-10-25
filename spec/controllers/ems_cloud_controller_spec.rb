@@ -304,25 +304,36 @@ describe EmsCloudController do
 
   context "#create_ems_button_validate" do
     let(:mocked_infra_class) { ManageIQ::Providers::Redhat::InfraManager }
-    let(:mocked_infra) { double(ManageIQ::Providers::Redhat::InfraManager) }
+    let(:mocked_cloud_class) { ManageIQ::Providers::Amazon::CloudManager }
+    let(:mocked_container_class) { ManageIQ::Providers::Openshift::ContainerManager }
+    let(:mocked_container) { double(ManageIQ::Providers::Openshift::ContainerManager) }
 
     it "queues the authentication type if it is a cloud provider" do
       allow(controller).to receive(:render)
-      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_infra_class)
+      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_cloud_class)
       controller.instance_variable_set(:@_params, :controller => "ems_cloud")
+
+      expect(mocked_cloud_class).to receive(:validate_credentials_task)
+      controller.send(:create_ems_button_validate)
+    end
+
+    it "queues the authentication check if it is an infra provider" do
+      allow(controller).to receive(:render)
+      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_infra_class)
+      controller.instance_variable_set(:@_params, :controller => "ems_infra")
 
       expect(mocked_infra_class).to receive(:validate_credentials_task)
       controller.send(:create_ems_button_validate)
     end
 
-    it "does not queue the authentication check if it is not a cloud provider" do
+    it "does not queue the authentication check if it is a container provider" do
       allow(controller).to receive(:set_ems_record_vars)
       allow(controller).to receive(:render)
-      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_infra_class)
-      allow(mocked_infra_class).to receive(:new).and_return(mocked_infra)
-      controller.instance_variable_set(:@_params, :controller => "ems_infra", :cred_type => "default")
+      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_container_class)
+      allow(mocked_container_class).to receive(:new).and_return(mocked_container)
+      controller.instance_variable_set(:@_params, :controller => "ems_container", :cred_type => "default")
 
-      expect(mocked_infra).to receive(:authentication_check).with("default", hash_including(:save => false))
+      expect(mocked_container).to receive(:authentication_check).with("default", hash_including(:save => false))
       controller.send(:create_ems_button_validate)
     end
 
