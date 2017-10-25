@@ -5,7 +5,7 @@
 }
 
 .container_topology .legend { /* prevents tooltip from conflicting with the nav bar*/
-  margin-left: 40px;
+  margin-left: 55px;
 }
 
 .container_topology g.EntityLegend {
