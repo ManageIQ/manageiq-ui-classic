@@ -18,6 +18,8 @@ class GenericObjectDefinitionController < ApplicationController
   def show_list
     super
     @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
+    self.x_active_tree ||= :generic_object_definitions_tree
+    self.x_node ||= 'root'
   end
 
   def button
@@ -79,15 +81,15 @@ class GenericObjectDefinitionController < ApplicationController
 
     presenter[:osf_node] = x_node
     if params[:id] == 'root'
-      presenter.update(:main_div, r[:partial => 'show_list'])
+      presenter.replace(:main_div, r[:partial => 'show_list'])
       presenter.show(:paging_div)
     else
-      presenter.update(:main_div, r[:partial => 'show'])
+      presenter.replace(:main_div, r[:partial => 'show'])
       presenter.hide(:paging_div)
     end
     # Hide/show searchbox depending on if a list is showing
     presenter.set_visibility(!(@record || @in_a_form), :searchbox)
-
+    presenter[:activate_node] = x_active_tree.to_s
     presenter[:right_cell_text] = @right_cell_text
 
     render :json => presenter.for_render
