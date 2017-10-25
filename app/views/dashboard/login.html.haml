@@ -25,12 +25,12 @@
           .form-group
             %label.col-md-3.control-label
             .col-md-9
-              = link_to(_("Login to Corporate System"), {:action => "initiate_saml_login",
+              = link_to(_("Log in to Corporate System"), {:action => "initiate_saml_login",
                                                          :button => "saml_login"},
                         :id                   => "saml_login",
                         :class                => "btn btn-primary form-control",
-                        :alt                  => _("Login"),
-                        :title                => _("Login to Corporate System"),
+                        :alt                  => _("Log in"),
+                        :title                => _("Log in to Corporate System"),
                         :remote               => true,
                         "data-method"         => :post,
                         "data-miq_sparkle_on" => true,
@@ -93,18 +93,18 @@
             - sso_url = url_for_only_path(:action => "kerberos_authenticate",
                                 :button => "sso_login")
 
-            = link_to(_("Login"), '',
+            = link_to(_("Log in"), '',
                       :id                   => "login",
                       :class                => "btn btn-primary",
-                      :alt                  => _("Login"),
-                      :title                => _("Login"),
+                      :alt                  => _("Log in"),
+                      :title                => _("Log in"),
                       :onclick              => ext_auth? ? "miqAjaxExtAuth(); return false;" : "miqAjaxAuth('#{j login_url}'); return false;")
 
-            = link_to(_("SSO Login"), '',
+            = link_to(_("SSO Log in"), '',
                       :id                    => "sso_login",
                       :class                 => "btn btn-primary",
-                      :alt                   => _("SSO Login"),
-                      :title                 => _("SSO Login"),
+                      :alt                   => _("SSO Log in"),
+                      :title                 => _("SSO Log in"),
                       :style                 => "display: none;",
                       :onclick              => "miqAjaxAuthSso('#{j sso_url}'); return false;")
 

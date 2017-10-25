@@ -723,6 +723,7 @@ function miqAjaxAuth(url) {
   .then(null, function() {
     add_flash(__('Incorrect username or password'), 'error', { id: 'auth_failed' });
 
+    miqClearLoginFields();
     miqEnableLoginFields(true);
     miqSparkleOff();
   });
@@ -772,6 +773,12 @@ function miqEnableLoginFields(enabled) {
   if (miqDomElementExists('user_verify_password')) {
     $('#user_verify_password').prop('readonly', ! enabled);
   }
+}
+
+// reset form fields on login failure
+function miqClearLoginFields() {
+  $('#user_name').val('');
+  $('#user_password').val('');
 }
 
 // Initialize dashboard column jQuery sortables
