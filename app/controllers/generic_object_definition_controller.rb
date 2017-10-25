@@ -55,7 +55,40 @@ class GenericObjectDefinitionController < ApplicationController
     true
   end
 
+  def x_show
+    tree_select
+  end
+
   private
+
+  def replace_right_cell
+    if params[:id] == 'root'
+      process_show_list
+      @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
+    else
+      @_params[:id] = params[:id].split("-").last
+      show
+      @right_cell_text = @record.name
+    end
+    presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
+
+    presenter[:osf_node] = x_node
+    if params[:id] == 'root'
+      presenter.update(:main_div, r[:partial => 'show_list'])
+      presenter.show(:paging_div)
+    else
+      presenter.update(:main_div, r[:partial => 'show'])
+      presenter.hide(:paging_div)
+    end
+    # Hide/show searchbox depending on if a list is showing
+    presenter.set_visibility(!(@record || @in_a_form), :searchbox)
+
+    p "xxxxxx #{@right_cell_text}"
+
+    presenter[:right_cell_text] = @right_cell_text
+
+    render :json => presenter.for_render
+  end
 
   def textual_group_list
     [%i(properties relationships attribute_details_list association_details_list method_details_list)]

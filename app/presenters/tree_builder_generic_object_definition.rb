@@ -13,6 +13,12 @@ class TreeBuilderGenericObjectDefinition < TreeBuilder
     }
   end
 
+  def set_locals_for_render
+    locals = super
+    locals.merge!(:tree_id   => "generic_object_definitions_treebox",
+                  :tree_name => "generic_object_definitions_tree")
+  end
+
   def x_get_tree_roots(count_only, _options)
     count_only_or_objects(count_only, GenericObjectDefinition.all, :name)
   end

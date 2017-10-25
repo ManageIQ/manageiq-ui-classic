@@ -2128,6 +2128,8 @@ Rails.application.routes.draw do
         show_list
         tag_edit_form_field_changed
         tagging_edit
+        tree_select
+        x_show
       ) +
         adv_search_post +
         save_post
