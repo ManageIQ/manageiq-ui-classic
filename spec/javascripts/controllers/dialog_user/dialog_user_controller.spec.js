@@ -1,5 +1,5 @@
 describe('dialogUserController', function() {
-  var $controller, API, dialogFieldRefreshService, miqService, serviceTemplateId, serviceTemplateCatalogId;
+  var $controller, API, dialogFieldRefreshService, miqService;
 
   beforeEach(module('ManageIQ'));
 
@@ -8,11 +8,7 @@ describe('dialogUserController', function() {
     dialogFieldRefreshService = _dialogFieldRefreshService_;
     miqService = _miqService_;
 
-    var responseResult = {
-      resources: [{
-        content: ['the dialog']
-      }]
-    };
+    var responseResult = {content: ['the dialog']};
 
     spyOn(API, 'get').and.callFake(function() {
       return {then: function(response) { response(responseResult); }};
@@ -28,8 +24,10 @@ describe('dialogUserController', function() {
       API: API,
       dialogFieldRefreshService: dialogFieldRefreshService,
       miqService: miqService,
-      serviceTemplateId: '123',
-      serviceTemplateCatalogId: '321'
+      dialogId: '1234',
+      apiSubmitEndpoint: 'submit endpoint',
+      apiAction: 'order',
+      cancelEndpoint: 'cancel endpoint',
     });
   }));
 
@@ -39,7 +37,7 @@ describe('dialogUserController', function() {
     });
 
     it('requests the current dialog based on the service template', function() {
-      expect(API.get).toHaveBeenCalledWith('/api/service_templates/123/service_dialogs?expand=resources&attributes=content');
+      expect(API.get).toHaveBeenCalledWith('/api/service_dialogs/1234', {expand: 'resources', attributes: 'content'});
     });
 
     it('resolves the request and stores the information in the dialog property', function() {
@@ -47,7 +45,7 @@ describe('dialogUserController', function() {
     });
 
     it('sets the refreshUrl', function() {
-      expect($controller.refreshUrl).toEqual('/api/service_catalogs/321/service_templates/');
+      expect($controller.refreshUrl).toEqual('/api/service_dialogs/');
     });
   });
 
@@ -59,8 +57,8 @@ describe('dialogUserController', function() {
       expect(dialogFieldRefreshService.refreshField).toHaveBeenCalledWith(
         'dialogData',
         ['dialogName'],
-        '/api/service_catalogs/321/service_templates/',
-        '123'
+        '/api/service_dialogs/',
+        '1234'
       );
     });
   });
@@ -98,7 +96,7 @@ describe('dialogUserController', function() {
         $controller.submitButtonClicked();
 
         setTimeout(function() {
-          expect(API.post).toHaveBeenCalledWith('/api/service_catalogs/321/service_templates/123', {
+          expect(API.post).toHaveBeenCalledWith('submit endpoint', {
             action: 'order',
             field1: 'field1'
           });
@@ -143,7 +141,7 @@ describe('dialogUserController', function() {
   describe('cancelClicked', function() {
     it('uses the miqService to make a call to catalog/explorer', function() {
       $controller.cancelClicked('event');
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/catalog/explorer');
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('cancel endpoint');
     });
   });
 

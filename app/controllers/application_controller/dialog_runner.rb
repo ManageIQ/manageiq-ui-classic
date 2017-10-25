@@ -155,7 +155,7 @@ module ApplicationController::DialogRunner
     @in_a_form = true
     @changed = session[:changed] = true
     if @edit[:explorer]
-      replace_right_cell(:action => "dialog_provision")
+      replace_right_cell(:action => "dialog_provision", :dialog_locals => options[:dialog_locals])
     else
       javascript_redirect :action => 'dialog_load'
     end
