@@ -1,5 +1,6 @@
-- if @record.try(:name)
-  #accordion.panel-group
+#accordion.panel-group
+  = render :partial => "layouts/listnav/#{controller_name}_show_list_with_treeview"
+  - if @record.try(:name)
     = miq_accordion_panel(_("Properties"), false, "god_prop") do
       %ul.nav.nav-pills.nav-stacked
         %li

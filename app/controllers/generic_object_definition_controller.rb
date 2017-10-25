@@ -51,6 +51,10 @@ class GenericObjectDefinitionController < ApplicationController
     "generic_object_definition/show"
   end
 
+  def display_tree
+    true
+  end
+
   private
 
   def textual_group_list
