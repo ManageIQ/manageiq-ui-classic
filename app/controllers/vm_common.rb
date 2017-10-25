@@ -1109,6 +1109,7 @@ module VmCommon
             options[:named_scope] = [[:with_type, klass.vm_descendants.collect(&:name)]]
           end
           if id == "orph"
+            options[:named_scope] ||= []
             options[:named_scope] << :orphaned
             process_show_list(options) if show_list
             @right_cell_text = if model
@@ -1117,6 +1118,7 @@ module VmCommon
                                  _("Orphaned VMs & Templates")
                                end
           elsif id == "arch"
+            options[:named_scope] ||= []
             options[:named_scope] << :archived
             process_show_list(options) if show_list
             @right_cell_text = if model
@@ -1135,6 +1137,7 @@ module VmCommon
         else
           rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(from_cid(id))
           options.merge!({:association => (@nodetype == "az" ? "vms" : "all_vms_and_templates"), :parent => rec})
+          options[:named_scope] ||= []
           options[:named_scope] << :with_ems
           process_show_list(options) if show_list
           model_name = @nodetype == "d" ? _("Datacenter") : ui_lookup(:model => rec.class.base_class.to_s)
