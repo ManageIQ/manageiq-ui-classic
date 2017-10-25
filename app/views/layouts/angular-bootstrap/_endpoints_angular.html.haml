@@ -28,8 +28,9 @@
                        "prefix"                      => prefix.to_s,
                        "reset-validation-status"     => "#{prefix}_auth_status")
     .col-md-8{"ng-if" => "emsCommonModel.emstype == 'nuage_network'"}
+      - prefix == "amqp" ? security_protocols = @amqp_security_protocols : security_protocols = @nuage_security_protocols
       = select_tag("#{prefix}_security_protocol",
-                       options_for_select([["<#{_('Choose')}>", nil]] + @nuage_security_protocols, :disabled => ["<#{_('Choose')}>", nil]),
+                       options_for_select([["<#{_('Choose')}>", nil]] + security_protocols, :disabled => ["<#{_('Choose')}>", nil]),
                        "ng-model"                    => "#{ng_model}.#{prefix}_security_protocol",
                        "checkchange"                 => "",
                        "required"                    => defined?(security_protocol_not_required) ? false : true,
