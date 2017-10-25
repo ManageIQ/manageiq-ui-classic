@@ -69,6 +69,7 @@ class GenericObjectDefinitionController < ApplicationController
   private
 
   def replace_right_cell
+    @explorer = false
     if params[:id] == 'root'
       process_show_list
       @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
@@ -80,15 +81,24 @@ class GenericObjectDefinitionController < ApplicationController
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
     presenter[:osf_node] = x_node
+    c_tb = build_toolbar(center_toolbar_filename) # Use vm or template tb
     if params[:id] == 'root'
       presenter.replace(:main_div, r[:partial => 'show_list'])
       presenter.show(:paging_div)
+      v_tb = build_toolbar("x_gtl_view_tb")
     else
       presenter.replace(:main_div, r[:partial => 'show'])
       presenter.hide(:paging_div)
+      v_tb = build_toolbar("x_summary_view_tb")
     end
     # Hide/show searchbox depending on if a list is showing
     presenter.set_visibility(!(@record || @in_a_form), :searchbox)
+
+    presenter.reload_toolbars(:center => c_tb, :view => v_tb)
+
+    presenter.set_visibility(c_tb.present? || v_tb.present?, :toolbar)
+
+    presenter[:record_id] = @record.try(:id)
     presenter[:activate_node] = x_active_tree.to_s
     presenter[:right_cell_text] = @right_cell_text
 

@@ -47,7 +47,6 @@
                 = link_to(tab[1], {:action => 'change_tab', :tab => tab[0], :id => @tab_id}, :onclick => "return miqCheckForChanges()")
   %br{:clear => "all"}/
 - if !@tabs && (@lastaction == "show_list" || !@edit && !session[:menu_click])
-  - p "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   - if @edit && @edit[:adv_search_applied] != nil && !session[:menu_click]
     %h1
       = h(@title + @edit[:adv_search_applied][:text] + " ")

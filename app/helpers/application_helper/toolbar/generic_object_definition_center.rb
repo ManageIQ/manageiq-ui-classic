@@ -14,6 +14,20 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           :klass => ApplicationHelper::Button::GenericObjectDefinition,
         ),
         button(
+          :ab_group_new,
+          'pficon pficon-add-circle-o fa-lg',
+          t = N_('Add a new Button Group'),
+          t,
+          :klass => ApplicationHelper::Button::GenericObjectDefinition,
+        ),
+        button(
+          :ab_button_new,
+          'pficon pficon-add-circle-o fa-lg',
+          t = N_('Add a new Button'),
+          t,
+          :klass => ApplicationHelper::Button::GenericObjectDefinition,
+        ),
+        button(
           :generic_object_definition_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Generic Object Classes from Inventory'),
