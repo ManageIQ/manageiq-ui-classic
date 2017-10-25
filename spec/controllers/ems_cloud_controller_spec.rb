@@ -620,5 +620,24 @@ describe EmsCloudController do
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("A member role must be selected.")
     end
+
+    def verify_password_and_confirm(password, verify)
+      post :sync_users, :params => {:id => @ems.id, :sync => "",
+                                    :admin_role => 1, :member_role => 2,
+                                    :password => password,
+                                    :verify => verify}
+      expect(controller.send(:flash_errors?)).to be_truthy
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("Password/Confirm Password do not match")
+    end
+
+    it "password and confirm must be equal" do
+      verify_password_and_confirm("apples", "oranges")
+    end
+
+    it "if password or confirm is not empty, then the other cannot be empty" do
+      verify_password_and_confirm("apples", nil)
+      verify_password_and_confirm(nil, "oranges")
+    end
   end
 end

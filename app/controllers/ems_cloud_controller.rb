@@ -49,6 +49,8 @@ class EmsCloudController < ApplicationController
     drop_breadcrumb(:name => _("Sync Users"), :url => "/ems_cloud/sync_users")
     @selected_admin_role = params[:admin_role]
     @selected_member_role = params[:member_role]
+    @selected_password = params[:password]
+    @selected_verify = params[:verify]
 
     if params[:cancel]
       redirect_to(ems_cloud_path(params[:id]))
@@ -56,14 +58,25 @@ class EmsCloudController < ApplicationController
     end
 
     if params[:sync]
+      has_error = false
+      if @selected_password != @selected_verify
+        add_flash(_("Password/Confirm Password do not match"), :error)
+        has_error = true
+      end
       if @selected_admin_role.blank?
         add_flash(_("An admin role must be selected."), :error)
-        populate_sync_user_parameters
-      elsif @selected_member_role.blank?
+        has_error = true
+      end
+      if @selected_member_role.blank?
         add_flash(_("A member role must be selected."), :error)
+        has_error = true
+      end
+      if has_error
         populate_sync_user_parameters
       else
-        @ems.sync_users_queue(session[:userid], params[:admin_role], params[:member_role])
+        password_digest = nil
+        password_digest = BCrypt::Password.create(@selected_password) unless @selected_password.blank?
+        @ems.sync_users_queue(session[:userid], @selected_admin_role, @selected_member_role, password_digest)
         redirect_to(ems_cloud_path(params[:id], :flash_msg => _("Sync users queued.")))
       end
     else
