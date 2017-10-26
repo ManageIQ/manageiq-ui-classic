@@ -601,4 +601,54 @@ describe EmsCloudController do
   include_examples '#download_summary_pdf', :ems_amazon
 
   it_behaves_like "controller with custom buttons"
+
+  describe "#sync_users" do
+    let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
+    before do
+      stub_user(:features => :all)
+    end
+
+    it "redirects when request is successful" do
+      expect(controller).to receive(:find_record_with_rbac).and_return(ems)
+      expect(ems).to receive(:sync_users_queue)
+      post :sync_users, :params => {:id => ems.id, :sync => "", :admin_role => 1, :member_role => 2}
+      expect(controller.send(:flash_errors?)).to be_falsey
+      expect(response.body).to include("Sync+users+queued.")
+      expect(response.body).to include("redirected")
+      expect(response.body).to include("ems_cloud/#{ems.id}")
+    end
+
+    it "returns error if admin role is not selected" do
+      post :sync_users, :params => {:id => ems.id, :sync => "", :member_role => 2}
+      expect(controller.send(:flash_errors?)).to be_truthy
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("An admin role must be selected.")
+    end
+
+    it "returns error if member role is not selected" do
+      post :sync_users, :params => {:id => ems.id, :sync => "", :admin_role => 1}
+      expect(controller.send(:flash_errors?)).to be_truthy
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("A member role must be selected.")
+    end
+
+    def verify_password_and_confirm(password, verify)
+      post :sync_users, :params => {:id => ems.id, :sync => "",
+                                    :admin_role => 1, :member_role => 2,
+                                    :password => password,
+                                    :verify => verify}
+      expect(controller.send(:flash_errors?)).to be_truthy
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("Password/Confirm Password do not match")
+    end
+
+    it "password and confirm must be equal" do
+      verify_password_and_confirm("apples", "oranges")
+    end
+
+    it "if password or confirm is not empty, then the other cannot be empty" do
+      verify_password_and_confirm("apples", nil)
+      verify_password_and_confirm(nil, "oranges")
+    end
+  end
 end
