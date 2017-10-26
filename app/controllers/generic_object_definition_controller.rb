@@ -37,6 +37,8 @@ class GenericObjectDefinitionController < ApplicationController
         { :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
       when 'ab_group_new'
         { :action => 'custom_button_group_new', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
+      when 'ab_group_edit'
+        { :action => 'custom_button_group_edit', :id => from_cid(params[:id]) }
       end
     )
   end
@@ -77,6 +79,13 @@ class GenericObjectDefinitionController < ApplicationController
     @in_a_form = true
   end
 
+  def custom_button_group_edit
+    assert_privileges('ab_group_edit')
+    drop_breadcrumb(:name => _("Edit this Custom Button Group"), :url => "/generic_object_definition/custom_button_group_edit")
+    @custom_button_group = CustomButtonSet.find(params[:id])
+    render_form
+  end
+
   private
 
   def root_node?
@@ -89,6 +98,16 @@ class GenericObjectDefinitionController < ApplicationController
 
   def custom_button_group_node?
     params[:id].split('-').first == 'cbg'
+  end
+
+  def render_form
+    presenter = rendering_objects
+    @in_a_form = true
+    presenter.replace(:main_div, r[:partial => 'custom_button_group_form'])
+    presenter.hide(:paging_div)
+    build_toolbar("x_summary_view_tb")
+
+    render :json => presenter.for_render
   end
 
   def process_root_node(presenter)

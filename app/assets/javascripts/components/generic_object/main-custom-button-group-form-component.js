@@ -103,6 +103,8 @@ function mainCustomButtonGroupFormController(API, miqService, $q) {
     vm.customButtonGroupModel.button_color = response.set_data.button_color;
     vm.customButtonGroupModel.display = response.set_data.display;
 
+    vm.genericObjectDefnRecordId = response.set_data.applies_to_id;
+
     vm.customButtonGroupModel.set_data = {};
 
     vm.modelCopy = Object.assign({}, vm.customButtonGroupModel);
