@@ -7,17 +7,9 @@ class ApplicationHelper::Toolbar::DialogCenter < ApplicationHelper::Toolbar::Bas
       t,
       :items => [
         button(
-          :dialog_edit,
-          'pficon pficon-edit fa-lg',
-          t = N_('Edit this Dialog'),
-          t,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :klass        => ApplicationHelper::Button::DialogAction),
-        button(
           :dialog_edit_editor,
           'pficon pficon-edit fa-lg',
-          t = N_('Edit this Dialog in the Dialog Editor'),
+          t = N_('Edit this Dialog'),
           t,
           :url_parms    => "main_div",
           :send_checked => true,
