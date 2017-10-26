@@ -285,6 +285,11 @@ module Mixins
         service_account_auth_status = @ems.authentication_status_ok?
       end
 
+      if @ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
+        amqp_fallback_hostname1 = @ems.connection_configurations.amqp_fallback1 ? @ems.connection_configurations.amqp_fallback1.endpoint.hostname : ""
+        amqp_fallback_hostname2 = @ems.connection_configurations.amqp_fallback2 ? @ems.connection_configurations.amqp_fallback2.endpoint.hostname : ""
+      end
+
       render :json => {:name                            => @ems.name,
                        :emstype                         => @ems.emstype,
                        :zone                            => zone,
@@ -316,7 +321,9 @@ module Mixins
                        :default_auth_status             => default_auth_status,
                        :amqp_auth_status                => amqp_auth_status,
                        :smartstate_docker_auth_status   => smartstate_docker_auth_status,
-                       :service_account_auth_status     => service_account_auth_status
+                       :service_account_auth_status     => service_account_auth_status,
+                       :amqp_fallback_hostname1         => amqp_fallback_hostname1 ? amqp_fallback_hostname1 : "",
+                       :amqp_fallback_hostname2         => amqp_fallback_hostname2 ? amqp_fallback_hostname2 : ""
       } if controller_name == "ems_cloud" || controller_name == "ems_network"
 
       render :json => { :name                          => @ems.name,
@@ -445,6 +452,8 @@ module Mixins
       hostname = params[:default_hostname].strip if params[:default_hostname]
       port = params[:default_api_port].strip if params[:default_api_port]
       amqp_hostname = params[:amqp_hostname].strip if params[:amqp_hostname]
+      amqp_fallback_hostname1 = params[:amqp_fallback_hostname1].strip if params[:amqp_fallback_hostname1]
+      amqp_fallback_hostname2 = params[:amqp_fallback_hostname2].strip if params[:amqp_fallback_hostname2]
       amqp_port = params[:amqp_api_port].strip if params[:amqp_api_port]
       amqp_security_protocol = params[:amqp_security_protocol].strip if params[:amqp_security_protocol]
       metrics_hostname = params[:metrics_hostname].strip if params[:metrics_hostname]
@@ -459,6 +468,8 @@ module Mixins
       prometheus_alerts_security_protocol = params[:prometheus_alerts_security_protocol].strip if params[:prometheus_alerts_security_protocol]
       default_endpoint = {}
       amqp_endpoint = {}
+      amqp_fallback_endpoint1 = {}
+      amqp_fallback_endpoint2 = {}
       ceilometer_endpoint = {}
       ssh_keypair_endpoint = {}
       metrics_endpoint = {}
@@ -553,6 +564,8 @@ module Mixins
       if ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
         amqp_endpoint = {:role => :amqp, :hostname => amqp_hostname, :port => amqp_port, :security_protocol => amqp_security_protocol}
+        amqp_fallback_endpoint1 = {:role => :amqp_fallback1, :hostname => amqp_fallback_hostname1, :port => amqp_port, :security_protocol => amqp_security_protocol}
+        amqp_fallback_endpoint2 = {:role => :amqp_fallback2, :hostname => amqp_fallback_hostname2, :port => amqp_port, :security_protocol => amqp_security_protocol}
       end
 
       if ems.kind_of?(ManageIQ::Providers::Lenovo::PhysicalInfraManager)
@@ -582,6 +595,8 @@ module Mixins
                    :ceilometer        => ceilometer_endpoint,
                    :amqp              => amqp_endpoint,
                    :smartstate_docker => default_endpoint,
+                   :amqp_fallback1    => amqp_fallback_endpoint1,
+                   :amqp_fallback2    => amqp_fallback_endpoint2,
                    :ssh_keypair       => ssh_keypair_endpoint,
                    :metrics           => metrics_endpoint,
                    :hawkular          => hawkular_endpoint,
@@ -603,7 +618,7 @@ module Mixins
       authentications = build_credentials(ems, mode)
       configurations = []
 
-      [:default, :ceilometer, :amqp, :smartstate_docker, :ssh_keypair, :metrics, :hawkular, :prometheus, :prometheus_alerts].each do |role|
+      [:default, :ceilometer, :amqp, :amqp_fallback1, :amqp_fallback2, :smartstate_docker, :ssh_keypair, :metrics, :hawkular, :prometheus, :prometheus_alerts].each do |role|
         configurations << build_configuration(ems, authentications, endpoints, role)
       end
 

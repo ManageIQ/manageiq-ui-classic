@@ -96,6 +96,50 @@
                   :xs              => 'true',
                   :primary         => 'true'}
 
+%div{"ng-if" => (defined?(hostname_hide) ? false : true) && (defined?(fallback_hostnames) ? fallback_hostnames : false)}
+  .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_fallback_hostname1.$invalid}"}
+    %label.col-md-2.control-label{"for" => "#{prefix}_fallback_hostname1"}
+      = _('Fallback Hostname 1')
+    .col-md-4
+      %input.form-control{"type"                    => "text",
+                          "id"                      => "#{prefix}_fallback_hostname1",
+                          "name"                    => "#{prefix}_fallback_hostname1",
+                          "ng-model"                => "#{ng_model}.#{prefix}_fallback_hostname1",
+                          "maxlength"               => ViewHelper::MAX_NAME_LEN.to_s,
+                          "ng-required"             => "#{ng_model}.#{prefix}_fallback_hostname2",
+                          "ng-trim"                 => false,
+                          "detect-spaces"           => "",
+                          "checkchange"             => "",
+                          "prefix"                  => prefix.to_s,
+                          "reset-validation-status" => "#{prefix}_auth_status",
+                          "placeholder"             => "Hostname or IPv4 or IPv6 address"}
+      %span.help-block{"ng-show" => "angularForm.#{prefix}_fallback_hostname1.$error.required"}
+        = _("Required")
+      %span.help-block{"ng-show" => "angularForm.#{prefix}_fallback_hostname1.$error.detectedSpaces"}
+        = _("Spaces are prohibited")
+
+%div{"ng-if" => (defined?(hostname_hide) ? false : true) && (defined?(fallback_hostnames) ? fallback_hostnames : false)}
+  .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_fallback_hostname2.$invalid}"}
+    %label.col-md-2.control-label{"for" => "#{prefix}_fallback_hostname2"}
+      = _('Fallback Hostname 2')
+    .col-md-4
+      %input.form-control{"type"                    => "text",
+                          "id"                      => "#{prefix}_fallback_hostname2",
+                          "name"                    => "#{prefix}_fallback_hostname2",
+                          "ng-model"                => "#{ng_model}.#{prefix}_fallback_hostname2",
+                          "maxlength"               => ViewHelper::MAX_NAME_LEN.to_s,
+                          "ng-required"             => "#{ng_model}.#{prefix}_fallback_hostname1",
+                          "ng-trim"                 => false,
+                          "detect-spaces"           => "",
+                          "checkchange"             => "",
+                          "prefix"                  => prefix.to_s,
+                          "reset-validation-status" => "#{prefix}_auth_status",
+                          "placeholder"             => "Hostname or IPv4 or IPv6 address"}
+      %span.help-block{"ng-show" => "angularForm.#{prefix}_fallback_hostname2.$error.required"}
+        = _("Required")
+      %span.help-block{"ng-show" => "angularForm.#{prefix}_fallback_hostname2.$error.detectedSpaces"}
+        = _("Spaces are prohibited")
+
 %div{"ng-if" => defined?(apiport_hide) ? false : true}
   .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_api_port.$invalid}",
               "ng-if" => "emsCommonModel.emstype == 'openstack'              || " + |
