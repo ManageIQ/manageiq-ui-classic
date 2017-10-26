@@ -8,6 +8,8 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Evacuate
     include Mixins::Actions::VmActions::AssociateFloatingIp
     include Mixins::Actions::VmActions::DisassociateFloatingIp
+    include Mixins::Actions::VmActions::AddSecurityGroup
+    include Mixins::Actions::VmActions::RemoveSecurityGroup
     include Mixins::Actions::VmActions::Resize
     include Mixins::Actions::VmActions::RightSize
     include Mixins::Actions::VmActions::Reconfigure
@@ -1057,6 +1059,8 @@ module ApplicationController::CiProcessing
     when "#{pfx}_migrate"                   then prov_redirect("migrate")
     when "#{pfx}_publish"                   then prov_redirect("publish")
     when "#{pfx}_terminate"                 then terminatevms
+    when "instance_add_security_group"      then add_security_group_vms
+    when "instance_remove_security_group"   then remove_security_group_vms
     end
   end
 

@@ -71,6 +71,8 @@ module ApplicationController::Explorer
     'evacuate'     => :s2, 'service_dialog'   => :s2, 'transform'       => :s2,
     'associate_floating_ip'    => :s2,
     'disassociate_floating_ip' => :s2,
+    'add_security_group'       => :s2,
+    'remove_security_group'    => :s2,
 
     # specials
     'perf'         => :show,

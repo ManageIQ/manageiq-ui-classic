@@ -3066,6 +3066,8 @@ Rails.application.routes.draw do
         associate_floating_ip_form_fields
         disassociate_floating_ip
         disassociate_floating_ip_form_fields
+        add_security_group
+        remove_security_group
         retire
         right_size
         show
@@ -3129,6 +3131,8 @@ Rails.application.routes.draw do
         associate_floating_ip_form_fields
         disassociate_floating_ip
         disassociate_floating_ip_form_fields
+        add_security_group
+        remove_security_group
       ) +
                compare_get,
       :post => %w(
