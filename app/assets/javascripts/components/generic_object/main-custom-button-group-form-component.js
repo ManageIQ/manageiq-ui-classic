@@ -9,9 +9,9 @@ ManageIQ.angular.app.component('mainCustomButtonGroupFormComponent', {
   templateUrl: '/static/generic_object/main_custom_button_group_form.html.haml',
 });
 
-mainCustomButtonGroupFormController.$inject = ['API', 'miqService', '$q'];
+mainCustomButtonGroupFormController.$inject = ['API', 'miqService'];
 
-function mainCustomButtonGroupFormController(API, miqService, $q) {
+function mainCustomButtonGroupFormController(API, miqService) {
   var vm = this;
 
   vm.$onInit = function() {
