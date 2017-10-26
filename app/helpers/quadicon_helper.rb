@@ -567,6 +567,7 @@ module QuadiconHelper
       # reduce font-size of the item_count so it will fit in its quadrant
       output << flobj_p_simple("a72", item_count, item_count.to_s.size > 2 ? "font-size: 12px;" : "")
       output << flobj_p_simple("b72", item.total_miq_templates) if item.kind_of?(EmsCloud)
+      output << flobj_p_simple("b72", item.total_vms) if item.kind_of?(EmsInfra)
       output << currentstate_icon(item.enabled? ? "on" : "paused") if item.kind_of?(::ManageIQ::Providers::ContainerManager)
       output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "c72")
       output << flobj_img_simple(img_for_auth_status(item), "d72")

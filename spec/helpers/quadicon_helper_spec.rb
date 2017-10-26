@@ -634,6 +634,7 @@ describe QuadiconHelper do
       @settings = {:quadicons => {:ems => true}}
       allow(item).to receive(:hosts).and_return(%w(foo bar))
       allow(item).to receive(:image_name).and_return("foo")
+      allow(item).to receive(:total_vms).and_return('42')
       @layout = "ems_infra"
     end
 
@@ -647,6 +648,10 @@ describe QuadiconHelper do
 
     it "displays Host Name in the tooltip" do
       expect(ext_quad).to match(/Hostname/)
+    end
+
+    it "displays the total VM count" do
+      expect(ext_quad).to have_selector('p', :text => item.total_vms.to_s)
     end
 
     context "when type is not listicon" do
