@@ -102,6 +102,10 @@ class GenericObjectDefinitionController < ApplicationController
     params[:id].split('-').first == 'cbg'
   end
 
+  def actions_node?
+    params[:id].split('-').first == 'xx'
+  end
+
   def render_form(title)
     presenter = rendering_objects
     @in_a_form = true
@@ -138,6 +142,14 @@ class GenericObjectDefinitionController < ApplicationController
     build_toolbar("x_summary_view_tb")
   end
 
+  def process_actions_node(presenter)
+    @record = GenericObjectDefinition.find(from_cid(params[:id].split("-").last))
+    @right_cell_text = "Actions for #{ui_lookup(:model => "GenericObjectDefinition")}"
+    presenter.replace(:main_div, r[:partial => 'show_actions'])
+    presenter.hide(:paging_div)
+    build_toolbar("x_summary_view_tb")
+  end
+
   def replace_right_cell
     presenter = rendering_objects
     @explorer = false
@@ -145,6 +157,7 @@ class GenericObjectDefinitionController < ApplicationController
     v_tb = process_root_node(presenter) if root_node?
     v_tb = process_god_node(presenter) if god_node?
     v_tb = process_custom_button_group_node(presenter) if custom_button_group_node?
+    v_tb = process_actions_node(presenter) if actions_node?
 
     c_tb = build_toolbar(center_toolbar_filename)
     presenter.reload_toolbars(:center => c_tb, :view => v_tb)
