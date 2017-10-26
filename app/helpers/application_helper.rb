@@ -1628,7 +1628,7 @@ module ApplicationHelper
   end
 
   def from_additional_options(additional_options)
-    if !additional_options[:match_via_descendants].nil?
+    if additional_options[:match_via_descendants].present?
       additional_options[:match_via_descendants] = additional_options[:match_via_descendants].constantize
     end
     additional_options

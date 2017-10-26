@@ -551,7 +551,7 @@ class ApplicationController < ActionController::Base
     end
     settings = set_variables_report_data(settings, @view)
 
-    if (options[:named_scope] == "in_my_region" && options[:model] == "Tenant")
+    if options[:named_scope] == "in_my_region" && options[:model] == "Tenant"
       @view.table = filter_parent_name_tenant(@view.table)
     end
 
@@ -1533,7 +1533,7 @@ class ApplicationController < ActionController::Base
 
   # Create view and paginator for a DB records with/without tags
   def get_view(db, options = {}, fetch_data = false)
-    if !fetch_data && @report_data_additional_options.nil? 
+    if !fetch_data && @report_data_additional_options.nil?
       process_show_list_options(options, db)
     end
     unless @edit.nil?

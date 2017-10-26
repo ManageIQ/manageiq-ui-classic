@@ -10,7 +10,7 @@ class ApplicationController
     :view_suffix
   ) do
     def self.from_options(options)
-      additional_options = new()
+      additional_options = new
       additional_options.named_scope = options[:named_scope]
       additional_options.gtl_dbname = options[:gtl_dbname]
       additional_options.with_model(options[:model]) if options[:model]
@@ -23,7 +23,7 @@ class ApplicationController
     end
 
     def with_model(curr_model)
-      self.model = (curr_model.kind_of? String) ? curr_model : curr_model.name
+      self.model = curr_model.kind_of?(String) ? curr_model : curr_model.name
     end
   end
 end

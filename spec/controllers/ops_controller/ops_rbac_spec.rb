@@ -129,7 +129,8 @@ describe OpsController do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@settings, {})
         expect(controller).to receive(:get_view).with(Tenant, :named_scope => :in_my_region).and_return(
-          [double('view', :table => double('table', :data => [])), {}])
+          [double('view', :table => double('table', :data => [])), {}]
+        )
         controller.send(:rbac_tenants_list)
         expect(response.status).to eq(200)
         expect(assigns(:view)).not_to be_nil

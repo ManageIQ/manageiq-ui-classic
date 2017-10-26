@@ -181,7 +181,7 @@ module Mixins
                       :url  => show_link(@record, :display => @display))
 
       view_options = {:parent => @record}
-      view_options.update(options.slice(*%i(association parent_method where_clause named_scope)))
+      view_options.update(options.slice(:association, :parent_method, :where_clause, :named_scope))
 
       @view, @pages = get_view(model, view_options)
       @showtype = @display
