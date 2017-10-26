@@ -1,19 +1,19 @@
 = render :partial => "layouts/flash_msg"
 = form_tag('/ems_cloud/sync_users', :method => :post)
-= hidden_field_tag('id', @ems.id)
-- unless @ems.nil?
+= hidden_field_tag('id', ems.id)
+- unless ems.nil?
   .form-horizontal
     .form-group
       %label.col-md-2.control-label
         = _('Number of New Users')
       .col-md-8
-        = @number_of_new_users
+        = number_of_new_users
     .form-group
       %label.col-md-2.control-label
         = _('Admin Role')
       .col-md-8
         = select_tag('admin_role',
-            options_for_select(@admin_roles.sort, @selected_admin_role),
+            options_for_select(admin_roles.sort, selected_admin_role),
             :class  => "selectpicker")
         :javascript
           miqInitSelectPicker();
@@ -22,7 +22,7 @@
         = _('Member Role')
       .col-md-8
         = select_tag('member_role',
-            options_for_select(@member_roles.sort, @selected_member_role),
+            options_for_select(member_roles.sort, selected_member_role),
             :class  => "selectpicker")
         :javascript
           miqInitSelectPicker();
@@ -31,7 +31,7 @@
         = _("Password")
       .col-md-8
         = password_field_tag("password",
-                             @selected_password,
+                             selected_password,
                              :maxlength         => 50,
                              :class => "form-control")
     .form-group
@@ -39,7 +39,7 @@
         = _("Confirm Password")
       .col-md-8
         = password_field_tag("verify",
-                             @selected_verify,
+                             selected_verify,
                              :maxlength         => 50,
                              :class => "form-control")
   %table{:width => "100%"}
