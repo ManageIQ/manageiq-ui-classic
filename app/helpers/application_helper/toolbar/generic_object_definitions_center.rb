@@ -20,7 +20,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           :onwhen       => "1",
           :url_parms    => "new_button_group_div",
           :send_checked => true,
-          :klass        => ApplicationHelper::Button::GenericObjectDefinitionButtonEdit,
+          :klass        => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupNew,
         ),
         button(
           :ab_button_new,
@@ -31,7 +31,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           :onwhen       => "1",
           :url_parms    => "new_button_div",
           :send_checked => true,
-          :klass        => ApplicationHelper::Button::GenericObjectDefinitionButtonEdit,
+          :klass        => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupNew,
         ),
         button(
           :generic_object_definition_edit,
