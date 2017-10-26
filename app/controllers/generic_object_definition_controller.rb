@@ -9,6 +9,8 @@ class GenericObjectDefinitionController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
 
+  include Mixins::ExplorerPresenterMixin
+
   menu_section :automate
 
   def self.model
@@ -77,36 +79,49 @@ class GenericObjectDefinitionController < ApplicationController
 
   private
 
+  def root_node?
+    params[:id] == 'root'
+  end
+
+  def god_node?
+    params[:id].split('-').first == 'god'
+  end
+
+  def custom_button_group_node?
+    params[:id].split('-').first == 'cbg'
+  end
+
+  def process_root_node(presenter)
+    process_show_list
+    @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
+    presenter.replace(:main_div, r[:partial => 'show_list'])
+    presenter.show(:paging_div)
+    build_toolbar("x_gtl_view_tb")
+  end
+
+  def process_god_node(presenter)
+    @_params[:id] = params[:id].split("-").last
+    show
+    @right_cell_text = @record.name
+    presenter.replace(:main_div, r[:partial => 'show'])
+    presenter.hide(:paging_div)
+    build_toolbar("x_summary_view_tb")
+  end
+
   def replace_right_cell
+    presenter = rendering_objects
     @explorer = false
-    if params[:id] == 'root'
-      process_show_list
-      @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
-    else
-      @_params[:id] = params[:id].split("-").last
-      show
-      @right_cell_text = @record.name
-    end
-    presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
-    presenter[:osf_node] = x_node
-    c_tb = build_toolbar(center_toolbar_filename) # Use vm or template tb
-    if params[:id] == 'root'
-      presenter.replace(:main_div, r[:partial => 'show_list'])
-      presenter.show(:paging_div)
-      v_tb = build_toolbar("x_gtl_view_tb")
-    else
-      presenter.replace(:main_div, r[:partial => 'show'])
-      presenter.hide(:paging_div)
-      v_tb = build_toolbar("x_summary_view_tb")
-    end
-    # Hide/show searchbox depending on if a list is showing
-    presenter.set_visibility(!(@record || @in_a_form), :searchbox)
+    v_tb = process_root_node(presenter) if root_node?
+    v_tb = process_god_node(presenter) if god_node?
 
+    c_tb = build_toolbar(center_toolbar_filename)
     presenter.reload_toolbars(:center => c_tb, :view => v_tb)
 
     presenter.set_visibility(c_tb.present? || v_tb.present?, :toolbar)
+    presenter.set_visibility(!(@record || @in_a_form), :searchbox)
 
+    presenter[:osf_node] = x_node
     presenter[:record_id] = @record.try(:id)
     presenter[:activate_node] = x_active_tree.to_s
     presenter[:right_cell_text] = @right_cell_text
