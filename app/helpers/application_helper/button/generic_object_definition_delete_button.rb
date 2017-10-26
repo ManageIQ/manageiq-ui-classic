@@ -1,9 +1,9 @@
 class ApplicationHelper::Button::GenericObjectDefinitionDeleteButton < ApplicationHelper::Button::Basic
   def visible?
-    @display != 'generic_objects'
+    @record.kind_of?(GenericObjectDefinition) && @display != 'generic_objects'
   end
 
   def disabled?
-    !@record.generic_objects.count.zero?
+    @record.kind_of?(GenericObjectDefinition) && !@record.generic_objects.count.zero?
   end
 end

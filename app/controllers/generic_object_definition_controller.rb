@@ -108,12 +108,21 @@ class GenericObjectDefinitionController < ApplicationController
     build_toolbar("x_summary_view_tb")
   end
 
+  def process_custom_button_group_node(presenter)
+    @record = CustomButtonSet.find(from_cid(params[:id].split("-").last))
+    @right_cell_text = @record.name
+    presenter.replace(:main_div, r[:partial => 'show_custom_button_group'])
+    presenter.hide(:paging_div)
+    build_toolbar("x_summary_view_tb")
+  end
+
   def replace_right_cell
     presenter = rendering_objects
     @explorer = false
 
     v_tb = process_root_node(presenter) if root_node?
     v_tb = process_god_node(presenter) if god_node?
+    v_tb = process_custom_button_group_node(presenter) if custom_button_group_node?
 
     c_tb = build_toolbar(center_toolbar_filename)
     presenter.reload_toolbars(:center => c_tb, :view => v_tb)
