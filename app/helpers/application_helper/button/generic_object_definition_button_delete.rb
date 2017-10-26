@@ -1,4 +1,4 @@
-class ApplicationHelper::Button::GenericObjectDefinitionDeleteButton < ApplicationHelper::Button::Basic
+class ApplicationHelper::Button::GenericObjectDefinitionButtonDelete < ApplicationHelper::Button::Basic
   def visible?
     @record.kind_of?(GenericObjectDefinition) && @display != 'generic_objects'
   end
