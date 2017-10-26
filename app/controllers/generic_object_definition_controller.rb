@@ -144,6 +144,7 @@ class GenericObjectDefinitionController < ApplicationController
 
   def process_actions_node(presenter)
     @record = GenericObjectDefinition.find(from_cid(params[:id].split("-").last))
+    @actions_node = true
     @right_cell_text = "Actions for #{ui_lookup(:model => "GenericObjectDefinition")}"
     presenter.replace(:main_div, r[:partial => 'show_actions'])
     presenter.hide(:paging_div)
