@@ -450,9 +450,10 @@
               - checked = options[field] && options[field][0] == f[0]
               - current_div = "#{@edit[:new][:current_tab_key]}"
               - onclick = remote_function(:with => "miqSerializeField('#{current_div}', '#{field_id}')", :url => url, :loading => "miqSparkle(true);", :complete => "miqSparkle(false);")
-              .radio-inline
-                %input{:type => "radio", :id => field_id, :value => f[0], :name => field_id, :checked => checked, :onclick => disabled ? "" : onclick}
-                = f[1]
+              .radio
+                %label
+                  %input{:type => "radio", :id => field_id, :value => f[0], :name => field_id, :checked => checked, :onclick => disabled ? "" : onclick}
+                  = f[1]
           - else
             = options[field][1]
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
