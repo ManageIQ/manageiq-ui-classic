@@ -31,6 +31,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       default_password: '',
       amqp_userid: '',
       amqp_password: '',
+      smartstate_docker_userid: '',
+      smartstate_docker_password: '',
       metrics_userid: '',
       metrics_password: '',
       metrics_database_name: '',
@@ -131,6 +133,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.default_userid                  = data.default_userid;
       $scope.emsCommonModel.amqp_userid                     = data.amqp_userid;
       $scope.emsCommonModel.metrics_userid                  = data.metrics_userid;
+      $scope.emsCommonModel.smartstate_docker_userid               = data.smartstate_docker_userid;
       $scope.emsCommonModel.vmware_cloud_api_version        = data.api_version;
 
       $scope.emsCommonModel.ssh_keypair_userid              = data.ssh_keypair_userid;
@@ -169,6 +172,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       }
       if ($scope.emsCommonModel.metrics_userid !== '') {
         $scope.emsCommonModel.metrics_password = miqService.storedPasswordPlaceholder;
+      }
+      if ($scope.emsCommonModel.smartstate_docker_userid !== '') {
+        $scope.emsCommonModel.smartstate_docker_password = miqService.storedPasswordPlaceholder;
       }
       if ($scope.emsCommonModel.ssh_keypair_userid !== '') {
         $scope.emsCommonModel.ssh_keypair_password = miqService.storedPasswordPlaceholder;
@@ -252,6 +258,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.emsCommonModel.amqp_hostname) &&
       ($scope.emsCommonModel.amqp_userid != '' && $scope.angularForm.amqp_userid !== undefined && $scope.angularForm.amqp_userid.$valid &&
        $scope.emsCommonModel.amqp_password != '' && $scope.angularForm.amqp_password !== undefined && $scope.angularForm.amqp_password.$valid)) {
+      return true;
+    } else if(($scope.currentTab == "smartstate_docker") &&
+      ($scope.emsCommonModel.smartstate_docker_userid != '' && $scope.angularForm.smartstate_docker_userid !== undefined &&
+       $scope.emsCommonModel.smartstate_docker_password != '' && $scope.angularForm.smartstate_docker_password !== undefined)) {
       return true;
     } else if(($scope.currentTab == "default" && $scope.emsCommonModel.emstype == "azure") &&
       ($scope.emsCommonModel.azure_tenant_id != '' && $scope.angularForm.azure_tenant_id.$valid) &&
@@ -470,6 +480,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     if ($scope.emsCommonModel.amqp_auth_status === true) {
       $scope.postValidationModelRegistry("amqp");
     }
+    if ($scope.emsCommonModel.smartstate_docker_auth_status === true) {
+      $scope.postValidationModelRegistry("smartstate_docker");
+    }
     if ($scope.emsCommonModel.service_account_auth_status === true) {
       $scope.postValidationModelRegistry("service_account");
     }
@@ -489,6 +502,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.postValidationModel = {
         default: {},
         amqp: {},
+        smartstate_docker: {},
         metrics: {},
         ssh_keypair: {},
         prometheus_alerts: {},
@@ -525,6 +539,16 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         amqp_security_protocol:    $scope.emsCommonModel.amqp_security_protocol,
         amqp_userid:               $scope.emsCommonModel.amqp_userid,
         amqp_password:             amqp_password,
+      };
+    } else if (prefix === "smartstate_docker") {
+      if ($scope.newRecord) {
+        var smartstate_docker_password = $scope.emsCommonModel.smartstate_docker_password;
+      } else {
+        var smartstate_docker_password = $scope.emsCommonModel.smartstate_docker_password === "" ? "" : miqService.storedPasswordPlaceholder;
+      }
+      $scope.postValidationModel.smartstate_docker = {
+        smartstate_docker_userid:      $scope.emsCommonModel.smartstate_docker_userid,
+        smartstate_docker_password:    smartstate_docker_password,
       };
     } else if (prefix === "metrics") {
       var metricsValidationModel = {
