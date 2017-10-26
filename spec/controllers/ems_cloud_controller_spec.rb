@@ -428,6 +428,28 @@ describe EmsCloudController do
     end
   end
 
+  describe "show storage_managers as a nested display list" do
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as FactoryGirl.create(:user)
+      session[:settings] = {:views     => {:vm_summary_cool => "summary"},
+                            :quadicons => {}}
+      @ems = FactoryGirl.create(:ems_amazon)
+    end
+
+    context "storage_managers as a nested display list" do
+      render_views
+
+      it 'displays associated storage_managers' do
+        FactoryGirl.create(:ems_storage, :name => 'abc', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
+        FactoryGirl.create(:ems_storage, :name => 'xyz', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
+        get :show, :params => { :display => "storage_managers", :id => @ems.id, :format => :js }
+        is_expected.to render_template(:partial => "layouts/angular/_gtl")
+        expect(response.status).to eq(200)
+      end
+    end
+  end
+
   describe "#dialog_form_button_pressed" do
     let(:dialog) { double("Dialog") }
     let(:wf) { double(:dialog => dialog) }
