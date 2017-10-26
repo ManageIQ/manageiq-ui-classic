@@ -44,6 +44,7 @@ module Mixins
           # if coming in to edit from miq_request list view
           recs = checked_or_params
           if !session[:checked_items].nil? && (@lastaction == "set_checked_items" || params[:pressed] == "miq_request_edit")
+            recs = session[:checked_items]
             request_id = params[:id]
           end
 
@@ -123,14 +124,15 @@ module Mixins
             if @req.options[:disk_add]
               @req.options[:disk_add].each do |disk|
                 adsize, adunit = reconfigure_calculations(disk[:disk_size_in_mb])
-                vmdisks << {:hdFilename   => disk[:disk_name],
-                            :hdType       => disk[:thin_provisioned] ? 'thin' : 'thick',
-                            :hdMode       => disk[:persistent] ? 'persistent' : 'nonpersistent',
-                            :hdSize       => adsize.to_s,
-                            :hdUnit       => adunit,
-                            :cb_dependent => disk[:dependent],
-                            :cb_bootable  => disk[:bootable],
-                            :add_remove   => 'add'}
+                vmdisks << {:hdFilename          => disk[:disk_name],
+                            :hdType              => disk[:thin_provisioned] ? 'thin' : 'thick',
+                            :hdMode              => disk[:persistent] ? 'persistent' : 'nonpersistent',
+                            :hdSize              => adsize.to_s,
+                            :hdUnit              => adunit,
+                            :new_controller_type => disk[:new_controller_type].to_s,
+                            :cb_dependent        => disk[:dependent],
+                            :cb_bootable         => disk[:bootable],
+                            :add_remove          => 'add'}
               end
             end
 
@@ -149,14 +151,15 @@ module Mixins
                   end
                 end
                 dsize, dunit = reconfigure_calculations(disk.size / (1024 * 1024))
-                vmdisks << {:hdFilename     => disk.filename,
-                            :hdType         => disk.disk_type.to_s,
-                            :hdMode         => disk.mode.to_s,
-                            :hdSize         => dsize.to_s,
-                            :hdUnit         => dunit.to_s,
-                            :delete_backing => delbacking,
-                            :cb_bootable    => disk.bootable,
-                            :add_remove     => removing}
+                vmdisk = {:hdFilename     => disk.filename,
+                          :hdType         => disk.disk_type.to_s,
+                          :hdMode         => disk.mode.to_s,
+                          :hdSize         => dsize.to_s,
+                          :hdUnit         => dunit.to_s,
+                          :delete_backing => delbacking,
+                          :cb_bootable    => disk.bootable,
+                          :add_remove     => removing}
+                vmdisks << vmdisk
               end
             end
             @reconfig_values[:disks] = vmdisks

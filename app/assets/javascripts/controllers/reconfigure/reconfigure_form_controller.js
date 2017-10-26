@@ -12,6 +12,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       hdMode:                  'persistent',
       hdSize:                  '',
       hdUnit:                  'MB',
+      new_controller_type:     'VirtualLsiLogicController',
       cb_dependent:            true,
       addEnabled:              false,
       cb_bootable:             false,
@@ -134,10 +135,11 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
         var dmode = (vm.reconfigureModel.vmdisks[disk].hdMode == 'persistent');
         var dtype = (vm.reconfigureModel.vmdisks[disk].hdType == 'thin');
         vm.reconfigureModel.vmAddDisks.push({disk_size_in_mb: dsize,
-                                                 persistent: dmode,
-                                                 thin_provisioned: dtype,
-                                                 dependent: vm.reconfigureModel.vmdisks[disk].cb_dependent,
-                                                 bootable: vm.reconfigureModel.vmdisks[disk].cb_bootable});
+          persistent: dmode,
+          thin_provisioned: dtype,
+          new_controller_type: vm.reconfigureModel.vmdisks[disk].new_controller_type,
+          dependent: vm.reconfigureModel.vmdisks[disk].cb_dependent,
+          bootable: vm.reconfigureModel.vmdisks[disk].cb_bootable});
       }
     }
   };
@@ -147,6 +149,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.reconfigureModel.hdMode = 'persistent';
     vm.reconfigureModel.hdSize = '';
     vm.reconfigureModel.hdUnit = 'MB';
+    vm.reconfigureModel.new_controller_type = 'VirtualLsiLogicController';
     vm.reconfigureModel.cb_dependent = true;
     vm.reconfigureModel.addEnabled = false;
     vm.reconfigureModel.cb_bootable = false;
@@ -154,13 +157,14 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
 
   vm.addDisk = function() {
     vm.reconfigureModel.vmdisks.push({hdFilename:'',
-                                          hdType: vm.reconfigureModel.hdType,
-                                          hdMode: vm.reconfigureModel.hdMode,
-                                          hdSize: vm.reconfigureModel.hdSize,
-                                          hdUnit: vm.reconfigureModel.hdUnit,
-                                          cb_dependent: vm.reconfigureModel.cb_dependent,
-                                          cb_bootable: vm.reconfigureModel.cb_bootable,
-                                          add_remove: 'add'});
+      hdType: vm.reconfigureModel.hdType,
+      hdMode: vm.reconfigureModel.hdMode,
+      hdSize: vm.reconfigureModel.hdSize,
+      hdUnit: vm.reconfigureModel.hdUnit,
+      new_controller_type: vm.reconfigureModel.new_controller_type,
+      cb_dependent: vm.reconfigureModel.cb_dependent,
+      cb_bootable: vm.reconfigureModel.cb_bootable,
+      add_remove: 'add'});
     vm.resetAddValues();
 
     vm.updateDisksAddRemove();
