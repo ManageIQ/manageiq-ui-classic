@@ -51,8 +51,10 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Button Group from Inventory'),
           t,
+          :data    => {'function'      => 'sendDataWithRx',
+                       'function-data' => '{"type": "delete", "controller": "customButtonGroupToolbarController"}'},
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupDelete,
-          :confirm => N_("Warning: This Generic Object Class will be permanently removed!"),
+          :confirm => N_("Warning: This Button Group will be permanently removed!"),
         )
       ]
     )

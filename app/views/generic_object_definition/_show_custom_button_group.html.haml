@@ -26,4 +26,10 @@
           = _('Image')
         .col-md-8
           %span{:class => @record.set_data[:button_icon], :style => @record.set_data.key?(:button_color) ? "color: #{@record.set_data[:button_color]};" : nil}
-    
+
+  %custom-button-group-toolbar#custom_button_group_show_form{'record-id'    => @record.id,
+                                                             'entity'       => _('Custom Button Group'),
+                                                             'entity-name'  => @record.description,
+                                                             'redirect-url' => "/#{controller_name}/show_list",}
+:javascript
+  miq_bootstrap('#custom_button_group_show_form');

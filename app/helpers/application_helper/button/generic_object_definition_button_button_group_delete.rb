@@ -4,6 +4,6 @@ class ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupDelete 
   end
 
   def disabled?
-    !@record.kind_of?(CustomButtonSet)
+    !@record.kind_of?(CustomButtonSet) || (@record.kind_of?(CustomButtonSet) && !@record.custom_buttons.count.zero?)
   end
 end
