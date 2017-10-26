@@ -302,7 +302,7 @@ module Mixins
                        :openstack_infra_providers_exist => retrieve_openstack_infra_providers.length > 0,
                        :default_userid                  => @ems.authentication_userid ? @ems.authentication_userid : "",
                        :amqp_userid                     => amqp_userid,
-                       :smartstate_docker_userid               => smartstate_docker_userid,
+                       :smartstate_docker_userid        => smartstate_docker_userid,
                        :service_account                 => service_account ? service_account : "",
                        :azure_tenant_id                 => azure_tenant_id ? azure_tenant_id : "",
                        :keystone_v3_domain_id           => keystone_v3_domain_id,
@@ -315,7 +315,7 @@ module Mixins
                        :ems_controller                  => controller_name,
                        :default_auth_status             => default_auth_status,
                        :amqp_auth_status                => amqp_auth_status,
-                       :smartstate_docker_auth_status                => smartstate_docker_auth_status,
+                       :smartstate_docker_auth_status   => smartstate_docker_auth_status,
                        :service_account_auth_status     => service_account_auth_status
       } if controller_name == "ems_cloud" || controller_name == "ems_network"
 
@@ -582,7 +582,7 @@ module Mixins
       endpoints = {:default           => default_endpoint,
                    :ceilometer        => ceilometer_endpoint,
                    :amqp              => amqp_endpoint,
-                   :smartstate_docker              => default_endpoint,
+                   :smartstate_docker => default_endpoint,
                    :ssh_keypair       => ssh_keypair_endpoint,
                    :metrics           => metrics_endpoint,
                    :hawkular          => hawkular_endpoint,
