@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Button Group'),
           t,
-          :url => 'custom_button_group_new',
+          :url   => 'custom_button_group_new',
           :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupNew,
         ),
         button(
@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Edit this Button Group'),
           t,
-          :url => 'custom_button_group_edit',
+          :url   => 'custom_button_group_edit',
           :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupEdit,
         ),
         button(
