@@ -74,16 +74,18 @@ class GenericObjectDefinitionController < ApplicationController
 
   def custom_button_group_new
     assert_privileges('ab_group_new')
-    drop_breadcrumb(:name => _("Add a new Custom Button Group"), :url => "/generic_object_definition/custom_button_group_new")
-    @generic_object_definition = GenericObjectDefinition.find(params[:id] || @god_node)
-    @in_a_form = true
+    title = _("Add a new Custom Button Group")
+    @generic_object_definition = GenericObjectDefinition.find(params[:id])
+    drop_breadcrumb(:name => title, :url => "/generic_object_definition/custom_button_group_new")
+    render_form(title)
   end
 
   def custom_button_group_edit
     assert_privileges('ab_group_edit')
-    drop_breadcrumb(:name => _("Edit this Custom Button Group"), :url => "/generic_object_definition/custom_button_group_edit")
     @custom_button_group = CustomButtonSet.find(params[:id])
-    render_form
+    title = _("Edit Custom Button Group '#{@custom_button_group.name}'")
+    drop_breadcrumb(:name => title, :url => "/generic_object_definition/custom_button_group_edit")
+    render_form(title)
   end
 
   private
@@ -100,9 +102,10 @@ class GenericObjectDefinitionController < ApplicationController
     params[:id].split('-').first == 'cbg'
   end
 
-  def render_form
+  def render_form(title)
     presenter = rendering_objects
     @in_a_form = true
+    presenter[:right_cell_text] = title
     presenter.replace(:main_div, r[:partial => 'custom_button_group_form'])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
@@ -112,7 +115,7 @@ class GenericObjectDefinitionController < ApplicationController
 
   def process_root_node(presenter)
     process_show_list
-    @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
+    @right_cell_text = _("All %{gods}") % {:gods => ui_lookup(:models => "GenericObjectDefinition")}
     presenter.replace(:main_div, r[:partial => 'show_list'])
     presenter.show(:paging_div)
     build_toolbar("x_gtl_view_tb")
@@ -121,7 +124,7 @@ class GenericObjectDefinitionController < ApplicationController
   def process_god_node(presenter)
     @_params[:id] = params[:id].split("-").last
     show
-    @right_cell_text = @record.name
+    @right_cell_text = "#{ui_lookup(:model => "GenericObjectDefinition")} '#{@record.name}'"
     presenter.replace(:main_div, r[:partial => 'show'])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
@@ -129,7 +132,7 @@ class GenericObjectDefinitionController < ApplicationController
 
   def process_custom_button_group_node(presenter)
     @record = CustomButtonSet.find(from_cid(params[:id].split("-").last))
-    @right_cell_text = @record.name
+    @right_cell_text = "#{ui_lookup(:model => "CustomButtonSet")} '#{@record.name}'"
     presenter.replace(:main_div, r[:partial => 'show_custom_button_group'])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
