@@ -1,5 +1,4 @@
-- if @sb[:active_tab] == "settings_label_tag_mapping"
-  = render :partial => "layouts/flash_msg"
+- if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_label_tag_mapping"
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr

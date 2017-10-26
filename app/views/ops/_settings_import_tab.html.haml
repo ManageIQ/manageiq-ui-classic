@@ -1,7 +1,6 @@
-- if @sb[:active_tab] == "settings_import"
+- if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_import"
   - url = url_for_only_path(:action => 'upload_form_field_changed', :id => @sb[:active_tab].split('_').last)
   %h3= _("Messages")
-  = render(:partial => "layouts/flash_msg")
   %hr
   %h3= _("Upload Custom Variable Values")
   = form_tag({:action => "upload_csv",

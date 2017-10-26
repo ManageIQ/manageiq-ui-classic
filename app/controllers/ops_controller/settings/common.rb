@@ -1093,33 +1093,36 @@ module OpsController::Settings::Common
       when "settings_cu_collection"                                 # C&U collection settings
         cu_build_edit_screen
         @in_a_form = true
-      when "settings_co_categories"
-        category_get_all
-      when "settings_co_tags"
-        # dont hide the disabled categories, so user can remove tags from the disabled ones
-        cats = Classification.categories.sort_by(&:description)  # Get the categories, sort by name
-        @cats = {}                                        # Classifications array for first chooser
-        cats.each do |c|
-          @cats[c.description] = c.name unless c.read_only?    # Show the non-read_only categories
+      when "settings_tags"
+        case @sb[:active_subtab]
+        when "settings_co_categories"
+          category_get_all
+        when "settings_co_tags"
+          # dont hide the disabled categories, so user can remove tags from the disabled ones
+          cats = Classification.categories.sort_by(&:description)  # Get the categories, sort by name
+          @cats = {}                                        # Classifications array for first chooser
+          cats.each do |c|
+            @cats[c.description] = c.name unless c.read_only?    # Show the non-read_only categories
+          end
+          @cat = cats.first
+          ce_build_screen                                         # Build the Classification Edit screen
+        when "settings_import_tags"
+          @edit = {}
+          @edit[:new] = {}
+          @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+          add_flash(_("Locate and upload a file to start the import process"), :info)
+          @in_a_form = true
+        when "settings_import"                                  # Import tab
+          @edit = {}
+          @edit[:new] = {}
+          @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+          @edit[:new][:upload_type] = nil
+          @sb[:good] = nil unless @sb[:show_button]
+          add_flash(_("Choose the type of custom variables to be imported"), :info)
+          @in_a_form = true
+        when "settings_label_tag_mapping"
+          label_tag_mapping_get_all
         end
-        @cat = cats.first
-        ce_build_screen                                         # Build the Classification Edit screen
-      when "settings_import_tags"
-        @edit = {}
-        @edit[:new] = {}
-        @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-        add_flash(_("Locate and upload a file to start the import process"), :info)
-        @in_a_form = true
-      when "settings_import"                                  # Import tab
-        @edit = {}
-        @edit[:new] = {}
-        @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-        @edit[:new][:upload_type] = nil
-        @sb[:good] = nil unless @sb[:show_button]
-        add_flash(_("Choose the type of custom variables to be imported"), :info)
-        @in_a_form = true
-      when "settings_label_tag_mapping"
-        label_tag_mapping_get_all
       when "settings_rhn"
         @edit = session[:edit] || {}
         @edit[:new] ||= {}
