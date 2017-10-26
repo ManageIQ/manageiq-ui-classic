@@ -46,6 +46,7 @@
           #settings_list
             = render :partial => "settings_list_tab"
       - else
+        = render(:partial => "layouts/flash_msg")
         %ul.nav.nav-tabs
           = miq_tab_header("settings_details", @sb[:active_tab]) do
             = _("Details")
@@ -63,7 +64,6 @@
           = miq_tab_content("settings_cu_collection", @sb[:active_tab]) do
             = render :partial => "settings_cu_collection_tab"
           = miq_tab_content("settings_tags", @sb[:active_tab]) do
-            = render(:partial => "layouts/flash_msg")
             #ops_tags_subtabs
               %ul.nav.nav-tabs.nav-tabs-pf{:style => 'font-size: 12px'}
                 = miq_tab_header("settings_co_categories", @sb[:active_subtab]) do
