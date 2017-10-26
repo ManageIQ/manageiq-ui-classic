@@ -2,6 +2,8 @@ set -e
 
 bin/setup
 
-source tools/ci/setup_js_env.sh
+if [ "$TEST_SUITE" = "spec:javascript" ]; then
+  source tools/ci/setup_js_env.sh
+fi
 
 set +v

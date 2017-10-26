@@ -1,6 +1,13 @@
 = render :partial => 'layouts/doctype'
 %html.layout-pf.layout-pf-fixed.transitions{:lang => I18n.locale.to_s.sub('-', '_')}
-  - if @report_only
+  - if Rails.env.test?
+    -# skipping javascripts and stuff for specs
+    %body
+      - if block_given?
+        = yield
+      - else
+        = render :partial => "layouts/content"
+  - elsif @report_only
     %head
       %title
         = "%{product}: %{title}" % {:product => I18n.t('product.name'), :title => @layout.titleize}

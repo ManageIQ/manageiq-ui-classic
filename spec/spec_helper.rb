@@ -73,3 +73,22 @@ RSpec.configure do |config|
     EvmSpecHelper.clear_caches { example.run }
   end
 end
+
+# This bypasses the lookup of Javascript dependencies in (ruby) tests
+ActionView::Helpers::AssetUrlHelper.module_eval {
+  def asset_path(source, _options = {})
+    "/assets/#{source}"
+  end
+}
+
+Sprockets::SassProcessor::Functions.module_eval {
+  def asset_path(path, _options= {})
+    Autoload::Sass::Script::String.new("/assets/#{path}", :string)
+  end
+}
+
+#Sprockets::Rails::LegacyAssetUrlHelper.module_eval {
+#  def asset_path(source, _options = {})
+#    "/assets/#{source}"
+#  end
+#}

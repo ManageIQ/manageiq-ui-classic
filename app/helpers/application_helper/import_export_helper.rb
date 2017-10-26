@@ -1,7 +1,7 @@
 module ApplicationHelper::ImportExportHelper
   def status_icon_image_path(exists)
-    icon_name = exists ? "100/checkmark" : "16/equal-green"
-    image_path("#{icon_name}.png")
+    icon_name = exists ? "100/checkmark.png" : "16/equal-green.png"
+    ActionController::Base.helpers.image_path(icon_name)
   end
 
   def status_description(exists)
