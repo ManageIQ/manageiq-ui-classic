@@ -112,6 +112,7 @@ class GenericObjectDefinitionController < ApplicationController
     presenter[:right_cell_text] = title
     presenter.replace(:main_div, r[:partial => 'custom_button_group_form'])
     presenter.hide(:paging_div)
+    presenter[:lock_sidebar] = true
     build_toolbar("x_summary_view_tb")
 
     render :json => presenter.for_render
