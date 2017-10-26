@@ -498,7 +498,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       let(:toolbar_to_build) { 'generic_object_definition_center_tb' }
 
       before do
-        @record = double(:generic_objects => [])
+        @record = FactoryGirl.create(:generic_object_definition)
         allow(Rbac).to receive(:role_allows?).and_return(true)
       end
 
@@ -522,6 +522,22 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :text  => "Edit this Generic Object Class",
         )
         expect(items[1]).to include(
+          :id      => "generic_object_definition_configuration__ab_group_new",
+          :type    => :button,
+          :title   => "Add a new Button Group",
+          :text    => "Add a new Button Group",
+          :onwhen  => nil,
+          :enabled => true,
+        )
+        expect(items[2]).to include(
+          :id      => "generic_object_definition_configuration__ab_button_new",
+          :type    => :button,
+          :title   => "Add a new Button",
+          :text    => "Add a new Button",
+          :onwhen  => nil,
+          :enabled => true,
+        )
+        expect(items[3]).to include(
           :id      => "generic_object_definition_configuration__generic_object_definition_delete",
           :type    => :button,
           :icon    => "pficon pficon-delete fa-lg",
