@@ -19,7 +19,7 @@
 
     .form-group
       %label.col-md-2.control-label{"for" => "name"}
-        = Dictionary.gettext('fqname', :type => :column, :notfound => :titleize)
+        = _('Fully Qualified Name')
       .col-md-8
         {{vm.aeMethodModel.namespace_path}}
 

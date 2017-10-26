@@ -38,7 +38,7 @@
         .col-md-10
           %p.form-control-static= @miq_report.user ? @miq_report.user.userid : ""
       .form-group
-        %label.control-label.col-md-2= Dictionary.gettext("MiqGroup", :type => :model, :notfound => :titleize)
+        %label.control-label.col-md-2= _('EVM Group')
         .col-md-10
           %p.form-control-static= @miq_report.miq_group ? @miq_report.miq_group.description : ""
       .form-group

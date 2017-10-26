@@ -26,7 +26,7 @@
             = @edit[:new][:location]
       .form-group
         %label.col-md-2.control-label
-          = Dictionary.gettext('fqname', :type => :column, :notfound => :titleize)
+          = _('Fully Qualified Name')
         .col-md-8
           %p.form-control-static
             = h(@sb[:namespace_path])
