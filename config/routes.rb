@@ -1956,7 +1956,9 @@ Rails.application.routes.draw do
         index
         show
         show_list
+        new
         tagging_edit
+        ems_list
       ) +
                compare_get,
       :post => %w(

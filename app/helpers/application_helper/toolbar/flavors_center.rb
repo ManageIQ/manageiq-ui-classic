@@ -1,4 +1,31 @@
 class ApplicationHelper::Toolbar::FlavorsCenter < ApplicationHelper::Toolbar::Basic
+  button_group('flavor_configuration', [
+    select(
+      :flavor_configuration_choice,
+      'fa fa-cog fa-lg',
+      t = N_('Configuration'),
+      t,
+      :items => [
+        button(
+          :flavor_create,
+          'pficon pficon-add-circle-o fa-lg',
+          t = N_('Add a new Flavor'),
+          t,
+        ),
+        separator,
+        button(
+          :flavor_delete,
+          'pficon pficon-delete fa-lg',
+          t = N_('Remove selected Flavors'),
+          t,
+          :url_parms => "main_div",
+          :confirm   => N_("Warning: The selected Flavors will be permanently removed!"),
+          :enabled   => false,
+          :onwhen    => "1+"
+        ),
+      ]
+    ),
+  ])
   button_group('flavor_policy', [
     select(
       :flavor_policy_choice,
