@@ -28,13 +28,18 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       provisioning_verbosity: '0',
       provisioning_editMode: false,
       provisioning_become_enabled: false,
+      provisioning_execution_ttl: '',
+      provisioning_inventory: 'localhost',
+      provisioning_log_output: 'on_error',
     };
     vm.verbosity_types = playbookReusableCodeMixin.getVerbosityTypes();
+    vm.log_output_types = playbookReusableCodeMixin.getLogOutputTypes();
     vm.provisioning_cloud_type = '';
     vm.currentRegion = currentRegion;
     vm.formId = aeMethodFormId;
     vm.afterGet = false;
     vm.model = "aeMethodModel";
+    vm.inventory_mode = 'localhost';
 
     ManageIQ.angular.scope = $scope;
 
@@ -73,6 +78,12 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel.provisioning_become_enabled = configData.become_enabled === true;
     vm.aeMethodModel.provisioning_key = '';
     vm.aeMethodModel.provisioning_value = '';
+    vm.aeMethodModel.provisioning_execution_ttl = configData.execution_ttl;
+    vm.aeMethodModel.provisioning_inventory = configData.hosts;
+    if (configData.hosts !== 'localhost') {
+      vm.inventory_mode = 'specify';
+    }
+    vm.aeMethodModel.provisioning_log_output = configData.log_output;
 
     if (configData.verbosity === undefined || configData.verbosity === '') {
       vm.aeMethodModel.provisioning_verbosity = '0';
@@ -136,6 +147,9 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       credential_id: configData.provisioning_machine_credential_id,
       verbosity: configData.provisioning_verbosity,
       become_enabled: configData.provisioning_become_enabled,
+      execution_ttl: configData.provisioning_execution_ttl,
+      log_output: configData.provisioning_log_output,
+      hosts: configData.provisioning_inventory,
       extra_vars: configData.provisioning_inputs,
     };
     if (configData.provisioning_network_credential_id !== '') {

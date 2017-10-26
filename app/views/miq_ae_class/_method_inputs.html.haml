@@ -51,6 +51,12 @@
         .form-group
           = format_form_group(_('Escalate Privilege'), @playbook_details[:become_enabled])
         .form-group
+          = format_form_group(_('Max TTL'), @playbook_details[:execution_ttl])
+        .form-group
+          = format_form_group(_('Hosts'), @playbook_details[:hosts])
+        .form-group
+          = format_form_group(_('Logging Output'), _(ViewHelper::LOG_OUTPUT_LEVELS[@playbook_details[:log_output]]))
+        .form-group
           = format_form_group(_('Verbosity'), _(ViewHelper::VERBOSITY_LEVELS[@playbook_details[:verbosity]]))
     - else
       = @ae_method.data
