@@ -25,6 +25,34 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   }
 
   function init(dialog) {
+    function translateResponderNamesToIds(dialog) {
+      var dynamicFields = [];
+      var allFields = [];
+
+      _.forEach(dialog.dialog_tabs, function(tab) {
+        _.forEach(tab.dialog_groups, function(group) {
+          _.forEach(group.dialog_fields, function(field) {
+            if (field.dynamic === true) {
+              dynamicFields.push(field);
+            }
+
+            allFields.push(field);
+          });
+        });
+      });
+
+      _.forEach(allFields, function(field) {
+        _.forEach(field.dialog_field_responders, function(responder, index) {
+          _.forEach(dynamicFields, function(dynamicField) {
+            if (responder === dynamicField.name) {
+              field.dialog_field_responders[index] = dynamicField.id;
+            }
+          });
+        });
+      });
+    }
+
+    translateResponderNamesToIds(dialog.content[0]);
     DialogEditor.setData(dialog);
     vm.dialog = dialog;
     vm.DialogValidation = DialogValidation;
