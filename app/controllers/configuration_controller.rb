@@ -137,6 +137,9 @@ class ConfigurationController < ApplicationController
       get_form_vars if @tabform != "ui_3"
       case @tabform
       when "ui_1"                                                 # Visual tab
+        if @settings[:display][:locale] != @edit[:new][:display][:locale]
+          FastGettext.locale = @edit[:new][:display][:locale]
+        end
         @settings.merge!(@edit[:new])                                   # Apply the new saved settings
 
         if current_user
