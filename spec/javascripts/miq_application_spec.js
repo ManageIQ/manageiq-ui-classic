@@ -497,5 +497,65 @@ describe('miq_application.js', function() {
       });
     });
   });
-});
 
+  describe('User login form', function() {
+    beforeEach(function() {
+      var html = '<div class="form-horizontal" id="login_div">\
+        <div class="form-group">\
+          <label class="col-md-3 control-label">Username</label>\
+          <div class="col-md-9">\
+            <input type="text" name="user_name" id="user_name" class="form-control" placeholder="Username" onkeypress="if (miqEnterPressed(event)) miqAjaxAuth();">\
+          </div>\
+        </div>\
+        <div class="form-group">\
+          <label class="col-md-3 control-label">Password</label>\
+          <div class="col-md-9">\
+            <input type="password" name="user_password" id="user_password" onkeypress="if (miqEnterPressed(event)) miqAjaxAuth();" autocomplete="off" placeholder="Password" class="form-control">\
+          </div>\
+        </div>\
+        <div class="form-group">\
+          <div class="col-xs-8 col-md-offset-3 col-md-6">\
+            <div id="back_button" style="display: none">\
+              <a data-method="post" title="Back" data-remote="true" href="/dashboard/authenticate?button=back">Back</a>\
+            </div>\
+          </div>\
+        </div>\
+        <div class="col-xs-4 col-md-3 submit">\
+          <a id="login" class="btn btn-primary" alt="Log in" title="Log in" onclick="miqAjaxAuth("/dashboard/authenticate?button=login"); return false;" href="">Log in</a>\
+          <a id="sso_login" class="btn btn-primary" alt="SSO Log in" title="SSO Log in" style="display: none;" onclick="miqAjaxAuthSso("/dashboard/kerberos_authenticate?button=sso_login"); return false;" href="">SSO Log in</a>\
+        </div>\
+      </div>';
+
+      setFixtures(html);
+    });
+    context('failed login', function() {
+      var deferred;
+
+      beforeEach(module('ManageIQ'));
+      beforeEach(
+        inject(function(_API_, $q) {
+          var API = _API_;
+          deferred = $q.defer();
+
+          // simulate failed authentication api call
+          spyOn(API, 'get').and.callFake(function() {return deferred.reject();});
+        })
+      );
+
+      it('removes user and password field from log in form', function() {
+        var user = $('#user_name');
+        var password = $('#user_password');
+
+        user.val('Bob');
+        password.val('shh');
+        $('#login').trigger('click');
+
+        deferred.promise.then(function() {
+          expect(miqClearLoginFields).toHaveBeenCalled();
+          expect(user.val()).toBe('');
+          expect(password.val()).toBe('');
+        });
+      });
+    });
+  });
+});
