@@ -7,6 +7,8 @@ class CatalogController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  helper ProvisionCustomizeHelper
+
   def self.model
     @model ||= ServiceTemplate
   end

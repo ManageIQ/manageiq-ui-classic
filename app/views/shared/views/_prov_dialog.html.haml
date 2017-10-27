@@ -180,7 +180,7 @@
         :prefix                     => "/miq_request/",
         :keys                       => keys})
   - when :customize
-    - if wf.kind_of?(ManageIQ::Providers::Vmware::InfraManager::ProvisionWorkflow) && !wf.supports_pxe? && !wf.supports_iso?
+    - if select_check?(wf)
       - keys = [:sysprep_enabled]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
@@ -189,73 +189,111 @@
           :prefix                     => "/miq_request/",
           :keys                       => keys})
       - if (@edit && @edit[:new] && @edit[:new][:sysprep_enabled] && @edit[:new][:sysprep_enabled][0] == "fields") || (@options && @options[:sysprep_enabled] && @options[:sysprep_enabled][0] == "fields")
-        - keys = [:sysprep_custom_spec, :sysprep_spec_override]
-        = render(:partial => "/miq_request/prov_dialog_fieldset",
-          :locals         => {:workflow => wf,
-            :dialog                     => dialog,
-            :label                      => _("Custom Specification"),
-            :prefix                     => "/miq_request/",
-            :keys                       => keys})
-        - if @sb[:vm_os] == "windows"
-          - keys = [:sysprep_timezone, :sysprep_auto_logon, :sysprep_auto_logon_count, :sysprep_password]
+        - if wf.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow)
+          - keys = [:root_username, :root_password]
           = render(:partial => "/miq_request/prov_dialog_fieldset",
             :locals         => {:workflow => wf,
               :dialog                     => dialog,
-              :label                      => _("Unattended GUI"),
+              :label                      => _("Credentials"),
               :prefix                     => "/miq_request/",
               :keys                       => keys})
-          - keys = [:sysprep_identification]
+          - keys = [:addr_mode, :hostname, :ip_addr, :subnet_mask, :gateway]
           = render(:partial => "/miq_request/prov_dialog_fieldset",
             :locals         => {:workflow => wf,
               :dialog                     => dialog,
-              :label                      => _("Identification"),
+              :label                      => _("IP Address Information"),
               :prefix                     => "/miq_request/",
               :keys                       => keys})
-          - if (@edit && @edit[:new] && @edit[:new][:sysprep_identification][0] == "domain") || (@options && @options[:sysprep_identification][0] == "domain")
-            - keys = [:sysprep_domain_name, :sysprep_domain_admin, :sysprep_domain_password]
+          - keys = [:dns_servers, :dns_suffixes]
+          = render(:partial => "/miq_request/prov_dialog_fieldset",
+            :locals         => {:workflow => wf,
+              :dialog                     => dialog,
+              :label                      => _("DNS"),
+              :prefix                     => "/miq_request/",
+              :keys                       => keys})
+          - keys = [:customization_template_id]
+          = render(:partial => "/miq_request/prov_dialog_fieldset",
+            :locals         => {:workflow => wf,
+              :dialog                     => dialog,
+              :label                      => _("Customize Template"),
+              :prefix                     => "/miq_request/",
+              :keys                       => keys})
+          - show_customization_template_script = (@edit && @edit[:new] && @edit[:new][:customization_template_script]) || (@options && @options[:customization_template_script])
+          - keys = [show_customization_template_script ? :customization_template_script : nil].compact
+          = render(:partial => "/miq_request/prov_dialog_fieldset",
+            :locals         => {:workflow => wf,
+              :dialog                     => dialog,
+              :label                      => _("Selected Template Contents"),
+              :prefix                     => "/miq_request/",
+              :keys                       => keys})
+        - else
+          - keys = [:sysprep_custom_spec, :sysprep_spec_override]
+          = render(:partial => "/miq_request/prov_dialog_fieldset",
+            :locals         => {:workflow => wf,
+              :dialog                     => dialog,
+              :label                      => _("Custom Specification"),
+              :prefix                     => "/miq_request/",
+              :keys                       => keys})
+          - if @sb[:vm_os] == "windows"
+            - keys = [:sysprep_timezone, :sysprep_auto_logon, :sysprep_auto_logon_count, :sysprep_password]
             = render(:partial => "/miq_request/prov_dialog_fieldset",
               :locals         => {:workflow => wf,
                 :dialog                     => dialog,
-                :label                      => _("Domain Information"),
+                :label                      => _("Unattended GUI"),
                 :prefix                     => "/miq_request/",
                 :keys                       => keys})
-          - else
-            - keys = [:sysprep_workgroup_name]
+            - keys = [:sysprep_identification]
             = render(:partial => "/miq_request/prov_dialog_fieldset",
               :locals         => {:workflow => wf,
                 :dialog                     => dialog,
-                :label                      => _("Workgroup Information"),
+                :label                      => _("Identification"),
                 :prefix                     => "/miq_request/",
                 :keys                       => keys})
-          - keys = [:sysprep_full_name, :sysprep_organization, :sysprep_product_id, :sysprep_computer_name]
-          = render(:partial => "/miq_request/prov_dialog_fieldset",
-            :locals         => {:workflow => wf,
-              :dialog                     => dialog,
-              :label                      => _("User Data"),
-              :prefix                     => "/miq_request/",
-              :keys                       => keys})
-          - keys = [:sysprep_change_sid, :sysprep_delete_accounts]
-          = render(:partial => "/miq_request/prov_dialog_fieldset",
-            :locals         => {:workflow => wf,
-              :dialog                     => dialog,
-              :label                      => _("Windows Options"),
-              :prefix                     => "/miq_request/",
-              :keys                       => keys})
-          - keys = [:sysprep_server_license_mode, :sysprep_per_server_max_connections]
-          = render(:partial => "/miq_request/prov_dialog_fieldset",
-            :locals         => {:workflow => wf,
-              :dialog                     => dialog,
-              :label                      => _("Server License"),
-              :prefix                     => "/miq_request/",
-              :keys                       => keys})
-        - elsif @sb[:vm_os] == "linux"
-          - keys = [:linux_host_name, :linux_domain_name]
-          = render(:partial => "/miq_request/prov_dialog_fieldset",
-            :locals         => {:workflow => wf,
-              :dialog                     => dialog,
-              :label                      => _("Naming"),
-              :prefix                     => "/miq_request/",
-              :keys                       => keys})
+            - if (@edit && @edit[:new] && @edit[:new][:sysprep_identification][0] == "domain") || (@options && @options[:sysprep_identification][0] == "domain")
+              - keys = [:sysprep_domain_name, :sysprep_domain_admin, :sysprep_domain_password]
+              = render(:partial => "/miq_request/prov_dialog_fieldset",
+                :locals         => {:workflow => wf,
+                  :dialog                     => dialog,
+                  :label                      => _("Domain Information"),
+                  :prefix                     => "/miq_request/",
+                  :keys                       => keys})
+            - else
+              - keys = [:sysprep_workgroup_name]
+              = render(:partial => "/miq_request/prov_dialog_fieldset",
+                :locals         => {:workflow => wf,
+                  :dialog                     => dialog,
+                  :label                      => _("Workgroup Information"),
+                  :prefix                     => "/miq_request/",
+                  :keys                       => keys})
+            - keys = [:sysprep_full_name, :sysprep_organization, :sysprep_product_id, :sysprep_computer_name]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("User Data"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+            - keys = [:sysprep_change_sid, :sysprep_delete_accounts]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("Windows Options"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+            - keys = [:sysprep_server_license_mode, :sysprep_per_server_max_connections]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("Server License"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+          - elsif @sb[:vm_os] == "linux"
+            - keys = [:linux_host_name, :linux_domain_name]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("Naming"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
       - elsif (@edit && @edit[:new] && @edit[:new][:sysprep_enabled] && @edit[:new][:sysprep_enabled][0] == "file") || (@options && @options[:sysprep_enabled] && @options[:sysprep_enabled][0] == "file")
         - keys = [:sysprep_custom_spec, :sysprep_spec_override]
         = render(:partial => "/miq_request/prov_dialog_fieldset",
@@ -297,7 +335,7 @@
             :label                      => _("Custom Specification"),
             :prefix                     => "/miq_request/",
             :keys                       => keys})
-      - if (!@options && @edit && @edit[:new] && @edit[:new][:sysprep_enabled] && @edit[:new][:sysprep_enabled][0] && @edit[:new][:sysprep_enabled][0] != "disabled") || (!@edit && @options && @options[:sysprep_enabled] && @options[:sysprep_enabled][0] && @options[:sysprep_enabled][0] != "disabled")
+      - if disable_check?(wf)
         - keys = [:addr_mode, :ip_addr, :subnet_mask, :gateway]
         = render(:partial => "/miq_request/prov_dialog_fieldset",
           :locals         => {:workflow => wf,

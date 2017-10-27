@@ -7,6 +7,8 @@ class MiqRequestController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  helper ProvisionCustomizeHelper
+
   def index
     #   show_list
     #   render :action=>"show_list"
