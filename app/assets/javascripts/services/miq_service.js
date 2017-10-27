@@ -33,7 +33,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
   };
 
   this.jqueryRequest = function(url, options) {
-    miqJqueryRequest(url, options);
+    return miqJqueryRequest(url, options);
   };
 
   this.sparkleOn = function() {

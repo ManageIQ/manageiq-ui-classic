@@ -543,6 +543,11 @@ class CatalogController < ApplicationController
       options[:header] = @right_cell_text
       options[:target_id] = st.id
       options[:target_kls] = st.class.name
+      options[:dialog_locals] = {
+        :api_submit_endpoint => "/api/service_catalogs/#{st.service_template_catalog_id}/service_templates/#{st.id}",
+        :api_action          => "order",
+        :cancel_endpoint     => "/catalog/explorer"
+      }
       dialog_initialize(ra, options)
     else
       # if catalog item has no dialog and provision button was pressed from list view
@@ -1979,7 +1984,7 @@ class CatalogController < ApplicationController
       elsif action && ["st_catalog_new", "st_catalog_edit"].include?(action)
         r[:partial => "stcat_form"]
       elsif action == "dialog_provision"
-        r[:partial => "shared/dialogs/dialog_provision"]
+        r[:partial => "shared/dialogs/dialog_provision", :locals => options[:dialog_locals]]
       elsif %w(ot_add ot_copy ot_edit service_dialog_from_ot).include?(action)
         r[:partial => action]
       elsif record_showing
@@ -2052,7 +2057,18 @@ class CatalogController < ApplicationController
             }
           end
         end
-        presenter.update(:form_buttons_div, r[:partial => "layouts/x_dialog_buttons", :locals => {:action_url => "dialog_form_button_pressed", :record_id => @edit[:rec_id]}])
+        if Settings.product.old_dialog_user_ui || action_name != "svc_catalog_provision"
+          presenter.update(
+            :form_buttons_div,
+            r[
+              :partial => "layouts/x_dialog_buttons",
+              :locals  => {
+                :action_url => "dialog_form_button_pressed",
+                :record_id  => @edit[:rec_id]
+              }
+            ]
+          )
+        end
       elsif %w(ot_edit ot_copy ot_add service_dialog_from_ot).include?(action)
         presenter.hide(:toolbar).show(:paging_div, :form_buttons_div).hide(:pc_div_1)
         locals = {:record_id  => @edit[:rec_id],
