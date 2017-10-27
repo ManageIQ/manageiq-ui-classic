@@ -364,7 +364,7 @@ class MiddlewareServerController < ApplicationController
     add_flash(_("%{operation} initiated for selected server(s)") % {:operation => operation_info.fetch(:msg)}) if operation_triggered
   end
 
-  def trigger_mw_operation(operation, mw_server, params = nil)
+  def trigger_mw_operation(operation, mw_server, params = {})
     mw_manager = mw_server.ext_management_system
 
     if mw_server.kind_of?(MiddlewareDeployment)
@@ -372,8 +372,7 @@ class MiddlewareServerController < ApplicationController
     else
       target_resource = mw_server.ems_ref
 
-      extra_params = []
-      extra_params << params if params
+      extra_params = [params]
 
       if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
         extra_params << {:original_resource_path => target_resource}
