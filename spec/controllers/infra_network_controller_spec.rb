@@ -31,7 +31,7 @@ describe InfraNetworkingController do
         seed_session_trees('switch', :infra_networking_tree, 'root')
 
         get :explorer
-        expect(response.body).to include("modelName: 'switches'")
+        expect(response.body).to include("modelName: 'Switch'")
         expect(response.body).to include("activeTree: 'infra_networking_tree'")
         expect(response.body).to include("gtlType: 'list'")
         expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")

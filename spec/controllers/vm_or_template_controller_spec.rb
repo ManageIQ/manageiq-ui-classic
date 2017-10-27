@@ -96,7 +96,7 @@ describe VmOrTemplateController do
         seed_session_trees('vm_or_template', :templates_images_filter_tree, 'root')
 
         get :explorer
-        expect(response.body).to include("modelName: 'vms_and_templates'")
+        expect(response.body).to include("modelName: 'MiqTemplate'")
         expect(response.body).to include("activeTree: 'templates_images_filter_tree'")
         expect(response.body).to include("gtlType: 'list'")
         expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
@@ -106,7 +106,7 @@ describe VmOrTemplateController do
       it 'show a vm in the vms instances list' do
         vm_vmware
         get :explorer
-        expect(response.body).to include("modelName: 'vms_and_templates'")
+        expect(response.body).to include("modelName: 'Vm'")
         expect(response.body).to include("activeTree: 'vms_instances_filter_tree'")
         expect(response.body).to include("gtlType: 'list'")
         expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")

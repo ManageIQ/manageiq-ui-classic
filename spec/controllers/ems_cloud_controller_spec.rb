@@ -408,6 +408,8 @@ describe EmsCloudController do
   end
 
   describe "#show" do
+    render_views
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
@@ -419,8 +421,6 @@ describe EmsCloudController do
     subject { get :show, :id => @ems.id }
 
     context "render listnav partial" do
-      render_views
-
       it do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => "layouts/listnav/_ems_cloud")
@@ -431,6 +431,7 @@ describe EmsCloudController do
       FactoryGirl.create(:ems_storage, :name => 'abc', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
       FactoryGirl.create(:ems_storage, :name => 'xyz', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
       get :show, :params => { :display => "storage_managers", :id => @ems.id, :format => :js }
+      expect(response).to render_template('layouts/angular/_gtl')
       expect(response.status).to eq(200)
     end
   end

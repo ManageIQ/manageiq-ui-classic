@@ -62,7 +62,7 @@ describe AutomationManagerController do
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
-    expect(response.body).to include("modelName: 'manageiq/providers/automation_managers'")
+    expect(response.body).to include("modelName: 'ManageIQ::Providers::AnsibleTower::AutomationManager'")
     expect(response.body).to include("activeTree: 'automation_manager_providers_tree'")
     expect(response.body).to include("gtlType: 'list'")
     expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
