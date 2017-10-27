@@ -64,13 +64,13 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   vm.setupModalOptions = setupModalOptions;
 
   function setupModalOptions(type, tab, box, field) {
-    var templates = {
-      tab: '<dialog-editor-modal-tab></dialog-editor-modal-tab>',
-      box: '<dialog-editor-modal-box></dialog-editor-modal-box>',
-      field: '<dialog-editor-modal-field></dialog-editor-modal-field>',
-    };
+    var components = {
+      tab: 'dialog-editor-modal-tab',
+      box: 'dialog-editor-modal-box',
+      field: 'dialog-editor-modal-field'
+    }
     vm.modalOptions = {
-      template: templates[type],
+      component: components[type],
       size: 'lg',
     };
     vm.elementInfo = { type: type, tabId: tab, boxId: box, fieldId: field };
