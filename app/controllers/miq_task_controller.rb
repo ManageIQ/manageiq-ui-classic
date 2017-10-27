@@ -350,44 +350,21 @@ class MiqTaskController < ApplicationController
 
     # Specify user scope
     if @tabform == "tasks_1"
-      scope << [:with_user_id, session[:userid]]
+      scope << [:with_userid, session[:userid]]
     elsif opts[:user_choice] && opts[:user_choice] != "all"
-      scope << [:with_user_id, opts[:user_choice]]
+      scope << [:with_userid, opts[:user_choice]]
     end
-
-    # Add status scope
-    scope += status_scope(opts)
 
     # Add time scope
     if use_times
       t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.now, Time.zone, "raw")
-      scope << [:with_update_on_between, t.beginning_of_day..t.end_of_day]
+      scope << [:with_updated_on_between, t.beginning_of_day..t.end_of_day]
     end
 
     # Add zone scope
     scope << [:with_zone, opts[:zone]] if opts[:zone] && opts[:zone] != "<all>"
 
-    # Add state scope
-    scope << [:with_state, opts[:state_choice]] if opts[:state_choice] != "all"
-  end
-
-  def status_scope(opts)
-    scope = []
-    status_scopes = {
-      :ok      => [[:with_status, 'Finished'], [:with_status, 'Ok']],
-      :error   => [[:with_status, 'Finished'], [:with_status, 'Error']],
-      :warn    => [[:with_status, 'Finished'], [:with_status, 'Warn']],
-      :running => [[:with_status, 'Finished'], [:with_status, 'Waiting_to_start'], [:with_status, 'Queued']],
-      :queued  => [[:with_status, %w[Waiting_to_start Queued]]]
-    }
-
-    statuses = (opts.keys & status_scopes.keys)
-    if statuses.any?
-      statuses.each { |status| scope += status_scopes[status] }
-      scope
-    else
-      [[:without_status, %w[Ok Error Warn Finished Queued Waiting_to_start]]]
-    end
+    scope
   end
 
   def reload_tasks
