@@ -2117,6 +2117,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         edit
         new
+        retrieve_distinct_instances_across_domains
         show
         show_list
         tagging_edit
