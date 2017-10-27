@@ -47,6 +47,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.currentRegion = currentRegion;
     vm.formId = catalogItemFormId;
     vm.afterGet = false;
+    vm.inventory_mode = 'localhost';
 
     ManageIQ.angular.scope = $scope;
 
@@ -80,6 +81,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.provisioning_cloud_credential_id = playbookReusableCodeMixin.setIfDefined(configData.provision.cloud_credential_id);
     vm.catalogItemModel.provisioning_execution_ttl = configData.provision.execution_ttl;
     vm.catalogItemModel.provisioning_inventory = configData.provision.hosts;
+    if (configData.provision.hosts !== 'localhost') {
+      vm.inventory_mode = 'specify';
+    }
     vm.catalogItemModel.provisioning_dialog_existing = configData.provision.dialog_id ? 'existing' : 'create';
     vm.catalogItemModel.provisioning_dialog_id = configData.provision.dialog_id;
     vm.catalogItemModel.provisioning_dialog_name = configData.provision.new_dialog_name;

@@ -993,6 +993,9 @@ class MiqAeClassController < ApplicationController
         :cloud_credential_id   => method.options[:cloud_credential_id] || '',
         :verbosity             => method.options[:verbosity],
         :become_enabled        => method.options[:become_enabled] || false,
+        :execution_ttl         => method.options[:execution_ttl] || '',
+        :hosts                 => method.options[:hosts] || 'localhost',
+        :log_output            => method.options[:log_output] || 'on_error',
         :extra_vars            => method.inputs
       }
     }
@@ -1745,7 +1748,10 @@ class MiqAeClassController < ApplicationController
                      credential_id
                      verbosity
                      network_credential_id
-                     cloud_credential_id)
+                     cloud_credential_id
+                     execution_ttl
+                     hosts
+                     log_output)
     boolean_params_list = %i(become_enabled)
     params_hash = copy_params_if_set({}, params, params_list)
     copy_boolean_params(params_hash, params, boolean_params_list)
@@ -2702,6 +2708,9 @@ class MiqAeClassController < ApplicationController
     @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
     @playbook_details[:verbosity] = options[:verbosity]
     @playbook_details[:become_enabled] = options[:become_enabled] == true ? _("Yes") : _("No")
+    @playbook_details[:execution_ttl] = options[:execution_ttl]
+    @playbook_details[:hosts] = options[:hosts]
+    @playbook_details[:log_output] = options[:log_output]
     @playbook_details
   end
 

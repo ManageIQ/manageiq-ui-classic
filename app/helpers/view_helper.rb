@@ -127,6 +127,12 @@ module ViewHelper
     '5' => N_('5 (WinRM Debug)')
   }.freeze
 
+  LOG_OUTPUT_LEVELS = {
+    'on_error' => N_('On Error'),
+    'always'   => N_('Always'),
+    'never'    => N_('Never')
+  }.freeze
+
   class << self
     def concat_tag(*args, &block)
       concat content_tag(*args, &block)

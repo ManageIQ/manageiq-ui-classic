@@ -99,15 +99,34 @@
       %label.col-md-3.control-label
         = _("Hosts")
       .col-md-9
-        %input.form-control{:type         => "text",
+        %label{'for' => "#{prefix}_inventory_localhost", 'title' => _('Run on localhost')}
+          %input{'type'       => "radio",
+                 'ng-model'   => "vm.inventory_mode",
+                 'value'      => "localhost",
+                 'ng-change'  => "#{ng_model}.#{prefix}_inventory = 'localhost'",
+                 'id'         => "#{prefix}_inventory_localhost",
+                 'name'       => "#{prefix}_inventory_radio"}
+          = _('Localhost')
+        %br
+        %label{'for' => "#{prefix}_inventory_specify", 'title' => _('Specify host values')}
+          %input{'type'       => "radio",
+                 'ng-model'   => "vm.inventory_mode",
+                 'value'      => "specify",
+                 'ng-change'  => "#{ng_model}.#{prefix}_inventory = ''",
+                 'id'         => "#{prefix}_inventory_specify",
+                 'name'       => "#{prefix}_inventory_radio"}
+          = _('Specify host values')
+        %br
+        %input.form-control{'type'        => "text",
                             'ng-model'    => "#{ng_model}.#{prefix}_inventory",
-                            :name         => "#{prefix}_inventory",
-                            :maxlength    => 50,
-                            "miqrequired" => "",
-                            "checkchange" => true}
+                            'ng-if'       => "vm.inventory_mode !== 'localhost'",
+                            'name'        => "#{prefix}_inventory",
+                            'maxlength'   => 50,
+                            'miqrequired' => "",
+                            'checkchange' => true}
           %span.help-block{"ng-show" => "angularForm.#{prefix}_inventory.$error.miqrequired"}
             = _("Required")
-    .form-group{"ng-if" =>"#{ng_model}.#{prefix}_execution_ttl!==undefined", "ng-class" => "{'has-error': angularForm.#{prefix}_execution_ttl.$invalid}"}
+    .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_execution_ttl.$invalid}"}
       %label.col-md-3.control-label{"for" => "#{prefix}_execution_ttl"}
         = _("Max TTL (mins)")
       .col-md-9
@@ -119,6 +138,15 @@
                             "checkchange" => true}
         %span{"style"=>"color:red", "ng-show" => "angularForm.#{prefix}_execution_ttl.$invalid"}
           = _("Max TTL value must be numeric")
+    .form-group{"ng-if" =>"#{ng_model}.#{prefix}_log_output!==undefined", "ng-class" => "{'has-error': angularForm.#{prefix}_log_output.$invalid}"}
+      %label.col-md-3.control-label{"for" => "#{prefix}_log_output"}
+        = _("Logging Output")
+      .col-md-9
+        %select{"ng-model"    => "#{ng_model}.#{prefix}_log_output",
+                "name"        => "#{prefix}_log_output",
+                'ng-options'  => 'v as k for (v, k) in vm.log_output_types',
+                "checkchange" => "",
+                'pf-select'   => true}
     #escalate_privilege{"ng-if" => "(#{ng_model}.#{prefix}_become_enabled!=='undefined' || vm.retirement_playbook_selected('#{prefix}'))"}
       .form-group
         %label.col-md-3.control-label

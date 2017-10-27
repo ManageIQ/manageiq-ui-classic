@@ -31,6 +31,14 @@ function playbookReusableCodeMixin(API, $q, miqService) {
     };
   };
 
+  var getLogOutputTypes = function() {
+    return {
+      "on_error": __("On Error"),
+      "always": __("Always"),
+      "never": __("Never"),
+    };
+  };
+
   var checkFormPristine = function(model, modelCopy, form) {
     if (angular.equals(model, modelCopy)) {
       form.$setPristine();
@@ -224,6 +232,7 @@ function playbookReusableCodeMixin(API, $q, miqService) {
     cloudCredentialsList: cloudCredentialsList,
     cloudTypeChanged: cloudTypeChanged,
     getVerbosityTypes: getVerbosityTypes,
+    getLogOutputTypes: getLogOutputTypes,
     getSortedHash: getSortedHash,
     getCloudCredentialsforType: getCloudCredentialsforType,
     getRemoveResourcesTypes: getRemoveResourcesTypes,
