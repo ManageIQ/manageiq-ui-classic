@@ -135,6 +135,9 @@ module Mixins
         [{:username => user, :password => password, :server => params[:default_hostname], :port => params[:default_api_port], :scheme => "http", :version => 4}]
       when 'ManageIQ::Providers::Vmware::InfraManager'
         [{:pass => password, :user => user, :ip => params[:default_hostname]}]
+      when 'ManageIQ::Providers::Nuage::NetworkManager'
+        endpoint_opts = {:protocol => params[:default_security_protocol], :hostname => params[:default_hostname], :api_port => params[:default_api_port], :api_version => params[:api_version]}
+        [user, params[:default_password], endpoint_opts]
       end
     end
 
