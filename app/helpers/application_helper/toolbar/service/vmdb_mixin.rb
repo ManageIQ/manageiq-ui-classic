@@ -21,8 +21,8 @@ module ApplicationHelper::Toolbar::Service::VmdbMixin
           included_class.button(
             :service_delete,
             'pficon pficon-delete fa-lg',
-            N_('Remove selected Services'),
-            N_('Remove Services'),
+            N_('Remove selected Services from Inventory'),
+            N_('Remove Services from Inventory'),
             :url_parms    => "main_div",
             :send_checked => true,
             :enabled      => false,

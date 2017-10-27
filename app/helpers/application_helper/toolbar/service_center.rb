@@ -15,8 +15,8 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
         button(
           :service_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this Service'),
-          N_('Remove Service'),
+          N_('Remove this Service from Inventory'),
+          N_('Remove Service from Inventory'),
           :url_parms    => "main_div",
           :send_checked => true,
           :confirm      => N_("Warning: This Service and ALL of their components will be permanently removed!")),
