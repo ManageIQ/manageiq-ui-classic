@@ -44,6 +44,7 @@ class PhysicalServerController < ApplicationController
   def button
     assign_policies(PhysicalServer) if params[:pressed] == "physical_server_protect"
     tag(PhysicalServer) if params[:pressed] == "physical_server_tag"
+    refresh_physical_servers if params[:pressed] == "physical_server_refresh"
 
     return if %w(physical_server_protect physical_server_tag).include?(params[:pressed]) &&
               @flash_array.nil? # Some other screen is showing, so return

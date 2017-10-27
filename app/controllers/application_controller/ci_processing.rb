@@ -21,6 +21,8 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::HostActions::Power
     include Mixins::Actions::HostActions::Misc
 
+    include Mixins::Actions::PhysicalServerActions::Misc
+
     include Mixins::ExplorerShow
   end
 
