@@ -2,9 +2,11 @@ describe TreeBuilderServices do
   let(:builder) { TreeBuilderServices.new("x", "y", {}) }
 
   it "generates tree" do
+    User.current_user = FactoryGirl.create(:user)
+    allow(User).to receive(:server_timezone).and_return("UTC")
     create_deep_tree
 
-    expect(root_nodes.size).to eq(2)
+    expect(root_nodes.size).to eq(4)
     active_nodes = kid_nodes(root_nodes[0])
     retired_nodes = kid_nodes(root_nodes[1])
     expect(active_nodes).to eq(
