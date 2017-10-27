@@ -606,6 +606,15 @@ describe EmsCloudController do
     let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
     before do
       stub_user(:features => :all)
+      stub_request(:post, "https://#{ems.hostname}:5000/v2.0/tokens")
+        .with(
+          :body    => "{\"auth\":{\"passwordCredentials\":{\"username\":\"testuser\",\"password\":\"secret\"},\"tenantName\":\"\"}}",
+          :headers => {
+            'Content-Type' => 'application/json',
+            'Host'         => "#{ems.hostname}:5000",
+            'User-Agent'   => 'fog-core/1.45.0'
+          }
+        ).to_return(:status => 200, :body => "", :headers => {})
     end
 
     it "redirects when request is successful" do
@@ -619,10 +628,6 @@ describe EmsCloudController do
     end
 
     it "returns error if admin role is not selected" do
-      stub_request(:post, "https://#{ems.hostname}:5000/v2.0/tokens").
-        with(:body    => "{\"auth\":{\"passwordCredentials\":{\"username\":\"testuser\",\"password\":\"secret\"},\"tenantName\":\"\"}}",
-             :headers => {'Content-Type'=>'application/json', 'Host'=>"#{ems.hostname}:5000", 'User-Agent'=>'fog-core/1.45.0'}).
-        to_return(:status => 200, :body => "", :headers => {})
       post :sync_users, :params => {:id => ems.id, :sync => "", :member_role => 2}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
@@ -630,10 +635,6 @@ describe EmsCloudController do
     end
 
     it "returns error if member role is not selected" do
-      stub_request(:post, "https://#{ems.hostname}:5000/v2.0/tokens").
-        with(:body    => "{\"auth\":{\"passwordCredentials\":{\"username\":\"testuser\",\"password\":\"secret\"},\"tenantName\":\"\"}}",
-             :headers => {'Content-Type'=>'application/json', 'Host'=>"#{ems.hostname}:5000", 'User-Agent'=>'fog-core/1.45.0'}).
-        to_return(:status => 200, :body => "", :headers => {})
       post :sync_users, :params => {:id => ems.id, :sync => "", :admin_role => 1}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
@@ -651,18 +652,10 @@ describe EmsCloudController do
     end
 
     it "password and confirm must be equal" do
-      stub_request(:post, "https://#{ems.hostname}:5000/v2.0/tokens").
-        with(:body    => "{\"auth\":{\"passwordCredentials\":{\"username\":\"testuser\",\"password\":\"secret\"},\"tenantName\":\"\"}}",
-             :headers => {'Content-Type'=>'application/json', 'Host'=>"#{ems.hostname}:5000", 'User-Agent'=>'fog-core/1.45.0'}).
-        to_return(:status => 200, :body => "", :headers => {})
       verify_password_and_confirm("apples", "oranges")
     end
 
     it "if password or confirm is not empty, then the other cannot be empty" do
-      stub_request(:post, "https://#{ems.hostname}:5000/v2.0/tokens").
-        with(:body    => "{\"auth\":{\"passwordCredentials\":{\"username\":\"testuser\",\"password\":\"secret\"},\"tenantName\":\"\"}}",
-             :headers => {'Content-Type'=>'application/json', 'Host'=>"#{ems.hostname}:5000", 'User-Agent'=>'fog-core/1.45.0'}).
-        to_return(:status => 200, :body => "", :headers => {})      
       verify_password_and_confirm("apples", nil)
       verify_password_and_confirm(nil, "oranges")
     end
