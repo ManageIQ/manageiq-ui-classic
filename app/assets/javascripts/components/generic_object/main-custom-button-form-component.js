@@ -17,6 +17,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
   var optionsPromise = null;
   var serviceDialogsPromise = null;
   var rolesPromise = null;
+  var instancesPromise = null;
 
   vm.$onInit = function() {
     vm.entity = __('Custom Button');
@@ -82,6 +83,10 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       .then(getRoles)
       .catch(miqService.handleFailure);
 
+    instancesPromise = $http.get('/generic_object_definition/retrieve_distinct_instances_across_domains')
+      .then(getDistinctInstancesAcrossDomains)
+      .catch(miqService.handleFailure);
+
     if (vm.customButtonRecordId) {
       vm.newRecord = false;
       miqService.sparkleOn();
@@ -95,7 +100,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       vm.modelCopy = angular.copy( vm.customButtonModel );
     }
 
-    $q.all([optionsPromise, serviceDialogsPromise, rolesPromise, dataPromise])
+    $q.all([optionsPromise, serviceDialogsPromise, rolesPromise, instancesPromise, dataPromise])
       .then(promisesResolvedForLoad);
   };
 
