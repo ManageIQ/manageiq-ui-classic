@@ -22,6 +22,7 @@ class GenericObjectDefinitionController < ApplicationController
     @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
     self.x_active_tree ||= :generic_object_definitions_tree
     self.x_node ||= 'root'
+    @tree = TreeBuilderGenericObjectDefinition.new(:generic_object_definitions_tree, :generic_object_definitions_tree, @sb)
   end
 
   def button
