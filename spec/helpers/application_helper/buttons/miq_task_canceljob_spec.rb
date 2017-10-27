@@ -6,12 +6,12 @@ describe ApplicationHelper::Button::MiqTaskCanceljob do
     %w(all_tasks my_tasks).each do |layout|
       context "when layout == #{layout}" do
         let(:layout) { layout }
-        it { is_expected.to be_falsey }
+        it { is_expected.to be_truthy }
       end
     end
     context 'when !layout.in(%w(all_tasks my_tasks))' do
       let(:layout) { 'something' }
-      it { is_expected.to be_truthy }
+      it { is_expected.to be_falsey }
     end
   end
 end
