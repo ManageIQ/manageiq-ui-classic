@@ -331,6 +331,20 @@ describe MiqAeCustomizationController do
         end
       end
 
+      context "when the dialog importer raises a circular reference error" do
+        before do
+          allow(dialog_import_service).to receive(:store_for_import)
+            .and_raise(DialogImportValidator::DialogFieldAssociationCircularReferenceError)
+        end
+
+        it "redirects with an error message" do
+          post :upload_import_file, :params => params, :xhr => true
+          expect(controller.instance_variable_get(:@flash_array))
+            .to include(:message => "Error during upload: the following dialog fields to be imported contain circular association references: DialogImportValidator::DialogFieldAssociationCircularReferenceError",
+                        :level   => :error)
+        end
+      end
+
       context "when the dialog importer raises a parse non dialog yaml error" do
         before do
           allow(dialog_import_service).to receive(:store_for_import)
