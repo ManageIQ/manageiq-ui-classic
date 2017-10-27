@@ -137,6 +137,10 @@ class GenericObjectDefinitionController < ApplicationController
     @right_cell_text = _("Custom Button Set %{record_name}") % {:record_name => @record.name}
   end
 
+  def custom_button_node?
+    params[:id].split('-').first == 'cb'
+  end
+
   def render_form(title)
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
     @in_a_form = true
@@ -174,6 +178,14 @@ class GenericObjectDefinitionController < ApplicationController
   def process_custom_button_group_node(presenter, node)
     custom_button_group_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_custom_button_group'])
+    presenter.hide(:paging_div)
+    build_toolbar("x_summary_view_tb")
+  end
+
+  def process_custom_button_node(presenter)
+    @record = CustomButton.find(from_cid(params[:id].split("-").last))
+    @right_cell_text = "#{ui_lookup(:model => "CustomButton")} '#{@record.name}'"
+    presenter.replace(:main_div, r[:partial => 'show_custom_button'])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
   end
