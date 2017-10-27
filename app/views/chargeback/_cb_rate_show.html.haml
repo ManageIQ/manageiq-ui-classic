@@ -1,3 +1,4 @@
+- breakdown_present = @record.chargeback_rate_details.any? { |d| d.sub_metric.present? }
 %h3= _('Basic Info')
 .form-horizontal.static
   .form-group
@@ -13,6 +14,9 @@
     %tr
       %th{:rowspan => "2"}= _('Group')
       %th{:rowspan => "2"}= _('Description')
+      - if breakdown_present
+        %th{:rowspan => '2'}= _('Sub Metric')
+
       %th{:colspan => "2"}= _('Range')
       %th{:colspan => "2"}= _('Rate')
       %th{:rowspan => "2"}= _('Units')
@@ -23,7 +27,7 @@
       %th= _("Variable")
   %tbody
     /Currency code is the same for all the chargeback_rate_details
-    - @record.chargeback_rate_details.to_a.sort_by { |rd| [rd.chargeable_field[:group].downcase, rd.chargeable_field[:description].downcase] }.each_with_index do |detail, detail_index|
+    - @record.chargeback_rate_details.to_a.sort_by { |rd| [rd.chargeable_field[:group].downcase, rd.chargeable_field[:description].downcase, rd[:sub_metric].to_s.downcase] }.each_with_index do |detail, detail_index|
     - tiers = detail.chargeback_tiers.order(:start)
       - @cur_group = detail.chargeable_field[:group] if @cur_group.nil?
       - if @cur_group != detail.chargeable_field[:group]
@@ -36,6 +40,10 @@
           = h(rate_detail_group(detail.chargeable_field[:group]))
         %td{:rowspan => num_tiers}
           = detail.chargeable_field[:description]
+          - if breakdown_present
+            %td{:rowspan => num_tiers}
+              - if detail.sub_metrics.present?
+                = detail.sub_metric_human
         - tier = tiers.first
         %td
           = tier.start ? tier.start : 0
