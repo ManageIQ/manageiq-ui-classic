@@ -185,7 +185,7 @@ module ApplicationController::AdvancedSearch
       build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
       build_accordions_and_trees
       load_or_clear_adv_search
-    elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
+    elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree svcs_tree).include?(x_active_tree.to_s)
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, tree_type, @sb)

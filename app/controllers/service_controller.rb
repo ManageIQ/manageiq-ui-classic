@@ -59,8 +59,7 @@ class ServiceController < ApplicationController
   end
 
   def explorer
-    @explorer   = true
-    @lastaction = "explorer"
+    @explorer = true
 
     # if AJAX request, replace right cell, and return
     if request.xml_http_request?
