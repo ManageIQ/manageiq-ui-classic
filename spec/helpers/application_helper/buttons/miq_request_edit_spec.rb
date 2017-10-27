@@ -14,7 +14,7 @@ describe ApplicationHelper::Button::MiqRequestEdit do
     let(:request) { "SomeRequest" }
     let(:username) { user.name }
     let(:state) { "xx" }
-    %w(MiqProvisionRequest MiqHostProvisionRequest VmReconfigureRequest
+    %w(MiqProvisionRequest MiqHostProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
        VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest).each do |cls|
       context 'miq_request_edit' do
         before do

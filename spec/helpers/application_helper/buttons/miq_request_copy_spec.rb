@@ -11,7 +11,7 @@ describe ApplicationHelper::Button::MiqRequestCopy do
 
     let(:view_context) { setup_view_context_with_sandbox({}) }
     let(:user) { FactoryGirl.create(:user) }
-    %w(MiqProvisionRequest MiqHostProvisionRequest VmReconfigureRequest
+    %w(MiqProvisionRequest MiqHostProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
        VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest).each do |cls|
       let(:request) { "MiqProvisionRequest" }
       let(:username) { user.name }

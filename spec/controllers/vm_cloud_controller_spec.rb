@@ -78,7 +78,7 @@ describe VmCloudController do
       flavor = FactoryGirl.create(:flavor_openstack)
       allow(controller).to receive(:load_edit).and_return(true)
       allow(controller).to receive(:previous_breadcrumb_url).and_return("/vm_cloud/explorer")
-      expect_any_instance_of(VmCloud).to receive(:resize_queue).with(controller.current_user.userid, flavor)
+      expect(VmCloudReconfigureRequest).to receive(:make_request)
       post :resize_vm, :params => {
         :button    => 'submit',
         :id        => vm_openstack.id,

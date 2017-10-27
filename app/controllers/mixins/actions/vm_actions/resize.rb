@@ -52,7 +52,11 @@ module Mixins
                 flavor_id = params['flavor_id']
                 flavor = find_record_with_rbac(Flavor, flavor_id)
                 old_flavor_name = @record.flavor.try(:name) || _("unknown")
-                @record.resize_queue(session[:userid], flavor)
+                # TODO: still need to determine whether the next line should be deleted or replaced
+                @request_id = nil
+                options = {:src_ids       => [@record.id],
+                           :instance_type => flavor_id}
+                VmCloudReconfigureRequest.make_request(@request_id, options, current_user)
                 add_flash(_("Reconfiguring Instance \"%{name}\" from %{old_flavor} to %{new_flavor}") % {
                   :name       => @record.name,
                   :old_flavor => old_flavor_name,
