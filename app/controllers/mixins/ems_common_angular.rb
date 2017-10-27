@@ -181,6 +181,7 @@ module Mixins
       amqp_hostname = ""
       amqp_port = ""
       amqp_security_protocol = ""
+      smartstate_docker_userid = ""
       ssh_keypair_userid = ""
       metrics_userid = ""
       metrics_hostname = ""
@@ -204,6 +205,11 @@ module Mixins
       if @ems.has_authentication_type?(:amqp)
         amqp_userid = @ems.has_authentication_type?(:amqp) ? @ems.authentication_userid(:amqp).to_s : ""
         amqp_auth_status = @ems.authentication_status_ok?(:amqp)
+      end
+
+      if @ems.has_authentication_type?(:smartstate_docker)
+        smartstate_docker_userid = @ems.has_authentication_type?(:smartstate_docker) ? @ems.authentication_userid(:smartstate_docker).to_s : ""
+        smartstate_docker_auth_status = true
       end
 
       if @ems.has_authentication_type?(:ssh_keypair)
@@ -296,6 +302,7 @@ module Mixins
                        :openstack_infra_providers_exist => retrieve_openstack_infra_providers.length > 0,
                        :default_userid                  => @ems.authentication_userid ? @ems.authentication_userid : "",
                        :amqp_userid                     => amqp_userid,
+                       :smartstate_docker_userid        => smartstate_docker_userid,
                        :service_account                 => service_account ? service_account : "",
                        :azure_tenant_id                 => azure_tenant_id ? azure_tenant_id : "",
                        :keystone_v3_domain_id           => keystone_v3_domain_id,
@@ -308,6 +315,7 @@ module Mixins
                        :ems_controller                  => controller_name,
                        :default_auth_status             => default_auth_status,
                        :amqp_auth_status                => amqp_auth_status,
+                       :smartstate_docker_auth_status   => smartstate_docker_auth_status,
                        :service_account_auth_status     => service_account_auth_status
       } if controller_name == "ems_cloud" || controller_name == "ems_network"
 
@@ -573,6 +581,7 @@ module Mixins
       endpoints = {:default           => default_endpoint,
                    :ceilometer        => ceilometer_endpoint,
                    :amqp              => amqp_endpoint,
+                   :smartstate_docker => default_endpoint,
                    :ssh_keypair       => ssh_keypair_endpoint,
                    :metrics           => metrics_endpoint,
                    :hawkular          => hawkular_endpoint,
@@ -594,7 +603,7 @@ module Mixins
       authentications = build_credentials(ems, mode)
       configurations = []
 
-      [:default, :ceilometer, :amqp, :ssh_keypair, :metrics, :hawkular, :prometheus, :prometheus_alerts].each do |role|
+      [:default, :ceilometer, :amqp, :smartstate_docker, :ssh_keypair, :metrics, :hawkular, :prometheus, :prometheus_alerts].each do |role|
         configurations << build_configuration(ems, authentications, endpoints, role)
       end
 
@@ -620,6 +629,11 @@ module Mixins
       if ems.supports_authentication?(:amqp) && params[:amqp_userid]
         amqp_password = params[:amqp_password] ? params[:amqp_password] : ems.authentication_password(:amqp)
         creds[:amqp] = {:userid => params[:amqp_userid], :password => amqp_password, :save => (mode != :validate)}
+      end
+      if ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager) &&
+         ems.supports_authentication?(:smartstate_docker) && params[:smartstate_docker_userid]
+        smartstate_docker_password = params[:smartstate_docker_password] ? params[:smartstate_docker_password] : ems.authentication_password(:smartstate_docker)
+        creds[:smartstate_docker] = {:userid => params[:smartstate_docker_userid], :password => smartstate_docker_password, :save => true}
       end
       if ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) &&
          ems.supports_authentication?(:ssh_keypair) && params[:ssh_keypair_userid]

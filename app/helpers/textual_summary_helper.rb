@@ -183,14 +183,15 @@ module TextualSummaryHelper
 
     authentications.collect do |auth|
       label = case auth[:authtype]
-              when "default"     then _("Default")
-              when "metrics"     then _("C & U Database")
-              when "amqp"        then _("AMQP")
-              when "ipmi"        then _("IPMI")
-              when "remote"      then _("Remote Login")
-              when "ws"          then _("Web Services")
-              when "ssh_keypair" then _("SSH Key Pair")
-              else;              _("<Unknown>")
+              when "default"           then _("Default")
+              when "metrics"           then _("C & U Database")
+              when "amqp"              then _("AMQP")
+              when "ipmi"              then _("IPMI")
+              when "remote"            then _("Remote Login")
+              when "smartstate_docker" then _("SmartState Docker")
+              when "ws"                then _("Web Services")
+              when "ssh_keypair"       then _("SSH Key Pair")
+              else;                    _("<Unknown>")
               end
 
       {:label => _("%{label} Credentials") % {:label => label},
