@@ -210,6 +210,8 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
     vm.customButtonModel.current_visibility = response.visibility.roles[0] === '_ALL_' ? 'all' : 'role';
 
+    vm.genericObjectDefnRecordId = response.applies_to_id;
+
     optionsPromise.then(function() {
       if (vm.customButtonModel.current_visibility === 'role') {
         _.forEach(vm.available_roles, function (role, index) {
