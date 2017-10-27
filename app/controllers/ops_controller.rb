@@ -119,13 +119,13 @@ class OpsController < ApplicationController
       @build = nil
       @sb[:user] = nil
       @ldap_group = nil
-    elsif %w(settings_import settings_import_tags).include?(@sb[:active_tab])
+    elsif @sb[:active_tab] == 'settings_tags' && %w(settings_import settings_import_tags).include?(@sb[:active_subtab])
       session[:changed] = !flash_errors?
     end
     # setting active record object here again, since they are no longer there due to redirect
     @ldap_group = @edit[:ldap_group] if params[:cls_id] && params[:cls_id].split('_')[0] == "lg"
     @x_edit_buttons_locals = set_form_locals if @in_a_form
-    edit_changed? if @edit && !%w(settings_import settings_import_tags).include?(@sb[:active_tab])
+    edit_changed? if @edit && (@sb[:active_tab] == 'settings_tags' && !%w(settings_import settings_import_tags).include?(@sb[:active_subtab]))
     render :layout => "application"
   end
 
@@ -167,7 +167,15 @@ class OpsController < ApplicationController
         redirect_to(:action => "ap_edit", :tab => "edit#{params[:tab]}", :id => (@scan.id || "new").to_s)
       end
     else
-      @sb[:active_tab] = params[:tab_id] || new_tab_id
+      # This is an ugly hack to have 2nd level tabs for our current tab changing workflow
+      # FIXME: this should be gone when we go with tabs fully implemented in angular
+      if params[:parent_tab_id]
+        @sb[:active_tab] = params[:parent_tab_id]
+        @sb[:active_subtab] = params[:tab_id]
+      else
+        @sb[:active_tab] = params[:tab_id] || new_tab_id
+      end
+
       @sb[:user] = nil
       @ldap_group = nil
       @flash_array = nil if MiqServer.my_server(true).logon_status == :ready  # don't reset if flash array
@@ -191,6 +199,11 @@ class OpsController < ApplicationController
         replace_right_cell(:nodetype => "root")
       end
     end
+  end
+
+  def change_subtab
+    @sb[:active_tab] = params[:tab_id]
+    change_tab
   end
 
   def rbac_group_load_tab
@@ -338,6 +351,7 @@ class OpsController < ApplicationController
       case node[0]
       when "root"
         @sb[:active_tab] = "settings_details"
+        @sb[:active_subtab] = "settings_co_categories"
       when "z"
         @sb[:active_tab] = "settings_evm_servers"
       when "xx", "sis", "msc", "l", "lr", "ld"
@@ -383,16 +397,16 @@ class OpsController < ApplicationController
         record_id = my_server.id
       end
     elsif x_active_tree == :settings_tree
-      if %w(settings_import settings_import_tags).include?(@sb[:active_tab])
+      if @sb[:active_tab] == 'settings_tags' && %w(settings_import settings_import_tags).include?(@sb[:active_subtab])
         action_url = "apply_imports"
         record_id = @sb[:active_tab].split("settings_").last
         locals[:no_reset] = true
         locals[:apply_button] = true
         locals[:no_cancel] = true
         locals[:apply_method] = :post
-        if @sb[:active_tab] == "settings_import"
+        if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_import"
           locals[:apply_text] = _("Apply the good VM custom variable value records")
-        elsif @sb[:active_tab] == "settings_import_tags"
+        elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_import_tags"
           locals[:apply_text] = _("Apply the good import records")
         end
       elsif @sb[:active_tab] == "settings_cu_collection"
@@ -417,10 +431,10 @@ class OpsController < ApplicationController
           action_url = "zone_edit"
           record_id = @edit[:zone_id] ? @edit[:zone_id] : nil
         end
-      elsif @sb[:active_tab] == "settings_co_categories" && @in_a_form
+      elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_co_categories" && @in_a_form
         action_url = "category_edit"
         record_id = @category.try(:id)
-      elsif @sb[:active_tab] == "settings_label_tag_mapping" && @in_a_form
+      elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_label_tag_mapping" && @in_a_form
         action_url = "label_tag_mapping_edit"
         record_id = @lt_map.try(:id)
       elsif @sb[:active_tab] == 'settings_rhn_edit'

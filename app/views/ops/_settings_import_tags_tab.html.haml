@@ -1,8 +1,7 @@
-- if @sb[:active_tab] == "settings_import_tags"
+- if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_import_tags"
   #tab_div
     %h3
       = _("Messages")
-    = render(:partial => "layouts/flash_msg")
     %hr
     %h3
       = _("Upload %{customer_name} Tag Assignments for VMs") % {:customer_name => session[:customer_name]}

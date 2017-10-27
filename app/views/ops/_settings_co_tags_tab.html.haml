@@ -1,4 +1,4 @@
-- if @sb[:active_tab] == "settings_co_tags"
+- if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_co_tags"
   #tab_div
     - url = url_for_only_path(:action => 'ce_new_cat')
     .form-horizontal

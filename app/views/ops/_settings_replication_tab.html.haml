@@ -4,7 +4,6 @@
   %form.form-horizontal#form_div{"name"          => "angularForm",
                                  "ng-controller" => "pglogicalReplicationFormController",
                                  "ng-show"       => "afterGet"}
-    = render :partial => "layouts/flash_msg"
     .form-group{"ng-class" => "{'has-error': angularForm.subscriptions.$invalid}"}
       %label.col-md-2.control-label
         = _('Type')

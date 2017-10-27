@@ -903,7 +903,7 @@ function miqClickAndPop(el) {
   return false;
 }
 
-function miq_tabs_init(id, url) {
+function miq_tabs_init(id, url, parms) {
   $(id + ' > ul.nav-tabs a[data-toggle="tab"]').on('show.bs.tab', function(e) {
     if ($(e.target).parent().hasClass('disabled')) {
       e.preventDefault();
@@ -911,7 +911,11 @@ function miq_tabs_init(id, url) {
     } else if (typeof url != 'undefined') {
       // Load remote tab if an URL is specified
       var currTabTarget = $(e.target).attr('href').substring(1);
-      miqObserveRequest(url + '/?tab_id=' + currTabTarget, {beforeSend: true})
+      var urlParams = _.reduce(parms || [], function(sum, value, key) {
+        return sum + '&' + key + '=' + value;
+      }, '?tab_id=' + currTabTarget);
+
+      miqObserveRequest(url + urlParams, {beforeSend: true})
         .catch(function(err) {
           add_flash(__('Error requesting data from server'), 'error');
           console.log(err);

@@ -1,5 +1,5 @@
 describe 'ops/_settings_label_tag_mapping_tab.html.haml' do
-  before { assign(:sb, :active_tab => 'settings_label_tag_mapping') }
+  before { assign(:sb, :active_tab => 'settings_tags', :active_subtab => 'settings_label_tag_mapping') }
 
   context 'table view' do
     it 'renders the table with zero mappings' do
