@@ -86,30 +86,28 @@ class GenericObjectDefinitionController < ApplicationController
     assert_privileges('ab_group_new')
     title = _("Add a new Custom Button Group")
     @generic_object_definition = GenericObjectDefinition.find(params[:id])
-    render_form(title)
+    render_form(title, 'custom_button_group_form')
   end
 
   def custom_button_group_edit
     assert_privileges('ab_group_edit')
     @custom_button_group = CustomButtonSet.find(params[:id])
     title = _("Edit Custom Button Group '#{@custom_button_group.name}'")
-    render_form(title)
+    render_form(title, 'custom_button_group_form')
   end
 
   def custom_button_new
     assert_privileges('ab_button_new')
     title = _("Add a new Custom Button")
     @generic_object_definition = GenericObjectDefinition.find(params[:id])
-    drop_breadcrumb(:name => title, :url => "/generic_object_definition/custom_button_new")
-    render_form(title)
+    render_form(title, 'custom_button_form')
   end
 
   def custom_button_edit
     assert_privileges('ab_button_edit')
     @custom_button = CustomButton.find(params[:id])
     title = _("Edit Custom Button'#{@custom_button.name}'")
-    drop_breadcrumb(:name => title, :url => "/generic_object_definition/custom_button_edit")
-    render_form(title)
+    render_form(title, 'custom_button_form')
   end
 
   private
@@ -161,11 +159,12 @@ class GenericObjectDefinitionController < ApplicationController
     params[:id].split('-').first == 'cb'
   end
 
-  def render_form(title)
+  def render_form(title, form_partial)
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
+
     @in_a_form = true
     presenter[:right_cell_text] = title
-    presenter.replace(:main_div, r[:partial => 'custom_button_group_form'])
+    presenter.replace(:main_div, r[:partial => form_partial])
     presenter.hide(:paging_div)
     presenter[:lock_sidebar] = true
     build_toolbar("x_summary_view_tb")
