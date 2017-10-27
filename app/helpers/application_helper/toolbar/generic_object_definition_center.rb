@@ -37,6 +37,13 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupNew,
         ),
         button(
+          :ab_button_edit,
+          'pficon pficon-add-circle-o fa-lg',
+          t = N_('Edit Button'),
+          t,
+          :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonEdit,
+        ),
+        button(
           :generic_object_definition_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Generic Object Classes from Inventory'),
@@ -55,6 +62,16 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
                        'function-data' => '{"type": "delete_custom_button_set", "controller": "genericObjectDefinitionToolbarController"}'},
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupDelete,
           :confirm => N_("Warning: This Button Group will be permanently removed!"),
+        ),
+        button(
+          :ab_button_delete,
+          'pficon pficon-delete fa-lg',
+          t = N_('Remove this Button from Inventory'),
+          t,
+          :data    => {'function'      => 'sendDataWithRx',
+                       'function-data' => '{"type": "delete", "controller": "customButtonGroupToolbarController"}'},
+          :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonDelete,
+          :confirm => N_("Warning: This Button will be permanently removed!"),
         )
       ]
     )
