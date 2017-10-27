@@ -49,6 +49,10 @@ class GenericObjectDefinitionController < ApplicationController
         {:action => 'custom_button_group_new', :id => from_cid(params[:id] || params[:miq_grid_checks])}
       when 'ab_group_edit'
         {:action => 'custom_button_group_edit', :id => from_cid(params[:id])}
+      when 'ab_button_new'
+        {:action => 'custom_button_new', :id => from_cid(params[:id] || params[:miq_grid_checks])}
+      when 'ab_button_edit'
+        {:action => 'custom_button_edit', :id => from_cid(params[:id])}
       end
     )
   end
@@ -89,6 +93,22 @@ class GenericObjectDefinitionController < ApplicationController
     assert_privileges('ab_group_edit')
     @custom_button_group = CustomButtonSet.find(params[:id])
     title = _("Edit Custom Button Group '#{@custom_button_group.name}'")
+    render_form(title)
+  end
+
+  def custom_button_new
+    assert_privileges('ab_button_new')
+    title = _("Add a new Custom Button")
+    @generic_object_definition = GenericObjectDefinition.find(params[:id])
+    drop_breadcrumb(:name => title, :url => "/generic_object_definition/custom_button_new")
+    render_form(title)
+  end
+
+  def custom_button_edit
+    assert_privileges('ab_button_edit')
+    @custom_button = CustomButton.find(params[:id])
+    title = _("Edit Custom Button'#{@custom_button.name}'")
+    drop_breadcrumb(:name => title, :url => "/generic_object_definition/custom_button_edit")
     render_form(title)
   end
 

@@ -2126,6 +2126,8 @@ Rails.application.routes.draw do
         create_del
         custom_button_group_new
         custom_button_group_edit
+        custom_button_new
+        custom_button_edit
         edit
         exp_button
         exp_changed
