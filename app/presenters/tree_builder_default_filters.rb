@@ -7,6 +7,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
     :containerservice                              => %w(Containers Services),
     :host                                          => %w(Infrastructure Hosts),
     :miqtemplate                                   => %w(Services Workloads Templates\ &\ Images),
+    :service                                       => %w(Services My\ Services),
     :storage                                       => %w(Infrastructure Datastores),
     :vm                                            => %w(Services Workloads VMs\ &\ Instances),
     :"manageiq::providers::cloudmanager::template" => %w(Cloud Instances Images),

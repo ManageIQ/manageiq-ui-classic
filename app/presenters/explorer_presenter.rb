@@ -282,7 +282,7 @@ class ExplorerPresenter
     data[:resetOneTrans] = !!@options[:reset_one_trans]
     data[:oneTransIE] = !!@options[:one_trans_ie]
     data[:focus] = @options[:focus]
-    data[:clearSearch] = @options[:clear_search_toggle] if @options[:clear_search_toggle]
+    data[:clearSearch] = @options[:clear_search_toggle] if @options.key?(:clear_search_toggle)
     data[:hideModal] if @options[:hide_modal]
     data[:initAccords] if @options[:init_accords]
     data[:reportData] = @options[:report_data] if @options[:report_data]

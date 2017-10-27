@@ -357,7 +357,7 @@ class ServiceController < ApplicationController
     action, replace_trees = options.values_at(:action, :replace_trees)
     @explorer = true
     partial, action_url, @right_cell_text = set_right_cell_vars(action) if action # Set partial name, action and cell header
-    get_node_info(x_node) if !@edit && !@in_a_form && !params[:display]
+    get_node_info(x_node) if !action && !@in_a_form && !params[:display]
     replace_trees = @replace_trees if @replace_trees  # get_node_info might set this
     type, = parse_nodetype_and_id(x_node)
     record_showing = type && ["Service"].include?(TreeBuilder.get_model_for_prefix(type))
@@ -441,6 +441,11 @@ class ServiceController < ApplicationController
 
     presenter[:lock_sidebar] = @edit && @edit[:current]
     presenter[:osf_node] = x_node
+
+    # Hide/show searchbox depending on if a list is showing
+    presenter.set_visibility(!(@record || @in_a_form), :adv_searchbox_div)
+    presenter[:clear_search_toggle] = clear_search_status
+
     # unset variable that was set in form_field_changed to prompt for changes when leaving the screen
     presenter.reset_changes
 
