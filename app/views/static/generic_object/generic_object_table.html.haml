@@ -41,11 +41,12 @@
                 "pf-select"                   => true,}
           %option{"value" => "", "disabled" => ""}
             = "<#{_('Choose')}>"
-      %td.form-group{"ng-if" => "!vm.valueOptions", "ng-class" => "{'has-error': vm.angularForm['Value_{{vm.keyType}}{{$index}}'].$invalid}"}
+      %td.form-group{"ng-if" => "vm.addValueColumn", "ng-class" => "{'has-error': vm.angularForm['Value_{{vm.keyType}}{{$index}}'].$invalid}"}
         %input.form-control{"type"        => "text",
                             "id"          => "Value_{{vm.keyType}}{{$index}}",
                             "name"        => "Value_{{vm.keyType}}{{$index}}",
                             "ng-model"    => "vm.values[$index]",
+                            "ng-change"   => "vm.tableCellValueChanged()",
                             "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
       %td{:align => "center", :style => "width: 50px"}
         %span.input-group-btn
