@@ -7,7 +7,7 @@
 - selected_records = params[:rec_ids] unless params.nil? || params[:rec_ids].nil?
 - selected_records = selected_records.map(&:to_i) if !selected_records.nil? && selected_records.first.kind_of?(String)
 - selected_records = selected_records.map(&:id) if !selected_records.nil? && !selected_records.first.kind_of?(Integer)
-- parent_id = @report_data_additional_options[:parent_id] || params[:id]
+- parent_id = @report_data_additional_options && @report_data_additional_options[:parent_id] ? @report_data_additional_options[:parent_id] : params[:id]
 #miq-gtl-view{"ng-controller" => "reportDataController as dataCtrl"}
   - unless no_flash_div
     = render :partial => "layouts/flash_msg"

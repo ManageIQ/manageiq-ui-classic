@@ -245,7 +245,7 @@ module ApplicationHelper
 
   def model_to_report_data
     # @report_data_additional_options[:model] is most important, others can be removed
-    current_model = if @report_data_additional_options[:model]
+    current_model = if @report_data_additional_options && @report_data_additional_options[:model]
                       @report_data_additional_options[:model]
                     elsif !@display.nil? && @display != "main"
                       @display
