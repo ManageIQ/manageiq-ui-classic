@@ -13,6 +13,7 @@ module OpsController::Settings
   include_concern 'Upload'
   include_concern 'Zones'
   include_concern 'RHN'
+  include_concern 'HelpMenu'
 
   # Apply the good records from an uploaded import file
   def apply_imports

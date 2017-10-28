@@ -58,6 +58,8 @@
             = _("Red Hat Updates")
           = miq_tab_header("settings_replication", @sb[:active_tab]) do
             = _("Replication")
+          = miq_tab_header("settings_help_menu", @sb[:active_tab]) do
+            = _("Help Menu")
         .tab-content
           = miq_tab_content("settings_details", @sb[:active_tab]) do
             = render :partial => "settings_details_tab"
@@ -95,6 +97,8 @@
             = render :partial => "settings_rhn_tab"
           = miq_tab_content("settings_replication", @sb[:active_tab]) do
             = render :partial => "settings_replication_tab"
+          = miq_tab_content("settings_help_menu", @sb[:active_tab]) do
+            = render :partial => "settings_help_menu_tab"
     -# Diagnostics
   - when :diagnostics_tree
     - if x_node.split("-")[0] == "z"

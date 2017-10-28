@@ -284,8 +284,8 @@ module Menu
           },
           :product       => {
             :title => N_('ManageIQ.org'),
-            :href  =>  I18n.t("product.support_website").html_safe,
-            :type  =>:new_window,
+            :href  => I18n.t("product.support_website").html_safe,
+            :type  => :new_window,
           },
           :about         => {
             :title => N_('About'),
@@ -315,7 +315,7 @@ module Menu
       private
 
       def help_menu_field(item, default)
-        (item.nil? || item.blank?) ? default : item
+        item.nil? || item.blank? ? default : item
       end
     end
   end

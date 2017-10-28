@@ -125,7 +125,9 @@ class OpsController < ApplicationController
     # setting active record object here again, since they are no longer there due to redirect
     @ldap_group = @edit[:ldap_group] if params[:cls_id] && params[:cls_id].split('_')[0] == "lg"
     @x_edit_buttons_locals = set_form_locals if @in_a_form
-    edit_changed? if @edit && (@sb[:active_tab] == 'settings_tags' && !%w(settings_import settings_import_tags).include?(@sb[:active_subtab]))
+    if @edit && (@sb[:active_tab] == 'settings_help_menu' || (@sb[:active_tab] == 'settings_tags' && !%w(settings_import settings_import_tags).include?(@sb[:active_subtab])))
+      edit_changed?
+    end
     render :layout => "application"
   end
 
@@ -413,6 +415,11 @@ class OpsController < ApplicationController
         action_url = "cu_collection_update"
         record_id = @sb[:active_tab].split("settings_").last
         locals[:no_cancel] = true
+      elsif @sb[:active_tab] == "settings_help_menu"
+        action_url = "settings_update_help_menu"
+        locals[:submit_button] = true
+        locals[:no_cancel] = true
+        locals[:no_reset] = true
       elsif %w(settings_evm_servers settings_list).include?(@sb[:active_tab]) && @in_a_form
         if %w(ap_copy ap_edit ap_host_edit ap_vm_edit).include?(@sb[:action])
           action_url = "ap_edit"

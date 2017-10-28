@@ -38,4 +38,12 @@ module OpsHelper
       _('Database')
     end
   end
+
+  def help_menu_items
+    items = []
+    Menu::Manager.menu(:help) do |menu|
+      items = menu.items.map { |item| item.id.to_sym }
+    end
+    items
+  end
 end
