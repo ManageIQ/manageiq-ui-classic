@@ -606,15 +606,6 @@ describe EmsCloudController do
     let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
     before do
       stub_user(:features => :all)
-      stub_request(:post, "https://#{ems.hostname}:5000/v2.0/tokens")
-        .with(
-          :body    => "{\"auth\":{\"passwordCredentials\":{\"username\":\"testuser\",\"password\":\"secret\"},\"tenantName\":\"\"}}",
-          :headers => {
-            'Content-Type' => 'application/json',
-            'Host'         => "#{ems.hostname}:5000",
-            'User-Agent'   => 'fog-core/1.45.0'
-          }
-        ).to_return(:status => 200, :body => "", :headers => {})
     end
 
     it "redirects when request is successful" do
