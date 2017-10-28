@@ -208,7 +208,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     vm.customButtonModel.ae_message = response.resource_action.ae_message;
     vm.customButtonModel.request = response.resource_action.ae_attributes.request;
 
-    vm.customButtonModel.current_visibility = response.visibility.roles[0] === '_ALL_' ? 'all' : 'role';
+    vm.customButtonModel.current_visibility = response.visibility.roles[0] === '_ALL_' || response.visibility.roles.length === 0 ? 'all' : 'role';
 
     vm.genericObjectDefnRecordId = response.applies_to_id;
 
