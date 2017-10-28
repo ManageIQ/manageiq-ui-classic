@@ -46,12 +46,12 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       attribute_values: [],
       attributeValuesTableChanged: false,
       current_visibility: 'all',
+      available_roles: [],
     };
 
     vm.dialogs = [];
     vm.button_types = [];
     vm.ae_instances = [];
-    vm.available_roles = [];
 
     vm.attributeValueTableHeaders = [__("Name"), __("Value")];
 
@@ -114,7 +114,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
   };
 
   vm.resetClicked = function(angularForm) {
-    vm.customButtonModel = Object.assign({}, vm.modelCopy);
+    vm.customButtonModel = angular.element.extend(true, {}, vm.modelCopy);
 
     assignAllObjectsToKeyValueArrays(true);
 
@@ -165,7 +165,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     };
 
     if (vm.customButtonModel.current_visibility === 'role')
-      vm.customButtonModel.roles =  _.pluck(_.filter(vm.available_roles, function(role) {
+      vm.customButtonModel.roles =  _.pluck(_.filter(vm.customButtonModel.available_roles, function(role) {
         return role.value === true;
       }), 'name');
 
@@ -214,22 +214,23 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
     optionsPromise.then(function() {
       if (vm.customButtonModel.current_visibility === 'role') {
-        _.forEach(vm.available_roles, function (role, index) {
+        _.forEach(vm.customButtonModel.available_roles, function (role, index) {
           if (_.includes(response.visibility.roles, role.name)) {
-            vm.available_roles[index].value = true;
+            vm.customButtonModel.available_roles[index].value = true;
           }
         });
       }
+
+      delete vm.customButtonModel.resource_action.ae_attributes.request;
+      vm.customButtonModel.noOfAttributeValueRows = assignObjectToKeyValueArrays(
+        vm.customButtonModel.resource_action.ae_attributes,
+        vm.customButtonModel.attribute_names,
+        vm.customButtonModel.attribute_values);
+
+      vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
+
+      miqService.sparkleOff();
     });
-
-    delete vm.customButtonModel.resource_action.ae_attributes.request;
-    vm.customButtonModel.noOfAttributeValueRows = assignObjectToKeyValueArrays(
-      vm.customButtonModel.resource_action.ae_attributes,
-      vm.customButtonModel.attribute_names,
-      vm.customButtonModel.attribute_values);
-
-    vm.modelCopy = Object.assign({}, vm.customButtonModel);
-    miqService.sparkleOff();
   }
 
   function assignAllObjectsToKeyValueArrays(purge) {
@@ -243,8 +244,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       vm.customButtonModel.attribute_names,
       vm.customButtonModel.attribute_values);
 
-    vm.modelCopy = Object.assign({}, vm.customButtonModel);
-    vm.modelCopy = Object.freeze(vm.modelCopy);
+    vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
   }
 
   function assignObjectToKeyValueArrays(obj, keyArray, valueArray) {
@@ -281,7 +281,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
   function getRoles(response) {
     _.forEach(response.resources, function(item) {
-      vm.available_roles.push({name: item.name, value: false});
+      vm.customButtonModel.available_roles.push({name: item.name, value: false});
     });
   }
 

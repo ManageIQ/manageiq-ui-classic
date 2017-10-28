@@ -139,13 +139,13 @@
     %label.col-md-2.control-label{"for" => "custom_button_open_url"}
       = _("User Roles")
     .col-md-8
-      %table{"ng-repeat" => "role in vm.available_roles track by $index"}
+      %table{"ng-repeat" => "role in vm.customButtonModel.available_roles track by $index"}
         %td{:nowrap => true}
           %input.form-control{"type"        => "checkbox",
                               "id"          => "role{{$index}}",
                               "name"        => "role{{$index}}",
                               "bs-switch"   => "",
                               :data         => {:size => 'mini'},
-                              "ng-model"    => "vm.available_roles[$index].value"}
-          {{vm.available_roles[$index].name}}
+                              "ng-model"    => "vm.customButtonModel.available_roles[$index].value"}
+          {{vm.customButtonModel.available_roles[$index].name}}
   = render :partial => "layouts/angular/generic_form_buttons"
