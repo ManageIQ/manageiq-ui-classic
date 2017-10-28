@@ -71,7 +71,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           t = N_('Remove this Button from Inventory'),
           t,
           :data    => {'function'      => 'sendDataWithRx',
-                       'function-data' => '{"type": "delete", "controller": "customButtonGroupToolbarController"}'},
+                       'function-data' => '{"type": "delete_custom_button", "controller": "genericObjectDefinitionToolbarController"}'},
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonDelete,
           :confirm => N_("Warning: This Button will be permanently removed!"),
         )
