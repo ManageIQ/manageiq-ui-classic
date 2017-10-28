@@ -1,5 +1,5 @@
 module Menu
-  Item = Struct.new(:id, :name, :feature, :rbac_feature, :href, :type) do
+  Item = Struct.new(:id, :name, :feature, :rbac_feature, :href, :type, :defaults) do
     extend ActiveModel::Naming
 
     def self.base_class
@@ -10,7 +10,7 @@ module Menu
       model_name
     end
 
-    def initialize(an_id, a_name, features, rbac_feature, href, type = :default)
+    def initialize(an_id, a_name, features, rbac_feature, href, type = :default, defaults = nil)
       super
       @parent = nil
       @name = a_name.kind_of?(Proc) ? a_name : -> { a_name }
