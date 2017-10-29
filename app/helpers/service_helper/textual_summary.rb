@@ -250,9 +250,10 @@ module ServiceHelper::TextualSummary
   def textual_generic_object_instances
     num = @record.number_of(:generic_objects)
     h = {:label => _("Instances"), :value => num}
-    if role_allows?(:feature => "generic_object_view") && num > 0
-      h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => 'generic_objects', :type => 'tile'),
-               :title => _('Show Generic Object Instances for this Service'))
+    if num > 0
+      h[:title] = n_('Show Generic Object Instances for this Service')
+      h[:explorer] = true
+      h[:link] = url_for_only_path(:action => 'generic_objects', :id => @record, :db => controller.controller_name)
     end
     h
   end
