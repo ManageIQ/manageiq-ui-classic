@@ -1,0 +1,9 @@
+{
+  "defaultSeverity": "warning",
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "color-hex-length": null,
+    "shorthand-property-no-redundant-values": null
+  }
+
+}

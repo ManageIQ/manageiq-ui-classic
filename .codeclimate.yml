@@ -57,6 +57,8 @@ engines:
   rubocop:
     enabled: true
     config: '.rubocop_cc.yml'
+  stylelint:
+    enabled: true
 prepare:
   fetch:
   - url: "https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_base.yml"
@@ -73,6 +75,7 @@ ratings:
   - "**.rhtml"
   - "**.slim"
   - "**.css"
+  - "**.scss"
   - "**.inc"
   - "**.js"
   - "**.jsx"
