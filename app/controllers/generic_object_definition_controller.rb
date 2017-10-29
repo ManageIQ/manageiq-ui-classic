@@ -19,9 +19,9 @@ class GenericObjectDefinitionController < ApplicationController
 
   def show_list
     super
-    @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
     self.x_active_tree ||= :generic_object_definitions_tree
     self.x_node ||= 'root'
+    @partial = node_info
     @tree = TreeBuilderGenericObjectDefinition.new(:generic_object_definitions_tree, :generic_object_definitions_tree, @sb)
   end
 
@@ -92,19 +92,59 @@ class GenericObjectDefinitionController < ApplicationController
   private
 
   def root_node?
-    params[:id] == 'root'
+    node = x_node || params[:id]
+    node == 'root'
   end
 
   def god_node?
-    params[:id].split('-').first == 'god'
+    node = x_node || params[:id]
+    node.split('-').first == 'god'
   end
 
   def custom_button_group_node?
-    params[:id].split('-').first == 'cbg'
+    node = x_node || params[:id]
+    node.split('-').first == 'cbg'
   end
 
   def actions_node?
-    params[:id].split('-').first == 'xx'
+    node = x_node || params[:id]
+    node.split('-').first == 'xx'
+  end
+
+  def node_info
+    partial = root_node_info if root_node?
+    partial = god_node_info if god_node?
+    partial = actions_node_info if actions_node?
+    partial = custom_button_group_node_info if custom_button_group_node?
+    partial
+  end
+
+  def root_node_info
+    @right_cell_text = "All #{ui_lookup(:models => self.class.model.name)}"
+    'list'
+  end
+
+  def god_node_info
+    node = x_node || params[:id]
+    @record = GenericObjectDefinition.find(from_cid(node.split('-').last))
+    @right_cell_text = "#{ui_lookup(:model => "GenericObjectDefinition")} '#{@record.name}'"
+    build_toolbar("x_summary_view_tb")
+    'show'
+  end
+
+  def actions_node_info
+    node = x_node || params[:id]
+    @actions_node = true
+    @record = GenericObjectDefinition.find(from_cid(node.split('-').last))
+    @right_cell_text = "Actions for #{ui_lookup(:model => "GenericObjectDefinition")}"
+    'show_actions'
+  end
+
+  def custom_button_group_node_info
+    node = x_node || params[:id]
+    @record = CustomButtonSet.find(from_cid(node.split("-").last))
+    @right_cell_text = "#{ui_lookup(:model => "CustomButtonSet")} '#{@record.name}'"
+    'show_custom_button_group'
   end
 
   def render_form(title)
@@ -120,35 +160,30 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def process_root_node(presenter)
+    partial = root_node_info
     process_show_list
-    @right_cell_text = _("All %{gods}") % {:gods => ui_lookup(:models => "GenericObjectDefinition")}
-    presenter.replace(:main_div, r[:partial => 'show_list'])
+    presenter.replace(:main_div, r[:partial => partial])
     presenter.show(:paging_div)
     build_toolbar("x_gtl_view_tb")
   end
 
   def process_god_node(presenter)
-    @_params[:id] = params[:id].split("-").last
-    show
-    @right_cell_text = "#{ui_lookup(:model => "GenericObjectDefinition")} '#{@record.name}'"
-    presenter.replace(:main_div, r[:partial => 'show'])
-    presenter.hide(:paging_div)
-    build_toolbar("x_summary_view_tb")
-  end
-
-  def process_custom_button_group_node(presenter)
-    @record = CustomButtonSet.find(from_cid(params[:id].split("-").last))
-    @right_cell_text = "#{ui_lookup(:model => "CustomButtonSet")} '#{@record.name}'"
-    presenter.replace(:main_div, r[:partial => 'show_custom_button_group'])
+    partial = god_node_info
+    presenter.replace(:main_div, r[:partial => partial])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
   end
 
   def process_actions_node(presenter)
-    @record = GenericObjectDefinition.find(from_cid(params[:id].split("-").last))
-    @actions_node = true
-    @right_cell_text = "Actions for #{ui_lookup(:model => "GenericObjectDefinition")}"
-    presenter.replace(:main_div, r[:partial => 'show_actions'])
+    partial = actions_node_info
+    presenter.replace(:main_div, r[:partial => partial])
+    presenter.hide(:paging_div)
+    build_toolbar("x_summary_view_tb")
+  end
+
+  def process_custom_button_group_node(presenter)
+    partial = custom_button_group_node_info
+    presenter.replace(:main_div, r[:partial => partial])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
   end
@@ -163,9 +198,10 @@ class GenericObjectDefinitionController < ApplicationController
     v_tb = process_actions_node(presenter) if actions_node?
 
     c_tb = build_toolbar(center_toolbar_filename)
-    presenter.reload_toolbars(:center => c_tb, :view => v_tb)
+    h_tb = build_toolbar("x_history_tb")
 
-    presenter.set_visibility(c_tb.present? || v_tb.present?, :toolbar)
+    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
+    presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)
     presenter.set_visibility(!(@record || @in_a_form), :searchbox)
 
     presenter[:osf_node] = x_node
