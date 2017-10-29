@@ -1,6 +1,8 @@
 ManageIQ.angular.app.component('genericObjectDefinitionToolbar', {
   bindings: {
-    genericObjectDefinitionId: '=?',
+    recordId: '=?',
+    entity: '@',
+    entityName: '@?',
     redirectUrl: '@?',
   },
   controllerAs: 'toolbar',
@@ -12,12 +14,16 @@ genericObjectDefinitionToolbarController.$inject = ['API', 'miqService', '$windo
 function genericObjectDefinitionToolbarController(API, miqService, $window) {
   var toolbar = this;
 
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
+  if (ManageIQ.angular.genericObjectDefinitionSubsription) {
+    ManageIQ.angular.genericObjectDefinitionSubsription.dispose();
+  }
+
+  ManageIQ.angular.genericObjectDefinitionSubsription = ManageIQ.angular.rxSubject.subscribe(function(event) {
     toolbar.action = event.type;
 
     if (toolbar.action) {
-      if (toolbar.genericObjectDefinitionId) {
-        toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [toolbar.genericObjectDefinitionId]);
+      if (toolbar.recordId) {
+        toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [toolbar.recordId]);
       } else {
         toolbar.genericObjectDefinitions = ManageIQ.gridChecks;
       }
@@ -27,36 +33,39 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
 
   // private functions
   function postGenericObjectDefinitionAction() {
-    if (toolbar.action === 'delete' && ! toolbar.genericObjectDefinitionId) {
-      _.forEach(toolbar.genericObjectDefinitions, function(genericObjectDefinitionId) {
-        API.get('/api/generic_object_definitions/' + genericObjectDefinitionId + '?attributes=generic_objects_count')
+    if (toolbar.action === 'delete' && ! toolbar.recordId) {
+      _.forEach(toolbar.genericObjectDefinitions, function(recordId) {
+        API.get('/api/generic_object_definitions/' + recordId + '?attributes=generic_objects_count')
           .then(checkGenericObjectCountAndDelete)
           .catch(miqService.handleFailure);
       });
-    } else if (toolbar.action === 'delete' && toolbar.genericObjectDefinitionId) {
-      deleteWithAPI(toolbar.genericObjectDefinitionId);
+    } else if (toolbar.action === 'delete' && toolbar.recordId) {
+      deleteWithAPI('/api/generic_object_definitions/', toolbar.recordId);
+    } else if (toolbar.action === 'delete_custom_button_set' && toolbar.recordId) {
+      deleteWithAPI('/api/custom_button_sets/', toolbar.recordId);
     }
+
   }
 
   function checkGenericObjectCountAndDelete(response) {
     if (response.generic_objects_count === 0) {
-      deleteWithAPI(response.id);
+      deleteWithAPI('/api/generic_object_definitions/', response.id);
     } else {
       miqService.miqFlashLater(
-        { message: sprintf(__('Generic Object Class "%s" with %s instances cannot be deleted'), response.name, response.generic_objects_count),
+        { message: sprintf(__('%s "%s" with %s instances cannot be deleted'), toolbar.entity, toolbar.entityName || response.name, response.generic_objects_count),
           level: 'warning'});
       $window.location.reload(true);
     }
   }
 
-  function deleteWithAPI(id) {
-    API.post('/api/generic_object_definitions/' + id, { action: 'delete' })
+  function deleteWithAPI(api, id) {
+    API.post(api + id, { action: 'delete' })
       .then(postAction)
       .catch(miqService.handleFailure);
   }
 
   function postAction(response) {
-    var saveMsg = sprintf(__('Generic Object Class:"%s" was successfully deleted'), response.name);
+    var saveMsg = sprintf(__('%s:"%s" was successfully deleted'), toolbar.entity, toolbar.entityName || response.name);
     if (toolbar.redirectUrl) {
       miqService.redirectBack(saveMsg, 'success', toolbar.redirectUrl);
     } else {
