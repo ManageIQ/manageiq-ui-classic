@@ -589,8 +589,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :id      => "generic_object_definition_configuration__generic_object_definition_edit",
           :type    => :button,
           :icon    => "pficon pficon-edit fa-lg",
-          :title   => "Edit Selected Generic Object Class",
-          :text    => "Edit Selected Generic Object Class",
+          :title   => "Edit selected Generic Object Class",
+          :text    => "Edit selected Generic Object Class",
           :onwhen  => "1",
           :enabled => false,
         )
