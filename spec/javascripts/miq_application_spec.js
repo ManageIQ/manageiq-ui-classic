@@ -521,8 +521,8 @@ describe('miq_application.js', function() {
           </div>\
         </div>\
         <div class="col-xs-4 col-md-3 submit">\
-          <a id="login" class="btn btn-primary" alt="Log in" title="Log in" onclick="miqAjaxAuth("/dashboard/authenticate?button=login"); return false;" href="">Log in</a>\
-          <a id="sso_login" class="btn btn-primary" alt="SSO Log in" title="SSO Log in" style="display: none;" onclick="miqAjaxAuthSso("/dashboard/kerberos_authenticate?button=sso_login"); return false;" href="">SSO Log in</a>\
+          <a id="login" class="btn btn-primary" alt="Log In" title="Log In" onclick="miqAjaxAuth("/dashboard/authenticate?button=login"); return false;" href="">Log In</a>\
+          <a id="sso_login" class="btn btn-primary" alt="SSO Log In" title="SSO Log In" style="display: none;" onclick="miqAjaxAuthSso("/dashboard/kerberos_authenticate?button=sso_login"); return false;" href="">SSO Log In</a>\
         </div>\
       </div>';
 
