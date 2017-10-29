@@ -1,6 +1,6 @@
 #main_div
+  = render :partial => "layouts/flash_msg"
   - if @record && @record.kind_of?(CustomButtonSet)
-    -# don't need basic info box for Unassigned button group
     %h3
       = _('Basic Information')
     .form-horizontal.static
@@ -26,6 +26,30 @@
           = _('Image')
         .col-md-8
           %span{:class => @record.set_data[:button_icon], :style => @record.set_data.key?(:button_color) ? "color: #{@record.set_data[:button_color]};" : nil}
+
+      - if @record.custom_buttons.empty?
+        %hr
+          = render :partial => 'layouts/info_msg', :locals => {:message => _("No Buttons found.")}
+      - else
+        %hr
+          %h3
+            = _('Buttons')
+          %table.table.table-bordered.table-hover.table-striped
+            %thead
+              %th.table-view-pf-select
+              %th
+                = _('Text')
+              %th
+                = _('Hover Text')
+            %tbody
+              - @record.custom_buttons.each do |obj|
+                %tr{:title => 'hi'}
+                  %td.table-view-pf-select
+                    %i{:class => obj.options[:button_icon], :style => obj.options.key?(:button_color) ? "color: #{obj.options[:button_color]};" : nil}
+                  %td
+                    = obj[:name]
+                  %td
+                    = obj[:description]
 
       %generic-object-definition-toolbar#generic_object_definition_show_form{'record-id'    => @record.id,
                                                                              'entity'       => _('Custom Button Group'),
