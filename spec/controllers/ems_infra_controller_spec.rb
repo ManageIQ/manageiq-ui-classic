@@ -105,15 +105,18 @@ describe EmsInfraController do
   describe "#scaling" do
     before do
       stub_user(:features => :all)
-      @ems = FactoryGirl.create(:ems_openstack_infra_with_stack)
+      @ems = instance_double("mock_infra_provider", :id => 1, :hosts => [1, 2])
+      allow(controller).to receive(:get_infra_provider).and_return(@ems)
+      p1 = instance_double("mock_stack_parameter1", :name => "compute-1::count", :value => 1)
+      p2 = instance_double("mock_stack_parameter2", :name => "controller-1::count", :value => 1)
+      stack_parameters = [p1, p2]
+      @orchestration_stack = instance_double("mock stack", :id => 1, :parameters => stack_parameters, :update_ready? => true)
+      allow(@ems).to receive(:direct_orchestration_stacks).and_return([@orchestration_stack])
       @orchestration_stack_parameter_compute = FactoryGirl.create(:orchestration_stack_parameter_openstack_infra_compute)
-
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:raw_status).and_return(["CREATE_COMPLETE", nil])
     end
 
     it "when values are not changed" do
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id }
+      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id }
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
@@ -121,7 +124,7 @@ describe EmsInfraController do
     end
 
     it "when values are changed, but exceed number of hosts available" do
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id,
+      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
            @orchestration_stack_parameter_compute.name => @ems.hosts.count * 2 }
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
@@ -129,13 +132,10 @@ describe EmsInfraController do
         "Assigning #{@ems.hosts.count * 2} but only have #{@ems.hosts.count} hosts available.")
     end
 
-    it "when values are changed, and values do not exceed number of hosts available" do
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:raw_update_stack)
-      expect_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .not_to receive(:queue_post_scaledown_task)
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id,
-           @orchestration_stack_parameter_compute.name => 2 }
+    it "when values are changed, values do not exceed number of hosts available" do
+      expect(@orchestration_stack).to receive(:scale_up_queue)
+      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
+                                  @orchestration_stack_parameter_compute.name => 2 }
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.body).to include("redirected")
       expect(response.body).to include("ems_infra")
@@ -143,68 +143,57 @@ describe EmsInfraController do
     end
 
     it "when no orchestration stack is available" do
-      @ems = FactoryGirl.create(:ems_openstack_infra)
+      allow(@ems).to receive(:direct_orchestration_stacks).and_return([])
       post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => nil }
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Orchestration stack could not be found.")
-    end
-
-    it "when patch operation fails, an error message should be displayed" do
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:update_stack_queue) { raise "my error" }
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id,
-           @orchestration_stack_parameter_compute.name => 2 }
-      expect(controller.send(:flash_errors?)).to be_truthy
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Unable to initiate scaling: my error")
-    end
-
-    it "when operation in progress, an error message should be displayed" do
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:raw_status).and_return(["CREATE_IN_PROGRESS", nil])
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id,
-           @orchestration_stack_parameter_compute.name => 2 }
-      expect(controller.send(:flash_errors?)).to be_truthy
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include(
-        "Provider stack is not ready to be updated, another operation is in progress.")
     end
   end
 
   describe "#scaledown" do
     before do
       stub_user(:features => :all)
-      @ems = FactoryGirl.create(:ems_openstack_infra_with_stack_and_compute_nodes)
-
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:raw_status).and_return(["CREATE_COMPLETE", nil])
+      @host1 = instance_double("mock_host0", :name => "Compute1-xxx", :id => 0, :maintenance => false, :number_of => 0, :uid_ems => 0, :ems_ref_obj => "openstack-perf-host-nova-instance", :cloud_services => "")
+      @host2 = instance_double("mock_host1", :name => "Compute2-xxx", :id => 1, :maintenance => true, :number_of => 0, :uid_ems => 1, :ems_ref_obj => "openstack-perf-host-nova-instance", :cloud_services => "")
+      @ems = instance_double("mock_infra_provider", :id => 1, :hosts => [@host1, @host2])
+      allow(controller).to receive(:get_infra_provider).and_return(@ems)
+      allow(controller).to receive(:get_hosts_to_scaledown_from_ids).and_return([@host2])
+      p1 = instance_double("mock_stack_parameter1", :name => "compute-1::count", :value => 1)
+      p2 = instance_double("mock_stack_parameter2", :name => "controller-1::count", :value => 1)
+      stack_parameters = [p1, p2]
+      r1 = instance_double("mock_stack_resource1", :physical_resource => "openstack-perf-host-nova-instance", :stack_id => 1)
+      r2 = instance_double("Mock_stack_resource2", :physical_resource => "1", :logical_resource => "1", :stack_id => 1)
+      stack_resources = [r1, r2]
+      @orchestration_stack = instance_double("mock stack", :class => "OrchestrationStack", :id => "1", :parameters => stack_parameters, :resources => stack_resources, :update_ready? => true, :ems_ref => "1")
+      allow(@ems).to receive(:direct_orchestration_stacks).and_return([@orchestration_stack])
+      allow(@ems).to receive(:orchestration_stacks).and_return([@orchestration_stack])
+      allow(controller).to receive(:find_record_with_rbac).and_return(@orchestration_stack)
+      @orchestration_stack_parameter_compute = FactoryGirl.create(:orchestration_stack_parameter_openstack_infra_compute)
     end
 
     it "when no compute hosts are selected" do
       post :scaledown, :params => {:id => @ems.id, :scaledown => "",
-           :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => []}
+           :orchestration_stack_id => @orchestration_stack.id, :host_ids => []}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("No compute hosts were selected for scale down.")
     end
 
     it "when values are changed, but selected host is in incorrect state" do
+      allow(controller).to receive(:get_hosts_to_scaledown_from_ids).and_return([@host1])
       post :scaledown, :params => {:id => @ems.id, :scaledown => "",
-           :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => [@ems.hosts[0].id]}
+           :orchestration_stack_id => @orchestration_stack.id, :host_ids => [@ems.hosts[0].id]}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
         "Not all hosts can be removed from the deployment.")
     end
 
-    it "when values are changed, and selected host is in correct state" do
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:raw_update_stack)
-      expect_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:queue_post_scaledown_task)
+    it "when values are changed, selected host is in correct state" do
+      expect(@orchestration_stack).to receive(:scale_down_queue)
       post :scaledown, :params => {:id => @ems.id, :scaledown => "",
-           :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => [@ems.hosts[1].id]}
+                                   :orchestration_stack_id => @orchestration_stack.id, :host_ids => [@ems.hosts[1].id]}
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.body).to include("redirected")
       expect(response.body).to include("ems_infra")
@@ -213,31 +202,11 @@ describe EmsInfraController do
 
     it "when no orchestration stack is available" do
       @ems = FactoryGirl.create(:ems_openstack_infra)
+      allow(controller).to receive(:get_infra_provider).and_return(@ems)
       post :scaledown, :params => {:id => @ems.id, :scaledown => "", :orchestration_stack_id => nil}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Orchestration stack could not be found.")
-    end
-
-    it "when patch operation fails, an error message should be displayed" do
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:update_stack_queue) { raise "my error" }
-      post :scaledown, :params => {:id => @ems.id, :scaledown => "",
-           :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => [@ems.hosts[1].id]}
-      expect(controller.send(:flash_errors?)).to be_truthy
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Unable to initiate scaling: my error")
-    end
-
-    it "when operation in progress, an error message should be displayed" do
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:raw_status).and_return(["CREATE_IN_PROGRESS", nil])
-      post :scaledown, :params => {:id => @ems.id, :scaledown => "",
-           :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => [@ems.hosts[1].id]}
-      expect(controller.send(:flash_errors?)).to be_truthy
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include(
-        "Provider stack is not ready to be updated, another operation is in progress.")
     end
   end
 
