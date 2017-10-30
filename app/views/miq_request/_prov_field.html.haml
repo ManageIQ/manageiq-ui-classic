@@ -238,7 +238,7 @@
                :resource_group, :load_balancer,
                :sysprep_auto_logon_count, :sysprep_domain_name, :sysprep_server_license_mode,
                :vlan, :cloud_tenant, :src_configuration_profile_id, :vm_minimum_memory,
-               :vm_maximum_memory, :boot_disk_size].include?(field)
+               :vm_maximum_memory, :boot_disk_size, :subnet].include?(field)
         -# Pull Down fields
         -# Multiple select Pull Down fields
         - multiple = field == :security_groups
