@@ -315,6 +315,13 @@ class ApplicationHelper::ToolbarBuilder
         buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
         toolbar.button_group("custom_buttons_", buttons)
       end
+      if @lastaction == 'generic_objects'
+        generic_object_buttons = record_to_generic_object_buttons(record)
+        unless generic_object_buttons.nil? || generic_object_buttons.empty?
+          buttons = generic_object_buttons.collect { |b| create_custom_button(b, model, record) }
+          toolbar.button_group("custom_buttons_", buttons)
+        end
+      end
     end
 
     toolbar
@@ -336,6 +343,14 @@ class ApplicationHelper::ToolbarBuilder
     return [] unless record.kind_of?(Service)
     return [] if record.service_template.nil?
     record.service_template.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
+  end
+
+  def record_to_generic_object_buttons(record)
+    return [] unless record.kind_of?(Service)
+    return [] if record.generic_objects.nil?
+
+    cbs = CustomButton.where(:applies_to_class => "GenericObjectDefinition", :applies_to_id => record.generic_objects.collect {|g| g.generic_object_definition.id})
+    cbs.collect { |cb| create_raw_custom_button_hash(cb, record) } if cbs.count > 0
   end
 
   def get_custom_buttons(model, record, toolbar_result)

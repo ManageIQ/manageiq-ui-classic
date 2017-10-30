@@ -18,6 +18,9 @@ class ServiceController < ApplicationController
   }
 
   def button
+    if @lastaction == 'generic_objects'
+      params[:id] = @sb[:rec_id]
+    end
     custom_buttons if params[:pressed] == "custom_button"
     return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
     tag(GenericObject) if @display == 'generic_objects' && params[:pressed] == 'generic_object_tag'
@@ -63,7 +66,7 @@ class ServiceController < ApplicationController
     conditions  = options[:conditions]
     # generate the grid/tile/list url to come back here when gtl buttons are pressed
     @gtl_url       = "/#{@db}/#{@listicon.pluralize}/#{@record.id}?"
-    @no_checkboxes = @no_checkboxes.nil? || @no_checkboxes
+    @no_checkboxes = false
     @showlinks     = true
     @view, @pages = get_view(db,
                              :parent      => @record,
@@ -182,6 +185,7 @@ class ServiceController < ApplicationController
       @item = @record.generic_objects.find(from_cid(id)).first
       item_breadcrumbs(_("Generic Objects"), 'generic_objects')
       @view = get_db_view(GenericObject, :association => "generic_objects")
+      @sb[:rec_id] = @item.id
       show_item
     else
       drop_breadcrumb(:name => _("%{name} (Generic Objects)") % {:name => @record.name},
@@ -451,12 +455,14 @@ class ServiceController < ApplicationController
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]
       elsif record_showing
         if action
-          partial_locals = { :controller => '' }
+          partial_locals = { :controller => ''}
           if partial == 'layouts/x_gtl'
             cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
             partial_locals[:action_url] = @lastaction
             presenter[:parent_id] = @record.id           # Set parent rec id for JS function miqGridSort to build URL
             presenter[:parent_class] = params[:controller] # Set parent class for URL also
+          else
+            partial_locals[:item_id] = @item.id
           end
           cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
           r[:partial => partial, :locals => partial_locals]

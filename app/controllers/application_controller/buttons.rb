@@ -259,7 +259,14 @@ module ApplicationController::Buttons
       raise ArgumentError, "Received: #{applies_to_class}, expected one of #{APPLIES_TO_CLASS_BASE_MODELS}"
     end
 
-    applies_to_class == "ServiceTemplate" ? Service : applies_to_class.constantize
+    case applies_to_class
+    when "ServiceTemplate"
+      Service
+    when "GenericObjectDefinition"
+      GenericObject
+    else
+      applies_to_class.constantize
+    end
   end
 
   def custom_button_done

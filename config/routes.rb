@@ -457,7 +457,7 @@ Rails.application.routes.draw do
         update
         wait_for_task
       ) +
-               compare_post + adv_search_post + exp_post + save_post
+               compare_post + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :cloud_object_store_object => {
