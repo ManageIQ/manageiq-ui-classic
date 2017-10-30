@@ -75,16 +75,18 @@ class VmInfraController < ApplicationController
   has_custom_buttons
 
   def simple_dialog_initialize(ra, options)
-    @edit = {}
-    @edit[:new] = options[:dialog] || {}
-    @edit[:wf] = ResourceActionWorkflow.new(@edit[:new], current_user, ra, {})
     @record = Dialog.find_by(:id => ra.dialog_id.to_i)
-    @edit[:rec_id]   = @record.id
-    @edit[:key]      = "dialog_edit__#{@edit[:rec_id] || "new"}"
-    @edit[:explorer] = @explorer ? @explorer : false
-    @edit[:dialog_mode] = options[:dialog_mode]
-    @edit[:current] = copy_hash(@edit[:new])
-    @edit[:right_cell_text] = options[:header].to_s
+    new = options[:dialog] || {}
+    @edit = {
+      :new             => new,
+      :wf              => ResourceActionWorkflow.new(new, current_user, ra, {}),
+      :rec_id          => @record.id,
+      :key             => "dialog_edit__#{@record.id || "new"}",
+      :explorer        => @explorer || false,
+      :dialog_mode     => options[:dialog_mode],
+      :current         => copy_hash(new),
+      :right_cell_text => options[:header].to_s
+    }
     @in_a_form = true
     @changed = session[:changed] = true
     if @edit[:explorer]
@@ -95,10 +97,10 @@ class VmInfraController < ApplicationController
   end
 
   def vm_transform
+    dialog = Dialog.find_by(:label => 'Transform VM')
     if params.key?(:id)
       vm = Vm.find_by(:id => params[:id].to_i)
       @right_cell_text = _("Transform VM %{name} to RHV") % {:name => vm.name}
-      dialog = Dialog.find_by(:label => 'Transform VM')
       dialog_initialize(
         dialog.resource_actions.first,
         :header     => @right_cell_text,
@@ -107,7 +109,6 @@ class VmInfraController < ApplicationController
       )
     else
       @right_cell_text = _("Transform VMs to RHV")
-      dialog = Dialog.find_by(:label => 'Transform VM')
       simple_dialog_initialize(
         dialog.resource_actions.first,
         :header => @right_cell_text
