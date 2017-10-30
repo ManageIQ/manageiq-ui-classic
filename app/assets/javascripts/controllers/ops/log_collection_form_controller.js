@@ -72,7 +72,6 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
       url += '&' + decodeURIComponent(moreUrlParams);
     }
     miqService.miqAjaxButton(url, false);
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.resetClicked = function() {
@@ -86,7 +85,6 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     miqService.sparkleOn();
     var url = vm.saveUrl + serverId + '?button=cancel';
     miqService.miqAjaxButton(url, true);
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.canValidateBasicInfo = function () {

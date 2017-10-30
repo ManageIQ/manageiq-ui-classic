@@ -49,9 +49,8 @@
                     'enable-valid-button'            => 'vm.canValidateBasicInfo()',
                     'validate'                       => 'vm.validateClicked',
                     'new-record'                     => 'vm.newRecord'}
-  %div_for_paging{'ng-controller'           => "pagingDivButtonGroupController",
-                  'paging_div_buttons_id'   => "angular_paging_div_buttons",
-                  'paging_div_buttons_type' => "Save"}
+
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('serverId', '#{@record.id || "new"}');
