@@ -15,7 +15,7 @@ class ConfigurationController < ApplicationController
   after_action :set_session_data
 
   def title
-    _("Configuration")
+    _("My Settings")
   end
 
   def index
