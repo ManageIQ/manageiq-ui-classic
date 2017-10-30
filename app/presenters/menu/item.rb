@@ -14,6 +14,8 @@ module Menu
       super
       @parent = nil
       @name = a_name.kind_of?(Proc) ? a_name : -> { a_name }
+      @href = href.kind_of?(Proc) ? href : -> { href }
+      @type = type.kind_of?(Proc) ? type : -> { type }
     end
 
     attr_accessor :parent
@@ -22,18 +24,26 @@ module Menu
       @name.call
     end
 
+    def href
+      @href.call
+    end
+
+    def type
+      @type.call
+    end
+
     def visible?
       ApplicationHelper.role_allows?(rbac_feature)
     end
 
     def link_params
-      params = case type
+      params = case type.try(:to_sym)
                when :big_iframe then {:href => "/dashboard/iframe?id=#{id}"}
                when :new_window then {:href => href, :target => '_new'}
                when :modal      then {'data-toggle' => 'modal', 'data-target' => href}
                else                  {:href => href}
                end
-      params[:onclick] = 'return miqCheckForChanges();' unless type == :modal
+      params[:onclick] = 'return miqCheckForChanges();' unless type.try(:to_sym) == :modal
       params
     end
 

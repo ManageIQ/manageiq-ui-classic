@@ -5,7 +5,7 @@
   .alert.alert-info
     %span.pficon.pficon-info
     %strong
-      = _("Any change to the help menu will require a server restart.")
+      = _("Any change to the help menu will take effect upon a full page reload.")
   = form_tag({:action => "settings_update_help_menu"}, :class => "form-horizontal", :method => :post) do
     %table.table
       %tr
@@ -14,7 +14,7 @@
         %th.no-border
           = _('URL')
         %th.no-border
-          = _('Type')
+          = _('Open in')
 
       - Menu::Manager.menu(:help) do |menu|
         - menu.items.each do |item|
@@ -31,9 +31,9 @@
                                'data-miq_observe' => {:interval => '.5', :url => url}.to_json)
             %td.no-border
               - val = @edit[:new][item.id.to_sym].try(:[], :type) || item.defaults[:type]
-              = select_tag("#{item.id}_type", options_for_select([[_("Default"), 'default'],
-                                                                 [_("New window"), "new_window"],
-                                                                 [_("Modal"),  "modal"]], val.to_s),
+              = select_tag("#{item.id}_type", options_for_select([[_("Current Window"), 'default'],
+                                                                 [_("New Window"), "new_window"],
+                                                                 [_("Overlay Window"),  "modal"]], val.to_s),
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
 
           - Settings.help_menu.try(item.id.to_s).try(:title).nil?

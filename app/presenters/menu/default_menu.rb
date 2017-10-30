@@ -294,11 +294,11 @@ module Menu
           }
         }.map do |key, value|
           Menu::Item.new(key,
-                         help_menu_field(Settings.help_menu.try(key).try(:title), value[:title]),
+                         help_menu_field(key, :title, value[:title]),
                          key.to_s,
                          {:feature => key.to_s},
-                         help_menu_field(Settings.help_menu.try(key).try(:href), value[:href]),
-                         help_menu_field(Settings.help_menu.try(key).try(:type), value[:type]).try(:to_sym),
+                         help_menu_field(key, :href, value[:href]),
+                         help_menu_field(key, :type, value[:type]),
                          value)
         end
 
@@ -314,8 +314,11 @@ module Menu
 
       private
 
-      def help_menu_field(item, default)
-        item.nil? || item.blank? ? default : item
+      def help_menu_field(key, item, default)
+        lambda do
+          field = Settings.help_menu.try(key).try(:[], item)
+          field.nil? || field.blank? ? default : field
+        end
       end
     end
   end
