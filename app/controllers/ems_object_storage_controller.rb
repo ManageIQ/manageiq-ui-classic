@@ -19,7 +19,7 @@ class EmsObjectStorageController < ApplicationController
   end
 
   def breadcrumb_name(_model)
-    ui_lookup(:tables => table_name.pluralize)
+    _('Object Storage Managers')
   end
 
   def ems_path(*args)
