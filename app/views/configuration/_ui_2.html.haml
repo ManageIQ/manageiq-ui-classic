@@ -43,23 +43,23 @@
           %fieldset
             %h3
               = _('Containers')
-            - {:emscontainer           => "ems_container",
-               :containernode          => "container_node",
-               :containergroup         => "container_group",
-               :containerservice       => "container_service",
-               :containerroute         => "container_route",
-               :container              => "container",
-               :containerproject       => "container_project",
-               :containerreplicator    => "container_replicator",
-               :containerimage         => "container_image",
-               :containerimageregistry => "container_image_registry",
-               :container              => "container",
-               :containerbuild         => "container_build",
-               :persistentvolume       => "persistent_volume",
-               :containertemplate      => "container_template"}.each do |resource, table_view_name|
+            - {:emscontainer           => _('Containers Providers'),
+               :containernode          => _('Nodes'),
+               :containergroup         => _('Pods'),
+               :containerservice       => _('Services'),
+               :containerroute         => _('Routes'),
+               :container              => _('Containers'),
+               :containerproject       => _('Projects'),
+               :containerreplicator    => _('Replicators'),
+               :containerimage         => _('Images'),
+               :containerimageregistry => _('Image Registries'),
+               :container              => _('Containers'),
+               :containerbuild         => _('Builds'),
+               :persistentvolume       => _('Volumes'),
+               :containertemplate      => _('Templates')}.each do |resource, label|
               .form-group
                 %label.col-md-3.control-label
-                  = ui_lookup(:tables => table_view_name)
+                  = label
                 .col-md-8
                   %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
         %fieldset
