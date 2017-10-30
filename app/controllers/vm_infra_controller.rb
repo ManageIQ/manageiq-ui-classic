@@ -77,11 +77,12 @@ class VmInfraController < ApplicationController
   def simple_dialog_initialize(ra, options)
     @record = Dialog.find_by(:id => ra.dialog_id.to_i)
     new = options[:dialog] || {}
+    id = @record.present? ? @record.id : nil
     @edit = {
       :new             => new,
       :wf              => ResourceActionWorkflow.new(new, current_user, ra, {}),
-      :rec_id          => @record.id,
-      :key             => "dialog_edit__#{@record.id || "new"}",
+      :rec_id          => id,
+      :key             => "dialog_edit__#{id || "new"}",
       :explorer        => @explorer || false,
       :dialog_mode     => options[:dialog_mode],
       :current         => copy_hash(new),
