@@ -173,6 +173,16 @@ module ApplicationHelper::Dialogs
     options.merge(:trigger => trigger_override)
   end
 
+  def force_old_dialogs?(params, force_old_dialog_use)
+    return false if force_old_dialog_use == false
+
+    if params[:dialog_locals]
+      return params[:dialog_locals][:force_old_dialog_use] || true
+    else
+      return true
+    end
+  end
+
   private
 
   def auto_refresh_options(field, auto_refresh_options_hash)

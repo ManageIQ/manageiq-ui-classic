@@ -1,7 +1,13 @@
 - wf = @edit[:wf] if @edit && @edit[:wf]
 = render :partial => "layouts/flash_msg"
+- if params[:dialog_locals]
+  - api_submit_endpoint ||= params[:dialog_locals][:api_submit_endpoint]
+  - api_action ||= params[:dialog_locals][:api_action]
+  - cancel_endpoint ||= params[:dialog_locals][:cancel_endpoint]
 
-- if Settings.product.old_dialog_user_ui || action_name != "svc_catalog_provision"
+- force_old_dialog_use = force_old_dialogs?(params, force_old_dialog_use)
+
+- if Settings.product.old_dialog_user_ui || force_old_dialog_use == true
   :javascript
     dialogFieldRefresh.unbindAllPreviousListeners();
 

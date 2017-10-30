@@ -92,7 +92,7 @@ module ApplicationController::DialogRunner
     @record = Dialog.find_by_id(@edit[:rec_id])
     @in_a_form = true
     @showtype = "dialog_provision"
-    render :template => "shared/dialogs/dialog_provision"
+    render :template => "shared/dialogs/dialog_provision", :locals => params[:dialog_locals]
   end
 
   def dynamic_radio_button_refresh
@@ -157,7 +157,7 @@ module ApplicationController::DialogRunner
     if @edit[:explorer]
       replace_right_cell(:action => "dialog_provision", :dialog_locals => options[:dialog_locals])
     else
-      javascript_redirect :action => 'dialog_load'
+      javascript_redirect(:action => 'dialog_load', :dialog_locals => options[:dialog_locals])
     end
   end
 
