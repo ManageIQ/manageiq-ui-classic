@@ -392,7 +392,11 @@ class ServiceController < ApplicationController
     )
     if %w(dialog_provision ownership tag).include?(action)
       presenter.show(:form_buttons_div).hide(:pc_div_1, :toolbar).show(:paging_div)
-      unless action == "dialog_provision"
+      if action == "dialog_provision" && params[:pressed] == "service_reconfigure"
+        presenter.update(:form_buttons_div, r[:partial => "layouts/x_dialog_buttons",
+                                              :locals  => {:action_url => action_url,
+                                                           :record_id  => @edit[:rec_id]}])
+      else
         if action == "tag"
           locals = {:action_url => action_url}
           locals[:multi_record] = true    # need save/cancel buttons on edit screen even tho @record.id is not there

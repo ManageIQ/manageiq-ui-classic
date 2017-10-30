@@ -173,11 +173,11 @@ module ApplicationHelper::Dialogs
     options.merge(:trigger => trigger_override)
   end
 
-  def force_old_dialogs?(params, force_old_dialog_use)
+  def force_old_dialogs?(dialog_locals, force_old_dialog_use)
     return false if force_old_dialog_use == false
 
-    if params[:dialog_locals]
-      return params[:dialog_locals][:force_old_dialog_use] || true
+    if dialog_locals
+      return dialog_locals[:force_old_dialog_use].to_s == "true"
     else
       return true
     end

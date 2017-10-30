@@ -599,6 +599,45 @@ describe ApplicationHelper::Dialogs do
     end
   end
 
+  describe "#force_old_dialogs?" do
+    let(:force_old_dialog_use) { true }
+
+    context "when force_old_dialog_use is false" do
+      let(:force_old_dialog_use) { false }
+      let(:dialog_locals) { nil }
+
+      it "returns false" do
+        expect(helper.force_old_dialogs?(dialog_locals, force_old_dialog_use)).to eq(false)
+      end
+    end
+
+    context "when dialog locals exist" do
+      context "when the dialog local force old dialog use string matches 'true'" do
+        let(:dialog_locals) { {:force_old_dialog_use => "true"} }
+
+        it "returns true" do
+          expect(helper.force_old_dialogs?(dialog_locals, force_old_dialog_use)).to eq(true)
+        end
+      end
+
+      context "when the dialog local force old dialog use string does not match 'true'" do
+        let(:dialog_locals) { {:force_old_dialog_use => "potato"} }
+
+        it "returns false" do
+          expect(helper.force_old_dialogs?(dialog_locals, force_old_dialog_use)).to eq(false)
+        end
+      end
+    end
+
+    context "when dialog locals do not exist" do
+      let(:dialog_locals) { nil }
+
+      it "returns true" do
+        expect(helper.force_old_dialogs?(dialog_locals, force_old_dialog_use)).to eq(true)
+      end
+    end
+  end
+
   describe "#default_value_form_options" do
     let(:subject) { helper.default_value_form_options(field_values, field_default_value) }
 
