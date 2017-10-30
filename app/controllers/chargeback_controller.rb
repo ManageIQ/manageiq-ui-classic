@@ -82,7 +82,7 @@ class ChargebackController < ApplicationController
     @sortcol = session[:rates_sortcol].nil? ? 0 : session[:rates_sortcol].to_i
     @sortdir = session[:rates_sortdir].nil? ? "ASC" : session[:rates_sortdir]
 
-    @view, @pages = get_view(ChargebackRate, :conditions => ["rate_type=?", x_node.split('-').last])  # Get the records (into a view) and the paginator
+    @view, @pages = get_view(ChargebackRate, :named_scope => [[:with_rate_type, x_node.split('-').last]]) # Get the records (into a view) and the paginator
 
     @current_page = @pages[:current] unless @pages.nil?  # save the current page number
     session[:rates_sortcol] = @sortcol

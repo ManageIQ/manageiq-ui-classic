@@ -35,9 +35,9 @@ module PxeController::PxeCustomizationTemplates
     @sortdir = session[:ct_sortdir].nil? ? "ASC" : session[:ct_sortdir]
     pxe_img_id = x_node.split('-').last == "system" ? nil : x_node.split('-').last
     if pxe_img_id
-      @view, @pages = get_view(CustomizationTemplate, :conditions => ["pxe_image_type_id=?", from_cid(pxe_img_id)]) # Get the records (into a view) and the paginator
+      @view, @pages = get_view(CustomizationTemplate, :named_scope => [[:with_pxe_image_type_id, from_cid(pxe_img_id)]]) # Get the records (into a view) and the paginator
     else
-      @view, @pages = get_view(CustomizationTemplate, :conditions => ["system=?", true])  # Get the records (into a view) and the paginator
+      @view, @pages = get_view(CustomizationTemplate, :named_scope => [:with_system]) # Get the records (into a view) and the paginator
     end
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
