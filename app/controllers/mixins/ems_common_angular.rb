@@ -201,18 +201,19 @@ module Mixins
         amqp_port = @ems.connection_configurations.amqp.endpoint.port
         amqp_security_protocol = @ems.connection_configurations.amqp.endpoint.security_protocol || 'ssl'
       end
+
       if @ems.has_authentication_type?(:amqp)
-        amqp_userid = @ems.has_authentication_type?(:amqp) ? @ems.authentication_userid(:amqp).to_s : ""
+        amqp_userid = @ems.authentication_userid(:amqp).to_s
         amqp_auth_status = @ems.authentication_status_ok?(:amqp)
       end
 
       if @ems.has_authentication_type?(:smartstate_docker)
-        smartstate_docker_userid = @ems.has_authentication_type?(:smartstate_docker) ? @ems.authentication_userid(:smartstate_docker).to_s : ""
+        smartstate_docker_userid = @ems.authentication_userid(:smartstate_docker).to_s
         smartstate_docker_auth_status = true
       end
 
       if @ems.has_authentication_type?(:ssh_keypair)
-        ssh_keypair_userid = @ems.has_authentication_type?(:ssh_keypair) ? @ems.authentication_userid(:ssh_keypair).to_s : ""
+        ssh_keypair_userid = @ems.authentication_userid(:ssh_keypair).to_s
         ssh_keypair_auth_status = @ems.authentication_status_ok?(:ssh_keypair)
       end
 
@@ -223,7 +224,7 @@ module Mixins
       end
 
       if @ems.has_authentication_type?(:metrics)
-        metrics_userid = @ems.has_authentication_type?(:metrics) ? @ems.authentication_userid(:metrics).to_s : ""
+        metrics_userid = @ems.authentication_userid(:metrics).to_s
         metrics_auth_status = @ems.authentication_status_ok?(:metrics)
       end
 
@@ -274,8 +275,8 @@ module Mixins
       if @ems.kind_of?(ManageIQ::Providers::Azure::CloudManager)
         azure_tenant_id = @ems.azure_tenant_id
         subscription    = @ems.subscription
-        client_id       = @ems.authentication_userid ? @ems.authentication_userid : ""
-        client_key      = @ems.authentication_password ? @ems.authentication_password : ""
+        client_id       = @ems.authentication_userid.to_s
+        client_key      = @ems.authentication_password.to_s
       end
 
       if @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
@@ -299,16 +300,16 @@ module Mixins
                        :amqp_security_protocol          => amqp_security_protocol,
                        :provider_region                 => @ems.provider_region,
                        :openstack_infra_providers_exist => retrieve_openstack_infra_providers.length > 0,
-                       :default_userid                  => @ems.authentication_userid ? @ems.authentication_userid : "",
+                       :default_userid                  => @ems.authentication_userid.to_s,
                        :amqp_userid                     => amqp_userid,
                        :smartstate_docker_userid        => smartstate_docker_userid,
-                       :service_account                 => service_account ? service_account : "",
-                       :azure_tenant_id                 => azure_tenant_id ? azure_tenant_id : "",
+                       :service_account                 => service_account.to_s,
+                       :azure_tenant_id                 => azure_tenant_id.to_s,
                        :keystone_v3_domain_id           => keystone_v3_domain_id,
-                       :subscription                    => subscription ? subscription : "",
-                       :client_id                       => client_id ? client_id : "",
-                       :client_key                      => client_key ? client_key : "",
-                       :project                         => project ? project : "",
+                       :subscription                    => subscription.to_s,
+                       :client_id                       => client_id.to_s,
+                       :client_key                      => client_key.to_s,
+                       :project                         => project.to_s,
                        :emstype_vm                      => @ems.kind_of?(ManageIQ::Providers::Vmware::InfraManager),
                        :event_stream_selection          => retrieve_event_stream_selection,
                        :ems_controller                  => controller_name,
@@ -336,7 +337,7 @@ module Mixins
                         :default_tls_ca_certs          => default_tls_ca_certs,
                         :api_version                   => @ems.api_version || "v2",
                         :provider_region               => @ems.provider_region,
-                        :default_userid                => @ems.authentication_userid ? @ems.authentication_userid : "",
+                        :default_userid                => @ems.authentication_userid.to_s,
                         :amqp_userid                   => amqp_userid,
                         :ssh_keypair_userid            => ssh_keypair_userid,
                         :metrics_userid                => metrics_userid,
@@ -368,8 +369,8 @@ module Mixins
                          :default_security_protocol           => default_security_protocol,
                          :default_tls_ca_certs                => default_tls_ca_certs,
                          :provider_region                     => @ems.provider_region,
-                         :default_userid                      => @ems.authentication_userid ? @ems.authentication_userid : "",
-                         :service_account                     => service_account ? service_account : "",
+                         :default_userid                      => @ems.authentication_userid.to_s,
+                         :service_account                     => service_account.to_s,
                          :bearer_token_exists                 => @ems.authentication_token(:bearer).nil? ? false : true,
                          :ems_controller                      => controller_name,
                          :default_auth_status                 => default_auth_status,
@@ -389,7 +390,7 @@ module Mixins
                          :zone                      => zone,
                          :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
                          :default_api_port          => @ems.connection_configurations.default.endpoint.port,
-                         :default_userid            => @ems.authentication_userid ? @ems.authentication_userid : "",
+                         :default_userid            => @ems.authentication_userid.to_s,
                          :default_security_protocol => default_security_protocol,
                          :default_tls_ca_certs      => default_tls_ca_certs,
                          :ems_controller            => controller_name,
@@ -401,7 +402,7 @@ module Mixins
                        :zone                => zone,
                        :default_hostname    => @ems.connection_configurations.default.endpoint.hostname,
                        :default_api_port    => @ems.connection_configurations.default.endpoint.port,
-                       :service_account     => service_account ? service_account : "",
+                       :service_account     => service_account.to_s,
                        :bearer_token_exists => @ems.authentication_token(:bearer).nil? ? false : true,
                        :ems_controller      => controller_name,
                        :default_auth_status => default_auth_status,
