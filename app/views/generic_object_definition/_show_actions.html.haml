@@ -1,0 +1,42 @@
+#main_div
+  = render :partial => "layouts/flash_msg"
+  - unless @record.custom_button_sets.empty?
+    %hr
+      %h3
+        = _('Button Groups')
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %th.table-view-pf-select
+          %th
+            = _('Text')
+          %th
+            = _('Hover Text')
+        %tbody
+          - @record.custom_button_sets.each do |obj|
+            %tr{:title => 'hi'}
+              %td.table-view-pf-select
+                %i{:class => obj.set_data[:button_icon], :style => obj.set_data.key?(:button_color) ? "color: #{obj.set_data[:button_color]};" : nil}
+              %td
+                = obj[:name]
+              %td
+                = obj[:description]
+  - unless @record.custom_buttons.empty?
+    %hr
+      %h3
+        = _('Buttons')
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %th.table-view-pf-select
+          %th
+            = _('Text')
+          %th
+            = _('Hover Text')
+        %tbody
+          - @record.custom_buttons.each do |obj|
+            %tr{:title => 'hi'}
+              %td.table-view-pf-select
+                %i{:class => obj.options[:button_icon], :style => obj.options.key?(:button_color) ? "color: #{obj.options[:button_color]};" : nil}
+              %td
+                = obj[:name]
+              %td
+                = obj[:description]

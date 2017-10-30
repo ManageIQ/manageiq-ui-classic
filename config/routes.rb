@@ -2117,6 +2117,8 @@ Rails.application.routes.draw do
       :post => %w(
         button
         create_del
+        custom_button_group_new
+        custom_button_group_edit
         edit
         exp_button
         exp_changed
@@ -2128,6 +2130,8 @@ Rails.application.routes.draw do
         show_list
         tag_edit_form_field_changed
         tagging_edit
+        tree_select
+        x_show
       ) +
         adv_search_post +
         save_post

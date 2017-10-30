@@ -63,6 +63,7 @@ module Sandbox
     dialogs_tree
     event_tree
     export_tree
+    generic_object_definitions_tree
     images_filter_tree
     images_tree
     infra_networking_tree
