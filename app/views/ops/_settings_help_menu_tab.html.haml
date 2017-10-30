@@ -34,6 +34,9 @@
               = select_tag("#{item.id}_type", options_for_select([[_("Current Window"), 'default'],
                                                                  [_("New Window"), "new_window"],
                                                                  [_("Overlay Window"),  "modal"]], val.to_s),
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          :class             => 'selectpicker')
 
           - Settings.help_menu.try(item.id.to_s).try(:title).nil?
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent("#{item.id}_type", '#{url}')
