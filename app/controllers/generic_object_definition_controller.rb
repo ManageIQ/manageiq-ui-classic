@@ -2,6 +2,8 @@ class GenericObjectDefinitionController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
 
+  before_action :build_tree, :only => [:show_list, :show]
+
   after_action :cleanup_action
   after_action :set_session_data
 
@@ -22,6 +24,15 @@ class GenericObjectDefinitionController < ApplicationController
     self.x_active_tree ||= :generic_object_definitions_tree
     self.x_node ||= 'root'
     @partial = node_info
+  end
+
+  def show
+    super
+    self.x_node = "god-#{to_cid(params[:id])}"
+    @breadcrumbs = []
+  end
+
+  def build_tree
     @tree = TreeBuilderGenericObjectDefinition.new(:generic_object_definitions_tree, :generic_object_definitions_tree, @sb)
   end
 
