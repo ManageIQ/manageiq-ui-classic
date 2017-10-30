@@ -116,7 +116,7 @@ describe StorageController do
 
         get :explorer
         session_storage = session[:sandboxes]["storage"]
-        expect(response.body).to include("modelName: '#{session_storage[:active_accord].to_s.pluralize}'")
+        expect(response.body).to include("modelName: 'Storage'")
         expect(response.body).to include("activeTree: '#{session_storage[:active_tree]}'")
         expect(response.body).to include("gtlType: 'list'")
         expect(response.body).to include("parentId: ''")
@@ -154,7 +154,7 @@ describe StorageController do
 
         main_content = JSON.parse(response.body)['updatePartials']['main_div']
         expect(main_content).to include("<h3>\n1 Datastore Being Tagged\n<\/h3>")
-        expect(main_content).to include("modelName: 'storages'")
+        expect(main_content).to include("modelName: 'Storage'")
         expect(main_content).to include("isExplorer: 'true' === 'true' ? true : false")
         expect(main_content).to include("showUrl: '/storage/x_show/'")
       end

@@ -9,6 +9,7 @@ describe ApplicationController do
       "sort_col" => 0
     }
   end
+
   before do
     stub_user(:features => :all)
   end
@@ -31,15 +32,12 @@ describe ApplicationController do
     end
 
     it "should call specific functions" do
-      allow(controller).to receive(:process_params_options)
-      allow(controller).to receive(:process_params_model_view)
-      allow(controller).to receive(:get_view)
-      allow(controller).to receive(:view_to_hash)
+      expect(controller).to receive(:from_additional_options).and_return({})
+      expect(controller).to receive(:process_params_options).and_call_original
+      expect(controller).to receive(:process_params_model_view)
+      expect(controller).to receive(:get_view)
+      expect(controller).to receive(:view_to_hash)
       controller.report_data
-      expect(controller).to have_received(:process_params_options)
-      expect(controller).to have_received(:process_params_model_view)
-      expect(controller).to have_received(:get_view)
-      expect(controller).to have_received(:view_to_hash)
     end
   end
 
@@ -65,20 +63,6 @@ describe ApplicationController do
     it "should return correct model from options" do
       options = controller.send(:process_params_model_view, {}, {:model_name => "ManageIQ::Providers::MiddlewareManager"})
       expect(options).to eql(ManageIQ::Providers::MiddlewareManager)
-    end
-  end
-
-  context "#process_params_options" do
-    it "should call get node info" do
-      allow(controller).to receive(:get_node_info)
-      controller.send(
-        :process_params_options,
-        :explorer    => "true",
-        :active_tree => "vandt_tree",
-        :model_id    => "e-2",
-        :controller  => "vm_infra"
-      )
-      expect(controller).to have_received(:get_node_info)
     end
   end
 end

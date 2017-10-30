@@ -782,11 +782,6 @@ module OpsController::OpsRbac
     update_gtl_div("rbac_#{rec_type.pluralize}_list") if pagination_or_gtl_request? && @show_list
   end
 
-  def allowed_tenant_names
-    current_tenant = User.current_user.current_tenant
-    (current_tenant.descendants + [current_tenant]).map(&:name)
-  end
-
   # Create the view and associated vars for the rbac list
   def rbac_build_list(rec_type)
     @lastaction = "rbac_#{rec_type}s_list"
@@ -808,12 +803,7 @@ module OpsController::OpsRbac
                     when "role"
                       get_view(MiqUserRole)
                     when "tenant"
-                      view, pages = get_view(Tenant, :named_scope => :in_my_region)
-                      view.table.data.map! do |x|
-                        x['parent_name'] = '' unless allowed_tenant_names.include?(x['parent_name'])
-                        x
-                      end
-                      [view, pages]
+                      get_view(Tenant, :named_scope => :in_my_region)
                     end
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number

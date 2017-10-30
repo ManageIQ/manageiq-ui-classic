@@ -62,7 +62,7 @@ describe AutomationManagerController do
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
-    expect(response.body).to include("modelName: 'manageiq/providers/automation_managers'")
+    expect(response.body).to include("modelName: 'ManageIQ::Providers::AnsibleTower::AutomationManager'")
     expect(response.body).to include("activeTree: 'automation_manager_providers_tree'")
     expect(response.body).to include("gtlType: 'list'")
     expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
@@ -307,7 +307,11 @@ describe AutomationManagerController do
       controller.send(:build_accordions_and_trees)
     end
 
-    it "renders the list view based on the nodetype(root,provider) and the search associated with it" do
+    # FIXME: This needs to be splin into separate tests.
+    # Also: we cannot directly test data rendered in the grid as this goes
+    # throught the GTL component and the /report_data JSON endpoint.
+    pending "renders the list view based on the nodetype(root,provider) and the search associated with it" do
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => "root")
       controller.instance_variable_set(:@search_text, "manager")
       controller.send(:tree_select)
@@ -358,18 +362,19 @@ describe AutomationManagerController do
 
     it "renders tree_select for ansible tower job templates tree node" do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => "configuration_scripts")
       controller.send(:accordion_select)
       controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@automation_manager1.id))
       controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
+      # view = controller.instance_variable_get(:@view)
       show_adv_search = controller.instance_variable_get(:@show_adv_search)
       expect(show_adv_search).to eq(true)
-      expect(view.table.data.size).to eq(2)
+      # expect(view.table.data.size).to eq(2)
       expect(show_adv_search).to eq(true)
 
-      expect(view.table.data[0].name).to eq("ConfigScript1")
-      expect(view.table.data[1].name).to eq("ConfigScript3")
+      # expect(view.table.data[0].name).to eq("ConfigScript1")
+      # expect(view.table.data[1].name).to eq("ConfigScript3")
     end
 
     it 'renders tree_select for one job template' do

@@ -435,16 +435,16 @@ class ApplicationController < ActionController::Base
   # @option params :model_id [String]
   #     String value of model's ID to be filtered with.
   def process_params_options(params)
-    options = {}
+    options = from_additional_options(params[:additional_options] || {})
     if params[:explorer]
       params[:action] = "explorer"
       @explorer = params[:explorer] == "true"
     end
 
-    if params[:active_tree] && defined? get_node_info
-      node_info = get_node_info(x_node, false)
-      options.merge!(node_info) if node_info.kind_of?(Hash)
-    end
+    # if params[:active_tree] && defined? get_node_info
+    #   node_info = get_node_info(x_node, false)
+    #   options.merge!(node_info) if node_info.kind_of?(Hash)
+    # end
 
     # handle exceptions
     if params[:model_name]
@@ -460,7 +460,7 @@ class ApplicationController < ActionController::Base
                 end
     end
 
-    if params[:parent_id] && !params[:active_tree]
+    if params[:parent_id]
       parent_id = from_cid(params[:parent_id])
       unless parent_id.nil?
         options[:parent] = identify_record(parent_id, controller_to_model) if parent_id && options[:parent].nil?
@@ -518,22 +518,42 @@ class ApplicationController < ActionController::Base
   end
   private :set_variables_report_data
 
+  def allowed_tenant_names
+    current_tenant = User.current_user.current_tenant
+    (current_tenant.descendants + [current_tenant]).map(&:name)
+  end
+  private :allowed_tenant_names
+
+  # Exception: Model Tenant and named_scope :in_my_region need to filter out the parent name if current user has no access to it.
+  # This can be removed once this is somehow fixed on the backend.
+  def filter_parent_name_tenant(table)
+    table.data.map! do |x|
+      x['parent_name'] = '' unless allowed_tenant_names.include?(x['parent_name'])
+      x
+    end
+    table
+  end
+  private :filter_parent_name_tenant
+
   # Method for fetching report data. These data can be displayed in Grid/Tile/List.
   # This method will first process params for options and then for current model.
   # From these options and model we get view (for fetching data) and settings (will hold info about paging).
   # Then this method will return JSON object with settings and data.
   def report_data
-    @in_report_data = true
     options = process_params_options(params)
     if options.nil? || options[:view].nil?
       model_view = process_params_model_view(params, options)
       @edit = session[:edit]
-      @view, settings = get_view(model_view, options)
+      @view, settings = get_view(model_view, options, true)
     else
       @view = options[:view]
       settings = options[:pages]
     end
     settings = set_variables_report_data(settings, @view)
+
+    if options && options[:named_scope] == "in_my_region" && options[:model] == "Tenant"
+      @view.table = filter_parent_name_tenant(@view.table)
+    end
 
     # Foreman has some unassigned rows which needs to be added after view is fetched
     if options && options[:unassigned_profile_row] && options[:unassigned_configuration_profile]
@@ -543,7 +563,7 @@ class ApplicationController < ActionController::Base
     end
     render :json => {
       :settings => settings,
-      :data     => view_to_hash(@view),
+      :data     => view_to_hash(@view, true),
       :messages => @flash_array
     }
   end
@@ -1085,7 +1105,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Render the view data to a Hash structure for the list view
-  def view_to_hash(view)
+  def view_to_hash(view, fetch_data = false)
     # Get the time zone in effect for this view
     tz = (view.db.downcase == 'miqschedule') ? server_timezone : Time.zone
 
@@ -1122,7 +1142,7 @@ class ApplicationController < ActionController::Base
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
-      if @in_report_data && defined?(@gtl_type) && @gtl_type != "list"
+      if fetch_data && defined?(@gtl_type) && @gtl_type != "list"
         quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
       end
       new_row = {
@@ -1512,7 +1532,10 @@ class ApplicationController < ActionController::Base
   end
 
   # Create view and paginator for a DB records with/without tags
-  def get_view(db, options = {})
+  def get_view(db, options = {}, fetch_data = false)
+    if !fetch_data && @report_data_additional_options.nil?
+      process_show_list_options(options, db)
+    end
     unless @edit.nil?
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
@@ -1613,8 +1636,13 @@ class ApplicationController < ActionController::Base
       :selected_ids              => object_ids,
       :match_via_descendants     => options[:match_via_descendants]
     }
-    # Call paged_view_search to fetch records and build the view.table and additional attrs
-    view.table, attrs = view.paged_view_search(session[:paged_view_search_options])
+
+    view.table, attrs = if fetch_data
+                          # Call paged_view_search to fetch records and build the view.table and additional attrs
+                          view.paged_view_search(session[:paged_view_search_options])
+                        else
+                          [{}, {}]
+                        end
 
     # adding filters/conditions for download reports
     view.user_categories = attrs[:user_filters]["managed"] if attrs && attrs[:user_filters] && attrs[:user_filters]["managed"]
@@ -1623,8 +1651,8 @@ class ApplicationController < ActionController::Base
     @targets_hash             = attrs[:targets_hash] if attrs[:targets_hash]
 
     # Set up the grid variables for list view, with exception models below
-    if grid_hash_conditions(view)
-      @grid_hash = view_to_hash(view)
+    if grid_hash_conditions(view) && fetch_data
+      @grid_hash = view_to_hash(view, fetch_data)
     end
 
     [view, get_view_pages(dbname, view)]
@@ -1680,7 +1708,9 @@ class ApplicationController < ActionController::Base
       :current => params[:page].nil? ? 1 : params[:page].to_i,
       :items   => view.extras[:auth_count]
     }
-    pages[:total] = (pages[:items] + pages[:perpage] - 1) / pages[:perpage]
+    if pages[:items] && pages[:perpage]
+      pages[:total] = (pages[:items] + pages[:perpage] - 1) / pages[:perpage]
+    end
     pages
   end
 
