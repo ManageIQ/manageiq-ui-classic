@@ -106,7 +106,7 @@ class GenericObjectDefinitionController < ApplicationController
   def custom_button_edit
     assert_privileges('ab_button_edit')
     @custom_button = CustomButton.find(params[:id])
-    title = _("Edit Custom Button'#{@custom_button.name}'")
+    title = _("Edit Custom Button '#{@custom_button.name}'")
     render_form(title, 'custom_button_form')
   end
 
@@ -163,8 +163,13 @@ class GenericObjectDefinitionController < ApplicationController
     @right_cell_text = _("Custom Button Set %{record_name}") % {:record_name => @record.name}
   end
 
-  def custom_button_node?
-    params[:id].split('-').first == 'cb'
+  def custom_button_node_info
+    node = x_node || params[:id]
+    @record = CustomButton.find(from_cid(node.split("-").last))
+    @right_cell_text = "#{ui_lookup(:model => "CustomButton")} '#{@record.name}'"
+    'show_custom_button'
+  rescue Exception => _err
+    root_node_info
   end
 
   def render_form(title, form_partial)

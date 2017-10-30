@@ -1,4 +1,5 @@
 #main_div
+  = render :partial => "layouts/flash_msg"
   - if @record && @record.kind_of?(CustomButton)
     -# don't need basic info box for Unassigned button group
     %h3
@@ -27,9 +28,9 @@
         .col-md-8
           %span{:class => @record.options[:button_icon], :style => @record.options.key?(:button_color) ? "color: #{@record.options[:button_color]};" : nil}
 
-  %custom-button-group-toolbar#custom_button_group_show_form{'record-id'    => @record.id,
-                                                             'entity'       => _('Custom Button'),
-                                                             'entity-name'  => @record.description,
-                                                             'redirect-url' => "/#{controller_name}/show_list",}
+    %generic-object-definition-toolbar#generic_object_definition_show_form{'record-id'    => @record.id,
+                                                                           'entity'       => _('Custom Button'),
+                                                                           'entity-name'  => @record.description,
+                                                                           'redirect-url' => "/#{controller_name}/show_list",}
 :javascript
-  miq_bootstrap('#custom_button_group_show_form');
+  miq_bootstrap('#generic_object_definition_show_form');
