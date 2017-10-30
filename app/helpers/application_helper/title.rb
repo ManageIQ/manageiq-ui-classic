@@ -21,7 +21,7 @@ module ApplicationHelper
 
       title + case layout
               when "configuration"
-                _(": Configuration")
+                _(": My Settings")
               when "dashboard"
                 _(": Dashboard")
               when "chargeback"
