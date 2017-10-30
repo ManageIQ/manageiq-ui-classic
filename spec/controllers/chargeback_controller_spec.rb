@@ -420,15 +420,14 @@ describe ChargebackController do
         post :cb_rate_edit, :params => {:button => "add"}
 
         # change expected values from yaml
-        compute_chargeback_rate_hash_from_yaml[:rates].sort_by! { |rd| [rd[:group], rd[:description]] }
+        compute_chargeback_rate_hash_from_yaml[:rates].sort_by! { |rd| [ChargeableField.find_by(:metric => rd[:metric]).group, rd[:description]] }
         compute_rates = compute_chargeback_rate_hash_from_yaml[:rates][index_to_rate_type.to_i]
         compute_rates[:tiers][0][:finish] = 20.0
         compute_rates[:tiers].push(:start => 20.0, :finish => 50.0)
         compute_rates[:tiers].push(:start => 50.0, :finish => Float::INFINITY)
 
         new_chargeback_rate = ChargebackRate.last
-
-        expect_chargeback_rate_to_eq_hash(new_chargeback_rate, compute_chargeback_rate_hash_from_yaml)
+        expect_chargeback_rate_to_eq_hash(new_chargeback_rate, compute_chargeback_rate_hash_from_yaml.dup)
       end
 
       it "doesn't add new chargeback rate because some of tier has start value bigger than finish value" do
