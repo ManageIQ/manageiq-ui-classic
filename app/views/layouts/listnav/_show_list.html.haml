@@ -26,7 +26,7 @@
                 "data-method" => :post,
                 :title        => _("Apply this filter"),
                 :onclick      => "return miqCheckForChanges()")
-
+    = render :partial => "layouts/listnav/#{controller_name}_show_list_with_treeview" if controller.respond_to?(:display_tree)
     - unless @my_searches.blank?
       - if @panels["#{@view.db}_my_searches"].nil?
         - @panels["#{@view.db}_my_searches"] = true

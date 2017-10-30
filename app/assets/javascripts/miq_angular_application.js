@@ -11,6 +11,7 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miq.compat',
   'miq.util',
   'kubernetesUI',
+  'ManageIQ.treeView',
   'miqStaticAssets.dialogEditor',
   'miqStaticAssets.dialogUser',
 ]);

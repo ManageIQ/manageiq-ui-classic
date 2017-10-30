@@ -2,6 +2,8 @@ class GenericObjectDefinitionController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
 
+  before_action :custom_button_or_group, :only => [:show]
+
   after_action :cleanup_action
   after_action :set_session_data
 
@@ -49,6 +51,16 @@ class GenericObjectDefinitionController < ApplicationController
 
   def default_show_template
     "generic_object_definition/show"
+  end
+
+  def display_tree
+    true
+  end
+
+  def custom_button_or_group
+    @cb_group = params[:cbs]
+    @cb = params[:cb]
+    @cb_group_actions = params[:actions]
   end
 
   private
