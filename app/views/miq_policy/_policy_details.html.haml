@@ -146,7 +146,7 @@
                 %tr{:title => _("View this Condition"),
                   :onclick => "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_co-#{to_cid(c.id)}');"}
                   %td.table-view-pf-select
-                    %i{:class => "fa fa-diamond"}
+                    %i{:class => c.decorate.fonticon}
                   %td
                     = c.description
                   %td
@@ -267,7 +267,7 @@
                   %tr{:title => _("View this Profile"),
                     :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=policy_profile")}
                     %td.table-view-pf-select
-                      %img{:src => image_path("100/policy_profile#{pp.active? ? '' : '_inactive'}.png")}
+                      %i{:class => pp.decorate.fonticon}
                     %td
                       = pp.description
   %br

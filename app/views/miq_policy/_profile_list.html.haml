@@ -14,7 +14,7 @@
             %tr{:title => _("View this Profile"),
               :onclick => "miqTreeActivateNode('policy_profile_tree', 'pp-#{to_cid(profile.id)}');"}
               %td.table-view-pf-select
-                %img{:src => image_path("100/policy_profile#{profile.active? ? '' : '_inactive'}.png")}
+                %i{:class => profile.decorate.fonticon}
               %td
                 = profile.description
 - else
