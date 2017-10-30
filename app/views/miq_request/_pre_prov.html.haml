@@ -29,33 +29,7 @@
                 %img{:src => image_path("16/sort_#{@edit[:vm_sortdir] == 'ASC' ? 'up' : 'down'}.png")}
     %tbody
       - @vms.each do |row|
-        - @id = row.id
-        - cls =  @edit[:src_vm_id] && @edit[:src_vm_id] == @id ? "selected" : ""
-        %tr{:class => cls, :onclick => "miqAjax('/miq_request/pre_prov/?sel_id=#{@id}');", :id => "row_#{@id}"}
-          %td.text-nowrap
-            = h(row.name)
-          - if @edit[:vm_headers].include?("image?")
-            %td.text-nowrap
-              - if row.respond_to?(:image?)
-                = h(row.image? ? _("Image") : _("Snapshot"))
-          %td
-            = h(row.operating_system.try(:product_name))
-          %td
-            = h(row.platform)
-          %td
-            = h(row.cpu_total_cores)
-          %td
-            = h(number_to_human_size(row.mem_cpu.to_i * 1024 * 1024))
-          %td
-            = h(number_to_human_size(row.allocated_disk_storage))
-          %td
-            = h(row.deprecated ? _("true") : _("false"))
-          %td
-            - if row.ext_management_system
-              = h(row.ext_management_system.name)
-          %td
-            = h(row.v_total_snapshots)
-          - if @edit[:vm_headers].include?("cloud_tenant")
-            %td
-              - if row.respond_to?(:cloud_tenant)
-                = h(row.cloud_tenant.try(:name))
+        - if row.respond_to?(:volume_template?) || row.respond_to?(:volume_snapshot_template?)
+          = render :partial => "miq_request/pre_prov_volumes_snapshots", :locals => {:row => row}
+        - else
+          = render :partial => "miq_request/pre_prov_images", :locals => {:row => row}

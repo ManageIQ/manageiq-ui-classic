@@ -164,7 +164,7 @@ module Mixins
     end
 
     def display_images
-      nested_list("template_cloud", ManageIQ::Providers::CloudManager::Template)
+      nested_list("template_cloud", ManageIQ::Providers::CloudManager::Template, :named_scope => :without_volume_templates)
     end
 
     # options:
@@ -184,6 +184,7 @@ module Mixins
       view_options[:association] = options[:association] if options.key?(:association)
       view_options[:parent_method] = options[:parent_method] if options.key?(:parent_method)
       view_options[:where_clause] = options[:where_clause] if options.key?(:where_clause)
+      view_options[:named_scope] = options[:named_scope] if options.key?(:named_scope)
 
       @view, @pages = get_view(model, view_options)
       @showtype = @display
