@@ -185,7 +185,7 @@ module ApplicationController::AdvancedSearch
       build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
       build_accordions_and_trees
       load_or_clear_adv_search
-    elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
+    elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree svcs_tree).include?(x_active_tree.to_s)
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, tree_type, @sb)
@@ -295,14 +295,15 @@ module ApplicationController::AdvancedSearch
     respond_to do |format|
       format.js do
         @explorer = true
-        if x_active_tree.to_s =~ /_filter_tree$/ &&
+        if (x_active_tree.to_s =~ /_filter_tree$/ || x_active_tree.to_s == "svcs_tree") &&
            !%w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
           search_id = 0
           adv_search_build(model_from_active_tree(x_active_tree))
           session[:edit] = @edit # Set because next method will restore @edit from session
         end
         listnav_search_selected(search_id) # Clear or set the adv search filter
-        self.x_node = "root"
+        # no root node for My Services
+        self.x_node = x_active_tree.to_s == "svcs_tree" ? "xx-asrv" : "root"
         replace_right_cell
       end
       format.html do

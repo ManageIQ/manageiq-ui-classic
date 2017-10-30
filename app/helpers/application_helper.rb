@@ -904,6 +904,7 @@ module ApplicationHelper
        retired
        security_group
        service
+       services
        storage
        templates
        vm
@@ -992,6 +993,8 @@ module ApplicationHelper
       "ManageIQ::Providers::CloudManager::Vm"
     when :images_filter_tree
       "ManageIQ::Providers::CloudManager::Template"
+    when :svcs_tree
+      "Service"
     when :vms_filter_tree
       "ManageIQ::Providers::InfraManager::Vm"
     when :templates_filter_tree
@@ -1577,6 +1580,7 @@ module ApplicationHelper
        instances_filter
        providers
        storage
+       svcs
        templates_filter
        templates_images_filter
        vandt

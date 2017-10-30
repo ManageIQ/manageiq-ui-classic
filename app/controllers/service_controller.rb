@@ -59,8 +59,7 @@ class ServiceController < ApplicationController
   end
 
   def explorer
-    @explorer   = true
-    @lastaction = "explorer"
+    @explorer = true
 
     # if AJAX request, replace right cell, and return
     if request.xml_http_request?
@@ -273,6 +272,9 @@ class ServiceController < ApplicationController
         process_show_list(:named_scope => [:retired, :displayed])
         @right_cell_text = _("Retired Services")
       end
+    when "MiqSearch"
+      load_adv_search # Select/load filter from Global/My Filters
+      @right_cell_text = _("All Services")
     else      # Get list of child Catalog Items/Services of this node
       if x_node == "root"
         process_show_list(:where_clause => "ancestry is null")
@@ -287,8 +289,33 @@ class ServiceController < ApplicationController
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
       end
     end
-    x_history_add_item(:id => treenodeid, :text => @right_cell_text)
-    {:view => @view, :pages => @pages}
+    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
+
+    if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
+      x_history_add_item(:id     => x_node,
+                         :qs_exp => @edit[:adv_search_applied][:qs_exp],
+                         :text   => @right_cell_text)
+    else
+      x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
+    end
+  end
+
+  # Select/load filter from Global/My Filters
+  def load_adv_search
+    adv_search_build("Service")
+    session[:edit] = @edit
+    @explorer = true
+    @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
+
+    if @nodetype == "ms"
+      listnav_search_selected(from_cid(id)) unless params.key?(:search_text)
+      if @edit[:adv_search_applied] &&
+         MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
+         %w(reload tree_select).include?(params[:action])
+        self.x_node = params[:id]
+        quick_search_show
+      end
+    end
   end
 
   # set partial name and cell header for edit screens
@@ -329,7 +356,7 @@ class ServiceController < ApplicationController
     action, replace_trees = options.values_at(:action, :replace_trees)
     @explorer = true
     partial, action_url, @right_cell_text = set_right_cell_vars(action) if action # Set partial name, action and cell header
-    get_node_info(x_node) if !@edit && !@in_a_form && !params[:display]
+    get_node_info(x_node) if !action && !@in_a_form && !params[:display]
     replace_trees = @replace_trees if @replace_trees  # get_node_info might set this
     type, = parse_nodetype_and_id(x_node)
     record_showing = type && ["Service"].include?(TreeBuilder.get_model_for_prefix(type))
@@ -413,6 +440,11 @@ class ServiceController < ApplicationController
 
     presenter[:lock_sidebar] = @edit && @edit[:current]
     presenter[:osf_node] = x_node
+
+    # Hide/show searchbox depending on if a list is showing
+    presenter.set_visibility(!(@record || @in_a_form), :adv_searchbox_div)
+    presenter[:clear_search_toggle] = clear_search_status
+
     # unset variable that was set in form_field_changed to prompt for changes when leaving the screen
     presenter.reset_changes
 
