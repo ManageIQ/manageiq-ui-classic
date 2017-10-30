@@ -108,6 +108,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.hostname                        = data.hostname;
       $scope.emsCommonModel.default_hostname                = data.default_hostname;
       $scope.emsCommonModel.amqp_hostname                   = data.amqp_hostname;
+      $scope.emsCommonModel.amqp_fallback_hostname1         = data.amqp_fallback_hostname1;
+      $scope.emsCommonModel.amqp_fallback_hostname2         = data.amqp_fallback_hostname2;
       $scope.emsCommonModel.metrics_selection               = data.metrics_selection;
       $scope.emsCommonModel.metrics_hostname                = data.metrics_hostname;
       $scope.emsCommonModel.project                         = data.project;
