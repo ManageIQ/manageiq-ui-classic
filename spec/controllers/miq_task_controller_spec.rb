@@ -827,7 +827,7 @@ describe MiqTaskController do
       it 'sets the active tab' do
         controller.instance_variable_set(:@tabform, "ui_2")
         controller.instance_variable_set(:@tasks_options, {})
-        allow(controller).to receive(:tasks_condition)
+        allow(controller).to receive(:tasks_scopes)
         allow(controller).to receive(:get_view)
         controller.list_jobs
         expect(assigns(:active_tab)).to eq("2")

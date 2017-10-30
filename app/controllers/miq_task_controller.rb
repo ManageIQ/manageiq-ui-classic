@@ -79,7 +79,7 @@ class MiqTaskController < ApplicationController
     when "tasks_2", "alltasks_2" then @layout = "all_tasks"
     end
 
-    @view, @pages = get_view(MiqTask, :conditions => tasks_condition(@tasks_options[@tabform]))
+    @view, @pages = get_view(MiqTask, :named_scope => tasks_scopes(@tasks_options[@tabform]))
     @user_names = MiqTask.distinct.pluck("userid").delete_if(&:blank?) if @active_tab.to_i == 2
   end
 
@@ -342,6 +342,29 @@ class MiqTaskController < ApplicationController
 
   def build_query_for_state(opts)
     ["miq_tasks.state=?", opts[:state_choice]]
+  end
+
+  # Create a scope chain from the passed in options
+  def tasks_scopes(opts, use_times = true)
+    scope = []
+
+    # Specify user scope
+    if @tabform == "tasks_1"
+      scope << [:with_userid, session[:userid]]
+    elsif opts[:user_choice] && opts[:user_choice] != "all"
+      scope << [:with_userid, opts[:user_choice]]
+    end
+
+    # Add time scope
+    if use_times
+      t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.now, Time.zone, "raw")
+      scope << [:with_updated_on_between, t.beginning_of_day..t.end_of_day]
+    end
+
+    # Add zone scope
+    scope << [:with_zone, opts[:zone]] if opts[:zone] && opts[:zone] != "<all>"
+
+    scope
   end
 
   def reload_tasks
