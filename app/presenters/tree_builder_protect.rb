@@ -57,6 +57,8 @@ class TreeBuilderProtect < TreeBuilder
                'pficon pficon-server'
              when 'PhysicalServer'
                'pficon pficon-enterprise'
+             when 'MiddlewareServer'
+               'pficon pficon-middleware'
              end
       {
         :id           => "policy_#{policy.id}",

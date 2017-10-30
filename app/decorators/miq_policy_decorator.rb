@@ -17,6 +17,8 @@ class MiqPolicyDecorator < MiqDecorator
              'pficon pficon-server'
            when 'PhysicalServer'
              'pficon pficon-enterprise'
+           when 'MiddlewareServer'
+             'pficon pficon-middleware'
            end
     "#{icon}#{active ? '' : ' fa-inactive'}"
   end
