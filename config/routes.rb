@@ -2123,6 +2123,7 @@ Rails.application.routes.draw do
         tagging_edit
       ),
       :post => %w(
+        add_button_in_group
         button
         create_del
         custom_button_group_new

@@ -99,7 +99,12 @@ class GenericObjectDefinitionController < ApplicationController
   def custom_button_new
     assert_privileges('ab_button_new')
     title = _("Add a new Custom Button")
-    @generic_object_definition = GenericObjectDefinition.find(params[:id])
+    if custom_button_group_node?
+      @custom_button_group = CustomButtonSet.find(params[:id])
+      @generic_object_definition = GenericObjectDefinition.find(@custom_button_group.set_data[:applies_to_id])
+    else
+      @generic_object_definition = GenericObjectDefinition.find(params[:id])
+    end
     render_form(title, 'custom_button_form')
   end
 
@@ -116,6 +121,16 @@ class GenericObjectDefinitionController < ApplicationController
         {:name => instance}
       end
     render :json => {:distinct_instances_across_domains => distinct_instances_across_domains}
+  end
+
+  def add_button_in_group
+    custom_button_set = CustomButtonSet.find(params[:id])
+    members = custom_button_set.members
+    members.push(CustomButton.find(params[:button_id]))
+    custom_button_set.replace_children(members)
+    custom_button_set.set_data[:button_order] ||= []
+    custom_button_set.set_data[:button_order].push(CustomButton.last.id)
+    custom_button_set.save!
   end
 
   private

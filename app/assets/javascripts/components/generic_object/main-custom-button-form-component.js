@@ -1,6 +1,7 @@
 ManageIQ.angular.app.component('mainCustomButtonFormComponent', {
   bindings: {
     genericObjectDefnRecordId: '@?',
+    customButtonGroupRecordId: '@?',
     customButtonRecordId: '@?',
     redirectUrl: '@',
   },
@@ -186,9 +187,21 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
   vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
     miqService.sparkleOn();
-    API[method](url, saveObject)
-      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
-      .catch(miqService.handleFailure);
+
+    if (vm.customButtonGroupRecordId) {
+      var saveCustomButtonPromise = API[method](url, saveObject);
+      var saveMsgBtnInGrp = sprintf(__('%s \"%s\" has been successfully added under the selected button group.'), vm.entity, vm.customButtonModel.name);
+
+      saveCustomButtonPromise.then(function(response) {
+        $http.post('/generic_object_definition/add_button_in_group/' + vm.customButtonGroupRecordId + '?button_id=' + response.results[0].id)
+          .then(miqService.redirectBack.bind(vm, saveMsgBtnInGrp, 'success', vm.redirectUrl))
+          .catch(miqService.handleFailure);
+      })
+    } else {
+      API[method](url, saveObject)
+        .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
+        .catch(miqService.handleFailure);
+    }
   };
 
   // private functions
@@ -228,8 +241,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
         vm.customButtonModel.attribute_values);
 
       vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
-
-      miqService.sparkleOff();
     });
   }
 
