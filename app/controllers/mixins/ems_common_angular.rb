@@ -170,8 +170,7 @@ module Mixins
 
     def ems_form_fields
       assert_privileges("#{permission_prefix}_edit")
-      @ems = model.new if params[:id] == 'new'
-      @ems = find_record_with_rbac(model, params[:id]) if params[:id] != 'new'
+      @ems = params[:id] == 'new' ? model.new : find_record_with_rbac(model, params[:id])
       default_endpoint = @ems.default_endpoint
       default_security_protocol = default_endpoint.security_protocol || security_protocol_default
       default_tls_verify = default_endpoint.verify_ssl != 0 ? true : false
