@@ -72,6 +72,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       {id: 'role', name: __('<By Role>')},
     ];
 
+    miqService.sparkleOn();
     optionsPromise = API.options('/api/custom_buttons')
       .then(getCustomButtonOptions)
       .catch(miqService.handleFailure);
