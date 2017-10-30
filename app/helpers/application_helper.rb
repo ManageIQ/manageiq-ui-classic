@@ -248,18 +248,18 @@ module ApplicationHelper
     current_model = if @report_data_additional_options && @report_data_additional_options[:model]
                       @report_data_additional_options[:model]
                     elsif !@display.nil? && @display != "main"
-                      @display
+                      @display.classify
                     elsif params[:db]
-                      params[:db]
+                      params[:db].classify
                     elsif params[:display]
-                      params[:display]
+                      params[:display].classify
                     elsif defined? controller.class.model
-                      controller.class.model.to_s.tableize
+                      controller.class.model.to_s
                     end
 
     # Hosts do not store correct @display in nested attributes (Relationship, Security and Attributes) so use action
     if @display == "main" && @use_action && !params.nil? && !params[:action].nil? && params[:action] != 'show'
-      current_model = params[:action]
+      current_model = params[:action].classify
     end
     current_model
   end
