@@ -1,6 +1,6 @@
 #main_div
   = render :partial => "layouts/flash_msg"
-  - if !@record.custom_button_sets.empty?
+  - unless @record.custom_button_sets.empty?
     %hr
       %h3
         = _('Button Groups')
@@ -20,7 +20,7 @@
                 = obj[:name]
               %td
                 = obj[:description]
-  - if !@record.custom_buttons.empty?
+  - unless @record.custom_buttons.empty?
     %hr
       %h3
         = _('Buttons')

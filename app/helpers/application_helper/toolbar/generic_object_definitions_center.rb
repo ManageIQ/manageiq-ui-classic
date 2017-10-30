@@ -29,7 +29,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           :onwhen       => "1",
           :url_parms    => "edit_div",
           :send_checked => true,
-          :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonRoot
+          :klass        => ApplicationHelper::Button::GenericObjectDefinitionButtonRoot
         ),
         button(
           :ab_group_new,
@@ -73,7 +73,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
                        'function-data' => '{"type": "delete", "controller": "genericObjectDefinitionToolbarController"}'},
           :enabled                     => false,
           :onwhen                      => "1+",
-          :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonRoot,
+          :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonRoot,
           :confirm => N_("Warning: This Generic Object Class will be permanently removed!")
         ),
         button(

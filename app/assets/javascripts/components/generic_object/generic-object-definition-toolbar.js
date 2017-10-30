@@ -44,7 +44,6 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
     } else if (toolbar.action === 'delete_custom_button_set' && toolbar.recordId) {
       deleteWithAPI('/api/custom_button_sets/', toolbar.recordId);
     }
-
   }
 
   function checkGenericObjectCountAndDelete(response) {

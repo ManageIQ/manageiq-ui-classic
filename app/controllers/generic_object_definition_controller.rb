@@ -150,7 +150,7 @@ class GenericObjectDefinitionController < ApplicationController
     node = x_node || params[:id]
     @custom_button_group_node = true
     @record = CustomButtonSet.find(from_cid(node.split("-").last))
-    @right_cell_text =  _("Custom Button Set %{record_name}") % {:record_name => @record.name}
+    @right_cell_text = _("Custom Button Set %{record_name}") % {:record_name => @record.name}
   end
 
   def render_form(title)
