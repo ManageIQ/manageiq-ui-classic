@@ -68,7 +68,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       tab: 'dialog-editor-modal-tab',
       box: 'dialog-editor-modal-box',
       field: 'dialog-editor-modal-field'
-    }
+    };
     vm.modalOptions = {
       component: components[type],
       size: 'lg',
