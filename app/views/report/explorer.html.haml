@@ -3,6 +3,7 @@
     = render :partial => list
     -# Include the center cell divs
 
+-# FIXME: we should not do javascript like this
 %script{:type => "text/javascript"}
   function miqReportAfterOnload() {
   - if @right_cell_div == "role_list"
@@ -12,7 +13,9 @@
         = javascript_hide("menu_div1")
         = javascript_show("menu_div3")
   - else
+    setTimeout(function() {
     miqTreeForceActivateNode('#{x_active_tree}', '#{x_node}')
+    });
   };
   ManageIQ.afterOnload = "miqReportAfterOnload();"
 
