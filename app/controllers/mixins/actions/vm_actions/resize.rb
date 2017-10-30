@@ -3,16 +3,26 @@ module Mixins
     module VmActions
       module Resize
         def resizevms
-          assert_privileges("instance_resize")
-          recs = find_checked_items
+          assert_privileges(params[:pressed])
+          # if coming in to edit from miq_request list view
+          recs = checked_or_params
+          if !session[:checked_items].nil? && (@lastaction == "set_checked_items" || params[:pressed] == "miq_request_edit")
+            request_id = params[:id]
+            @record = VmCloudReconfigureRequest.find(request_id).vms.first
+          end
+
           recs = [params[:id].to_i] if recs.blank?
-          @record = find_record_with_rbac(VmOrTemplate, recs.first) # Set the VM object
+          @record ||= find_record_with_rbac(VmOrTemplate, recs.first) # Set the VM object
           if @record.supports_resize?
             if @explorer
               resize
               @refresh_partial = "vm_common/resize"
             else
-              javascript_redirect :controller => 'vm', :action => 'resize', :rec_id => @record.id, :escape => false # redirect to build the retire screen
+              javascript_redirect(:controller => 'vm',
+                                  :action     => 'resize',
+                                  :req_id     => request_id,
+                                  :rec_id     => @record.id,
+                                  :escape     => false) # redirect to build the retire screen
             end
           else
             add_flash(_("Unable to reconfigure Instance \"%{name}\": %{details}") % {
@@ -33,6 +43,7 @@ module Mixins
             )
           end
           @sb[:explorer] = @explorer
+          @request_id = params[:req_id] ? params[:req_id] : nil
           @in_a_form = true
           @resize = true
           render :action => "show" unless @explorer
@@ -40,7 +51,10 @@ module Mixins
 
         def resize_vm
           assert_privileges("instance_resize")
-          @record = find_record_with_rbac(VmOrTemplate, params[:id])
+          @record = find_record_with_rbac(VmOrTemplate, params[:objectId])
+          if params[:id] && params[:id] != 'new'
+            @request_id = params[:id]
+          end
 
           case params[:button]
           when "cancel"
@@ -52,8 +66,6 @@ module Mixins
                 flavor_id = params['flavor_id']
                 flavor = find_record_with_rbac(Flavor, flavor_id)
                 old_flavor_name = @record.flavor.try(:name) || _("unknown")
-                # TODO: still need to determine whether the next line should be deleted or replaced
-                @request_id = nil
                 options = {:src_ids       => [@record.id],
                            :instance_type => flavor_id}
                 VmCloudReconfigureRequest.make_request(@request_id, options, current_user)
@@ -75,7 +87,7 @@ module Mixins
             @record = nil
             @sb[:action] = nil
           end
-          if @sb[:explorer]
+          if @sb[:explorer] && !(@breadcrumbs.length >= 2 && previous_breadcrumb_url.include?('miq_request'))
             replace_right_cell
           else
             flash_to_session
@@ -86,7 +98,9 @@ module Mixins
 
         def resize_form_fields
           assert_privileges("instance_resize")
-          @record = find_record_with_rbac(VmOrTemplate, params[:id])
+
+          @request_id = params[:id]
+          @record = find_record_with_rbac(VmOrTemplate, params[:objectId])
           flavors = []
           unless @record.ext_management_system.nil?
             @record.ext_management_system.flavors.each do |ems_flavor|
@@ -96,9 +110,14 @@ module Mixins
               end
             end
           end
-          render :json => {
+          resize_values = {
             :flavors => flavors
           }
+          unless @request_id == 'new'
+            @req = MiqRequest.find_by(:id => @request_id)
+            resize_values[:flavor_id] = @req.options[:instance_type].to_i
+          end
+          render :json => resize_values
         end
       end
     end

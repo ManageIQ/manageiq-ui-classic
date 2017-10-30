@@ -87,7 +87,7 @@ describe VmCloudController do
       expect(VmCloudReconfigureRequest).to receive(:make_request)
       post :resize_vm, :params => {
         :button    => 'submit',
-        :id        => vm_openstack.id,
+        :objectId  => vm_openstack.id,
         :flavor_id => flavor.id
       }
       expect(response.status).to eq(200)
