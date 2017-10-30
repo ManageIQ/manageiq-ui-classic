@@ -551,7 +551,7 @@ class ApplicationController < ActionController::Base
     end
     settings = set_variables_report_data(settings, @view)
 
-    if options[:named_scope] == "in_my_region" && options[:model] == "Tenant"
+    if options && options[:named_scope] == "in_my_region" && options[:model] == "Tenant"
       @view.table = filter_parent_name_tenant(@view.table)
     end
 
