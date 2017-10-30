@@ -5,8 +5,7 @@
 
 .form-group
   %button.btn.btn-default{'data-function'      => 'sendDataWithRx',
-                          'data-function-data' => {:controller => 'cloudTopologyController',
-                                                   :name => 'refresh'}.to_json}
+                          'data-function-data' => {:name => 'refreshTopology'}.to_json}
     %i.fa.fa-refresh.fa-lg
     = _("Refresh")
 %form.search-pf.topology-search{:role     => 'form',

@@ -15,7 +15,7 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
   topologyService.mixinContextMenu(vm, vm);
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
-    if (event.controller === 'cloudTopologyController' && event.name === 'refresh') {
+    if (event.name === 'refreshTopology') {
       vm.refresh();
     }
   });

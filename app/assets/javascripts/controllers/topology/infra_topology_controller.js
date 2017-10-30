@@ -13,6 +13,12 @@ function InfraTopologyCtrl($scope, $http, $interval, $location, topologyService,
 
   topologyService.mixinContextMenu(vm, vm);
 
+  ManageIQ.angular.rxSubject.subscribe(function(event) {
+    if (event.name === 'refreshTopology') {
+      vm.refresh();
+    }
+  });
+
   vm.refresh = function() {
     var id;
     if ($location.absUrl().match("show/$") || $location.absUrl().match("show$")) {

@@ -13,6 +13,12 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
 
   topologyService.mixinContextMenu(vm, vm);
 
+  ManageIQ.angular.rxSubject.subscribe(function(event) {
+    if (event.name === 'refreshTopology') {
+      vm.refresh();
+    }
+  });
+
   vm.refresh = function() {
     var id;
     var type;
