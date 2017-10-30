@@ -582,7 +582,7 @@ class ConfigurationController < ApplicationController
   end
 
   def self.session_key_prefix
-    "configuration"
+    "My Settings"
   end
 
   def get_session_data
