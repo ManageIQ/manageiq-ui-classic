@@ -161,13 +161,15 @@ class GenericObjectDefinitionController < ApplicationController
     @custom_button_group_node = true
     @record = CustomButtonSet.find(from_cid(node.split("-").last))
     @right_cell_text = _("Custom Button Set %{record_name}") % {:record_name => @record.name}
+  rescue Exception => _err
+    root_node_info
   end
 
   def custom_button_node_info
     node = x_node || params[:id]
+    @custom_button_node = true
     @record = CustomButton.find(from_cid(node.split("-").last))
-    @right_cell_text = "#{ui_lookup(:model => "CustomButton")} '#{@record.name}'"
-    'show_custom_button'
+    @right_cell_text = _("Custom Button %{record_name}") % {:record_name => @record.name}
   rescue Exception => _err
     root_node_info
   end
@@ -215,8 +217,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def process_custom_button_node(presenter)
-    @record = CustomButton.find(from_cid(params[:id].split("-").last))
-    @right_cell_text = "#{ui_lookup(:model => "CustomButton")} '#{@record.name}'"
+    custom_button_node_info
     presenter.replace(:main_div, r[:partial => 'show_custom_button'])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
