@@ -2106,8 +2106,6 @@ Rails.application.routes.draw do
 
     :generic_object_definition => {
       :get => %w(
-        custom_button_group_new
-        custom_button_group_edit
         download_data
         download_summary_pdf
         edit

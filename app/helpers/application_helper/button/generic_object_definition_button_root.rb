@@ -1,5 +1,5 @@
 class ApplicationHelper::Button::GenericObjectDefinitionButtonRoot < ApplicationHelper::Button::Basic
   def visible?
-    @record.nil? == true
+    @record.nil?
   end
 end
