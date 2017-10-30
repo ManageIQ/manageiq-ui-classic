@@ -276,26 +276,33 @@ module Menu
       end
 
       def help_menu_section
-        Menu::Section.new(:help, N_('Help'), 'pficon pficon-help', [
-          Menu::Item.new('documentation',
-                         Settings.help_menu.try(:documentation).try(:title) || N_('Documentation'),
-                         'documentation',
-                         {:feature => 'documentation'},
-                         Settings.help_menu.try(:documentation).try(:link) || '/support/index?support_tab=about',
-                         Settings.help_menu.try(:documentation).try(:type)),
-          Menu::Item.new('product',
-                         Settings.help_menu.try(:product).try(:title) || N_('ManageIQ.org'),
-                         'product',
-                         {:feature => 'product'},
-                         Settings.help_menu.try(:product).try(:link) || I18n.t("product.support_website").html_safe,
-                         Settings.help_menu.try(:product).try(:type) || :new_window),
-          Menu::Item.new('about',
-                         Settings.help_menu.try(:about).try(:title) || N_('About'),
-                         'about',
-                         {:feature => 'about'},
-                         Settings.help_menu.try(:about).try(:link) || '#aboutModal',
-                         Settings.help_menu.try(:about).try(:type) || :modal)
-        ], :help)
+        menu = {
+          :documentation => {
+            :title => N_('Documentation'),
+            :href  => '/support/index?support_tab=about',
+            :type  => nil,
+          },
+          :product       => {
+            :title => N_('ManageIQ.org'),
+            :href  => I18n.t("product.support_website").html_safe,
+            :type  => :new_window,
+          },
+          :about         => {
+            :title => N_('About'),
+            :href  => '#aboutModal',
+            :type  => :modal
+          }
+        }.map do |key, value|
+          Menu::Item.new(key,
+                         help_menu_field(key, :title, value[:title]),
+                         key.to_s,
+                         {:feature => key.to_s},
+                         help_menu_field(key, :href, value[:href]),
+                         help_menu_field(key, :type, value[:type]),
+                         value)
+        end
+
+        Menu::Section.new(:help, N_('Help'), 'pficon pficon-help', menu, :help)
       end
 
       def default_menu
@@ -303,6 +310,15 @@ module Menu
          network_menu_section, middleware_menu_section, datawarehouse_menu_section, storage_menu_section,
          control_menu_section, automation_menu_section, optimize_menu_section, monitor_menu_section,
          settings_menu_section, help_menu_section].compact
+      end
+
+      private
+
+      def help_menu_field(key, item, default)
+        lambda do
+          field = Settings.help_menu.try(key).try(:[], item)
+          field.nil? || field.blank? ? default : field
+        end
       end
     end
   end

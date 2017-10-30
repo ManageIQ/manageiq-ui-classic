@@ -1,5 +1,6 @@
 module OpsController::Settings::Common
   extend ActiveSupport::Concern
+  include OpsHelper
 
   logo_dir = File.expand_path(File.join(Rails.root, "public/upload"))
   Dir.mkdir logo_dir unless File.exist?(logo_dir)
@@ -1130,6 +1131,16 @@ module OpsController::Settings::Common
         @customer = rhn_subscription
         @buttons_on = @edit[:new][:servers].detect { |_, value| !!value }
         @updates = rhn_update_information
+      when "settings_help_menu"
+        @in_a_form = true
+        @edit = {:new => {}, :key => 'customize_help_menu'}
+        @edit[:new] = Settings.help_menu
+        help_menu_items.each do |item|
+          @edit[:new][item] = Settings.help_menu.try(item).try(:to_h) || {}
+        end
+        @edit[:current] = copy_hash(@edit[:new])
+        session[:edit] = @edit
+        session[:changed] = false
       end
     when "xx"
       case nodes[1]

@@ -2665,6 +2665,7 @@ Rails.application.routes.draw do
         forest_delete
         forest_form_field_changed
         forest_select
+        help_menu_form_field_changed
         label_tag_mapping_delete
         label_tag_mapping_edit
         label_tag_mapping_update
@@ -2707,6 +2708,7 @@ Rails.application.routes.draw do
         schedule_update
         settings_form_field_changed
         settings_update
+        settings_update_help_menu
         show
         show_product_update
         smartproxy_affinity_field_changed
