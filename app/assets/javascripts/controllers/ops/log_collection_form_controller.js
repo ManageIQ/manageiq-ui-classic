@@ -18,7 +18,6 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     vm.prefix = 'log';
     vm.model = 'logCollectionModel';
     vm.miqDBBackupService = miqDBBackupService;
-    //Request URL:http://localhost:3000/ops/log_depot_edit?button=validate&type=log
     ManageIQ.angular.scope = vm;
 
     if (serverId == 'new') {
