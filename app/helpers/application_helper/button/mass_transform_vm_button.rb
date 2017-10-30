@@ -10,6 +10,6 @@ class ApplicationHelper::Button::MassTransformVmButton < ApplicationHelper::Butt
 
   def destination_exists?
     # Is there a provider that supports import?
-    !ManageIQ::Providers::Redhat::InfraManager.all.select(&:validate_import_vm).empty?
+    ManageIQ::Providers::Redhat::InfraManager.all.detect(&:validate_import_vm).present?
   end
 end
