@@ -40,10 +40,12 @@
     if (initObject.activeTree === 'diagnostics_tree' && ManageIQ.controller === 'ops') {
       var lastSlash = initObject.showUrl.indexOf('/', 5) + 1;
       var itemId = initObject.showUrl.substring(lastSlash);
-      initObject.showUrl = initObject.showUrl.substring(0, lastSlash);
-      if (itemId) {
-        itemId = itemId[itemId.length - 1] === '/' ? itemId.substring(0, itemId.length - 1) : itemId;
-        return _.find(items, {id: itemId});
+      if (itemId.indexOf('?id=') === -1) {
+        initObject.showUrl = initObject.showUrl.substring(0, lastSlash);
+        if (itemId) {
+          itemId = itemId[itemId.length - 1] === '/' ? itemId.substring(0, itemId.length - 1) : itemId;
+          return _.find(items, {id: itemId});
+        }
       }
     }
 
