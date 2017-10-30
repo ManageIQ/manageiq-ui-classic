@@ -35,7 +35,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           t = N_('Add a new Button'),
           t,
           :url   => 'custom_button_new',
-          :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupNew,
+          :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonNew,
         ),
         button(
           :ab_button_edit,
@@ -61,7 +61,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           t = N_('Remove this Button Group from Inventory'),
           t,
           :data    => {'function'      => 'sendDataWithRx',
-                       'function-data' => '{"type": "delete_custom_button_set", "controller": "genericObjectDefinitionToolbarController"}'},
+                       'function-data' => '{"type": "delete_custom_button_set", "controller": "genericObjectDefinitionToolbarController", "entity": "Button Group"}'},
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupDelete,
           :confirm => N_("Warning: This Button Group will be permanently removed!"),
         ),
@@ -71,7 +71,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           t = N_('Remove this Button from Inventory'),
           t,
           :data    => {'function'      => 'sendDataWithRx',
-                       'function-data' => '{"type": "delete_custom_button", "controller": "genericObjectDefinitionToolbarController"}'},
+                       'function-data' => '{"type": "delete_custom_button", "controller": "genericObjectDefinitionToolbarController", "entity": "Button"}'},
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonDelete,
           :confirm => N_("Warning: This Button will be permanently removed!"),
         )

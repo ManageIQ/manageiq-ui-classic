@@ -48,11 +48,20 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupEdit,
         ),
         button(
+          :ab_group_edit,
+          'pficon pficon-add-circle-o fa-lg',
+          t = N_('Edit this Button'),
+          t,
+          :url   => 'custom_button_edit',
+          :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonEdit,
+        ),
+        button(
           :ab_button_new,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Button'),
           t,
-          :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupNew,
+          :url   => 'custom_button_new',
+          :klass => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonNew,
         ),
         button(
           :generic_object_definition_delete,
@@ -82,9 +91,19 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           t = N_('Remove this Button Group from Inventory'),
           t,
           :data    => {'function'      => 'sendDataWithRx',
-                       'function-data' => '{"type": "delete_custom_button_set", "controller": "genericObjectDefinitionToolbarController"}'},
+                       'function-data' => '{"type": "delete_custom_button_set", "controller": "genericObjectDefinitionToolbarController", "entity": "Button Group"}'},
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupDelete,
           :confirm => N_("Warning: This Button Group will be permanently removed!"),
+        ),
+        button(
+          :ab_button_delete,
+          'pficon pficon-delete fa-lg',
+          t = N_('Remove this Button from Inventory'),
+          t,
+          :data    => {'function'      => 'sendDataWithRx',
+                       'function-data' => '{"type": "delete_custom_button", "controller": "genericObjectDefinitionToolbarController", "entity": "Button"}'},
+          :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonButtonDelete,
+          :confirm => N_("Warning: This Button will be permanently removed!"),
         )
       ]
     )

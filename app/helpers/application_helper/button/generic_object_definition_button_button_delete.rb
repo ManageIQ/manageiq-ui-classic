@@ -2,8 +2,4 @@ class ApplicationHelper::Button::GenericObjectDefinitionButtonButtonDelete < App
   def visible?
     @record.kind_of?(CustomButton)
   end
-
-  def disabled?
-    !@record.kind_of?(CustomButton)
-  end
 end

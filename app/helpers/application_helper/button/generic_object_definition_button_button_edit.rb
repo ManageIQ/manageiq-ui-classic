@@ -2,8 +2,4 @@ class ApplicationHelper::Button::GenericObjectDefinitionButtonButtonEdit < Appli
   def visible?
     @record.kind_of?(CustomButton)
   end
-
-  def disabled?
-    !@record.kind_of?(CustomButton)
-  end
 end
