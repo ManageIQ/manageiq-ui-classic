@@ -91,15 +91,12 @@ class EmsCloudController < ApplicationController
     admin_roles["Choose Admin Role"] = nil
     member_roles["Choose Member Role"] = nil
 
-    number_of_new_users = ems.new_users.count
-
     render(:locals => {:selected_admin_role  => selected_admin_role,
                        :selected_member_role => selected_member_role,
                        :selected_password    => selected_password,
                        :selected_verify      => selected_verify,
                        :admin_roles          => admin_roles,
                        :member_roles         => member_roles,
-                       :number_of_new_users  => number_of_new_users,
                        :ems                  => ems})
   end
 end
