@@ -1766,18 +1766,6 @@ module VmCommon
     @detail_sortcol
   end
 
-  # Gather up the vm records from the DB
-  def get_vms(selected = nil)
-    page = params[:page].nil? ? 1 : params[:page].to_i
-    @current_page = page
-    @items_per_page = settings(:perpage, @gtl_type.to_sym) # Get the per page setting for this gtl type
-    if selected                             # came in with a list of selected ids (i.e. checked vms)
-      @record_pages, @records = paginate(:vms, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir, :conditions => ["id IN (?)", selected])
-    else                                      # getting ALL vms
-      @record_pages, @records = paginate(:vms, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
-    end
-  end
-
   def update_buttons(locals)
     locals[:continue_button] = locals[:submit_button] = false
     locals[:continue_button] = true if @edit[:buttons].include?(:continue)
