@@ -12,6 +12,12 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
 
   topologyService.mixinContextMenu(vm, vm);
 
+  ManageIQ.angular.rxSubject.subscribe(function(event) {
+    if (event.name === 'refreshTopology') {
+      vm.refresh();
+    }
+  });
+
   vm.refresh = function() {
     var id;
     if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
