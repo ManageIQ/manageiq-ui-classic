@@ -111,13 +111,18 @@ module OpsController::Settings::Zones
     zone.settings ||= {}
     zone.settings[:proxy_server_ip] = @edit[:new][:proxy_server_ip]
     zone.settings[:concurrent_vm_scans] = @edit[:new][:concurrent_vm_scans]
-    if @edit[:new][:ntp][:server]
-      temp = []
-      @edit[:new][:ntp][:server].each { |svr| temp.push(svr) unless svr.blank? }
-      zone.settings[:ntp] ||= {}
-      zone.settings[:ntp][:server] = temp
-    end
+
+    zone_save_ntp_server_settings(zone)
+
     zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, :save => (mode != :validate))
+  end
+
+  private def zone_save_ntp_server_settings(zone)
+    if (new_servers = new_ntp_servers).present?
+      zone.add_settings_for_resource(:ntp => {:server => new_servers})
+    else
+      zone.remove_settings_path_for_resource(:ntp)
+    end
   end
 
   # Validate the zone record fields
@@ -146,9 +151,7 @@ module OpsController::Settings::Zones
     @edit[:new][:password] = params[:password] if params[:password]
     @edit[:new][:verify] = params[:verify] if params[:verify]
 
-    @edit[:new][:ntp][:server][0] = params[:ntp_server_1] if params[:ntp_server_1]
-    @edit[:new][:ntp][:server][1] = params[:ntp_server_2] if params[:ntp_server_2]
-    @edit[:new][:ntp][:server][2] = params[:ntp_server_3] if params[:ntp_server_3]
+    settings_get_form_vars_sync_ntp
     set_verify_status
   end
 
@@ -175,10 +178,7 @@ module OpsController::Settings::Zones
     @edit[:new][:userid] = @zone.authentication_userid(:windows_domain)
     @edit[:new][:password] = @zone.authentication_password(:windows_domain)
     @edit[:new][:verify] = @zone.authentication_password(:windows_domain)
-    @edit[:new][:ntp] = @zone.settings[:ntp] if !@zone.settings.nil? && !@zone.settings[:ntp].nil?
-
-    @edit[:new][:ntp] ||= {}
-    @edit[:new][:ntp][:server] ||= []
+    @edit[:new][:ntp] = @zone.settings_for_resource.ntp.to_h
 
     session[:verify_ems_status] = nil
     set_verify_status
