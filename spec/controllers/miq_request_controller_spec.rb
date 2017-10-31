@@ -132,12 +132,12 @@ describe MiqRequestController do
     end
 
     it "MiqRequest-type" do
-      content = %w(MiqProvisionRequest MiqProvisionConfiguredSystemRequest VmReconfigureRequest VmCloudReconfigureRequest VmMigrateRequest ServiceTemplateProvisionRequest ServiceReconfigureRequest).collect do |type|
-        {"=" => {"value" => type, "field" => "MiqRequest-type"}}
+      content = MiqRequest::MODEL_REQUEST_TYPES[:Service].keys.collect do |klass|
+        {"=" => {"value" => klass.to_s, "field" => "MiqRequest-type"}}
       end
 
       expect(MiqExpression).to receive(:new) do |h|
-        expect(h.fetch_path("and", 2, "or")).to eq(content)
+        expect(h.fetch_path("and", 2, "or")).to match_array(content)
       end
       controller.send(:prov_condition, {})
     end
