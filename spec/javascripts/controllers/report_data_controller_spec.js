@@ -27,10 +27,7 @@ describe('reportDataController', function () {
     beforeEach(function() {
       $controller.MiQEndpointsService.rootPoint = '/mock_root';
       $httpBackend
-        .whenPOST('/mock_root/report_data', {
-          active_tree: 'vandt_tree',
-          model: 'manageiq/providers/infra_manager/vms',
-        })
+        .when('POST', '/mock_root/report_data')
         .respond(report_data);
     });
 
@@ -76,10 +73,7 @@ describe('reportDataController', function () {
     beforeEach(function(done) {
       $controller.MiQEndpointsService.rootPoint = '/mock_root';
       $httpBackend
-        .whenPOST('/mock_root/report_data', {
-          active_tree: 'vandt_tree',
-          model: 'manageiq/providers/infra_manager/vms',
-        })
+        .when('POST', '/mock_root/report_data')
         .respond(report_data);
       $controller.initController(initObject).then(function() {
         done();
