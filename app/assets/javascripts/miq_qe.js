@@ -99,19 +99,21 @@ ManageIQ.qe.gtl = {
       this.onLoadNext(pageItems.start, this.settings.perpage);
     }.bind(this);
 
-    var queryItem = function(identificator) {
+    var queryItem = function(identificator, columnName, rows, multiple) {
       var foundItem;
-      var nameColumn = this.gtlData.cols.filter(function(data) {return data.text === 'Name';});
+      var nameColumn = this.gtlData.cols.filter(function(data) {
+        return data.text && data.text.toLowerCase() === columnName;
+      });
       if (nameColumn) {
         var index = this.gtlData.cols.indexOf(nameColumn[0]);
-        foundItem = this.gtlData.rows.filter(function(oneRow) {
+        foundItem = rows.filter(function(oneRow) {
           return oneRow.cells[index].text === identificator;
         });
       }
       if (foundItem.length === 0) {
-        foundItem = this.gtlData.rows.filter(function(oneRow) {return oneRow.id == identificator;});
+        foundItem = rows.filter(function(oneRow) {return oneRow.id == identificator;});
       }
-      return foundItem.length === 1 ? foundItem[0] : {};
+      return multiple ? foundItem : foundItem[0];
     }.bind(this);
 
     var processItem = function(item) {
@@ -121,6 +123,7 @@ ManageIQ.qe.gtl = {
           acc[colName] = value.text;
           return acc;
         }.bind(this), {}),
+        gtlType: this.gtlType,
         id: item.id,
         long_id: item.long_id,
         quadicon: item.quadicon,
@@ -226,7 +229,7 @@ ManageIQ.qe.gtl = {
         return responseData;
       },
       'get_item': function(identificator) {
-        var foundItem = queryItem(identificator);
+        var foundItem = queryItem(identificator, 'name', this.gtlData.rows, false);
         if (foundItem.id) {
           var responseData = getItem(foundItem);
           ManageIQ.qe.gtl.result = responseData;
@@ -235,10 +238,27 @@ ManageIQ.qe.gtl = {
         ManageIQ.qe.gtl.result = foundItem;
         return foundItem;
       },
+      'query': function(queryBy) {
+        var rows = this.gtlData.rows;
+        Object.keys(queryBy).forEach(function(oneKey) {
+          rows = queryItem(queryBy[oneKey], oneKey, rows, true);
+        });
+        ManageIQ.qe.gtl.result = rows;
+        return rows;
+      },
       'is_displayed': function(identificator) {
-        var foundItem = queryItem(identificator);
+        var foundItem = queryItem(identificator, 'name', this.gtlData.rows, false);
         ManageIQ.qe.gtl.result = foundItem.id ? true : false;
         return foundItem.id ? true : false;
+      },
+      'pagination_range': function() {
+        ManageIQ.qe.gtl.result = {
+          total: this.settings.items,
+          start: this.settings.startIndex + 1,
+          end: this.settings.endIndex + 1,
+          pageCount: this.settings.total
+        };
+        return ManageIQ.qe.gtl.result;
       },
     };
   },
