@@ -1,7 +1,6 @@
 require 'ostruct'
 
 describe ApplicationController do
-
   context "#find_record_with_rbac" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
@@ -311,6 +310,27 @@ describe ApplicationController do
       allow(tree_2).to receive(:locals_for_render).and_return(:bs_tree => {})
       expect(presenter).to receive(:reload_tree).with(any_args).twice
       controller.send(:reload_trees_by_presenter, presenter, trees)
+    end
+  end
+
+  context "private methods" do
+    describe "#process_params_model_view" do
+      it "with options[:model_name]" do
+        expect(subject.send(:process_params_model_view, {:active_tree => :vms_instances_filter_tree, :model_name => "instances"}, {:model_name => "Vm"})).to eq(Vm)
+      end
+
+      it "with params[:active_tree]" do
+        expect(subject.send(:process_params_model_view, {:active_tree => :vms_instances_filter_tree, :model_name => "instances"}, {})).to eq("Vm")
+      end
+
+      it "with params[:model_name]" do
+        expect(subject.send(:process_params_model_view, {:model_name => "instances"}, {})).to eq(Vm)
+      end
+
+      it "with empty params and options will use the model method" do
+        expect(ApplicationController).to receive(:model).twice.and_return(Vm)
+        expect(subject.send(:process_params_model_view, {}, {})).to eq(Vm)
+      end
     end
   end
 end
