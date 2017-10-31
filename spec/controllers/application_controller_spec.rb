@@ -328,7 +328,7 @@ describe ApplicationController do
       end
 
       it "with empty params and options will use the model method" do
-        expect(ApplicationController).to receive(:model).twice.and_return(Vm)
+        expect(ApplicationController).to receive(:model).and_return(Vm)
         expect(subject.send(:process_params_model_view, {}, {})).to eq(Vm)
       end
     end
