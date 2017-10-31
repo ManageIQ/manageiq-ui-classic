@@ -1166,14 +1166,15 @@ class ApplicationController < ActionController::Base
       # Generate html for the list icon
       if has_listicon
         item = listicon_item(view, row['id'])
-        icon, icon2, image = listicon_glyphicon(item)
+        icon, icon2, image, picture = listicon_glyphicon(item)
         image = "100/#{(@listicon || view.db).underscore}.png" if icon.nil? && image.nil? # TODO: we want to get rid of this
         icon = nil if %w(pxe).include? params[:controller]
         new_row[:img_url] = ActionController::Base.helpers.image_path(image.to_s)
         new_row[:cells] << {:title => _('View this item'),
-                            :image => image,
-                            :icon  => icon,
-                            :icon2 => icon2}
+                            :image   => image,
+                            :picture => picture,
+                            :icon    => icon,
+                            :icon2   => icon2}
 
       end
 
