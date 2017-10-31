@@ -635,7 +635,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
                 matchingTag = _.find(_this.tags, function(nextTag) {
                   return nextTag.id === providerTag.id;
                 });
-                if (matchingTag !== undefined) {
+                if (matchingTag !== undefined  && matchingTag.categorization.category !== undefined  ) {
                   summaryItem.tags.push({
                     id: providerTag.id,
                     categoryName: matchingTag.categorization.category.name,
