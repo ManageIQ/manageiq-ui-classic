@@ -127,8 +127,16 @@ module Mixins
       when 'ManageIQ::Providers::Google::CloudManager'
         [params[:project], params[:service_account], {:service => "compute"}]
       when 'ManageIQ::Providers::Microsoft::InfraManager'
-        endpoint = ems.auth_url(params[:default_hostname], params[:default_api_port])
-        [{:endpoint => endpoint, :user => user, :password => password}, true]
+        connect_opts = {
+          :hostname          => params[:default_hostname],
+          :user              => user,
+          :password          => password,
+          :port              => params[:default_api_port],
+          :realm             => params[:realm],
+          :security_protocol => params[:default_security_protocol],
+        }
+
+        [ems.build_connect_params(connect_opts), true]
       when 'ManageIQ::Providers::Openstack::InfraManager'
         auth_url = ems.auth_url(params[:default_hostname], params[:default_api_port])
         [user, password, auth_url]
