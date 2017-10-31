@@ -95,8 +95,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       var dataPromise = API.get('/api/custom_buttons/' + vm.customButtonRecordId + '?attributes=resource_action')
         .then(getCustomButtonFormData)
         .catch(miqService.handleFailure);
-
-
     } else {
       vm.newRecord = true;
       vm.modelCopy = angular.copy( vm.customButtonModel );
@@ -166,10 +164,11 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       ae_attributes: vm.customButtonModel.resource_action.ae_attributes,
     };
 
-    if (vm.customButtonModel.current_visibility === 'role')
-      vm.customButtonModel.roles =  _.pluck(_.filter(vm.customButtonModel.available_roles, function(role) {
+    if (vm.customButtonModel.current_visibility === 'role') {
+      vm.customButtonModel.roles = _.pluck(_.filter(vm.customButtonModel.available_roles, function(role) {
         return role.value === true;
       }), 'name');
+    }
 
     vm.customButtonModel.visibility = {
       roles: vm.customButtonModel.roles,
@@ -197,7 +196,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
         $http.post('/generic_object_definition/add_button_in_group/' + vm.customButtonGroupRecordId + '?button_id=' + response.results[0].id)
           .then(miqService.redirectBack.bind(vm, saveMsgBtnInGrp, 'success', vm.redirectUrl))
           .catch(miqService.handleFailure);
-      })
+      });
     } else {
       API[method](url, saveObject)
         .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
@@ -228,7 +227,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
     optionsPromise.then(function() {
       if (vm.customButtonModel.current_visibility === 'role') {
-        _.forEach(vm.customButtonModel.available_roles, function (role, index) {
+        _.forEach(vm.customButtonModel.available_roles, function(role, index) {
           if (_.includes(response.visibility.roles, role.name)) {
             vm.customButtonModel.available_roles[index].value = true;
           }
@@ -278,10 +277,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
   function getCustomButtonOptions(response) {
     _.forEach(response.data.custom_button_types, function(name, id) {
       vm.button_types.push({id: id, name: name});
-    });
-
-    _.forEach(response.data.distinct_instances_across_domains, function(item) {
-      vm.ae_instances.push({id: item, name: item});
     });
   }
 

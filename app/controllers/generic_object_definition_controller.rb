@@ -39,6 +39,10 @@ class GenericObjectDefinitionController < ApplicationController
       tag(GenericObject)
       return
     end
+    button_actions
+  end
+
+  def button_actions
     javascript_redirect(
       case params[:pressed]
       when 'generic_object_definition_new'
@@ -176,7 +180,7 @@ class GenericObjectDefinitionController < ApplicationController
     @custom_button_group_node = true
     @record = CustomButtonSet.find(from_cid(node.split("-").last))
     @right_cell_text = _("Custom Button Set %{record_name}") % {:record_name => @record.name}
-  rescue Exception => _err
+  rescue StandardError => _err
     root_node_info
   end
 
@@ -185,7 +189,7 @@ class GenericObjectDefinitionController < ApplicationController
     @custom_button_node = true
     @record = CustomButton.find(from_cid(node.split("-").last))
     @right_cell_text = _("Custom Button %{record_name}") % {:record_name => @record.name}
-  rescue Exception => _err
+  rescue StandardError => _err
     root_node_info
   end
 
