@@ -10,10 +10,6 @@ describe GenericObjectDefinitionController do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
       generic_obj_defn = FactoryGirl.create(:generic_object_definition)
-      allow(controller).to receive(:build_tree)
-      allow(@tree).to receive(:name).and_return('abc')
-      allow(@tree).to receive(:locals_for_render).and_return(:bs_tree => {})
-      allow_message_expectations_on_nil
       get :show, :params => {:id => generic_obj_defn.id}
     end
     it { expect(response.status).to eq(200) }
