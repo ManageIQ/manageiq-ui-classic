@@ -2,7 +2,12 @@
   - if %w(physical_servers).include?(@display)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
-    = render :partial => 'layouts/textual_groups_generic'
+    - case @showtype
+    - when "main"
+      = render :partial => 'layouts/textual_groups_generic'
+    - when "timeline"
+      = render :partial => "layouts/tl_show_async"
+
 
   %physical-server-toolbar#physical_server_show_form{'physical-server-id' => @record.id}
 

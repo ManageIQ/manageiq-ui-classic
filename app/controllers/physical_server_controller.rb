@@ -1,6 +1,8 @@
 class PhysicalServerController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
+  include Mixins::GenericSessionMixin
+  include Mixins::MoreShowActions
 
   before_action :check_privileges
   before_action :session_data
@@ -45,5 +47,10 @@ class PhysicalServerController < ApplicationController
 
     return if %w(physical_server_protect physical_server_tag).include?(params[:pressed]) &&
               @flash_array.nil? # Some other screen is showing, so return
+    if params[:pressed] == "physical_server_timeline"
+      @record = find_record_with_rbac(ManageIQ::Providers::PhysicalInfraManager::PhysicalServer, params[:id])
+      show_timeline
+      javascript_redirect(:action => 'show', :id => @record.id, :display => 'timeline')
+    end
   end
 end
