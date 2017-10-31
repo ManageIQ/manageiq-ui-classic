@@ -1046,6 +1046,7 @@ class ApplicationController < ActionController::Base
           end
         else
           if @temp_title1 != title[1]
+            reports.sort!
             reports = []
             @temp_title1 = title[1]
           end

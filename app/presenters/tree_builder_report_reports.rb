@@ -51,7 +51,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
     node_id = nodes.last.to_i
 
     child_names = @rpt_menu[parent_id][1][node_id][1]
-    count_only ? child_names.size : MiqReport.where(:name => child_names)
+    count_only ? child_names.size : MiqReport.where(:name => child_names).order(:name)
   end
 
   def folder_hash(id, text, blue)
