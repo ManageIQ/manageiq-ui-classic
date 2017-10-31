@@ -18,7 +18,8 @@
               %a{"href" => "#", "ng-click" => "customScope.showHostPage(item, $event)"}
                 %span.no-wrap{"tooltip" => "{{item.hostName}}",
                               "tooltip-placement" => "bottom",
-                              "tooltip-popup-delay" => "1000"}
+                              "tooltip-popup-delay" => "1000",
+                              "ng-class" => "{'transparent': item.hostImg == item.objectTypeImg}"}
                   %img.list-view-type-img{"ng-src" => "{{item.hostImg}}"}
                   {{item.hostName}}
             %div
