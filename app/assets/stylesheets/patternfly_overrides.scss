@@ -723,6 +723,12 @@ td.action > .btn.btn-default {
   }
 }
 
+/// force word-break for long text strings in modals
+
+.modal-body p {
+  word-wrap: break-word;
+}
+
 /// Panel in sidebar doesn't need bottom margin
 .sidebar-pf-left {
   .panel-group {
