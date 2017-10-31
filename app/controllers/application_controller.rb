@@ -1504,7 +1504,7 @@ class ApplicationController < ActionController::Base
     if @search_text && (
         (!@parent && @lastaction == "show_list" && !session[:menu_click]) ||
         (@explorer && !session[:menu_click]) ||
-        (@layout == "miq_policy")) # Added to handle search text from list views in control explorer
+        %w(miq_policy vm_infra).include?(@layout)) # Added to handle search text from list views in control explorer
 
       stxt = @search_text.gsub("_", "`_")                 # Escape underscores
       stxt.gsub!("%", "`%")                               #   and percents
