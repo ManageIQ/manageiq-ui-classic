@@ -40,29 +40,4 @@ describe ApplicationController do
       controller.report_data
     end
   end
-
-  context "#process_params_model_view" do
-    it "should call model_from_active_tree" do
-      allow(controller).to receive(:model_from_active_tree)
-      controller.send(:process_params_model_view, {:active_tree => "vandt_tree"}, {})
-      expect(controller).to have_received(:model_from_active_tree)
-    end
-
-    it "should call controller_to_model" do
-      allow(controller).to receive(:controller_to_model)
-      controller.send(:process_params_model_view, {}, {})
-      expect(controller).to have_received(:controller_to_model)
-    end
-
-    it "should return correct model from params" do
-      options = controller.send(:process_params_model_view,
-                                {:model_name => "manageiq/providers/middleware_managers"}, {})
-      expect(options).to eql(ManageIQ::Providers::MiddlewareManager)
-    end
-
-    it "should return correct model from options" do
-      options = controller.send(:process_params_model_view, {}, {:model_name => "ManageIQ::Providers::MiddlewareManager"})
-      expect(options).to eql(ManageIQ::Providers::MiddlewareManager)
-    end
-  end
 end
