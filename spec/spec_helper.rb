@@ -8,6 +8,7 @@ require 'application_helper'
 require 'rails-controller-testing'
 require 'rspec/rails'
 
+Rails::Controller::Testing.install
 require 'manageiq-ui-classic'
 
 support_path = Pathname.new(__dir__).join('support')
