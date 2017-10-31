@@ -484,21 +484,10 @@ class ApplicationController < ActionController::Base
   # @option options :model [Object]
   #     If model was chosen somehow before calling this method use this model instead of finding it.
   def process_params_model_view(params, options)
-    if options[:model_name]
-      model_view = options[:model_name].constantize
-    end
-
-    if model_view.nil? && params[:active_tree]
-      model_view = model_from_active_tree(params[:active_tree].to_sym)
-    end
-    if model_view.nil? && params[:model_name]
-      model_view = model_string_to_constant(params[:model_name])
-    end
-
-    if model_view.nil?
-      model_view = controller_to_model
-    end
-    model_view
+    model_view   = options[:model_name].constantize if options[:model_name]
+    model_view ||= model_from_active_tree(params[:active_tree].to_sym) if params[:active_tree]
+    model_view ||= model_string_to_constant(params[:model_name]) if params[:model_name]
+    model_view ||  controller_to_model
   end
   private :process_params_model_view
 
