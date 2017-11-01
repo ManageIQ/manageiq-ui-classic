@@ -40,7 +40,8 @@ describe Mixins::CheckedIdMixin do
 
     context 'when user tries to access non-existent record' do
       let(:model) { VmOrTemplate }
-      let(:id) { [vm1.id, vm2.id, 1_000_000_000_004] }
+      let(:missing_vm_id) { VmOrTemplate.maximum(:id) + 1000 }
+      let(:id) { [vm1.id, vm2.id, missing_vm_id] }
       it 'is expected to raise exeption' do
         expect { subject }.to raise_error("Can't access selected records")
       end
