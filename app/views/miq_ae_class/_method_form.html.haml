@@ -97,4 +97,5 @@
                       'data-click_url'      => {:url => url2}.to_json}
                 %i{:class => "fa fa-angle-#{icon} fa-lg"}
 
+      %div{:id => 'inputs_div', :style => @sb[:squash_state] ? "display: none;" : ""}
         = render :partial => "inputs"
