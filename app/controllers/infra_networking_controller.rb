@@ -349,7 +349,8 @@ class InfraNetworkingController < ApplicationController
     @explorer = true
     @sb[:action] = action unless action.nil?
     if @sb[:action] || params[:display]
-      partial, _, @right_cell_text = set_right_cell_vars # Set partial name, action and cell header
+      # Set partial name, action and cell header
+      partial, action_type, @right_cell_text = set_right_cell_vars
     end
 
     if params[:action] == 'x_button' && params[:pressed] == 'infra_networking_tag'
@@ -357,7 +358,39 @@ class InfraNetworkingController < ApplicationController
       return
     end
 
-    return if @in_a_form
+    if action_type == "dialog_form_button_pressed"
+      presenter ||= ExplorerPresenter.new(
+        :active_tree => x_active_tree,
+        :add_nodes   => nil,         # Update the tree with any new nodes
+        :delete_node => nil,      # Remove a new node from the tree
+      )
+      presenter.show(:default_left_cell).hide(:custom_left_cell)
+      presenter.update(:main_div, r[:partial => partial])
+      if @record.try(:dialog_fields)
+        @record.dialog_fields.each do |field|
+          if %w(DialogFieldDateControl DialogFieldDateTimeControl).include?(field.type)
+            presenter[:build_calendar] = {
+              :date_from => field.show_past_dates ? nil : Time.zone.now,
+            }
+          end
+        end
+      end
+      presenter.update(:form_buttons_div, r[
+        :partial => 'layouts/x_dialog_buttons',
+        :locals  => {
+          :action_url => action_type,
+          :record_id  => @edit[:rec_id],
+        }
+      ])
+      presenter.show(:form_buttons_div)
+      presenter[:right_cell_text] = @right_cell_text
+      presenter.set_visibility(false, :toolbar)
+      presenter.set_visibility(false, :adv_searchbox_div)
+      presenter[:lock_sidebar] = true
+      render :json => presenter.for_render
+    end
+
+    return if @in_a_form && action
 
     if !@in_a_form && !@sb[:action]
       get_node_info(x_node)
@@ -409,6 +442,8 @@ class InfraNetworkingController < ApplicationController
                 "layouts/x_gtl"
               elsif @showtype == "item"
                 "layouts/item"
+              elsif params[:pressed] == 'custom_button'
+                "shared/dialogs/dialog_provision"
               else
                 @showtype.to_s
               end
@@ -419,6 +454,8 @@ class InfraNetworkingController < ApplicationController
         :action    => action_type(@sb[:action], 1)
       }
       x_history_add_item(:id => x_node, :text => header, :action => @sb[:action], :item => @item.id)
+    elsif @sb[:action] == "dialog_provision"
+      header = @right_cell_text
     else
       header = _("\"%{action}\" for Switch \"%{name}\"") % {
         :name   => name,
@@ -430,7 +467,7 @@ class InfraNetworkingController < ApplicationController
         x_history_add_item(:id => x_node, :text => header, :action => @sb[:action])
       end
     end
-    action = nil
+    action = @sb[:action] == "button" ? "dialog_form_button_pressed" : nil
     return partial, action, header
   end
 

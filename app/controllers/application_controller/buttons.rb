@@ -246,7 +246,7 @@ module ApplicationController::Buttons
 
   private
 
-  BASE_MODEL_EXPLORER_CLASSES = [Vm, MiqTemplate, Service].freeze
+  BASE_MODEL_EXPLORER_CLASSES = [Vm, MiqTemplate, Service, Switch].freeze
   APPLIES_TO_CLASS_BASE_MODELS = %w(AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem Host LoadBalancer
@@ -299,7 +299,6 @@ module ApplicationController::Buttons
   def custom_buttons
     button = CustomButton.find_by_id(params[:button_id])
     cls = applies_to_class_model(button.applies_to_class)
-
     @explorer = true if BASE_MODEL_EXPLORER_CLASSES.include?(cls)
 
     if params[:id].to_s == 'LIST'
