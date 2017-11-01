@@ -203,6 +203,7 @@ module Mixins
       amqp_hostname = ""
       amqp_port = ""
       amqp_security_protocol = ""
+      console_userid = ""
       smartstate_docker_userid = ""
       ssh_keypair_userid = ""
       metrics_userid = ""
@@ -228,6 +229,11 @@ module Mixins
       if @ems.has_authentication_type?(:amqp)
         amqp_userid = @ems.authentication_userid(:amqp).to_s
         amqp_auth_status = @ems.authentication_status_ok?(:amqp)
+      end
+
+      if @ems.has_authentication_type?(:console)
+        console_userid = @ems.authentication_userid(:console).to_s
+        console_auth_status = true
       end
 
       if @ems.has_authentication_type?(:smartstate_docker)
@@ -353,6 +359,7 @@ module Mixins
                         :provider_id                   => @ems.provider_id || "",
                         :default_hostname              => @ems.connection_configurations.default.endpoint.hostname,
                         :amqp_hostname                 => amqp_hostname,
+                        :console_userid                => console_userid,
                         :metrics_hostname              => metrics_hostname,
                         :metrics_database_name         => metrics_database_name,
                         :metrics_default_database_name => metrics_default_database_name,
@@ -376,6 +383,7 @@ module Mixins
                         :event_stream_selection        => retrieve_event_stream_selection,
                         :ems_controller                => controller_name,
                         :default_auth_status           => default_auth_status,
+                        :console_auth_status           => console_auth_status,
                         :metrics_auth_status           => metrics_auth_status.nil? ? true : metrics_auth_status,
                         :ssh_keypair_auth_status       => ssh_keypair_auth_status.nil? ? true : ssh_keypair_auth_status
       } if controller_name == "ems_infra"
@@ -615,6 +623,7 @@ module Mixins
       endpoints = {:default           => default_endpoint,
                    :ceilometer        => ceilometer_endpoint,
                    :amqp              => amqp_endpoint,
+                   :console           => default_endpoint,
                    :smartstate_docker => default_endpoint,
                    :amqp_fallback1    => amqp_fallback_endpoint1,
                    :amqp_fallback2    => amqp_fallback_endpoint2,
@@ -639,7 +648,7 @@ module Mixins
       authentications = build_credentials(ems, mode)
       configurations = []
 
-      [:default, :ceilometer, :amqp, :amqp_fallback1, :amqp_fallback2, :smartstate_docker, :ssh_keypair, :metrics, :hawkular, :prometheus, :prometheus_alerts].each do |role|
+      [:default, :ceilometer, :amqp, :amqp_fallback1, :amqp_fallback2, :console, :smartstate_docker, :ssh_keypair, :metrics, :hawkular, :prometheus, :prometheus_alerts].each do |role|
         configurations << build_configuration(ems, authentications, endpoints, role)
       end
 
@@ -665,6 +674,11 @@ module Mixins
       if ems.supports_authentication?(:amqp) && params[:amqp_userid]
         amqp_password = params[:amqp_password] ? params[:amqp_password] : ems.authentication_password(:amqp)
         creds[:amqp] = {:userid => params[:amqp_userid], :password => amqp_password, :save => (mode != :validate)}
+      end
+      if ems.kind_of?(ManageIQ::Providers::Vmware::InfraManager) &&
+         ems.supports_authentication?(:console) && params[:console_userid]
+        console_password = params[:console_password] ? params[:console_password] : ems.authentication_password(:console)
+        creds[:console] = {:userid => params[:console_userid], :password => console_password, :save => (mode != :validate)} # FIXME: skateman was here
       end
       if ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager) &&
          ems.supports_authentication?(:smartstate_docker) && params[:smartstate_docker_userid]
