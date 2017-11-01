@@ -28,7 +28,7 @@ describe Mixins::CheckedIdMixin do
     context 'when multiple records are checked in show list' do
       let(:model) { VmOrTemplate }
       let(:id) { [1_000_000_000_001, 1_000_000_000_002] }
-      it { is_expected.to eq([@vm1, @vm2]) }
+      it { is_expected.to match_array([@vm1, @vm2]) }
     end
 
     context 'when user is not authorized to access the record' do
