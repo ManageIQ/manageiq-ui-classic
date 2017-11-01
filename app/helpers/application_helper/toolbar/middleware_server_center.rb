@@ -26,6 +26,11 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
       :enabled => "false",
       :items => [
         button(
+          :middleware_server_protect,
+          'pficon pficon-edit fa-lg',
+          N_('Manage Policies for this Middleware Server'),
+          N_('Manage Policies')),
+        button(
           :middleware_server_tag,
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Middleware Server'),

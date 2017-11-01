@@ -1435,6 +1435,7 @@ Rails.application.routes.draw do
         jdbc_drivers
         dr_download
         dr_report_download
+        protect
       ) +
                compare_get,
       :post => %w(
@@ -1458,6 +1459,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         dr_delete
+        protect
       ) +
                adv_search_post +
                compare_post +
