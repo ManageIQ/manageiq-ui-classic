@@ -33,6 +33,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       amqp_userid: '',
       amqp_password: '',
       amqp_verify: '',
+      console_userid: '',
+      console_password: '',
       metrics_userid: '',
       metrics_password: '',
       metrics_database_name: '',
@@ -123,6 +125,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.provider_region                 = data.provider_region;
       $scope.emsCommonModel.default_userid                  = data.default_userid;
       $scope.emsCommonModel.amqp_userid                     = data.amqp_userid;
+      $scope.emsCommonModel.console_userid                  = data.console_userid;
       $scope.emsCommonModel.metrics_userid                  = data.metrics_userid;
       $scope.emsCommonModel.vmware_cloud_api_version        = data.api_version;
 
@@ -153,6 +156,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       }
       if ($scope.emsCommonModel.amqp_userid !== '') {
         $scope.emsCommonModel.amqp_password = $scope.emsCommonModel.amqp_verify = miqService.storedPasswordPlaceholder;
+      }
+      if ($scope.emsCommonModel.console_userid !== '') {
+        $scope.emsCommonModel.console_password = miqService.storedPasswordPlaceholder;
       }
       if ($scope.emsCommonModel.metrics_userid !== '') {
         $scope.emsCommonModel.metrics_password = $scope.emsCommonModel.metrics_verify = miqService.storedPasswordPlaceholder;
@@ -232,6 +238,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.emsCommonModel.amqp_userid != '' && angular.isDefined($scope.angularForm.amqp_userid) && $scope.angularForm.amqp_userid.$valid &&
        $scope.emsCommonModel.amqp_password != '' && angular.isDefined($scope.angularForm.amqp_password) && $scope.angularForm.amqp_password.$valid &&
        $scope.emsCommonModel.amqp_verify != '' && angular.isDefined($scope.angularForm.amqp_verify) && $scope.angularForm.amqp_verify.$valid)) {
+      return true;
+    } else if(($scope.currentTab == "console") &&
+      ($scope.emsCommonModel.console_userid != '' && $scope.angularForm.console_userid !== undefined &&
+       $scope.emsCommonModel.console_password != '' && $scope.angularForm.console_password !== undefined)) {
       return true;
     } else if(($scope.currentTab == "default" && $scope.emsCommonModel.emstype == "azure") &&
       ($scope.emsCommonModel.azure_tenant_id != '' && $scope.angularForm.azure_tenant_id.$valid) &&
@@ -403,6 +413,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     if ($scope.emsCommonModel.amqp_auth_status === true) {
       $scope.postValidationModelRegistry("amqp");
     }
+    if ($scope.emsCommonModel.console_auth_status === true) {
+      $scope.postValidationModelRegistry("console");
+    }
     if ($scope.emsCommonModel.service_account_auth_status === true) {
       $scope.postValidationModelRegistry("service_account");
     }
@@ -421,6 +434,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     if (!angular.isDefined($scope.postValidationModel)) {
       $scope.postValidationModel = {default: {},
                                     amqp: {},
+                                    console: {},
                                     metrics: {},
                                     ssh_keypair: {},
                                     hawkular: {}}
@@ -462,6 +476,16 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         amqp_userid:               $scope.emsCommonModel.amqp_userid,
         amqp_password:             amqp_password,
         amqp_verify:               amqp_verify,
+      };
+    } else if (prefix === "console") {
+      if ($scope.newRecord) {
+        var console_password = $scope.emsCommonModel.console_password;
+      } else {
+        var console_password = $scope.emsCommonModel.console_password === "" ? "" : miqService.storedPasswordPlaceholder;
+      }
+      $scope.postValidationModel.console = {
+        console_userid:           $scope.emsCommonModel.console_userid,
+        console_password:         console_password,
       };
     } else if (prefix === "metrics") {
       if ($scope.newRecord) {
