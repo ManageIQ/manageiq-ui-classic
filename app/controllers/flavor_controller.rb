@@ -55,8 +55,7 @@ class FlavorController < ApplicationController
         add_flash(_("Delete of Flavor \"%{name}\" was successfully initiated.") % {:name => flavor.name})
       rescue => error
         add_flash(_("Unable to delete Flavor \"%{name}\": %{details}") % {:name    => flavor.name,
-                                                                          :details => error},
-                  :error)
+                                                                          :details => error.message}, :error)
       end
     end
     session[:flash_msgs] = @flash_array
