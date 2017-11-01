@@ -32,14 +32,11 @@ function add_flash(msg, level, options) {
   var textStrong = $('<strong></strong>');
   textStrong.text(msg);
 
-  var alertDiv = $('<div class="' + cls.alert + '"></div>');
+  var alertDiv = $('<div class="' + cls.alert + '"><button class="close" data-dismiss="alert"><span class="pficon pficon-close"></span></button></div>');
   alertDiv.append(iconSpan, textStrong);
 
   var textDiv = $('<div class="flash_text_div"></div>');
-  textDiv.attr('title', __('Click to remove message'));
-  textDiv.on('click', function() {
-    textDiv.remove();
-  });
+
   textDiv.append(alertDiv);
 
   // if options.id is provided, only one flash message with that id may exist
