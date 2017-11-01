@@ -30,6 +30,12 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Middleware Server'),
           N_('Edit Tags')),
+        button(
+          :middleware_server_check_compliance,
+          'fa fa-search fa-lg',
+          N_('Check Compliance of the last known configuration for this Middleware Server'),
+          N_('Check Compliance of Last Known Configuration'),
+          :confirm => N_("Initiate Check Compliance of the last known configuration for this item?")),
       ]
     ),
   ])

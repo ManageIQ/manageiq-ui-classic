@@ -1462,6 +1462,7 @@ Rails.application.routes.draw do
                adv_search_post +
                compare_post +
                exp_post +
+               policy_post +
                save_post
     },
 

@@ -18,6 +18,16 @@ class ApplicationHelper::Toolbar::MiddlewareServersCenter < ApplicationHelper::T
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1+"),
+        button(
+          :middleware_server_check_compliance,
+          'fa fa-search fa-lg',
+          N_('Check Compliance of the last known configuration for these Middleware Servers'),
+          N_('Check Compliance of Last Known Configuration'),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Initiate Check Compliance of the last known configuration for the selected items?"),
+          :enabled      => "false",
+          :onwhen       => "1+")
       ]
     ),
   ])

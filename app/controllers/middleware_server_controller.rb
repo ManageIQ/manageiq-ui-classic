@@ -293,7 +293,7 @@ class MiddlewareServerController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties), %i(relationships smart_management)]
+    [%i(properties smart_management), %i(compliance relationships)]
   end
   helper_method :textual_group_list
 
