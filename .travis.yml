@@ -16,7 +16,10 @@ env:
   - TEST_SUITE=spec:javascript
   - TEST_SUITE=spec:compile
 bundler_args: --no-deployment
-before_install: source tools/ci/before_install.sh
+before_install:
+- rvm @global do gem uninstall bundler -a -x
+- rvm @global do gem install bundler -v 1.15.4
+- source tools/ci/before_install.sh
 before_script: bundle exec rake $TEST_SUITE:setup
 script: bundle exec rake $TEST_SUITE
 before_cache:
