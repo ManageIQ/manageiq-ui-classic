@@ -354,6 +354,11 @@ module ApplicationHelper
       if controller == "ems_network" && action == "show"
         return ems_networks_path
       end
+      if request[:controller] == 'service' && view.db == 'GenericObject'
+        controller = "service"
+        action = 'generic_object'
+        return url_for_only_path(:action => action, :id => params[:id]) + "?show="
+      end
       # If we do not want to use redirect or any kind of click action
       if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex MiqTask).include?(view.db) &&
          %w(miq_task ops miq_task).include?(params[:controller])
@@ -415,7 +420,6 @@ module ApplicationHelper
         controller = "vm_infra" if controller == "template_infra"
         return url_for_only_path(:controller => controller, :action => action, :id => nil) + "/"
       end
-
     else
       # need to add a check for @explorer while setting controller incase building a link for details screen to show items
       # i.e users list view screen inside explorer needs to point to vm_or_template controller
@@ -510,6 +514,9 @@ module ApplicationHelper
       controller = "#{$2.underscore}_#{$1.underscore}"
     when "EmsAutomation"
       controller = "automation_manager"
+    when "GenericObject" && request.parameters[:controller] == 'service'
+      controller = request.parameters[:controller]
+      action = 'generic_object'
     else
       controller = db.underscore
     end

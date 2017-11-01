@@ -237,22 +237,43 @@ class ApplicationHelper::ToolbarBuilder
            x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard).include?(name)
   end
 
+  def cb_send_checked_list
+    return true if %w(generic_objects).include?(@display)
+  end
+
+  def cb_enabled_for_nested
+    return true if %w(generic_objects).include?(@display)
+  end
+
+  def cb_enabled_value_for_nested
+    if @display == 'generic_objects'
+      return false if @lastaction == 'generic_objects'
+      return true if @lastaction == 'generic_object'
+    end
+  end
+
   def create_custom_button(input, model, record)
     button_id = input[:id]
     button_name = input[:name].to_s
-    record_id = record.present? ? record.id : 'LIST'
+    record_id = if cb_send_checked_list
+                  'LIST'
+                else
+                  record.present? ? record.id : 'LIST'
+                end
+    enabled = cb_enabled_for_nested ? cb_enabled_value_for_nested : input[:enabled]
     button = {
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
       :icon      => "#{input[:image]} fa-lg",
       :color     => input[:color],
       :title     => !input[:enabled] && input[:disabled_text] ? input[:disabled_text] : input[:description].to_s,
-      :enabled   => input[:enabled],
+      :enabled   => enabled,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
       :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}"
     }
     button[:text] = button_name if input[:text_display]
+    button[:onwhen] = '1+' if cb_enabled_for_nested
     button
   end
 
@@ -276,23 +297,33 @@ class ApplicationHelper::ToolbarBuilder
     get_custom_buttons(model, record, toolbar_result).collect do |group|
       buttons = group[:buttons].collect { |b| create_custom_button(b, model, record) }
 
+      enabled = if cb_enabled_for_nested
+                  cb_enabled_value_for_nested
+                else
+                  record ? true : buttons.all? { |button| button[:enabled] }
+                end
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
         :icon    => "#{group[:image]} fa-lg",
         :color   => group[:color],
         :title   => group[:description],
-        :enabled => record ? true : buttons.all?{ |button| button[:enabled]},
+        :enabled => enabled,
         :items   => buttons
       }
       props[:text] = group[:text] if group[:text_display]
+      props[:onwhen] = '1+' if cb_enabled_for_nested
 
       {:name => "custom_buttons_#{group[:text]}", :items => [props]}
     end
   end
 
   def custom_toolbar_class(toolbar_result)
-    model = @record ? @record.class : model_for_custom_toolbar
+    model = if @display == 'generic_objects'
+              GenericObjectDefinition
+            else
+              @record ? @record.class : model_for_custom_toolbar
+            end
     build_custom_toolbar_class(model, @record, toolbar_result)
   end
 
