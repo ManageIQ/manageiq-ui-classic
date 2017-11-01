@@ -21,10 +21,10 @@ class FlavorController < ApplicationController
   end
 
   def button
-    if params[:pressed] == 'flavor_create'
-      javascript_redirect(:action => 'new')
-    else
-      delete_flavors
+    case params[:pressed]
+    when 'flavor_create' then javascript_redirect(:action => 'new')
+    when 'flavor_delete' then delete_flavors
+    when 'flavor_tag'    then tag(Flavor)
     end
   end
 
