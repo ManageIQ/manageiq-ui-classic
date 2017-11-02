@@ -291,7 +291,7 @@ class HostController < ApplicationController
       require "net/ssh"
       begin
         verify_host.verify_credentials(params[:type], :remember_host => params.key?(:remember_host))
-      rescue Net::SSH::HostKeyMismatch => e   # Capture the Host key mismatch from the verify
+      rescue MiqException::MiqSshUtilHostKeyMismatch # Capture the Host key mismatch from the verify
         render :update do |page|
           page << javascript_prologue
           new_url = url_for_only_path(:action => "update", :button => "validate", :type => params[:type], :remember_host => "true", :escape => false)
