@@ -1,9 +1,6 @@
 ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', function($http, $scope, $attrs, miqService, miqDBBackupService) {
   var vm = this;
   var init = function() {
-    ManageIQ.angular.scope = $scope;
-
-    // NOTE: vm part of controller_name
     vm.diagnosticsDatabaseModel = {
       action_typ: 'db_backup',
       backup_schedule_type: '',
@@ -17,12 +14,17 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.diagnosticsDatabaseModel );
     vm.dbBackupFormFieldChangedUrl = $attrs.dbBackupFormFieldChangedUrl;
-    vm.submitUrl = $scope.submitUrl = $attrs.submitUrl;
-    vm.validateClicked = miqService.validateWithAjax;
+    vm.submitUrl = $attrs.submitUrl;
     vm.model = 'diagnosticsDatabaseModel';
     vm.saveable = miqService.saveable;
+    vm.prefix = 'log';
+    vm.validateUrl = '/ops/log_depot_validate?button=validate&type=' + vm.prefix;
     ManageIQ.angular.scope = vm;
   };
+
+  vm.validateClicked = function() {
+    miqService.validateWithAjax(vm.validateUrl);
+  }
 
   vm.backupScheduleTypeChanged = function() {
     if (vm.diagnosticsDatabaseModel.backup_schedule_type === '') {
@@ -45,15 +47,13 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
 
   vm.isBasicInfoValid = function() {
     return $scope.angularForm.depot_name.$valid &&
-      $scope.angularForm.uri.$valid &&
-      $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid;
+      $scope.angularForm.uri.$valid;
   };
 
-  $scope.submitButtonClicked = function(confirmMsg) {
+  vm.submitButtonClicked = function(confirmMsg) {
     if (confirm(confirmMsg)) {
       miqService.sparkleOn();
-      var url = $scope.submitUrl;
+      var url = vm.submitUrl;
       miqService.miqAjaxButton(url, true);
     }
   };
@@ -79,11 +79,11 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     return miqDBBackupService.logProtocolSelected(vm.diagnosticsDatabaseModel);
   };
 
-  $scope.sambaBackup = function() {
+  vm.sambaBackup = function() {
     return miqDBBackupService.sambaBackup(vm.diagnosticsDatabaseModel);
   };
 
-  $scope.sambaRequired = function(value) {
+  vm.sambaRequired = function(value) {
     return miqDBBackupService.sambaRequired(vm.diagnosticsDatabaseModel, value);
   };
 

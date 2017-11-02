@@ -6,6 +6,7 @@
                               'data-db-backup-form-field-changed-url' => "/#{controller_name}/db_backup_form_field_changed/",
                               'data-submit-url'                       => "/#{controller_name}/db_backup/",
                               'miq-form'                              => true,
+                              'model'                                 => 'vm.diagnosticsDatabaseModel',
                               'model-copy'                            => 'vm.modelCopy',
                               'form-changed'                          => true,}
   - if @sb[:active_tab] == "diagnostics_database"
@@ -90,16 +91,16 @@
                               :ng_model_uri_prefix => "vm.diagnosticsDatabaseModel.uri_prefix",
                               :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
 
-  = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
-                 :locals  => {:ng_show           => "sambaBackup()",
-                              :vm_scope          => 'true',
-                              :ng_model          => "vm.diagnosticsDatabaseModel",
-                              :ng_reqd_userid    => "sambaRequired(vm.diagnosticsDatabaseModel.log_userid)",
-                              :ng_reqd_password  => "sambaRequired(vm.diagnosticsDatabaseModel.log_password)",
-                              :validate_url      => "log_depot_validate",
-                              :id                => nil,
-                              :valtype           => "log",
-                              :basic_info_needed => true}
+  %auth-credentials{'ng-if'                => 'vm.sambaBackup()',
+                    'form-model'           => 'vm.diagnosticsDatabaseModel',
+                    'model-copy'           => 'vm.modelCopy',
+                    'prefix'               => '{{vm.prefix}}',
+                    'user-required'        => 'vm.sambaRequired(vm.diagnosticsDatabaseModel.log_userid)',
+                    'password-required'    => 'vm.sambaRequired(vm.diagnosticsDatabaseModel.log_password)',
+                    'enable-valid-button'  => 'vm.canValidateBasicInfo()',
+                    'validate'             => 'vm.validateClicked',
+                    'new-record'           => true}
+
   %input{:type => "hidden", :value => "db_backup", :name => "action_typ"}
 
   %table{:width => "100%"}
@@ -109,7 +110,7 @@
                     "disabled-title" => _("Username and matching password fields are needed to run a database backup"),
                     "enabled-title"  => _("Run a Database backup now"),
                     :enabled         => "vm.saveable(angularForm)",
-                    'on-click'       => "submitButtonClicked('#{_("Are you sure you want to Run a Database Backup Now?")}')",
+                    'on-click'       => "vm.submitButtonClicked('#{_("Are you sure you want to Run a Database Backup Now?")}')",
                     :primary         => 'true'}
 
 
