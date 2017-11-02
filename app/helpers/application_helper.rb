@@ -250,18 +250,17 @@ module ApplicationHelper
     end
 
     # @report_data_additional_options[:model] is most important, others can be removed
-    current_model = if @report_data_additional_options && @report_data_additional_options[:model]
-                      @report_data_additional_options[:model]
-                    elsif !@display.nil? && @display != "main"
-                      @display.classify
-                    elsif params[:db]
-                      params[:db].classify
-                    elsif params[:display]
-                      params[:display].classify
-                    elsif defined? controller.class.model
-                      controller.class.model.to_s
-                    end
-    current_model
+    if @report_data_additional_options && @report_data_additional_options[:model]
+      @report_data_additional_options[:model]
+    elsif !@display.nil? && @display != "main"
+      @display.classify
+    elsif params[:db]
+      params[:db].classify
+    elsif params[:display]
+      params[:display].classify
+    elsif defined? controller.class.model
+      controller.class.model.to_s
+    end
   end
 
   def model_string_to_constant(model_string)
