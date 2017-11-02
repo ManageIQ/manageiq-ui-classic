@@ -28,16 +28,18 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           'pficon pficon-trend-up fa-lg',
           t = N_('Resume this Containers Provider'),
           t,
-          :confirm => N_("Resume this Containers Provider?"),
-          :enabled => proc { !@record.enabled? }),
+          :confirm   => N_("Resume this Containers Provider?"),
+          :enabled   => proc { !@record.enabled? },
+          :url_parms => "main_div"),
         button(
           :ems_container_pause,
           'pficon pficon-trend-down fa-lg',
           t = N_('Pause this Containers Provider'),
           t,
-          :confirm => N_("Warning: While this provider is paused no data will be collected from it. " \
+          :confirm   => N_("Warning: While this provider is paused no data will be collected from it. " \
                          "This may cause gaps in inventory, metrics and events!"),
-          :enabled => proc { @record.enabled? }),
+          :enabled   => proc { @record.enabled? },
+          :url_parms => "main_div"),
         button(
           :ems_container_delete,
           'pficon pficon-delete fa-lg',
