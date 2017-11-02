@@ -130,7 +130,9 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
 
   vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
     miqService.sparkleOn();
-    API[method](url, saveObject)
+    API[method](url, saveObject, {
+      skipErrors: [400],  // disable error modal on validation errors
+    })
       .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
       .catch(miqService.handleFailure);
   };
