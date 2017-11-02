@@ -355,14 +355,27 @@ class MiqTaskController < ApplicationController
       scope << [:with_userid, opts[:user_choice]]
     end
 
+    # Add status scope
+    status = (opts.compact.symbolize_keys.keys & %i(ok queued error warn running))
+    if status.any?
+      status_scope_mapping = { :ok => :completed_ok, :warn => :completed_warn, :error => :completed_error } # remap reserved names
+      status.map! { |s| status_scope_mapping[s] ? status_scope_mapping[s] : s }
+      scope << [:with_status_in, *status]
+    else
+      scope << :no_status_selected
+    end
+
     # Add time scope
     if use_times
       t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.now, Time.zone, "raw")
-      scope << [:with_updated_on_between, t.beginning_of_day..t.end_of_day]
+      scope << [:with_updated_on_between, t.beginning_of_day, t.end_of_day]
     end
 
     # Add zone scope
     scope << [:with_zone, opts[:zone]] if opts[:zone] && opts[:zone] != "<all>"
+
+    # Add state scope
+    scope << [:with_state, opts[:state_choice]] if opts[:state_choice] != "all"
 
     scope
   end
