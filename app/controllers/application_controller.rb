@@ -468,7 +468,12 @@ class ApplicationController < ActionController::Base
     end
 
     options[:parent] = options[:parent] || @parent
-    options[:association] = HAS_ASSOCATION[params[:model_name]] if HAS_ASSOCATION.include?(params[:model_name])
+    if HAS_ASSOCATION.include?(params[:model])
+      options[:association] = HAS_ASSOCATION[params[:model]]
+    elsif options[:parent].kind_of?(GenericObject)
+      options.merge!(generate_options(params[:model]))
+    end
+
     options[:selected_ids] = params[:records]
     options
   end
@@ -486,6 +491,10 @@ class ApplicationController < ActionController::Base
   def process_params_model_view(params, options)
     if options[:model_name]
       model_view = options[:model_name].constantize
+    end
+
+    if options[:parent].kind_of?(GenericObject)
+      model_view = options[:parent].generic_object_definition.properties[:associations][params[:model]]
     end
 
     if model_view.nil? && params[:active_tree]
@@ -1718,12 +1727,17 @@ class ApplicationController < ActionController::Base
   end
 
   def get_db_view(db, options = {})
-    if %w(ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm)
-       .include?(db) && options[:association] == "all_vms_and_templates"
+    if unrequired_association_exists?(db, options)
       options[:association] = nil
     end
 
     MiqReport.load_from_view_options(db, current_user, options, db_view_yaml_cache)
+  end
+
+  def unrequired_association_exists?(db, options)
+    %w(ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm)
+      .include?(db) && options[:association] == "all_vms_and_templates" ||
+      controller_name == 'generic_object'
   end
 
   def db_view_yaml_cache
