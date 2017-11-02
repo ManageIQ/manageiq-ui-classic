@@ -1,7 +1,7 @@
 ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', 'API', 'miqService', 'DialogEditor', 'DialogValidation', 'dialogId', function($window, $http, API, miqService, DialogEditor, DialogValidation, dialogId) {
   var vm = this;
 
-  vm.cache = {}
+  vm.cache = {};
   vm.$http = $http;
 
   vm.saveDialogDetails = saveDialogDetails;
@@ -110,7 +110,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
   }
 
   function treeSelectorToggle() {
-    vm.treeSelectorShow = !vm.treeSelectorShow;
+    vm.treeSelectorShow = ! vm.treeSelectorShow;
   }
 
   var beingCloned = null; // hack that solves recursion problem for cloneDeep
