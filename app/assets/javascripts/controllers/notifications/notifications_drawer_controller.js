@@ -97,14 +97,14 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
 
   vm.customScope.getNotficationStatusIconClass = function(notification) {
     var retClass = '';
-    if (notification && notification.data && notification.data.type) {
-      if (notification.data.type == 'info') {
+    if (notification && notification.type) {
+      if (notification.type == 'info') {
         retClass = "pficon pficon-info";
-      } else if ((notification.data.type == 'error') || (notification.data.type == 'danger')) {
+      } else if ((notification.type == 'error') || (notification.type == 'danger')) {
         retClass = "pficon pficon-error-circle-o";
-      } else if (notification.data.type == 'warning') {
+      } else if (notification.type == 'warning') {
         retClass = "pficon pficon-warning-triangle-o";
-      } else if ((notification.data.type == 'success') || (notification.data.type == 'ok')) {
+      } else if ((notification.type == 'success') || (notification.type == 'ok')) {
         retClass = "pficon pficon-ok";
       }
     }
