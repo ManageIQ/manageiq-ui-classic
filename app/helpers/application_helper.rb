@@ -245,22 +245,14 @@ module ApplicationHelper
 
   def model_to_report_data
     # Hosts do not store correct @display in nested attributes (Relationship, Security and Attributes) so use action
-    if @display == "main" && @use_action && params && params[:action] && params[:action] != 'show'
-      return params[:action].classify
-    end
+    return params[:action].classify if @display == "main" && @use_action && params && params[:action] && params[:action] != 'show'
 
     # @report_data_additional_options[:model] is most important, others can be removed
-    if @report_data_additional_options && @report_data_additional_options[:model]
-      @report_data_additional_options[:model]
-    elsif @display && @display != "main"
-      @display.classify
-    elsif params[:db]
-      params[:db].classify
-    elsif params[:display]
-      params[:display].classify
-    elsif defined? controller.class.model
-      controller.class.model.to_s
-    end
+    return @report_data_additional_options[:model] if @report_data_additional_options && @report_data_additional_options[:model]
+    return @display.classify if @display && @display != "main"
+    return params[:db].classify if params[:db]
+    return params[:display].classify if params[:display]
+    controller.class.model.to_s if defined? controller.class.model
   end
 
   def model_string_to_constant(model_string)
