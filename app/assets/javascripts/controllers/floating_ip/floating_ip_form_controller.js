@@ -1,34 +1,42 @@
-ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 'floatingIpFormId', 'miqService', function($http, $scope, floatingIpFormId, miqService) {
+ManageIQ.angular.app.controller('floatingIpFormController', ['floatingIpFormId', 'miqService', 'API', function(floatingIpFormId, miqService, API) {
   var vm = this;
-  vm.floatingIpModel = { floating_ip_address: '' };
-  vm.formId = floatingIpFormId;
-  vm.afterGet = false;
-  vm.modelCopy = angular.copy( vm.floatingIpModel );
-  vm.model = "floatingIpModel";
 
-  ManageIQ.angular.scope = vm;
-  vm.saveable = miqService.saveable;
+  var init = function() {
+    vm.afterGet = false;
 
-  if (floatingIpFormId == 'new') {
-    vm.floatingIpModel.floating_ip_address = "";
-    vm.floatingIpModel.description = "";
-    vm.newRecord = true;
-  } else {
-    miqService.sparkleOn();
+    vm.floatingIpModel = { address: null };
+    vm.available_ems = null;
 
-    $http.get('/floating_ip/floating_ip_form_fields/' + floatingIpFormId)
-      .then(getFloatingIpFormData)
-      .catch(miqService.handleFailure);
-  }
+    vm.formId = floatingIpFormId;
+    vm.model = "floatingIpModel";
+    vm.newRecord = floatingIpFormId === "new";
+    vm.saveable = miqService.saveable;
+
+    if (vm.newRecord) {
+      vm.afterGet = true;
+      vm.modelCopy = angular.copy(vm.floatingIpModel);
+      API.get("/api/providers?expand=resources&attributes=name&filter[]=type='*NetworkManager'").then(function(data) {
+        vm.available_ems = data.resources;
+        miqService.sparkleOff();
+      }).catch(miqService.handleFailure);
+    } else {
+      API.get("/api/floating_ips/" +  floatingIpFormId + "?attributes=cloud_network,cloud_tenant,ext_management_system,network_port").then(function(data) {
+        Object.assign(vm.floatingIpModel, data);
+        vm.afterGet = true;
+        vm.modelCopy = angular.copy(vm.floatingIpModel);
+        miqService.sparkleOff();
+      }).catch(miqService.handleFailure);
+    }
+  };
 
   vm.addClicked = function() {
-    var url = 'create/new' + '?button=add';
+    var url = 'create/new?button=add';
     miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
   };
 
   vm.cancelClicked = function() {
     if (floatingIpFormId == 'new') {
-      var url = '/floating_ip/create/new' + '?button=cancel';
+      var url = '/floating_ip/create/new?button=cancel';
     } else {
       var url = '/floating_ip/update/' + floatingIpFormId + '?button=cancel';
     }
@@ -42,34 +50,18 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
 
   vm.resetClicked = function() {
     vm.floatingIpModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
+    vm.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
 
   vm.filterNetworkManagerChanged = function(id) {
-    miqService.sparkleOn();
-    $http.get('/floating_ip/networks_by_ems/' + id)
-      .then(getNetworkByEmsFormData)
-      .catch(miqService.handleFailure);
-
+    miqService.getCloudNetworksByEms(function(data) {
+      vm.available_networks = data.resources;
+    })(id);
     miqService.getProviderTenants(function(data) {
       vm.available_tenants = data.resources;
     })(id);
   };
 
-  function getFloatingIpFormData(response) {
-    var data = response.data;
-
-    vm.afterGet = true;
-    vm.floatingIpModel.network_port_ems_ref = data.network_port_ems_ref;
-    vm.modelCopy = angular.copy( vm.floatingIpModel );
-    miqService.sparkleOff();
-  }
-
-  function getNetworkByEmsFormData(response) {
-    var data = response.data;
-
-    vm.available_networks = data.available_networks;
-    miqService.sparkleOff();
-  }
+  init();
 }]);
