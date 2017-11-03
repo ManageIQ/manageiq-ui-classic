@@ -21,10 +21,10 @@ class FlavorController < ApplicationController
   end
 
   def button
-    if params[:pressed] == 'flavor_create'
-      javascript_redirect(:action => 'new')
-    else
-      delete_flavors
+    case params[:pressed]
+    when 'flavor_create' then javascript_redirect(:action => 'new')
+    when 'flavor_delete' then delete_flavors
+    when 'flavor_tag'    then tag(Flavor)
     end
   end
 
@@ -55,8 +55,7 @@ class FlavorController < ApplicationController
         add_flash(_("Delete of Flavor \"%{name}\" was successfully initiated.") % {:name => flavor.name})
       rescue => error
         add_flash(_("Unable to delete Flavor \"%{name}\": %{details}") % {:name    => flavor.name,
-                                                                          :details => error},
-                  :error)
+                                                                          :details => error.message}, :error)
       end
     end
     session[:flash_msgs] = @flash_array
