@@ -36,7 +36,7 @@
       - if @record.type == "ServiceAnsiblePlaybook"
         = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list}
-          - if @job && @job.try(:raw_stdout)
+          - if (@job && @job.try(:raw_stdout) rescue false)
             %h3
               = _('Standard Output')
             .form-horizontal.static
