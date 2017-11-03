@@ -828,6 +828,7 @@ module OpsController::OpsRbac
     if rec_type == "group"
       bad = (@edit[:new][:role].blank? || @edit[:new][:group_tenant].blank?)
     end
+    bad = @edit[:new][:name].blank? if rec_type == 'role'
 
     render :update do |page|
       page << javascript_prologue
@@ -856,7 +857,9 @@ module OpsController::OpsRbac
         # don't do anything to lookup box when checkboxes on the right side are checked
         page << set_element_visible('group_lookup', @edit[:new][:lookup]) unless params[:check]
       end
-      changed ? page << 'ManageIQ.changes = true;' : page << 'ManageIQ.changes = false;' if rec_type == 'group'
+      if rec_type == 'group'
+        page << changed ? 'ManageIQ.changes = true;' : 'ManageIQ.changes = false;'
+      end
       page << javascript_for_miq_button_visibility(changed && !bad)
     end
   end
