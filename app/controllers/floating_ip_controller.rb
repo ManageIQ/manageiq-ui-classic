@@ -48,9 +48,9 @@ class FloatingIpController < ApplicationController
       javascript_redirect :action    => 'show_list',
                           :flash_msg => _("Add of new Floating IP was cancelled by the user")
     when "add"
-      @floating_ip = FloatingIp.new
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
+
       if FloatingIp.class_by_ems(ems).supports_create?
         options.delete(:ems_id)
         task_id = ems.create_floating_ip_queue(session[:userid], options)
@@ -128,47 +128,15 @@ class FloatingIpController < ApplicationController
     drop_breadcrumb(
       :name => _("Associate Floating IP \"%{address}\"") % { :address => @floating_ip.address },
       :url  => "/floating_ip/edit/#{@floating_ip.id}")
-  end
-
-  def floating_ip_form_fields
-    assert_privileges("floating_ip_edit")
-    floating_ip = find_record_with_rbac(FloatingIp, params[:id])
-    network_port_ems_ref = if floating_ip.network_port
-                             floating_ip.network_port.ems_ref
-                           else
-                             ""
-                           end
-    # TODO: router field is missing!
-    # :router_id            => floating_ip.router.id,
-    render :json => {
-      :fixed_ip_address     => floating_ip.fixed_ip_address,
-      :floating_ip_address  => floating_ip.address,
-      :cloud_network_name   => floating_ip.cloud_network.try(:name),
-      :network_port_ems_ref => network_port_ems_ref,
-      :cloud_tenant_name    => floating_ip.cloud_tenant.try(:name),
-    }
-  end
-
-  def networks_by_ems
-    assert_privileges("floating_ip_new")
-    networks = []
-    available_networks = Rbac::Filterer.filtered(CloudNetwork.where(:ems_id => params[:id], :external_facing => true))
-    available_networks.each do |network|
-      networks << { 'name' => network.name, 'id' => network.id }
-    end
-    render :json => {
-      :available_networks => networks
-    }
+    render :change
   end
 
   def new
     assert_privileges("floating_ip_new")
     @floating_ip = FloatingIp.new
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Add New Floating IP"),
-      :url  => "/floating_ip/new"
-    )
+    drop_breadcrumb(:name => _("Add New Floating IP"), :url => "/floating_ip/new")
+    render :change
   end
 
   def update
