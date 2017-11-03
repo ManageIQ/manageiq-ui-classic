@@ -461,6 +461,8 @@ describe EmsInfraController do
     end
 
     it "validates credentials for a new record" do
+      expect(ManageIQ::Providers::Microsoft::InfraManager).to receive(:build_connect_params)
+
       post :create, :params => {
         "button"           => "validate",
         "cred_type"        => "default",
