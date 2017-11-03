@@ -22,10 +22,16 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
       name = case klass
              when 'ContainerGroup'
                _('Container Pod')
+             when 'ContainerNode'
+               _('Container Node')
              when 'ContainerProject'
                _('Container Project')
+             when 'MiqGroup'
+               _('Group')
              when 'Switch'
                _('Virtual Infra Switch')
+             when 'User'
+               _('User')
              else
                ui_lookup(:model => klass)
              end

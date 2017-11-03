@@ -13,6 +13,8 @@ module Mixins::CustomButtons
         Mixins::CustomButtons::Result.new(:single)
       elsif @lastaction == "show_list"
         Mixins::CustomButtons::Result.new(:list)
+      elsif x_tree[:tree] == :rbac_tree
+        Mixins::CustomButtons::Result.new(:single)
       else
         'blank_view_tb'
       end
