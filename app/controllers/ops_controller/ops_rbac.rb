@@ -856,6 +856,7 @@ module OpsController::OpsRbac
         # don't do anything to lookup box when checkboxes on the right side are checked
         page << set_element_visible('group_lookup', @edit[:new][:lookup]) unless params[:check]
       end
+      changed ? page << 'ManageIQ.changes = true;' : page << 'ManageIQ.changes = false;' if rec_type == 'group'
       page << javascript_for_miq_button_visibility(changed && !bad)
     end
   end
