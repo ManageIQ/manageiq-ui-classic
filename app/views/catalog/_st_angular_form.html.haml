@@ -23,7 +23,7 @@
                               "auto-focus"     => ""}
           %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}
             = _("Required")
-      .form-group{"ng-class" => "{'has-error': angularForm.description.$invalid}"}
+      .form-group
         %label.col-md-2.control-label{"for" => "description"}
           = _("Description")
         .col-md-8
@@ -32,10 +32,7 @@
                               "name"        => "description",
                               "ng-model"    => "vm.catalogItemModel.description",
                               "maxlength"   => 60,
-                              "miqrequired" => "",
                               "checkchange" => ""}
-          %span.help-block{"ng-show" => "angularForm.description.$error.miqrequired"}
-            = _("Required")
       .form-group
         %label.col-md-2.control-label
           = _("Display in Catalog")
