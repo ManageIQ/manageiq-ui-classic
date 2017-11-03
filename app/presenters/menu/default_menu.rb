@@ -283,7 +283,7 @@ module Menu
             :type  => nil,
           },
           :product       => {
-            :title => N_('ManageIQ.org'),
+            :title => I18n.t('product.support_website_text'),
             :href  => I18n.t("product.support_website").html_safe,
             :type  => :new_window,
           },
