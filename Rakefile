@@ -82,7 +82,7 @@ module Jasmine
 
     def initialize
       # hack around Travis resolving localhost to IPv6 and failing
-      @host = '127.0.0.1'
+      @host = 'http://127.0.0.1'
       old_initialize
     end
   end
