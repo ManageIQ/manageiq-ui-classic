@@ -19,7 +19,9 @@ class ServiceController < ApplicationController
 
   def button
     if @lastaction == 'generic_objects'
-      params[:id] = @sb[:rec_id]
+      params[:id] = 'LIST'
+    elsif @lastaction.starts_with?('generic_objects')
+      params[:id]     #params[:id] = @sb[:rec_id]
     end
     custom_buttons if params[:pressed] == "custom_button"
     return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
@@ -185,6 +187,7 @@ class ServiceController < ApplicationController
       @item = @record.generic_objects.find(from_cid(id)).first
       item_breadcrumbs(_("Generic Objects"), 'generic_objects')
       @view = get_db_view(GenericObject, :association => "generic_objects")
+      @lastaction = "generic_objects_#{@item_id}"
       @sb[:rec_id] = @item.id
       show_item
     else
@@ -459,7 +462,7 @@ class ServiceController < ApplicationController
           if partial == 'layouts/x_gtl'
             cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
             partial_locals[:action_url] = @lastaction
-            presenter[:parent_id] = @record.id           # Set parent rec id for JS function miqGridSort to build URL
+            presenter[:parent_id] = @record.id  # Set parent rec id for JS function miqGridSort to build URL
             presenter[:parent_class] = params[:controller] # Set parent class for URL also
           else
             partial_locals[:item_id] = @item.id

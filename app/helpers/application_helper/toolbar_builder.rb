@@ -240,19 +240,26 @@ class ApplicationHelper::ToolbarBuilder
   def create_custom_button(input, model, record)
     button_id = input[:id]
     button_name = input[:name].to_s
-    record_id = record.present? ? record.id : 'LIST'
+    enabled = input[:enabled]
+    if @lastaction.starts_with?('generic_objects')
+      record_id = 'LIST'
+      enabled = @lastaction != 'generic_objects'
+    else
+      record_id = record.present? ? record.id : 'LIST'
+    end
     button = {
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
       :icon      => "#{input[:image]} fa-lg",
       :color     => input[:color],
       :title     => !input[:enabled] && input[:disabled_text] ? input[:disabled_text] : input[:description].to_s,
-      :enabled   => input[:enabled],
+      :enabled   => enabled,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
       :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}"
     }
     button[:text] = button_name if input[:text_display]
+    button[:onwhen] = '1+' if record_id == 'LIST'
     button
   end
 
@@ -276,23 +283,33 @@ class ApplicationHelper::ToolbarBuilder
     get_custom_buttons(model, record, toolbar_result).collect do |group|
       buttons = group[:buttons].collect { |b| create_custom_button(b, model, record) }
 
+      enabled = if @lastaction == 'generic_objects'
+                  false
+                else
+                  record ? true : buttons.all?{ |button| button[:enabled]}
+                end
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
         :icon    => "#{group[:image]} fa-lg",
         :color   => group[:color],
         :title   => group[:description],
-        :enabled => record ? true : buttons.all?{ |button| button[:enabled]},
+        :enabled => enabled,
         :items   => buttons
       }
       props[:text] = group[:text] if group[:text_display]
+      props[:onwhen] = '1+' if @lastaction == 'generic_objects'
 
       {:name => "custom_buttons_#{group[:text]}", :items => [props]}
     end
   end
 
   def custom_toolbar_class(toolbar_result)
-    model = @record ? @record.class : model_for_custom_toolbar
+    if @lastaction.starts_with?('generic_objects')
+      model = GenericObjectDefinition
+    else
+      model = @record ? @record.class : model_for_custom_toolbar
+    end
     build_custom_toolbar_class(model, @record, toolbar_result)
   end
 
@@ -315,13 +332,6 @@ class ApplicationHelper::ToolbarBuilder
         buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
         toolbar.button_group("custom_buttons_", buttons)
       end
-      if @lastaction == 'generic_objects'
-        generic_object_buttons = record_to_generic_object_buttons(record)
-        unless generic_object_buttons.nil? || generic_object_buttons.empty?
-          buttons = generic_object_buttons.collect { |b| create_custom_button(b, model, record) }
-          toolbar.button_group("custom_buttons_", buttons)
-        end
-      end
     end
 
     toolbar
@@ -343,14 +353,6 @@ class ApplicationHelper::ToolbarBuilder
     return [] unless record.kind_of?(Service)
     return [] if record.service_template.nil?
     record.service_template.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
-  end
-
-  def record_to_generic_object_buttons(record)
-    return [] unless record.kind_of?(Service)
-    return [] if record.generic_objects.nil?
-
-    cbs = CustomButton.where(:applies_to_class => "GenericObjectDefinition", :applies_to_id => record.generic_objects.collect {|g| g.generic_object_definition.id})
-    cbs.collect { |cb| create_raw_custom_button_hash(cb, record) } if cbs.count > 0
   end
 
   def get_custom_buttons(model, record, toolbar_result)
