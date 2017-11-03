@@ -179,7 +179,7 @@ div#saml-login hr {
 
 /* Table customizations */
 
-table.table td {
+table.table td:not(.table-view-pf-select) { //Force word break but prevent bs-switch from wrapping
   word-break: break-all
 }
 
