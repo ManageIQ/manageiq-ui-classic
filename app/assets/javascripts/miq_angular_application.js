@@ -6,6 +6,7 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'patternfly.charts',
   'frapontillo.bootstrap-switch',
   'angular.validators',
+  'formly',
   'miq.api',
   'miq.card',
   'miq.compat',
