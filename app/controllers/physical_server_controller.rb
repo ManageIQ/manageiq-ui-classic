@@ -39,7 +39,7 @@ class PhysicalServerController < ApplicationController
       %i(properties networks relationships power_management assets firmware_details network_adapters smart_management),
     ]
   end
-  helper_method :textual_group_list
+  helper_method(:textual_group_list)
 
   def button
     assign_policies(PhysicalServer) if params[:pressed] == "physical_server_protect"
@@ -52,5 +52,16 @@ class PhysicalServerController < ApplicationController
       show_timeline
       javascript_redirect(:action => 'show', :id => @record.id, :display => 'timeline')
     end
+  end
+
+  def provision
+    provisioning_ids = find_checked_ids_with_rbac(PhysicalServer)
+    provisioning_ids.push(find_id_with_rbac(PhysicalServer, params[:id])) if provisioning_ids.empty?
+
+    javascript_redirect(:controller     => "miq_request",
+                        :action         => "prov_edit",
+                        :prov_id        => provisioning_ids,
+                        :org_controller => "physical_server",
+                        :escape         => false)
   end
 end

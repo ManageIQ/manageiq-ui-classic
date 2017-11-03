@@ -193,6 +193,26 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
           ),
         ]
       ),
+      select(
+        :physical_server_lifecycle_choice,
+        'fa fa-recycle fa-lg',
+        t = N_('Lifecycle'),
+        t,
+        :enabled => true,
+        :items   => [
+          button(
+            :physical_server_provision,
+            'pficon pficon-add-circle-o fa-lg',
+            t = N_('Provision Physical Server'),
+            t,
+            :url       => "provision",
+            :url_parms => "main_div",
+            :enabled   => true,
+            :onwhen    => "0+",
+            :klass     => ApplicationHelper::Button::ConfiguredSystemProvision
+          )
+        ]
+      )
     ]
   )
 
