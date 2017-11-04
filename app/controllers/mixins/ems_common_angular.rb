@@ -141,7 +141,7 @@ module Mixins
         auth_url = ems.auth_url(params[:default_hostname], params[:default_api_port])
         [user, password, auth_url]
       when 'ManageIQ::Providers::Redhat::InfraManager'
-        [{:username => user, :password => password, :server => params[:default_hostname], :port => params[:default_api_port], :scheme => "http", :version => 4}]
+        [{:username => user, :password => password, :server => params[:default_hostname], :port => params[:default_api_port], :scheme => 'https', :version => 4}]
       when 'ManageIQ::Providers::Vmware::InfraManager'
         [{:pass => password, :user => user, :ip => params[:default_hostname]}]
       when 'ManageIQ::Providers::Nuage::NetworkManager'
