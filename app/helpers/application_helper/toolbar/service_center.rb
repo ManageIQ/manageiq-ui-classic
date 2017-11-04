@@ -5,7 +5,6 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
       'fa fa-cog fa-lg',
       t = N_('Configuration'),
       t,
-      :onwhen => "1+",
       :items  => [
         button(
           :service_edit,
