@@ -263,6 +263,17 @@ describe VmInfraController do
     expect(response.status).to eq(200)
   end
 
+  it 'can reset selected items' do
+    get :show, :params => { :id => vm_vmware.id }
+    expect(response).to redirect_to(:action => 'explorer')
+
+    post :explorer
+    expect(response.status).to eq(200)
+
+    post :x_button, :params => { :pressed => 'vm_reset', :id => vm_vmware.id }
+    expect(response.status).to eq(200)
+  end
+
   it 'can migrate selected items' do
     get :show, :params => { :id => vm_vmware.id }
     expect(response).to redirect_to(:action => 'explorer')
