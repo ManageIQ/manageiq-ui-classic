@@ -26,10 +26,21 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
       :enabled => "false",
       :items => [
         button(
+          :middleware_server_protect,
+          'pficon pficon-edit fa-lg',
+          N_('Manage Policies for this Middleware Server'),
+          N_('Manage Policies')),
+        button(
           :middleware_server_tag,
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Middleware Server'),
           N_('Edit Tags')),
+        button(
+          :middleware_server_check_compliance,
+          'fa fa-search fa-lg',
+          N_('Check Compliance of the last known configuration for this Middleware Server'),
+          N_('Check Compliance of Last Known Configuration'),
+          :confirm => N_("Initiate Check Compliance of the last known configuration for this item?")),
       ]
     ),
   ])
