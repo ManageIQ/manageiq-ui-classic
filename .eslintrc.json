@@ -1,6 +1,5 @@
 {
   "root": true,
-  "installedESLint": true,
   "env": {
     "browser": true,
     "jquery": true
