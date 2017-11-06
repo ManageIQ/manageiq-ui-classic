@@ -358,8 +358,12 @@ module Mixins
 
     def miq_search_node
       options = {:model => "ConfiguredSystem"}
+      if x_active_tree == :configuration_scripts_tree
+        options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
+                   :gtl_dbname => "automation_manager_configuration_scripts"}
+      end
       process_show_list(options)
-      @right_cell_text = _("All Configured Systems")
+      @right_cell_text = x_active_tree == :configuration_scripts_tree ? _("All Ansible Tower Job Templates") : _("All Configured Systems")
     end
 
     def rendering_objects
