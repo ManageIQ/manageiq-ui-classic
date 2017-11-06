@@ -42,6 +42,8 @@ ManageIQ.angular.app.directive('formChanged', function() {
       };
 
       scope.$watchCollection(ctrl.model || scope.model, updateDirty);
+      // for cases that modelCopy is not created in same tick as any change of model
+      scope.$watchCollection(ctrl.modelCopy || 'modelCopy', updateDirty);
       // for form elements which do not change the model (but do make the form dirty)
       scope.$watch(attr.name + '.$dirty', updateDirty);
     },
