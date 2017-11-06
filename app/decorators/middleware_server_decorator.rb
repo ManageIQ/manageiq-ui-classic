@@ -6,11 +6,11 @@ class MiddlewareServerDecorator < MiqDecorator
   def fileicon
     case product
     when 'Hawkular'
-      'svg/vendor-hawkular.svg'
+      '/assets/svg/vendor-hawkular.svg'
     when /EAP$/
-      'svg/vendor-jboss-eap.svg'
+      '/assets/svg/vendor-jboss-eap.svg'
     else
-      'svg/vendor-wildfly.svg'
+      '/assets/svg/vendor-wildfly.svg'
     end
   end
 end
