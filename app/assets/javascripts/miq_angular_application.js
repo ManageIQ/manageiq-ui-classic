@@ -14,6 +14,8 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'ManageIQ.fonticonPicker',
   'miqStaticAssets.dialogEditor',
   'miqStaticAssets.dialogUser',
+  'miqStaticAssets.treeSelector',
+  'miqStaticAssets.treeView',
 ]);
 miqHttpInject(ManageIQ.angular.app);
 
