@@ -1,6 +1,6 @@
 ManageIQ.angular.app.component('mainCustomButtonFormComponent', {
   bindings: {
-    genericObjectDefnRecordId: '@?',
+    genericObjectDefinitionRecordId: '@?',
     customButtonGroupRecordId: '@?',
     customButtonRecordId: '@?',
     redirectUrl: '@',
@@ -178,7 +178,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       name: vm.customButtonModel.name,
       description: vm.customButtonModel.description,
       applies_to_class: 'GenericObjectDefinition',
-      applies_to_id: vm.genericObjectDefnRecordId,
+      applies_to_id: vm.genericObjectDefinitionRecordId,
       options: vm.customButtonModel.options,
       resource_action: vm.customButtonModel.resource_action,
       visibility: vm.customButtonModel.visibility,
@@ -223,7 +223,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
     vm.customButtonModel.current_visibility = response.visibility.roles[0] === '_ALL_' || response.visibility.roles.length === 0 ? 'all' : 'role';
 
-    vm.genericObjectDefnRecordId = response.applies_to_id;
+    vm.genericObjectDefinitionRecordId = response.applies_to_id;
 
     optionsPromise.then(function() {
       if (vm.customButtonModel.current_visibility === 'role') {
