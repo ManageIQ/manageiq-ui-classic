@@ -149,6 +149,8 @@ module Mixins
         [user, params[:default_password], endpoint_opts]
       when 'ManageIQ::Providers::Lenovo::PhysicalInfraManager'
         [user, password, params[:default_hostname], params[:default_api_port], "token", false]
+      when 'ManageIQ::Providers::Hawkular::MiddlewareManager'
+        [params[:default_hostname], params[:default_api_port], user, password, params[:default_security_protocol], params[:default_tls_ca_certs]]
       end
     end
 
