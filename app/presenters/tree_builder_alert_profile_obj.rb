@@ -8,7 +8,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def override(node, object, _pid, _options)
-    node[:text] = (object.name.presence || object.description) unless object.kind_of?(MiddlewareServer)
+    node[:text] = (object.name.presence || object.description) unless object.kind_of?(MiddlewareServer) || object.kind_of?(MiddlewareDatasource) || object.kind_of?(MiddlewareMessaging)
     node[:hideCheckbox] = false
     node[:select] = @selected.include?(object.id)
   end
