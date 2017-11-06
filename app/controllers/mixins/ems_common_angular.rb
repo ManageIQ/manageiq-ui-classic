@@ -137,8 +137,7 @@ module Mixins
 
         [ems.build_connect_params(connect_opts), true]
       when 'ManageIQ::Providers::Openstack::InfraManager'
-        auth_url = ems.auth_url(params[:default_hostname], params[:default_api_port])
-        [user, password, auth_url]
+        [password, params.except(:default_password)]
       when 'ManageIQ::Providers::Redhat::InfraManager'
         [{:username => user, :password => password, :server => params[:default_hostname], :port => params[:default_api_port], :scheme => "http", :version => 4}]
       when 'ManageIQ::Providers::Vmware::InfraManager'
