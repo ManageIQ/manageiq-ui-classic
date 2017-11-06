@@ -202,7 +202,6 @@ class GenericObjectDefinitionController < ApplicationController
 
     presenter[:osf_node] = x_node
     presenter[:record_id] = @record.try(:id)
-    presenter[:activate_node] = x_active_tree.to_s
     presenter[:right_cell_text] = @right_cell_text
 
     render :json => presenter.for_render
