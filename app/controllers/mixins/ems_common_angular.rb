@@ -83,10 +83,9 @@ module Mixins
     def create_ems_button_validate
       @in_a_form = true
       ems_type = model.model_from_emstype(params[:emstype])
-      # TODO: queue authentication for container providers
-      result, details = if params[:controller] != "ems_container" && session[:selected_roles].try(:include?, 'user_interface')
+      result, details = if %w(ems_cloud ems_infra).include?(params[:controller]) && session[:selected_roles].try(:include?, 'user_interface')
                           realtime_raw_connect(ems_type)
-                        elsif params[:controller] != "ems_container"
+                        elsif %w(ems_cloud ems_infra).include?(params[:controller])
                           ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
                         else
                           realtime_authentication_check(ems_type.new)
