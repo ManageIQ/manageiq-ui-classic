@@ -42,13 +42,13 @@ class GenericObjectDefinitionController < ApplicationController
     javascript_redirect(
       case params[:pressed]
       when 'generic_object_definition_new'
-        { :action => 'new' }
+        {:action => 'new'}
       when 'generic_object_definition_edit'
-        { :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
+        {:action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks])}
       when 'ab_group_new'
-        { :action => 'custom_button_group_new', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
+        {:action => 'custom_button_group_new', :id => from_cid(params[:id] || params[:miq_grid_checks])}
       when 'ab_group_edit'
-        { :action => 'custom_button_group_edit', :id => from_cid(params[:id]) }
+        {:action => 'custom_button_group_edit', :id => from_cid(params[:id])}
       end
     )
   end
