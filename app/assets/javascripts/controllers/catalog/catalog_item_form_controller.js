@@ -312,6 +312,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel[prefix + '_variables'][vm.catalogItemModel[prefix + '_key']] =  vm.catalogItemModel[prefix + '_value'];
     vm.catalogItemModel[prefix + '_key'] = '';
     vm.catalogItemModel[prefix + '_value'] = '';
+    return true;
   };
 
   vm.provisioning_repository_selected = function() {
@@ -349,7 +350,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel[prefix + '_variables'][vm.catalogItemModel.original_key] = vm.catalogItemModel.original_key_value;
   };
 
-  vm.saveKeyValue = function(prefix, _index) {
+  vm.saveKeyValue = function(prefix) {
     if (vm.catalogItemModel.key in vm.catalogItemModel[prefix + '_variables'] && vm.catalogItemModel.original_key_value === vm.catalogItemModel.key_value) {
       return miqService.miqFlash("error", __("Variable name must be unique"));
     }
@@ -361,6 +362,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     }
 
     vm.catalogItemModel[prefix + '_variables'][vm.catalogItemModel.key] = vm.catalogItemModel.key_value;
+    return true;
   };
 
   vm.toggleDialogSelection = function(prefix, selected_value) {
