@@ -110,11 +110,6 @@ class GenericObjectDefinitionController < ApplicationController
     node.split('-').first == 'xx'
   end
 
-  def retrieve_node_type(node)
-    return 'root' if node == 'root'
-    node.split('-').first
-  end
-
   def node_info
     node = x_node || params[:id]
 
