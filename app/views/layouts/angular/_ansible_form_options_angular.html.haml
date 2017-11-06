@@ -245,7 +245,7 @@
                       %i.pficon.pficon-close
 
                   %div{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)", :class => "btn-container"}
-                    %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.editKeyValue('#{prefix}', this.arr[0], this.arr[1], this.arr[2], $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
+                    %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.editKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
                       %span{:class => "pficon pficon-edit"}
                     %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.removeKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
                       %span{:class => "pficon pficon-delete"}
