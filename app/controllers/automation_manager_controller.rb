@@ -63,13 +63,13 @@ class AutomationManagerController < ApplicationController
     session[:edit] = @edit
     @explorer = true
 
-    if x_active_tree != :automation_manager_cs_filter_tree || x_node == "root"
+    if !filtering? || x_node == "root"
       listnav_search_selected(0)
     else
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
-      if x_active_tree == :automation_manager_cs_filter_tree && @nodetype == "xx-csa"
-        search_id = @nodetype == "root" ? 0 : from_cid(id)
+      if filtering? && %w(xx-csa ms).include?(@nodetype)
+        search_id = from_cid(id)
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
            MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
@@ -236,7 +236,8 @@ class AutomationManagerController < ApplicationController
     else
       default_node
     end
-    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :automation_manager_cs_filter && @edit && @edit[:adv_search_applied]
+    # Edit right cell text if using filter
+    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && filtering? && @edit && @edit[:adv_search_applied]
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
       x_history_add_item(:id     => x_node,
@@ -246,6 +247,10 @@ class AutomationManagerController < ApplicationController
       x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
     {:view => @view, :pages => @pages}
+  end
+
+  def filtering?
+    %w(automation_manager_cs_filter configuration_scripts).include?(x_tree[:type].to_s)
   end
 
   def provider_node(id, model)
