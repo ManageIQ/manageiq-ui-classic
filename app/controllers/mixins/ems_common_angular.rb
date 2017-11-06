@@ -125,7 +125,7 @@ module Mixins
       when 'ManageIQ::Providers::Vmware::CloudManager'
         [params[:default_hostname], params[:default_api_port], user, password, true]
       when 'ManageIQ::Providers::Google::CloudManager'
-        [params[:project], params[:service_account], {:service => "compute"}]
+        [params[:project], params[:service_account], {:service => "compute"}, true]
       when 'ManageIQ::Providers::Microsoft::InfraManager'
         [{:endpoint => params[:default_hostname], :user => user, :password => password}, true]
       when 'ManageIQ::Providers::Openstack::InfraManager'
