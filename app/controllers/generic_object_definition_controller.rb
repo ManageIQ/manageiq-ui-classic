@@ -94,29 +94,26 @@ class GenericObjectDefinitionController < ApplicationController
 
   private
 
-  def root_node?(node)
-    node == 'root'
-  end
-
-  def god_node?(node)
-    node.split('-').first == 'god'
-  end
-
-  def custom_button_group_node?(node)
-    node.split('-').first == 'cbg'
-  end
-
-  def actions_node?(node)
-    node.split('-').first == 'xx'
+  def node_type(node)
+    node_prefix = node.split('-').first
+    case node_prefix
+    when 'root' then :root
+    when 'god'  then :god
+    when 'cbg'  then :button_group
+    when 'xx'   then :actions
+    else        raise 'Invalid node type.'
+    end
   end
 
   def node_info
     node = x_node || params[:id]
 
-    root_node_info if root_node?(node)
-    god_node_info(node) if god_node?(node)
-    actions_node_info(node) if actions_node?(node)
-    custom_button_group_node_info(node) if custom_button_group_node?(node)
+    case node_type(node)
+    when :root         then root_node_info
+    when :god          then god_node_info(node)
+    when :actions      then actions_node_info(node)
+    when :button_group then custom_button_group_node_info(node)
+    end
   end
 
   def root_node_info
@@ -189,10 +186,12 @@ class GenericObjectDefinitionController < ApplicationController
 
     node = x_node || params[:id]
 
-    v_tb = process_root_node(presenter) if root_node?(node)
-    v_tb = process_god_node(presenter, node) if god_node?(node)
-    v_tb = process_custom_button_group_node(presenter, node) if custom_button_group_node?(node)
-    v_tb = process_actions_node(presenter, node) if actions_node?(node)
+    v_tb = case node_type(node)
+           when :root         then process_root_node(presenter)
+           when :god          then process_god_node(presenter, node)
+           when :actions      then process_actions_node(presenter, node)
+           when :button_group then process_custom_button_group_node(presenter, node)
+           end
 
     c_tb = build_toolbar(center_toolbar_filename)
     h_tb = build_toolbar("x_history_tb")
