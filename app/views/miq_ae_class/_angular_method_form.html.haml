@@ -37,7 +37,7 @@
                             "auto-focus"     => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}
           = _("Required")
-    .form-group{"ng-class" => "{'has-error': angularForm.display_name.$invalid}"}
+    .form-group
       %label.col-md-2.control-label{"for" => "display_name"}
         = _("Display Name")
       .col-md-8
@@ -46,10 +46,7 @@
                             "name"        => "display_name",
                             "ng-model"    => "vm.aeMethodModel.display_name",
                             "maxlength"   => 60,
-                            "miqrequired" => "",
                             "checkchange" => ""}
-        %span.help-block{"ng-show" => "angularForm.display_name.$error.miqrequired"}
-          = _("Required")
 
     = render :partial => "layouts/angular/ansible_form_options_angular",
                  :locals  => {:ng_show           => true,
