@@ -1,5 +1,23 @@
-ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'miqService', 'DialogEditor', 'DialogValidation', 'dialogId', function($window, API, miqService, DialogEditor, DialogValidation, dialogId) {
+ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', 'API', 'miqService', 'DialogEditor', 'DialogValidation', 'dialogId', function($window, $http, API, miqService, DialogEditor, DialogValidation, dialogId) {
   var vm = this;
+
+  vm.cache = {};
+  vm.$http = $http;
+
+  vm.saveDialogDetails = saveDialogDetails;
+  vm.dismissChanges = dismissChanges;
+  vm.setupModalOptions = setupModalOptions;
+
+  // treeSelector related
+  vm.lazyLoad = lazyLoad;
+  vm.onSelect = onSelect;
+  vm.node = {};
+  vm.treeSelectorToggle = treeSelectorToggle;
+  vm.treeSelectorIncludeDomain = false;
+  vm.treeSelectorShow = false;
+  vm.$http.get('/tree/automate_entrypoint').then(function(response) {
+    vm.treeSelectorData = response.data;
+  });
 
   if (dialogId === 'new') {
     var dialogInitContent = {
@@ -59,10 +77,6 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     vm.DialogEditor = DialogEditor;
   }
 
-  vm.saveDialogDetails = saveDialogDetails;
-  vm.dismissChanges = dismissChanges;
-  vm.setupModalOptions = setupModalOptions;
-
   function setupModalOptions(type, tab, box, field) {
     var components = {
       tab: 'dialog-editor-modal-tab',
@@ -75,6 +89,28 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     };
     vm.elementInfo = { type: type, tabId: tab, boxId: box, fieldId: field };
     vm.visible = true;
+  }
+
+
+  function lazyLoad(node) {
+    return vm.$http.get('/tree/automate_entrypoint?id=' + encodeURIComponent(node.key))
+    .then(function(response) {
+      vm.cache[node.key] = response.data;
+      return response.data;
+    });
+  }
+
+  function onSelect(node, elementData) {
+    var fqname = node.fqname.split('/');
+    if (vm.treeSelectorIncludeDomain === false) {
+      fqname.splice(1, 1);
+    }
+    elementData.resource_action.ae_namespace = fqname.join('/');
+    vm.treeSelectorShow = false;
+  }
+
+  function treeSelectorToggle() {
+    vm.treeSelectorShow = ! vm.treeSelectorShow;
   }
 
   var beingCloned = null; // hack that solves recursion problem for cloneDeep

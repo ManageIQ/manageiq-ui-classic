@@ -18,6 +18,12 @@
     .dialog-designer-container
       %dialog-editor-modal{"modal-options" => "vm.modalOptions",
                            "element-info" => "vm.elementInfo",
+                           "lazy-load" => "vm.lazyLoad",
+                           "on-select" => "vm.onSelect",
+                           "tree-selector-data" => "vm.treeSelectorData",
+                           "tree-selector-include-domain" => "vm.treeSelectorIncludeDomain",
+                           "tree-selector-show" => "vm.treeSelectorShow",
+                           "tree-selector-toggle" => "vm.treeSelectorToggle",
                            :visible => "vm.modalVisible"}
       .toolbox-container
         #toolbox.static-field-container
