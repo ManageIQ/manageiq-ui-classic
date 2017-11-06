@@ -198,7 +198,6 @@ class GenericObjectDefinitionController < ApplicationController
 
     presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
     presenter.set_visibility(true, :toolbar)
-    presenter.set_visibility(!(@record || @in_a_form), :searchbox)
 
     presenter[:osf_node] = x_node
     presenter[:record_id] = @record.try(:id)
