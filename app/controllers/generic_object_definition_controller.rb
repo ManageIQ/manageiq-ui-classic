@@ -103,7 +103,7 @@ class GenericObjectDefinitionController < ApplicationController
   def custom_button_new
     assert_privileges('ab_button_new')
     title = _("Add a new Custom Button")
-    if custom_button_group_node?
+    if node_type(x_node || params[:id]) == :button_group
       @custom_button_group = CustomButtonSet.find(params[:id])
       @generic_object_definition = GenericObjectDefinition.find(@custom_button_group.set_data[:applies_to_id])
     else
@@ -146,6 +146,7 @@ class GenericObjectDefinitionController < ApplicationController
     when 'god'  then :god
     when 'cbg'  then :button_group
     when 'xx'   then :actions
+    when 'cb'   then :button
     else        raise 'Invalid node type.'
     end
   end
@@ -156,6 +157,7 @@ class GenericObjectDefinitionController < ApplicationController
     when :god          then god_node_info(node)
     when :actions      then actions_node_info(node)
     when :button_group then custom_button_group_node_info(node)
+    when :button       then custom_button_node_info(node)
     end
   end
 
@@ -184,8 +186,7 @@ class GenericObjectDefinitionController < ApplicationController
     root_node_info
   end
 
-  def custom_button_node_info
-    node = x_node || params[:id]
+  def custom_button_node_info(node)
     @custom_button_node = true
     @record = CustomButton.find(from_cid(node.split("-").last))
     @right_cell_text = _("Custom Button %{record_name}") % {:record_name => @record.name}
@@ -235,8 +236,8 @@ class GenericObjectDefinitionController < ApplicationController
     build_toolbar("x_summary_view_tb")
   end
 
-  def process_custom_button_node(presenter)
-    custom_button_node_info
+  def process_custom_button_node(presenter, node)
+    custom_button_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_custom_button'])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
@@ -253,6 +254,7 @@ class GenericObjectDefinitionController < ApplicationController
            when :god          then process_god_node(presenter, node)
            when :actions      then process_actions_node(presenter, node)
            when :button_group then process_custom_button_group_node(presenter, node)
+           when :button       then process_custom_button_node(presenter, node)
            end
 
     c_tb = build_toolbar(center_toolbar_filename)
