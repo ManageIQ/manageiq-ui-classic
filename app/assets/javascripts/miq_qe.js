@@ -126,8 +126,7 @@ ManageIQ.qe.gtl = {
         gtlType: this.gtlType,
         id: item.id,
         long_id: item.long_id,
-        quadicon: item.quadicon,
-        img_url: item.img_url
+        quadicon: item.quadicon
       }
     }.bind(this);
 
