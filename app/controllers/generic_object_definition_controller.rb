@@ -20,7 +20,7 @@ class GenericObjectDefinitionController < ApplicationController
     super
     self.x_active_tree ||= :generic_object_definitions_tree
     self.x_node ||= 'root'
-    node_info
+    node_info(x_node)
   end
 
   def show
@@ -42,13 +42,13 @@ class GenericObjectDefinitionController < ApplicationController
     javascript_redirect(
       case params[:pressed]
       when 'generic_object_definition_new'
-        { :action => 'new' }
+        {:action => 'new'}
       when 'generic_object_definition_edit'
-        { :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
+        {:action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks])}
       when 'ab_group_new'
-        { :action => 'custom_button_group_new', :id => from_cid(params[:id] || params[:miq_grid_checks]) }
+        {:action => 'custom_button_group_new', :id => from_cid(params[:id] || params[:miq_grid_checks])}
       when 'ab_group_edit'
-        { :action => 'custom_button_group_edit', :id => from_cid(params[:id]) }
+        {:action => 'custom_button_group_edit', :id => from_cid(params[:id])}
       end
     )
   end
@@ -94,37 +94,24 @@ class GenericObjectDefinitionController < ApplicationController
 
   private
 
-  def root_node?
-    node = x_node || params[:id]
-    node == 'root'
+  def node_type(node)
+    node_prefix = node.split('-').first
+    case node_prefix
+    when 'root' then :root
+    when 'god'  then :god
+    when 'cbg'  then :button_group
+    when 'xx'   then :actions
+    else        raise 'Invalid node type.'
+    end
   end
 
-  def god_node?
-    node = x_node || params[:id]
-    node.split('-').first == 'god'
-  end
-
-  def custom_button_group_node?
-    node = x_node || params[:id]
-    node.split('-').first == 'cbg'
-  end
-
-  def actions_node?
-    node = x_node || params[:id]
-    node.split('-').first == 'xx'
-  end
-
-  def retrieve_node_type
-    node = x_node || params[:id]
-    return 'root' if node == 'root'
-    node.split('-').first
-  end
-
-  def node_info
-    root_node_info if root_node?
-    god_node_info if god_node?
-    actions_node_info if actions_node?
-    custom_button_group_node_info if custom_button_group_node?
+  def node_info(node)
+    case node_type(node)
+    when :root         then root_node_info
+    when :god          then god_node_info(node)
+    when :actions      then actions_node_info(node)
+    when :button_group then custom_button_group_node_info(node)
+    end
   end
 
   def root_node_info
@@ -132,22 +119,19 @@ class GenericObjectDefinitionController < ApplicationController
     @right_cell_text = _("All %{models}") % {:models => _("Generic Object Classes")}
   end
 
-  def god_node_info
-    node = x_node || params[:id]
+  def god_node_info(node)
     @god_node = true
     @record = GenericObjectDefinition.find(from_cid(node.split('-').last))
     @right_cell_text = _("Generic Object Class %{record_name}") % {:record_name => @record.name}
   end
 
-  def actions_node_info
-    node = x_node || params[:id]
+  def actions_node_info(node)
     @actions_node = true
     @record = GenericObjectDefinition.find(from_cid(node.split('-').last))
     @right_cell_text = _("Actions for %{model}") % {:model => _("Generic Object Class")}
   end
 
-  def custom_button_group_node_info
-    node = x_node || params[:id]
+  def custom_button_group_node_info(node)
     @custom_button_group_node = true
     @record = CustomButtonSet.find(from_cid(node.split("-").last))
     @right_cell_text = _("Custom Button Set %{record_name}") % {:record_name => @record.name}
@@ -173,22 +157,22 @@ class GenericObjectDefinitionController < ApplicationController
     build_toolbar("x_gtl_view_tb")
   end
 
-  def process_god_node(presenter)
-    god_node_info
+  def process_god_node(presenter, node)
+    god_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_god'])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
   end
 
-  def process_actions_node(presenter)
-    actions_node_info
+  def process_actions_node(presenter, node)
+    actions_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_actions'])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
   end
 
-  def process_custom_button_group_node(presenter)
-    custom_button_group_node_info
+  def process_custom_button_group_node(presenter, node)
+    custom_button_group_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_custom_button_group'])
     presenter.hide(:paging_div)
     build_toolbar("x_summary_view_tb")
@@ -198,21 +182,23 @@ class GenericObjectDefinitionController < ApplicationController
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
     @explorer = false
 
-    v_tb = process_root_node(presenter) if root_node?
-    v_tb = process_god_node(presenter) if god_node?
-    v_tb = process_custom_button_group_node(presenter) if custom_button_group_node?
-    v_tb = process_actions_node(presenter) if actions_node?
+    node = x_node || params[:id]
+
+    v_tb = case node_type(node)
+           when :root         then process_root_node(presenter)
+           when :god          then process_god_node(presenter, node)
+           when :actions      then process_actions_node(presenter, node)
+           when :button_group then process_custom_button_group_node(presenter, node)
+           end
 
     c_tb = build_toolbar(center_toolbar_filename)
     h_tb = build_toolbar("x_history_tb")
 
     presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
-    presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)
-    presenter.set_visibility(!(@record || @in_a_form), :searchbox)
+    presenter.set_visibility(true, :toolbar)
 
     presenter[:osf_node] = x_node
     presenter[:record_id] = @record.try(:id)
-    presenter[:activate_node] = x_active_tree.to_s
     presenter[:right_cell_text] = @right_cell_text
 
     render :json => presenter.for_render
