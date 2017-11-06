@@ -20,7 +20,7 @@ class GenericObjectDefinitionController < ApplicationController
     super
     self.x_active_tree ||= :generic_object_definitions_tree
     self.x_node ||= 'root'
-    node_info
+    node_info(x_node)
   end
 
   def show
@@ -105,9 +105,7 @@ class GenericObjectDefinitionController < ApplicationController
     end
   end
 
-  def node_info
-    node = x_node || params[:id]
-
+  def node_info(node)
     case node_type(node)
     when :root         then root_node_info
     when :god          then god_node_info(node)
