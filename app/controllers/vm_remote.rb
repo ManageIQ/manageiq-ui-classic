@@ -71,6 +71,26 @@ module VmRemote
     end
   end
 
+  #
+  # When the user clicks the `oVirt UI` button the UI will send a POST request to this method. But
+  # it does so from JavaScript, using XHR, so we can't just redirect to the oVirt UI, because the
+  # browser will ignore the redirect. Instead of that we will send back instructions to open a new
+  # window for the oVirt URL.
+  #
+  def post_ovirt_ui
+    # Retrieve the virtual machine:
+    vm = identify_record(params[:id], Vm)
+
+    # Queue a task for the provider to generate the URL:
+    task_id = vm.queue_generate_ui_url
+
+    # Wait for the result of the task:
+    task = MiqTask.wait_for_taskid(task_id, sleep_time: 1)
+
+    # Send instructions to render the URL returned by the provider:
+    javascript_open_window(task.task_results)
+  end
+
   private
 
   # First time thru, kick off the acquire ticket task
