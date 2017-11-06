@@ -234,7 +234,6 @@ module Mixins
 
       if @ems.has_authentication_type?(:smartstate_docker)
         smartstate_docker_userid = @ems.authentication_userid(:smartstate_docker).to_s
-        smartstate_docker_auth_status = true
       end
 
       if @ems.has_authentication_type?(:ssh_keypair)

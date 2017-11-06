@@ -539,12 +539,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         amqp_userid:               $scope.emsCommonModel.amqp_userid,
         amqp_password:             amqp_password,
       };
-    } else if (prefix === "smartstate_docker") {
-      if ($scope.newRecord) {
-        var smartstate_docker_password = $scope.emsCommonModel.smartstate_docker_password;
-      } else {
-        var smartstate_docker_password = $scope.emsCommonModel.smartstate_docker_password === "" ? "" : miqService.storedPasswordPlaceholder;
-      }
     } else if (prefix === "metrics") {
       var metricsValidationModel = {
         metrics_hostname: $scope.emsCommonModel.metrics_hostname,
