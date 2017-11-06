@@ -1,3 +1,5 @@
+require 'openssl'
+
 module Mixins
   module EmsCommonAngular
     extend ActiveSupport::Concern
@@ -141,7 +143,16 @@ module Mixins
         auth_url = ems.auth_url(params[:default_hostname], params[:default_api_port])
         [user, password, auth_url]
       when 'ManageIQ::Providers::Redhat::InfraManager'
-        [{:username => user, :password => password, :server => params[:default_hostname], :port => params[:default_api_port], :scheme => "http", :version => 4}]
+        [{
+          :username   => user,
+          :password   => password,
+          :server     => params[:default_hostname],
+          :port       => params[:default_api_port],
+          :scheme     => 'https',
+          :version    => 4,
+          :verify_ssl => params[:default_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
+          :ca_certs   => params[:default_tls_ca_certs],
+        }]
       when 'ManageIQ::Providers::Vmware::InfraManager'
         [{:pass => password, :user => user, :ip => params[:default_hostname]}]
       when 'ManageIQ::Providers::Nuage::NetworkManager'
@@ -509,7 +520,7 @@ module Mixins
           :hostname              => hostname,
           :port                  => port,
           :security_protocol     => ems.security_protocol,
-          :verify_ssl            => params[:default_tls_verify] == 'on' ? 1 : 0,
+          :verify_ssl            => params[:default_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
           :certificate_authority => params[:default_tls_ca_certs],
         }
         metrics_endpoint = { :role     => :metrics,
