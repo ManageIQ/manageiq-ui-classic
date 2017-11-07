@@ -60,6 +60,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       prometheus_alerts_tls_ca_certs: '',
       prometheus_alerts_auth_status: '',
       prometheus_alerts_security_protocol: '',
+      smartstate_docker_auth_status: true,
       alerts_selection: '',
     };
 
@@ -482,9 +483,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     if ($scope.emsCommonModel.amqp_auth_status === true) {
       $scope.postValidationModelRegistry("amqp");
     }
-    if ($scope.emsCommonModel.smartstate_docker_auth_status === true) {
-      $scope.postValidationModelRegistry("smartstate_docker");
-    }
     if ($scope.emsCommonModel.service_account_auth_status === true) {
       $scope.postValidationModelRegistry("service_account");
     }
@@ -504,7 +502,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.postValidationModel = {
         default: {},
         amqp: {},
-        smartstate_docker: {},
         metrics: {},
         ssh_keypair: {},
         prometheus_alerts: {},
@@ -541,16 +538,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         amqp_security_protocol:    $scope.emsCommonModel.amqp_security_protocol,
         amqp_userid:               $scope.emsCommonModel.amqp_userid,
         amqp_password:             amqp_password,
-      };
-    } else if (prefix === "smartstate_docker") {
-      if ($scope.newRecord) {
-        var smartstate_docker_password = $scope.emsCommonModel.smartstate_docker_password;
-      } else {
-        var smartstate_docker_password = $scope.emsCommonModel.smartstate_docker_password === "" ? "" : miqService.storedPasswordPlaceholder;
-      }
-      $scope.postValidationModel.smartstate_docker = {
-        smartstate_docker_userid:      $scope.emsCommonModel.smartstate_docker_userid,
-        smartstate_docker_password:    smartstate_docker_password,
       };
     } else if (prefix === "metrics") {
       var metricsValidationModel = {
