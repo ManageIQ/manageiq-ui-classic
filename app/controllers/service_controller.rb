@@ -39,6 +39,7 @@ class ServiceController < ApplicationController
   # Service show selected, redirect to proper controller
   def show
     @record = Service.find(from_cid(params[:id]))
+    @lastaction = "show"
 
     @gtl_url = "/show"
     @display = params[:display] if params[:display]
@@ -163,21 +164,13 @@ class ServiceController < ApplicationController
     if id.present?
       @lastaction = "generic_object"
       @item = @record.generic_objects.find(from_cid(id)).first
-      item_breadcrumbs(_("Generic Objects"), 'generic_objects')
+      drop_breadcrumb(:name => "#{@record.name} (All Generic Objects)",
+                      :url  => show_link(@record, :display => @display))
+      drop_breadcrumb(:name => @item.name, :url => "/#{controller_name}/show/#{@record.id}?display=generic_objects/show=#{id}")
       @view = get_db_view(GenericObject)
       @sb[:rec_id] = id
       show_item
     end
-  end
-
-  def generic_objects
-    return unless init_show_variables
-    @lastaction = "generic_objects"
-    drop_breadcrumb(:name => _("%{name} (Generic Objects)") % {:name => @record.name},
-                    :url  => "/#{@db}/generic_objects/#{@record.id}")
-    @listicon = "generic_objects"
-    @explorer = true
-    show_details(GenericObject, :association => "generic_objects")
   end
 
   def self.display_methods

@@ -108,14 +108,14 @@ describe ServiceController do
       go = FactoryGirl.create(
         :generic_object,
         :generic_object_definition => definition,
-        :name                      => 'go_assoc',
+        :name                      => 'GOTest',
         :services                  => [service]
       )
-      service.add_resource(go)
-
-      get :show, :params => { :id => service.id, :display => 'generic_objects', :show => go.id}
+      go.add_to_service(service)
+      get :generic_object, :params => { :id => service.id, :show => go.id}
       expect(response.status).to eq(200)
-      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"}])
+      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}"},
+                                           {:name => "GOTest", :url => "/service/show/#{service.id}?display=generic_objects/show=#{go.id}"}])
     end
 
     context "#button" do
