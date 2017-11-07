@@ -232,7 +232,6 @@ module Mixins
 
       if @ems.has_authentication_type?(:smartstate_docker)
         smartstate_docker_userid = @ems.authentication_userid(:smartstate_docker).to_s
-        smartstate_docker_auth_status = true
       end
 
       if @ems.has_authentication_type?(:ssh_keypair)
@@ -343,7 +342,6 @@ module Mixins
                        :ems_controller                  => controller_name,
                        :default_auth_status             => default_auth_status,
                        :amqp_auth_status                => amqp_auth_status,
-                       :smartstate_docker_auth_status   => smartstate_docker_auth_status,
                        :service_account_auth_status     => service_account_auth_status,
                        :amqp_fallback_hostname1         => amqp_fallback_hostname1 ? amqp_fallback_hostname1 : "",
                        :amqp_fallback_hostname2         => amqp_fallback_hostname2 ? amqp_fallback_hostname2 : ""
