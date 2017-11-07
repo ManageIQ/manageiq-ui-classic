@@ -13,8 +13,9 @@ class EmsContainerController < ApplicationController
   after_action :set_session_data
 
   OPENSHIFT_ROUTES = {
-    "hawkular"   => %w(hawkular-metrics openshift-infra),
-    "prometheus" => %w(prometheus prometheus)
+    "hawkular"          => %w(hawkular-metrics openshift-infra),
+    "prometheus"        => %w(prometheus prometheus),
+    "prometheus_alerts" => %w(alerts prometheus)
   }.freeze
   OPENSHIFT_DEFAULT_ROUTE = %w(hawkular-metrics openshift-infra).freeze
 
@@ -67,7 +68,12 @@ class EmsContainerController < ApplicationController
   end
 
   def update_ems_button_detect(verify_ems = nil)
-    route, project = OPENSHIFT_ROUTES.fetch(params[:metrics_selection], OPENSHIFT_DEFAULT_ROUTE)
+    route_type = if params[:current_tab] == "alerts"
+                   "prometheus_alerts"
+                 else
+                   params[:metrics_selection]
+                 end
+    route, project = OPENSHIFT_ROUTES.fetch(route_type, OPENSHIFT_DEFAULT_ROUTE)
     verify_ems ||= find_record_with_rbac(model, params[:id])
     set_ems_record_vars(verify_ems, :validate)
     @in_a_form = true

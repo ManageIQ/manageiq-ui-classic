@@ -355,7 +355,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     miqService.sparkleOn();
     miqService.detectWithRest($event, $scope.actionUrl)
       .then(function success(data) {
-        $scope.updateHawkularHostname(data.hostname);
+        $scope.updateHostname(data.hostname);
         miqService.miqFlash(data.level, data.message);
         miqSparkleOff();
       });
@@ -615,8 +615,12 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     $scope.angularForm[$scope.authType + '_auth_status'].$setViewValue(updatedValue);
   };
 
-  $scope.updateHawkularHostname = function(value) {
-    $scope.emsCommonModel.metrics_hostname = value;
+  $scope.updateHostname = function(value) {
+    if ($scope.currentTab === "alerts") {
+      $scope.emsCommonModel.prometheus_alerts_hostname = value;
+    } else {
+      $scope.emsCommonModel.metrics_hostname = value;
+    }
   };
 
   $scope.radioSelectionChanged = function() {

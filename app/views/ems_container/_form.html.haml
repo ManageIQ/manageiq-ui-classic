@@ -84,7 +84,11 @@
                      "checkchange"                 => "",
                      "required"                    => "",
                      "selectpicker-for-select-tag" => "")
-
+    %input{:type      => 'text',
+           :id        => "current_tab",
+           :name      => "current_tab",
+           "ng-model" => "currentTab",
+           "ng-hide"  => "true"}
 
   %hr
   = render :partial => "layouts/angular/multi_auth_credentials", :locals => {:record => @ems, :ng_model => "emsCommonModel"}
