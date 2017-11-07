@@ -17,14 +17,21 @@ class GenericObjectController < ApplicationController
     GenericObject
   end
 
-  def self.populate_display_methods(record)
-    define_singleton_method("display_methods") do
-      associations = %w()
-      record.property_associations.each do |key, _value|
-        associations.push(key)
-      end
-      associations
+  def self.display_methods
+    []
+  end
+
+  def display_methods(record)
+    associations = %w()
+    record.property_associations.each do |key, _value|
+      associations.push(key)
     end
+    associations
+  end
+
+  def display_nested_generic(display)
+    return unless @record.property_associations.key?(display)
+    nested_list(display, @record.generic_object_definition.properties[:associations][display], :association => display)
   end
 
   private

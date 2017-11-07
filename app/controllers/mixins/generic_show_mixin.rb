@@ -5,8 +5,6 @@ module Mixins
       return unless init_show
       @center_toolbar = self.class.toolbar_singular if self.class.toolbar_singular
 
-      self.class.populate_display_methods(@record) if self.class.respond_to?(:populate_display_methods)
-
       case @display
       # these methods are defined right in GenericShowMixin
       when "summary_only"
@@ -28,8 +26,12 @@ module Mixins
       when "topology"
         show_topology
 
-      # nested list methods as enabled by 'display_methods'
+      # nested list methods as enabled by 'display_methods' on the class
       when *self.class.display_methods
+        display_nested_list(@display)
+
+      # .. or on an instance
+      when *display_methods(@record)
         display_nested_list(@display)
 
       else
@@ -42,6 +44,10 @@ module Mixins
       if params[:action] == 'show' && !performed? && self.class.respond_to?(:default_show_template)
         render :template => self.class.default_show_template
       end
+    end
+
+    def display_methods
+      []
     end
 
     def custom_display_method(display)
