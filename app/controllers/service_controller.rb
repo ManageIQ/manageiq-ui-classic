@@ -381,7 +381,7 @@ class ServiceController < ApplicationController
     # Replace right cell divs
     presenter.update(:main_div,
       if ["dialog_provision", "ownership", "retire", "service_edit", "tag"].include?(action)
-        r[:partial => partial]
+        r[:partial => partial, :locals => options[:dialog_locals]]
       elsif params[:display]
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]
       elsif record_showing
@@ -392,7 +392,7 @@ class ServiceController < ApplicationController
     )
     if %w(dialog_provision ownership tag).include?(action)
       presenter.show(:form_buttons_div).hide(:pc_div_1, :toolbar).show(:paging_div)
-      if action == "dialog_provision"
+      if action == "dialog_provision" && params[:pressed] == "service_reconfigure"
         presenter.update(:form_buttons_div, r[:partial => "layouts/x_dialog_buttons",
                                               :locals  => {:action_url => action_url,
                                                            :record_id  => @edit[:rec_id]}])
