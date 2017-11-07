@@ -141,15 +141,21 @@ module Mixins
       when 'ManageIQ::Providers::Openstack::InfraManager'
         [password, params.except(:default_password)]
       when 'ManageIQ::Providers::Redhat::InfraManager'
+        metrics_user, metrics_password = params[:metrics_userid], MiqPassword.encrypt(params[:metrics_password])
         [{
-          :username   => user,
-          :password   => password,
-          :server     => params[:default_hostname],
-          :port       => params[:default_api_port],
-          :scheme     => 'https',
-          :version    => 4,
-          :verify_ssl => params[:default_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
-          :ca_certs   => params[:default_tls_ca_certs],
+          :username         => user,
+          :password         => password,
+          :server           => params[:default_hostname],
+          :port             => params[:default_api_port],
+          :scheme           => 'https',
+          :version          => 4,
+          :verify_ssl       => params[:default_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
+          :ca_certs         => params[:default_tls_ca_certs],
+          :metrics_username => metrics_user,
+          :metrics_password => metrics_password,
+          :metrics_server   => params[:metrics_hostname],
+          :metrics_port     => params[:metrics_api_port],
+          :metrics_database => params[:metrics_database_name],
         }]
       when 'ManageIQ::Providers::Vmware::InfraManager'
         [{:pass => password, :user => user, :ip => params[:default_hostname]}]
