@@ -26,6 +26,8 @@ module Mixins::CustomButtons
       Mixins::CustomButtons::Result.new(:single)
     elsif @lastaction == "show_list"
       Mixins::CustomButtons::Result.new(:list)
+    elsif @display == 'generic_objects'
+      Mixins::CustomButtons::Result.new(:list)
     end
   end
 

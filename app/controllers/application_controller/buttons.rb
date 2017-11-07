@@ -249,7 +249,8 @@ module ApplicationController::Buttons
   BASE_MODEL_EXPLORER_CLASSES = [Vm, MiqTemplate, Service].freeze
   APPLIES_TO_CLASS_BASE_MODELS = %w(AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
-                                    ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem Host LoadBalancer
+                                    ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
+                                    GenericObjectDefinition Host LoadBalancer
                                     MiqGroup MiqTemp NetworkRouter OrchestrationStack SecurityGroup Service
                                     ServiceTemplate Storage Switch Tenant User Vm).freeze
   def applies_to_class_model(applies_to_class)
@@ -259,7 +260,14 @@ module ApplicationController::Buttons
       raise ArgumentError, "Received: #{applies_to_class}, expected one of #{APPLIES_TO_CLASS_BASE_MODELS}"
     end
 
-    applies_to_class == "ServiceTemplate" ? Service : applies_to_class.constantize
+    case applies_to_class
+    when "ServiceTemplate"
+      Service
+    when "GenericObjectDefinition"
+      GenericObject
+    else
+      applies_to_class.constantize
+    end
   end
 
   def custom_button_done

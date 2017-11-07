@@ -18,6 +18,11 @@ class ServiceController < ApplicationController
   }
 
   def button
+    if @lastaction == 'generic_objects'
+      params[:id] = 'LIST'
+    elsif @lastaction.starts_with?('generic_objects')
+      params[:id]     #params[:id] = @sb[:rec_id]
+    end
     custom_buttons if params[:pressed] == "custom_button"
     return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
     tag(GenericObject) if @display == 'generic_objects' && params[:pressed] == 'generic_object_tag'
@@ -58,8 +63,31 @@ class ServiceController < ApplicationController
     redirect_to :action => 'explorer', :flash_msg => @flash_array.try(:fetch_path, 0, :message)
   end
 
+  def show_details(db, options = {})
+    association = options[:association]
+    conditions  = options[:conditions]
+    # generate the grid/tile/list url to come back here when gtl buttons are pressed
+    @gtl_url       = "/#{@db}/#{@listicon.pluralize}/#{@record.id}?"
+    @no_checkboxes = false
+    @showlinks     = true
+    @view, @pages = get_view(db,
+                             :parent      => @record,
+                             :association => association,
+                             :conditions  => conditions,
+                             :dbname      => "#{@db}item") # Get the records into a view & paginator
+
+    @refresh_partial = "service/details"
+    replace_right_cell(:action => "generic_objects", :showtype => "details")
+  end
+
+  # show a single item from a detail list
+  def show_item
+    replace_right_cell(:action => "generic_objects", :showtype => "item")
+  end
+
   def explorer
-    @explorer = true
+    @explorer   = true
+    @lastaction = "explorer"
 
     # if AJAX request, replace right cell, and return
     if request.xml_http_request?
@@ -148,6 +176,27 @@ class ServiceController < ApplicationController
       :name        => service.name,
       :description => service.description
     }
+  end
+
+  def generic_objects
+    return unless init_show_variables
+
+    @lastaction = "generic_objects"
+    id = params[:show] || params[:x_show]
+    if id.present?
+      @item = @record.generic_objects.find(from_cid(id)).first
+      item_breadcrumbs(_("Generic Objects"), 'generic_objects')
+      @view = get_db_view(GenericObject, :association => "generic_objects")
+      @lastaction = "generic_objects_#{@item_id}"
+      @sb[:rec_id] = @item.id
+      show_item
+    else
+      drop_breadcrumb(:name => _("%{name} (Generic Objects)") % {:name => @record.name},
+                      :url  => "/#{@db}/generic_objects/#{@record.id}")
+      @listicon = "generic_objects"
+      @explorer = true
+      show_details(GenericObject, :association => "generic_objects")
+    end
   end
 
   def self.display_methods
@@ -319,7 +368,7 @@ class ServiceController < ApplicationController
   end
 
   # set partial name and cell header for edit screens
-  def set_right_cell_vars(action)
+  def set_right_cell_vars(action, type = "details")
     case action
     when "dialog_provision"
       partial = "shared/dialogs/dialog_provision"
@@ -341,6 +390,29 @@ class ServiceController < ApplicationController
       partial = "layouts/tagging"
       header = _("Edit Tags for Service")
       action = "service_tag"
+    when "generic_objects"
+      table = request.parameters["controller"]
+      header = _("Generic Objects for %{service} \"%{name}\"") % {
+        :service => ui_lookup(:table => table),
+        :name    => @record.name
+      }
+      table = controller_name
+      partial = if type == "details"
+                  "layouts/x_gtl"
+                elsif type == "item"
+                  "layouts/item"
+                end
+      if type == "item"
+        header = _("Generic Object \"%{item_name}\" for %{service} \"%{name}\"") % {
+          :service   => ui_lookup(:table => table),
+          :name      => @record.name,
+          :item_name => @item.name
+        }
+        x_history_add_item(:id     => x_node,
+                           :text   => header,
+                           :action => action,
+                           :item   => @item.id)
+      end
     else
       action = nil
     end
@@ -353,9 +425,9 @@ class ServiceController < ApplicationController
       javascript_flash
       return
     end
-    action, replace_trees = options.values_at(:action, :replace_trees)
+    action, replace_trees, showtype = options.values_at(:action, :replace_trees, :showtype)
     @explorer = true
-    partial, action_url, @right_cell_text = set_right_cell_vars(action) if action # Set partial name, action and cell header
+    partial, action_url, @right_cell_text = set_right_cell_vars(action, showtype) if action # Set partial name, action and cell header
     get_node_info(x_node) if !action && !@in_a_form && !params[:display]
     replace_trees = @replace_trees if @replace_trees  # get_node_info might set this
     type, = parse_nodetype_and_id(x_node)
@@ -385,7 +457,21 @@ class ServiceController < ApplicationController
       elsif params[:display]
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]
       elsif record_showing
-        r[:partial => "service/svcs_show", :locals => {:controller => "service"}]
+        if action
+          partial_locals = { :controller => ''}
+          if partial == 'layouts/x_gtl'
+            cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
+            partial_locals[:action_url] = @lastaction
+            presenter[:parent_id] = @record.id  # Set parent rec id for JS function miqGridSort to build URL
+            presenter[:parent_class] = params[:controller] # Set parent class for URL also
+          else
+            partial_locals[:item_id] = @item.id
+          end
+          cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
+          r[:partial => partial, :locals => partial_locals]
+        else
+          r[:partial => "service/svcs_show", :locals => {:controller => "service"}]
+        end
       else
         r[:partial => "layouts/x_gtl"]
       end

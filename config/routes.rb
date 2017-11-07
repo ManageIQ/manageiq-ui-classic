@@ -2980,6 +2980,7 @@ Rails.application.routes.draw do
       :post => %w(
         button
         explorer
+        generic_objects
         listnav_search_selected
         ownership_field_changed
         ownership_update
