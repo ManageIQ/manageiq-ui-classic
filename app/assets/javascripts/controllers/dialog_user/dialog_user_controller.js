@@ -30,8 +30,14 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   function submitButtonClicked() {
     vm.dialogData.action = apiAction;
     miqService.sparkleOn();
-    API.post(apiSubmitEndpoint, vm.dialogData).then(function() {
-      miqService.redirectBack(__('Service ordered successfully!'), 'info', '/miq_request?typ=service');
+    var apiData;
+    if (apiSubmitEndpoint.match(/generic_objects/)) {
+      apiData = {parameters: vm.dialogData};
+    } else {
+      apiData = vm.dialogData;
+    }
+    API.post(apiSubmitEndpoint, apiData).then(function() {
+      miqService.redirectBack(__('Dialog submitted successfully!'), 'info', cancelEndpoint);
     }).catch(function(err) {
       miqService.sparkleOff();
       add_flash(__('Error requesting data from server'), 'error');

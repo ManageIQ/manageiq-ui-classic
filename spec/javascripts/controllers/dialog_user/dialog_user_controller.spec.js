@@ -107,7 +107,7 @@ describe('dialogUserController', function() {
       it('redirects to the miq_request screen', function(done) {
         $controller.submitButtonClicked();
         setTimeout(function() {
-          expect(miqService.redirectBack).toHaveBeenCalledWith('Service ordered successfully!', 'info', '/miq_request?typ=service');
+          expect(miqService.redirectBack).toHaveBeenCalledWith('Dialog submitted successfully!', 'info', 'cancel endpoint');
           done();
         });
       });
