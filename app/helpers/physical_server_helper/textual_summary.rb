@@ -44,7 +44,7 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_group_network_adapters
     TextualCustom.new(
-      _("Network Adapters"),
+      _("Network Devices"),
       "textual_network_adapter_table",
       %i(network_adapter)
     )
