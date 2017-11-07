@@ -62,7 +62,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       prometheus_alerts_tls_ca_certs: '',
       prometheus_alerts_auth_status: '',
       prometheus_alerts_security_protocol: '',
-      smartstate_docker_auth_status: true,
       alerts_selection: '',
       console_auth_status: true,
     };
@@ -516,7 +515,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.postValidationModel = {
         default: {},
         amqp: {},
+<<<<<<< ac8191621962baf3d53ce5e86a922d7964bfdc51
         console: {},
+=======
+>>>>>>> Revert "Fix AWS Docker Credentials Tab Issues"
         smartstate_docker: {},
         metrics: {},
         ssh_keypair: {},
@@ -561,9 +563,15 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       } else {
         var console_password = $scope.emsCommonModel.console_password === "" ? "" : miqService.storedPasswordPlaceholder;
       }
+<<<<<<< ac8191621962baf3d53ce5e86a922d7964bfdc51
       $scope.postValidationModel.console = {
         console_userid:           $scope.emsCommonModel.console_userid,
         console_password:         console_password,
+=======
+      $scope.postValidationModel.smartstate_docker = {
+        smartstate_docker_userid:      $scope.emsCommonModel.smartstate_docker_userid,
+        smartstate_docker_password:    smartstate_docker_password,
+>>>>>>> Revert "Fix AWS Docker Credentials Tab Issues"
       };
     } else if (prefix === "metrics") {
       var metricsValidationModel = {

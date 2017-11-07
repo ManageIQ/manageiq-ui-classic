@@ -354,6 +354,7 @@ module Mixins
                        :ems_controller                  => controller_name,
                        :default_auth_status             => default_auth_status,
                        :amqp_auth_status                => amqp_auth_status,
+                       :smartstate_docker_auth_status   => smartstate_docker_auth_status,
                        :service_account_auth_status     => service_account_auth_status,
                        :amqp_fallback_hostname1         => amqp_fallback_hostname1 ? amqp_fallback_hostname1 : "",
                        :amqp_fallback_hostname2         => amqp_fallback_hostname2 ? amqp_fallback_hostname2 : ""
