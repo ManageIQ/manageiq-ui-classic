@@ -9,10 +9,11 @@
 - if @edit && !options[:readonly]
   .form-horizontal
     .form-group
-      .col-md-10
       .col-md-2
-        %button#add-additional-volume-button
+      .col-md-8
+        %button.btn.btn-primary.pull-right#add-additional-volume-button
           Add Volume
+  %hr
 
 .form-horizontal#add-volumes-form
   - while (draw_fields)
