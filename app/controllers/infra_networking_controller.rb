@@ -416,8 +416,6 @@ class InfraNetworkingController < ApplicationController
                 "layouts/x_gtl"
               elsif @showtype == "item"
                 "layouts/item"
-              elsif params[:pressed] == 'custom_button'
-                "shared/dialogs/dialog_provision"
               else
                 @showtype.to_s
               end
@@ -428,8 +426,6 @@ class InfraNetworkingController < ApplicationController
         :action    => action_type(@sb[:action], 1)
       }
       x_history_add_item(:id => x_node, :text => header, :action => @sb[:action], :item => @item.id)
-    elsif @sb[:action] == "dialog_provision"
-      header = @right_cell_text
     else
       header = _("\"%{action}\" for Switch \"%{name}\"") % {
         :name   => name,
