@@ -140,13 +140,17 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
   this.handleFailure = function(e) {
     miqSparkleOff();
 
-    if (e.error !== undefined && e.error.message !== undefined) {
-      console.error(e.error.message);
-      miqService.miqFlash('error', e.error.message);
+    var message = __("Unknown error");
+    if (e.data && e.data.error && e.data.error.message) {
+      message = e.data.error.message;
+    } else if (e.error && e.error.message) {
+      message = e.error.message;
     } else if (e.message) {
-      console.error(e.message);
-      miqService.miqFlash('error', e.message);
+      message = e.message;
     }
+
+    console.error(message);
+    miqService.miqFlash('error', message);
 
     return $q.reject(e);
   };
