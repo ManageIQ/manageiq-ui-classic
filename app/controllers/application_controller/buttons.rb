@@ -246,7 +246,7 @@ module ApplicationController::Buttons
 
   private
 
-  BASE_MODEL_EXPLORER_CLASSES = [Vm, MiqTemplate, Service, Switch].freeze
+  BASE_MODEL_EXPLORER_CLASSES = [MiqGroup, MiqTemplate, Service, Switch, Tenant, User, Vm].freeze
   APPLIES_TO_CLASS_BASE_MODELS = %w(AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem Host LoadBalancer

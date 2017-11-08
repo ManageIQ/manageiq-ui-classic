@@ -534,8 +534,45 @@ class OpsController < ApplicationController
     end
   end
 
+  def set_custom_button_dialog_presenter
+    presenter ||= ExplorerPresenter.new(
+      :active_tree => x_active_tree,
+      :add_nodes   => nil,         # Update the tree with any new nodes
+      :delete_node => nil,      # Remove a new node from the tree
+    )
+    presenter.show(:default_left_cell).hide(:custom_left_cell)
+    presenter.update(:main_div, r[:partial => "shared/dialogs/dialog_provision"])
+    if @record.try(:dialog_fields)
+      @record.dialog_fields.each do |field|
+        if %w(DialogFieldDateControl DialogFieldDateTimeControl).include?(field.type)
+          presenter[:build_calendar] = {
+            :date_from => field.show_past_dates ? nil : Time.zone.now,
+          }
+        end
+      end
+    end
+    presenter.update(:form_buttons_div, r[
+      :partial => 'layouts/x_dialog_buttons',
+      :locals  => {
+        :action_url => "dialog_form_button_pressed",
+        :record_id  => @edit[:rec_id],
+      }
+    ])
+    presenter.show(:form_buttons_div)
+    presenter[:right_cell_text] = @right_cell_text
+    presenter.set_visibility(false, :toolbar)
+    presenter.set_visibility(false, :adv_searchbox_div)
+    presenter[:lock_sidebar] = true
+    presenter
+  end
+
   def replace_right_cell(options = {}) # replace_trees can be an array of tree symbols to be replaced
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
+    if params[:pressed] == "custom_button"
+      presenter = set_custom_button_dialog_presenter
+      render :json => presenter.for_render
+      return
+    end
     # get_node_info might set this
     replace_trees = @replace_trees if @replace_trees
     @explorer = true
@@ -716,9 +753,27 @@ class OpsController < ApplicationController
       @right_cell_text = @edit ?
           _("Manage quotas for %{model} \"%{name}\"") % {:name => @tenant.name, :model => model} :
           _("%{model} \"%{name}\"") % {:model => model, :name => @tenant.name}
+    elsif nodetype == 'dialog_return'
+      presenter.update(:main_div, r[:partial => "detail_page"])
     else
       presenter[:update_partials][@sb[:active_tab].to_sym] = r[:partial => "#{@sb[:active_tab]}_tab"]
     end
+  end
+
+  # set all needed thing before calling replace_right_cell with nodetype
+  def dialog_replace_right_cell
+    model, id = TreeBuilder.extract_node_model_and_id(x_node)
+    @record = model.constantize.find(from_cid(id))
+    case @record
+    when User
+      @user = @record
+    when MiqGroup
+      @group = @record
+      rbac_group_get_details(@record.id)
+    when Tenant
+      @tenant = @record
+    end
+    replace_right_cell(:nodetype => 'dialog_return')
   end
 
   def rbac_set_tab_label
@@ -736,7 +791,7 @@ class OpsController < ApplicationController
         _("Tenants")
       end
     when "u"
-      @user.name || _("Users")
+      @user.present? ? @user.name : _('Users')
     when "g"
       if @record && @record.id
         @record.description
@@ -746,9 +801,9 @@ class OpsController < ApplicationController
         _("Groups")
       end
     when "ur"
-      @role.name || _("Roles")
+      @role.present? ? @role.name : _("Roles")
     when "tn"
-      @tenant.name || _("Tenants")
+      @tenant.present? ? @tenant.name : _("Tenants")
     else
       _("Details")
     end
