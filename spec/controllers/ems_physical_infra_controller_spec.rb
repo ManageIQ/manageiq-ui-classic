@@ -217,6 +217,16 @@ describe EmsPhysicalInfraController do
     end
   end
 
+  describe "When the console button is pressed" do
+    before do
+      allow(controller).to receive(:launch_console).and_return(true)
+    end
+
+    it "redirects to new url" do
+      post :launch_console
+      expect(response.status).to eq(302)
+    end
+  end
   include_examples '#download_summary_pdf', :ems_physical_infra
 
   it_behaves_like "controller with custom buttons"

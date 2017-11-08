@@ -1302,6 +1302,7 @@ Rails.application.routes.draw do
         update
         wait_for_task
         x_show
+        launch_console
       ) +
                adv_search_post +
                compare_post +
