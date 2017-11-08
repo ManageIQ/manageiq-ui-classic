@@ -1,3 +1,5 @@
+/* global miqDeferred */
+
 /* functions to use the API from our JS/Angular:
  *
  * API.get(url, options) - use API.get('/api'), returns a Promise
@@ -98,11 +100,7 @@
   };
 
   API.wait_for_task = function(task_id) {
-    var deferred = {};
-    deferred.promise = new Promise(function(resolve, reject) {
-      deferred.resolve = resolve;
-      deferred.reject = reject;
-    });
+    var deferred = miqDeferred();
 
     var retry = function() {
       API.get('/api/tasks/' + task_id + '?attributes=task_results')
