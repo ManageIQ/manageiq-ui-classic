@@ -170,23 +170,27 @@ class GenericObjectDefinitionController < ApplicationController
 
   def root_node_info
     @root_node = true
+    @center_toolbar = 'generic_object_definitions'
     @right_cell_text = _("All %{models}") % {:models => _("Generic Object Classes")}
   end
 
   def god_node_info(node)
     @god_node = true
+    @center_toolbar = 'generic_object_definition_node'
     @record = GenericObjectDefinition.find(from_cid(node.split('-').last))
     @right_cell_text = _("Generic Object Class %{record_name}") % {:record_name => @record.name}
   end
 
   def actions_node_info(node)
     @actions_node = true
+    @center_toolbar = 'generic_object_definition_actions_node'
     @record = GenericObjectDefinition.find(from_cid(node.split('-').last))
     @right_cell_text = _("Actions for %{model}") % {:model => _("Generic Object Class")}
   end
 
   def custom_button_group_node_info(node)
     @custom_button_group_node = true
+    @center_toolbar = 'generic_object_definition_button_group'
     @record = CustomButtonSet.find(from_cid(node.split("-").last))
     @right_cell_text = _("Custom Button Set %{record_name}") % {:record_name => @record.name}
   rescue StandardError => _err
@@ -195,6 +199,7 @@ class GenericObjectDefinitionController < ApplicationController
 
   def custom_button_node_info(node)
     @custom_button_node = true
+    @center_toolbar = 'generic_object_definition_button'
     @record = CustomButton.find(from_cid(node.split("-").last))
     @right_cell_text = _("Custom Button %{record_name}") % {:record_name => @record.name}
   rescue StandardError => _err
@@ -219,35 +224,35 @@ class GenericObjectDefinitionController < ApplicationController
     process_show_list
     presenter.replace(:main_div, r[:partial => 'list'])
     presenter.show(:paging_div)
-    build_toolbar("x_gtl_view_tb")
+    [build_toolbar("x_gtl_view_tb"), build_toolbar("generic_object_definitions_center_tb")]
   end
 
   def process_god_node(presenter, node)
     god_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_god'])
     presenter.hide(:paging_div)
-    build_toolbar("x_summary_view_tb")
+    [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_node_center_tb")]
   end
 
   def process_actions_node(presenter, node)
     actions_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_actions'])
     presenter.hide(:paging_div)
-    build_toolbar("x_summary_view_tb")
+    [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_actions_node_center_tb")]
   end
 
   def process_custom_button_group_node(presenter, node)
     custom_button_group_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_custom_button_group'])
     presenter.hide(:paging_div)
-    build_toolbar("x_summary_view_tb")
+    [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_button_group_center_tb")]
   end
 
   def process_custom_button_node(presenter, node)
     custom_button_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_custom_button'])
     presenter.hide(:paging_div)
-    build_toolbar("x_summary_view_tb")
+    [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_button_center_tb")]
   end
 
   def replace_right_cell
@@ -256,15 +261,14 @@ class GenericObjectDefinitionController < ApplicationController
 
     node = x_node || params[:id]
 
-    v_tb = case node_type(node)
-           when :root         then process_root_node(presenter)
-           when :god          then process_god_node(presenter, node)
-           when :actions      then process_actions_node(presenter, node)
-           when :button_group then process_custom_button_group_node(presenter, node)
-           when :button       then process_custom_button_node(presenter, node)
-           end
+    v_tb, c_tb = case node_type(node)
+                 when :root         then process_root_node(presenter)
+                 when :god          then process_god_node(presenter, node)
+                 when :actions      then process_actions_node(presenter, node)
+                 when :button_group then process_custom_button_group_node(presenter, node)
+                 when :button       then process_custom_button_node(presenter, node)
+                 end
 
-    c_tb = build_toolbar(center_toolbar_filename)
     h_tb = build_toolbar("x_history_tb")
 
     presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
