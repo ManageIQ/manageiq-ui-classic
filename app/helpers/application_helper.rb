@@ -525,7 +525,6 @@ module ApplicationHelper
     ToolbarBuilder.new(
       self,
       binding,
-      :actions_node     => @actions_node,
       :active           => @active,
       :button_group     => @button_group,
       :changed          => @changed,
