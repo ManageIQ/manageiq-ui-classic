@@ -99,11 +99,11 @@
     });
   };
 
-  API.wait_for_task = function(task_id) {
+  API.wait_for_task = function(taskId) {
     var deferred = miqDeferred();
 
     var retry = function() {
-      API.get('/api/tasks/' + task_id + '?attributes=task_results')
+      API.get('/api/tasks/' + taskId + '?attributes=task_results')
         .then(function(result) {
           if (result.state === 'Finished') {  // MiqTask::STATE_FINISHED
             deferred.resolve(result);
