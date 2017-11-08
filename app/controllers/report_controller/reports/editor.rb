@@ -1198,7 +1198,7 @@ module ReportController::Reports::Editor
         rpt.cols.push(f) unless rpt.cols.include?(f)  # Add the original field, if not already there
         rpt.col_order.push(field.split("-")[1])       # Add the field to the col_order array
       else
-        field_column = MiqExpression::Field.parse(field).column
+        field_column = (MiqExpression::ChargeableField.parse(field) || MiqExpression::Field.parse(field)).column
         rpt.cols.push(field_column)
         rpt.col_order.push(field_column) # Add the field to the col_order array
       end
