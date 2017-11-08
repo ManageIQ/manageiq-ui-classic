@@ -164,7 +164,7 @@ class ServiceController < ApplicationController
     if id.present?
       @lastaction = "generic_object"
       @item = @record.generic_objects.find(from_cid(id)).first
-      drop_breadcrumb(:name => "#{@record.name} (All Generic Objects)",
+      drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name},
                       :url  => show_link(@record, :display => @display))
       drop_breadcrumb(:name => @item.name, :url => "/#{controller_name}/show/#{@record.id}?display=generic_objects/show=#{id}")
       @view = get_db_view(GenericObject)
