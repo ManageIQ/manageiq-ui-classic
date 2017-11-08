@@ -55,6 +55,12 @@ class EmsPhysicalInfraController < ApplicationController
      :breadcrumb_title => _("Physical Servers with Host")}
   end
 
+  def launch_console
+    @ems = find_record_with_rbac(model, params[:id])
+    $log.info('Console URL - ' + @ems.console_url.to_s)
+    javascript_open_window(@ems.console_url.to_s)
+  end
+
   private
 
   ############################
