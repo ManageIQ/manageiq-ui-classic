@@ -5,7 +5,6 @@ class GenericObjectDefinitionController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
 
@@ -15,19 +14,27 @@ class GenericObjectDefinitionController < ApplicationController
     GenericObjectDefinition
   end
 
+  def index
+    self.x_node = 'root'
+    redirect_to :action => "show_list"
+  end
+
   def show_list
-    build_tree
-    super
     self.x_active_tree ||= :generic_object_definitions_tree
     self.x_node ||= 'root'
+    build_tree
     node_info(x_node)
+    process_show_list
   end
 
   def show
-    build_tree
-    super
     self.x_node = "god-#{to_cid(params[:id])}"
-    @breadcrumbs = []
+    if params[:display]
+      super
+    else
+      @breadcrumbs = []
+      redirect_to :action => "show_list"
+    end
   end
 
   def build_tree
