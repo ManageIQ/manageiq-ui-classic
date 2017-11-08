@@ -64,7 +64,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         vm.catalogItemModel.description = catalogItemData.description;
         vm.catalogItemModel.display = catalogItemData.display;
         vm.catalogItemModel.catalog_id = catalogItemData.service_template_catalog_id;
-        vm.catalogItemModel.provisioning_dialog_id = catalogItemData.provisioning_dialog_id;
+        vm.catalogItemModel.provisioning_dialog_id = catalogItemData.config_info.provision.dialog_id;
         playbookReusableCodeMixin.formOptions(vm);
         playbookReusableCodeMixin.formCloudCredentials(vm, catalogItemData.config_info.provision.cloud_credential_id, catalogItemData.config_info.retirement.cloud_credential_id);
         getConfigInfo(catalogItemData.config_info);
@@ -85,7 +85,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm.inventory_mode = 'specify';
     }
     vm.catalogItemModel.provisioning_dialog_existing = configData.provision.dialog_id ? 'existing' : 'create';
-    vm.catalogItemModel.provisioning_dialog_id = configData.provision.dialog_id;
     vm.catalogItemModel.provisioning_dialog_name = configData.provision.new_dialog_name;
     vm.catalogItemModel.provisioning_key = '';
     vm.catalogItemModel.provisioning_value = '';
