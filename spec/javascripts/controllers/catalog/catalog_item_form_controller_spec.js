@@ -59,8 +59,9 @@ describe('catalogItemFormController', function() {
   describe('initialization', function() {
     it('sets the catalogItemData name to the value returned via the http request', function(done) {
       setTimeout(function () {
-        expect($scope.vm.catalogItemModel.name).toEqual('catalogItemName');
-        expect($scope.vm.catalogItemModel.description).toEqual('catalogItemDescription');
+        expect($controller.catalogItemModel.name).toEqual($scope.vm.catalogItemModel.name);
+        expect($controller.catalogItemModel.description).toEqual($scope.vm.catalogItemModel.description);
+        expect($controller.catalogItemModel.provisioning_dialog_id).toEqual($scope.vm.catalogItemModel.config_info.provision.dialog_id);
         done();
       });
     });
