@@ -789,7 +789,8 @@ describe CatalogController do
             :playbook_id     => playbook.id,
             :dialog_id       => dialog.id,
             :execution_ttl   => nil,
-            :verbosity       => 4
+            :verbosity       => 4,
+            :log_output      => nil,
           },
           :retirement => {
             :new_dialog_name => 'test_dialog',
@@ -798,7 +799,8 @@ describe CatalogController do
             :repository_id   => repository.id,
             :playbook_id     => playbook.id,
             :execution_ttl   => nil,
-            :verbosity       => 0
+            :verbosity       => 0,
+            :log_output      => nil,
           }
         }
       }
@@ -814,7 +816,8 @@ describe CatalogController do
           :dialog_id          => dialog.id,
           :become_enabled     => "No",
           :execution_ttl      => nil,
-          :verbosity          => 4
+          :verbosity          => 4,
+          :log_output         => nil,
         },
         :retirement   => {
           :remove_resources   => nil,
@@ -823,7 +826,8 @@ describe CatalogController do
           :machine_credential => auth.name,
           :become_enabled     => "No",
           :execution_ttl      => nil,
-          :verbosity          => 0
+          :verbosity          => 0,
+          :log_output         => nil,
         }
       }
       expect(playbook_details).to eq(st_details)
@@ -843,7 +847,8 @@ describe CatalogController do
             :playbook_id     => playbook.id,
             :dialog_id       => 2,
             :execution_ttl   => nil,
-            :verbosity       => 4
+            :verbosity       => 4,
+            :log_output         => nil,
           },
           :retirement => {
             :new_dialog_name => 'test_dialog',
@@ -852,7 +857,8 @@ describe CatalogController do
             :repository_id   => repository.id,
             :playbook_id     => 2,
             :execution_ttl   => nil,
-            :verbosity       => 0
+            :verbosity       => 0,
+            :log_output         => nil,
           }
         }
       }
@@ -866,7 +872,8 @@ describe CatalogController do
           :machine_credential => auth.name,
           :become_enabled     => "No",
           :execution_ttl      => nil,
-          :verbosity          => 4
+          :verbosity          => 4,
+          :log_output         => nil,
         },
         :retirement   => {
           :remove_resources   => nil,
@@ -875,7 +882,8 @@ describe CatalogController do
           :machine_credential => auth.name,
           :become_enabled     => "No",
           :execution_ttl      => nil,
-          :verbosity          => 0
+          :verbosity          => 0,
+          :log_output         => nil,
         }
       }
       expect(playbook_details).to eq(st_details)
