@@ -147,8 +147,6 @@ module Mixins
           :password         => password,
           :server           => params[:default_hostname],
           :port             => params[:default_api_port],
-          :scheme           => 'https',
-          :version          => 4,
           :verify_ssl       => params[:default_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
           :ca_certs         => params[:default_tls_ca_certs],
           :metrics_username => metrics_user,
