@@ -1,4 +1,4 @@
-ManageIQ.angular.app.service('topologyService', function() {
+ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqService', function($location, $http, miqService) {
   this.tooltip = function tooltip(d) {
     var status = [
       __('Name: ') + d.item.name,
@@ -239,4 +239,37 @@ ManageIQ.angular.app.service('topologyService', function() {
     });
     $scope.resetSearch = resetEvent;
   };
-});
+
+  this.mixinRefresh = function(controller, $scope) {
+    var getTopologyData = function(response) {
+      var data = response.data;
+      var currentSelectedKinds = controller.kinds;
+      controller.items = data.data.items;
+      controller.relations = data.data.relations;
+      controller.kinds = $scope.kinds = data.data.kinds;
+      controller.icons = data.data.icons;
+      if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(controller.kinds).length)) {
+        controller.kinds = $scope.kinds = currentSelectedKinds;
+      }
+    };
+    var refresh = function() {
+      var id;
+      if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
+        id = '';
+      } else {
+        id = '/' + controller.dataUrl + (/\/show\/(\d+)/.exec($location.absUrl())[1]);
+      }
+
+      var url = controller.dataUrl + id;
+      $http.get(url)
+        .then(controller.getTopologyData ? controller.getTopologyData : getTopologyData)
+        .catch(miqService.handleFailure);
+    };
+    ManageIQ.angular.rxSubject.subscribe(function(event) {
+      if (event.service === 'topologyService' && event.name === 'refreshTopology') {
+        controller.refresh();
+      }
+    });
+    controller.refresh = refresh;
+  };
+}]);

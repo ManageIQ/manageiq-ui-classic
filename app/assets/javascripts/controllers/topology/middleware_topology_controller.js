@@ -1,35 +1,17 @@
 angular.module('ManageIQ').controller('middlewareTopologyController', MiddlewareTopologyCtrl);
-MiddlewareTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
+MiddlewareTopologyCtrl.$inject = ['$scope', '$interval', 'topologyService'];
 
-function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
+function MiddlewareTopologyCtrl($scope, $interval, topologyService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   var vm = this;
   vm.vs = null;
   var d3 = window.d3;
   vm.d3 = d3;
-  var icons;
+  vm.icons;
+  vm.dataUrl = '/middleware_topology/data';
 
   topologyService.mixinContextMenu(vm, vm);
-
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
-    if (event.name === 'refreshTopology') {
-      vm.refresh();
-    }
-  });
-
-  vm.refresh = function() {
-    var id;
-    if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
-      id = '';
-    } else {
-      id = '/' + (/middleware_topology\/show\/(\d+)/.exec($location.absUrl())[1]);
-    }
-    var url = '/middleware_topology/data' + id;
-    $http.get(url)
-      .then(getMiddlewareTopologyData)
-      .catch(miqService.handleFailure);
-  };
 
   vm.checkboxModel = {
     value: false,
@@ -37,6 +19,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
   vm.legendTooltip = 'Click here to show/hide entities of this type';
 
   $('input#box_display_names').click(topologyService.showHideNames(vm));
+  topologyService.mixinRefresh(vm, $scope);
   vm.refresh();
   var promise = $interval(vm.refresh, 1000 * 60 * 3);
 
@@ -142,7 +125,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
       };
     }
 
-    return icons[d.item.display_kind];
+    return vm.icons[d.item.display_kind];
   };
 
   vm.getCircleDimensions = function getCircleDimensions(d) {
@@ -182,19 +165,5 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
         };
     }
   };
-
-  function getMiddlewareTopologyData(response) {
-    var data = response.data;
-    var currentSelectedKinds = vm.kinds;
-
-    vm.items = data.data.items;
-    vm.relations = data.data.relations;
-    vm.kinds = $scope.kinds = data.data.kinds;
-    icons = data.data.icons;
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
-      vm.kinds = currentSelectedKinds;
-    }
-  }
-
   topologyService.mixinSearch(vm);
 }

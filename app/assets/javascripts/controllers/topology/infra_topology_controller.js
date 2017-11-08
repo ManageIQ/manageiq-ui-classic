@@ -1,39 +1,18 @@
 angular.module('ManageIQ').controller('infraTopologyController', InfraTopologyCtrl);
-InfraTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
+InfraTopologyCtrl.$inject = ['$scope', '$interval', 'topologyService'];
 
-function InfraTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
+function InfraTopologyCtrl($scope, $interval, topologyService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   var vm = this;
+  vm.dataUrl = '/infra_topology/data';
   vm.vs = null;
-  var icons = null;
+  vm.icons = null;
 
   var d3 = window.d3;
   vm.d3 = d3;
 
   topologyService.mixinContextMenu(vm, vm);
-
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
-    if (event.name === 'refreshTopology') {
-      vm.refresh();
-    }
-  });
-
-  vm.refresh = function() {
-    var id;
-    if ($location.absUrl().match("show/$") || $location.absUrl().match("show$")) {
-      id = '';
-    } else {
-      id = '/' + (/infra_topology\/show\/(\d+)/.exec($location.absUrl())[1]);
-    }
-
-    var url = '/infra_topology/data' + id;
-
-    $http.get(url)
-      .then(getInfraTopologyData)
-      .catch(miqService.handleFailure);
-  };
-
   vm.checkboxModel = {
     value: false
   };
@@ -41,6 +20,7 @@ function InfraTopologyCtrl($scope, $http, $interval, $location, topologyService,
   vm.legendTooltip = __("Click here to show/hide entities of this type");
 
   $('input#box_display_names').click(topologyService.showHideNames(vm));
+  topologyService.mixinRefresh(vm, $scope);
   vm.refresh();
   var promise = $interval(vm.refresh, 1000 * 60 * 3);
 
@@ -161,9 +141,9 @@ function InfraTopologyCtrl($scope, $http, $interval, $location, topologyService,
   this.getIcon = function getIcon(d) {
     switch(d.item.kind) {
       case 'InfraManager':
-        return icons[d.item.display_kind];
+        return vm.icons[d.item.display_kind];
       default:
-        return icons[d.item.kind];
+        return vm.icons[d.item.kind];
     }
   };
 
@@ -182,21 +162,6 @@ function InfraTopologyCtrl($scope, $http, $interval, $location, topologyService,
         return defaultDimensions;
     }
   };
-
-  function getInfraTopologyData(response) {
-    var data = response.data;
-
-    var currentSelectedKinds = vm.kinds;
-
-    vm.items = data.data.items;
-    vm.relations = data.data.relations;
-    vm.kinds = $scope.kinds = data.data.kinds;
-    icons = data.data.icons;
-
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
-      vm.kinds = currentSelectedKinds;
-    }
-  }
 
   topologyService.mixinSearch(vm);
 }
