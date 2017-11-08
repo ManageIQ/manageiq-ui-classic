@@ -1,61 +1,39 @@
 angular.module('ManageIQ').controller('containerTopologyController', ContainerTopologyCtrl);
-ContainerTopologyCtrl.$inject = ['$scope', '$http', '$interval', 'topologyService', '$window', 'miqService'];
+ContainerTopologyCtrl.$inject = ['$scope', '$interval', 'topologyService'];
 
-function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $window, miqService) {
+function ContainerTopologyCtrl($scope, $interval, topologyService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   var vm = this;
+  vm.dataUrl = '/container_topology/data';
+  vm.detailUrl = '/container_project_topology/data';
   vm.vs = null;
-  var icons = null;
+  vm.icons = null;
 
   var d3 = window.d3;
   vm.d3 = d3;
 
   topologyService.mixinContextMenu(vm, vm);
 
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
-    if (event.name === 'refreshTopology') {
-      vm.refresh();
-    }
-  });
-
-  vm.refresh = function() {
-    var id;
-    var type;
-    var arr;
-    var pathname = $window.location.pathname.replace(/\/$/, '');
-    if (pathname.match('/container_topology/show$')) {
-      // specifically the container_topology page - all container ems's
-      type = 'container_topology';
-      id = '';
-    } else if (pathname.match('/(.+)/show/([0-9]+)')) {
-      // any container entity except the ems
-      // search for pattern ^/<controller>/show/<id>$ in the pathname - /container_project/show/11
-      arr = pathname.match('/(.+)/show/([0-9]+)');
-      type = arr[1] + '_topology';
-      id = '/' + arr[2];
-    } else if (pathname.match('/(.+)/([0-9]+)')) {
-      // single entity topology of ems_container
-      // search for pattern ^/<controller>/<id>$ in the pathname - /ems_container/4
-      arr = pathname.match('/(.+)/([0-9]+)');
-      type = 'container_topology';
-      id = '/' + arr[2];
-    }
-
-    var url = '/' + type + '/data' + id;
-
-    $http.get(url)
-      .then(getContainerTopologyData)
-      .catch(miqService.handleFailure);
-  };
-
   vm.checkboxModel = {
     value: false
   };
 
-  vm.legendTooltip = __("Click here to show/hide entities of this type");
+  vm.remove_hierarchy = [
+    'Container',
+    'ContainerGroup',
+    'ContainerReplicator',
+    'ContainerService',
+    'ContainerRoute',
+    'Host',
+    'Vm',
+    'ContainerNode',
+    'ContainerManager'
+  ];
 
+  vm.legendTooltip = __("Click here to show/hide entities of this type");
   $('input#box_display_names').click(topologyService.showHideNames(vm));
+  topologyService.mixinRefresh(vm, $scope);
   vm.refresh();
   var promise = $interval(vm.refresh, 1000 * 60 * 3);
 
@@ -174,7 +152,7 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
   });
 
   vm.getIcon = function getIcon(d) {
-    return d.item.kind === 'ContainerManager' ? icons[d.item.display_kind] : icons[d.item.kind];
+    return d.item.kind === 'ContainerManager' ? vm.icons[d.item.display_kind] : vm.icons[d.item.kind];
   };
 
   vm.getDimensions = function getDimensions(d) {
@@ -200,36 +178,6 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
         return defaultDimensions;
     }
   };
-
-  function getContainerTopologyData(response) {
-    var data = response.data;
-
-    var currentSelectedKinds = vm.kinds;
-
-    vm.items = data.data.items;
-    vm.relations = data.data.relations;
-    // NOTE: $scope.kinds is required by kubernetes-topology-icon
-    vm.kinds = $scope.kinds = data.data.kinds;
-    icons = data.data.icons;
-
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
-      vm.kinds = currentSelectedKinds;
-    } else if (data.data.settings && data.data.settings.containers_max_items) {
-      var size_limit = data.data.settings.containers_max_items;
-      var remove_hierarchy = [
-        'Container',
-        'ContainerGroup',
-        'ContainerReplicator',
-        'ContainerService',
-        'ContainerRoute',
-        'Host',
-        'Vm',
-        'ContainerNode',
-        'ContainerManager'
-      ];
-      vm.kinds = topologyService.reduce_kinds(vm.items, vm.kinds, size_limit, remove_hierarchy);
-    }
-  }
 
   topologyService.mixinSearch(vm);
 }
