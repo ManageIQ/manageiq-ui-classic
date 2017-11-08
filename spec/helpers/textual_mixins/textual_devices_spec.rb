@@ -35,6 +35,18 @@ describe TextualMixins::TextualDevices do
       end
       it { is_expected.not_to be_empty }
     end
+
+    context "with hdd with no size_on_disk collected (AZURE)" do
+      let(:hw) do
+        FactoryGirl.create(:hardware,
+                           :disks => [FactoryGirl.create(:disk,
+                                                         :device_type     => "disk",
+                                                         :size            => "1072693248",
+                                                         :controller_type => "AZURE")])
+      end
+      it { expect(subject[0][:name]).to include("Hard Disk (AZURE ), Size 1072693248") }
+      it { expect(subject[0][:name]).not_to include("Percent Used Provisioned Space") }
+    end
   end
 
   describe "#network_attributes" do
