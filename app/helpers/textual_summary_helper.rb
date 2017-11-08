@@ -186,6 +186,7 @@ module TextualSummaryHelper
               when "default"           then _("Default")
               when "metrics"           then _("C & U Database")
               when "amqp"              then _("AMQP")
+              when "console"           then _("VMRC Console")
               when "ipmi"              then _("IPMI")
               when "remote"            then _("Remote Login")
               when "smartstate_docker" then _("SmartState Docker")
