@@ -42,11 +42,10 @@ module TextualMixins::TextualDevices
       location = disk.location
       size = disk.size
       prov = disk.used_percent_of_provisioned
-      device_name = _("Hard Disk (%{controller_type} %{location}), Size %{size}, " \
-                      "Percent Used Provisioned Space %{space}") % {:controller_type => ctrl_type,
-                                                                    :location        => location,
-                                                                    :size            => size,
-                                                                    :space           => prov}
+      device_name = _("Hard Disk (%{controller_type} %{location}), Size %{size}") % {:controller_type => ctrl_type,
+                                                                                     :location        => location,
+                                                                                     :size            => size}
+      device_name << _(", Percent Used Provisioned Space %{space}") % {:space => prov} unless disk.size_on_disk.nil?
       description = _("%{filename}, Mode: %{mode}") % {:filename => disk.filename, :mode => disk.mode}
       Device.new(device_name, description, nil, :disk)
     end
