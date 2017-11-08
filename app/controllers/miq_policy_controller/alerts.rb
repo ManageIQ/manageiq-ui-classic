@@ -116,7 +116,6 @@ module MiqPolicyController::Alerts
         @edit[:expression_options] = MiqAlert.expression_options(@edit[:new][:expression][:eval_method])
         alert_build_exp_options_info
       end
-      @edit[:new][:repeat_time] = alert_default_repeat_time
     end
 
     @edit[:new][:expression][:options][:event_types] = [params[:event_types]].reject(&:blank?) if params[:event_types]
