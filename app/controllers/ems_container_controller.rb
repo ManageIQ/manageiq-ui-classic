@@ -17,7 +17,6 @@ class EmsContainerController < ApplicationController
     "prometheus"        => %w(prometheus prometheus),
     "prometheus_alerts" => %w(alerts prometheus)
   }.freeze
-  OPENSHIFT_DEFAULT_ROUTE = %w(hawkular-metrics openshift-infra).freeze
 
   def self.model
     ManageIQ::Providers::ContainerManager
@@ -73,7 +72,7 @@ class EmsContainerController < ApplicationController
                  else
                    params[:metrics_selection]
                  end
-    route, project = OPENSHIFT_ROUTES.fetch(route_type, OPENSHIFT_DEFAULT_ROUTE)
+    route, project = OPENSHIFT_ROUTES[route_type]
     verify_ems ||= find_record_with_rbac(model, params[:id])
     set_ems_record_vars(verify_ems, :validate)
     @in_a_form = true

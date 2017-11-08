@@ -116,8 +116,8 @@ describe EmsContainerController do
     it "detects openshift prometheus alert route" do
       require 'kubeclient'
       controller.instance_variable_set(:@_params,
-                                       :id                => openshift_manager.id,
-                                       :current_tab       => "alerts")
+                                       :id          => openshift_manager.id,
+                                       :current_tab => "alerts")
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
 
       # set kubeclient to return a mock route.
@@ -134,9 +134,9 @@ describe EmsContainerController do
 
     it "tolerates detection exceptions" do
       controller.instance_variable_set(:@_params,
-                                       :id => openshift_manager.id,
+                                       :id                => openshift_manager.id,
                                        :current_tab       => "metrics",
-                                        :metrics_selection => 'hawkular')
+                                       :metrics_selection => 'hawkular')
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
 
       # set kubeclient to return a mock route.
