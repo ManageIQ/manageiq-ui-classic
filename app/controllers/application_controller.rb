@@ -1717,6 +1717,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_db_view(db, options = {})
+    binding.pry
     if %w(ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm)
        .include?(db) && options[:association] == "all_vms_and_templates"
       options[:association] = nil

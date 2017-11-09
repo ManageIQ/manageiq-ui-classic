@@ -245,6 +245,7 @@ module ApplicationHelper
 
   def model_to_report_data
     # @report_data_additional_options[:model] is most important, others can be removed
+    binding.pry
     current_model = if @report_data_additional_options && @report_data_additional_options[:model]
                       @report_data_additional_options[:model]
                     elsif !@display.nil? && @display != "main"
@@ -253,8 +254,11 @@ module ApplicationHelper
                       params[:db].classify
                     elsif params[:display]
                       params[:display].classify
-                    elsif defined? controller.class.model
+                    elsif defined?(controller.class.model) && controller.class.model.present?
                       controller.class.model.to_s
+                    # for tagging of Users, Groups in ops/settings/rbac
+                    elsif @tagging.present?
+                      @tagging
                     end
 
     # Hosts do not store correct @display in nested attributes (Relationship, Security and Attributes) so use action

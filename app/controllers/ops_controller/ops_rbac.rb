@@ -623,6 +623,7 @@ module OpsController::OpsRbac
     add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
     @sb[:pre_edit_node] = x_node  unless params[:button] # Save active tree node before edit
     @right_cell_text = _("Editing %{model} for \"%{name}\"") % {:name => ui_lookup(:models => @tagging), :model => "#{current_tenant.name} Tags"}
+    binding.pry
     replace_right_cell(:nodetype => "root")
   end
 
