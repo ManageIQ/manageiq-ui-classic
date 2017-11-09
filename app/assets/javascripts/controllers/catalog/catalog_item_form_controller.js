@@ -318,9 +318,13 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   });
 
   vm.addKeyValue = function(prefix) {
+    if (vm.catalogItemModel[prefix + '_variables'].hasOwnProperty(vm.catalogItemModel[prefix + '_key'])) {
+      return miqService.miqFlash("error", __("Variable name must be unique"));
+    }
     vm.catalogItemModel[prefix + '_variables'][vm.catalogItemModel[prefix + '_key']] =  vm.catalogItemModel[prefix + '_value'];
     vm.catalogItemModel[prefix + '_key'] = '';
     vm.catalogItemModel[prefix + '_value'] = '';
+    return true;
   };
 
   vm.provisioning_repository_selected = function() {
@@ -358,7 +362,10 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel[prefix + '_variables'][vm.catalogItemModel.original_key] = vm.catalogItemModel.original_key_value;
   };
 
-  vm.saveKeyValue = function(prefix, _index) {
+  vm.saveKeyValue = function(prefix) {
+    if (vm.catalogItemModel.key in vm.catalogItemModel[prefix + '_variables'] && vm.catalogItemModel.original_key_value === vm.catalogItemModel.key_value) {
+      return miqService.miqFlash("error", __("Variable name must be unique"));
+    }
     vm.catalogItemModel[prefix + '_editMode'] = false;
     vm.catalogItemModel.s_index = '';
     // delete key if key name was edited, and a add new key to hash with new name
@@ -367,6 +374,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     }
 
     vm.catalogItemModel[prefix + '_variables'][vm.catalogItemModel.key] = vm.catalogItemModel.key_value;
+    return true;
   };
 
   vm.toggleDialogSelection = function(prefix, selected_value) {
