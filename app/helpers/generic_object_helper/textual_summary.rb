@@ -32,10 +32,10 @@ module GenericObjectHelper::TextualSummary
       associations.push(key.to_sym)
       define_singleton_method("textual_#{key}") do
         num = @record.send(key).count
-        h = {:label => _("%{label}") % {:label => key.capitalize}, :value => num}
+        h = {:label => _("%{label}") % {:label => key}, :value => num}
         if role_allows?(:feature => "generic_object_view") && num > 0
           h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => key),
-                   :title => _('Show all %{associated_models}') % {:associated_models => key.capitalize})
+                   :title => _('Show all %{associated_models}') % {:associated_models => key})
         end
       end
     end
