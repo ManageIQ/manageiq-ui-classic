@@ -29,7 +29,7 @@
         .col-md-8{"ng-class" => "{'has-error': angularForm.ems_id.$invalid}", "ng-if" => "vm.newRecord"}
           = select_tag("ems_id",
               options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
-              "ng-change"                   => "vm.filterNetworkManagerChanged(angularForm.ems_id)",
+              "ng-change"                   => "vm.filterNetworkManagerChanged(vm.networkRouterModel.ext_management_system.id)",
               "ng-model"                    => "vm.networkRouterModel.ext_management_system.id",
               "required"                    => "",
               "selectpicker-for-select-tag" => "")
