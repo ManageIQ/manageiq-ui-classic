@@ -767,7 +767,7 @@ class OpsController < ApplicationController
   end
 
   def choose_custom_toolbar
-    if x_tree && x_tree[:tree] == :rbac_tree && x_node != 'root'
+    if x_tree && x_tree[:tree] == :rbac_tree && x_node != 'root' && params[:action] != 'x_button'
       build_toolbar(@record ? Mixins::CustomButtons::Result.new(:single) : Mixins::CustomButtons::Result.new(:list))
     end
   end
