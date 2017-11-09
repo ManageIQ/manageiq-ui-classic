@@ -44,8 +44,7 @@ describe TextualMixins::TextualDevices do
                                                          :size            => "1072693248",
                                                          :controller_type => "AZURE")])
       end
-      it { expect(subject[0][:name]).to include("Hard Disk (AZURE ), Size 1072693248") }
-      it { expect(subject[0][:name]).not_to include("Percent Used Provisioned Space") }
+      it { expect(subject[0][:name]).to include("Hard Disk (AZURE ), Size 1072693248, Percent Used Provisioned Space N/A") }
     end
   end
 
