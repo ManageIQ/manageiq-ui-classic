@@ -214,7 +214,8 @@ module ApplicationHelper
   }.freeze
 
   def controller_to_model
-    CONTROLLER_TO_MODEL[self.class.model.to_s] || self.class.model
+    model = self.class.model
+    CONTROLLER_TO_MODEL[model.to_s] || model
   end
 
   MODEL_STRING = {
