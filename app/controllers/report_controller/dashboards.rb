@@ -58,7 +58,7 @@ module ReportController::Dashboards
       if !@db || @db.id.blank?
         add_flash(_("Add of new Dashboard was cancelled by the user"))
       else
-        add_flash(_("Edit of Dashboard \"%{name}\" was cancelled by the user") % {:name => @db.name})
+        add_flash(_("Edit of Dashboard \"%{name}\" was cancelled by the user") % {:name => get_record_display_name(@db)})
       end
       get_node_info
       @edit = session[:edit] = nil # clean out the saved info
@@ -76,7 +76,7 @@ module ReportController::Dashboards
       if @flash_array.nil? && @db.save
         db_save_members
         AuditEvent.success(build_saved_audit(@db, @edit))
-        add_flash(_("Dashboard \"%{name}\" was saved") % {:name => @db.name})
+        add_flash(_("Dashboard \"%{name}\" was saved") % {:name => get_record_display_name(@db)})
         if params[:button] == "add"
           widgetset = MiqWidgetSet.where_unique_on(@edit[:new][:name]).first
           settings = g.settings ? g.settings : {}
