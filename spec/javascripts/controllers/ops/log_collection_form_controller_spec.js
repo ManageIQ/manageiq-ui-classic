@@ -1,5 +1,5 @@
 describe('logCollectionFormController', function() {
-  var $scope, $controller, $httpBackend, miqService;
+  var $scope, $controller, $httpBackend, miqService, vm;
 
   beforeEach(module('ManageIQ'));
 
@@ -21,13 +21,13 @@ describe('logCollectionFormController', function() {
 
   $httpBackend = _$httpBackend_;
 
-  $controller = _$controller_('logCollectionFormController',
-                              {$scope: $scope,
-                               $attrs: {'logCollectionFormFieldsUrl': '/ops/log_collection_form_fields/',
-                                        'logProtocolChangedUrl': '/ops/log_protocol_changed/'},
-                               miqService: miqService,
-                               serverId: 123456
-                              });
+  vm = _$controller_('logCollectionFormController',
+                      {$scope: $scope,
+                       $attrs: {'logCollectionFormFieldsUrl': '/ops/log_collection_form_fields/',
+                                'logProtocolChangedUrl': '/ops/log_protocol_changed/'},
+                       miqService: miqService,
+                       serverId: 123456
+                      });
   }));
 
   afterEach(function() {
@@ -50,27 +50,27 @@ describe('logCollectionFormController', function() {
     }));
 
     it('sets the depot_name to the value returned from the http request', function () {
-      expect($scope.logCollectionModel.depot_name).toEqual('my_samba_depot');
+      expect(vm.logCollectionModel.depot_name).toEqual('my_samba_depot');
     });
 
     it('sets the uri to the value returned from the http request', function () {
-      expect($scope.logCollectionModel.uri).toEqual('smb://smb_location');
+      expect(vm.logCollectionModel.uri).toEqual('smb://smb_location');
     });
 
     it('sets the uri_prefix to the value returned from the http request', function () {
-      expect($scope.logCollectionModel.uri_prefix).toEqual('smb');
+      expect(vm.logCollectionModel.uri_prefix).toEqual('smb');
     });
 
     it('sets the log_userid to the value returned from the http request', function () {
-      expect($scope.logCollectionModel.log_userid).toEqual('admin');
+      expect(vm.logCollectionModel.log_userid).toEqual('admin');
     });
 
     it('sets the log_password to the value returned from the http request', function () {
-      expect($scope.logCollectionModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
+      expect(vm.logCollectionModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
     });
 
     it('sets the log_protocol to the value returned from the http request', function () {
-      expect($scope.logCollectionModel.log_protocol).toEqual('Samba');
+      expect(vm.logCollectionModel.log_protocol).toEqual('Samba');
     });
 
     describe('when the log protocol is changed to Redhat dropbox', function() {
@@ -81,28 +81,28 @@ describe('logCollectionFormController', function() {
       };
 
       beforeEach(inject(function() {
-        $scope.logCollectionModel.log_protocol = 'Red Hat Dropbox';
-        $scope.logProtocolChanged();
+        vm.logCollectionModel.log_protocol = 'Red Hat Dropbox';
+        vm.logProtocolChanged();
         $httpBackend.whenGET('/ops/log_protocol_changed/123456?log_protocol=Red Hat Dropbox').respond(200, logProtocolChangedFormResponse);
         $httpBackend.flush();
       }));
 
       it('sets the depot_name to the value returned from the http request', function () {
-        expect($scope.logCollectionModel.depot_name).toEqual(logProtocolChangedFormResponse.depot_name);
+        expect(vm.logCollectionModel.depot_name).toEqual(logProtocolChangedFormResponse.depot_name);
       });
 
       it('sets the uri to the value returned from the http request', function () {
-        expect($scope.logCollectionModel.uri).toEqual(logProtocolChangedFormResponse.uri);
+        expect(vm.logCollectionModel.uri).toEqual(logProtocolChangedFormResponse.uri);
       });
 
       it('sets the uri_prefix to the value returned from the http request', function () {
-        expect($scope.logCollectionModel.uri_prefix).toEqual(logProtocolChangedFormResponse.uri_prefix);
+        expect(vm.logCollectionModel.uri_prefix).toEqual(logProtocolChangedFormResponse.uri_prefix);
       });
     });
 
     describe('miqDBBackupService should exist in the scope', function() {
       it('returns true', function() {
-        expect($scope.miqDBBackupService).toBeDefined();
+        expect(vm.miqDBBackupService).toBeDefined();
       });
     });
   });
