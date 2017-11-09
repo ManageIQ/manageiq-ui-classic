@@ -4,7 +4,6 @@ module ApplicationController::Tags
   # Edit user, group or tenant tags
   def tagging_edit(db = nil, assert = true)
     assert_privileges("#{controller_for_common_methods}_tag") if assert
-    @showlinks = true
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
     case params[:button]
     when "cancel"
@@ -199,6 +198,10 @@ module ApplicationController::Tags
 
   # Build the @edit elements for the tag edit screen
   def tag_edit_build_screen
+    @gtl_type = 'list' # show items in tagging screen a list
+    @embedded = true   # with no links
+    @showlinks = false
+
     cats = Classification.categories.select(&:show).sort_by(&:name) # Get the categories, sort by name
     @categories = {}    # Classifications array for first chooser
     cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
