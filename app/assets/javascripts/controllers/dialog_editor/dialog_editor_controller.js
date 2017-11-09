@@ -105,7 +105,9 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
     if (vm.treeSelectorIncludeDomain === false) {
       fqname.splice(1, 1);
     }
-    elementData.resource_action.ae_namespace = fqname.join('/');
+    elementData.resource_action.ae_instance = fqname.pop();
+    elementData.resource_action.ae_class = fqname.pop();
+    elementData.resource_action.ae_namespace = fqname.filter(String).join('/');
     vm.treeSelectorShow = false;
   }
 
