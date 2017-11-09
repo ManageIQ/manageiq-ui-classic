@@ -103,7 +103,7 @@ describe EmsContainerController do
 
       # set kubeclient to return a mock route.
       allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
-      expect(mock_client).to receive(:get_route).with('prometheus', 'prometheus')
+      expect(mock_client).to receive(:get_route).with('prometheus', 'openshift-metrics')
         .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-metrics.example.com"}))
 
       ret = JSON.parse(controller.send(:update_ems_button_detect))
@@ -122,7 +122,7 @@ describe EmsContainerController do
 
       # set kubeclient to return a mock route.
       allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
-      expect(mock_client).to receive(:get_route).with('alerts', 'prometheus')
+      expect(mock_client).to receive(:get_route).with('alerts', 'openshift-metrics')
         .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-alerts.example.com"}))
 
       ret = JSON.parse(controller.send(:update_ems_button_detect))

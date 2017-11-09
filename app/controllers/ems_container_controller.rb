@@ -14,8 +14,8 @@ class EmsContainerController < ApplicationController
 
   OPENSHIFT_ROUTES = {
     "hawkular"          => %w(hawkular-metrics openshift-infra),
-    "prometheus"        => %w(prometheus prometheus),
-    "prometheus_alerts" => %w(alerts prometheus)
+    "prometheus"        => %w(prometheus openshift-metrics),
+    "prometheus_alerts" => %w(alerts openshift-metrics)
   }.freeze
 
   def self.model
