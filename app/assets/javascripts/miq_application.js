@@ -851,17 +851,35 @@ function miqEnableLoginFields(enabled) {
 // Initialize dashboard column jQuery sortables
 function miqInitDashboardCols() {
   if (miqDomElementExists('col1')) {
-    $('#col1').sortable({connectWith: '#col2, #col3', handle: ".sortable-handle"});
+    $('#col1').sortable({
+      connectWith: '#col2, #col3',
+      handle: '.sortable-handle',
+      helper: 'clone',
+      placeholder: 'sortable-placeholder',
+      forcePlaceholderSize: true,
+    });
     $('#col1').off('sortupdate');
     $('#col1').on('sortupdate', miqDropComplete);
   }
   if (miqDomElementExists('col2')) {
-    $('#col2').sortable({connectWith: '#col1, #col3', handle: ".sortable-handle"});
+    $('#col2').sortable({
+      connectWith: '#col1, #col3',
+      handle: '.sortable-handle',
+      helper: 'clone',
+      placeholder: 'sortable-placeholder',
+      forcePlaceholderSize: true,
+    });
     $('#col2').off('sortupdate');
     $('#col2').on('sortupdate', miqDropComplete);
   }
   if (miqDomElementExists('col3')) {
-    $('#col3').sortable({connectWith: '#col1, #col2', handle: ".sortable-handle"});
+    $('#col3').sortable({
+      connectWith: '#col1, #col2',
+      handle: '.sortable-handle',
+      helper: 'clone',
+      placeholder: 'sortable-placeholder',
+      forcePlaceholderSize: true,
+    });
     $('#col3').off('sortupdate');
     $('#col3').on('sortupdate', miqDropComplete);
   }

@@ -710,3 +710,13 @@ table .label {  // Adds margin to the label to vertically align with text
 div.disabled {
   cursor: default;
 }
+
+.sortable-placeholder {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px dashed #ddd;
+}
+
+/// ===================================================================
+/// end misc styling
+/// ===================================================================
+
