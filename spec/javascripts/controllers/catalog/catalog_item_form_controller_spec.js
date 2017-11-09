@@ -31,6 +31,7 @@ describe('catalogItemFormController', function() {
           execution_ttl:         100,
           hosts:                'localhost',
           verbosity:            '0',
+          log_output:           'on_error',
           extra_vars:           {
             'var1': {'default': 'default_val1'},
             'var2': {'default': 'default_val2'}
@@ -40,7 +41,8 @@ describe('catalogItemFormController', function() {
         },
         retirement: {
           remove_resources: 'yes_without_playbook',
-          verbosity: '0',
+          verbosity:         '0',
+          log_output:       'on_error',
         }
       }
     };
