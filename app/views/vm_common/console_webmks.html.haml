@@ -4,8 +4,8 @@
     %title
       = _('%{product_name} WebMKS Remote Console') % {:product_name => I18n.t('product.name')}
     = favicon_link_tag
-    = stylesheet_link_tag 'webmks'
-    = javascript_include_tag 'jquery/dist/jquery.js', 'jquery-ui/jquery-ui.js', 'webmks'
+    = stylesheet_link_tag '/webmks/css/wmks-all.css'
+    = javascript_include_tag 'jquery/dist/jquery.js', 'jquery-ui/jquery-ui.js', '/webmks/wmks.min.js'
     :javascript
       $(function () {
         var wmks = WMKS.createWMKS('wmksContainer', {}).register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function (event,data) {
