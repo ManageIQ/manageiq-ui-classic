@@ -483,7 +483,7 @@ module ApplicationController::Buttons
     @in_a_form  = true
     @lastaction = "automate_button"
     @layout     = "miq_ae_automate_button"
-    replace_right_cell(:nodetype => "button_edit")
+    replace_right_cell(:nodetype => "group_edit")
   end
 
   def group_create_update(typ)
