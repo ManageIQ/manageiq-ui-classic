@@ -3,8 +3,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionNodeCenter < Applicatio
     select(
       :generic_object_definition_configuration,
       'fa fa-cog fa-lg',
-      title = N_('Configuration'),
-      title,
+      N_('Configuration'),
       :items => [
         button(
           :generic_object_definition_edit,
@@ -15,22 +14,19 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionNodeCenter < Applicatio
         button(
           :ab_group_new,
           'pficon pficon-add-circle-o fa-lg',
-          t = N_('Add a new Button Group'),
-          t,
+          N_('Add a new Button Group'),
           :url => 'custom_button_group_new',
         ),
         button(
           :ab_button_new,
           'pficon pficon-add-circle-o fa-lg',
-          t = N_('Add a new Button'),
-          t,
+          N_('Add a new Button'),
           :url => 'custom_button_new',
         ),
         button(
           :generic_object_definition_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Generic Object Classes from Inventory'),
-          t,
+          N_('Remove this Generic Object Classes from Inventory'),
           :data    => {'function'      => 'sendDataWithRx',
                        'function-data' => '{"type": "delete", "controller": "genericObjectDefinitionToolbarController", "entity": "Generic Object Class"}'},
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonDelete,

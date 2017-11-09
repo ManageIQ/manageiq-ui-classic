@@ -3,8 +3,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
     select(
       :generic_object_definition_configuration,
       'fa fa-cog fa-lg',
-      title = N_('Configuration'),
-      title,
+      N_('Configuration'),
       :items => [
         button(
           :generic_object_definition_new,
@@ -15,8 +14,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
         button(
           :generic_object_definition_edit,
           'pficon pficon-edit fa-lg',
-          t = N_('Edit selected Generic Object Class'),
-          t,
+          N_('Edit selected Generic Object Class'),
           :enabled      => false,
           :onwhen       => "1",
           :url_parms    => "edit_div",
