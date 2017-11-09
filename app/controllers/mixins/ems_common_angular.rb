@@ -161,7 +161,7 @@ module Mixins
         endpoint_opts = {:protocol => params[:default_security_protocol], :hostname => params[:default_hostname], :api_port => params[:default_api_port], :api_version => params[:api_version]}
         [user, params[:default_password], endpoint_opts]
       when 'ManageIQ::Providers::Lenovo::PhysicalInfraManager'
-        [user, password, params[:default_hostname], params[:default_api_port], "token", false]
+        [user, password, params[:default_hostname], params[:default_api_port], "token", false, true]
       end
     end
 
