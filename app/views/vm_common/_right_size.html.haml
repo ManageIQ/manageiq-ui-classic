@@ -214,7 +214,7 @@
     = _("* Recommendations are subject to minimum of CPU: %{cpu} and Memory: %{memory}.") % {:cpu => arr[0], :memory => arr[1]}
 
   - unless @explorer
-    #buttons_on.pull-right
+    #buttons_on{:style => "float: right"}
       = button_tag((t = _('Back')),
         :class   => 'btn btn-default',
         :alt     => t,
