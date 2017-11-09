@@ -63,16 +63,16 @@ module ContainerServiceMixin
     if used_cpu.any?
       {
         :cpu => {
-          :used  => used_cpu.values.last.round,
-          :total => total_cpu.values.last.round,
+          :used  => (used_cpu.values.last || 0).round,
+          :total => (total_cpu.values.last || 0).round,
           :xData => used_cpu.keys,
           :yData => used_cpu.values.map(&:round)
         },
         :mem => {
-          :used  => (used_mem.values.last / 1024.0).round,
-          :total => (total_mem.values.last / 1024.0).round,
+          :used  => ((used_mem.values.last || 0) / 1024.0).round,
+          :total => ((total_mem.values.last || 0) / 1024.0).round,
           :xData => used_mem.keys,
-          :yData => used_mem.values.map { |m| (m / 1024.0).round }
+          :yData => used_mem.values.map { |m| ((m || 0) / 1024.0).round }
         }
       }
     end
