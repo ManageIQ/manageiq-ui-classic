@@ -1852,6 +1852,7 @@ class CatalogController < ApplicationController
     fetch_dialog(playbook_details, provision[:dialog_id], :provisioning)
     playbook_details[:provisioning][:execution_ttl] = provision[:execution_ttl]
     playbook_details[:provisioning][:verbosity] = provision[:verbosity]
+    playbook_details[:provisioning][:log_output] = provision[:log_output]
     playbook_details[:provisioning][:become_enabled] = provision[:become_enabled] == true ? _('Yes') : _('No')
 
     if @record.config_info[:retirement]
@@ -1867,6 +1868,7 @@ class CatalogController < ApplicationController
       end
       playbook_details[:retirement][:execution_ttl] = retirement[:execution_ttl]
       playbook_details[:retirement][:verbosity] = retirement[:verbosity]
+      playbook_details[:retirement][:log_output] = retirement[:log_output]
       playbook_details[:retirement][:become_enabled] = retirement[:become_enabled] == true ? _('Yes') : _('No')
     end
     playbook_details

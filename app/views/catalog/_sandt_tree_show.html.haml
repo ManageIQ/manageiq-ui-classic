@@ -249,6 +249,11 @@
                 = h(@record.config_info[:provision][:hosts])
             .form-group
               %label.col-md-3.control-label
+                = _('Logging Output')
+              .col-md-9
+                = h(ViewHelper::LOG_OUTPUT_LEVELS[provisioning[:log_output]])
+            .form-group
+              %label.col-md-3.control-label
                 = _('Escalate Privilege')
               .col-md-9
                 = h(provisioning[:become_enabled])
@@ -331,6 +336,11 @@
                   = _('Hosts')
                 .col-md-9
                   = h(@record.config_info[:retirement][:hosts])
+              .form-group
+                %label.col-md-3.control-label
+                  = _('Logging Output')
+                .col-md-9
+                  = h(ViewHelper::LOG_OUTPUT_LEVELS[retirement[:log_output]])
               .form-group
                 %label.col-md-3.control-label
                   = _('Escalate Privilege')
