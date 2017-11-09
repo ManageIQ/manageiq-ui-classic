@@ -47,5 +47,13 @@ describe AnsibleRepositoryController do
       expect(response.status).to eq(200)
       expect(response.body).to include("Test Repository (All Playbooks)")
     end
+
+    it 'reload button will stay on the nested list' do
+      get :show, :params => {:id => @repository.id, :display => 'playbooks'}
+      expect(response.status).to eq(200)
+      post :button, :params => { :id => @repository.id, :pressed => 'ansible_repository_reload' }
+      expect(response.status).to eq(200)
+      expect(response).to render_template(:partial => "layouts/_gtl")
+    end
   end
 end

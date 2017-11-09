@@ -5,7 +5,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
       'fa fa-repeat fa-lg',
       N_('Reload the current display'),
       N_('Reload'),
-      :url_parms    => ":display => @display",
+      :url_parms    => "main_div",
       :send_checked => true,
       :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck),
   ])
