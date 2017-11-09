@@ -470,31 +470,20 @@ table.table.table-summary-screen tbody td img {
 
 @media (min-width: $screen-sm) {
   #paging_div { /* sets paging_div at bottom of screen and styles */
-    background-color: #f5f5f5;
     border-top: 1px solid #d1d1d1;
-    height: 44px;
     margin-top: 0;
-    padding: 3px 0 0 0;
     top:0;
     .col-md-12 {
       padding: 0;
     }
     .content-view-pf-pagination {
       border: 0;
+      height: 44px;
       margin: 0;
+      padding: 3px 0 0 0;
     }
   }
 }
-
-#form_buttons_div:not(.content-view-pf-pagination) .form-group {  // aligns form buttons right
-  padding-top: 8px;
-  margin-bottom: 0;
-}
-
-#angular_paging_div_buttons button {
-  margin-left: 3px;
-}
-
 
 /// end paginator styling
 
