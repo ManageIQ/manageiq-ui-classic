@@ -766,8 +766,22 @@ class OpsController < ApplicationController
     } if @ajax_action
   end
 
+  def custom_toolbar_explorer
+    if x_tree
+      if @display == "main" && @record
+        Mixins::CustomButtons::Result.new(:single)
+      elsif @lastaction == "show_list"
+        Mixins::CustomButtons::Result.new(:list)
+      elsif x_tree[:tree] == :rbac_tree
+        Mixins::CustomButtons::Result.new(:single)
+      else
+        'blank_view_tb'
+      end
+    end
+  end
+
   def choose_custom_toolbar
-    if x_tree && x_tree[:tree] == :rbac_tree && x_node != 'root'
+    if x_tree && x_tree[:tree] == :rbac_tree && x_node != 'root' && params[:action] != 'x_button'
       build_toolbar(@record ? Mixins::CustomButtons::Result.new(:single) : Mixins::CustomButtons::Result.new(:list))
     end
   end
