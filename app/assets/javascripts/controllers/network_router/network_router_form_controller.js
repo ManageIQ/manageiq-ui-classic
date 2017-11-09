@@ -1,16 +1,18 @@
 ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope', 'networkRouterFormId', 'miqService', 'API', function($http, $scope, networkRouterFormId, miqService, API) {
   var vm = this;
 
-  vm.afterGet = false;
-  vm.networkRouterModel = {
-    name: '',
-    cloud_subnet_id: null,
-    cloud_tenant: null,
-    enable_snat: true,
-    external_gateway: false,
-    extra_attributes: null,
-  };
+  var init = function() {
+    vm.afterGet = false;
+    vm.networkRouterModel = {
+      name: '',
+      cloud_subnet_id: null,
+      cloud_tenant: null,
+      enable_snat: true,
+      external_gateway: false,
+      extra_attributes: null,
+    };
 
+<<<<<<< HEAD
   vm.formId = networkRouterFormId;
   vm.model = "networkRouterModel";
   vm.ems = [];
@@ -47,11 +49,38 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     }).then(function() {
       getCloudSubnetsByNetworkID(vm.networkRouterModel.cloud_network_id);
     }).then(function() {
+=======
+    vm.formId = networkRouterFormId;
+    vm.model = "networkRouterModel";
+    vm.newRecord = networkRouterFormId === "new";
+    vm.saveable = miqService.saveable;
+
+    if (vm.newRecord) {
+>>>>>>> Using init() and lodash isEmpty
       vm.afterGet = true;
       vm.modelCopy = angular.copy(vm.networkRouterModel);
-      miqService.sparkleOff();
-    }).catch(miqService.handleFailure);
-  }
+    } else {
+      miqService.sparkleOn();
+      API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,ems_id,admin_state_up,cloud_network_id,extra_attributes,cloud_tenant,ext_management_system,cloud_subnets").then(function(data) {
+        Object.assign(vm.networkRouterModel, data);
+        if (data.extra_attributes.external_gateway_info && ! _.isEmpty(data.extra_attributes.external_gateway_info)) {
+          vm.networkRouterModel.external_gateway = true;
+        }
+      }).then(function() {
+        if (vm.networkRouterModel.external_gateway) {
+          getSubnetByRef(vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id);
+        }
+      }).then(function() {
+        getCloudNetworksByEms(vm.networkRouterModel.ext_management_system.id);
+      }).then(function() {
+        getCloudSubnetsByNetworkID(vm.networkRouterModel.cloud_network_id);
+      }).then(function() {
+        vm.afterGet = true;
+        vm.modelCopy = angular.copy(vm.networkRouterModel);
+        miqService.sparkleOff();
+      }).catch(miqService.handleFailure);
+    }
+  };
 
   var getCloudNetworksByEms = function(id) {
     if (id) {
@@ -78,7 +107,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   };
 
   vm.addClicked = function() {
-    var url = 'create/new' + '?button=add';
+    var url = 'create/new?button=add';
     miqService.miqAjaxButton(url, vm.networkRouterModel, { complete: false });
   };
 
@@ -132,4 +161,6 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     }
     miqService.sparkleOff();
   };
+
+  init();
 }]);
