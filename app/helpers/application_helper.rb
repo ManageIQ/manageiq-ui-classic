@@ -1632,6 +1632,12 @@ module ApplicationHelper
 
   def process_show_list_options(options, curr_model = nil)
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
+    @report_data_additional_options.with_quadicon_options(
+      :listicon   => @listicon,
+      :embedded   => @embedded,
+      :showlinks  => @showlinks,
+      :policy_sim => @policy_sim
+    )
     @report_data_additional_options.with_model(curr_model) if curr_model
     @report_data_additional_options.freeze
   end
@@ -1646,6 +1652,20 @@ module ApplicationHelper
       additional_options[:parent] = parent_class.find(parent_id) if parent_class < ActiveRecord::Base
     end
     additional_options
+  end
+
+  # Restore instance variables necessary for proper rendering of quadicons.
+  # This is a temporary solution that is ot be replaced by proper
+  # parametrization of an ancessor class of QuadiconHelper.
+  def restore_quadicon_options(quadicon_options)
+    @listicon = quadicon_options[:listicon]
+    @embedded = quadicon_options[:embedded]
+    @showlinks = quadicon_options[:showlinks]
+    @policy_sim = quadicon_options[:policy_sim]
+    # @explorer
+    # @view.db
+    # @parent
+    @lastaction = quadicon_options[:lastaction]
   end
 
   # Wrapper around jquery-rjs' remote_function which adds an extra .html_safe()

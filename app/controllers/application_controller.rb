@@ -435,6 +435,7 @@ class ApplicationController < ActionController::Base
   # @option params :model_id [String]
   #     String value of model's ID to be filtered with.
   def process_params_options(params)
+    restore_quadicon_options(params[:additional_options] || {})
     options = from_additional_options(params[:additional_options] || {})
     if params[:explorer]
       params[:action] = "explorer"
