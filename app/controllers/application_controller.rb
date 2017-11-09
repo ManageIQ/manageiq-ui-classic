@@ -1712,6 +1712,8 @@ class ApplicationController < ActionController::Base
       options[:association] = nil
     end
 
+    process_show_list_options(options, db) if @report_data_additional_options.nil?
+
     MiqReport.load_from_view_options(db, current_user, options, db_view_yaml_cache)
   end
 
