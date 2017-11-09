@@ -8,7 +8,12 @@ class ApplicationController
     :parent_class_name,
     :parent_method,
     :association,
-    :view_suffix
+    :view_suffix,
+
+    :listicon,
+    :embedded,
+    :showlinks,
+    :policy_sim
   ) do
     def self.from_options(options)
       additional_options = new
@@ -22,6 +27,13 @@ class ApplicationController
       additional_options.view_suffix = options[:view_suffix]
       additional_options.parent_method = options[:parent_method]
       additional_options
+    end
+
+    def with_quadicon_options(options)
+      self.listicon   = options[:listicon]
+      self.embedded   = options[:embedded]
+      self.showlinks  = options[:showlinks]
+      self.policy_sim = options[:policy_sim]
     end
 
     def with_model(curr_model)
