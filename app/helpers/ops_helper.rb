@@ -1,6 +1,7 @@
 module OpsHelper
   include_concern 'TextualSummary'
   include_concern 'MyServer'
+  include VmwareConsoleHelper
 
   def hide_button(button, opt)
     if opt == "on"
