@@ -451,7 +451,7 @@ class ProviderForemanController < ApplicationController
        'manager_id'                     => provider_id
       }
 
-    if @view
+    unless @view.table.kind_of?(Hash)
       add_unassigned_configuration_profile_record_to_view(unassigned_profile_row, unassigned_configuration_profile)
     end
     {
