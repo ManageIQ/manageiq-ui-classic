@@ -16,6 +16,4 @@ Rails.application.config.assets.precompile += %w(
   remote_consoles/*.js
   spice-html5-bower
   spice-html5-bower/spiceHTML5/spicearraybuffer.js
-  webmks.css
-  webmks.js
 )
