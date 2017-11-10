@@ -298,7 +298,7 @@ class ProviderForemanController < ApplicationController
     else
       options = {:model => "ConfiguredSystem", :match_via_descendants => 'ConfiguredSystem'}
       if empty_configuration_profile_record?(@configuration_profile_record)
-        options[:named_scope] = [[:with_manager, id], [:with_configuration_profile_id, nil]]
+        options[:named_scope] = [[:with_manager, id], [:without_configuration_profile_id]]
       else
         options[:named_scope] = [[:with_configuration_profile_id, @configuration_profile_record.id]]
       end
@@ -451,7 +451,7 @@ class ProviderForemanController < ApplicationController
        'manager_id'                     => provider_id
       }
 
-    if @view
+    unless @view.table.kind_of?(Hash)
       add_unassigned_configuration_profile_record_to_view(unassigned_profile_row, unassigned_configuration_profile)
     end
     {
