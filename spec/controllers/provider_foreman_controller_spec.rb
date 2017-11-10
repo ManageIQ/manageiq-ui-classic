@@ -273,6 +273,7 @@ describe ProviderForemanController do
       allow(controller).to receive(:current_page).and_return(1)
       controller.send(:build_accordions_and_trees)
     end
+
     it "renders right cell text for root node" do
       key = ems_key_for_provider(@provider)
       controller.send(:get_node_info, "root")
@@ -280,7 +281,7 @@ describe ProviderForemanController do
       expect(right_cell_text).to eq("All Configuration Management Providers")
     end
 
-    pending "renders right cell text for ConfigurationManagerForeman node" do
+    it "renders right cell text for ConfigurationManagerForeman node" do
       controller.instance_variable_set(:@in_report_data, true)
       ems_id = ems_key_for_provider(@provider)
       controller.instance_variable_set(:@_params, :id => ems_id)
