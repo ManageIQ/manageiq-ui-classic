@@ -1447,7 +1447,7 @@ function miqSupportCasePrompt(tb_url) {
   var supportCase = prompt(__('Enter Support Case:'), '');
   if (supportCase === null) {
     return false;
-  } else if (support_case.trim() === '') {
+  } else if (supportCase.trim() === '') {
     alert(__('Support Case must be provided to collect logs'));
     return false;
   }
