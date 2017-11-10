@@ -1,4 +1,4 @@
-angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainerController', ['$q', 'providerId', 'chartsMixin', '$http', 'miqService', 'dashboardUtilsFactory', function($q, providerId, chartsMixin, $http, miqService, dashboardUtilsFactory) {
+angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainerController', ['$q', 'providerId', 'chartsMixin', '$http', 'miqService', function($q, providerId, chartsMixin, $http, miqService) {
   var vm = this;
 
   var init = function() {
@@ -34,22 +34,22 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainer
     };
   };
 
-  var processMetricsData = function(metricsDataStruct, all_data) {
-    var data = all_data.xy_data;
+  var processMetricsData = function(metricsDataStruct, allData) {
+    var data = allData.xy_data;
 
-    if (all_data.interval_name === 'hourly') {
+    if (allData.interval_name === 'hourly') {
       vm.timeframeLabel = __('Last 24 hours');
-    } else if (all_data.interval_name === 'realtime') {
+    } else if (allData.interval_name === 'realtime') {
       vm.timeframeLabel = __('Last 10 minutes');
     } else {
       vm.timeframeLabel = __('Last 30 Days');
     }
 
-    if (all_data.xy_data.cpu != null) {
-      all_data.xy_data.cpu.xData = all_data.xy_data.cpu.xData.map(function(date) {
+    if (allData.xy_data.cpu != null) {
+      allData.xy_data.cpu.xData = allData.xy_data.cpu.xData.map(function(date) {
         return chartsMixin.parseDate(date);
       });
-      all_data.xy_data.memory.xData = all_data.xy_data.memory.xData.map(function(date) {
+      allData.xy_data.memory.xData = allData.xy_data.memory.xData.map(function(date) {
         return chartsMixin.parseDate(date);
       });
     }
@@ -66,7 +66,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainer
             },
           };
         } else {
-          if (all_data.interval_name !== 'daily') {
+          if (allData.interval_name !== 'daily') {
             vm.cpuUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
             vm.memoryUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
           }

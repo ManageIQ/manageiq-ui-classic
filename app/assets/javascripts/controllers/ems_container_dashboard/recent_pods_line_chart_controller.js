@@ -1,12 +1,11 @@
 /* global miqHttpInject */
-angular.module( 'patternfly.charts' ).controller( 'recentPodsLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', 'dashboardUtilsFactory', function($q, providerId, $http, chartsMixin, miqService, dashboardUtilsFactory) {
+angular.module( 'patternfly.charts' ).controller( 'recentPodsLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
   var vm = this;
   vm.id = "recentPodsLineChart_" + providerId;
   vm.lineChartId = vm.id
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.loadingDone = false;
-    //vm.config = chartsMixin.chartConfig.hourlyPodUsageConfig;
     vm.timeframeLabel = __('Last 30 Days');
     var url = '/container_dashboard/pod_metrics_data/' + providerId;
     var podsDataPromise = $http.get(url)

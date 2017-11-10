@@ -4,14 +4,14 @@ angular.module( 'patternfly.charts' ).component('pfTrendsChart', {
     chartData: '<',
     chartHeight: '<?',
     showXAxis: '<?',
-    showYAxis: '<?'
+    showYAxis: '<?',
   },
   templateUrl: '/static/pf_charts/trends-chart.html.haml',
   controller: trendsChartController,
 });
-trendsChartController.$inject = ['pfUtils'];
+trendsChartController.$inject = [];
 
-function trendsChartController(pfUtils) {
+function trendsChartController() {
   'use strict';
   var vm = this;
   var prevChartData;
@@ -19,18 +19,18 @@ function trendsChartController(pfUtils) {
   var SMALL = 30;
   var LARGE = 60;
 
-  vm.updateAll = function () {
+  vm.updateAll = function() {
     // Need to deep watch changes
     prevChartData = angular.copy(vm.chartData);
     prevConfig = angular.copy(vm.config);
 
-    vm.showLargeCardLayout = (!vm.config.layout || vm.config.layout === 'large');
+    vm.showLargeCardLayout = (! vm.config.layout || vm.config.layout === 'large');
     vm.showSmallCardLayout = (vm.config.layout === 'small');
-    vm.showActualValue = (!vm.config.valueType || vm.config.valueType === 'actual');
+    vm.showActualValue = (! vm.config.valueType || vm.config.valueType === 'actual');
     vm.showPercentageValue = (vm.config.valueType === 'percentage');
   };
 
-  vm.getPercentageValue = function () {
+  vm.getPercentageValue = function() {
     var pctValue = 0;
 
     if (vm.chartData.dataAvailable !== false && vm.chartData.total > 0) {
@@ -38,14 +38,14 @@ function trendsChartController(pfUtils) {
     }
     return pctValue;
   };
-  vm.getLatestValue = function () {
+  vm.getLatestValue = function() {
     var latestValue = 0;
     if (vm.chartData.yData && vm.chartData.yData.length > 0) {
       latestValue = vm.chartData.yData[vm.chartData.yData.length - 1];
     }
     return latestValue;
   };
-  vm.getChartHeight = function () {
+  vm.getChartHeight = function() {
     var retValue = LARGE;
     if (vm.chartHeight) {
       retValue = vm.chartHeight;
@@ -55,13 +55,13 @@ function trendsChartController(pfUtils) {
     return retValue;
   };
 
-  vm.$onChanges = function (changesObj) {
+  vm.$onChanges = function() {
     vm.updateAll();
   };
 
-  vm.$doCheck = function () {
+  vm.$doCheck = function() {
     // do a deep compare on chartData and config
-    if (!angular.equals(vm.chartData, prevChartData) || !angular.equals(vm.config, prevConfig)) {
+    if (! angular.equals(vm.chartData, prevChartData) || ! angular.equals(vm.config, prevConfig)) {
       vm.updateAll();
     }
   };

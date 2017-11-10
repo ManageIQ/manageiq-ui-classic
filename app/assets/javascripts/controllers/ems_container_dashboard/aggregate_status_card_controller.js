@@ -24,17 +24,6 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
     "images": "pficon pficon-image",
     "routes": "pficon pficon-route",
   };
-//
-//   var attrUrl = {
-//     "nodes": "container_node",
-//     "containers": "container",
-//     "registries": "container_image_registry",
-//     "projects": "container_project",
-//     "pods": "container_group",
-//     "services": "container_service",
-//     "images": "container_image",
-//     "routes": "container_route",
-//   };
 
   var init = function() {
     ManageIQ.angular.scope = vm;
@@ -47,7 +36,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
       .catch(miqService.handleFailure);
 
     $q.all([promiseProviderData]).then(function() {
-      data = vm.provider.data.data
+      var data = vm.provider.data.data
 
       vm.status = {
         "iconImage": data.providers[0].iconImage,
@@ -56,27 +45,27 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
           {
             "iconImage": data.providers[0].statusIcon,
           },
-        ]
+        ],
       };
 
       vm.alertStatus = {
         "title": "Alerts",
-        "notifications":[
+        "notifications": [
           {
             "iconClass": data.alerts.notifications[0].iconClass,
           },
-        ]
+        ],
       };
 
       vm.AggStatus = [];
       for (var i = 0; i < attributes.length; i++) {
-        data_status = data.status[attributes[i]];
+        var dataStatus = data.status[attributes[i]];
         vm.AggStatus.push({
           "id": attributes[i] + '_' + providerId,
           "iconClass": attrIconHsh[attributes[i]],
           "title": attrHsh[attributes[i]],
-          "count": data_status.count,
-          "href": data_status.href,
+          "count": dataStatus.count,
+          "href": dataStatus.href,
           "notification": {
             "iconClass": "pficon pficon-error-circle-o",
             "count": 0,

@@ -1,6 +1,5 @@
 /* global miqHttpInject */
 angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
-//angular.module('trendChartController', ['patternfly.charts', 'patternfly.card', 'ui.bootstrap'] ).controller('trendChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
   var vm = this;
   vm.id = "trendsChart_" + providerId;
   var init = function() {
@@ -29,7 +28,7 @@ angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', '
         vm.data.dataAvailable = false;
       } else {
         if (data.xy_data != null) {
-          data.xy_data.xData = data.xy_data.xData.map(function (date) {
+          data.xy_data.xData = data.xy_data.xData.map(function(date) {
             return chartsMixin.parseDate(date);
           });
         }
