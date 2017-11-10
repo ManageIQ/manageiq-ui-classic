@@ -71,11 +71,8 @@ module ApplicationController::WaitForTask
     result = send(rx_action, task)
     raise "Non-hash rx_action return" unless result.kind_of?(Hash)
 
-    # FIXME: move this to ExplorerPresenter
-    render :update do |page|
-      page << javascript_prologue
-      page << "sendDataWithRx(#{result.to_json});"
-    end
+    presenter = ExplorerPresenter.rx(:rx => result)
+    render :json => presenter.for_render
   end
   private :wait_for_task_rx
 end
