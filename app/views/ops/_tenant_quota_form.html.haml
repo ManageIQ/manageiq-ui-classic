@@ -36,7 +36,7 @@
                               "ng-required" => "quota_obj.enforced",
                               "ng-disabled" => "!quota_obj.enforced",
                               "ng-pattern"  => "quota_obj.valpattern",
-                              "placeholder" => "Not enforced",
+                              "placeholder" => _('Not enforced'),
                               "ng-change"   => "vm.valueChanged()"}
           %span{"style"=>"color:red", "ng-show" => "rowForm.value.$invalid"}
             = _(" Valid numeric quota value required ")
