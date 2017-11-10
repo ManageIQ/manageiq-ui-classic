@@ -336,6 +336,30 @@ describe VmInfraController do
     expect(response.status).to eq(200)
   end
 
+  context 'transform VM dialog' do
+    let(:dialog)           { FactoryGirl.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
+    let!(:resource_action) { FactoryGirl.create(:resource_action, :dialog => dialog) }
+
+    it 'can Transform selected VM' do
+      get :show, :params => { :id => vm_vmware.id }
+      expect(response).to redirect_to(:action => 'explorer')
+
+      post :explorer
+      expect(response.status).to eq(200)
+
+      post :x_button, :params => { :pressed => 'vm_transform', :id => vm_vmware.id }
+      expect(response.status).to eq(200)
+    end
+
+    it 'can Transform VMs by tag' do
+      post :explorer
+      expect(response.status).to eq(200)
+
+      post :x_button, :params => { :pressed => 'vm_transform' }
+      expect(response.status).to eq(200)
+    end
+  end
+
   it 'can Shutdown Guest' do
     post :x_button, :params => { :pressed => 'vm_guest_shutdown', :id => vm_vmware.id }
     expect(response.status).to eq(200)
