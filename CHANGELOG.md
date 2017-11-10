@@ -123,6 +123,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Fixed issue with custom button editing [(#1686)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1686)
   - Custom button submit all [(#1572)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1572)
   - Add status to Repository Properties [(#1131)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1131)
+  - Add button classes [(#2371)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2371)
 - Chargeback
   - UI Fix for ChargeableField in chargeback editor [(#1727)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1727)
 - Compute
@@ -142,7 +143,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Add alerts to dashboard [(#1234)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1234)
   - Create a box in new dialog automatically [(#1791)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1791)
   - Generic Object Instances UI - `show_list` and `show` [(#1765)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1765)
-  - Use the fonticon picker component to pick custom button icons [(#1801)](https://github.com/ManageIQ/manageiq-ui-classic
+  - Use the fonticon picker component to pick custom button icons [(#1801)](https://github.com/ManageIQ/manageiq-ui-classic)
   - Add container limits to container summary page [(#1401)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1401)
   - Kibana SSO encoding of query parameters in the url [(#1741)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1741)
   - Cloud
@@ -190,8 +191,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Implements Physical Server Helper. [(#1281)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1281)
   - Refactor Textual Summary archtecture [(#1295)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1295)
   - Cloud: Angularize the VmCloud resize form [(#919)](https://github.com/ManageIQ/manageiq-ui-classic/pull/919)
+  - Create dialog for provisioning physical servers [(#2401)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2401)
+  - Add verification credential param for google [(#2647)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2647)
 - Control
   - Add severity to Alerts [(#2280)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2280)
+  - Enable assign of policy profiles [(#2595)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2595)
 - Core
   - Introducing the font-fabulous gem [(#1463)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1463)
 - Dashboards
@@ -279,6 +283,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - Angular
   - Remove "Confirm Password" input field previously required for Validation [(#1335)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1335)
+  - Add a dismiss button for dynamically generated flash messages [(#2580)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2580)
 - Ansible Tower
   - Manager nodes with no children should be visible in the providers tree [(#1709)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1709)
 - Automation
@@ -304,6 +309,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Add reload button to Ansible Repositories [(#1366)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1366)
   - Changed icon for the button for consistency [(#1437)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1437)
   - Enable Ansible refresh button after first successful refresh is complete [(#1141)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1141)
+  - Fixed visibility of Input Params div on non-ansible method form. [(#2597)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2597)
+  - Make Display Name not required to be consistent with non-ansible forms [(#2622)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2622)
+  - Make Description not required to be consistent with non-ansible forms [(#2623)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2623)
 - Chargeback
   - Dupe message when trying to Remove Default Chargeback Rate [(#2071)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2071)
 - Charts
@@ -313,6 +321,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Fix Report full screen view should be in a new window [(#1641)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1641)
   - Fix 'Download TXT' for nested list resources [(#1529)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1529)
   - Use for fetching report result status of MiqTask [(#1482)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1482)
+  - Do not run JS on the saved reports screen before the tree is ready [(#2566)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2566)
 - Compute
   - Fixed name of icon [(#2418)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2418)
   - Fix providers card height [(#2410)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2410)
@@ -342,6 +351,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Allow copying/focusing in disabled codemirror editor [(#1758)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1758)
   - Change GET to POST route report data [(#1833)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1833)
   - Fix a syntax error in miq_qe.js [(#1799)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1799)
+  - Flavor delete vs tag [(#2590)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2590)
   - Cloud
     - Fix Evacuate form [(#1676)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1676)
     - Fix typo [(#1707)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1707)
@@ -365,6 +375,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
     - Fix filter menu dropdown cutoff [(#1433)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1433)
   - Infrastructure
     - Remove association for template only [(#1290)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1290)
+  - Always use HTTPS to interact with oVirt [(#2633)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2633)
 - Configuration Management
   - Fix selection of configured system [(#2160)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2160)
   - Fix pdf download for configuration profiles [(#1937)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1937)
@@ -375,6 +386,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Physical Infrastructure
     - Fix display of hosts on physical infra topology [(#1609)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1609)
     - Fix network address issue [(#1588)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1588)
+  - Rename Network Adapters table to Network Devices [(#2627)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2627)
+  - Fix variable interpolation in volume attach/detach messages [(#2648)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2648)
 - Consoles
   - Fixed path to jquery and jquery-ui in the asset pipeline [(#2318)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2318)
   - app: Redirect to cockpit [(#1649)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1649)
@@ -398,8 +411,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Fix clipped topology tooltip [(#2281)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2281)
   - Fix toolbar height [(#2184)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2184)
   - Saved report pagination fix [(#2258)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2258)
+  - Styling fix for Bootstrap switch on Tenant Quota screen [(#2583)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2583)
 - Expressions
   - Fix saving filter in Advanced search [(#2105)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2105)
+  - Fix Search to filter VMs [(#2556)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2556)
+  - Fix using filters under Job Templates [(#2607)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2607)
 - Formating
   - Fix table cell issue on report styling tab [(#2122)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2122)
   - Fix margin of expanded alerts [(#2117)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2117)
@@ -418,7 +434,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Do not change parent for report data if active tree is present [(#1194)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1194)
   - Task managemenet gtl [(#1192)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1192)
   - Skip links for quadicons in PDFs [(#1060)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1060)
-- Intel-Chargeback: UI Fix for ChargeableField in chargeback editor [(#1727)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1727)
+  - Add status and state scopes, fix time for MiqTask list [(#2585)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2585)
+  - Provide the custom uploaded picture attribute separately in report_data [(#2573)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2573)
+  - GTL: do not set parent_id directly from params[:id]. [(#2631)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2631)
+- Intel-Chargeback
+  - UI Fix for ChargeableField in chargeback editor [(#1727)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1727)
 - Menus
   - Request menu item highlight fixes [(#2368)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2368)
 - Middleware
@@ -430,6 +450,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Fix breakage to MW Add JDBC Driver [(#2030)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2030)
   - Fix middleware providers broken links in timeline events [(#1492)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1492)
   - Ensure that error indicator appears on Hawkular tab [(#1172)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1172)
+- Monitor
+  - Ext targeted alerts in the monitoring screen [(#2579)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2579)
 - Networks
   - Cloud_Network: No value option for network types [(#2341)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2341)
   - Floating IP controller/views should use address instead of name [(#2312)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2312)
@@ -440,6 +462,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Notifications
   - miq.notifications - update accordion sizing when opening/closing an accordion [(#2270)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2270)
   - Close button on the right even when expanded [(#2036)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2036)
+  - Display the missing notification type icons in the drawer [(#2608)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2608)
 - Performance
   - Fix bad use of constant in planning [(#2074)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2074)
 - Providers
@@ -463,6 +486,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Fix displaying tag from DialogFieldTagControl [(#1316)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1316)
   - CatalogController - fix typo in default assignment [(#1264)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1264)
   - Re-initialize 'Remove Resources' drop down after copy button is pressed. [(#1246)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1246)
+  - Ansible service - rescue from Ansible role disabled exception [(#2628)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2628)
+  - Removed unneeded :onwhen from summary screen toolbar [(#2630)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2630)
+  - Move GTL below bootstrapping sanitizeRender [(#1383)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1383)
 - Settings
   - miqDBBackupService - fix isModelValueNil to handle undefined [(#2377)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2377)
   - Fix duplicate DOM ID in analysis profile edit. [(#2344)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2344)
@@ -476,11 +502,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
   - Fix duplicate DOM id in textual summaries. [(#1184)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1184)
   - Fix some duplicate DOM ids under ops. [(#1181)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1181)
   - Settings/server: Move flash message one level up fixing duplicate DOM ids. [(#1182)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1182)
+  - Use the `product.support_website_text` for the second help menu item [(#2626)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2626)
 - Storage
 - Topology
   - Try to capitalize when determining container status in topology [(#2337)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2337)
   - Fix unknown errors for image-based icons in middleware topology [(#1289)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1289)
   - Topology header - fix Enter in search [(#1005)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1005)
+  - Fixed broken refresh functionality on all topology screens [(#2557)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2557)
 - Trees
   - Fix tree building in miq_ae_class controller [(#2415)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2415)
   - Fix duplicate DOM id when saving advanced search. [(#1177)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1177)
@@ -520,6 +548,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fix misplaced ng-cloak in ems_datawarehouse [(#960)](https://github.com/ManageIQ/manageiq-ui-classic/pull/960)
 - Default to a 0 evaluation frequency in dwh alerts [(#678)](https://github.com/ManageIQ/manageiq-ui-classic/pull/678)
 - Storage: Enable attach/detach operations to storage manager [(#746)](https://github.com/ManageIQ/manageiq-ui-classic/pull/746)
+- Fix SCVMM Credential Validation [(#2575)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2575)
+- Add watch to modelCopy in form_changed [(#2637)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2637)
+- Display flash message after updating Chargeback Rate [(#2581)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2581)
+- Drop the img_url attribute from the report_data hash [(#2641)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2641)
+- Queue authentication check only for ems_cloud and ems_infra providers. [(#2643)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2643)
+- Fix Openstack InfraManager credential validation [(#2646)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2646)
 
 ### Removed
 - Remove get route for report data [(#1834)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1834)
