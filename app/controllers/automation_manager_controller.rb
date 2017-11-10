@@ -264,7 +264,7 @@ class AutomationManagerController < ApplicationController
       @show_adv_search = true
       @no_checkboxes = true
       options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryRootGroup",
-                 :match_via_descendants => ConfiguredSystem,
+                 :match_via_descendants => 'ConfiguredSystem',
                  :named_scope           => [[:with_provider, provider.id]],
                  :gtl_dbname            => "automation_manager_providers"}
       process_show_list(options)
@@ -276,7 +276,7 @@ class AutomationManagerController < ApplicationController
 
   def cs_provider_node(provider)
     options = {:model                 => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
-               :match_via_descendants => ConfigurationScript,
+               :match_via_descendants => 'ConfigurationScript',
                :named_scope           => [[:with_manager, provider.id]],
                :gtl_dbname            => "automation_manager_configuration_scripts"}
     @show_adv_search = true
@@ -293,7 +293,7 @@ class AutomationManagerController < ApplicationController
     else
       @show_adv_search = true
       options = {:model                 => "ConfiguredSystem",
-                 :match_via_descendants => ConfiguredSystem,
+                 :match_via_descendants => 'ConfiguredSystem',
                  :named_scope           => [[:with_inventory_root_group, from_cid(@inventory_group_record.id)]],
                  :gtl_dbname            => "automation_manager_configured_systems"}
       process_show_list(options)
