@@ -320,7 +320,7 @@ describe ApplicationController do
       end
 
       it "with params[:active_tree]" do
-        expect(subject.send(:process_params_model_view, {:active_tree => :vms_instances_filter_tree, :model_name => "instances"}, {})).to eq("Vm")
+        expect(subject.send(:process_params_model_view, {:active_tree => :vms_instances_filter_tree}, {})).to eq("Vm")
       end
 
       it "with params[:model_name]" do
