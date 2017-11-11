@@ -1439,6 +1439,7 @@ Rails.application.routes.draw do
         jdbc_drivers
         dr_download
         dr_report_download
+        dynamic_ui
         protect
       ) +
                compare_get,
