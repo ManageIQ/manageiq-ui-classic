@@ -75,6 +75,54 @@ module Spec
         # display needs to be saved to session for GTL pagination and such
         expect(session["#{controller.class.table_name}_display".to_sym]).to eq(relation)
       end
+
+
+      # Formats POST data for /report_data request
+      #
+      # Supported options:
+      #   :model
+      #   :parent_model
+      #   :parent_id
+      #   :active_tree
+      #   :parent_method
+      #
+      # FIXME: This hash needs cleanups as we clenup the /report_data,
+      #        angular/_gtl and the calling sites.
+      #
+      def report_data_request_data(options)
+        {
+          'model_name'  => options[:model],
+          'model'       => options[:model],
+          'active_tree' => options[:active_tree],
+          'parent_id'   => options[:parent_id],
+          'model_id'    => options[:parent_id],
+          'explorer'    => true,
+          'additional_options' => {
+            'named_scope' => nil, 'gtl_dbname' => nil, 'model' => options[:model], 'match_via_descendants' => nil,
+            'parent_id' => options[:parent_id], 'parent_class_name' => options[:parent_model],
+            'parent_method' => options[:parent_method], 'association' => nil,
+            'view_suffix' => nil, 'listicon' => nil, 'embedded' => nil, 'showlinks' => nil, 'policy_sim' => nil
+          }.compact
+        }.compact
+      end
+
+      # Fires a POST request to the current controller's /report_data action
+      #
+      def report_data_request(options)
+        post :report_data, :params => report_data_request_data(options)
+      end
+
+      # Assert a valid /report_data response, parse the response.
+      #
+      # Returns: response as a hash
+      #
+      def assert_report_data_response
+        expect(response.status).to eq(200)
+        parsed_data = JSON.parse(response.body)
+        expect(parsed_data).to have_key('settings')
+        expect(parsed_data).to have_key('data')
+        parsed_data
+      end
     end
   end
 end
