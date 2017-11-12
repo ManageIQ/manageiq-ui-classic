@@ -257,7 +257,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
         id = '';
       } else {
-        id = '/' + controller.dataUrl + (/\/show\/(\d+)/.exec($location.absUrl())[1]);
+        id = '/' + (/\/show\/(\d+)/.exec($location.absUrl())[1]);
       }
 
       var url = controller.dataUrl + id;

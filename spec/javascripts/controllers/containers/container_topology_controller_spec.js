@@ -42,25 +42,15 @@ describe('containerTopologyController', function() {
     };
 
     beforeEach(module('ManageIQ'));
-
-    beforeEach(function() {
-      var $window = {
-          location: {
-              pathname: '/ems_container/1',
-          },
-      };
-
-      module(function($provide) {
-        $provide.value('$window', $window);
-      });
-    });
-
-    beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, $window) {
+    beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, $location) {
+      spyOn($location, 'absUrl').and.returnValue('/container_topology/show/1');
       scope = $rootScope.$new();
-
       $httpBackend = _$httpBackend_;
       $httpBackend.when('GET','/container_topology/data/1').respond(mock_data);
-      ctrl = _$controller_('containerTopologyController', {$scope: scope});
+      ctrl = _$controller_('containerTopologyController',
+        {$scope: scope}
+      );
+      console.log('ctrl: ', ctrl);
       $httpBackend.flush();
     }));
 
