@@ -12,6 +12,9 @@
 //= require angular-patternfly-sass/dist/angular-patternfly
 //= require angular-bootstrap/ui-bootstrap
 //= require angular-bootstrap/ui-bootstrap-tpls
+//= require api-check/dist/api-check
+//= require angular-formly/dist/formly
+//= require angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap
 //= require angular-sanitize
 //= require angular.validators
 //= require moment
