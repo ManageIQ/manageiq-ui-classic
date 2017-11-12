@@ -9,6 +9,10 @@
   = render :partial => 'dr_reports_list'
 
 - @angular_form = true
+-# NOTE: in reality, the entity and fields would be provided by a ruby yaml config file
+%mw-generic-properties-component{"entity" => 'WildFly Server [Local DMR]',
+                                 "fields" => "'id', 'feed', 'product', 'bind_address', 'version'"}
+
 %ng-form#mw_server_form{"name"          => "mw_server_form",
                         "ng-controller" => "mwServerController",
                         "novalidate"    => "true"}
@@ -18,4 +22,4 @@
   = render :partial => 'add_datasource'
 
 :javascript
-  miq_bootstrap('#mw_server_form');
+  miq_bootstrap('mw-generic-properties-component');
