@@ -55,7 +55,7 @@ function miqHttpInject(angular_app) {
 function miq_bootstrap(selector, app) {
   app = app || 'ManageIQ';
 
-  return angular.bootstrap($(selector), [app], { strictDi: true });
+  return angular.bootstrap($(selector), [app], { strictDi: false });
 }
 
 function miqCallAngular(data) {
