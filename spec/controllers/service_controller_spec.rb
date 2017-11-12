@@ -136,5 +136,28 @@ describe ServiceController do
     end
   end
 
+  context "#report_data" do
+    let(:service) { FactoryGirl.create(:service) }
+
+    let!(:vm) do
+      vm = FactoryGirl.create(:vm)
+      vm.add_to_service(service)
+      vm
+    end
+
+    it 'returns VMs associated to selected Service' do
+      report_data_request(
+        :model         => 'Vm',
+        :parent_model  => 'Service',
+        :parent_id     => service.id,
+        :active_tree   => 'svcs_tree',
+        :parent_method => 'all_vms'
+      )
+      results = assert_report_data_response
+      expect(results['data']['rows'].length).to eq(1)
+      expect(results['data']['rows'][0]['long_id']).to eq(vm.id)
+    end
+  end
+
   it_behaves_like "explorer controller with custom buttons"
 end
