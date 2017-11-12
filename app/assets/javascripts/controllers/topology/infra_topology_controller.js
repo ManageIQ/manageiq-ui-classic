@@ -21,6 +21,7 @@ function InfraTopologyCtrl($scope, $interval, topologyService) {
 
   $('input#box_display_names').click(topologyService.showHideNames(vm));
   topologyService.mixinRefresh(vm, $scope);
+  topologyService.mixinGetIcon(vm);
   vm.refresh();
   var promise = $interval(vm.refresh, 1000 * 60 * 3);
 
@@ -137,15 +138,6 @@ function InfraTopologyCtrl($scope, $interval, topologyService) {
     /* Don't do default rendering */
     ev.preventDefault();
   });
-
-  this.getIcon = function getIcon(d) {
-    switch(d.item.kind) {
-      case 'InfraManager':
-        return vm.icons[d.item.display_kind];
-      default:
-        return vm.icons[d.item.kind];
-    }
-  };
 
   this.getDimensions = function getDimensions(d) {
     var defaultDimensions = topologyService.defaultElementDimensions();

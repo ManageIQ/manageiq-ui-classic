@@ -272,4 +272,17 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     });
     controller.refresh = refresh;
   };
+
+  this.mixinGetIcon = function(controller) {
+    controller.getIcon = function(d) {
+      switch (d.item.kind) {
+        case 'CloudManager':
+        case 'InfraManager':
+        case 'PhysicalInfraManager':
+          return controller.icons[d.item.display_kind];
+        default:
+          return controller.icons[d.item.kind];
+      }
+    };
+  };
 }]);

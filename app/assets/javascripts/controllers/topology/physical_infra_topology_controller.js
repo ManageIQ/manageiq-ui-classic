@@ -21,6 +21,7 @@ function physicalInfraTopologyCtrl($scope, $interval, topologyService) {
 
   $('input#box_display_names').click(topologyService.showHideNames(vm));
   topologyService.mixinRefresh(vm, $scope);
+  topologyService.mixinGetIcon(vm);
   vm.refresh();
   var promise = $interval(vm.refresh, 1000 * 60 * 3);
 
@@ -137,15 +138,6 @@ function physicalInfraTopologyCtrl($scope, $interval, topologyService) {
     /* Don't do default rendering */
     ev.preventDefault();
   });
-
-  vm.getIcon = function getIcon(d) {
-    switch(d.item.kind) {
-      case 'PhysicalInfraManager':
-        return vm.icons[d.item.display_kind];
-      default:
-        return vm.icons[d.item.kind];
-    }
-  };
 
   vm.getDimensions = function getDimensions(d) {
     var defaultDimensions = topologyService.defaultElementDimensions();

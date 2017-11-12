@@ -22,6 +22,7 @@ function CloudTopologyCtrl($scope, $interval, topologyService) {
 
   $('input#box_display_names').click(topologyService.showHideNames(vm));
   topologyService.mixinRefresh(vm, $scope);
+  topologyService.mixinGetIcon(vm);
   vm.refresh();
   var promise = $interval(vm.refresh, 1000 * 60 * 3);
   $scope.$on('$destroy', function() {
