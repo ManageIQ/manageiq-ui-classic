@@ -46,7 +46,7 @@ module Mixins
       end
     end
 
-    def display_methods
+    def display_methods(_record = nil)
       []
     end
 
