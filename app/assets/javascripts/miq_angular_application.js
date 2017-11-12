@@ -20,6 +20,13 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miqStaticAssets.treeView',
 ]);
 miqHttpInject(ManageIQ.angular.app);
+// @Todo: Move to a external package like FormlyBootstrap does
+ManageIQ.angular.app.run(function(formlyConfig) {
+  formlyConfig.setType({
+    name: 'mw-input',
+    template: '<label>{{to.label}}</label><input ng-model="model[options.key]" readonly style="margin-left:15px;"/>'
+  });
+});
 
 ManageIQ.angular.rxSubject = new Rx.Subject();
 
