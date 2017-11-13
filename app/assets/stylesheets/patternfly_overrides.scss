@@ -497,6 +497,12 @@ table.table td:not(.table-view-pf-select) { //Force word break but prevent bs-sw
   word-break: normal !important;
 }
 
+.card .card-content .miq-info-section > div {
+  position: absolute;
+  top: -35px;
+  right: 0px;
+}
+
 table.table tbody td img {
   height: 20px;
   width: 20px;

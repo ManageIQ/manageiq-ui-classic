@@ -10,6 +10,8 @@ class ApplicationController
     :association,
     :view_suffix,
 
+    :row_button,
+
     :listicon,
     :embedded,
     :showlinks,
@@ -34,6 +36,10 @@ class ApplicationController
       self.embedded   = options[:embedded]
       self.showlinks  = options[:showlinks]
       self.policy_sim = options[:policy_sim]
+    end
+
+    def with_row_button(row_button)
+      self.row_button = row_button
     end
 
     def with_model(curr_model)
