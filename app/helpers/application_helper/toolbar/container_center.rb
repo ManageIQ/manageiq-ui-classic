@@ -11,16 +11,20 @@ class ApplicationHelper::Toolbar::ContainerCenter < ApplicationHelper::Toolbar::
           'ff ff-timeline fa-lg',
           N_('Show Timelines for this Container'),
           N_('Timelines'),
+          :url       => "/show",
           :url_parms => "?display=timeline",
           :options   => {:entity => 'Container'},
-          :klass     => ApplicationHelper::Button::ContainerTimeline),
+          :klass     => ApplicationHelper::Button::ContainerTimeline
+        ),
         button(
           :container_perf,
           'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Container'),
           N_('Utilization'),
+          :url       => "/show",
           :url_parms => "?display=performance",
-          :klass     => ApplicationHelper::Button::VmPerf),
+          :klass     => ApplicationHelper::Button::ContainerPerf
+        ),
       ]
     ),
   ])
