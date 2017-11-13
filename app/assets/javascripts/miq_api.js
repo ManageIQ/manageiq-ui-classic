@@ -59,6 +59,7 @@
         'Authorization': 'Basic ' + base64encode([login, password].join(':')),
       },
       skipErrors: [401],
+      skipLoginRedirect: true,
     })
     .then(function(response) {
       sessionStorage.miq_token = response.auth_token;
@@ -176,14 +177,6 @@
       return Promise.resolve(null);
     }
 
-    if (response.status === 401) {
-      // Unauthorized - always redirect to dashboard#login
-      add_flash(__('API logged out, redirecting to the login page'), 'warning');
-      window.document.location.href = '/dashboard/login?timeout=true';
-
-      return Promise.reject(response);
-    }
-
     if (response.status >= 300) {
       // Not 1** or 2**
       // clone() because otherwise if json() fails, you can't call text()
@@ -200,6 +193,14 @@
 
     return function(response) {
       var ret = process_response(response);
+
+      if ((response.status === 401) && !options.skipLoginRedirect) {
+        // Unauthorized - always redirect to dashboard#login
+        add_flash(__('API logged out, redirecting to the login page'), 'warning');
+        window.document.location.href = '/dashboard/login?timeout=true';
+
+        return ret;
+      }
 
       // true means skip all of them - no error modal at all
       if (options.skipErrors === true) {
