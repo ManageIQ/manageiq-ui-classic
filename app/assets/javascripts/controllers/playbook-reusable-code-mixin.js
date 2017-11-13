@@ -105,6 +105,7 @@ function playbookReusableCodeMixin(API, $q, miqService) {
       allApiPromises.push(API.get('/api/service_catalogs/?expand=resources&attributes=id,name' + sortOptions)
         .then(function(data) {
           vm.catalogs = data.resources;
+          vm.catalogs.unshift({"href": "", "id": "", "name": "<Unassigned>"});
           vm._catalog = _.find(vm.catalogs, {id: vm[vm.model].catalog_id});
         })
         .catch(miqService.handleFailure)

@@ -66,7 +66,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         vm.catalogItemModel.name = catalogItemData.name;
         vm.catalogItemModel.description = catalogItemData.description;
         vm.catalogItemModel.display = catalogItemData.display;
-        vm.catalogItemModel.catalog_id = catalogItemData.service_template_catalog_id;
+        vm.catalogItemModel.catalog_id = catalogItemData.service_template_catalog_id === undefined ? '' : catalogItemData.service_template_catalog_id;
         vm.catalogItemModel.provisioning_dialog_id = catalogItemData.config_info.provision.dialog_id;
         playbookReusableCodeMixin.formOptions(vm);
         playbookReusableCodeMixin.formCloudCredentials(vm, catalogItemData.config_info.provision.cloud_credential_id, catalogItemData.config_info.retirement.cloud_credential_id);
