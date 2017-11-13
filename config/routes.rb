@@ -2117,15 +2117,19 @@ Rails.application.routes.draw do
         download_summary_pdf
         edit
         new
+        retrieve_distinct_instances_across_domains
         show
         show_list
         tagging_edit
       ),
       :post => %w(
+        add_button_in_group
         button
         create_del
         custom_button_group_new
         custom_button_group_edit
+        custom_button_new
+        custom_button_edit
         edit
         exp_button
         exp_changed

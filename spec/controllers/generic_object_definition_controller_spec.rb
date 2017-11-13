@@ -9,10 +9,15 @@ describe GenericObjectDefinitionController do
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
+    end
+
+    it "should redirect to #show_list" do
       generic_obj_defn = FactoryGirl.create(:generic_object_definition)
       get :show, :params => {:id => generic_obj_defn.id}
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'show_list')
+      expect(controller.x_node).to eq("god-#{to_cid(generic_obj_defn.id)}")
     end
-    it { expect(response.status).to eq(200) }
   end
 
   describe "#show_list" do

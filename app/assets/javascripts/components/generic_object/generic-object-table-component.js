@@ -12,6 +12,8 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
     requiredRule: '@?',
     tableRendered: '=',
     uniqueProperty: '&',
+    noPattern: '<',
+    addValueColumn: '<',
     angularForm: '<',
   },
   controllerAs: 'vm',
