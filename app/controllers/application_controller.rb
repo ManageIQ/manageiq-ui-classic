@@ -1146,6 +1146,11 @@ class ApplicationController < ActionController::Base
       end
       new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
       new_row[:tree_id] = TreeBuilder.build_node_cid(target) if target
+      if row.data["job.target_class"] && row.data["job.target_id"]
+        underscore_class = row.data["job.target_class"].underscore
+        new_row[:parent_path] = url_for_only_path(:controller => underscore_class, :action => "show")
+        new_row[:parent_id] = row.data["job.target_id"] if row.data["job.target_id"]
+      end
       root[:rows] << new_row
 
       if has_checkbox
