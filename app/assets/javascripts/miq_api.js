@@ -1,4 +1,4 @@
-/* global miqDeferred */
+/* global miqDeferred, add_flash */
 
 /* functions to use the API from our JS/Angular:
  *
@@ -174,6 +174,14 @@
     if (response.status === 204) {
       // No content
       return Promise.resolve(null);
+    }
+
+    if (response.status === 401) {
+      // Unauthorized - always redirect to dashboard#login
+      add_flash(__('API logged out, redirecting to the login page'), 'warning');
+      window.document.location.href = '/dashboard/login?timeout=true';
+
+      return Promise.reject(response);
     }
 
     if (response.status >= 300) {
