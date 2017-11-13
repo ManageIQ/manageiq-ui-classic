@@ -2972,6 +2972,7 @@ Rails.application.routes.draw do
 
     :service                  => {
       :get  => %w(
+        dialog_load
         download_data
         edit
         explorer
@@ -2980,6 +2981,7 @@ Rails.application.routes.draw do
         retire
         service_form_fields
         show
+        generic_object
         tagging_edit
       ),
       :post => %w(
@@ -2994,6 +2996,7 @@ Rails.application.routes.draw do
         service_edit
         service_tag
         show
+        generic_object
         show_list
         tag_edit_form_field_changed
         tagging_edit

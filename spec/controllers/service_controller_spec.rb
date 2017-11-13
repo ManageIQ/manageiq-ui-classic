@@ -98,6 +98,26 @@ describe ServiceController do
       expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"}])
     end
 
+    it 'displays one generic object from the nested list' do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as FactoryGirl.create(:user)
+      controller.instance_variable_set(:@breadcrumbs, [])
+      service = FactoryGirl.create(:service, :name => "Abc")
+      definition = FactoryGirl.create(:generic_object_definition,
+                                      :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
+      go = FactoryGirl.create(
+        :generic_object,
+        :generic_object_definition => definition,
+        :name                      => 'GOTest',
+        :services                  => [service]
+      )
+      go.add_to_service(service)
+      get :generic_object, :params => { :id => service.id, :show => go.id}
+      expect(response.status).to eq(200)
+      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}"},
+                                           {:name => "GOTest", :url => "/service/show/#{service.id}?display=generic_objects/show=#{go.id}"}])
+    end
+
     context "#button" do
       render_views
 

@@ -237,22 +237,43 @@ class ApplicationHelper::ToolbarBuilder
            x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard).include?(name)
   end
 
+  def cb_send_checked_list
+    return true if %w(generic_objects).include?(@display)
+  end
+
+  def cb_enabled_for_nested
+    return true if %w(generic_objects).include?(@display)
+  end
+
+  def cb_enabled_value_for_nested
+    if @display == 'generic_objects'
+      return false if @lastaction == 'generic_objects'
+      return true if @lastaction == 'generic_object'
+    end
+  end
+
   def create_custom_button(input, model, record)
     button_id = input[:id]
     button_name = input[:name].to_s
-    record_id = record.present? ? record.id : 'LIST'
+    record_id = if cb_send_checked_list
+                  'LIST'
+                else
+                  record.present? ? record.id : 'LIST'
+                end
+    enabled = cb_enabled_for_nested ? cb_enabled_value_for_nested : input[:enabled]
     button = {
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
       :icon      => "#{input[:image]} fa-lg",
       :color     => input[:color],
       :title     => !input[:enabled] && input[:disabled_text] ? input[:disabled_text] : input[:description].to_s,
-      :enabled   => input[:enabled],
+      :enabled   => enabled,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
       :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}"
     }
     button[:text] = button_name if input[:text_display]
+    button[:onwhen] = '1+' if cb_enabled_for_nested
     button
   end
 
@@ -276,24 +297,36 @@ class ApplicationHelper::ToolbarBuilder
     get_custom_buttons(model, record, toolbar_result).collect do |group|
       buttons = group[:buttons].collect { |b| create_custom_button(b, model, record) }
 
+      enabled = if cb_enabled_for_nested
+                  cb_enabled_value_for_nested
+                else
+                  record ? true : buttons.all? { |button| button[:enabled] }
+                end
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
         :icon    => "#{group[:image]} fa-lg",
         :color   => group[:color],
         :title   => group[:description],
-        :enabled => record ? true : buttons.all?{ |button| button[:enabled]},
+        :enabled => enabled,
         :items   => buttons
       }
       props[:text] = group[:text] if group[:text_display]
+      props[:onwhen] = '1+' if cb_enabled_for_nested
 
       {:name => "custom_buttons_#{group[:text]}", :items => [props]}
     end
   end
 
   def custom_toolbar_class(toolbar_result)
-    model = @record ? @record.class : model_for_custom_toolbar
-    build_custom_toolbar_class(model, @record, toolbar_result)
+    record = @record
+    if @display == 'generic_objects'
+      model = GenericObjectDefinition
+      record = GenericObject.find_by(:id => @sb[:rec_id])
+    else
+      model = @record ? @record.class : model_for_custom_toolbar
+    end
+    build_custom_toolbar_class(model, record, toolbar_result)
   end
 
   def build_custom_toolbar_class(model, record, toolbar_result)
@@ -315,6 +348,12 @@ class ApplicationHelper::ToolbarBuilder
         buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
         toolbar.button_group("custom_buttons_", buttons)
       end
+
+      generic_object_buttons = record_to_generic_object_buttons(record)
+      unless generic_object_buttons.empty?
+        buttons = generic_object_buttons.collect { |b| create_custom_button(b, model, record) }
+        toolbar.button_group("custom_buttons_", buttons)
+      end
     end
 
     toolbar
@@ -328,7 +367,8 @@ class ApplicationHelper::ToolbarBuilder
   def service_template_id(record)
     case record
     when Service then         record.service_template_id
-    when ServiceTemplate then record.id
+    when ServiceTemplate, GenericObjectDefinition then record.id
+    when GenericObject then record.generic_object_definition.id
     end
   end
 
@@ -336,6 +376,11 @@ class ApplicationHelper::ToolbarBuilder
     return [] unless record.kind_of?(Service)
     return [] if record.service_template.nil?
     record.service_template.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
+  end
+
+  def record_to_generic_object_buttons(record)
+    return [] unless record.kind_of?(GenericObject)
+    record.generic_object_definition.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
   end
 
   def get_custom_buttons(model, record, toolbar_result)

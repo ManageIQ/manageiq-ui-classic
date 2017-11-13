@@ -249,7 +249,8 @@ module ApplicationController::Buttons
   BASE_MODEL_EXPLORER_CLASSES = [Vm, MiqTemplate, Service].freeze
   APPLIES_TO_CLASS_BASE_MODELS = %w(AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
-                                    ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem Host LoadBalancer
+                                    ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
+                                    GenericObjectDefinition Host LoadBalancer
                                     MiqGroup MiqTemp NetworkRouter OrchestrationStack SecurityGroup Service
                                     ServiceTemplate Storage Switch Tenant User Vm).freeze
   def applies_to_class_model(applies_to_class)
@@ -259,7 +260,14 @@ module ApplicationController::Buttons
       raise ArgumentError, "Received: #{applies_to_class}, expected one of #{APPLIES_TO_CLASS_BASE_MODELS}"
     end
 
-    applies_to_class == "ServiceTemplate" ? Service : applies_to_class.constantize
+    case applies_to_class
+    when "ServiceTemplate"
+      Service
+    when "GenericObjectDefinition"
+      GenericObject
+    else
+      applies_to_class.constantize
+    end
   end
 
   def custom_button_done
@@ -296,17 +304,17 @@ module ApplicationController::Buttons
     end
   end
 
-  def custom_buttons
+  def custom_buttons(ids = nil)
     button = CustomButton.find_by_id(params[:button_id])
     cls = applies_to_class_model(button.applies_to_class)
 
     @explorer = true if BASE_MODEL_EXPLORER_CLASSES.include?(cls)
-
-    if params[:id].to_s == 'LIST'
+    ids ||= params[:id]
+    if ids.to_s == 'LIST'
       objs = Rbac.filtered(cls.where(:id => find_checked_items))
       obj = objs.first
     else
-      obj = Rbac.filtered_object(cls.find(params[:id].to_i))
+      obj = Rbac.filtered_object(cls.find(ids.to_i))
       objs = [obj]
     end
 

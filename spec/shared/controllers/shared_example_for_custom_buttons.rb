@@ -62,4 +62,29 @@ shared_examples 'explorer controller with custom buttons' do
 
     expect(controller.custom_toolbar).to be_a_kind_of Mixins::CustomButtons::Result
   end
+
+  it "has custom toolbar when showing nested list if nested list custom buttons are enabled" do
+    controller.instance_variable_set(:@display, 'generic_objects')
+    controller.instance_variable_set(:@layout, 'generic_objects')
+    controller.instance_variable_set(:@record, true)
+    controller.instance_variable_set(
+      :@sb,
+      :active_tree => "my_tree",
+      :trees       => {"my_tree" => {:active_node => 's-1r35'}}
+    )
+
+    expect(controller.custom_toolbar).to be_a_kind_of Mixins::CustomButtons::Result
+  end
+
+  it "has custom toolbar when showing an item in a nested list if nested list custom buttons are enabled" do
+    controller.instance_variable_set(:@display, 'generic_objects')
+    controller.instance_variable_set(:@layout, 'generic_object')
+    controller.instance_variable_set(:@record, true)
+    controller.instance_variable_set(
+      :@sb,
+      :active_tree => "my_tree",
+      :trees       => {"my_tree" => {:active_node => 's-1r35'}}
+    )
+    expect(controller.custom_toolbar).to be_a_kind_of Mixins::CustomButtons::Result
+  end
 end

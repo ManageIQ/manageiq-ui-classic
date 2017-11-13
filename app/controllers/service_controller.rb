@@ -18,8 +18,13 @@ class ServiceController < ApplicationController
   }
 
   def button
-    custom_buttons if params[:pressed] == "custom_button"
-    return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
+    if params[:pressed] == "custom_button"
+      ids = if @display == 'generic_objects'
+              @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
+            end
+      custom_buttons(ids)
+      return
+    end
     tag(GenericObject) if @display == 'generic_objects' && params[:pressed] == 'generic_object_tag'
   end
 
@@ -34,6 +39,7 @@ class ServiceController < ApplicationController
   # Service show selected, redirect to proper controller
   def show
     @record = Service.find(from_cid(params[:id]))
+    @lastaction = "show"
 
     @gtl_url = "/show"
     @display = params[:display] if params[:display]
@@ -59,7 +65,8 @@ class ServiceController < ApplicationController
   end
 
   def explorer
-    @explorer = true
+    @explorer   = true
+    @lastaction = "explorer"
 
     # if AJAX request, replace right cell, and return
     if request.xml_http_request?
@@ -148,6 +155,22 @@ class ServiceController < ApplicationController
       :name        => service.name,
       :description => service.description
     }
+  end
+
+  def generic_object
+    return unless init_show_variables
+
+    id = params[:show] || params[:x_show]
+    if id.present?
+      @lastaction = "generic_object"
+      @item = @record.generic_objects.find(from_cid(id)).first
+      drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name},
+                      :url  => show_link(@record, :display => @display))
+      drop_breadcrumb(:name => @item.name, :url => "/#{controller_name}/show/#{@record.id}?display=generic_objects/show=#{id}")
+      @view = get_db_view(GenericObject)
+      @sb[:rec_id] = id
+      show_item
+    end
   end
 
   def self.display_methods
@@ -341,6 +364,18 @@ class ServiceController < ApplicationController
       partial = "layouts/tagging"
       header = _("Edit Tags for Service")
       action = "service_tag"
+    when "show_generic_object"
+      table = controller_name
+      partial = "layouts/item"
+      header = _("Generic Object \"%{item_name}\" for %{service} \"%{name}\"") % {
+        :service   => ui_lookup(:table => table),
+        :name      => @record.name,
+        :item_name => @item.name
+      }
+      x_history_add_item(:id     => x_node,
+                         :text   => header,
+                         :action => action,
+                         :item   => @item.id)
     else
       action = nil
     end
@@ -385,7 +420,13 @@ class ServiceController < ApplicationController
       elsif params[:display]
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]
       elsif record_showing
-        r[:partial => "service/svcs_show", :locals => {:controller => "service"}]
+        if action
+          partial_locals[:item_id] = @item.id
+          cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
+          r[:partial => partial, :locals => partial_locals]
+        else
+          r[:partial => "service/svcs_show", :locals => {:controller => "service"}]
+        end
       else
         r[:partial => "layouts/x_gtl"]
       end
