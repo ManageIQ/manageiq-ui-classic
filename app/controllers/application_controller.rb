@@ -1658,18 +1658,19 @@ class ApplicationController < ActionController::Base
   def get_view_where_clause(default_where_clause)
     # If doing charts, limit the records to ones showing in the chart
     if session[:menu_click] && session[:sandboxes][params[:sb_controller]][:chart_reports]
-      click_parts = session[:menu_click]
       chart_reports = session[:sandboxes][params[:sb_controller]][:chart_reports]
-      legend_idx, data_idx, chart_idx, _cmd, model, typ = parse_chart_click(Array(click_parts).first)
-      report = chart_reports.kind_of?(Array) ? chart_reports[chart_idx] : chart_reports
-      data_row = report.table.data[data_idx]
+      chart_click = parse_chart_click(Array(session[:menu_click]).first)
+      model_downcase = chart_click.model.downcase
 
-      if typ == "bytag"
-        ["\"#{model.downcase.pluralize}\".id IN (?)",
-         data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]]
+      report = chart_reports.kind_of?(Array) ? chart_reports[chart_click.chart_index] : chart_reports
+      data_row = report.table.data[chart_click.data_index]
+
+      if chart_click.type == "bytag"
+        ["\"#{model_downcase.pluralize}\".id IN (?)",
+         data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click.legend_idx]}"][model_downcase.to_sym][:on]]
       else
-        ["\"#{model.downcase.pluralize}\".id IN (?)",
-         data_row["assoc_ids"][model.downcase.to_sym][typ.to_sym]]
+        ["\"#{model_downcase.pluralize}\".id IN (?)",
+         data_row["assoc_ids"][model_downcase.to_sym][chart_click.type.to_sym]]
       end
     else
       default_where_clause
