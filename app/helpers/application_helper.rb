@@ -1638,6 +1638,7 @@ module ApplicationHelper
       :showlinks  => @showlinks,
       :policy_sim => @policy_sim
     )
+    @report_data_additional_options.with_row_button(@row_button) if @row_button
     @report_data_additional_options.with_model(curr_model) if curr_model
     @report_data_additional_options.freeze
   end
@@ -1651,6 +1652,9 @@ module ApplicationHelper
       parent_class = additional_options[:parent_class_name].constantize
       additional_options[:parent] = parent_class.find(parent_id) if parent_class < ActiveRecord::Base
     end
+
+    @row_button = additional_options[:row_button]
+
     additional_options
   end
 
