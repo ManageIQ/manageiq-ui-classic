@@ -1727,7 +1727,7 @@ class CatalogController < ApplicationController
   end
 
   def get_node_info_handle_unassigned_node
-    scope = [[:with_service_template_catalog_id, nil]]
+    scope = [[:without_service_template_catalog_id]]
     service_template_list(scope, :no_order_button => true)
     @right_cell_text = _("Services in Catalog \"Unassigned\"")
   end
