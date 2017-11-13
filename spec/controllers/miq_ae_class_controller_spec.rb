@@ -878,4 +878,37 @@ describe MiqAeClassController do
       controller.send(:replace_right_cell, :replace_trees => %i(ae))
     end
   end
+
+  context "method data edit" do
+    before do
+      stub_user(:features => :all)
+      @method = FactoryGirl.create(:miq_ae_method, :name => "method01", :scope => "class",
+                                   :language => "ruby", :class_id => "someid", :data => "exit MIQ_OK", :location => "inline")
+      controller.instance_variable_set(:@sb, :trees       => {:ae_tree => {:active_node => "aec-someid"}},
+                                       :active_tree => :ae_tree, :form_vars_set => true)
+    end
+
+    it "make sure data in data field still exists when edititng that field" do
+      new = {
+        :name     => @method.name,
+        :language => 'ruby',
+        :scope    => 'instance',
+        :location => 'inline',
+        :data     => "exit MIQ_OK",
+        :fields   => []
+      }
+      session[:edit] = {
+        :key              => "aemethod_edit__#{@method.id}",
+        :fields_to_delete => [],
+        :ae_class_id      => "someid",
+        :new_field        => {},
+        :new              => new,
+        :current          => new
+      }
+      controller.instance_variable_set(:@_params, :transOne => "1", :id => @method.id)
+      allow(controller).to receive(:render)
+      controller.send(:form_method_field_changed)
+      expect(assigns(:edit)[:new][:data]).to eq("exit MIQ_OK...")
+    end
+  end
 end
