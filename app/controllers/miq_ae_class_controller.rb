@@ -1279,10 +1279,7 @@ class MiqAeClassController < ApplicationController
       rescue => bang
         add_flash(_("Error during 'add': %{error_message}") % {:error_message => bang.message}, :error)
         @in_a_form = true
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("flash_msg", :partial => "layouts/flash_msg")
-        end
+        javascript_flash
       else
         add_flash(_("Automate Class \"%{name}\" was added") % {:name => add_aeclass.fqname})
         @in_a_form = false
