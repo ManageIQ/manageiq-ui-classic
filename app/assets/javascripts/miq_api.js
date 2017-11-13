@@ -1,3 +1,5 @@
+/* global miqDeferred */
+
 /* functions to use the API from our JS/Angular:
  *
  * API.get(url, options) - use API.get('/api'), returns a Promise
@@ -95,6 +97,36 @@
       API.ws_destroy();
       document.cookie = 'ws_token=' + response.auth_token + '; path=/ws/notifications';
     });
+  };
+
+  API.wait_for_task = function(taskId) {
+    var deferred = miqDeferred();
+
+    var retry = function() {
+      API.get('/api/tasks/' + taskId + '?attributes=task_results')
+        .then(function(result) {
+          if (result.state === 'Finished') {  // MiqTask::STATE_FINISHED
+            deferred.resolve(result);
+          } else {
+            setTimeout(retry, 1000);
+          }
+        })
+        .catch(function(error) {
+          deferred.reject(error);
+        });
+    };
+
+    var failOnBadStatus = function(result) {
+      if (result.status !== 'Ok') {
+        return Promise.reject(result);
+      }
+
+      return result;
+    };
+
+    retry();
+    return deferred.promise
+      .then(failOnBadStatus);
   };
 
   window.vanillaJsAPI = API;
@@ -223,6 +255,7 @@ angular.module('miq.api', [])
     put: angularify(vanillaJsAPI.put),
     patch: angularify(vanillaJsAPI.patch),
     options: angularify(vanillaJsAPI.options),
+    wait_for_task: angularify(vanillaJsAPI.wait_for_task),
     login: angularify(vanillaJsAPI.login),
     logout: vanillaJsAPI.logout,
     autorenew: vanillaJsAPI.autorenew,

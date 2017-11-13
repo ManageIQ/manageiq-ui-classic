@@ -53,6 +53,10 @@ class ExplorerPresenter
     new(args.update(:mode => 'flash'))
   end
 
+  def self.rx(args = {})
+    new(args.update(:mode => 'rx'))
+  end
+
   def self.main_div(args = {})
     new(args.update(:mode => 'main_div'))
   end
@@ -74,6 +78,7 @@ class ExplorerPresenter
       :show_miq_buttons     => false,
       :load_chart           => nil,
       :open_window          => nil,
+      :rx                   => nil,
     }.update(options)
   end
 
@@ -160,6 +165,11 @@ class ExplorerPresenter
     @options[:report_data] = report_data
   end
 
+  def rx(data)
+    @options[:rx] = data
+    self
+  end
+
   def self.open_window(url)
     new(:mode => 'window', :open_url => url)
   end
@@ -178,6 +188,7 @@ class ExplorerPresenter
     when 'flash'    then for_render_flash
     when 'buttons'  then for_render_buttons
     when 'window'   then for_render_window
+    when 'rx'       then for_render_rx
     else for_render_default
     end
   end
@@ -198,6 +209,12 @@ class ExplorerPresenter
     data = {:explorer => 'window'}
     data[:openUrl] = @options[:open_url]
     data[:spinnerOff] = true if @options[:spinner_off]
+    data
+  end
+
+  def for_render_rx
+    data = {:explorer => 'rx'}
+    data[:rx] = @options[:rx]
     data
   end
 

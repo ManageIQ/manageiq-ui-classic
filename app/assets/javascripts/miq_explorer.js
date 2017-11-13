@@ -53,6 +53,9 @@ ManageIQ.explorer.process = function(data) {
     case 'window':
       ManageIQ.explorer.processWindow(data);
       break;
+    case 'rx':
+      ManageIQ.explorer.processRx(data);
+      break;
     default:
   }
 };
@@ -81,6 +84,10 @@ ManageIQ.explorer.processFlash = function(data) {
   if (! _.isUndefined(data.activateNode)) {
     miqTreeActivateNode(data.activateNode.tree, data.activateNode.node);
   }
+};
+
+ManageIQ.explorer.processRx = function(data) {
+  ManageIQ.explorer.rx(data);
 };
 
 ManageIQ.explorer.replacePartials = function(data) {
@@ -119,6 +126,11 @@ ManageIQ.explorer.spinnerOff = function(data) {
   }
 };
 
+ManageIQ.explorer.rx = function(data) {
+  if (data.rx) {
+    sendDataWithRx(data.rx);
+  }
+};
 
 ManageIQ.explorer.scrollTop = function(data) {
   if (data.scrollTop) {

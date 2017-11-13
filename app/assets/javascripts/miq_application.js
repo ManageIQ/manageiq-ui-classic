@@ -1083,15 +1083,22 @@ function miqProcessObserveQueue() {
   });
 }
 
-function miqObserveRequest(url, options) {
-  options = _.cloneDeep(options || {});
-  options.observe = true;
-
+function miqDeferred() {
   var deferred = {};
+
   deferred.promise = new Promise(function(resolve, reject) {
     deferred.resolve = resolve;
     deferred.reject = reject;
   });
+
+  return deferred;
+}
+
+function miqObserveRequest(url, options) {
+  options = _.cloneDeep(options || {});
+  options.observe = true;
+
+  var deferred = miqDeferred();
 
   ManageIQ.observe.queue.push({
     url: url,
