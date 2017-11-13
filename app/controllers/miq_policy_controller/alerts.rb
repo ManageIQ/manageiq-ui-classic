@@ -116,6 +116,7 @@ module MiqPolicyController::Alerts
         @edit[:expression_options] = MiqAlert.expression_options(@edit[:new][:expression][:eval_method])
         alert_build_exp_options_info
       end
+      @edit[:new][:repeat_time] = alert_default_repeat_time if apply_default_repeat_time?
     end
 
     @edit[:new][:expression][:options][:event_types] = [params[:event_types]].reject(&:blank?) if params[:event_types]
@@ -366,6 +367,13 @@ module MiqPolicyController::Alerts
     else
       10.minutes.to_i
     end
+  end
+
+  def apply_default_repeat_time?
+    event = @edit[:new]
+    return true if event[:exp_event] == '_hourly_timer_'
+    return false if event[:eval_method].nil?
+    event[:eval_method] =~ /hourly_performance|dwh_generic/
   end
 
   def alert_get_perf_column_unit(val)
