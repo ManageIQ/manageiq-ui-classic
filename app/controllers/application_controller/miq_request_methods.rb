@@ -443,6 +443,7 @@ module ApplicationController::MiqRequestMethods
                   "vmm_product" => _("Platform"),
                   "vmm_version" => _("Version"),
                   "state"       => _("State"),
+                  "maintenance" => _("Maintenance")
                 }
               end
 
