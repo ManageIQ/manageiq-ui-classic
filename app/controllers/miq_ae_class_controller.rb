@@ -898,6 +898,8 @@ class MiqAeClassController < ApplicationController
                            elsif params[:cls_method_location] || params[:method_location]
                              # reset data if location is changed
                              ''
+                           else
+                             @edit[:new][:data]
                            end
       build_ae_tree(:ae_methods, :automate_tree)
       @changed = (@edit[:new] != @edit[:current])
