@@ -319,12 +319,14 @@ class ApplicationHelper::ToolbarBuilder
   end
 
   def custom_toolbar_class(toolbar_result)
-    model = if @display == 'generic_objects'
-              GenericObjectDefinition
-            else
-              @record ? @record.class : model_for_custom_toolbar
-            end
-    build_custom_toolbar_class(model, @record, toolbar_result)
+    record = @record
+    if @display == 'generic_objects'
+      model = GenericObjectDefinition
+      record = GenericObject.find_by(:id => @sb[:rec_id])
+    else
+      model = @record ? @record.class : model_for_custom_toolbar
+    end
+    build_custom_toolbar_class(model, record, toolbar_result)
   end
 
   def build_custom_toolbar_class(model, record, toolbar_result)
@@ -346,6 +348,12 @@ class ApplicationHelper::ToolbarBuilder
         buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
         toolbar.button_group("custom_buttons_", buttons)
       end
+
+      generic_object_buttons = record_to_generic_object_buttons(record)
+      unless generic_object_buttons.empty?
+        buttons = generic_object_buttons.collect { |b| create_custom_button(b, model, record) }
+        toolbar.button_group("custom_buttons_", buttons)
+      end
     end
 
     toolbar
@@ -359,7 +367,8 @@ class ApplicationHelper::ToolbarBuilder
   def service_template_id(record)
     case record
     when Service then         record.service_template_id
-    when ServiceTemplate then record.id
+    when ServiceTemplate, GenericObjectDefinition then record.id
+    when GenericObject then record.generic_object_definition.id
     end
   end
 
@@ -367,6 +376,11 @@ class ApplicationHelper::ToolbarBuilder
     return [] unless record.kind_of?(Service)
     return [] if record.service_template.nil?
     record.service_template.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
+  end
+
+  def record_to_generic_object_buttons(record)
+    return [] unless record.kind_of?(GenericObject)
+    record.generic_object_definition.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
   end
 
   def get_custom_buttons(model, record, toolbar_result)

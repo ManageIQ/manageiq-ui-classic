@@ -2968,6 +2968,7 @@ Rails.application.routes.draw do
 
     :service                  => {
       :get  => %w(
+        dialog_load
         download_data
         edit
         explorer
