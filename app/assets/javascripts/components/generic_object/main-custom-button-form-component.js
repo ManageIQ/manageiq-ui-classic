@@ -138,7 +138,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     vm.customButtonModel.options = {};
     vm.customButtonModel.resource_action = {};
     vm.customButtonModel.visibility = {};
-    vm.customButtonModel.roles = [];
 
     vm.customButtonModel.options = {
       button_icon: vm.customButtonModel.button_icon,
@@ -171,7 +170,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     }
 
     vm.customButtonModel.visibility = {
-      roles: vm.customButtonModel.roles,
+      roles: vm.customButtonModel.roles.length === 0 ? ['_ALL_'] : vm.customButtonModel.roles,
     };
 
     return {
