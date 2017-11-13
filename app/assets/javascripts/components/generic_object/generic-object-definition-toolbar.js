@@ -1,7 +1,6 @@
 ManageIQ.angular.app.component('genericObjectDefinitionToolbar', {
   bindings: {
     recordId: '=?',
-    entity: '@',
     entityName: '@?',
     redirectUrl: '@?',
   },
@@ -20,10 +19,13 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
 
   ManageIQ.angular.genericObjectDefinitionSubsription = ManageIQ.angular.rxSubject.subscribe(function(event) {
     toolbar.action = event.type;
+    toolbar.entity = event.entity;
 
     if (toolbar.action) {
       if (toolbar.recordId) {
         toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [toolbar.recordId]);
+      } else if (ManageIQ.record.recordId) {
+        toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [ManageIQ.record.recordId]);
       } else {
         toolbar.genericObjectDefinitions = ManageIQ.gridChecks;
       }
@@ -33,16 +35,19 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
 
   // private functions
   function postGenericObjectDefinitionAction() {
-    if (toolbar.action === 'delete' && ! toolbar.recordId) {
+    var currentRecordId = toolbar.recordId || ManageIQ.record.recordId;
+    if (toolbar.action === 'delete' && ! currentRecordId) {
       _.forEach(toolbar.genericObjectDefinitions, function(recordId) {
         API.get('/api/generic_object_definitions/' + recordId + '?attributes=generic_objects_count')
           .then(checkGenericObjectCountAndDelete)
           .catch(miqService.handleFailure);
       });
-    } else if (toolbar.action === 'delete' && toolbar.recordId) {
-      deleteWithAPI('/api/generic_object_definitions/', toolbar.recordId);
-    } else if (toolbar.action === 'delete_custom_button_set' && toolbar.recordId) {
-      deleteWithAPI('/api/custom_button_sets/', toolbar.recordId);
+    } else if (toolbar.action === 'delete' && currentRecordId) {
+      deleteWithAPI('/api/generic_object_definitions/', currentRecordId);
+    } else if (toolbar.action === 'delete_custom_button_set' && currentRecordId) {
+      deleteWithAPI('/api/custom_button_sets/', currentRecordId);
+    } else if (toolbar.action === 'delete_custom_button' && currentRecordId) {
+      deleteWithAPI('/api/custom_buttons/', currentRecordId);
     }
   }
 
@@ -64,7 +69,13 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
   }
 
   function postAction(response) {
-    var saveMsg = sprintf(__('%s:"%s" was successfully deleted'), toolbar.entity, toolbar.entityName || response.name);
+    var entityName = toolbar.entityName || response.name;
+    var saveMsg;
+    if (entityName) {
+      saveMsg = sprintf(__('%s:"%s" was successfully deleted'), toolbar.entity, entityName);
+    } else {
+      saveMsg = sprintf(__('%s was successfully deleted'), toolbar.entity);
+    }
     if (toolbar.redirectUrl) {
       miqService.redirectBack(saveMsg, 'success', toolbar.redirectUrl);
     } else {

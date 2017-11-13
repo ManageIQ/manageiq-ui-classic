@@ -5,15 +5,25 @@
   %tbody
     %tr{"ng-repeat" => "key in vm.keys track by $index"}
       %td.form-group{"ng-class" => "{'has-error': vm.angularForm['{{vm.keyType}}{{$index}}'].$invalid}"}
-        %input.form-control{"type"        => "text",
-                            "id"          => "{{vm.keyType}}{{$index}}",
-                            "name"        => "{{vm.keyType}}{{$index}}",
-                            "ng-required" => "vm.valueOptions && vm.values[$index] || {{vm.requiredRule}}",
-                            "ng-model"    => "vm.keys[$index]",
-                            "ng-change"   => "vm.tableCellValueChanged(vm.angularForm[vm.keyType+$index])",
-                            "ng-pattern"  => "/^[a-z][a-zA-Z_0-9]*[!?]?$/",
-                            "title"       => "{{vm.angularForm[vm.keyType+$index].$error.pattern ? vm.invalidKeyName : ''}}",
-                            "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
+        %div{"ng-if" => "vm.noPattern"}
+          %input.form-control{"type"        => "text",
+                              "id"          => "{{vm.keyType}}{{$index}}",
+                              "name"        => "{{vm.keyType}}{{$index}}",
+                              "ng-required" => "vm.valueOptions && vm.values[$index] || {{vm.requiredRule}}",
+                              "ng-model"    => "vm.keys[$index]",
+                              "ng-change"   => "vm.tableCellValueChanged(vm.angularForm[vm.keyType+$index])",
+                              "title"       => "{{vm.angularForm[vm.keyType+$index].$error.pattern ? vm.invalidKeyName : ''}}",
+                              "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
+        %div{"ng-if" => "!vm.noPattern"}
+          %input.form-control{"type"        => "text",
+                              "id"          => "{{vm.keyType}}{{$index}}",
+                              "name"        => "{{vm.keyType}}{{$index}}",
+                              "ng-required" => "vm.valueOptions && vm.values[$index] || {{vm.requiredRule}}",
+                              "ng-model"    => "vm.keys[$index]",
+                              "ng-change"   => "vm.tableCellValueChanged(vm.angularForm[vm.keyType+$index])",
+                              "ng-pattern"  => "/^[a-z][a-zA-Z_0-9]*[!?]?$/",
+                              "title"       => "{{vm.angularForm[vm.keyType+$index].$error.pattern ? vm.invalidKeyName : ''}}",
+                              "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
           %span.help-block{"ng-if" => "vm.angularForm[vm.keyType+$index].$error.pattern"}
             %i.fa.fa-exclamation-circle{:style => "color:#cc0000"}
               {{vm.invalidKeyName}}
@@ -31,6 +41,13 @@
                 "pf-select"                   => true,}
           %option{"value" => "", "disabled" => ""}
             = "<#{_('Choose')}>"
+      %td.form-group{"ng-if" => "vm.addValueColumn", "ng-class" => "{'has-error': vm.angularForm['Value_{{vm.keyType}}{{$index}}'].$invalid}"}
+        %input.form-control{"type"        => "text",
+                            "id"          => "Value_{{vm.keyType}}{{$index}}",
+                            "name"        => "Value_{{vm.keyType}}{{$index}}",
+                            "ng-model"    => "vm.values[$index]",
+                            "ng-change"   => "vm.tableCellValueChanged()",
+                            "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
       %td{:align => "center", :style => "width: 50px"}
         %span.input-group-btn
           .btn.btn-default{:alt => t = _("Delete Row"), :title => t, "ng-click" => "vm.deleteRow($index)"}

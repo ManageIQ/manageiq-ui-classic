@@ -76,7 +76,7 @@ function mainCustomButtonGroupFormController(API, miqService) {
       button_color: vm.customButtonGroupModel.button_color,
       display: vm.customButtonGroupModel.display,
       applies_to_class: 'GenericObjectDefinition',
-      applies_to_id: vm.genericObjectDefnRecordId,
+      applies_to_id: parseInt(vm.genericObjectDefnRecordId, 10),
     };
 
     return {

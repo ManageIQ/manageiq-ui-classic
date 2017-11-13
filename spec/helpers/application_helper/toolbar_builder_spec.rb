@@ -495,7 +495,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     context "when the toolbar to be built is a generic object toolbar" do
-      let(:toolbar_to_build) { 'generic_object_definition_center_tb' }
+      let(:toolbar_to_build) { 'generic_object_definitions_center_tb' }
 
       before do
         @record = FactoryGirl.create(:generic_object_definition)
@@ -511,40 +511,32 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :text  => "Configuration"
         )
       end
-
       it "includes the correct button items in the show screen" do
         items = _toolbar_builder.build_toolbar(toolbar_to_build).first[:items]
+
         expect(items[0]).to include(
+          :id      => "generic_object_definition_configuration__generic_object_definition_new",
+          :type    => :button,
+          :title   => "Add a new Generic Object Class",
+          :text    => "Add a new Generic Object Class",
+          :onwhen  => nil,
+          :enabled => true,
+        )
+        expect(items[1]).to include(
           :id    => "generic_object_definition_configuration__generic_object_definition_edit",
           :type  => :button,
           :icon  => "pficon pficon-edit fa-lg",
-          :title => "Edit this Generic Object Class",
-          :text  => "Edit this Generic Object Class",
-        )
-        expect(items[1]).to include(
-          :id      => "generic_object_definition_configuration__ab_group_new",
-          :type    => :button,
-          :title   => "Add a new Button Group",
-          :text    => "Add a new Button Group",
-          :onwhen  => nil,
-          :enabled => true,
+          :title => "Edit selected Generic Object Class",
+          :text  => "Edit selected Generic Object Class",
         )
         expect(items[2]).to include(
-          :id      => "generic_object_definition_configuration__ab_button_new",
-          :type    => :button,
-          :title   => "Add a new Button",
-          :text    => "Add a new Button",
-          :onwhen  => nil,
-          :enabled => true,
-        )
-        expect(items[3]).to include(
           :id      => "generic_object_definition_configuration__generic_object_definition_delete",
           :type    => :button,
           :icon    => "pficon pficon-delete fa-lg",
-          :title   => "Remove this Generic Object Classes from Inventory",
-          :text    => "Remove this Generic Object Classes from Inventory",
-          :onwhen  => nil,
-          :enabled => true,
+          :title   => "Remove selected Generic Object Classes from Inventory",
+          :text    => "Remove selected Generic Object Classes from Inventory",
+          :onwhen  => "1+",
+          :enabled => false,
         )
       end
     end
