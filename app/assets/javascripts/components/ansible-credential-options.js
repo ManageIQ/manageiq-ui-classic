@@ -2,7 +2,6 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
   bindings: {
     model: '=',
     options: '<',
-    type: '<',
     newRecord: '<',
     reset: '=',
     deleteFromModel: '=',
@@ -13,18 +12,6 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
 
   controller: ['$scope', function($scope) {
     $scope.__ = __;
-
-    this.setOptions = function() {
-      this.current_options = this.options[this.type];
-    };
-
-    this.$onInit = function() {
-      this.setOptions();
-    };
-
-    this.$onChanges = function(changes) {
-      this.setOptions();
-    };
 
     this.updatePassword = function(name) {
       this[name] = true;
@@ -43,7 +30,7 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
   }],
 
   template: [
-    '<div class="form-group" ng-repeat="(name, attr) in vm.current_options.attributes">',
+    '<div class="form-group" ng-repeat="(name, attr) in vm.options.attributes">',
       '<label class="control-label col-md-2">',
         '{{ __(attr.label) }}',
        '</label>',
