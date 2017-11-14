@@ -12,7 +12,10 @@ class ApplicationHelper::Toolbar::ContainerServiceCenter < ApplicationHelper::To
           N_('Show Capacity & Utilization data for this Service'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :options   => {:entity => N_('Service')},
+          :klass     => ApplicationHelper::Button::ContainerPerf,
+        ),
       ]
     ),
   ])

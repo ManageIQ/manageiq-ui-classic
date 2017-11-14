@@ -13,7 +13,7 @@ class ApplicationHelper::Toolbar::ContainerCenter < ApplicationHelper::Toolbar::
           N_('Timelines'),
           :url       => "/show",
           :url_parms => "?display=timeline",
-          :options   => {:entity => 'Container'},
+          :options   => {:entity => N_('Container')},
           :klass     => ApplicationHelper::Button::ContainerTimeline
         ),
         button(
@@ -23,6 +23,7 @@ class ApplicationHelper::Toolbar::ContainerCenter < ApplicationHelper::Toolbar::
           N_('Utilization'),
           :url       => "/show",
           :url_parms => "?display=performance",
+          :options   => {:entity => N_('Container')},
           :klass     => ApplicationHelper::Button::ContainerPerf
         ),
       ]

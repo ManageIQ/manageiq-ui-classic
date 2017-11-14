@@ -13,7 +13,7 @@ class ApplicationHelper::Toolbar::ContainerNodeCenter < ApplicationHelper::Toolb
           N_('Timelines'),
           :url       => "/show",
           :url_parms => "?display=timeline",
-          :options   => {:entity => 'Node'},
+          :options   => {:entity => N_('Node')},
           :klass     => ApplicationHelper::Button::ContainerTimeline),
         button(
           :container_node_perf,
@@ -21,7 +21,10 @@ class ApplicationHelper::Toolbar::ContainerNodeCenter < ApplicationHelper::Toolb
           N_('Show Capacity & Utilization data for this Node'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :options   => {:entity => N_('Node')},
+          :klass     => ApplicationHelper::Button::ContainerPerf,
+        ),
         button(
           :ems_container_ad_hoc_metrics,
           'fa fa-tachometer fa-1xplus',
