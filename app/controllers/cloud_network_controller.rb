@@ -144,7 +144,7 @@ class CloudNetworkController < ApplicationController
       :name => _("Edit Cloud Network \"%{name}\"") % {:name => @network.name},
       :url  => "/cloud_network/edit/#{@network.id}"
     )
-    render :change
+    render :action => 'change'
   end
 
   def new
@@ -157,7 +157,7 @@ class CloudNetworkController < ApplicationController
     end
 
     drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
-    render :change
+    render :action => 'change'
   end
 
   def update
