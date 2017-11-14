@@ -71,7 +71,10 @@
 
   API.logout = function() {
     if (sessionStorage.miq_token) {
-      API.delete('/api/auth');
+      API.delete('/api/auth', {
+        skipErrors: [401],
+        skipLoginRedirect: true,
+      });
     }
 
     API.ws_destroy();
