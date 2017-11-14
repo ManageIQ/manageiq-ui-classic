@@ -92,7 +92,7 @@ module PxeController::PxeCustomizationTemplates
     changed = (@edit[:new] != @edit[:current])
     if params[:button] == "cancel"
       @edit = session[:edit] = nil # clean out the saved info
-      @ct.id ? add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "PxeCustomizationTemplate"), :name => @ct.name}) :
+      @ct.id ? add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "PxeCustomizationTemplate"), :name => get_record_display_name(@ct)}) :
               add_flash(_("Add of new %{model} was cancelled by the user") %
                          {:model => ui_lookup(:model => "PxeCustomizationTemplate")})
       get_node_info(x_node)
@@ -119,7 +119,7 @@ module PxeController::PxeCustomizationTemplates
 
       if !flash_errors? && ct.valid? && ct.save
         flash_key = ct.id ? _("%{model} \"%{name}\" was saved") : _("%{model} \"%{name}\" was added")
-        add_flash(flash_key % {:model => ui_lookup(:model => "PxeCustomizationTemplate"), :name  => ct.name})
+        add_flash(flash_key % {:model => ui_lookup(:model => "PxeCustomizationTemplate"), :name  => get_record_display_name(ct)})
         AuditEvent.success(build_created_audit(ct, @edit))
         @edit = session[:edit] = nil # clean out the saved info
         self.x_node = "xx-xx-#{to_cid(ct.pxe_image_type.id)}"
