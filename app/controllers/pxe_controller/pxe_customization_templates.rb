@@ -92,7 +92,7 @@ module PxeController::PxeCustomizationTemplates
     if params[:button] == "cancel"
       @edit = session[:edit] = nil # clean out the saved info
       if @ct.id
-        add_flash(_("Edit of Customization Template \"%{name}\" was cancelled by the user") % {:name => @ct.name})
+        add_flash(_("Edit of Customization Template \"%{name}\" was cancelled by the user") % {:name => get_record_display_name(@ct)})
       else
         add_flash(_("Add of new Customization Template was cancelled by the user"))
       end
@@ -120,9 +120,9 @@ module PxeController::PxeCustomizationTemplates
 
       if !flash_errors? && ct.valid? && ct.save
         if ct.id
-          add_flash(_("Customization Template \"%{name}\" was saved") % {:name => ct.name})
+          add_flash(_("Customization Template \"%{name}\" was saved") % {:name => get_record_display_name(ct)})
         else
-          add_flash(_("Customization Template \"%{name}\" was added") % {:name => ct.name})
+          add_flash(_("Customization Template \"%{name}\" was added") % {:name => get_record_display_name(ct)})
         end
         AuditEvent.success(build_created_audit(ct, @edit))
         @edit = session[:edit] = nil # clean out the saved info
