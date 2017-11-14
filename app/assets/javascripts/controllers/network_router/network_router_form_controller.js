@@ -144,22 +144,14 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   };
 
   vm.filterNetworkManagerChanged = function(id) {
-    miqService.sparkleOn();
-    if (id) {
-      getCloudNetworksByEms(id);
-      miqService.getProviderTenants(function(data) {
-        vm.available_tenants = data.resources;
-      })(id);
-    }
-    miqService.sparkleOff();
+    getCloudNetworksByEms(id);
+    miqService.getProviderTenants(function(data) {
+      vm.available_tenants = data.resources;
+    })(id);
   };
 
   vm.filterCloudNetworkChanged = function(id) {
-    miqService.sparkleOn();
-    if (id) {
-      getCloudSubnetsByNetworkID(id);
-    }
-    miqService.sparkleOff();
+    getCloudSubnetsByNetworkID(id);
   };
 
   init();
