@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
     protect_from_forgery :secret => SecureRandom.hex(64), :except => [:authenticate, :external_authenticate, :kerberos_authenticate, :saml_login, :initiate_saml_login, :csp_report], :with => :exception
   end
 
+  helper GtlHelper
   helper ChartingHelper
   Charting.load_helpers(self)
 
