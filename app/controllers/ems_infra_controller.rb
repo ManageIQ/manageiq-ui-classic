@@ -185,7 +185,7 @@ class EmsInfraController < ApplicationController
     if task.results_ready?
       javascript_open_window(task.task_results)
     else
-      javascript_flash(:text     => _("Infrastructure provider failed to generate Admin UI URL"),
+      javascript_flash(:text     => _("Infrastructure provider failed to generate Admin UI URL: %{message}") % {:message => task.message},
                        :severity => :error)
     end
   end
