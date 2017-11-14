@@ -415,7 +415,7 @@ class DashboardController < ApplicationController
     end
     @settings = copy_hash(DEFAULT_SETTINGS)               # Need settings, else pages won't display
     @more = params[:type] && params[:type] != "less"
-    flash[:notice] = _("Session was timed out due to inactivity. Please log in again.") if params[:timeout] == "true"
+    add_flash(_("Session was timed out due to inactivity. Please log in again."), :error) if params[:timeout] == "true"
     logon_details = MiqServer.my_server(true).logon_status_details
     @login_message = logon_details[:message] if logon_details[:status] == :starting && logon_details[:message]
 
