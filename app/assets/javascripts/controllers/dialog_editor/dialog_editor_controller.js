@@ -11,6 +11,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
   // treeSelector related
   vm.lazyLoad = lazyLoad;
   vm.onSelect = onSelect;
+  vm.showFullyQualifiedName = showFullyQualifiedName;
   vm.node = {};
   vm.treeSelectorToggle = treeSelectorToggle;
   vm.treeSelectorIncludeDomain = false;
@@ -109,6 +110,18 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
     elementData.resource_action.ae_class = fqname.pop();
     elementData.resource_action.ae_namespace = fqname.filter(String).join('/');
     vm.treeSelectorShow = false;
+  }
+
+  function showFullyQualifiedName(resourceAction) {
+    if (typeof resourceAction.ae_namespace == 'undefined' ||
+        typeof resourceAction.ae_class == 'undefined' ||
+        typeof resourceAction.ae_instance == 'undefined') {
+      return '';
+    }
+    var fqname = resourceAction.ae_namespace
+      + '/' + resourceAction.ae_class
+      + '/' + resourceAction.ae_instance;
+    return fqname;
   }
 
   function treeSelectorToggle() {
