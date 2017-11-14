@@ -5,6 +5,6 @@ describe TreeNode::MiqAeMethod do
   let(:object) { FactoryGirl.create(:miq_ae_method, :scope => :class, :language => :ruby, :location => :inline) }
 
   include_examples 'TreeNode::Node#key prefix', 'aem-'
-  include_examples 'TreeNode::Node#icon', 'ff ff-method'
+  include_examples 'TreeNode::Node#icon', 'fa-ruby'
   include_examples 'TreeNode::Node#tooltip prefix', 'Automate Method'
 end
