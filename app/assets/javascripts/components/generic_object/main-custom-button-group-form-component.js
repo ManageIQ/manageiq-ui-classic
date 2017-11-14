@@ -36,9 +36,10 @@ function mainCustomButtonGroupFormController(API, miqService) {
         .catch(miqService.handleFailure);
     } else {
       vm.newRecord = true;
-      vm.afterGet = true;
 
-      vm.modelCopy = angular.copy( vm.customButtonGroupModel );
+      API.get('/api/custom_button_sets?expand=resources&attributes=set_data')
+        .then(getCustomButtonSetGroupIndex)
+        .catch(miqService.handleFailure);
     }
   };
 
@@ -77,6 +78,7 @@ function mainCustomButtonGroupFormController(API, miqService) {
       display: vm.customButtonGroupModel.display,
       applies_to_class: 'GenericObjectDefinition',
       applies_to_id: parseInt(vm.genericObjectDefnRecordId, 10),
+      group_index: vm.customButtonGroupModel.group_index,
     };
 
     return {
@@ -102,6 +104,7 @@ function mainCustomButtonGroupFormController(API, miqService) {
     vm.customButtonGroupModel.button_icon = response.set_data.button_icon;
     vm.customButtonGroupModel.button_color = response.set_data.button_color;
     vm.customButtonGroupModel.display = response.set_data.display;
+    vm.customButtonGroupModel.group_index = response.set_data.group_index;
 
     vm.genericObjectDefnRecordId = response.set_data.applies_to_id;
 
@@ -110,5 +113,14 @@ function mainCustomButtonGroupFormController(API, miqService) {
     vm.modelCopy = Object.assign({}, vm.customButtonGroupModel);
     vm.afterGet = true;
     miqService.sparkleOff();
+  }
+
+  function getCustomButtonSetGroupIndex(response) {
+    vm.afterGet = true;
+    var currentGroupIndex = _.filter(_.pluck(response.resources, 'set_data'), function(setData) {
+      return setData.applies_to_class === 'GenericObject';
+    }).length;
+    vm.customButtonGroupModel.group_index = currentGroupIndex + 1;
+    vm.modelCopy = angular.copy( vm.customButtonGroupModel );
   }
 }
