@@ -9,9 +9,10 @@ class DashboardController < ApplicationController
   before_action :check_privileges, :except => %i(csp_report authenticate
                                                external_authenticate kerberos_authenticate
                                                logout login login_retry wait_for_task
-                                               saml_login initiate_saml_login)
+                                               saml_login initiate_saml_login
+                                               oidc_login, initiate_oidc_login)
   before_action :get_session_data, :except => %i(csp_report authenticate
-                                               external_authenticate kerberos_authenticate saml_login)
+                                               external_authenticate kerberos_authenticate saml_login oidc_login)
   after_action :cleanup_action,    :except => %i(csp_report)
 
   def index
@@ -53,6 +54,16 @@ class DashboardController < ApplicationController
     request.base_url + '/saml_login'
   end
   helper_method :saml_protected_page
+
+  def oidc_protected_page
+    request.base_url + '/oidc_login'
+  end
+  helper_method :oidc_protected_page
+
+  def oidc_protected_page_logout
+    request.base_url + '/oidc_login/redirect_uri?logout=' + CGI.escape(request.base_url)
+  end
+  helper_method :oidc_protected_page_logout
 
   def iframe
     override_content_security_policy_directives(:frame_src => ['*'])
@@ -415,6 +426,11 @@ class DashboardController < ApplicationController
       return
     end
 
+    if ext_auth?(:oidc_enabled) && ext_auth?(:local_login_disabled)
+      redirect_to oidc_protected_page
+      return
+    end
+
     if ::Settings.product.allow_passed_in_credentials # Only pre-populate credentials if setting is turned on
       @user_name     = params[:user_name]
       @user_password = params[:user_password]
@@ -452,6 +468,41 @@ class DashboardController < ApplicationController
   # Initiate a SAML Login from the main login page
   def initiate_saml_login
     javascript_redirect(saml_protected_page)
+  end
+
+  # Initiate an OpenIDC Login from the main login page
+  def initiate_oidc_login
+    javascript_redirect oidc_protected_page
+  end
+
+  # Login support for OpenIDC - GET /oidc_login
+  def oidc_login
+    request.env.each do |key, value|
+      $log.info("    request.env[#{key}] = #{value}") if key =~ /^HTTP_/
+    end
+
+    if @user_name.blank? && request.env.key?("HTTP_X_REMOTE_USER").present?
+      @user_name = params[:user_name] = request.env["HTTP_X_REMOTE_USER"].split("@").first
+    else
+      redirect_to :action => 'logout'
+      return
+    end
+
+    user = {:name => @user_name}
+    validation = validate_user(user, nil, request, :require_user => true, :timeout => 30)
+
+    case validation.result
+    when :pass
+      render :template => "dashboard/oidc_login",
+             :layout   => false,
+             :locals   => {:api_auth_token => generate_ui_api_token(@user_name),
+                           :validation_url => validation.url}
+      return
+    when :fail
+      session[:user_validation_error] = validation.flash_msg || "User validation failed"
+      redirect_to :action => 'logout'
+      return
+    end
   end
 
   # Login support for SAML - GET /saml_login
@@ -651,6 +702,8 @@ class DashboardController < ApplicationController
     # For SAML, let's do the SAML logout to clear mod_auth_mellon IdP cookies and such
     if ext_auth?(:saml_enabled)
       redirect_to("/saml2/logout?ReturnTo=/")
+    elsif ext_auth?(:oidc_enabled)
+      redirect_to(oidc_protected_page_logout)
     else
       redirect_to(:action => 'login')
     end
