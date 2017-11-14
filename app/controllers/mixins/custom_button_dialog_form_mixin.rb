@@ -3,8 +3,6 @@ module Mixins
     def set_custom_button_dialog_presenter
       presenter ||= ExplorerPresenter.new(
         :active_tree => x_active_tree,
-        :add_nodes   => nil, # Update the tree with any new nodes
-        :delete_node => nil, # Remove a new node from the tree
       )
       presenter.show(:default_left_cell).hide(:custom_left_cell)
       presenter.update(:main_div, r[:partial => "shared/dialogs/dialog_provision"])
