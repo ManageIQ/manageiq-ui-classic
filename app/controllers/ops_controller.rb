@@ -305,7 +305,6 @@ class OpsController < ApplicationController
       @sb[:active_tab] ||= "db_summary"
     end
 
-    @sb[:tab_label] ||= _('Zones')
     @sb[:active_node] ||= {}
 
     if MiqServer.my_server(true).logon_status != :ready
@@ -698,7 +697,6 @@ class OpsController < ApplicationController
   end
 
   def rbac_replace_right_cell(nodetype, presenter)
-    @sb[:tab_label] = @tagging ? _("Tagging") : rbac_set_tab_label
     if %w(accordion_select change_tab tree_select).include?(params[:action])
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
     elsif nodetype == "group_seq"
@@ -735,39 +733,6 @@ class OpsController < ApplicationController
     @record = model.constantize.find(from_cid(id))
     rbac_group_get_details(@record.id) if @record.kind_of?(MiqGroup) # set Group's trees
     replace_right_cell(:nodetype => 'dialog_return')
-  end
-
-  def rbac_set_tab_label
-    nodes = x_node.split("-")
-    case nodes.first
-    when "xx"
-      case nodes.last
-      when "u"
-        _("Users")
-      when "g"
-        _("Groups")
-      when "ur"
-        _("Roles")
-      when "tn"
-        _("Tenants")
-      end
-    when "u"
-      @record.present? ? @record.name : _('Users')
-    when "g"
-      if @record && @record.id
-        @record.description
-      elsif @group && @group.id
-        @group.description
-      else
-        _("Groups")
-      end
-    when "ur"
-      @role.present? ? @role.name : _("Roles")
-    when "tn"
-      @record.present? ? @record.name : _("Tenants")
-    else
-      _("Details")
-    end
   end
 
   def extra_js_commands(presenter)
