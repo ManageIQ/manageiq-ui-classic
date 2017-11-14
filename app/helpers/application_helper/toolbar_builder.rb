@@ -345,16 +345,20 @@ class ApplicationHelper::ToolbarBuilder
     # For Service, we include buttons for ServiceTemplate.
     # These buttons are added as a single group with multiple buttons
     if record.present?
-      service_buttons = record_to_service_buttons(record)
-      unless service_buttons.empty?
-        buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
-        toolbar.button_group("custom_buttons_", buttons)
+      if record.kind_of?(Service)
+        service_buttons = record_to_service_buttons(record)
+        unless service_buttons.empty?
+          buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
+          toolbar.button_group("custom_buttons_", buttons)
+        end
       end
 
-      generic_object_buttons = record_to_generic_object_buttons(record)
-      unless generic_object_buttons.empty?
-        buttons = generic_object_buttons.collect { |b| create_custom_button(b, model, record) }
-        toolbar.button_group("custom_buttons_", buttons)
+      if record.kind_of?(GenericObject)
+        generic_object_buttons = record_to_generic_object_buttons(record)
+        unless generic_object_buttons.empty?
+          buttons = generic_object_buttons.collect { |b| create_custom_button(b, model, record) }
+          toolbar.button_group("custom_buttons_", buttons)
+        end
       end
     end
 

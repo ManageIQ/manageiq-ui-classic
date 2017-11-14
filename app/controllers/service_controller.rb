@@ -19,10 +19,14 @@ class ServiceController < ApplicationController
 
   def button
     if params[:pressed] == "custom_button"
-      ids = if @display == 'generic_objects'
-              @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
-            end
-      custom_buttons(ids)
+      display_options = {}
+      ids = nil
+      if @display == 'generic_objects'
+        ids = @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
+        display_options[:display] = @display
+        display_options[:display_id] = params[:id]
+      end
+      custom_buttons(ids, display_options)
       return
     end
     tag(GenericObject) if @display == 'generic_objects' && params[:pressed] == 'generic_object_tag'

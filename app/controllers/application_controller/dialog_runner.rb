@@ -5,6 +5,8 @@ module ApplicationController::DialogRunner
     model = self.class.model
     if restful_routed?(model)
       polymorphic_path(model.find(session[:edit][:target_id]), :flash_msg => flash)
+    elsif session[:edit][:display] && session[:edit][:display_id]
+      {:action => 'show', :id => session[:edit][:display_id], :display => session[:edit][:display], :flash_msg => flash}
     else
       {:action => 'show', :id => session[:edit][:target_id], :flash_msg => flash}
     end
@@ -158,6 +160,8 @@ module ApplicationController::DialogRunner
     @edit[:dialog_mode] = options[:dialog_mode]
     @edit[:current] = copy_hash(@edit[:new])
     @edit[:right_cell_text] = options[:header].to_s
+    @edit[:display] = options[:display] if options[:display]
+    @edit[:display_id] = options[:display_id] if options[:display] && options[:display_id]
     @in_a_form = true
     @changed = session[:changed] = true
     if @edit[:explorer]
