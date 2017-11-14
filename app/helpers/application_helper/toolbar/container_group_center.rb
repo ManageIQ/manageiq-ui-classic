@@ -9,19 +9,22 @@ class ApplicationHelper::Toolbar::ContainerGroupCenter < ApplicationHelper::Tool
         button(
           :container_group_timeline,
           'ff ff-timeline fa-lg',
-          N_('Show Timelines for this Group'),
+          N_('Show Timelines for this Pod'),
           N_('Timelines'),
           :url       => "/show",
           :url_parms => "?display=timeline",
-          :options   => {:entity => 'Group'},
+          :options   => {:entity => N_('Pod')},
           :klass     => ApplicationHelper::Button::ContainerTimeline),
         button(
           :container_group_perf,
           'ff ff-monitoring fa-lg',
-          N_('Show Capacity & Utilization data for this Group'),
+          N_('Show Capacity & Utilization data for this Pod'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :options   => {:entity => N_('Pod')},
+          :klass     => ApplicationHelper::Button::ContainerPerf,
+        ),
       ]
     ),
   ])

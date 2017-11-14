@@ -13,7 +13,7 @@ class ApplicationHelper::Toolbar::ContainerProjectCenter < ApplicationHelper::To
           N_('Timelines'),
           :url       => "/show",
           :url_parms => "?display=timeline",
-          :options   => {:entity => 'Project'},
+          :options   => {:entity => N_('Project')},
           :klass     => ApplicationHelper::Button::ContainerTimeline),
         button(
           :container_project_perf,
@@ -21,7 +21,10 @@ class ApplicationHelper::Toolbar::ContainerProjectCenter < ApplicationHelper::To
           N_('Show Capacity & Utilization data for this Project'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :options   => {:entity => N_('Project')},
+          :klass     => ApplicationHelper::Button::ContainerPerf,
+        ),
       ]
     ),
   ])
