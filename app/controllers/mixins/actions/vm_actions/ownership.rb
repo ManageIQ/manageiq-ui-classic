@@ -213,7 +213,7 @@ module Mixins
 
         def filter_ownership_items(klass, ownership_ids)
           records = find_records_with_rbac(klass.order(:name), ownership_ids)
-          records.with_ownership if klass.respond_to?(:with_ownership)
+          records.try(:with_ownership) || records
         end
       end
     end
