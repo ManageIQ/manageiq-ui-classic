@@ -182,10 +182,11 @@ class EmsInfraController < ApplicationController
   def open_admin_ui_done
     task = MiqTask.find(params[:task_id])
 
-    if task.results_ready?
+    if task.results_ready? && task.task_results.kind_of?(String)
       javascript_open_window(task.task_results)
     else
-      javascript_flash(:text     => _("Infrastructure provider failed to generate Admin UI URL: %{message}") % {:message => task.message},
+      message = MiqTask.status_ok?(task.status) ? _("The URL is blank or not a String") : task.message
+      javascript_flash(:text     => _("Infrastructure provider failed to generate Admin UI URL: %{message}") % {:message => message},
                        :severity => :error)
     end
   end
