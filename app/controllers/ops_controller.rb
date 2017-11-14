@@ -733,15 +733,7 @@ class OpsController < ApplicationController
   def dialog_replace_right_cell
     model, id = TreeBuilder.extract_node_model_and_id(x_node)
     @record = model.constantize.find(from_cid(id))
-    case @record
-    when User
-      @user = @record
-    when MiqGroup
-      @group = @record
-      rbac_group_get_details(@record.id)
-    when Tenant
-      @tenant = @record
-    end
+    rbac_group_get_details(@record.id) if @record.kind_of?(MiqGroup) # set Group's trees
     replace_right_cell(:nodetype => 'dialog_return')
   end
 
@@ -760,7 +752,7 @@ class OpsController < ApplicationController
         _("Tenants")
       end
     when "u"
-      @user.present? ? @user.name : _('Users')
+      @record.present? ? @record.name : _('Users')
     when "g"
       if @record && @record.id
         @record.description
@@ -772,7 +764,7 @@ class OpsController < ApplicationController
     when "ur"
       @role.present? ? @role.name : _("Roles")
     when "tn"
-      @tenant.present? ? @tenant.name : _("Tenants")
+      @record.present? ? @record.name : _("Tenants")
     else
       _("Details")
     end
