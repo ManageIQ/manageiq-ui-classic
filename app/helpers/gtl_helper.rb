@@ -9,7 +9,8 @@ module GtlHelper
   end
 
   def miq_tile_view
-    content_tag('miq-tile-view', '', {
+    content_tag(
+      'miq-tile-view', '',
       "ng-if"            => "dataCtrl.gtlType === 'grid' || dataCtrl.gtlType === 'tile'",
       "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === ''}",
       "settings"         => "dataCtrl.settings",
@@ -21,12 +22,12 @@ module GtlHelper
       "load-more-items"  => "dataCtrl.onLoadNext(start, perPage)",
       "columns"          => "dataCtrl.gtlData.cols",
       "type"             => "dataCtrl.gtlType === 'grid' ? 'small' : 'big'"
-    })
+    )
   end
 
-
   def miq_data_table
-    content_tag('miq-data-table', '', {
+    content_tag(
+      'miq-data-table', '',
       "ng-if"            => "dataCtrl.gtlType === 'list'",
       "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === false}",
       "settings"         => "dataCtrl.settings",
@@ -37,9 +38,8 @@ module GtlHelper
       "load-more-items"  => "dataCtrl.onLoadNext(start, perPage)",
       "on-item-selected" => "dataCtrl.onItemSelect(item, isSelected)",
       "columns"          => "dataCtrl.gtlData.cols"
-    })
+    )
   end
-
 
   # This method collects all the data comming from side channels
   # so that `render_gtl` can be a pure function.
@@ -50,19 +50,19 @@ module GtlHelper
                 end
 
     options = {
-      :model_name        => model_to_report_data,
-      :no_flash_div      => no_flash_div || false,
-      :gtl_type_string   => @gtl_type,
-      :active_tree       => (x_active_tree unless params[:display] || @use_action),
-      :parent_id         => parent_id,
-      :selected_records  => gtl_selected_records,
+      :model_name                     => model_to_report_data,
+      :no_flash_div                   => no_flash_div || false,
+      :gtl_type_string                => @gtl_type,
+      :active_tree                    => (x_active_tree unless params[:display] || @use_action),
+      :parent_id                      => parent_id,
+      :selected_records               => gtl_selected_records,
 
-      :display           => @display,
-      :sort_col          => @sort_col,
-      :sort_dir          => @sort_dir,
-      :explorer          => @explorer,
-      :view              => @view,
-      :db                => @db,
+      :display                        => @display,
+      :sort_col                       => @sort_col,
+      :sort_dir                       => @sort_dir,
+      :explorer                       => @explorer,
+      :view                           => @view,
+      :db                             => @db,
 
       :report_data_additional_options => @report_data_additional_options,
     }
@@ -81,20 +81,17 @@ module GtlHelper
   end
 
   def render_gtl_markup(no_flash_div)
-    content_tag('div', {
-      :id => 'miq-gtl-view', "ng-controller" => "reportDataController as dataCtrl"
-    }) do
+    content_tag('div', :id => 'miq-gtl-view', "ng-controller" => "reportDataController as dataCtrl") do
       capture do
         concat render :partial => 'layouts/flash_msg' unless no_flash_div
         concat miq_tile_view
         concat miq_data_table
-        concat content_tag('div',
-                 render(:partial => "layouts/info_msg", :locals => {:message => _("No Records Found.")}),
-                 {
-                   :class => 'no-record',
-                   "ng-show" => "!dataCtrl.settings.isLoading && dataCtrl.gtlData.rows.length === 0"
-                 }
-               )
+        concat content_tag(
+          'div',
+          render(:partial => "layouts/info_msg", :locals => {:message => _("No Records Found.")}),
+          :class    => 'no-record',
+          "ng-show" => "!dataCtrl.settings.isLoading && dataCtrl.gtlData.rows.length === 0"
+        )
       end
     end
   end
@@ -102,7 +99,7 @@ module GtlHelper
   def render_gtl_javascripts(options)
     parent_id_escaped = (h(j_str(options[:parent_id])) unless options[:display].nil?)
 
-    javascript_tag(<<EOJ
+    javascript_tag <<EOJ
       sendDataWithRx({unsubscribe: 'reportDataController'});
       miq_bootstrap('#miq-gtl-view', 'ManageIQ.report_data');
       sendDataWithRx({initController: {
@@ -122,6 +119,5 @@ module GtlHelper
         }
       }});
 EOJ
-    )
   end
 end
