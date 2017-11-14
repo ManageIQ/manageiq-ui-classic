@@ -6,7 +6,7 @@ class ApplicationHelper::Button::CockpitConsole < ApplicationHelper::Button::Bas
     @error_message = _("%{canned_msg} 'Cockpit' role is not enabled." % {:canned_msg => canned_msg}) unless MiqRegion.my_region.role_active?('cockpit_ws')
     record_type = @record.respond_to?(:current_state) ? _('VM') : _('Container Node')
     @error_message = _("%{canned_msg} %{record_type} is not powered on" % {:canned_msg => canned_msg, :record_type => record_type}) unless on?
-    @error_message = _("%{canned_msg} Windows platform is not supported" % {:canned_msg => canned_msg}) unless platform_supported
+    @error_message = _("%{canned_msg} Windows platform is not supported" % {:canned_msg => canned_msg}) unless platform_supported?
     @error_message.present?
   end
 
