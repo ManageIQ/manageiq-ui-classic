@@ -133,13 +133,14 @@ class ApplicationHelper::ToolbarBuilder
   # Set properties for button
   def apply_common_props(button, input)
     button.update(
-      :icon    => input[:icon],
-      :color   => input[:color],
-      :name    => button[:id],
-      :hidden  => button[:hidden] || !!input[:hidden],
-      :pressed => input[:pressed],
-      :onwhen  => input[:onwhen],
-      :data    => input[:data]
+      :color        => input[:color],
+      :data         => input[:data],
+      :hidden       => button[:hidden] || !!input[:hidden],
+      :icon         => input[:icon],
+      :name         => button[:id],
+      :onwhen       => input[:onwhen],
+      :pressed      => input[:pressed],
+      :send_checked => input[:send_checked],
     )
 
     button[:enabled] = input[:enabled]
@@ -270,10 +271,11 @@ class ApplicationHelper::ToolbarBuilder
       :enabled   => enabled,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
-      :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}"
+      :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}",
     }
     button[:text] = button_name if input[:text_display]
     button[:onwhen] = '1+' if cb_enabled_for_nested
+    button[:send_checked] = true if record_id == 'LIST'
     button
   end
 

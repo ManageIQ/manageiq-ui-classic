@@ -1411,22 +1411,7 @@ function miqToolbarOnClick(_e) {
   }
 
   // put url_parms into params var, if defined
-  var params;
-  if (button.data('url_parms')) {
-    if (button.data('url_parms').match('_div$')) {
-      if (ManageIQ.gridChecks.length) {
-        params = 'miq_grid_checks=' + ManageIQ.gridChecks.join(',');
-      } else {
-        params = miqSerializeForm(button.data('url_parms'));
-      }
-    } else if (button.data('url_parms').match('id=LIST')) {
-      // this is used by custom buttons in lists
-      params = button.data('url_parms').split("?")[1] +
-        '&miq_grid_checks=' + ManageIQ.gridChecks.join(',');
-    } else {
-      params = button.data('url_parms').split('?')[1];
-    }
-  }
+  var paramstring = getParams(button.data('url_parms'), !! button.data('send_checked'));
 
   // TODO:
   // Checking for perf_reload button to not turn off spinning Q (will be done after charts are drawn).
@@ -1443,11 +1428,31 @@ function miqToolbarOnClick(_e) {
   var options = {
     beforeSend: true,
     complete: ! no_complete,
-    data: params,
+    data: paramstring,
   };
 
   miqJqueryRequest(tb_url, options);
   return false;
+
+  function getParams(urlParms, sendChecked) {
+    var params = [];
+
+    if (urlParms && (urlParms[0] === '?')) {
+      params.push( urlParms.slice(1) );
+    }
+
+    // FIXME - don't depend on length
+    // (but then params[:miq_grid_checks] || params[:id] does the wrong thing)
+    if (sendChecked && ManageIQ.gridChecks.length) {
+      params.push('miq_grid_checks=' + ManageIQ.gridChecks.join(','));
+    }
+
+    if (urlParms && urlParms.match('_div$')) {
+      params.push(miqSerializeForm(urlParms));
+    }
+
+    return _.filter(params).join('&') || undefined;
+  }
 }
 
 function miqSupportCasePrompt(tb_url) {
