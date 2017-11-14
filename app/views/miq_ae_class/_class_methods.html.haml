@@ -16,7 +16,10 @@
               %td.table-view-pf-select.noclick
                 %input{:type => 'checkbox', :value => cls_cid}
               %td.table-view-pf-select
-                %i{:class => record.decorate.fonticon}
+                - if record.decorate.try(:fileicon)
+                  %img{:src => ActionController::Base.helpers.image_path(record.decorate.fileicon)}
+                - else
+                  %i{:class => record.decorate.fonticon}
               %td
                 = record_name(record)
       :javascript

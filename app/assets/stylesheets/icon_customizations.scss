@@ -59,4 +59,8 @@ opacity:0.6;
   color: #ec7a08; //pf-orange-400
 }
 
+.fa-ruby {
+  @extend .fa, .fa-lg, .fa-diamond;
+  color: red;
+}
 /*end icon class customizations*/
