@@ -7,7 +7,10 @@
     "module": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
-    "target": "es5"
+    "target": "es5",
+    "typeRoots": [
+      "app/javascript/typings"
+    ]
   },
   "exclude": [
     "**/*.spec.ts",

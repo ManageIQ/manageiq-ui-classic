@@ -1,9 +1,9 @@
 import { IModule } from 'angular';
 
-import { configureNgReduxStore } from '../miq-redux/store';
-import { addReducer, applyReducerHash } from '../miq-redux/reducer';
-import { ReduxStore, ReduxApi } from '../miq-redux/redux-typings';
-import '../miq-redux/test-helper';
+import { configureNgReduxStore } from './store';
+import { addReducer, applyReducerHash } from './reducer';
+import { ReduxStore, ReduxApi } from './redux-typings';
+import './test-helper';
 
 const app: IModule = ManageIQ.angular.app;
 
