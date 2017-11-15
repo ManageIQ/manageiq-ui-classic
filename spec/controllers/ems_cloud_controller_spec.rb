@@ -303,9 +303,10 @@ describe EmsCloudController do
   end
 
   context "#create_ems_button_validate" do
+    let(:mocked_params) { {:controller => mocked_class_controller, :cred_type => "default"} }
     before do
       allow(controller).to receive(:render)
-      controller.instance_variable_set(:@_params, :controller => mocked_class_controller, :cred_type => "default")
+      controller.instance_variable_set(:@_params, mocked_params)
       allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_class)
     end
 
@@ -323,6 +324,20 @@ describe EmsCloudController do
 
         expect(mocked_class).to receive(:raw_connect)
         controller.send(:create_ems_button_validate)
+      end
+
+      context "google compute engine" do
+        let(:mocked_params)   { {:controller => mocked_class_controller, :cred_type => "default", :project => project, :service_account => service_account} }
+        let(:mocked_class)    { ManageIQ::Providers::Google::CloudManager }
+        let(:project)         { "gce-project-1" }
+        let(:service_account) { "PRIVATE_KEY" }
+        let(:compute_service) { {:service => "compute"} }
+
+        it "queues the correct number of arguments" do
+          expected_validate_args = [project, MiqPassword.encrypt(service_account), compute_service, nil, true]
+          expect(mocked_class).to receive(:validate_credentials_task).with(expected_validate_args, nil, nil)
+          controller.send(:create_ems_button_validate)
+        end
       end
     end
 
