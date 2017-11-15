@@ -15,7 +15,7 @@ class PrometheusProxyService < HawkularProxyService
     @conn = cli.prometheus_client
   end
 
-  def metric_definitions(params)
+  def metric_definitions(params, no_data = false)
     tags = params[:tags]
     tags_str = if tags.present?
                  tags.map { |x, y| ",#{x}=~\"#{y}\"" }.join
@@ -24,19 +24,27 @@ class PrometheusProxyService < HawkularProxyService
                end
     limit = params[:limit].to_i
 
-    response = @conn.get(
-      "query_range",
-      :query => "{job=\"#{@tenant}\"#{tags_str}}",
-      :start => params[:ends] / 1000 - 10 * 12 * 60,
-      :end   => params[:ends] / 1000,
-      :step  => "600s"
-    )
+    response = if no_data
+                 @conn.get("query", :query => "{job=\"#{@tenant}\"#{tags_str}}")
+               else
+                 @conn.get(
+                   "query_range",
+                   :query => "{job=\"#{@tenant}\"#{tags_str}}",
+                   :start => params[:ends] / 1000 - 10 * 12 * 60,
+                   :end   => params[:ends] / 1000,
+                   :step  => "600s"
+                 )
+               end
 
     list = JSON.parse(response.body)["data"]["result"]
 
     list = list.each_with_index.map do |o, i|
       metric = o['metric']
-      values = o['values']
+      values = if no_data
+                 [o['value']]
+               else
+                 o['values']
+               end
 
       metric['descriptor_name'] = metric['__name__']
       metric['units'] = 'bytes' if metric['__name__'].include?('_bytes')
@@ -67,7 +75,7 @@ class PrometheusProxyService < HawkularProxyService
   end
 
   def metric_tags(params)
-    definitions = metric_definitions(params.merge(:tags => {:job => @tenant}))
+    definitions = metric_definitions(params.merge(:tags => {:job => @tenant}), true)
     tags = definitions.map { |x| x["tags"].keys }.flatten.uniq
 
     tags.map do |tag|
