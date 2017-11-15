@@ -148,7 +148,7 @@ class MiqRequestController < ApplicationController
     resource_type = get_request_tab_type        # storing resource type in local variable so dont have to call method everytime
     kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
     gv_options = page_display_options
-    @view, @pages = get_view(kls, gv_options)
+    @view, @pages = get_view(kls, gv_options, true)
     @sb[:prov_options] ||= {}
     @sb[:def_prov_options] ||= {}
     @sb[:prov_options][:resource_type] = resource_type.to_sym                   # storing current resource type
