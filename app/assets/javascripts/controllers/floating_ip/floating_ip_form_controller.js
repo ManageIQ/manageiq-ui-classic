@@ -12,11 +12,12 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['floatingIpFormId',
     vm.newRecord = floatingIpFormId === "new";
     vm.saveable = miqService.saveable;
 
+    miqService.sparkleOn();
     if (vm.newRecord) {
-      vm.afterGet = true;
-      vm.modelCopy = angular.copy(vm.floatingIpModel);
       API.get("/api/providers?expand=resources&attributes=name&filter[]=type='*NetworkManager'").then(function(data) {
         vm.available_ems = data.resources;
+        vm.afterGet = true;
+        vm.modelCopy = angular.copy(vm.floatingIpModel);
         miqService.sparkleOff();
       }).catch(miqService.handleFailure);
     } else {
