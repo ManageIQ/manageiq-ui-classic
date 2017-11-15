@@ -11,6 +11,8 @@ class ApplicationController
     :view_suffix,
 
     :row_button,
+    :menu_click,
+    :sb_controller,
 
     :listicon,
     :embedded,
@@ -40,6 +42,14 @@ class ApplicationController
 
     def with_row_button(row_button)
       self.row_button = row_button
+    end
+
+    def with_menu_click(menu_click)
+      self.menu_click = menu_click
+    end
+
+    def with_sb_controller(sb_controller)
+      self.sb_controller = sb_controller
     end
 
     def with_model(curr_model)

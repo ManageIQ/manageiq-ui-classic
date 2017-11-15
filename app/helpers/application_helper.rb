@@ -1639,6 +1639,8 @@ module ApplicationHelper
       :policy_sim => @policy_sim
     )
     @report_data_additional_options.with_row_button(@row_button) if @row_button
+    @report_data_additional_options.with_menu_click(params[:menu_click]) if params[:menu_click]
+    @report_data_additional_options.with_sb_controller(params[:sb_controller]) if params[:sb_controller]
     @report_data_additional_options.with_model(curr_model) if curr_model
     @report_data_additional_options.freeze
   end
