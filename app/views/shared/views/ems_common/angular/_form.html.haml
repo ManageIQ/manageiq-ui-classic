@@ -164,6 +164,7 @@
                      options_for_select(@nuage_api_versions),
                      "ng-model"                    => "emsCommonModel.api_version",
                      "checkchange"                 => "",
+                     "required"                    => true,
                      "selectpicker-for-select-tag" => "")
 
     .form-group{"ng-class" => "{'has-error': angularForm.provider_id.$invalid}", "ng-if" => "emsCommonModel.emstype == 'openstack' && emsCommonModel.openstack_infra_providers_exist"}
