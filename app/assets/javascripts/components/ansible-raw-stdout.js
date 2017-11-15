@@ -26,6 +26,9 @@ ManageIQ.angular.app.component('ansibleRawStdout', {
         })
         .then(function() {
           vm.loading = false;
+
+          // FIXME: uncomment after ManageIQ/manageiq-api#203
+          // API.delete('/api/tasks/' + vm.taskId);
         });
     };
   }],
