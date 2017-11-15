@@ -51,5 +51,10 @@ module TermOfServiceHelper
   }
 
   ASSIGN_TOS[:chargeback_storage] = ASSIGN_TOS["Storage"]
+
+  ASSIGN_TOS["EmsCluster"].merge!(ASSIGN_TOS["ExtManagementSystem"])
+  ASSIGN_TOS["Host"].merge!(ASSIGN_TOS["EmsCluster"])
+  ASSIGN_TOS["Vm"].merge!(ASSIGN_TOS["Host"])
+
   ASSIGN_TOS.freeze
 end
