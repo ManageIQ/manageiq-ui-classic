@@ -156,7 +156,7 @@ describe ServiceController do
     end
   end
 
-  context "#report_data" do
+  context 'displaying a service with associated VMs' do
     let(:service) { FactoryGirl.create(:service) }
 
     let!(:vm) do
@@ -165,17 +165,37 @@ describe ServiceController do
       vm
     end
 
-    it 'returns VMs associated to selected Service' do
-      report_data_request(
-        :model         => 'Vm',
-        :parent_model  => 'Service',
-        :parent_id     => service.id,
-        :active_tree   => 'svcs_tree',
-        :parent_method => 'all_vms'
-      )
-      results = assert_report_data_response
-      expect(results['data']['rows'].length).to eq(1)
-      expect(results['data']['rows'][0]['long_id']).to eq(vm.id)
+    describe "#report_data" do
+      it 'returns VMs associated to the selected Service' do
+        report_data_request(
+          :model         => 'Vm',
+          :parent_model  => 'Service',
+          :parent_id     => service.id,
+          :active_tree   => 'svcs_tree',
+          :parent_method => 'all_vms'
+        )
+        results = assert_report_data_response
+        expect(results['data']['rows'].length).to eq(1)
+        expect(results['data']['rows'][0]['long_id']).to eq(vm.id)
+      end
+    end
+
+    # Request URL:http://localhost:3000/service/tree_select?id=s-10r219
+    describe '#tree_select' do
+      render_views
+
+      it 'renders GTL of VMs associated to the selected Service' do
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name => 'Vm',
+          :parent_id => service.id,
+          :report_data_additional_options => {
+            :parent_class_name => 'Service',
+            :parent_method => :all_vms,
+          }
+        )
+        post :tree_select, :params => { :id => "s-#{service.id}" }
+        expect(response.status).to eq(200)
+      end
     end
   end
 
