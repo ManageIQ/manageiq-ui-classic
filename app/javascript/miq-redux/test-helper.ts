@@ -2,7 +2,7 @@ import { IModule } from 'angular';
 
 import { rootReducer, addReducer, clearReducers, applyReducerHash } from './reducer';
 
-const app: IModule = miqApp;
+const app: IModule = ManageIQ.angular.app;
 
 // allow unit-testing specific module exports
 if (jasmine) {

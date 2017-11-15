@@ -44,9 +44,6 @@ module.exports = {
 
   plugins: [
     new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
-    new webpack.DefinePlugin({
-      miqApp: 'ManageIQ.angular.app'
-    }),
     new ExtractTextPlugin(env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css'),
 
     // Workaround for angular/angular#11580

@@ -5,7 +5,7 @@ import { addReducer, applyReducerHash } from '../miq-redux/reducer';
 import { ReduxStore, ReduxApi } from '../miq-redux/redux-typings';
 import '../miq-redux/test-helper';
 
-const app: IModule = miqApp;
+const app: IModule = ManageIQ.angular.app;
 
 const initialState = {};
 
