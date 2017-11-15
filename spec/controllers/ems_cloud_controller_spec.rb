@@ -303,48 +303,53 @@ describe EmsCloudController do
   end
 
   context "#create_ems_button_validate" do
-    let(:mocked_infra_class) { ManageIQ::Providers::Redhat::InfraManager }
-    let(:mocked_cloud_class) { ManageIQ::Providers::Amazon::CloudManager }
-    let(:mocked_container_class) { ManageIQ::Providers::Openshift::ContainerManager }
-    let(:mocked_container) { double(ManageIQ::Providers::Openshift::ContainerManager) }
-
-    it "queues the authentication type if it is a cloud provider" do
+    before do
       allow(controller).to receive(:render)
-      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_cloud_class)
-      controller.instance_variable_set(:@_params, :controller => "ems_cloud")
-
-      expect(mocked_cloud_class).to receive(:validate_credentials_task)
-      controller.send(:create_ems_button_validate)
+      controller.instance_variable_set(:@_params, :controller => mocked_class_controller, :cred_type => "default")
+      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_class)
     end
 
-    it "queues the authentication check if it is an infra provider" do
-      allow(controller).to receive(:render)
-      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_infra_class)
-      controller.instance_variable_set(:@_params, :controller => "ems_infra")
+    context "with a cloud manager" do
+      let(:mocked_class) { ManageIQ::Providers::Amazon::CloudManager }
+      let(:mocked_class_controller) { "ems_cloud" }
 
-      expect(mocked_infra_class).to receive(:validate_credentials_task)
-      controller.send(:create_ems_button_validate)
+      it "queues the authentication type if it is a cloud provider" do
+        expect(mocked_class).to receive(:validate_credentials_task)
+        controller.send(:create_ems_button_validate)
+      end
+
+      it "does not queue the authentication check if it is a cloud provider with a ui role" do
+        session[:selected_roles] = ['user_interface']
+
+        expect(mocked_class).to receive(:raw_connect)
+        controller.send(:create_ems_button_validate)
+      end
     end
 
-    it "does not queue the authentication check if it is a container provider" do
-      allow(controller).to receive(:set_ems_record_vars)
-      allow(controller).to receive(:render)
-      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_container_class)
-      allow(mocked_container_class).to receive(:new).and_return(mocked_container)
-      controller.instance_variable_set(:@_params, :controller => "ems_container", :cred_type => "default")
+    context "with an infrastructure manager" do
+      let(:mocked_class) { ManageIQ::Providers::Redhat::InfraManager }
+      let(:mocked_class_controller) { "ems_infra" }
 
-      expect(mocked_container).to receive(:authentication_check).with("default", hash_including(:save => false))
-      controller.send(:create_ems_button_validate)
+      it "queues the authentication check" do
+        expect(mocked_class).to receive(:validate_credentials_task)
+        controller.send(:create_ems_button_validate)
+      end
     end
 
-    it "does not queue the authentication check if it is a cloud provider with a ui role" do
-      session[:selected_roles] = ['user_interface']
-      allow(controller).to receive(:render)
-      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_infra_class)
-      controller.instance_variable_set(:@_params, :controller => "ems_cloud")
+    context "with a container manager" do
+      let(:mocked_class) { ManageIQ::Providers::Openshift::ContainerManager }
+      let(:mocked_class_controller) { "ems_container" }
+      let(:mocked_container) { double(ManageIQ::Providers::Openshift::ContainerManager) }
 
-      expect(mocked_infra_class).to receive(:raw_connect)
-      controller.send(:create_ems_button_validate)
+      before do
+        allow(mocked_class).to receive(:new).and_return(mocked_container)
+        allow(controller).to receive(:set_ems_record_vars)
+      end
+
+      it "does not queue the authentication check if it is a container provider" do
+        expect(mocked_container).to receive(:authentication_check).with("default", hash_including(:save => false))
+        controller.send(:create_ems_button_validate)
+      end
     end
   end
 
