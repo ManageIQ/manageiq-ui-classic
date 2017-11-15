@@ -1,1 +1,1 @@
-import 'miq-redux';
+require('miq-redux');
