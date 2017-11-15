@@ -58,8 +58,8 @@ module GtlHelper
       :selected_records               => gtl_selected_records,
 
       :display                        => @display,
-      :sort_col                       => @sort_col,
-      :sort_dir                       => @sort_dir,
+      :sort_col                       => @sortcol,
+      :sort_dir                       => @sortdir,
       :explorer                       => @explorer,
       :view                           => @view,
       :db                             => @db,
@@ -75,22 +75,24 @@ module GtlHelper
   #
   def render_gtl(options)
     capture do
-      concat render_gtl_markup(options[:no_flash_div])
-      concat render_gtl_javascripts(options)
+      concat(render_gtl_markup(options[:no_flash_div]))
+      concat(render_gtl_javascripts(options))
     end
   end
 
   def render_gtl_markup(no_flash_div)
     content_tag('div', :id => 'miq-gtl-view', "ng-controller" => "reportDataController as dataCtrl") do
       capture do
-        concat render :partial => 'layouts/flash_msg' unless no_flash_div
-        concat miq_tile_view
-        concat miq_data_table
-        concat content_tag(
-          'div',
-          render(:partial => "layouts/info_msg", :locals => {:message => _("No Records Found.")}),
-          :class    => 'no-record',
-          "ng-show" => "!dataCtrl.settings.isLoading && dataCtrl.gtlData.rows.length === 0"
+        concat(render(:partial => 'layouts/flash_msg')) unless no_flash_div
+        concat(miq_tile_view)
+        concat(miq_data_table)
+        concat(
+          content_tag(
+            'div',
+            render(:partial => "layouts/info_msg", :locals => {:message => _("No Records Found.")}),
+            :class    => 'no-record',
+            "ng-show" => "!dataCtrl.settings.isLoading && dataCtrl.gtlData.rows.length === 0"
+          )
         )
       end
     end
@@ -106,16 +108,16 @@ module GtlHelper
         name: 'reportDataController',
         data: {
           additionalOptions: #{options[:report_data_additional_options].to_json},
-          modelName:        '#{h(j_str(options[:model_name]))}',
-          activeTree:       '#{options[:active_tree]}',
-          gtlType:          '#{h(j_str(options[:gtl_type_string]))}',
-          parentId:         '#{parent_id_escaped}',
-          sortColIdx:       '#{options[:sortcol]}',
-          sortDir:          '#{options[:sortdir]}',
-          isExplorer:       '#{options[:explorer]}' === 'true' ? true : false,
-          records:          #{!options[:selected_records].nil? ? h(j_str(options[:selected_records].to_json)) : "\'\'"},
-          hideSelect:       #{options[:selected_records].kind_of?(Array)},
-          showUrl:          '#{view_to_url(options[:view], options[:parent]) if options[:view].present? && options[:view].db.present?}'
+          modelName: '#{h(j_str(options[:model_name]))}',
+          activeTree: '#{options[:active_tree]}',
+          gtlType: '#{h(j_str(options[:gtl_type_string]))}',
+          parentId: '#{parent_id_escaped}',
+          sortColIdx: '#{options[:sort_col]}',
+          sortDir: '#{options[:sort_dir]}',
+          isExplorer: '#{options[:explorer]}' === 'true' ? true : false,
+          records: #{!options[:selected_records].nil? ? h(j_str(options[:selected_records].to_json)) : "\'\'"},
+          hideSelect: #{options[:selected_records].kind_of?(Array)},
+          showUrl: '#{view_to_url(options[:view], options[:parent]) if options[:view].present? && options[:view].db.present?}'
         }
       }});
 EOJ

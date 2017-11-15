@@ -186,14 +186,14 @@ describe ServiceController do
 
       it 'renders GTL of VMs associated to the selected Service' do
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
-          :model_name => 'Vm',
-          :parent_id => service.id,
+          :model_name                     => 'Vm',
+          :parent_id                      => service.id,
           :report_data_additional_options => {
             :parent_class_name => 'Service',
-            :parent_method => :all_vms,
+            :parent_method     => :all_vms,
           }
         )
-        post :tree_select, :params => { :id => "s-#{service.id}" }
+        post :tree_select, :params => {:id => "s-#{service.id}"}
         expect(response.status).to eq(200)
       end
     end
