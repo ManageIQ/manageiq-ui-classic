@@ -1003,6 +1003,7 @@ module OpsController::OpsRbac
 
   def build_rbac_feature_tree
     @role = @sb[:typ] == "copy" ? @record.dup : @record if @role.nil? # if on edit screen use @record
+    @role.miq_product_features = @record.miq_product_features if @sb[:typ] == "copy"
     TreeBuilderOpsRbacFeatures.new("features_tree", "features", @sb, true, :role => @role, :editable => @edit.present?)
   end
 
