@@ -169,6 +169,29 @@ describe CatalogController do
       expect(controller).to receive(:replace_right_cell)
       controller.send(:dialog_form_button_pressed)
     end
+
+    it "redirects to show for the display/display_id if present" do
+      edit = {:rec_id     => 1,
+              :wf         => wf,
+              :key        => 'dialog_edit__10',
+              :display    => "generic_objects",
+              :display_id => 10}
+      controller.instance_variable_set(:@edit, edit)
+      controller.instance_variable_set(:@sb, {})
+      session[:edit] = edit
+
+      controller.instance_variable_set(:@_params, :button => 'submit', :id => 10)
+      allow(controller).to receive(:role_allows?).and_return(true)
+      allow(wf).to receive(:submit_request).and_return(:request => workflow.make_request(nil, {}))
+      page = double('page')
+      allow(page).to receive(:<<).with(any_args)
+      expect(page).to receive(:redirect_to).with(:action    => 'show',
+                                                 :display   => "generic_objects",
+                                                 :id        => 10,
+                                                 :flash_msg => "Order Request was Submitted")
+      expect(controller).to receive(:render).with(:update).and_yield(page)
+      controller.send(:dialog_form_button_pressed)
+    end
   end
 
   describe '#dialog_replace_right_cell' do
