@@ -275,5 +275,37 @@ describe HostController do
     end
   end
 
+  # http://localhost:3000/host/show_list?bc=Hosts%20on%202017-09-29&escape=false&menu_click=eyJyb3ciOjAsImNvbHVtbiI6NSwiY2hhcnRfaW5kZXgiOiI2IiwiY2hhcnRfbmFtZSI6IkRpc3BsYXktSG9zdHMtb24ifQ%3D%3D&sb_controller=storage
+  describe "#show_list" do
+    render_views
+
+    before(:each) do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    context 'called as chart click-through' do
+      it 'renders GTL according to menu_click options' do
+        report = double(:report)
+        allow(report).to receive_message_chain(:table, :data) {[{"assoc_ids" => {:hosts => {:on => 1}}}]}
+        session.store_path(:sandboxes, 'storage', :chart_reports, [report])
+
+        menu_click = Base64.encode64({:row => 0, :column => 0, :chart_index => 0, :chart_name => "Display-Hosts-on"}.to_json)
+
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'Host',
+          :report_data_additional_options => {
+            :menu_click    => menu_click,
+            :sb_controller => 'storage',
+          }
+        )
+
+        # FIXME: This should rather be a POST, but it really is a GET.
+        get :show_list, :params => {:menu_click => menu_click, :sb_controller => 'storage'}
+        expect(response.status).to eq(200)
+      end
+    end
+  end
+
   it_behaves_like "controller with custom buttons"
 end
