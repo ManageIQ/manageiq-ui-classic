@@ -1,6 +1,6 @@
 class MiddlewareServerDecorator < MiqDecorator
   def self.fonticon
-    nil
+    'pficon pficon-middleware'
   end
 
   def fileicon
