@@ -38,19 +38,14 @@
         %label.col-md-2.control-label{"for" => "start_date"}
           = _("Starting Date")
         .col-md-3
-          .input-group.date
-            %input{:type             => "text",
-                   :id               => "start_date",
-                   :name             => "start_date",
-                   "ng-model"        => "scheduleModel.start_date",
-                   "datepicker-init" => "",
-                   :language         => FastGettext.locale,
-                   :required         => true,
-                   :checkchange      => "",
-                   :class            => "form-control bootstrap-datepicker",
-                   :readonly         => true}
-            %span.input-group-addon{"data-toggle" => "datepicker"}
-              %span.fa.fa-calendar
+          = datepicker_input_tag('start_date', nil,
+                                 'id'                => 'start_date',
+                                 'class'             => 'form-control',
+                                 'ng-model'          => 'scheduleModel.start_date',
+                                 'miq-calendar'      => true,
+                                 'miq-cal-date-from' => 'date_from',
+                                 'required'          => true,
+                                 'checkchange'       => true)
       .form-group
         %label.col-md-2.control-label{"for" => "start_hour"}
           = _("Starting Time")
