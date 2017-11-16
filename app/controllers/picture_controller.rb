@@ -1,5 +1,14 @@
 class PictureController < ApplicationController
+  before_action :check_privileges
+  before_action :get_session_data
+
+  after_action :cleanup_action
+  after_action :set_session_data
+
+  include Mixins::GenericSessionMixin
+
   def show # GET /pictures/:basename
+    @edit = session[:edit]
     compressed_id, extension = params[:basename].split('.')
     picture = Picture.find_by_id(from_cid(compressed_id))
     if picture && picture.extension == extension
