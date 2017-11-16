@@ -1,10 +1,12 @@
 module GtlHelper
   def gtl_selected_records
-    records = @edit[:object_ids] unless @edit.nil? || @edit[:object_ids].nil?
-    records = @edit[:pol_items] unless @edit.nil? || @edit[:pol_items].nil?
-    records = params[:rec_ids] unless params.nil? || params[:rec_ids].nil?
-    records = records.map(&:to_i) if !records.nil? && records.first.kind_of?(String)
-    records = records.map(&:id) if !records.nil? && !records.first.kind_of?(Integer)
+    records = params.try(:[], :rec_ids) || @edit.try(:[], :pol_items) || @edit.try(:[], :object_ids)
+
+    if records.present?
+      records = records.map(&:to_i) if records.first.kind_of?(String)
+      records = records.map(&:id) unless records.first.kind_of?(Integer)
+    end
+
     records
   end
 
@@ -45,9 +47,7 @@ module GtlHelper
   # so that `render_gtl` can be a pure function.
   #
   def render_gtl_outer(no_flash_div)
-    parent_id = if @report_data_additional_options
-                  @report_data_additional_options[:parent_id]
-                end
+    parent_id = @report_data_additional_options.try(:[], :parent_id)
 
     options = {
       :model_name                     => model_to_report_data,
