@@ -9,10 +9,13 @@ describe PictureController do
 
     picture.content = picture_content.dup # dup because destructive operation
     picture.save
+
+    session[:edit] = {:key => "GenericObject_edit_tags__1111", :tagging => "GenericObject"}
   end
 
   it 'can serve a picture directly from the database' do
     get :show, :params => { :basename => "#{picture.compressed_id}.#{picture.extension}" }
+    expect(controller.instance_variable_get(:@edit)).to eq(session[:edit])
     expect(response.status).to eq(200)
     expect(response.body).to eq(picture_content)
   end
