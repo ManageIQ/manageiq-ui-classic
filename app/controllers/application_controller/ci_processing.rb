@@ -15,6 +15,7 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Reconfigure
     helper_method :supports_reconfigure_disks?
     include Mixins::Actions::VmActions::PolicySimulation
+    include Mixins::Actions::VmActions::Transform
 
     include Mixins::Actions::HostActions::Discover
     include Mixins::Actions::HostActions::Power
@@ -1063,6 +1064,7 @@ module ApplicationController::CiProcessing
     when "#{pfx}_terminate"                 then terminatevms
     when "instance_add_security_group"      then add_security_group_vms
     when "instance_remove_security_group"   then remove_security_group_vms
+    when "vm_transform"                     then vm_transform
     end
   end
 

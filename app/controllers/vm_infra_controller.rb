@@ -2,6 +2,7 @@ class VmInfraController < ApplicationController
   include VmCommon # common methods for vm controllers
   include VmRemote # methods for VM remote access
   include VmShowMixin
+  include Mixins::Actions::VmActions::Transform
 
   before_action :check_privileges
   before_action :get_session_data
@@ -94,26 +95,6 @@ class VmInfraController < ApplicationController
       replace_right_cell(:action => "dialog_provision")
     else
       javascript_redirect(:action => 'dialog_load')
-    end
-  end
-
-  def vm_transform
-    dialog = Dialog.find_by(:label => 'Transform VM')
-    if params.key?(:id)
-      vm = Vm.find_by(:id => params[:id].to_i)
-      @right_cell_text = _("Transform VM %{name} to RHV") % {:name => vm.name}
-      dialog_initialize(
-        dialog.resource_actions.first,
-        :header     => @right_cell_text,
-        :target_id  => vm.id,
-        :target_kls => Vm.name
-      )
-    else
-      @right_cell_text = _("Transform VMs to RHV")
-      simple_dialog_initialize(
-        dialog.resource_actions.first,
-        :header => @right_cell_text
-      )
     end
   end
 end
