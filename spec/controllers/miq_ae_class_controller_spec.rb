@@ -911,4 +911,47 @@ describe MiqAeClassController do
       expect(assigns(:edit)[:new][:data]).to eq("exit MIQ_OK...")
     end
   end
+
+  context "#open_parent_nodes" do
+    it "returns parent nodes hash for newly added item in tree" do
+      ns = FactoryGirl.create(:miq_ae_namespace)
+      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id, :name => "foo_cls")
+      method = FactoryGirl.create(:miq_ae_method,
+                                  :name     => "method01",
+                                  :scope    => "class",
+                                  :language => "ruby",
+                                  :class_id => cls.id,
+                                  :data     => "exit MIQ_OK",
+                                  :location => "inline")
+      controller.instance_variable_set(:@record, cls)
+      controller.instance_variable_set(
+        :@sb,
+        :trees       => {
+          :ae_tree => {
+            :active_node => "aec-#{cls.id}",
+            :open_nodes  => [],
+            :klass_name  => "TreeBuilderAeClass"
+          }
+        },
+        :active_tree => :ae_tree
+      )
+      tree_node = controller.send(:open_parent_nodes, method)
+      node_to_add = {
+        :key   => "aen-#{ApplicationRecord.compress_id(ns.id)}",
+        :nodes => [
+          {
+            :key        => "aec-#{ApplicationRecord.compress_id(cls.id)}",
+            :text       => "foo_cls",
+            :tooltip    => "Automate Class: foo_cls",
+            :icon       => "ff ff-class",
+            :selectable => true,
+            :lazyLoad   => true,
+            :state      => {:expanded => false},
+            :class      => "",
+          }
+        ]
+      }
+      expect(tree_node).to eq(node_to_add)
+    end
+  end
 end
