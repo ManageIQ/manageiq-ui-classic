@@ -126,7 +126,7 @@ module Mixins
       when 'ManageIQ::Providers::Vmware::CloudManager'
         [params[:default_hostname], params[:default_api_port], user, password, true]
       when 'ManageIQ::Providers::Google::CloudManager'
-        [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, true]
+        [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, nil, true]
       when 'ManageIQ::Providers::Microsoft::InfraManager'
         connect_opts = {
           :hostname          => params[:default_hostname],
