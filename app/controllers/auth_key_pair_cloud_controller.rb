@@ -166,7 +166,6 @@ class AuthKeyPairCloudController < ApplicationController
   # delete selected auth key pairs
   def delete_auth_key_pairs
     assert_privileges("auth_key_pair_cloud_delete")
-    key_pairs = []
 
     key_pairs = if params[:miq_grid_checks].present?
                   find_checked_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair)
