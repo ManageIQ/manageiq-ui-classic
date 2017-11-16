@@ -28,25 +28,19 @@
             "data-width"                  => "auto",
             "ng-model"                    => "vm.securityGroupModel.firewall_rules[$index].direction",
             "ng-options"                  => "direction for direction in vm.directions",
-            "ng-selected"                 => "fw_rule.direction",
-            "required"                    => "",
-            "selectpicker-for-select-tag" => ""}
+            "required"                    => ""}
         %td.table-view-pf-select
           %select{"name"                        => "network_protocol",
             "data-width"                  => "auto",
             "ng-model"                    => "vm.securityGroupModel.firewall_rules[$index].network_protocol",
-            "ng-options"                  => "network_protocol for network_protocol in vm.networkProtocols",
-            "ng-selected"                 => "fw_rule.network_protocol",
-            "selectpicker-for-select-tag" => ""}
+            "ng-options"                  => "network_protocol for network_protocol in vm.networkProtocols"}
             %option{"value" => ""}
               = "<#{_('Choose')}>"
         %td.table-view-pf-select
           %select{"name"                        => "host_protocol",
             "data-width"                  => "auto",
             "ng-model"                    => "vm.securityGroupModel.firewall_rules[$index].host_protocol",
-            "ng-options"                  => "host_protocol for host_protocol in vm.hostProtocols",
-            "ng-selected"                 => "fw_rule.host_protocol",
-            "selectpicker-for-select-tag" => ""}
+            "ng-options"                  => "host_protocol for host_protocol in vm.hostProtocols"}
             %option{"value" => ""}
               = "<#{_('Choose')}>"
         %td.table-view-pf-select
@@ -54,9 +48,7 @@
             "data-width"                  => "auto",
             "ng-model"                    => "vm.securityGroupModel.firewall_rules[$index].source_security_group_id",
             "ng-options"                  => "sg.id as sg.name + ' - ' + sg.ems_ref for sg in vm.security_groups_list",
-            "ng-selected"                 => "fw_rules.source_security_group_id",
-            "ng-change"                   => "vm.securityGroupModel.firewall_rules[$index].source_ip_range = null",
-            "selectpicker-for-select-tag" => ""}
+            "ng-change"                   => "vm.securityGroupModel.firewall_rules[$index].source_ip_range = null"}
             %option{"value" => ""}
               = "<#{_('Choose')}>"
         %td
