@@ -115,6 +115,7 @@ class ConfigurationController < ApplicationController
     @changed = session[:changed]
     render :update do |page|
       page << javascript_prologue
+      page << javascript_for_miq_button_visibility(@changed)
       page.replace 'tab_div', :partial => "ui_2"
     end
   end
@@ -473,6 +474,8 @@ class ConfigurationController < ApplicationController
         value.merge!(user_settings[key]) unless user_settings[key].nil?
       end
     end
+    # Override nil settings since we only expect 2 settings: true/false later on
+    settings[:display][:display_vms] = false if settings[:display][:display_vms].nil?
     settings
   end
 
