@@ -166,6 +166,31 @@ class EmsInfraController < ApplicationController
     end
   end
 
+  def open_admin_ui
+    assert_privileges("ems_infra_admin_ui")
+    ems = identify_record(params[:id], ManageIQ::Providers::InfraManager)
+
+    if ems.supports?(:admin_ui)
+      task_id = ems.queue_generate_admin_ui_url
+      initiate_wait_for_task(:task_id => task_id, :action => "open_admin_ui_done")
+    else
+      javascript_flash(:text     => _("Admin UI feature is not supported for this infrastructure provider"),
+                       :severity => :error)
+    end
+  end
+
+  def open_admin_ui_done
+    task = MiqTask.find(params[:task_id])
+
+    if task.results_ready? && task.task_results.kind_of?(String)
+      javascript_open_window(task.task_results)
+    else
+      message = MiqTask.status_ok?(task.status) ? _("The URL is blank or not a String") : task.message
+      javascript_flash(:text     => _("Infrastructure provider failed to generate Admin UI URL: %{message}") % {:message => message},
+                       :severity => :error)
+    end
+  end
+
   def ems_infra_form_fields
     ems_form_fields
   end
