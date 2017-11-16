@@ -1,13 +1,13 @@
 class ContainerProjectDashboardService
   include UiServiceMixin
   include ContainerServiceMixin
-  CPU_USAGE_PRECISION = 2 # 2 decimal points
 
   def initialize(project_id, controller)
     @project_id = project_id
     @project = ContainerProject.find(@project_id)
     @resource = @project
     @controller = controller
+    @custom_display_precision = 2 # 2 decimal points
   end
 
   def all_data
