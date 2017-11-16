@@ -336,7 +336,7 @@ class ApplicationController < ActionController::Base
       rpt.generate_table(:userid => session[:userid])
     else
       rpt = if session[:report_result_id]
-              MiqReportResult.for_user(current_user).find(session[:report_result_id]).report_results
+              MiqReportResult.find(session[:report_result_id]).report_results
             elsif session[:rpt_task_id].present?
               MiqTask.find(session[:rpt_task_id]).task_results
             else
@@ -541,7 +541,12 @@ class ApplicationController < ActionController::Base
     end
     # Dashboard widget will send in report result id else, find report result in the sandbox
     search_id = params[:rr_id] ? params[:rr_id].to_i : @sb[:pages][:rr_id]
-    rr = MiqReportResult.for_user(current_user).find(search_id)
+    rr = MiqReportResult.find(search_id)
+    unless rr.available_to_user?(current_user)
+      add_flash(_("Current user does not permission to view report data id: #{search_id}"), :error)
+      render :partial => "layouts/flash_msg"
+      return
+    end
 
     session[:report_result_id] = rr.id  # Save report result id for chart rendering
     session[:rpt_task_id]      = nil    # Clear out report task id, using a saved report
