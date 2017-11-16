@@ -1552,7 +1552,8 @@ class ApplicationController < ActionController::Base
              params[:type]                          # gtl type
            )
       refresh_view = true
-      session[:menu_click] = params[:menu_click]      # Creating a new view, remember if came from a menu_click
+      # Creating a new view, remember if came from a menu_click
+      session[:menu_click] = params[:menu_click] || options[:menu_click]
       session[:bc]         = params[:bc]              # Remember incoming breadcrumb as well
     end
 
@@ -1626,7 +1627,7 @@ class ApplicationController < ActionController::Base
       :supported_features_filter => options[:supported_features_filter],
       :page                      => options[:all_pages] ? 1 : @current_page,
       :per_page                  => options[:all_pages] ? ONE_MILLION : @items_per_page,
-      :where_clause              => get_view_where_clause(options[:where_clause]),
+      :where_clause              => get_view_where_clause(options[:where_clause], options[:sb_controller]),
       :named_scope               => options[:named_scope],
       :display_filter_hash       => options[:display_filter_hash],
       :userid                    => session[:userid],
@@ -1661,10 +1662,11 @@ class ApplicationController < ActionController::Base
       !@force_no_grid_xml && (@gtl_type == "list" || @force_grid_xml)
   end
 
-  def get_view_where_clause(default_where_clause)
+  def get_view_where_clause(default_where_clause, sb_controller = nil)
     # If doing charts, limit the records to ones showing in the chart
-    if session[:menu_click] && session[:sandboxes][params[:sb_controller]][:chart_reports]
-      chart_reports = session[:sandboxes][params[:sb_controller]][:chart_reports]
+    sb_controller = params[:sb_controller] if sb_controller.nil?
+    if !sb_controller.nil? && session[:menu_click] && session[:sandboxes][sb_controller][:chart_reports]
+      chart_reports = session[:sandboxes][sb_controller][:chart_reports]
       chart_click = parse_chart_click(Array(session[:menu_click]).first)
       model_downcase = chart_click.model.downcase
 
