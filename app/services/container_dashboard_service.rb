@@ -185,7 +185,7 @@ class ContainerDashboardService
         :node     => m.resource.name,
         :provider => provider_name,
         :total    => m.derived_vm_numvcpus.present? ? m.derived_vm_numvcpus.round : nil,
-        :percent  => m.cpu_usage_rate_average.present? ? (m.cpu_usage_rate_average / 100.0).round(CPU_USAGE_PRECISION) : nil # pf accepts fractions 90% = 0.90
+        :percent  => m.cpu_usage_rate_average.present? ? (m.cpu_usage_rate_average / 100.0).round(GRAPH_PRECISION) : nil # pf accepts fractions 90% = 0.90
       }
 
       node_memory_usage << {
@@ -193,7 +193,7 @@ class ContainerDashboardService
         :node     => m.resource.name,
         :provider => m.resource.ext_management_system.name,
         :total    => m.derived_memory_available.present? ? m.derived_memory_available.round : nil,
-        :percent  => m.mem_usage_absolute_average.present? ? (m.mem_usage_absolute_average / 100.0).round(CPU_USAGE_PRECISION) : nil # pf accepts fractions 90% = 0.90
+        :percent  => m.mem_usage_absolute_average.present? ? (m.mem_usage_absolute_average / 100.0).round(GRAPH_PRECISION) : nil # pf accepts fractions 90% = 0.90
       }
     end
 
