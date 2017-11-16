@@ -1,10 +1,15 @@
 class TopologyService
   include UiServiceMixin
+  include Mixins::CheckedIdMixin
 
   def initialize(provider_id = nil)
     provider_class = self.class.instance_variable_get(:@provider_class)
     # If the provider ID is not set, the topology needs to be generated for all the providers
-    @providers = provider_id ? provider_class.where(:id => provider_id) : provider_class.all
+    @providers = if provider_id
+                   find_records_with_rbac(provider_class, Array.wrap(provider_id))
+                 else
+                   Rbac.filtered(provider_class.all)
+                 end
   end
 
   def build_link(source, target)
