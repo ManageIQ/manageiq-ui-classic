@@ -151,8 +151,8 @@ describe ServiceController do
 
   context "#sanitize_output" do
     it "escapes characters in the output string" do
-      output = controller.send(:sanitize_output, "I'm \"Fred\" {{Flintstone}}")
-      expect(output).to eq("I\\'m \\\"Fred\\\" \\{\\{Flintstone\\}\\}")
+      output = controller.send(:sanitize_output, "I'm \"\\'Fred\\'\" {{Flintstone}}")
+      expect(output).to eq("I\\'m \\\"\\'Fred\\'\\\" \\{\\{Flintstone\\}\\}")
     end
   end
 
