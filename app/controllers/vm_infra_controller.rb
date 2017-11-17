@@ -2,7 +2,6 @@ class VmInfraController < ApplicationController
   include VmCommon # common methods for vm controllers
   include VmRemote # methods for VM remote access
   include VmShowMixin
-  include Mixins::Actions::VmActions::Transform
 
   before_action :check_privileges
   before_action :get_session_data
