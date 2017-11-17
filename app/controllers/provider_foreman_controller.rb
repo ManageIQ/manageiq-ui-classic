@@ -65,15 +65,28 @@ class ProviderForemanController < ApplicationController
     end
   end
 
+  def tagging_cs_node
+    assert_privileges("configured_system_tag")
+    tagging_edit('ConfiguredSystem', false)
+  end
+
+  def tagging_fr_node
+    assert_privileges("configuration_manager_provider_tag")
+    tagging_edit('ManageIQ::Providers::ConfigurationManager', false)
+  end
+
   def tagging
     @explorer = true
     case x_active_accord
     when :configuration_manager_providers
-      assert_privileges("configuration_manager_provider_tag")
-      tagging_edit('ManageIQ::Providers::ConfigurationManager', false)
+      nodetype, _id = parse_nodetype_and_id(valid_active_node(x_node))
+      case nodetype
+      when 'cs' then tagging_cs_node
+      when 'fr' then tagging_fr_node
+      else           raise 'Tagging not supported for this node type.'
+      end
     when :configuration_manager_cs_filter
-      assert_privileges("configured_system_tag")
-      tagging_edit('ConfiguredSystem', false)
+      tagging_cs_node
     end
     render_tagging_form
   end
