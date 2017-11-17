@@ -219,20 +219,22 @@ module ApplicationHelper
   end
 
   MODEL_STRING = {
-    "all_vms"                                => VmOrTemplate,
-    "all_miq_templates"                      => MiqTemplate,
-    "based_volumes"                          => CloudVolume,
-    "instances"                              => Vm,
-    "images"                                 => MiqTemplate,
-    "groups"                                 => Account,
-    "users"                                  => Account,
-    "host_services"                          => SystemService,
-    "chargebacks"                            => ChargebackRate,
-    "playbooks"                              => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook,
-    "physical_servers_with_host"             => PhysicalServer,
-    "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript,
-    "vms"                                    => VmOrTemplate,
-    "ServiceCatalog"                         => ServiceTemplate
+
+    "all_vms"                                   => VmOrTemplate,
+    "all_miq_templates"                         => MiqTemplate,
+    "based_volumes"                             => CloudVolume,
+    "instances"                                 => Vm,
+    "images"                                    => MiqTemplate,
+    "groups"                                    => Account,
+    "users"                                     => Account,
+    "host_services"                             => SystemService,
+    "chargebacks"                               => ChargebackRate,
+    "playbooks"                                 => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook,
+    "physical_servers_with_host"                => PhysicalServer,
+    "manageiq/providers/automation_managers"    => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript,
+    "vms"                                       => VmOrTemplate,
+    "ServiceCatalog"                            => ServiceTemplate,
+    "manageiq/providers/configuration_managers" => ConfigurationProfile
   }.freeze
 
   HAS_ASSOCATION = {
