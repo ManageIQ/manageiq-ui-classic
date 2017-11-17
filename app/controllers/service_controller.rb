@@ -164,6 +164,7 @@ class ServiceController < ApplicationController
     htm = stdout.gsub('"', '\"')
 
     regex_map = {
+      /\\'/ => "'",
       /'/  => "\\\\'",
       /{{/ => '\{\{',
       /}}/ => '\}\}'
