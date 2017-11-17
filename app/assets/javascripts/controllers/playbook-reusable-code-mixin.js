@@ -215,15 +215,15 @@ function playbookReusableCodeMixin(API, $q, miqService) {
   };
 
   var cloudTypeChanged = function(vm, prefix, value) {
-    var valueChanged = (value !== vm.provisioning_cloud_type);
+    var valueChanged = (value !== vm[prefix + "_cloud_type"]);
     if (value) {
-      vm.provisioning_cloud_type = value;
+      vm[prefix + "_cloud_type"] = value;
     } else {
-      vm.provisioning_cloud_type = '';
+      vm[prefix + "_cloud_type"] = '';
     }
     if (valueChanged) {
-      var typ = vm.provisioning_cloud_type;
-      vm[vm.model].provisioning_cloud_credential_id = '';
+      var typ = vm[prefix + "_cloud_type"];
+      vm[vm.model][prefix + "_cloud_credential_id"] = '';
       getCloudCredentialsforType(prefix, typ, vm);
     }
   };
