@@ -11,6 +11,18 @@ describe PictureController do
     picture.save
   end
 
+  context 'skip_before_action :get_global_session_data / skip_after_action :set_global_session_data' do
+    before do
+      session[:edit] = "abc"
+    end
+
+    it 'retains the existing value of session[:edit] after the GET request' do
+      get :show, :params => { :basename => "#{picture.compressed_id}.#{picture.extension}" }
+      expect(session[:edit]).to eq("abc")
+      expect(response.status).to eq(200)
+    end
+  end
+
   it 'can serve a picture directly from the database' do
     get :show, :params => { :basename => "#{picture.compressed_id}.#{picture.extension}" }
     expect(response.status).to eq(200)
