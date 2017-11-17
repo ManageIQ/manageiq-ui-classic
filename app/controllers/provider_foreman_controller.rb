@@ -70,7 +70,7 @@ class ProviderForemanController < ApplicationController
     case x_active_accord
     when :configuration_manager_providers
       assert_privileges("configuration_manager_provider_tag")
-      tagging_edit('ManageIQ::Providers::ConfigurationManager', false)
+      tagging_edit(class_for_provider_node.to_s, false)
     when :configuration_manager_cs_filter
       assert_privileges("configured_system_tag")
       tagging_edit('ConfiguredSystem', false)
@@ -141,18 +141,24 @@ class ProviderForemanController < ApplicationController
     end
   end
 
-  def configuration_manager_providers_tree_rec
+  def class_for_provider_node
     nodes = x_node.split('-')
     case nodes.first
-    when "root" then find_record(ManageIQ::Providers::ConfigurationManager, params[:id])
-    when "fr"   then find_record(ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile, params[:id])
-    when "cp"   then find_record(ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem, params[:id])
+    when "root" then ManageIQ::Providers::ConfigurationManager
+    when "fr"   then ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
+    when "cp", "cs" then ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem
     when "xx" then
       case nodes.second
-      when "fr" then find_record(ManageIQ::Providers::Foreman::ConfigurationManager, params[:id])
-      when "csf" then find_record(ConfiguredSystem, params[:id])
+      when "fr" then ManageIQ::Providers::Foreman::ConfigurationManager
+      when "csf" then ConfiguredSystem
       end
+    else
+      nodes.include?("unassigned") ? ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem : ManageIQ::Providers::ConfigurationManager
     end
+  end
+
+  def configuration_manager_providers_tree_rec
+    find_record(class_for_provider_node, params[:id])
   end
 
   def configuration_manager_cs_filter_tree_rec
