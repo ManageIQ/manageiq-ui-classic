@@ -16,7 +16,7 @@ class TreeBuilderServices < TreeBuilder
   end
 
   def root_options
-    { }
+    {}
   end
 
   # Get root nodes count/array for explorer tree
@@ -45,13 +45,16 @@ class TreeBuilderServices < TreeBuilder
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
-    services = Rbac.filtered(Service.where(:retired => object[:id] != 'asrv', :display => true))
-    if %w(global my).include?(object[:id]) # Get My Filters and Global Filters
-      count_only_or_objects(count_only, x_get_search_results(object, _options[:leaf]))
-    elsif count_only
-      services.size
-    else
+  def x_get_tree_custom_kids(object, count_only, options)
+    case object[:id]
+    when 'my', 'global'
+      # Get My Filters and Global Filters
+      count_only_or_objects(count_only, x_get_search_results(object, options[:leaf]))
+    when 'asrv', 'rsrv'
+      retired = object[:id] != 'asrv'
+      services = Rbac.filtered(Service.where(:retired => retired, :display => true))
+      return sevices.size if count_only
+
       MiqPreloader.preload(services.to_a, :picture)
       Service.arrange_nodes(services.sort_by { |n| [n.ancestry.to_s, n.name.downcase] })
     end
