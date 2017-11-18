@@ -21,27 +21,33 @@ class TreeBuilderServices < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    objects = []
-    objects.push(:id            => "asrv",
-                 :text          => _("Active Services"),
-                 :icon          => "pficon pficon-folder-close",
-                 :load_children => true,
-                 :tip           => _("Active Services"))
-    objects.push(:id            => "rsrv",
-                 :text          => _("Retired Services"),
-                 :icon          => "pficon pficon-folder-close",
-                 :load_children => true,
-                 :tip           => _("Retired Services"))
-    objects.push(:id         => "global",
-                 :text       => _("Global Filters"),
-                 :icon       => "pficon pficon-folder-close",
-                 :selectable => false,
-                 :tip        => _("Global Shared Filters"))
-    objects.push(:id         => "my",
-                 :text       => _("My Filters"),
-                 :icon       => "pficon pficon-folder-close",
-                 :selectable => false,
-                 :tip        => _("My Personal Filters"))
+    objects = [
+      {
+        :id            => "asrv",
+        :text          => _("Active Services"),
+        :icon          => "pficon pficon-folder-close",
+        :load_children => true,
+        :tip           => _("Active Services")
+      }, {
+        :id            => "rsrv",
+        :text          => _("Retired Services"),
+        :icon          => "pficon pficon-folder-close",
+        :load_children => true,
+        :tip           => _("Retired Services")
+      }, {
+        :id         => "global",
+        :text       => _("Global Filters"),
+        :icon       => "pficon pficon-folder-close",
+        :selectable => false,
+        :tip        => _("Global Shared Filters")
+      }, {
+        :id         => "my",
+        :text       => _("My Filters"),
+        :icon       => "pficon pficon-folder-close",
+        :selectable => false,
+        :tip        => _("My Personal Filters")
+      }
+    ]
     count_only_or_objects(count_only, objects)
   end
 
