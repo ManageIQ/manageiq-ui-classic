@@ -1,4 +1,7 @@
 class PictureController < ApplicationController
+  skip_before_action :get_global_session_data
+  skip_after_action :set_global_session_data
+
   def show # GET /pictures/:basename
     compressed_id, extension = params[:basename].split('.')
     picture = Picture.find_by_id(from_cid(compressed_id))
