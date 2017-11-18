@@ -83,6 +83,13 @@ describe EmsInfraController do
       post :button, :params => {:pressed => "host_analyze_check_compliance", :id => ems_infra.id, :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
+
+    it "when vm_transform is pressed" do
+      ems_infra = FactoryGirl.create(:ems_vmware)
+      expect(controller).to receive(:vm_transform)
+      post :button, :params => {:pressed => "vm_transform", :id => ems_infra.id, :format => :js}
+      expect(controller.send(:flash_errors?)).not_to be_truthy
+    end
   end
 
   describe "#create" do
