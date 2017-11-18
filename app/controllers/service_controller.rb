@@ -280,38 +280,27 @@ class ServiceController < ApplicationController
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
+
     case TreeBuilder.get_model_for_prefix(@nodetype)
-    when "Service"  # VM or Template record, show the record
+    when "Service"
       show_record(from_cid(id))
-      @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => TreeBuilder.get_model_for_prefix(@nodetype))}
+      @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => 'Service')}
       @no_checkboxes = true
       @gtl_type = "grid"
       @items_per_page = ONE_MILLION
       @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true)  # Get the records (into a view) and the paginator
     when "Hash"
-      if id == "asrv"
+      case id
+      when 'asrv'
         process_show_list(:named_scope => [[:retired, false], :displayed])
         @right_cell_text = _("Active Services")
-      else
+      when 'rsrv'
         process_show_list(:named_scope => [:retired, :displayed])
         @right_cell_text = _("Retired Services")
       end
     when "MiqSearch"
       load_adv_search # Select/load filter from Global/My Filters
       @right_cell_text = _("All Services")
-    else      # Get list of child Catalog Items/Services of this node
-      if x_node == "root"
-        process_show_list(:where_clause => "ancestry is null")
-        @right_cell_text = if x_active_tree == :svcs_tree
-                             _("All Services")
-                           else
-                             _("All Service Catalog Items")
-                           end
-      else
-        show_record(from_cid(id))
-        typ = x_active_tree == :svcs_tree ? "Service" : TreeBuilder.get_model_for_prefix(@nodetype)
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
-      end
     end
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
 
