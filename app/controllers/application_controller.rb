@@ -450,9 +450,6 @@ class ApplicationController < ActionController::Base
     if !@policy_sim.nil? && session[:policies] && !session[:policies].empty?
       settings[:url] = '/' + controller + '/policies/'
     end
-    if session[:sandboxes] && @sb && controller
-      session[:sandboxes][controller] = @sb
-    end
     settings
   end
   private :set_variables_report_data
