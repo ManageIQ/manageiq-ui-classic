@@ -123,6 +123,22 @@ module Spec
         expect(parsed_data).to have_key('data')
         parsed_data
       end
+
+      RSpec::Matchers.define :match_gtl_options do |expected|
+        def matches_additional(actual, expected)
+          return true unless expected
+          expected.keys.find_all { |key| expected[key] != actual.send(key) }.empty?
+        end
+
+        def matches_basic(actual, expected)
+          expected.keys.find_all { |key| expected[key] != actual[key] }.empty?
+        end
+
+        match do |actual|
+          additional_options = expected.delete(:report_data_additional_options)
+          matches_basic(actual, expected) && matches_additional(actual[:report_data_additional_options], additional_options)
+        end
+      end
     end
   end
 end

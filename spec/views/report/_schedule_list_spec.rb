@@ -3,6 +3,8 @@ require 'ostruct'
 describe 'report/_schedule_list' do
   context 'flash message is set' do
     helper(JsHelper)
+    helper(GtlHelper)
+    helper(ApplicationHelper)
 
     before do
       assign(:sb, :active_accord => :schedules)
