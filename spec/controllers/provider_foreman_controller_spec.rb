@@ -473,6 +473,17 @@ describe ProviderForemanController do
     expect(response.status).to eq(200)
   end
 
+  it "renders tagging editor for a configured system in the manager accordion" do
+    session[:assigned_filters] = []
+    allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
+    allow(controller).to receive(:x_node).and_return(config_profile_key(@config_profile))
+    parent = FactoryGirl.create(:classification, :name => "test_category")
+    FactoryGirl.create(:classification_tag,      :name => "test_entry",         :parent => parent)
+    FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+    post :tagging, :params => { :miq_grid_checks => [@configured_system.id], :id => @config_profile.id, :format => :js }
+    expect(response.status).to eq(200)
+  end
+
   it "renders tree_select as js" do
     controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
 
@@ -618,6 +629,51 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_node).and_return("-1000000000013-unassigned")
       post :x_show, :params => {:id => "1r1", :format => :js}
       expect(response.status).to eq(200)
+    end
+  end
+
+  context "#tags_edit" do
+    let!(:user) { stub_user(:features => :all) }
+    before(:each) do
+      EvmSpecHelper.create_guid_miq_server_zone
+      allow(@configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryGirl.create(:classification_tag,
+                                 :name   => "tag1",
+                                 :parent => classification)
+      @tag2 = FactoryGirl.create(:classification_tag,
+                                 :name   => "tag2",
+                                 :parent => classification)
+      allow(Classification).to receive(:find_assigned_entries).with(@configured_system).and_return([@tag1, @tag2])
+      session[:tag_db] = "ConfiguredSystem"
+      edit = {:key        => "ConfiguredSystem_edit_tags__#{@configured_system.id}",
+              :tagging    => "ConfiguredSystem",
+              :object_ids => [@configured_system.id],
+              :current    => {:assignments => []},
+              :new        => {:assignments => [@tag1.id, @tag2.id]}}
+      session[:edit] = edit
+    end
+
+    after(:each) do
+      expect(response.status).to eq(200)
+    end
+
+    it "builds tagging screen" do
+      post :tagging, :params => {:format => :js, :miq_grid_checks => [@configured_system.id]}
+      expect(assigns(:flash_array)).to be_nil
+      expect(response.status).to eq(200)
+    end
+
+    it "cancels tags edit" do
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => @configured_system.id}
+      expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
+      expect(assigns(:edit)).to be_nil
+    end
+
+    it "save tags" do
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @configured_system.id}
+      expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
+      expect(assigns(:edit)).to be_nil
     end
   end
 
