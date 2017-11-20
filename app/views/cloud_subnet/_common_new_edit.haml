@@ -3,30 +3,48 @@
     %label.col-md-2.control-label
       = _('Subnet Name')
     .col-md-8
-      %input.form-control{:type          => "text",
-                          :name          => "name",
-                          'ng-model'     => "cloudSubnetModel.name",
-                          'ng-maxlength' => 128,
-                          :miqrequired   => true,
-                          :checkchange   => true}
+      %input.form-control{"type"         => "text",
+                          "name"         => "name",
+                          "ng-model"     => "vm.cloudSubnetModel.name",
+                          "ng-maxlength" => 128}
   .form-group
     %label.col-md-2.control-label
       = _('Gateway')
     .col-md-8
-      %input.form-control{:type          => "text",
-                          :name          => "gateway_ip",
-                          'ng-model'     => "cloudSubnetModel.gateway",
-                          'ng-maxlength' => 20,
-                          :miqrequired   => false,
-                          :checkchange   => true}
+      %input.form-control{"type"         => "text",
+                          "name"         => "gateway_ip",
+                          "ng-model"     => "vm.cloudSubnetModel.gateway",
+                          "ng-maxlength" => 20}
   .form-group
     %label.control-label.col-md-2{"for" => "cloud_subnet_dhcp_enabled"}
       = _('Enable DHCP')
     .col-md-8
-      %input{"bs-switch"   => "",
-             :data         => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
-             "type"        => "checkbox",
-             "id"          => "cloud_subnet_dhcp_enabled",
+      %input{"type"        => "checkbox",
              "name"        => "dhcp_enabled",
-             "checkchange" => "true",
-             "ng-model"    => "cloudSubnetModel.dhcp_enabled"}
+             "bs-switch"   => "",
+             "data"        => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+             "id"          => "cloud_subnet_dhcp_enabled",
+             "ng-model"    => "vm.cloudSubnetModel.dhcp_enabled"}
+  .form-group{"ng-class" => "{'has-error': angularForm.network_protocol.$invalid}"}
+    %label.col-md-2.control-label
+      = _('IP Version')
+    .col-md-8
+      %select{"name"                        => "network_protocol",
+              "ng-model"                    => "vm.cloudSubnetModel.network_protocol",
+              "required"                    => "",
+              "ng-disabled"                 => "!vm.newRecord",
+              "ng-options"                  => "protocol as protocol for protocol in vm.networkProtocols",
+              "pf-select"                   => true,
+              "selectpicker-for-select-tag" => ""}
+      %span.help-block{"ng-show" => "angularForm.network_protocol.$error.required"}
+        = _("Required")
+
+  .form-group
+    %label.col-md-2.control-label
+      = _('Subnet CIDR')
+    .col-md-8
+      %input.form-control{"type"         => "text",
+                          "name"         => "cidr",
+                          "ng-disabled"  => "!vm.newRecord",
+                          "ng-model"     => "vm.cloudSubnetModel.cidr",
+                          "ng-maxlength" => 20}
