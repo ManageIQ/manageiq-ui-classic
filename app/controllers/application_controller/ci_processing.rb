@@ -1848,6 +1848,8 @@ module ApplicationController::CiProcessing
         return
       end
 
+      return if method == 'reset' && !check_reset_requirements(selected_items)
+
       if selected_items.empty?
         add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => request.parameters["controller"]), :task => display_name}, :error)
       else
@@ -1884,6 +1886,14 @@ module ApplicationController::CiProcessing
       end
     end
     selected_items.count
+  end
+
+  def check_reset_requirements(selected_items)
+    if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_reset? }
+      javascript_flash(:text => _("Reset does not apply to at least one of the selected items"), :severity => :error, :scroll_top => true)
+      return false
+    end
+    true
   end
 
   def process_cloud_object_storage_buttons(pressed)
