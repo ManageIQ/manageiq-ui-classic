@@ -6,7 +6,7 @@
     = favicon_link_tag
     = stylesheet_link_tag 'application'
     -# Load the required JS based on the console type
-    = javascript_include_tag 'jquery', "remote_consoles/#{@console[:type]}"
+    = javascript_include_tag 'jquery/dist/jquery.js', "remote_consoles/#{@console[:type]}"
     -# Css for the unified look & feel
     :css
       #remote-console {

@@ -28,6 +28,26 @@ end
 require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
 
+# hack around Travis resolving localhost to IPv6 and failing
+module Jasmine
+  class << self
+    alias old_server_is_listening_on server_is_listening_on
+
+    def server_is_listening_on(_hostname, port)
+      old_server_is_listening_on('127.0.0.1', port)
+    end
+  end
+
+  class Configuration
+    alias old_initialize initialize
+
+    def initialize
+      @host = 'http://127.0.0.1'
+      old_initialize
+    end
+  end
+end
+
 namespace :spec do
   namespace :javascript do
     desc "Setup environment for javascript specs"

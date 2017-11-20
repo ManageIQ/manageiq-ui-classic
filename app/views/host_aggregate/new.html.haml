@@ -59,8 +59,9 @@
                          "ng-disabled" => "angularForm.$pristine",
                          "ng-class"    => "{ disabled: angularForm.$pristine}")
           = button_tag(_("Cancel"),
-                       :class     => "btn btn-default",
-                       "ng-click" => "cancelClicked()")
+                       :class          => "btn btn-default",
+                       :formnovalidate => 'true',
+                       "ng-click"      => "cancelClicked()")
 
 :javascript
   ManageIQ.angular.app.value('hostAggregateFormId', '#{@host_aggregate.id || "new"}');

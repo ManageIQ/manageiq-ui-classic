@@ -29,7 +29,7 @@ class ApplicationHelper::Toolbar::ConditionCenter < ApplicationHelper::Toolbar::
           end,
           t,
           :url_parms => "?copy=true",
-          :klass     => ApplicationHelper::Button::ConditionPolicy),
+          :klass     => ApplicationHelper::Button::ConditionPolicyCopy),
         button(
           :condition_delete,
           'pficon pficon-delete fa-lg',

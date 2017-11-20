@@ -208,7 +208,6 @@ class ChargebackController < ApplicationController
         render_flash(_("No %{records} were selected for deletion") %
           {:records => ui_lookup(:models => "ChargebackRate")}, :error)
       end
-      process_cb_rates(rates, "destroy")  unless rates.empty?
     else # showing 1 rate, delete it
       cb_rate = ChargebackRate.find_by_id(params[:id])
       if cb_rate.nil?
@@ -352,7 +351,7 @@ class ChargebackController < ApplicationController
     else
       @report_result_id = session[:report_result_id] = rr.id
       session[:report_result_runtime]  = rr.last_run_on
-      if MiqTask.state_finished(rr.miq_task_id)
+      if rr.status.downcase == "complete"
         @report = rr.report_results
         session[:rpt_task_id] = nil
         if @report.blank?

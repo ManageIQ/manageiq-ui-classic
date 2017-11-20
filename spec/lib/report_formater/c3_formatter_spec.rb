@@ -82,6 +82,10 @@ describe ReportFormatter::C3Formatter do
         expect(report.chart[:data][:columns][0][2]).to eq(4_096)
         expect(report.chart[:data][:columns][1][1]).to eq(1_024)
         expect(report.chart[:data][:columns][0][-1]).to eq(1_024) if other
+        labels = ["MTC-RHEVM-3.0", "openstack"]
+        labels.push("Other") if other
+        expect(report.chart[:axis][:x][:categories]).to eq(labels)
+        expect(report.chart[:miq][:category_table]).to eq(labels)
       end
     end
 

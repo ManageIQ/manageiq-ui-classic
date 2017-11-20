@@ -12,6 +12,7 @@ describe VmInfraController do
     allow(controller).to receive(:protect_build_tree).and_return(nil)
     controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
 
+    MiqRegion.seed
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
@@ -260,6 +261,17 @@ describe VmInfraController do
     expect(response.status).to eq(200)
 
     post :x_button, :params => { :pressed => 'vm_retire_now', :id => vm_vmware.id }
+    expect(response.status).to eq(200)
+  end
+
+  it 'can reset selected items' do
+    get :show, :params => { :id => vm_vmware.id }
+    expect(response).to redirect_to(:action => 'explorer')
+
+    post :explorer
+    expect(response.status).to eq(200)
+
+    post :x_button, :params => { :pressed => 'vm_reset', :id => vm_vmware.id }
     expect(response.status).to eq(200)
   end
 

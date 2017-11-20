@@ -260,12 +260,12 @@ class OrchestrationStackController < ApplicationController
           {:error_message => bang.message}, :error)
         render_flash
       else
-        flash_message = _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => 'OrchestrationTemplate'),
-                                                               :name  => ot.name}
-        javascript_redirect :controller    => 'catalog',
-                            :action        => 'ot_show',
-                            :id            => ot.id,
-                            :flash_message => flash_message
+        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => 'OrchestrationTemplate'),
+                                                         :name  => ot.name})
+        session[:flash_msgs] = @flash_array.dup
+        javascript_redirect :controller => 'catalog',
+                            :action     => 'ot_show',
+                            :id         => ot.id
       end
     end
   end

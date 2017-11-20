@@ -9,6 +9,14 @@ class CloudVolumeSnapshotController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericButtonMixin
 
+  def self.display_methods
+    %w(based_volumes)
+  end
+
+  def display_based_volumes
+    nested_list('cloud_volumes', CloudVolume, :association => :based_volumes)
+  end
+
   private
 
   def textual_group_list
@@ -23,14 +31,6 @@ class CloudVolumeSnapshotController < ApplicationController
       return true
     end
     false
-  end
-
-  def self.display_methods
-    %w(based_volumes)
-  end
-
-  def display_based_volumes
-    nested_list('based_volumes', CloudVolume)
   end
 
   def delete_cloud_volume_snapshots

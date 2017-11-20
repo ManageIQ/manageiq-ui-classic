@@ -906,7 +906,10 @@ function miqBuildCalendar() {
       element.datepicker();
     }
 
-    if (ManageIQ.calendar.calDateFrom) {
+    var startDate = element.attr('data_date_start');
+    if (startDate) {
+      element.datepicker('setStartDate', new Date(startDate));
+    } else if (ManageIQ.calendar.calDateFrom) {
       element.datepicker('setStartDate', ManageIQ.calendar.calDateFrom);
     }
 
@@ -1542,7 +1545,7 @@ function miqInitMainContent() {
   $('#main-content').css('height', 'calc(100% - ' + height + 'px)')
 }
 
-function miqHideSearchClearButton() {
+function miqHideSearchClearButton(explorer) {
   // Hide the clear button if the search input is empty
   $(".search-pf .has-clear .clear").each(function() {
     if (!$(this).prev('.form-control').val()) {
@@ -1558,6 +1561,9 @@ function miqHideSearchClearButton() {
   $(".search-pf .has-clear .clear").click(function () {
     $(this).prev('.form-control').val('').focus();
     $(this).hide();
+    // Clear Search text values as well
+    var url = "/" + ManageIQ.controller + "/adv_search_text_clear" + "?in_explorer=" + explorer;
+    miqJqueryRequest(url);
   });
 }
 
@@ -1599,8 +1605,19 @@ function rbacGroupLoadTab(id) {
 }
 
 function chartData(type, data, data2) {
+  var empty = {
+    data: {
+      columns: [],
+    },
+  };
+
   if (type === undefined) {
-    return;
+    return empty;
+  }
+
+  var config = _.cloneDeep(ManageIQ.charts.c3config[type]);
+  if (config === undefined) {
+    return empty;
   }
 
   if (_.isObject(data.miq)) {
@@ -1671,7 +1688,7 @@ function chartData(type, data, data2) {
     }
   }
 
-  var config = _.cloneDeep(ManageIQ.charts.c3config[type]);
+
   // some PatternFly default configs define contents function, but it breaks formatting
   if (_.isObject(config.tooltip)) {
     config.tooltip.contents = undefined;

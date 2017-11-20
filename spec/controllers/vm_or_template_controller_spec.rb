@@ -38,6 +38,7 @@ describe VmOrTemplateController do
 
       it "should set correct VM for right-sizing when on vm list view" do
         expect(controller).to receive(:replace_right_cell)
+        allow(controller).to receive(:find_records_with_rbac) { [vm_vmware] }
         post :x_button, :params => { :pressed => "vm_right_size", :id => vm_vmware.id, :check_10r839 => '1' }
         expect(controller.send(:flash_errors?)).not_to be_truthy
         assigns(:record).id == vm_vmware.id

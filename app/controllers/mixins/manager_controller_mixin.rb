@@ -118,6 +118,13 @@ module Mixins
       render :layout => "application"
     end
 
+    def identify_record(id, klass = self.class.model)
+      type, _id = parse_nodetype_and_id(x_node)
+      klass = TreeBuilder.get_model_for_prefix(type).constantize if type
+      record = super(id, klass)
+      record
+    end
+
     def tree_autoload
       @view ||= session[:view]
       super
@@ -351,8 +358,12 @@ module Mixins
 
     def miq_search_node
       options = {:model => "ConfiguredSystem"}
+      if x_active_tree == :configuration_scripts_tree
+        options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
+                   :gtl_dbname => "automation_manager_configuration_scripts"}
+      end
       process_show_list(options)
-      @right_cell_text = _("All Configured Systems")
+      @right_cell_text = x_active_tree == :configuration_scripts_tree ? _("All Ansible Tower Job Templates") : _("All Configured Systems")
     end
 
     def rendering_objects

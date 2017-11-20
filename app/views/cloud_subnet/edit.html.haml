@@ -1,33 +1,50 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudSubnetFormController"}
+%form#form_div{"name"          => "angularForm",
+   "form-changed"  => true,
+   "miq-form"      => true,
+   "model"         => "vm.cloudSubnetModel",
+   "model-copy"    => "vm.modelCopy",
+   "ng-cloak"      => "",
+   "ng-controller" => "cloudSubnetFormController as vm",
+   "ng-show"       => "vm.afterGet"}
   = render :partial => "layouts/flash_msg"
   %h3
-  = render :partial => "common_new_edit"
-
+    = _('Network Provider')
   .form-horizontal
     .form-group
       %label.col-md-2.control-label
-        = _('IP Version')
+        = _('Network Manager')
       .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "network_protocol",
-                            'ng-model'     => "cloudSubnetModel.network_protocol",
-                            'ng-maxlength' => 2,
-                            :miqrequired   => true,
-                            :disabled      => true,
-                            :checkchange   => true}
+        %input.form-control{"type"         => "text",
+                            "name"         => "ems_name",
+                            "ng-model"     => "vm.cloudSubnetModel.ems_name",
+                            "ng-maxlength" => 128,
+                            "readonly"     => true}
+  %h3
+    = _('Placement')
+  .form-horizontal
     .form-group
       %label.col-md-2.control-label
-        = _('CIDR')
+        = _('Cloud Tenant')
       .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "cidr",
-                            'ng-model'     => "cloudSubnetModel.cidr",
-                            'ng-maxlength' => 20,
-                            :miqrequired   => false,
-                            :disabled      => true,
-                            :checkchange   => true}
-
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+        %input.form-control{"type"         => "text",
+                            "name"         => "tenant_name",
+                            "ng-model"     => "vm.cloudSubnetModel.tenant_name",
+                            "ng-maxlength" => 128,
+                            "readonly"     => true}
+  %h3
+    = _('Cloud Subnet details')
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Network')
+      .col-md-8
+        %input.form-control{"type"         => "text",
+                            "name"         => "network_name",
+                            "ng-model"     => "vm.cloudSubnetModel.network_name",
+                            "ng-maxlength" => 128,
+                            "readonly"     => true}
+  = render :partial => "common_new_edit"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('cloudSubnetFormId', '#{@subnet.id}');

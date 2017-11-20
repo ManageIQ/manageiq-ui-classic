@@ -115,11 +115,11 @@ module ReportFormatter
       cat_cnt = 0
       cat_total = mri.table.size
       mri.table.data.each do |r|
-        cat = cat_cnt > 6 ? '<Other(1)>' : r["resource_name"]
+        cat = cat_cnt > 6 ? 'Others' : r["resource_name"]
         val = rounded_value(r[col])
         next if val == 0
-        if cat.starts_with?("<Other(") && categories[-1].starts_with?("<Other(") # Are we past the top 10?
-          categories[-1] = "<Other(#{cat_total - (cat_cnt - 1)})>" # Fix the <Other> category count
+        if cat.starts_with?("Others") && categories[-1].starts_with?("Others") # Are we past the top 10?
+          categories[-1] = "Others"
           series.add_to_value(-1, val) # Accumulate the series value
           next
         end
@@ -131,7 +131,6 @@ module ReportFormatter
       return no_records_found_chart if series.empty?
 
       add_axis_category_text(categories)
-
       series.zip(categories) { |ser, category| ser[:tooltip] = category }
       add_series('', series)
     end
@@ -440,6 +439,7 @@ module ReportFormatter
       selected_groups = sorted_sums.reverse.take(keep)
 
       cathegory_texts = selected_groups.collect do |key, _|
+        label = key
         label = _('no value') if label.blank?
         label
       end
@@ -467,7 +467,7 @@ module ReportFormatter
 
         series.push(:value   => other[val2],
                     :tooltip => "Other / #{val2}: #{other[val2]}") if show_other
-
+        label = val2 if val2.kind_of?(String)
         label = label.to_s.gsub(/\\/, ' \ ')
         label = _('no value') if label.blank?
         add_series(label, series)

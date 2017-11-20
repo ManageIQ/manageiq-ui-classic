@@ -413,6 +413,13 @@ class ApplicationController < ActionController::Base
     send_data fs.contents, :filename => fs.name
   end
 
+  def adv_search_text_clear
+    if params[:in_explorer] == "true"
+      @search_text = @sb[:search_text] = nil
+      reload
+    end
+  end
+
   protected
 
   def render_flash(add_flash_text = nil, severity = nil)
@@ -760,7 +767,7 @@ class ApplicationController < ActionController::Base
       @data.each do |r|
         next if r.template_type != "report" && !r.template_type.blank?
         r_group = r.rpt_group == "Custom" ? "#{@sb[:grp_title]} - Custom" : r.rpt_group # Get the report group
-        title = r_group.split('-').collect(&:strip)
+        title = r_group.reverse.split('-', 2).collect(&:reverse).collect(&:strip).reverse
         if @temp_title != title[0]
           @temp_title = title[0]
           reports = []
