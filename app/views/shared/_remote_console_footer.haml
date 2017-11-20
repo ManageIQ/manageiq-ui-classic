@@ -1,0 +1,9 @@
+%footer
+  .pull-left
+    %span#console-type.label.label-info= j console_type.to_s
+    %span#connection-status.label.label-warning= _('Connecting')
+  .pull-right
+    %button#ctrlaltdel.btn.btn-default{:title => _('Send CTRL+ALT+DEL')}
+      %i.fa.fa-keyboard-o
+    %button#fullscreen.btn.btn-default{:title => _('Toggle Fullscreen')}
+      %i.fa.fa-arrows-alt
