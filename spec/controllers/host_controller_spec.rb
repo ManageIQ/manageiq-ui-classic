@@ -22,43 +22,43 @@ describe HostController do
 
     it "when VM Right Size Recommendations is pressed" do
       expect(controller).to receive(:vm_right_size)
-      post :button, :params => { :pressed => 'vm_right_size', :format => :js }
+      post :button, :params => {:pressed => 'vm_right_size', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when VM Migrate is pressed" do
       expect(controller).to receive(:prov_redirect).with("migrate")
-      post :button, :params => { :pressed => 'vm_migrate', :format => :js }
+      post :button, :params => {:pressed => 'vm_migrate', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when VM Retire is pressed" do
       expect(controller).to receive(:retirevms).once
-      post :button, :params => { :pressed => 'vm_retire', :format => :js }
+      post :button, :params => {:pressed => 'vm_retire', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when VM Manage Policies is pressed" do
       expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'vm_protect', :format => :js }
+      post :button, :params => {:pressed => 'vm_protect', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when MiqTemplate Manage Policies is pressed" do
       expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'miq_template_protect', :format => :js }
+      post :button, :params => {:pressed => 'miq_template_protect', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when VM Tag is pressed" do
       expect(controller).to receive(:tag).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'vm_tag', :format => :js }
+      post :button, :params => {:pressed => 'vm_tag', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when MiqTemplate Tag is pressed" do
       expect(controller).to receive(:tag).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'miq_template_tag', :format => :js }
+      post :button, :params => {:pressed => 'miq_template_tag', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
@@ -71,14 +71,14 @@ describe HostController do
       ra = FactoryGirl.create(:resource_action, :dialog_id => d.id)
       custom_button.resource_action = ra
       custom_button.save
-      post :button, :params => { :pressed => "custom_button", :id => host.id, :button_id => custom_button.id }
+      post :button, :params => {:pressed => "custom_button", :id => host.id, :button_id => custom_button.id}
       expect(response.status).to eq(200)
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when Drift button is pressed" do
       expect(controller).to receive(:drift_analysis)
-      post :button, :params => { :pressed => 'common_drift', :format => :js }
+      post :button, :params => {:pressed => 'common_drift', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
   end
@@ -88,13 +88,14 @@ describe HostController do
       stub_user(:features => :all)
       controller.instance_variable_set(:@breadcrumbs, [])
 
-      controller.instance_variable_set(:@_params,
-                                       :button   => "add",
-                                       :id       => "new",
-                                       :name     => 'foobar',
-                                       :hostname => nil,
-                                       :custom_1 => 'bar'
-                                      )
+      controller.instance_variable_set(
+        :@_params,
+        :button   => "add",
+        :id       => "new",
+        :name     => 'foobar',
+        :hostname => nil,
+        :custom_1 => 'bar'
+      )
 
       expect_any_instance_of(Host).to receive(:save).and_call_original
       expect(controller).to receive(:render)
@@ -107,16 +108,17 @@ describe HostController do
       controller.instance_variable_set(:@breadcrumbs, [])
       controller.new
 
-      controller.instance_variable_set(:@_params,
-                                       :button           => "validate",
-                                       :type             => "default",
-                                       :id               => "new",
-                                       :name             => 'foobar',
-                                       :hostname         => '127.0.0.1',
-                                       :default_userid   => "abc",
-                                       :default_password => "def",
-                                       :user_assigned_os => "linux_generic"
-                                      )
+      controller.instance_variable_set(
+        :@_params,
+        :button           => "validate",
+        :type             => "default",
+        :id               => "new",
+        :name             => 'foobar',
+        :hostname         => '127.0.0.1',
+        :default_userid   => "abc",
+        :default_password => "def",
+        :user_assigned_os => "linux_generic"
+      )
       expect(controller).to receive(:render)
       controller.send(:create)
       expect(response.status).to eq(200)
@@ -126,11 +128,12 @@ describe HostController do
   context "#set_record_vars" do
     it "strips leading/trailing whitespace from hostname/ipaddress when adding infra host" do
       stub_user(:features => :all)
-      controller.instance_variable_set(:@_params,
-                                       :name     => 'EMS 2',
-                                       :emstype  => 'rhevm',
-                                       :hostname => '  10.10.10.10  '
-                                      )
+      controller.instance_variable_set(
+        :@_params,
+        :name     => 'EMS 2',
+        :emstype  => 'rhevm',
+        :hostname => '  10.10.10.10  '
+      )
       host = Host.new
       controller.send(:set_record_vars, host, false)
       expect(host.hostname).to eq('10.10.10.10')
@@ -149,7 +152,7 @@ describe HostController do
     it "renders show_details for guest applications" do
       controller.instance_variable_set(:@breadcrumbs, [])
       allow(controller).to receive(:get_view)
-      get :guest_applications, :params => { :id => @host.id }
+      get :guest_applications, :params => {:id => @host.id}
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
       expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (Packages)",
@@ -272,6 +275,40 @@ describe HostController do
       get :new
       expect(response.status).to eq(200)
       expect(response.body).to include("name='default_password' ng-disabled='!vm.showVerify(&#39;default_userid&#39;)' ng-model='$parent.hostModel.default_password' ng-required='false'")
+    end
+  end
+
+  # http://localhost:3000/host/show_list?bc=Hosts%20on%202017-09-29&escape=false&menu_click=eyJyb3ciOjAsImNvbHVtbiI6NSwiY2hhcnRfaW5kZXgiOiI2IiwiY2hhcnRfbmFtZSI6IkRpc3BsYXktSG9zdHMtb24ifQ%3D%3D&sb_controller=storage
+  describe "#show_list" do
+    render_views
+
+    before(:each) do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    context 'called as chart click-through' do
+      it 'renders GTL according to menu_click options' do
+        report = double(:report)
+        allow(report).to receive_message_chain(:table, :data) { [{"assoc_ids" => {:hosts => {:on => 1}}}] }
+        session.store_path(:sandboxes, 'storage', :chart_reports, [report])
+
+        menu_click = Base64.encode64(
+          {:row => 0, :column => 0, :chart_index => 0, :chart_name => "Display-Hosts-on"}.to_json
+        )
+
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'Host',
+          :report_data_additional_options => {
+            :menu_click    => menu_click,
+            :sb_controller => 'storage',
+          }
+        )
+
+        # FIXME: This should rather be a POST, but it really is a GET.
+        get :show_list, :params => {:menu_click => menu_click, :sb_controller => 'storage'}
+        expect(response.status).to eq(200)
+      end
     end
   end
 
