@@ -23,7 +23,7 @@ describe('cloud-network-form', function() {
     });
 
     it('sets afterGet', function () {
-      expect(vm.afterGet).toBe(true);
+      expect(vm.afterGet).toBe(false);
     });
 
     it('adds a Cloud Network record', function () {

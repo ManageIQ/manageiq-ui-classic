@@ -34,18 +34,19 @@ function cloudNetworkFormController(API, miqService) {
 
     vm.newRecord = vm.cloudNetworkFormId === "new";
 
+    miqService.sparkleOn();
     if (vm.newRecord) {
       vm.cloudNetworkModel.enabled = true;
       vm.cloudNetworkModel.external_facing = false;
       vm.cloudNetworkModel.shared = false;
       vm.cloudNetworkModel.vlan_transparent = false;
-      vm.afterGet = true;
-      vm.modelCopy = angular.copy( vm.cloudNetworkModel );
       API.get("/api/providers?expand=resources&attributes=name&filter[]=type='*NetworkManager'").then(function(data) {
         vm.available_ems = data.resources;
+        vm.afterGet = true;
+        vm.modelCopy = angular.copy( vm.cloudNetworkModel );
+        miqService.sparkleOff();
       }).catch(miqService.handleFailure);
     } else {
-      miqService.sparkleOn();
       API.get("/api/cloud_networks/" + vm.cloudNetworkFormId + "?attributes=cloud_tenant,ext_management_system").then(function(data) {
         Object.assign(vm.cloudNetworkModel, data);
         vm.afterGet = true;
