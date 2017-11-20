@@ -727,7 +727,7 @@ class OpsController < ApplicationController
     end
   end
 
-  # set all needed thing before calling replace_right_cell with nodetype
+  # set all needed things before calling replace_right_cell with nodetype
   def dialog_replace_right_cell
     model, id = TreeBuilder.extract_node_model_and_id(x_node)
     @record = model.constantize.find(from_cid(id))

@@ -6,14 +6,6 @@ module Mixins
       )
       presenter.show(:default_left_cell).hide(:custom_left_cell)
       presenter.update(:main_div, r[:partial => "shared/dialogs/dialog_provision"])
-      if @record.try(:dialog_fields)
-        @record.dialog_fields.each do |field|
-          next unless %w(DialogFieldDateControl DialogFieldDateTimeControl).include?(field.type)
-          presenter[:build_calendar] = {
-            :date_from => field.show_past_dates ? nil : Time.zone.now,
-          }
-        end
-      end
       presenter.update(:form_buttons_div, r[
         :partial => 'layouts/x_dialog_buttons',
         :locals  => {
