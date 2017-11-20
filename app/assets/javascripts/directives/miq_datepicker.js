@@ -1,5 +1,5 @@
 /*
- * The 'miq-calendar' angular calendar directive takes care of:
+ * The 'miq-datepicker' angular calendar directive takes care of:
  * 1. data conversion (String <-> Date) between datepicker input and model
  * 2. re-configuring datepicker (start date, end date, skip days), whenever
  *    the model changes.
@@ -10,7 +10,7 @@
  * - miq-cal-skip-days: days of the week (array) to disable in the datepicker
  */
 
-ManageIQ.angular.app.directive('miqCalendar', function() {
+ManageIQ.angular.app.directive('miqDatepicker', function() {
   return {
     require: 'ngModel',
     link: function(scope, elem, attr, ctrl) {
@@ -27,8 +27,9 @@ ManageIQ.angular.app.directive('miqCalendar', function() {
       });
 
       scope.$watch(attr.ngModel, function(value) {
-        if(value)
+        if(value) {
           elem.datepicker('update');
+        }
       });
 
       if (attr.miqCalDateFrom) {
