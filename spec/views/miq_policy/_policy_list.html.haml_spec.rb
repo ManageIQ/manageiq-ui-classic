@@ -1,6 +1,10 @@
 require "ostruct"
 
 describe "miq_policy/_policy_list.html.haml" do
+  helper(JsHelper)
+  helper(GtlHelper)
+  helper(ApplicationHelper)
+
   it "renders flash message for cancelled creation of new Policy" do
     assign(:sb, :active_tree => :policy_tree, :folder => "a-b")
     assign(:view, OpenStruct.new(:table => OpenStruct.new(:data => [])))
