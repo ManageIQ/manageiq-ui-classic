@@ -946,7 +946,7 @@ module ApplicationController::CiProcessing
   def delete_elements(model_class, destroy_method, model_name = nil)
     elements = []
     model_name ||= model_class.table_name
-    if @lastaction == "show_list" || (@lastaction == "show" && @layout != model_name.singularize) # showing a list
+    if params[:miq_grid_checks].present? || @lastaction == "show_list" || (@lastaction == "show" && @layout != model_name.singularize) # showing a list
       elements = find_checked_ids_with_rbac(model_class)
       if elements.empty?
         add_flash(_("No %{model} were selected for deletion") %
