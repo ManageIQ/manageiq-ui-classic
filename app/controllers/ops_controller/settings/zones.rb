@@ -28,9 +28,10 @@ module OpsController::Settings::Zones
         javascript_flash(:spinner_off => true)
         return
       end
-      # zone = @zone.id.blank? ? Zone.new : Zone.find(@zone.id)  # Get new or existing record
+
       zone_set_record_vars(@zone)
       if valid_record?(@zone) && @zone.save
+        zone_save_ntp_server_settings(@zone)
         AuditEvent.success(build_created_audit(@zone, @edit))
         if params[:button] == "save"
           add_flash(_("Zone \"%{name}\" was saved") % {:name => @edit[:new][:name]})
@@ -111,8 +112,6 @@ module OpsController::Settings::Zones
     zone.settings ||= {}
     zone.settings[:proxy_server_ip] = @edit[:new][:proxy_server_ip]
     zone.settings[:concurrent_vm_scans] = @edit[:new][:concurrent_vm_scans]
-
-    zone_save_ntp_server_settings(zone)
 
     zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, :save => (mode != :validate))
   end
