@@ -126,12 +126,32 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
   vm.saveClicked = function() {
     var saveMsg = sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.customButtonModel.name);
-    vm.saveWithAPI('put', '/api/custom_buttons/' + vm.customButtonRecordId, vm.prepSaveObject(), saveMsg);
+
+    miqService.saveWithAPI('/api/custom_buttons/' + vm.customButtonRecordId, vm.prepSaveObject(), {
+      method: 'put',
+      successMessage: saveMsg,
+      redirectUrl: vm.redirectUrl,
+    });
   };
 
   vm.addClicked = function() {
     var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.customButtonModel.name);
-    vm.saveWithAPI('post', '/api/custom_buttons/', vm.prepSaveObject(), saveMsg);
+    var addToGroup = null;
+
+    if (vm.customButtonGroupRecordId) {
+      saveMsg = sprintf(__('%s \"%s\" has been successfully added under the selected button group.'), vm.entity, vm.customButtonModel.name);
+
+      addToGroup = function(response) {
+        return $http.post('/generic_object_definition/add_button_in_group/' + vm.customButtonGroupRecordId + '?button_id=' + response.results[0].id);
+      }
+    }
+
+    miqService.saveWithAPI('/api/custom_buttons', vm.prepSaveObject(), {
+      method: 'post',
+      successMessage: saveMsg,
+      redirectUrl: vm.redirectUrl,
+      beforeSuccess: addToGroup,
+    });
   };
 
   vm.prepSaveObject = function() {
@@ -182,25 +202,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       resource_action: vm.customButtonModel.resource_action,
       visibility: vm.customButtonModel.visibility,
     };
-  };
-
-  vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
-    miqService.sparkleOn();
-
-    if (vm.customButtonGroupRecordId) {
-      var saveCustomButtonPromise = API[method](url, saveObject);
-      var saveMsgBtnInGrp = sprintf(__('%s \"%s\" has been successfully added under the selected button group.'), vm.entity, vm.customButtonModel.name);
-
-      saveCustomButtonPromise.then(function(response) {
-        $http.post('/generic_object_definition/add_button_in_group/' + vm.customButtonGroupRecordId + '?button_id=' + response.results[0].id)
-          .then(miqService.redirectBack.bind(vm, saveMsgBtnInGrp, 'success', vm.redirectUrl))
-          .catch(miqService.handleFailure);
-      });
-    } else {
-      API[method](url, saveObject)
-        .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
-        .catch(miqService.handleFailure);
-    }
   };
 
   // private functions
