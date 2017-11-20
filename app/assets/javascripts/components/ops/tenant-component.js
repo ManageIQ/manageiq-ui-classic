@@ -64,7 +64,9 @@ function tenantFormController(API, miqService) {
 
   vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
     miqService.sparkleOn();
-    API[method](url, saveObject)
+    API[method](url, saveObject, {
+      skipErrors: [400],  // server-side validation
+    })
       .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
       .catch(miqService.handleFailure);
   };
