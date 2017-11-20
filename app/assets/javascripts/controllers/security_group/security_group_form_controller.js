@@ -23,19 +23,33 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
       vm.modelCopy = angular.copy( vm.securityGroupModel );
     } else {
       miqService.sparkleOn();
-      API.get("/api/security_groups/" + securityGroupFormId + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules").then(function(data) {
+
+      getSecurityGroup(securityGroupFormId)
+      .then(function(data) {
         Object.assign(vm.securityGroupModel, data);
         vm.securityGroupModel.firewall_rules_delete = false;
-        API.get("/api/security_groups/?expand=resources&attributes=ems_ref,id,name").then(function(data) {
-          vm.security_groups_list = data.resources;
-        }).catch(miqService.handleFailure);
-      }).then(function() {
+
+        return getSecurityGroups();
+      })
+      .then(function() {
         vm.afterGet = true;
         vm.modelCopy = _.cloneDeep(vm.securityGroupModel);
         miqService.sparkleOff();
-      }).catch(miqService.handleFailure);
+      })
+      .catch(miqService.handleFailure);
     }
   };
+
+  function getSecurityGroup(id) {
+    return API.get("/api/security_groups/" + id + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules");
+  }
+
+  function getSecurityGroups() {
+    return API.get("/api/security_groups/?expand=resources&attributes=ems_ref,id,name")
+      .then(function(data) {
+        vm.security_groups_list = data.resources;
+      });
+  }
 
   vm.addClicked = function() {
     var url = 'create/new?button=add';
