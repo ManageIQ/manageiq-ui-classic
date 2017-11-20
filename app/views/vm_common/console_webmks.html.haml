@@ -4,16 +4,23 @@
     %title
       = _('%{product_name} WebMKS Remote Console') % {:product_name => I18n.t('product.name')}
     = favicon_link_tag
-    = stylesheet_link_tag '/webmks/css/wmks-all.css'
-    = javascript_include_tag 'jquery/dist/jquery.js', 'jquery-ui/jquery-ui.js', '/webmks/wmks.min.js'
+    = stylesheet_link_tag '/webmks/css/wmks-all.css', 'application', 'webmks'
+    = javascript_include_tag 'jquery/dist/jquery.js', 'jquery-ui/jquery-ui.js', '/webmks/wmks.min.js', 'remote_console'
     :javascript
       $(function () {
-        var wmks = WMKS.createWMKS('wmksContainer', {}).register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function (event,data) {
+        var wmks = WMKS.createWMKS('remote-console', {}).register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function (event,data) {
           if(data.state == WMKS.CONST.ConnectionState.CONNECTED) {
+            $('#connection-status').text('#{_('Connected')}');
             console.log("connection state change: connected");
           }
         });
         wmks.connect("#{j webmks_uri.to_s}");
+
+        $('#ctrlaltdel').on('click', function() {
+          wmks.sendCAD();
+        });
       });
+
   %body
-    #wmksContainer{:style => "position: absolute; width: 99%; height: 99%;"}
+    #remote-console
+    = render :partial => 'shared/remote_console_footer', :layout => false, :locals => { :console_type => 'WebMKS' }
