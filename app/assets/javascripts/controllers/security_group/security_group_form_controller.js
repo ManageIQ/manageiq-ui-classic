@@ -18,23 +18,23 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     vm.newRecord = securityGroupFormId === "new";
     vm.saveable = miqService.saveable;
 
-    API.get("/api/security_groups/?expand=resources&attributes=ems_ref,id,name").then(function(data) {
-      vm.security_groups_list = data.resources;
-    }).then(function() {
-      if (vm.newRecord) {
-        vm.afterGet = true;
-        vm.modelCopy = angular.copy( vm.securityGroupModel );
-      } else {
-        miqService.sparkleOn();
-        API.get("/api/security_groups/" + securityGroupFormId + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules").then(function(data) {
-          Object.assign(vm.securityGroupModel, data);
-          vm.securityGroupModel.firewall_rules_delete = false;
-          vm.afterGet = true;
-          vm.modelCopy = _.cloneDeep(vm.securityGroupModel);
-          miqService.sparkleOff();
+    if (vm.newRecord) {
+      vm.afterGet = true;
+      vm.modelCopy = angular.copy( vm.securityGroupModel );
+    } else {
+      miqService.sparkleOn();
+      API.get("/api/security_groups/" + securityGroupFormId + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules").then(function(data) {
+        Object.assign(vm.securityGroupModel, data);
+        vm.securityGroupModel.firewall_rules_delete = false;
+        API.get("/api/security_groups/?expand=resources&attributes=ems_ref,id,name").then(function(data) {
+          vm.security_groups_list = data.resources;
         }).catch(miqService.handleFailure);
-      }
-    }).catch(miqService.handleFailure);
+      }).then(function() {
+        vm.afterGet = true;
+        vm.modelCopy = _.cloneDeep(vm.securityGroupModel);
+        miqService.sparkleOff();
+      }).catch(miqService.handleFailure);
+    }
   };
 
   vm.addClicked = function() {
