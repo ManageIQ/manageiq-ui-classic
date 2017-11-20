@@ -236,10 +236,15 @@ module EmsCommon
 
       when "physical_server_protect"          then assign_policies(PhysicalServer)
       when "physical_server_tag"              then tag(PhysicalServer)
-
+      when "orchestration_stack_delete"       then orchestration_stack_delete
       end
 
       return if params[:pressed].include?("tag") && !%w(host_tag vm_tag miq_template_tag instance_tag).include?(params[:pressed])
+      if params[:pressed].include?("orchestration_stack_delete")
+        session[:flash_msgs] = @flash_array.dup
+        javascript_redirect(polymorphic_path(EmsCloud.find(params[:id]), :display => 'orchestration_stacks'))
+        return
+      end
       pfx = pfx_for_vm_button_pressed(params[:pressed])
       # Handle Host power buttons
       if host_power_button?(params[:pressed])
