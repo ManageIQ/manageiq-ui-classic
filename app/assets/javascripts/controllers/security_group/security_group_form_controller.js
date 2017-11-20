@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFormId', 'miqService', 'API', function(securityGroupFormId, miqService, API) {
+ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFormId', 'miqService', 'API', '$q', function(securityGroupFormId, miqService, API, $q) {
   var vm = this;
 
   var init = function() {
@@ -24,24 +24,22 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     } else {
       miqService.sparkleOn();
 
-      getSecurityGroup(securityGroupFormId)
-      .then(function(data) {
-        Object.assign(vm.securityGroupModel, data);
-        vm.securityGroupModel.firewall_rules_delete = false;
-
-        return getSecurityGroups();
-      })
-      .then(function() {
-        vm.afterGet = true;
-        vm.modelCopy = _.cloneDeep(vm.securityGroupModel);
-        miqService.sparkleOff();
-      })
-      .catch(miqService.handleFailure);
+      $q.all([getSecurityGroup(securityGroupFormId), getSecurityGroups()])
+        .then(function() {
+          vm.afterGet = true;
+          vm.modelCopy = _.cloneDeep(vm.securityGroupModel);
+          miqService.sparkleOff();
+        })
+        .catch(miqService.handleFailure);
     }
   };
 
   function getSecurityGroup(id) {
-    return API.get("/api/security_groups/" + id + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules");
+    return API.get("/api/security_groups/" + id + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules")
+      .then(function(data) {
+        Object.assign(vm.securityGroupModel, data);
+        vm.securityGroupModel.firewall_rules_delete = false;
+      });
   }
 
   function getSecurityGroups() {
