@@ -454,16 +454,6 @@ class ServiceController < ApplicationController
     # Clear the JS gtl_list_grid var if changing to a type other than list
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
 
-    if @record.kind_of?(Dialog)
-      @record.dialog_fields.each do |field|
-        if %w(DialogFieldDateControl DialogFieldDateTimeControl).include?(field.type)
-          presenter[:build_calendar] = {
-            :date_from => field.show_past_dates ? nil : Time.zone.now,
-          }
-        end
-      end
-    end
-
     presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb, :custom => cb_tb)
 
     presenter.set_visibility(h_tb.present? || c_tb.present? || !v_tb.present?, :toolbar)
