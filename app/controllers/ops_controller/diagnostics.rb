@@ -236,7 +236,7 @@ module OpsController::Diagnostics
   def cu_repair
     return unless load_edit("curepair_edit__new", "replace_cell__explorer")
     if @edit[:new][:end_date].to_time < @edit[:new][:start_date].to_time
-      add_flash(_("End Date cannot be greater than Start Date"), :error)
+      add_flash(_("End Date cannot be earlier than Start Date"), :error)
     else
       # converting string to time, and then converting into user selected timezone
       from =  "#{@edit[:new][:start_date]} #{@edit[:new][:start_hour]}:#{@edit[:new][:start_min]}:00".to_time.in_time_zone(@edit[:new][:timezone])
