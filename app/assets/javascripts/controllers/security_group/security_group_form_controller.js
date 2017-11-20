@@ -28,7 +28,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
         miqService.sparkleOn();
         API.get("/api/security_groups/" + securityGroupFormId + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules").then(function(data) {
           Object.assign(vm.securityGroupModel, data);
-          vm.securityGroupModel.firewall_rules_delete = false;        vm.securityGroupModel.name = data.name;
+          vm.securityGroupModel.firewall_rules_delete = false;
           vm.afterGet = true;
           vm.modelCopy = _.cloneDeep(vm.securityGroupModel);
           miqService.sparkleOff();
