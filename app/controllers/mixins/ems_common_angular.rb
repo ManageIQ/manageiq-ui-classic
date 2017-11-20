@@ -156,7 +156,7 @@ module Mixins
           :metrics_database => params[:metrics_database_name],
         }]
       when 'ManageIQ::Providers::Vmware::InfraManager'
-        [{:pass => password, :user => user, :ip => params[:default_hostname]}]
+        [{:pass => password, :user => user, :ip => params[:default_hostname], :use_broker => false}]
       when 'ManageIQ::Providers::Nuage::NetworkManager'
         endpoint_opts = {:protocol => params[:default_security_protocol], :hostname => params[:default_hostname], :api_port => params[:default_api_port], :api_version => params[:api_version]}
         [user, params[:default_password], endpoint_opts]
