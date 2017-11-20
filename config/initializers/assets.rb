@@ -14,6 +14,7 @@ Rails.application.config.assets.precompile += %w(
   novnc-rails
   noVNC/web-socket-js/WebSocketMain.swf
   remote_consoles/*.js
+  remote_console.js
   spice-html5-bower
   spice-html5-bower/spiceHTML5/spicearraybuffer.js
 )
