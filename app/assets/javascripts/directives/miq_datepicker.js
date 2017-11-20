@@ -32,6 +32,10 @@ ManageIQ.angular.app.directive('miqDatepicker', function() {
         }
       });
 
+      if (elem.attr('data-provide') !== 'datepicker') {
+        throw 'Needs data-provide attribute';
+      }
+
       if (attr.miqCalDateFrom) {
         scope.$watch(attr.miqCalDateFrom, function(value) {
           elem.datepicker('setStartDate', value);
