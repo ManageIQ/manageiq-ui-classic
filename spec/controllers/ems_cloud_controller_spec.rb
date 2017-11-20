@@ -349,6 +349,17 @@ describe EmsCloudController do
         expect(mocked_class).to receive(:validate_credentials_task)
         controller.send(:create_ems_button_validate)
       end
+
+      context "vmware infrastructure manager" do
+        let(:mocked_class) { ManageIQ::Providers::Vmware::InfraManager }
+        let(:mocked_class_controller) { "ems_infra" }
+
+        it "disables the broker" do
+          expected_validate_args = [{:pass => nil, :user => nil, :ip => nil, :use_broker => false}]
+          expect(mocked_class).to receive(:validate_credentials_task).with(expected_validate_args, nil, nil)
+          controller.send(:create_ems_button_validate)
+        end
+      end
     end
 
     context "with a container manager" do
