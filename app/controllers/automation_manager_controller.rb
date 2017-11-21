@@ -47,7 +47,7 @@ class AutomationManagerController < ApplicationController
     case x_active_accord
     when :automation_manager_providers
       assert_privileges("automation_manager_provider_tag")
-      tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager', false)
+      tagging_edit(class_for_provider_node.to_s, false)
     when :automation_manager_cs_filter
       assert_privileges("automation_manager_configured_system_tag")
       tagging_edit('ConfiguredSystem', false)
@@ -100,18 +100,22 @@ class AutomationManagerController < ApplicationController
       end
   end
 
-  def automation_manager_providers_tree_rec
+  def class_for_provider_node
     nodes = x_node.split('-')
     case nodes.first
-    when "root" then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-    when "at", "e" then find_record(ManageIQ::Providers::AutomationManager::InventoryRootGroup, params[:id])
-    when "f"    then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem, params[:id])
+    when "root" then ManageIQ::Providers::AnsibleTower::AutomationManager
+    when "at", "e" then ManageIQ::Providers::AutomationManager::InventoryRootGroup
+    when "f", "cs"    then ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
     when "xx" then
       case nodes.second
-      when "at"  then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-      when "csa" then find_record(ConfiguredSystem, params[:id])
+      when "at"  then ManageIQ::Providers::AnsibleTower::AutomationManager
+      when "csa" then ConfiguredSystem
       end
     end
+  end
+
+  def automation_manager_providers_tree_rec
+    find_record(class_for_provider_node, params[:id])
   end
 
   def automation_manager_cs_filter_tree_rec

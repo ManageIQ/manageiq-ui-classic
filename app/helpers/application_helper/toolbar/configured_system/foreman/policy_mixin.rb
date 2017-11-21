@@ -1,4 +1,4 @@
-module ApplicationHelper::Toolbar::ConfiguredSystem::PolicyMixin
+module ApplicationHelper::Toolbar::ConfiguredSystem::Foreman::PolicyMixin
   def self.included(included_class)
     included_class.button_group('provider_foreman_policy', [
       included_class.select(

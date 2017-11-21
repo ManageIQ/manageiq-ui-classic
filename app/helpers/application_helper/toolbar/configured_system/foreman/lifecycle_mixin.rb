@@ -1,4 +1,4 @@
-module ApplicationHelper::Toolbar::ConfiguredSystem::LifecycleMixin
+module ApplicationHelper::Toolbar::ConfiguredSystem::Foreman::LifecycleMixin
   def self.included(included_class)
     included_class.button_group('provider_foreman_lifecycle', [
       included_class.select(

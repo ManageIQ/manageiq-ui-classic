@@ -598,7 +598,7 @@ class ApplicationHelper::ToolbarChooser
     when "f"        then  inventory_group_center_tb
     when "xx"       then
       case nodes.last
-      when "f"  then "configured_systems_ansible_center_tb"
+      when "f"  then "configured_systems_center_tb"
       when "cp" then "unassigned_profiles_group_center_tb"
       else "configuration_manager_providers_center_tb"
       end
