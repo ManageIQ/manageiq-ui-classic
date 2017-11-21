@@ -2051,7 +2051,7 @@ class CatalogController < ApplicationController
       elsif action == "dialog_provision"
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
-        presenter.show(:paging_div, :form_buttons_div).hide(:pc_div_1)
+        presenter.hide(:form_buttons_div, :paging_div, :pc_div_1)
         @record.dialog_fields.each do |field|
           if ["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(field.type)
             presenter[:build_calendar] = {
@@ -2060,6 +2060,7 @@ class CatalogController < ApplicationController
           end
         end
         if Settings.product.old_dialog_user_ui || action_name != "svc_catalog_provision"
+          presenter.show(:form_buttons_div, :buttons_on)
           presenter.update(
             :form_buttons_div,
             r[
@@ -2084,10 +2085,10 @@ class CatalogController < ApplicationController
         presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
       else
         # Added so buttons can be turned off even tho div is not being displayed it still pops up Abandon changes box when trying to change a node on tree after saving a record
-        presenter.hide(:buttons_on).show(:toolbar).hide(:paging_div)
+        presenter.hide(:buttons_on, :form_buttons_div).show(:toolbar).hide(:paging_div)
       end
     else
-      presenter.show(:form_buttons_div, :pc_div_1, :toolbar, :paging_div)
+      presenter.hide(:form_buttons_div).show(:pc_div_1, :toolbar, :paging_div)
     end
 
     presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
