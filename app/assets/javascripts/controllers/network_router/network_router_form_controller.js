@@ -65,15 +65,12 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
         Object.assign(vm.networkRouterModel, data);
         if (data.extra_attributes.external_gateway_info && ! _.isEmpty(data.extra_attributes.external_gateway_info)) {
           vm.networkRouterModel.external_gateway = true;
+          return getSubnetByRef(vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id);
         }
       }).then(function() {
-        if (vm.networkRouterModel.external_gateway) {
-          getSubnetByRef(vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id);
-        }
+        return getCloudNetworksByEms(vm.networkRouterModel.ext_management_system.id);
       }).then(function() {
-        getCloudNetworksByEms(vm.networkRouterModel.ext_management_system.id);
-      }).then(function() {
-        getCloudSubnetsByNetworkID(vm.networkRouterModel.cloud_network_id);
+        return getCloudSubnetsByNetworkID(vm.networkRouterModel.cloud_network_id);
       }).then(function() {
         vm.afterGet = true;
         vm.modelCopy = angular.copy(vm.networkRouterModel);

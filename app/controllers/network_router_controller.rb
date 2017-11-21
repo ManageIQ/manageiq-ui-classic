@@ -70,8 +70,8 @@ class NetworkRouterController < ApplicationController
       @router = NetworkRouter.new
       options = form_params(params)
       options.merge!(form_external_gateway(params)) if switch_to_bool(params[:external_gateway])
-      ems = ExtManagementSystem.find(options[:ems_id])
-      options.delete(:ems_id)
+
+      ems = ExtManagementSystem.find(params[:ext_management_system][:id])
       task_id = ems.create_network_router_queue(session[:userid], options)
 
       add_flash(_("Network Router creation failed: Task start failed: ID [%{id}]") %
@@ -406,7 +406,7 @@ class NetworkRouterController < ApplicationController
   end
 
   def form_params(params)
-    options = %i(name ems_id admin_state_up cloud_group_id cloud_subnet_id
+    options = %i(name ems_id cloud_group_id cloud_subnet_id
       cloud_network_id).each_with_object({}) do |param, opt|
       opt[param] = params[param] if params[param]
     end
