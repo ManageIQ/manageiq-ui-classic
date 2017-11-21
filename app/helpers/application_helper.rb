@@ -1636,7 +1636,8 @@ module ApplicationHelper
       :listicon   => @listicon,
       :embedded   => @embedded,
       :showlinks  => @showlinks,
-      :policy_sim => @policy_sim
+      :policy_sim => @policy_sim,
+      :lastaction => @lastaction
     )
     @report_data_additional_options.with_row_button(@row_button) if @row_button
     @report_data_additional_options.with_menu_click(params[:menu_click]) if params[:menu_click]
