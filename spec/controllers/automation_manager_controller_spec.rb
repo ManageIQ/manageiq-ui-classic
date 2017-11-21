@@ -639,6 +639,51 @@ describe AutomationManagerController do
     end
   end
 
+  context "#tags_edit" do
+    let!(:user) { stub_user(:features => :all) }
+    before(:each) do
+      EvmSpecHelper.create_guid_miq_server_zone
+      allow(@ans_configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryGirl.create(:classification_tag,
+                                 :name   => "tag1",
+                                 :parent => classification)
+      @tag2 = FactoryGirl.create(:classification_tag,
+                                 :name   => "tag2",
+                                 :parent => classification)
+      allow(Classification).to receive(:find_assigned_entries).with(@ans_configured_system).and_return([@tag1, @tag2])
+      session[:tag_db] = "ConfiguredSystem"
+      edit = {:key        => "ConfiguredSystem_edit_tags__#{@ans_configured_system.id}",
+              :tagging    => "ConfiguredSystem",
+              :object_ids => [@ans_configured_system.id],
+              :current    => {:assignments => []},
+              :new        => {:assignments => [@tag1.id, @tag2.id]}}
+      session[:edit] = edit
+    end
+
+    after(:each) do
+      expect(response.status).to eq(200)
+    end
+
+    it "builds tagging screen" do
+      post :tagging, :params => {:format => :js, :miq_grid_checks => [@ans_configured_system.id]}
+      expect(assigns(:flash_array)).to be_nil
+      expect(response.status).to eq(200)
+    end
+
+    it "cancels tags edit" do
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => @ans_configured_system.id}
+      expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
+      expect(assigns(:edit)).to be_nil
+    end
+
+    it "save tags" do
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @ans_configured_system.id}
+      expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
+      expect(assigns(:edit)).to be_nil
+    end
+  end
+
   def user_with_feature(features)
     features = EvmSpecHelper.specific_product_features(*features)
     FactoryGirl.create(:user, :features => features)

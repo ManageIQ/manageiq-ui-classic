@@ -1,4 +1,4 @@
-module ApplicationHelper::Toolbar::ConfiguredSystem::AutomationPolicyMixin
+module ApplicationHelper::Toolbar::ConfiguredSystem::Automation::PolicyMixin
   def self.included(included_class)
     included_class.button_group('automation_manager_policy', [
        included_class.select(
