@@ -105,7 +105,7 @@ class AutomationManagerController < ApplicationController
     case nodes.first
     when "root" then ManageIQ::Providers::AnsibleTower::AutomationManager
     when "at", "e" then ManageIQ::Providers::AutomationManager::InventoryRootGroup
-    when "f"    then ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
+    when "f", "cs"    then ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
     when "xx" then
       case nodes.second
       when "at"  then ManageIQ::Providers::AnsibleTower::AutomationManager
