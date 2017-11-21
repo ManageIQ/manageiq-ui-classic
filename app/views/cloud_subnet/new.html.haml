@@ -15,13 +15,16 @@
         = _('Network Manager')
       .col-md-8
         = select_tag("ems_id",
-            options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
-            "ng-model"                    => "vm.cloudSubnetModel.ems_id",
-            "ng-change"                   => "vm.filterNetworkManagerChanged(vm.cloudSubnetModel.ems_id)",
-            "required"                    => "",
-            "selectpicker-for-select-tag" => "")
+                      options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
+                      "ng-model"                    => "cloudSubnetModel.ems_id",
+                      "required"                    => "",
+                      "ng-change"                   => "filterNetworkManagerChanged(cloudSubnetModel.ems_id)",
+                      "selectpicker-for-select-tag" => "")
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
+
+  %h3
+    = _('Cloud Subnet details')
   .form-horizontal
     .form-group{"ng-if"    => "vm.cloudSubnetModel.ems_id",
                 "ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
