@@ -1,6 +1,7 @@
 describe 'ops/_label_tag_mapping_form.html.haml' do
   before do
     assign(:sb, :active_tab => 'settings_label_tag_mapping')
+    allow(view).to receive(:url_for_only_path).and_return("test")
   end
 
   context 'add new mapping' do
