@@ -3,7 +3,7 @@
     %dialog-user{"dialog" =>"vm.dialog", "refresh-field" => "vm.refreshField(field)", "on-update" => "vm.setDialogData(data)"}
 
   .clearfix
-  .pull-right.button-group
+  .pull-right.button-group{'ng-show' => "vm.dialogLoaded"}
     %miq-button{:name      => t = _("Submit"),
                 :title     => t,
                 :alt       => t,
