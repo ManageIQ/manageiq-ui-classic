@@ -450,9 +450,6 @@ class ApplicationController < ActionController::Base
     if !@policy_sim.nil? && session[:policies] && !session[:policies].empty?
       settings[:url] = '/' + controller + '/policies/'
     end
-    if session[:sandboxes] && @sb && controller
-      session[:sandboxes][controller] = @sb
-    end
     settings
   end
   private :set_variables_report_data
@@ -2305,11 +2302,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_active_elements(feature)
+  # Set active tree and accordion according to given node.
+  # Optionally set x_node.
+  #
+  # Warning: the new x_node must exist in the tree.
+  #
+  def set_active_elements(feature, x_node_to_set = nil)
     if feature
       self.x_active_tree ||= feature.tree_list_name
       self.x_active_accord ||= feature.accord_name
     end
+
+    self.x_node = x_node_to_set if x_node_to_set.present?
     get_node_info(x_node)
   end
 
@@ -2323,12 +2327,14 @@ class ApplicationController < ActionController::Base
     @flash_array = nil if params[:button] != "reset"
   end
 
-  def build_accordions_and_trees
+  # Build all trees and accordions accoding to features available to the current user.
+  #
+  def build_accordions_and_trees(x_node_to_set = nil)
     # Build the Explorer screen from scratch
     allowed_features = ApplicationController::Feature.allowed_features(features)
     @trees = allowed_features.collect { |feature| feature.build_tree(@sb) }
     @accords = allowed_features.map(&:accord_hash)
-    set_active_elements(allowed_features.first)
+    set_active_elements(allowed_features.first, x_node_to_set)
   end
 
   def fetch_name_from_object(klass, id)
