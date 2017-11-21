@@ -2059,7 +2059,7 @@ class CatalogController < ApplicationController
             }
           end
         end
-        if Settings.product.old_dialog_user_ui || action_name != "svc_catalog_provision"
+        if Settings.product.old_dialog_user_ui
           presenter.show(:form_buttons_div, :buttons_on)
           presenter.update(
             :form_buttons_div,
