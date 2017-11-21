@@ -15,23 +15,7 @@
       %div{:style => "position: relative; width: 152px; height: #{height}; z-index: 0; margin: 0px auto;"}
         - if %w(MiqTemplate VmOrTemplate Vm).include?(@sb[:compare_db])
           - if settings(:quadicons, :vm)
-            .flobj
-              %img{:src => image_path("layout/base.svg")}
-            %div{:class => "flobj b72"}
-              - if @drift_obj.template?
-                - if @drift_obj.host
-                  %img{:src => image_path('100/template.png')}
-                - else
-                  %img{:src => image_path('100/template-no-host.png')}
-              - else
-                %img{:src => image_path("svg/currentstate-#{h(@drift_obj.current_state.downcase)}.svg")}
-            %div{:class => "flobj c72"}
-              %img{:src => image_path("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg")}
-            %div{:class => "flobj a72"}
-              %img{:src => image_path("svg/os-#{h(@drift_obj.os_image_name.downcase)}.svg")}
-            %div{:class => "flobj d72"}
-              %p
-                = @drift_obj.number_of(:snapshots)
+            = render_quadicon(@drift_obj, :mode => :icon, :size => 72, :height => height, :typ => :listnav)
           - else
             .flobj
               %img{:src => image_path("layout/base-single.png")}
