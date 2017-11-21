@@ -1330,7 +1330,15 @@ module VmCommon
       elsif @in_a_form
         # these subviews use angular, so they need to use a special partial
         # so the form buttons on the outer frame can be updated.
-        if %w(attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
+        if @sb[:action] == 'dialog_provision'
+          presenter.update(:form_buttons_div, r[
+            :partial => 'layouts/x_dialog_buttons',
+            :locals  => {
+              :action_url => action,
+              :record_id  => @edit[:rec_id],
+            }
+          ])
+        elsif %w(attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
                  associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
         elsif action != "retire" && action != "reconfigure_update"
