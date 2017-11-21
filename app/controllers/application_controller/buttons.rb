@@ -251,8 +251,8 @@ module ApplicationController::Buttons
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
                                     GenericObjectDefinition Host LoadBalancer
-                                    MiqGroup MiqTemp NetworkRouter OrchestrationStack SecurityGroup Service
-                                    ServiceTemplate Storage Switch Tenant User Vm).freeze
+                                    MiqGroup MiqTemp MiqTemplate NetworkRouter OrchestrationStack SecurityGroup Service
+                                    ServiceTemplate Storage Switch Tenant User Vm VmOrTemplate).freeze
   def applies_to_class_model(applies_to_class)
     # TODO: Give a better name for this concept, including ServiceTemplate using Service
     # This should probably live in the model once this concept is defined.
