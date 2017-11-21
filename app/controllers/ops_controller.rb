@@ -676,7 +676,8 @@ class OpsController < ApplicationController
       elsif %w(zone_delete).include?(params[:pressed])
         presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
       else
-        presenter[:update_partials][@sb[:active_tab.to_sym]] = r[:partial => "#{@sb[:active_tab]}_tab"]
+        tab = @sb[:active_tab] == 'settings_tags' ? @sb[:active_subtab] : @sb[:active_tab]
+        presenter[:update_partials][tab] = r[:partial => "#{tab}_tab"]
       end
       active_id = from_cid(x_node.split("-").last)
       # server node
