@@ -16,42 +16,47 @@ class TreeBuilderServices < TreeBuilder
   end
 
   def root_options
-    { }
+    {}
+  end
+
+  def root_node(id, text, tip)
+    {
+      :id   => id,
+      :text => text,
+      :icon => 'pficon pficon-folder-close',
+      :tip  => tip
+    }
+  end
+
+  def services_root(id, name, tip)
+    root_node(id, name, tip).update(:load_children => true)
+  end
+
+  def filter_root(id, name, tip)
+    root_node(id, name, tip).update(:selectable => false)
   end
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    objects = []
-    objects.push(:id            => "asrv",
-                 :text          => _("Active Services"),
-                 :icon          => "pficon pficon-folder-close",
-                 :load_children => true,
-                 :tip           => _("Active Services"))
-    objects.push(:id            => "rsrv",
-                 :text          => _("Retired Services"),
-                 :icon          => "pficon pficon-folder-close",
-                 :load_children => true,
-                 :tip           => _("Retired Services"))
-    objects.push(:id         => "global",
-                 :text       => _("Global Filters"),
-                 :icon       => "pficon pficon-folder-close",
-                 :selectable => false,
-                 :tip        => _("Global Shared Filters"))
-    objects.push(:id         => "my",
-                 :text       => _("My Filters"),
-                 :icon       => "pficon pficon-folder-close",
-                 :selectable => false,
-                 :tip        => _("My Personal Filters"))
+    objects = [
+      services_root('asrv', _('Active Services'),  _('Active Services')),
+      services_root('rsrv', _('Retired Services'), _('Retired Services')),
+      filter_root('global', _('Global Filters'),   _('Global Shared Filters')),
+      filter_root('my',     _('My Filters'),       _('My Personal Filters'))
+    ]
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
-    services = Rbac.filtered(Service.where(:retired => object[:id] != 'asrv', :display => true))
-    if %w(global my).include?(object[:id]) # Get My Filters and Global Filters
-      count_only_or_objects(count_only, x_get_search_results(object, _options[:leaf]))
-    elsif count_only
-      services.size
-    else
+  def x_get_tree_custom_kids(object, count_only, options)
+    case object[:id]
+    when 'my', 'global'
+      # Get My Filters and Global Filters
+      count_only_or_objects(count_only, x_get_search_results(object, options[:leaf]))
+    when 'asrv', 'rsrv'
+      retired = object[:id] != 'asrv'
+      services = Rbac.filtered(Service.where(:retired => retired, :display => true))
+      return sevices.size if count_only
+
       MiqPreloader.preload(services.to_a, :picture)
       Service.arrange_nodes(services.sort_by { |n| [n.ancestry.to_s, n.name.downcase] })
     end

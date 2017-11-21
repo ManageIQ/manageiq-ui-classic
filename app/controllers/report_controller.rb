@@ -274,7 +274,7 @@ class ReportController < ApplicationController
 
   private ###########################
 
-  def set_active_elements(feature)
+  def set_active_elements(feature, _x_node_to_set = nil)
     if feature
       self.x_active_tree ||= feature.tree_list_name
       self.x_active_accord ||= feature.accord_name

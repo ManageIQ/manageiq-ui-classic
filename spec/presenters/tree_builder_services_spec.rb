@@ -7,6 +7,13 @@ describe TreeBuilderServices do
     create_deep_tree
 
     expect(root_nodes.size).to eq(4)
+    expect(root_nodes).to match [
+      a_hash_including(:id => 'asrv'),
+      a_hash_including(:id => 'rsrv'),
+      a_hash_including(:id => 'global'),
+      a_hash_including(:id => 'my')
+    ]
+
     active_nodes = kid_nodes(root_nodes[0])
     retired_nodes = kid_nodes(root_nodes[1])
     expect(active_nodes).to eq(

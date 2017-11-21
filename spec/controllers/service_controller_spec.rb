@@ -199,5 +199,40 @@ describe ServiceController do
     end
   end
 
+  # Request URL: http://localhost:3000/service/tree_select?id=xx-asrv
+  context 'displaying a list of Active Services' do
+    describe '#tree_select' do
+      render_views
+
+      it 'renders GTL of Active services' do
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'Service',
+          :report_data_additional_options => {
+            :named_scope => [[:retired, false], :displayed]
+          }
+        )
+        post :tree_select, :params => {:id => 'xx-asrv'}
+        expect(response.status).to eq(200)
+      end
+    end
+  end
+
+  context 'displaying a list of Retired Services' do
+    describe '#tree_select' do
+      render_views
+
+      it 'renders GTL of Retired services' do
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'Service',
+          :report_data_additional_options => {
+            :named_scope => [:retired, :displayed]
+          }
+        )
+        post :tree_select, :params => {:id => 'xx-rsrv'}
+        expect(response.status).to eq(200)
+      end
+    end
+  end
+
   it_behaves_like "explorer controller with custom buttons"
 end
