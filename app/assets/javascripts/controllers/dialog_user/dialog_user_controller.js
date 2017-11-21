@@ -9,6 +9,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
 
   function init(dialog) {
     vm.dialog = dialog.content[0];
+    vm.dialogLoaded = true;
   }
 
   vm.refreshField = refreshField;

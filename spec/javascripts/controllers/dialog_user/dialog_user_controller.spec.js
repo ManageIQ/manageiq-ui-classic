@@ -47,6 +47,10 @@ describe('dialogUserController', function() {
     it('sets the refreshUrl', function() {
       expect($controller.refreshUrl).toEqual('/api/service_dialogs/');
     });
+
+    it('sets dialogLoaded to true', function() {
+      expect($controller.dialogLoaded).toEqual(true);
+    });
   });
 
   describe('refreshField', function() {
