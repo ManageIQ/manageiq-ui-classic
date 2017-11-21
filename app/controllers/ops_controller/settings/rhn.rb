@@ -296,27 +296,28 @@ module OpsController::Settings::RHN
         begin
           case params[:button]
           when 'register'
-            verb = _("Registration")
             MiqServer.queue_update_registration_status(server_ids)
+            add_flash(_('Registration has been initiated for the selected Servers'))
           when 'check'
-            verb = _("Check for updates")
             MiqServer.queue_check_updates(server_ids)
+            add_flash(_('Check for updates has been initiated for the selected Servers'))
           when 'update'
-            verb = _("Update")
             MiqServer.queue_apply_updates(server_ids)
+            add_flash(_('Update has been initiated for the selected Servers'))
           end
 
-          add_flash(_("%{item} has been initiated for the selected Servers") % {:item => verb})
+          javascript_flash
         rescue => error
           add_flash(_("Error occured when queuing action: %{message}") % {:message => error.message}, :error)
+          javascript_flash
         end
       end
-    end
-
-    settings_get_info('root')
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html('settings_rhn', :partial => 'settings_rhn_tab')
+    else
+      settings_get_info('root')
+      render :update do |page|
+        page << javascript_prologue
+        page.replace_html('settings_rhn', :partial => 'settings_rhn_tab')
+      end
     end
   end
 
