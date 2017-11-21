@@ -966,5 +966,34 @@ describe CatalogController do
       ct_details = controller.send(:fetch_ct_details)
       expect(ct_details).to eq(options)
     end
+
+    describe '#replace_right_cell' do
+      let(:dialog)           { FactoryGirl.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
+      before do
+        allow(controller).to receive(:params).and_return(:action => 'dialog_provision')
+        controller.instance_variable_set(:@in_a_form, true)
+        controller.instance_variable_set(:@record, dialog)
+        controller.instance_variable_set(:@edit, {:rec_id => '1'})
+        controller.instance_variable_set(:@sb,
+                                         :trees       => {:svccat_tree => {:open_nodes => [], :active_node => "root"}},
+                                         :active_tree => :svccat_tree)
+        @presenter = ExplorerPresenter.new(:active_tree => :svccat_tree)
+        allow(controller).to receive(:render).and_return(nil)
+      end
+
+      it 'should render and make form buttons visible when product setting is set to render old dialogs' do
+        ::Settings.product.old_dialog_user_ui = true
+        controller.send(:replace_right_cell, {:action => "dialog_provision", :presenter => @presenter})
+        expect(@presenter[:set_visible_elements]).to include(:form_buttons_div => true)
+        expect(@presenter[:set_visible_elements]).to include(:buttons_on => true)
+      end
+
+      it 'should not render and show form buttons when product setting is NOT set to render old dialogs' do
+        ::Settings.product.old_dialog_user_ui = false
+
+        controller.send(:replace_right_cell, {:action => "dialog_provision", :presenter => @presenter})
+        expect(@presenter[:set_visible_elements]).to include(:form_buttons_div => false)
+      end
+    end
   end
 end
