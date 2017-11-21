@@ -113,9 +113,9 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
   }
 
   function showFullyQualifiedName(resourceAction) {
-    if (typeof resourceAction.ae_namespace == 'undefined' ||
-        typeof resourceAction.ae_class == 'undefined' ||
-        typeof resourceAction.ae_instance == 'undefined') {
+    if (typeof resourceAction.ae_namespace === 'undefined' ||
+        typeof resourceAction.ae_class === 'undefined' ||
+        typeof resourceAction.ae_instance === 'undefined') {
       return '';
     }
     var fqname = resourceAction.ae_namespace
