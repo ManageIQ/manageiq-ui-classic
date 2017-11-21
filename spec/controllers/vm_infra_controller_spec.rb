@@ -19,6 +19,14 @@ describe VmInfraController do
   render_views
 
   it 'can render the explorer' do
+    expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      :model_name                     => 'VmOrTemplate',
+      :report_data_additional_options => {
+        :model      => "VmOrTemplate",
+        :lastaction => 'show_list'
+      }
+    )
+
     get :explorer
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
