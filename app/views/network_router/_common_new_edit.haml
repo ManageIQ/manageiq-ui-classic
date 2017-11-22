@@ -42,7 +42,7 @@
             "ng-maxlength" => 128,
             "ng-model"     => "vm.networkRouterModel.ext_management_system.name",
             "ng-disabled"  => true}
-  %div
+  %div{"ng-if" => "vm.networkRouterModel.ext_management_system.id"}
     %h3
       = _('Placement')
     .form-horizontal

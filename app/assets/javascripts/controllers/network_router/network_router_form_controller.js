@@ -65,7 +65,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
         Object.assign(vm.networkRouterModel, data);
         if (data.extra_attributes.external_gateway_info && ! _.isEmpty(data.extra_attributes.external_gateway_info)) {
           vm.networkRouterModel.external_gateway = true;
-          return getSubnetByRef(vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id);
+          return getCloudSubnetsByRef(vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id);
         }
       }).then(function() {
         return getCloudNetworksByEms(vm.networkRouterModel.ext_management_system.id);
@@ -95,7 +95,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     }
   };
 
-  var getSubnetByRef = function(ref) {
+  var getCloudSubnetsByRef = function(ref) {
     if (ref) {
       API.get("/api/cloud_subnets?expand=resources&attributes=name&filter[]=ems_ref=" + ref).then(function(data) {
         vm.networkRouterModel.cloud_subnet_id = data.resources[0].id;

@@ -128,7 +128,7 @@ describe NetworkRouterController do
       it "queues the create action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :create, :params => { :button => "add", :format => :js, :name => 'test',
-                                   :tenant_id => 'id', :ems_id => @ems.id }
+                                   :tenant_id => 'id', :ext_management_system => {:id => @ems.id }}
       end
     end
   end
