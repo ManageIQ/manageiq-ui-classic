@@ -45,7 +45,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     miqService.sparkleOn();
     var apiData;
     if (apiSubmitEndpoint.match(/generic_objects/)) {
-      apiData = {parameters: vm.dialogData};
+      apiData = {action: apiAction, parameters: _.omit(vm.dialogData, 'action')};
     } else {
       apiData = vm.dialogData;
     }
