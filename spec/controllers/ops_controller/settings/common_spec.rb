@@ -218,5 +218,19 @@ describe OpsController do
         expect(assigns(:flash_array).first[:message]).to include("Replication configuration save was successful")
       end
     end
+
+    describe '#settings_get_info' do
+      before { MiqRegion.seed }
+
+      let(:edit) { controller.instance_variable_get(:@edit) }
+
+      context 'help menu' do
+        it 'current and new in the edit hash equals' do
+          controller.instance_variable_set(:@sb, :active_tab => 'settings_help_menu')
+          controller.send(:settings_get_info, 'root-0')
+          expect(edit[:new]).to eq(edit[:current])
+        end
+      end
+    end
   end
 end
