@@ -1729,7 +1729,7 @@ module ApplicationHelper
 
   def translate_header_text(text)
     if text == "Region"
-      I18n.t("product.name") + " " + _(text)
+      Vmdb::Appliance.PRODUCT_NAME + " " + _(text)
     else
      _(text)
     end

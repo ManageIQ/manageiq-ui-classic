@@ -1,6 +1,6 @@
 describe ApplicationHelper::Title do
   context "#title_from_layout" do
-    let(:title) { I18n.t('product.name') }
+    let(:title) { Vmdb::Appliance.PRODUCT_NAME }
     subject { helper.title_from_layout(@layout) }
 
     it "when layout is blank" do

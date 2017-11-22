@@ -73,11 +73,11 @@ class UserValidationService
                                        :action        => 'explorer',
                                        :flash_warning => true,
                                        :no_refresh    => true,
-                                       :flash_msg     => _("The %{product} Server is still starting, you have been redirected to the diagnostics page for problem determination") % {:product => I18n.t('product.name')},
+                                       :flash_msg     => _("The %{product} Server is still starting, you have been redirected to the diagnostics page for problem determination") % {:product => Vmdb::Appliance.PRODUCT_NAME},
                                        :escape        => false)
                         )
     else
-      ValidateResult.new(:fail, _("The %{product} Server is still starting. If this message persists, please contact your %{product} administrator.") % {:product => I18n.t('product.name')})
+      ValidateResult.new(:fail, _("The %{product} Server is still starting. If this message persists, please contact your %{product} administrator.") % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
   end
 

@@ -112,7 +112,7 @@
       - if default_button
         = button_tag(_('Default'),
           :class   => "btn btn-default",
-          :alt     => t = _("Reset All menus to %{product} defaults") % {:product => I18n.t('product.name')},
+          :alt     => t = _("Reset All menus to %{product} defaults") % {:product => Vmdb::Appliance.PRODUCT_NAME},
           :title   => t,
           :onclick => "miqAjaxButton('#{url_for_only_path(:action => "menu_update", :button => "default")}');")
       - unless no_cancel
@@ -143,7 +143,7 @@
       - if default_button
         = button_tag(_('Default'),
           :class   => "btn btn-default",
-          :alt     => t = _("Reset All menus to %{product} defaults") % {:product => I18n.t('product.name')},
+          :alt     => t = _("Reset All menus to %{product} defaults") % {:product => Vmdb::Appliance.PRODUCT_NAME},
           :title   => t,
           :onclick => "miqAjaxButton('#{url_for_only_path(:action => "menu_update", :button => "default")}');")
 

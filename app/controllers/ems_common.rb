@@ -537,7 +537,7 @@ module EmsCommon
                    "%{task} initiated for %{count} %{models} from the %{product} Database", emss.length) % \
         {:task    => task_name(task).gsub("Ems", ui_lookup(:tables => table_name)),
          :count   => emss.length,
-         :product => I18n.t('product.name'),
+         :product => Vmdb::Appliance.PRODUCT_NAME,
          :model   => ui_lookup(:table => table_name),
          :models  => ui_lookup(:tables => table_name)})
       AuditEvent.success(:userid => session[:userid], :event => "#{table_name}_#{task}",
@@ -559,7 +559,7 @@ module EmsCommon
       add_flash(n_("Delete initiated for %{count} %{model} from the %{product} Database",
                    "Delete initiated for %{count} %{models} from the %{product} Database", emss.length) %
         {:count   => emss.length,
-         :product => I18n.t('product.name'),
+         :product => Vmdb::Appliance.PRODUCT_NAME,
          :model   => ui_lookup(:table => table_name),
          :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
     elsif task == "pause_ems" || task == "resume_ems"
@@ -613,7 +613,7 @@ module EmsCommon
       add_flash(n_("Delete initiated for %{count} %{model} from the %{product} Database",
                    "Delete initiated for %{count} %{models} from the %{product} Database", emss.length) %
         {:count   => emss.length,
-         :product => I18n.t('product.name'),
+         :product => Vmdb::Appliance.PRODUCT_NAME,
          :model   => ui_lookup(:table => table_name),
          :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
     else # showing 1 ems, scan it
@@ -646,7 +646,7 @@ module EmsCommon
       add_flash(n_("Analysis initiated for %{count} %{model} from the %{product} Database",
                    "Analysis initiated for %{count} %{models} from the %{product} Database", emss.length) %
         {:count   => emss.length,
-         :product => I18n.t('product.name'),
+         :product => Vmdb::Appliance.PRODUCT_NAME,
          :model   => ui_lookup(:table => table_name),
          :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
       show_list
@@ -661,7 +661,7 @@ module EmsCommon
       add_flash(n_("Analysis initiated for %{count} %{model} from the %{product} Database",
                    "Analysis initiated for %{count} %{models} from the %{product} Database", emss.length) %
         {:count   => emss.length,
-         :product => I18n.t('product.name'),
+         :product => Vmdb::Appliance.PRODUCT_NAME,
          :model   => ui_lookup(:table => table_name),
          :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
       params[:display] = @display
@@ -681,7 +681,7 @@ module EmsCommon
     add_flash(n_("Refresh initiated for %{count} %{model} from the %{product} Database",
                  "Refresh initiated for %{count} %{models} from the %{product} Database", emss.length) %
       {:count   => emss.length,
-       :product => I18n.t('product.name'),
+       :product => Vmdb::Appliance.PRODUCT_NAME,
        :model   => ui_lookup(:table => table_name),
        :models  => ui_lookup(:tables => table_name)})
   end
@@ -719,7 +719,7 @@ module EmsCommon
     add_flash(n_("#{action.capitalize} initiated for %{count} %{model} from the %{product} Database",
                  "#{action.capitalize} initiated for %{count} %{models} from the %{product} Database", emss.length) %
                 {:count   => emss.length,
-                 :product => I18n.t('product.name'),
+                 :product => Vmdb::Appliance.PRODUCT_NAME,
                  :model   => ui_lookup(:table => table_name),
                  :models  => ui_lookup(:tables => table_name)})
   end

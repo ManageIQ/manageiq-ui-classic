@@ -5,8 +5,7 @@ module ApplicationHelper
     end
 
     def product_title
-      # TODO: leave I18n until we have productization capability in gettext
-      I18n.t('product.name')
+      Vmdb::Appliance.PRODUCT_NAME
     end
 
     def page_title

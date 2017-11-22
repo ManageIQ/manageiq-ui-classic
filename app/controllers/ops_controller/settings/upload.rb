@@ -86,7 +86,7 @@ module OpsController::Settings::Upload
           msg = _("No valid import records were found, please upload another file")
           err = true
         else
-          msg = _("Press the Apply button to import the good records into the %{product} database") % {:product => I18n.t('product.name')}
+          msg = _("Press the Apply button to import the good records into the %{product} database") % {:product => Vmdb::Appliance.PRODUCT_NAME}
           err = false
           @sb[:good] = imp.stats[:good]
           @sb[:imports] = imp

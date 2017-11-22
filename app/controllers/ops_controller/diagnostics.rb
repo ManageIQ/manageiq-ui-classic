@@ -33,7 +33,7 @@ module OpsController::Diagnostics
                :target_class => "MiqServer",
                :userid       => session[:userid]}
       AuditEvent.success(audit)
-      add_flash(_("%{product} Appliance restart initiated successfully") % {:product => I18n.t('product.name')})
+      add_flash(_("%{product} Appliance restart initiated successfully") % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
     javascript_flash(:spinner_off => true)
   end
@@ -181,7 +181,7 @@ module OpsController::Diagnostics
     assert_privileges("refresh_log")
     @log = $log.contents(120, 1000)
     @selected_server = MiqServer.find(from_cid(x_node.split("-").last).to_i)
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % I18n.t('product.name'), :warning) if @log.blank?
+    add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
       page << javascript_prologue
       page.replace_html("diagnostics_evm_log", :partial => "diagnostics_evm_log_tab")
@@ -193,7 +193,7 @@ module OpsController::Diagnostics
     assert_privileges("refresh_audit_log")
     @log = $audit_log.contents(nil, 1000)
     @selected_server = MiqServer.find(from_cid(x_node.split("-").last).to_i)
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % I18n.t('product.name'), :warning) if @log.blank?
+    add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
       page << javascript_prologue
       page.replace_html("diagnostics_audit_log", :partial => "diagnostics_audit_log_tab")
@@ -205,7 +205,7 @@ module OpsController::Diagnostics
     assert_privileges("refresh_production_log")
     @log = $rails_log.contents(nil, 1000)
     @selected_server = MiqServer.find(from_cid(x_node.split("-").last).to_i)
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % I18n.t('product.name'), :warning) if @log.blank?
+    add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
       page << javascript_prologue
       page.replace_html("diagnostics_production_log", :partial => "diagnostics_production_log_tab")
@@ -528,7 +528,7 @@ module OpsController::Diagnostics
       rescue => bang
         add_flash(_("Log collection error returned: %{error_message}") % {:error_message => bang.message}, :error)
       else
-        add_flash(_("Log collection for %{product} %{object_type} %{name} has been initiated") % {:product => I18n.t('product.name'), :object_type => klass.name, :name => instance.display_name})
+        add_flash(_("Log collection for %{product} %{object_type} %{name} has been initiated") % {:product => Vmdb::Appliance.PRODUCT_NAME, :object_type => klass.name, :name => instance.display_name})
       end
     end
     get_node_info(x_node)
@@ -636,7 +636,7 @@ module OpsController::Diagnostics
         add_flash(bang, :error)
       else
         priority = asr.priority == 1 ? "primary" : (asr.priority == 2 ? "secondary" : "normal")
-        add_flash(_("%{product} Server \"%{name}\" set as %{priority} for Role \"%{role_description}\"") % {:name => asr.miq_server.name, :priority => priority, :role_description => asr.server_role.description, :product => I18n.t('product.name')})
+        add_flash(_("%{product} Server \"%{name}\" set as %{priority} for Role \"%{role_description}\"") % {:name => asr.miq_server.name, :priority => priority, :role_description => asr.server_role.description, :product => Vmdb::Appliance.PRODUCT_NAME})
       end
     end
     refresh_screen
@@ -654,7 +654,7 @@ module OpsController::Diagnostics
         add_flash(bang, :error)
       else
         priority = asr.priority == 1 ? "primary" : (asr.priority == 2 ? "secondary" : "normal")
-        add_flash(_("%{product} Server \"%{name}\" set as %{priority} for Role \"%{role_description}\"") % {:name => asr.miq_server.name, :priority => priority, :role_description => asr.server_role.description, :product => I18n.t('product.name')})
+        add_flash(_("%{product} Server \"%{name}\" set as %{priority} for Role \"%{role_description}\"") % {:name => asr.miq_server.name, :priority => priority, :role_description => asr.server_role.description, :product => Vmdb::Appliance.PRODUCT_NAME})
       end
     end
     refresh_screen
@@ -768,19 +768,19 @@ module OpsController::Diagnostics
       if @sb[:selected_server_id] == my_server.id
         if @sb[:active_tab] == "diagnostics_evm_log"
           @log = $log.contents(120, 1000)
-          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
+          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("ManageIQ")
           @refresh_action = "refresh_log"
           @download_action = "fetch_log"
         elsif @sb[:active_tab] == "diagnostics_audit_log"
           @log = $audit_log.contents(nil, 1000)
-          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
+          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("Audit")
           @refresh_action = "refresh_audit_log"
           @download_action = "fetch_audit_log"
         elsif @sb[:active_tab] == "diagnostics_production_log"
           @log = $rails_log.contents(nil, 1000)
-          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
+          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = @sb[:rails_log]
           @refresh_action = "refresh_production_log"
           @download_action = "fetch_production_log"
