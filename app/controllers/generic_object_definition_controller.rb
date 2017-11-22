@@ -176,7 +176,7 @@ class GenericObjectDefinitionController < ApplicationController
 
   def god_node_info(node)
     @god_node = true
-    @center_toolbar = 'generic_object_definition_node'
+    @center_toolbar = 'generic_object_definition'
     @record = GenericObjectDefinition.find(from_cid(node.split('-').last))
     @right_cell_text = _("Generic Object Class %{record_name}") % {:record_name => @record.name}
   end
@@ -227,7 +227,7 @@ class GenericObjectDefinitionController < ApplicationController
     god_node_info(node)
     presenter.replace(:main_div, r[:partial => 'show_god'])
     presenter.hide(:paging_div)
-    [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_node_center_tb")]
+    [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_center_tb")]
   end
 
   def process_actions_node(presenter, node)
