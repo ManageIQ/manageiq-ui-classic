@@ -18,6 +18,17 @@ describe GenericObjectDefinitionController do
       expect(response).to redirect_to(:action => 'show_list')
       expect(controller.x_node).to eq("god-#{to_cid(generic_obj_defn.id)}")
     end
+
+    context "#show when display=main" do
+      before do
+        allow_any_instance_of(GenericObjectDefinition).to receive(:generic_objects)
+      end
+      it "show the generic_object_definition record when display=main" do
+        generic_obj_defn = FactoryGirl.create(:generic_object_definition)
+        get :show, :params => {:id => generic_obj_defn.id, :display => "main"}
+        expect(response.status).to eq(200)
+      end
+    end
   end
 
   describe "#show_list" do
