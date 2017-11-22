@@ -14,7 +14,7 @@ class ApplicationHelper::Button::TransformVmButton < ApplicationHelper::Button::
 
   def destination_exists?
     # Is there a provider that supports import?
-    !EmsInfra.all.select(&:validate_import_vm).empty?
+    !EmsInfra.all.select(&:supports_vm_import?).empty?
   end
 
   def vm_down?
