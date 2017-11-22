@@ -169,6 +169,42 @@ describe HostController do
     end
   end
 
+  context 'nested lists' do # these are similar to #show_association but require 'render_views'
+    render_views
+
+    before(:each) do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+
+      @host = FactoryGirl.create(:host, :name =>'hostname1')
+    end
+
+    # http://localhost:3000/host/users/10000000000005?db=host
+    it "renders a grid of associated Users" do
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name      => 'Account',
+        :parent_id       => @host.id,
+        :parent          => @host,
+        :gtl_type_string => 'list'
+      )
+      get :users, :params => {:id => @host.id, :db => 'host'}
+      expect(response.status).to eq(200)
+    end
+
+    # http://localhost:3000/host/guest_applications/10000000000005?db=host
+    it "renders a grid of associated GuestApplications" do
+      @guest_application = FactoryGirl.create(:guest_application, :name => "foo", :host_id => @host.id)
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name      => 'GuestApplication',
+        :parent_id       => @host.id,
+        :parent          => @host,
+        :gtl_type_string => 'list'
+      )
+      get :guest_applications, :params => {:id => @host.id, :db => 'host'}
+      expect(response.status).to eq(200)
+    end
+  end
+
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
