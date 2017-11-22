@@ -2,7 +2,7 @@
 
 #tl_options_div
   %form#form_div{:name           => 'angularForm',
-                 'ng-controller' => 'timelineOptionsController',
+                 'ng-controller' => 'timelineOptionsController as vm',
                  'ng-show'       => 'vm.afterGet',
                  :novalidate     => true}
     - if @timeline
