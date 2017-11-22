@@ -44,7 +44,6 @@ module Mixins
     end
 
     def init_show_variables(db = nil)
-      @use_action = true
       @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
       @db = db || params[:db] || controller_name
