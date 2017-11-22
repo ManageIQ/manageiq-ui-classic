@@ -411,6 +411,7 @@ class ServiceController < ApplicationController
       elsif params[:display]
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]
       elsif record_showing
+        presenter.remove_sand
         if action
           partial_locals[:item_id] = @item.id
           cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))

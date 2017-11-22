@@ -149,6 +149,11 @@ ManageIQ.explorer.focus = function(data) {
   }
 };
 
+ManageIQ.explorer.removeSand = function() {
+  var mainContent = $('#main-content');
+  mainContent.removeClass('miq-sand-paper');
+};
+
 ManageIQ.explorer.processReplaceRightCell = function(data) {
   /* variables for the expression editor */
   if (_.isObject(data.expEditor)) {
@@ -291,6 +296,8 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   if (data.hideModal) { $('#quicksearchbox').modal('hide'); }
   if (data.initAccords) { miqInitAccordions(); }
   if (data.lockSidebar !== undefined) { ManageIQ.explorer.lockSidebar(data.lockSidebar); }
+
+  if (data.removeSand) { ManageIQ.explorer.removeSand(); }
 
   if (_.isString(data.ajaxUrl)) {
     miqAsyncAjax(data.ajaxUrl);
