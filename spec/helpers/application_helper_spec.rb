@@ -1310,46 +1310,37 @@ Datasources\" href=\"/ems_middleware/#{ems.id}?display=middleware_datasources\">
     let(:test_class) do
       Class.new do
         include ApplicationHelper
-        attr_accessor :display, :params, :use_action, :report_data_additional_options
+        attr_accessor :display, :params, :report_data_additional_options
 
         def controller; HostController.new; end
       end
     end
 
-    it "the first case" do
-      # All 3 required
-      instance.params = {:action => "vm_or_template"}
-      instance.display = "main"
-      instance.use_action = true
-
-      expect(instance.model_to_report_data).to eq("VmOrTemplate")
-    end
-
-    it "the second case" do
+    it "the prefered case" do
       instance.report_data_additional_options = {:model => "Something"}
 
       expect(instance.model_to_report_data).to eq("Something")
     end
 
-    it "the third case" do
+    it "the @display fallback" do
       instance.display = "vm_or_template"
 
       expect(instance.model_to_report_data).to eq("VmOrTemplate")
     end
 
-    it "the fourth case" do
+    it "the params[:db] fallback" do
       instance.params = {:db => "vm_or_template", :display => "something" }
 
       expect(instance.model_to_report_data).to eq("VmOrTemplate")
     end
 
-    it "the fifth case" do
+    it "the params[:display] fallback" do
       instance.params = {:display => "vm_or_template"}
 
       expect(instance.model_to_report_data).to eq("VmOrTemplate")
     end
 
-    it "the sixth case" do
+    it "the controller.class.model fallback case" do
       instance.params = {}
 
       expect(instance.model_to_report_data).to eq("Host")
