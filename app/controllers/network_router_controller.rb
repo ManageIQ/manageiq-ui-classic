@@ -437,11 +437,11 @@ class NetworkRouterController < ApplicationController
   private
 
   def get_networks_by_ems(id)
-    CloudNetwork.where(:ems_id => id).pluck(:name, :id)
+    CloudNetwork.where(:ems_id => id).select(:id, :name).as_json
   end
 
   def get_subnets_by_network(id)
-    CloudSubnet.where(:cloud_network_id => id).pluck(:name, :id)
+    CloudSubnet.where(:cloud_network_id => id).select(:id, :name).as_json
   end
 
   def textual_group_list
