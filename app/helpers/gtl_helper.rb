@@ -63,6 +63,7 @@ module GtlHelper
       :explorer                       => @explorer,
       :view                           => @view,
       :db                             => @db,
+      :parent                         => @parent,
 
       :report_data_additional_options => @report_data_additional_options,
     }
