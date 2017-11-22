@@ -1,4 +1,4 @@
-- return if @display == 'generic_objects'
+- return if @display == 'generic_objects' || @display == 'main'
 = miq_accordion_panel(_("Generic Object Classes"), true, "god") do
   %tree_div{'ng-controller' => 'treeViewController as vm'}
     %miq-tree-view{:name       => @tree.name,
