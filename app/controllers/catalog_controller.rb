@@ -1922,7 +1922,7 @@ class CatalogController < ApplicationController
 
   # Replace the right cell of the explorer
   def replace_right_cell(options = {})
-    action, replace_trees = options.values_at(:action, :replace_trees)
+    action, replace_trees, presenter = options.values_at(:action, :replace_trees, :presenter)
     @explorer = true
 
     # FIXME: make this functional
@@ -1963,7 +1963,7 @@ class CatalogController < ApplicationController
       h_tb = build_toolbar("x_history_tb")
     end
 
-    presenter = ExplorerPresenter.right_cell(
+    presenter ||= ExplorerPresenter.right_cell(
       :active_tree => x_active_tree,
       :add_nodes   => add_nodes
     )
