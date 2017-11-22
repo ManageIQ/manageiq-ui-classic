@@ -1156,7 +1156,7 @@ module OpsController::Settings::Common
       when "settings_help_menu"
         @in_a_form = true
         @edit = {:new => {}, :key => 'customize_help_menu'}
-        @edit[:new] = Settings.help_menu
+        @edit[:new] = Settings.help_menu.to_h
         help_menu_items.each do |item|
           @edit[:new][item] = Settings.help_menu.try(item).try(:to_h) || {}
         end
