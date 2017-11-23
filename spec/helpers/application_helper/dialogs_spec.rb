@@ -6,6 +6,7 @@ describe ApplicationHelper::Dialogs do
       :read_only            => read_only,
       :trigger_auto_refresh => trigger_auto_refresh,
       :force_multi_value    => true,
+      :show_past_dates      => true,
     )
   end
   let(:trigger_auto_refresh) { nil }
@@ -345,6 +346,7 @@ describe ApplicationHelper::Dialogs do
           expect(helper.date_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
             :class                  => "css1 dynamic-date-100",
             :readonly               => "true",
+            "data_date_start"       => nil,
             "data-miq_observe_date" => {
               :url                             => "url",
               :auto_refresh                    => true,
@@ -367,6 +369,7 @@ describe ApplicationHelper::Dialogs do
           expect(helper.date_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
             :class                  => "css1 dynamic-date-100",
             :readonly               => "true",
+            "data_date_start"       => nil,
             "data-miq_observe_date" => '{"url":"url"}'
           )
         end
@@ -407,6 +410,7 @@ describe ApplicationHelper::Dialogs do
         it "returns the tag options with a few data-miq attributes" do
           expect(helper.time_tag_options(dialog_field, "url", "hour_or_min", auto_refresh_options_hash)).to eq(
             :class             => "dynamic-date-hour_or_min-100",
+            "data_date_start"  => nil,
             "data-miq_observe" => {
               :url                             => "url",
               :auto_refresh                    => true,
@@ -428,6 +432,7 @@ describe ApplicationHelper::Dialogs do
         it "returns the tag options with a few data-miq attributes" do
           expect(helper.time_tag_options(dialog_field, "url", "hour_or_min", auto_refresh_options_hash)).to eq(
             :class             => "dynamic-date-hour_or_min-100",
+            "data_date_start"  => nil,
             "data-miq_observe" => '{"url":"url"}'
           )
         end
