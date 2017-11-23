@@ -9,13 +9,20 @@ describe HostController do
       ApplicationController.handle_exceptions = true
     end
 
-    it "doesn't break" do
+    it 'edit renders GTL grid with selected Host records' do
       h1 = FactoryGirl.create(:host)
       h2 = FactoryGirl.create(:host)
       session[:host_items] = [h1.id, h2.id]
       session[:settings] = {:views     => {:host => 'grid'},
                             :display   => {:quad_truncate => 'f'},
                             :quadicons => {:host => 'foo'}}
+
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name       => 'Host',
+        :gtl_type_string  => 'grid',
+        :parent_id        => nil,
+        :selected_records => [h1.id, h2.id]
+      )
       get :edit
       expect(response.status).to eq(200)
     end
