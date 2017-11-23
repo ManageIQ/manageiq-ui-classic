@@ -47,6 +47,7 @@ class UserValidationService
     return validate_user_handle_not_ready(db_user) unless server_ready?
 
     # Start super admin at the main db if the main db has no records yet
+    # If the main db has no records the default starting view is set to "Infrastructure Provider" view - the idea here is there is no point showing another view since it would be empty.
     return validate_user_handle_no_records if db_user.super_admin_user? &&
                                               ::Settings.product.maindb &&
                                               !::Settings.product.maindb.constantize.first
