@@ -53,7 +53,7 @@ module GtlHelper
       :model_name                     => model_to_report_data,
       :no_flash_div                   => no_flash_div || false,
       :gtl_type_string                => @gtl_type,
-      :active_tree                    => (x_active_tree unless params[:display] || @use_action),
+      :active_tree                    => (x_active_tree unless params[:display]),
       :parent_id                      => parent_id,
       :selected_records               => gtl_selected_records,
 
@@ -63,6 +63,7 @@ module GtlHelper
       :explorer                       => @explorer,
       :view                           => @view,
       :db                             => @db,
+      :parent                         => @parent,
 
       :report_data_additional_options => @report_data_additional_options,
     }

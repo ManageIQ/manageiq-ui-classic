@@ -245,9 +245,6 @@ module ApplicationHelper
   }.freeze
 
   def model_to_report_data
-    # Hosts do not store correct @display in nested attributes (Relationship, Security and Attributes) so use action
-    return params[:action].classify if @display == "main" && @use_action && params && params[:action] && params[:action] != 'show'
-
     # @report_data_additional_options[:model] is most important, others can be removed
     return @report_data_additional_options[:model] if @report_data_additional_options && @report_data_additional_options[:model]
     return @display.classify if @display && @display != "main"
