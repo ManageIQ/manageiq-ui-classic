@@ -368,18 +368,15 @@ class MiddlewareServerController < ApplicationController
     mw_manager = mw_server.ext_management_system
 
     if mw_server.kind_of?(MiddlewareDeployment)
-      mw_manager.public_send(operation, mw_server.ems_ref, mw_server.name)
+      mw_manager.public_send(operation, mw_server.ems_ref, mw_server.feed, mw_server.name)
     else
-      target_resource = mw_server.ems_ref
-
       extra_params = [params]
 
       if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
-        extra_params << {:original_resource_path => target_resource}
-        target_resource = target_resource.sub(/%2Fserver%3D/, '%2Fserver-config%3D')
+        extra_params << {:server_in_domain => true}
       end
 
-      mw_manager.public_send(operation, target_resource, *extra_params)
+      mw_manager.public_send(operation, mw_server.ems_ref, mw_server.feed, *extra_params)
     end
   end
 

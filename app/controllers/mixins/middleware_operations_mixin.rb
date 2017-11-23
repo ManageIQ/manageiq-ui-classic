@@ -32,9 +32,9 @@ module Mixins::MiddlewareOperationsMixin
     mw_manager = mw_item.ext_management_system
     op = mw_manager.public_method operation
     if params
-      op.call(mw_item.ems_ref, params)
+      op.call(mw_item.ems_ref, mw_item.feed, params)
     else
-      op.call mw_item.ems_ref
+      op.call(mw_item.ems_ref, mw_item.feed)
     end
   end
 
