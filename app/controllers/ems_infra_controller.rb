@@ -26,6 +26,11 @@ class EmsInfraController < ApplicationController
     new_ems_infra_path
   end
 
+  def show_list
+    @showtype = nil
+    super
+  end
+
   def index
     redirect_to :action => 'show_list'
   end
