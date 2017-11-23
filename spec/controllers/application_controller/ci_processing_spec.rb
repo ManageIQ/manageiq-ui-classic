@@ -872,7 +872,7 @@ describe ServiceController do
       controller.send(:vm_button_operation, 'retire_now', "Retirement")
       expect(response.status).to eq(200)
       expect(assigns(:flash_array).first[:message]).to \
-        include("Retirement initiated for 1 Service from the %{product} Database" % {:product => I18n.t('product.name')})
+        include("Retirement initiated for 1 Service from the %{product} Database" % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
   end
 end
@@ -940,7 +940,7 @@ describe VmOrTemplateController do
       controller.send(:vm_button_operation, 'retire_now', "Retirement")
       expect(response.status).to eq(200)
       expect(assigns(:flash_array).first[:message]).to \
-        include("Retirement initiated for 1 VM and Instance from the %{product} Database" % {:product => I18n.t('product.name')})
+        include("Retirement initiated for 1 VM and Instance from the %{product} Database" % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
   end
 end

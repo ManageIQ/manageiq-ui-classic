@@ -17,7 +17,7 @@ class TreeBuilderOpsSettings < TreeBuilderOps
     region = MiqRegion.my_region
     text = _("%{product} Region: %{region_description} [%{region}]") % {:region_description => region.description,
                                                                         :region             => region.region,
-                                                                        :product            => I18n.t('product.name')}
+                                                                        :product            => Vmdb::Appliance.PRODUCT_NAME}
     {
       :text    => text,
       :tooltip => text,

@@ -134,7 +134,7 @@ class MiqTaskController < ApplicationController
                          :message      => message,
                          :target_class => "MiqTask")
       add_flash(_("Deleting all Tasks older than %{date} from the %{product} Database initiated") %
-                 {:date => task.updated_on, :product => I18n.t('product.name')})
+                 {:date => task.updated_on, :product => Vmdb::Appliance.PRODUCT_NAME})
     else
       add_flash(_("The selected task no longer exists, Delete all older Tasks was not completed"), :warning)
     end
@@ -227,7 +227,7 @@ class MiqTaskController < ApplicationController
                          :target_class => "MiqTask")
       add_flash(n_("Delete initiated for %{count} Task from the %{product} Database",
                    "Delete initiated for %{count} Tasks from the %{product} Database",
-                   task_ids.length) % {:count => task_ids.length, :product => I18n.t('product.name')})
+                   task_ids.length) % {:count => task_ids.length, :product => Vmdb::Appliance.PRODUCT_NAME})
     end
   end
 

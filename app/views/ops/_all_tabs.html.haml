@@ -135,7 +135,7 @@
           = _("Collect Logs")
         - if @sb[:selected_server_id] == my_server.id
           = miq_tab_header("diagnostics_evm_log", @sb[:active_tab]) do
-            = _("%{product} Log") % {:product => I18n.t('product.name')}
+            = _("%{product} Log") % {:product => Vmdb::Appliance.PRODUCT_NAME}
           = miq_tab_header("diagnostics_audit_log", @sb[:active_tab]) do
             = _("Audit Log")
           = miq_tab_header("diagnostics_production_log", @sb[:active_tab]) do

@@ -27,7 +27,7 @@ module Mixins
           add_flash(n_("%{task} initiated for %{count} Host from the %{product} Database",
                        "%{task} initiated for %{count} Hosts from the %{product} Database", hosts.length) % \
             {:task    => display_name,
-             :product => I18n.t('product.name'),
+             :product => Vmdb::Appliance.PRODUCT_NAME,
              :count   => hosts.length})
           AuditEvent.success(:userid => session[:userid], :event => "host_#{task}",
               :message => "'#{task_name(task)}' successfully initiated for #{pluralize(hosts.length, "Host")}",

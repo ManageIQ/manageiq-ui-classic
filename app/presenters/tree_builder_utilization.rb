@@ -26,8 +26,8 @@ class TreeBuilderUtilization < TreeBuilderRegion
       icon  = 'pficon pficon-enterprise'
     else
       text = _("%{product} Region: %{region_description} [%{region}]") % {:region_description => MiqRegion.my_region.description,
-                                                                           :region => MiqRegion.my_region.region,
-                                                                           :product => I18n.t('product.name')}
+                                                                          :region             => MiqRegion.my_region.region,
+                                                                          :product            => Vmdb::Appliance.PRODUCT_NAME}
       icon  = 'pficon pficon-regions'
     end
     {

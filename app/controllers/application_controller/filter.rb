@@ -86,7 +86,7 @@ module ApplicationController::Filter
         @edit[@expkey].update_from_exp_tree(@edit[:edit_exp])
       rescue => bang
         @exp_atom_errors = [_("There is an error in the selected expression element, perhaps it was imported or edited manually."),
-                            _("This element should be removed and recreated or you can report the error to your %{product} administrator.") % {:product => I18n.t('product.name')},
+                            _("This element should be removed and recreated or you can report the error to your %{product} administrator.") % {:product => Vmdb::Appliance.PRODUCT_NAME},
                             _("Error details: %{message}") % {:message => bang}]
       end
       @edit[@expkey][:exp_token] = token

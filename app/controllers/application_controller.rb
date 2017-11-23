@@ -845,7 +845,7 @@ class ApplicationController < ActionController::Base
   end
 
   def report_edit_aborted(lastaction)
-    add_flash(_("Edit aborted!  %{product} does not support the browser's back button or access from multiple tabs or windows of the same browser.  Please close any duplicate sessions before proceeding.") % {:product => I18n.t('product.name')}, :error)
+    add_flash(_("Edit aborted!  %{product} does not support the browser's back button or access from multiple tabs or windows of the same browser.  Please close any duplicate sessions before proceeding.") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :error)
     session[:flash_msgs] = @flash_array.dup
     if request.xml_http_request? # Is this an Ajax request?
       if lastaction == "configuration"
@@ -1386,11 +1386,11 @@ class ApplicationController < ActionController::Base
     end
     if success_count > 0
       add_flash(n_("Successfully deleted Saved Report from the %{product} Database",
-                   "Successfully deleted Saved Reports from the %{product} Database", success_count) % {:product => I18n.t('product.name')})
+                   "Successfully deleted Saved Reports from the %{product} Database", success_count) % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
     if failure_count > 0
       add_flash(n_("Error during Saved Report delete from the %{product} Database",
-                   "Error during Saved Reports delete from the %{product} Database", failure_count) % {:product => I18n.t('product.name')})
+                   "Error during Saved Reports delete from the %{product} Database", failure_count) % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
   end
 

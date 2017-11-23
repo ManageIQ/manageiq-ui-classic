@@ -423,7 +423,7 @@ module ApplicationController::CiProcessing
         # FIXME: Unify the dataflow: get rid of 'task_name (ApplicationHelper::Tasks)'.
         :task    => display_name,
         :number  => objs.length,
-        :product => I18n.t('product.name'),
+        :product => Vmdb::Appliance.PRODUCT_NAME,
         :model   => ui_lookup(:model => klass.to_s),
         :models  => ui_lookup(:models => klass.to_s)
       }
@@ -803,7 +803,7 @@ module ApplicationController::CiProcessing
       end
       Storage.destroy_queue(storages)
       add_flash(n_("Delete initiated for Datastore from the %{product} Database",
-                   "Delete initiated for Datastores from the %{product} Database", storages.length) % {:product => I18n.t('product.name')})
+                   "Delete initiated for Datastores from the %{product} Database", storages.length) % {:product => Vmdb::Appliance.PRODUCT_NAME})
     else
       Storage.where(:id => storages).order("lower(name)").each do |storage|
         storage_name = storage.name
@@ -956,7 +956,7 @@ module ApplicationController::CiProcessing
       add_flash(n_("Delete initiated for %{count} %{model} from the %{product} Database",
                    "Delete initiated for %{count} %{models} from the %{product} Database", elements.length) %
         {:count   => elements.length,
-         :product => I18n.t('product.name'),
+         :product => Vmdb::Appliance.PRODUCT_NAME,
          :model   => ui_lookup(:table => model_name),
          :models  => ui_lookup(:tables => model_name)}) unless flash_errors?
     else # showing 1 element, delete it
