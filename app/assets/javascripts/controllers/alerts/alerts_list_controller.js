@@ -69,7 +69,7 @@ angular.module('alertsCenter').controller('alertsListController',
         filterConfig: vm.filterConfig,
         sortConfig: vm.sortConfig,
         actionsConfig: {
-          actionsInclude: true,
+          actionsInclude: false,
         },
       };
     }
