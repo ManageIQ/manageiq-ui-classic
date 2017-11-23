@@ -784,6 +784,10 @@ class ChargebackController < ApplicationController
     @edit[:cb_assign][:hierarchy] ||= {}
     all_of_classtype.each do |instance|
       @edit[:cb_assign][:cis][instance.id] = instance.name
+      if klass == "ems_cluster"
+        provider_name = instance.ext_management_system.name
+        @edit[:cb_assign][:cis][instance.id] = "#{provider_name}/#{instance.name}"
+      end
       next unless klass == "tenant" && instance.root?
       @edit[:cb_assign][:hierarchy][instance.id] = {}
       @edit[:cb_assign][:hierarchy][instance.id][:name] = instance.name
