@@ -530,7 +530,6 @@ class HostController < ApplicationController
   def get_session_data
     super
     @drift_db   = "Host"
-    @use_action = true
   end
 
   def set_session_data
