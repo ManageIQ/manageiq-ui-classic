@@ -1093,6 +1093,19 @@ class ApplicationController < ActionController::Base
     rptmenu
   end
 
+  # Calculate controller name from job.target_class used in the Tasks GTL
+  # FIXME: We need to move this, view_to_hash and related code to a separate
+  # module.
+  #
+  def view_to_hash_controller_from_job_target_class(target_class)
+    case target_class
+    when "ManageIQ::Providers::Openshift::ContainerManager::ContainerImage"
+      'container_image'
+    else # this branch works e.g. for VmOrTemplate
+      target_class.underscore
+    end
+  end
+
   # Render the view data to a Hash structure for the list view
   def view_to_hash(view, fetch_data = false)
     # Get the time zone in effect for this view
@@ -1146,8 +1159,8 @@ class ApplicationController < ActionController::Base
       new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
       new_row[:tree_id] = TreeBuilder.build_node_cid(target) if target
       if row.data["job.target_class"] && row.data["job.target_id"]
-        underscore_class = row.data["job.target_class"].underscore
-        new_row[:parent_path] = url_for_only_path(:controller => underscore_class, :action => "show")
+        controller = view_to_hash_controller_from_job_target_class(row.data["job.target_class"])
+        new_row[:parent_path] = (url_for_only_path(:controller => controller, :action => "show") rescue nil)
         new_row[:parent_id] = row.data["job.target_id"] if row.data["job.target_id"]
       end
       root[:rows] << new_row
