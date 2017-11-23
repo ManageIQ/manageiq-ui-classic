@@ -46,12 +46,14 @@ class UserValidationService
 
     return validate_user_handle_not_ready(db_user) unless server_ready?
 
+    startpage = start_url_for_user(start_url)
+
     # Start super admin at the main db if the main db has no records yet
     return validate_user_handle_no_records if db_user.super_admin_user? &&
                                               ::Settings.product.maindb &&
-                                              !::Settings.product.maindb.constantize.first
+                                              !::Settings.product.maindb.constantize.first &&
+                                              !startpage
 
-    startpage = start_url_for_user(start_url)
     unless startpage
       return ValidateResult.new(:fail, _("The user's role is not authorized for any access, please contact the administrator!"))
     end
