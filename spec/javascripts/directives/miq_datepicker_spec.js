@@ -1,11 +1,11 @@
-describe('miq-calendar test', function() {
+describe('miq-datepicker test', function() {
   var scope, form, element, compile;
   beforeEach(module('ManageIQ'));
   beforeEach(inject(function($compile, $rootScope) {
     scope = $rootScope;
     compile = $compile;
     element = angular.element('<form name="angularForm">' +
-      '<input type="text" miq-calendar="true" ng-model="testModel.test_date" name="test_date" ' +
+      '<input type="text" miq-datepicker="true" ng-model="testModel.test_date" name="test_date" ' +
       'data-provide="datepicker" miq-cal-date-from="testModel.start_date" miq-cal-date-to="testModel.end_date" ' +
       'miq-cal-skip-days="testModel.skip_days" ' +
       '/></form>');
@@ -21,7 +21,7 @@ describe('miq-calendar test', function() {
     spyOn($.fn, 'datepicker');
   }));
 
-  describe('miq-calendar formatter and parser', function() {
+  describe('miq-datepicker formatter and parser', function() {
     it('should format a date value from model into string value for output', function() {
       expect(form.test_date.$viewValue).toBe('08/30/2015');
     });
