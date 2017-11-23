@@ -95,17 +95,16 @@ module ApplicationHelper::Dialogs
     miq_observe_options = {
       :url => url
     }.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json
-    extra_options = {"data-miq_observe_date" => miq_observe_options}
+    extra_options = {"data-miq_observe_date" => miq_observe_options,
+                     "data_date_start"       => field.show_past_dates ? nil : Time.zone.now.iso8601}
 
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
   def time_tag_options(field, url, hour_or_min, auto_refresh_options_hash)
     tag_options = {:class => "dynamic-date-#{hour_or_min}-#{field.id}"}
-    extra_options = {"data-miq_observe" => {
-      :url => url
-    }.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json}
-
+    extra_options = {"data_date_start"  => field.show_past_dates ? nil : Time.zone.now.iso8601,
+                     "data-miq_observe" => {:url => url}.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json}
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 

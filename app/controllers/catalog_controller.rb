@@ -2052,13 +2052,6 @@ class CatalogController < ApplicationController
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.hide(:form_buttons_div, :paging_div, :pc_div_1)
-        @record.dialog_fields.each do |field|
-          if ["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(field.type)
-            presenter[:build_calendar] = {
-              :date_from => field.show_past_dates ? nil : Time.zone.now,
-            }
-          end
-        end
         if Settings.product.old_dialog_user_ui
           presenter.show(:form_buttons_div, :buttons_on)
           presenter.update(
