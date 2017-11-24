@@ -48,7 +48,12 @@ function tenantFormController(API, miqService) {
       use_config_for_attributes: vm.tenantModel.use_config_for_attributes,
     };
     var saveMsg = sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name);
-    vm.saveWithAPI('put', '/api/tenants/' + vm.recordId, saveObject, saveMsg);
+
+    miqService.saveWithAPI('/api/tentants/' + vm.recordId, saveObject, {
+      method: 'put',
+      successMessage: saveMsg,
+      redirectUrl: vm.redirectUrl,
+    });
   };
 
   vm.addClicked = function() {
@@ -59,14 +64,12 @@ function tenantFormController(API, miqService) {
       parent: { id: vm.tenantModel.ancestry },
     };
     var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name);
-    vm.saveWithAPI('post', '/api/tenants/', saveObject, saveMsg);
-  };
 
-  vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
-    miqService.sparkleOn();
-    API[method](url, saveObject)
-      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
-      .catch(miqService.handleFailure);
+    miqService.saveWithAPI('/api/tentants', saveObject, {
+      method: 'post',
+      successMessage: saveMsg,
+      redirectUrl: vm.redirectUrl,
+    });
   };
 
   vm.resetClicked = function(angularForm) {

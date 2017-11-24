@@ -62,12 +62,22 @@ function mainCustomButtonGroupFormController(API, miqService) {
 
   vm.saveClicked = function() {
     var saveMsg = sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.customButtonGroupModel.name);
-    vm.saveWithAPI('put', '/api/custom_button_sets/' + vm.customButtonGroupRecordId, vm.prepSaveObject(), saveMsg);
+
+    miqService.saveWithAPI('/api/custom_button_sets/' + vm.customButtonGroupRecordId, vm.prepSaveObject(), {
+      method: 'put',
+      successMessage: saveMsg,
+      redirectUrl: vm.redirectUrl,
+    });
   };
 
   vm.addClicked = function() {
     var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.customButtonGroupModel.name);
-    vm.saveWithAPI('post', '/api/custom_button_sets/', vm.prepSaveObject(), saveMsg);
+
+    miqService.saveWithAPI('/api/custom_button_sets', vm.prepSaveObject(), {
+      method: 'post',
+      successMessage: saveMsg,
+      redirectUrl: vm.redirectUrl,
+    });
   };
 
   vm.prepSaveObject = function() {
@@ -86,13 +96,6 @@ function mainCustomButtonGroupFormController(API, miqService) {
       owner_type: 'GenericObjectDefinition',
       owner_id: vm.genericObjectDefnRecordId,
     };
-  };
-
-  vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
-    miqService.sparkleOn();
-    API[method](url, saveObject)
-      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
-      .catch(miqService.handleFailure);
   };
 
   // private functions

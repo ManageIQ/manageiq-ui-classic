@@ -174,6 +174,17 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     }
   };
 
+  this.saveWithAPI = function(url, object, options) {
+    miqService.sparkleOn();
+
+    return API[options.method || 'post'](url, object, {
+      skipErrors: [400],  // server-side validation
+    })
+      .then(options.beforeSuccess || null)
+      .then(miqService.redirectBack.bind(null, options.successMessage, 'success', options.redirectUrl))
+      .catch(miqService.handleFailure);
+  };
+
   this.redirectBack = function(message, flashType, redirectUrl) {
     miqFlashLater({message: message, level: flashType});
 
