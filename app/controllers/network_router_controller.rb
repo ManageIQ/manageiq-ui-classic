@@ -378,14 +378,6 @@ class NetworkRouterController < ApplicationController
 
   private
 
-  def get_networks_by_ems(id)
-    Rbac::Filterer.filtered(CloudNetwork.where(:ems_id => id)).select(:id, :name).as_json
-  end
-
-  def get_subnets_by_network(id)
-    Rbac::Filterer.filtered(CloudSubnet.where(:cloud_network_id => id)).select(:id, :name).as_json
-  end
-
   def textual_group_list
     [%i(properties relationships), %i(tags)]
   end
