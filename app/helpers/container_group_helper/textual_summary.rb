@@ -6,7 +6,7 @@ module ContainerGroupHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name phase message reason creation_timestamp resource_version restart_policy dns_policy ip)
+      %i(name status message reason creation_timestamp resource_version restart_policy dns_policy ip)
     )
   end
 
@@ -78,7 +78,7 @@ module ContainerGroupHelper::TextualSummary
   # Items
   #
 
-  def textual_phase
+  def textual_status
     @record.phase
   end
 
