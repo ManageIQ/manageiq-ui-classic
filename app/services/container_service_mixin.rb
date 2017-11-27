@@ -1,6 +1,8 @@
 module ContainerServiceMixin
-  GRAPH_PRECISION = 2 # 2 decimal points
-  DISPLAY_PRECISION = 0 # 0 decimal points
+  def graph_precision
+    2
+  end
+
   REALTIME_TIME_RANGE = 10 # 10 minutes
 
   def daily_pod_metrics
@@ -61,22 +63,7 @@ module ContainerServiceMixin
   end
 
   def utilization_data(used_cpu, total_cpu, used_mem, total_mem)
-    if used_cpu.any?
-      {
-        :cpu => {
-          :used  => (used_cpu.values.last || 0).round(@custom_display_precision || DISPLAY_PRECISION),
-          :total => (total_cpu.values.last || 0).round,
-          :xData => used_cpu.keys,
-          :yData => used_cpu.values.map { |m| m.round(GRAPH_PRECISION) }
-        },
-        :mem => {
-          :used  => ((used_mem.values.last || 0) / 1024.0).round(@custom_display_precision || DISPLAY_PRECISION),
-          :total => ((total_mem.values.last || 0) / 1024.0).round(@custom_display_precision || DISPLAY_PRECISION),
-          :xData => used_mem.keys,
-          :yData => used_mem.values.map { |m| ((m || 0) / 1024.0).round(GRAPH_PRECISION) }
-        }
-      }
-    end
+    format_utilization_data(used_cpu, used_mem, total_cpu, total_mem)
   end
 
   def trend_data(trend)

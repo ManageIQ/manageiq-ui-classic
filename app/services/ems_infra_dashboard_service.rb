@@ -1,4 +1,4 @@
-class EmsInfraDashboardService
+class EmsInfraDashboardService < DashboardService
   include UiServiceMixin
   CPU_USAGE_PRECISION = 2 # 2 decimal points
 
@@ -129,27 +129,7 @@ class EmsInfraDashboardService
       total_mem[date] += metric.derived_memory_available if metric.derived_memory_available.present?
     end
 
-    if used_cpu.any?
-      {
-        :cpu => {
-          :used  => used_cpu.values.last.round,
-          :total => total_cpu.values.last.round,
-          :xData => used_cpu.keys,
-          :yData => used_cpu.values.map(&:round)
-        },
-        :memory => {
-          :used  => (used_mem.values.last / 1024.0).round,
-          :total => (total_mem.values.last / 1024.0).round,
-          :xData => used_mem.keys,
-          :yData => used_mem.values.map { |m| (m / 1024.0).round }
-        }
-      }
-    else
-      {
-        :cpu => nil,
-        :memory => nil
-      }
-    end
+    format_utilization_data(used_cpu, used_mem, total_cpu, total_mem)
   end
 
   def daily_provider_metrics

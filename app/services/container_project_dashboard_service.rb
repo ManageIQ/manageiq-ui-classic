@@ -1,4 +1,4 @@
-class ContainerProjectDashboardService
+class ContainerProjectDashboardService < DashboardService
   include UiServiceMixin
   include ContainerServiceMixin
 
@@ -7,7 +7,10 @@ class ContainerProjectDashboardService
     @project = ContainerProject.find(@project_id)
     @resource = @project
     @controller = controller
-    @custom_display_precision = 2 # 2 decimal points
+  end
+
+  def display_precision
+    2
   end
 
   def all_data
