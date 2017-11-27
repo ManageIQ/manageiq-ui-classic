@@ -31,7 +31,7 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['floatingIpFormId',
   };
 
   vm.addClicked = function() {
-    var url = 'create/new?button=add';
+    var url = '/floating_ip/create/new?button=add';
     miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
   };
 
