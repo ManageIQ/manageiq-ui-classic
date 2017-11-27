@@ -5,6 +5,7 @@ class OpsController < ApplicationController
   include_concern 'OpsRbac'
   include_concern 'Settings'
   include OpsHelper::MyServer
+  include Mixins::CustomButtonDialogFormMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -304,7 +305,6 @@ class OpsController < ApplicationController
       @sb[:active_tab] ||= "db_summary"
     end
 
-    @sb[:tab_label] ||= _('Zones')
     @sb[:active_node] ||= {}
 
     if MiqServer.my_server(true).logon_status != :ready
@@ -536,6 +536,11 @@ class OpsController < ApplicationController
 
   def replace_right_cell(options = {}) # replace_trees can be an array of tree symbols to be replaced
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
+    if params[:pressed] == "custom_button"
+      presenter = set_custom_button_dialog_presenter
+      render :json => presenter.for_render
+      return
+    end
     # get_node_info might set this
     replace_trees = @replace_trees if @replace_trees
     @explorer = true
@@ -693,7 +698,6 @@ class OpsController < ApplicationController
   end
 
   def rbac_replace_right_cell(nodetype, presenter)
-    @sb[:tab_label] = @tagging ? _("Tagging") : rbac_set_tab_label
     if %w(accordion_select change_tab tree_select).include?(params[:action])
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
     elsif nodetype == "group_seq"
@@ -717,42 +721,19 @@ class OpsController < ApplicationController
       @right_cell_text = @edit ?
           _("Manage quotas for %{model} \"%{name}\"") % {:name => @tenant.name, :model => model} :
           _("%{model} \"%{name}\"") % {:model => model, :name => @tenant.name}
+    elsif nodetype == 'dialog_return'
+      presenter.update(:main_div, r[:partial => "detail_page"])
     else
       presenter[:update_partials][@sb[:active_tab].to_sym] = r[:partial => "#{@sb[:active_tab]}_tab"]
     end
   end
 
-  def rbac_set_tab_label
-    nodes = x_node.split("-")
-    case nodes.first
-    when "xx"
-      case nodes.last
-      when "u"
-        _("Users")
-      when "g"
-        _("Groups")
-      when "ur"
-        _("Roles")
-      when "tn"
-        _("Tenants")
-      end
-    when "u"
-      @user.name || _("Users")
-    when "g"
-      if @record && @record.id
-        @record.description
-      elsif @group && @group.id
-        @group.description
-      else
-        _("Groups")
-      end
-    when "ur"
-      @role.name || _("Roles")
-    when "tn"
-      @tenant.name || _("Tenants")
-    else
-      _("Details")
-    end
+  # set all needed things before calling replace_right_cell with nodetype
+  def dialog_replace_right_cell
+    model, id = TreeBuilder.extract_node_model_and_id(x_node)
+    @record = model.constantize.find(from_cid(id))
+    rbac_group_get_details(@record.id) if @record.kind_of?(MiqGroup) # set Group's trees
+    replace_right_cell(:nodetype => 'dialog_return')
   end
 
   def extra_js_commands(presenter)

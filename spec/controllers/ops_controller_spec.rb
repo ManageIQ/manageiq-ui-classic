@@ -352,4 +352,32 @@ describe OpsController do
       end
     end
   end
+
+  context '#dialog_replace_right_cell' do
+    describe 'for an User' do
+      before do
+        user = FactoryGirl.create(:user)
+        allow(controller).to receive(:x_node).and_return("u-#{user.id}")
+      end
+
+      it 'calls #replace_right_cell with nodetype set to dialog_return' do
+        expect(controller).to receive(:replace_right_cell).with(:nodetype => 'dialog_return')
+        controller.send(:dialog_replace_right_cell)
+      end
+    end
+
+    describe 'for a Group' do
+      let(:group) { FactoryGirl.create(:miq_group) }
+
+      before do
+        allow(controller).to receive(:x_node).and_return("g-#{group.id}")
+      end
+
+      it 'calls #replace_right_cell with nodetype set to dialog_return and #rbac_group_get_details with group id' do
+        expect(controller).to receive(:rbac_group_get_details).with(group.id)
+        expect(controller).to receive(:replace_right_cell).with(:nodetype => 'dialog_return')
+        controller.send(:dialog_replace_right_cell)
+      end
+    end
+  end
 end

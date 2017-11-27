@@ -15,10 +15,14 @@ module ApplicationController::DialogRunner
     @in_a_form = false
     if session[:edit][:explorer]
       add_flash(flash)
-      replace_right_cell
+      dialog_replace_right_cell
     else
       javascript_redirect redirect_url(flash)
     end
+  end
+
+  def dialog_replace_right_cell
+    replace_right_cell
   end
 
   def dialog_form_button_pressed
@@ -35,7 +39,7 @@ module ApplicationController::DialogRunner
         add_flash(_("Error during 'Provisioning': %{error_message}") % {:error_message => bang.message}, :error)
         javascript_flash(:spinner_off => true)
       else
-        unless result[:errors].blank?
+        if result[:errors].present?
           # show validation errors
           result[:errors].each do |err|
             add_flash(err, :error)
@@ -49,7 +53,7 @@ module ApplicationController::DialogRunner
             if session[:edit][:explorer]
               add_flash(flash)
               if result[:request].nil?
-                replace_right_cell
+                dialog_replace_right_cell
               else
                 javascript_redirect :controller => 'miq_request',
                                     :action     => 'show_list',

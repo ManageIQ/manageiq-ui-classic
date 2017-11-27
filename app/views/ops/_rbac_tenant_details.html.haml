@@ -1,6 +1,6 @@
 = render :partial => "layouts/flash_msg"
 #tenant_info
-  - type = @tenant.tenant? ? "Tenant" : "Project"
+  - type = @record.tenant? ? "Tenant" : "Project"
   %h3
     = _("%{type} Information") % {:type => type}
   .form-horizontal
@@ -8,13 +8,13 @@
       %label.control-label.col-md-2
         = _("Name")
       .col-md-8
-        = h(@tenant.name)
+        = h(@record.name)
     .form-group
       %label.control-label.col-md-2
         = _("Description")
       .col-md-8
-        = h(@tenant.description)
-    - parent = @tenant.parent
+        = h(@record.description)
+    - parent = @record.parent
     - if parent && parent.allowed?
       .form-group
         %label.control-label.col-md-2
@@ -27,7 +27,7 @@
         = _("Groups in this %{type}") % {:type => type}
       .col-md-8
         %table{:cellpadding => "0", :cellspacing => "0"}
-          - @tenant.miq_groups.non_tenant_groups.sort_by { |group| group.name.downcase }.each do |g|
+          - @record.miq_groups.non_tenant_groups.sort_by { |group| group.name.downcase }.each do |g|
             - if role_allows?(:feature => "rbac_group_show")
               - params = {:class   => "pointer",
                           :onclick => "miqTreeActivateNode('rbac_tree', 'g-#{to_cid(g.id)}');",
@@ -38,7 +38,7 @@
               %td
                 %i.ff.ff-group
                 = h(g.name)
-  - all_subtenants = @tenant.all_subtenants
+  - all_subtenants = @record.all_subtenants
   - unless all_subtenants.blank?
     %h3= _("Child Tenants")
     %table.table.table-striped.table-bordered.table-hover
@@ -52,7 +52,7 @@
               %td.table-view-pf-select
                 %i.pficon.pficon-tenant
               %td= tenant.name
-  - all_subprojects = @tenant.all_subprojects
+  - all_subprojects = @record.all_subprojects
   - unless all_subprojects.blank?
     %h3= _("Projects")
     %table.table.table-striped.table-bordered.table-hover

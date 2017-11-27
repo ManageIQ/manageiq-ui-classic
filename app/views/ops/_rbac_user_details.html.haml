@@ -19,7 +19,7 @@
       .col-md-8
         - if !@edit
           %p.form-control-static
-            = h(@user.name)
+            = h(@record.name)
         - else
           = text_field_tag("name",
                            @edit[:new][:name],
@@ -36,7 +36,7 @@
       .col-md-8
         - if !@edit
           %p.form-control-static
-            = h(@user.userid)
+            = h(@record.userid)
         - else
           = text_field_tag("userid",
                            @edit[:new][:userid],
@@ -81,7 +81,7 @@
       .col-md-8
         - if !@edit
           %p.form-control-static
-            = h(@user.email)
+            = h(@record.email)
         - else
           = text_field_tag("email",
                            @edit[:new][:email],
@@ -95,13 +95,13 @@
           = _("Current Group")
         .col-md-8
           - params = {}
-          - if @user.current_group
+          - if @record.current_group
             - if role_allows?(:feature => "rbac_group_show")
               - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('g-#{to_cid(@user.current_group.id)}');",
+                          :onclick => "miqOnClickSelectRbacTreeNode('g-#{to_cid(@record.current_group.id)}');",
                           :title => _("View this Group")}
             %i.ff.ff-group{params}
-            = link_to(@user.current_group.description, "#", params)
+            = link_to(@record.current_group.description, "#", params)
     .form-group
       %label.col-md-2.control-label
         - if !@edit
@@ -109,7 +109,7 @@
         - else
           = _("Available Groups")
       .col-md-2
-        - groups = @user.present? && @user.miq_groups.present? ? @user.miq_groups.order(:description) : []
+        - groups = @record.present? && @record.miq_groups.present? ? @record.miq_groups.order(:description) : []
         - if groups.present? && @edit.blank?
           - if role_allows?(:feature => "rbac_group_show")
             - groups.each do |group|
@@ -151,18 +151,18 @@
         %label.col-md-2.control-label
           = _("Role")
         .col-md-8
-          - if @user.current_group && @user.current_group.miq_user_role
+          - if @record.current_group && @record.current_group.miq_user_role
             - if role_allows?(:feature => "rbac_user_show")
               - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{to_cid(@user.current_group.miq_user_role.id)}');",
+                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{to_cid(@record.current_group.miq_user_role.id)}');",
                           :title => _("View this Role")}
             - else
               - params = {}
             %i.ff.ff-user-role{params}
-            = link_to(@user.miq_user_role_name, "#", params)
+            = link_to(@record.miq_user_role_name, "#", params)
           - else
             %p.form-control-static
-              = h(@user.miq_user_role_name)
+              = h(@record.miq_user_role_name)
   %hr
   - unless @edit
     = render :partial => "rbac_tag_box"

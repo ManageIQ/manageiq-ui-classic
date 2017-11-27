@@ -8,6 +8,7 @@ class InfraNetworkingController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::ExplorerPresenterMixin
   include Mixins::FindRecord
+  include Mixins::CustomButtonDialogFormMixin
 
   def self.model
     Switch
@@ -349,11 +350,18 @@ class InfraNetworkingController < ApplicationController
     @explorer = true
     @sb[:action] = action unless action.nil?
     if @sb[:action] || params[:display]
-      partial, _, @right_cell_text = set_right_cell_vars # Set partial name, action and cell header
+      # Set partial name, action and cell header
+      partial, action_type, @right_cell_text = set_right_cell_vars
     end
 
     if params[:action] == 'x_button' && params[:pressed] == 'infra_networking_tag'
       tagging
+      return
+    end
+
+    if action_type == "dialog_form_button_pressed"
+      presenter = set_custom_button_dialog_presenter
+      render :json => presenter.for_render
       return
     end
 
@@ -430,7 +438,7 @@ class InfraNetworkingController < ApplicationController
         x_history_add_item(:id => x_node, :text => header, :action => @sb[:action])
       end
     end
-    action = nil
+    action = params[:pressed] == "custom_button" ? "dialog_form_button_pressed" : nil
     return partial, action, header
   end
 

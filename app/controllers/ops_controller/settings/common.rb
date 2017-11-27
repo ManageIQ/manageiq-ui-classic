@@ -1207,7 +1207,6 @@ module OpsController::Settings::Common
     when "z"
       @servers = []
       @record = @zone = @selected_zone = Zone.find(from_cid(nodes.last))
-      @sb[:tab_label] = @selected_zone.description
       @right_cell_text = my_zone_name == @selected_zone.name ?
           _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
                                                           :model => ui_lookup(:model => @selected_zone.class.to_s)} :
