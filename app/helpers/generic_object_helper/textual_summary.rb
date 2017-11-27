@@ -25,6 +25,10 @@ module GenericObjectHelper::TextualSummary
     {:label => _("No Associations defined")}
   end
 
+  def textual_methods_none
+    {:label => _("No Methods defined")}
+  end
+
   def textual_group_attribute_details_list
     if @record.property_attributes.count > 0
       TextualMultilabel.new(
@@ -55,6 +59,21 @@ module GenericObjectHelper::TextualSummary
       TextualGroup.new(_("Associations"), associations)
     else
       TextualGroup.new(_("Associations"), %i(associations_none))
+    end
+  end
+
+  def textual_group_methods
+    methods = %i()
+    @record.property_methods.each do |key|
+      methods.push(key.to_sym)
+      define_singleton_method("textual_#{key}") do
+        {:label => _("%{label}") % {:label => key}}
+      end
+    end
+    if methods.count > 0
+      TextualGroup.new(_("Methods"), methods)
+    else
+      TextualGroup.new(_("Methods"), %i(methods_none))
     end
   end
 
