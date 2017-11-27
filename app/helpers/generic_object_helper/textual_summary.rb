@@ -43,6 +43,14 @@ module GenericObjectHelper::TextualSummary
   end
 
   def textual_group_associations
+    if @record.property_associations.count > 0
+      TextualGroup.new(_("Associations"), associations)
+    else
+      TextualGroup.new(_("Associations"), %i(associations_none))
+    end
+  end
+
+  def associations
     associations = %i()
     @record.property_associations.each do |key, _value|
       associations.push(key.to_sym)
@@ -55,11 +63,7 @@ module GenericObjectHelper::TextualSummary
         end
       end
     end
-    if associations.count > 0
-      TextualGroup.new(_("Associations"), associations)
-    else
-      TextualGroup.new(_("Associations"), %i(associations_none))
-    end
+    associations
   end
 
   def textual_group_methods
