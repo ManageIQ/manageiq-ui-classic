@@ -170,4 +170,11 @@ describe CatalogController do
       controller.send(:dialog_form_button_pressed)
     end
   end
+
+  describe '#dialog_replace_right_cell' do
+    it 'calls #replace_right_cell' do
+      expect(controller).to receive(:replace_right_cell)
+      controller.dialog_replace_right_cell
+    end
+  end
 end

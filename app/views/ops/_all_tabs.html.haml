@@ -197,12 +197,8 @@
           = miq_tab_content("diagnostics_orphaned_data", @sb[:active_tab]) do
             = render :partial => "diagnostics_orphaned_data_tab"
   - when :rbac_tree
-    %ul.nav.nav-tabs
-      = miq_tab_header("rbac_details", "rbac_details") do
-        = @sb[:tab_label]
-    .tab-content
-      = miq_tab_content("rbac_details", "rbac_details") do
-        = render :partial => "rbac_details_tab"
+    #rbac_details
+      = render :partial => "rbac_details_tab"
   - when :vmdb_tree
     %ul.nav.nav-tabs
       - tree_node = x_node
