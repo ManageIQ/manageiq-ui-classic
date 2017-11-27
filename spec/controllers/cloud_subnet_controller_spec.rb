@@ -121,6 +121,15 @@ describe CloudSubnetController do
           :userid => controller.current_user.userid
         }
       end
+
+      let(:cloud_tenant) do
+        FactoryGirl.create(:cloud_tenant)
+      end
+
+      let(:cloud_network) do
+        FactoryGirl.create(:cloud_network_openstack)
+      end
+
       let(:queue_options) do
         {
           :class_name  => @ems.class.name,
@@ -129,7 +138,13 @@ describe CloudSubnetController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name => "test", :ip_version => 4, :enable_dhcp => false}]
+          :args        => [{
+            :name         => 'test',
+            :ip_version   => 4,
+            :enable_dhcp  => true,
+            :cloud_tenant => cloud_tenant,
+            :network_id   => cloud_network.ems_ref
+          }]
         }
       end
 
@@ -140,8 +155,16 @@ describe CloudSubnetController do
 
       it "queues the create action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :create, :params => { :button => "add", :format => :js, :name => 'test',
-                                   :tenant_id => 'id', :ems_id => @ems.id }
+        post :create, :params => {
+          :button           => 'add',
+          :format           => :js,
+          :name             => 'test',
+          :cloud_tenant     => {:id => cloud_tenant.id},
+          :ems_id           => @ems.id,
+          :dhcp_enabled     => true,
+          :network_protocol => 4,
+          :network_id       => cloud_network.ems_ref
+        }
       end
     end
   end
@@ -161,6 +184,7 @@ describe CloudSubnetController do
           :userid => controller.current_user.userid
         }
       end
+
       let(:queue_options) do
         {
           :class_name  => @cloud_subnet.class.name,
@@ -180,7 +204,12 @@ describe CloudSubnetController do
 
       it "queues the update action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :update, :params => { :button => "save", :format => :js, :id => @cloud_subnet.id, :name => "foo2" }
+        post :update, :params => {
+          :button => "save",
+          :format => :js,
+          :id     => @cloud_subnet.id,
+          :name   => "foo2"
+        }
       end
     end
   end

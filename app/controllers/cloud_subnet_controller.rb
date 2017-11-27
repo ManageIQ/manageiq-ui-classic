@@ -47,12 +47,8 @@ class CloudSubnetController < ApplicationController
     assert_privileges("cloud_tenant_show_list")
     assert_privileges("cloud_network_show_list")
 
-    @subnet = CloudSubnet.new
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Add New Subnet"),
-      :url  => "/cloud_subnet/new"
-    )
+    drop_breadcrumb(:name => _("Add New Subnet"), :url => "/cloud_subnet/new")
   end
 
   def create
@@ -213,14 +209,15 @@ class CloudSubnetController < ApplicationController
   end
 
   def changed_form_params
-    # Fields allowed for update are: name, enable_dhcp, dns_nameservers, allocation_pools, host_routes, gateway_ip
+    # Allowed fields for update: name, enable_dhcp, dns_nameservers, allocation_pools, host_routes, gateway_ip
     options = {}
     options[:name] = params[:name] unless @subnet.name == params[:name]
 
-    # A gateway address is automatically assigned by Openstack when gateway is null
+    # Provider to automatically assign gateway address unless provided
     unless @subnet.gateway == params[:gateway]
       options[:gateway_ip] = params[:gateway].blank? ? nil : params[:gateway]
     end
+
     unless @subnet.dhcp_enabled == switch_to_bol(params[:dhcp_enabled])
       options[:enable_dhcp] = switch_to_bol(params[:dhcp_enabled])
     end
@@ -235,15 +232,15 @@ class CloudSubnetController < ApplicationController
     options[:name] = params[:name] if params[:name]
     options[:ems_id] = params[:ems_id] if params[:ems_id]
     options[:cidr] = params[:cidr] if params[:cidr]
-    # An address is automatically assigned by Openstack when gateway is null
+    # Provider to automatically assign gateway address unless provided
     if params[:gateway]
       options[:gateway_ip] = params[:gateway].blank? ? nil : params[:gateway]
     end
     options[:ip_version] = params[:network_protocol] =~ /4/ ? 4 : 6
-    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
+    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params[:cloud_tenant][:id]
     options[:network_id] = params[:network_id] if params[:network_id]
     options[:enable_dhcp] = params[:dhcp_enabled]
-    # TODO: Add extra fields
+    # TODO: Add dns_nameservers, allocation_pools, host_routes
     options[:availability_zone_id] = params[:availability_zone_id] if params[:availability_zone_id]
     if params[:ipv6_router_advertisement_mode]
       options[:ipv6_router_advertisement_mode] = params[:ipv6_router_advertisement_mode]
