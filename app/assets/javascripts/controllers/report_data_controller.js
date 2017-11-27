@@ -89,6 +89,8 @@
         this.onUnsubscribe();
       } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
         this.setExtraClasses();
+      } else if (event.refreshData && event.refreshData.name === CONTROLLER_NAME) {
+        this.refreshData();
       }
 
       if (event.controller === CONTROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
@@ -144,6 +146,10 @@
     }
     subscribeToSubject.bind(vm)();
     vm.perPage = defaultPaging();
+  };
+
+  ReportDataController.prototype.refreshData = function() {
+    this.initController(this.initObject);
   };
 
   ReportDataController.prototype.setSort = function(headerId, isAscending) {
