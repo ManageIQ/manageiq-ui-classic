@@ -9,7 +9,8 @@ class HawkularProxyService
     "admin"                        => _("Admin"),
     "openshift-infra"              => _("OpenShift Infra"),
     "kubernetes-nodes"             => _("Kubernetes Nodes"),
-    "kubernetes-apiserver"         => _("Kubernetes API server"),
+    "kubernetes-apiservers"        => _("Kubernetes API servers"),
+    "kubernetes-cadvisor"          => _("Kubernetes cAdvisor"),
     "kubernetes-service-endpoints" => _("Kubernetes Service"),
   }.freeze
 
