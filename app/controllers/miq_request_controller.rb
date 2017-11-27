@@ -162,15 +162,6 @@ class MiqRequestController < ApplicationController
     {:view => @view, :pages => @pages}
   end
 
-  def page_params
-    @request_tab = params[:typ] if params[:typ] # set this to be used to identify which Requests subtab was clicked
-    @layout = layout_from_tab_name(@request_tab)
-    kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
-    gv_options = page_display_options
-    @view, @pages = get_view(kls, gv_options)
-    {:view => @view, :pages => @pages}
-  end
-
   def show
     identify_request
     return if record_no_longer_exists?(@miq_request)
@@ -387,25 +378,9 @@ class MiqRequestController < ApplicationController
     end
     show_list
 
-    # need to call this outside render :update
-    grid_options, js_options = replace_list_grid
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("prov_options_div", :partial => "prov_options")
-      if @view.table.data.length >= 1
-        page << javascript_hide("no_records_div")
-        page << javascript_show("records_div")
-      else
-        page << javascript_show("no_records_div")
-        page << javascript_hide("records_div")
-      end
-
-      page.replace_html("list_grid", :partial => "layouts/list_grid",
-                                     :locals => {:options    => grid_options,
-                                                 :js_options => js_options})
-      page << "miqGridOnCheck();" # Reset the center buttons
-      page << "miqSparkle(false);"
+    render :update do |js|
+      js << javascript_prologue
+      js << 'sendDataWithRx({refreshData: {name: "reportDataController"}});'
     end
   end
 

@@ -17,15 +17,15 @@ describe MiqRequestController do
     end
   end
 
+  let(:parent_tenant)      { FactoryGirl.create(:tenant) }
+  let(:child_tenant)       { FactoryGirl.create(:tenant, :parent=> parent_tenant) }
+  let(:user_child_tenant)  { FactoryGirl.create(:user_with_group, :tenant => child_tenant) }
+  let(:user_parent_tenant) { FactoryGirl.create(:user_with_group, :tenant => parent_tenant) }
+
+  let(:template)     { FactoryGirl.create(:template_amazon) }
+  let(:request_body) { {:requester => user_child_tenant, :source_type => 'VmOrTemplate', :source_id => template.id} }
+
   describe "#get_view" do
-    let(:parent_tenant)      { FactoryGirl.create(:tenant) }
-    let(:child_tenant)       { FactoryGirl.create(:tenant, :parent=> parent_tenant) }
-    let(:user_child_tenant)  { FactoryGirl.create(:user_with_group, :tenant => child_tenant) }
-    let(:user_parent_tenant) { FactoryGirl.create(:user_with_group, :tenant => parent_tenant) }
-
-    let(:template)     { FactoryGirl.create(:template_amazon) }
-    let(:request_body) { {:requester => user_child_tenant, :source_type => 'VmOrTemplate', :source_id => template.id} }
-
     before :each do
       EvmSpecHelper.local_miq_server
 
@@ -200,6 +200,37 @@ describe MiqRequestController do
   end
 
   render_views
+
+  context 'showing the list of tasks' do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    describe '#show_list' do
+      it 'renders GTL with MiqRequest model' do
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name      => 'MiqRequest',
+          :gtl_type_string => 'list',
+        )
+        get :show_list
+      end
+    end
+
+    context '#report_data' do
+      it 'calls "page_display_options" and returns the MiqRequest data' do
+        FactoryGirl.create(:miq_provision_request, request_body)
+
+        expect(controller).to receive(:page_display_options).and_call_original
+        report_data_request(
+          :model => 'MiqRequest',
+        )
+        results = assert_report_data_response
+        expect(results['data']['rows'].length).to eq(1)
+      end
+    end
+  end
+
   context "#edit_button" do
     before do
       stub_user(:features => :all)
