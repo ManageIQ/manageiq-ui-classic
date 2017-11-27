@@ -210,6 +210,70 @@ describe HostController do
       get :guest_applications, :params => {:id => @host.id, :db => 'host'}
       expect(response.status).to eq(200)
     end
+
+    # http://localhost:3000/host/filesystems/10000000000005?db=host
+    it "renders a grid of all associated Filesystems" do
+      @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name                     => 'Filesystem',
+        :parent_id                      => @host.id,
+        :parent                         => @host,
+        :gtl_type_string                => 'list',
+        :report_data_additional_options => {
+          :named_scope => [[:host_service_group_filesystems, @host_service_group.id]]
+        }
+      )
+      get :filesystems, :params => {:id => @host.id, :db => 'host', :host_service_group => @host_service_group.id}
+      expect(response.status).to eq(200)
+    end
+
+    # http://localhost:3000/host/guest_applications/10000000000005?db=host?status=all
+    it "renders a grid of all associated SystemServices" do
+      @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name                     => 'SystemService',
+        :parent_id                      => @host.id,
+        :parent                         => @host,
+        :gtl_type_string                => 'list',
+        :report_data_additional_options => {
+          :named_scope => [[:host_service_group_systemd, @host_service_group.id]]
+        }
+      )
+      get :host_services, :params => {:id => @host.id, :db => 'host', :host_service_group => @host_service_group.id, :status => "all"}
+      expect(response.status).to eq(200)
+    end
+
+    # http://localhost:3000/host/guest_applications/10000000000005?db=host?status=running
+    it "renders a grid of running associated SystemServices" do
+      @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name                     => 'SystemService',
+        :parent_id                      => @host.id,
+        :parent                         => @host,
+        :gtl_type_string                => 'list',
+        :report_data_additional_options => {
+          :named_scope => [[:host_service_group_running_systemd, @host_service_group.id]]
+        }
+      )
+      get :host_services, :params => {:id => @host.id, :db => 'host', :host_service_group => @host_service_group.id, :status => 'running'}
+      expect(response.status).to eq(200)
+    end
+
+    # http://localhost:3000/host/guest_applications/10000000000005?db=host?status=failed
+    it "renders a grid of failed associated SystemServices" do
+      @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name                     => 'SystemService',
+        :parent_id                      => @host.id,
+        :parent                         => @host,
+        :gtl_type_string                => 'list',
+        :report_data_additional_options => {
+          :named_scope => [[:host_service_group_failed_systemd, @host_service_group.id]]
+        }
+      )
+      get :host_services, :params => {:id => @host.id, :db => 'host', :host_service_group => @host_service_group.id, :status => 'failed'}
+      expect(response.status).to eq(200)
+    end
   end
 
   describe "#show" do
