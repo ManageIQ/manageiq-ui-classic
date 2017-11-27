@@ -10,7 +10,8 @@ angular.module('miq.util').factory('metricsConfigFactory', function() {
       dash.itemSelected = dash.selectedItems.length > 0;
     };
 
-    dash.DEFAULT_TENANT = "_system";
+    dash.DEFAULT_HAWKULAR_TENANT = "_system";
+    dash.DEFAULT_PROMETHEUS_TENANT = "kubernetes-cadvisor";
     dash.tenant = {value: null};
 
     dash.actionsConfig = {

@@ -9,14 +9,30 @@ class PrometheusProxyService < HawkularProxyService
     @hostname = @ems.hostname
 
     @params = controller.params
-    @tenant = @params['tenant'] || 'kubernetes-nodes'
+    @tenant = @params['tenant'] || 'kubernetes-cadvisor'
 
     cli = ManageIQ::Providers::Kubernetes::ContainerManager::MetricsCapture::PrometheusClient.new(@ems, @tenant)
     @conn = cli.prometheus_client
   end
 
+  def replace_hawular_tags(tags)
+    if tags && tags["type"] == "node" && tags["hostname"]
+      tags["id"] = "/"
+      tags["instance"] = tags["hostname"]
+
+      tags.delete("type")
+      tags.delete("hostname")
+    end
+
+    tags
+  end
+
   def metric_definitions(params, no_data = false)
     tags = params[:tags]
+
+    # check for hawkular style type / hostname tags and replace if needed
+    tags = replace_hawular_tags(tags)
+
     tags_str = if tags.present?
                  tags.map { |x, y| ",#{x}=~\"#{y}\"" }.join
                else
@@ -46,22 +62,29 @@ class PrometheusProxyService < HawkularProxyService
                  o['values']
                end
 
-      metric['descriptor_name'] = metric['__name__']
-      metric['units'] = 'bytes' if metric['__name__'].include?('_bytes')
-      metric['units'] = 'seconds' if metric['__name__'].include?('_seconds')
-      metric['units'] = 'milliseconds' if metric['__name__'].include?('_milliseconds')
-      metric['metric_type'] = metric['type']
+      unless no_data
+        # if we are in list view ( we need data )
+        # set the descriptor_name and units for the display title in list view.
+        metric['descriptor_name'] = metric['__name__']
+        metric['units'] = 'bytes' if metric['__name__'].include?('_bytes')
+        metric['units'] = 'seconds' if metric['__name__'].include?('_seconds')
+        metric['units'] = 'milliseconds' if metric['__name__'].include?('_milliseconds')
+        metric['metric_type'] = metric['type']
 
-      if metric['container_name'].nil?
-        metric['type'] = 'machine'
-        metric['type_id'] = metric['instance']
-      elsif metric['container_name'] == "POD"
-        metric['type'] = 'pod'
-        metric['type_id'] = metric['pod_name']
-      else
-        metric['type'] = 'container'
-        metric['type_id'] = metric['container_name']
+        if metric['container_name'].nil?
+          metric['type'] = 'machine'
+          metric['type_id'] = metric['instance']
+        elsif metric['container_name'] == "POD"
+          metric['type'] = 'pod'
+          metric['type_id'] = metric['pod_name']
+        else
+          metric['type'] = 'container'
+          metric['type_id'] = metric['container_name']
+        end
       end
+
+      # users should not have access to the job tag
+      metric.delete("job")
 
       {
         "id"   => "#{metric['__name__']}/#{metric['type_id']}[#{i}]",

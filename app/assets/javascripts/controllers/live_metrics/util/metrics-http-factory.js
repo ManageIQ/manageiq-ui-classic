@@ -108,7 +108,7 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
 
         // try to set the current tenant to be the default one
         dash.tenantList.forEach(function callback(obj, i) {
-          if (obj.value === dash.DEFAULT_TENANT) {
+          if (obj.value === dash.DEFAULT_HAWKULAR_TENANT || obj.value === dash.DEFAULT_PROMETHEUS_TENANT) {
             dash.tenant = dash.tenantList[i];
           }
         });
