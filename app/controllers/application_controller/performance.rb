@@ -820,7 +820,7 @@ module ApplicationController::Performance
 
     charts = []
     chart_data = []
-    cat_desc = Classification.find_by(:name => @perf_options[:cat]).description
+    cat_desc = Classification.find_by_name(@perf_options[:cat]).description
 
     layout_name = case @perf_options[:typ]
                   when "Hourly" then 'hourly_tag_charts'
@@ -1547,7 +1547,7 @@ module ApplicationController::Performance
   end
 
   def breadcrumb_tag(report, legend_index)
-    category = Classification.find_by(:name => @perf_options[:cat]).description
+    category = Classification.find_by_name(@perf_options[:cat]).description
     group_by = report.extras[:group_by_tag_descriptions][legend_index]
     "#{category}:#{group_by}"
   end
