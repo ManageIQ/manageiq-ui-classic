@@ -162,15 +162,6 @@ class MiqRequestController < ApplicationController
     {:view => @view, :pages => @pages}
   end
 
-  def page_params
-    @request_tab = params[:typ] if params[:typ] # set this to be used to identify which Requests subtab was clicked
-    @layout = layout_from_tab_name(@request_tab)
-    kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
-    gv_options = page_display_options
-    @view, @pages = get_view(kls, gv_options)
-    {:view => @view, :pages => @pages}
-  end
-
   def show
     identify_request
     return if record_no_longer_exists?(@miq_request)
