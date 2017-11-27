@@ -11,7 +11,7 @@
             .pull-left
               = label[:value]
             .pull-right
-              %i{:class => label[:sortable] == :asc ? "fa-sort-asc" : "fa-sort-desc"}
+              %i{:class => label[:sortable] == :asc ? "fa fa-sort-asc" : "fa fa-sort-desc"}
           - else
             = label
     - values.each do |item|
