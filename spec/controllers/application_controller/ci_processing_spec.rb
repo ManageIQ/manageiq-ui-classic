@@ -944,3 +944,37 @@ describe VmOrTemplateController do
     end
   end
 end
+
+describe OrchestrationStackController do
+  context "#orchestration_stack_delete" do
+    let(:orchestration_stack) { FactoryGirl.create(:orchestration_stack_cloud) }
+    let(:orchestration_stack_deleted) { FactoryGirl.create(:orchestration_stack_cloud) }
+
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as FactoryGirl.create(:user_admin)
+      controller.instance_variable_set(:@lastaction, "show_list")
+      allow(controller).to receive(:role_allows?).and_return(true)
+    end
+
+    it "should render error flash message if OrchestrationStack doesn't exist" do
+      id = orchestration_stack_deleted.id
+      orchestration_stack_deleted.destroy
+      controller.instance_variable_set(:@_params, :miq_grid_checks => id.to_s) # Orchestration Stack id that doesn't exist
+      expect(controller).to receive(:show_list)
+      controller.send('orchestration_stack_delete')
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first).to eq(:message => "Error during deletion: Unauthorized object or action",
+                                         :level   => :error)
+    end
+
+    it "should render success flash message if OrchestrationStack deletion was initiated" do
+      controller.instance_variable_set(:@_params, :miq_grid_checks => orchestration_stack.id.to_s) # Orchestration Stack id that exists
+      expect(controller).to receive(:show_list)
+      controller.send('orchestration_stack_delete')
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first).to eq(:message => "Delete initiated for 1 Orchestration Stacks from the ManageIQ Database",
+                                         :level   => :success)
+    end
+  end
+end
