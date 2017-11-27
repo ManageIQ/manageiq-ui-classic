@@ -81,7 +81,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   var getCloudNetworksByEms = function(id) {
     if (id) {
-      API.get("/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=" + id).then(function(data) {
+      return API.get("/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=" + id).then(function(data) {
         vm.available_networks = data.resources;
       }).catch(miqService.handleFailure);
     }
@@ -89,7 +89,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   var getCloudSubnetsByNetworkID = function(id) {
     if (id) {
-      API.get("/api/cloud_subnets?expand=resources&attributes=name,ems_ref&filter[]=cloud_network_id=" + id).then(function(data) {
+      return API.get("/api/cloud_subnets?expand=resources&attributes=name,ems_ref&filter[]=cloud_network_id=" + id).then(function(data) {
         vm.available_subnets = data.resources;
       }).catch(miqService.handleFailure);
     }
@@ -97,7 +97,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   var getCloudSubnetsByRef = function(ref) {
     if (ref) {
-      API.get("/api/cloud_subnets?expand=resources&attributes=name&filter[]=ems_ref=" + ref).then(function(data) {
+      return API.get("/api/cloud_subnets?expand=resources&attributes=name&filter[]=ems_ref=" + ref).then(function(data) {
         vm.networkRouterModel.cloud_subnet_id = data.resources[0].id;
       }).catch(miqService.handleFailure);
     }
