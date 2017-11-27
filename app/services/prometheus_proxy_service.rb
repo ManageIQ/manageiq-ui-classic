@@ -15,7 +15,7 @@ class PrometheusProxyService < HawkularProxyService
     @conn = cli.prometheus_client
   end
 
-  def replace_hawular_tags(tags)
+  def replace_hawkular_tags(tags)
     if tags && tags["type"] == "node" && tags["hostname"]
       tags["id"] = "/"
       tags["instance"] = tags["hostname"]
@@ -31,7 +31,7 @@ class PrometheusProxyService < HawkularProxyService
     tags = params[:tags]
 
     # check for hawkular style type / hostname tags and replace if needed
-    tags = replace_hawular_tags(tags)
+    tags = replace_hawkular_tags(tags)
 
     tags_str = if tags.present?
                  tags.map { |x, y| ",#{x}=~\"#{y}\"" }.join
