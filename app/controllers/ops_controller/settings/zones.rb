@@ -122,6 +122,8 @@ module OpsController::Settings::Zones
     else
       zone.remove_settings_path_for_resource(:ntp)
     end
+
+    zone.ntp_reload_queue
   end
 
   # Validate the zone record fields
