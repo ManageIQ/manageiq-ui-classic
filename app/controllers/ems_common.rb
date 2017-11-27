@@ -236,6 +236,8 @@ module EmsCommon
 
       when "physical_server_protect"          then assign_policies(PhysicalServer)
       when "physical_server_tag"              then tag(PhysicalServer)
+      when "physical_server_refresh"          then refresh_physical_servers
+
       when "orchestration_stack_delete"       then orchestration_stack_delete
       end
 
