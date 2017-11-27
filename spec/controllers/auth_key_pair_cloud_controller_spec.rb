@@ -68,4 +68,26 @@ describe AuthKeyPairCloudController do
                                                                        "fingerprint"
     end
   end
+
+  describe '#show_list' do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    render_views
+
+    it 'sets the lastaction correctly' do
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name                     => 'ManageIQ::Providers::CloudManager::AuthKeyPair',
+        :report_data_additional_options => {
+          :model      => "ManageIQ::Providers::CloudManager::AuthKeyPair",
+          :lastaction => 'show_list'
+        }
+      )
+
+      get :show_list
+      expect(response.status).to eq(200)
+    end
+  end
 end
