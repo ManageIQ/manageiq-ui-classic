@@ -1715,6 +1715,10 @@ var fontIconChar = _.memoize(function(klass) {
   document.body.appendChild(tmp);
   var char = window.getComputedStyle(tmp, ':before').content.replace(/'|"/g, '');
   var font = window.getComputedStyle(tmp, ':before').fontFamily;
-  tmp.remove();
+  if (tmp.hasOwnProperty('remove')) {
+    tmp.remove();
+  } else { // IE11 doesn't support ChildNode.remove()
+    tmp.parentNode.removeChild(tmp);
+  }
   return {font: font, char: char};
 });
