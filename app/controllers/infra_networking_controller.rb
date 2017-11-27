@@ -362,9 +362,10 @@ class InfraNetworkingController < ApplicationController
     if action_type == "dialog_form_button_pressed"
       presenter = set_custom_button_dialog_presenter
       render :json => presenter.for_render
+      return
     end
 
-    return if @in_a_form && action
+    return if @in_a_form
 
     if !@in_a_form && !@sb[:action]
       get_node_info(x_node)
@@ -437,7 +438,7 @@ class InfraNetworkingController < ApplicationController
         x_history_add_item(:id => x_node, :text => header, :action => @sb[:action])
       end
     end
-    action = @sb[:action] == "button" ? "dialog_form_button_pressed" : nil
+    action = params[:pressed] == "custom_button" ? "dialog_form_button_pressed" : nil
     return partial, action, header
   end
 
