@@ -388,7 +388,7 @@ class ApplicationController < ActionController::Base
     options = from_additional_options(params[:additional_options] || {})
     if params[:explorer]
       params[:action] = "explorer"
-      @explorer = params[:explorer] == "true"
+      @explorer = params[:explorer].to_s == "true"
     end
 
     # if params[:active_tree] && defined? get_node_info
@@ -1454,11 +1454,21 @@ class ApplicationController < ActionController::Base
       @search_text = params[:search_text].blank? ? nil : params[:search_text].strip
     end
 
+    return nil unless @search_text
+
+    # Don't apply sub_filter when viewing sub-list view of a CI.
+    # This applies when search is active and you go Vm -->
+    # {Processes,Users,...} in that case, search shoult NOT be applied.
+    # FIXME: This needs to be changed to apply search in some explicit way.
+    return nil if @display
+
+    # If we came in through Chart pop-up menu click we don't filter records.
+    return nil if session[:menu_click]
+
     # Build sub_filter where clause from search text
-    if @search_text && (
-        (!@parent && @lastaction == "show_list" && !session[:menu_click]) ||
-        (@explorer && !session[:menu_click]) ||
-        %w(miq_policy vm_infra).include?(@layout)) # Added to handle search text from list views in control explorer
+    if (!@parent && @lastaction == "show_list") ||  # This part is for the Hosts screen.
+       @explorer                                    # In explorer screens we have search (that includes vm_infra and
+                                                    # Control/Explorer/Policies)
 
       stxt = @search_text.gsub("_", "`_")                 # Escape underscores
       stxt.gsub!("%", "`%")                               #   and percents
@@ -1473,14 +1483,15 @@ class ApplicationController < ActionController::Base
                "%#{stxt}%"
              end
 
-      if ::Settings.server.case_sensitive_name_search
-        sub_filter = ["#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt]
-      else
-        # don't apply sub_filter when viewing sub-list view of a CI
-        sub_filter = ["lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase] unless @display
-      end
+      return (
+        if ::Settings.server.case_sensitive_name_search
+          ["#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt]
+        else
+          ["lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase]
+        end
+      )
     end
-    sub_filter
+    nil
   end
 
   def perpage_key(dbname)
