@@ -16,35 +16,27 @@ module DashboardService
 
   def format_cpu(used, total)
     {
-      :used  => cpu_round(used.values.last),
-      :total => cpu_round(total.values.last),
+      :used  => cpu_num(used.values.last).round(display_precision),
+      :total => cpu_num(total.values.last).round(0),
       :xData => used.keys,
-      :yData => used.values.map { |v| cpu_graph_round(v) },
+      :yData => used.values.map { |v| cpu_num(v).round(graph_precision) },
     }
   end
 
-  def cpu_round(val)
-    (val || 0).round(display_precision)
-  end
-
-  def cpu_graph_round(val)
-    (val || 0).round(graph_precision)
+  def cpu_num(val)
+    (val || 0)
   end
 
   def format_memory(used, total)
     {
-      :used  => mem_round(used.values.last),
-      :total => mem_round(total.values.last),
+      :used  => mem_num(used.values.last).round(display_precision),
+      :total => mem_num(total.values.last).round(0),
       :xData => used.keys,
-      :yData => used.values.map { |v| mem_graph_round(v) },
+      :yData => used.values.map { |v| mem_num(v).round(graph_precision) },
     }
   end
 
-  def mem_round(val)
-    ((val || 0) / 1024.0).round(display_precision)
-  end
-
-  def mem_graph_round(val)
-    ((val || 0) / 1024.0).round(graph_precision)
+  def mem_num(val)
+    ((val || 0) / 1024.0)
   end
 end
