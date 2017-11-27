@@ -387,25 +387,9 @@ class MiqRequestController < ApplicationController
     end
     show_list
 
-    # need to call this outside render :update
-    grid_options, js_options = replace_list_grid
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("prov_options_div", :partial => "prov_options")
-      if @view.table.data.length >= 1
-        page << javascript_hide("no_records_div")
-        page << javascript_show("records_div")
-      else
-        page << javascript_show("no_records_div")
-        page << javascript_hide("records_div")
-      end
-
-      page.replace_html("list_grid", :partial => "layouts/list_grid",
-                                     :locals => {:options    => grid_options,
-                                                 :js_options => js_options})
-      page << "miqGridOnCheck();" # Reset the center buttons
-      page << "miqSparkle(false);"
+    render :update do |js|
+      js << javascript_prologue
+      js << 'sendDataWithRx({refreshData: {name: "reportDataController"}});'
     end
   end
 
