@@ -167,6 +167,8 @@ class NetworkRouterController < ApplicationController
       router = NetworkRouter.find_by(:id => s)
       if router.nil?
         add_flash(_("Router no longer exists."), :error)
+      elsif !router.supports?(:delete)
+        add_flash(_(router.unsupported_reason(:delete)), :error)
       else
         routers_to_delete.push(router)
       end
