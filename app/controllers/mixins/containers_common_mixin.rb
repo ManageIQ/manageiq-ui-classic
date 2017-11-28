@@ -173,6 +173,7 @@ module ContainersCommonMixin
         add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
       end
     end
+    javascript_flash
   end
 
   included do
