@@ -83,23 +83,18 @@ class ProviderForemanController < ApplicationController
     session[:edit] = @edit
     @explorer = true
 
-    if (x_active_tree != :configuration_manager_cs_filter_tree || x_node == "root") && params[:button] != 'saveit'
-      listnav_search_selected(0)
-    else
+    if x_active_tree == :configuration_manager_cs_filter_tree && params[:button] != 'saveit' # Configured Systems accordion
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
-
-      if x_active_tree == :cs_filter_tree && @nodetype == "xx-csf"
-        search_id = @nodetype == "root" ? 0 : from_cid(id)
-        listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
-        if @edit[:adv_search_applied] &&
-           MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
-           %w(reload tree_select).include?(params[:action])
-          self.x_node = params[:id]
-          quick_search_show
-        end
-      elsif x_active_tree == :configuration_manager_cs_filter_tree && params[:button].present? && params[:button] != 'saveit'
-        listnav_search_selected(from_cid(id))
+      search_id = @nodetype == "root" ? 0 : from_cid(id)
+      listnav_search_selected(search_id) if !params.key?(:search_text) && params[:action] != 'x_show' # Clear or set the adv search filter
+      if @edit[:adv_search_applied] &&
+         MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
+         %w(reload tree_select).include?(params[:action])
+        self.x_node = params[:id]
+        quick_search_show # User will input the value
       end
+    else # Providers accordion, without Advanced Search
+      listnav_search_selected(0)
     end
   end
 
