@@ -891,7 +891,15 @@ module ApplicationController::CiProcessing
   # Delete all selected or single displayed stack(s)
   def orchestration_stack_delete
     assert_privileges("orchestration_stack_delete")
-    delete_elements(OrchestrationStack, :process_orchestration_stacks)
+    begin
+      delete_elements(OrchestrationStack, :process_orchestration_stacks)
+    rescue StandardError => err
+      add_flash(_("Error during deletion: %{error_message}") % {:error_message => err.message}, :error)
+      if @lastaction == "show_list"
+        show_list
+        @refresh_partial = "layouts/gtl"
+      end
+    end
   end
 
   def configuration_job_delete
