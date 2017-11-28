@@ -12,7 +12,7 @@ class ContainerTopologyService < TopologyService
     ]
   ]
 
-  @kinds = %i(ContainerReplicator ContainerGroup Container ContainerNode ContainerService ContainerRoute ContainerManager)
+  @kinds = %i(ContainerReplicator ContainerGroup Container ContainerNode ContainerService Host Vm ContainerRoute ContainerManager)
 
   def entity_display_type(entity)
     if entity.kind_of?(ManageIQ::Providers::ContainerManager)
