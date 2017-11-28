@@ -13,11 +13,13 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             'fa fa-refresh fa-lg',
             N_('Refresh relationships and power states for all items related to the selected Physical Servers'),
             N_('Refresh Relationships and Power States'),
-            :url_parms    => "main_div",
-            :send_checked => true,
-            :confirm      => N_("Refresh relationships and power states for all items related to the selected Physical Servers?"),
-            :enabled      => false,
-            :onwhen       => "1+"
+            :image   => "refresh",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "refresh", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Refresh relationships and power states for all items related to the selected Physical Servers?"),
+            :enabled => false,
+            :onwhen  => "1+",
+            :options => {:feature => :refresh}
           ),
           button(
             :physical_server_delete,
