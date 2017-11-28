@@ -18,15 +18,15 @@ module GenericObjectHelper::TextualSummary
   end
 
   def textual_attributes_none
-    {:label => _("No Attributes defined")}
+    {:label => _("No Attributes defined"), :no_value => true}
   end
 
   def textual_associations_none
-    {:label => _("No Associations defined")}
+    {:label => _("No Associations defined"), :no_value => true}
   end
 
   def textual_methods_none
-    {:label => _("No Methods defined")}
+    {:label => _("No Methods defined"), :no_value => true}
   end
 
   def textual_group_attribute_details_list
@@ -71,7 +71,7 @@ module GenericObjectHelper::TextualSummary
     @record.property_methods.each do |key|
       methods.push(key.to_sym)
       define_singleton_method("textual_#{key}") do
-        {:label => _("%{label}") % {:label => key}}
+        {:label => _("%{label}") % {:label => key}, :no_value => true}
       end
     end
     if methods.count > 0
