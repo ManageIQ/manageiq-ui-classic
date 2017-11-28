@@ -20,7 +20,7 @@
             :onclick => item[:link] ? click : ""}
           %td.label
             = item[:label]
-          - if item[:value]
+          - if item[:no_value].nil?
             %td
               = render :partial => "shared/summary/icon_or_image", :locals => {:item => item}
               = !item[:value].kind_of?(Array) ? item[:value] : render(:partial => "shared/summary/textual_multivalue", :locals => {:items => item[:value]})
