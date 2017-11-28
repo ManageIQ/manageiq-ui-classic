@@ -134,9 +134,15 @@ module Spec
           expected.keys.find_all { |key| expected[key] != actual[key] }.empty?
         end
 
+        def matches_selected_records(actual, expected)
+          return true unless expected
+          actual.sort == expected.sort
+        end
+
         match do |actual|
           additional_options = expected.delete(:report_data_additional_options)
-          matches_basic(actual, expected) && matches_additional(actual[:report_data_additional_options], additional_options)
+          selected_records = expected.delete(:selected_records)
+          matches_basic(actual, expected) && matches_additional(actual[:report_data_additional_options], additional_options) && matches_selected_records(actual[:selected_records], selected_records)
         end
       end
     end
