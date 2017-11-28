@@ -66,7 +66,7 @@
       .row.row-tile-pf
         .col-xs-12.col-sm-12.col-md-12
           %div{"pf-card" => "",
-           "head-title" => "Quotas",
+           "head-title" => _('Quotas'),
            "show-top-border" =>"true"}
             %div{"ng-repeat"                => "item in quotas",
                  "pf-utilization-bar-chart" => "",
@@ -78,17 +78,21 @@
 
         .col-xs-12.col-sm-6.col-md-12
           %div{"pf-card" => "",
-               "head-title" => "Pods",
+               "head-title" => _('Pods'),
                "show-top-border" =>"true"}
             .spinner.spinner-lg.loading{"ng-if" => "!loadingDone"}
             .empty-chart-content{"pf-empty-chart" => "", "ng-if" => "loadingDone && pods.length == 0"}
             %table#table.table.table-striped.table-bordered.table-hover{"ng-if" => "loadingDone && pods.length > 0"}
               %thead
                 %tr
-                  %th Name
-                  %th Status
-                  %th Ready Status
-                  %th Running Containers
+                  %th
+                    = _('Name')
+                  %th
+                    = _('Status')
+                  %th
+                    = _('Ready Status')
+                  %th
+                    = _('Running Containers')
               %tr{"ng-repeat" => "pod in pods"}
                 %td
                   {{pod.name}}
