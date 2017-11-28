@@ -4,6 +4,9 @@
   %form#form_div{:name           => 'angularForm',
                  'ng-controller' => 'timelineOptionsController as vm',
                  'ng-show'       => 'vm.afterGet',
+                 'miq-form'      => true,
+                 'model'         => 'vm.reportModel',
+                 'model-copy'    => 'vm.modelCopy',
                  :novalidate     => true}
     - if @timeline
       %h3
