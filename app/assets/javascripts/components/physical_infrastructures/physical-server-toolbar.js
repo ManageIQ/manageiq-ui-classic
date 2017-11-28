@@ -39,9 +39,9 @@ function physicalServerToolbarController(API, miqService) {
     // miqService.miqFlashSaved();
 
     if (toolbar.servers.length > 1) {
-      miqService.miqFlash('success', sprintf(__('Requested Server state %s for the selected servers'), toolbar.action));
+      miqService.miqFlash('success', sprintf(__('Requested Server %s for the selected servers'), toolbar.action));
     } else {
-      miqService.miqFlash('success', sprintf(__('Requested Server state %s for the selected server'), toolbar.action));
+      miqService.miqFlash('success', sprintf(__('Requested Server %s for the selected server'), toolbar.action));
     }
   }
 }
