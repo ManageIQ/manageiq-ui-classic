@@ -37,10 +37,12 @@ describe('ansible-raw-stdout', function() {
 
     it('sets the data', function(done) {
       setTimeout(function() {
-        expect(scope.$ctrl.error).toBeDefined();
-        expect(scope.$ctrl.loading).toBeFalsy();
-        expect(scope.$ctrl.data).toBeFalsy();
-        done();
+        setTimeout(function() {
+          expect(scope.$ctrl.error).toBeDefined();
+          expect(scope.$ctrl.loading).toBeFalsy();
+          expect(scope.$ctrl.data).toBeFalsy();
+          done();
+        });
       });
     });
   });
@@ -68,12 +70,14 @@ describe('ansible-raw-stdout', function() {
 
     it('sets the data', function(done) {
       setTimeout(function() {
-        expect(scope.$ctrl).toBeDefined();
-        expect(scope.$ctrl.error).toBeFalsy();
-        expect(scope.$ctrl.loading).toBeFalsy();
-        expect(scope.$ctrl.data).toBeDefined();
-        expect(scope.$ctrl.sanitized).toBeDefined();
-        done();
+        setTimeout(function() {
+          expect(scope.$ctrl).toBeDefined();
+          expect(scope.$ctrl.error).toBeFalsy();
+          expect(scope.$ctrl.loading).toBeFalsy();
+          expect(scope.$ctrl.data).toBeDefined();
+          expect(scope.$ctrl.sanitized).toBeDefined();
+          done();
+        });
       });
     });
   });
