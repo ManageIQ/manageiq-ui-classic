@@ -477,10 +477,6 @@ class DashboardController < ApplicationController
 
   # Login support for OpenIDC - GET /oidc_login
   def oidc_login
-    request.env.each do |key, value|
-      $log.info("    request.env[#{key}] = #{value}") if key =~ /^HTTP_/
-    end
-
     if @user_name.blank? && request.env.key?("HTTP_X_REMOTE_USER").present?
       @user_name = params[:user_name] = request.env["HTTP_X_REMOTE_USER"].split("@").first
     else
