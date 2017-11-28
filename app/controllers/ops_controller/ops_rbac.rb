@@ -1152,10 +1152,10 @@ module OpsController::OpsRbac
 
     if params[:use_filter_expression]
       @edit[:new][:use_filter_expression] = params[:use_filter_expression]
+      @group = MiqGroup.find_by(:id => @edit[:group_id])
+      rbac_group_right_tree(@edit[:new][:belongsto].keys)
       if params[:use_filter_expression] == 'false'
         @edit[:new][:use_filter_expression] = false
-        @group = MiqGroup.find_by(:id => @edit[:group_id])
-        rbac_group_right_tree(@edit[:new][:belongsto].keys)
       elsif params[:use_filter_expression] == 'true'
         @edit[:use_filter_expression] = true
       end
