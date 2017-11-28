@@ -44,6 +44,22 @@ describe ContainerNodeController do
     end
   end
 
+  describe "#button" do
+    let(:node) { FactoryGirl.create(:container_node) }
+
+    context "container_node_check_compliance" do
+      before do
+        EvmSpecHelper.create_guid_miq_server_zone
+        login_as FactoryGirl.create(:user)
+      end
+
+      it 'displays a flash message' do
+        post :button, :pressed => 'container_node_check_compliance', :id => node.id
+        expect(JSON.parse(response.body)['replacePartials']).to have_key('flash_msg_div')
+      end
+    end
+  end
+
   it "renders show_list" do
     session[:settings] = {:default_search => 'foo',
                           :views          => {:containernode => 'list'},
