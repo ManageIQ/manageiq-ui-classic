@@ -32,7 +32,17 @@ describe('tenant-component', function() {
       vm.tenantModel.description = 'newTenant_desc';
       vm.tenantModel.ancestry = null;
       vm.addClicked();
-      expect(API.post).toHaveBeenCalledWith('/api/tenants/', {name: vm.tenantModel.name, description: vm.tenantModel.description, divisible: true, parent: {id: vm.tenantModel.ancestry}});
+
+      expect(API.post).toHaveBeenCalledWith('/api/tenants/', {
+        name: vm.tenantModel.name,
+        description: vm.tenantModel.description,
+        divisible: true,
+        parent: {
+          id: vm.tenantModel.ancestry,
+        },
+      }, {
+        skipErrors: [400],
+      });
       expect(miqService.redirectBack.bind).toHaveBeenCalledWith(vm, 'Tenant \"newTenant\" has been successfully added.', 'success', vm.redirectUrl);
     });
   });
@@ -92,7 +102,10 @@ describe('tenant-component', function() {
       expect(API.put).toHaveBeenCalledWith('/api/tenants/1111', {
         name: vm.tenantModel.name,
         description: vm.tenantModel.description,
-        use_config_for_attributes: vm.tenantModel.use_config_for_attributes,});
+        use_config_for_attributes: vm.tenantModel.use_config_for_attributes,
+      }, {
+        skipErrors: [400],
+      });
       expect(miqService.redirectBack.bind).toHaveBeenCalledWith(vm, 'Tenant \"xyz\" has been successfully saved.', 'success', vm.redirectUrl);
     });
   });
