@@ -476,6 +476,23 @@ describe OpsController do
       expect(MiqExpression).to receive(:tag_details)
       post :rbac_group_field_changed, :params => { :id => 'new',  :use_filter_expression => "true"}
     end
+
+    it "initializes the group record and tag tree when switching tabs" do
+      controller.instance_variable_set(:@edit,
+                                       :group_id => @group.id,
+                                       :new      => {:use_filter_expression => true,
+                                                     :name                  => 'Name',
+                                                     :description           => "Test",
+                                                     :role                  => @role.id,
+                                                     :filter_expression     => @exp.exp,
+                                                     :belongsto             => {},
+                                                     :filters               => {'managed/env' => '/managed/env'}})
+      controller.instance_variable_set(:@sb, :active_rbac_group_tab => 'rbac_customer_tags')
+      controller.instance_variable_set(:@_params, :use_filter_expression => "false", :id => @group.id)
+      controller.send(:rbac_group_get_form_vars)
+      expect(controller.instance_variable_get(:@group).name).to eq(@group.name)
+      expect(controller.instance_variable_get(:@tags_tree)).to_not be_nil
+    end
   end
 
   context "rbac_role_edit" do
