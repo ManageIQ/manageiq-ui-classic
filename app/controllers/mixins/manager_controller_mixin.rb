@@ -188,7 +188,7 @@ module Mixins
                            else
                              'summary'
                            end
-        replace_right_cell
+        replace_right_cell unless @edit && @edit[:adv_search_applied] && MiqExpression.quick_search?(@edit[:adv_search_applied][:exp])
       end
     end
 
