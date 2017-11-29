@@ -58,12 +58,12 @@ class DashboardController < ApplicationController
   def oidc_protected_page
     request.base_url + '/oidc_login'
   end
-  helper_method :oidc_protected_page
+  helper_method(:oidc_protected_page)
 
   def oidc_protected_page_logout
     request.base_url + '/oidc_login/redirect_uri?logout=' + CGI.escape(request.base_url)
   end
-  helper_method :oidc_protected_page_logout
+  helper_method(:oidc_protected_page_logout)
 
   def iframe
     override_content_security_policy_directives(:frame_src => ['*'])
@@ -427,7 +427,7 @@ class DashboardController < ApplicationController
     end
 
     if ext_auth?(:oidc_enabled) && ext_auth?(:local_login_disabled)
-      redirect_to oidc_protected_page
+      redirect_to(oidc_protected_page)
       return
     end
 
@@ -472,7 +472,7 @@ class DashboardController < ApplicationController
 
   # Initiate an OpenIDC Login from the main login page
   def initiate_oidc_login
-    javascript_redirect oidc_protected_page
+    javascript_redirect(oidc_protected_page)
   end
 
   # Login support for OpenIDC - GET /oidc_login
@@ -480,7 +480,7 @@ class DashboardController < ApplicationController
     if @user_name.blank? && request.env.key?("HTTP_X_REMOTE_USER").present?
       @user_name = params[:user_name] = request.env["HTTP_X_REMOTE_USER"].split("@").first
     else
-      redirect_to :action => 'logout'
+      redirect_to(:action => 'logout')
       return
     end
 
@@ -496,7 +496,7 @@ class DashboardController < ApplicationController
       return
     when :fail
       session[:user_validation_error] = validation.flash_msg || "User validation failed"
-      redirect_to :action => 'logout'
+      redirect_to(:action => 'logout')
       return
     end
   end

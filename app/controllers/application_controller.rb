@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     # MiqWebServerWorkerMixin.configure_secret_token for rails server, UI, and
     # web service worker processes.
     protect_from_forgery(:secret => SecureRandom.hex(64),
-                         :except => %i[authenticate external_authenticate kerberos_authenticate saml_login initiate_saml_login oidc_login initiate_oidc_login csp_report],
+                         :except => %i(authenticate external_authenticate kerberos_authenticate saml_login initiate_saml_login oidc_login initiate_oidc_login csp_report),
                          :with   => :exception)
 
   end

@@ -246,15 +246,30 @@
           = _("Provider Type:")
         .col-md-8
           %label
-            %input{:type => 'radio', :name => 'provider_type', :id => 'provider_type', :value => 'none', "data-miq_observe" => {:url => url}.to_json, :checked => @edit[:new][:authentication][:provider_type] == "none" }
+            %input{:type              => 'radio',
+                   :name              => 'provider_type',
+                   :id                => 'provider_type',
+                   :value             => 'none',
+                   "data-miq_observe" => {:url => url}.to_json,
+                   :checked           => @edit[:new][:authentication][:provider_type] == "none"}
             = _("None")
           %br
           %label
-            %input{:type => 'radio', :name => 'provider_type', :id => 'provider_type', :value => 'saml', "data-miq_observe" => {:url => url}.to_json, :checked => @edit[:new][:authentication][:provider_type] == "saml" }
+            %input{:type              => 'radio',
+                   :name              => 'provider_type',
+                   :id                => 'provider_type',
+                   :value             => 'saml',
+                   "data-miq_observe" => {:url => url}.to_json,
+                   :checked           => @edit[:new][:authentication][:provider_type] == "saml"}
             = _("Enable SAML")
           %br
           %label
-            %input{:type => 'radio', :name => 'provider_type', :id => 'provider_type', :value => 'oidc', "data-miq_observe" => {:url => url}.to_json, :checked => @edit[:new][:authentication][:provider_type] == "oidc" }
+            %input{:type              => 'radio',
+                   :name              => 'provider_type',
+                   :id                => 'provider_type',
+                   :value             => 'oidc',
+                   "data-miq_observe" => {:url => url}.to_json,
+                   :checked           => @edit[:new][:authentication][:provider_type] == "oidc"}
             = _("Enable OpenID-Connect")
 
       = hidden_div_if(@edit[:new][:authentication][:provider_type] == "none", :id => "none_local_login_div") do
