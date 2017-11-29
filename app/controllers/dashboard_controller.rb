@@ -477,54 +477,12 @@ class DashboardController < ApplicationController
 
   # Login support for OpenIDC - GET /oidc_login
   def oidc_login
-    if @user_name.blank? && request.env.key?("HTTP_X_REMOTE_USER").present?
-      @user_name = params[:user_name] = request.env["HTTP_X_REMOTE_USER"].split("@").first
-    else
-      redirect_to(:action => 'logout')
-      return
-    end
-
-    user = {:name => @user_name}
-    validation = validate_user(user, nil, request, :require_user => true, :timeout => 30)
-
-    case validation.result
-    when :pass
-      render :template => "dashboard/oidc_login",
-             :layout   => false,
-             :locals   => {:api_auth_token => generate_ui_api_token(@user_name),
-                           :validation_url => validation.url}
-      return
-    when :fail
-      session[:user_validation_error] = validation.flash_msg || "User validation failed"
-      redirect_to(:action => 'logout')
-      return
-    end
+    identity_provider_login("oidc_login")
   end
 
   # Login support for SAML - GET /saml_login
   def saml_login
-    if @user_name.blank? && request.env.key?("HTTP_X_REMOTE_USER").present?
-      @user_name = params[:user_name] = request.env["HTTP_X_REMOTE_USER"].split("@").first
-    else
-      redirect_to(:action => 'logout')
-      return
-    end
-
-    user = {:name => @user_name}
-    validation = validate_user(user, nil, request, :require_user => true, :timeout => 30)
-
-    case validation.result
-    when :pass
-      render :template => "dashboard/saml_login",
-             :layout   => false,
-             :locals   => {:api_auth_token => generate_ui_api_token(@user_name),
-                           :validation_url => validation.url}
-      return
-    when :fail
-      session[:user_validation_error] = validation.flash_msg || "User validation failed"
-      redirect_to(:action => 'logout')
-      return
-    end
+    identity_provider_login("saml_login")
   end
 
   # Handle external-auth signon from login screen
@@ -869,5 +827,30 @@ class DashboardController < ApplicationController
 
   def get_session_data
     @layout = "login"
+  end
+
+  def identity_provider_login(identity_type)
+    if @user_name.blank? && request.env.key?("HTTP_X_REMOTE_USER").present?
+      @user_name = params[:user_name] = request.env["HTTP_X_REMOTE_USER"].split("@").first
+    else
+      redirect_to(:action => 'logout')
+      return
+    end
+
+    user = {:name => @user_name}
+    validation = validate_user(user, nil, request, :require_user => true, :timeout => 30)
+
+    case validation.result
+    when :pass
+      render :template => "dashboard/#{identity_type}",
+             :layout   => false,
+             :locals   => {:api_auth_token => generate_ui_api_token(@user_name),
+                           :validation_url => validation.url}
+      return
+    when :fail
+      session[:user_validation_error] = validation.flash_msg || "User validation failed"
+      redirect_to(:action => 'logout')
+      return
+    end
   end
 end
