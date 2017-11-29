@@ -14,12 +14,16 @@ module TextualMixins::TextualDevices
   end
 
   def processor_description
-    Device.new(_("Processors"),
-               _("%{total_cores} (%{num_sockets} Sockets x %{num_cores} Cores)") %
-                  {:total_cores => @record.cpu_total_cores,
-                   :num_sockets => @record.num_cpu,
-                   :num_cores   => @record.cpu_cores_per_socket},
-               nil, :processor)
+    description = if @record.num_cpu > 0 && @record.cpu_cores_per_socket > 0
+                    _("%{total_cores} (%{num_sockets} Sockets x %{num_cores} Cores)") %
+                      {:total_cores => @record.cpu_total_cores,
+                       :num_sockets => @record.num_cpu,
+                       :num_cores   => @record.cpu_cores_per_socket}
+                  else
+                    _("%{total_cores}") % {:total_cores => @record.cpu_total_cores}
+                  end
+
+    Device.new(_("Processors"), description, nil, :processor)
   end
 
   def cpu_attributes
