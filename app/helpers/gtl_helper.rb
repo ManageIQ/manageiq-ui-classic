@@ -1,4 +1,8 @@
 module GtlHelper
+  REPORT_CONTROLLER_NAME = "reportDataController".freeze
+  REPORT_DOM_ID = "miq-gtl-view".freeze
+  REPORT_ANGULAR_MODULE = "ManageIQ.report_data".freeze
+
   def gtl_selected_records
     records = params.try(:[], :rec_ids) || @edit.try(:[], :pol_items) ||
               @edit.try(:[], :object_ids) || @targets_hash.try(:keys) || @selected_ids
@@ -83,7 +87,7 @@ module GtlHelper
   end
 
   def render_gtl_markup(no_flash_div)
-    content_tag('div', :id => 'miq-gtl-view', "ng-controller" => "reportDataController as dataCtrl") do
+    content_tag('div', :id => REPORT_DOM_ID, "ng-controller" => "reportDataController as dataCtrl") do
       capture do
         concat(render(:partial => 'layouts/flash_msg')) unless no_flash_div
         concat(miq_tile_view)
@@ -101,27 +105,39 @@ module GtlHelper
   end
 
   def render_gtl_javascripts(options)
-    parent_id_escaped = (h(j_str(options[:parent_id])) unless options[:display].nil?)
-
     javascript_tag <<EOJ
-      sendDataWithRx({unsubscribe: 'reportDataController'});
-      miq_bootstrap('#miq-gtl-view', 'ManageIQ.report_data');
+      sendDataWithRx({unsubscribe: '#{REPORT_CONTROLLER_NAME}'});
+      miq_bootstrap('##{REPORT_DOM_ID}', '#{REPORT_ANGULAR_MODULE}');
       sendDataWithRx({initController: {
-        name: 'reportDataController',
-        data: {
-          additionalOptions: #{options[:report_data_additional_options].to_json},
-          modelName: '#{h(j_str(options[:model_name]))}',
-          activeTree: '#{options[:active_tree]}',
-          gtlType: '#{h(j_str(options[:gtl_type_string]))}',
-          parentId: '#{parent_id_escaped}',
-          sortColIdx: '#{options[:sort_col]}',
-          sortDir: '#{options[:sort_dir]}',
-          isExplorer: '#{options[:explorer]}' === 'true' ? true : false,
-          records: #{!options[:selected_records].nil? ? h(j_str(options[:selected_records].to_json)) : "\'\'"},
-          hideSelect: #{options[:selected_records].kind_of?(Array)},
-          showUrl: '#{view_to_url(options[:view], options[:parent]) if options[:view].present? && options[:view].db.present?}'
-        }
+        name: '#{REPORT_CONTROLLER_NAME}',
+        data: #{generate_data(options).transform_keys { |key| key.to_s.camelize(:lower) }.to_json}
       }});
 EOJ
+  end
+
+  def generate_data(options)
+    {
+      :additionl_opitons => options[:report_data_additional_options],
+      :model_name        => options[:model_name],
+      :active_tree       => options[:active_tree],
+      :gtl_type          => options[:gtl_type_string],
+      :parent_id         => escape_parent_id(options[:parent_id], options[:display]).to_s,
+      :sort_col_idx      => options[:sort_col].to_s,
+      :sort_dir          => options[:sort_dir],
+      :is_explorer       => options[:explorer],
+      :records           => !options[:selected_records].nil? ? options[:selected_records] : '',
+      :hide_select       => options[:selected_records].kind_of?(Array),
+      :show_url          => generate_url(options[:view], options[:parent])
+    }
+  end
+
+  private
+  
+  def escape_parent_id(parent_id, display)
+    (h(j_str(parent_id)) unless display.nil?)
+  end
+
+  def generate_url(view, parent)
+    view_to_url(view, parent) if view.present? && view.db.present?
   end
 end
