@@ -12,7 +12,7 @@ class ApplicationHelper::Toolbar::HostAggregatesCenter < ApplicationHelper::Tool
           t = N_('Add a New Host Aggregate'),
           t,
           :url   => "/new",
-          :klass => ApplicationHelper::Button::ButtonNewDiscover),
+          :klass => ApplicationHelper::Button::NewHostAggregate),
         button(
           :host_aggregate_edit,
           'pficon pficon-edit fa-lg',
