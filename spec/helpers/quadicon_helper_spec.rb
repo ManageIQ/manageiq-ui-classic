@@ -668,6 +668,14 @@ describe QuadiconHelper do
     let(:item) { FactoryGirl.build(:service, :id => 100) }
     subject(:service_quad) { helper.render_service_quadicon(item, options) }
 
+    context "url for service quadicon" do
+      it "renders quadicon with service url" do
+        expect(service_quad).to have_selector("a[href*='service/x_show/#{item.id}']")
+        expect(service_quad).to have_selector('div.flobj', :count => 2)
+        expect(service_quad).to match(/service-[\w]*.png/)
+      end
+    end
+
     context "for service w/o custom picture" do
       it "renders quadicon" do
         allow(helper).to receive(:url_for).and_return("/path")
