@@ -891,19 +891,15 @@ module OpsController::OpsRbac
       case id
       when "u"
         @right_cell_text = _("Access Control EVM Users")
-        @tree_selected_model = User
         rbac_users_list
       when "g"
         @right_cell_text = _("Access Control EVM Groups")
-        @tree_selected_model = MiqGroup
         rbac_groups_list
       when "ur"
         @right_cell_text = _("Access Control Roles")
-        @tree_selected_model = MiqUserRole
         rbac_roles_list
       when "tn"
         @right_cell_text = _("Access Control Tenants")
-        @tree_selected_model = Tenant
         rbac_tenants_list
       end
     when "u"

@@ -266,6 +266,13 @@ describe OpsController do
       expect(response.status).to eq(200)
       expect(assigns(:sb)[:active_accord]).to eq(:rbac)
     end
+
+    it 'calls #tree_selected_model' do
+      controller.instance_variable_set(:@sb, {})
+      allow(controller).to receive(:render)
+      expect(controller).to receive(:tree_selected_model)
+      controller.send(:explorer)
+    end
   end
 
   context "#replace_explorer_trees" do
@@ -378,6 +385,74 @@ describe OpsController do
         expect(controller).to receive(:replace_right_cell).with(:nodetype => 'dialog_return')
         controller.send(:dialog_replace_right_cell)
       end
+    end
+  end
+
+  context "#tree_selected_model" do
+    it 'sets @tree_model_selected to User for user node' do
+      allow(controller).to receive(:x_node).and_return('u-42')
+      controller.tree_selected_model
+      expect(assigns(:tree_selected_model)).to eq(User)
+    end
+
+    it 'sets @tree_model_selected to Tenant for tenant node' do
+      allow(controller).to receive(:x_node).and_return('tn-42')
+      controller.tree_selected_model
+      expect(assigns(:tree_selected_model)).to eq(Tenant)
+    end
+
+    it 'sets @tree_model_selected to MiqGroup for group node' do
+      allow(controller).to receive(:x_node).and_return('g-42')
+      controller.tree_selected_model
+      expect(assigns(:tree_selected_model)).to eq(MiqGroup)
+    end
+
+    it 'sets @tree_model_selected to MiqUserRole for group node' do
+      allow(controller).to receive(:x_node).and_return('ur-42')
+      controller.tree_selected_model
+      expect(assigns(:tree_selected_model)).to eq(MiqUserRole)
+    end
+
+    it 'sets @tree_model_selected to User for all users node' do
+      allow(controller).to receive(:x_node).and_return('xx-u')
+      controller.tree_selected_model
+      expect(assigns(:tree_selected_model)).to eq(User)
+    end
+
+    it 'sets @tree_model_selected to Tenant for all tenants node' do
+      allow(controller).to receive(:x_node).and_return('xx-tn')
+      controller.tree_selected_model
+      expect(assigns(:tree_selected_model)).to eq(Tenant)
+    end
+
+    it 'sets @tree_model_selected to MiqGroup for all groups node' do
+      allow(controller).to receive(:x_node).and_return('xx-g')
+      controller.tree_selected_model
+      expect(assigns(:tree_selected_model)).to eq(MiqGroup)
+    end
+
+    it 'sets @tree_model_selected to MiqUserRole for all roles node' do
+      allow(controller).to receive(:x_node).and_return('xx-ur')
+      controller.tree_selected_model
+      expect(assigns(:tree_selected_model)).to eq(MiqUserRole)
+    end
+
+    it 'sets @tree_model_selected to MiqRegion for root node' do
+      allow(controller).to receive(:x_node).and_return('root')
+      controller.tree_selected_model
+      expect(assigns(:tree_selected_model)).to eq(MiqRegion)
+    end
+  end
+
+  context '#tree_select' do
+    it 'calls #tree_select_model' do
+      controller.instance_variable_set(:@sb, {})
+      controller.params[:id] = 'root'
+      allow(controller).to receive(:set_active_tab)
+      allow(controller).to receive(:get_node_info)
+      allow(controller).to receive(:replace_right_cell)
+      expect(controller).to receive(:tree_selected_model)
+      controller.send(:tree_select)
     end
   end
 end
