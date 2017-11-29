@@ -461,7 +461,7 @@ module QuadiconHelper
     link_opts = {}
 
     if quadicon_show_links?
-      url = quadicon_url_to_xshow_from_cid(item, options)
+      url = url_for_record(item, "x_show")
       link_opts = {:sparkle => true, :remote => true}
     end
 
