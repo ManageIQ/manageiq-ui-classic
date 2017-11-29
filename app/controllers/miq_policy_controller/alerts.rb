@@ -9,7 +9,7 @@ module MiqPolicyController::Alerts
     if @alert && @alert.id.blank?
       add_flash(_("Add of new Alert was cancelled by the user"))
     else
-      add_flash(_("Edit of Alert \"%{name}\" was cancelled by the user") % {name => @alert.description})
+      add_flash(_("Edit of Alert \"%{name}\" was cancelled by the user") % {:name => @alert.description})
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype => @nodetype)
