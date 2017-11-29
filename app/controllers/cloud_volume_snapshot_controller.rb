@@ -14,7 +14,7 @@ class CloudVolumeSnapshotController < ApplicationController
   end
 
   def display_based_volumes
-    nested_list('cloud_volumes', CloudVolume, :association => :based_volumes)
+    nested_list(CloudVolume, :association => :based_volumes)
   end
 
   private

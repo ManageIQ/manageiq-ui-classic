@@ -179,7 +179,7 @@ class ServiceController < ApplicationController
   end
 
   def display_generic_objects
-    nested_list("generic_object", GenericObject)
+    nested_list(GenericObject)
   end
 
   private

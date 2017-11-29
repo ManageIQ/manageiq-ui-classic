@@ -95,7 +95,7 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def display_playbooks
-    nested_list("ansible_playbook", ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
+    nested_list(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, :breadcrumb_title => _('Playbooks'))
   end
 
   def repository_refresh

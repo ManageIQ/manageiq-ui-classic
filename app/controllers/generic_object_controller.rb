@@ -31,7 +31,7 @@ class GenericObjectController < ApplicationController
 
   def display_nested_generic(display)
     return unless @record.property_associations.key?(display)
-    nested_list(display, @record.generic_object_definition.properties[:associations][display], :association => display)
+    nested_list(@record.generic_object_definition.properties[:associations][display], :association => display)
   end
 
   private

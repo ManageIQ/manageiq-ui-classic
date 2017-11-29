@@ -47,7 +47,7 @@ class EmsPhysicalInfraController < ApplicationController
   end
 
   def display_physical_servers_with_host
-    nested_list('physical_servers', PhysicalServer, generate_options)
+    nested_list(PhysicalServer, generate_options)
   end
 
   def generate_options

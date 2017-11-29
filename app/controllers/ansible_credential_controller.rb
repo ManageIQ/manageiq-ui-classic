@@ -22,7 +22,7 @@ class AnsibleCredentialController < ApplicationController
   end
 
   def display_repositories
-    nested_list("repository", ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+    nested_list(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
   end
 
   def button
