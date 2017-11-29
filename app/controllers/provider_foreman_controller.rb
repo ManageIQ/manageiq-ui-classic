@@ -79,7 +79,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def load_or_clear_adv_search
-    adv_search_build("ConfiguredSystem")
+    adv_search_build(model_from_active_tree(x_active_tree))
     session[:edit] = @edit
     @explorer = true
 
