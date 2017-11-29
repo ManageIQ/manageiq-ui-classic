@@ -11,6 +11,7 @@ class ApplicationHelper::Toolbar::FlavorsCenter < ApplicationHelper::Toolbar::Ba
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Flavor'),
           t,
+          :klass => ApplicationHelper::Button::NewFlavor
         ),
         separator,
         button(
