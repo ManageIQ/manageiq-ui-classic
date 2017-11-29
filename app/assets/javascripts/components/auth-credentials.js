@@ -24,7 +24,7 @@ ManageIQ.angular.app.component('authCredentials', {
     vm.model = 'formModel';
 
     this.$onInit = function() {
-      this.bChangeStoredPassword = this.newRecord;
+      this.bChangeStoredPassword = false;
       this.bCancelPasswordChange = this.newRecord;
       this.buildInputsLabels();
     };
