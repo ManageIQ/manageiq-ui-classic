@@ -22,7 +22,7 @@ describe MiqPolicyController do
       end
     end
 
-    context "#alert_build_edit_screen" do
+    context "alert edit" do
       before do
         login_as FactoryGirl.create(:user, :features => "alert_admin")
       end
@@ -35,16 +35,36 @@ describe MiqPolicyController do
                                         )
       end
 
-      it "it should skip id when copying all attributes of an existing alert" do
-        controller.instance_variable_set(:@_params, :id => @miq_alert.id, :copy => "copy")
-        controller.send(:alert_build_edit_screen)
-        expect(assigns(:alert).id).to eq(nil)
+      context "#alert_build_edit_screen" do
+        it "it should skip id when copying all attributes of an existing alert" do
+          controller.instance_variable_set(:@_params, :id => @miq_alert.id, :copy => "copy")
+          controller.send(:alert_build_edit_screen)
+          expect(assigns(:alert).id).to eq(nil)
+        end
+
+        it "it should select correct record when editing an existing alert" do
+          controller.instance_variable_set(:@_params, :id => @miq_alert.id)
+          controller.send(:alert_build_edit_screen)
+          expect(assigns(:alert).id).to eq(@miq_alert.id)
+        end
       end
 
-      it "it should select correct record when editing an existing alert" do
-        controller.instance_variable_set(:@_params, :id => @miq_alert.id)
-        controller.send(:alert_build_edit_screen)
-        expect(assigns(:alert).id).to eq(@miq_alert.id)
+      context "#alert_edit_cancel" do
+        before :each do
+          allow(controller).to receive(:replace_right_cell).and_return(true)
+        end
+
+        it "it should correctly cancel edit screen of existing alert" do
+          session[:edit] = {:alert_id => @miq_alert.id}
+          controller.send(:alert_edit_cancel)
+          expect(assigns(:flash_array).first[:message]).to match(/Edit of Alert \".+\" was cancelled/)
+        end
+
+        it "it should correctly cancel edit screen of new alert" do
+          session[:edit] = {:alert_id => nil}
+          controller.send(:alert_edit_cancel)
+          expect(assigns(:flash_array).first[:message]).to include('Add of new Alert was cancelled')
+        end
       end
     end
 
