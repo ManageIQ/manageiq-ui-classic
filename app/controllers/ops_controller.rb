@@ -99,6 +99,18 @@ class OpsController < ApplicationController
     custom_buttons if params[:pressed] == 'custom_button'
   end
 
+  def tree_selected_model
+    @tree_selected_model = if x_node == 'root'
+                             MiqRegion
+                           else
+                             model, id, _ = TreeBuilder.extract_node_model_and_id(x_node)
+                             if model == 'Hash'
+                               model = TreeBuilder.get_model_for_prefix(id)
+                             end
+                             model.constantize
+                           end
+  end
+
   def explorer
     @explorer = true
     @trees = []
@@ -115,6 +127,8 @@ class OpsController < ApplicationController
     return unless load_edit(params[:edit_key], "explorer") if params[:edit_key]
     @breadcrumbs = []
     build_accordions_and_trees
+
+    tree_selected_model
 
     @sb[:rails_log] = $rails_log.filename.to_s.include?("production.log") ? N_("Production") : N_("Development")
 
@@ -151,6 +165,7 @@ class OpsController < ApplicationController
     session[:flash_msgs] = @flash_array = nil           # clear out any messages from previous screen i.e import tab
     @sb[:active_node] ||= {}
     self.x_node = params[:id]
+    tree_selected_model
     set_active_tab(params[:id])
     session[:changed] = false
     self.x_node = params[:id] # if x_active_tree == :vmdb_tree #params[:action] == "x_show"
