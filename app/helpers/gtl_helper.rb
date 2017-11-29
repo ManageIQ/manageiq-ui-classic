@@ -53,8 +53,7 @@ module GtlHelper
   #
   def render_gtl_outer(no_flash_div)
     parent_id = @report_data_additional_options.try(:[], :parent_id)
-
-    options = {
+    options = GtlOptions.from_hash(
       :model_name                     => model_to_report_data,
       :no_flash_div                   => no_flash_div || false,
       :gtl_type_string                => @gtl_type,
@@ -71,8 +70,8 @@ module GtlHelper
       :parent                         => @parent,
 
       :report_data_additional_options => @report_data_additional_options,
-    }
-
+      :url                            => (view_to_url(@view, @paren) if @view.present? && @view.db.present?)
+    )
     render_gtl(options)
   end
 
@@ -110,34 +109,8 @@ module GtlHelper
       miq_bootstrap('##{REPORT_DOM_ID}', '#{REPORT_ANGULAR_MODULE}');
       sendDataWithRx({initController: {
         name: '#{REPORT_CONTROLLER_NAME}',
-        data: #{generate_data(options).transform_keys { |key| key.to_s.camelize(:lower) }.to_json}
+        data: #{options.transform_to_settings.transform_keys { |key| key.to_s.camelize(:lower) }.to_json}
       }});
 EOJ
-  end
-
-  def generate_data(options)
-    {
-      :additionl_opitons => options[:report_data_additional_options],
-      :model_name        => options[:model_name],
-      :active_tree       => options[:active_tree],
-      :gtl_type          => options[:gtl_type_string],
-      :parent_id         => escape_parent_id(options[:parent_id], options[:display]).to_s,
-      :sort_col_idx      => options[:sort_col].to_s,
-      :sort_dir          => options[:sort_dir],
-      :is_explorer       => options[:explorer],
-      :records           => !options[:selected_records].nil? ? options[:selected_records] : '',
-      :hide_select       => options[:selected_records].kind_of?(Array),
-      :show_url          => generate_url(options[:view], options[:parent])
-    }
-  end
-
-  private
-  
-  def escape_parent_id(parent_id, display)
-    (h(j_str(parent_id)) unless display.nil?)
-  end
-
-  def generate_url(view, parent)
-    view_to_url(view, parent) if view.present? && view.db.present?
   end
 end
