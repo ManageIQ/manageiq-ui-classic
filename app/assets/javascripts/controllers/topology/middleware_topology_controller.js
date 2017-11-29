@@ -8,7 +8,6 @@ function MiddlewareTopologyCtrl($scope, $interval, topologyService) {
   vm.vs = null;
   var d3 = window.d3;
   vm.d3 = d3;
-  vm.icons;
   vm.dataUrl = '/middleware_topology/data';
 
   topologyService.mixinContextMenu(vm, vm);

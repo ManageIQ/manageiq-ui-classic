@@ -241,6 +241,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
   };
 
   this.mixinRefresh = function(controller, $scope) {
+    var topologyService = this;
     var getTopologyData = function(response) {
       var data = response.data;
       var currentSelectedKinds = controller.kinds;
@@ -250,26 +251,33 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       controller.icons = data.data.icons;
       if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(controller.kinds).length)) {
         controller.kinds = $scope.kinds = currentSelectedKinds;
+      } else if (controller.remove_hierarchy && data.data.settings && data.data.settings.containers_max_items) {
+        var size_limit = data.data.settings.containers_max_items;
+        controller.kinds = $scope.kinds = topologyService.reduce_kinds(controller.items, controller.kinds, size_limit, controller.remove_hierarchy);
       }
     };
     var refresh = function() {
       var id;
+      var url = '';
       if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
-        id = '';
-      } else {
+        url = controller.dataUrl;
+      } else if ($location.absUrl().match('show/[0-9]*\\?display=topology$') || $location.absUrl().match('show/[0-9]*\\?display=topology/$')) {
         id = '/' + (/\/show\/(\d+)/.exec($location.absUrl())[1]);
+        url = controller.detailUrl || controller.dataUrl;
+        url += id;
       }
 
-      var url = controller.dataUrl + id;
       $http.get(url)
         .then(controller.getTopologyData ? controller.getTopologyData : getTopologyData)
         .catch(miqService.handleFailure);
     };
+
     ManageIQ.angular.rxSubject.subscribe(function(event) {
       if (event.service === 'topologyService' && event.name === 'refreshTopology') {
         controller.refresh();
       }
     });
+
     controller.refresh = refresh;
   };
 

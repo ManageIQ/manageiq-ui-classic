@@ -6,8 +6,9 @@ function ContainerTopologyCtrl($scope, $interval, topologyService) {
   miqHideSearchClearButton();
   var vm = this;
   vm.dataUrl = '/container_topology/data';
+  vm.detailUrl = '/container_project_topology/data';
   vm.vs = null;
-  var icons = null;
+  vm.icons = null;
 
   var d3 = window.d3;
   vm.d3 = d3;
@@ -18,40 +19,21 @@ function ContainerTopologyCtrl($scope, $interval, topologyService) {
     value: false
   };
 
+  vm.remove_hierarchy = [
+    'Container',
+    'ContainerGroup',
+    'ContainerReplicator',
+    'ContainerService',
+    'ContainerRoute',
+    'Host',
+    'Vm',
+    'ContainerNode',
+    'ContainerManager'
+  ];
+
   vm.legendTooltip = __("Click here to show/hide entities of this type");
-
-  vm.getTopologyData = function(response) {
-    var data = response.data;
-
-    var currentSelectedKinds = vm.kinds;
-
-    vm.items = data.data.items;
-    vm.relations = data.data.relations;
-    // NOTE: $scope.kinds is required by kubernetes-topology-icon
-    vm.kinds = $scope.kinds = data.data.kinds;
-    icons = data.data.icons;
-
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
-      vm.kinds = $scope.kinds = currentSelectedKinds;
-    } else if (data.data.settings && data.data.settings.containers_max_items) {
-      var size_limit = data.data.settings.containers_max_items;
-      var remove_hierarchy = [
-        'Container',
-        'ContainerGroup',
-        'ContainerReplicator',
-        'ContainerService',
-        'ContainerRoute',
-        'Host',
-        'Vm',
-        'ContainerNode',
-        'ContainerManager'
-      ];
-      vm.kinds = $scope.kinds = topologyService.reduce_kinds(vm.items, vm.kinds, size_limit, remove_hierarchy);
-    }
-  };
-
   $('input#box_display_names').click(topologyService.showHideNames(vm));
-  topologyService.mixinRefresh(vm);
+  topologyService.mixinRefresh(vm, $scope);
   vm.refresh();
   var promise = $interval(vm.refresh, 1000 * 60 * 3);
 
@@ -170,7 +152,7 @@ function ContainerTopologyCtrl($scope, $interval, topologyService) {
   });
 
   vm.getIcon = function getIcon(d) {
-    return d.item.kind === 'ContainerManager' ? icons[d.item.display_kind] : icons[d.item.kind];
+    return d.item.kind === 'ContainerManager' ? vm.icons[d.item.display_kind] : vm.icons[d.item.kind];
   };
 
   vm.getDimensions = function getDimensions(d) {

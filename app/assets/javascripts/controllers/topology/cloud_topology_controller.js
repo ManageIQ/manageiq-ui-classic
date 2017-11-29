@@ -11,7 +11,6 @@ function CloudTopologyCtrl($scope, $interval, topologyService) {
   var d3 = window.d3;
   // NOTE: for search
   vm.d3 = d3;
-
   topologyService.mixinContextMenu(vm, vm);
 
   vm.checkboxModel = {
@@ -139,15 +138,6 @@ function CloudTopologyCtrl($scope, $interval, topologyService) {
     /* Don't do default rendering */
     ev.preventDefault();
   });
-
-  vm.getIcon = function getIcon(d) {
-    switch (d.item.kind) {
-      case 'CloudManager':
-        return vm.icons[d.item.display_kind];
-      default:
-        return vm.icons[d.item.kind];
-    }
-  };
 
   vm.getDimensions = function getDimensions(d) {
     var defaultDimensions = topologyService.defaultElementDimensions();

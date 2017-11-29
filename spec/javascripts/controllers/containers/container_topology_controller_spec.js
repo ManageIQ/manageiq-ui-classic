@@ -43,14 +43,15 @@ describe('containerTopologyController', function() {
 
     beforeEach(module('ManageIQ'));
     beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, $location) {
-      spyOn($location, 'absUrl').and.returnValue('/container_topology/show/1');
+      spyOn($location, 'absUrl').and.returnValue('/container_topology/show/1?display=topology');
       scope = $rootScope.$new();
       $httpBackend = _$httpBackend_;
-      $httpBackend.when('GET','/container_topology/data/1').respond(mock_data);
+      $httpBackend.when('GET','/container_project_topology/data/1').respond(mock_data);
       ctrl = _$controller_('containerTopologyController',
-        {$scope: scope}
+        {
+          $scope: scope,
+        }
       );
-      console.log('ctrl: ', ctrl);
       $httpBackend.flush();
     }));
 
@@ -61,7 +62,6 @@ describe('containerTopologyController', function() {
 
     describe('data loads successfully', function() {
       it('in all main objects', function() {
-        console.log('controller: ', ctrl);
         expect(ctrl.items).toBeDefined();
         expect(ctrl.relations).toBeDefined();
         expect(ctrl.kinds).toBeDefined();
