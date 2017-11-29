@@ -22,11 +22,7 @@ class GenericObjectController < ApplicationController
   end
 
   def display_methods(record)
-    associations = %w()
-    record.property_associations.each do |key, _value|
-      associations.push(key)
-    end
-    associations
+    record.property_associations.keys()
   end
 
   def display_nested_generic(display)
