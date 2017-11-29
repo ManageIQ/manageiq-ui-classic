@@ -42,7 +42,7 @@ module ContainerSummaryHelper
   end
 
   def textual_containers
-    textual_link(@record.containers, :feature => "containers") # should it be container_show_list?
+    textual_link(@record.containers) # should it be container_show_list?
   end
 
   def textual_container_nodes
