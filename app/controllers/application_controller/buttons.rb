@@ -375,10 +375,11 @@ module ApplicationController::Buttons
     end
 
     {
-      :force_old_dialog_use => force_old_dialog_use,
-      :api_submit_endpoint  => "/api/#{api_collection_name}/#{obj.id}",
-      :api_action           => button_name,
-      :cancel_endpoint      => cancel_endpoint
+      :force_old_dialog_use   => force_old_dialog_use,
+      :api_submit_endpoint    => "/api/#{api_collection_name}/#{obj.id}",
+      :api_action             => button_name,
+      :finish_submit_endpoint => cancel_endpoint,
+      :cancel_endpoint        => cancel_endpoint
     }
   end
 

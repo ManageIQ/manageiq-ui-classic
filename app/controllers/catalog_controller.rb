@@ -544,9 +544,10 @@ class CatalogController < ApplicationController
       options[:target_id] = st.id
       options[:target_kls] = st.class.name
       options[:dialog_locals] = {
-        :api_submit_endpoint => "/api/service_catalogs/#{st.service_template_catalog_id}/service_templates/#{st.id}",
-        :api_action          => "order",
-        :cancel_endpoint     => "/catalog/explorer"
+        :api_submit_endpoint    => "/api/service_catalogs/#{st.service_template_catalog_id}/service_templates/#{st.id}",
+        :api_action             => "order",
+        :finish_submit_endpoint => svc_catalog_provision_finish_submit_endpoint,
+        :cancel_endpoint        => "/catalog/explorer"
       }
       dialog_initialize(ra, options)
     else
@@ -808,6 +809,10 @@ class CatalogController < ApplicationController
   end
 
   private
+
+  def svc_catalog_provision_finish_submit_endpoint
+    role_allows?(:feature => "miq_request_show_list", :any => true) ? "/miq_request/show_list" : "/catalog/explorer"
+  end
 
   def ansible_playbook?
     prov_type = params[:st_prov_type] ? params[:st_prov_type] : @record.prov_type
