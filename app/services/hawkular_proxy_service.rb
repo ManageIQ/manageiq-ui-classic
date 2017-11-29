@@ -115,13 +115,17 @@ class HawkularProxyService
                           :order          => params[:order] || 'ASC')
   end
 
+  def tenant_id(id)
+    id.split(':')[0] if id
+  end
+
   def tenants(limit)
     tenants = @cli.hawkular_client.http_get('/tenants')
 
     if @params['include'].blank?
-      tenants.map! { |x| {:label => labelize(x["id"]), :value => x["id"]} }
+      tenants.map! { |x| {:label => labelize(x["id"]), :value => tenant_id(x["id"])} }
     else
-      tenants.map! { |x| {:label => labelize(x["id"]), :value => x["id"]} if x["id"].include?(@params['include']) }
+      tenants.map! { |x| {:label => labelize(x["id"]), :value => tenant_id(x["id"])} if x["id"].include?(@params['include']) }
     end
 
     tenants.compact[0...limit]
@@ -164,6 +168,8 @@ class HawkularProxyService
   end
 
   def labelize(id)
+    id = tenant_id(id)
+
     tenant_labels = TENANT_LABEL_SPECIAL_CASES.symbolize_keys
     if Settings.hawkular_tenant_labels
       tenant_labels.merge!(Settings.hawkular_tenant_labels.to_hash)
