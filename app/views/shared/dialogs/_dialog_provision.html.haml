@@ -3,6 +3,7 @@
 - if @dialog_locals
   - api_submit_endpoint ||= @dialog_locals[:api_submit_endpoint]
   - api_action ||= @dialog_locals[:api_action]
+  - finish_submit_endpoint ||= @dialog_locals[:finish_submit_endpoint]
   - cancel_endpoint ||= @dialog_locals[:cancel_endpoint]
   - force_old_dialog_use = @dialog_locals[:force_old_dialog_use].to_s == "true"
 
@@ -38,7 +39,8 @@
 
 - else
   = render :partial => "shared/dialogs/dialog_user",
-    :locals => {:wf                  => wf,
-                :api_submit_endpoint => api_submit_endpoint,
-                :api_action          => api_action,
-                :cancel_endpoint     => cancel_endpoint}
+    :locals => {:wf                     => wf,
+                :finish_submit_endpoint => finish_submit_endpoint,
+                :api_submit_endpoint    => api_submit_endpoint,
+                :api_action             => api_action,
+                :cancel_endpoint        => cancel_endpoint}

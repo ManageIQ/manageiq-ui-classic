@@ -28,6 +28,7 @@ describe('dialogUserController', function() {
       apiSubmitEndpoint: 'submit endpoint',
       apiAction: 'order',
       cancelEndpoint: 'cancel endpoint',
+      finishSubmitEndpoint: 'finish submit endpoint',
     });
   }));
 
@@ -111,7 +112,9 @@ describe('dialogUserController', function() {
       it('redirects to the miq_request screen', function(done) {
         $controller.submitButtonClicked();
         setTimeout(function() {
-          expect(miqService.redirectBack).toHaveBeenCalledWith('Dialog submitted successfully!', 'info', 'cancel endpoint');
+          expect(miqService.redirectBack).toHaveBeenCalledWith(
+            'Order Request was Submitted', 'info', 'finish submit endpoint'
+          );
           done();
         });
       });
