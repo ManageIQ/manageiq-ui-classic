@@ -1,4 +1,4 @@
-module DashboardService
+class DashboardService
   def display_precision
     0
   end
