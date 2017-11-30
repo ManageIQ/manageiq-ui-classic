@@ -3,6 +3,11 @@ describe StorageController do
 
   let(:storage) { FactoryGirl.create(:storage, :name => 'test_storage1') }
   let(:storage_cluster) { FactoryGirl.create(:storage_cluster, :name => 'test_storage_cluster1') }
+  let(:storage_with_miq_templates) do
+    st = FactoryGirl.create(:storage)
+    2.times { st.all_miq_templates << FactoryGirl.create(:miq_template) }
+    st
+  end
   before { stub_user(:features => :all) }
 
   context "#button" do
@@ -214,6 +219,30 @@ describe StorageController do
         expect(response.status).to eq(200)
         expect(response.body).to_not be_empty
         expect(response).to render_template('shared/summary/_textual')
+      end
+
+      it " can render storage's miq templates" do
+        storage_with_miq_templates
+        get :show, :params => {:id => storage_with_miq_templates.id, :display => 'all_miq_templates'}
+        expect(response.status).to eq(200)
+        expect(response.body).to_not be_empty
+        expect(response.body).to include('All VM Templates')
+      end
+
+      it " returns VM Templates associated with selected Datastore" do
+        req = {
+          :model_name                     => 'MiqTemplate',
+          :parent_id                      => storage_with_miq_templates.id,
+          :display                        => 'all_miq_templates',
+          :parent                         => storage_with_miq_templates,
+          :report_data_additional_options => {
+            :parent_class_name => 'Storage',
+            :association       => 'all_miq_templates',
+          }
+        }
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(req)
+        get :show, :id => storage_with_miq_templates.id, :display => 'all_miq_templates'
+        expect(response.status).to eq(200)
       end
     end
 
