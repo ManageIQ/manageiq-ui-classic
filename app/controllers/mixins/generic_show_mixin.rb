@@ -142,7 +142,7 @@ module Mixins
     end
 
     def display_nested_generic(display)
-      nested_list(display, display.camelize.singularize.constantize)
+      nested_list(display.camelize.singularize.constantize)
     end
 
     def display_descendant_vms
@@ -154,32 +154,32 @@ module Mixins
     end
 
     def display_all_vms
-      nested_list("vms", Vm, :association => "all_vms")
+      nested_list(Vm, :association => "all_vms")
     end
 
     def display_vms
-      nested_list(nil, Vm, :breadcrumb_title => _("Direct VMs"))
+      nested_list(Vm, :breadcrumb_title => _("Direct VMs"))
     end
 
     def display_resource_pools
-      nested_list("resource_pools", ResourcePool)
+      nested_list(ResourcePool)
     end
 
     def display_instances
-      nested_list("vm_cloud", ManageIQ::Providers::CloudManager::Vm)
+      nested_list(ManageIQ::Providers::CloudManager::Vm)
     end
 
     def display_images
-      nested_list("template_cloud", ManageIQ::Providers::CloudManager::Template, :named_scope => :without_volume_templates)
+      nested_list(ManageIQ::Providers::CloudManager::Template, :named_scope => :without_volume_templates)
     end
 
     # options:
     #   breadcrumb_title -- title for the breadcrumb, defaults to
-    #                       ui_lookup(:tables => table_name)
+    #                       ui_lookup(:models => model.to_s)
     #   parent_method    -- parent_method to be passed to get_view call
     #   association      -- get_view option association - implicit nil
-    def nested_list(table_name, model, options = {})
-      title = options[:breadcrumb_title] || ui_lookup(:tables => table_name)
+    def nested_list(model, options = {})
+      title = options[:breadcrumb_title] || ui_lookup(:models => model.to_s)
 
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record.name},
                       :url  => "/#{self.class.table_name}/show/#{@record.id}")

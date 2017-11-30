@@ -21,7 +21,7 @@ class StorageController < ApplicationController
   end
 
   def display_all_miq_templates
-    nested_list("miq_templates", MiqTemplate, :parent => @record, :association => "all_miq_templates")
+    nested_list(MiqTemplate, :parent => @record, :association => "all_miq_templates")
   end
 
   def show_list

@@ -54,27 +54,27 @@ module EmsCommon
   end
 
   def display_block_storage_managers
-    nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)
+    nested_list(ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers, :breadcrumb_title => _('Block Storage Managers'))
   end
 
   def display_object_storage_managers
-    nested_list('object_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :object_storage_managers)
+    nested_list(ManageIQ::Providers::StorageManager, :parent_method => :object_storage_managers, :breadcrumb_title => _('Object Storage Managers'))
   end
 
   def display_storage_managers
-    nested_list('storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :storage_managers)
+    nested_list(ManageIQ::Providers::StorageManager, :parent_method => :storage_managers)
   end
 
   def display_ems_clusters
-    nested_list('ems_cluster', EmsCluster, :breadcrumb_title => title_for_clusters)
+    nested_list(EmsCluster, :breadcrumb_title => title_for_clusters)
   end
 
   def display_persistent_volumes
-    nested_list('persistent_volume', PersistentVolume, :parent_method => :persistent_volumes)
+    nested_list(PersistentVolume, :parent_method => :persistent_volumes)
   end
 
   def display_hosts
-    nested_list('hosts', Host, :breadcrumb_title => _("Managed Hosts"))
+    nested_list(Host, :breadcrumb_title => _('Managed Hosts'))
   end
 
   class_methods do
