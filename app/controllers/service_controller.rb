@@ -171,6 +171,10 @@ class ServiceController < ApplicationController
     }
   end
 
+  def item_url(record_id, item_id)
+    "/#{controller_name}/show/#{record_id}?display=generic_objects/show=#{item_id}"
+  end
+
   def generic_object
     return unless init_show_variables
 

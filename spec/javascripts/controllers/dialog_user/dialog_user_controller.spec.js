@@ -88,6 +88,36 @@ describe('dialogUserController', function() {
       $controller.setDialogData({data: {field1: 'field1'}});
     });
 
+    context('when the submit endpoint deals with generic objects', function() {
+      beforeEach(inject(function(_$controller_) {
+         $controller = _$controller_('dialogUserController', {
+          API: API,
+          dialogFieldRefreshService: dialogFieldRefreshService,
+          miqService: miqService,
+          dialogId: '1234',
+          apiSubmitEndpoint: 'generic_objects',
+          apiAction: 'custom_action',
+          cancelEndpoint: 'cancel endpoint',
+          finishSubmitEndpoint: 'finish submit endpoint',
+        });
+
+        $controller.setDialogData({data: {field1: 'field1'}});
+
+        spyOn(API, 'post').and.returnValue(Promise.resolve('awesome'));
+      }));
+
+      it('posts to the API with the right data', function(done) {
+        $controller.submitButtonClicked();
+
+        setTimeout(function() {
+          expect(API.post).toHaveBeenCalledWith('generic_objects', {
+            action: 'custom_action', parameters: {field1: 'field1'}
+          });
+          done();
+        });
+      });
+    });
+
     context('when the API call succeeds', function() {
       beforeEach(function() {
         spyOn(miqService, 'redirectBack');
@@ -167,7 +197,7 @@ describe('dialogUserController', function() {
   describe('cancelClicked', function() {
     it('uses the miqService to make a call to catalog/explorer', function() {
       $controller.cancelClicked('event');
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('cancel endpoint');
+      expect(miqService.redirectBack).toHaveBeenCalledWith('Dialog Canceled', 'info', 'cancel endpoint');
     });
   });
 

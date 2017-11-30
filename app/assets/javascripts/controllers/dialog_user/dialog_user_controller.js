@@ -65,7 +65,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   }
 
   function cancelClicked(_event) {
-    miqService.miqAjaxButton(cancelEndpoint);
+    miqService.redirectBack(__('Dialog Canceled'), 'info', cancelEndpoint);
   }
 
   function saveable() {
