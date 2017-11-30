@@ -139,11 +139,14 @@ module VmHelper::TextualSummary
 
       cpu_details =
         if @record.num_cpu > 0 && @record.cpu_cores_per_socket > 0
-          " (#{pluralize(@record.num_cpu, 'socket')} x #{pluralize(@record.cpu_cores_per_socket, 'core')})"
+          sockets = n_("%{number} socket", "%{number} sockets", @record.num_cpu) % {:number => @record.num_cpu}
+          cores = n_("%{number} core", "%{number} cores", @record.cpu_cores_per_socket) % {:number => @record.cpu_cores_per_socket}
+          " (#{sockets} x #{cores})"
         else
           ""
         end
-      h[:value] = "#{vendor}: #{pluralize(@record.cpu_total_cores, 'CPU')}#{cpu_details}, #{@record.mem_cpu} MB"
+      cpus = n_('CPU', 'CPUs', @record.cpu_total_cores)
+      h[:value] = "#{vendor}: #{cpus}#{cpu_details}, #{@record.mem_cpu} MB"
     end
     h
   end
