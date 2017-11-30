@@ -64,7 +64,7 @@
       - @quadicon_no_url = true
       = render :partial => "layouts/gtl"
 
-- unless @explorer
+- if @record.present?
   %table{:width => '100%'}
     %tr
       %td{:align => 'right'}
