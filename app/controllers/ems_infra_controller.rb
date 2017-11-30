@@ -70,6 +70,10 @@ class EmsInfraController < ApplicationController
       return_message = _("Scaling")
       @count_parameters.each do |p|
         if !scale_parameters[p.name].nil? && scale_parameters[p.name] != p.value
+          if scale_parameters[p.name].to_s < p.value.to_s
+            add_flash(_("Scaling down is not supported. New value for %{name} %{new_value} is lower than current value %{current_value}.") % {:name => p.name, :new_value => scale_parameters[p.name], :current_value => p.value}, :error)
+            return
+          end
           return_message += _(" %{name} from %{value} to %{parameters} ") % {:name => p.name, :value => p.value, :parameters => scale_parameters[p.name]}
           scale_parameters_formatted[p.name] = scale_parameters[p.name]
         end
