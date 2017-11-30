@@ -81,7 +81,10 @@ module OpsController::Settings::Upload
           msg = msg
           err = true
         end
-        add_flash(_("Import validation complete: %{good_record}, %{bad_record}") % {:good_record => pluralize(imp.stats[:good], 'good record'), :bad_record => pluralize(imp.stats[:bad], 'bad record')}, :warning)
+        add_flash(_("Import validation complete: %{good_record}, %{bad_record}") % {
+          :good_record => n_("%{num} good record", "%{num} good records", imp.stats[:good]) % {:num => imp.stats[:good]},
+          :bad_record  => n_("%{num} bad record", "%{num} bad records", imp.stats[:bad]) % {:num => imp.stats[:bad]}
+        }, :warning)
         if imp.stats[:good] == 0
           msg = _("No valid import records were found, please upload another file")
           err = true
