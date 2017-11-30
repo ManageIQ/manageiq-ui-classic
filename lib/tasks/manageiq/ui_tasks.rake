@@ -14,22 +14,7 @@ namespace :update do
     end
   end
 
-  task :ui do
-    Rake::Task['update:bower'].invoke
-    Rake::Task['update:yarn'].invoke
-
-    # When available, run the `webpack:compile` tasks without a fully loaded
-    # environment, since when doing an appliance/docker build, a database isn't
-    # available for the :environment task (prerequisite for
-    # 'webpacker:compile') to function.
-    if defined?(EvmRakeHelper)
-      EvmRakeHelper.with_dummy_database_url_configuration do
-        Rake::Task['webpack:compile'].invoke
-      end
-    else
-      Rake::Task['webpack:compile'].invoke
-    end
-  end
+  task :ui => ['update:bower', 'update:yarn', 'webpack:compile']
 end
 
 namespace :webpack do
@@ -41,9 +26,15 @@ namespace :webpack do
 
   [:compile, :clobber].each do |webpacker_task|
     task webpacker_task do
-      Dir.chdir ManageIQ::UI::Classic::Engine.root do
-        Rake::Task["webpack:paths"].invoke
-        Rake::Task["webpacker:#{webpacker_task}"].invoke
+      # Run the `webpack:compile` tasks without a fully loaded environment,
+      # since when doing an appliance/docker build, a database isn't
+      # available for the :environment task (prerequisite for
+      # 'webpacker:compile') to function.
+      EvmRakeHelper.with_dummy_database_url_configuration do
+        Dir.chdir ManageIQ::UI::Classic::Engine.root do
+          Rake::Task["webpack:paths"].invoke
+          Rake::Task["webpacker:#{webpacker_task}"].invoke
+        end
       end
     end
   end
