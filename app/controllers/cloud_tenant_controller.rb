@@ -211,6 +211,7 @@ class CloudTenantController < ApplicationController
     # refresh the list if applicable
     if @lastaction == "show_list"
       show_list
+      render_flash
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "cloud_tenant"
       # deleting from 'show' so we:
