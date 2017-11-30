@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'cancelEndpoint', function(API, dialogFieldRefreshService, miqService, dialogId, apiSubmitEndpoint, apiAction, cancelEndpoint) {
+ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', function(API, dialogFieldRefreshService, miqService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -38,7 +38,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
       apiData = vm.dialogData;
     }
     API.post(apiSubmitEndpoint, apiData).then(function() {
-      miqService.redirectBack(__('Dialog submitted successfully!'), 'info', cancelEndpoint);
+      miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
     }).catch(function(err) {
       miqService.sparkleOff();
       add_flash(__('Error requesting data from server'), 'error');
