@@ -91,13 +91,13 @@ describe ContainerDashboardService do
           :used  => 3,
           :total => 3,
           :xData => [current_date.strftime("%Y-%m-%d")],
-          :yData => [3]
+          :yData => [3.0]
         },
         :mem => {
           :used  => 2,
           :total => 3,
           :xData => [current_date.strftime("%Y-%m-%d")],
-          :yData => [2]
+          :yData => [1.5]
         }
       )
     end

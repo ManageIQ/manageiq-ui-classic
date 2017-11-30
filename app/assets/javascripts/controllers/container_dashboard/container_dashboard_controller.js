@@ -116,7 +116,7 @@
           data.ems_utilization.xy_data.cpu.xData = data.ems_utilization.xy_data.cpu.xData.map(function(date) {
             return dashboardUtilsFactory.parseDate(date);
           });
-          data.ems_utilization.xy_data.mem.xData = data.ems_utilization.xy_data.mem.xData.map(function(date) {
+          data.ems_utilization.xy_data.memory.xData = data.ems_utilization.xy_data.memory.xData.map(function(date) {
             return dashboardUtilsFactory.parseDate(date);
           });
         }
@@ -125,7 +125,7 @@
                                                                  'dates',
                                                                  $scope.cpuUsageConfig.units);
 
-        $scope.memoryUsageData = chartsMixin.processUtilizationData(data.ems_utilization.xy_data.mem,
+        $scope.memoryUsageData = chartsMixin.processUtilizationData(data.ems_utilization.xy_data.memory,
                                                                     'dates',
                                                                     $scope.memoryUsageConfig.units);
 
