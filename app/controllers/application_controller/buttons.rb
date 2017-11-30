@@ -333,7 +333,7 @@ module ApplicationController::Buttons
         :target_kls => obj.class.name,
       }
 
-      options[:dialog_locals] = determine_dialog_locals_for_custom_button(obj, button.name)
+      options[:dialog_locals] = determine_dialog_locals_for_custom_button(obj, button.name, button.resource_action.id)
 
       dialog_initialize(button.resource_action, options)
 
@@ -356,7 +356,7 @@ module ApplicationController::Buttons
     end
   end
 
-  def determine_dialog_locals_for_custom_button(obj, button_name)
+  def determine_dialog_locals_for_custom_button(obj, button_name, resource_action_id)
     case obj.class.name.demodulize
     when /Vm/
       api_collection_name = "vms"
@@ -375,6 +375,9 @@ module ApplicationController::Buttons
     end
 
     {
+      :resource_action_id     => resource_action_id,
+      :target_id              => obj.id,
+      :target_type            => obj.class.name.underscore,
       :force_old_dialog_use   => force_old_dialog_use,
       :api_submit_endpoint    => "/api/#{api_collection_name}/#{obj.id}",
       :api_action             => button_name,

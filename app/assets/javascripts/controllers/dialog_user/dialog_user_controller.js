@@ -1,9 +1,14 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', function(API, dialogFieldRefreshService, miqService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint) {
+ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', function(API, dialogFieldRefreshService, miqService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType) {
   var vm = this;
 
   vm.$onInit = function() {
     return new Promise(function(resolve) {
-      resolve(API.get('/api/service_dialogs/' + dialogId, {expand: 'resources', attributes: 'content'}).then(init));
+      var url = '/api/service_dialogs/' + dialogId +
+        '?resource_action_id=' + resourceActionId +
+        '&target_id=' + targetId +
+        '&target_type=' + targetType;
+
+      resolve(API.get(url, {expand: 'resources', attributes: 'content'}).then(init));
     });
   };
 
