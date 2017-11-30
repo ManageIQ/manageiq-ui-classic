@@ -15,7 +15,7 @@ class MiddlewareDatasourceController < ApplicationController
       :skip     => true,
       :hawk     => N_('removed datasources'),
       :skip_msg => N_('Not %{operation_name} for %{record_name} on the provider itself'),
-      :msg      => N_('The selected datasources were removed')
+      :msg      => N_('The selected datasources removal was initiated')
     }
   }.freeze
 
