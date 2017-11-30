@@ -99,7 +99,7 @@
             3
           ]
         },
-        "mem": {
+        "memory": {
           "total": 21,
           "used": 12,
           "xData": [

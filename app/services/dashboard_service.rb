@@ -1,4 +1,4 @@
-module DashboardService
+class DashboardService
   def display_precision
     0
   end
@@ -9,7 +9,7 @@ module DashboardService
 
   def format_utilization_data(used_cpu, used_mem, total_cpu, total_mem)
     {
-      :cpu => used_cpu.any? ? format_cpu(used_cpu, total_cpu) : nil,
+      :cpu    => used_cpu.any? ? format_cpu(used_cpu, total_cpu) : nil,
       :memory => used_mem.any? ? format_memory(used_mem, total_mem) : nil,
     }
   end

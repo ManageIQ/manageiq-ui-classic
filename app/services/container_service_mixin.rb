@@ -108,7 +108,7 @@ module ContainerServiceMixin
   def empty_utilization_trend_data
     {
       :interval_name => "",
-      :xy_data       => {:cpu => nil, :mem => nil}
+      :xy_data       => {:cpu => nil, :memory => nil}
     }
   end
 
