@@ -68,7 +68,7 @@ describe('dialogUserController', function() {
         'dialogData',
         ['dialogName'],
         '/api/service_dialogs/',
-        '1234'
+        {dialogId: '1234', resourceActionId: '789', targetId: '987', targetType: 'targettype'}
       );
     });
   });

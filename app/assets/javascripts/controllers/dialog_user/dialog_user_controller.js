@@ -26,7 +26,14 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   vm.saveable = saveable;
 
   function refreshField(field) {
-    return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, dialogId);
+    var idList = {
+      dialogId: dialogId,
+      resourceActionId: resourceActionId,
+      targetId: targetId,
+      targetType: targetType
+    };
+
+    return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
   }
 
   function setDialogData(data) {

@@ -547,7 +547,11 @@ class CatalogController < ApplicationController
         ra, st, svc_catalog_provision_finish_submit_endpoint
       )
 
-      replace_right_cell(:action => "dialog_provision", :dialog_locals => options[:dialog_locals])
+      if Settings.product.old_dialog_user_ui
+        dialog_initialize(ra, options)
+      else
+        replace_right_cell(:action => "dialog_provision", :dialog_locals => options[:dialog_locals])
+      end
     else
       # if catalog item has no dialog and provision button was pressed from list view
       add_flash(_("No Ordering Dialog is available"), :warning)
