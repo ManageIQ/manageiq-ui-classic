@@ -6,6 +6,7 @@
 -# FIXME: we should not do javascript like this
 %script{:type => "text/javascript"}
   function miqReportAfterOnload() {
+  window.setTimeout(function() {
   - if @right_cell_div == "role_list"
     - if role_allows?(:feature => "miq_report_menu_editor")
       miqTreeForceActivateNode('roles_tree','#{x_node}');
@@ -16,6 +17,7 @@
     setTimeout(function() {
     miqTreeForceActivateNode('#{x_active_tree}', '#{x_node}')
     });
+  });
   };
   ManageIQ.afterOnload = "miqReportAfterOnload();"
 
