@@ -543,16 +543,9 @@ class CatalogController < ApplicationController
       options[:header] = @right_cell_text
       options[:target_id] = st.id
       options[:target_kls] = st.class.name
-      options[:dialog_locals] = {
-        :resource_action_id     => ra.id,
-        :target_id              => st.id,
-        :target_type            => st.class.name.underscore,
-        :dialog_id              => ra.dialog_id,
-        :api_submit_endpoint    => "/api/service_catalogs/#{st.service_template_catalog_id}/service_templates/#{st.id}",
-        :api_action             => "order",
-        :finish_submit_endpoint => svc_catalog_provision_finish_submit_endpoint,
-        :cancel_endpoint        => "/catalog/explorer"
-      }
+      options[:dialog_locals] = DialogLocalService.new.determine_dialog_locals_for_svc_catalog_provision(
+        ra, st, svc_catalog_provision_finish_submit_endpoint
+      )
 
       replace_right_cell(:action => "dialog_provision", :dialog_locals => options[:dialog_locals])
     else
