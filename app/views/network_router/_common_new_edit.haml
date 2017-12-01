@@ -86,7 +86,7 @@
     = _('External Gateway')
   .form-horizontal
     .form-group
-      %label.col-md-2.control-label{"for" => "network_router_enable_snat"}
+      %label.col-md-2.control-label{"for" => "network_router_external_gateway"}
         = _('Enabled')
       .col-md-8
         %input{"bs-switch"   => "",
@@ -97,7 +97,7 @@
                "ng-model"    => "vm.networkRouterModel.external_gateway"}
 
   .form-horizontal{"ng-if" => "vm.networkRouterModel.external_gateway"}
-    .form-group{"ng-if" => "vm.networkRouterModel.ext_management_system.id"}
+    .form-group
       %label.col-md-2.control-label{"for" => "network_router_enable_snat"}
         = _('Source NAT')
       .col-md-8
@@ -106,7 +106,7 @@
                "type"        => "checkbox",
                "id"          => "network_router_enable_snat",
                "name"        => "enable_snat",
-               "ng-model"    => "vm.networkRouterModel.enable_snat"}
+               "ng-model"    => "vm.networkRouterModel.extra_attributes.external_gateway_info.enable_snat"}
 
     .form-group{"ng-class" => "{'has-error': angularForm.cloud_network_id.$invalid}"}
       %label.col-md-2.control-label

@@ -3,13 +3,12 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   var init = function() {
     vm.afterGet = false;
+
     vm.networkRouterModel = {
       name: '',
+      extra_attributes: { external_gateway_info: { enable_snat: true } },
       cloud_subnet_id: null,
-      cloud_tenant: null,
-      enable_snat: true,
       external_gateway: false,
-      extra_attributes: null,
     };
 
 <<<<<<< HEAD
@@ -62,10 +61,18 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     } else {
       miqService.sparkleOn();
       API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,ems_id,admin_state_up,cloud_network_id,extra_attributes,cloud_tenant,ext_management_system,cloud_subnets").then(function(data) {
-        Object.assign(vm.networkRouterModel, data);
+        vm.networkRouterModel = _.omit(data, [ 'cloud_tenant', 'ext_management_system' ]);
+        vm.networkRouterModel.ext_management_system = {
+          id: data.ext_management_system.id,
+          name: data.ext_management_system.name,
+        };
+        vm.networkRouterModel.cloud_tenant = { id: data.cloud_tenant.id,  name: data.cloud_tenant.name, };
+
         if (data.extra_attributes.external_gateway_info && ! _.isEmpty(data.extra_attributes.external_gateway_info)) {
           vm.networkRouterModel.external_gateway = true;
           return getCloudSubnetsByRef(vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id);
+        } else {
+          vm.networkRouterModel.external_gateway = false;
         }
       }).then(function() {
         return getCloudNetworksByEms(vm.networkRouterModel.ext_management_system.id);
