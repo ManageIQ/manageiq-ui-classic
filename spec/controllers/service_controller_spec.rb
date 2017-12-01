@@ -1,4 +1,6 @@
 describe ServiceController do
+  include CompressedIds
+
   before(:each) do
     stub_user(:features => :all)
   end
@@ -245,6 +247,27 @@ describe ServiceController do
       record = FactoryGirl.create(:service)
       controller.instance_variable_set(:@record, record)
       expect(controller.send(:textual_group_list)).to include(array_including(:generic_objects))
+    end
+  end
+
+  context 'displaying a list of All Services' do
+    describe '#tree_select' do
+      render_views
+
+      let(:service_search) { FactoryGirl.create(:miq_search, :description => 'a', :db => 'Service') }
+
+      it 'renders GTL of All Services, filtered by choosen filter from accordion' do
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'Service',
+          :report_data_additional_options => {
+            :model       => 'Service',
+            :named_scope => nil
+          }
+        )
+        expect(controller).to receive(:process_show_list).once.and_call_original
+        post :tree_select, :params => {:id => "ms-#{to_cid(service_search.id)}"}
+        expect(response.status).to eq(200)
+      end
     end
   end
 
