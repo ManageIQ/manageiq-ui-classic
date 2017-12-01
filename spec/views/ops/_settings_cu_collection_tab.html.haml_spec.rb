@@ -42,4 +42,18 @@ describe "ops/_settings_cu_collection_tab.html.haml" do
     render
     expect(response).to have_selector("input#ds_toggle")
   end
+
+  it "Displays note if there are no Clusters" do
+    @cluster_tree = nil
+    assign(:edit, :new => {:all_clusters => false})
+    render
+    expect(response).to have_selector("div.note b", :text => "Note: No Clusters available.")
+  end
+
+  it "Displays note if there are no Datastores" do
+    @datastore_tree = nil
+    assign(:edit, :new => {:all_storages => false})
+    render
+    expect(response).to have_selector("div.note b", :text => "Note: No Datastores available.")
+  end
 end
