@@ -109,22 +109,27 @@
 
   ToolbarController.prototype.setClickHandler = function() {
     _.chain(this.toolbarItems)
-     .flatten()
-     .map(function(item) {
-       return (item && item.hasOwnProperty('items')) ? item.items : item;
-     })
-     .flatten()
-     .filter(function(item) {
-       return item.type &&
-         (isButton(item) || isButtonTwoState(item));
-     })
-     .each(function(item) {
-       item.eventFunction = function($event) {
-         sendDataWithRx({toolbarEvent: 'itemClicked'});
-         miqToolbarOnClick.bind($event.delegateTarget)($event);
-       };
-     })
-     .value();
+      .flatten()
+      .map(function(item) {
+        return (item && item.hasOwnProperty('items')) ? item.items : item;
+      })
+      .flatten()
+      .filter(function(item) {
+        return item.type &&
+          (isButton(item) || isButtonTwoState(item));
+      })
+      .each(function(item) {
+        item.eventFunction = function($event) {
+          // clicking on disabled or hidden things shouldn't do anything
+          if (item.hidden === true || item.enabled === false) {
+            return;
+          }
+
+          sendDataWithRx({toolbarEvent: 'itemClicked'});
+          miqToolbarOnClick.bind($event.delegateTarget)($event);
+        };
+      })
+      .value();
   };
 
   /**
