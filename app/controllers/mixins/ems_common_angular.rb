@@ -599,8 +599,8 @@ module Mixins
       if ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
         amqp_endpoint = {:role => :amqp, :hostname => amqp_hostname, :port => amqp_port, :security_protocol => amqp_security_protocol}
-        amqp_fallback_endpoint1 = {:role => :amqp_fallback1, :hostname => amqp_fallback_hostname1, :port => amqp_port, :security_protocol => amqp_security_protocol}
-        amqp_fallback_endpoint2 = {:role => :amqp_fallback2, :hostname => amqp_fallback_hostname2, :port => amqp_port, :security_protocol => amqp_security_protocol}
+        amqp_fallback_endpoint1 = {:role => :amqp_fallback1, :hostname => amqp_fallback_hostname1, :port => amqp_port, :security_protocol => amqp_security_protocol} if amqp_fallback_hostname1.present?
+        amqp_fallback_endpoint2 = {:role => :amqp_fallback2, :hostname => amqp_fallback_hostname2, :port => amqp_port, :security_protocol => amqp_security_protocol} if amqp_fallback_hostname2.present?
       end
 
       if ems.kind_of?(ManageIQ::Providers::Lenovo::PhysicalInfraManager)
