@@ -61,4 +61,24 @@ describe GenericObjectDefinitionController do
       expect(response.body).to include('generic_object_definition/tagging_edit')
     end
   end
+
+  context "#process_root_node" do
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as FactoryGirl.create(:user)
+    end
+
+    it "renders the toolbar for 'show_list'" do
+      presenter = ExplorerPresenter.new(:active_tree => 'generic_object_definition_tree')
+      toolbar_array = controller.send(:process_root_node, presenter)
+      expect(toolbar_array[0][0][:id]).to eq('view_grid')
+      expect(toolbar_array[0][0][:url]).to eq('/show_list')
+
+      expect(toolbar_array[0][1][:id]).to eq('view_tile')
+      expect(toolbar_array[0][1][:url]).to eq('/show_list')
+
+      expect(toolbar_array[0][2][:id]).to eq('view_list')
+      expect(toolbar_array[0][2][:url]).to eq('/show_list')
+    end
+  end
 end
