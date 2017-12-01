@@ -69,11 +69,6 @@ class EmsPhysicalInfraController < ApplicationController
     ems_path(ems.id, options)
   end
 
-  def log_and_flash_message(message)
-    add_flash(message, :error)
-    $log.error(message)
-  end
-
   def restful?
     true
   end
