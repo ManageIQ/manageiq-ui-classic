@@ -222,13 +222,13 @@ module ReportController::Menus
       @menu_lastaction = "save"
       role             = session[:role_choice] unless session[:role_choice].nil?
       rec              = MiqGroup.find_by_description(role)
-      rec.settings ||= {}
+      rec[:settings] ||= {}
       if @sb[:menu_default]
         # delete report_menus from settings if menu set to default
-        rec.settings.delete(:report_menus)
+        rec[:settings].delete(:report_menus)
       else
-        rec.settings[:report_menus] ||= {}
-        rec.settings[:report_menus]  = copy_array(@edit[:new])
+        rec[:settings]["report_menus"] ||= {}
+        rec[:settings]["report_menus"]  = copy_array(@edit[:new])
       end
 
       if rec.save
@@ -262,7 +262,7 @@ module ReportController::Menus
     current_group_id = current_user.current_group.try(:id).to_i
     id = session[:node_selected].split('__')
     @selected = id[1].split(':')
-    all = MiqReport.for_user(current_user).sort_by { |r| [r.rpt_type, r.filename.to_s, r.name] }
+    all = MiqReport.all.sort_by { |r| [r.rpt_type, r.filename.to_s, r.name] }
     @all_reports = []
     all.each do |r|
       next if r.template_type != "report" && !r.template_type.blank?
@@ -297,7 +297,7 @@ module ReportController::Menus
       end
     end
 
-    # Calculating reports that are asigned to any of the folders
+    # Calculating reports that are assigned to any of the folders
     @edit[:new].each do |arr|
       if arr.class == Array
         arr.each do |a|

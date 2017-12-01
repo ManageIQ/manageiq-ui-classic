@@ -641,7 +641,7 @@ class ReportController < ApplicationController
   end
 
   def reports_menu_in_sb
-    @sb[:rpt_menu]  = populate_reports_menu
+    @sb[:rpt_menu]  = populate_reports_menu("reports", "default")
     @sb[:grp_title] = reports_group_title
   end
 
