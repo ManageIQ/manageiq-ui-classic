@@ -60,9 +60,9 @@ module PxeController::PxeServers
       end
 
       if pxe.id
-        _("PXE Server \"%{name}\" was saved") % {:name => @edit[:new][:name]}
+        add_flash(_("PXE Server \"%{name}\" was saved") % {:name => @edit[:new][:name]})
       else
-        _("PXE Server \"%{name}\" was added") % {:name => @edit[:new][:name]}
+        add_flash(_("PXE Server \"%{name}\" was added") % {:name => @edit[:new][:name]})
       end
 
       if pxe.valid? && !flash_errors? && pxe_server_set_record_vars(pxe) && pxe.save!
