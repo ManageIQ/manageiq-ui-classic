@@ -29,6 +29,21 @@ describe GenericObjectDefinitionController do
         expect(response.status).to eq(200)
       end
     end
+
+    context "#show when @display=generic_objects" do
+      it "renders the generic objects list" do
+        generic_obj_defn = FactoryGirl.create(:generic_object_definition)
+        FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+        controller.instance_variable_set(:@display, 'generic_objects')
+        controller.instance_variable_set(:@breadcrumbs, [])
+        controller.instance_variable_set(:@settings, {})
+        params = {:id => generic_obj_defn.id, :type => 'grid'}
+        allow(controller).to receive(:params).and_return(params)
+        controller.send(:show)
+        expect(controller.instance_variable_get(:@gtl_type)).to eq('grid')
+        expect(response.status).to eq(200)
+      end
+    end
   end
 
   describe "#show_list" do
