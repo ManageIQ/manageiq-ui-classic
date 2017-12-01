@@ -464,6 +464,7 @@ module EmsCommon
     @openstack_api_versions = retrieve_openstack_api_versions
     @vmware_cloud_api_versions = retrieve_vmware_cloud_api_versions
     @emstype_display = model.supported_types_and_descriptions_hash[@ems.emstype]
+    @ems_region_display = @ems.provider_region
     @nuage_api_versions = retrieve_nuage_api_versions
     @hawkular_security_protocols = retrieve_hawkular_security_protocols
   end
