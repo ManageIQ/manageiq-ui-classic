@@ -29,7 +29,7 @@ class GenericObjectDefinitionController < ApplicationController
 
   def show
     self.x_node = "god-#{to_cid(params[:id])}"
-    if params[:display]
+    if params[:display] || @display
       super
     else
       @breadcrumbs = []
