@@ -8,10 +8,11 @@
 
   %ul.dropdown-menu.dropdown-menu-right{'aria-labelledby' => "{{vm.dropdown_id}}"}
     %li{'ng-repeat' => "button in vm.buttons"}
+      -# data-remote="" breaks PDF donwnload, can't exist when empty, thus the ng-attr
       %a{'id'                  => "{{button.id}}",
          'title'               => "{{button.title}}",
          'data-method'         => "{{button.dataMethod}}",
-         'data-remote'         => "{{button.dataRemote}}",
+         'ng-attr-data-remote' => "{{button.dataRemote}}",
          'data-confirm'        => "{{button.confirm}}",
          'href'                => "{{button.href}}",
          'data-miq_sparkle_on' => "{{button.sparkleOn ? 'true' : 'false'}}"}
