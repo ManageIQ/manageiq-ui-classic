@@ -90,6 +90,19 @@ describe ReportFormatter::TimelineMessage do
     tests = {'event_type'  => 'vm_poweroff',
              'target_name' => 'Test VM<br><b>VM or Template:</b>&nbsp;<a href=/vm_or_template/show/42>Test VM</a><br/><b>Assigned Profiles:</b>&nbsp;'}
 
+    context 'policy profile assigned' do
+      let(:event_content) { FactoryGirl.create(:policy_event_content, :resource => policy_set) }
+      let(:policy_set) { FactoryGirl.create(:miq_policy_set) }
+
+      before { event.contents << event_content }
+
+      subject { ReportFormatter::TimelineMessage.new({'event_type' => 'vm_poweroff'}, event, {}, 'PolicyEvent').message_html('target_name') }
+
+      it 'generates a link to the affected policy profile' do
+        is_expected.to include("?profile=#{policy_set.id}")
+      end
+    end
+
     tests.each do |column, href|
       it "Evaluate column #{column} content" do
         row[column] = 'vm_poweroff'

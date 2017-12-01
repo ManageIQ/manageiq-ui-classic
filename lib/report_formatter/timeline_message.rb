@@ -55,7 +55,7 @@ module ReportFormatter
       unless @event.event_type.nil?
         e_text += "<br/><b>#{_("Assigned Profiles")}:</b>&nbsp;"
         assigned_profiles.each_with_index do |p, i|
-          e_text += "<a href=/miq_policy/explorer/?id=pp-#{p[0]}>#{p[1]}</a>"
+          e_text += "<a href=/miq_policy/explorer/?profile=#{p[0]}>#{p[1]}</a>"
           e_text += ", " if assigned_profiles.length > 1 && i < assigned_profiles.length
         end
       end
