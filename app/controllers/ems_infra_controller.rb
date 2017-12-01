@@ -207,11 +207,6 @@ class EmsInfraController < ApplicationController
     ems_path(ems.id, options)
   end
 
-  def log_and_flash_message(message)
-    add_flash(message, :error)
-    $log.error(message)
-  end
-
   def update_stack_up(stack, stack_parameters, provider_id, return_message)
     if stack_parameters_changed?(stack_parameters)
       begin
