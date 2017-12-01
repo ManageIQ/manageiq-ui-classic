@@ -220,7 +220,7 @@ class GenericObjectDefinitionController < ApplicationController
     process_show_list
     presenter.replace(:main_div, r[:partial => 'list'])
     presenter.show(:paging_div)
-    [build_toolbar("x_gtl_view_tb"), build_toolbar("generic_object_definitions_center_tb")]
+    [build_toolbar("gtl_view_tb"), build_toolbar("generic_object_definitions_center_tb")]
   end
 
   def process_god_node(presenter, node)
