@@ -1021,6 +1021,7 @@ class ApplicationController < ActionController::Base
       data.each do |r|
         r_group = r.rpt_group == "Custom" ? "#{@sb[:grp_title]} - Custom" : r.rpt_group # Get the report group
         title = r_group.reverse.split('-', 2).collect(&:reverse).collect(&:strip).reverse
+        next if mode == "menu" && title[1] == "Custom"
         if @temp_title != title[0]
           @temp_title = title[0]
           reports = []
@@ -1078,7 +1079,8 @@ class ApplicationController < ActionController::Base
       else
         temp2 = group.settings[:report_menus]
       end
-      rptmenu = temp.concat(temp2)
+      # don't add custom reports to rptmenu when building tree for menu editor form
+      rptmenu = mode == "menu" ? temp2 : temp.concat(temp2)
     end
     # move Customs folder as last item in tree
     rptmenu[0].each do |r|

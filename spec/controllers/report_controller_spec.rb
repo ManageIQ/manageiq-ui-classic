@@ -1284,7 +1284,7 @@ describe ReportController do
       login_as user
     end
 
-    it "it returns corrent name for custom folder" do
+    it "it returns correct name for custom folder" do
       controller.instance_variable_set(:@_params, :controller => "report", :action => "explorer")
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:get_node_info)
