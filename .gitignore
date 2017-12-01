@@ -14,6 +14,7 @@ spec/reports/
 tmp/
 .rubocop-*
 .idea/
+.vscode/
 .ruby-version
 vendor/assets/bower_components/
 node_modules/
