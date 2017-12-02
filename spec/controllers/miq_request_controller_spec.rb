@@ -231,6 +231,32 @@ describe MiqRequestController do
     end
   end
 
+  context 'showing details of a VM reconfigure task' do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    let(:vm) { FactoryGirl.create(:vm) }
+    let!(:other_vm) { FactoryGirl.create(:vm) }
+
+    let(:reconfigure_request) do
+      FactoryGirl.create(:vm_reconfigure_request, :options => {:src_ids => [vm.id]})
+    end
+
+    # http://localhost:3000/miq_request/show/10000000000342
+    it 'shows a grid with affected VMs' do
+      expect(controller).to receive(:prov_set_show_vars).once.and_call_original
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name       => 'Vm',
+        :gtl_type_string  => 'list',
+        :selected_records => [vm.id] # vm.id is here, other_vm.id is not
+      )
+      get :show, :params => {:id => reconfigure_request.id}
+      expect(response.status).to eq(200)
+    end
+  end
+
   context "#edit_button" do
     before do
       stub_user(:features => :all)
