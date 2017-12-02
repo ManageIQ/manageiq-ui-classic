@@ -721,6 +721,20 @@ describe QuadiconHelper do
     end
   end
 
+  describe "render_service_quadicon - displays correct quadicon hover url for service_template" do
+    let(:options) { {:size => 72, :type => 'grid'} }
+    let(:item) { FactoryGirl.build(:service_template, :id => 100) }
+    subject(:service_quad) { helper.render_service_quadicon(item, options) }
+
+    context "url for service_template quadicon" do
+      it "renders quadicon with catalog url" do
+        expect(service_quad).to have_selector("a[href*='catalog/x_show/#{item.id}']")
+        expect(service_quad).to have_selector('div.flobj', :count => 2)
+        expect(service_quad).to match(/service_template-[\w]*.png/)
+      end
+    end
+  end
+
   describe "#render_resource_pool_quadicon" do
     let(:item) { FactoryGirl.create(:resource_pool) }
     let(:options) { {:mode => :icon} }
