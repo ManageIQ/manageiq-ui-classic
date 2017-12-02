@@ -1,7 +1,7 @@
 module GtlHelper
   def gtl_selected_records
     records = params.try(:[], :rec_ids) || @edit.try(:[], :pol_items) ||
-              @edit.try(:[], :object_ids) || @targets_hash.try(:keys)
+              @edit.try(:[], :object_ids) || @targets_hash.try(:keys) || @selected_ids
 
     if records.present?
       records = records.map(&:to_i) if records.first.kind_of?(String)

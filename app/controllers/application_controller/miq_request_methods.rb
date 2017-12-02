@@ -803,7 +803,11 @@ module ApplicationController::MiqRequestMethods
       @options = @miq_request.options
       @options[:memory], @options[:mem_typ] = reconfigure_calculations(@options[:vm_memory][0]) if @options[:vm_memory]
       @force_no_grid_xml   = true
-      @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :selected_ids => @miq_request.options[:src_ids]) # Get the records (into a view) and the paginator
+
+      @selected_ids = @miq_request.options[:src_ids]
+      @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest")
+      # FIXME: use selected_ids passed through get_view to replace all of
+      # gtl_selected_records after Gaprindashvili
     end
     @user = User.find_by_userid(@miq_request.stamped_by)
   end
