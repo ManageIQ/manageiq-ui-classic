@@ -401,7 +401,7 @@ module ApplicationController::MiqRequestMethods
       "name"                          => _("Name"),
       "operating_system.product_name" => _("Operating System"),
       "platform"                      => _("Platform"),
-      "logical_cpus"                  => _("CPUs"),
+      "cpu_total_cores"               => _("CPUs"),
       "mem_cpu"                       => _("Memory"),
       "allocated_disk_storage"        => _("Disk Size"),
       "deprecated"                    => _("Deprecated"),
@@ -415,7 +415,7 @@ module ApplicationController::MiqRequestMethods
     # currently the only ones that support the field.
     headers["image?"] = _("Type") if vms.any? { |vm| vm.respond_to?(:image?) }
 
-    integer_fields = %w(allocated_disk_storage mem_cpu logical_cpus v_total_snapshots)
+    integer_fields = %w(allocated_disk_storage mem_cpu cpu_total_cores v_total_snapshots)
 
     filtered_vms = vms.select { |x| filter_by.call(x) }
 
