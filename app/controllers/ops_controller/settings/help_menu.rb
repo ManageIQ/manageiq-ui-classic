@@ -42,7 +42,8 @@ module OpsController::Settings::HelpMenu
         param = params["#{item}_#{field}"]
         next if param.nil?
 
-        @edit[:new][item][field] = param == 'null' ? false : param
+        @edit[:new][item][field] = param
+        @edit[:new][item].delete(field) if param.empty?
       end
     end
 
