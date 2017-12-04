@@ -28,7 +28,7 @@ class ApplicationHelper::Toolbar::MiddlewareDomainCenter < ApplicationHelper::To
                        nil,
                        N_('Shutdown this Domain'),
                        N_('Shutdown Domain'),
-                       :image   => 'power_off',
+                       :icon    => "pficon pficon-off fa-lg",
                        :confirm => N_('This operation will shutdown the entire domain, including all EAP instances that are serving user requests. Are you sure you want to proceed?')
                      )
                    ]
