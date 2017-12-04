@@ -242,15 +242,15 @@
   */
   ReportDataController.prototype.onItemSelect = function(item, isSelected) {
     if (typeof item !== 'undefined') {
-      var selectedItem = _.find(this.gtlData.rows, {id: item.id});
+      var selectedItem = _.find(this.gtlData.rows, {long_id: item.long_id});
       if (selectedItem) {
         selectedItem.checked = isSelected;
         selectedItem.selected = isSelected;
         this.$window.sendDataWithRx({rowSelect: selectedItem});
         if (isSelected) {
-          ManageIQ.gridChecks.push(item.id);
+          ManageIQ.gridChecks.push(item.long_id);
         } else {
-          var index = ManageIQ.gridChecks.indexOf(item.id);
+          var index = ManageIQ.gridChecks.indexOf(item.long_id);
           index !== -1 && ManageIQ.gridChecks.splice(index, 1);
         }
       }
