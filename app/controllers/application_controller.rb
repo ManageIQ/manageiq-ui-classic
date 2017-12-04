@@ -1151,7 +1151,7 @@ class ApplicationController < ActionController::Base
       end
       new_row = {
         :id       => list_row_id(row),
-        :long_id  => row['id'],
+        :long_id  => row['id'].to_s,
         :cells    => [],
         :quadicon => quadicon
       }
