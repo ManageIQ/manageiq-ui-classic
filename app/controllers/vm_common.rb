@@ -2,6 +2,7 @@ module VmCommon
   extend ActiveSupport::Concern
   include ActionView::Helpers::JavaScriptHelper
   include ChargebackPreview
+  include ProvisionCustomizeHelper
 
   def textual_group_list
     [
@@ -14,6 +15,8 @@ module VmCommon
     private :textual_group_list
     helper_method :textual_group_list
     helper_method :parent_choices_with_no_parent_choice
+    helper_method :select_check?
+    helper_method :disable_check?
   end
 
   # handle buttons pressed on the button bar

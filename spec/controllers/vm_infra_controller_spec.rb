@@ -577,4 +577,15 @@ describe VmInfraController do
   include_examples '#download_summary_pdf', :template_vmware
 
   it_behaves_like "explorer controller with custom buttons"
+
+  it "executes select_check? and disable_check? helper methods" do
+    admin_user = FactoryGirl.create(:user_with_group, :role => 'super_administrator')
+    wf = FactoryGirl.create(:miq_provision_workflow, :requester => admin_user)
+
+    controller.send(:select_check?, wf)
+    expect(response.status).to eq(200)
+
+    controller.send(:disable_check?, wf)
+    expect(response.status).to eq(200)
+  end
 end
