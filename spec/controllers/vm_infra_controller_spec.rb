@@ -535,6 +535,44 @@ describe VmInfraController do
     expect(assigns(:flash_array).first[:message]).to include("Create Snapshot")
   end
 
+  context 'simple searching' do
+    let(:vm1) { FactoryGirl.create(:vm_vmware, :name => 'foobar') }
+    let(:vm2) { FactoryGirl.create(:vm_vmware, :name => 'barbar') }
+
+    describe '#x_search_by_name' do
+      it 'render GTL with and saves search_text in the session' do
+        seed_session_trees('vm_infra', 'vandt_tree', 'root')
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name => 'VmOrTemplate',
+          :parent_id  => nil,
+          :explorer   => true,
+        )
+
+        post :x_search_by_name, :params => {:search_text => 'foobar'}
+        expect(session.fetch_path(:sandboxes, 'vm_infra', :search_text)).to eq('foobar')
+        expect(response.status).to eq(200)
+      end
+    end
+
+    describe '#report_data' do
+      it 'returns VMs filtered by the search text' do
+        vm1
+        vm2
+
+        session[:sandboxes] = {}
+        session.store_path(:sandboxes, 'vm_infra', :search_text, 'foobar')
+        report_data_request(
+          :model     => 'VmOrTemplate',
+          :parent_id => nil,
+          :explorer  => true,
+        )
+        results = assert_report_data_response
+        expect(results['data']['rows'].length).to eq(1)
+        expect(results['data']['rows'][0]['long_id']).to eq(vm1.id.to_s)
+      end
+    end
+  end
+
   include_examples '#download_summary_pdf', :vm_vmware
   include_examples '#download_summary_pdf', :template_vmware
 
