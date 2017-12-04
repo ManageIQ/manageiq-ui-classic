@@ -64,7 +64,7 @@ class WidgetPresenter
                    :confirm     => confirm,
                    :href        => "/dashboard/report_only?rr_id=#{@widget.id}&type=#{@widget.content_type == "chart" ? 'hybrid' : 'tabular'}",
                    :fonticon    => 'fa fa-arrows-alt fa-fw',
-                   :clickAction => "return miqClickAndPop(this);")
+                   :target      => "_blank")
       if PdfGenerator.available?
         buttons.push(:id       => "w_#{@widget.id}_pdf",
                      :title    => _("Download the full report (all rows) as a PDF file"),
