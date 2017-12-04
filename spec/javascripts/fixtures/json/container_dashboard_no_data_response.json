@@ -65,7 +65,7 @@
       "interval_name": "realtime",
       "xy_data": {
         "cpu": null,
-        "mem": null
+        "memory": null
       }
     },
     "network_metrics" : {
