@@ -20,13 +20,13 @@ module Mixins
     def update_ems_button_cancel
       update_ems = find_record_with_rbac(model, params[:id])
       model_name = model.to_s
-      flash_msg = _("Edit of %{model} \"%{name}\" was cancelled by the user") %
-                  {:model => ui_lookup(:model => model_name),
-                   :name  => update_ems.name}
+      add_flash(
+        _("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => model_name), :name => update_ems.name}
+      )
+      session[:flash_msgs] = @flash_array.dup
       js_args = {:action    => @lastaction == 'show_dashboard' ? 'show' : @lastaction,
                  :id        => update_ems.id,
                  :display   => session[:ems_display],
-                 :flash_msg => flash_msg,
                  :record    => update_ems}
       javascript_redirect(javascript_process_redirect_args(js_args))
     end
@@ -36,19 +36,16 @@ module Mixins
       set_ems_record_vars(update_ems)
       if update_ems.save
         update_ems.reload
-        flash = _("%{model} \"%{name}\" was saved") %
-                {:model => ui_lookup(:model => model.to_s),
-                 :name  => update_ems.name}
+        add_flash(
+          _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => model.to_s), :name => update_ems.name}
+        )
         construct_edit_for_audit(update_ems)
         AuditEvent.success(build_saved_audit(update_ems, @edit))
         update_ems.authentication_check_types_queue(update_ems.authentication_for_summary.pluck(:authtype),
                                                     :save => true)
-        ems_path = if @lastaction == 'show_list'
-                     ems_path('show_list', :flash_msg => flash)
-                   else
-                     ems_path(update_ems, :flash_msg => flash)
-                   end
-        javascript_redirect ems_path
+
+        session[:flash_msgs] = @flash_array.dup
+        javascript_redirect(@lastaction == 'show_list' ? ems_path('show_list') : ems_path(update_ems))
       else
         update_ems.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -173,10 +170,9 @@ module Mixins
       if ems.valid? && ems.save
         construct_edit_for_audit(ems)
         AuditEvent.success(build_created_audit(ems, @edit))
-        flash_msg = _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => table_name),
-                                                           :name  => ems.name}
-        javascript_redirect :action    => 'show_list',
-                            :flash_msg => flash_msg
+        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => table_name), :name => ems.name})
+        session[:flash_msgs] = @flash_array.dup
+        javascript_redirect(:action => 'show_list')
       else
         @in_a_form = true
         ems.errors.each do |field, msg|
@@ -191,10 +187,10 @@ module Mixins
 
     def create_ems_button_cancel
       model_name = model.to_s
-      javascript_redirect :action    => @lastaction,
-                          :display   => session[:ems_display],
-                          :flash_msg => _("Add of %{model} was cancelled by the user") %
-                          {:model => ui_lookup(:model => model_name)}
+      add_flash(_("Add of %{model} was cancelled by the user") % {:model => ui_lookup(:model => model_name)})
+      session[:flash_msgs] = @flash_array.dup
+      javascript_redirect(:action  => @lastaction,
+                          :display => session[:ems_display])
     end
 
     def ems_form_fields
