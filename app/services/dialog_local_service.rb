@@ -69,7 +69,11 @@ class DialogLocalService
       cancel_endpoint = "/ems_cluster"
     when /GenericObject/
       api_collection_name = "generic_objects"
-      cancel_endpoint = "/generic_object/show_list"
+      cancel_endpoint = if params[:id]
+                          url_for_only_path(:controller => controller_name, :id => params[:id], :action => :show, :display => "generic_objects", :only_path => true)
+                        else
+                          "/service/explorer"
+                        end
     when /Host/
       api_collection_name = "hosts"
       cancel_endpoint = "/host"

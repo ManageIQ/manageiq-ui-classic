@@ -171,6 +171,7 @@ describe CatalogController do
     end
 
     it "redirects to show for the display/display_id if present" do
+      stub_user(:features => :all)
       edit = {:rec_id     => 1,
               :wf         => wf,
               :key        => 'dialog_edit__10',
@@ -181,7 +182,6 @@ describe CatalogController do
       session[:edit] = edit
 
       controller.instance_variable_set(:@_params, :button => 'submit', :id => 10)
-      allow(controller).to receive(:role_allows?).and_return(true)
       allow(wf).to receive(:submit_request).and_return(:request => workflow.make_request(nil, {}))
       page = double('page')
       allow(page).to receive(:<<).with(any_args)
