@@ -477,7 +477,7 @@ module Mixins
 
     def set_ems_record_vars(ems, mode = nil)
       ems.name                   = params[:name].strip if params[:name]
-      ems.provider_region        = params[:provider_region]
+      ems.provider_region        = params[:provider_region] if params[:provider_region]
       ems.api_version            = params[:api_version].strip if params[:api_version]
       ems.provider_id            = params[:provider_id]
       ems.zone                   = Zone.find_by_name(params[:zone])
