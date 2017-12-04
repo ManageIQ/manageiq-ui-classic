@@ -18,18 +18,20 @@ class ServiceController < ApplicationController
   }
 
   def button
-    if params[:pressed] == "custom_button"
-      display_options = {}
-      ids = nil
-      if @display == 'generic_objects'
-        ids = @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
-        display_options[:display] = @display
-        display_options[:display_id] = params[:id]
-      end
-      custom_buttons(ids, display_options)
-      return
+    case params[:pressed]
+    when 'generic_object_tag'
+      tag(GenericObject)
+    when "custom_button"
+      @display == 'generic_objects' ? generic_object_custom_buttons : custom_buttons
     end
-    tag(GenericObject) if @display == 'generic_objects' && params[:pressed] == 'generic_object_tag'
+  end
+
+  def generic_object_custom_buttons
+    display_options = {}
+    ids = @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
+    display_options[:display] = @display
+    display_options[:display_id] = params[:id]
+    custom_buttons(ids, display_options)
   end
 
   def x_button
@@ -169,10 +171,6 @@ class ServiceController < ApplicationController
       :name        => service.name,
       :description => service.description
     }
-  end
-
-  def item_url(record_id, item_id)
-    "/#{controller_name}/show/#{record_id}?display=generic_objects/show=#{item_id}"
   end
 
   def generic_object
