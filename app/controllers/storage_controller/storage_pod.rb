@@ -12,9 +12,9 @@ module StorageController::StoragePod
     end
     @sortcol = session[:dsc_sortcol].nil? ? 0 : session[:dsc_sortcol].to_i
     @sortdir = session[:dsc_sortdir].nil? ? "ASC" : session[:dsc_sortdir]
+
     dsc_id = x_node.split('-').last
-    folder = EmsFolder.where(:id => from_cid(dsc_id))
-    @view, @pages = get_view(Storage, :selected_ids => folder.first.storages.collect(&:id)) # Get the records (into a view) and the paginator
+    @view, @pages = get_view(Storage, :association => 'storages', :parent => EmsFolder.find(from_cid(dsc_id)))
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:ct_sortcol] = @sortcol
@@ -47,11 +47,8 @@ module StorageController::StoragePod
     end
   end
 
-
   # Get information for an event
   def build_storage_pod_tree
     TreeBuilderStoragePod.new("storage_pod_tree", "storage_pod", @sb)
   end
-
-
 end
