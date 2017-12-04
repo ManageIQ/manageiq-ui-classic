@@ -30,8 +30,8 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           :send_checked => true,
           :confirm      => N_("Delete all selected Groups?"),
           :enabled      => false,
-          :onwhen       => "1+",
-          :klass        => ApplicationHelper::Button::RbacGroupDelete),
+          :onwhen       => "1+"
+        ),
         separator,
         button(
           :rbac_group_seq_edit,
