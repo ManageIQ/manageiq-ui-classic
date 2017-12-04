@@ -1,7 +1,7 @@
-class ContainerDashboardService
+class ContainerDashboardService < DashboardService
   include UiServiceMixin
   include ContainerServiceMixin
-
+  CPU_USAGE_PRECISION = 2 # 2 decimal points
 
   def initialize(provider_id, controller)
     @provider_id = provider_id
