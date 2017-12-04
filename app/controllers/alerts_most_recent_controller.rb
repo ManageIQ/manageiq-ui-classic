@@ -26,5 +26,5 @@ class AlertsMostRecentController < ApplicationController
     session[:layout] = @layout
   end
 
-  menu_section :monitor
+  menu_section :monitor_alerts
 end
