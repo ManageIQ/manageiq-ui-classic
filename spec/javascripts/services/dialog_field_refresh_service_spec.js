@@ -22,13 +22,18 @@ describe('dialogFieldRefreshService', function() {
     var data = 'the data';
     var field = 'the field';
     var url = 'url';
-    var resourceId = '123';
+    var idList = {
+      dialogId: '123',
+      resourceActionId: '321',
+      targetId: '456',
+      targetType: 'service_template',
+    };
 
     var refreshPromise;
     var resolvedValue;
 
     beforeEach(function(done) {
-      refreshPromise = testDialogFieldRefreshService.refreshField(data, field, url, resourceId);
+      refreshPromise = testDialogFieldRefreshService.refreshField(data, field, url, idList);
 
       refreshPromise.then(function(value) {
         resolvedValue = value;
@@ -45,7 +50,10 @@ describe('dialogFieldRefreshService', function() {
         action: 'refresh_dialog_fields',
         resource: {
           dialog_fields: 'the data',
-          fields: 'the field'
+          fields: 'the field',
+          resource_action_id: '321',
+          target_id: '456',
+          target_type: 'service_template',
         }
       };
 
