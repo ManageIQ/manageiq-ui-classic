@@ -690,4 +690,29 @@ describe EmsCloudController do
       verify_password_and_confirm(nil, "oranges")
     end
   end
+
+  context "'Set Default' button rendering in listnav" do
+    render_views
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    it "renders 'Set Default' button when a user defined search exists" do
+      MiqSearch.create(:db          => 'EmsCloud',
+                       :search_type => "user",
+                       :description => 'abc',
+                       :name        => 'abc',
+                       :search_key  => session[:userid])
+      get :show_list
+      expect(response.status).to eq(200)
+      expect(response.body).to have_selector("button[title*='Select a filter to set it as my default']", :text => "Set Default")
+    end
+
+    it "does not render set default button when a user defined search does not exist" do
+      get :show_list
+      expect(response.status).to eq(200)
+      expect(response.body).not_to have_selector("button[title*='Select a filter to set it as my default']", :text => "Set Default")
+    end
+  end
 end

@@ -62,7 +62,7 @@
       "data-method"          => :post,
       :alt                   => t,
       :title                 => t)
-  - else
+  - elsif !@my_searches.blank?
     = button_tag(_("Set Default"),
       :class => "btn btn-default disabled pull-right",
       :title => _("Select a filter to set it as my default"))
