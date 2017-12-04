@@ -17,6 +17,22 @@
         "display_kind": "MiddlewareServer",
         "icon": "vendor-wildfly"
       },
+      "MiddlewareServerWildfly1": {
+        "name": "Local DMR",
+        "kind": "MiddlewareServerWildfly",
+        "miq_id": 1,
+        "status": "Unknown",
+        "display_kind": "MiddlewareServerWildfly",
+        "icon": "vendor-wildfly"
+      },
+      "MiddlewareServerEap1": {
+        "name": "Local DMR",
+        "kind": "MiddlewareServerEap",
+        "miq_id": 1,
+        "status": "Unknown",
+        "display_kind": "MiddlewareServerEap",
+        "icon": "vendor-jboss-eap"
+      },
       "MiddlewareDeployment1": {
         "name": "hawkular-command-gateway-war.war",
         "kind": "MiddlewareDeployment",
@@ -80,6 +96,14 @@
         "target": "MiddlewareServer1"
       },
       {
+        "source": "MiddlewareManager1",
+        "target": "MiddlewareServerEap1"
+      },
+      {
+        "source": "MiddlewareManager1",
+        "target": "MiddlewareServerWildfly1"
+      },
+      {
         "source": "MiddlewareServer1",
         "target": "MiddlewareDeployment1"
       },
@@ -119,6 +143,8 @@
       "MiddlewareManager": true,
       "Vm": true,
       "MiddlewareServer": true,
+      "MiddlewareServerEap": true,
+      "MiddlewareServerWildfly": true,
       "MiddlewareServerGroup": true,
       "MiddlewareMessaging": true
     },
