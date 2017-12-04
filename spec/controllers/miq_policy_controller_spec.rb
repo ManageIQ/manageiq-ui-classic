@@ -172,7 +172,7 @@ describe MiqPolicyController do
         expect(response).to render_template('explorer')
         flash_messages = controller.instance_variable_get(:@flash_array)
         expect(flash_messages).to be_nil
-        expect(controller.x_node).to eq("pp_#{profile.id}")
+        expect(controller.x_node).to eq("pp-#{profile.id}")
       end
     end
   end

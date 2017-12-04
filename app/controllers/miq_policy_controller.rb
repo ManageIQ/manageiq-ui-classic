@@ -234,7 +234,7 @@ class MiqPolicyController < ApplicationController
       self.x_active_tree = 'policy_profile_tree'
       profile_id = params[:profile].to_i
       if MiqPolicySet.exists?(:id => profile_id)
-        self.x_node = "pp_#{profile_id}"
+        self.x_node = "pp-#{profile_id}"
       else
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:model => "MiqPolicySet")}, :error)
         self.x_node = "root"
