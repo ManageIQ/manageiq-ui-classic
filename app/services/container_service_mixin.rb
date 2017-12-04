@@ -70,7 +70,7 @@ module ContainerServiceMixin
     if trend.any?
       {
         :xData => trend.keys,
-        :yData => trend.values.map(&:round)
+        :yData => trend.values.map { |value| (value || 0).round }
       }
     end
   end
