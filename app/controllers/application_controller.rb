@@ -1201,7 +1201,7 @@ class ApplicationController < ActionController::Base
           value = row[col] || ' '
           new_row[:cells] << {:span => severity_span_class(value), :text => severity_title(value)}
         when 'state'
-          celltext = row[col].titleize
+          celltext = row[col].to_s.titleize
         when 'hardware.bitness'
           celltext = row[col] ? "#{row[col]} bit" : ''
         when 'image?'
