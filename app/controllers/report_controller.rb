@@ -555,14 +555,13 @@ class ReportController < ApplicationController
   def set_form_locals
     locals = {}
     if x_active_tree == :export_tree
+      locals[:no_reset] = locals[:no_cancel] = locals[:multi_record] = true
       if x_node == "xx-exportwidgets"
         action_url = nil
         record_id = nil
+        locals[:export_button] = false
       else
         action_url = "download_report"
-        locals[:no_reset] = true
-        locals[:no_cancel] = true
-        locals[:multi_record] = true
         locals[:export_button] = true
       end
     elsif x_active_tree == :schedules_tree || params[:pressed] == "miq_report_schedule_add"
@@ -857,7 +856,7 @@ class ReportController < ApplicationController
     presenter[:right_cell_text] = @right_cell_text
 
     # Handle bottom cell
-    if ((@in_a_form || @pages) || (@sb[:pages] && @html)) && params[:id] != 'xx-exportwidgets'
+    if (@in_a_form || @pages) || (@sb[:pages] && @html)
       if @pages
         presenter.hide(:form_buttons_div, :rpb_div_1).show(:pc_div_1)
       elsif @in_a_form
@@ -871,7 +870,7 @@ class ReportController < ApplicationController
     else
       presenter.hide(:paging_div)
     end
-    if @sb[:active_tab] == 'report_info' && x_node.split('-').length == 5 && !@in_a_form
+    if (@sb[:active_tab] == 'report_info' && x_node.split('-').length == 5 && !@in_a_form) || %w(xx-exportwidgets xx-exportcustomreports).include?(x_node)
       presenter.hide(:paging_div)
     end
     presenter.set_visibility(!@in_a_form, :toolbar)
