@@ -28,6 +28,28 @@ describe('middlewareTopologyController', function () {
     }
   };
 
+  var mw_server_wildfly = {
+    id: "MiddlewareServerWildfly1", item: {
+      "name": "Local DMR",
+      "kind": "MiddlewareServerWildfly",
+      "miq_id": 1,
+      "status": "Running",
+      "display_kind": "MiddlewareServerWildfly",
+      "icon": "vendor-wildfly"
+    }
+  };
+
+  var mw_server_eap = {
+    id: "MiddlewareServerEap1", item: {
+      "name": "Local DMR",
+      "kind": "MiddlewareServerEap",
+      "miq_id": 1,
+      "status": "Running",
+      "display_kind": "MiddlewareServerEap",
+      "icon": "vendor-jboss-eap"
+    }
+  };
+
   var mw_server_starting = {
     id: "MiddlewareServer1", item: {
       "status": "Starting"
@@ -162,9 +184,11 @@ describe('middlewareTopologyController', function () {
 
   describe('kinds contains all expected mw kinds', function () {
     it('in all main objects', function () {
-      expect(Object.keys(scope.kinds).length).toBe(8);
+      expect(Object.keys(scope.kinds).length).toBe(10);
       expect(ctrl.kinds["MiddlewareManager"]).toBeDefined();
       expect(ctrl.kinds["MiddlewareServer"]).toBeDefined();
+      expect(ctrl.kinds["MiddlewareServerEap"]).toBeDefined();
+      expect(ctrl.kinds["MiddlewareServerWildfly"]).toBeDefined();
       expect(ctrl.kinds["MiddlewareDeployment"]).toBeDefined();
       expect(ctrl.kinds["MiddlewareDatasource"]).toBeDefined();
       expect(ctrl.kinds["Vm"]).toBeDefined();
@@ -179,6 +203,8 @@ describe('middlewareTopologyController', function () {
     it('in graph elements', function () {
       expect(ctrl.getIcon(mw_manager).icon).toContain("vendor-hawkular");
       expect(ctrl.getIcon(mw_server).icon).toContain("vendor-wildfly");
+      expect(ctrl.getIcon(mw_server_wildfly).icon).toContain("vendor-wildfly");
+      expect(ctrl.getIcon(mw_server_eap).icon).toContain("vendor-jboss-eap");
       expect(ctrl.getIcon(mw_deployment).fontfamily).toEqual("font-fabulous");
       expect(ctrl.getIcon(mw_datasource).fontfamily).toEqual("FontAwesome");
       expect(ctrl.getIcon(vm).fontfamily).toEqual("PatternFlyIcons-webfont");
@@ -192,6 +218,8 @@ describe('middlewareTopologyController', function () {
     it('for all objects', function () {
       expect(ctrl.getCircleDimensions(mw_manager)).toEqual({x: -20, y: -20, height: 40, width: 40, r: 28});
       expect(ctrl.getCircleDimensions(mw_server)).toEqual({x: -12, y: -12, height: 23, width: 23, r: 19});
+      expect(ctrl.getCircleDimensions(mw_server_eap)).toEqual({x: -9, y: -9, height: 18, width: 18, r: 17});
+      expect(ctrl.getCircleDimensions(mw_server_wildfly)).toEqual({x: -9, y: -9, height: 18, width: 18, r: 17});
       expect(ctrl.getCircleDimensions(mw_deployment)).toEqual({x: -9, y: -9, height: 18, width: 18, r: 17});
       expect(ctrl.getCircleDimensions(mw_datasource)).toEqual({x: -9, y: -9, height: 18, width: 18, r: 17});
       expect(ctrl.getCircleDimensions(vm)).toEqual({ x: 0, y: 9, height: 40, width: 40, r: 21 });
@@ -205,6 +233,8 @@ describe('middlewareTopologyController', function () {
     it('for all objects', function () {
       expect(ctrl.getIcon(mw_manager).type).toEqual("image");
       expect(ctrl.getIcon(mw_server).type).toEqual("image");
+      expect(ctrl.getIcon(mw_server_wildfly).type).toEqual("image");
+      expect(ctrl.getIcon(mw_server_eap).type).toEqual("image");
       expect(ctrl.getIcon(mw_deployment).type).toEqual("glyph");
       expect(ctrl.getIcon(mw_datasource).type).toEqual("glyph");
       expect(ctrl.getIcon(vm).type).toEqual("glyph");
@@ -222,6 +252,8 @@ describe('middlewareTopologyController', function () {
     });
     it('for servers', function() {
       expect(topologyService.getItemStatusClass(mw_server)).toEqual('success');
+      expect(topologyService.getItemStatusClass(mw_server_wildfly)).toEqual('success');
+      expect(topologyService.getItemStatusClass(mw_server_eap)).toEqual('success');
       expect(topologyService.getItemStatusClass(mw_server_down)).toEqual('error');
       expect(topologyService.getItemStatusClass(mw_server_starting)).toEqual('information');
       expect(topologyService.getItemStatusClass(mw_server_reload)).toEqual('warning');

@@ -13,7 +13,19 @@ class MiddlewareTopologyService < TopologyService
     ]
   ]
 
-  @kinds = %i(MiddlewareDeployment MiddlewareDatasource MiddlewareDomain MiddlewareManager Vm Container MiddlewareServer MiddlewareServerGroup MiddlewareMessaging)
+  @kinds = %i(
+    MiddlewareDeployment
+    MiddlewareDatasource
+    MiddlewareDomain
+    MiddlewareManager
+    Vm
+    Container
+    MiddlewareServer
+    MiddlewareServerEap
+    MiddlewareServerWildfly
+    MiddlewareServerGroup
+    MiddlewareMessaging
+  )
 
   def build_topology
     topology = super
