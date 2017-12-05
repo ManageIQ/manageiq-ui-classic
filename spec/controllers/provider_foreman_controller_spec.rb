@@ -429,7 +429,8 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "configuration_manager_providers_accord")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::ConfigurationManager", :dbname => :cm_providers).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::ConfigurationManager",
+                                                    :gtl_dbname => :cm_providers, :dbname => :cm_providers).and_call_original
       controller.send(:accordion_select)
     end
 
@@ -439,7 +440,8 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", :dbname => :cm_configured_systems).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem",
+                                                    :gtl_dbname => :cm_configured_systems, :dbname => :cm_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
     end
