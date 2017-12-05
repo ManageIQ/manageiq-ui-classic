@@ -27,15 +27,14 @@ module VmRemote
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     options = case console_type
               when "webmks"
-                override_content_security_policy_directives(
-                  :connect_src => ["'self'", "wss://#{params[:host]}"]
-                )
-                {
-                  :webmks_uri => URI::Generic.build(:scheme => 'wss',
-                                                    :host   => params[:host],
-                                                    :port   => params[:port],
-                                                    :path   => "/ticket/#{params[:ticket]}")
+                # TODO: move this part to the launch_html5_console method
+                override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin], :img_src => %w(data: self))
+                %i(secret url).each { |p| params.require(p) }
+                @console = {
+                  :url    => j(params[:url]),
+                  :secret => j(params[:secret])
                 }
+                {} # This is just for compatibility, see the TODO above
               when "vmrc"
                 host = @record.ext_management_system.hostname || @record.ext_management_system.ipaddress
                 vmid = @record.ems_ref
