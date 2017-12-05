@@ -94,30 +94,6 @@ module OpsController::Settings::Ldap
     end
   end
 
-  # Delete all selected or single displayed action(s)
-  def ldap_region_delete
-    ldap_regions = []
-    if !params[:id] # showing a list
-      ldap_regions = find_checked_ids_with_rbac(LdapRegion)
-      if ldap_regions.empty?
-        add_flash(_("No LDAP Regions were selected for deletion"), :error)
-        javascript_flash
-      end
-      process_ldap_regions(ldap_regions, "destroy") unless ldap_regions.empty?
-    else # showing 1 ldap_region, delete it
-      if params[:id].nil? || LdapRegion.find_by_id(params[:id]).nil?
-        add_flash(_("LDAP Region no longer exists"), :error)
-        javascript_flash
-      else
-        ldap_regions.push(params[:id])
-      end
-      process_ldap_regions(ldap_regions, "destroy") unless ldap_regions.empty?
-    end
-    self.x_node = "xx-l"
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => x_node, :replace_trees => [:settings])
-  end
-
   def ldap_domain_add
     @_params[:typ] = "new"
     @_params[:region_id] = x_node.split('-').last
