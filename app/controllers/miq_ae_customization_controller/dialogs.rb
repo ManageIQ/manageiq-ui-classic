@@ -688,7 +688,7 @@ module MiqAeCustomizationController::Dialogs
         add_flash(_("Entry Point must be given."), :error)
         res = false
       end
-      if @edit[:field_name].to_s !~ /^[a-z0-9_]+$/i
+      if @edit[:field_name].to_s !~ /^[a-z0-9_-]+$/i
         add_flash(_("Element Name must be alphanumeric characters and underscores without spaces"), :error)
         res = false
       end
