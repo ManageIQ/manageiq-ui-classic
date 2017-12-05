@@ -481,6 +481,7 @@ class ProviderForemanController < ApplicationController
                        when :configuration_manager_cs_filter
                          :cm_configured_systems
                        end
+    options[:gtl_dbname] = options[:dbname]
     options
   end
   private :update_options
