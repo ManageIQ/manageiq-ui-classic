@@ -107,11 +107,13 @@ ManageIQ.qe.gtl = {
       if (nameColumn) {
         var index = this.gtlData.cols.indexOf(nameColumn[0]);
         foundItem = rows.filter(function(oneRow) {
-          return oneRow.cells[index].text === identificator;
+          return oneRow.cells[index] && oneRow.cells[index].text === identificator;
         });
       }
       if (foundItem.length === 0) {
-        foundItem = rows.filter(function(oneRow) {return oneRow.id == identificator;});
+        foundItem = rows.filter(function(oneRow) {
+          return oneRow.id == identificator || oneRow.long_id == identificator;
+        });
       }
       return multiple ? foundItem : foundItem[0];
     }.bind(this);
@@ -229,7 +231,7 @@ ManageIQ.qe.gtl = {
       },
       'get_item': function(identificator) {
         var foundItem = queryItem(identificator, 'name', this.gtlData.rows, false);
-        if (foundItem.id) {
+        if (foundItem && foundItem.id) {
           var responseData = getItem(foundItem);
           ManageIQ.qe.gtl.result = responseData;
           return responseData;
