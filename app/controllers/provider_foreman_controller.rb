@@ -115,11 +115,10 @@ class ProviderForemanController < ApplicationController
   end
 
   def tree_record
-    @record =
-      case x_active_tree
-      when :configuration_manager_providers_tree then configuration_manager_providers_tree_rec
-      when :configuration_manager_cs_filter_tree then configuration_manager_cs_filter_tree_rec
-      end
+    @record = case x_active_tree
+              when :configuration_manager_providers_tree then configuration_manager_providers_tree_rec
+              when :configuration_manager_cs_filter_tree then configuration_manager_cs_filter_tree_rec
+              end
   end
 
   def check_for_unassigned_configuration_profile
@@ -144,10 +143,10 @@ class ProviderForemanController < ApplicationController
   def class_for_provider_node
     nodes = x_node.split('-')
     case nodes.first
-    when "root" then ManageIQ::Providers::ConfigurationManager
-    when "fr"   then ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
+    when "root"     then ManageIQ::Providers::ConfigurationManager
+    when "fr"       then ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
     when "cp", "cs" then ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem
-    when "xx" then
+    when "xx"       then
       case nodes.second
       when "fr" then ManageIQ::Providers::Foreman::ConfigurationManager
       when "csf" then ConfiguredSystem
@@ -210,17 +209,20 @@ class ProviderForemanController < ApplicationController
   end
 
   def features
-    [{:role     => "providers_accord",
-      :role_any => true,
-      :name     => :configuration_manager_providers,
-      :title    => _("Providers")},
-     {:role     => "configured_systems_filter_accord",
-      :role_any => true,
-      :name     => :configuration_manager_cs_filter,
-      :title    => _("Configured Systems")},
-     ].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+    [
+      ApplicationController::Feature.new_with_hash(
+        :role     => "providers_accord",
+        :role_any => true,
+        :name     => :configuration_manager_providers,
+        :title    => _("Providers")
+      ),
+      ApplicationController::Feature.new_with_hash(
+        :role     => "configured_systems_filter_accord",
+        :role_any => true,
+        :name     => :configuration_manager_cs_filter,
+        :title    => _("Configured Systems")
+      ),
+    ]
   end
 
   def build_configuration_manager_providers_tree(_type)
@@ -265,7 +267,7 @@ class ProviderForemanController < ApplicationController
                          :qs_exp => @edit[:adv_search_applied][:qs_exp],
                          :text   => @right_cell_text)
     else
-      x_history_add_item(:id => treenodeid, :text => @right_cell_text)  # Add to history pulldown array
+      x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
     if @view && @pages
       {:view => @view, :pages => @pages}
@@ -290,7 +292,8 @@ class ProviderForemanController < ApplicationController
         record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
         @right_cell_text = _("Configuration Profiles under %{record_model} Provider \"%{name}\"") % {
           :name         => provider.name,
-          :record_model => record_model}
+          :record_model => record_model
+        }
       end
     end
     options
@@ -315,8 +318,7 @@ class ProviderForemanController < ApplicationController
       else
         @showtype        = 'main'
         @pages           = nil
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @configuration_profile_record.name,
-                                                        :model => record_model}
+        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @configuration_profile_record.name, :model => record_model}
       end
     end
     options
@@ -438,7 +440,7 @@ class ProviderForemanController < ApplicationController
     unprovisioned_configured_systems =
       ConfiguredSystem.where(:manager_id => provider_id, :configuration_profile_id => nil).count
 
-    return if unprovisioned_configured_systems == 0
+    return if unprovisioned_configured_systems.zero?
 
     unassigned_configuration_profile_desc = unassigned_configuration_profile_name = _("Unassigned Profiles Group")
     unassigned_configuration_profile = ConfigurationProfile.new
@@ -446,16 +448,16 @@ class ProviderForemanController < ApplicationController
     unassigned_configuration_profile.name = unassigned_configuration_profile_name
     unassigned_configuration_profile.description = unassigned_configuration_profile_desc
 
-    unassigned_profile_row =
-      {'x_show_id'                      => "-#{provider_id}-unassigned",
-       'description'                    => unassigned_configuration_profile_desc,
-       'total_configured_systems'       => unprovisioned_configured_systems,
-       'configuration_environment_name' => unassigned_configuration_profile.configuration_environment_name,
-       'my_zone'                        => unassigned_configuration_profile.my_zone,
-       'region_description'             => unassigned_configuration_profile.region_description,
-       'name'                           => unassigned_configuration_profile_name,
-       'manager_id'                     => provider_id
-      }
+    unassigned_profile_row = {
+      'x_show_id'                      => "-#{provider_id}-unassigned",
+      'description'                    => unassigned_configuration_profile_desc,
+      'total_configured_systems'       => unprovisioned_configured_systems,
+      'configuration_environment_name' => unassigned_configuration_profile.configuration_environment_name,
+      'my_zone'                        => unassigned_configuration_profile.my_zone,
+      'region_description'             => unassigned_configuration_profile.region_description,
+      'name'                           => unassigned_configuration_profile_name,
+      'manager_id'                     => provider_id
+    }
 
     unless @view.table.kind_of?(Hash)
       add_unassigned_configuration_profile_record_to_view(unassigned_profile_row, unassigned_configuration_profile)

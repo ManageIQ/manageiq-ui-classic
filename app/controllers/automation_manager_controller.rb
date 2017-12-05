@@ -41,7 +41,6 @@ class AutomationManagerController < ApplicationController
     'automation_manager'
   end
 
-
   def tagging
     @explorer ||= true
     case x_active_accord
@@ -92,21 +91,20 @@ class AutomationManagerController < ApplicationController
   end
 
   def tree_record
-    @record =
-      case x_active_tree
-      when :automation_manager_providers_tree  then automation_manager_providers_tree_rec
-      when :automation_manager_cs_filter_tree  then automation_manager_cs_filter_tree_rec
-      when :configuration_scripts_tree then configuration_scripts_tree_rec
-      end
+    @record = case x_active_tree
+              when :automation_manager_providers_tree then automation_manager_providers_tree_rec
+              when :automation_manager_cs_filter_tree then automation_manager_cs_filter_tree_rec
+              when :configuration_scripts_tree        then configuration_scripts_tree_rec
+              end
   end
 
   def class_for_provider_node
     nodes = x_node.split('-')
     case nodes.first
-    when "root" then ManageIQ::Providers::AnsibleTower::AutomationManager
+    when "root"    then ManageIQ::Providers::AnsibleTower::AutomationManager
     when "at", "e" then ManageIQ::Providers::AutomationManager::InventoryRootGroup
-    when "f", "cs"    then ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
-    when "xx" then
+    when "f", "cs" then ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
+    when "xx"      then
       case nodes.second
       when "at"  then ManageIQ::Providers::AnsibleTower::AutomationManager
       when "csa" then ConfiguredSystem
@@ -186,21 +184,25 @@ class AutomationManagerController < ApplicationController
 
   def features
     [
-      {:role     => "automation_manager_providers",
-       :role_any => true,
-       :name     => :automation_manager_providers,
-       :title    => _("Providers")},
-      {:role     => "automation_manager_configured_system",
-       :role_any => true,
-       :name     => :automation_manager_cs_filter,
-       :title    => _("Configured Systems")},
-      {:role     => "automation_manager_configuration_scripts_accord",
-       :role_any => true,
-       :name     => :configuration_scripts,
-       :title    => _("Job Templates")}
-    ].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+      ApplicationController::Feature.new_with_hash(
+        :role     => "automation_manager_providers",
+        :role_any => true,
+        :name     => :automation_manager_providers,
+        :title    => _("Providers")
+      ),
+      ApplicationController::Feature.new_with_hash(
+        :role     => "automation_manager_configured_system",
+        :role_any => true,
+        :name     => :automation_manager_cs_filter,
+        :title    => _("Configured Systems")
+      ),
+      ApplicationController::Feature.new_with_hash(
+        :role     => "automation_manager_configuration_scripts_accord",
+        :role_any => true,
+        :name     => :configuration_scripts,
+        :title    => _("Job Templates")
+      )
+    ]
   end
 
   def build_automation_manager_tree(type, name)

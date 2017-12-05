@@ -4,8 +4,7 @@ module ApplicationHelper::Toolbar::ConfiguredSystem::Foreman::PolicyMixin
       included_class.select(
         :provider_foreman_policy_choice,
         'fa fa-shield fa-lg',
-        t = N_('Policy'),
-        t,
+        N_('Policy'),
         :items => [
           included_class.button(
             :configured_system_tag,

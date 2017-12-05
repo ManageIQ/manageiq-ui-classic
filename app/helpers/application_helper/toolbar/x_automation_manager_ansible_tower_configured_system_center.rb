@@ -3,8 +3,7 @@ class ApplicationHelper::Toolbar::XAutomationManagerAnsibleTowerConfiguredSystem
     select(
       :automation_manager_policy_choice,
       'fa fa-shield fa-lg',
-      t = N_('Policy'),
-      t,
+      N_('Policy'),
       :enabled => true,
       :items   => [
         button(
