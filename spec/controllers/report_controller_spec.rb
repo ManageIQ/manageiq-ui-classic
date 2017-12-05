@@ -824,6 +824,45 @@ describe ReportController do
     end
   end
 
+  describe "import/export accordion" do
+    include_context "valid session"
+    render_views
+
+    before :each do
+      login_as(FactoryGirl.create(:user))
+      allow(controller).to receive(:x_active_tree) { :export_tree }
+    end
+
+    context "accordion root" do
+      it "correctly renders the screen for accordion root" do
+        allow(controller).to receive(:x_node) { 'root' }
+        post :tree_select, :params => {'id' => 'root'}
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Choose a Import/Export type from the menus on the left.')
+      end
+    end
+
+    context "widgets import/export node" do
+      it "correctly renders the widget import/export screen" do
+        allow(controller).to receive(:x_node) { 'xx-exportwidgets' }
+        post :tree_select, :params => {'id' => 'xx-exportwidgets'}
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Widgets')
+        expect(response.body).to match(/input.+type=.+submit.+value=.+Export.+/)
+      end
+    end
+
+    context "custom reports import/export node" do
+      it "correctly renders the custom reports import/export screen" do
+        allow(controller).to receive(:x_node) { 'xx-exportcustomreports' }
+        post :tree_select, :params => {'id' => 'xx-exportcustomreports'}
+        expect(response.body).to include('Custom Reports')
+        expect(response.status).to eq(200)
+        expect(response.body).to match(/input.+type=.+submit.+value=.+Export.+/)
+      end
+    end
+  end
+
   describe "#export_widgets" do
     include_context "valid session"
 
