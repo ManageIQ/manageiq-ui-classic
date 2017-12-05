@@ -26,8 +26,4 @@ class EmsSwiftController < ApplicationController
   def new_ems_path
     {:action => 'new'}
   end
-
-  def ems_swift_form_fields
-    ems_form_fields
-  end
 end
