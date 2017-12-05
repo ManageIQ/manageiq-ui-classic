@@ -386,6 +386,7 @@ class ProviderForemanController < ApplicationController
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
     elsif valid_configuration_profile_record?(@configuration_profile_record)
       presenter.hide(:form_buttons_div)
+      presenter.remove_sand
       presenter.update(:main_div, r[:partial => "configuration_profile",
                                     :locals  => {:controller => controller_name}])
     else
