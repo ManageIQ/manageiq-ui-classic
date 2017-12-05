@@ -103,15 +103,17 @@ module Mixins::MiddlewareOperationsMixin
     if operation_info.fetch(:log_timeline, false)
       EmsEvent.add_queue(
         'add', mw_item.ext_management_system.id,
-        :ems_id          => mw_item.ext_management_system.id,
-        :source          => 'EVM',
-        :timestamp       => Time.zone.now,
-        :event_type      => operation_info.fetch(:log_timeline),
-        :message         => _('%{server} will be %{operation} per user request') %
+        :ems_id                 => mw_item.ext_management_system.id,
+        :source                 => 'EVM',
+        :timestamp              => Time.zone.now,
+        :event_type             => operation_info.fetch(:log_timeline),
+        :message                => _('%{server} will be %{operation} per user request') %
           {:operation => operation_info.fetch(:hawk), :server => mw_item.name},
-        :middleware_ref  => mw_item.ems_ref,
-        :middleware_type => mw_item.class.name.demodulize,
-        :username        => current_userid
+        :middleware_server_id   => mw_item.id,
+        :middleware_server_name => mw_item.name,
+        :middleware_ref         => mw_item.ems_ref,
+        :middleware_type        => mw_item.class.name.demodulize,
+        :username               => current_userid
       )
     end
   end
