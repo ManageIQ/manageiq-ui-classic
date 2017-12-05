@@ -172,14 +172,6 @@ module ApplicationController::Buttons
     button_new_edit("new")
   end
 
-  def ab_create_update
-    if params[:button] == "add"
-      button_create
-    else
-      button_update
-    end
-  end
-
   def ab_button_edit
     assert_privileges("ab_button_edit")
     button_new_edit("edit")
