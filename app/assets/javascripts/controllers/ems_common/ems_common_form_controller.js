@@ -46,8 +46,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       azure_tenant_id: '',
       keystone_v3_domain_id: '',
       subscription: '',
-      host_default_vnc_port_start: '',
-      host_default_vnc_port_end: '',
       event_stream_selection: '',
       bearer_token_exists: false,
       ems_controller: '',
@@ -149,9 +147,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.azure_tenant_id                 = data.azure_tenant_id;
       $scope.emsCommonModel.keystone_v3_domain_id           = data.keystone_v3_domain_id;
       $scope.emsCommonModel.subscription                    = data.subscription;
-
-      $scope.emsCommonModel.host_default_vnc_port_start     = data.host_default_vnc_port_start;
-      $scope.emsCommonModel.host_default_vnc_port_end       = data.host_default_vnc_port_end;
 
       $scope.emsCommonModel.event_stream_selection          = data.event_stream_selection;
 

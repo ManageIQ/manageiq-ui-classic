@@ -173,12 +173,6 @@ module EmsInfraHelper::TextualSummary
     {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.name}
   end
 
-  def textual_host_default_vnc_port_range
-    return nil if @record.host_default_vnc_port_start.blank?
-    value = "#{@record.host_default_vnc_port_start} - #{@record.host_default_vnc_port_end}"
-    {:label => _("%{title} Default VNC Port Range") % {:title => title_for_host}, :value => value}
-  end
-
   def textual_topology
     {:label => _('Topology'),
      :icon  => "pficon pficon-topology",
