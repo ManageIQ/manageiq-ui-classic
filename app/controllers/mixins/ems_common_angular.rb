@@ -297,11 +297,6 @@ module Mixins
 
       @ems_types = Array(model.supported_types_and_descriptions_hash.invert).sort_by(&:first)
 
-      if @ems.kind_of?(ManageIQ::Providers::Vmware::InfraManager)
-        host_default_vnc_port_start = @ems.host_default_vnc_port_start.to_s
-        host_default_vnc_port_end = @ems.host_default_vnc_port_end.to_s
-      end
-
       if @ems.kind_of?(ManageIQ::Providers::Azure::CloudManager)
         azure_tenant_id = @ems.azure_tenant_id
         subscription    = @ems.subscription
@@ -380,8 +375,6 @@ module Mixins
                         :metrics_userid                => metrics_userid,
                         :keystone_v3_domain_id         => keystone_v3_domain_id,
                         :emstype_vm                    => @ems.kind_of?(ManageIQ::Providers::Vmware::InfraManager),
-                        :host_default_vnc_port_start   => host_default_vnc_port_start || "",
-                        :host_default_vnc_port_end     => host_default_vnc_port_end || "",
                         :event_stream_selection        => retrieve_event_stream_selection,
                         :ems_controller                => controller_name,
                         :default_auth_status           => default_auth_status,
@@ -546,8 +539,6 @@ module Mixins
 
       if ems.kind_of?(ManageIQ::Providers::Vmware::InfraManager)
         default_endpoint = {:role => :default, :hostname => hostname}
-        ems.host_default_vnc_port_start = params[:host_default_vnc_port_start].blank? ? nil : params[:host_default_vnc_port_start].to_i
-        ems.host_default_vnc_port_end = params[:host_default_vnc_port_end].blank? ? nil : params[:host_default_vnc_port_end].to_i
       end
 
       if ems.kind_of?(ManageIQ::Providers::Vmware::CloudManager)
