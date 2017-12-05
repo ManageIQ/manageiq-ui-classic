@@ -49,7 +49,7 @@ class EmsInfraController < ApplicationController
     # be improved to support multiple stacks.
     @stack = @infra.direct_orchestration_stacks.first
     if @stack.nil?
-      log_and_flash_message(_("Orchestration stack could not be found."))
+      add_flash(_('Orchestration stack could not be found.'), :error)
       return
     end
 
@@ -62,7 +62,9 @@ class EmsInfraController < ApplicationController
     infra = get_infra_provider(params[:id])
     if assigned_hosts > infra.hosts.count
       # Validate number of selected hosts is not more than available
-      log_and_flash_message(_("Assigning %{hosts} but only have %{hosts_count} hosts available.") % {:hosts => assigned_hosts, :hosts_count => infra.hosts.count.to_s})
+      add_flash(_("Assigning %{hosts} but only have %{hosts_count} hosts available.") % {
+        :hosts => assigned_hosts, :hosts_count => infra.hosts.count.to_s
+      }, :error)
     else
       scale_parameters_formatted = {}
       return_message = _("Scaling")
@@ -90,7 +92,7 @@ class EmsInfraController < ApplicationController
     # be improved to support multiple stacks.
     @stack = @infra.direct_orchestration_stacks.first
     if @stack.nil?
-      log_and_flash_message(_("Orchestration stack could not be found."))
+      add_flash(_('Orchestration stack could not be found.'), :error)
       return
     end
 
@@ -100,14 +102,14 @@ class EmsInfraController < ApplicationController
 
     host_ids = params[:host_ids]
     if host_ids.nil?
-      log_and_flash_message(_("No compute hosts were selected for scale down."))
+      add_flash(_("No compute hosts were selected for scale down."), :error)
     else
       hosts = get_hosts_to_scaledown_from_ids(host_ids)
 
       # verify selected nodes can be removed
       has_invalid_nodes, error_return_message = verify_hosts_for_scaledown(hosts)
       if has_invalid_nodes
-        log_and_flash_message(error_return_message)
+        add_flash(error_return_message, :error)
         return
       end
 
@@ -130,7 +132,7 @@ class EmsInfraController < ApplicationController
 
     if params[:register]
       if params[:nodes_json].nil? || params[:nodes_json][:file].nil?
-        log_and_flash_message(_("Please select a JSON file containing the nodes you would like to register."))
+        add_flash(_('Please select a JSON file containing the nodes you would like to register.'), :error)
         return
       end
 
@@ -138,26 +140,23 @@ class EmsInfraController < ApplicationController
         uploaded_file = params[:nodes_json][:file]
         nodes_json = parse_json(uploaded_file)
         if nodes_json.nil?
-          log_and_flash_message(_("JSON file format is incorrect, missing 'nodes'."))
+          add_flash(_("JSON file format is incorrect, missing 'nodes'."), :error)
         end
       rescue => ex
-        log_and_flash_message(_("Cannot parse JSON file: %{message}") %
-                                  {:message => ex})
+        add_flash(_("Cannot parse JSON file: %{message}") % {:message => ex}, :error)
       end
 
       if nodes_json
         begin
           @infra.workflow_service
         rescue => ex
-          log_and_flash_message(_("Cannot connect to workflow service: %{message}") %
-                                    {:message => ex})
+          add_flash(_("Cannot connect to workflow service: %{message}") % {:message => ex}, :error)
           return
         end
         begin
           state, response = @infra.register_and_configure_nodes(nodes_json)
         rescue => ex
-          log_and_flash_message(_("Error executing register and configure workflows: %{message}") %
-                                    {:message => ex})
+          add_flash(_("Error executing register and configure workflows: %{message}") % {:message => ex}, :error)
           return
         end
         if state == "SUCCESS"
@@ -165,7 +164,7 @@ class EmsInfraController < ApplicationController
                                      :display   => "hosts",
                                      :flash_msg => _("Nodes were added successfully. Refresh queued."))
         else
-          log_and_flash_message(_("Unable to add nodes: %{error}") % {:error => response})
+          add_flash(_("Unable to add nodes: %{error}") % {:error => response}, :error)
         end
       end
     end
@@ -208,18 +207,13 @@ class EmsInfraController < ApplicationController
     ems_path(ems.id, options)
   end
 
-  def log_and_flash_message(message)
-    add_flash(message, :error)
-    $log.error(message)
-  end
-
   def update_stack_up(stack, stack_parameters, provider_id, return_message)
     if stack_parameters_changed?(stack_parameters)
       begin
         stack.scale_up_queue(session[:userid], stack_parameters)
         redirect_to(ems_infra_path(provider_id, :flash_msg => return_message))
       rescue => ex
-        log_and_flash_message(_("Unable to initiate scale up: %{message}") % {:message => ex})
+        add_flash(_("Unable to initiate scale up: %{message}") % {:message => ex}, :error)
       end
     end
   end
@@ -231,7 +225,7 @@ class EmsInfraController < ApplicationController
         stack.scale_down_queue(session[:userid], stack_parameters, hosts)
         redirect_to(ems_infra_path(provider_id, :flash_msg => return_message))
       rescue => ex
-        log_and_flash_message(_("Unable to initiate scale down: %{message}") % {:message => ex})
+        add_flash(_("Unable to initiate scale down: %{message}") % {:message => ex}, :error)
       end
     end
   end
