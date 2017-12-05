@@ -65,8 +65,6 @@ module ApplicationController::Timelines
       @events = @event_groups = nil
     end
 
-    private
-
     def event_groups
       @event_groups ||= EmsEvent.event_groups
     end
