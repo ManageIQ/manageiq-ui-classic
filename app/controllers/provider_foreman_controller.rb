@@ -93,7 +93,7 @@ class ProviderForemanController < ApplicationController
         self.x_node = params[:id]
         quick_search_show # User will input the value
       end
-    else # Providers accordion, without Advanced Search
+    elsif x_active_tree == :configuration_manager_providers_tree # Providers accordion, without Advanced Search
       listnav_search_selected(0)
     end
   end
