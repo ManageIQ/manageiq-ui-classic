@@ -14,7 +14,16 @@
             console.log("connection state change: connected");
           }
         });
-        wmks.connect("#{j webmks_uri.to_s}");
+
+        var host = window.location.hostname;
+        var encrypt = window.location.protocol === 'https:';
+        var port = encrypt ? 443 : 80;
+        if (window.location.port) {
+          port = window.location.port;
+        }
+        var proto = encrypt ? 'wss' : 'ws';
+
+        wmks.connect(proto + "://" + host + ":" + port + "/#{@console[:url]}");
 
         $('#ctrlaltdel').on('click', function() {
           wmks.sendCAD();
