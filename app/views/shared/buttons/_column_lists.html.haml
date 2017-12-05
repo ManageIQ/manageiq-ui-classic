@@ -34,7 +34,7 @@
           %i.fa.fa-lg.fa-angle-left.fa-rotate-90.hidden-md.hidden-lg
       - else
         - t = _("Move selected fields left")
-        %button.btn.btn-default{:title           => t,
+        %button.btn.btn-default.btn-block{:title           => t,
                                 :remote          => true,
                                 "data-submit"    => 'column_lists',
                                 "data-method"    => :post,
