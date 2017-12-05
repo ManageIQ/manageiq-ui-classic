@@ -1223,6 +1223,33 @@ describe ReportController do
       EvmSpecHelper.local_miq_server
     end
 
+    context "when generating reports" do
+      render_views
+      let(:rpt) { FactoryGirl.create(:miq_report) }
+
+      before do
+        stub_user(:features => :all)
+
+        seed_session_trees('report', :reports_tree, "xx-0_xx-0-1_rep-#{controller.to_cid(rpt.id)}")
+        session[:sandboxes]["report"][:rep_tree_build_time] = rpt.created_on
+        session[:sandboxes]["report"][:active_accord] = :reports
+      end
+
+      it "runs report and calls GTL generation" do
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'MiqReportResult',
+          :report_data_additional_options => {
+            :named_scope => [[:with_current_user_groups_and_report, rpt.id]],
+            :model       => 'MiqReportResult'
+          }
+        )
+
+        post :x_button, :params => { :pressed => 'miq_report_run', :id => rpt.id }
+
+        expect(response.status).to eq(200)
+      end
+    end
+
     context "User1 has Group1(current group: Group1), User2 has Group1, Group2(current group: Group2)" do
       before do
         EvmSpecHelper.local_miq_server
