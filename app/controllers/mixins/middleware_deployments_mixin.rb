@@ -39,10 +39,6 @@ module Mixins::MiddlewareDeploymentsMixin
     end
   end
 
-  def parent_entity_name
-    @is_server ? 'server.' : 'server group.'
-  end
-
   def prepare_properties
     @entity_id = identify_selected_entities
     @klass = self.class
