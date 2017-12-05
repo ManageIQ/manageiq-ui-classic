@@ -123,7 +123,7 @@ module Mixins
           end
         end
 
-        def process_host_provide(hosts, display_name)
+        def process_hosts_provide(hosts, display_name)
           each_host(hosts, display_name) do |host|
             if host.hardware.provision_state == "manageable"
               host.provide_queue(session[:userid])
