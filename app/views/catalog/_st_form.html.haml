@@ -9,9 +9,9 @@
         %label.col-md-2.control-label= _('Catalog Item Type')
         .col-md-8
           - catalog_item_types = ServiceTemplate.catalog_item_types
-          - array = catalog_item_types.collect { |x| [x[1][:description], x[0]]}
+          - array = catalog_item_types.collect { |x| [x[1][:description], x[0]] }
           - array.sort_by! { |a| a.first.downcase }
-          - disabled_options = catalog_item_types.collect { |x| x[0] if !x[1][:display]}
+          - disabled_options = catalog_item_types.collect { |x| x[0] unless x[1][:display] }
           = select_tag('st_prov_type',
                        options_for_select(([["<#{_('Choose')}>",nil]]) + array,
                        :selected => '',
