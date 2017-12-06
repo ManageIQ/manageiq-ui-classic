@@ -4,7 +4,7 @@ describe ComplianceSummaryHelper do
     @record = FactoryGirl.build(:vm_vmware, :miq_server => server)
     @compliance1 = FactoryGirl.build(:compliance)
     @compliance2 = FactoryGirl.build(:compliance)
-    allow_any_instance_of(described_class).to receive(:role_allows?).and_return(true)
+    allow(self).to receive(:role_allows?).and_return(true)
   end
 
   context "when @explorer is set" do
