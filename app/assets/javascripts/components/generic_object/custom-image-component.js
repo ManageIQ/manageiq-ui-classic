@@ -81,11 +81,22 @@ function customImageComponentController($timeout) {
     vm.pictureRemove = true;
   };
 
+  vm.cancelUpdateImage = function() {
+    vm.changeImage = false;
+    vm.changeImageSelected();
+  };
+
+  vm.cancelDeleteImage = function() {
+    vm.pictureRemove = false;
+    vm.changeImageSelected();
+  };
+
   function restoreOriginalStatus() {
     if (vm.angularForm.generic_object_definition_image_file_status) {
       vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", true);
     }
     vm.imageUploadStatus = "";
+    vm.pictureUploaded = false;
     angular.element(":file").filestyle('clear');
   }
 }
