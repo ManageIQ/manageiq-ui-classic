@@ -36,21 +36,20 @@
     %label.control-label.col-md-2
       = _('Available Custom Reports:')
     .col-md-8
-      %div{:style => "overflow: auto; width: 400px; border: 1px solid #999999;"}
-        = select_tag('choices_chosen',
-          options_for_select(@export_reports.sort),
-          :size              => 15,
-          :style             => "width:400px; min-width:375px; background-color:#fff; border: 0px;",
-          :multiple          => true)
+      = select_tag('choices_chosen',
+        options_for_select(@export_reports.sort),
+        :size              => 15,
+        :style             => "width:400px; background-color:#fff; border: 1px solid #999999;",
+        :multiple          => true)
 
-        :javascript
-          miqInitSelectPicker();
-          miqSelectPickerEvent("choices_chosen", "#{url}");
-          $('#choices_chosen').on("change",
-            function() {
-              if ($(this).val()) {
-                $('#export_button').removeClass('disabled');
-              } else {
-                $('#export_button').addClass('disabled');
-              }
-            });
+      :javascript
+        miqInitSelectPicker();
+        miqSelectPickerEvent("choices_chosen", "#{url}");
+        $('#choices_chosen').on("change",
+          function() {
+            if ($(this).val()) {
+              $('#export_button').removeClass('disabled');
+            } else {
+              $('#export_button').addClass('disabled');
+            }
+          });
