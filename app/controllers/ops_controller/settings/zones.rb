@@ -9,7 +9,7 @@ module OpsController::Settings::Zones
       if @zone && @zone.id
         add_flash(_("Edit of Zone \"%{name}\" was cancelled by the user") % {:name => @zone.name})
       else
-        add_flash(_("Add of new Zone was cancelled by the user") % {:name => @zone.name})
+        add_flash(_("Add of new Zone was cancelled by the user"))
       end
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype)
