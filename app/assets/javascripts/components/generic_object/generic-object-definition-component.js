@@ -221,7 +221,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
 
   function buildOptionObject(optionData, optionObject) {
     _.forEach(optionData, function(item) {
-      optionObject.push({id: item[1], name: item[0]});
+      optionObject.push({id: item[1], name: __(item[0])});
     });
   }
 
