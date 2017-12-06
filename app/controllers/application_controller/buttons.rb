@@ -250,7 +250,7 @@ module ApplicationController::Buttons
   APPLIES_TO_CLASS_BASE_MODELS = %w(AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
-                                    GenericObjectDefinition Host LoadBalancer
+                                    GenericObject GenericObjectDefinition Host LoadBalancer
                                     MiqGroup MiqTemp MiqTemplate NetworkRouter OrchestrationStack SecurityGroup Service
                                     ServiceTemplate Storage Switch Tenant User Vm VmOrTemplate).freeze
   def applies_to_class_model(applies_to_class)
