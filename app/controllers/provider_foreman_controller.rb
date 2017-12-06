@@ -372,6 +372,7 @@ class ProviderForemanController < ApplicationController
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
+      presenter.remove_sand
       presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @in_a_form
       partial_locals = {:controller => controller_name}
@@ -385,6 +386,7 @@ class ProviderForemanController < ApplicationController
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
     elsif valid_configuration_profile_record?(@configuration_profile_record)
       presenter.hide(:form_buttons_div)
+      presenter.remove_sand
       presenter.update(:main_div, r[:partial => "configuration_profile",
                                     :locals  => {:controller => controller_name}])
     else
@@ -480,6 +482,7 @@ class ProviderForemanController < ApplicationController
                        when :configuration_manager_cs_filter
                          :cm_configured_systems
                        end
+    options[:gtl_dbname] = options[:dbname]
     options
   end
   private :update_options
