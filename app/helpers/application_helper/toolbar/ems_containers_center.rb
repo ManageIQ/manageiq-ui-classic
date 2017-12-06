@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
       :items => [
         button(
           :ems_container_refresh,
-          'icon fa fa-refresh fa-lg',
+          'fa fa-refresh fa-lg',
           N_('Refresh Items and Relationships for all Containers Providers'),
           N_('Refresh Items and Relationships'),
           :confirm      => N_("Refresh Items and Relationships related to Containers Providers?"),

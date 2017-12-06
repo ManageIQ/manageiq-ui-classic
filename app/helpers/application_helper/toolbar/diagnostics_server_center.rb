@@ -2,20 +2,20 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
   button_group('support_reloading', [
     button(
       :refresh_server_summary,
-      'fa fa-repeat fa-lg',
-      N_('Reload Current Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil,
       :klass => ApplicationHelper::Button::DiagnosticsSummary),
     button(
       :refresh_workers,
-      'fa fa-repeat fa-lg',
-      N_('Reload current workers display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil,
       :klass => ApplicationHelper::Button::RefreshWorkers),
     button(
       :refresh_audit_log,
-      'fa fa-repeat fa-lg',
-      N_('Reload the Audit Log Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil,
       :klass => ApplicationHelper::Button::DiagnosticsAuditLogs),
     button(
@@ -27,8 +27,8 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
       :klass => ApplicationHelper::Button::DiagnosticsAuditLogs),
     button(
       :refresh_log,
-      'fa fa-repeat fa-lg',
-      N_('Reload the EVM Log Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil,
       :klass => ApplicationHelper::Button::DiagnosticsEvmLogs),
     button(
@@ -40,9 +40,9 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
       :klass => ApplicationHelper::Button::DiagnosticsEvmLogs),
     button(
       :refresh_production_log,
-      'fa fa-repeat fa-lg',
+      'fa fa-refresh fa-lg',
       proc do
-        _('Reload the %{log_type} Log Display') % {:log_type => _(@sb[:rails_log])}
+        _('Refresh this page') % {:log_type => _(@sb[:rails_log])}
       end,
       nil,
       :klass => ApplicationHelper::Button::DiagnosticsProductionLogs),

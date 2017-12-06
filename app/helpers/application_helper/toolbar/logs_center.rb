@@ -2,9 +2,9 @@ class ApplicationHelper::Toolbar::LogsCenter < ApplicationHelper::Toolbar::Basic
   button_group('log_reloading', [
     button(
       :refresh_log,
-      'fa fa-repeat fa-lg',
+      'fa fa-refresh fa-lg',
       proc do
-        _('Reload the %{log_type} Log Display') % {:log_type => @msg_title}
+        _('Refresh this page') % {:log_type => @msg_title}
       end,
       nil),
     button(

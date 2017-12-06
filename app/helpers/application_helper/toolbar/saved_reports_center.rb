@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::SavedReportsCenter < ApplicationHelper::Toolba
   button_group('saved_report_reloading', [
     button(
       :reload,
-      'fa fa-repeat fa-lg',
-      N_('Reload selected Reports'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh selected Reports'),
       nil,
       :url   => "reload",
       :klass => ApplicationHelper::Button::Reload)

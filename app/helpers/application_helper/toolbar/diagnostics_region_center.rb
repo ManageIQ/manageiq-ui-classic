@@ -4,8 +4,8 @@ class ApplicationHelper::Toolbar::DiagnosticsRegionCenter < ApplicationHelper::T
   button_group('support_reloading', [
     button(
       :reload_server_tree,
-      'fa fa-repeat fa-lg',
-      N_('Reload Current Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil,
       :klass => ApplicationHelper::Button::ReloadServerTree),
   ])
