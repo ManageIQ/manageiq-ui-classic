@@ -334,7 +334,7 @@ module ApplicationController::Buttons
       }
 
       options[:dialog_locals] = DialogLocalService.new.determine_dialog_locals_for_custom_button(
-        obj, button.name, button.resource_action.id
+        obj, button.name, button.resource_action
       )
 
       dialog_initialize(button.resource_action, options)

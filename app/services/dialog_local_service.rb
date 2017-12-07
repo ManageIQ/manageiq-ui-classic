@@ -29,7 +29,7 @@ class DialogLocalService
     }
   end
 
-  def determine_dialog_locals_for_custom_button(obj, button_name, resource_action_id)
+  def determine_dialog_locals_for_custom_button(obj, button_name, resource_action)
     dialog_locals = {:force_old_dialog_use => true}
 
     return dialog_locals unless NEW_DIALOG_USERS.include?(obj.class.name.demodulize)
@@ -37,9 +37,10 @@ class DialogLocalService
     submit_endpoint, cancel_endpoint = determine_api_endpoints(obj)
 
     dialog_locals.merge!(
-      :resource_action_id     => resource_action_id,
+      :resource_action_id     => resource_action.id,
       :target_id              => obj.id,
       :target_type            => obj.class.name.demodulize.underscore,
+      :dialog_id              => resource_action.dialog_id,
       :force_old_dialog_use   => false,
       :api_submit_endpoint    => submit_endpoint,
       :api_action             => button_name,
