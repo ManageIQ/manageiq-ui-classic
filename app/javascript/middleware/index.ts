@@ -64,6 +64,6 @@ class MwGenericPropertiesController {
   }
 }
 
-ManageIQ.angular.app.component('mwGenericPropertiesComponent2', new MwGenericPropertiesComponent());
+ManageIQ.angular.app.component('mwGenericPropertiesComponent', new MwGenericPropertiesComponent());
 
 

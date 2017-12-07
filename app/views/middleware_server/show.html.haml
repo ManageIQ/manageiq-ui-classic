@@ -10,8 +10,8 @@
 
 - @angular_form = true
 -# NOTE: in reality, the entity and fields would be provided by a ruby yaml config file
-%mw-generic-properties-component2{"entity" => 'WildFly Server [Local DMR]',
-                                  "fields" => "'id', 'feed', 'product', 'bind_address', 'version'"}
+%mw-generic-properties-component{"entity" => 'WildFly Server [Local DMR]',
+                                 "fields" => "'id', 'feed', 'product', 'bind_address', 'version'"}
   Loading...
 = javascript_pack_tag 'manageiq-ui-classic/middleware'
 
@@ -24,4 +24,4 @@
   = render :partial => 'add_datasource'
 
 :javascript
-  miq_bootstrap('mw-generic-properties-component2');
+  miq_bootstrap('mw-generic-properties-component');
