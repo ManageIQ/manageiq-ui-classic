@@ -240,5 +240,19 @@ describe ServiceController do
     end
   end
 
+  context "Generic Object instances in Textual Summary" do
+    it "displays Generic Objects in Ansible Playbook Service Textual Summary" do
+      record = FactoryGirl.create(:service_ansible_playbook)
+      controller.instance_variable_set(:@record, record)
+      expect(controller.send(:textual_group_list)).to include(array_including(:generic_objects))
+    end
+
+    it "displays Generic Objects for all other Services" do
+      record = FactoryGirl.create(:service)
+      controller.instance_variable_set(:@record, record)
+      expect(controller.send(:textual_group_list)).to include(array_including(:generic_objects))
+    end
+  end
+
   it_behaves_like "explorer controller with custom buttons"
 end
