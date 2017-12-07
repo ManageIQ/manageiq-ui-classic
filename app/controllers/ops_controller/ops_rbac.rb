@@ -1190,7 +1190,7 @@ module OpsController::OpsRbac
     end
 
     # Build roles hash
-    @edit[:roles]["<Choose a Role>"] = nil if @record.id.nil?
+    @edit[:roles]["<#{_('Choose a Role')}>"] = nil if @record.id.nil?
 
     Rbac::Filterer.filtered(MiqUserRole).each do |r|
       @edit[:roles][r.name] = r.id
