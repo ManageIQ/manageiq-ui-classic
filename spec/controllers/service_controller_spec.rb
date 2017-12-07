@@ -268,6 +268,12 @@ describe ServiceController do
         post :tree_select, :params => {:id => "ms-#{to_cid(service_search.id)}"}
         expect(response.status).to eq(200)
       end
+
+      it 'calls load_adv_search method to load filter from filters in accordion' do
+        expect(controller).to receive(:load_adv_search).once
+        post :tree_select, :params => {:id => "ms-#{to_cid(service_search.id)}"}
+        expect(response.status).to eq(200)
+      end
     end
   end
 
