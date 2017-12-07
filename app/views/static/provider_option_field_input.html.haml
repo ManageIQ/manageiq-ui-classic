@@ -1,6 +1,7 @@
 .form-group{"ng-class" => "{{ \"{'has_error': angularForm.\"  + $ctrl.elemID + \".$invalid}\" }}"}
   %label.col-md-2.control-label{"for" => "{{ $ctrl.elemID }}"}
     {{ $ctrl.option.label }}
+    .pf-blue-info.pficon.pficon-info{:title => _("{{ $ctrl.option.help_text }}")}
   .col-md-4
     %input.form-control{"type"          => "text",
                         "id"            => "{{ $ctrl.elemID }}",
