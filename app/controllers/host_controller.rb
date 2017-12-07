@@ -207,7 +207,7 @@ class HostController < ApplicationController
       end
       build_targets_hash(hostitems)
       @view = get_db_view(Host)       # Instantiate the MIQ Report view object
-      @view.table = MiqFilter.records2table(hostitems, @view.cols + ['id'])
+      @view.table = ReportFormatter::Converter.records2table(hostitems, @view.cols + ['id'])
     end
   end
 

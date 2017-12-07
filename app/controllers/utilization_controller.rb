@@ -70,7 +70,7 @@ class UtilizationController < ApplicationController
                            :extras    => {},
                            :group     => "y")
     report.db = "MetricRollup"
-    report.table = MiqReportable.hashes2table(summ_hashes, :only => report.cols)
+    report.table = ReportFormatter::Converter.hashes2table(summ_hashes, :only => report.cols)
     filename = report.title
     disable_client_cache
     case params[:typ]
