@@ -47,6 +47,7 @@ RSpec.configure do |config|
 
   config.include Spec::Support::AuthHelper, :type => :view
   config.include Spec::Support::ViewHelper, :type => :view
+  config.include ApplicationHelper, :type => :view
 
   config.include Spec::Support::ControllerHelper, :type => :controller
   config.include Spec::Support::AuthHelper, :type => :controller
