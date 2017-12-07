@@ -745,7 +745,7 @@ class MiqAeClassController < ApplicationController
       end
     end
     @edit[:new][:available_datatypes] = MiqAeField.available_datatypes_for_ui
-    @edit[:new][:embedded_methods] = @ae_method.embedded_methods if @ae_method.location == 'inline'
+    @edit[:new][:embedded_methods] = @ae_method.embedded_methods
     @edit[:current] = copy_hash(@edit[:new])
     @right_cell_text = if @edit[:rec_id].nil?
                          _("Adding a new Automate Method")

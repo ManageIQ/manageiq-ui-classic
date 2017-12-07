@@ -664,6 +664,11 @@ describe MiqAeClassController do
       expect(@cls.ae_fields.last.name).to eq("Bar")
       expect(@cls.ae_fields.last.default_value).to eq("Foo")
     end
+
+    it "#new_method" do
+      controller.send(:new_method)
+      expect(session['edit'][:new][:embedded_methods].count).to eq(0)
+    end
   end
 
   context "#copy_objects_edit_screen" do
