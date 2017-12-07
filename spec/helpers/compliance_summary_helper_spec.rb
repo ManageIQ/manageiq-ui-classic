@@ -1,4 +1,6 @@
 describe ComplianceSummaryHelper do
+  include ApplicationHelper
+
   before do
     server  = FactoryGirl.build(:miq_server, :id => 0)
     @record = FactoryGirl.build(:vm_vmware, :miq_server => server)
