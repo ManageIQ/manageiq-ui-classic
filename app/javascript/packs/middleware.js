@@ -1,6 +1,6 @@
 // Run this Angular example by adding the following HTML markup to your view:
 //
-// <>Loading...</middleware>
+// <mw-generic-properties-component>Loading...</mw-generic-properties-component>
 //
 // <%= javascript_pack_tag 'manageiq-ui-classic/middleware' %>
 
