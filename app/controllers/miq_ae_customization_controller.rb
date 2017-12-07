@@ -141,6 +141,8 @@ class MiqAeCustomizationController < ApplicationController
   def editor
     if params[:id].present?
       @record = Dialog.find(params[:id])
+    elsif params[:copy].present?
+      @record = Dialog.find(params[:copy])
     else
       @record = Dialog.new
     end
