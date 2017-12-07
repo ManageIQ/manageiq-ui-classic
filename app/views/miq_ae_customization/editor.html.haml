@@ -45,7 +45,7 @@
                               :type => "button"}= _("Save")
 
 :javascript
-  ManageIQ.angular.app.value('dialogId', '#{ @record.id || "new" }');
+  ManageIQ.angular.app.value('dialogIdAction', '#{ dialog_id_action.to_json }');
   miq_bootstrap('#dialog-editor');
   // Fixes wrong coordinates of draggable element after scrolling in #main-content.
   // To be selected as scrollParent it cannot have position: static(default setting of #main-content) so it's overridden here
