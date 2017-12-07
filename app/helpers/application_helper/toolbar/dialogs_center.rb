@@ -23,7 +23,7 @@ class ApplicationHelper::Toolbar::DialogsCenter < ApplicationHelper::Toolbar::Ba
           :onwhen       => "1",
           :klass        => ApplicationHelper::Button::DialogAction),
         button(
-          :dialog_copy,
+          :dialog_copy_editor,
           'fa fa-files-o fa-lg',
           t = N_('Copy the selected Dialog to a new Dialog'),
           t,
