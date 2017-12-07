@@ -56,7 +56,7 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           nil,
           N_('Gracefully shut this server down'),
           N_('Gracefully shutdown Server'),
-          :icon  => "fa fa-stop fa-lg",
+          :icon  => "pficon pficon-off fa-lg",
           :data  => {'toggle'        => 'modal',
                      'target'        => '#modal_param_div',
                      'function'      => 'sendDataWithRx',
@@ -76,7 +76,7 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           nil,
           N_('Stop this Middleware Server'),
           N_('Stop Server'),
-          :icon    => "pficon pficon-off fa-lg",
+          :icon    => "fa fa-stop fa-lg",
           :confirm => N_('Do you want to stop this server?'),
           :klass   => ApplicationHelper::Button::MiddlewareStandaloneServerAction),
         button(
@@ -127,7 +127,7 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           nil,
           N_('Restart this server'),
           N_('Restart Server'),
-          :icon    => 'fa fa-reply fa-lg',
+          :icon    => 'pficon pficon-restart fa-lg',
           :confirm => N_('Do you want to trigger a restart of this server?'),
           :klass   => ApplicationHelper::Button::MiddlewareDomainServerAction),
         button(

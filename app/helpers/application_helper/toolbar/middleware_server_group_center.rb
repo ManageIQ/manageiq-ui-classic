@@ -37,7 +37,7 @@ class ApplicationHelper::Toolbar::MiddlewareServerGroupCenter < ApplicationHelpe
                        nil,
                        N_('Stop Servers in this Server Group'),
                        N_('Stop Server Group'),
-                       :icon  => "pficon pficon-off fa-lg",
+                       :icon  => "fa fa-stop fa-lg",
                        :data  => {'toggle'        => 'modal',
                                   'target'        => '#modal_param_div',
                                   'function'      => 'sendDataWithRx',
