@@ -68,4 +68,30 @@ describe AuthKeyPairCloudController do
                                                                        "fingerprint"
     end
   end
+
+  describe '#report_data' do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    let(:kp) { FactoryGirl.create(:auth_key_pair_cloud, :name => "auth-key-pair-cloud-01") }
+
+    context 'when tile mode is selected' do
+      it 'returns key pairs with quadicons' do
+        kp
+        session[:settings] = {:views => {:authkeypaircloud => 'tile'}}
+        report_data_request(
+          :model      => 'ManageIQ::Providers::CloudManager::AuthKeyPair',
+          :parent_id  => nil,
+          :explorer   => false,
+          :gtl_dbname => :authkeypaircloud,
+        )
+        results = assert_report_data_response
+        expect(results['data']['rows'].length).to eq(1)
+        expect(results['data']['rows'][0]['long_id']).to eq(kp.id.to_s)
+        expect(results['data']['rows'][0]['quadicon']).to match(/quadicon/)
+      end
+    end
+  end
 end
