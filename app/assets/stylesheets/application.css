@@ -10,7 +10,7 @@
  *= require dialog_fields
  *= require angular
  *= require notifications
- *= require angular-patternfly-sass/dist/styles/angular-patternfly
+ *= require angular-patternfly/dist/styles/angular-patternfly.css
  *= require schedule_editor
  *= require miq_tree
  *= require codemirror
