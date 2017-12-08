@@ -80,6 +80,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
     }
 
     translateResponderNamesToIds(dialog.content[0]);
+
+    if (requestDialogAction() === 'copy') {
+      dialog.label = dialog.content[0].label = "Copy of " + dialog.label;
+    }
+
     DialogEditor.setData(dialog);
     vm.dialog = dialog;
     vm.DialogValidation = DialogValidation;
