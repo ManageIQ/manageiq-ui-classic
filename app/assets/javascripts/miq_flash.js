@@ -48,6 +48,10 @@ function add_flash(msg, level, options) {
   $('#flash_msg_div').append(textDiv).show();
 }
 
+function clearFlash() {
+  $('#flash_msg_div').empty();
+}
+
 function _miqFlashLoad() {
   return JSON.parse(sessionStorage.getItem('flash_msgs') || '[]');
 }
