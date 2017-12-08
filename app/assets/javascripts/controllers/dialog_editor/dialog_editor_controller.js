@@ -21,11 +21,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
   });
 
   function requestDialogId() {
-    return JSON.parse(dialogIdAction)['id']
+    return JSON.parse(dialogIdAction).id;
   }
 
   function requestDialogAction() {
-    return JSON.parse(dialogIdAction)['action']
+    return JSON.parse(dialogIdAction).action;
   }
 
   if (requestDialogAction() === 'new') {
