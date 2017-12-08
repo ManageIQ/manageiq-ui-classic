@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::LogsCenter < ApplicationHelper::Toolbar::Basic
       :refresh_log,
       'fa fa-refresh fa-lg',
       proc do
-        _('Refresh this page') % {:log_type => @msg_title}
+        _('Refresh this page')
       end,
       nil),
     button(

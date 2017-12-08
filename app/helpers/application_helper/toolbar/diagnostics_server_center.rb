@@ -42,7 +42,7 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
       :refresh_production_log,
       'fa fa-refresh fa-lg',
       proc do
-        _('Refresh this page') % {:log_type => _(@sb[:rails_log])}
+        _('Refresh this page')
       end,
       nil,
       :klass => ApplicationHelper::Button::DiagnosticsProductionLogs),
