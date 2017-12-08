@@ -143,7 +143,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
 
   var beingCloned = null; // hack that solves recursion problem for cloneDeep
   function customizer(value) {
-    var keysToDelete = ['active', '$$hashKey', 'href', 'dynamicFieldList'];
+    var keysToDelete = ['active', '$$hashKey', 'href', 'dynamicFieldList', 'id'];
     var useCustomizer =
       (value !== beingCloned) &&
       _.isObject(value) &&
