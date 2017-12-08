@@ -3049,6 +3049,7 @@ Rails.application.routes.draw do
         scan_histories
         sections_field_changed
         security_groups
+        sort_template_grid
         floating_ips
         network_routers
         network_ports
