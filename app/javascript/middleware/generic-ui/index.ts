@@ -2,7 +2,7 @@ import * as ng from 'angular';
 import * as _ from "lodash";
 
 export default class MwGenericPropertiesComponent implements ng.IComponentOptions {
-  public template: '<form><formly-form model="$ctrl.mwModel" fields="$ctrl.mwFields"></formly-form></form>';
+  public template = `<formly-form model="$ctrl.mwModel" fields="$ctrl.mwFields"></formly-form>`;
   public controller: any = MwGenericPropertiesController;
   public bindings: any = {
     entity: '@',
@@ -44,7 +44,7 @@ class MwGenericPropertiesController {
   }
 
   private selectItem(hawkularJson, itemName) {
-    return _.find(hawkularJson, function (item) {
+    return _.find(hawkularJson, (item) => {
       return item.name === itemName;
     });
   }
@@ -58,7 +58,7 @@ class MwGenericPropertiesController {
   private createFormlyTemplateFields(item, displayFields) {
     let fields = [];
     const pickedItem = _.pick(item, displayFields);
-    _.each(pickedItem, function (value, prop) {
+    _.each(pickedItem, (value, prop) => {
       fields.push({key: prop, type: 'mw-input', templateOptions: {label: _.capitalize(prop)}});
     });
     return fields;
