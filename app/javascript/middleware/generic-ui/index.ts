@@ -1,5 +1,7 @@
 import * as ng from 'angular';
 import * as _ from "lodash";
+import {GenericPropertiesService, MwGenericView} from "./genericProperties.service";
+import {_finally} from "rxjs/operator/finally";
 
 export default class MwGenericPropertiesComponent implements ng.IComponentOptions {
   public template = `<formly-form model="$ctrl.mwModel" fields="$ctrl.mwFields"></formly-form>`;
@@ -10,13 +12,18 @@ export default class MwGenericPropertiesComponent implements ng.IComponentOption
   };
 }
 
-class MwGenericPropertiesController {
+interface MwTextualSummaryDisplayModel {
+  mwModel: any;
+  mwFields: any;
+}
+
+class MwGenericPropertiesController implements MwTextualSummaryDisplayModel {
   public mwModel: any = [];
-  public mwFields: any = [];
+  public mwFields: any = {};
 
-  public static $inject = ['$http', 'miqService'];
+  public static $inject = ['genericPropertiesService', 'miqService'];
 
-  constructor(private $http: ng.IHttpService,
+  constructor(private genericPropertiesService: GenericPropertiesService,
               private miqService: any) {
     /// initializers - non yet
   }
@@ -25,43 +32,16 @@ class MwGenericPropertiesController {
     this.loadJson(this.entity, this.fields);
   }
 
-  public loadJson(entity, fields) {
-    console.info('Fetching data from /middleware_server/dynamic_ui for: ' + entity);
-    console.info('Entity Fields to display: ' + fields);
-    let fieldsNoSpaces = fields.replace(/ /g, '');
-    let fieldsNoQuotes = fieldsNoSpaces.replace(/'/g, '');
-    const displayFields = fieldsNoQuotes.split(',');
+  private loadJson(entity, fields) {
     this.miqService.sparkleOn();
-    this.$http.get('/middleware_server/dynamic_ui/')
+    this.genericPropertiesService.fetchFields(entity, fields)
       .then((response) => {
-        const jsonData = response.data;
-        const selectedItem = this.selectItem(jsonData, entity);
-        this.mwModel = this.transformHawkularModelToFormly(selectedItem);
-        this.mwFields = this.createFormlyTemplateFields(selectedItem, displayFields);
+        const mwGenericView: MwGenericView = response;
+        this.mwModel = mwGenericView.mwModel;
+        this.mwFields = mwGenericView.mwFields;
         this.miqService.sparkleOff();
       })
       .catch(this.miqService.handleFailure);
-  }
-
-  private selectItem(hawkularJson, itemName) {
-    return _.find(hawkularJson, (item) => {
-      return item.name === itemName;
-    });
-  }
-
-  private transformHawkularModelToFormly(item) {
-    let tranformedItem = item;
-    // placeholder for model mutations
-    return tranformedItem;
-  }
-
-  private createFormlyTemplateFields(item, displayFields) {
-    let fields = [];
-    const pickedItem = _.pick(item, displayFields);
-    _.each(pickedItem, (value, prop) => {
-      fields.push({key: prop, type: 'mw-input', templateOptions: {label: _.capitalize(prop)}});
-    });
-    return fields;
   }
 }
 
