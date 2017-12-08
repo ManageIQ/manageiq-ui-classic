@@ -85,23 +85,30 @@ module Spec
       #   :parent_id
       #   :active_tree
       #   :parent_method
+      #   :gtl_dbname
+      #   :explorer (defaults to true)
       #
       # FIXME: This hash needs cleanups as we clenup the /report_data,
       #        angular/_gtl and the calling sites.
       #
       def report_data_request_data(options)
+        explorer = options.key?(:explorer) ? options[:explorer] : true
         {
           'model_name'  => options[:model],
           'model'       => options[:model],
           'active_tree' => options[:active_tree],
           'parent_id'   => options[:parent_id],
           'model_id'    => options[:parent_id],
-          'explorer'    => true,
+          'explorer'    => explorer,
           'additional_options' => {
-            'named_scope' => nil, 'gtl_dbname' => nil, 'model' => options[:model], 'match_via_descendants' => nil,
-            'parent_id' => options[:parent_id], 'parent_class_name' => options[:parent_model],
-            'parent_method' => options[:parent_method], 'association' => nil,
-            'view_suffix' => nil, 'listicon' => nil, 'embedded' => nil, 'showlinks' => nil, 'policy_sim' => nil
+            'named_scope'           => nil,
+            'gtl_dbname'            => options[:gtl_dbname],
+            'model'                 => options[:model],
+            'match_via_descendants' => nil,
+            'parent_id'             => options[:parent_id],
+            'parent_class_name'     => options[:parent_model],
+            'parent_method'         => options[:parent_method],
+            'association' => nil, 'view_suffix' => nil, 'listicon' => nil, 'embedded' => nil, 'showlinks' => nil, 'policy_sim' => nil
           }.compact
         }.compact
       end
