@@ -4,7 +4,7 @@ import {GenericPropertiesService, MwGenericView} from "./genericProperties.servi
 import {_finally} from "rxjs/operator/finally";
 
 export default class MwGenericPropertiesComponent implements ng.IComponentOptions {
-  public template = `<formly-form model="$ctrl.mwModel" fields="$ctrl.mwFields"></formly-form>`;
+  public template = ` <formly-form model="$ctrl.mwModel" fields="$ctrl.mwFields"></formly-form>`;
   public controller: any = MwGenericPropertiesController;
   public bindings: any = {
     entity: '@',
