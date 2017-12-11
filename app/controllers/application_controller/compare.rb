@@ -1223,7 +1223,7 @@ module ApplicationController::Compare
 
   def drift_add_image_col(idx, img_src, img_bkg, val)
     html = ViewHelper.content_tag(:div, :class => img_bkg) do
-      ViewHelper.tag(:i, :class => img_src, :title => val)
+      ViewHelper.content_tag(:i, nil, :class => img_src, :title => val)
     end
     {"col#{idx + 1}".to_sym => html}
   end
