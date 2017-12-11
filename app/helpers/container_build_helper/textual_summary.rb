@@ -53,7 +53,7 @@ module ContainerBuildHelper::TextualSummary
   # Items
   #
   def textual_creation_timestamp
-    format_timezone(@record.ems_created_on)
+    {:label => _('Creation Timestamp'), :value => format_timezone(@record.ems_created_on)}
   end
 
   def textual_resource_version
