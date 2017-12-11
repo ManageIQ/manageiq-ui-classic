@@ -43,8 +43,7 @@ class ServiceController < ApplicationController
 
     @gtl_url = "/show"
 
-    @display = params[:display]
-    @display ||= default_display unless pagination_or_gtl_request?
+    set_display
 
     if self.class.display_methods.include?(@display)
       nested_list_show
@@ -59,6 +58,11 @@ class ServiceController < ApplicationController
       return
     end
     redirect_to(:action => 'show', :controller => @record.class.base_model.to_s.underscore, :id => @record.id)
+  end
+
+  def set_display
+    @display = params[:display]
+    @display ||= default_display unless pagination_or_gtl_request?
   end
 
   def nested_list_show
