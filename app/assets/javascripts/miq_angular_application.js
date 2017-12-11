@@ -6,6 +6,8 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'patternfly.charts',
   'frapontillo.bootstrap-switch',
   'angular.validators',
+  'formly',
+  'formlyBootstrap',
   'miq.api',
   'miq.card',
   'miq.compat',
@@ -18,6 +20,13 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miqStaticAssets.treeView',
 ]);
 miqHttpInject(ManageIQ.angular.app);
+// @Todo: Move to a external package like FormlyBootstrap does
+ManageIQ.angular.app.run(function(formlyConfig) {
+  formlyConfig.setType({
+    name: 'mw-input',
+    template: '<label>{{to.label}}</label><input ng-model="model[options.key]" readonly style="margin-left:15px;"/>'
+  });
+});
 
 ManageIQ.angular.rxSubject = new Rx.Subject();
 
@@ -53,7 +62,7 @@ function miqHttpInject(angular_app) {
 function miq_bootstrap(selector, app) {
   app = app || 'ManageIQ';
 
-  return angular.bootstrap($(selector), [app], { strictDi: true });
+  return angular.bootstrap($(selector), [app], { strictDi: false });
 }
 
 function miqCallAngular(data) {

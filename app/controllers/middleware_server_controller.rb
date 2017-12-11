@@ -126,6 +126,10 @@ class MiddlewareServerController < ApplicationController
     ALL_OPERATIONS
   end
 
+  def dynamic_ui
+    render :json => ManageIQ::Providers::Hawkular::Connection.new.fetch_all_resources
+  end
+
   def add_jdbc_driver
     selected_server = identify_selected_entities
 
