@@ -5,6 +5,7 @@ describe DialogLocalService do
     let(:resource_action) { instance_double("ResourceAction", :id => 456, :dialog_id => 654) }
     let(:target) { instance_double("ServiceTemplate", :class => ServiceTemplate, :id => 321, :service_template_catalog_id => 123) }
     let(:finish_submit_endpoint) { "finishsubmitendpoint" }
+    let(:target_ansible) { instance_double("ServiceTemplateAnsiblePlaybook", :class => ServiceTemplateAnsiblePlaybook, :id => 987, :service_template_catalog_id => 798) }
 
     it "returns a hash" do
       expect(service.determine_dialog_locals_for_svc_catalog_provision(
@@ -20,6 +21,19 @@ describe DialogLocalService do
         :finish_submit_endpoint => "finishsubmitendpoint",
         :cancel_endpoint        => "/catalog/explorer"
       )
+    end
+
+    it "uses the base class for service_template derived classes" do
+      allow(target_ansible).to receive(:kind_of?).with(ServiceTemplate).and_return(true)
+      expect(service.determine_dialog_locals_for_svc_catalog_provision(resource_action, target_ansible, finish_submit_endpoint)).to eq(:resource_action_id     => 456,
+                                                                                                                                       :target_id              => 987,
+                                                                                                                                       :target_type            => 'service_template',
+                                                                                                                                       :dialog_id              => 654,
+                                                                                                                                       :force_old_dialog_use   => false,
+                                                                                                                                       :api_submit_endpoint    => "/api/service_catalogs/798/service_templates/987",
+                                                                                                                                       :api_action             => "order",
+                                                                                                                                       :finish_submit_endpoint => "finishsubmitendpoint",
+                                                                                                                                       :cancel_endpoint        => "/catalog/explorer")
     end
   end
 

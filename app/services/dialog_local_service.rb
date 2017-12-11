@@ -19,7 +19,7 @@ class DialogLocalService
     {
       :resource_action_id     => resource_action.id,
       :target_id              => target.id,
-      :target_type            => target.class.name.underscore,
+      :target_type            => target.kind_of?(ServiceTemplate) ? "service_template" : target.class.name.underscore,
       :dialog_id              => resource_action.dialog_id,
       :force_old_dialog_use   => false,
       :api_submit_endpoint    => api_submit_endpoint,
