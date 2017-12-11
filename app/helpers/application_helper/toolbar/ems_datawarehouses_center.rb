@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
       :items => [
         button(
           :ems_datawarehouse_refresh,
-          'icon fa fa-refresh fa-lg',
+          'fa fa-refresh fa-lg',
           N_('Refresh Items and Relationships for these Datawarehouse Providers'),
           N_('Refresh Items and Relationships'),
           :confirm      => N_("Refresh Items and Relationships related to these Datawarehouse Providers?"),

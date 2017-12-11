@@ -2,9 +2,9 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
   button_group('ansible_repositories_reloading', [
     button(
       :ansible_repository_reload,
-      'fa fa-repeat fa-lg',
-      N_('Reload the current display'),
-      N_('Reload'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
+      N_('Refresh'),
       :url_parms    => "main_div",
       :send_checked => true,
       :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck),

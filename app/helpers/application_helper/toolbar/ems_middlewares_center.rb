@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::EmsMiddlewaresCenter < ApplicationHelper::Tool
       :items => [
         button(
           :ems_middleware_refresh,
-          'icon fa fa-refresh fa-lg',
+          'fa fa-refresh fa-lg',
           N_('Refresh Items and Relationships for these Middleware Providers'),
           N_('Refresh Items and Relationships'),
           :confirm      => N_("Refresh Items and Relationships related to these Middleware Providers?"),
