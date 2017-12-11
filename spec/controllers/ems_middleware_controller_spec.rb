@@ -101,5 +101,24 @@ describe EmsMiddlewareController do
     end
   end
 
+  describe '#report_data' do
+    context 'list of middleware servers related to a provider' do
+      let!(:provider) { FactoryGirl.create(:ems_hawkular) }
+      let!(:server) { FactoryGirl.create(:hawkular_middleware_server, :ext_management_system => provider) }
+
+      subject { assert_report_data_response }
+
+      it 'returns a single middleware server that has an image but not an icon' do
+        report_data_request(:model => 'MiddlewareServer', :parent_model => provider.type, :parent_id => provider.id)
+
+        expect(subject["data"]["rows"].length).to eq(1)
+        expect(subject["data"]["rows"][0]["cells"][2]["text"]).to eq(server.name)
+
+        expect(subject["data"]["rows"][0]["cells"][1]["icon"]).to be_nil
+        expect(subject["data"]["rows"][0]["cells"][1]["image"]).not_to be_nil
+      end
+    end
+  end
+
   include_examples '#download_summary_pdf', :ems_hawkular
 end
