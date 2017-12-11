@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
   button_group('ems_cloud_vmdb', [
     button(
       :refresh_server_summary,
-      'fa fa-repeat fa-lg',
-      N_('Reload Current Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil),
     select(
       :ems_cloud_vmdb_choice,

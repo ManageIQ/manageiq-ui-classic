@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
   button_group('ems_storage_vmdb', [
                  button(
                    :refresh_server_summary,
-                   'fa fa-repeat fa-lg',
-                   N_('Reload Current Display'),
+                   'fa fa-refresh fa-lg',
+                   N_('Refresh this page'),
                    nil),
                  select(
                    :ems_storage_vmdb_choice,

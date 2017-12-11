@@ -2,9 +2,9 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
   button_group('miq_task_reloading', [
     button(
       :miq_task_reload,
-      'fa fa-repeat fa-lg',
-      N_('Reload the current display'),
-      N_('Reload'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
+      N_('Refresh'),
       :url_parms    => "main_div",
       :send_checked => true),
   ])

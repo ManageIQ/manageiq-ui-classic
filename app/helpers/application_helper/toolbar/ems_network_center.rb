@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::EmsNetworkCenter < ApplicationHelper::Toolbar:
   button_group('ems_network_vmdb', [
     button(
       :refresh_server_summary,
-      'fa fa-repeat fa-lg',
-      N_('Reload Current Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil),
     select(
       :ems_network_vmdb_choice,
