@@ -352,9 +352,8 @@ module ApplicationHelper
         return ems_networks_path
       end
       if request[:controller] == 'service' && view.db == 'GenericObject'
-        controller = "service"
-        action = 'generic_object'
-        return url_for_only_path(:action => action, :id => params[:id]) + "?show="
+        action = 'show'
+        return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
       end
       # If we do not want to use redirect or any kind of click action
       if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex).include?(view.db) &&

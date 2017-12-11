@@ -98,7 +98,7 @@ describe ServiceController do
       expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"}])
     end
 
-    it 'displays one generic object from the nested list' do
+    it 'redirects to service detail page when Services maintab is clicked right after viewing the GO object' do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
       controller.instance_variable_set(:@breadcrumbs, [])
@@ -112,10 +112,16 @@ describe ServiceController do
         :services                  => [service]
       )
       go.add_to_service(service)
-      get :generic_object, :params => { :id => service.id, :show => go.id}
+      get :show, :params => { :id => service.id, :display => 'generic_objects', :generic_object_id => go.id}
       expect(response.status).to eq(200)
-      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}"},
-                                           {:name => "GOTest", :url => "/service/show/#{service.id}?display=generic_objects/show=#{go.id}"}])
+      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"},
+                                           {:name => "GOTest", :url => "/service/show/#{service.id}?display=generic_objects&generic_object_id=#{go.id}"}])
+      is_expected.to render_template("layouts/_item")
+      is_expected.to render_template("service/show")
+
+      get :show, :params => { :id => service.id}
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'explorer', :id => "s-#{service.id}")
     end
 
     context "#button" do
