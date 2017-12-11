@@ -1124,7 +1124,9 @@ class ApplicationController < ActionController::Base
         item = listicon_item(view, row['id'])
         icon, icon2, image, picture = listicon_glyphicon(item)
         image = "100/#{(@listicon || view.db).underscore}.png" if icon.nil? && image.nil? # TODO: we want to get rid of this
-        icon = nil if %w(pxe middleware_server).include?(params[:controller]) # TODO: adding exceptions here is a wrong approach
+        # FIXME: adding exceptions here is a wrong approach
+        icon = nil if params[:controller] == 'pxe'
+        icon = nil if params[:model] == 'MiddlewareServer'
         new_row[:cells] << {:title => _('View this item'),
                             :image   => ActionController::Base.helpers.image_path(image.to_s),
                             :picture => ActionController::Base.helpers.image_path(picture.to_s),
