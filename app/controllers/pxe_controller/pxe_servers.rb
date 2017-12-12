@@ -356,14 +356,6 @@ module PxeController::PxeServers
     wimg.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
   end
 
-  def identify_pxe_server
-    @ps = nil
-    begin
-      @record = @ps = find_record_with_rbac(PxeServer, from_cid(params[:id]))
-    rescue ActiveRecord::RecordNotFound
-    rescue => @bang
-    end
-  end
 
   # Delete all selected or single displayed PXE Server(s)
   def deletepxes
