@@ -224,11 +224,6 @@ class OpsController < ApplicationController
     end
   end
 
-  def change_subtab
-    @sb[:active_tab] = params[:tab_id]
-    change_tab
-  end
-
   def rbac_group_load_tab
     tab_id = params[:tab_id]
     _, group_id = TreeBuilder.extract_node_model_and_id(x_node)
