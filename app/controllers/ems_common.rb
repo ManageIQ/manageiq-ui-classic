@@ -758,9 +758,4 @@ module EmsCommon
     self.class.permission_prefix
   end
 
-  def show_list_link(ems, options = {})
-    url_for_only_path(options.merge(:controller => controller_name,
-                                    :action     => "show_list",
-                                    :id         => ems.id))
-  end
 end
