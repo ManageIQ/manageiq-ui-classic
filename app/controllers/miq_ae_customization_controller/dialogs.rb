@@ -606,20 +606,7 @@ module MiqAeCustomizationController::Dialogs
   end
 
   private     ############
-
-  # A new classificiation field value was selected
-  def field_value_new_cat
-    field_value_get_form_vars
-    if params[:classification_name]
-      @cat = Classification.find_by_name(params["classification_name"])
-      field_value_build_screen                                          # Build the Classification Edit screen
-      render :update do |page|
-        page << javascript_prologue
-        page.replace(:tab_div, :partial => "settings_co_tags_tab")
-      end
-    end
-  end
-
+  
   def field_value_get_form_vars
     @edit = session[:edit]
   end
