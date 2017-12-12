@@ -98,34 +98,6 @@ class EmsClusterController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def hosts_subsets
-    condition         = nil
-    label             = _("%{name} (All %{titles})" % {:name => @record.name, :titles => title_for_hosts})
-    breadcrumb_suffix = ""
-
-    host_service_group_name = params[:host_service_group_name]
-    if host_service_group_name
-      case params[:status]
-      when 'running'
-        hosts_filter =  @record.host_ids_with_running_service_group(host_service_group_name)
-        label        = _("Hosts with running %{name}") % {:name => host_service_group_name}
-      when 'failed'
-        hosts_filter =  @record.host_ids_with_failed_service_group(host_service_group_name)
-        label        = _("Hosts with failed %{name}") % {:name => host_service_group_name}
-      when 'all'
-        hosts_filter = @record.host_ids_with_service_group(host_service_group_name)
-        label        = _("All %{titles} with %{name}") % {:titles => title_for_hosts, :name => host_service_group_name}
-      end
-
-      if hosts_filter
-        condition = ["hosts.id IN (#{hosts_filter.to_sql})"]
-        breadcrumb_suffix = "&host_service_group_name=#{host_service_group_name}&status=#{params[:status]}"
-      end
-    end
-
-    return label, condition, breadcrumb_suffix
-  end
-
   def breadcrumb_name(_model)
     title_for_clusters
   end
