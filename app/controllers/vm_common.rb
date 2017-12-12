@@ -655,29 +655,6 @@ module VmCommon
     end
   end
 
-  def profile_toggle
-    if params[:pressed] == "tag_cat_toggle"
-      profile_build
-      policy_escaped = j(params[:policy])
-      cat            = params[:cat]
-      render :update do |page|
-        page << javascript_prologue
-        if @catinfo[cat]
-          @catinfo[cat] = false
-          page << javascript_show("cat_#{policy_escaped}_div")
-          page << "$('#cat_#{policy_escaped}_icon').prop('src', '#{ActionController::Base.helpers.image_path('tree/compress.png')}');"
-        else
-          @catinfo[cat] = true # Set squashed = true
-          page << javascript_hide("cat_#{policy_escaped}_div")
-          page << "$('#cat_#{policy_escaped}_icon').prop('src', '#{ActionController::Base.helpers.image_path('tree/expand.png')}');"
-        end
-      end
-    else
-      add_flash(_("Button not yet implemented"), :error)
-      javascript_flash(:spinner_off => true)
-    end
-  end
-
   def add_to_service
     @record = find_record_with_rbac(Vm, params[:id])
     @svcs = {}
