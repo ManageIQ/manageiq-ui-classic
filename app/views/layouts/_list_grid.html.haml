@@ -78,7 +78,9 @@
               %span{:class => "#{cell[:span]}"}
                 = cell[:text]
             - else
-              - if cell[:icon]
+              - if cell[:image] && cell[:image].starts_with?('/pictures/')
+                = image_tag(image_path(cell[:image]), :alt => cell[:title], :title => cell[:title])
+              - elsif cell[:icon]
                 %i{:class => cell[:icon], :title => cell[:title]}
               - elsif cell[:image]
                 = image_tag(image_path(cell[:image]), :alt => cell[:title], :title => cell[:title])
