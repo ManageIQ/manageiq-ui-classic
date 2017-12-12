@@ -2,12 +2,12 @@ class PhysicalInfraTopologyService < TopologyService
   @provider_class = ManageIQ::Providers::PhysicalInfraManager
 
   @included_relations = [
-    :tags,
+    :writable_classification_tags,
     :physical_servers => [
-      :tags,
+      :writable_classification_tags,
       :host => [
-        :tags,
-        :vms => :tags
+        :writable_classification_tags,
+        :vms => :writable_classification_tags
       ]
     ],
   ]

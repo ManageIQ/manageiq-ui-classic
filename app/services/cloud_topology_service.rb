@@ -2,9 +2,9 @@ class CloudTopologyService < TopologyService
   @provider_class = ManageIQ::Providers::CloudManager
 
   @included_relations = [
-    :tags,
-    :availability_zones => [:tags, :vms => :tags],
-    :cloud_tenants      => [:tags, :vms => :tags],
+    :writable_classification_tags,
+    :availability_zones => [:writable_classification_tags, :vms => :writable_classification_tags],
+    :cloud_tenants      => [:writable_classification_tags, :vms => :writable_classification_tags],
   ]
 
   @kinds = %i(CloudManager AvailabilityZone CloudTenant Vm Tag)
