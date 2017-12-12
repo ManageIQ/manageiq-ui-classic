@@ -435,10 +435,6 @@ class AutomationManagerController < ApplicationController
     (%w(x_show x_search_by_name).include?(action_name) && managed_group_record?)
   end
 
-  def empty_managed_group_record?(inventory_group_record)
-    inventory_group_record.try(:id).nil?
-  end
-
   def valid_managed_group_record?(inventory_group_record)
     inventory_group_record.try(:id)
   end
