@@ -437,10 +437,6 @@ module EmsCommon
 
   private ############################
 
-  def generate_breadcrumb(name, url, replace = false)
-    drop_breadcrumb({:name => name, :url => url}, replace)
-  end
-
   # Set form variables for edit
   def set_form_vars
     form_instance_vars
