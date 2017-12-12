@@ -231,7 +231,7 @@ module ApplicationController::Tags
     end
 
     @view = get_db_view(@tagging)               # Instantiate the MIQ Report view object
-    @view.table = MiqFilter.records2table(@tagitems, @view.cols + ['id'])
+    @view.table = ReportFormatter::Converter.records2table(@tagitems, @view.cols + ['id'])
 
     # Start with the first items assignments
     @edit[:new][:assignments] =

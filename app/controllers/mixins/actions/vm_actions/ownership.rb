@@ -99,7 +99,7 @@ module Mixins
           Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
           @edit[:object_ids] = ownership_ids
           @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
-          @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
+          @view.table = ReportFormatter::Converter.records2table(@ownershipitems, @view.cols + ['id'])
           session[:edit] = @edit
         end
 
