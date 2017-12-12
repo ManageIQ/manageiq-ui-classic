@@ -252,16 +252,6 @@ class InfraNetworkingController < ApplicationController
     options
   end
 
-  def dvswitches_list(id, model)
-    return dvswitch_node(id, model) if id
-    if x_active_tree == :infra_networking_tree
-      options = {:model => "Switch", :named_scope => :shareable}
-      @right_cell_text = _("All %{title}") % {:title => model_to_name(model)}
-      process_show_list(options) if @show_list
-    end
-    options
-  end
-
   def dvswitch_node(id, model)
     @record = @switch_record = find_record(model, id) if model
     display_node(id, model)
