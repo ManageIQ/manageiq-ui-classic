@@ -13,15 +13,7 @@ module PxeController::IsoDatastores
       @record = ServerRole.find(from_cid(id))
     end
   end
-
-  def iso_datastore_new
-    assert_privileges("iso_datastore_new")
-    @isd = IsoDatastore.new
-    iso_datastore_set_form_vars
-    @in_a_form = true
-    replace_right_cell(:nodetype => "isd")
-  end
-
+  
   def iso_datastore_edit
     unless params[:id]
       obj           = find_checked_items
