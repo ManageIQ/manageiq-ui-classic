@@ -3,6 +3,7 @@ describe MiddlewareDatasourceController do
   before(:each) do
     stub_user(:features => :all)
   end
+  let(:mw_server) { FactoryGirl.create(:middleware_server) }
 
   it 'renders index' do
     get :index
@@ -20,7 +21,8 @@ describe MiddlewareDatasourceController do
                                          'Connection URL' => 'bar',
                                          'JNDI Name'      => 'foo-bar',
                                          'Enabled'        => 'yes'
-                                       })
+                                       },
+                                       :middleware_server => mw_server)
     end
 
     subject { get :show, :id => @datasource.id }
