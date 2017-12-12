@@ -6,13 +6,19 @@ ManageIQ.angular.app.service('topologyService', function() {
       __('Status: ') + d.item.status,
     ];
 
+    if (d.item.kind === 'Tag') {
+      status = [
+        d.item.name,
+        __('Type: ') + d.item.display_kind,
+      ];
+    }
+
     if (d.item.kind === 'Host' || d.item.kind === 'Vm') {
       status.push(__('Provider: ') + d.item.provider);
     }
 
     return status;
   };
-
 
   this.showHideNames = function($scope) {
     return function() {
