@@ -47,7 +47,8 @@ class ApplicationHelper::Toolbar::MiddlewareDatasourceCenter < ApplicationHelper
             N_('Remove'),
             :confirm => N_('Do you want to remove this Datasource? Some Applications could be using this '\
  +                             'Datasource and may malfunction if it is deleted.'),
-            :klass   => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
+            :klass   => ApplicationHelper::Button::MiddlewareDatasourceAction,
+          )
         ]
       ),
     ])
