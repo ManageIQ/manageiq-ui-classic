@@ -1743,15 +1743,6 @@ module VmCommon
     {:event => event, :target_id => vm.id, :target_class => vm.class.base_class.name, :userid => session[:userid], :message => msg}
   end
 
-    # in case sort column is not set, set the defaults
-    if @detail_sortcol.nil?
-      @detail_sortcol = 0
-      @detail_sortdir = "ASC"
-    end
-
-    @detail_sortcol
-  end
-
   def update_buttons(locals)
     locals[:continue_button] = locals[:submit_button] = false
     locals[:continue_button] = true if @edit[:buttons].include?(:continue)
