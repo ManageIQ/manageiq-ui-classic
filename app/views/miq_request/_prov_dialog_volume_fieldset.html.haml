@@ -70,6 +70,9 @@
             if (node.hasAttribute(attr)) {
               $(node).prop(attr, increment_attr($(node).prop(attr)));
             }
+            // reset the observed flag so that the listener properly tracks
+            // changes to this field
+            $(node).data('isObserved', false);
           });
           node.value = '';
           node.checked = false;
