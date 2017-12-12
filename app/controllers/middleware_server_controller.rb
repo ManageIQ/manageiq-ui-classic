@@ -5,6 +5,7 @@ class MiddlewareServerController < ApplicationController
   include MiddlewareCommonMixin
   include Mixins::MiddlewareDeploymentsMixin
 
+  toolbar :middleware_server
 
   before_action :check_privileges
   before_action :get_session_data
