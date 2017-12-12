@@ -145,11 +145,6 @@ module PxeController::PxeCustomizationTemplates
 
   private #######################
 
-  # Delete all selected or single displayed PXE Server(s)
-  def deletetemplates
-    template_button_operation('destroy', 'deletion')
-  end
-
   # Get variables from edit form
   def template_get_form_vars
     @ct = @edit[:ct_id] ? CustomizationTemplate.find_by_id(@edit[:ct_id]) : CustomizationTemplate.new
