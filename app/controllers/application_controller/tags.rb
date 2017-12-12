@@ -186,15 +186,6 @@ module ApplicationController::Tags
     add_flash(_("Tag edits were successfully saved"))
   end
 
-  # Build the pulldown containing the tags
-  def tagging_build_tags_pulldown
-    @mytags = Tag.all_tags(:cat => session[:userid]).sort     # Get all of the users tags
-    unless session[:mytags].blank?
-      session[:mytags].each do |t|                                    # Look thru the common tags
-        @mytags.delete(t.name.split("/")[-1])                     # Remove any tags from the pulldown that are in the common tags
-      end
-    end
-  end
 
   # Build the @edit elements for the tag edit screen
   def tag_edit_build_screen
