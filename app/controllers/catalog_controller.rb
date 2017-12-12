@@ -969,11 +969,6 @@ class CatalogController < ApplicationController
     process_show_list(options)
   end
 
-  def ot_edit_get_form_vars
-    copy_params_if_set(@edit[:new], params, %i(name description dialog_name manager_id))
-    @edit[:new][:draft] = params[:draft] == "true" if params[:draft]
-  end
-
   def ot_edit_set_form_vars(right_cell_text)
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
