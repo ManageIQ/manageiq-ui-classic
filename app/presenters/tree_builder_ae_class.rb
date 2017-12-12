@@ -38,12 +38,18 @@ class TreeBuilderAeClass < TreeBuilder
     count_only_or_objects(count_only, object.ae_methods, [:display_name, :name])
   end
 
+  def ae_inline_methods(object, count_only)
+    count_only_or_objects(count_only, object.ae_methods.where(:location => 'inline'), [:display_name, :name])
+  end
+
   def x_get_tree_class_kids(object, count_only, type)
     case type
     when :ae
       ae_instances(object, count_only) + ae_methods(object, count_only)
     when :ae_methods
       ae_methods(object, count_only)
+    when :ae_inline_methods
+      ae_inline_methods(object, count_only)
     else
       ae_instances(object, count_only)
     end
