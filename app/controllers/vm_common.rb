@@ -1743,22 +1743,6 @@ module VmCommon
     {:event => event, :target_id => vm.id, :target_class => vm.class.base_class.name, :userid => session[:userid], :message => msg}
   end
 
-  # get the sort column for the detail lists that was clicked on, else use the current one
-  def get_detail_sort_col
-    if params[:page].nil? && params[:type].nil? && params[:searchtag].nil?    # paging, gtltype change, or search tag did not come in
-      if params[:sortby].nil? # no column clicked, reset to first column, ascending
-        @detail_sortcol = 0
-        @detail_sortdir = "ASC"
-      else
-        if @detail_sortcol == params[:sortby].to_i                        # if same column was selected
-          @detail_sortdir = flip_sort_direction(@detail_sortdir)
-        else
-          @detail_sortdir = "ASC"
-        end
-        @detail_sortcol = params[:sortby].to_i
-      end
-    end
-
     # in case sort column is not set, set the defaults
     if @detail_sortcol.nil?
       @detail_sortcol = 0
