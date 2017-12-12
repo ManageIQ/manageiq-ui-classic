@@ -465,6 +465,8 @@ class ApplicationHelper::ToolbarChooser
         return "#{@display}_center_tb"
       elsif to_display_center.include?(@display)
         return "#{@display}_center"
+      elsif @layout == 'ems_container'
+        return "#{@display}_center"
       end
     elsif @display == 'generic_objects'
       return "#{@display}_center"
