@@ -559,6 +559,7 @@ class OpsController < ApplicationController
     # get_node_info might set this
     replace_trees = @replace_trees if @replace_trees
     @explorer = true
+    tree_selected_model if @tree_selected_model.nil?
 
     # Clicked on right cell record, open the tree enough to show the node,
     # if not already showing a record

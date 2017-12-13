@@ -150,6 +150,7 @@ describe OpsController do
         expect(controller).to receive(:render)
         @zone = FactoryGirl.create(:zone, :name => 'zoneName', :description => "description1")
         allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:x_node).and_return('root')
 
         @params = {:id     => 'new',
                    :action => "zone_edit",
@@ -237,6 +238,7 @@ describe OpsController do
                                        :active_accord => 'active_accord',
                                        :active_tab    => 'settings_server',
                                        :active_tree   => :settings_tree)
+      allow(controller).to receive(:x_node).and_return('xx-svr')
       expect(controller).to receive(:x_active_tree_replace_cell)
       expect(controller).to receive(:replace_explorer_trees)
       expect(controller).to receive(:rebuild_toolbars)
