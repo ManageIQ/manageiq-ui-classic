@@ -16,6 +16,7 @@ describe('dialogUserController', function() {
 
     spyOn(dialogFieldRefreshService, 'refreshField');
     spyOn(miqService, 'miqAjaxButton');
+    spyOn(miqService, 'redirectBack');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
 
@@ -90,15 +91,18 @@ describe('dialogUserController', function() {
 
     context('when the submit endpoint deals with generic objects', function() {
       beforeEach(inject(function(_$controller_) {
-         $controller = _$controller_('dialogUserController', {
+        $controller = _$controller_('dialogUserController', {
           API: API,
           dialogFieldRefreshService: dialogFieldRefreshService,
           miqService: miqService,
           dialogId: '1234',
-          apiSubmitEndpoint: 'generic_objects',
+          apiSubmitEndpoint: 'service/explorer',
           apiAction: 'custom_action',
           cancelEndpoint: 'cancel endpoint',
           finishSubmitEndpoint: 'finish submit endpoint',
+          resourceActionId: '789',
+          targetId: '987',
+          targetType: 'targettype',
         });
 
         $controller.setDialogData({data: {field1: 'field1'}});
@@ -110,9 +114,8 @@ describe('dialogUserController', function() {
         $controller.submitButtonClicked();
 
         setTimeout(function() {
-          expect(API.post).toHaveBeenCalledWith('generic_objects', {
-            action: 'custom_action', parameters: {field1: 'field1'}
-          });
+          expect(API.post).toHaveBeenCalledWith('service/explorer', {
+            field1: 'field1', action: 'custom_action'}, {skipErrors: [400]});
           done();
         });
       });
@@ -120,7 +123,6 @@ describe('dialogUserController', function() {
 
     context('when the API call succeeds', function() {
       beforeEach(function() {
-        spyOn(miqService, 'redirectBack');
         spyOn(API, 'post').and.returnValue(Promise.resolve('awesome'));
       });
 
@@ -159,7 +161,6 @@ describe('dialogUserController', function() {
     context('when the API call fails', function() {
       beforeEach(function() {
         var rejectionData = {data: {error: {message: "Failed! -One,Two"}}};
-        spyOn(miqService, 'redirectBack');
         spyOn(API, 'post').and.returnValue(Promise.reject(rejectionData));
         spyOn(window, 'clearFlash');
         spyOn(window, 'add_flash');

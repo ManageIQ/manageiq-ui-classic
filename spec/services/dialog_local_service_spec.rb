@@ -125,8 +125,8 @@ describe DialogLocalService do
           :force_old_dialog_use   => false,
           :api_submit_endpoint    => "/api/generic_objects/123",
           :api_action             => "custom-button-name",
-          :finish_submit_endpoint => "/generic_object/show_list",
-          :cancel_endpoint        => "/generic_object/show_list"
+          :finish_submit_endpoint => "/service/explorer",
+          :cancel_endpoint        => "/service/explorer"
         )
       end
     end
