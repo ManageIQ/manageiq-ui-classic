@@ -20,8 +20,8 @@ class ExtManagementSystemDecorator < MiqDecorator
         :tooltip  => try(:type)
       },
       :bottom_right => {
-        :img     => status_img(self),
-        :tooltip => try(:authentication_status)
+        :fileicon => status_img(self),
+        :tooltip  => try(:authentication_status)
       }
     }
   end

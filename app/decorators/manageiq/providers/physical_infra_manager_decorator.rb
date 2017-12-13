@@ -9,8 +9,8 @@ module ManageIQ::Providers
           :tooltip  => type
         },
         :bottom_right => {
-          :img     => status_img(self),
-          :tooltip => authentication_status
+          :fileicon => status_img(self),
+          :tooltip  => authentication_status
         }
       }
     end
