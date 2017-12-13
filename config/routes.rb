@@ -212,6 +212,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         index
         perf_top_chart
+        protect
         show
         show_list
         tagging_edit
@@ -220,6 +221,7 @@ Rails.application.routes.draw do
       :post => %w(
         button
         listnav_search_selected
+        protect
         quick_search
         sections_field_changed
         show
