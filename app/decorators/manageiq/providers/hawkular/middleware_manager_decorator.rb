@@ -17,14 +17,13 @@ module ManageIQ::Providers::Hawkular
           :text => middleware_servers.size
         },
         :bottom_left  => {
-          :fonticon => fileicon,
+          :fileicon => fileicon,
           :tooltip  => type
         },
         :bottom_right => {
-          :img     => QuadiconHelper::AssetsMapper.img_status(self),
+          :img     => status_img,
           :tooltip => authentication_status
-        },
-        :has_policies? => !get_policies.empty?
+        }
       }
     end
   end

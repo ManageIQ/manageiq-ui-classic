@@ -10,4 +10,19 @@ class ExtManagementSystemDecorator < MiqDecorator
   def fileicon
     "svg/vendor-#{image_name}.svg"
   end
+
+  def quadicon(_n = nil)
+    {
+      :top_left     => { :text => try(:hosts).try(:size) || 0 },
+      :top_right    => { :text => "" },
+      :bottom_left  => {
+        :fileicon => fileicon,
+        :tooltip  => try(:type)
+      },
+      :bottom_right => {
+        :img     => status_img,
+        :tooltip => try(:authentication_status)
+      }
+    }
+  end
 end
