@@ -1,31 +1,50 @@
 describe ApplicationHelper::Button::MiddlewareStandaloneServerAction do
-  let(:record) { double("MiddlewareServer") }
-  subject(:action) { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
+  let(:mw_server) { FactoryGirl.create(:middleware_server) }
+  let(:record) { mw_server }
+  subject { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
 
   describe '#visible?' do
-    it 'is true if record it not in domain and is mutable' do
-      allow(record).to receive(:in_domain?) { false }
-      allow(record).to receive(:mutable?) { true }
+    before do
+      allow(mw_server).to receive(:in_domain?) { in_domain }
+      allow(mw_server).to receive(:mutable?) { mutable }
+    end
+    context 'delegated for record' do
+      let(:record) { FactoryGirl.create(delegated_class.to_sym, :middleware_server => mw_server) }
+      let(:in_domain) { false }
+      let(:mutable) { true }
 
-      expect(action).to be_visible
+      %w(middleware_datasource middleware_deployment).each do |dc|
+        context dc.to_s do
+          let(:delegated_class) { dc }
+          it { is_expected.to be_visible }
+        end
+      end
     end
 
-    it 'is false if record is in domain' do
-      allow(record).to receive(:in_domain?) { true }
+    context 'with record' do
+      context 'not in domain' do
+        let(:in_domain) { false }
 
-      expect(action).not_to be_visible
+        context 'mutable' do
+          let(:mutable) { true }
+          it { is_expected.to be_visible }
+        end
+
+        context 'immutable' do
+          let(:mutable) { false }
+          it { is_expected.not_to be_visible }
+        end
+      end
+
+      context 'in domain' do
+        let(:in_domain) { true }
+        it { is_expected.not_to be_visible }
+      end
     end
 
-    it 'is false if record is not in domain but it is immutable' do
-      allow(record).to receive(:in_domain?) { false }
-      allow(record).to receive(:mutable?) { false }
-
-      expect(action).not_to be_visible
-    end
-
-    it 'is false if record is nil' do
-      action = described_class.new(setup_view_context_with_sandbox({}), {}, {}, {})
-      expect(action).not_to be_visible
+    context 'record is nil' do
+      let(:record) { nil }
+      it { is_expected.not_to be_visible }
     end
   end
 end
