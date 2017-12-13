@@ -26,6 +26,7 @@ describe OpsController do
 
     describe 'x_button actions' do
       it 'rbac group add' do
+        allow(controller).to receive(:x_node).and_return('xx-g')
         post :x_button, :params => {:pressed => 'rbac_group_add'}
         expect(response.status).to eq(200)
       end
@@ -38,6 +39,7 @@ describe OpsController do
       it 'rbac role add' do
         MiqProductFeature.seed
         session[:sandboxes] = {"ops" => {:trees => {}}}
+        allow(controller).to receive(:x_node).and_return('xx-ur')
         post :x_button, :params => {:pressed => 'rbac_role_add'}
         expect(response.status).to eq(200)
       end
