@@ -504,7 +504,7 @@ class MiqAeClassController < ApplicationController
       @in_a_form = true
     end
     session[:changed] = @changed = false
-    build_ae_tree(:ae_methods, :automate_tree)
+    build_ae_tree(:ae_inline_methods, :automate_tree)
     replace_right_cell
   end
 
