@@ -900,7 +900,6 @@ class MiqAeClassController < ApplicationController
                            else
                              @edit[:new][:data]
                            end
-      build_ae_tree(:ae_methods, :automate_tree)
       @changed = (@edit[:new] != @edit[:current])
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
       angular_form_specific_data if @edit[:new][:location] == "playbook"
@@ -1228,7 +1227,6 @@ class MiqAeClassController < ApplicationController
       @in_a_form = true
       add_flash(_("All changes have been reset"), :warning)
       @button = "reset"
-      build_ae_tree(:ae_methods, :automate_tree)
       replace_right_cell
     else
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
@@ -1667,11 +1665,11 @@ class MiqAeClassController < ApplicationController
   def ae_tree_select_toggle
     @edit = session[:edit]
     self.x_active_tree = :ae_tree
-    method_edit_or_new_method? ? at_tree_select_toggle(:method) : at_tree_select_toggle(:namespace)
+    at_tree_select_toggle(:namespace)
 
     if params[:button] == 'submit'
       x_node_set(@edit[:active_id], :automate_tree)
-      @edit[:namespace] = @edit[:new][:namespace] unless method_edit_or_new_method?
+      @edit[:namespace] = @edit[:new][:namespace]
     end
 
     session[:edit] = @edit
@@ -1691,7 +1689,6 @@ class MiqAeClassController < ApplicationController
 
   def embedded_methods_remove
     @edit[:new][:embedded_methods].delete_at(params[:id].to_i)
-    build_ae_tree(:ae_methods, :automate_tree)
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
@@ -1703,7 +1700,7 @@ class MiqAeClassController < ApplicationController
 
   def ae_tree_select
     @edit = session[:edit]
-    method_edit_or_new_method? ? at_tree_select(:method) : at_tree_select(:namespace)
+    at_tree_select(:namespace)
     session[:edit] = @edit
   end
 
@@ -1728,10 +1725,6 @@ class MiqAeClassController < ApplicationController
   end
 
   private
-
-  def method_edit_or_new_method?
-    %w(miq_ae_method_edit miq_ae_method_new).include?(@sb[:action])
-  end
 
   def playbook_inputs(method)
     existing_inputs = method.inputs
