@@ -1066,7 +1066,7 @@ module VmCommon
                     when "vandt_tree"
                       ["VmOrTemplate", _("VMs & Templates")]
                     when "vms_instances_filter_tree"
-                      ["Vm", "VMs & Instances"]
+                      ["Vm", _("VMs & Instances")]
                     when "templates_images_filter_tree"
                       ["MiqTemplate", _("Templates & Images")]
                     when "templates_filter_tree"
