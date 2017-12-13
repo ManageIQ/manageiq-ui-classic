@@ -9,6 +9,11 @@ class TreeController < ApplicationController
     render :body => json, :content_type => 'application/json'
   end
 
+  def automate_inline_methods
+    json = fetch_tree(TreeBuilderAutomateInlineMethod, :automate_inline_method, params[:id])
+    render :body => json, :content_type => 'application/json'
+  end
+
   private
 
   def fetch_tree(klass, name, node_id = nil)

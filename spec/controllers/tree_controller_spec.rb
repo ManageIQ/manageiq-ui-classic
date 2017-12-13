@@ -29,6 +29,12 @@ describe TreeController do
     include_examples 'valid HTTP JSON response', :automate_entrypoint
   end
 
+  describe '#automate_inline_methods' do
+    let(:record) { FactoryGirl.create(:miq_ae_namespace) }
+
+    include_examples 'valid HTTP JSON response', :automate_inline_methods
+  end
+
   describe '#fetch_tree' do
     let(:klass) { dup }
     let(:tree) { dup }
