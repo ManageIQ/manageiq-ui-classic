@@ -504,7 +504,6 @@ class MiqAeClassController < ApplicationController
       @in_a_form = true
     end
     session[:changed] = @changed = false
-    build_ae_tree(:ae_methods, :automate_tree)
     replace_right_cell
   end
 
@@ -1676,6 +1675,18 @@ class MiqAeClassController < ApplicationController
     end
 
     session[:edit] = @edit
+  end
+
+  def embedded_methods_add
+    submit_embedded_method(URI.unescape(params[:fqname]))
+    @changed = (@edit[:new] != @edit[:current])
+    render :update do |page|
+      page << javascript_prologue
+      page << javascript_show("flash_msg_div")
+      page << javascript_for_miq_button_visibility(@changed)
+      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page.replace("embedded_methods_div", :partial => "embedded_methods")
+    end
   end
 
   def embedded_methods_remove

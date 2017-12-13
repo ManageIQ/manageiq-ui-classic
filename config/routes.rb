@@ -2210,6 +2210,7 @@ Rails.application.routes.draw do
         create_method
         create_ns
         domains_priority_edit
+        embedded_methods_add
         embedded_methods_remove
         explorer
         expand_toggle

@@ -1,13 +1,13 @@
 module AutomateTreeHelper
-  def submit_embedded_method
-    if @edit[:new][:embedded_methods].include?(@edit[:automate_tree_selected_path])
+  def submit_embedded_method(fqname)
+    if @edit[:new][:embedded_methods].include?(fqname)
       add_flash(_("This embedded method is already selected"), :warning)
     elsif @edit[:new][:embedded_methods].count >= 20
       add_flash(_("It is not allowed to have more than 20 embedded methods"), :warning)
-    elsif MiqAeMethod.find_by(:id => (@edit[:ae_method_id])).try(:fqname) == @edit[:automate_tree_selected_path]
+    elsif MiqAeMethod.find_by(:id => (@edit[:ae_method_id])).try(:fqname) == fqname
       add_flash(_("It is not allowed to choose method itself"), :warning)
     else
-      @edit[:new][:embedded_methods].push(@edit[:automate_tree_selected_path])
+      @edit[:new][:embedded_methods].push(fqname)
     end
   end
 
