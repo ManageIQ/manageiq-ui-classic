@@ -69,11 +69,11 @@ class DialogLocalService
       cancel_endpoint = "/ems_cluster"
     when /GenericObject/
       api_collection_name = "generic_objects"
-      if !display_options.empty? && display_options[:display_id]
-        cancel_endpoint =  "/service/show/#{display_options[:display_id]}?display=generic_objects"
-      else
-        cancel_endpoint = "/service/explorer"
-      end
+      cancel_endpoint = if !display_options.empty? && display_options[:display_id]
+                          "/service/show/#{display_options[:display_id]}?display=generic_objects"
+                        else
+                          "/service/explorer"
+                        end
     when /Host/
       api_collection_name = "hosts"
       cancel_endpoint = "/host"
