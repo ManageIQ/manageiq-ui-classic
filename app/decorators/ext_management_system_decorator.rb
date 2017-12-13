@@ -13,14 +13,14 @@ class ExtManagementSystemDecorator < MiqDecorator
 
   def quadicon(_n = nil)
     {
-      :top_left     => { :text => try(:hosts).try(:size) || 0 },
-      :top_right    => { :text => "" },
+      :top_left     => {:text => try(:hosts).try(:size) || 0},
+      :top_right    => {:text => ""},
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => try(:type)
       },
       :bottom_right => {
-        :img     => status_img,
+        :img     => status_img(self),
         :tooltip => try(:authentication_status)
       }
     }

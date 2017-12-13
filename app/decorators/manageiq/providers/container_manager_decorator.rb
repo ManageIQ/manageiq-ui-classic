@@ -1,9 +1,9 @@
 module ManageIQ::Providers
-  class PhysicalInfraManagerDecorator < ExtManagementSystemDecorator
+  class ContainerManagerDecorator < MiqDecorator
     def quadicon(_n = nil)
       {
-        :top_left     => {:text => physical_servers.size},
-        :top_right    => {:text => ""},
+        :top_left     => {:text => container_nodes.size},
+        :top_right    => {:state_icon => enabled? ? "on" : "paused"},
         :bottom_left  => {
           :fileicon => fileicon,
           :tooltip  => type

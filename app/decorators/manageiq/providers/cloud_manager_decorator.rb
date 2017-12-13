@@ -1,15 +1,15 @@
 module ManageIQ::Providers
-  class CloudManagerDecorator < MiqDecorator
+  class CloudManagerDecorator < ExtManagementSystemDecorator
     def quadicon(_n = nil)
       {
-        :top_left     => { :text => container_nodes.size },
-        :top_right    => { :text => total_miq_templates },
+        :top_left     => {:text => total_vms},
+        :top_right    => {:text => total_miq_templates},
         :bottom_left  => {
-          :fileicon => "svg/vendor-#{h(item.image_name)}.svg",
+          :fileicon => fileicon,
           :tooltip  => type
         },
         :bottom_right => {
-          :img     => status_img,
+          :img     => status_img(self),
           :tooltip => authentication_status
         }
       }
