@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::MiqScsiLun do
   subject { described_class.new(object, nil, {}) }
   let(:object) { FactoryGirl.create(:miq_scsi_lun, :canonical_name => 'foo') }

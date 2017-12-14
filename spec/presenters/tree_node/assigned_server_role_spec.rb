@@ -1,6 +1,3 @@
-require 'shared/presenters/tree_node/common'
-require 'shared/presenters/tree_node/server_roles'
-
 describe TreeNode::AssignedServerRole do
   include_context 'server roles'
   let(:object) { assigned_server_role }

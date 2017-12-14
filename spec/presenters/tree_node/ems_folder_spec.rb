@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::EmsFolder do
   subject { described_class.new(object, nil, options) }
   let(:options) { Hash.new }

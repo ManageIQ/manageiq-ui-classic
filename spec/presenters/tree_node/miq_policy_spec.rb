@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::MiqPolicy do
   subject { described_class.new(object, nil, {}) }
   let(:object) { FactoryGirl.create(:miq_policy, :towhat => 'Vm', :active => true, :mode => 'control') }

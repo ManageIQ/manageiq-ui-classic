@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::MiqAction do
   subject { described_class.new(object, nil, :tree => :action_tree) }
   let(:object) { FactoryGirl.create(:miq_action, :name => 'raise_automation_event', :action_type => 'default') }
