@@ -18,6 +18,11 @@ describe AnsiblePlaybookController do
     it "renders correct template" do
       is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
     end
+
+    it "does not display tags" do
+      get :show, :params => {:id => playbook.id}
+      expect(response.body).not_to include("Smart Management")
+    end
   end
 
   context "#show_list" do
