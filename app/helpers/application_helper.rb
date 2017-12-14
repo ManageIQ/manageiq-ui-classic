@@ -1634,6 +1634,7 @@ module ApplicationHelper
       :showlinks  => @showlinks,
       :policy_sim => @policy_sim,
       :lastaction => @lastaction,
+      :in_a_form  => @in_a_form,
       :display    => @display
     )
     @report_data_additional_options.with_row_button(@row_button) if @row_button
@@ -1674,6 +1675,10 @@ module ApplicationHelper
     # we also need to pass the @display because @display passed throught the
     # session does not persist the null value
     @display = quadicon_options[:display]
+
+    # need to pass @in_a_form so get_view does not set advanced search options
+    # in the forms that render gtl that mess up @edit
+    @in_a_form = quadicon_options[:in_a_form]
   end
 
   # Wrapper around jquery-rjs' remote_function which adds an extra .html_safe()
