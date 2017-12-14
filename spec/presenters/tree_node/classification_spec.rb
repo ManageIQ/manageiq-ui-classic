@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::Classification do
   subject { described_class.new(object, nil, {}) }
 

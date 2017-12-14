@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::MiqWidgetSet do
   subject { described_class.new(object, nil, {}) }
   let(:object) { FactoryGirl.create(:miq_widget_set, :name => 'foo') }
