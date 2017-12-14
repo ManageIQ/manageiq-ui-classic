@@ -1075,9 +1075,4 @@ module ApplicationController::CiProcessing
     when "vm_transform"                     then vm_transform
     end
   end
-
-  def owner_changed?(owner)
-    return false if @edit[:new][owner].blank?
-    @edit[:new][owner] != @edit[:current][owner]
-  end
 end
