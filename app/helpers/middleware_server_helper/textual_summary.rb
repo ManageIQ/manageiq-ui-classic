@@ -60,7 +60,7 @@ module MiddlewareServerHelper::TextualSummary
   end
 
   def textual_version
-    @record.properties['Version']
+    {:label => _('Version'), :value => @record.properties['Version']}
   end
 
   def textual_lives_on
