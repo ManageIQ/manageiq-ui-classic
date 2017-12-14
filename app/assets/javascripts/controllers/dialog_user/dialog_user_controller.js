@@ -49,11 +49,16 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     } else {
       apiData = vm.dialogData;
     }
-    API.post(apiSubmitEndpoint, apiData).then(function() {
+    API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
       miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
     }).catch(function(err) {
       miqService.sparkleOff();
-      add_flash(__('Error requesting data from server'), 'error');
+      var fullErrorMessage = err.data.error.message;
+      var allErrorMessages = fullErrorMessage.split('-')[1].split(',');
+      clearFlash();
+      _.forEach(allErrorMessages, (function(errorMessage) {
+        add_flash(errorMessage, 'error');
+      }));
       console.log(err);
       return Promise.reject(err);
     });
