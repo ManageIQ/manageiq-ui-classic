@@ -69,6 +69,7 @@ module ApplicationController::Explorer
     'tag'          => :s2, 'timeline'         => :s2, 'resize'          => :s2,
     'live_migrate' => :s2, 'attach'           => :s2, 'detach'          => :s2,
     'evacuate'     => :s2, 'service_dialog'   => :s2, 'transform'       => :s2,
+    'transform_mass'           => :s2,
     'associate_floating_ip'    => :s2,
     'disassociate_floating_ip' => :s2,
     'add_security_group'       => :s2,
