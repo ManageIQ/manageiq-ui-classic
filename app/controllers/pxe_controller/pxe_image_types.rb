@@ -2,15 +2,7 @@
 module PxeController::PxeImageTypes
   extend ActiveSupport::Concern
 
-  def pxe_image_type_tree_select
-    typ, id = params[:id].split("_")
-    case typ
-    when "img"
-      @record = MiqServer.find(from_cid(id))
-    when "ps"
-      @record = ServerRole.find(from_cid(id))
-    end
-  end
+  
 
   def pxe_image_type_new
     assert_privileges("pxe_image_type_new")
