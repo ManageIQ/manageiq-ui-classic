@@ -4,10 +4,11 @@
       = miq_tab_header("details") do
         = _("Details")
       - if @record.type == "ServiceAnsiblePlaybook"
-        - job = @record.try(:job, "Retirement")
+        - provision_job = @record.try(:job, "Provision")
+        - retirement_job = @record.try(:job, "Retirement")
         = miq_tab_header("provisioning") do
           = _("Provisioning")
-        - if job
+        - if retirement_job
           = miq_tab_header("retirement") do
             = _("Retirement")
     .tab-content
@@ -37,29 +38,17 @@
       - if @record.type == "ServiceAnsiblePlaybook"
         = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list}
-          - if (@job && @job.try(:raw_stdout) rescue false)
-            #service_detail_ansible_playbook{'ng-controller' => "SanitizeAndRenderController as vm"}
-              %h3
-                = _('Standard Output')
-              .form-horizontal.static
-                .form-group
-                  .col-md-9
-                    %div{'ng-bind-html' => "vm.sanitizeRenderHtml('#{sanitize_output(@job.raw_stdout('html'))}')"}
+          - if provision_job
+            %ansible-raw-stdout#service_detail_ansible_playbook{'task-id' => provision_job.raw_stdout_via_worker(nil, 'html')}
             :javascript
-              miq_bootstrap('#service_detail_ansible_playbook', 'sanitizeRender');
+              miq_bootstrap('#service_detail_ansible_playbook');
 
-        - if job
+        - if retirement_job
           = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
             = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list}
-            #service_detail_job{'ng-controller' => "SanitizeAndRenderController as vm"}
-              %h3
-                = _('Standard Output')
-              .form-horizontal.static
-                .form-group
-                  .col-md-9
-                    %div{'ng-bind-html' => "vm.sanitizeRenderHtml('#{sanitize_output(job.raw_stdout('html'))}')"}
+            %ansible-raw-stdout#service_detail_job{'task-id' => retirement_job.raw_stdout_via_worker(nil, 'html')}
             :javascript
-              miq_bootstrap('#service_detail_job', 'sanitizeRender');
+              miq_bootstrap('#service_detail_job');
 
 :javascript
   miq_tabs_init('#services_tab');
