@@ -91,11 +91,4 @@ class DialogFieldVisibilityService
     @field_names_to_show += visibility_hash[:show] if visibility_hash[:show]
   end
 
-  def set_fields_display_status(fields, field_name_list, status)
-    fields.each do |field|
-      if field_name_list.include?(field[:name])
-        field[:display] = field[:display_override].presence || status
-      end
-    end
-  end
 end
