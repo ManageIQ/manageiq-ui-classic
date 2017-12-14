@@ -236,15 +236,6 @@ module PxeController::IsoDatastores
     img.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
   end
 
-  def identify_isd_datastore
-    @isd = nil
-    begin
-      @record = @isd = find_record_with_rbac(IsoDatastore, from_cid(params[:id]))
-    rescue ActiveRecord::RecordNotFound
-    rescue => @bang
-    end
-  end
-
   # Delete all selected or single displayed ISO Datastore(s)
   def deleteisds
     iso_datastore_button_operation('destroy', 'deletion')
