@@ -24,9 +24,18 @@ class TopologyService
     entity_type(entity) + entity.compressed_id.to_s
   end
 
+  def entity_name(entity)
+    if entity.kind_of?(Tag)
+      cls = entity.classification
+      [cls.parent, cls].map(&:description).join(': ')
+    else
+      entity.name
+    end
+  end
+
   def build_base_entity_data(entity)
     {
-      :name   => entity.name,
+      :name   => entity_name(entity),
       :kind   => entity_type(entity),
       :model  => entity.class.to_s,
       :miq_id => entity.id,
