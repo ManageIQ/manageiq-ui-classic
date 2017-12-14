@@ -128,4 +128,26 @@ describe TopologyService do
       end
     end
   end
+
+  describe '#entity_name' do
+    let(:name) { subject.send(:entity_name, entity) }
+
+    context 'entity is not a tag' do
+      let(:entity) { FactoryGirl.create(:vm_vmware) }
+
+      it 'returns with the name of the entity' do
+        expect(name).to eq(entity.name)
+      end
+    end
+
+    context 'entity is a tag' do
+      let(:parent_cls) { FactoryGirl.create(:classification, :description => 'foo') }
+      let(:cls) { FactoryGirl.create(:classification, :parent => parent_cls, :description => 'bar') }
+      let(:entity) { FactoryGirl.create(:tag, :classification => cls) }
+
+      it 'returns with the parent and the child classification description' do
+        expect(name).to eq('foo: bar')
+      end
+    end
+  end
 end
