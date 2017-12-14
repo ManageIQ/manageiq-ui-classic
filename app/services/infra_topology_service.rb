@@ -2,17 +2,17 @@ class InfraTopologyService < TopologyService
   @provider_class = ManageIQ::Providers::InfraManager
 
   @included_relations = [
-    :tags,
+    :writable_classification_tags,
     :ems_clusters      => [
-      :tags,
+      :writable_classification_tags,
       :hosts => [
-        :tags,
-        :vms => :tags
+        :writable_classification_tags,
+        :vms => :writable_classification_tags
       ]
     ],
     :clusterless_hosts => [
-      :tags,
-      :vms => :tags
+      :writable_classification_tags,
+      :vms => :writable_classification_tags
     ],
   ]
 

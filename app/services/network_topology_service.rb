@@ -2,15 +2,15 @@ class NetworkTopologyService < TopologyService
   @provider_class = ManageIQ::Providers::NetworkManager
 
   @included_relations = [
-    :tags,
+    :writable_classification_tags,
     :availability_zones => [
       :vms => [
-        :tags,
-        :floating_ips    => :tags,
-        :cloud_tenant    => :tags,
-        :security_groups => :tags,
+        :writable_classification_tags,
+        :floating_ips    => :writable_classification_tags,
+        :cloud_tenant    => :writable_classification_tags,
+        :security_groups => :writable_classification_tags,
         :load_balancers  => [
-          :tags,
+          :writable_classification_tags,
           :floating_ips,
           :security_groups,
         ]
@@ -18,13 +18,13 @@ class NetworkTopologyService < TopologyService
     ],
     :cloud_subnets      => [
       :parent_cloud_subnet,
-      :tags,
+      :writable_classification_tags,
       :vms,
-      :cloud_network  => :tags,
+      :cloud_network  => :writable_classification_tags,
       :network_router => [
-        :tags,
+        :writable_classification_tags,
         :cloud_network => [
-          :floating_ips => :tags
+          :floating_ips => :writable_classification_tags
         ]
       ]
     ]
