@@ -1,8 +1,8 @@
 describe('ansible-raw-stdout', function() {
-  var scope, compile;
+  var scope, compile, $q;
 
   beforeEach(module('ManageIQ'));
-  beforeEach(inject(function($compile, $rootScope, $templateCache) {
+  beforeEach(inject(function($compile, $rootScope, $templateCache, _$q_) {
     // FIXME: templateRequest is using $http to get the template, but angular-mocks prevents it
     $templateCache.put('/static/ansible-raw-stdout.html.haml', '<div></div>');
 
@@ -14,12 +14,14 @@ describe('ansible-raw-stdout', function() {
       $scope.$digest();
       scope = element.find('div').scope();
     };
+
+    $q = _$q_;
   }));
 
   describe('on error', function() {
     beforeEach(inject(function(API) {
       spyOn(API, 'wait_for_task').and.callFake(function(url) {
-        return Promise.reject({
+        return $q.reject({
           href: "http://localhost:3000/api/tasks/10000000054710",
           id: "10000000054710",
           name: "ansible_stdout",
@@ -37,12 +39,10 @@ describe('ansible-raw-stdout', function() {
 
     it('sets the data', function(done) {
       setTimeout(function() {
-        setTimeout(function() {
-          expect(scope.$ctrl.error).toBeDefined();
-          expect(scope.$ctrl.loading).toBeFalsy();
-          expect(scope.$ctrl.data).toBeFalsy();
-          done();
-        });
+        expect(scope.$ctrl.error).toBeDefined();
+        expect(scope.$ctrl.loading).toBeFalsy();
+        expect(scope.$ctrl.data).toBeFalsy();
+        done();
       });
     });
   });
@@ -50,7 +50,7 @@ describe('ansible-raw-stdout', function() {
   describe('on success', function() {
     beforeEach(inject(function(API) {
       spyOn(API, 'wait_for_task').and.callFake(function(url) {
-        return Promise.resolve({
+        return $q.resolve({
           href: "http://localhost:3000/api/tasks/44",
           id: "44",
           name: "ansible_stdout",
@@ -70,14 +70,12 @@ describe('ansible-raw-stdout', function() {
 
     it('sets the data', function(done) {
       setTimeout(function() {
-        setTimeout(function() {
-          expect(scope.$ctrl).toBeDefined();
-          expect(scope.$ctrl.error).toBeFalsy();
-          expect(scope.$ctrl.loading).toBeFalsy();
-          expect(scope.$ctrl.data).toBeDefined();
-          expect(scope.$ctrl.sanitized).toBeDefined();
-          done();
-        });
+        expect(scope.$ctrl).toBeDefined();
+        expect(scope.$ctrl.error).toBeFalsy();
+        expect(scope.$ctrl.loading).toBeFalsy();
+        expect(scope.$ctrl.data).toBeDefined();
+        expect(scope.$ctrl.sanitized).toBeDefined();
+        done();
       });
     });
   });
