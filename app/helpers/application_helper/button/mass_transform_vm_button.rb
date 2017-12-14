@@ -1,6 +1,7 @@
 class ApplicationHelper::Button::MassTransformVmButton < ApplicationHelper::Button::Basic
   def visible?
-    true
+    store = Vmdb::PermissionStores.instance
+    store.can?('vm_transform_mass')
   end
 
   def disabled?
