@@ -550,8 +550,8 @@ class MiqPolicyController < ApplicationController
     when 'root'
       partial_name, model =
         case x_active_tree
-        when :policy_profile_tree then ['profile_list',          _('Policy Profile')]
-        when :policy_tree         then ['policy_folders',        _('Policy')]
+        when :policy_profile_tree then ['profile_list',          _('Policy Profiles')]
+        when :policy_tree         then ['policy_folders',        _('Policies')]
         when :event_tree          then ['event_list',            _('Events')]
         when :condition_tree      then ['condition_folders',     _('Conditions')]
         when :action_tree         then ['action_list',           _('Actions')]
