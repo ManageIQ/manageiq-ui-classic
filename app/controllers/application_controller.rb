@@ -1200,14 +1200,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def severity_title(value)
-    if self.class.instance_of?(MiqPolicyController)
-      self.class::SEVERITIES[value]
-    else
-      value.titleize
-    end
-  end
-
   def listicon_item(view, id = nil)
     id = @id if id.nil?
 
