@@ -1148,8 +1148,7 @@ class ApplicationController < ActionController::Base
         when "result"
           new_row[:cells] << {:span => result_span_class(row[col]), :text => row[col].titleize}
         when "severity"
-          value = row[col] || ' '
-          new_row[:cells] << {:span => severity_span_class(value), :text => severity_title(value)}
+          new_row[:cells] << {:span => severity_span_class(row[col]), :text => row[col].titleize}
         when 'state'
           celltext = row[col].to_s.titleize
         when 'hardware.bitness'
