@@ -66,7 +66,7 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_type
-    @record.emstype_description
+    {:label => _('Type'), :value => @record.emstype_description}
   end
 
   def textual_port
@@ -116,23 +116,23 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_availability_zones
-    @record.availability_zones
+    textual_link(@record.availability_zones, :label => _('Availability Zones'))
   end
 
   def textual_host_aggregates
-    @record.host_aggregates
+    textual_link(@record.host_aggregates, :label => _('Host Aggregates'))
   end
 
   def textual_cloud_tenants
-    @record.cloud_tenants
+    textual_link(@record.cloud_tenants, :label => _('Cloud Tenants'))
   end
 
   def textual_orchestration_stacks
-    @record.orchestration_stacks
+    textual_link(@record.orchestration_stacks, :label => _('Orchestration Stacks'))
   end
 
   def textual_flavors
-    @record.flavors
+    textual_link(@record.flavors, :label => _('Flavors'))
   end
 
   def textual_security_groups
