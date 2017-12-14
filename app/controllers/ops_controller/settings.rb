@@ -198,13 +198,6 @@ module OpsController::Settings
     @edit[:new][:description] = params[:region_description] if params[:region_description]
   end
 
-  # Need to make arrays by category containing arrays of items so the filtering logic can apply
-  # AND between the categories, but OR between the items within a category
-  def user_make_subarrays
-    # moved into common method used by ops_rbac module as well
-    rbac_and_user_make_subarrays
-  end
-
   def set_verify_status
     @edit[:default_verify_status] = (@edit[:new][:password] == @edit[:new][:verify])
   end
