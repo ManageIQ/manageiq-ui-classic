@@ -495,6 +495,42 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       end
     end
 
+    context "when the toolbar is a generic object instances toolbar" do
+      let(:toolbar_to_build) { 'generic_objects_center_tb' }
+
+      before do
+        go_def = FactoryGirl.create(:generic_object_definition)
+        @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => go_def.id)
+        allow(Rbac).to receive(:role_allows?).and_return(true)
+      end
+
+      it "includes the 'send_checked' parameter" do
+        items_hash = {:child_id     => "generic_object_tag",
+                      :id           => "generic_object_policy_choice__generic_object_tag",
+                      :type         => :button,
+                      :img          => "generic_object_tag.png",
+                      :img_url      => "/images/toolbars/generic_object_tag.png",
+                      :imgdis       => "generic_object_tag.png",
+                      :hidden       => false,
+                      :icon         => "pficon pficon-edit fa-lg",
+                      :name         => "generic_object_policy_choice__generic_object_tag",
+                      :onwhen       => "1+",
+                      :send_checked => true,
+                      :enabled      => false,
+                      :title        => "Edit Tags for the selected Generic Object Instances",
+                      :text         => "Edit Tags",
+                      :url_parms    => "main_div"}
+
+        expect(_toolbar_builder.build_toolbar(toolbar_to_build).first).to include(
+          :id    => "generic_object_policy_choice",
+          :icon  => "fa fa-shield fa-lg",
+          :title => "Policy",
+          :text  => "Policy",
+          :items => [a_hash_including(items_hash)]
+        )
+      end
+    end
+
     context "when the toolbar to be built is a generic object toolbar" do
       let(:toolbar_to_build) { 'generic_object_definitions_center_tb' }
 
