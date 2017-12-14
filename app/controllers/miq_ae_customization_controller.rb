@@ -406,7 +406,7 @@ class MiqAeCustomizationController < ApplicationController
 
   def right_cell_text_for_node(record, model_name)
     if record && record.id
-      _("Editing %{model} \"%{name}\"") % {:name  => record.name,
+      _("Editing %{model} \"%{name}\"") % {:name  => record.kind_of?(CustomButtonSet) ? record.name.split("|").first : record.name,
                                            :model => ui_lookup(:model => model_name)}
     else
       _("Adding a new %{model}") % {:model => ui_lookup(:model => model_name)}
