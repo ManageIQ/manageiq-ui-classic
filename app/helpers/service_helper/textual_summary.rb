@@ -169,11 +169,11 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_owner
-    @record.evm_owner.try(:name)
+    {:label => _('Owner'), :value => @record.evm_owner.try(:name)}
   end
 
   def textual_group
-    @record.miq_group.try(:description)
+    {:label => _('Group'), :value => @record.miq_group.try(:description)}
   end
 
   def textual_created
