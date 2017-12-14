@@ -27,11 +27,11 @@ module CloudSubnetHelper::TextualSummary
   # Items
   #
   def textual_type
-    ui_lookup(:model => @record.type)
+    {:label => _('Type'), :value => ui_lookup(:model => @record.type)}
   end
 
   def textual_cidr
-    @record.cidr
+    {:label => _('CIDR'), :value => @record.cidr}
   end
 
   def textual_gateway
@@ -63,7 +63,7 @@ module CloudSubnetHelper::TextualSummary
   end
 
   def textual_parent_ems_cloud
-    @record.ext_management_system.try(:parent_manager)
+    textual_link(@record.ext_management_system.try(:parent_manager), :label => _('Parent Cloud Provider'))
   end
 
   def textual_instances
@@ -77,7 +77,7 @@ module CloudSubnetHelper::TextualSummary
   end
 
   def textual_cloud_network
-    @record.cloud_network
+    textual_link(@record.cloud_network, :label => _('Cloud Network'))
   end
 
   def textual_cloud_tenant
@@ -85,7 +85,7 @@ module CloudSubnetHelper::TextualSummary
   end
 
   def textual_network_router
-    @record.network_router
+    textual_link(@record.network_router, :label => _('Network Router'))
   end
 
   def textual_parent_subnet
@@ -104,6 +104,6 @@ module CloudSubnetHelper::TextualSummary
   end
 
   def textual_availability_zone
-    @record.availability_zone
+    textual_link(@record.availability_zone, :label => _('Availability Zone'))
   end
 end
