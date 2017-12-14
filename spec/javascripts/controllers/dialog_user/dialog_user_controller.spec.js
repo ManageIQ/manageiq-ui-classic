@@ -110,7 +110,7 @@ describe('dialogUserController', function() {
           expect(API.post).toHaveBeenCalledWith('submit endpoint', {
             action: 'order',
             field1: 'field1'
-          });
+          }, {skipErrors: [400]});
           done();
         });
       });
@@ -128,8 +128,10 @@ describe('dialogUserController', function() {
 
     context('when the API call fails', function() {
       beforeEach(function() {
+        var rejectionData = {data: {error: {message: "Failed! -One,Two"}}};
         spyOn(miqService, 'redirectBack');
-        spyOn(API, 'post').and.returnValue(Promise.reject('not awesome'));
+        spyOn(API, 'post').and.returnValue(Promise.reject(rejectionData));
+        spyOn(window, 'clearFlash');
         spyOn(window, 'add_flash');
       });
 
@@ -141,11 +143,21 @@ describe('dialogUserController', function() {
         });
       });
 
-      it('adds a flash message', function(done) {
+      it('clears flash messages', function(done) {
         $controller.submitButtonClicked();
 
         setTimeout(function() {
-          expect(window.add_flash).toHaveBeenCalledWith('Error requesting data from server', 'error');
+          expect(window.clearFlash).toHaveBeenCalled();
+          done();
+        });
+      });
+
+      it('adds flash messages for each message after the -', function(done) {
+        $controller.submitButtonClicked();
+
+        setTimeout(function() {
+          expect(window.add_flash).toHaveBeenCalledWith('One', 'error');
+          expect(window.add_flash).toHaveBeenCalledWith('Two', 'error');
           done();
         });
       });
