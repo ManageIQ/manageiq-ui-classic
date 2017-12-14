@@ -1,6 +1,4 @@
-ManageIQ.angular.app.service('dialogFieldRefreshService', ['miqService', function(miqService) {
-  this.areFieldsBeingRefreshed = false;
-
+ManageIQ.angular.app.service('dialogFieldRefreshService', ['API', function(API) {
   this.refreshField = function(dialogData, dialogField, url, idList) {
     this.areFieldsBeingRefreshed = true;
     var data = angular.toJson({
@@ -15,7 +13,7 @@ ManageIQ.angular.app.service('dialogFieldRefreshService', ['miqService', functio
     });
 
     return new Promise(function(resolve) {
-      miqService.jqueryRequest(url + idList.dialogId, {data: data, dataType: 'json'}).then(function(response) {
+      API.post(url + idList.dialogId, data).then(function(response) {
         resolve(response.result[dialogField]);
         if ($.active < 1) {
           this.areFieldsBeingRefreshed = false;
