@@ -282,7 +282,6 @@ module EmsCommon
       refreshemss if params[:pressed] == "#{table_name}_refresh"
       pause_or_resume_emss(:pause => true) if params[:pressed] == "#{table_name}_pause"
       pause_or_resume_emss(:resume => true) if params[:pressed] == "#{table_name}_resume"
-      #     scanemss if params[:pressed] == "scan"
       tag(model) if params[:pressed] == "#{table_name}_tag"
 
       # Edit Tags for Middleware Manager Relationship pages
@@ -633,47 +632,6 @@ module EmsCommon
     if @lastaction == "show_list"
       show_list
       @refresh_partial = "layouts/gtl"
-    end
-  end
-
-  # Scan all selected or single displayed ems(s)
-  def scanemss
-    assert_privileges(params[:pressed])
-    emss = []
-    if @lastaction == "show_list" # showing a list, scan all selected emss
-      emss = find_checked_items
-      if emss.empty?
-        add_flash(_("No %{model} were selected for scanning") % {:model => ui_lookup(:table => table_name)}, :error)
-      end
-      process_emss(emss, "scan")  unless emss.empty?
-      add_flash(n_("Analysis initiated for %{count} %{model} from the %{product} Database",
-                   "Analysis initiated for %{count} %{models} from the %{product} Database", emss.length) %
-        {:count   => emss.length,
-         :product => Vmdb::Appliance.PRODUCT_NAME,
-         :model   => ui_lookup(:table => table_name),
-         :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
-      show_list
-      @refresh_partial = "layouts/gtl"
-    else # showing 1 ems, scan it
-      if params[:id].nil? || model.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => table_name)}, :error)
-      else
-        emss.push(params[:id])
-      end
-      process_emss(emss, "scan")  unless emss.empty?
-      add_flash(n_("Analysis initiated for %{count} %{model} from the %{product} Database",
-                   "Analysis initiated for %{count} %{models} from the %{product} Database", emss.length) %
-        {:count   => emss.length,
-         :product => Vmdb::Appliance.PRODUCT_NAME,
-         :model   => ui_lookup(:table => table_name),
-         :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
-      params[:display] = @display
-      show
-      if ["vms", "hosts", "storages"].include?(@display)
-        @refresh_partial = "layouts/gtl"
-      else
-        @refresh_partial = "main"
-      end
     end
   end
 
