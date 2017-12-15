@@ -564,4 +564,26 @@ describe VmInfraController do
     controller.send(:disable_check?, wf)
     expect(response.status).to eq(200)
   end
+
+  it "should not add search variables in @edit[:new] when rendering Policy assignment form" do
+    controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
+    controller.instance_variable_set(:@_params,
+                                     :pressed                => "vm_protect",
+                                     "check_#{vm_vmware.id}" => "1",
+                                     :active_tree            => "vandt_tree",
+                                     :model_name             => "VmOrTemplate",
+                                     :model                  => "VmOrTemplate",
+                                     :explorer               => true,
+                                     :additional_options     => {:in_a_form => true}
+    )
+    edit = {:new => {}, :current => {}}
+    controller.instance_variable_set(:@sb, {})
+    controller.instance_variable_set(:@edit, edit)
+    session[:edit] = edit
+    allow(controller).to receive(:assign_policies)
+    allow(controller).to receive(:replace_right_cell)
+    controller.send(:x_button)
+    controller.report_data
+    expect(assigns(:edit)[:new]).to_not include(:expression)
+  end
 end
