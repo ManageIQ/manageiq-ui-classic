@@ -11,13 +11,13 @@
     .form-group
       .col-md-2
       .col-md-8
-        %button.btn.btn-primary.pull-right#add-additional-volume-button
+        %button.btn.btn-primary.pull-right.add-additional-volume-button
           Add Volume
   %hr
 
 .form-horizontal#add-volumes-form
   - while (draw_fields)
-    #add-volume-fieldset
+    .add-volume-fieldset
       - keys.each do |key|
         .form-group
           %label.col-md-2.control-label{:valign => "top"}
@@ -32,7 +32,7 @@
                                     :value             => options[:"#{key}_#{counter}"],
                                     :id                => "volumes__#{key}_#{counter}",
                                     :name              => "volumes__#{key}_#{counter}",
-                                    "data-miq_observe" => {:interval => ".5", :url => url}.to_json}
+                                    "data-miq_observe" => {:interval => ".1", :url => url}.to_json}
               - else
                 = options[:"#{key}_#{counter}"]
             - elsif workflow.get_field(key, dialog)[:data_type] == :boolean
@@ -42,7 +42,7 @@
                      :required          => workflow.get_field(key, dialog)[:required],
                      :name              => "volumes__#{key}_#{counter}",
                      :disabled          => !(@edit && workflow.get_field(key, dialog)[:display] == :edit && !@edit[:stamp_typ]),
-                     "data-miq_observe" => {:interval => ".5", :url => url}.to_json}
+                     "data-miq_observe_checkbox" => {:url => url}.to_json}
           .col-md-2
       %hr
       %div
@@ -51,10 +51,10 @@
 
 :javascript
   (function(){
-      var button = $("#add-additional-volume-button");
+      var button = $(".add-additional-volume-button");
 
       button.click(function() {
-        var sourceNode = $("#add-volume-fieldset");
+        var sourceNode = $(".add-volume-fieldset").first();
         var node = duplicateNode(sourceNode, ["id", "name"]);
 
         sourceNode.parent().append(node);
@@ -70,6 +70,9 @@
             if (node.hasAttribute(attr)) {
               $(node).prop(attr, increment_attr($(node).prop(attr)));
             }
+            // reset the observed flag so that the listener properly tracks
+            // changes to this field
+            $(node).data('isObserved', false);
           });
           node.value = '';
           node.checked = false;
