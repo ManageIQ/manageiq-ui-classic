@@ -14,19 +14,17 @@
                 %text_field_tag
                   = _(method.to_s)
   - else
-    = hidden_div_if(!@edit[:new][:method], :id => "ae_tree_select_div") do
-      = render(:partial => 'layouts/ae_tree_select', :locals => {:entry_point => "Method"})
     %hr
     %h3
       = _('Embedded Methods')
-    %table{:width => "100%", :align => "bottom"}
-      %tr
-        %td{:align => "right"}
-          %button.btn.btn-primary{:type        => "button",
-                                  :onFocus     => 'miqShowAE_Tree("namespace");miqButtons("hide");',
-                                  :align       => "left"}= _('Add Method')
-          %br
-          %br
+    #automate-inline-method-select{'ng-controller' => 'aeInlineMethodSelectionController as vm'}
+      .pull-right
+        %button.btn.btn-primary{:type        => "button",
+                                'ng-click'   => 'vm.openModal();',
+                                :align       => "left"}= _('Add Method')
+      .clearfix
+    :javascript
+      miq_bootstrap('#automate-inline-method-select', 'ManageIQ.automateSelector');
     - if !@edit[:new][:embedded_methods].nil? && !@edit[:new][:embedded_methods].empty?
       %table.table.table-striped.table-hover.table-condensed.table-bordered
         %thead

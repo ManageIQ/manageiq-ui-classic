@@ -30,22 +30,14 @@ class TreeBuilderAeClass < TreeBuilder
     count_only_or_objects(count_only, objects)
   end
 
-  def ae_instances(object, count_only)
-    count_only_or_objects(count_only, object.ae_instances, [:display_name, :name])
-  end
-
-  def ae_methods(object, count_only)
-    count_only_or_objects(count_only, object.ae_methods, [:display_name, :name])
-  end
-
   def x_get_tree_class_kids(object, count_only, type)
-    case type
-    when :ae
-      ae_instances(object, count_only) + ae_methods(object, count_only)
-    when :ae_methods
-      ae_methods(object, count_only)
+    instances = count_only_or_objects(count_only, object.ae_instances, [:display_name, :name])
+    # show methods in automate explorer tree
+    if type == :ae # FIXME: is this ever false?
+      methods = count_only_or_objects(count_only, object.ae_methods, [:display_name, :name])
+      instances + methods
     else
-      ae_instances(object, count_only)
+      instances
     end
   end
 
