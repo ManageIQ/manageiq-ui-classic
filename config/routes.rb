@@ -2212,6 +2212,7 @@ Rails.application.routes.draw do
         create_method
         create_ns
         domains_priority_edit
+        embedded_methods_add
         embedded_methods_remove
         explorer
         expand_toggle
@@ -3485,6 +3486,7 @@ Rails.application.routes.draw do
 
   # API-like JSON trees
   get '/tree/automate_entrypoint', :to => 'tree#automate_entrypoint'
+  get '/tree/automate_inline_methods', :to => 'tree#automate_inline_methods'
 
   # pure-angular templates
   get '/static/*id' => 'static#show', :format => false

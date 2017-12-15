@@ -5,13 +5,24 @@ class TreeController < ApplicationController
   before_action :check_privileges
 
   def automate_entrypoint
-    tree = TreeBuilderAutomateEntrypoint.new(:automate_entrypoint, :automate_entrypoint_tree, {})
-    json = if params[:id]
-             TreeBuilder.convert_bs_tree(tree.x_get_child_nodes(params[:id])).to_json
-           else
-             tree.instance_variable_get(:@bs_tree)
-           end
-
+    json = fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint, params[:id])
     render :body => json, :content_type => 'application/json'
+  end
+
+  def automate_inline_methods
+    json = fetch_tree(TreeBuilderAutomateInlineMethod, :automate_inline_method, params[:id])
+    render :body => json, :content_type => 'application/json'
+  end
+
+  private
+
+  def fetch_tree(klass, name, node_id = nil)
+    tree = klass.new(name, "#{name}_tree".to_sym, {})
+
+    if node_id
+      TreeBuilder.convert_bs_tree(tree.x_get_child_nodes(node_id)).to_json
+    else
+      tree.instance_variable_get(:@bs_tree)
+    end
   end
 end

@@ -5,7 +5,6 @@ class TreeBuilderAutomate < TreeBuilderAeClass
 
   def initialize(name, type, sandbox, build = true, controller = nil)
     @controller = controller
-    sandbox[:trees][:automate_tree][:type] = :ae_methods if type == :ae_methods && sandbox.has_key_path?(:trees, 'automate_tree')
     super(name, type, sandbox, build)
   end
 
