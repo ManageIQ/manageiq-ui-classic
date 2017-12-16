@@ -40,16 +40,6 @@
                               "style"       => "color: black; font-weight: normal;"}
             = @emstype_display
 
-    .form-group{"ng-class" => "{'has-error': angularForm.api_version.$invalid}", "ng-if" => "emsCommonModel.emstype == 'openstack_infra'"}
-      %label.col-md-2.control-label{"for" => "ems_api_version"}
-        = _("API Version")
-      .col-md-8
-        = select_tag('api_version',
-                     options_for_select(@openstack_api_versions),
-                     "ng-model"                    => "emsCommonModel.api_version",
-                     "checkchange"                 => "",
-                     "selectpicker-for-select-tag" => "")
-
     .form-group{"ng-class" => "{'has-error': angularForm.zone.$invalid}"}
       %label.col-md-2.control-label{"for" => "ems_zone"}
         = _("Zone")
@@ -71,6 +61,16 @@
                        "checkchange"                 => "",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.api_version.$invalid}", "ng-if" => "emsCommonModel.emstype == 'openstack_infra'"}
+      %label.col-md-2.control-label{"for" => "ems_api_version"}
+        = _("API Version")
+      .col-md-8
+        = select_tag('api_version',
+                     options_for_select(@openstack_api_versions),
+                     "ng-model"                    => "emsCommonModel.api_version",
+                     "checkchange"                 => "",
+                     "selectpicker-for-select-tag" => "")
 
     .form-group{"ng-class" => "{'has-error': angularForm.host_default_vnc_port_start.$invalid}", "ng-if" => "emsCommonModel.emstype == 'vmwarews'"}
       %label.col-md-2.control-label{"for" => "ems_vnc_start_port"}
