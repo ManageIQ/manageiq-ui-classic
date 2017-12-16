@@ -8,66 +8,42 @@ class CloudVolumeController < ApplicationController
   include Mixins::GenericFormMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::GenericButtonMixin
 
   def self.display_methods
     %w(cloud_volume_snapshots cloud_volume_backups instances)
   end
 
-  # handle buttons pressed on the button bar
-  def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(instances).include?(@display)
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
-
-    if params[:pressed] == "custom_button"
-      custom_buttons
-      return
-    end
-
-    if params[:pressed].starts_with?("instance_") # support for instance_ buttons
-      pfx = pfx_for_vm_button_pressed(params[:pressed])
-      process_vm_buttons(pfx)
-      # Control transferred to another screen, so return
-      return if vm_button_redirected?(pfx, params[:pressed])
-
-      unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-              "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-        show # will render show?display=instances
-      end
-    else
-      @refresh_div = "main_div"
-      return tag("CloudVolume") if params[:pressed] == "cloud_volume_tag"
-      delete_volumes if params[:pressed] == 'cloud_volume_delete'
-    end
-
-    if params[:pressed] == "cloud_volume_attach"
-      javascript_redirect :action => "attach", :id => checked_item_id
-    elsif params[:pressed] == "cloud_volume_detach"
-      @volume = find_record_with_rbac(CloudVolume, checked_item_id)
-      if @volume.attachments.empty?
+  def specific_buttons(pressed)
+    case pressed
+    when 'cloud_volume_delete'
+      @refresh_div = 'main_div'
+      delete_volumes
+      return false
+    when 'cloud_volume_attach'
+      javascript_redirect :action => 'attach', :id => checked_item_id
+    when 'cloud_volume_detach'
+      volume = find_record_with_rbac(CloudVolume, checked_item_id)
+      if volume.attachments.empty?
         render_flash(_("Cloud Volume \"%{volume_name}\" is not attached to any Instances") % {
-                     :volume_name => @volume.name}, :error)
+                     :volume_name => volume.name}, :error)
       else
-        javascript_redirect :action => "detach", :id => checked_item_id
+        javascript_redirect :action => 'detach', :id => checked_item_id
       end
-    elsif params[:pressed] == "cloud_volume_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    elsif params[:pressed] == "cloud_volume_snapshot_create"
-      javascript_redirect :action => "snapshot_new", :id => checked_item_id
-    elsif params[:pressed] == "cloud_volume_new"
-      javascript_redirect :action => "new"
-    elsif params[:pressed] == "cloud_volume_backup_create"
-      javascript_redirect :action => "backup_new", :id => checked_item_id
-    elsif params[:pressed] == "cloud_volume_backup_restore"
-      javascript_redirect :action => "backup_select", :id => checked_item_id
-    elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
-                                                   "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-      render_or_redirect_partial(pfx)
+    when 'cloud_volume_edit'
+      javascript_redirect :action => 'edit', :id => checked_item_id
+    when 'cloud_volume_snapshot_create'
+      javascript_redirect :action => 'snapshot_new', :id => checked_item_id
+    when 'cloud_volume_new'
+      javascript_redirect :action => 'new'
+    when 'cloud_volume_backup_create'
+      javascript_redirect :action => 'backup_new', :id => checked_item_id
+    when 'cloud_volume_backup_restore'
+      javascript_redirect :action => 'backup_select', :id => checked_item_id
     else
-      render_flash
+      return false
     end
+    true
   end
 
   def attach
