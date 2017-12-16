@@ -2,8 +2,6 @@
 module PxeController::PxeImageTypes
   extend ActiveSupport::Concern
 
-  
-
   def pxe_image_type_new
     assert_privileges("pxe_image_type_new")
     @pxe_image_type = PxeImageType.new
@@ -25,7 +23,7 @@ module PxeController::PxeImageTypes
       @edit = session[:edit] = nil # clean out the saved info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
-    elsif ["add", "save"].include?(params[:button])
+    elsif %w(add save).include?(params[:button])
       id = params[:id] || "new"
       return unless load_edit("pxe_image_type_edit__#{id}", "replace_cell__explorer")
       pxe_image_type_get_form_vars
@@ -43,7 +41,7 @@ module PxeController::PxeImageTypes
         @edit = session[:edit] = nil # clean out the saved info
         add_flash(_("System Image Type \"%{name}\" was added") % {:name => add_pxe.name})
         get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:pxe_image_types, :customization_templates])
+        replace_right_cell(:nodetype => x_node, :replace_trees => %i(pxe_image_types customization_templates))
       else
         @in_a_form = true
         add_pxe.errors.each do |field, msg|
@@ -86,7 +84,7 @@ module PxeController::PxeImageTypes
         process_pxe_image_type(pxes, method)
       end
       get_node_info(x_node)
-      replace_right_cell(:nodetype => "root", :replace_trees => [:pxe_image_types, :customization_templates])
+      replace_right_cell(:nodetype => "root", :replace_trees => %i(pxe_image_types customization_templates))
     elsif params[:id].nil? || find_id_with_rbac(PxeImageType, params[:id]).nil?
       # showing 1 vm
       add_flash(_("System Image Type no longer exists"), :error)
@@ -94,7 +92,7 @@ module PxeController::PxeImageTypes
       @refresh_partial = "layouts/x_gtl"
     else
       pxes.push(find_id_with_rbac(PxeImageType, params[:id]))
-      process_pxe_image_type(pxes, method)  unless pxes.empty?
+      process_pxe_image_type(pxes, method) unless pxes.empty?
       # TODO: tells callers to go back to show_list because this record may be gone
       # Should be refactored into calling show_list right here
       if method == 'destroy'
@@ -102,7 +100,7 @@ module PxeController::PxeImageTypes
         @single_delete = true unless flash_errors?
       end
       get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node, :replace_trees => [:pxe_image_types, :customization_templates])
+      replace_right_cell(:nodetype => x_node, :replace_trees => %i(pxe_image_types customization_templates))
     end
     pxes.count
   end
@@ -123,7 +121,7 @@ module PxeController::PxeImageTypes
     @sortcol = session[:pxe_image_type_sortcol].nil? ? 0 : session[:pxe_image_type_sortcol].to_i
     @sortdir = session[:pxe_image_type_sortdir].nil? ? "ASC" : session[:pxe_image_type_sortdir]
 
-    @view, @pages = get_view(PxeImageType)  # Get the records (into a view) and the paginator
+    @view, @pages = get_view(PxeImageType) # Get the records (into a view) and the paginator
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:pxe_image_type_sortcol] = @sortcol
@@ -132,7 +130,7 @@ module PxeController::PxeImageTypes
     update_gtl_div('pxe_image_type_list') if params[:action] != "button" && pagination_or_gtl_request?
   end
 
-  private #######################
+  private
 
   def pxe_image_type_validate_fields
     if @edit[:new][:name].blank?
@@ -152,7 +150,7 @@ module PxeController::PxeImageTypes
 
   # Get variables from edit form
   def pxe_image_type_get_form_vars
-    @pxe_image_type = @edit[:pxe_id] ? PxeImageType.find_by_id(@edit[:pxe_id]) : PxeImageType.new
+    @pxe_image_type = @edit[:pxe_id] ? PxeImageType.find(@edit[:pxe_id]) : PxeImageType.new
     @edit[:new][:name] = params[:name] if params[:name]
     @edit[:new][:provision_type] = params[:provision_type] if params[:provision_type]
   end
@@ -191,7 +189,7 @@ module PxeController::PxeImageTypes
     else
       @right_cell_div = "pxe_image_type_details"
       nodes = treenodeid.split("-")
-      @record = @pxe_image_type = PxeImageType.find_by_id(from_cid(nodes.last))
+      @record = @pxe_image_type = PxeImageType.find(from_cid(nodes.last))
       @right_cell_text = _("System Image Types \"%{name}\"") % {:name => @pxe_image_type.name}
     end
   end
