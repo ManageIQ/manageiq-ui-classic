@@ -246,15 +246,10 @@ module ApplicationController::Filter
   end
 
   def clear_default_search
+    # @edit[@expkey][:exp_last_loaded] = nil                                  # Clear the last search loaded
     @edit[@expkey][:selected] = {:id => 0, :description => "All"}             # Save the last search loaded
     @edit[:adv_search_applied] = nil
-    @edit[@expkey][:expression] = {"???" => "???"}                            # Set as new exp element
-    @edit[:new][@expkey] = @edit[@expkey][:expression]                        # Copy to new exp
-    @edit[@expkey].history.reset(@edit[@expkey][:expression])
-    @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the expression table
-    # @edit[@expkey][:exp_last_loaded] = nil                                  # Clear the last search loaded
-    @edit[:adv_search_name] = nil                                             # Clear search name
-    @edit[:adv_search_report] = nil                                           # Clear the report name
+    search_expression_reset_fields
   end
 
   def load_default_search(id)

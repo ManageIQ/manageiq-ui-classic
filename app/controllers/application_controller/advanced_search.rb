@@ -149,14 +149,18 @@ module ApplicationController::AdvancedSearch
   end
 
   def adv_search_button_reset_fields
-    @edit[@expkey][:expression] = {"???" => "???"}            # Set as new exp element
-    @edit[:new][@expkey] = @edit[@expkey][:expression]        # Copy to new exp
+    @edit[@expkey][:exp_last_loaded] = nil                    # Clear the last search loaded
+    @edit[@expkey][:selected] = nil                           # Clear selected search
+    search_expression_reset_fields
+  end
+
+  def search_expression_reset_fields
+    @edit[@expkey][:expression] = {"???" => "???"}                            # Set as new exp element
+    @edit[:new][@expkey] = @edit[@expkey][:expression]                        # Copy to new exp
     @edit[@expkey].history.reset(@edit[@expkey][:expression])
     @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the expression table
-    @edit[@expkey][:exp_last_loaded] = nil                    # Clear the last search loaded
-    @edit[:adv_search_name] = nil                             # Clear search name
-    @edit[:adv_search_report] = nil                           # Clear the report name
-    @edit[@expkey][:selected] = nil                           # Clear selected search
+    @edit[:adv_search_name] = nil                                             # Clear search name
+    @edit[:adv_search_report] = nil                                           # Clear the report name
   end
 
   def adv_search_redraw_tree_and_main(tree)
