@@ -1233,6 +1233,7 @@ Rails.application.routes.draw do
         scaling
         show_list
         tagging_edit
+        properties
       ) +
                compare_get,
       :post => %w(

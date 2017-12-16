@@ -62,6 +62,7 @@
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
 
-  = render :partial => "providers/common/properties"
+  %div{"ng-if"      => "!!emsCommonModel.emstype",
+       "ng-include" => "'#{properties_path}?id=#{@ems.id}&type=' + emsCommonModel.emstype"}
 
   = render :partial => "layouts/angular/x_edit_buttons_angular", :locals => {:record => @ems, :restful => true}
