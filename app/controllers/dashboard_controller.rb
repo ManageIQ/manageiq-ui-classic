@@ -138,24 +138,32 @@ class DashboardController < ApplicationController
     shortcuts = widget.miq_widget_shortcuts.order("sequence").select do |shortcut|
                   role_allows?(:feature => shortcut.miq_shortcut.rbac_feature_name, :any => true)
                 end.map do |shortcut|
-                  {:description => shortcut.description, :href => shortcut.miq_shortcut.url }
+                  {:description => shortcut.description, :href => shortcut.miq_shortcut.url}
                 end
     render :json => {:shortcuts => shortcuts,
                      :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
   end
 
+  def widget_minimized?(id)
+    @sb[:dashboards][@sb[:active_db]][:minimized].include?(id)
+  end
+  private :widget_minimized?
+
   def widget_report_data
     widget = find_record_with_rbac(MiqWidget, params[:id])
-    render :json => {:content   => widget.contents_for_user(current_user).contents,
-                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
+    render :json => {
+      :content   => widget.contents_for_user(current_user).contents,
+      :minimized => widget_minimized?(params[:id])
+    }
   end
 
   def widget_rss_data
     widget = find_record_with_rbac(MiqWidget, params[:id])
-    content = widget.contents_for_user(current_user).contents.gsub("https://localhost:3000",
-                                                                   "#{request.protocol}#{request.host}:#{request.port}").html_safe
-    render :json => {:content   => content,
-                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
+    content = widget
+              .contents_for_user(current_user)
+              .contents.gsub("https://localhost:3000", "#{request.protocol}#{request.host}:#{request.port}")
+              .html_safe
+    render :json => {:content => content, :minimized => widget_minimized?(params[:id])}
   end
 
   def show
@@ -208,8 +216,7 @@ class DashboardController < ApplicationController
 
     # if all of user groups dashboards have been deleted and they are logged in, need to reset active_db_id
     if ws.nil?
-      wset = MiqWidgetSet.find_by_id(@sb[:active_db_id])
-      @sb[:active_db_id] = nil if wset.nil?
+      @sb[:active_db_id] = nil unless MiqWidgetSet.exists?(:id => @sb[:active_db_id])
     end
 
     # Create default dashboard for this user, if not present
@@ -217,7 +224,7 @@ class DashboardController < ApplicationController
 
     # Set tabs now if user's group didnt have any dashboards using default dashboard
     if records.empty?
-      db = MiqWidgetSet.find_by_id(@sb[:active_db_id])
+      db = MiqWidgetSet.find(@sb[:active_db_id])
       @active_tab = ws.id.to_s
       @tabs.push([ws.id.to_s, db.description])
     # User's group has dashboards, delete userid|default dashboard if it exists, dont need to keep that
@@ -239,13 +246,13 @@ class DashboardController < ApplicationController
     prev_type   = nil
     @available_widgets = []
     MiqWidget.available_for_user(current_user).sort_by { |a| a.content_type + a.title.downcase }.each do |w|
-      @available_widgets.push(w.id)  # Keep track of widgets available to this user
+      @available_widgets.push(w.id) # Keep track of widgets available to this user
       if !col_widgets.include?(w.id) && w.enabled
         image, tip = case w.content_type
-                     when "menu"   then ["fa fa-share-square-o fa-lg",     _("Add this Menu Widget")]
-                     when "rss"    then ["fa fa-rss fa-lg",  _("Add this RSS Feed Widget")]
-                     when "chart"  then ["fa fa-pie-chart fa-lg", _("Add this Chart Widget")]
-                     when "report" then ["fa fa-file-text-o fa-lg",   _("Add this Report Widget")]
+                     when "menu"   then ["fa fa-share-square-o fa-lg", _("Add this Menu Widget")]
+                     when "rss"    then ["fa fa-rss fa-lg",            _("Add this RSS Feed Widget")]
+                     when "chart"  then ["fa fa-pie-chart fa-lg",      _("Add this Chart Widget")]
+                     when "report" then ["fa fa-file-text-o fa-lg",    _("Add this Report Widget")]
                      end
         if prev_type && prev_type != w.content_type
           widget_list << {:id => w.content_type, :type => :separator}
@@ -285,8 +292,8 @@ class DashboardController < ApplicationController
     assert_privileges("dashboard_reset")
     ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
     ws.destroy unless ws.nil?
-    ws = create_user_dashboard(@sb[:active_db_id])
-    @sb[:dashboards] = nil  # Reset dashboards hash so it gets recreated
+    create_user_dashboard(@sb[:active_db_id])
+    @sb[:dashboards] = nil # Reset dashboards hash so it gets recreated
     javascript_redirect :action => 'show'
   end
 
@@ -324,7 +331,7 @@ class DashboardController < ApplicationController
       return
     end
 
-    widget = MiqWidget.find_by_id(params[:widget].to_i)
+    widget = MiqWidget.find(params[:widget].to_i)
     # Save the rr id for rendering
     session[:report_result_id] = widget.contents_for_user(current_user).miq_report_result_id
 
@@ -353,19 +360,19 @@ class DashboardController < ApplicationController
       end
       save_user_dashboards
     end
-    head :ok               # We have nothing to say  :)
+    head :ok # We have nothing to say  :)
   end
 
   # A widget has been closed
   def widget_close
-    if params[:widget]                # Make sure we got a widget in
+    if params[:widget] # Make sure we got a widget in
       w = params[:widget].to_i
       @sb[:dashboards][@sb[:active_db]][:col1].delete(w)
       @sb[:dashboards][@sb[:active_db]][:col2].delete(w)
       @sb[:dashboards][@sb[:active_db]][:col3].delete(w)
       @sb[:dashboards][@sb[:active_db]][:minimized].delete(w)
       ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
-      w = MiqWidget.find_by_id(w)
+      w = MiqWidget.find_by(:id => w)
       ws.remove_member(w) if w
       save_user_dashboards
       javascript_redirect :action => 'show'
@@ -377,7 +384,7 @@ class DashboardController < ApplicationController
   # A widget has been added
   def widget_add
     assert_privileges("dashboard_add")
-    if params[:widget]                # Make sure we got a widget in
+    if params[:widget] # Make sure we got a widget in
       w = params[:widget].to_i
       if @sb[:dashboards][@sb[:active_db]][:col3].length < @sb[:dashboards][@sb[:active_db]][:col1].length &&
          @sb[:dashboards][@sb[:active_db]][:col3].length < @sb[:dashboards][@sb[:active_db]][:col2].length
@@ -388,7 +395,7 @@ class DashboardController < ApplicationController
         @sb[:dashboards][@sb[:active_db]][:col1].insert(0, w)
       end
       ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
-      w = MiqWidget.find_by_id(w)
+      w = MiqWidget.find(w)
       if ws.add_member(w).present?
         save_user_dashboards
         w.create_initial_content_for_user(session[:userid])
@@ -413,7 +420,7 @@ class DashboardController < ApplicationController
       @user_name     = params[:user_name]
       @user_password = params[:user_password]
     end
-    @settings = copy_hash(DEFAULT_SETTINGS)               # Need settings, else pages won't display
+    @settings = copy_hash(DEFAULT_SETTINGS) # Need settings, else pages won't display
     @more = params[:type] && params[:type] != "less"
     add_flash(_("Session was timed out due to inactivity. Please log in again."), :error) if params[:timeout] == "true"
     logon_details = MiqServer.my_server(true).logon_status_details
@@ -606,7 +613,7 @@ class DashboardController < ApplicationController
     @timeline = true
     render :update do |page|
       page << javascript_prologue
-      page << javascript_highlight("report_#{session[:last_rpt_id]}_link", false)  if session[:last_rpt_id]
+      page << javascript_highlight("report_#{session[:last_rpt_id]}_link", false) if session[:last_rpt_id]
       center_tb_buttons = {
         'timeline_txt' => "text",
         'timeline_csv' => "CSV"
@@ -628,7 +635,7 @@ class DashboardController < ApplicationController
 
       page.replace("tl_div", :partial => "dashboard/tl_detail")
       page << "miqSparkle(false);"
-      session[:last_rpt_id] = @report.try(:id)  # Remember rpt record id to turn off later
+      session[:last_rpt_id] = @report.try(:id) # Remember rpt record id to turn off later
     end
   end
 
@@ -654,7 +661,7 @@ class DashboardController < ApplicationController
   def change_group
     # Get the user and new group and set current_group in the user record
     db_user = current_user
-    db_user.update_attributes(:current_group => MiqGroup.find_by_id(params[:to_group]))
+    db_user.update_attributes(:current_group => MiqGroup.find_by(:id => params[:to_group]))
 
     # Rebuild the session
     session_reset
@@ -688,17 +695,17 @@ class DashboardController < ApplicationController
     self.current_user = db_user
 
     # Load settings for this user, if they exist
-    @settings = copy_hash(DEFAULT_SETTINGS)             # Start with defaults
-    unless db_user.nil? || db_user.settings.nil?    # If the user has saved settings
+    @settings = copy_hash(DEFAULT_SETTINGS) # Start with defaults
+    unless db_user.nil? || db_user.settings.nil? # If the user has saved settings
 
-      db_user.settings.delete(:dashboard)               # Remove pre-v4 dashboard settings
+      db_user.settings.delete(:dashboard) # Remove pre-v4 dashboard settings
       db_user.settings.delete(:db_item_min)
 
       @settings.each { |key, value| value.merge!(db_user.settings[key]) unless db_user.settings[key].nil? }
-      @settings[:default_search] = db_user.settings[:default_search]  # Get the user's default search setting
+      @settings[:default_search] = db_user.settings[:default_search] # Get the user's default search setting
     end
 
-    session[:user_TZO] = params[:user_TZO] ? params[:user_TZO].to_i : nil     # Grab the timezone (future use)
+    session[:user_TZO] = params[:user_TZO] ? params[:user_TZO].to_i : nil # Grab the timezone (future use)
     session[:browser] ||= Hash.new("Unknown")
     if params[:browser_name]
       session[:browser][:name] = params[:browser_name].to_s.downcase
@@ -739,7 +746,7 @@ class DashboardController < ApplicationController
 
   # Create a user's dashboard, pass in dashboard id if that is used to copy else use default dashboard
   def create_user_dashboard(db_id = nil)
-    db = db_id ? MiqWidgetSet.find_by_id(db_id) : MiqWidgetSet.where_unique_on("default").first
+    db = db_id ? MiqWidgetSet.find_by(:id => db_id) : MiqWidgetSet.where_unique_on("default").first
     ws = MiqWidgetSet.where_unique_on(db.name, current_user).first
     if ws.nil?
       # Create new db if it doesn't exist
@@ -754,9 +761,9 @@ class DashboardController < ApplicationController
       ws.set_data[:last_group_db_updated] = db.updated_on
       ws.save!
       ws.replace_children(db.children)
-      ws.members.each { |w| w.create_initial_content_for_user(session[:userid]) }  # Generate content if not there
+      ws.members.each { |w| w.create_initial_content_for_user(session[:userid]) } # Generate content if not there
     end
-    unless db_id     # set active_db and id and tabs now if user's group didnt have any dashboards
+    unless db_id # set active_db and id and tabs now if user's group didnt have any dashboards
       @sb[:active_db] = db.name
       @sb[:active_db_id] = db.id
     end
@@ -777,7 +784,7 @@ class DashboardController < ApplicationController
   end
 
   def build_timeline
-    @record = MiqReport.for_user(current_user).find_by_id(from_cid(params[:id]))
+    @record = MiqReport.for_user(current_user).find_by(:id => from_cid(params[:id]))
     @ajax_action = "tl_generate"
   end
 
@@ -814,6 +821,6 @@ class DashboardController < ApplicationController
   end
 
   def get_session_data
-    @layout       = "login"
+    @layout = "login"
   end
 end
