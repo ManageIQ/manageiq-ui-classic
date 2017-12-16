@@ -358,7 +358,7 @@ class CloudVolumeController < ApplicationController
         end
       end
     end
-    process_cloud_volumes(volumes_to_delete, "destroy") unless volumes_to_delete.empty?
+    delete_cloud_volumes(volumes_to_delete) unless volumes_to_delete.empty?
 
     # refresh the list if applicable
     if @lastaction == "show_list" && @breadcrumbs.last[:url].include?(@lastaction)
@@ -601,26 +601,21 @@ class CloudVolumeController < ApplicationController
     options
   end
 
-  # dispatches tasks to multiple volumes
-  def process_cloud_volumes(volumes, task)
-    return if volumes.empty?
-
-    if task == "destroy"
-      volumes.each do |volume|
-        audit = {
-          :event        => "cloud_volume_record_delete_initiateed",
-          :message      => "[#{volume.name}] Record delete initiated",
-          :target_id    => volume.id,
-          :target_class => "CloudVolume",
-          :userid       => session[:userid]
-        }
-        AuditEvent.success(audit)
-        volume.delete_volume_queue(session[:userid])
-      end
-      add_flash(n_("Delete initiated for %{number} Cloud Volume.",
-                   "Delete initiated for %{number} Cloud Volumes.",
-                   volumes.length) % {:number => volumes.length})
+  def delete_cloud_volumes(volumes)
+    volumes.each do |volume|
+      audit = {
+        :event        => "cloud_volume_record_delete_initiateed",
+        :message      => "[#{volume.name}] Record delete initiated",
+        :target_id    => volume.id,
+        :target_class => "CloudVolume",
+        :userid       => session[:userid]
+      }
+      AuditEvent.success(audit)
+      volume.delete_volume_queue(session[:userid])
     end
+    add_flash(n_("Delete initiated for %{number} Cloud Volume.",
+                 "Delete initiated for %{number} Cloud Volumes.",
+                 volumes.length) % {:number => volumes.length})
   end
 
   menu_section :bst
