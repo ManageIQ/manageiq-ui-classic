@@ -26,7 +26,7 @@ module VmShowMixin
     end
 
     # Build the Explorer screen from scratch
-    build_accordions_and_trees_only
+    allowed_features = build_accordions_and_trees_only
 
     params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms]  # Grab any explorer parm overrides
     session.delete(:exp_parms)

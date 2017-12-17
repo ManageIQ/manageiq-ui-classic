@@ -2331,10 +2331,12 @@ class ApplicationController < ActionController::Base
     allowed_features = ApplicationController::Feature.allowed_features(features)
     @trees = allowed_features.collect { |feature| feature.build_tree(@sb) }
     @accords = allowed_features.map(&:accord_hash)
+
+    allowed_features
   end
 
   def build_accordions_and_trees(x_node_to_set = nil)
-    build_accordions_and_trees_only
+    allowed_features = build_accordions_and_trees_only
     set_active_elements(allowed_features.first, x_node_to_set)
   end
 
