@@ -2325,12 +2325,16 @@ class ApplicationController < ActionController::Base
   end
 
   # Build all trees and accordions accoding to features available to the current user.
-  #
-  def build_accordions_and_trees(x_node_to_set = nil)
+
+  def build_accordions_and_trees_only
     # Build the Explorer screen from scratch
     allowed_features = ApplicationController::Feature.allowed_features(features)
     @trees = allowed_features.collect { |feature| feature.build_tree(@sb) }
     @accords = allowed_features.map(&:accord_hash)
+  end
+
+  def build_accordions_and_trees(x_node_to_set = nil)
+    build_accordions_and_trees_only
     set_active_elements(allowed_features.first, x_node_to_set)
   end
 
