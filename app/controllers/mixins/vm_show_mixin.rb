@@ -71,7 +71,7 @@ module VmShowMixin
     get_node_info(x_node_right_cell)
   end
 
-  def set_active_elements_authorized_user(tree_name, accord_name, klass, id)
+  def set_active_elements_authorized_user(tree_name, accord_name)
     self.x_active_tree   = tree_name
     self.x_active_accord = accord_name
   end
