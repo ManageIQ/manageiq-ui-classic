@@ -414,16 +414,12 @@ class ReportController < ApplicationController
   end
 
   def determine_xx_node_info
-    if x_active_tree == :savedreports_tree
-      saved_reports_get_node_info
-    elsif x_active_tree == :db_tree
-      db_get_node_info
-    elsif x_active_tree == :reports_tree
-      reports_get_node_info
-    elsif x_active_tree == :widgets_tree
-      widget_get_node_info
-    elsif x_active_tree == :export_tree
-      export_get_node_info
+    case x_active_tree
+    when :savedreports_tree then saved_reports_get_node_info
+    when :db_tree           then db_get_node_info
+    when :reports_tree      then reports_get_node_info
+    when :widgets_tree      then widget_get_node_info
+    when :export_tree       then export_get_node_info
     end
   end
 
@@ -523,21 +519,20 @@ class ReportController < ApplicationController
     @sb[:menu_buttons] = false
 
     case @nodetype
-    when "root"
-      determine_root_node_info
-    when "g"
-      determine_g_node_info(nodeid)
-    when "xx"
-      determine_xx_node_info
-    when "rr"
-      determine_rr_node_info
-    when "msc"
-      get_schedule(nodeid) unless nodeid.blank?
-      @sb[:selected_sched_id] = nodeid unless nodeid.blank?
+    when "root" then determine_root_node_info
+    when "g"    then determine_g_node_info(nodeid)
+    when "xx"   then determine_xx_node_info
+    when "rr"   then determine_rr_node_info
+    when "msc"  then determine_msc_node_info(nodeid)
     end
 
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
     {:view => @view, :pages => @pages}
+  end
+
+  def determine_msc_node_info(nodeid)
+    get_schedule(nodeid) unless nodeid.blank?
+    @sb[:selected_sched_id] = nodeid unless nodeid.blank?
   end
 
   def get_export_reports
@@ -593,22 +588,14 @@ class ReportController < ApplicationController
 
   def set_partial_name
     case x_active_tree
-    when :db_tree
-      return "db_list"
-    when :export_tree
-      return "export"
-    when :reports_tree
-      return params[:pressed] == "miq_report_schedule_add" ? "schedule_list" : "report_list"
-    when :roles_tree
-      return "role_list"
-    when :savedreports_tree
-      return "savedreports_list"
-    when :schedules_tree
-      return "schedule_list"
-    when :widgets_tree
-      return "widget_list"
-    else
-      return "role_list"
+    when :db_tree           then 'db_list'
+    when :export_tree       then 'export'
+    when :reports_tree      then params[:pressed] == 'miq_report_schedule_add' ? 'schedule_list' : 'report_list'
+    when :roles_tree        then 'role_list'
+    when :savedreports_tree then 'savedreports_list'
+    when :schedules_tree    then 'schedule_list'
+    when :widgets_tree      then 'widget_list'
+    else                         'role_list'
     end
   end
 
