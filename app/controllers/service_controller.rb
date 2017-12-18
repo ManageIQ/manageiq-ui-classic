@@ -307,6 +307,7 @@ class ServiceController < ApplicationController
       end
     when "MiqSearch"
       load_adv_search # Select/load filter from Global/My Filters
+      process_show_list
       @right_cell_text = _("All Services")
     end
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
