@@ -89,7 +89,7 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
                      'target'        => '#modal_param_div',
                      'function'      => 'sendDataWithRx',
                      'function-data' => '{"type": "mwServerOps", "operation": "suspend", "timeout": 10}'},
-          :klass => ApplicationHelper::Button::MiddlewareServerAction),
+          :klass => ApplicationHelper::Button::MiddlewareDomainServerAction),
         button(
           :middleware_server_resume,
           nil,
