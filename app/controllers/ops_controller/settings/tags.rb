@@ -25,6 +25,7 @@ module OpsController::Settings::Tags
       category_get_all
       render :update do |page|
         page << javascript_prologue
+        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page.replace_html 'settings_co_categories', :partial => 'settings_co_categories_tab'
       end
     else
