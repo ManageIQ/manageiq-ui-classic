@@ -63,11 +63,6 @@ module VmShowMixin
     redirect_to :action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id
   end
 
-  # find the vm that was chosen
-  def identify_vm
-    @record = identify_record(params[:id])
-  end
-
   private
 
   def set_active_elements(feature, _x_node_to_set = nil)

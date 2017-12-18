@@ -436,10 +436,6 @@ module EmsCommon
 
   private ############################
 
-  def generate_breadcrumb(name, url, replace = false)
-    drop_breadcrumb({:name => name, :url => url}, replace)
-  end
-
   # Set form variables for edit
   def set_form_vars
     form_instance_vars
@@ -703,12 +699,6 @@ module EmsCommon
       end
       params[:display] = @display
     end
-  end
-
-  # true, if any of the given fields are either missing from or blank in hash
-  def any_blank_fields?(hash, fields)
-    fields = [fields] unless fields.kind_of? Array
-    fields.any? { |f| hash[f].blank? }
   end
 
   def model
