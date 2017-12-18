@@ -127,27 +127,6 @@ module ApplicationController::PolicySupport
     end
   end
 
-  def profile_toggle
-    if params[:pressed] == "tag_cat_toggle"
-      policy_escaped = j(params[:policy])
-      cat            = params[:cat]
-      render :update do |page|
-        page << javascript_prologue
-        if @catinfo[cat]
-          @catinfo[cat] = false
-          page << javascript_show("cat_#{policy_escaped}_div")
-          page << "$('#cat_#{policy_escaped}_icon').prop('src', #{ActionController::Base.helpers.image_path('tree/compress.png')});"
-        else
-          @catinfo[cat] = true # Set squashed = true
-          page << javascript_hide("cat_#{policy_escaped}_div")
-          page << "$('#cat_#{policy_escaped}_icon').prop('src', #{ActionController::Base.helpers.image_path('tree/expand.png')});"
-        end
-      end
-    else
-      render_flash(_("Button not yet implemented"), :error)
-    end
-  end
-
   private ############################
 
   # Assign policies to selected records of db
