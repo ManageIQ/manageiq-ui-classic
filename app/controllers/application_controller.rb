@@ -916,28 +916,6 @@ class ApplicationController < ActionController::Base
     session[:user_tz] = Time.zone = (user ? user.get_timezone : server_timezone)
   end
 
-  # Initialize the options for server selection
-  def init_server_options(show_all = true)
-    @server_options ||= {}
-    @server_options[:zones] = []
-    @server_options[:zone_servers] = {}
-    MiqServer.all.each do |ms|
-      next if !show_all && !ms.started? # Collect all or only started servers
-
-      if ms.id == MiqServer.my_server.id # This is the current server
-        @server_options[:server_id] ||= ms.id
-        next # Don't add to list
-      end
-      @server_options[:zones].push(ms.my_zone) unless @server_options[:zones].include?(ms.my_zone)
-      @server_options[:zone_servers][ms.my_zone] ||= []
-      @server_options[:zone_servers][ms.my_zone].push(ms.id)
-    end
-    @server_options[:server_id] ||= MiqServer.my_server.id
-    @server_options[:zone] = MiqServer.find(@server_options[:server_id]).my_zone
-    @server_options[:hostname] = ""
-    @server_options[:ipaddress] = ""
-  end
-
   def populate_reports_menu(tree_type = 'reports', mode = 'menu')
     # checking to see if group (used to be role) was selected in menu editor tree, or came in from reports/timeline tree calls
     group = !session[:role_choice].blank? ? MiqGroup.find_by(:description => session[:role_choice]) : current_group
