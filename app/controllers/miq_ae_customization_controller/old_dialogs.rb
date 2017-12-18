@@ -209,11 +209,6 @@ module MiqAeCustomizationController::OldDialogs
     replace_right_cell(:nodetype => "odg-#{params[:id]}")
   end
 
-  def old_dialogs_create
-    return unless load_edit("dialog_edit__new")
-    old_dialogs_update_create
-  end
-
   def old_dialogs_update
     id = params[:id] ? params[:id] : "new"
     return unless load_edit("dialog_edit__#{id}", "replace_cell__explorer")
