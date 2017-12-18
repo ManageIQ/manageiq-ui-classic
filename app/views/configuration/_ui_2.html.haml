@@ -78,23 +78,6 @@
               :javascript
                 miqInitBootstrapSwitch("display_vms", "#{url}")
       .col-md-12.col-lg-6
-        - if has_any_role?(%w(ems_middleware_show_list middleware_server_show_list middleware_deployment_show_list middleware_datasource_show_list middleware_domain_show_list middleware_server_group_show_list middleware_messaging_show_list))
-          %fieldset
-            %h3
-              = _('Middleware')
-            - {:manageiq_providers_middlewaremanager => ["ems_middleware_show_list",           _('Middleware Providers')],
-               :middlewareserver                     => ["middleware_server_show_list",        _('Middleware Servers')],
-               :middlewaredeployment                 => ["middleware_deployment_show_list",    _('Middleware Deployments')],
-               :middlewaredatasource                 => ["middleware_datasource_show_list",    _('Middleware Datasources')],
-               :middlewaredomain                     => ["middleware_domain_show_list",        _('Middleware Domains')],
-               :middlewareservergroup                => ["middleware_server_groups_show_list", _('Middleware Server Groups')],
-               :middlewaremessaging                  => ["middleware_messaging_show_list",     _('Middleware Messaging')]}.each do |resource, (feature, view_name)|
-              - if role_allows?(:feature => feature)
-                .form-group
-                  %label.col-md-3.control-label
-                    = view_name
-                  .col-md-8
-                    %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
         - if has_any_role?(%w(ems_cloud_show_list availability_zone_show_list host_aggregate_show_list cloud_tenant_show_list flavor_show_list instances_accord instances_filter_accord images_filter_accord orchestration_stack_show_list cloud_volume_show_list cloud_volume_snapshot_show_list cloud_object_store_container_show_list))
           %fieldset
             %h3
@@ -155,6 +138,6 @@
                   %label.col-md-3.control-label
                     = view_name
                   .col-md-8
-                    %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])  
+                    %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
 
     = render :partial => "/layouts/form_buttons"
