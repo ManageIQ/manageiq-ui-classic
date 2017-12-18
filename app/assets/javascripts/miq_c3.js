@@ -1,4 +1,4 @@
-/* global chartData miqBuildChartMenuEx miqSparkleOff */
+/* global ManageIQ chartData miqBuildChartMenuEx miqSparkleOff */
 
 function load_c3_charts() {
   for (var set in ManageIQ.charts.chartData) {
@@ -22,9 +22,9 @@ function load_c3_charts() {
 function load_c3_chart(data, chart_id, height) {
   if (typeof (data.miqChart) == "undefined") { data.miqChart = "Line"; }
 
-  var generate_args = chartData(data.miqChart, data, { bindto: "#" + chart_id, size: {height: height}})
+  var generate_args = chartData(data.miqChart, data, { bindto: "#" + chart_id, size: {height: height}});
 
-  generate_args.data.onclick = function (data, _i) {
+  generate_args.data.onclick = function(data, _i) {
     var index = _.findIndex(generate_args.data.columns, function(col) { return col[0] == data.id; });
     // when not Pie/Donut chart, first column doesn't contain actual data.
     var seriesIndex = _.contains(['Pie', 'Donut'], generate_args.miqChart) ? index : index - 1;
@@ -39,7 +39,7 @@ function load_c3_chart(data, chart_id, height) {
 
     // This is to allow the bootstrap pop-up to be manually fired from the chart's click event
     // and have it closed by clicking outside of the pop-up menu.
-    setTimeout(function () {
+    setTimeout(function() {
       $(document).on('click.close_popup', function() {
         $('.chart_parent.open').removeClass('open').trigger(
           $.Event('hidden.bs.dropdown'), { relatedTarget: this });
@@ -55,10 +55,10 @@ function load_c3_chart(data, chart_id, height) {
   var chart = c3.generate(generate_args);
 
   ManageIQ.charts.c3[chart_id] = chart;
-};
+}
 
 
-function recalculateChartYAxisLabels (id) {
+function recalculateChartYAxisLabels(id) {
   // hide/show chart with id
   this.api.toggle(id);
 
@@ -79,9 +79,9 @@ function recalculateChartYAxisLabels (id) {
   var tmpMax = getChartFormatedValueWithFormat(format, minMax[1]);
   var minShowed = tmpMin[0];
   var maxShowed = tmpMax[0];
-  var min_units = tmpMin[1];
-  var max_units = tmpMax[1];
-  if (min_units !== max_units) {
+  var minUnits = tmpMin[1];
+  var maxUnits = tmpMax[1];
+  if (minUnits !== maxUnits) {
     return;
   }
 
@@ -94,13 +94,13 @@ function recalculateChartYAxisLabels (id) {
 
 function validatePrecision(minShowed, maxShowed, format, min, max) {
   if (min === max) {
-    return {'changed' : false, 'format' : ManageIQ.charts.formatters[format.function].c3(format.options)}
+    return {'changed': false, 'format': ManageIQ.charts.formatters[format.function].c3(format.options)};
   }
   var recalculated = recalculatePrecision(minShowed, maxShowed, format, min, max);
   return {
-    'changed' : recalculated.changed,
-    'format'  : ManageIQ.charts.formatters[recalculated.format.function].c3(recalculated.format.options)
-  }
+    'changed': recalculated.changed,
+    'format': ManageIQ.charts.formatters[recalculated.format.function].c3(recalculated.format.options),
+  };
 }
 
 function recalculatePrecision(minShowed, maxShowed, format, min, max) {
@@ -125,7 +125,7 @@ function recalculatePrecision(minShowed, maxShowed, format, min, max) {
       maxShowed = getChartFormatedValue(format, max);
     }
   }
-  return {'changed' : changed, 'format' : format};
+  return {'changed': changed, 'format': format};
 }
 
 function getMinMaxFromChart(chart) {
@@ -145,7 +145,7 @@ function getMinMaxFromChart(chart) {
 }
 
 function getChartColumnDataValues(columns) {
-  return _.filter(_.flatten(_.tail(columns).map(_.tail)), function(o) { return o !== null; })
+  return _.filter(_.flatten(_.tail(columns).map(_.tail)), function(o) { return o !== null; });
 }
 
 function getChartFormatedValue(format, value) {
@@ -163,18 +163,19 @@ function validateMinMax(min, max, minShowed, maxShowed) {
   if (max <= min || maxShowed < minShowed) {
     if (max < min || max > 10) {
       invalid = true;
-    } else if (max > 0){
+    } else if (max > 0) {
       min = 0;
-    } else if (min === 0 && max === 0){
+    } else if (min === 0 && max === 0) {
       invalid = true;
     }
   }
 
-  return {'invalid' : invalid, 'min' : min };
+  return {'invalid': invalid, 'min': min};
 }
 
 
-c3.chart.internal.fn.categoryName = function (i) {
-  var config = this.config, categoryIndex = Math.ceil(i);
+c3.chart.internal.fn.categoryName = function(i) {
+  var config = this.config;
+  var categoryIndex = Math.ceil(i);
   return i < config.axis_x_categories.length ? config.axis_x_categories[categoryIndex] : i;
 };
