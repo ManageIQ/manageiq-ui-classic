@@ -14,6 +14,12 @@
           %span.help-block{"ng-show" => "#{ng_model}.#{prefix}_key === ''"}
             = _("Required")
         %td
+          %select{"ng-model" => "#{ng_model}.#{prefix}_type",
+                  "name"       => "#{prefix}_type",
+                  'ng-options' => "v as v for v in #{ng_model}.available_datatypes",
+                  'ng-change'  => '',
+                  "pf-select"  => true}
+        %td
           %input{:type         => "text",
                  'ng-model'    => "#{ng_model}.#{prefix}_value",
                  'ng-if'       => "#{ng_model}.#{prefix}_type != 'password'",
@@ -26,12 +32,6 @@
                  'ng-model'    => "#{ng_model}.#{prefix}_value",
                  "placeholder" => placeholder_if_present("#{ng_model}.#{prefix}_value"),
                  "ng-change" => ""}
-        %td
-          %select{"ng-model" => "#{ng_model}.#{prefix}_type",
-                  "name"       => "#{prefix}_type",
-                  'ng-options' => "v as v for v in #{ng_model}.available_datatypes",
-                  'ng-change'  => '',
-                  "pf-select"  => true}
         %td{"ng-if" => "#{ng_model}.#{prefix}_key != ''"}
           %button{:class     => "btn btn-link",
                   :type      => "button",
@@ -48,9 +48,9 @@
             %th
               = _("Input Name")
             %th
-              = _("Default value")
-            %th
               = _("Data Type")
+            %th
+              = _("Default value")
             %th
               = _("Actions")
           %tbody
@@ -63,6 +63,14 @@
                                     'ng-model'    => "#{ng_model}.key",
                                     "ng-change" => "",
                                     "miqrequired" => ""}
+              %td{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)"}
+                {{arr[2]}}
+              %td{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
+                %select.form-control{"ng-model"   => "#{ng_model}.key_type",
+                                     "name"       => "key_type",
+                                     'ng-options' => "v as v for v in #{ng_model}.available_datatypes",
+                                     "ng-change"  => '',
+                                     "pf-select"  => true}
               %td{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)"}
                 {{arr[2] == 'password' ? '******' : arr[1]}}
               %td{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
@@ -77,14 +85,6 @@
                                     'ng-model'    => "#{ng_model}.key_value",
                                     "placeholder" => placeholder_if_present("#{ng_model}.key_value"),
                                     "ng-change" => ""}
-              %td{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)"}
-                {{arr[2]}}
-              %td{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
-                %select.form-control{"ng-model"   => "#{ng_model}.key_type",
-                                     "name"       => "key_type",
-                                     'ng-options' => "v as v for v in #{ng_model}.available_datatypes",
-                                     "ng-change"  => '',
-                                     "pf-select"  => true}
 
               %td.table-view-pf-select
                 %div{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
