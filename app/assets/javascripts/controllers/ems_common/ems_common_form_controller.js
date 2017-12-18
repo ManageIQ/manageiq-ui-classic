@@ -65,6 +65,14 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       smartstate_docker_auth_status: true,
       alerts_selection: '',
       console_auth_status: true,
+      virtualization_selection: '',
+      kubevirt_hostname: '',
+      kubevirt_api_port: '',
+      kubevirt_auth_status: '',
+      kubevirt_security_protocol: '',
+      kubevirt_tls_ca_certs: '',
+      kubevirt_password: '',
+      kubevirt_password_exists: false,
     };
 
     $scope.emsOptionsModel = {
@@ -171,6 +179,14 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.prometheus_alerts_security_protocol = data.prometheus_alerts_security_protocol;
       $scope.emsCommonModel.prometheus_alerts_tls_ca_certs  = data.prometheus_alerts_tls_ca_certs;
 
+      $scope.emsCommonModel.virtualization_selection        = data.virtualization_selection;
+      $scope.emsCommonModel.kubevirt_hostname               = data.kubevirt_hostname;
+      $scope.emsCommonModel.kubevirt_api_port               = data.kubevirt_api_port !== undefined && data.kubevirt_api_port !== '' ? data.kubevirt_api_port.toString() : '443';
+      $scope.emsCommonModel.kubevirt_auth_status            = data.kubevirt_auth_status;
+      $scope.emsCommonModel.kubevirt_security_protocol      = data.kubevirt_security_protocol;
+      $scope.emsCommonModel.kubevirt_tls_ca_certs           = data.kubevirt_tls_ca_certs;
+      $scope.emsCommonModel.kubevirt_password_exists        = data.kubevirt_password_exists;
+
       if ($scope.emsCommonModel.default_userid !== '') {
         $scope.emsCommonModel.default_password = miqService.storedPasswordPlaceholder;
       }
@@ -192,6 +208,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       if ($scope.emsCommonModel.bearer_token_exists) {
         $scope.emsCommonModel.default_userid = "_";
         $scope.emsCommonModel.default_password = miqService.storedPasswordPlaceholder;
+      }
+      if ($scope.emsCommonModel.kubevirt_password_exists) {
+        $scope.emsCommonModel.kubevirt_password = miqService.storedPasswordPlaceholder;
       }
 
       $scope.afterGet  = true;
@@ -235,6 +254,12 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.ssh_keypair_auth_status         = true;
       $scope.emsCommonModel.metrics_auth_status             = data.metrics_auth_status;
       $scope.emsCommonModel.vmware_cloud_api_version        = '9.0';
+      $scope.emsCommonModel.virtualization_selection        = data.virtualization_selection;
+      $scope.emsCommonModel.kubevirt_api_port               = $scope.emsCommonModel.default_api_port;
+      $scope.emsCommonModel.kubevirt_auth_status            = data.kubevirt_auth_status;
+      $scope.emsCommonModel.kubevirt_security_protocol      = $scope.emsCommonModel.default_security_protocol;
+      $scope.emsCommonModel.kubevirt_tls_ca_certs           = $scope.emsCommonModel.default_tls_ca_certs;
+      $scope.emsCommonModel.kubevirt_password               = data.kubevirt_password;
 
       miqService.sparkleOff();
 
@@ -245,6 +270,15 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.changeAuthTab = function(id) {
     $scope.currentTab = id;
+  };
+
+  $scope.changeAuthTabToVirtualization = function(id) {
+    $scope.emsCommonModel.kubevirt_hostname = $scope.emsCommonModel.default_hostname;
+    $scope.emsCommonModel.kubevirt_api_port = $scope.emsCommonModel.default_api_port;
+    $scope.emsCommonModel.kubevirt_security_protocol = $scope.emsCommonModel.default_security_protocol;
+    $scope.emsCommonModel.kubevirt_tls_verify = $scope.emsCommonModel.default_tls_verify;
+    $scope.emsCommonModel.kubevirt_tls_ca_certs = $scope.emsCommonModel.default_tls_ca_certs;
+    $scope.changeAuthTab(id);
   };
 
   $scope.canValidateBasicInfo = function () {
@@ -259,6 +293,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
        $scope.emsCommonModel.emstype == "openstack_infra" && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "nuage_network"  && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "rhevm" && $scope.emsCommonModel.default_hostname ||
+       $scope.emsCommonModel.emstype == "kubevirt" && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "vmwarews" && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "vmware_cloud" && $scope.emsCommonModel.default_hostname) &&
       ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
@@ -308,11 +343,17 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
        ($scope.currentTab === "alerts" &&
         $scope.emsCommonModel.prometheus_alerts_hostname !== '' &&
         $scope.emsCommonModel.prometheus_alerts_api_port !== '') ||
+       ($scope.currentTab === "virtualization" &&
+        $scope.emsCommonModel.kubevirt_hostname !== '' &&
+        $scope.emsCommonModel.kubevirt_password !== '' &&
+        $scope.emsCommonModel.kubevirt_api_port !== '') ||
       ($scope.currentTab === "proxy_settings") || ($scope.currentTab === "advanced_settings"))) {
       return true;
     } else if($scope.emsCommonModel.emstype == "gce" && $scope.emsCommonModel.project != '' &&
       ($scope.currentTab == "default" ||
       ($scope.currentTab == "service_account" && $scope.emsCommonModel.service_account != ''))) {
+      return true;
+    } else if($scope.emsCommonModel.emstype == "kubevirt") {
       return true;
     } else {
       return false;
@@ -410,6 +451,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     $scope.tabSelectionChanged("#alerts_tab", $scope.emsCommonModel.alerts_selection);
   };
 
+  $scope.virtualizationSelectionChanged = function() {
+    $scope.tabSelectionChanged("#virtualization_tab", $scope.emsCommonModel.virtualization_selection);
+  };
+
   $scope.providerTypeChanged = function() {
     $scope.updateProviderOptionsDescription();
     if ($scope.emsCommonModel.ems_controller === 'ems_container') {
@@ -443,6 +488,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.metrics_api_port = "5432";
       $scope.emsCommonModel.default_api_port = $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
       $scope.emsCommonModel.metrics_database_name = "ovirt_engine_history";
+    } else if ($scope.emsCommonModel.emstype === 'kubevirt') {
+      $scope.emsCommonModel.default_api_port = "8443";
     } else if ($scope.emsCommonModel.emstype === 'vmware_cloud') {
       $scope.emsCommonModel.default_api_port = "443";
       $scope.emsCommonModel.event_stream_selection = "none";
@@ -508,6 +555,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     if ($scope.emsCommonModel.prometheus_alerts_auth_status === true) {
       $scope.postValidationModelRegistry("prometheus_alerts");
     }
+    if ($scope.emsCommonModel.kubevirt_auth_status === true) {
+      $scope.postValidationModelRegistry("kubevirt");
+    }
   };
 
   $scope.postValidationModelRegistry = function(prefix) {
@@ -519,6 +569,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         metrics: {},
         ssh_keypair: {},
         prometheus_alerts: {},
+        kubevirt: {},
       }
     }
     if (prefix === "default") {
@@ -601,6 +652,12 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       .forEach( function(resource) {
         $scope.postValidationModel['prometheus_alerts'][resource] = $scope.emsCommonModel[resource];
       });
+    } else if (prefix === "kubevirt") {
+      $scope.postValidationModel['kubevirt'] = {};
+      ['kubevirt_hostname', 'kubevirt_api_port', 'kubevirt_security_protocol', 'kubevirt_tls_ca_certs', 'kubevirt_password']
+        .forEach( function(resource) {
+          $scope.postValidationModel['kubevirt'][resource] = $scope.emsCommonModel[resource];
+        });
     }
   };
 
