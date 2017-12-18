@@ -36,21 +36,6 @@ class StorageController < ApplicationController
     redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
   end
 
-  def show_new(id = nil)
-    @flash_array = [] if params[:display]
-    @sb[:action] = nil
-
-    @display = params[:display] || "main"
-    @lastaction = "show"
-    @showtype = "config"
-    @record = find_record(Storage, id || params[:id])
-    return if record_no_longer_exists?(@record)
-
-    @explorer = true if request.xml_http_request? # Ajax request means in explorer
-
-    @gtl_url = "/show"
-  end
-
   def init_show
     return unless super
     if !@explorer && @display == "main"
