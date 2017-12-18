@@ -822,6 +822,7 @@ module OpsController::OpsRbac
     when "role"  then rbac_role_get_form_vars
     end
 
+    @edit[:new][:group] = rbac_user_get_group_ids.map(&:to_i)
     session[:changed] = changed = (@edit[:new] != @edit[:current])
     bad = false
     if rec_type == "group"
@@ -837,7 +838,7 @@ module OpsController::OpsRbac
         end
         bad = false
       else
-        # only do following if groups of a user change (adding/editing a user)
+        # only do following for user (adding/editing a user)
         if x_node.split("-").first == "u" || x_node == "xx-u"
           page.replace("group_selected",
                        :partial => "ops/rbac_group_selected")
@@ -1053,9 +1054,9 @@ module OpsController::OpsRbac
     when 'null', nil
       []
     when String
-      @edit[:new][:group].split(',').delete_if(&:blank?)
+      @edit[:new][:group].split(',').delete_if(&:blank?).sort
     when Array
-      @edit[:new][:group]
+      @edit[:new][:group].sort
     end
   end
 
