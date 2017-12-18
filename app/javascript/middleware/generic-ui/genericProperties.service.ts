@@ -27,6 +27,9 @@ export class GenericPropertiesService {
         const mwFields = this.createFormlyTemplateFields(selectedItem, displayFields);
         const mwGenericView = new MwGenericView(mwModel, mwFields);
         deferred.resolve(mwGenericView)
+      })
+      .catch((error) => {
+       deferred.reject(error);
       });
     return deferred.promise;
   }
