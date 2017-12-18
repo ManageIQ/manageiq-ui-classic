@@ -77,6 +77,7 @@
                           "ng-required"             => ng_reqd_hostname.to_s,
                           "ng-trim"                 => false,
                           "detect-spaces"           => "",
+                          "hostname-validation"     => "",
                           "checkchange"             => "",
                           "prefix"                  => prefix.to_s,
                           "reset-validation-status" => "#{prefix}_auth_status"}
@@ -84,6 +85,8 @@
         = _("Required")
       %span.help-block{"ng-show" => "angularForm.#{prefix}_hostname.$error.detectedSpaces"}
         = _("Spaces are prohibited")
+      %span.help-block{"ng-show" => "angularForm.#{prefix}_hostname.$error.hostnameValidation"}
+        = _("Wrong hostname format")
 
     - detect = "detectClicked({target: '.detect_button'})"
     %span
