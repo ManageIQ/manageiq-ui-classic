@@ -109,6 +109,7 @@ module Mixins::MiddlewareOperationsMixin
         :event_type      => operation_info.fetch(:log_timeline),
         :message         => _('%{server} will be %{operation} per user request') %
           {:operation => operation_info.fetch(:hawk), :server => mw_item.name},
+        :host_name       => mw_item.hostname,
         :middleware_ref  => mw_item.ems_ref,
         :middleware_type => mw_item.class.name.demodulize,
         :username        => current_userid

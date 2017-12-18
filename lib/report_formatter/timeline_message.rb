@@ -29,7 +29,7 @@ module ReportFormatter
     end
 
     def host_name
-      "<a href=/host/show/#{to_cid(@event.host_id)}>#{text}</a>" if @event.host_id
+      @event.host_id ? "<a href=/host/show/#{to_cid(@event.host_id)}>#{text}</a>" : text
     end
 
     def dest_host_name
