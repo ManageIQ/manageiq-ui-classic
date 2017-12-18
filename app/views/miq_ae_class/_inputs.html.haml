@@ -7,8 +7,8 @@
     %tr
       %th.table-view-pf-select
       %th= _('Name')
-      %th= _('Default Value')
       %th= _('Data Type')
+      %th= _('Default Value')
   %tbody
     - @edit[:new][:fields].each_with_index do |flds, i|
       - unless @edit[:fields_to_delete].include?(flds["id"])
@@ -28,6 +28,10 @@
               :maxlength         => 50,
               "data-miq_observe" => obs)
           %td
+            = select_tag("#{prefix}fields_datatype_#{i}",
+              options_for_select(@edit[:new][:available_datatypes], flds["datatype"]),
+              "data-miq_observe" => {:url => url}.to_json)
+          %td
             = text_field_tag("#{prefix}fields_value_#{i}", flds["default_value"],
               :style             => flds["datatype"] == "password" ? "display:none" : "",
               "data-miq_observe" => obs)
@@ -35,10 +39,6 @@
               :placeholder       => placeholder_if_present(flds['default_value']),
               :style             => flds["datatype"] == "password" ? "" : "display:none",
               "data-miq_observe" => obs)
-          %td
-            = select_tag("#{prefix}fields_datatype_#{i}",
-              options_for_select(@edit[:new][:available_datatypes], flds["datatype"]),
-              "data-miq_observe" => {:url => url}.to_json)
     - if !params[:add] && params[:add] != "new" && session[:field_data].blank?
       %tr{:title => _("Click to add a new parameter"),
         :onclick => remote_function(:url => {:action => 'field_method_select', :add => 'new', :item => "field"})}
@@ -65,6 +65,8 @@
             session[:field_data][:name],
             "data-miq_observe" => obs)
         %td
+          = select_tag("#{prefix}field_datatype", options_for_select(@edit[:new][:available_datatypes], session[:field_data][:datatype]), "data-miq_observe" => {:url => url}.to_json)
+        %td
           = text_field_tag("#{prefix}field_default_value",
             session[:field_data][:default_value],
             :style             => session[:field_data][:datatype] == "password" ? "display:none" : "",
@@ -73,5 +75,3 @@
             :placeholder       => placeholder_if_present(session[:field_data][:data_value]),
             :style             => session[:field_data][:datatype] == "password" ? "" : "display:none",
             "data-miq_observe" => obs)
-        %td
-          = select_tag("#{prefix}field_datatype", options_for_select(@edit[:new][:available_datatypes], session[:field_data][:datatype]), "data-miq_observe" => {:url => url}.to_json)
