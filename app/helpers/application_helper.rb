@@ -395,7 +395,11 @@ module ApplicationHelper
           return "/" + request.parameters[:controller] + "/tree_select?id=" + suffix
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
-          return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
+          if @tagging
+            return false # when tagging Users, Groups, Roles and Tennants, the table is non-clickable
+          else
+            return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
+          end
         elsif %w(VmdbTableEvm MiqServer).include?(view.db) &&
               %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
