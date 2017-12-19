@@ -603,9 +603,9 @@ class MiqPolicyController < ApplicationController
                             _("Adding a new %{model_name} Policy") % {:model_name => model_name}
                           end
       else
-        options = {:model => "#{model_name} #{@sb[:mode] ? @sb[:mode].capitalize : ""} Policy",
+        options = {:model => "#{model_name} #{@sb[:mode] ? @sb[:mode].capitalize : ""}",
                    :name  => @policy.description}
-        right_cell_text = @edit ? _("Editing %{model} \"%{name}\"") % options : _("%{model} \"%{name}\"") % options
+        right_cell_text = @edit ? _("Editing %{model} \"%{name}\"") % options : _("%{model} Policy \"%{name}\"") % options
         if @edit && @edit[:typ] == 'conditions'
           right_cell_text += _(" Condition Assignments")
         end
