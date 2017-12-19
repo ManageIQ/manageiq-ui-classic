@@ -3,7 +3,7 @@
   - if @report_only
     %head
       %title
-        = "%{product}: %{title}" % {:product => Vmdb::Appliance.PRODUCT_NAME, :title => @layout.titleize}
+        = "%{product}: %{title}" % {:product => Vmdb::Appliance.PRODUCT_NAME, :title => @report.title}
       = favicon_link_tag
       = stylesheet_link_tag 'application'
       = javascript_include_tag 'application'
