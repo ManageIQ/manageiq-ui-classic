@@ -146,6 +146,17 @@ describe('emsCommonFormController', function() {
     it('sets the default_password', function() {
       expect($scope.emsCommonModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
     });
+
+    it('initializes $scope.postValidationModel with credential objects for only those providers that support validation', function () {
+      $scope.postValidationModelRegistry('default');
+      expect($scope.postValidationModel).toEqual(jasmine.objectContaining({
+        default: jasmine.objectContaining({provider_region: 'ap-southeast-2'}),
+        console: jasmine.objectContaining({console_userid: undefined}),
+        amqp: {},
+        metrics: {},
+        ssh_keypair: {},
+        prometheus_alerts: {}}));
+    });
   });
 
   describe('when the emsCommonFormId is an Openstack Id', function() {

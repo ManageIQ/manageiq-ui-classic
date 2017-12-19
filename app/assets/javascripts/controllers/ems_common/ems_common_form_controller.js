@@ -517,7 +517,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         default: {},
         amqp: {},
         console: {},
-        smartstate_docker: {},
         metrics: {},
         ssh_keypair: {},
         prometheus_alerts: {},
