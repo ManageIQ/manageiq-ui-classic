@@ -1040,7 +1040,7 @@ module ApplicationController::Buttons
 
     @edit[:current] = copy_hash(@edit[:new])
 
-    @edit[:visibility_types] = [["<To All>", "all"], ["<By Role>", "role"]]
+    @edit[:visibility_types] = [["<#{_('To All')}>", "all"], ["<#{_('By Role')}>", "role"]]
     # Visibility Box
     if @custom_button.visibility && @custom_button.visibility[:roles]
       @edit[:new][:visibility_typ] = @custom_button.visibility[:roles][0] == "_ALL_" ? "all" : "role"
