@@ -9,7 +9,7 @@
   - validate = "#{main_scope}.validateClicked({target: '.validate_button:visible'}, '#{valtype}', true, angularForm, '#{url_for_only_path(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
 - else
   - validate = "#{main_scope}.validateClicked('#{url_for_only_path(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
-%div{"ng-hide" => "#{main_scope}.currentTab === 'smartstate_docker'"}
+%div{"ng-show" => ng_show}
   %miq-button{:class           => 'validate_button',
               :name            => _("Validate"),
               "disabled-title" => verify_title_off,
