@@ -3,7 +3,7 @@
   - if @report_only
     %head
       %title
-        = "%{product}: %{title}" % {:product => I18n.t('product.name'), :title => @layout.titleize}
+        = "%{product}: %{title}" % {:product => I18n.t('product.name'), :title => @report.title}
       = favicon_link_tag
       = stylesheet_link_tag 'application'
       = javascript_include_tag 'application'
