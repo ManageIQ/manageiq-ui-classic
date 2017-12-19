@@ -39,12 +39,14 @@
     %label.col-md-2.control-label{"for" => "custom_button_open_url"}
       = _("Open URL")
     .col-md-8
-      %input.form-control{"type"        => "checkbox",
-                          "id"          => "custom_button_open_url",
-                          "name"        => "open_url",
-                          "bs-switch"   => "",
-                          :data         => {:size => 'mini'},
-                          "ng-model"    => "vm.customButtonModel.open_url"}
+      %input.form-control{"type"            => "checkbox",
+                          "id"              => "custom_button_open_url",
+                          "name"            => "open_url",
+                          "bs-switch"       => "",
+                          "switch-on-text"  => _('Yes'),
+                          "switch-off-text" => _('No'),
+                          :data             => {:size => 'mini'},
+                          "ng-model"        => "vm.customButtonModel.open_url"}
   .form-group{"ng-class" => "{'has-error': angularForm.display_for.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_display_for"}
       = _("Display for")
@@ -141,11 +143,13 @@
     .col-md-8
       %table{"ng-repeat" => "role in vm.customButtonModel.available_roles track by $index"}
         %td{:nowrap => true}
-          %input.form-control{"type"        => "checkbox",
-                              "id"          => "role{{$index}}",
-                              "name"        => "role{{$index}}",
-                              "bs-switch"   => "",
-                              :data         => {:size => 'mini'},
-                              "ng-model"    => "vm.customButtonModel.available_roles[$index].value"}
+          %input.form-control{"type"            => "checkbox",
+                              "id"              => "role{{$index}}",
+                              "name"            => "role{{$index}}",
+                              "bs-switch"       => "",
+                              "switch-on-text"  => _('Yes'),
+                              "switch-off-text" => _('No'),
+                              :data             => {:size => 'mini'},
+                              "ng-model"        => "vm.customButtonModel.available_roles[$index].value"}
           {{vm.customButtonModel.available_roles[$index].name}}
   = render :partial => "layouts/angular/generic_form_buttons"
