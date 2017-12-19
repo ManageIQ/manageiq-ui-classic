@@ -259,7 +259,6 @@ module Menu
         Menu::Section.new(:monitor_alerts, N_("Alerts"), 'fa fa-bullhorn-o fa-2x', [
                             Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview'),
                             Menu::Item.new('monitor_alerts_list', N_('All Alerts'), 'monitor_alerts_list', {:feature => 'monitor_alerts_list', :any => true}, '/alerts_list'),
-                            Menu::Item.new('monitor_alerts_most_recent', N_('Most Recent Alerts'), 'monitor_alerts_most_recent', {:feature => 'monitor_alerts_most_recent', :any => true}, '/alerts_most_recent')
                           ])
       end
 
