@@ -68,8 +68,8 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     ];
 
     vm.visibilities = [
-      {id: 'all', name: __('<To All>')},
-      {id: 'role', name: __('<By Role>')},
+      {id: 'all', name: '<' + __('To All') + '>'},
+      {id: 'role', name: '<' + __('By Role') + '>'},
     ];
 
     miqService.sparkleOn();
