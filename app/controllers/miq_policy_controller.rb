@@ -585,7 +585,13 @@ class MiqPolicyController < ApplicationController
           r[:partial => 'condition_list']
         elsif @folders
           mode = @sb[:folder]
-          right_cell_text = _("%{typ} Policies") % {:typ => mode.capitalize}
+          right_cell_text = if mode == 'compliance'
+                              _('Compliance Policies')
+                            elsif mode == 'control'
+                              _('Control Policies')
+                            else
+                              _("%{typ} Policies") % {:typ => mode.capitalize}
+                            end
           r[:partial => 'policy_folders']
         elsif @alert_profiles
           right_cell_text = _("All %{typ} Alert Profiles") % {:typ => ui_lookup(:model => @sb[:folder].try(:camelize))}
@@ -919,7 +925,13 @@ class MiqPolicyController < ApplicationController
         @folders = UI_FOLDERS.collect do |model|
           "#{model.name.titleize} #{mode.titleize}"
         end
-        @right_cell_text = _("%{typ} Policies") % {:typ => mode.titleize}
+        @right_cell_text = if mode == 'compliance'
+                             _('Compliance Policies')
+                           elsif mode == 'control'
+                             _('Control Policies')
+                           else
+                             _("%{typ} Policies") % {:typ => mode.titleize}
+                           end
       else
         # level 2 - host, vm, etc. under compliance/control - OR deeper levels
         @sb[:mode] = nodeid.split("-")[1]
