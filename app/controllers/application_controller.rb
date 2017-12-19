@@ -354,26 +354,6 @@ class ApplicationController < ActionController::Base
     render Charting.render_format => rpt.chart
   end
 
-  # Method for creating object with data for report.
-  # Report is either grid/table or list.
-  # @param controller_name name of JS controller. Typically `reportDataController`.
-  def init_report_data(controller_name)
-    view_url = view_to_url(@view) unless @view.nil?
-    {
-      :controller_name => controller_name,
-      :data            => {
-        :model_name => @display.nil? && !self.class.model.nil? ? self.class.model.to_s.tableize : @display,
-        :activeTree => x_active_tree.to_s,
-        :gtlType    => @gtl_type,
-        :parentId   => params[:id],
-        :sortColIdx => @sortcol,
-        :sortDir    => @sortdir,
-        :isExplorer => @explorer,
-        :showUrl    => view_url
-      }
-    }
-  end
-
   # Private method for processing params.
   # params can contain these options:
   # @param params parameters object.
