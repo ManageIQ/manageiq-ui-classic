@@ -77,7 +77,7 @@ module Mixins
 
         def associate_handle_submit_button
           if @record.supports_associate_floating_ip?
-            floating_ip = params[:floating_ip]
+            floating_ip = params[:floating_ip][:address]
             begin
               @record.associate_floating_ip_queue(session[:userid], floating_ip)
               add_flash(_("Associating Floating IP %{address} with Instance \"%{name}\"") % {

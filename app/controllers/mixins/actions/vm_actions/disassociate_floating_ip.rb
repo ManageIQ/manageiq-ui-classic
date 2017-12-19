@@ -83,7 +83,7 @@ module Mixins
 
         def disassociate_handle_submit_button
           if @record.supports_disassociate_floating_ip?
-            floating_ip = params[:floating_ip]
+            floating_ip = params[:floating_ip][:address]
             begin
               @record.disassociate_floating_ip_queue(session[:userid], floating_ip)
               add_flash(_("Disassociating Floating IP %{address} from Instance \"%{name}\"") % {
