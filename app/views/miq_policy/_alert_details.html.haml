@@ -129,10 +129,10 @@
                   - hide = true
                 - else
                   = h(@sb[:alert][:repeat_times][@alert.options[:notifications][:delay_next_evaluation]])
+          %hr
           - if hide
             :javascript
               $(".notification-frequency").hide();
-      %hr
       -# Expression
       - if @edit
         - if !@edit[:new][:expression][:eval_method]
