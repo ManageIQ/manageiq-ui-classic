@@ -206,7 +206,7 @@ module ApplicationController::Buttons
   def ab_group_delete
     assert_privileges("ab_group_delete")
     if x_node.split('_').last == "ub"
-      add_flash(_("'Unassigned Buttons Group' can not be deleted"), :error)
+      add_flash(_("'Unassigned Button Group' can not be deleted"), :error)
       get_node_info
       replace_right_cell(:nodetype => x_node)
       return
@@ -660,7 +660,7 @@ module ApplicationController::Buttons
         CustomButtonSet.new :
         CustomButtonSet.find(from_cid(params[:id]))
     if typ == "edit" && x_node.split('_').last == "ub"
-      add_flash(_("'Unassigned Buttons Group' can not be edited"), :error)
+      add_flash(_("'Unassigned Button Group' can not be edited"), :error)
       get_node_info
       replace_right_cell(:nodetype => x_node)
       return
