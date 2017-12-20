@@ -16,8 +16,8 @@ module Mixins
       end
     end
 
-    def render_flash_json(msg, level = :success)
-      render :json => {:message => msg, :level => level}
+    def render_flash_json(msg, level = :success, options = {})
+      render :json => {:message => msg, :level => level, :options => options}
     end
   end
 end

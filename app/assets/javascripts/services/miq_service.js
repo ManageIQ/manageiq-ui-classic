@@ -44,9 +44,9 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     miqSparkleOff();
   };
 
-  this.miqFlash = function(type, msg) {
+  this.miqFlash = function(type, msg, options) {
     miqService.miqFlashClear();
-    add_flash(msg, type);
+    add_flash(msg, type, options);
   };
 
   // FIXME: usually we just hide it, merge the logic
