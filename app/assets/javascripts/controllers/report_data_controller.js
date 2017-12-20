@@ -208,6 +208,7 @@
     event.stopPropagation();
     event.preventDefault();
     if (this.initObject.showUrl) {
+      miqSparkleOn();
       var prefix = this.initObject.showUrl;
       var splitUrl = this.initObject.showUrl.split('/');
       if (item.parent_path && item.parent_id) {
