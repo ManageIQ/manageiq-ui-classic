@@ -2,7 +2,7 @@
   .drawer-pf-title{'ng-if' => "drawerTitle"}
     %a.drawer-pf-toggle-expand{'ng-if'    => "allowExpand",
                                'ng-click' => "toggleExpandDrawer()"}
-    %a.miq-drawer-close{'ng-click' => "closeDrawer()"}
+    %a.drawer-pf-close{'ng-click' => "closeDrawer()"}
       %i.pficon.pficon-close
     %h3.text-center
       {{drawerTitle}}

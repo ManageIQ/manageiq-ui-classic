@@ -98,57 +98,14 @@ div#saml-login hr {
 /// begin header styling
 /// ===================================================================
 
-// badge position and color
-.navbar-pf-vertical .nav .nav-item-iconic {
-  &.drawer-pf-trigger-icon {
-    width: 40px;
-  }
-  .badge {
-    position: relative;
-    top: -23px;
-    right : -10px;
-    margin: 0px;
-    min-width: 13px;
-    background-color: #0088ce;
-  }
-}
-
 /// toast notifications positioning
 .toast-notifications-list-pf {
   top: 65px
 }
 
-/// notifications drawer positioning
-.drawer-pf {
-  bottom: 20px;
-  position: absolute;
-  top: 60px;
-  z-index: 950;
-  .panel-body {
-    margin: 0;
-  }
-}
-.drawer-pf.vertical-scroll {
-  right: 15px;
-}
-
 .navbar__user-name {
   display: inline-block;
   color: #FFFFFF; margin-left: 1ex;
-}
-
-.miq-drawer-close {
-  color: inherit;
-  cursor: pointer;
-  right: 0;
-  padding: 2px 5px;
-  position: absolute;
-}
-
-.drawer-pf-expanded .drawer-pf-title {
-  width: auto;
-  left: 0;
-  right: 0;
 }
 
 /// group switcher styling
