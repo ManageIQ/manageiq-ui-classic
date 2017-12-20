@@ -1,55 +1,17 @@
 angular.module('ManageIQ').controller('cloudTopologyController', CloudTopologyCtrl);
-CloudTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
+CloudTopologyCtrl.$inject = ['$scope', '$interval', 'topologyService'];
 
-function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
+function CloudTopologyCtrl($scope, $interval, topologyService) {
   var vm = this;
 
   miqHideSearchClearButton();
   vm.vs = null;
-  var icons = null;
-
+  vm.icons = null;
+  vm.dataUrl = '/cloud_topology/data';
   var d3 = window.d3;
   // NOTE: for search
   vm.d3 = d3;
-
   topologyService.mixinContextMenu(vm, vm);
-
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
-    if (event.name === 'refreshTopology') {
-      vm.refresh();
-    }
-  });
-
-  vm.refresh = function() {
-    var id;
-    if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
-      id = '';
-    } else {
-      id = '/' + (/cloud_topology\/show\/(\d+)/.exec($location.absUrl())[1]);
-    }
-
-    var url = '/cloud_topology/data' + id;
-
-    $http.get(url)
-      .then(getCloudTopologyFormDataComplete)
-      .catch(miqService.handleFailure);
-  };
-
-  function getCloudTopologyFormDataComplete(response) {
-    var data = response.data;
-
-    var currentSelectedKinds = vm.kinds;
-
-    vm.items = data.data.items;
-    vm.relations = data.data.relations;
-    // NOTE: $scope.kind is required by kubernetes-topology-icon
-    vm.kinds = $scope.kinds = data.data.kinds;
-    icons = data.data.icons;
-
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
-      vm.kinds = currentSelectedKinds;
-    }
-  }
 
   vm.checkboxModel = {
     value: false,
@@ -58,6 +20,8 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
   vm.legendTooltip = __('Click here to show/hide entities of this type');
 
   $('input#box_display_names').click(topologyService.showHideNames(vm));
+  topologyService.mixinRefresh(vm, $scope);
+  topologyService.mixinGetIcon(vm);
   vm.refresh();
   var promise = $interval(vm.refresh, 1000 * 60 * 3);
   $scope.$on('$destroy', function() {
@@ -174,15 +138,6 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
     /* Don't do default rendering */
     ev.preventDefault();
   });
-
-  vm.getIcon = function getIcon(d) {
-    switch (d.item.kind) {
-      case 'CloudManager':
-        return icons[d.item.display_kind];
-      default:
-        return icons[d.item.kind];
-    }
-  };
 
   vm.getDimensions = function getDimensions(d) {
     var defaultDimensions = topologyService.defaultElementDimensions();
