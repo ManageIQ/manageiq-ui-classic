@@ -295,6 +295,69 @@
               %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
                                             "ng-if"    => "disk.add_remove == 'resize'",
                                             "ng-click" => "vm.cancelAddRemoveDisk(disk)"}= _('Cancel Resize')
+  - if supports_reconfigure_network_adapters?
+    %hr
+    %div
+      %h3
+        = _('Network Adapters')
+        %table{:width => "100%", :align => "bottom"}
+          %tr
+            %td#buttons_on_nics{:align => "right"}
+              %button.btn.btn-primary{:type      => "button",
+                                      "ng-click" => "vm.enableAddNetworkAdapter()",
+                                      :align     => "left",
+                                      "ng-show"  => "!vm.reconfigureModel.nicsEnabled",
+                                      "ng-disabled" => "!vm.reconfigureModel.enableAddNetworkAdapterButton"}= _('Add Network')
+              %button.btn.btn-default.btn-sm{:type      => "button",
+                                             "ng-click" => "vm.hideAddNetworkAdapter()",
+                                             "ng-show"  => "vm.reconfigureModel.nicsEnabled"}= ('Cancel Add')
+      %table.table.table-striped.table-condensed.table-bordered
+        %thead
+          %th= _('Name')
+          %th= _('vLan')
+          %th= _('MAC Address')
+          %th{:colspan => 2}= _('Actions')
+        %tr{"ng-repeat" => "networkAdapter in vm.reconfigureModel.vmNetworkAdapters", "ng-class" => "{'danger': networkAdapter.add_remove == 'remove', 'active': networkAdapter.add_remove == 'add'}"}
+          %td
+            {{networkAdapter.name}}
+          %td
+            {{networkAdapter.vlan}}
+          %td.narrow
+            {{networkAdapter.mac}}
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type         => "button",
+                                                     :style        => "visibility:hidden"}= _('Intentionally left empty')
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-if"    => "networkAdapter.add_remove == ''",
+                                                              "ng-click" => "vm.removeExistingNetworkAdapter(networkAdapter)"}= _('Delete')
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-if"    => "networkAdapter.add_remove == 'remove'",
+                                                              "ng-disabled" => "!vm.reconfigureModel.enableAddNetworkAdapterButton",
+                                                              "ng-click" => "vm.cancelAddRemoveNetworkAdapter(networkAdapter)"}= _('Cancel Delete')
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-if"    => "networkAdapter.add_remove == 'add'",
+                                                              "ng-click" => "vm.cancelAddRemoveNetworkAdapter(networkAdapter)"}= _('Cancel Add')
+        %tr{"ng-if"       => "vm.reconfigureModel.showDropDownNetwork",
+            "ng-form"     => "rowForm"}
+          %td
+          %td
+            = select_tag('vLan',
+                       options_for_select([["<#{_('Choose')}>", '']] + @vlan_options, disabled: ["<#{_('Choose')}>", nil]),
+                       "ng-model"                    => "vm.reconfigureModel.vLan_requested",
+                       "ng-change"                   => "",
+                       "data-width"                  => "auto",
+                       "required"                    => "",
+                       "selectpicker-for-select-tag" => "")
+          %td
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-click" => "vm.processAddSelectedNetwork();rowForm.vLan.selectionpicker('refresh')",
+                                                              "ng-disabled" => "rowForm.vLan.$invalid || !vm.reconfigureModel.vmNetworkAdapters.length >= 4"}= _('Confirm Add')
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-click" => "vm.hideAddNetworkAdapter()"}= _('Cancel Add')
+
   %hr
 
   %table{:width => "100%", :align => "bottom"}
@@ -303,7 +366,7 @@
         %miq-button{:name      => t = _('Submit'),
                     :title     => t,
                     :alt       => t,
-                    :enabled   => "!((angularForm.$pristine && !vm.cb_disks) || angularForm.$invalid || (!vm.cb_memory && !vm.cb_cpu && !vm.cb_disks))",
+                    :enabled   => "!((angularForm.$pristine && !vm.cb_disks && !vm.cb_networkAdapters) || angularForm.$invalid || (!vm.cb_memory && !vm.cb_cpu && !vm.cb_disks && !vm.cb_networkAdapters))",
                     'on-click' => "vm.submitClicked()",
                     :primary   => 'true'}
         %miq-button{:name      => t = _('Reset'),

@@ -2,26 +2,30 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   var vm = this;
   var init = function() {
     vm.reconfigureModel = {
-      memory: '0',
-      memory_type: '',
-      socket_count: '1',
-      cores_per_socket_count: '1',
-      total_cpus: '1',
-      vmdisks: [],
-      hdType: 'thin',
-      hdMode: 'persistent',
-      hdSize: '',
-      hdUnit: 'MB',
-      new_controller_type: 'VirtualLsiLogicController',
-      cb_dependent: true,
-      addEnabled: false,
-      enableAddDiskButton: true,
-      cb_bootable: false,
-      vmAddDisks: [],
-      vmRemoveDisks: [],
-      vmResizeDisks: [],
+      memory:                  '0',
+      memory_type:             '',
+      socket_count:            '1',
+      cores_per_socket_count:  '1',
+      total_cpus:              '1',
+      vmdisks:                 [],
+      hdType:                  'thin',
+      hdMode:                  'persistent',
+      hdSize:                  '',
+      hdUnit:                  'MB',
+      new_controller_type:     'VirtualLsiLogicController',
+      cb_dependent:            true,
+      nicsEnabled:             false,
+      addEnabled:              false,
+      enableAddDiskButton:     true,
+      enableAddNetworkAdapterButton: true,
+      cb_bootable:             false,
+      vmAddDisks:              [],
+      vmRemoveDisks:           [],
+      vmResizeDisks:           [],
+      vLan_requested:          ''
     };
     vm.cb_disks = false;
+    vm.cb_networkAdapters = false;
     vm.hdpattern = '^[1-9][0-9]*$';
     vm.reconfigureFormId = reconfigureFormId;
     vm.afterGet = false;
@@ -61,8 +65,22 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.reconfigureModel.enableAddDiskButton = (nrDisksAfterReconfigure < 4);
   };
 
-  vm.canValidateBasicInfo = function() {
-    if (vm.isBasicInfoValid()) {
+  vm.setEnableAddNetworkAdapterButton = function () {
+    var nrNetworksAfterReconfigure=0;
+    angular.forEach(vm.reconfigureModel.vmNetworkAdapters, function(network){
+      switch (network.add_remove) {
+        case "remove":
+          break;
+        default:
+          nrNetworksAfterReconfigure++;
+          break;
+      }
+    });
+    vm.reconfigureModel.enableAddNetworkAdapterButton = (nrNetworksAfterReconfigure < 4);
+  };
+
+  vm.canValidateBasicInfo = function () {
+    if (vm.isBasicInfoValid())
       return true;
     }
     return false;
@@ -187,6 +205,25 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.setEnableAddDiskButton();
   };
 
+  vm.updateNetworkAdaptersAddRemove = function() {
+    vm.reconfigureModel.vmAddNetworkAdapters=[];
+    vm.reconfigureModel.vmRemoveNetworkAdapters = [];
+    angular.forEach(vm.reconfigureModel.vmNetworkAdapters, function (networkAdapter)
+    {
+      if (networkAdapter['add_remove'] === 'add') {
+        vm.reconfigureModel.vmAddNetworkAdapters.push({network: networkAdapter.vlan});
+      }
+      if (networkAdapter['add_remove'] === 'remove') {
+        vm.reconfigureModel.vmRemoveNetworkAdapters.push({network: networkAdapter});
+      }
+    });
+    vm.setEnableAddNetworkAdapterButton();
+    if( vm.reconfigureModel.vmAddNetworkAdapters.length > 0  || vm.reconfigureModel.vmRemoveNetworkAdapters.length > 0)
+      vm.cb_networkAdapters = true;
+    else
+      vm.cb_networkAdapters = false;
+  };
+
   vm.resetAddValues = function() {
     vm.reconfigureModel.hdType = 'thin';
     vm.reconfigureModel.hdMode = 'persistent';
@@ -196,6 +233,52 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.reconfigureModel.cb_dependent = true;
     vm.reconfigureModel.addEnabled = false;
     vm.reconfigureModel.cb_bootable = false;
+  };
+
+  vm.processAddSelectedNetwork = function() {
+    vm.reconfigureModel.vmNetworkAdapters.push(
+      {
+        name: 'to be determined',
+        vlan: vm.reconfigureModel.vLan_requested,
+        mac:  'not available yet',
+        add_remove: 'add'
+      });
+    vm.resetAddNetworkAdapterValues();
+    vm.updateNetworkAdaptersAddRemove();
+  };
+
+  vm.removeExistingNetworkAdapter = function(thisNetworkAdapter) {
+    thisNetworkAdapter['add_remove'] = 'remove';
+    vm.updateNetworkAdaptersAddRemove();
+  };
+
+  vm.enableAddNetworkAdapter = function() {
+    vm.reconfigureModel.nicsEnabled = true;
+    vm.reconfigureModel.enableAddNetworkAdapterButton = false;
+    vm.reconfigureModel.showDropDownNetwork = true;
+    vm.reconfigureModel.vLan_requested = '';
+  };
+
+  vm.hideAddNetworkAdapter= function() {
+    vm.resetAddNetworkAdapterValues();
+  };
+
+  vm.resetAddNetworkAdapterValues = function() {
+    vm.reconfigureModel.nicsEnabled = false;
+    vm.reconfigureModel.addNetworkAdapterEnabled = false;
+    vm.reconfigureModel.showDropDownNetwork = false;
+    vm.setEnableAddNetworkAdapterButton();
+    vm.reconfigureModel.vLan_requested = '';
+  };
+
+  vm.cancelAddRemoveNetworkAdapter = function(vmNetworkAdapter) {
+    if (vmNetworkAdapter.add_remove ==="remove"){
+      vmNetworkAdapter.add_remove= "";
+    } else if (vmNetworkAdapter.add_remove === "add"){
+      var index = vm.reconfigureModel.vmNetworkAdapters.indexOf(vmNetworkAdapter);
+      vm.reconfigureModel.vmNetworkAdapters.splice(index, 1);
+    }
+    vm.updateNetworkAdaptersAddRemove();
   };
 
   vm.addDisk = function() {
@@ -289,6 +372,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
         vmAddDisks: vm.reconfigureModel.vmAddDisks,
         vmRemoveDisks: vm.reconfigureModel.vmRemoveDisks,
         vmResizeDisks: vm.reconfigureModel.vmResizeDisks,
+        vmAddNetworkAdapters: vm.reconfigureModel.vmAddNetworkAdapters,
+        vmRemoveNetworkAdapters: vm.reconfigureModel.vmRemoveNetworkAdapters
       });
     }
   };
@@ -334,7 +419,10 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.cb_memory                               = data.cb_memory;
     vm.cb_cpu                                  = data.cb_cpu;
     vm.reconfigureModel.vmdisks                = angular.copy(data.disks);
+    vm.reconfigureModel.vmNetworkAdapters      = angular.copy(data.network_adapters);
     vm.updateDisksAddRemove();
+    vm.updateNetworkAdaptersAddRemove();
+
     angular.forEach(vm.reconfigureModel.vmdisks, function(disk) {
       if (typeof disk !== 'undefined') {
         disk.orgHdSize = disk.hdSize;
