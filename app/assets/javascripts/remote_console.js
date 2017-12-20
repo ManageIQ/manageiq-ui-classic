@@ -22,11 +22,11 @@ $(function() {
           document.documentElement.mozRequestFullScreen();
         }
         break;
-      case document.msFullScreenEnabled:
-        if (document.msFullScreenElement) {
-          document.msExitFullScreen();
+      case document.msFullscreenEnabled:
+        if (document.msFullscreenElement) {
+          document.msExitFullscreen();
         } else {
-          document.documentElement.msRequestFullScreen();
+          document.documentElement.msRequestFullscreen();
         }
         break;
     }
