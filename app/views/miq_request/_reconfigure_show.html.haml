@@ -40,6 +40,12 @@
           = _("Remove Disks")
         .col-md-8
           = h(@options[:disk_remove].size)
+    - if @options[:disk_resize]
+      .form-group
+        %label.control-label.col-md-2
+          = _("Resize Disks")
+        .col-md-8
+          = h(@options[:disk_resize].size)
     - if @options[:instance_type]
       .form-group
         %label.control-label.col-md-2
