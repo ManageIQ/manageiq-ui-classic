@@ -530,7 +530,6 @@ class ApplicationController < ActionController::Base
 
   # Common method to show a standalone report
   def report_only
-    @report_only = true # Indicate stand alone report for views
     # Render error message if report doesn't exist
     if params[:rr_id].nil? && @sb.fetch_path(:pages, :rr_id).nil?
       add_flash(_("This report isn't generated yet. It cannot be rendered."), :error)
@@ -548,7 +547,8 @@ class ApplicationController < ActionController::Base
     @html     = report_build_html_table(rr.report_results, rr.html_rows.join)
     @ght_type = params[:type] || (@report.graph.blank? ? 'tabular' : 'hybrid')
     @render_chart = (@ght_type == 'hybrid')
-    render 'shared/show_report'
+    # Indicate stand alone report for views
+    render 'shared/show_report', :layout => 'report_only'
   end
 
   def show_statistics
