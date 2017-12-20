@@ -22,6 +22,13 @@ $(function() {
           document.documentElement.mozRequestFullScreen();
         }
         break;
+      case document.msFullScreenEnabled:
+        if (document.msFullScreenElement) {
+          document.msExitFullScreen();
+        } else {
+          document.documentElement.msRequestFullScreen();
+        }
+        break;
     }
   });
 });
