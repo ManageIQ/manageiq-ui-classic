@@ -88,7 +88,7 @@
       } else if (event.unsubscribe && event.unsubscribe === CONTROLLER_NAME) {
         this.onUnsubscribe();
       } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
-        this.setExtraClasses();
+        this.setExtraClasses(this.initObject.gtlType);
       } else if (event.refreshData && event.refreshData.name === CONTROLLER_NAME) {
         this.refreshData();
       }
@@ -223,7 +223,7 @@
         }
         var url = prefix + itemId;
         $.post(url).always(function() {
-          this.setExtraClasses();
+          this.setExtraClasses(this.initObject.gtlType);
         }.bind(this));
       } else if (prefix !== "true") {
         var lastChar = prefix[prefix.length - 1];
