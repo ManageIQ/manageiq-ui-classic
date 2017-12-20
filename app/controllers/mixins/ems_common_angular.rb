@@ -98,7 +98,7 @@ module Mixins
         level = :error
       end
 
-      render_flash_json(msg, level)
+      render_flash_json(msg, level, :long_alert => true)
     end
 
     def create

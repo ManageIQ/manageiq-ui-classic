@@ -616,7 +616,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
             } else {
               $scope.updateAuthStatus(true);
             }
-            miqService.miqFlash(data.level, data.message);
+            miqService.miqFlash(data.level, data.message, data.options);
             miqSparkleOff();
           });
         });
