@@ -524,19 +524,6 @@ module ApplicationController::Performance
     end
   end
 
-  # Send error message if record is found and authorized, else return the record
-  def perf_menu_record_valid(model, id)
-    record = find_record_with_rbac(model.constantize, id)
-    if record.blank?
-      add_flash(_("Can't access selected record"))
-    end
-    unless @flash_array.blank?
-      javascript_flash(:spinner_off => true)
-      return false
-    end
-    record # Record is found and authorized
-  end
-
   # Load a chart miq_report object from YML
   def perf_get_chart_rpt(chart_rpt)
     MiqReport.new(YAML.load(File.open("#{CHARTS_REPORTS_FOLDER}/#{chart_rpt}.yaml")))
