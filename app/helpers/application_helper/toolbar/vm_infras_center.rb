@@ -190,7 +190,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
           :onwhen       => "1+",
           :klass        => ApplicationHelper::Button::BasicImage),
         button(
-          :vm_transform,
+          :vm_transform_mass,
           'fa fa-random fa-lg',
           t = N_('Transform tagged VMs to RHV'),
           t,

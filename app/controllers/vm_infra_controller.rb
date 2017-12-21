@@ -73,27 +73,4 @@ class VmInfraController < ApplicationController
 
   menu_section :inf
   has_custom_buttons
-
-  def simple_dialog_initialize(ra, options)
-    @record = Dialog.find_by(:id => ra.dialog_id.to_i)
-    new = options[:dialog] || {}
-    id = @record.try(:id)
-    @edit = {
-      :new             => new,
-      :wf              => ResourceActionWorkflow.new(new, current_user, ra, {}),
-      :rec_id          => id,
-      :key             => "dialog_edit__#{id || "new"}",
-      :explorer        => @explorer || false,
-      :dialog_mode     => options[:dialog_mode],
-      :current         => copy_hash(new),
-      :right_cell_text => options[:header].to_s
-    }
-    @in_a_form = true
-    @changed = session[:changed] = true
-    if @edit[:explorer]
-      replace_right_cell(:action => "dialog_provision")
-    else
-      javascript_redirect(:action => 'dialog_load')
-    end
-  end
 end
