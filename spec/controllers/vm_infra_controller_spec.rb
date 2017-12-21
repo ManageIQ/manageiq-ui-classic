@@ -350,14 +350,6 @@ describe VmInfraController do
       post :x_button, :params => { :pressed => 'vm_transform', :id => vm_vmware.id }
       expect(response.status).to eq(200)
     end
-
-    it 'can Transform VMs by tag' do
-      post :explorer
-      expect(response.status).to eq(200)
-
-      post :x_button, :params => { :pressed => 'vm_transform' }
-      expect(response.status).to eq(200)
-    end
   end
 
   it 'can Shutdown Guest' do
