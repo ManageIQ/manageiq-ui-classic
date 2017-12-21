@@ -16,7 +16,8 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
           'fa fa-refresh fa-lg',
           N_('Refresh relationships and power states for all items related to this Infrastructure Provider'),
           N_('Refresh Relationships and Power States'),
-          :confirm => N_("Refresh relationships and power states for all items related to this Infrastructure Provider?")),
+          :confirm => N_("Refresh relationships and power states for all items related to this Infrastructure Provider?"),
+          :klass   => ApplicationHelper::Button::EmsRefresh),
         button(
           :host_register_nodes,
           'pficon pficon-add-circle-o fa-lg',

@@ -16,7 +16,8 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
           'fa fa-refresh fa-lg',
           N_('Refresh relationships and power states for all items related to this Cloud Provider'),
           N_('Refresh Relationships and Power States'),
-          :confirm => N_("Refresh relationships and power states for all items related to this Cloud Provider?")),
+          :confirm => N_("Refresh relationships and power states for all items related to this Cloud Provider?"),
+          :klass   => ApplicationHelper::Button::EmsRefresh),
         separator,
         button(
           :ems_cloud_user_sync,

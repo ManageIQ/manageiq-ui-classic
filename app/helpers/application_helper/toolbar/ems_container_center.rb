@@ -16,7 +16,8 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           'fa fa-refresh fa-lg',
           N_('Refresh items and relationships related to this Containers Provider'),
           N_('Refresh items and relationships'),
-          :confirm => N_("Refresh items and relationships related to this Containers Provider?")),
+          :confirm => N_("Refresh items and relationships related to this Containers Provider?"),
+          :klass   => ApplicationHelper::Button::EmsRefresh),
         separator,
         button(
           :ems_container_edit,
