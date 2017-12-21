@@ -458,6 +458,13 @@
         gtlData.messages && gtlData.messages.forEach(function(oneMessage) {
           add_flash(oneMessage.msg, oneMessage.level);
         });
+        // Apply gettext __() on column headers
+        for (var i = 0;  i < gtlData.cols.length; i++) {
+          var column = gtlData.cols[i];
+          if (column.hasOwnProperty('text')) {
+            column.text = __(column.text);
+          }
+        }
         return gtlData;
       }.bind(this));
   };
