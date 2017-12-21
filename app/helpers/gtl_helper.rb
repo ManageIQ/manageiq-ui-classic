@@ -49,11 +49,13 @@ module GtlHelper
   #
   def render_gtl_outer(no_flash_div)
     parent_id = @report_data_additional_options.try(:[], :parent_id)
+    gtl_type_string = @gtl_type || 'list'
+    @report_data_additional_options.with_gtl_type(gtl_type_string) if @report_data_additional_options
 
     options = {
       :model_name                     => model_to_report_data,
       :no_flash_div                   => no_flash_div || false,
-      :gtl_type_string                => @gtl_type,
+      :gtl_type_string                => gtl_type_string,
       :active_tree                    => (x_active_tree unless params[:display]),
       :parent_id                      => parent_id,
       :selected_records               => gtl_selected_records,
