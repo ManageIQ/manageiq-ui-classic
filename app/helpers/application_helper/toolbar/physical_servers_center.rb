@@ -233,9 +233,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             t,
             :url       => "provision",
             :url_parms => "main_div",
-            :enabled   => true,
-            :onwhen    => "0+",
-            :klass     => ApplicationHelper::Button::ConfiguredSystemProvision
+            :klass     => ApplicationHelper::Button::PhysicalServerProvision
           )
         ]
       )
