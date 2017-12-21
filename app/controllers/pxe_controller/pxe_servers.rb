@@ -2,18 +2,6 @@
 module PxeController::PxeServers
   extend ActiveSupport::Concern
 
-  def pxe_server_tree_select
-    typ, id = params[:id].split("_")
-    case typ
-    when "img"
-      @record = MiqServer.find(from_cid(id))
-    when "wimg"
-      @record = WindowsImage.find(from_cid(id))
-    when "ps"
-      @record = ServerRole.find(from_cid(id))
-    end
-  end
-
   def pxe_server_new
     assert_privileges("pxe_server_new")
     @ps = PxeServer.new
