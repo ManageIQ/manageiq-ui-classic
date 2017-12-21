@@ -41,6 +41,11 @@
     color: #0088ce; //pf-blue-400
 }
 
+.popover{
+  max-width: none;
+}
+
+
 .compare-same {
   @extend .fa, .fa-lg, .fa-check;
 
