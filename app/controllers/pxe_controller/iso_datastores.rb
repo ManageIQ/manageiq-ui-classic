@@ -2,18 +2,6 @@
 module PxeController::IsoDatastores
   extend ActiveSupport::Concern
 
-  def iso_datastore_tree_select
-    typ, id = params[:id].split("_")
-    case typ
-    when "img"
-      @record = MiqServer.find(from_cid(id))
-    when "wimg"
-      @record = WindowsImage.find(from_cid(id))
-    when "ps"
-      @record = ServerRole.find(from_cid(id))
-    end
-  end
-
   def iso_datastore_new
     assert_privileges("iso_datastore_new")
     @isd = IsoDatastore.new
