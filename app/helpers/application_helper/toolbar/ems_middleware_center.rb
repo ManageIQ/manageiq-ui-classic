@@ -11,7 +11,8 @@ class ApplicationHelper::Toolbar::EmsMiddlewareCenter < ApplicationHelper::Toolb
           'fa fa-refresh fa-lg',
           N_('Refresh items and relationships related to this Middleware Provider'),
           N_('Refresh items and relationships'),
-          :confirm => N_("Refresh items and relationships related to this Middleware Provider?")),
+          :confirm => N_("Refresh items and relationships related to this Middleware Provider?"),
+          :klass   => ApplicationHelper::Button::EmsRefresh),
         separator,
         button(
           :ems_middleware_edit,
