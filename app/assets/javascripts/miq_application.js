@@ -737,7 +737,7 @@ function miqAjaxAuthSso(url) {
 
   // Note: /dashboard/kerberos_authenticate creates an API token
   //       based on the authenticated external user
-  //       and stores it in sessionStore.miq_token
+  //       and stores it in localStorage.miq_token
 
   miqJqueryRequest(url || '/dashboard/kerberos_authenticate', {
     beforeSend: true,
@@ -751,7 +751,7 @@ function miqAjaxExtAuth(url) {
 
   // Note: /dashboard/external_authenticate creates an API token
   //       based on the authenticated external user
-  //       and stores it in sessionStore.miq_token
+  //       and stores it in localStorage.miq_token
 
   var credentials = {
     login: $('#user_name').val(),
