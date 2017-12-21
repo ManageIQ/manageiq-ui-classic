@@ -391,7 +391,9 @@ module ApplicationHelper
                  MiqReportResult).include?(view.db) &&
               %w(report automation_manager).include?(request.parameters[:controller])
           suffix = ''
-          suffix = x_node if params[:tab_id] == "saved_reports" || params[:pressed] == "miq_report_run"
+          if params[:tab_id] == "saved_reports" || params[:pressed] == "miq_report_run" || params[:action] == "reload"
+            suffix = x_node
+          end
           return "/" + request.parameters[:controller] + "/tree_select?id=" + suffix
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
