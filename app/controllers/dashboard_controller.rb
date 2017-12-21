@@ -545,7 +545,7 @@ class DashboardController < ApplicationController
       miq_api_token = require_api_token ? generate_ui_api_token(user[:name]) : nil
       render :update do |page|
         page << javascript_prologue
-        page << "sessionStorage.miq_token = '#{j_str miq_api_token}';" if miq_api_token
+        page << "localStorage.miq_token = '#{j_str miq_api_token}';" if miq_api_token
         page.redirect_to(validation.url)
       end
     when :fail
