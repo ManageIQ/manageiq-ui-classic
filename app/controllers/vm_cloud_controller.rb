@@ -212,16 +212,16 @@ class VmCloudController < ApplicationController
   end
 
   def set_elements_and_redirect_unauthorized_user
-    @nodetype, id = parse_nodetype_and_id(params[:id])
+    @nodetype, _id = parse_nodetype_and_id(params[:id])
     prefix = prefix_by_nodetype(@nodetype)
 
     # Position in tree that matches selected record
     if role_allows?(:feature => "instances_accord") && prefix == "instances"
-      set_active_elements_authorized_user('instances_tree', 'instances', ManageIQ::Providers::CloudManager::Vm, id)
+      set_active_elements_authorized_user('instances_tree', 'instances')
     elsif role_allows?(:feature => "images_accord") && prefix == "images"
-      set_active_elements_authorized_user('images_tree', 'images', ManageIQ::Providers::CloudManager::Template, id)
+      set_active_elements_authorized_user('images_tree', 'images')
     elsif role_allows?(:feature => "#{prefix}_filter_accord")
-      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter", nil, nil)
+      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter")
     else
       if (prefix == "vms" && role_allows?(:feature => "vms_instances_filter_accord")) ||
          (prefix == "templates" && role_allows?(:feature => "templates_images_filter_accord"))

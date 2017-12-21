@@ -26,9 +26,7 @@ module VmShowMixin
     end
 
     # Build the Explorer screen from scratch
-    allowed_features = ApplicationController::Feature.allowed_features(features)
-    @trees = allowed_features.collect { |feature| feature.build_tree(@sb) }
-    @accords = allowed_features.map(&:accord_hash)
+    allowed_features = build_accordions_and_trees_only
 
     params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms]  # Grab any explorer parm overrides
     session.delete(:exp_parms)
@@ -73,7 +71,7 @@ module VmShowMixin
     get_node_info(x_node_right_cell)
   end
 
-  def set_active_elements_authorized_user(tree_name, accord_name, klass, id)
+  def set_active_elements_authorized_user(tree_name, accord_name)
     self.x_active_tree   = tree_name
     self.x_active_accord = accord_name
   end
