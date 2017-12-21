@@ -46,5 +46,21 @@ describe Mixins::CheckedIdMixin do
         expect { subject }.to raise_error("Can't access selected records")
       end
     end
+
+    context 'when there is no record id' do
+      let(:model) { VmOrTemplate }
+      let(:id) { [] }
+      it 'is expected to raise exeption' do
+        expect { subject }.to raise_error("Can't access records without id")
+      end
+    end
+
+    context 'when user tries to access record with nil id ' do
+      let(:model) { VmOrTemplate }
+      let(:id) { [vm1.id, nil] }
+      it 'is expected to raise exeption' do
+        expect { subject }.to raise_error("Can't access records without id")
+      end
+    end
   end
 end
