@@ -45,9 +45,12 @@ module MiddlewareServerHelper::TextualSummary
   end
 
   def textual_server_state
+    server_state = translated_status(@record.properties['Calculated Server State'] || @record.properties['Server State'])
+    server_state += " (#{translated_status(@record.properties['Suspend State'].downcase)})" if @record.properties['Suspend State'] == 'SUSPENDED'
+
     {
       :label => _('Server State'),
-      :value => translated_status(@record.properties['Calculated Server State'] || @record.properties['Server State'])
+      :value => server_state
     }
   end
 
