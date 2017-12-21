@@ -138,11 +138,6 @@ module PxeController::PxeImageTypes
     end
   end
 
-  # Delete all selected or single displayed PXEImageType(s)
-  def delete_pxe_image_types
-    pxe_image_type_button_operation('destroy', 'deletion')
-  end
-
   def pxe_image_type_set_record_vars(pxe)
     pxe.name = @edit[:new][:name]
     pxe.provision_type = @edit[:new][:provision_type]
