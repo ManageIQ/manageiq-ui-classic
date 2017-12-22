@@ -442,15 +442,6 @@ module OpsController::OpsRbac
     end
   end
 
-  def rbac_group_filter_expression
-    rbac_group_set_form_vars
-    @changed = session[:changed] = (@edit[:new] != @edit[:current])
-    @expkey = params[:button].to_sym
-    @edit[:filter_expression_table] = exp_build_table_or_nil(@edit[:new][:filter_expression])
-    @in_a_form = true
-    replace_right_cell(:nodetype => x_node)
-  end
-
   def rbac_group_seq_edit_screen
     @edit = {}
     @edit[:new] = {}

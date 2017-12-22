@@ -224,11 +224,6 @@ module PxeController::IsoDatastores
     img.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
   end
 
-  # Delete all selected or single displayed ISO Datastore(s)
-  def deleteisds
-    iso_datastore_button_operation('destroy', 'deletion')
-  end
-
   def iso_datastore_set_record_vars(isd)
     ems = ManageIQ::Providers::Redhat::InfraManager.find_by_id(@edit[:new][:ems_id])
     isd.ext_management_system = ems
