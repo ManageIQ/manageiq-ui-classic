@@ -476,11 +476,18 @@ class ProviderForemanController < ApplicationController
     @grid_hash = view_to_hash(@view)
   end
 
-  def update_options
-    options = {}
+  def update_options(options = {})
+    options ||= {}
     options[:dbname] = case x_active_accord
                        when :configuration_manager_providers
-                         options[:model] && options[:model] == 'ConfiguredSystem' ? :cm_configured_systems : :cm_providers
+                         case options[:model]
+                         when 'ConfiguredSystem'
+                           :cm_configured_systems
+                         when 'ConfigurationProfile'
+                           :cm_configuration_profiles
+                         else
+                           :cm_providers
+                         end
                        when :configuration_manager_cs_filter
                          :cm_configured_systems
                        end
@@ -490,7 +497,7 @@ class ProviderForemanController < ApplicationController
   private :update_options
 
   def process_show_list(options = {})
-    options.merge!(update_options)
+    options.merge!(update_options(options))
     process_show_list_options(options)
     super
   end

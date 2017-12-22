@@ -110,6 +110,7 @@ class ApplicationController < ActionController::Base
       :catalog                                  => "list",
       :cm_providers                             => "list",
       :cm_configured_systems                    => "list",
+      :cm_configuration_profiles                => "list",
       :compare                                  => "expanded",
       :compare_mode                             => "details",
       :condition                                => "list",
