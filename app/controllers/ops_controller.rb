@@ -81,8 +81,10 @@ class OpsController < ApplicationController
     'schedule_disable'          => :schedule_disable,
     'ldap_region_add'           => :ldap_region_add,
     'ldap_region_edit'          => :ldap_region_edit,
+    'ldap_region_delete'        => :ldap_region_delete,
     'ldap_domain_add'           => :ldap_domain_add,
     'ldap_domain_edit'          => :ldap_domain_edit,
+    'ldap_domain_delete'        => :ldap_domain_delete,
   }.freeze
 
   def collect_current_logs
