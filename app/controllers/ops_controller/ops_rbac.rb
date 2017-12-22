@@ -707,12 +707,6 @@ module OpsController::OpsRbac
     session[:changed] = false
     add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
     @sb[:pre_edit_node] = x_node  unless params[:button] # Save active tree node before edit
-    if @edit["#{key}_id".to_sym]
-      caption = key == :group ? @record.description : @record.name
-      @right_cell_text = _("Editing %{model} \"%{name}\"") % {:name => caption, :model => what.titleize}
-    else
-      @right_cell_text = _("Adding a new %{name}") % {:name => what.titleize}
-    end
     replace_right_cell(:nodetype => x_node)
   end
 
@@ -1017,6 +1011,11 @@ module OpsController::OpsRbac
     @edit[:groups] = Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).sort_by { |g| g.description.downcase }.collect { |g| [g.description, g.id] }
     # store current state of the new users information
     @edit[:current] = copy_hash(@edit[:new])
+    @right_cell_text = if @edit[:user_id]
+                         _("Editing User \"%{name}\"") % {:name => @record.name}
+                       else
+                         _('Adding a new User')
+                       end
   end
 
   # Get variables from user edit form
@@ -1205,6 +1204,12 @@ module OpsController::OpsRbac
     rbac_group_filter_expression_vars(:filter_expression, :filter_expression_table)
     @edit[:current] = copy_hash(@edit[:new])
 
+    @right_cell_text = if @edit[:group_id]
+                         _("Editing Group \"%{name}\"") % {:name => @record.description}
+                       else
+                         _('Adding a new Group')
+                       end
+
     rbac_group_right_tree(@edit[:new][:belongsto].keys)
   end
 
@@ -1291,6 +1296,12 @@ module OpsController::OpsRbac
 
     @role_features = @record.feature_identifiers.sort
     @rbac_menu_tree = build_rbac_feature_tree
+
+    @right_cell_text = if @edit[:role_id]
+                         _("Editing Role \"%{name}\"") % {:name => @record.name}
+                       else
+                         _('Adding a new Role')
+                       end
   end
 
   # Get array of total set of features from the children of selected features
