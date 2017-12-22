@@ -232,7 +232,8 @@ module ApplicationHelper
     "physical_servers_with_host"             => PhysicalServer,
     "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript,
     "vms"                                    => VmOrTemplate,
-    "ServiceCatalog"                         => ServiceTemplate
+    "ServiceCatalog"                         => ServiceTemplate,
+    "middleware_diagnostic_report"           => "middleware_diagnostic_report"
   }.freeze
 
   HAS_ASSOCATION = {

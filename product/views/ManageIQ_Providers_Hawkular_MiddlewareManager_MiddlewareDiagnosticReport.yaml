@@ -22,7 +22,6 @@ cols:
 - queued_at
 - requesting_user
 - status
-- error_message
 - binary_blob.name
 - binary_blob.size
 
@@ -43,7 +42,6 @@ col_order:
 - queued_at
 - requesting_user
 - status
-- error_message
 
 # Column titles, in order
 headers:
@@ -52,7 +50,6 @@ headers:
 - Queued at
 - Username
 - Status
-- Error message
 
 # Condition(s) string for the SQL query
 conditions:
@@ -62,7 +59,7 @@ order: Ascending
 
 # Columns to sort the report on, in order
 sortby:
-- id
+- binary_blob.name
 
 # Group rows (y=yes,n=no,c=count)
 group: n

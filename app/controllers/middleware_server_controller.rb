@@ -236,8 +236,7 @@ class MiddlewareServerController < ApplicationController
                    "Deletion of %{count} JDR reports succeeded.",
                    reports.count) % {:count => reports.count})
     end
-    session[:flash_msgs] = @flash_array
-    redirect_to(:action => 'show', :id => to_cid(mw_server.id))
+    render :json => {:msg => @flash_array, :selected_drs => selected_drs}
   end
 
   def dr_report_download
