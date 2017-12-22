@@ -1,11 +1,6 @@
 module MiqAeCustomizationController::OldDialogs
   extend ActiveSupport::Concern
 
-  # Delete all selected or single displayed PXE Server(s)
-  def deletedialogs
-    old_dialogs_button_operation('destroy', 'deletion')
-  end
-
   # Get variables from edit form
   def old_dialogs_get_form_vars
     @dialog = @edit[:dialog]
