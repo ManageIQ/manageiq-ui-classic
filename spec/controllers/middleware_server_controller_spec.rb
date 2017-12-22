@@ -241,7 +241,7 @@ describe MiddlewareServerController do
       subject { assert_report_data_response }
 
       it 'returns a single middleware server that has an image but not an icon' do
-        report_data_request(:model => 'MiddlewareServer')
+        report_data_request(:model => 'MiddlewareServer', :explorer => false)
 
         expect(subject["data"]["rows"].length).to eq(1)
         expect(subject["data"]["rows"][0]["cells"][2]["text"]).to eq(server.name)

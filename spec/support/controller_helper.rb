@@ -87,6 +87,7 @@ module Spec
       #   :parent_method
       #   :gtl_dbname
       #   :explorer (defaults to true)
+      #   :lastaction
       #
       # FIXME: This hash needs cleanups as we clenup the /report_data,
       #        angular/_gtl and the calling sites.
@@ -108,6 +109,7 @@ module Spec
             'parent_id'             => options[:parent_id],
             'parent_class_name'     => options[:parent_model],
             'parent_method'         => options[:parent_method],
+            'lastaction'            => options[:lastaction],
             'association' => nil, 'view_suffix' => nil, 'listicon' => nil, 'embedded' => nil, 'showlinks' => nil, 'policy_sim' => nil
           }.compact
         }.compact
