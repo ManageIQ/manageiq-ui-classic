@@ -27,7 +27,4 @@ class EmsCinderController < ApplicationController
     {:action => 'new'}
   end
 
-  def ems_cinder_form_fields
-    ems_form_fields
-  end
 end

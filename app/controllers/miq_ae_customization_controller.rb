@@ -498,10 +498,6 @@ class MiqAeCustomizationController < ApplicationController
     TreeBuilderButtons.new("ab_tree", "ab", @sb)
   end
 
-  def dialog_import_export_build_tree
-    TreeBuilderAeCustomization.new("dialog_import_export_tree", "dialog_import_export", @sb)
-  end
-
   def group_button_add_save(typ)
     # override for AE Customization Buttons - the label doesn't say Description
     if @edit[:new][:description].blank?
