@@ -80,7 +80,7 @@ module Mixins
     def create_ems_button_validate
       @in_a_form = true
       ems_type = model.model_from_emstype(params[:emstype])
-      result, details = if %w(ems_cloud ems_infra).include?(params[:controller]) && session[:selected_roles].try(:include?, 'user_interface')
+      result, details = if %w(ems_cloud ems_infra ems_middleware).include?(params[:controller]) && session[:selected_roles].try(:include?, 'user_interface')
                           realtime_raw_connect(ems_type)
                         elsif %w(ems_cloud ems_infra).include?(params[:controller])
                           ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
