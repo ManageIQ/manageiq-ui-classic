@@ -183,7 +183,7 @@ module ApplicationHelper
 
   def type_has_quadicon(type)
     !%w(
-      ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
+      ConfigurationProfile
       Account
       GuestApplication
       SystemService
