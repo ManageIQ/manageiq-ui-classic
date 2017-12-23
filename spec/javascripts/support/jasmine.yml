@@ -18,6 +18,7 @@ src_files:
 - assets/angular-mocks
 - __spec__/helpers/fixtures-fix.js
 - packs/manageiq-ui-classic/application-common.js
+- packs/manageiq-ui-classic/miq-redux-common.js
 
 # stylesheets
 #
@@ -126,3 +127,9 @@ boot_files:
 #
 # rack_options:
 #   server: 'thin'
+
+# show_console_log
+#
+# Tell PhantomJS runner to enable console.log output from your specs.
+
+# show_console_log: true
