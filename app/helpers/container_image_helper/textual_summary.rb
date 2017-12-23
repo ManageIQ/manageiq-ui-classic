@@ -129,4 +129,8 @@ module ContainerImageHelper
   def textual_group_container_docker_labels
     TextualGroup.new(_("Image Labels"), textual_key_value_group(@record.docker_labels.to_a))
   end
+
+  def textual_group_annotations
+    TextualGroup.new(_("Annotations"), textual_key_value_group(@record.annotations.to_a))
+  end
 end
