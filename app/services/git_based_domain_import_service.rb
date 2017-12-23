@@ -94,7 +94,11 @@ class GitBasedDomainImportService
     task = MiqTask.wait_for_taskid(task_id)
 
     domain = task.task_results
-    error_message = _("Selected branch or tag does not contain a valid domain")
+    error_message = if task.message == _('multiple domains')
+                      _('Selected branch or tag contains more than one domain')
+                    else
+                      _('Selected branch or tag does not contain a valid domain')
+                    end
     raise MiqException::Error, error_message unless domain.kind_of?(MiqAeDomain)
     domain.update_attribute(:enabled, true)
   end
