@@ -4,6 +4,8 @@ module Mixins
   module EmsCommonAngular
     extend ActiveSupport::Concern
 
+    OPENSTACK_PARAMS = [:name, :provider_region, :api_version, :default_security_protocol, :keystone_v3_domain_id, :default_hostname, :default_api_port, :default_userid, :event_stream_selection].freeze
+
     included do
       include Mixins::GenericFormMixin
     end
@@ -115,7 +117,7 @@ module Mixins
       user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
       case ems.to_s
       when 'ManageIQ::Providers::Openstack::CloudManager'
-        [password, params.except(:default_password)]
+        [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)]
       when 'ManageIQ::Providers::Amazon::CloudManager'
         [user, password, :EC2, params[:provider_region], nil, true]
       when 'ManageIQ::Providers::Azure::CloudManager'
@@ -136,7 +138,7 @@ module Mixins
 
         [ems.build_connect_params(connect_opts), true]
       when 'ManageIQ::Providers::Openstack::InfraManager'
-        [password, params.except(:default_password)]
+        [password, params.to_hash.symbolize_keys.slice(*(OPENSTACK_PARAMS))]
       when 'ManageIQ::Providers::Redhat::InfraManager'
         metrics_user, metrics_password = params[:metrics_userid], MiqPassword.encrypt(params[:metrics_password])
         [{
