@@ -16,10 +16,6 @@ class ConfigurationJobController < ApplicationController
     @table_name ||= "configuration_job"
   end
 
-  def ems_path(*args)
-    ems_configprovider_path(*args)
-  end
-
   def parameters
     show_association('parameters', _('Parameters'), 'parameter', :parameters, OrchestrationStackParameter)
   end

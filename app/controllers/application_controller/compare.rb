@@ -1223,7 +1223,7 @@ module ApplicationController::Compare
 
   def drift_add_image_col(idx, img_src, img_bkg, val)
     html = ViewHelper.content_tag(:div, :class => img_bkg) do
-      ViewHelper.tag(:i, :class => img_src, :title => val)
+      ViewHelper.content_tag(:i, nil, :class => img_src, :title => val)
     end
     {"col#{idx + 1}".to_sym => html}
   end
@@ -1442,7 +1442,7 @@ module ApplicationController::Compare
 
   # Build a section row for the compare grid xml
   def comp_add_section(view, section, records, fields)
-    cell_text = section[:header]
+    cell_text = _(section[:header])
     if records.nil? # Show records count if not nil
       cell_text += " (#{fields.length})"
     else                # Show fields count
@@ -1487,7 +1487,7 @@ module ApplicationController::Compare
   def comp_add_record(view, section, record, ridx)
     @same = true
     row = {
-      :col0       => record,
+      :col0       => _(record),
       :id         => "id_#{@rows.length}",
       :indent     => 1,
       :parent     => @section_parent_id,
@@ -1632,7 +1632,7 @@ module ApplicationController::Compare
   # Build a field row under a record row
   def comp_add_record_field(view, section, record, field)
     row = {
-      :col0         => field[:header],
+      :col0         => _(field[:header]),
       :id           => "id_#{@rows.length}",
       :indent       => 2,
       :parent       => @record_parent_id,
@@ -1776,7 +1776,7 @@ module ApplicationController::Compare
     @same = true
 
     row = {
-      :col0          => field[:header],
+      :col0          => _(field[:header]),
       :id            => "id_#{@rows.length}",
       :indent        => 1,
       :parent        => @section_parent_id,

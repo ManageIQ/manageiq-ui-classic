@@ -13,17 +13,7 @@ class MiqPolicyController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  UI_FOLDERS = [
-    Host,
-    Vm,
-    ContainerReplicator,
-    ContainerGroup,
-    ContainerNode,
-    ContainerImage,
-    ExtManagementSystem,
-    PhysicalServer,
-    MiddlewareServer
-  ].freeze
+  UI_FOLDERS = [Host, Vm, ContainerReplicator, ContainerGroup, ContainerNode, ContainerImage, ExtManagementSystem, PhysicalServer].freeze
 
   def export
     @breadcrumbs = []
@@ -243,7 +233,7 @@ class MiqPolicyController < ApplicationController
       self.x_active_tree = 'policy_profile_tree'
       profile_id = params[:profile].to_i
       if MiqPolicySet.exists?(:id => profile_id)
-        self.x_node = "pp_#{profile_id}"
+        self.x_node = "pp-#{profile_id}"
       else
         add_flash(_("Policy Profile no longer exists"), :error)
         self.x_node = "root"
@@ -550,8 +540,8 @@ class MiqPolicyController < ApplicationController
     when 'root'
       partial_name, model =
         case x_active_tree
-        when :policy_profile_tree then ['profile_list',          _('Policy Profile')]
-        when :policy_tree         then ['policy_folders',        _('Policy')]
+        when :policy_profile_tree then ['profile_list',          _('Policy Profiles')]
+        when :policy_tree         then ['policy_folders',        _('Policies')]
         when :event_tree          then ['event_list',            _('Events')]
         when :condition_tree      then ['condition_folders',     _('Conditions')]
         when :action_tree         then ['action_list',           _('Actions')]
@@ -585,7 +575,13 @@ class MiqPolicyController < ApplicationController
           r[:partial => 'condition_list']
         elsif @folders
           mode = @sb[:folder]
-          right_cell_text = _("%{typ} Policies") % {:typ => mode.capitalize}
+          right_cell_text = if mode == 'compliance'
+                              _('Compliance Policies')
+                            elsif mode == 'control'
+                              _('Control Policies')
+                            else
+                              _("%{typ} Policies") % {:typ => mode.capitalize}
+                            end
           r[:partial => 'policy_folders']
         elsif @alert_profiles
           right_cell_text = _("All %{typ} Alert Profiles") % {:typ => ui_lookup(:model => @sb[:folder].try(:camelize))}
@@ -603,9 +599,9 @@ class MiqPolicyController < ApplicationController
                             _("Adding a new %{model_name} Policy") % {:model_name => model_name}
                           end
       else
-        options = {:model => "#{model_name} #{@sb[:mode] ? @sb[:mode].capitalize : ""} Policy",
+        options = {:model => "#{model_name} #{@sb[:mode] ? @sb[:mode].capitalize : ""}",
                    :name  => @policy.description}
-        right_cell_text = @edit ? _("Editing %{model} \"%{name}\"") % options : _("%{model} \"%{name}\"") % options
+        right_cell_text = @edit ? _("Editing %{model} \"%{name}\"") % options : _("%{model} Policy \"%{name}\"") % options
         if @edit && @edit[:typ] == 'conditions'
           right_cell_text += _(" Condition Assignments")
         end
@@ -919,7 +915,13 @@ class MiqPolicyController < ApplicationController
         @folders = UI_FOLDERS.collect do |model|
           "#{model.name.titleize} #{mode.titleize}"
         end
-        @right_cell_text = _("%{typ} Policies") % {:typ => mode.titleize}
+        @right_cell_text = if mode == 'compliance'
+                             _('Compliance Policies')
+                           elsif mode == 'control'
+                             _('Control Policies')
+                           else
+                             _("%{typ} Policies") % {:typ => mode.titleize}
+                           end
       else
         # level 2 - host, vm, etc. under compliance/control - OR deeper levels
         @sb[:mode] = nodeid.split("-")[1]

@@ -1346,4 +1346,37 @@ Datasources\" href=\"/ems_middleware/#{ems.id}?display=middleware_datasources\">
       expect(instance.model_to_report_data).to eq("Host")
     end
   end
+
+  context "calculate_toolbars for ems_container" do
+    before do
+      allow(helper).to receive(:inner_layout_present?).and_return(false)
+      allow(controller).to receive(:restful?).and_return(true)
+      allow(controller.class).to receive(:toolbar_plural).and_return(nil)
+      allow(controller.class).to receive(:toolbar_singular).and_return(nil)
+      allow(controller).to receive(:custom_toolbar)
+      @layout = 'ems_container'
+    end
+
+    it "displays ems_containers_center toolbar for ems_container show_list action" do
+      @lastaction = "show_list"
+      expect(calculate_toolbars).to include("center_tb" => "ems_containers_center_tb")
+    end
+
+    it "displays ems_container_center toolbar for ems_container show_dashboard action" do
+      @lastaction = "show_dashboard"
+      expect(calculate_toolbars).to include("center_tb" => "ems_container_center_tb")
+    end
+
+    it "displays container routes center toolbar for 'container_routes' nested display lists" do
+      @lastaction = "show"
+      @display = "container_routes"
+      expect(calculate_toolbars).to include("center_tb" => "container_routes_center")
+    end
+
+    it "displays container projects center toolbar for 'container_projects' nested display lists" do
+      @lastaction = "show"
+      @display = "container_projects"
+      expect(calculate_toolbars).to include("center_tb" => "container_projects_center")
+    end
+  end
 end

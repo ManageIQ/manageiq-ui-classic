@@ -183,7 +183,7 @@ module ApplicationHelper
 
   def type_has_quadicon(type)
     !%w(
-      ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
+      ConfigurationProfile
       Account
       GuestApplication
       SystemService
@@ -352,9 +352,8 @@ module ApplicationHelper
         return ems_networks_path
       end
       if request[:controller] == 'service' && view.db == 'GenericObject'
-        controller = "service"
-        action = 'generic_object'
-        return url_for_only_path(:action => action, :id => params[:id]) + "?show="
+        action = 'show'
+        return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
       end
       # If we do not want to use redirect or any kind of click action
       if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex).include?(view.db) &&
@@ -392,7 +391,9 @@ module ApplicationHelper
                  MiqReportResult).include?(view.db) &&
               %w(report automation_manager).include?(request.parameters[:controller])
           suffix = ''
-          suffix = x_node if params[:tab_id] == "saved_reports"
+          if params[:tab_id] == "saved_reports" || params[:pressed] == "miq_report_run" || params[:action] == "reload"
+            suffix = x_node
+          end
           return "/" + request.parameters[:controller] + "/tree_select?id=" + suffix
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
@@ -1634,7 +1635,9 @@ module ApplicationHelper
       :embedded   => @embedded,
       :showlinks  => @showlinks,
       :policy_sim => @policy_sim,
-      :lastaction => @lastaction
+      :lastaction => @lastaction,
+      :in_a_form  => @in_a_form,
+      :display    => @display
     )
     @report_data_additional_options.with_row_button(@row_button) if @row_button
     @report_data_additional_options.with_menu_click(params[:menu_click]) if params[:menu_click]
@@ -1670,6 +1673,14 @@ module ApplicationHelper
     # @view.db
     # @parent
     @lastaction = quadicon_options[:lastaction]
+
+    # we also need to pass the @display because @display passed throught the
+    # session does not persist the null value
+    @display = quadicon_options[:display]
+
+    # need to pass @in_a_form so get_view does not set advanced search options
+    # in the forms that render gtl that mess up @edit
+    @in_a_form = quadicon_options[:in_a_form]
   end
 
   # Wrapper around jquery-rjs' remote_function which adds an extra .html_safe()

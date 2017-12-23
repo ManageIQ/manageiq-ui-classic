@@ -504,7 +504,6 @@ class MiqAeClassController < ApplicationController
       @in_a_form = true
     end
     session[:changed] = @changed = false
-    build_ae_tree(:ae_methods, :automate_tree)
     replace_right_cell
   end
 
@@ -745,7 +744,7 @@ class MiqAeClassController < ApplicationController
       end
     end
     @edit[:new][:available_datatypes] = MiqAeField.available_datatypes_for_ui
-    @edit[:new][:embedded_methods] = @ae_method.embedded_methods if @ae_method.location == 'inline'
+    @edit[:new][:embedded_methods] = @ae_method.embedded_methods
     @edit[:current] = copy_hash(@edit[:new])
     @right_cell_text = if @edit[:rec_id].nil?
                          _("Adding a new Automate Method")
@@ -901,7 +900,6 @@ class MiqAeClassController < ApplicationController
                            else
                              @edit[:new][:data]
                            end
-      build_ae_tree(:ae_methods, :automate_tree)
       @changed = (@edit[:new] != @edit[:current])
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
       angular_form_specific_data if @edit[:new][:location] == "playbook"
@@ -1229,7 +1227,6 @@ class MiqAeClassController < ApplicationController
       @in_a_form = true
       add_flash(_("All changes have been reset"), :warning)
       @button = "reset"
-      build_ae_tree(:ae_methods, :automate_tree)
       replace_right_cell
     else
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
@@ -1668,19 +1665,30 @@ class MiqAeClassController < ApplicationController
   def ae_tree_select_toggle
     @edit = session[:edit]
     self.x_active_tree = :ae_tree
-    method_edit_or_new_method? ? at_tree_select_toggle(:method) : at_tree_select_toggle(:namespace)
+    at_tree_select_toggle(:namespace)
 
     if params[:button] == 'submit'
       x_node_set(@edit[:active_id], :automate_tree)
-      @edit[:namespace] = @edit[:new][:namespace] unless method_edit_or_new_method?
+      @edit[:namespace] = @edit[:new][:namespace]
     end
 
     session[:edit] = @edit
   end
 
+  def embedded_methods_add
+    submit_embedded_method(URI.unescape(params[:fqname]))
+    @changed = (@edit[:new] != @edit[:current])
+    render :update do |page|
+      page << javascript_prologue
+      page << javascript_show("flash_msg_div")
+      page << javascript_for_miq_button_visibility(@changed)
+      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page.replace("embedded_methods_div", :partial => "embedded_methods")
+    end
+  end
+
   def embedded_methods_remove
     @edit[:new][:embedded_methods].delete_at(params[:id].to_i)
-    build_ae_tree(:ae_methods, :automate_tree)
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
@@ -1692,7 +1700,7 @@ class MiqAeClassController < ApplicationController
 
   def ae_tree_select
     @edit = session[:edit]
-    method_edit_or_new_method? ? at_tree_select(:method) : at_tree_select(:namespace)
+    at_tree_select(:namespace)
     session[:edit] = @edit
   end
 
@@ -1717,10 +1725,6 @@ class MiqAeClassController < ApplicationController
   end
 
   private
-
-  def method_edit_or_new_method?
-    %w(miq_ae_method_edit miq_ae_method_new).include?(@sb[:action])
-  end
 
   def playbook_inputs(method)
     existing_inputs = method.inputs

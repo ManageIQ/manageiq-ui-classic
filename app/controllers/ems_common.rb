@@ -282,7 +282,6 @@ module EmsCommon
       refreshemss if params[:pressed] == "#{table_name}_refresh"
       pause_or_resume_emss(:pause => true) if params[:pressed] == "#{table_name}_pause"
       pause_or_resume_emss(:resume => true) if params[:pressed] == "#{table_name}_resume"
-      #     scanemss if params[:pressed] == "scan"
       tag(model) if params[:pressed] == "#{table_name}_tag"
 
       # Edit Tags for Middleware Manager Relationship pages
@@ -437,10 +436,6 @@ module EmsCommon
 
   private ############################
 
-  def generate_breadcrumb(name, url, replace = false)
-    drop_breadcrumb({:name => name, :url => url}, replace)
-  end
-
   # Set form variables for edit
   def set_form_vars
     form_instance_vars
@@ -464,6 +459,9 @@ module EmsCommon
     @openstack_api_versions = retrieve_openstack_api_versions
     @vmware_cloud_api_versions = retrieve_vmware_cloud_api_versions
     @emstype_display = model.supported_types_and_descriptions_hash[@ems.emstype]
+    if @ems.respond_to?(:description)
+      @ems_region_display = @ems.description
+    end
     @nuage_api_versions = retrieve_nuage_api_versions
     @hawkular_security_protocols = retrieve_hawkular_security_protocols
   end
@@ -633,47 +631,6 @@ module EmsCommon
     end
   end
 
-  # Scan all selected or single displayed ems(s)
-  def scanemss
-    assert_privileges(params[:pressed])
-    emss = []
-    if @lastaction == "show_list" # showing a list, scan all selected emss
-      emss = find_checked_items
-      if emss.empty?
-        add_flash(_("No %{model} were selected for scanning") % {:model => ui_lookup(:table => table_name)}, :error)
-      end
-      process_emss(emss, "scan")  unless emss.empty?
-      add_flash(n_("Analysis initiated for %{count} %{model} from the %{product} Database",
-                   "Analysis initiated for %{count} %{models} from the %{product} Database", emss.length) %
-        {:count   => emss.length,
-         :product => Vmdb::Appliance.PRODUCT_NAME,
-         :model   => ui_lookup(:table => table_name),
-         :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
-      show_list
-      @refresh_partial = "layouts/gtl"
-    else # showing 1 ems, scan it
-      if params[:id].nil? || model.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => table_name)}, :error)
-      else
-        emss.push(params[:id])
-      end
-      process_emss(emss, "scan")  unless emss.empty?
-      add_flash(n_("Analysis initiated for %{count} %{model} from the %{product} Database",
-                   "Analysis initiated for %{count} %{models} from the %{product} Database", emss.length) %
-        {:count   => emss.length,
-         :product => Vmdb::Appliance.PRODUCT_NAME,
-         :model   => ui_lookup(:table => table_name),
-         :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
-      params[:display] = @display
-      show
-      if ["vms", "hosts", "storages"].include?(@display)
-        @refresh_partial = "layouts/gtl"
-      else
-        @refresh_partial = "main"
-      end
-    end
-  end
-
   def call_ems_refresh(emss)
     process_emss(emss, "refresh_ems") unless emss.empty?
     return if @flash_array.present?
@@ -744,12 +701,6 @@ module EmsCommon
     end
   end
 
-  # true, if any of the given fields are either missing from or blank in hash
-  def any_blank_fields?(hash, fields)
-    fields = [fields] unless fields.kind_of? Array
-    fields.any? { |f| hash[f].blank? }
-  end
-
   def model
     self.class.model
   end
@@ -758,9 +709,4 @@ module EmsCommon
     self.class.permission_prefix
   end
 
-  def show_list_link(ems, options = {})
-    url_for_only_path(options.merge(:controller => controller_name,
-                                    :action     => "show_list",
-                                    :id         => ems.id))
-  end
 end

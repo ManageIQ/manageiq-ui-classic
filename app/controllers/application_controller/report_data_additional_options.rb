@@ -18,7 +18,9 @@ class ApplicationController
     :embedded,
     :showlinks,
     :policy_sim,
-    :lastaction
+    :in_a_form,
+    :lastaction,
+    :display
   ) do
     def self.from_options(options)
       additional_options = new
@@ -40,6 +42,8 @@ class ApplicationController
       self.showlinks  = options[:showlinks]
       self.policy_sim = options[:policy_sim]
       self.lastaction = options[:lastaction]
+      self.in_a_form  = options[:in_a_form]
+      self.display    = options[:display]
     end
 
     def with_row_button(row_button)

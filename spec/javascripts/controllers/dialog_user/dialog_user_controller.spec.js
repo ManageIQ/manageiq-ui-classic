@@ -16,7 +16,6 @@ describe('dialogUserController', function() {
 
     spyOn(dialogFieldRefreshService, 'refreshField');
     spyOn(miqService, 'miqAjaxButton');
-    spyOn(miqService, 'redirectBack');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
 
@@ -29,6 +28,9 @@ describe('dialogUserController', function() {
       apiAction: 'order',
       cancelEndpoint: 'cancel endpoint',
       finishSubmitEndpoint: 'finish submit endpoint',
+      resourceActionId: '789',
+      targetId: '987',
+      targetType: 'targettype',
     });
   }));
 
@@ -38,7 +40,10 @@ describe('dialogUserController', function() {
     });
 
     it('requests the current dialog based on the service template', function() {
-      expect(API.get).toHaveBeenCalledWith('/api/service_dialogs/1234', {expand: 'resources', attributes: 'content'});
+      expect(API.get).toHaveBeenCalledWith(
+        '/api/service_dialogs/1234?resource_action_id=789&target_id=987&target_type=targettype',
+        {expand: 'resources', attributes: 'content'}
+      );
     });
 
     it('resolves the request and stores the information in the dialog property', function() {
@@ -63,7 +68,7 @@ describe('dialogUserController', function() {
         'dialogData',
         ['dialogName'],
         '/api/service_dialogs/',
-        '1234'
+        {dialogId: '1234', resourceActionId: '789', targetId: '987', targetType: 'targettype'}
       );
     });
   });
@@ -85,6 +90,7 @@ describe('dialogUserController', function() {
 
     context('when the API call succeeds', function() {
       beforeEach(function() {
+        spyOn(miqService, 'redirectBack');
         spyOn(API, 'post').and.returnValue(Promise.resolve('awesome'));
       });
 
@@ -104,7 +110,7 @@ describe('dialogUserController', function() {
           expect(API.post).toHaveBeenCalledWith('submit endpoint', {
             action: 'order',
             field1: 'field1'
-          });
+          }, {skipErrors: [400]});
           done();
         });
       });
@@ -122,7 +128,10 @@ describe('dialogUserController', function() {
 
     context('when the API call fails', function() {
       beforeEach(function() {
-        spyOn(API, 'post').and.returnValue(Promise.reject('not awesome'));
+        var rejectionData = {data: {error: {message: "Failed! -One,Two"}}};
+        spyOn(miqService, 'redirectBack');
+        spyOn(API, 'post').and.returnValue(Promise.reject(rejectionData));
+        spyOn(window, 'clearFlash');
         spyOn(window, 'add_flash');
       });
 
@@ -134,11 +143,21 @@ describe('dialogUserController', function() {
         });
       });
 
-      it('adds a flash message', function(done) {
+      it('clears flash messages', function(done) {
         $controller.submitButtonClicked();
 
         setTimeout(function() {
-          expect(window.add_flash).toHaveBeenCalledWith('Error requesting data from server', 'error');
+          expect(window.clearFlash).toHaveBeenCalled();
+          done();
+        });
+      });
+
+      it('adds flash messages for each message after the -', function(done) {
+        $controller.submitButtonClicked();
+
+        setTimeout(function() {
+          expect(window.add_flash).toHaveBeenCalledWith('One', 'error');
+          expect(window.add_flash).toHaveBeenCalledWith('Two', 'error');
           done();
         });
       });

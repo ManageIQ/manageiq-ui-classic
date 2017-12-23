@@ -26,11 +26,10 @@ Dir[support_path.join("**/*.rb")].each { |f| require f }
 # require core_support_path.join('settings_helper.rb')
 #
 # Known:
-# require core_support_path.join("examples_group/shared_examples_for_application_helper.rb")
 # require core_support_path.join("rake_task_example_group.rb")
 Dir[Rails.root.join('spec', 'shared', '**', '*.rb')].each { |f| require f }
 
-Dir[ManageIQ::UI::Classic::Engine.root.join('spec/shared/controllers/**/*.rb')].each { |f| require f }
+Dir[ManageIQ::UI::Classic::Engine.root.join('spec/shared/**/*.rb')].each { |f| require f }
 Dir[ManageIQ::Gems::Pending.root.join("spec/support/custom_matchers/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|

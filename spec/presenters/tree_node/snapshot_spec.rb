@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::Snapshot do
   subject { described_class.new(object, nil, {}) }
   let(:object) do

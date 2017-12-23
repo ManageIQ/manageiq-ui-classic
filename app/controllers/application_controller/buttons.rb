@@ -172,14 +172,6 @@ module ApplicationController::Buttons
     button_new_edit("new")
   end
 
-  def ab_create_update
-    if params[:button] == "add"
-      button_create
-    else
-      button_update
-    end
-  end
-
   def ab_button_edit
     assert_privileges("ab_button_edit")
     button_new_edit("edit")
@@ -214,7 +206,7 @@ module ApplicationController::Buttons
   def ab_group_delete
     assert_privileges("ab_group_delete")
     if x_node.split('_').last == "ub"
-      add_flash(_("'Unassigned Buttons Group' can not be deleted"), :error)
+      add_flash(_("'Unassigned Button Group' can not be deleted"), :error)
       get_node_info
       replace_right_cell(:nodetype => x_node)
       return
@@ -250,7 +242,7 @@ module ApplicationController::Buttons
   APPLIES_TO_CLASS_BASE_MODELS = %w(AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
-                                    GenericObjectDefinition Host LoadBalancer
+                                    GenericObject GenericObjectDefinition Host LoadBalancer
                                     MiqGroup MiqTemp MiqTemplate NetworkRouter OrchestrationStack SecurityGroup Service
                                     ServiceTemplate Storage Switch Tenant User Vm VmOrTemplate).freeze
   def applies_to_class_model(applies_to_class)
@@ -333,7 +325,9 @@ module ApplicationController::Buttons
         :target_kls => obj.class.name,
       }
 
-      options[:dialog_locals] = determine_dialog_locals_for_custom_button(obj, button.name)
+      options[:dialog_locals] = DialogLocalService.new.determine_dialog_locals_for_custom_button(
+        obj, button.name, button.resource_action
+      )
 
       dialog_initialize(button.resource_action, options)
 
@@ -354,33 +348,6 @@ module ApplicationController::Buttons
       end
       javascript_flash
     end
-  end
-
-  def determine_dialog_locals_for_custom_button(obj, button_name)
-    case obj.class.name.demodulize
-    when /Vm/
-      api_collection_name = "vms"
-      cancel_endpoint = "/vm_infra/explorer"
-      force_old_dialog_use = false
-    when /Service/
-      api_collection_name = "services"
-      cancel_endpoint = "/service/explorer"
-      force_old_dialog_use = false
-    when /GenericObject/
-      api_collection_name = "generic_objects"
-      cancel_endpoint = "/generic_object/show_list"
-      force_old_dialog_use = false
-    else
-      force_old_dialog_use = true
-    end
-
-    {
-      :force_old_dialog_use   => force_old_dialog_use,
-      :api_submit_endpoint    => "/api/#{api_collection_name}/#{obj.id}",
-      :api_action             => button_name,
-      :finish_submit_endpoint => cancel_endpoint,
-      :cancel_endpoint        => cancel_endpoint
-    }
   end
 
   def get_available_dialogs
@@ -693,7 +660,7 @@ module ApplicationController::Buttons
         CustomButtonSet.new :
         CustomButtonSet.find(from_cid(params[:id]))
     if typ == "edit" && x_node.split('_').last == "ub"
-      add_flash(_("'Unassigned Buttons Group' can not be edited"), :error)
+      add_flash(_("'Unassigned Button Group' can not be edited"), :error)
       get_node_info
       replace_right_cell(:nodetype => x_node)
       return
@@ -1073,7 +1040,7 @@ module ApplicationController::Buttons
 
     @edit[:current] = copy_hash(@edit[:new])
 
-    @edit[:visibility_types] = [["<To All>", "all"], ["<By Role>", "role"]]
+    @edit[:visibility_types] = [["<#{_('To All')}>", "all"], ["<#{_('By Role')}>", "role"]]
     # Visibility Box
     if @custom_button.visibility && @custom_button.visibility[:roles]
       @edit[:new][:visibility_typ] = @custom_button.visibility[:roles][0] == "_ALL_" ? "all" : "role"

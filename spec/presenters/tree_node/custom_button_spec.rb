@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::CustomButton do
   subject { described_class.new(object, nil, {}) }
   let(:object) { FactoryGirl.create(:custom_button, :applies_to_class => 'Host') }

@@ -141,10 +141,11 @@
             :javascript
               miqInitSelectPicker();
               miqSelectPickerEvent('chosen_group', "#{url}")
-      - if @edit
+    - if @edit
+      .form-group
         %label.col-md-2.control-label
           = _("Selected Groups")
-        .col-md-3
+        .col-md-4
           = render :partial => "ops/rbac_group_selected"
     - unless @edit
       .form-group

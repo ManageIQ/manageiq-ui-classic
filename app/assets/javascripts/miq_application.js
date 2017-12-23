@@ -721,6 +721,7 @@ function miqAjaxAuth(url) {
     // TODO vanillaJsAPI.autorenew is called on (non-login) page load - when?
   })
   .then(null, function() {
+    clearFlash();
     add_flash(__('Incorrect username or password'), 'error', { id: 'auth_failed' });
 
     miqClearLoginFields();
@@ -736,7 +737,7 @@ function miqAjaxAuthSso(url) {
 
   // Note: /dashboard/kerberos_authenticate creates an API token
   //       based on the authenticated external user
-  //       and stores it in sessionStore.miq_token
+  //       and stores it in localStorage.miq_token
 
   miqJqueryRequest(url || '/dashboard/kerberos_authenticate', {
     beforeSend: true,
@@ -750,7 +751,7 @@ function miqAjaxExtAuth(url) {
 
   // Note: /dashboard/external_authenticate creates an API token
   //       based on the authenticated external user
-  //       and stores it in sessionStore.miq_token
+  //       and stores it in localStorage.miq_token
 
   var credentials = {
     login: $('#user_name').val(),

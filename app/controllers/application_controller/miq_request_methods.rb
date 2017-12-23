@@ -401,7 +401,7 @@ module ApplicationController::MiqRequestMethods
       "name"                          => _("Name"),
       "operating_system.product_name" => _("Operating System"),
       "platform"                      => _("Platform"),
-      "logical_cpus"                  => _("CPUs"),
+      "cpu_total_cores"               => _("CPUs"),
       "mem_cpu"                       => _("Memory"),
       "allocated_disk_storage"        => _("Disk Size"),
       "deprecated"                    => _("Deprecated"),
@@ -415,7 +415,7 @@ module ApplicationController::MiqRequestMethods
     # currently the only ones that support the field.
     headers["image?"] = _("Type") if vms.any? { |vm| vm.respond_to?(:image?) }
 
-    integer_fields = %w(allocated_disk_storage mem_cpu logical_cpus v_total_snapshots)
+    integer_fields = %w(allocated_disk_storage mem_cpu cpu_total_cores v_total_snapshots)
 
     filtered_vms = vms.select { |x| filter_by.call(x) }
 
@@ -803,7 +803,11 @@ module ApplicationController::MiqRequestMethods
       @options = @miq_request.options
       @options[:memory], @options[:mem_typ] = reconfigure_calculations(@options[:vm_memory][0]) if @options[:vm_memory]
       @force_no_grid_xml   = true
-      @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :selected_ids => @miq_request.options[:src_ids]) # Get the records (into a view) and the paginator
+
+      @selected_ids = @miq_request.options[:src_ids]
+      @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest")
+      # FIXME: use selected_ids passed through get_view to replace all of
+      # gtl_selected_records after Gaprindashvili
     end
     @user = User.find_by_userid(@miq_request.stamped_by)
   end

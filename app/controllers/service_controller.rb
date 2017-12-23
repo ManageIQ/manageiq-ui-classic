@@ -42,11 +42,11 @@ class ServiceController < ApplicationController
     @lastaction = "show"
 
     @gtl_url = "/show"
-    @display = params[:display] if params[:display]
+
+    set_display
 
     if self.class.display_methods.include?(@display)
-      params[:display] = @display
-      display_nested_list(@display)
+      nested_list_show
       return
     end
 
@@ -58,6 +58,15 @@ class ServiceController < ApplicationController
       return
     end
     redirect_to(:action => 'show', :controller => @record.class.base_model.to_s.underscore, :id => @record.id)
+  end
+
+  def set_display
+    @display = params[:display]
+    @display ||= default_display unless pagination_or_gtl_request?
+  end
+
+  def nested_list_show
+    params[:generic_object_id] ? generic_object : display_nested_list(@display)
   end
 
   def show_list
@@ -161,17 +170,14 @@ class ServiceController < ApplicationController
   def generic_object
     return unless init_show_variables
 
-    id = params[:show] || params[:x_show]
-    if id.present?
-      @lastaction = "generic_object"
-      @item = @record.generic_objects.find(from_cid(id)).first
-      drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name},
-                      :url  => show_link(@record, :display => @display))
-      drop_breadcrumb(:name => @item.name, :url => "/#{controller_name}/show/#{@record.id}?display=generic_objects/show=#{id}")
-      @view = get_db_view(GenericObject)
-      @sb[:rec_id] = id
-      show_item
-    end
+    @lastaction = 'generic_object'
+    @item ||= @record.generic_objects.find(params[:generic_object_id]).first
+    drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name},
+                    :url  => show_link(@record, :display => @display))
+    drop_breadcrumb(:name => @item.name, :url => "/#{controller_name}/show/#{@record.id}?display=generic_objects&generic_object_id=#{params[:generic_object_id]}")
+    @view = get_db_view(GenericObject)
+    @sb[:rec_id] = params[:generic_object_id]
+    show_item
   end
 
   def self.display_methods
@@ -200,7 +206,7 @@ class ServiceController < ApplicationController
 
   def textual_group_list
     if @record.type == "ServiceAnsiblePlaybook"
-      [%i(properties), %i(lifecycle tags)]
+      [%i(properties), %i(lifecycle tags generic_objects)]
     else
       [%i(properties lifecycle relationships generic_objects miq_custom_attributes), %i(vm_totals tags)]
     end
@@ -301,6 +307,7 @@ class ServiceController < ApplicationController
       end
     when "MiqSearch"
       load_adv_search # Select/load filter from Global/My Filters
+      process_show_list
       @right_cell_text = _("All Services")
     end
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]

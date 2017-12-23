@@ -429,8 +429,25 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "configuration_manager_providers_accord")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::ConfigurationManager", :dbname => :cm_providers).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::ConfigurationManager",
+                                                    :gtl_dbname => :cm_providers, :dbname => :cm_providers).and_call_original
       controller.send(:accordion_select)
+    end
+
+    it "calls get_view with the associated dbname for the Configuration Profiles list" do
+      stub_user(:features => :all)
+      allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_providers_tree)
+      allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
+      ems_id = ems_id_for_provider(@provider)
+      controller.instance_variable_set(:@in_report_data, true)
+      controller.instance_variable_set(:@_params, :id => ems_key_for_provider(@provider))
+      allow(controller).to receive(:build_listnav_search_list)
+      allow(controller).to receive(:apply_node_search_text)
+      expect(controller).to receive(:get_view).with("ConfigurationProfile", :match_via_descendants => "ConfiguredSystem",
+                                                                            :named_scope           => [[:with_manager, ems_id]],
+                                                                            :dbname                => :cm_configuration_profiles,
+                                                                            :gtl_dbname            => :cm_configuration_profiles).and_call_original
+      controller.send(:tree_select)
     end
 
     it "calls get_view with the associated dbname for the Configured Systems accordion" do
@@ -439,7 +456,8 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", :dbname => :cm_configured_systems).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem",
+                                                    :gtl_dbname => :cm_configured_systems, :dbname => :cm_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
     end

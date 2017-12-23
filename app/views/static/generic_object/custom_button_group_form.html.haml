@@ -16,11 +16,13 @@
     %label.col-md-2.control-label{"for" => "custom_button_group_display"}
       = _("Display Text on Button")
     .col-md-8
-      %input.form-control{"type"        => "checkbox",
-                          "id"          => "custom_button_group_display",
-                          "name"        => "display",
-                          "bs-switch"   => "",
-                          "ng-model"    => "vm.model.display"}
+      %input.form-control{"type"            => "checkbox",
+                          "id"              => "custom_button_group_display",
+                          "name"            => "display",
+                          "bs-switch"       => "",
+                          "switch-on-text"  => _('Yes'),
+                          "switch-off-text" => _('No'),
+                          "ng-model"        => "vm.model.display"}
   .form-group{"ng-class" => "{'has-error': vm.angularForm.description.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_group_description"}
       = _("Description")

@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::MiqAeMethod do
   subject { described_class.new(object, nil, {}) }
   let(:object) { FactoryGirl.create(:miq_ae_method, :scope => :class, :language => :ruby, :location => :inline) }

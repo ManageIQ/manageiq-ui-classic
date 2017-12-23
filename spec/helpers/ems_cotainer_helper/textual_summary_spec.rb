@@ -2,7 +2,7 @@ describe EmsContainerHelper::TextualSummary do
   context "providers custom attributes" do
     before do
       @record = FactoryGirl.build(:ems_openshift)
-      allow_any_instance_of(described_class).to receive(:role_allows?).and_return(true)
+      allow(self).to receive(:role_allows?).and_return(true)
       allow(controller).to receive(:restful?).and_return(true)
       allow(controller).to receive(:controller_name).and_return("ems_container")
     end

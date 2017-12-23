@@ -442,15 +442,6 @@ module OpsController::OpsRbac
     end
   end
 
-  def rbac_group_filter_expression
-    rbac_group_set_form_vars
-    @changed = session[:changed] = (@edit[:new] != @edit[:current])
-    @expkey = params[:button].to_sym
-    @edit[:filter_expression_table] = exp_build_table_or_nil(@edit[:new][:filter_expression])
-    @in_a_form = true
-    replace_right_cell(:nodetype => x_node)
-  end
-
   def rbac_group_seq_edit_screen
     @edit = {}
     @edit[:new] = {}
@@ -716,12 +707,6 @@ module OpsController::OpsRbac
     session[:changed] = false
     add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
     @sb[:pre_edit_node] = x_node  unless params[:button] # Save active tree node before edit
-    if @edit["#{key}_id".to_sym]
-      caption = key == :group ? @record.description : @record.name
-      @right_cell_text = _("Editing %{model} \"%{name}\"") % {:name => caption, :model => what.titleize}
-    else
-      @right_cell_text = _("Adding a new %{name}") % {:name => what.titleize}
-    end
     replace_right_cell(:nodetype => x_node)
   end
 
@@ -822,6 +807,7 @@ module OpsController::OpsRbac
     when "role"  then rbac_role_get_form_vars
     end
 
+    @edit[:new][:group] = rbac_user_get_group_ids.map(&:to_i)
     session[:changed] = changed = (@edit[:new] != @edit[:current])
     bad = false
     if rec_type == "group"
@@ -837,7 +823,7 @@ module OpsController::OpsRbac
         end
         bad = false
       else
-        # only do following if groups of a user change (adding/editing a user)
+        # only do following for user (adding/editing a user)
         if x_node.split("-").first == "u" || x_node == "xx-u"
           page.replace("group_selected",
                        :partial => "ops/rbac_group_selected")
@@ -1025,6 +1011,11 @@ module OpsController::OpsRbac
     @edit[:groups] = Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).sort_by { |g| g.description.downcase }.collect { |g| [g.description, g.id] }
     # store current state of the new users information
     @edit[:current] = copy_hash(@edit[:new])
+    @right_cell_text = if @edit[:user_id]
+                         _("Editing User \"%{name}\"") % {:name => @record.name}
+                       else
+                         _('Adding a new User')
+                       end
   end
 
   # Get variables from user edit form
@@ -1053,9 +1044,9 @@ module OpsController::OpsRbac
     when 'null', nil
       []
     when String
-      @edit[:new][:group].split(',').delete_if(&:blank?)
+      @edit[:new][:group].split(',').delete_if(&:blank?).sort
     when Array
-      @edit[:new][:group]
+      @edit[:new][:group].sort
     end
   end
 
@@ -1190,7 +1181,7 @@ module OpsController::OpsRbac
     end
 
     # Build roles hash
-    @edit[:roles]["<Choose a Role>"] = nil if @record.id.nil?
+    @edit[:roles]["<#{_('Choose a Role')}>"] = nil if @record.id.nil?
 
     Rbac::Filterer.filtered(MiqUserRole).each do |r|
       @edit[:roles][r.name] = r.id
@@ -1202,9 +1193,9 @@ module OpsController::OpsRbac
     end
 
     all_tenants, all_projects = Tenant.tenant_and_project_names
-    @edit[:projects_tenants].push(["", [[_("<Choose a Project/Tenant>"),
-                                         :selected => _("<Choose a Project/Tenant>"),
-                                         :disabled => _("<Choose a Project/Tenant>"),
+    @edit[:projects_tenants].push(["", [["<#{_('Choose a Project/Tenant')}>",
+                                         :selected => "<#{_('Choose a Project/Tenant')}>",
+                                         :disabled => "<#{_('Choose a Project/Tenant')}>",
                                          :style    => 'display:none']]])
     @edit[:projects_tenants].push(["Projects", all_projects]) unless all_projects.blank?
     @edit[:projects_tenants].push(["Tenants", all_tenants]) unless all_tenants.blank?
@@ -1212,6 +1203,12 @@ module OpsController::OpsRbac
 
     rbac_group_filter_expression_vars(:filter_expression, :filter_expression_table)
     @edit[:current] = copy_hash(@edit[:new])
+
+    @right_cell_text = if @edit[:group_id]
+                         _("Editing Group \"%{name}\"") % {:name => @record.description}
+                       else
+                         _('Adding a new Group')
+                       end
 
     rbac_group_right_tree(@edit[:new][:belongsto].keys)
   end
@@ -1299,6 +1296,12 @@ module OpsController::OpsRbac
 
     @role_features = @record.feature_identifiers.sort
     @rbac_menu_tree = build_rbac_feature_tree
+
+    @right_cell_text = if @edit[:role_id]
+                         _("Editing Role \"%{name}\"") % {:name => @record.name}
+                       else
+                         _('Adding a new Role')
+                       end
   end
 
   # Get array of total set of features from the children of selected features

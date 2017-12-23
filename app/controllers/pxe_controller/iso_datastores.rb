@@ -2,18 +2,6 @@
 module PxeController::IsoDatastores
   extend ActiveSupport::Concern
 
-  def iso_datastore_tree_select
-    typ, id = params[:id].split("_")
-    case typ
-    when "img"
-      @record = MiqServer.find(from_cid(id))
-    when "wimg"
-      @record = WindowsImage.find(from_cid(id))
-    when "ps"
-      @record = ServerRole.find(from_cid(id))
-    end
-  end
-
   def iso_datastore_new
     assert_privileges("iso_datastore_new")
     @isd = IsoDatastore.new
@@ -234,20 +222,6 @@ module PxeController::IsoDatastores
 
   def iso_img_set_record_vars(img)
     img.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
-  end
-
-  def identify_isd_datastore
-    @isd = nil
-    begin
-      @record = @isd = find_record_with_rbac(IsoDatastore, from_cid(params[:id]))
-    rescue ActiveRecord::RecordNotFound
-    rescue => @bang
-    end
-  end
-
-  # Delete all selected or single displayed ISO Datastore(s)
-  def deleteisds
-    iso_datastore_button_operation('destroy', 'deletion')
   end
 
   def iso_datastore_set_record_vars(isd)

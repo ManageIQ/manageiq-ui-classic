@@ -394,6 +394,42 @@ describe CatalogController do
     end
   end
 
+  context "#ot_copy" do
+    it "Orchestration Template is copied but name is changed" do
+      controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
+      ot = FactoryGirl.create(:orchestration_template_amazon)
+      controller.x_node = "xx-otcfn_ot-#{ot.id}"
+      name = "New Name"
+      description = "New Description"
+      new_content = "{\"AWSTemplateFormatVersion\" : \"new-version\"}"
+      session[:edit] = {
+        :new => {
+          :name        => name,
+          :description => description
+        },
+        :key => "ot_edit__#{ot.id}"
+      }
+
+      new_name = "New name for copied OT"
+      new_description = "New description for copied OT"
+
+      allow(controller).to receive(:replace_right_cell)
+      controller.instance_variable_set(:@_params,
+                                       :name        => new_name,
+                                       :description => new_description,
+                                       :id          => ot.id.to_s)
+      controller.send(:ot_form_field_changed)
+      controller.instance_variable_set(:@_params,
+                                       :button           => "add",
+                                       :original_ot_id   => ot.id,
+                                       :template_content => new_content)
+      controller.send(:ot_copy_submit)
+      expect(OrchestrationTemplate.where(:name        => new_name,
+                                         :description => new_description).first).to_not be_nil
+    end
+  end
+
   context "#ot_delete" do
     before(:each) do
       controller.instance_variable_set(:@sb, {})

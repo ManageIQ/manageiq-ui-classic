@@ -34,8 +34,8 @@ class TreeBuilderSections < TreeBuilder
       if group.blank? || section[:group] != group
         group = section[:group]
         nodes.push(:id         => "group_#{section[:group]}",
-                   :text       => section[:group] == "Categories" ? "#{@current_tenant} Tags" : section[:group],
-                   :tip        => section[:group],
+                   :text       => section[:group] == "Categories" ? _("%{current_tenant} Tags") % {:current_tenant => @current_tenant} : _(section[:group]),
+                   :tip        => _(section[:group]),
                    :image      => false,
                    :select     => true,
                    :selectable => false,
@@ -60,8 +60,8 @@ class TreeBuilderSections < TreeBuilder
   def x_get_tree_hash_kids(parent, count_only)
     nodes = parent[:nodes].map do |kid|
       {:id         => "group_#{kid[:group]}:#{kid[:name]}",
-       :text       => kid[:header],
-       :tip        => kid[:header],
+       :text       => _(kid[:header]),
+       :tip        => _(kid[:header]),
        :image      => false,
        :select     => @data.include[kid[:name]][:checked],
        :selectable => false,

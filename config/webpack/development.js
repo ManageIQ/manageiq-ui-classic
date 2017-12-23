@@ -3,6 +3,7 @@
 const merge = require('webpack-merge')
 const sharedConfig = require('./shared.js')
 const { settings, output } = require('./configuration.js')
+const { env } = require('process')
 
 module.exports = merge(sharedConfig, {
   devtool: 'cheap-eval-source-map',
@@ -27,6 +28,19 @@ module.exports = merge(sharedConfig, {
     historyApiFallback: true,
     watchOptions: {
       ignored: /node_modules/
+    },
+    proxy: {
+      '/': {
+        target: `http://${settings.dev_server.host}:${env.PORT || '3000'}`,
+        secure: false,
+      },
+      '/ws': {
+        target: `ws://${settings.dev_server.host}:${env.WS_PORT ||
+          env.PORT ||
+          '3000'}`,
+        secure: false,
+        ws: true,
+      },
     }
   }
 })

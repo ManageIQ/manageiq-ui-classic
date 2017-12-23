@@ -2,18 +2,6 @@
 module PxeController::PxeServers
   extend ActiveSupport::Concern
 
-  def pxe_server_tree_select
-    typ, id = params[:id].split("_")
-    case typ
-    when "img"
-      @record = MiqServer.find(from_cid(id))
-    when "wimg"
-      @record = WindowsImage.find(from_cid(id))
-    when "ps"
-      @record = ServerRole.find(from_cid(id))
-    end
-  end
-
   def pxe_server_new
     assert_privileges("pxe_server_new")
     @ps = PxeServer.new
@@ -356,14 +344,6 @@ module PxeController::PxeServers
     wimg.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
   end
 
-  def identify_pxe_server
-    @ps = nil
-    begin
-      @record = @ps = find_record_with_rbac(PxeServer, from_cid(params[:id]))
-    rescue ActiveRecord::RecordNotFound
-    rescue => @bang
-    end
-  end
 
   # Delete all selected or single displayed PXE Server(s)
   def deletepxes

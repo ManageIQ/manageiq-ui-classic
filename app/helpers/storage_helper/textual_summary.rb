@@ -105,19 +105,35 @@ module StorageHelper::TextualSummary
   end
 
   def textual_registered_vms
-    {:label => _("Managed/Registered VMs"),
-     :icon  => "pficon pficon-virtual-machine",
-     :value => @record.total_managed_registered_vms}
+    value = @record.total_managed_registered_vms
+    h = {:label => _("Managed/Registered VMs"),
+         :icon  => "pficon pficon-virtual-machine",
+         :value => value}
+    if value > 0 && role_allows?(:feature => "vm_show_list")
+      h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'registered_vms')
+      h[:title] = _("Show all Managed/Registered VMs")
+    end
+    h
   end
 
   def textual_unregistered_vms
-    {:label => _("Managed/Unregistered VMs"),
-     :icon  => "pficon pficon-virtual-machine",
-     :value => @record.total_managed_unregistered_vms}
+    value = @record.total_managed_unregistered_vms
+    h = {:label => _("Managed/Unregistered VMs"),
+         :icon  => "pficon pficon-virtual-machine",
+         :value => value}
+    if value > 0 && role_allows?(:feature => "vm_show_list")
+      h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'unregistered_vms')
+      h[:title] = _("Show all Managed/Unregistered VMs")
+    end
+    h
   end
 
+  # Unmanaged VMs no longer exist but their number is known
   def textual_unmanaged_vms
-    {:label => _("Unmanaged VMs"), :icon => "pficon pficon-virtual-machine", :value => @record.total_unmanaged_vms}
+    {:label => _("Unmanaged VMs"),
+     :icon  => "pficon pficon-virtual-machine",
+     :value => @record.total_unmanaged_vms,
+     :title => _("Unmanaged VMs are no longer available")}
   end
 
   def textual_files

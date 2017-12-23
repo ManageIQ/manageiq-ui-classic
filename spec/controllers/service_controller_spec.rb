@@ -1,4 +1,6 @@
 describe ServiceController do
+  include CompressedIds
+
   before(:each) do
     stub_user(:features => :all)
   end
@@ -98,7 +100,7 @@ describe ServiceController do
       expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"}])
     end
 
-    it 'displays one generic object from the nested list' do
+    it 'redirects to service detail page when Services maintab is clicked right after viewing the GO object' do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
       controller.instance_variable_set(:@breadcrumbs, [])
@@ -112,10 +114,16 @@ describe ServiceController do
         :services                  => [service]
       )
       go.add_to_service(service)
-      get :generic_object, :params => { :id => service.id, :show => go.id}
+      get :show, :params => { :id => service.id, :display => 'generic_objects', :generic_object_id => go.id}
       expect(response.status).to eq(200)
-      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}"},
-                                           {:name => "GOTest", :url => "/service/show/#{service.id}?display=generic_objects/show=#{go.id}"}])
+      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"},
+                                           {:name => "GOTest", :url => "/service/show/#{service.id}?display=generic_objects&generic_object_id=#{go.id}"}])
+      is_expected.to render_template("layouts/_item")
+      is_expected.to render_template("service/show")
+
+      get :show, :params => { :id => service.id}
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'explorer', :id => "s-#{service.id}")
     end
 
     context "#button" do
@@ -176,7 +184,7 @@ describe ServiceController do
         )
         results = assert_report_data_response
         expect(results['data']['rows'].length).to eq(1)
-        expect(results['data']['rows'][0]['long_id']).to eq(vm.id)
+        expect(results['data']['rows'][0]['long_id']).to eq(vm.id.to_s)
       end
     end
 
@@ -229,6 +237,47 @@ describe ServiceController do
           }
         )
         post :tree_select, :params => {:id => 'xx-rsrv'}
+        expect(response.status).to eq(200)
+      end
+    end
+  end
+
+  context "Generic Object instances in Textual Summary" do
+    it "displays Generic Objects in Ansible Playbook Service Textual Summary" do
+      record = FactoryGirl.create(:service_ansible_playbook)
+      controller.instance_variable_set(:@record, record)
+      expect(controller.send(:textual_group_list)).to include(array_including(:generic_objects))
+    end
+
+    it "displays Generic Objects for all other Services" do
+      record = FactoryGirl.create(:service)
+      controller.instance_variable_set(:@record, record)
+      expect(controller.send(:textual_group_list)).to include(array_including(:generic_objects))
+    end
+  end
+
+  context 'displaying a list of All Services' do
+    describe '#tree_select' do
+      render_views
+
+      let(:service_search) { FactoryGirl.create(:miq_search, :description => 'a', :db => 'Service') }
+
+      it 'renders GTL of All Services, filtered by choosen filter from accordion' do
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'Service',
+          :report_data_additional_options => {
+            :model       => 'Service',
+            :named_scope => nil
+          }
+        )
+        expect(controller).to receive(:process_show_list).once.and_call_original
+        post :tree_select, :params => {:id => "ms-#{to_cid(service_search.id)}"}
+        expect(response.status).to eq(200)
+      end
+
+      it 'calls load_adv_search method to load filter from filters in accordion' do
+        expect(controller).to receive(:load_adv_search).once
+        post :tree_select, :params => {:id => "ms-#{to_cid(service_search.id)}"}
         expect(response.status).to eq(200)
       end
     end

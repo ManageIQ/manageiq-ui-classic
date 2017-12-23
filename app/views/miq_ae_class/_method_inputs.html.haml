@@ -68,15 +68,15 @@
         %thead
           %tr
             %th= _('Input Name')
-            %th= _('Default Value')
             %th= _('Data Type')
+            %th= _('Default Value')
         %tbody
           - @record.inputs.each do |record|
             %tr
               %td= record_name(record)
+              %td= record.datatype.blank? ? 'string' : record.datatype
               %td
                 - if record.datatype == 'password'
                   ********
                 - else
                   = record.default_value
-              %td= record.datatype.blank? ? 'string' : record.datatype

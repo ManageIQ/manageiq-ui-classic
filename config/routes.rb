@@ -212,6 +212,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         index
         perf_top_chart
+        protect
         show
         show_list
         tagging_edit
@@ -220,6 +221,7 @@ Rails.application.routes.draw do
       :post => %w(
         button
         listnav_search_selected
+        protect
         quick_search
         sections_field_changed
         show
@@ -484,7 +486,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         update
-      ) + compare_post + adv_search_post + exp_post
+      ) + compare_post + adv_search_post + exp_post + save_post
     },
 
     :cloud_volume             => {
@@ -2210,6 +2212,7 @@ Rails.application.routes.draw do
         create_method
         create_ns
         domains_priority_edit
+        embedded_methods_add
         embedded_methods_remove
         explorer
         expand_toggle
@@ -3206,6 +3209,7 @@ Rails.application.routes.draw do
         scan_histories
         sections_field_changed
         security_groups
+        sort_template_grid
         floating_ips
         network_routers
         network_ports
@@ -3482,6 +3486,7 @@ Rails.application.routes.draw do
 
   # API-like JSON trees
   get '/tree/automate_entrypoint', :to => 'tree#automate_entrypoint'
+  get '/tree/automate_inline_methods', :to => 'tree#automate_inline_methods'
 
   # pure-angular templates
   get '/static/*id' => 'static#show', :format => false

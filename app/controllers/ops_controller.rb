@@ -224,11 +224,6 @@ class OpsController < ApplicationController
     end
   end
 
-  def change_subtab
-    @sb[:active_tab] = params[:tab_id]
-    change_tab
-  end
-
   def rbac_group_load_tab
     tab_id = params[:tab_id]
     _, group_id = TreeBuilder.extract_node_model_and_id(x_node)
@@ -559,6 +554,7 @@ class OpsController < ApplicationController
     # get_node_info might set this
     replace_trees = @replace_trees if @replace_trees
     @explorer = true
+    tree_selected_model if @tree_selected_model.nil?
 
     # Clicked on right cell record, open the tree enough to show the node,
     # if not already showing a record

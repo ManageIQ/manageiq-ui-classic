@@ -1,4 +1,7 @@
 describe HostController do
+  let(:h1) { FactoryGirl.create(:host, :name => 'foobar') }
+  let(:h2) { FactoryGirl.create(:host, :name => 'bar') }
+
   context "#button" do
     render_views
 
@@ -10,8 +13,6 @@ describe HostController do
     end
 
     it 'edit renders GTL grid with selected Host records' do
-      h1 = FactoryGirl.create(:host)
-      h2 = FactoryGirl.create(:host)
       session[:host_items] = [h1.id, h2.id]
       session[:settings] = {:views     => {:host => 'grid'},
                             :display   => {:quad_truncate => 'f'},
@@ -351,6 +352,48 @@ describe HostController do
         # FIXME: This should rather be a POST, but it really is a GET.
         get :show_list, :params => {:menu_click => menu_click, :sb_controller => 'storage'}
         expect(response.status).to eq(200)
+      end
+    end
+
+    context 'called with search text' do
+      it 'render GTL with and saves search_text in the session' do
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'Host',
+          :parent_id                      => nil,
+          :report_data_additional_options => {
+            :lastaction => 'show_list',
+          },
+        )
+        get :show_list, :params => {'search[text]' => 'foobar'}
+        expect(session.fetch_path(:sandboxes, 'host', :search_text)).to eq('foobar')
+        expect(response.status).to eq(200)
+      end
+    end
+  end
+
+  describe '#report_data' do
+    before(:each) do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    context 'called with search text' do
+      it 'returns hosts filtered by the search text' do
+        h1
+        h2
+
+        session[:sandboxes] = {}
+        session.store_path(:sandboxes, 'host', :search_text, 'foobar')
+        report_data_request(
+          :model                          => 'Host',
+          :parent_id                      => nil,
+          :report_data_additional_options => {
+            :lastaction => 'show_list',
+          }
+        )
+        results = assert_report_data_response
+        expect(results['data']['rows'].length).to eq(1)
+        expect(results['data']['rows'][0]['long_id']).to eq(h1.id.to_s)
       end
     end
   end

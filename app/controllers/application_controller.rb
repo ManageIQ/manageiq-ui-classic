@@ -110,6 +110,7 @@ class ApplicationController < ActionController::Base
       :catalog                                  => "list",
       :cm_providers                             => "list",
       :cm_configured_systems                    => "list",
+      :cm_configuration_profiles                => "list",
       :compare                                  => "expanded",
       :compare_mode                             => "details",
       :condition                                => "list",
@@ -146,15 +147,8 @@ class ApplicationController < ActionController::Base
       :manageiq_providers_inframanager          => "grid",
       :manageiq_providers_inframanager_vm       => "grid",
       :manageiq_providers_inframanager_template => "list",
-      :manageiq_providers_middlewaremanager     => "grid",
       :manageiq_providers_physicalinframanager  => "list",
       :manageiq_providers_storagemanager        => "list",
-      :middlewaredatasource                     => "list",
-      :middlewaredeployment                     => "list",
-      :middlewaredomain                         => "list",
-      :middlewaremessaging                      => "list",
-      :middlewareserver                         => "list",
-      :middlewareservergroup                    => "list",
       :miqaction                                => "list",
       :miqaeclass                               => "list",
       :miqaeinstance                            => "list",
@@ -354,26 +348,6 @@ class ApplicationController < ActionController::Base
     render Charting.render_format => rpt.chart
   end
 
-  # Method for creating object with data for report.
-  # Report is either grid/table or list.
-  # @param controller_name name of JS controller. Typically `reportDataController`.
-  def init_report_data(controller_name)
-    view_url = view_to_url(@view) unless @view.nil?
-    {
-      :controller_name => controller_name,
-      :data            => {
-        :model_name => @display.nil? && !self.class.model.nil? ? self.class.model.to_s.tableize : @display,
-        :activeTree => x_active_tree.to_s,
-        :gtlType    => @gtl_type,
-        :parentId   => params[:id],
-        :sortColIdx => @sortcol,
-        :sortDir    => @sortdir,
-        :isExplorer => @explorer,
-        :showUrl    => view_url
-      }
-    }
-  end
-
   # Private method for processing params.
   # params can contain these options:
   # @param params parameters object.
@@ -388,7 +362,7 @@ class ApplicationController < ActionController::Base
     options = from_additional_options(params[:additional_options] || {})
     if params[:explorer]
       params[:action] = "explorer"
-      @explorer = params[:explorer] == "true"
+      @explorer = params[:explorer].to_s == "true"
     end
 
     # if params[:active_tree] && defined? get_node_info
@@ -530,7 +504,6 @@ class ApplicationController < ActionController::Base
 
   # Common method to show a standalone report
   def report_only
-    @report_only = true # Indicate stand alone report for views
     # Render error message if report doesn't exist
     if params[:rr_id].nil? && @sb.fetch_path(:pages, :rr_id).nil?
       add_flash(_("This report isn't generated yet. It cannot be rendered."), :error)
@@ -548,7 +521,8 @@ class ApplicationController < ActionController::Base
     @html     = report_build_html_table(rr.report_results, rr.html_rows.join)
     @ght_type = params[:type] || (@report.graph.blank? ? 'tabular' : 'hybrid')
     @render_chart = (@ght_type == 'hybrid')
-    render 'shared/show_report'
+    # Indicate stand alone report for views
+    render 'shared/show_report', :layout => 'report_only'
   end
 
   def show_statistics
@@ -916,28 +890,6 @@ class ApplicationController < ActionController::Base
     session[:user_tz] = Time.zone = (user ? user.get_timezone : server_timezone)
   end
 
-  # Initialize the options for server selection
-  def init_server_options(show_all = true)
-    @server_options ||= {}
-    @server_options[:zones] = []
-    @server_options[:zone_servers] = {}
-    MiqServer.all.each do |ms|
-      next if !show_all && !ms.started? # Collect all or only started servers
-
-      if ms.id == MiqServer.my_server.id # This is the current server
-        @server_options[:server_id] ||= ms.id
-        next # Don't add to list
-      end
-      @server_options[:zones].push(ms.my_zone) unless @server_options[:zones].include?(ms.my_zone)
-      @server_options[:zone_servers][ms.my_zone] ||= []
-      @server_options[:zone_servers][ms.my_zone].push(ms.id)
-    end
-    @server_options[:server_id] ||= MiqServer.my_server.id
-    @server_options[:zone] = MiqServer.find(@server_options[:server_id]).my_zone
-    @server_options[:hostname] = ""
-    @server_options[:ipaddress] = ""
-  end
-
   def populate_reports_menu(tree_type = 'reports', mode = 'menu')
     # checking to see if group (used to be role) was selected in menu editor tree, or came in from reports/timeline tree calls
     group = !session[:role_choice].blank? ? MiqGroup.find_by(:description => session[:role_choice]) : current_group
@@ -969,6 +921,7 @@ class ApplicationController < ActionController::Base
       data.each do |r|
         r_group = r.rpt_group == "Custom" ? "#{@sb[:grp_title]} - Custom" : r.rpt_group # Get the report group
         title = r_group.reverse.split('-', 2).collect(&:reverse).collect(&:strip).reverse
+        next if mode == "menu" && title[1] == "Custom"
         if @temp_title != title[0]
           @temp_title = title[0]
           reports = []
@@ -1026,7 +979,8 @@ class ApplicationController < ActionController::Base
       else
         temp2 = group.settings[:report_menus]
       end
-      rptmenu = temp.concat(temp2)
+      # don't add custom reports to rptmenu when building tree for menu editor form
+      rptmenu = mode == "menu" ? temp2 : temp.concat(temp2)
     end
     # move Customs folder as last item in tree
     rptmenu[0].each do |r|
@@ -1097,7 +1051,7 @@ class ApplicationController < ActionController::Base
       end
       new_row = {
         :id       => list_row_id(row),
-        :long_id  => row['id'],
+        :long_id  => row['id'].to_s,
         :cells    => [],
         :quadicon => quadicon
       }
@@ -1122,7 +1076,9 @@ class ApplicationController < ActionController::Base
         item = listicon_item(view, row['id'])
         icon, icon2, image, picture = listicon_glyphicon(item)
         image = "100/#{(@listicon || view.db).underscore}.png" if icon.nil? && image.nil? # TODO: we want to get rid of this
-        icon = nil if %w(pxe middleware_server).include?(params[:controller]) # TODO: adding exceptions here is a wrong approach
+        # FIXME: adding exceptions here is a wrong approach
+        icon = nil if params[:controller] == 'pxe'
+        icon = nil if params[:model] == 'MiddlewareServer'
         new_row[:cells] << {:title => _('View this item'),
                             :image   => ActionController::Base.helpers.image_path(image.to_s),
                             :picture => ActionController::Base.helpers.image_path(picture.to_s),
@@ -1144,10 +1100,9 @@ class ApplicationController < ActionController::Base
         when "result"
           new_row[:cells] << {:span => result_span_class(row[col]), :text => row[col].titleize}
         when "severity"
-          value = row[col] || ' '
-          new_row[:cells] << {:span => severity_span_class(value), :text => severity_title(value)}
+          new_row[:cells] << {:span => severity_span_class(row[col]), :text => row[col].titleize}
         when 'state'
-          celltext = row[col].titleize
+          celltext = row[col].to_s.titleize
         when 'hardware.bitness'
           celltext = row[col] ? "#{row[col]} bit" : ''
         when 'image?'
@@ -1194,14 +1149,6 @@ class ApplicationController < ActionController::Base
       "label label-warning center-block"
     else
       "label label-low-severity center-block"
-    end
-  end
-
-  def severity_title(value)
-    if self.class.instance_of?(MiqPolicyController)
-      self.class::SEVERITIES[value]
-    else
-      value.titleize
     end
   end
 
@@ -1454,11 +1401,21 @@ class ApplicationController < ActionController::Base
       @search_text = params[:search_text].blank? ? nil : params[:search_text].strip
     end
 
+    return nil unless @search_text
+
+    # Don't apply sub_filter when viewing sub-list view of a CI.
+    # This applies when search is active and you go Vm -->
+    # {Processes,Users,...} in that case, search shoult NOT be applied.
+    # FIXME: This needs to be changed to apply search in some explicit way.
+    return nil if @display
+
+    # If we came in through Chart pop-up menu click we don't filter records.
+    return nil if session[:menu_click]
+
     # Build sub_filter where clause from search text
-    if @search_text && (
-        (!@parent && @lastaction == "show_list" && !session[:menu_click]) ||
-        (@explorer && !session[:menu_click]) ||
-        %w(miq_policy vm_infra).include?(@layout)) # Added to handle search text from list views in control explorer
+    if (!@parent && @lastaction == "show_list") ||  # This part is for the Hosts screen.
+       @explorer                                    # In explorer screens we have search (that includes vm_infra and
+                                                    # Control/Explorer/Policies)
 
       stxt = @search_text.gsub("_", "`_")                 # Escape underscores
       stxt.gsub!("%", "`%")                               #   and percents
@@ -1473,14 +1430,15 @@ class ApplicationController < ActionController::Base
                "%#{stxt}%"
              end
 
-      if ::Settings.server.case_sensitive_name_search
-        sub_filter = ["#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt]
-      else
-        # don't apply sub_filter when viewing sub-list view of a CI
-        sub_filter = ["lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase] unless @display
-      end
+      return (
+        if ::Settings.server.case_sensitive_name_search
+          ["#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt]
+        else
+          ["lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase]
+        end
+      )
     end
-    sub_filter
+    nil
   end
 
   def perpage_key(dbname)
@@ -2341,12 +2299,18 @@ class ApplicationController < ActionController::Base
   end
 
   # Build all trees and accordions accoding to features available to the current user.
-  #
-  def build_accordions_and_trees(x_node_to_set = nil)
+
+  def build_accordions_and_trees_only
     # Build the Explorer screen from scratch
     allowed_features = ApplicationController::Feature.allowed_features(features)
     @trees = allowed_features.collect { |feature| feature.build_tree(@sb) }
     @accords = allowed_features.map(&:accord_hash)
+
+    allowed_features
+  end
+
+  def build_accordions_and_trees(x_node_to_set = nil)
+    allowed_features = build_accordions_and_trees_only
     set_active_elements(allowed_features.first, x_node_to_set)
   end
 

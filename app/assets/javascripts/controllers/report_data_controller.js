@@ -88,7 +88,7 @@
       } else if (event.unsubscribe && event.unsubscribe === CONTROLLER_NAME) {
         this.onUnsubscribe();
       } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
-        this.setExtraClasses();
+        this.setExtraClasses(this.initObject.gtlType);
       } else if (event.refreshData && event.refreshData.name === CONTROLLER_NAME) {
         this.refreshData();
       }
@@ -208,6 +208,7 @@
     event.stopPropagation();
     event.preventDefault();
     if (this.initObject.showUrl) {
+      miqSparkleOn();
       var prefix = this.initObject.showUrl;
       var splitUrl = this.initObject.showUrl.split('/');
       if (item.parent_path && item.parent_id) {
@@ -223,7 +224,7 @@
         }
         var url = prefix + itemId;
         $.post(url).always(function() {
-          this.setExtraClasses();
+          this.setExtraClasses(this.initObject.gtlType);
         }.bind(this));
       } else if (prefix !== "true") {
         var lastChar = prefix[prefix.length - 1];
@@ -242,15 +243,15 @@
   */
   ReportDataController.prototype.onItemSelect = function(item, isSelected) {
     if (typeof item !== 'undefined') {
-      var selectedItem = _.find(this.gtlData.rows, {id: item.id});
+      var selectedItem = _.find(this.gtlData.rows, {long_id: item.long_id});
       if (selectedItem) {
         selectedItem.checked = isSelected;
         selectedItem.selected = isSelected;
         this.$window.sendDataWithRx({rowSelect: selectedItem});
         if (isSelected) {
-          ManageIQ.gridChecks.push(item.id);
+          ManageIQ.gridChecks.push(item.long_id);
         } else {
-          var index = ManageIQ.gridChecks.indexOf(item.id);
+          var index = ManageIQ.gridChecks.indexOf(item.long_id);
           index !== -1 && ManageIQ.gridChecks.splice(index, 1);
         }
       }
@@ -457,6 +458,13 @@
         gtlData.messages && gtlData.messages.forEach(function(oneMessage) {
           add_flash(oneMessage.msg, oneMessage.level);
         });
+        // Apply gettext __() on column headers
+        for (var i = 0;  i < gtlData.cols.length; i++) {
+          var column = gtlData.cols[i];
+          if (column.hasOwnProperty('text')) {
+            column.text = __(column.text);
+          }
+        }
         return gtlData;
       }.bind(this));
   };

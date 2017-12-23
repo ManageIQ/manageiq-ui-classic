@@ -19,8 +19,8 @@ class ApplicationHelper::Toolbar::XHistory < ApplicationHelper::Toolbar::Basic
     ),
     button(
       :summary_reload,
-      'fa fa-repeat fa-lg',
-      N_('Reload current display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil,
       :url => "reload",
       :klass => ApplicationHelper::Button::SummaryReload),

@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
       :items => [
         button(
           :ems_container_refresh,
-          'icon fa fa-refresh fa-lg',
+          'fa fa-refresh fa-lg',
           N_('Refresh Items and Relationships for all Containers Providers'),
           N_('Refresh Items and Relationships'),
           :confirm      => N_("Refresh Items and Relationships related to Containers Providers?"),
@@ -45,20 +45,22 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           'pficon pficon-trend-up fa-lg',
           t = N_('Resume selected Containers Providers'),
           t,
-          :confirm   => N_("Resume these Containers Providers?"),
-          :enabled   => false,
-          :url_parms => "main_div",
-          :onwhen    => "1+"),
+          :confirm      => N_("Resume these Containers Providers?"),
+          :enabled      => false,
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :onwhen       => "1+"),
         button(
           :ems_container_pause,
           'pficon pficon-trend-down fa-lg',
           t = N_('Pause selected Containers Providers'),
           t,
-          :confirm   => N_("Warning: While these providers are paused no data will be collected from them. " \
-                           "This may cause gaps in inventory, metrics and events!"),
-          :enabled   => false,
-          :url_parms => "main_div",
-          :onwhen    => "1+"),
+          :confirm      => N_("Warning: While these providers are paused no data will be collected from them. " \
+                              "This may cause gaps in inventory, metrics and events!"),
+          :enabled      => false,
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :onwhen       => "1+"),
         button(
           :ems_container_delete,
           'pficon pficon-delete fa-lg',

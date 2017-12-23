@@ -2,6 +2,7 @@ module VmCommon
   extend ActiveSupport::Concern
   include ActionView::Helpers::JavaScriptHelper
   include ChargebackPreview
+  include ProvisionCustomizeHelper
 
   def textual_group_list
     [
@@ -14,6 +15,8 @@ module VmCommon
     private :textual_group_list
     helper_method :textual_group_list
     helper_method :parent_choices_with_no_parent_choice
+    helper_method :select_check?
+    helper_method :disable_check?
   end
 
   # handle buttons pressed on the button bar
@@ -652,29 +655,6 @@ module VmCommon
     end
   end
 
-  def profile_toggle
-    if params[:pressed] == "tag_cat_toggle"
-      profile_build
-      policy_escaped = j(params[:policy])
-      cat            = params[:cat]
-      render :update do |page|
-        page << javascript_prologue
-        if @catinfo[cat]
-          @catinfo[cat] = false
-          page << javascript_show("cat_#{policy_escaped}_div")
-          page << "$('#cat_#{policy_escaped}_icon').prop('src', '#{ActionController::Base.helpers.image_path('tree/compress.png')}');"
-        else
-          @catinfo[cat] = true # Set squashed = true
-          page << javascript_hide("cat_#{policy_escaped}_div")
-          page << "$('#cat_#{policy_escaped}_icon').prop('src', '#{ActionController::Base.helpers.image_path('tree/expand.png')}');"
-        end
-      end
-    else
-      add_flash(_("Button not yet implemented"), :error)
-      javascript_flash(:spinner_off => true)
-    end
-  end
-
   def add_to_service
     @record = find_record_with_rbac(Vm, params[:id])
     @svcs = {}
@@ -1063,7 +1043,7 @@ module VmCommon
                     when "vandt_tree"
                       ["VmOrTemplate", _("VMs & Templates")]
                     when "vms_instances_filter_tree"
-                      ["Vm", "VMs & Instances"]
+                      ["Vm", _("VMs & Instances")]
                     when "templates_images_filter_tree"
                       ["MiqTemplate", _("Templates & Images")]
                     when "templates_filter_tree"
@@ -1321,13 +1301,15 @@ module VmCommon
         # these subviews use angular, so they need to use a special partial
         # so the form buttons on the outer frame can be updated.
         if @sb[:action] == 'dialog_provision'
-          presenter.update(:form_buttons_div, r[
-            :partial => 'layouts/x_dialog_buttons',
-            :locals  => {
-              :action_url => action,
-              :record_id  => @edit[:rec_id],
-            }
-          ])
+          if Settings.product.old_dialog_user_ui
+            presenter.update(:form_buttons_div, r[
+              :partial => 'layouts/x_dialog_buttons',
+              :locals  => {
+                :action_url => action,
+                :record_id  => @edit[:rec_id],
+              }
+            ])
+          end
         elsif %w(attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
                  associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
@@ -1738,31 +1720,6 @@ module VmCommon
     end
     msg += ")"
     {:event => event, :target_id => vm.id, :target_class => vm.class.base_class.name, :userid => session[:userid], :message => msg}
-  end
-
-  # get the sort column for the detail lists that was clicked on, else use the current one
-  def get_detail_sort_col
-    if params[:page].nil? && params[:type].nil? && params[:searchtag].nil?    # paging, gtltype change, or search tag did not come in
-      if params[:sortby].nil? # no column clicked, reset to first column, ascending
-        @detail_sortcol = 0
-        @detail_sortdir = "ASC"
-      else
-        if @detail_sortcol == params[:sortby].to_i                        # if same column was selected
-          @detail_sortdir = flip_sort_direction(@detail_sortdir)
-        else
-          @detail_sortdir = "ASC"
-        end
-        @detail_sortcol = params[:sortby].to_i
-      end
-    end
-
-    # in case sort column is not set, set the defaults
-    if @detail_sortcol.nil?
-      @detail_sortcol = 0
-      @detail_sortdir = "ASC"
-    end
-
-    @detail_sortcol
   end
 
   def update_buttons(locals)

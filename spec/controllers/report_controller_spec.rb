@@ -824,6 +824,45 @@ describe ReportController do
     end
   end
 
+  describe "import/export accordion" do
+    include_context "valid session"
+    render_views
+
+    before :each do
+      login_as(FactoryGirl.create(:user))
+      allow(controller).to receive(:x_active_tree) { :export_tree }
+    end
+
+    context "accordion root" do
+      it "correctly renders the screen for accordion root" do
+        allow(controller).to receive(:x_node) { 'root' }
+        post :tree_select, :params => {'id' => 'root'}
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Choose a Import/Export type from the menus on the left.')
+      end
+    end
+
+    context "widgets import/export node" do
+      it "correctly renders the widget import/export screen" do
+        allow(controller).to receive(:x_node) { 'xx-exportwidgets' }
+        post :tree_select, :params => {'id' => 'xx-exportwidgets'}
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Widgets')
+        expect(response.body).to match(/input.+type=.+submit.+value=.+Export.+/)
+      end
+    end
+
+    context "custom reports import/export node" do
+      it "correctly renders the custom reports import/export screen" do
+        allow(controller).to receive(:x_node) { 'xx-exportcustomreports' }
+        post :tree_select, :params => {'id' => 'xx-exportcustomreports'}
+        expect(response.body).to include('Custom Reports')
+        expect(response.status).to eq(200)
+        expect(response.body).to match(/input.+type=.+submit.+value=.+Export.+/)
+      end
+    end
+  end
+
   describe "#export_widgets" do
     include_context "valid session"
 
@@ -1223,6 +1262,33 @@ describe ReportController do
       EvmSpecHelper.local_miq_server
     end
 
+    context "when generating reports" do
+      render_views
+      let(:rpt) { FactoryGirl.create(:miq_report) }
+
+      before do
+        stub_user(:features => :all)
+
+        seed_session_trees('report', :reports_tree, "xx-0_xx-0-1_rep-#{controller.to_cid(rpt.id)}")
+        session[:sandboxes]["report"][:rep_tree_build_time] = rpt.created_on
+        session[:sandboxes]["report"][:active_accord] = :reports
+      end
+
+      it "runs report and calls GTL generation" do
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'MiqReportResult',
+          :report_data_additional_options => {
+            :named_scope => [[:with_current_user_groups_and_report, rpt.id]],
+            :model       => 'MiqReportResult'
+          }
+        )
+
+        post :x_button, :params => { :pressed => 'miq_report_run', :id => rpt.id }
+
+        expect(response.status).to eq(200)
+      end
+    end
+
     context "User1 has Group1(current group: Group1), User2 has Group1, Group2(current group: Group2)" do
       before do
         EvmSpecHelper.local_miq_server
@@ -1284,11 +1350,11 @@ describe ReportController do
       login_as user
     end
 
-    it "it returns corrent name for custom folder" do
+    it "it returns correct name for custom folder" do
       controller.instance_variable_set(:@_params, :controller => "report", :action => "explorer")
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:get_node_info)
-      controller.send(:reports_menu_in_sb)
+      controller.send(:populate_reports_menu, "reports", "default")
       rpt_menu = controller.instance_variable_get(:@sb)[:rpt_menu]
       expect(rpt_menu.first.first).to eq("#{user.current_tenant.name} (Group): #{user.current_group.name}")
     end

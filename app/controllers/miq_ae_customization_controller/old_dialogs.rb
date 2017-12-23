@@ -1,11 +1,6 @@
 module MiqAeCustomizationController::OldDialogs
   extend ActiveSupport::Concern
 
-  # Delete all selected or single displayed PXE Server(s)
-  def deletedialogs
-    old_dialogs_button_operation('destroy', 'deletion')
-  end
-
   # Get variables from edit form
   def old_dialogs_get_form_vars
     @dialog = @edit[:dialog]
@@ -207,11 +202,6 @@ module MiqAeCustomizationController::OldDialogs
     old_dialogs_set_form_vars
     @in_a_form = true
     replace_right_cell(:nodetype => "odg-#{params[:id]}")
-  end
-
-  def old_dialogs_create
-    return unless load_edit("dialog_edit__new")
-    old_dialogs_update_create
   end
 
   def old_dialogs_update

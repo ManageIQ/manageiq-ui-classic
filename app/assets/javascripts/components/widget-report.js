@@ -9,7 +9,7 @@ ManageIQ.angular.app.component('widgetReport', {
 
     this.$onInit = function() {
       $http.get('/dashboard/widget_report_data/' + vm.id)
-        .then(function(response) { vm.widgetReportModel.content = $sce.getTrustedHtml(response.data.content);})
+        .then(function(response) { vm.widgetReportModel.content = $sce.trustAsHtml(response.data.content);})
         .catch(miqService.handleFailure);
       vm.div_id = "dd_w" + vm.id + "_box";
     };

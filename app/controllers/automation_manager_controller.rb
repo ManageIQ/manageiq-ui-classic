@@ -41,7 +41,6 @@ class AutomationManagerController < ApplicationController
     'automation_manager'
   end
 
-
   def tagging
     @explorer ||= true
     case x_active_accord
@@ -92,21 +91,20 @@ class AutomationManagerController < ApplicationController
   end
 
   def tree_record
-    @record =
-      case x_active_tree
-      when :automation_manager_providers_tree  then automation_manager_providers_tree_rec
-      when :automation_manager_cs_filter_tree  then automation_manager_cs_filter_tree_rec
-      when :configuration_scripts_tree then configuration_scripts_tree_rec
-      end
+    @record = case x_active_tree
+              when :automation_manager_providers_tree then automation_manager_providers_tree_rec
+              when :automation_manager_cs_filter_tree then automation_manager_cs_filter_tree_rec
+              when :configuration_scripts_tree        then configuration_scripts_tree_rec
+              end
   end
 
   def class_for_provider_node
     nodes = x_node.split('-')
     case nodes.first
-    when "root" then ManageIQ::Providers::AnsibleTower::AutomationManager
+    when "root"    then ManageIQ::Providers::AnsibleTower::AutomationManager
     when "at", "e" then ManageIQ::Providers::AutomationManager::InventoryRootGroup
-    when "f", "cs"    then ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
-    when "xx" then
+    when "f", "cs" then ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
+    when "xx"      then
       case nodes.second
       when "at"  then ManageIQ::Providers::AnsibleTower::AutomationManager
       when "csa" then ConfiguredSystem
@@ -186,21 +184,25 @@ class AutomationManagerController < ApplicationController
 
   def features
     [
-      {:role     => "automation_manager_providers",
-       :role_any => true,
-       :name     => :automation_manager_providers,
-       :title    => _("Providers")},
-      {:role     => "automation_manager_configured_system",
-       :role_any => true,
-       :name     => :automation_manager_cs_filter,
-       :title    => _("Configured Systems")},
-      {:role     => "automation_manager_configuration_scripts_accord",
-       :role_any => true,
-       :name     => :configuration_scripts,
-       :title    => _("Job Templates")}
-    ].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+      ApplicationController::Feature.new_with_hash(
+        :role     => "automation_manager_providers",
+        :role_any => true,
+        :name     => :automation_manager_providers,
+        :title    => _("Providers")
+      ),
+      ApplicationController::Feature.new_with_hash(
+        :role     => "automation_manager_configured_system",
+        :role_any => true,
+        :name     => :automation_manager_cs_filter,
+        :title    => _("Configured Systems")
+      ),
+      ApplicationController::Feature.new_with_hash(
+        :role     => "automation_manager_configuration_scripts_accord",
+        :role_any => true,
+        :name     => :configuration_scripts,
+        :title    => _("Job Templates")
+      )
+    ]
   end
 
   def build_automation_manager_tree(type, name)
@@ -386,6 +388,7 @@ class AutomationManagerController < ApplicationController
   def update_partials(record_showing, presenter)
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
+      presenter.remove_sand
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @in_a_form
@@ -399,10 +402,12 @@ class AutomationManagerController < ApplicationController
       partial = 'form'
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
     elsif valid_managed_group_record?(@inventory_group_record)
+      presenter.remove_sand
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "inventory_group",
                                     :locals  => {:controller => controller_name}])
     elsif valid_configuration_script_record?(@configuration_script_record)
+      presenter.remove_sand
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "configuration_script",
                                     :locals  => {:controller => controller_name}])
@@ -433,10 +438,6 @@ class AutomationManagerController < ApplicationController
 
   def active_tab_configured_systems?
     (%w(x_show x_search_by_name).include?(action_name) && managed_group_record?)
-  end
-
-  def empty_managed_group_record?(inventory_group_record)
-    inventory_group_record.try(:id).nil?
   end
 
   def valid_managed_group_record?(inventory_group_record)

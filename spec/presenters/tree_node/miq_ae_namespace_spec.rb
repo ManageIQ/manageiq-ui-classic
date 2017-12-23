@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::MiqAeNamespace do
   before { login_as FactoryGirl.create(:user_with_group) }
   subject { described_class.new(object, nil, {}) }

@@ -44,7 +44,7 @@ module EmsStorageHelper::TextualSummary
   end
 
   def textual_type
-    @record.emstype_description
+    {:label => _('Type'), :value => @record.emstype_description}
   end
 
   def textual_port
@@ -64,11 +64,11 @@ module EmsStorageHelper::TextualSummary
   end
 
   def textual_cloud_volumes
-    @record.try(:cloud_volumes)
+    textual_link(@record.try(:cloud_volumes), :label => _('Cloud Volumes'))
   end
 
   def textual_cloud_volume_snapshots
-    @record.try(:cloud_volume_snapshots)
+    textual_link(@record.try(:cloud_volume_snapshots), :label => _('Cloud Volume Snapshots'))
   end
 
   def textual_cloud_object_store_containers

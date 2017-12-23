@@ -13,7 +13,7 @@ class StorageController < ApplicationController
   after_action :set_session_data
 
   def self.display_methods
-    %w(all_vms hosts all_miq_templates)
+    %w(all_vms hosts all_miq_templates registered_vms unregistered_vms)
   end
 
   def self.custom_display_method
@@ -24,23 +24,16 @@ class StorageController < ApplicationController
     nested_list(MiqTemplate, :parent => @record, :association => "all_miq_templates")
   end
 
-  def show_list
-    redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
+  def display_registered_vms
+    nested_list(Vm, :parent_method => "registered_vms", :breadcrumb_title => _('Managed/Registered VMs'))
   end
 
-  def show_new(id = nil)
-    @flash_array = [] if params[:display]
-    @sb[:action] = nil
+  def display_unregistered_vms
+    nested_list(Vm, :parent_method => "unregistered_vms", :breadcrumb_title => _('Managed/Unregistered VMs'))
+  end
 
-    @display = params[:display] || "main"
-    @lastaction = "show"
-    @showtype = "config"
-    @record = find_record(Storage, id || params[:id])
-    return if record_no_longer_exists?(@record)
-
-    @explorer = true if request.xml_http_request? # Ajax request means in explorer
-
-    @gtl_url = "/show"
+  def show_list
+    redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
   end
 
   def init_show

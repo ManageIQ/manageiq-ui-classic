@@ -37,8 +37,6 @@ class TreeBuilderCondition < TreeBuilder
       'pficon pficon-server'
     when 'PhysicalServer'
       'pficon pficon-enterprise'
-    when 'MiddlewareServer'
-      'pficon pficon-middleware'
     end
   end
 
@@ -51,8 +49,7 @@ class TreeBuilderCondition < TreeBuilder
                  :ContainerNode       => _("Container Node Conditions"),
                  :ContainerImage      => _("Container Image Conditions"),
                  :ExtManagementSystem => _("Provider Conditions"),
-                 :PhysicalServer      => _("Physical Infrastructure Conditions"),
-                 :MiddlewareServer    => _("Middleware Server Conditions")}
+                 :PhysicalServer      => _("Physical Infrastructure Conditions")}
 
     objects = MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[model.name.to_sym]

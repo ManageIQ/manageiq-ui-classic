@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::VmdbTableCenter < ApplicationHelper::Toolbar::
   button_group('support_reloading', [
     button(
       :db_refresh,
-      'fa fa-repeat fa-lg',
-      N_('Reload Current Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil,
       :klass => ApplicationHelper::Button::DbRefresh),
   ])

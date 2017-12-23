@@ -21,19 +21,6 @@ module ReportController::Reports
     replace_right_cell(:replace_trees => [:reports, :savedreports])
   end
 
-  def miq_report_save
-    rr               = MiqReportResult.for_user(current_user).find(@sb[:pages][:rr_id])
-    rr.save_for_user(session[:userid])                # Save the current report results for this user
-    @_params[:sortby] = "last_run_on"
-    view, _page = get_view(MiqReportResult, :named_scope => [[:with_current_user_groups_and_report, @sb[:miq_report_id]]])
-    savedreports = view.table.data
-    r = savedreports.first
-    @right_cell_div  = "report_list"
-    @right_cell_text ||= _("Saved Report \"%{name}\"") % {:name => r.name}
-    add_flash(_("Report \"%{name}\" was saved") % {:name => r.name})
-    replace_right_cell(:replace_trees => [:reports, :savedreports])
-  end
-
   def show_preview
     unless params[:task_id]                       # First time thru, kick off the report generate task
       @rpt = create_report_object                 # Build a report object from the latest edit fields

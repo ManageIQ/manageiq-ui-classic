@@ -1,38 +1,17 @@
 angular.module('ManageIQ').controller('physicalInfraTopologyController', physicalInfraTopologyCtrl);
-physicalInfraTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
+physicalInfraTopologyCtrl.$inject = ['$scope', '$interval', 'topologyService'];
 
-function physicalInfraTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
-  ManageIQ.angular.scope = $scope;
+function physicalInfraTopologyCtrl($scope, $interval, topologyService) {
   miqHideSearchClearButton();
   var vm = this;
   vm.vs = null;
-  var icons = null;
+  vm.icons = null;
+  vm.dataUrl = '/physical_infra_topology/data';
 
   var d3 = window.d3;
   vm.d3 = d3;
 
   topologyService.mixinContextMenu(vm, vm);
-
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
-    if (event.name === 'refreshTopology') {
-      vm.refresh();
-    }
-  });
-
-  vm.refresh = function() {
-    var id;
-    if ($location.absUrl().match("show/$") || $location.absUrl().match("show$")) {
-      id = '';
-    } else {
-      id = '/' + (/physical_infra_topology\/show\/(\d+)/.exec($location.absUrl())[1]);
-    }
-
-    var url = '/physical_infra_topology/data' + id;
-
-    $http.get(url)
-      .then(getPhysicalInfraTopologyData)
-      .catch(miqService.handleFailure);
-  };
 
   vm.checkboxModel = {
     value: false
@@ -41,6 +20,8 @@ function physicalInfraTopologyCtrl($scope, $http, $interval, $location, topology
   vm.legendTooltip = __("Click here to show/hide entities of this type");
 
   $('input#box_display_names').click(topologyService.showHideNames(vm));
+  topologyService.mixinRefresh(vm, $scope);
+  topologyService.mixinGetIcon(vm);
   vm.refresh();
   var promise = $interval(vm.refresh, 1000 * 60 * 3);
 
@@ -158,15 +139,6 @@ function physicalInfraTopologyCtrl($scope, $http, $interval, $location, topology
     ev.preventDefault();
   });
 
-  vm.getIcon = function getIcon(d) {
-    switch(d.item.kind) {
-      case 'PhysicalInfraManager':
-        return icons[d.item.display_kind];
-      default:
-        return icons[d.item.kind];
-    }
-  };
-
   vm.getDimensions = function getDimensions(d) {
     var defaultDimensions = topologyService.defaultElementDimensions();
     switch (d.item.kind) {
@@ -182,21 +154,5 @@ function physicalInfraTopologyCtrl($scope, $http, $interval, $location, topology
         return defaultDimensions;
     }
   };
-
-  function getPhysicalInfraTopologyData(response) {
-    var data = response.data;
-
-    var currentSelectedKinds = vm.kinds;
-
-    vm.items = data.data.items;
-    vm.relations = data.data.relations;
-    vm.kinds = $scope.kinds = data.data.kinds;
-    icons = data.data.icons;
-
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
-      vm.kinds = currentSelectedKinds;
-    }
-  }
-
   topologyService.mixinSearch(vm);
 }

@@ -11,8 +11,8 @@
     - else
       = display_label
 .spacer
-- unless @edit[expression_key][:expression].key?('???')
-  - @edit[expression_key][:exp_table].each do |token|
+- unless @edit[@expkey][:expression].key?('???')
+  - @edit[@expkey][:exp_table].each do |token|
     - single_token = [token].flatten.first
     - if %w(AND OR ( )).include?(single_token)
       %font{:color => "black"}

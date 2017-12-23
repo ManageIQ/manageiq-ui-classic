@@ -4,6 +4,8 @@ module Mixins
   module EmsCommonAngular
     extend ActiveSupport::Concern
 
+    OPENSTACK_PARAMS = [:name, :provider_region, :api_version, :default_security_protocol, :keystone_v3_domain_id, :default_hostname, :default_api_port, :default_userid, :event_stream_selection].freeze
+
     included do
       include Mixins::GenericFormMixin
     end
@@ -20,13 +22,13 @@ module Mixins
     def update_ems_button_cancel
       update_ems = find_record_with_rbac(model, params[:id])
       model_name = model.to_s
-      flash_msg = _("Edit of %{model} \"%{name}\" was cancelled by the user") %
-                  {:model => ui_lookup(:model => model_name),
-                   :name  => update_ems.name}
+      add_flash(
+        _("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => model_name), :name => update_ems.name}
+      )
+      session[:flash_msgs] = @flash_array.dup
       js_args = {:action    => @lastaction == 'show_dashboard' ? 'show' : @lastaction,
                  :id        => update_ems.id,
                  :display   => session[:ems_display],
-                 :flash_msg => flash_msg,
                  :record    => update_ems}
       javascript_redirect(javascript_process_redirect_args(js_args))
     end
@@ -36,19 +38,16 @@ module Mixins
       set_ems_record_vars(update_ems)
       if update_ems.save
         update_ems.reload
-        flash = _("%{model} \"%{name}\" was saved") %
-                {:model => ui_lookup(:model => model.to_s),
-                 :name  => update_ems.name}
+        add_flash(
+          _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => model.to_s), :name => update_ems.name}
+        )
         construct_edit_for_audit(update_ems)
         AuditEvent.success(build_saved_audit(update_ems, @edit))
         update_ems.authentication_check_types_queue(update_ems.authentication_for_summary.pluck(:authtype),
                                                     :save => true)
-        ems_path = if @lastaction == 'show_list'
-                     ems_path('show_list', :flash_msg => flash)
-                   else
-                     ems_path(update_ems, :flash_msg => flash)
-                   end
-        javascript_redirect ems_path
+
+        session[:flash_msgs] = @flash_array.dup
+        javascript_redirect(@lastaction == 'show_list' ? ems_path('show_list') : ems_path(update_ems))
       else
         update_ems.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -101,7 +100,7 @@ module Mixins
         level = :error
       end
 
-      render_flash_json(msg, level)
+      render_flash_json(msg, level, :long_alert => true)
     end
 
     def create
@@ -118,7 +117,7 @@ module Mixins
       user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
       case ems.to_s
       when 'ManageIQ::Providers::Openstack::CloudManager'
-        [password, params.except(:default_password)]
+        [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)]
       when 'ManageIQ::Providers::Amazon::CloudManager'
         [user, password, :EC2, params[:provider_region], nil, true]
       when 'ManageIQ::Providers::Azure::CloudManager'
@@ -139,7 +138,7 @@ module Mixins
 
         [ems.build_connect_params(connect_opts), true]
       when 'ManageIQ::Providers::Openstack::InfraManager'
-        [password, params.except(:default_password)]
+        [password, params.to_hash.symbolize_keys.slice(*(OPENSTACK_PARAMS))]
       when 'ManageIQ::Providers::Redhat::InfraManager'
         metrics_user, metrics_password = params[:metrics_userid], MiqPassword.encrypt(params[:metrics_password])
         [{
@@ -162,6 +161,8 @@ module Mixins
         [user, params[:default_password], endpoint_opts]
       when 'ManageIQ::Providers::Lenovo::PhysicalInfraManager'
         [user, password, params[:default_hostname], params[:default_api_port], "token", false, true]
+      when 'ManageIQ::Providers::Hawkular::MiddlewareManager'
+        [params[:default_hostname], params[:default_api_port], user, params[:default_password], params[:default_security_protocol], params[:default_tls_ca_certs], true]
       end
     end
 
@@ -171,10 +172,9 @@ module Mixins
       if ems.valid? && ems.save
         construct_edit_for_audit(ems)
         AuditEvent.success(build_created_audit(ems, @edit))
-        flash_msg = _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => table_name),
-                                                           :name  => ems.name}
-        javascript_redirect :action    => 'show_list',
-                            :flash_msg => flash_msg
+        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => table_name), :name => ems.name})
+        session[:flash_msgs] = @flash_array.dup
+        javascript_redirect(:action => 'show_list')
       else
         @in_a_form = true
         ems.errors.each do |field, msg|
@@ -189,10 +189,10 @@ module Mixins
 
     def create_ems_button_cancel
       model_name = model.to_s
-      javascript_redirect :action    => @lastaction,
-                          :display   => session[:ems_display],
-                          :flash_msg => _("Add of %{model} was cancelled by the user") %
-                          {:model => ui_lookup(:model => model_name)}
+      add_flash(_("Add of %{model} was cancelled by the user") % {:model => ui_lookup(:model => model_name)})
+      session[:flash_msgs] = @flash_array.dup
+      javascript_redirect(:action  => @lastaction,
+                          :display => session[:ems_display])
     end
 
     def ems_form_fields
@@ -475,7 +475,7 @@ module Mixins
 
     def set_ems_record_vars(ems, mode = nil)
       ems.name                   = params[:name].strip if params[:name]
-      ems.provider_region        = params[:provider_region]
+      ems.provider_region        = params[:provider_region] if params[:provider_region]
       ems.api_version            = params[:api_version].strip if params[:api_version]
       ems.provider_id            = params[:provider_id]
       ems.zone                   = Zone.find_by_name(params[:zone])
@@ -597,8 +597,8 @@ module Mixins
       if ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
         amqp_endpoint = {:role => :amqp, :hostname => amqp_hostname, :port => amqp_port, :security_protocol => amqp_security_protocol}
-        amqp_fallback_endpoint1 = {:role => :amqp_fallback1, :hostname => amqp_fallback_hostname1, :port => amqp_port, :security_protocol => amqp_security_protocol}
-        amqp_fallback_endpoint2 = {:role => :amqp_fallback2, :hostname => amqp_fallback_hostname2, :port => amqp_port, :security_protocol => amqp_security_protocol}
+        amqp_fallback_endpoint1 = {:role => :amqp_fallback1, :hostname => amqp_fallback_hostname1, :port => amqp_port, :security_protocol => amqp_security_protocol} if amqp_fallback_hostname1.present?
+        amqp_fallback_endpoint2 = {:role => :amqp_fallback2, :hostname => amqp_fallback_hostname2, :port => amqp_port, :security_protocol => amqp_security_protocol} if amqp_fallback_hostname2.present?
       end
 
       if ems.kind_of?(ManageIQ::Providers::Lenovo::PhysicalInfraManager)

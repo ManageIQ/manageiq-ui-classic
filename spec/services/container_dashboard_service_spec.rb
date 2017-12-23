@@ -78,7 +78,7 @@ describe ContainerDashboardService do
           :xData => [current_date.strftime("%Y-%m-%d")],
           :yData => [2]
         },
-        :mem => {
+        :memory => {
           :used  => 1,
           :total => 2,
           :xData => [current_date.strftime("%Y-%m-%d")],
@@ -91,13 +91,13 @@ describe ContainerDashboardService do
           :used  => 3,
           :total => 3,
           :xData => [current_date.strftime("%Y-%m-%d")],
-          :yData => [3]
+          :yData => [3.0]
         },
-        :mem => {
+        :memory => {
           :used  => 2,
           :total => 3,
           :xData => [current_date.strftime("%Y-%m-%d")],
-          :yData => [2]
+          :yData => [1.5]
         }
       )
     end
@@ -106,8 +106,8 @@ describe ContainerDashboardService do
       ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
       node_utilization_all_providers = described_class.new(nil, controller).ems_utilization[:xy_data]
       node_utilization_single_provider = described_class.new(ems_openshift.id, controller).ems_utilization[:xy_data]
-      expect(node_utilization_all_providers).to eq(:cpu => nil, :mem => nil)
-      expect(node_utilization_single_provider).to eq(:cpu => nil, :mem => nil)
+      expect(node_utilization_all_providers).to eq(:cpu => nil, :memory => nil)
+      expect(node_utilization_single_provider).to eq(:cpu => nil, :memory => nil)
     end
   end
 

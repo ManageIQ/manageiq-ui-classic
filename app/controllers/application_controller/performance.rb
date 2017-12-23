@@ -180,13 +180,11 @@ module ApplicationController::Performance
 
     report = @sb[:chart_reports].kind_of?(Array) ? @sb[:chart_reports][chart_click_data.chart_index] : @sb[:chart_reports]
     data_row = report.table.data[chart_click_data.data_index]
-
     ts = data_row["timestamp"].in_time_zone(@perf_options[:tz]) # Grab the timestamp from the row in selected tz
-
     request_displayed, unavailability_reason = case chart_click_data.cmd
     when "Display"
       if chart_click_data.model == "Current" && chart_click_data.type == "Top"
-        display_current_top(chart_click_data, data_row)
+        display_current_top(data_row)
       elsif chart_click_data.type == "bytag"
         display_by_tag(chart_click_data, data_row, report, ts, bc_model)
       else
@@ -529,7 +527,7 @@ module ApplicationController::Performance
   # Send error message if record is found and authorized, else return the record
   def perf_menu_record_valid(model, id)
     record = find_record_with_rbac(model.constantize, id)
-    if record.present?
+    if record.blank?
       add_flash(_("Can't access selected record"))
     end
     unless @flash_array.blank?
@@ -634,7 +632,7 @@ module ApplicationController::Performance
                              from_dt,
                              to_dt,
                              interval_type]
-      elsif %w(MiddlewareServer MiddlewareDatasource MiddlewareMessaging).include?(@perf_record.class.name.demodulize)
+      elsif %w(MiddlewareServer MiddlewareDatasource MiddlewareMessaging).any? { |e| @perf_record.kind_of?(e.constantize) }
         rpt = perf_get_chart_rpt("vim_perf_#{interval_type}_#{@perf_record.chart_report_name}")
         rpt.where_clause = ["resource_type = ? and resource_id = ? and timestamp >= ? and timestamp <= ? " \
                             "and capture_interval_name = ?",
@@ -660,7 +658,7 @@ module ApplicationController::Performance
       f, to_dt = @perf_record.first_and_last_capture("realtime")
       from_dt = to_dt.nil? ? nil : to_dt - @perf_options[:rt_minutes]
       suffix = if %w(MiddlewareServer MiddlewareDatasource MiddlewareMessaging)
-                  .include?(@perf_record.class.name.demodulize)
+                  .any? { |e| @perf_record.kind_of?(e.constantize) }
                  "_#{@perf_record.chart_report_name}"
                else
                  ""

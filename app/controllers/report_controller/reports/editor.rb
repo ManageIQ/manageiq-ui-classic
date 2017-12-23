@@ -1456,10 +1456,6 @@ module ReportController::Reports::Editor
     end
   end
 
-  def cb_docker_image_labels
-    CustomAttribute.where(:section => "docker_labels").pluck(:name).uniq
-  end
-
   def categories_hash
     # Omit categories for which entries dropdown would be empty.
     cats = Classification.categories.select { |c| c.show && !c.entries.empty? }

@@ -220,9 +220,11 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
   }
 
   function buildOptionObject(optionData, optionObject) {
-    _.forEach(optionData, function(item) {
-      optionObject.push({id: item[1], name: item[0]});
-    });
+    for (var key in optionData) {
+      if (optionData.hasOwnProperty(key)) {
+        optionObject.push({id: key, name: __(optionData[key])});
+      }
+    }
   }
 
   function promisesResolvedForLoad() {

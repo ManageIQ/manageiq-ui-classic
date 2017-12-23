@@ -1,9 +1,14 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', function(API, dialogFieldRefreshService, miqService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint) {
+ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', function(API, dialogFieldRefreshService, miqService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType) {
   var vm = this;
 
   vm.$onInit = function() {
     return new Promise(function(resolve) {
-      resolve(API.get('/api/service_dialogs/' + dialogId, {expand: 'resources', attributes: 'content'}).then(init));
+      var url = '/api/service_dialogs/' + dialogId +
+        '?resource_action_id=' + resourceActionId +
+        '&target_id=' + targetId +
+        '&target_type=' + targetType;
+
+      resolve(API.get(url, {expand: 'resources', attributes: 'content'}).then(init));
     });
   };
 
@@ -21,7 +26,14 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   vm.saveable = saveable;
 
   function refreshField(field) {
-    return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, dialogId);
+    var idList = {
+      dialogId: dialogId,
+      resourceActionId: resourceActionId,
+      targetId: targetId,
+      targetType: targetType
+    };
+
+    return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
   }
 
   function setDialogData(data) {
@@ -37,11 +49,16 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     } else {
       apiData = vm.dialogData;
     }
-    API.post(apiSubmitEndpoint, apiData).then(function() {
+    API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
       miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
     }).catch(function(err) {
       miqService.sparkleOff();
-      add_flash(__('Error requesting data from server'), 'error');
+      var fullErrorMessage = err.data.error.message;
+      var allErrorMessages = fullErrorMessage.split('-')[1].split(',');
+      clearFlash();
+      _.forEach(allErrorMessages, (function(errorMessage) {
+        add_flash(errorMessage, 'error');
+      }));
       console.log(err);
       return Promise.reject(err);
     });

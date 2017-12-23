@@ -47,15 +47,23 @@
         = _('Region')
       .col-md-8
         - @provider_regions.each do |name, regions|
-          = select_tag('provider_region',
-                       options_for_select([["<#{_('Choose')}>", nil]] + regions, disabled: ["<#{_('Choose')}>", nil]),
-                       "ng-model"                    => "emsCommonModel.provider_region",
-                       "ng-switch-when"              => name,
-                       "required"                    => "",
-                       "checkchange"                 => "",
-                       "selectpicker-for-select-tag" => "",
-                       "prefix"                      => "default",
-                       "reset-validation-status"     => "default_auth_status")
+          %div{"ng-switch-when" => name}
+            = select_tag('provider_region',
+                         options_for_select([["<#{_('Choose')}>", nil]] + regions, disabled: ["<#{_('Choose')}>", nil]),
+                         "ng-model"                    => "emsCommonModel.provider_region",
+                         "required"                    => "",
+                         "checkchange"                 => "",
+                         "selectpicker-for-select-tag" => "",
+                         "prefix"                      => "default",
+                         "reset-validation-status"     => "default_auth_status",
+                         "ng-if"                       => "newRecord")
+            %label.form-control{"type"        => "text",
+                                "id"          => "provider_region",
+                                "name"        => "provider_region",
+                                "readonly"    => true,
+                                "style"       => "color: black; font-weight: normal;",
+                                "ng-if"       => "!newRecord"}
+              = @ems_region_display
 
     .form-group{"ng-class" => "{'has-error': angularForm.project.$invalid}", "ng-if" => "emsCommonModel.emstype == 'gce'"}
       %label.col-md-2.control-label{"for" => "ems_project"}

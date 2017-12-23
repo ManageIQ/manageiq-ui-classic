@@ -1,52 +1,38 @@
 = render :partial => 'layouts/doctype'
 %html.layout-pf.layout-pf-fixed.transitions{:lang => I18n.locale.to_s.sub('-', '_')}
-  - if @report_only
-    %head
-      %title
-        = "%{product}: %{title}" % {:product => Vmdb::Appliance.PRODUCT_NAME, :title => @layout.titleize}
-      = favicon_link_tag
-      = stylesheet_link_tag 'application'
-      = javascript_include_tag 'application'
-      - if Rails.env.development?
-        = javascript_include_tag 'miq_debug'
-        = stylesheet_link_tag 'miq_debug'
-      = render :partial => 'layouts/i18n_js'
-    %body{:style => "overflow: scroll; padding: 0 20px 0 20px !important"}
-      = yield
-  - else
-    %head
-      %title= h page_title
+  %head
+    %title= h page_title
 
-      %meta{"http-equiv" => "Pragma", :content => "no-cache"}
-      %meta{"http-equiv" => "Pragma", :content => "no-store"}
-      %meta{"http-equiv" => "Pragma", :content => "must-revalidate"}
-      %meta{"http-equiv" => "cache-control", :content => "no-cache, no-store"}
+    %meta{"http-equiv" => "Pragma", :content => "no-cache"}
+    %meta{"http-equiv" => "Pragma", :content => "no-store"}
+    %meta{"http-equiv" => "Pragma", :content => "must-revalidate"}
+    %meta{"http-equiv" => "cache-control", :content => "no-cache, no-store"}
 
-      = favicon_link_tag
-      = stylesheet_link_tag 'application'
-      = render :partial => "stylesheets/template50"
-      = javascript_include_tag 'application'
-      - if Rails.env.development?
-        = javascript_include_tag 'miq_debug'
-        = stylesheet_link_tag 'miq_debug'
-      = csrf_meta_tag
-      = render :partial => 'layouts/i18n_js'
-      -# FIXME: the conditional below is a temporary fix for a webpacker issue, remove when it's resolved
-      - unless Rails.env.test?
-        - Webpacker::Manifest.instance.data.keys.each do |pack|
-          = javascript_pack_tag pack if pack.ends_with? '-common.js'
+    = favicon_link_tag
+    = stylesheet_link_tag 'application'
+    = render :partial => "stylesheets/template50"
+    = javascript_include_tag 'application'
+    - if Rails.env.development?
+      = javascript_include_tag 'miq_debug'
+      = stylesheet_link_tag 'miq_debug'
+    = csrf_meta_tag
+    = render :partial => 'layouts/i18n_js'
+    -# FIXME: the conditional below is a temporary fix for a webpacker issue, remove when it's resolved
+    - unless Rails.env.test?
+      - Webpacker::Manifest.instance.data.keys.each do |pack|
+        = javascript_pack_tag pack if pack.ends_with? '-common.js'
 
+    :javascript
+      ManageIQ.charts.provider = "#{Charting.backend}";
+      ManageIQ.browser = "#{j browser_info(:name_ui)}";
+      ManageIQ.controller = "#{j controller_name}";
+      vanillaJsAPI.autorenew();
+
+    - if ::Settings.server.asynchronous_notifications
       :javascript
-        ManageIQ.charts.provider = "#{Charting.backend}";
-        ManageIQ.browser = "#{j browser_info(:name_ui)}";
-        ManageIQ.controller = "#{j controller_name}";
-        vanillaJsAPI.autorenew();
+        miqInitNotifications();
 
-      - if ::Settings.server.asynchronous_notifications
-        :javascript
-          miqInitNotifications();
-
-    %body{:onload => is_browser_ie? ? '' : 'miqOnLoad();', 'data-controller' => controller_name}
-      = render :partial => "layouts/header"
-      = render :partial => "layouts/content"
-      = render :partial => 'layouts/footer'
+  %body{:onload => is_browser_ie? ? '' : 'miqOnLoad();', 'data-controller' => controller_name}
+    = render :partial => "layouts/header"
+    = render :partial => "layouts/content"
+    = render :partial => 'layouts/footer'

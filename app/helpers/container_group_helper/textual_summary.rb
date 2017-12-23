@@ -128,15 +128,15 @@ module ContainerGroupHelper::TextualSummary
   end
 
   def textual_waiting
-    container_statuses_summary[:waiting] || 0
+    {:label => _('Waiting'), :value => container_statuses_summary[:waiting] || 0}
   end
 
   def textual_running
-    container_statuses_summary[:running] || 0
+    {:label => _('Running'), :value => container_statuses_summary[:running] || 0}
   end
 
   def textual_terminated
-    container_statuses_summary[:terminated] || 0
+    {:label => _('Terminated'), :value => container_statuses_summary[:terminated] || 0}
   end
 
   def textual_compliance_history

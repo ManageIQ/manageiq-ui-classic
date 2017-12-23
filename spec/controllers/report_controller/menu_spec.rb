@@ -67,4 +67,35 @@ describe ReportController do
                          {:id => "|-|i_B", :text => "B"}])
     end
   end
+
+  describe "#edit_reports" do
+    before(:each) do
+      MiqUserRole.seed
+
+      role = MiqUserRole.find_by_name("EvmRole-administrator")
+      current_group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Current Group")
+      @current_user = FactoryGirl.create(:user, :userid => "Current User", :miq_groups => [current_group],
+                                         :email => "current_user@test.com")
+
+      login_as @current_user
+      FactoryGirl.create(:miq_report, :name => "VM 1", :rpt_group => "Configuration Management - Folder Foo", :rpt_type => "Default")
+      FactoryGirl.create(:miq_report, :name => "Provisioning 1", :rpt_group => "Provisioning - Folder Bar", :rpt_type => "Default")
+      FactoryGirl.create(:miq_report, :name => "Provisioning 2", :rpt_group => "Provisioning - Folder Bar", :rpt_type => "Default")
+      FactoryGirl.create(:miq_report, :name => "custom report 1", :rpt_group => "Custom", :rpt_type => "Custom")
+      FactoryGirl.create(:miq_report, :name => "custom report 2", :rpt_group => "Custom", :rpt_type => "Custom")
+
+      controller.instance_variable_set(:@edit,
+                                       :new => [
+        ["Configuration Management", [["Folder Foo", ["VM 1"]]]],
+        ["Provisioning", [["Folder Bar", ["Provisioning 1"]]]]
+      ])
+      session[:node_selected] = 'foo__bar'
+      allow(controller).to receive(:replace_right_cell)
+    end
+
+    it "returns custom reports in available_reports array along with other default available reports" do
+      controller.send(:edit_reports)
+      expect(assigns(:available_reports)).to eq(["custom report 1", "custom report 2", "Provisioning 2"])
+    end
+  end
 end

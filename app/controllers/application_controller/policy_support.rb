@@ -127,27 +127,6 @@ module ApplicationController::PolicySupport
     end
   end
 
-  def profile_toggle
-    if params[:pressed] == "tag_cat_toggle"
-      policy_escaped = j(params[:policy])
-      cat            = params[:cat]
-      render :update do |page|
-        page << javascript_prologue
-        if @catinfo[cat]
-          @catinfo[cat] = false
-          page << javascript_show("cat_#{policy_escaped}_div")
-          page << "$('#cat_#{policy_escaped}_icon').prop('src', #{ActionController::Base.helpers.image_path('tree/compress.png')});"
-        else
-          @catinfo[cat] = true # Set squashed = true
-          page << javascript_hide("cat_#{policy_escaped}_div")
-          page << "$('#cat_#{policy_escaped}_icon').prop('src', #{ActionController::Base.helpers.image_path('tree/expand.png')});"
-        end
-      end
-    else
-      render_flash(_("Button not yet implemented"), :error)
-    end
-  end
-
   private ############################
 
   # Assign policies to selected records of db
@@ -176,13 +155,7 @@ module ApplicationController::PolicySupport
     end
   end
   %w(image instance vm miq_template
-     container
-     container_replicator
-     container_group
-     container_node
-     container_image
-     ems_container
-     middleware_server).each do |old_name|
+     container container_replicator container_group container_node container_image ems_container).each do |old_name|
     alias_method "#{old_name}_protect".to_sym, :assign_policies
   end
 
@@ -197,7 +170,7 @@ module ApplicationController::PolicySupport
     # session[:pol_db] = session[:pol_db] == Vm ? VmOrTemplate : session[:pol_db]
     @politems = session[:pol_db].find(session[:pol_items]).sort_by(&:name)  # Get the db records
     @view = get_db_view(session[:pol_db])             # Instantiate the MIQ Report view object
-    @view.table = MiqFilter.records2table(@politems, @view.cols + ['id'])
+    @view.table = ReportFormatter::Converter.records2table(@politems, @view.cols + ['id'])
 
     @edit = {}
     @edit[:explorer] = true if @explorer
@@ -261,7 +234,7 @@ module ApplicationController::PolicySupport
     @catinfo = {}
     @lastaction = "policy_sim"
     @pol_view = get_db_view(session[:tag_db])       # Instantiate the MIQ Report view object
-    @pol_view.table = MiqFilter.records2table(@tagitems, @pol_view.cols + ['id'])
+    @pol_view.table = ReportFormatter::Converter.records2table(@tagitems, @pol_view.cols + ['id'])
 
     # Build the profiles selection list
     @all_profs = {}

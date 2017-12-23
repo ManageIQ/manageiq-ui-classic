@@ -22,7 +22,7 @@ module ServiceHelper::TextualSummary
 
   def textual_group_provisioning_credentials
     return nil unless provisioning_get_job
-    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential vmware_credential))
+    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential))
   end
 
   def textual_group_provisioning_plays
@@ -169,11 +169,11 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_owner
-    @record.evm_owner.try(:name)
+    {:label => _('Owner'), :value => @record.evm_owner.try(:name)}
   end
 
   def textual_group
-    @record.miq_group.try(:description)
+    {:label => _('Group'), :value => @record.miq_group.try(:description)}
   end
 
   def textual_created
@@ -233,18 +233,14 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_cloud_credential
-    credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential')
-    return nil unless credential
-    credential(credential, _("Cloud"))
-  end
-
-  def textual_vmware_credential
-    credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VmwareCredential')
-    return nil unless credential
-    {:label => _('VMware'),
-     :value => credential.name,
-     :title => _('VMware Credential'),
-     :link  => url_for_only_path(:action => 'show', :id => credential.id, :controller => 'ansible_credential')}
+    cloud_credential = nil
+    excluded_types = [ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential,
+                      ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential]
+    @job.authentications.each do |authentication|
+      cloud_credential = authentication unless excluded_types.include?(authentication.type)
+    end
+    return nil unless cloud_credential
+    credential(cloud_credential, _("Cloud"))
   end
 
   def textual_generic_object_instances
@@ -258,7 +254,10 @@ module ServiceHelper::TextualSummary
   end
 
   def credential(credential, label)
-    {:label => label, :value => credential.name}
+    {:label => label,
+     :value => credential.name,
+     :title => ui_lookup(:model => credential.type),
+     :link  => url_for_only_path(:action => 'show', :id => credential.id, :controller => 'ansible_credential')}
   end
 
   def provisioning_get_job

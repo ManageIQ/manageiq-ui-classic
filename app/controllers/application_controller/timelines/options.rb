@@ -65,14 +65,6 @@ module ApplicationController::Timelines
       @events = @event_groups = nil
     end
 
-    private
-
-    def build_filter(grp_name) # hidden fields to highlight bands in timeline
-      arr = event_groups[grp_name][level.to_sym]
-      arr.push(event_groups[grp_name][:critical]) if level == 'detail'
-      "(" << arr.join(")|(") << ")"
-    end
-
     def event_groups
       @event_groups ||= EmsEvent.event_groups
     end
@@ -102,26 +94,10 @@ module ApplicationController::Timelines
       @events = @fltr_cache = nil
     end
 
-    def fltr(number)
-      @fltr_cache ||= {}
-      @fltr_cache[number] ||= build_filter(filters[number])
-    end
-
     def event_set
       categories.blank? ? [] : categories.collect { |_, e| e[:event_groups] }
     end
 
-    private
-
-    def build_filter(grp_name) # hidden fields to highlight bands in timeline
-      return '' if grp_name.blank?
-      arr = []
-      events[grp_name].each do |a|
-        e = PolicyEvent.find_by_miq_event_definition_id(a.to_i)
-        arr.push(e.event_type) unless e.nil?
-      end
-      arr.blank? ? '' : '(' << arr.join(')|(') << ')'
-    end
   end
 
   Options = Struct.new(

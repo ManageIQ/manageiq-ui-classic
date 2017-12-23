@@ -226,14 +226,6 @@ module MiqPolicyController::Conditions
     @right_cell_div = "condition_folders"
   end
 
-  def condition_get_all
-    @conditions = Condition.all.sort_by { |c| c.description.downcase }
-    set_search_text
-    @conditions = apply_search_filter(@search_text, @conditions) unless @search_text.blank?
-    @right_cell_text = _("All Conditions")
-    @right_cell_div = "condition_list"
-  end
-
   # Get information for a condition
   def condition_get_info(condition)
     @record = @condition = condition

@@ -146,7 +146,6 @@ module ApplicationController::ReportDownloads
   end
 
   def set_summary_pdf_data
-    @report_only = true
     @showtype    = @display
     run_time     = Time.now
     klass        = ui_lookup(:model => @record.class.name)

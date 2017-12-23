@@ -253,6 +253,7 @@ describe StorageController do
       end
 
       [
+        ['Datastores', 'storage_tree'],
         ['All Datastore Clusters', 'storage_pod_tree'],
       ].each do |elements, tree|
         it "renders list of #{elements} for #{tree} root node" do
@@ -262,6 +263,41 @@ describe StorageController do
           post :tree_select, :params => { :id => 'root', :format => :js }
           expect(response.status).to eq(200)
         end
+      end
+
+      it 'renders list of Datastores in given cluster' do
+        storage
+        storage_cluster
+        seed_session_trees('storage', :storage_pod_tree, 'root')
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'Storage',
+          :parent_id                      => storage_cluster.id,
+          :report_data_additional_options => {
+            :association       => 'storages',
+            :parent_class_name => 'StorageCluster',
+          }
+        )
+
+        post :tree_select, :params => {:id => "xx-#{to_cid(storage_cluster.id)}", :format => :js}
+        expect(response.status).to eq(200)
+      end
+    end
+  end
+
+  describe 'report_data' do
+    context 'for selected StorageCluster' do
+      it 'returns associated Storages' do
+        storage_cluster.add_child(storage)
+
+        report_data_request(
+          :model        => 'Storage',
+          :parent_model => 'StorageCluster',
+          :parent_id    => storage_cluster.id,
+          :association  => 'storages'
+        )
+        results = assert_report_data_response
+        expect(results['data']['rows'].length).to eq(1)
+        expect(results['data']['rows'][0]['long_id']).to eq(storage.id.to_s)
       end
     end
   end
