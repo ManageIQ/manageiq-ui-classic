@@ -1,9 +1,4 @@
 build:
   dependencies:
     before:
-    - sudo apt-get -y install cmake;
-    - git clone https://github.com/manageiq/manageiq.git spec/manageiq;
-  tests:
-    override:
-      -
-        command: true
+      - source tools/ci/before_install.sh
