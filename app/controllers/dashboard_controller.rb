@@ -302,14 +302,14 @@ class DashboardController < ApplicationController
       page << javascript_prologue
       if @sb[:dashboards][@sb[:active_db]][:minimized].include?(w)
         page << javascript_show("dd_w#{w}_box")
-        page << "$('#w_#{w}_minmax').prop('title', ' Minimize');"
-        page << "$('#w_#{w}_minmax').text(' Minimize');"
+        page << "$('#w_#{w}_minmax').prop('title', ' ' + __('Minimize'));"
+        page << "$('#w_#{w}_minmax').text(' ' + __('Minimize'));"
         page << javascript_prepend_span("w_#{w}_minmax", "fa fa-caret-square-o-up fa-fw")
         @sb[:dashboards][@sb[:active_db]][:minimized].delete(w)
       else
         page << javascript_hide("dd_w#{w}_box")
-        page << "$('#w_#{w}_minmax').prop('title', ' Maximize');"
-        page << "$('#w_#{w}_minmax').text(' Maximize');"
+        page << "$('#w_#{w}_minmax').prop('title', ' ' + __('Maximize'));"
+        page << "$('#w_#{w}_minmax').text(' ' + __('Maximize'));"
         page << javascript_prepend_span("w_#{w}_minmax", "fa fa-caret-square-o-down fa-fw")
         @sb[:dashboards][@sb[:active_db]][:minimized].push(w)
       end
