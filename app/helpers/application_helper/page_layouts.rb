@@ -10,7 +10,6 @@ module ApplicationHelper::PageLayouts
       container_topology
       ems_infra_dashboard
       infra_topology
-      middleware_topology
       network_topology
       cloud_topology
       diagnostics

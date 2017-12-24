@@ -38,6 +38,13 @@ class EmsMiddlewareController < ApplicationController
     ems_form_fields
   end
 
+  def textual_group_list
+    [
+      %i(properties status),
+      %i(relationships smart_management)
+    ]
+  end
+
   public :restful?
 
   menu_section :mdl

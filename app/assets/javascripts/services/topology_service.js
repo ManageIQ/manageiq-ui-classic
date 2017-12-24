@@ -197,8 +197,6 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       case 'Disabled':
       case 'Reload required':
         return 'warning';
-      case 'Starting':
-        return 'information'; // defined in middleware_topology.css
       case 'Unknown':
       case 'Terminated':
         return 'unknown';
