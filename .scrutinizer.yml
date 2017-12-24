@@ -1,4 +1,4 @@
 build:
   dependencies:
     before:
-      - source tools/ci/before_install.sh
+      - sudo apt-get -y install cmake; source tools/ci/before_install.sh
