@@ -6,7 +6,7 @@
     {
       "id": 1,
       "name": "Provider 1",
-      "type": "ManageIQ::Providers::Hawkular::DatawarehouseManager",
+      "type": "ManageIQ::Providers::Openshift::ContainerManager",
       "tags": [
         {
           "id": 1

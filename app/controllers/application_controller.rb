@@ -1671,8 +1671,6 @@ class ApplicationController < ActionController::Base
       javascript_redirect edit_ems_container_path(params[:id])
     elsif params[:pressed] == "ems_middleware_edit" && params[:id]
       javascript_redirect edit_ems_middleware_path(params[:id])
-    elsif params[:pressed] == "ems_datawarehouse_edit" && params[:id]
-      javascript_redirect edit_ems_datawarehouse_path(params[:id])
     elsif params[:pressed] == "ems_network_edit" && params[:id]
       javascript_redirect edit_ems_network_path(params[:id])
     elsif params[:pressed] == "ems_physical_infra_edit" && params[:id]

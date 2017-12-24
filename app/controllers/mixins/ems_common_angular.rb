@@ -436,17 +436,6 @@ module Mixins
                          :ems_controller            => controller_name,
                          :default_auth_status       => default_auth_status}
       end
-
-      render :json => {:name                => @ems.name,
-                       :emstype             => @ems.emstype,
-                       :zone                => zone,
-                       :default_hostname    => @ems.connection_configurations.default.endpoint.hostname,
-                       :default_api_port    => @ems.connection_configurations.default.endpoint.port,
-                       :service_account     => service_account.to_s,
-                       :bearer_token_exists => @ems.authentication_token(:bearer).nil? ? false : true,
-                       :ems_controller      => controller_name,
-                       :default_auth_status => default_auth_status,
-      } if controller_name == "ems_datawarehouse"
     end
 
     private ############################
@@ -589,11 +578,6 @@ module Mixins
         default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
       end
 
-      if ems.kind_of?(ManageIQ::Providers::Hawkular::DatawarehouseManager)
-        params[:cred_type] = ems.default_authentication_type
-        default_endpoint = {:role => :default, :hostname => hostname, :port => port}
-      end
-
       if ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
         amqp_endpoint = {:role => :amqp, :hostname => amqp_hostname, :port => amqp_port, :security_protocol => amqp_security_protocol}
@@ -724,10 +708,6 @@ module Mixins
         end
         creds[:bearer] = {:auth_key => default_key, :save => (mode != :validate)}
         creds.delete(:default)
-      end
-      if ems.kind_of?(ManageIQ::Providers::DatawarehouseManager)
-        default_key = params[:default_password] ? params[:default_password] : ems.authentication_key
-        creds[:default] = {:auth_key => default_key, :userid => "_", :save => (mode != :validate)}
       end
       creds
     end

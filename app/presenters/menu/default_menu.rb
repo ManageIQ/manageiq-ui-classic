@@ -115,15 +115,6 @@ module Menu
         ])
       end
 
-      def datawarehouse_menu_section
-        if ::Settings.product.datawarehouse_manager
-          Menu::Section.new(:dwh, N_("Datawarehouse"), 'pficon pficon-enterprise', [
-            Menu::Item.new('ems_datawarehouse', N_('Providers'), 'ems_datawarehouse',
-                           {:feature => 'ems_datawarehouse_show_list'}, '/ems_datawarehouse')
-            ])
-        end
-      end
-
       def network_menu_section
         Menu::Section.new(:net, N_("Networks"), 'pficon pficon-network', [
           Menu::Item.new('ems_network',      N_('Providers'),       'ems_network',      {:feature => 'ems_network_show_list'},    '/ems_network'),
@@ -290,9 +281,8 @@ module Menu
 
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
-         network_menu_section, datawarehouse_menu_section, storage_menu_section,
-         control_menu_section, automation_menu_section, optimize_menu_section, monitor_menu_section,
-         settings_menu_section, help_menu_section].compact
+         network_menu_section, storage_menu_section, control_menu_section, automation_menu_section,
+         optimize_menu_section, monitor_menu_section, settings_menu_section, help_menu_section].compact
       end
 
       private
