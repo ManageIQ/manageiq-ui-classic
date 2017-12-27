@@ -44,7 +44,7 @@ describe TreeBuilderOpsRbacFeatures do
     end
 
     describe 'main sections' do
-      %w(aut compute con conf mdl net opt set sto svc vi).each do |i|
+      %w(aut compute con conf net opt set sto svc vi).each do |i|
         it "includes #{i}" do
           expect(main_keys).to include("100000002___tab_#{i}")
         end
