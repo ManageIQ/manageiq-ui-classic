@@ -154,7 +154,7 @@ module ApplicationController::AdvancedSearch
     @edit[@expkey].history.reset(@edit[@expkey][:expression])
     @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the expression table
     @edit[@expkey][:exp_last_loaded] = nil                    # Clear the last search loaded
-    @edit[:adv_search_name] = nil                             # Clear search name
+    @edit[:adv_search_name] = @edit[:new_search_name] = nil   # Clear search name
     @edit[:adv_search_report] = nil                           # Clear the report name
     @edit[@expkey][:selected] = nil                           # Clear selected search
   end
