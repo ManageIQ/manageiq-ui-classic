@@ -146,9 +146,6 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       case 'NetworkManager':
         entity_url = 'ems_network';
         break;
-      case 'MiddlewareManager':
-        entity_url = 'ems_middleware';
-        break;
       case 'InfraManager':
         entity_url = 'ems_infra';
         break;
@@ -182,20 +179,16 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       case 'Running':
       case 'Succeeded':
       case 'Valid':
-      case 'Enabled':
         return 'success';
       case 'NotReady':
       case 'Failed':
       case 'Error':
       case 'Unreachable':
-      case 'Down':
       case 'Inactive':
         return 'error';
       case 'Warning':
       case 'Waiting':
       case 'Pending':
-      case 'Disabled':
-      case 'Reload required':
         return 'warning';
       case 'Unknown':
       case 'Terminated':
