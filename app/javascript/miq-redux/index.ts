@@ -9,7 +9,7 @@ const initialState = {};
 configureNgReduxStore(app, initialState);
 
 // allow unit-testing specific module exports
-if (jasmine) {
+if (window['jasmine']) {
   app.constant('_rootReducer', rootReducer);
   app.constant('_addReducer', addReducer);
   app.constant('_clearReducers', clearReducers);
