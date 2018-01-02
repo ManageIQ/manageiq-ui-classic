@@ -189,9 +189,7 @@ module ApplicationController::Tags
 
   # Build the @edit elements for the tag edit screen
   def tag_edit_build_screen
-    @gtl_type = 'list' # show items in tagging screen a list
-    @embedded = true   # with no links
-    @showlinks = false
+    @showlinks = true
 
     cats = Classification.categories.select(&:show).sort_by(&:name) # Get the categories, sort by name
     @categories = {}    # Classifications array for first chooser

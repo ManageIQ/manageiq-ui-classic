@@ -397,7 +397,11 @@ module ApplicationHelper
           return "/" + request.parameters[:controller] + "/tree_select?id=" + suffix
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
-          return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
+          if @tagging
+            return false # when tagging Users, Groups, Roles and Tennants, the table is non-clickable
+          else
+            return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
+          end
         elsif %w(VmdbTableEvm MiqServer).include?(view.db) &&
               %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
@@ -1643,7 +1647,9 @@ module ApplicationHelper
     @report_data_additional_options.with_menu_click(params[:menu_click]) if params[:menu_click]
     @report_data_additional_options.with_sb_controller(params[:sb_controller]) if params[:sb_controller]
     @report_data_additional_options.with_model(curr_model) if curr_model
-    @report_data_additional_options.freeze
+    # FIXME: we would like to freeze here, but the @gtl_type is calculated no sooner than in view templates.
+    # So until that if fixed we cannot freeze.
+    # @report_data_additional_options.freeze
   end
 
   def from_additional_options(additional_options)
@@ -1681,6 +1687,9 @@ module ApplicationHelper
     # need to pass @in_a_form so get_view does not set advanced search options
     # in the forms that render gtl that mess up @edit
     @in_a_form = quadicon_options[:in_a_form]
+
+    # take GTL type from the component
+    @gtl_type = quadicon_options[:gtl_type]
   end
 
   # Wrapper around jquery-rjs' remote_function which adds an extra .html_safe()
