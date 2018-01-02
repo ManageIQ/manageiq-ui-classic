@@ -22,11 +22,11 @@
             "selectpicker-for-select-tag" => "")
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
+  %h3
+    = _('Placement')
   .form-horizontal
     .form-group{"ng-if"    => "vm.cloudSubnetModel.ems_id",
                 "ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
-      %h3
-        = _('Placement')
       %label.col-md-2.control-label
         = _('Cloud Tenant')
       .col-md-8
