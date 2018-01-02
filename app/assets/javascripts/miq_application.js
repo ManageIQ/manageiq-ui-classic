@@ -1695,7 +1695,14 @@ function miqUncompressedId(id) {
   return id;
 }
 
-function queryParam(name) { return QS(window.location.href).get(name); }
+function queryParam(name) {
+  return QS(window.location.href).get(name);
+}
+
+function miqRelativeUrl() {
+  var location = window.document.location;
+  return location.pathname + location.search;
+}
 
 function miqFormatNotification(text, bindings) {
   if (! text) {

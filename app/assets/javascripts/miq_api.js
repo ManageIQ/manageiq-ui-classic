@@ -1,4 +1,4 @@
-/* global miqDeferred, add_flash */
+/* global miqDeferred, add_flash, miqRelativeUrl */
 
 /* functions to use the API from our JS/Angular:
  *
@@ -200,7 +200,8 @@
       if ((response.status === 401) && !options.skipLoginRedirect) {
         // Unauthorized - always redirect to dashboard#login
         add_flash(__('API logged out, redirecting to the login page'), 'warning');
-        window.document.location.href = '/dashboard/login?timeout=true';
+
+        window.document.location.href = '/dashboard/login?timeout=true&last_url=' + encodeURIComponent(miqRelativeUrl());
 
         return ret;
       }

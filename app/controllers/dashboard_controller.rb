@@ -431,6 +431,8 @@ class DashboardController < ApplicationController
       session[:user_validation_error] = nil
     end
 
+    session[:login_redirect_url] = params[:last_url]
+
     render :layout => "login"
   end
 
@@ -543,10 +545,12 @@ class DashboardController < ApplicationController
       # noop, page content already set by initiate_wait_for_task
     when :pass
       miq_api_token = require_api_token ? generate_ui_api_token(user[:name]) : nil
+      url = session.delete(:login_redirect_url) || validation.url
+
       render :update do |page|
         page << javascript_prologue
         page << "localStorage.miq_token = '#{j_str miq_api_token}';" if miq_api_token
-        page.redirect_to(validation.url)
+        page.redirect_to(url)
       end
     when :fail
       clear_current_user
