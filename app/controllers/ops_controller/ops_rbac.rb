@@ -616,6 +616,7 @@ module OpsController::OpsRbac
       session[:tag_db] = @tagging = tagging
     end
 
+    @gtl_type = "list" # No quad icons for user/group list views
     x_tags_set_form_vars
     @in_a_form = true
     session[:changed] = false

@@ -385,11 +385,10 @@ describe HostController do
         session[:sandboxes] = {}
         session.store_path(:sandboxes, 'host', :search_text, 'foobar')
         report_data_request(
-          :model                          => 'Host',
-          :parent_id                      => nil,
-          :report_data_additional_options => {
-            :lastaction => 'show_list',
-          }
+          :model      => 'Host',
+          :parent_id  => nil,
+          :explorer   => false,
+          :lastaction => 'show_list',
         )
         results = assert_report_data_response
         expect(results['data']['rows'].length).to eq(1)
