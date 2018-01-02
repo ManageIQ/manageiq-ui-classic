@@ -380,7 +380,7 @@ module ApplicationController::Buttons
       return
     end
     if @edit[:new][:button_icon].blank?
-      render_flash(_("Button Image must be selected"), :error)
+      render_flash(_("Button Icon must be selected"), :error)
       return
     end
     group_set_record_vars(@custom_button_set)
@@ -819,7 +819,7 @@ module ApplicationController::Buttons
     add_flash(_("Button Text is required"), :error) if button_hash[:name].blank? || button_hash[:name].strip.blank?
 
     if button_hash[:button_icon].blank?
-      add_flash(_("Button Image must be selected"), :error)
+      add_flash(_("Button Icon must be selected"), :error)
     end
 
     add_flash(_("Button Hover Text is required"), :error) if button_hash[:description].blank?
