@@ -183,7 +183,6 @@ module ApplicationHelper::PageLayouts
       middleware_datasource
       middleware_deployment
       middleware_domain
-      middleware_messaging
       middleware_server
       miq_template
       network_port

@@ -31,7 +31,6 @@ describe MiddlewareServerController do
     it 'show associated server entities' do
       assert_nested_list(server, [deployment], 'middleware_deployments', 'All Middleware Deployments')
       assert_nested_list(server, [datasource], 'middleware_datasources', 'All Middleware Datasources')
-      assert_nested_list(server, [jms_queue], 'middleware_messagings', 'All Middleware Messagings')
     end
   end
 

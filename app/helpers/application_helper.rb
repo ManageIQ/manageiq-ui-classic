@@ -893,7 +893,6 @@ module ApplicationHelper
        middleware_datasource
        middleware_deployment
        middleware_domain
-       middleware_messaging
        middleware_server
        miq_template
        network_port
@@ -1350,7 +1349,6 @@ module ApplicationHelper
                         middleware_datasource
                         middleware_deployment
                         middleware_domain
-                        middleware_messaging
                         middleware_server
                         middleware_server_group
                         miq_schedule
@@ -1449,7 +1447,6 @@ module ApplicationHelper
           middleware_datasource
           middleware_deployment
           middleware_domain
-          middleware_messaging
           middleware_server
           middleware_server_group
           miq_template
@@ -1520,7 +1517,6 @@ module ApplicationHelper
              middleware_datasource
              middleware_deployment
              middleware_domain
-             middleware_messaging
              middleware_server
              middleware_server_group
              miq_schedule

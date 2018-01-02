@@ -446,7 +446,7 @@ class ApplicationHelper::ToolbarChooser
                     cloud_tenants cloud_volumes ems_clusters flavors floating_ips host_aggregates hosts
                     load_balancers network_ports network_routers orchestration_stacks resource_pools
                     security_groups storages middleware_deployments middleware_datasources
-                    middleware_messagings middleware_servers)
+                    middleware_servers)
     to_display_center = %w(stack_orchestration_template topology cloud_object_store_objects generic_objects physical_servers)
     performance_layouts = %w(vm host ems_container)
     if @lastaction == 'show' && (@view || @display != 'main') && !@layout.starts_with?("miq_request")
@@ -528,7 +528,6 @@ class ApplicationHelper::ToolbarChooser
               middleware_datasource
               middleware_domain
               middleware_server_group
-              middleware_messaging
               orchestration_stack
               physical_infra_topology
               physical_server
