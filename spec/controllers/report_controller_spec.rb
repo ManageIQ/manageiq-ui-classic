@@ -724,23 +724,14 @@ describe ReportController do
     context "no schedules selected" do
       before do
         allow(controller).to receive(:find_checked_items).and_return([])
-        expect(controller).to receive(:render)
-        expect(controller).to receive(:schedule_get_all)
-        expect(controller).to receive(:replace_right_cell)
       end
 
       it "#miq_report_schedule_enable" do
-        controller.miq_report_schedule_enable
-        flash_messages = assigns(:flash_array)
-        expect(flash_messages.first[:message]).to eq("No Report Schedules were selected to be enabled")
-        expect(flash_messages.first[:level]).to eq(:error)
+        expect { controller.miq_report_schedule_enable }.to raise_error("Can't access records without id")
       end
 
       it "#miq_report_schedule_disable" do
-        controller.miq_report_schedule_disable
-        flash_messages = assigns(:flash_array)
-        expect(flash_messages.first[:message]).to eq("No Report Schedules were selected to be disabled")
-        expect(flash_messages.first[:level]).to eq(:error)
+        expect { controller.miq_report_schedule_disable }.to raise_error("Can't access records without id")
       end
     end
 
