@@ -1772,4 +1772,8 @@ module ApplicationHelper
                         :flash_msg   => @flash_array[0][:message],
                         :flash_error => @flash_array[0][:level] == :error
   end
+
+  def accessible_select_event_types
+    ApplicationController::Timelines::SELECT_EVENT_TYPE.map {|key, value| [_(key), value]}
+  end
 end
