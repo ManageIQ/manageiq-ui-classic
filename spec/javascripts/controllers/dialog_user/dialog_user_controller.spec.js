@@ -198,7 +198,7 @@ describe('dialogUserController', function() {
   describe('cancelClicked', function() {
     it('uses the miqService to make a call to catalog/explorer', function() {
       $controller.cancelClicked('event');
-      expect(miqService.redirectBack).toHaveBeenCalledWith('Dialog Canceled', 'info', 'cancel endpoint');
+      expect(miqService.redirectBack).toHaveBeenCalledWith('Dialog Cancelled', 'info', 'cancel endpoint');
     });
   });
 
