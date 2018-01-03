@@ -619,6 +619,7 @@ module ApplicationController::Buttons
   def ab_button_reset
     button_set_form_vars
     @changed = session[:changed] = false
+    @sb[:active_tab] = "ab_options_tab"
     add_flash(_("All changes have been reset"), :warning)
     @in_a_form = true
     @breadcrumbs = []
@@ -693,6 +694,7 @@ module ApplicationController::Buttons
     @record = @custom_button = typ == "new" ?
         CustomButton.new :
         CustomButton.find(from_cid(params[:id]))
+    @sb[:active_tab] = "ab_options_tab"
     button_set_form_vars
     @in_a_form = true
     @changed = session[:changed] = false
