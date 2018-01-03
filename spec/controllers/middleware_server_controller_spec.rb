@@ -15,7 +15,6 @@ describe MiddlewareServerController do
 
   describe '#show' do
     let(:deployment) { FactoryGirl.create(:middleware_deployment, :middleware_server => server) }
-    let(:datasource) { FactoryGirl.create(:middleware_datasource, :middleware_server => server) }
     let(:jms_queue) do
       FactoryGirl.create(:hawkular_middleware_messaging_initialized_queue,
                          :middleware_server => server)
@@ -30,7 +29,6 @@ describe MiddlewareServerController do
 
     it 'show associated server entities' do
       assert_nested_list(server, [deployment], 'middleware_deployments', 'All Middleware Deployments')
-      assert_nested_list(server, [datasource], 'middleware_datasources', 'All Middleware Datasources')
     end
   end
 

@@ -26,7 +26,6 @@ describe EmsMiddlewareController do
       )
       @middleware = FactoryGirl.create(:ems_hawkular,
                                        :authentications => [auth])
-      MiddlewareDatasource.create(:ext_management_system => @middleware, :name => "Test Middleware")
     end
 
     subject { get :show, :id => @middleware.id }

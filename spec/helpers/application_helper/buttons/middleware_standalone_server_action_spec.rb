@@ -13,7 +13,7 @@ describe ApplicationHelper::Button::MiddlewareStandaloneServerAction do
       let(:in_domain) { false }
       let(:mutable) { true }
 
-      %w(middleware_datasource middleware_deployment).each do |dc|
+      %w(middleware_deployment).each do |dc|
         context dc.to_s do
           let(:delegated_class) { dc }
           it { is_expected.to be_visible }

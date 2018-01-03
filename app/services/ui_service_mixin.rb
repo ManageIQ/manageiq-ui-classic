@@ -16,7 +16,6 @@ module UiServiceMixin
       :FloatingIp              => {:type => "glyph", :class => 'ff ff-floating-ip'},
       :Host                    => {:type => "glyph", :class => 'pficon pficon-screen'},
       :LoadBalancer            => {:type => "glyph", :class => 'ff ff-load-balancer'},
-      :MiddlewareDatasource    => {:type => "glyph", :class => 'fa fa-database'},
       :MiddlewareDeployment    => {:type => "glyph", :class => 'fa fa-file-text-o'},
       :MiddlewareDeploymentEar => {:type => "glyph", :class => 'ff ff-file-ear-o'},
       :MiddlewareDeploymentWar => {:type => "glyph", :class => 'ff ff-file-war-o'},

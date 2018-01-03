@@ -14,7 +14,6 @@ ManageIQ.angular.app.controller('mwServerGroupController', MwServerGroupControll
  * - MwServerController
  * -- MwServerOpsController
  * -- MwAddDeploymentController
- * -- MwAddDatasourceController
  * -- *Any other controllers (more coming...)
  *
  * This is certainly not ideal, but allows us to use multiple controllers on a page.
@@ -22,21 +21,20 @@ ManageIQ.angular.app.controller('mwServerGroupController', MwServerGroupControll
  * parent/child controller relationships.
  * @param {scope} $scope  - angular $scope object
  * @param {MiqService} miqService - MiqServices
- * @param {MwAddDatasourceService} mwAddDatasourceService - Datasource services
  * @param {document} $document - angular $document object
  * @constructor
  */
-MwServerController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout', '$document'];
-function MwServerController($scope, miqService, mwAddDatasourceService, $timeout, $document) {
-  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, false, $timeout, $document);
+MwServerController.$inject = ['$scope', 'miqService', '$timeout', '$document'];
+function MwServerController($scope, miqService, $timeout, $document) {
+  return MwServerControllerFactory($scope, miqService, false, $timeout, $document);
 }
 
-MwServerGroupController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout', '$document'];
-function MwServerGroupController($scope, miqService, mwAddDatasourceService, $timeout, $document) {
-  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, true, $timeout, $document);
+MwServerGroupController.$inject = ['$scope', 'miqService', '$timeout', '$document'];
+function MwServerGroupController($scope, miqService, $timeout, $document) {
+  return MwServerControllerFactory($scope, miqService, true, $timeout, $document);
 }
 
-function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, isGroupDeployment, $timeout, $document) {
+function MwServerControllerFactory($scope, miqService, isGroupDeployment, $timeout, $document) {
   ManageIQ.angular.scope = $scope;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
@@ -63,12 +61,6 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
       $timeout(function() {
         if (event.name === 'showDeployListener') {
           $scope.showDeployListener();
-        }
-        if (event.name === 'showDatasourceListener') {
-          $scope.showDatasourceListener();
-        }
-        if (event.name === 'showJdbcDriverListener') {
-          $scope.showJdbcDriverListener();
         }
       });
     }
@@ -104,10 +96,6 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
     $scope.resetDeployForm();
   };
 
-  $scope.showDatasourceListener = function() {
-    // just here to 'Button not implemented'
-  };
-
   $scope.resetDeployForm = function() {
     $scope.deployAddModel.enableDeployment = true;
     $scope.deployAddModel.forceDeploy = false;
@@ -127,47 +115,6 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
   $scope.addDeployment = function() {
     miqService.sparkleOn();
     $scope.$broadcast('mwAddDeploymentEvent', $scope.deployAddModel);
-  };
-
-  // ///////////////////////////////////////////////////////////////////////
-  // Add JDBC Driver
-  // ///////////////////////////////////////////////////////////////////////
-
-  $scope.showJdbcDriverListener = function() {
-    $scope.resetJdbcDriverForm();
-    $scope.jdbcDriverModel.showDeployModal = true;
-  };
-
-  $scope.resetJdbcDriverForm = function() {
-    $scope.jdbcDriverModel = {};
-    $scope.jdbcDriverModel.serverId = angular.element('#server_id').val();
-    $scope.jdbcDriverModel.jdbcCompliant = true;
-    $scope.jdbcDriverModel.driverXaDatasourceClassName = '';
-    $scope.jdbcDriverModel.databases = mwAddDatasourceService.getDatasources();
-    $scope.jdbcDriverModel.selectedDatabase = undefined;
-    angular.element('#jdbc_add_div :file#jdbc_driver_file').val('');
-    angular.element('#jdbc_add_div input[type="text"]:disabled').val('');
-    $scope.$broadcast('mwAddJdbcDriverReset');
-  };
-
-  $scope.$watch('jdbcDriverModel.selectedDatabase', function(newValue) {
-    if (newValue) {
-      $scope.jdbcDriverModel.driverName = newValue.driverName;
-      $scope.jdbcDriverModel.moduleName = newValue.driverModuleName;
-      $scope.jdbcDriverModel.driverClass = newValue.driverClass;
-      $scope.jdbcDriverModel.driverXaDatasourceClassName = '';
-    }
-  });
-
-  $scope.$watch('jdbcDriverModel.filePath', function(newValue) {
-    if (newValue) {
-      $scope.jdbcDriverModel.driverJarName = newValue.name;
-    }
-  });
-
-  $scope.addJdbcDriver = function() {
-    miqService.sparkleOn();
-    $scope.$broadcast('mwAddJdbcDriverEvent', $scope.jdbcDriverModel);
   };
 
   // //////////////////////////////////////////////////////////////////////
