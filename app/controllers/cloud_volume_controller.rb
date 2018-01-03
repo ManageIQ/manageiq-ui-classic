@@ -366,9 +366,6 @@ class CloudVolumeController < ApplicationController
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "cloud_volume"
       @single_delete = true unless flash_errors?
-      if @flash_array.nil?
-        add_flash(_("The selected Cloud Volume was deleted"))
-      end
     else
       drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
       session[:flash_msgs] = @flash_array.dup if @flash_array
