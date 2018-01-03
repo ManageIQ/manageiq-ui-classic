@@ -1,0 +1,6 @@
+---
+yaml_strings_to_extract:
+  product/views/*.*:
+  - title
+  - name
+  - headers
