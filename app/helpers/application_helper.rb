@@ -1722,4 +1722,8 @@ module ApplicationHelper
   def parse_nodetype_and_id(x_node)
     x_node.split('_').last.split('-')
   end
+
+  def accessible_select_event_types
+    ApplicationController::Timelines::SELECT_EVENT_TYPE.map {|key, value| [_(key), value]}
+  end
 end
