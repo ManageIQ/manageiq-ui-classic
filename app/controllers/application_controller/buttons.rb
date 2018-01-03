@@ -121,6 +121,7 @@ module ApplicationController::Buttons
     render :update do |page|
       page << javascript_prologue
       if [:instance_name, :other_name, :target_class, :button_type].any? { |k| params.key?(k) }
+        @sb[:active_tab] = "ab_options_tab"
         page.replace("ab_form", :partial => "shared/buttons/ab_form")
       end
       if params[:visibility_typ]
@@ -379,7 +380,7 @@ module ApplicationController::Buttons
       return
     end
     if @edit[:new][:button_icon].blank?
-      render_flash(_("Button Image must be selected"), :error)
+      render_flash(_("Button Icon must be selected"), :error)
       return
     end
     group_set_record_vars(@custom_button_set)
@@ -493,6 +494,7 @@ module ApplicationController::Buttons
     @edit[:visibility_expression_table] = exp_build_table_or_nil(@edit[:new][:visibility_expression])
     @edit[:enablement_expression_table] = exp_build_table_or_nil(@edit[:new][:enablement_expression])
     @in_a_form = true
+    @sb[:active_tab] = "ab_advanced_tab"
     replace_right_cell(:nodetype => x_node)
   end
 
@@ -509,6 +511,7 @@ module ApplicationController::Buttons
 
   def ab_button_add
     assert_privileges("ab_button_new")
+    @sb[:active_tab] = "ab_options_tab"
     @resolve = session[:resolve]
     name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
 
@@ -577,6 +580,7 @@ module ApplicationController::Buttons
     assert_privileges("ab_button_edit")
     @resolve = session[:resolve]
     attrs = {}
+    @sb[:active_tab] = "ab_options_tab"
     @edit[:new][:attrs].each do |a|
       attrs[a[0].to_sym] = a[1] unless a[0].blank?
     end
@@ -615,6 +619,7 @@ module ApplicationController::Buttons
   def ab_button_reset
     button_set_form_vars
     @changed = session[:changed] = false
+    @sb[:active_tab] = "ab_options_tab"
     add_flash(_("All changes have been reset"), :warning)
     @in_a_form = true
     @breadcrumbs = []
@@ -689,6 +694,7 @@ module ApplicationController::Buttons
     @record = @custom_button = typ == "new" ?
         CustomButton.new :
         CustomButton.find(from_cid(params[:id]))
+    @sb[:active_tab] = "ab_options_tab"
     button_set_form_vars
     @in_a_form = true
     @changed = session[:changed] = false
@@ -815,7 +821,7 @@ module ApplicationController::Buttons
     add_flash(_("Button Text is required"), :error) if button_hash[:name].blank? || button_hash[:name].strip.blank?
 
     if button_hash[:button_icon].blank?
-      add_flash(_("Button Image must be selected"), :error)
+      add_flash(_("Button Icon must be selected"), :error)
     end
 
     add_flash(_("Button Hover Text is required"), :error) if button_hash[:description].blank?

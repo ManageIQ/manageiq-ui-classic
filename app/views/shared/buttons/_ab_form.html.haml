@@ -19,14 +19,14 @@
 
   #custom_button_tabs
     %ul.nav.nav-tabs
-      = miq_tab_header('ab_options_tab') do
+      = miq_tab_header('ab_options_tab', @sb[:active_tab]) do
         = _('Options')
-      = miq_tab_header('ab_advanced_tab') do
+      = miq_tab_header('ab_advanced_tab', @sb[:active_tab]) do
         = _('Advanced')
     .tab-content
-      = miq_tab_content('ab_options_tab') do
+      = miq_tab_content('ab_options_tab', @sb[:active_tab]) do
         = render :partial => "shared/buttons/ab_options_form"
-      = miq_tab_content('ab_advanced_tab') do
+      = miq_tab_content('ab_advanced_tab', @sb[:active_tab]) do
         = render :partial => "shared/buttons/ab_advanced_form"
 
   :javascript
