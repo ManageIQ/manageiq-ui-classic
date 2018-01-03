@@ -891,7 +891,6 @@ module ApplicationHelper
        host
        host_aggregate
        load_balancer
-       middleware_datasource
        middleware_deployment
        middleware_domain
        middleware_server
@@ -1347,7 +1346,6 @@ module ApplicationHelper
                         load_balancer
                         manageiq/providers/embedded_ansible/automation_manager/playbook
                         manageiq/providers/embedded_automation_manager/authentication
-                        middleware_datasource
                         middleware_deployment
                         middleware_domain
                         middleware_server
@@ -1445,7 +1443,6 @@ module ApplicationHelper
           generic_object_definition
           host
           load_balancer
-          middleware_datasource
           middleware_deployment
           middleware_domain
           middleware_server
@@ -1515,7 +1512,6 @@ module ApplicationHelper
              host
              host_aggregate
              load_balancer
-             middleware_datasource
              middleware_deployment
              middleware_domain
              middleware_server

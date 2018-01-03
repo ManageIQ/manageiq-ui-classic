@@ -11,5 +11,5 @@
            :title => _("Show Summary"))
     = miq_accordion_panel(_("Relationships"), false, "ems_middleware_rel") do
       %ul.nav.nav-pills.nav-stacked
-        - %w(middleware_domain middleware_server middleware_deployment middleware_datasource).each do |ent|
+        - %w(middleware_domain middleware_server middleware_deployment).each do |ent|
           = multiple_relationship_link(@record, ent)

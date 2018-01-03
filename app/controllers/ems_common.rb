@@ -109,7 +109,6 @@ module EmsCommon
         images
         instances
         load_balancers
-        middleware_datasources
         middleware_deployments
         middleware_domains
         middleware_server_groups
