@@ -305,7 +305,7 @@ module ApplicationController::Buttons
     end
   end
 
-  def custom_buttons(ids = nil)
+  def custom_buttons(ids = nil, display_options = {})
     button = CustomButton.find_by_id(params[:button_id])
     cls = applies_to_class_model(button.applies_to_class)
     @explorer = true if BASE_MODEL_EXPLORER_CLASSES.include?(cls)
@@ -334,10 +334,8 @@ module ApplicationController::Buttons
         :target_kls => obj.class.name,
       }
 
-      options[:dialog_locals] = DialogLocalService.new.determine_dialog_locals_for_custom_button(
-        obj, button.name, button.resource_action
-      )
-
+      options[:dialog_locals] = DialogLocalService.new.determine_dialog_locals_for_custom_button(obj, button.name, button.resource_action, display_options)
+      options.merge!(display_options) unless display_options.empty?
       dialog_initialize(button.resource_action, options)
 
     elsif button.options && button.options.key?(:open_url) && button.options[:open_url]

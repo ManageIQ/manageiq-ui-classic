@@ -29,12 +29,12 @@ class DialogLocalService
     }
   end
 
-  def determine_dialog_locals_for_custom_button(obj, button_name, resource_action)
+  def determine_dialog_locals_for_custom_button(obj, button_name, resource_action, display_options = {})
     dialog_locals = {:force_old_dialog_use => true}
 
     return dialog_locals unless NEW_DIALOG_USERS.include?(obj.class.name.demodulize)
 
-    submit_endpoint, cancel_endpoint = determine_api_endpoints(obj)
+    submit_endpoint, cancel_endpoint = determine_api_endpoints(obj, display_options)
 
     dialog_locals.merge!(
       :resource_action_id     => resource_action.id,
@@ -53,7 +53,7 @@ class DialogLocalService
 
   private
 
-  def determine_api_endpoints(obj)
+  def determine_api_endpoints(obj, display_options = {})
     case obj.class.name.demodulize
     when /CloudTenant/
       api_collection_name = "cloud_tenants"
@@ -69,7 +69,11 @@ class DialogLocalService
       cancel_endpoint = "/ems_cluster"
     when /GenericObject/
       api_collection_name = "generic_objects"
-      cancel_endpoint = "/generic_object/show_list"
+      cancel_endpoint = if !display_options.empty? && display_options[:display_id]
+                          "/service/show/#{display_options[:display_id]}?display=generic_objects"
+                        else
+                          "/service/explorer"
+                        end
     when /Host/
       api_collection_name = "hosts"
       cancel_endpoint = "/host"

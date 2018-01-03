@@ -45,7 +45,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     miqService.sparkleOn();
     var apiData;
     if (apiSubmitEndpoint.match(/generic_objects/)) {
-      apiData = {parameters: vm.dialogData};
+      apiData = {action: apiAction, parameters: _.omit(vm.dialogData, 'action')};
     } else {
       apiData = vm.dialogData;
     }
@@ -65,7 +65,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   }
 
   function cancelClicked(_event) {
-    miqService.miqAjaxButton(cancelEndpoint);
+    miqService.redirectBack(__('Dialog Cancelled'), 'info', cancelEndpoint);
   }
 
   function saveable() {
