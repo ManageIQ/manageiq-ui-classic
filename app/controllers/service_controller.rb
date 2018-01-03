@@ -232,12 +232,6 @@ class ServiceController < ApplicationController
     replace_right_cell(:action => 'ownership')
   end
 
-  def service_tag_edit
-    @explorer = true
-    service_tag
-    replace_right_cell(:action => 'tag')
-  end
-
   def service_retire
     @explorer = true
     retirevms
