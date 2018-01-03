@@ -13,6 +13,8 @@ module EmsCommon
 
     helper_method :textual_group_list
     private :textual_group_list
+
+    helper_method :properties_path
   end
 
   def init_show_ems
@@ -163,6 +165,35 @@ module EmsCommon
     session[:changed] = false
     drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => table_name), :object_name => @ems.name},
                     :url  => "/#{controller_name}/#{@ems.id}/edit")
+  end
+
+  def properties
+    # Get the query parameters:
+    id = params[:id]
+    type = params[:type]
+
+    # Assert the permissions:
+    permission_suffix = id.blank? ? :new : :edit
+    assert_privileges("#{permission_prefix}_#{permission_suffix}")
+
+    # Check the id:
+    begin
+      @ems = id.blank? ? model.new : find_record_with_rbac(model, id)
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
+      return
+    end
+
+    # Check the type:
+    unless ExtManagementSystem.supported_types.include?(type)
+      head :not_found
+      return
+    end
+
+    # Set the variables and render the template:
+    set_form_vars
+    @in_a_form = true
+    render :partial => properties_template(type)
   end
 
   # handle buttons pressed on the button bar
@@ -709,4 +740,28 @@ module EmsCommon
     self.class.permission_prefix
   end
 
+  #
+  # Returns the path of the template that generates the provider specific part of the new and edit
+  # provider dialogs.
+  #
+  # @param type [String] The type of provider, for example `rhevm`.
+  # @return [String] The path of the template.
+  #
+  def properties_template(type)
+    template = "/providers/#{type}/properties"
+    unless lookup_context.exists?(template, [], true)
+      template = '/providers/common/properties'
+    end
+    template
+  end
+
+  #
+  # Generates the URL path that the client should use to request the provider specific part of the
+  # new and edit provider dialogs.
+  #
+  # @return [String] The absolute path that the client should use.
+  #
+  def properties_path
+    '/ems_infra/properties'
+  end
 end
