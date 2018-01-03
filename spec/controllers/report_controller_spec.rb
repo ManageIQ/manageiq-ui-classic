@@ -727,11 +727,11 @@ describe ReportController do
       end
 
       it "#miq_report_schedule_enable" do
-        expect { controller.miq_report_schedule_enable }.to raise_error("Can't access records without id")
+        expect { controller.miq_report_schedule_enable }.to raise_error("Can't access records without an id")
       end
 
       it "#miq_report_schedule_disable" do
-        expect { controller.miq_report_schedule_disable }.to raise_error("Can't access records without id")
+        expect { controller.miq_report_schedule_disable }.to raise_error("Can't access records without an id")
       end
     end
 

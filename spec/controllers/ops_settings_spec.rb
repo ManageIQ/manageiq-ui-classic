@@ -14,11 +14,11 @@ describe OpsController do
       end
 
       it "#schedule_enable" do
-        expect { controller.schedule_enable }.to raise_error("Can't access records without id")
+        expect { controller.schedule_enable }.to raise_error("Can't access records without an id")
       end
 
       it "#schedule_disable" do
-        expect { controller.schedule_disable }.to raise_error("Can't access records without id")
+        expect { controller.schedule_disable }.to raise_error("Can't access records without an id")
       end
     end
 
