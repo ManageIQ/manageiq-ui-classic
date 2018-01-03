@@ -150,6 +150,9 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
     keysToDelete.forEach(function(key) {
       delete copy[key];
     });
+    if (value.type === "DialogFieldDropDownList" && Array.isArray(value.default_value)) {
+      value.default_value = value.default_value.join(',');
+    }
     return copy;
   }
 
