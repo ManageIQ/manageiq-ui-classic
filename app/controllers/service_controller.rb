@@ -11,7 +11,7 @@ class ServiceController < ApplicationController
     'service_delete'      => :service_delete,
     'service_edit'        => :service_edit,
     'service_ownership'   => :service_ownership,
-    'service_tag'         => :service_tag_edit,
+    'service_tag'         => :service_tag,
     'service_retire'      => :service_retire,
     'service_retire_now'  => :service_retire_now,
     'service_reconfigure' => :service_reconfigure
