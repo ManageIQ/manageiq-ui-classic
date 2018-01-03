@@ -342,23 +342,28 @@ class ApplicationHelper::ToolbarBuilder
       toolbar.button_group(button_group[:name], button_group[:items])
     end
 
+    custom_button_add_related_buttons(model, record, toolbar) if record.present?
+    toolbar
+  end
+
+  def custom_button_add_related_buttons(model, record, toolbar)
     # For Service, we include buttons for ServiceTemplate.
     # These buttons are added as a single group with multiple buttons
-    if record.present?
+    if record.kind_of?(Service)
       service_buttons = record_to_service_buttons(record)
       unless service_buttons.empty?
         buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
         toolbar.button_group("custom_buttons_", buttons)
       end
+    end
 
+    if record.kind_of?(GenericObject)
       generic_object_buttons = record_to_generic_object_buttons(record)
       unless generic_object_buttons.empty?
         buttons = generic_object_buttons.collect { |b| create_custom_button(b, model, record) }
         toolbar.button_group("custom_buttons_", buttons)
       end
     end
-
-    toolbar
   end
 
   def button_class_name(model)
@@ -374,15 +379,19 @@ class ApplicationHelper::ToolbarBuilder
     end
   end
 
+  def create_related_custom_buttons(record, item)
+    item.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
+  end
+
   def record_to_service_buttons(record)
     return [] unless record.kind_of?(Service)
     return [] if record.service_template.nil?
-    record.service_template.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
+    create_related_custom_buttons(record, record.service_template)
   end
 
   def record_to_generic_object_buttons(record)
     return [] unless record.kind_of?(GenericObject)
-    record.generic_object_definition.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
+    create_related_custom_buttons(record, record.generic_object_definition)
   end
 
   def get_custom_buttons(model, record, toolbar_result)

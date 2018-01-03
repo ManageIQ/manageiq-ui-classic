@@ -16,6 +16,7 @@ describe('dialogUserController', function() {
 
     spyOn(dialogFieldRefreshService, 'refreshField');
     spyOn(miqService, 'miqAjaxButton');
+    spyOn(miqService, 'redirectBack');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
 
@@ -88,9 +89,40 @@ describe('dialogUserController', function() {
       $controller.setDialogData({data: {field1: 'field1'}});
     });
 
+    context('when the submit endpoint deals with generic objects', function() {
+      beforeEach(inject(function(_$controller_) {
+        $controller = _$controller_('dialogUserController', {
+          API: API,
+          dialogFieldRefreshService: dialogFieldRefreshService,
+          miqService: miqService,
+          dialogId: '1234',
+          apiSubmitEndpoint: 'service/explorer',
+          apiAction: 'custom_action',
+          cancelEndpoint: 'cancel endpoint',
+          finishSubmitEndpoint: 'finish submit endpoint',
+          resourceActionId: '789',
+          targetId: '987',
+          targetType: 'targettype',
+        });
+
+        $controller.setDialogData({data: {field1: 'field1'}});
+
+        spyOn(API, 'post').and.returnValue(Promise.resolve('awesome'));
+      }));
+
+      it('posts to the API with the right data', function(done) {
+        $controller.submitButtonClicked();
+
+        setTimeout(function() {
+          expect(API.post).toHaveBeenCalledWith('service/explorer', {
+            field1: 'field1', action: 'custom_action'}, {skipErrors: [400]});
+          done();
+        });
+      });
+    });
+
     context('when the API call succeeds', function() {
       beforeEach(function() {
-        spyOn(miqService, 'redirectBack');
         spyOn(API, 'post').and.returnValue(Promise.resolve('awesome'));
       });
 
@@ -129,7 +161,6 @@ describe('dialogUserController', function() {
     context('when the API call fails', function() {
       beforeEach(function() {
         var rejectionData = {data: {error: {message: "Failed! -One,Two"}}};
-        spyOn(miqService, 'redirectBack');
         spyOn(API, 'post').and.returnValue(Promise.reject(rejectionData));
         spyOn(window, 'clearFlash');
         spyOn(window, 'add_flash');
@@ -167,7 +198,7 @@ describe('dialogUserController', function() {
   describe('cancelClicked', function() {
     it('uses the miqService to make a call to catalog/explorer', function() {
       $controller.cancelClicked('event');
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('cancel endpoint');
+      expect(miqService.redirectBack).toHaveBeenCalledWith('Dialog Cancelled', 'info', 'cancel endpoint');
     });
   });
 
