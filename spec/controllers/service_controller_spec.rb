@@ -45,6 +45,26 @@ describe ServiceController do
       expect(flash_message[:message]).to include("Delete successful")
       expect(flash_message[:level]).to be(:success)
     end
+
+    context 'setting x_node properly after deleting a service from its details page' do
+      let(:service) { FactoryGirl.create(:service) }
+
+      before do
+        allow(controller).to receive(:replace_right_cell)
+        controller.instance_variable_set(:@_params, :id => service.id)
+      end
+
+      it 'sets x_node to return to Active Services' do
+        controller.send(:service_delete)
+        expect(controller.x_node).to eq("xx-asrv")
+      end
+
+      it 'sets x_node to return to Retired Services' do
+        service.update_attributes(:retired => true)
+        controller.send(:service_delete)
+        expect(controller.x_node).to eq("xx-rsrv")
+      end
+    end
   end
 
   describe 'x_button' do
