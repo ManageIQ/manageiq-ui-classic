@@ -2264,7 +2264,7 @@ Rails.application.routes.draw do
         playbook_options_field_changed
         cancel_import
         change_tab
-        dialog_edit
+        dialog_copy_editor
         dialog_edit_editor
         dialog_new_editor
         dialog_form_field_changed

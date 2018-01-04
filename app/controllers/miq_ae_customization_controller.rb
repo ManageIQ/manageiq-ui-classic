@@ -17,7 +17,7 @@ class MiqAeCustomizationController < ApplicationController
   AE_CUSTOM_X_BUTTON_ALLOWED_ACTIONS = {
     'dialog_edit_editor'     => :dialog_edit_editor,
     'dialog_edit'            => :dialog_edit,
-    'dialog_copy'            => :dialog_copy,
+    'dialog_copy_editor'     => :dialog_copy_editor,
     'dialog_delete'          => :dialog_delete,
     'dialog_add_tab'         => :dialog_add_tab,
     'dialog_add_box'         => :dialog_add_box,
@@ -141,6 +141,8 @@ class MiqAeCustomizationController < ApplicationController
   def editor
     if params[:id].present?
       @record = Dialog.find(params[:id])
+    elsif params[:copy].present?
+      @record = Dialog.find(params[:copy])
     else
       @record = Dialog.new
     end

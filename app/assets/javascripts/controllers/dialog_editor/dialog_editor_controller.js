@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', 'API', 'miqService', 'DialogEditor', 'DialogValidation', 'dialogId', function($window, $http, API, miqService, DialogEditor, DialogValidation, dialogId) {
+ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', 'API', 'miqService', 'DialogEditor', 'DialogValidation', 'dialogIdAction', function($window, $http, API, miqService, DialogEditor, DialogValidation, dialogIdAction) {
   var vm = this;
 
   vm.cache = {};
@@ -20,7 +20,15 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
     vm.treeSelectorData = response.data;
   });
 
-  if (dialogId === 'new') {
+  function requestDialogId() {
+    return JSON.parse(dialogIdAction).id;
+  }
+
+  function requestDialogAction() {
+    return JSON.parse(dialogIdAction).action;
+  }
+
+  if (requestDialogAction() === 'new') {
     var dialogInitContent = {
       'content': [{
         'dialog_tabs': [{
@@ -38,7 +46,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
   } else {
     API.get(
       '/api/service_dialogs/'
-      + dialogId
+      + requestDialogId()
       + '?attributes=content,buttons,label'
     ).then(init);
   }
@@ -72,6 +80,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
     }
 
     translateResponderNamesToIds(dialog.content[0]);
+
+    if (requestDialogAction() === 'copy') {
+      dialog.label = dialog.content[0].label = "Copy of " + dialog.label;
+    }
+
     DialogEditor.setData(dialog);
     vm.dialog = dialog;
     vm.DialogValidation = DialogValidation;
@@ -130,7 +143,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
 
   var beingCloned = null; // hack that solves recursion problem for cloneDeep
   function customizer(value) {
-    var keysToDelete = ['active', '$$hashKey', 'href', 'dynamicFieldList'];
+    var keysToDelete = ['active', '$$hashKey', 'href', 'dynamicFieldList', 'id'];
     var useCustomizer =
       (value !== beingCloned) &&
       _.isObject(value) &&
@@ -159,17 +172,9 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
     var dialogId;
 
     // load dialog data
-    if (angular.isUndefined(DialogEditor.getDialogId())) {
-      action = 'create';
-      dialogData = {
-        description: DialogEditor.getDialogDescription(),
-        label: DialogEditor.getDialogLabel(),
-        buttons: 'submit, cancel',
-        dialog_tabs: [],
-      };
-      dialogData.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
-    } else {
+    if (requestDialogAction() === 'edit') {
       action = 'edit';
+      dialogId = '/' + DialogEditor.getDialogId();
       dialogData = {
         description: DialogEditor.getDialogDescription(),
         label: DialogEditor.getDialogLabel(),
@@ -180,13 +185,16 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
       // once we start using lodash 4.17.4, change to 'cloneDeepWith'
       // https://lodash.com/docs/4.17.4#cloneDeepWith
       dialogData.content.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
-    }
-
-    // save the dialog
-    if (action === 'create') {
-      dialogId = '';
     } else {
-      dialogId = '/' + DialogEditor.getDialogId();
+      action = 'create';
+      dialogId = '';
+      dialogData = {
+        description: DialogEditor.getDialogDescription(),
+        label: DialogEditor.getDialogLabel(),
+        buttons: 'submit, cancel',
+        dialog_tabs: [],
+      };
+      dialogData.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
     }
 
     API.post('/api/service_dialogs' + dialogId, {

@@ -15,7 +15,7 @@ class ApplicationHelper::Toolbar::DialogCenter < ApplicationHelper::Toolbar::Bas
           :send_checked => true,
           :klass        => ApplicationHelper::Button::DialogAction),
         button(
-          :dialog_copy,
+          :dialog_copy_editor,
           'fa fa-files-o fa-lg',
           t = N_('Copy this Dialog'),
           t,
