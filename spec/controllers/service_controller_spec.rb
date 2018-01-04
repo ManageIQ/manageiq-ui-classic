@@ -5,7 +5,7 @@ describe ServiceController do
     stub_user(:features => :all)
   end
 
-  context "#service_delete" do
+  describe "#service_delete" do
     it "display flash message with description of deleted Service" do
       st  = FactoryGirl.create(:service_template)
       svc = FactoryGirl.create(:service, :service_template => st, :name => "GemFire", :description => "VMware vFabric GEMFIRE")
@@ -30,6 +30,21 @@ describe ServiceController do
 
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
+
+    it "replaces right cell after service is deleted" do
+      service = FactoryGirl.create(:service)
+      allow(controller).to receive(:x_build_tree)
+      controller.instance_variable_set(:@settings, {})
+      controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@_params, :id => service.id)
+      expect(controller).to receive(:render)
+      expect(response.status).to eq(200)
+      controller.send(:service_delete)
+
+      flash_message = assigns(:flash_array).first
+      expect(flash_message[:message]).to include("Delete successful")
+      expect(flash_message[:level]).to be(:success)
+    end
   end
 
   describe 'x_button' do
@@ -49,23 +64,6 @@ describe ServiceController do
     it 'exception is raised for unknown action' do
       get :x_button, :params => { :pressed => 'random_dude', :format => :html }
       expect(response).to render_template('layouts/exception')
-    end
-  end
-
-  context "#service_delete" do
-    it "replaces right cell after service is deleted" do
-      service = FactoryGirl.create(:service)
-      allow(controller).to receive(:x_build_tree)
-      controller.instance_variable_set(:@settings, {})
-      controller.instance_variable_set(:@sb, {})
-      controller.instance_variable_set(:@_params, :id => service.id)
-      expect(controller).to receive(:render)
-      expect(response.status).to eq(200)
-      controller.send(:service_delete)
-
-      flash_message = assigns(:flash_array).first
-      expect(flash_message[:message]).to include("Delete successful")
-      expect(flash_message[:level]).to be(:success)
     end
   end
 
