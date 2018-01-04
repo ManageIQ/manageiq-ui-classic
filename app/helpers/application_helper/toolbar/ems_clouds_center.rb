@@ -23,7 +23,7 @@ class ApplicationHelper::Toolbar::EmsCloudsCenter < ApplicationHelper::Toolbar::
           t,
           :url       => "/discover",
           :url_parms => "?discover_type=ems",
-          :klass     => ApplicationHelper::Button::ButtonNewDiscover),
+          :klass     => ApplicationHelper::Button::ButtonNewDiscoverCloud),
         separator,
         button(
           :ems_cloud_new,
