@@ -99,6 +99,26 @@ module MiqAeCustomizationController::Dialogs
     javascript_redirect :controller => 'miq_ae_customization', :action => 'editor', :id => @record.id
   end
 
+  # Edit dialog using the Dialog Editor
+  def dialog_edit_editor
+    assert_privileges("dialog_edit")
+    @record = find_records_with_rbac(Dialog, checked_or_params)
+    javascript_redirect :controller => 'miq_ae_customization',
+                        :action     => 'editor',
+                        :id         => Array.wrap(@record).first.id
+  end
+
+  # Copy dialog using the Dialog Editor
+  def dialog_copy_editor
+    assert_privileges("dialog_copy_editor")
+    record_to_copy = find_record_with_rbac(Dialog, checked_or_params)
+    @record = Dialog.new
+    javascript_redirect :controller => 'miq_ae_customization',
+                        :action     => 'editor',
+                        :copy       => record_to_copy.id,
+                        :id         => @record.id
+  end
+
   # Add new dialog
   def dialog_new
    assert_privileges("dialog_new")
@@ -177,15 +197,6 @@ module MiqAeCustomizationController::Dialogs
     else
       javascript_flash(:spinner_off => true)
     end
-  end
-
-  # Edit dialog using the Dialog Editor
-  def dialog_edit_editor
-    assert_privileges("dialog_edit")
-    @record = find_records_with_rbac(Dialog, checked_or_params)
-    javascript_redirect :controller => 'miq_ae_customization',
-                        :action     => 'editor',
-                        :id         => Array.wrap(@record).first.id
   end
 
   # edit dialog

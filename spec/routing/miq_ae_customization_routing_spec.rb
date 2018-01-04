@@ -25,7 +25,7 @@ describe MiqAeCustomizationController do
     button_update
     cancel_import
     change_tab
-    dialog_edit
+    dialog_copy_editor
     dialog_form_field_changed
     dialog_list
     dialog_res_remove
