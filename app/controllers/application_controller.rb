@@ -1592,7 +1592,7 @@ class ApplicationController < ActionController::Base
 
       if chart_click.type == "bytag"
         ["\"#{model_downcase.pluralize}\".id IN (?)",
-         data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click.legend_idx]}"][model_downcase.to_sym][:on]]
+         data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click.legend_index]}"][model_downcase.to_sym][:on]]
       else
         ["\"#{model_downcase.pluralize}\".id IN (?)",
          data_row["assoc_ids"][model_downcase.to_sym][chart_click.type.to_sym]]
