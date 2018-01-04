@@ -1,6 +1,6 @@
 %add_row_div{:align => "right", :style => "width: 50px"}
   %span.input-group-btn
-    %button.btn.btn-primary{:alt => t = _("Add Row"), :title => t, "ng-click" => "vm.addRow($index, vm.keyType + vm.noOfRows)"}
+    %button.btn.btn-primary{:alt => t = _("Add Row"), :title => t, "ng-click" => "vm.addRow(vm.keyType + vm.noOfRows)"}
       {{vm.addRowText}}
   %table.table.datatable.table-striped.table-bordered
     %thead
