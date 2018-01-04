@@ -27,7 +27,9 @@ function genericObjectTableController($timeout) {
   var vm = this;
 
   vm.$onInit = function() {
-    vm.tableHeaders.push('', '');
+    vm.tableHeaders.push('');
+
+    vm.addRowText = sprintf(__('Add %s'), vm.keyType);
 
     vm.dupicatePropertyError = [];
     vm.invalidKeyName = __("Invalid name");
