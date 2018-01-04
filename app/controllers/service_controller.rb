@@ -269,11 +269,12 @@ class ServiceController < ApplicationController
     assert_privileges("service_delete")
     @explorer = true
     elements = []
-    if params[:id]
+    if params[:id] # delete service from its details page
       elements.push(params[:id])
+      deleted_service = Service.find(params[:id].to_i) # service which is going to be deleted
       process_elements(elements, Service, 'destroy') unless elements.empty?
-      self.x_node = "root"
-    else # showing 1 element, delete it
+      self.x_node = deleted_service.retired ? "xx-rsrv" : "xx-asrv" # set x_node for returning to Active or Retired Services
+    else # delete choosen service(s), choosen by checking appropriate checkbox(es)
       elements = find_checked_items
       if elements.empty?
         add_flash(_("No Services were selected for deletion"), :error)
