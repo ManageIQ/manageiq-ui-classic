@@ -21,25 +21,24 @@ class CloudVolumeController < ApplicationController
       delete_volumes
       return false
     when 'cloud_volume_attach'
-      javascript_redirect :action => 'attach', :id => checked_item_id
+      javascript_redirect(:action => 'attach', :id => checked_item_id)
     when 'cloud_volume_detach'
       volume = find_record_with_rbac(CloudVolume, checked_item_id)
       if volume.attachments.empty?
-        render_flash(_("Cloud Volume \"%{volume_name}\" is not attached to any Instances") % {
-                     :volume_name => volume.name}, :error)
+        render_flash(_("Cloud Volume \"%{volume_name}\" is not attached to any Instances") % {:volume_name => volume.name}, :error)
       else
-        javascript_redirect :action => 'detach', :id => checked_item_id
+        javascript_redirect(:action => 'detach', :id => checked_item_id)
       end
     when 'cloud_volume_edit'
-      javascript_redirect :action => 'edit', :id => checked_item_id
+      javascript_redirect(:action => 'edit', :id => checked_item_id)
     when 'cloud_volume_snapshot_create'
-      javascript_redirect :action => 'snapshot_new', :id => checked_item_id
+      javascript_redirect(:action => 'snapshot_new', :id => checked_item_id)
     when 'cloud_volume_new'
-      javascript_redirect :action => 'new'
+      javascript_redirect(:action => 'new')
     when 'cloud_volume_backup_create'
-      javascript_redirect :action => 'backup_new', :id => checked_item_id
+      javascript_redirect(:action => 'backup_new', :id => checked_item_id)
     when 'cloud_volume_backup_restore'
-      javascript_redirect :action => 'backup_select', :id => checked_item_id
+      javascript_redirect(:action => 'backup_select', :id => checked_item_id)
     else
       return false
     end
@@ -47,7 +46,7 @@ class CloudVolumeController < ApplicationController
   end
 
   def attach
-    params[:id] = checked_item_id unless params[:id].present?
+    params[:id] = checked_item_id if params[:id].blank?
     assert_privileges("cloud_volume_attach")
     @vm_choices = {}
     @volume = find_record_with_rbac(CloudVolume, params[:id])
@@ -56,11 +55,12 @@ class CloudVolumeController < ApplicationController
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Attach Cloud Volume \"%{name}\"") % {:name => @volume.name},
-      :url  => "/cloud_volume/attach")
+      :url  => "/cloud_volume/attach"
+    )
   end
 
   def detach
-    params[:id] = checked_item_id unless params[:id].present?
+    params[:id] = checked_item_id if params[:id].blank?
     assert_privileges("cloud_volume_detach")
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     @vm_choices = @volume.vms.each_with_object({}) { |vm, hash| hash[vm.name] = vm.id }
@@ -68,7 +68,8 @@ class CloudVolumeController < ApplicationController
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Detach Cloud Volume \"%{name}\"") % {:name => @volume.name},
-      :url  => "/cloud_volume/detach")
+      :url  => "/cloud_volume/detach"
+    )
   end
 
   def attach_volume
@@ -261,7 +262,7 @@ class CloudVolumeController < ApplicationController
   end
 
   def edit
-    params[:id] = checked_item_id unless params[:id].present?
+    params[:id] = checked_item_id if params[:id].blank?
     assert_privileges("cloud_volume_edit")
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     @in_a_form = true
