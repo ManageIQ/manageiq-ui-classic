@@ -3,6 +3,7 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
     keys: '=',
     values: '=',
     keyType: '@',
+    addRowText: '@',
     tableHeaders: '=',
     valueOptions: '<',
     newRecord: '<',
@@ -28,8 +29,6 @@ function genericObjectTableController($timeout) {
 
   vm.$onInit = function() {
     vm.tableHeaders.push('');
-
-    vm.addRowText = sprintf(__('Add %s'), vm.keyType);
 
     vm.dupicatePropertyError = [];
     vm.invalidKeyName = __("Invalid name");
