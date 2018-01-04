@@ -1,4 +1,4 @@
-ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqService', function($location, $http, miqService) {
+ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqService', '$timeout', function($location, $http, miqService, $timeout) {
   this.tooltip = function tooltip(d) {
     var status = [
       __('Name: ') + d.item.name,
@@ -222,28 +222,39 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
   // this injects some common code in the controller - temporary pending a proper merge
   this.mixinSearch = function($scope) {
     var topologyService = this;
+
     var resetEvent = function() {
       topologyService.resetSearch($scope.d3);
       $('input#search_topology')[0].value = '';
       $scope.searching = false;
       $scope.notFound = false;
     };
+
     $scope.searching = false;
     $scope.notFound = false;
-      // NOTE: listener on search
-    ManageIQ.angular.rxSubject.subscribe(function(event) {
-      if (event.service === 'topologyService') {
-        if (event.name === 'searchNode') {
-          $scope.searching = true;
-          var svg = topologyService.getSVG($scope.d3);
-          var query = $('input#search_topology')[0].value;
-          $scope.notFound = ! topologyService.searchNode(svg, query);
-        } else if (event.name === 'resetSearch') {
-          resetEvent();
-        }
-      }
-    });
     $scope.resetSearch = resetEvent;
+
+    // listen for search & reset events
+    ManageIQ.angular.rxSubject.subscribe(function(event) {
+      if (event.service !== 'topologyService') {
+        return;
+      }
+
+      $timeout(function() {
+        switch (event.name) {
+          case 'searchNode':
+            $scope.searching = true;
+            var svg = topologyService.getSVG($scope.d3);
+            var query = $('input#search_topology')[0].value;
+            $scope.notFound = ! topologyService.searchNode(svg, query);
+            break;
+
+          case 'resetSearch':
+            resetEvent();
+            break;
+        }
+      });
+    });
   };
 
   this.mixinRefresh = function(controller, $scope) {
