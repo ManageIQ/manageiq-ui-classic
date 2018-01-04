@@ -747,10 +747,14 @@ class ChargebackController < ApplicationController
     classification.entries.each { |e| @edit[:cb_assign][:tags][e.id.to_s] = e.description } if classification
   end
 
+  DEFAULT_CHARGEBACK_LABELS = ["com.redhat.component"] # move to yml\constants class?
+
   def get_docker_labels_all_keys
+    @edit[:cb_assign][:docker_label_default_keys] = {}
     @edit[:cb_assign][:docker_label_keys] = {}
     CustomAttribute.where(:section => "docker_labels").pluck(:id, :name).uniq(&:second).each do |label|
       @edit[:cb_assign][:docker_label_keys][label.first.to_s] = label.second
+      @edit[:cb_assign][:docker_label_default_keys][label.first.to_s] = label.second if DEFAULT_CHARGEBACK_LABELS.include?(label.second)
     end
   end
 

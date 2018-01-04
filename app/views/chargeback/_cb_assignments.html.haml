@@ -32,8 +32,9 @@
         %label.col-md-2.control-label
           = _('Image Labels')
         .col-md-8
+          - default_options = Array(@edit[:cb_assign][:docker_label_default_keys].invert).sort_by { |a| a.first.downcase }
           - options = Array(@edit[:cb_assign][:docker_label_keys].invert).sort_by { |a| a.first.downcase }
-          = select_tag("cblabel_key", options_for_select([["<#{_('Choose a Label')}>", ""]] + options, @edit[:new][:cblabel_key].to_s),
+          = select_tag("cblabel_key", options_for_select([["<#{_('Choose a Label')}>", ""]] + default_options + [['-------', nil]] + options, @edit[:new][:cblabel_key].to_s),
                       "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class    => "selectpicker")
         :javascript
           miqInitSelectPicker();
