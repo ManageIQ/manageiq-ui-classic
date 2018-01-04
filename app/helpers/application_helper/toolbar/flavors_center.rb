@@ -20,6 +20,7 @@ class ApplicationHelper::Toolbar::FlavorsCenter < ApplicationHelper::Toolbar::Ba
           t = N_('Remove selected Flavors'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Flavors will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"
