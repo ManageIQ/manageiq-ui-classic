@@ -74,6 +74,11 @@ module Mixins
 
       check_if_button_is_implemented
 
+      if single_delete_test
+        single_delete_redirect
+        return
+      end
+
       if params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                   "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
         render_or_redirect_partial(pfx)
