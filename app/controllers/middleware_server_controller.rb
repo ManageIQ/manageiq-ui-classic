@@ -3,8 +3,6 @@ class MiddlewareServerController < ApplicationController
   include Mixins::GenericShowMixin
   include EmsCommon
   include MiddlewareCommonMixin
-  include Mixins::MiddlewareDeploymentsMixin
-
 
   before_action :check_privileges
   before_action :get_session_data
@@ -64,13 +62,6 @@ class MiddlewareServerController < ApplicationController
       :skip         => true,
       :hawk         => N_('restarting'),
       :msg          => N_('Restart')
-    },
-    :middleware_add_deployment  => {
-      :op    => :add_middleware_deployment,
-      :skip  => false,
-      :hawk  => N_('Not deploying to Hawkular server'),
-      :msg   => N_('Deployment initiated for selected server(s)'),
-      :param => :file
     }
   }.freeze
 
@@ -169,7 +160,7 @@ class MiddlewareServerController < ApplicationController
   end
 
   def self.display_methods
-    %w(middleware_deployments)
+    []
   end
 
   def self.default_show_template

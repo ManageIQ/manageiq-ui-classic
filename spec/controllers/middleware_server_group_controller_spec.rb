@@ -42,7 +42,6 @@ describe MiddlewareServerGroupController do
 
       it 'display other specific partials' do
         is_expected.to render_template(:partial => 'middleware_shared/_ops_params')
-        is_expected.to render_template(:partial => 'middleware_server_group/_deploy')
       end
     end
 

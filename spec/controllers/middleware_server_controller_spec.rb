@@ -13,25 +13,6 @@ describe MiddlewareServerController do
     expect(response).to redirect_to(:action => 'show_list')
   end
 
-  describe '#show' do
-    let(:deployment) { FactoryGirl.create(:middleware_deployment, :middleware_server => server) }
-    let(:jms_queue) do
-      FactoryGirl.create(:hawkular_middleware_messaging_initialized_queue,
-                         :middleware_server => server)
-    end
-
-    before do
-      EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-    end
-
-    subject { get :show, :params => {:id => server.id} }
-
-    it 'show associated server entities' do
-      assert_nested_list(server, [deployment], 'middleware_deployments', 'All Middleware Deployments')
-    end
-  end
-
   context '#tags_edit' do
     let!(:user) { stub_user(:features => :all) }
     let(:classification) { FactoryGirl.create(:classification, :name => 'department', :description => 'Department') }

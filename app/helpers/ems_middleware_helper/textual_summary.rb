@@ -12,7 +12,7 @@ module EmsMiddlewareHelper::TextualSummary
     # Order of items should be from parent to child
     TextualGroup.new(
       _("Relationships"),
-      %i(middleware_domains middleware_servers middleware_deployments)
+      %i(middleware_domains middleware_servers)
     )
   end
 

@@ -180,7 +180,6 @@ module ApplicationHelper::PageLayouts
       host
       host_aggregate
       load_balancer
-      middleware_deployment
       middleware_domain
       middleware_server
       miq_template

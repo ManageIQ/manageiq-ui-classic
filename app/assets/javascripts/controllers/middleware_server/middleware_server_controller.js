@@ -13,7 +13,6 @@ ManageIQ.angular.app.controller('mwServerGroupController', MwServerGroupControll
  * Nested Controller Hierarchy is:
  * - MwServerController
  * -- MwServerOpsController
- * -- MwAddDeploymentController
  * -- *Any other controllers (more coming...)
  *
  * This is certainly not ideal, but allows us to use multiple controllers on a page.
@@ -51,19 +50,6 @@ function MwServerControllerFactory($scope, miqService, isGroupDeployment, $timeo
       $scope.paramsModel.timeout = timeout;
       $scope.$apply();
     }
-
-    if (eventType === 'mwReloadDeployDialog') {
-      $scope.warnMsg = event.msg;
-      $scope.$apply();
-    }
-
-    if (event.controller === 'middlewareServerController') {
-      $timeout(function() {
-        if (event.name === 'showDeployListener') {
-          $scope.showDeployListener();
-        }
-      });
-    }
   });
 
   // //////////////////////////////////////////////////////////////////////
@@ -79,42 +65,6 @@ function MwServerControllerFactory($scope, miqService, isGroupDeployment, $timeo
 
   var formatOpDisplayName = function(operation) {
     return _.capitalize(operation);
-  };
-
-  // //////////////////////////////////////////////////////////////////////
-  // Add Deployment
-  // //////////////////////////////////////////////////////////////////////
-
-  $scope.deployAddModel = {};
-  $scope.deployAddModel.isGroupDeployment = isGroupDeployment;
-  $scope.deployAddModel.enableDeployment = true;
-  $scope.deployAddModel.forceDeploy = false;
-  $scope.deployAddModel.serverId = angular.element('#server_id').val();
-
-  $scope.showDeployListener = function() {
-    $scope.deployAddModel.showDeployModal = true;
-    $scope.resetDeployForm();
-  };
-
-  $scope.resetDeployForm = function() {
-    $scope.deployAddModel.enableDeployment = true;
-    $scope.deployAddModel.forceDeploy = false;
-    $scope.deployAddModel.runtimeName = undefined;
-    $scope.deployAddModel.filePath = undefined;
-    $scope.warnMsg = undefined;
-    angular.element('#deploy_div :file#upload_file').val('');
-    angular.element('#deploy_div input[type="text"]:disabled').val('');
-  };
-
-  $scope.$watch('deployAddModel.filePath', function(newValue) {
-    if (newValue) {
-      $scope.deployAddModel.runtimeName = newValue.name;
-    }
-  });
-
-  $scope.addDeployment = function() {
-    miqService.sparkleOn();
-    $scope.$broadcast('mwAddDeploymentEvent', $scope.deployAddModel);
   };
 
   // //////////////////////////////////////////////////////////////////////

@@ -140,24 +140,6 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :klass   => ApplicationHelper::Button::MiddlewareDomainServerAction),
       ]
     ),
-    select(
-      :middleware_server_deployments_choice,
-      'pficon pficon-save fa-lg',
-      t = N_('Deployments'),
-      t,
-      :items => [
-        button(
-          :middleware_deployment_add,
-          'pficon pficon-add-circle-o fa-lg',
-          N_('Add a new Middleware Deployment'),
-          N_('Add Deployment'),
-          :data => {'toggle'        => 'modal',
-                    'target'        => '#modal_d_div',
-                    'function'      => 'sendDataWithRx',
-                    'function-data' => '{"name": "showDeployListener", "controller": "middlewareServerController"}'},
-          :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
-      ]
-    ),
     button(
       :middleware_dr_generate,
       'pficon pficon-import fa-lg',

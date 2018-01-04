@@ -3,7 +3,6 @@ class MiddlewareServerGroupController < ApplicationController
   include Mixins::GenericShowMixin
   include EmsCommon
   include MiddlewareCommonMixin
-  include Mixins::MiddlewareDeploymentsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -24,10 +23,7 @@ class MiddlewareServerGroupController < ApplicationController
                                                 :msg => N_('Start')},
     :middleware_server_group_stop           => {:op    => :stop_middleware_server_group,
                                                 :msg   => N_('Stop'),
-                                                :param => :timeout},
-    :middleware_server_group_add_deployment => {:op    => :add_middleware_deployment,
-                                                :msg   => N_('Deployment initiated for selected server group(s)'),
-                                                :param => :file},
+                                                :param => :timeout}
   }.freeze
 
   def self.operations
