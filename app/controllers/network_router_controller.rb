@@ -95,6 +95,7 @@ class NetworkRouterController < ApplicationController
     @router = NetworkRouter.new
     assert_privileges("network_router_new")
     assert_privileges("ems_network_show_list")
+    assert_privileges("cloud_tenant_show_list")
 
     @in_a_form = true
     @network_provider_choices = {}

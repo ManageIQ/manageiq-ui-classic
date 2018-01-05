@@ -80,7 +80,7 @@ describe CloudSubnetController do
       bypass_rescue
 
       EvmSpecHelper.create_guid_miq_server_zone
-      EvmSpecHelper.seed_specific_product_features(%w(cloud_subnet_new))
+      EvmSpecHelper.seed_specific_product_features(%w(cloud_subnet_new ems_network_show_list))
 
       allow(User).to receive(:current_user).and_return(user)
       allow(Rbac).to receive(:role_allows?).and_call_original
@@ -89,6 +89,14 @@ describe CloudSubnetController do
 
     it "raises exception wheh used have not privilege" do
       expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
+    end
+
+    context "user don't have privilege for cloud tenants" do
+      let(:feature) { MiqProductFeature.find_all_by_identifier(%w(cloud_subnet_new ems_network_show_list)) }
+
+      it "raises exception" do
+        expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
+      end
     end
   end
 
