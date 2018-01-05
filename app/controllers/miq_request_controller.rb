@@ -42,24 +42,14 @@ class MiqRequestController < ApplicationController
       @refresh_div = 'flash_msg_div'
     end
 
-    if params[:pressed].ends_with?("_edit")
-      if @refresh_partial == "show_list"
-        javascript_redirect :action      => 'show_list',
-                            :flash_msg   => _("Default Requests can not be edited"),
-                            :flash_error => true
-      else
-        javascript_redirect :action => @refresh_partial, :id => @redirect_id
-      end
+    if @refresh_partial.nil?
+      render :nothing
+    elseif @refresh_div == "flash_msg_div"
+      javascript_flash
     else
-      if @refresh_partial.nil?
-        render :nothing
-      elseif @refresh_div == "flash_msg_div"
-        javascript_flash
-      else
-        render :update do |page|
-          page << javascript_prologue
-          page.replace_html(@refresh_div, :partial => @refresh_partial)
-        end
+      render :update do |page|
+        page << javascript_prologue
+        page.replace_html(@refresh_div, :partial => @refresh_partial)
       end
     end
   end
