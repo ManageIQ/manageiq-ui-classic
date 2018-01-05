@@ -1,5 +1,4 @@
 build:
   dependencies:
     before:
-      - psql -c "create user test with password 'smartvm' createdb"
-      - sudo apt-get -y install cmake; source tools/ci/before_install.sh
+      - source tools/ci/scrutinizer_before_install.sh
