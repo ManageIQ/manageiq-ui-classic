@@ -24,33 +24,14 @@ class MiqRequestController < ApplicationController
     case params[:pressed]
     when 'miq_request_delete'
       deleterequests
-      if @flash_array.present?
-        javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-      end
     when 'miq_request_edit'
       request_edit
-      return
     when 'miq_request_copy'
       request_copy
-      return
     when 'miq_request_reload'
       handle_request_reload
-      return
     else
-      add_flash(_('Button not yet implemented'), :error)
-      @refresh_partial = 'layouts/flash_msg'
-      @refresh_div = 'flash_msg_div'
-    end
-
-    if @refresh_partial.nil?
-      render :nothing
-    elseif @refresh_div == "flash_msg_div"
-      javascript_flash
-    else
-      render :update do |page|
-        page << javascript_prologue
-        page.replace_html(@refresh_div, :partial => @refresh_partial)
-      end
+      javascript_flash(:text => _('Button not yet implemented'), :severity => :error)
     end
   end
 
@@ -547,7 +528,15 @@ class MiqRequestController < ApplicationController
       add_flash(_("The selected Request was deleted")) unless flash_errors?
     end
     show_list
-    @refresh_partial = "layouts/gtl"
+
+    if @flash_array.present?
+      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+    else
+      render :update do |page|
+        page << javascript_prologue
+        page.replace_html('main_div', :partial => 'layouts/gtl')
+      end
+    end
   end
 
   # Common Request button handler routines
