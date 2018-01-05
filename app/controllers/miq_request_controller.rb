@@ -1,5 +1,4 @@
 class MiqRequestController < ApplicationController
-
   include Mixins::GenericSessionMixin
 
   before_action :check_privileges, :except => :post_install_callback
@@ -12,7 +11,7 @@ class MiqRequestController < ApplicationController
   def index
     #   show_list
     #   render :action=>"show_list"
-    @request_tab = params[:typ] if params[:typ]                       # set this to be used to identify which Requests subtab was clicked
+    @request_tab = params[:typ] if params[:typ] # set this to be used to identify which Requests subtab was clicked
     redirect_to :action => 'show_list'
   end
 
@@ -22,22 +21,17 @@ class MiqRequestController < ApplicationController
     @refresh_div = "main_div" # Default div for button.rjs to refresh
 
     case params[:pressed]
-    when 'miq_request_delete'
-      deleterequests
-    when 'miq_request_edit'
-      request_edit
-    when 'miq_request_copy'
-      request_copy
-    when 'miq_request_reload'
-      handle_request_reload
-    else
-      javascript_flash(:text => _('Button not yet implemented'), :severity => :error)
+    when 'miq_request_delete' then deleterequests
+    when 'miq_request_edit'   then request_edit
+    when 'miq_request_copy'   then request_copy
+    when 'miq_request_reload' then handle_request_reload
+    else                           javascript_flash(:text => _('Button not yet implemented'), :severity => :error)
     end
   end
 
   def request_edit
     assert_privileges("miq_request_edit")
-    provision_request = MiqRequest.find_by_id(params[:id])
+    provision_request = MiqRequest.find(params[:id])
     if provision_request.workflow_class || provision_request.kind_of?(MiqProvisionConfiguredSystemRequest)
       request_edit_settings(provision_request)
       handle_request_edit_copy_redirect
@@ -51,14 +45,14 @@ class MiqRequestController < ApplicationController
 
   def request_copy
     assert_privileges("miq_request_copy")
-    provision_request = MiqRequest.find_by_id(params[:id])
+    provision_request = MiqRequest.find(params[:id])
     @refresh_partial = "prov_copy"
     request_settings_for_edit_or_copy(provision_request)
     handle_request_edit_copy_redirect
   end
 
   def page_display_options
-    resource_type = get_request_tab_type
+    resource_type = request_tab_type
     time_period = 7
     if is_approver && (!@sb[:prov_options] || (@sb[:prov_options] && !@sb[:prov_options].key?(resource_type.to_sym)))
       gv_options = {:filter => prov_condition(:resource_type => resource_type, :time_period => time_period)}
@@ -94,16 +88,16 @@ class MiqRequestController < ApplicationController
     @sortcol = session[:request_sortcol].nil? ? 0 : session[:request_sortcol].to_i
     @sortdir = session[:request_sortdir].nil? ? "ASC" : session[:request_sortdir]
     @listicon = "miq_request"
-    @no_checkboxes = true   # Don't show checkboxes, read_only
-    resource_type = get_request_tab_type        # storing resource type in local variable so dont have to call method everytime
+    @no_checkboxes = true # Don't show checkboxes, read_only
+    resource_type = request_tab_type # storing resource type in local variable so dont have to call method everytime
     kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
     gv_options = page_display_options
     @view, @pages = get_view(kls, gv_options)
     @sb[:prov_options] ||= {}
     @sb[:def_prov_options] ||= {}
-    @sb[:prov_options][:resource_type] = resource_type.to_sym                   # storing current resource type
+    @sb[:prov_options][:resource_type] = resource_type.to_sym # storing current resource type
 
-    prov_set_default_options if !@sb[:prov_options] || (@sb[:prov_options] && !@sb[:prov_options].key?(resource_type.to_sym))   # reset default options if requests sub tab has changed
+    prov_set_default_options if !@sb[:prov_options] || (@sb[:prov_options] && !@sb[:prov_options].key?(resource_type.to_sym)) # reset default options if requests sub tab has changed
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:request_sortcol] = @sortcol
@@ -156,7 +150,7 @@ class MiqRequestController < ApplicationController
       session[:flash_msgs] = @flash_array.dup                     # Put msg in session for next transaction to display
       @edit = nil
       javascript_redirect :action => "show_list"
-    else  # First time in, set up @edit hash
+    else # First time in, set up @edit hash
       identify_request
       @edit = {}
       @edit[:dialog_mode] = :review
@@ -181,7 +175,7 @@ class MiqRequestController < ApplicationController
     @edit[:reason] = params[:reason] if params[:reason]
     render :update do |page|
       page << javascript_prologue
-      page << javascript_for_miq_button_visibility(!@edit[:reason].blank?)
+      page << javascript_for_miq_button_visibility(@edit[:reason].present?)
     end
   end
 
@@ -197,11 +191,11 @@ class MiqRequestController < ApplicationController
       :options        => org_req.options.except(:requester_group),
     )
 
-    prov_set_form_vars(req)       # Set vars from existing request
+    prov_set_form_vars(req) # Set vars from existing request
     # forcing submit button to stay on for copy request, setting a key in current hash so new and current are different,
     # couldn't set this in new hash becasue that's being set by model
     @edit[:current][:description] = _("Copy of %{description}") % {:description => org_req.description}
-    session[:changed] = true                                # Turn on the submit button
+    session[:changed] = true # Turn on the submit button
     drop_breadcrumb(:name => _("Copy of %{typ} Request") % {:typ => org_req.request_type_display})
     @in_a_form = true
     render :action => "prov_edit"
@@ -209,7 +203,7 @@ class MiqRequestController < ApplicationController
 
   # To handle Continue button
   def prov_continue
-    if params[:button] == "continue"                            # Continue the request from the workflow with the new options
+    if params[:button] == "continue" # Continue the request from the workflow with the new options
       id = params[:id] ? params[:id] : "new"
       return unless load_edit("prov_edit__#{id}", "show_list")
       @edit[:wf].continue_request(@edit[:new])    # Continue the workflow with new field values based on options
@@ -217,7 +211,7 @@ class MiqRequestController < ApplicationController
       @edit[:buttons] = @edit[:wf].get_buttons
       @edit[:wf].get_dialog_order.each do |d|                           # Go thru all dialogs, in order that they are displayed
         @edit[:wf].get_all_fields(d).each do |_f, field|                # Go thru all field
-          unless field[:error].blank?
+          if field[:error].present?
             @error_div ||= "#{d}_div"
             add_flash(field[:error], :error)
           end
@@ -252,19 +246,23 @@ class MiqRequestController < ApplicationController
     @options[:host_sortdir] = "ASC"
     @options[:host_sortcol] = "name"
     # only build host grid if that field is visible/exists in dialog
-    build_host_grid(@options[:wf].allowed_hosts, @options[:host_sortdir], @options[:host_sortcol]) if !@options[:wf].get_field(:src_host_ids, :service).blank? || !@options[:wf].get_field(:placement_host_name, :environment).blank?
+    if @options[:wf].get_field(:src_host_ids, :service).present? ||
+       @options[:wf].get_field(:placement_host_name, :environment).present?
+      build_host_grid(@options[:wf].allowed_hosts, @options[:host_sortdir], @options[:host_sortcol])
+    end
     render :update do |page|
       page << javascript_prologue
-      page.replace_html(@options[:current_tab_key],
-                        :partial => dialog_partial_for_workflow,
-                        :locals  => {:wf => @options[:wf], :dialog => @options[:current_tab_key]}
-                       )
+      page.replace_html(
+        @options[:current_tab_key],
+        :partial => dialog_partial_for_workflow,
+        :locals  => {:wf => @options[:wf], :dialog => @options[:current_tab_key]}
+      )
       # page << javascript_show("hider_#{@options[:current_tab_key].to_s}_div")
       page << "miqSparkle(false);"
     end
   end
 
-  WORKFLOW_METHOD_WHITELIST = {'retrieve_ldap' => :retrieve_ldap}
+  WORKFLOW_METHOD_WHITELIST = {'retrieve_ldap' => :retrieve_ldap}.freeze
 
   def retrieve_email
     @edit = session[:edit]
@@ -286,7 +284,7 @@ class MiqRequestController < ApplicationController
 
   # Gather any changed options
   def prov_change_options
-    resource_type = get_request_tab_type.to_sym
+    resource_type = request_tab_type.to_sym
     @sb[:def_prov_options][resource_type][:user_choice] = params[:user_choice] if params[:user_choice]
     @sb[:def_prov_options][resource_type][:type_choice] = params[:type_choice] if params[:type_choice]
     @sb[:def_prov_options][resource_type][:time_period] = params[:time_period].to_i if params[:time_period]
@@ -305,12 +303,12 @@ class MiqRequestController < ApplicationController
 
     render :update do |page|
       page << javascript_prologue
-      unless applied_states_blank
-        # Options have changed?
-        page << javascript_for_miq_button_visibility(res_type != @sb[:def_prov_options][resource_type])
-      else
+      if applied_states_blank
         # Disable buttons due to no filters being selected
         page << javascript_for_miq_button_visibility(false)
+      else
+        # Options have changed?
+        page << javascript_for_miq_button_visibility(res_type != @sb[:def_prov_options][resource_type])
       end
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
     end
@@ -376,7 +374,7 @@ class MiqRequestController < ApplicationController
       show
       render :update do |page|
         page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/gtl")  # Replace the provisioned vms list
+        page.replace("gtl_div", :partial => "layouts/gtl") # Replace the provisioned vms list
       end
     else
       # forcing to refresh the view when reload button is pressed
@@ -389,8 +387,7 @@ class MiqRequestController < ApplicationController
     end
   end
 
-
-  def get_request_tab_type
+  def request_tab_type
     case @layout
     when "miq_request_ae"                        then "AutomateRequest"
     when "miq_request_configured_system"         then "MiqProvisionConfiguredSystemRequest"
@@ -411,7 +408,7 @@ class MiqRequestController < ApplicationController
 
   # Create a condition from the passed in options
   def prov_condition(opts)
-    cond = [{"AFTER" => {"value" => "#{opts[:time_period].to_i} Days Ago", "field" => "MiqRequest-created_on"}}]  # Start with setting time
+    cond = [{"AFTER" => {"value" => "#{opts[:time_period].to_i} Days Ago", "field" => "MiqRequest-created_on"}}] # Start with setting time
 
     unless is_approver
       cond.push(*remote_and_global_requestors(current_user))
@@ -427,7 +424,7 @@ class MiqRequestController < ApplicationController
 
     cond.push("or" => request_types_for_model.keys.collect { |k| {"=" => {"value" => k.to_s, "field" => "MiqRequest-type"}} })
 
-    if opts[:type_choice] && opts[:type_choice] != "all"  # Add request_type filter, if selected
+    if opts[:type_choice] && opts[:type_choice] != "all" # Add request_type filter, if selected
       cond.push("=" => {"value" => opts[:type_choice], "field" => "MiqRequest-request_type"})
     end
 
@@ -451,7 +448,7 @@ class MiqRequestController < ApplicationController
   end
 
   def prov_condition_reason_text_sanitized(text)
-    text.sub(/\A\*?(.+?)\*?\z/, '\1')  # Remove leading and/or trailing "*"
+    text.sub(/\A\*?(.+?)\*?\z/, '\1') # Remove leading and/or trailing "*"
   end
 
   def prov_condition_reason_text_expression_key(text)
@@ -466,7 +463,7 @@ class MiqRequestController < ApplicationController
 
   # Set all task options to default
   def prov_set_default_options
-    resource_type = get_request_tab_type
+    resource_type = request_tab_type
     opts = @sb[:prov_options][resource_type.to_sym] = {}
     opts[:states] = PROV_STATES.map { |k, v| [k, _(v)] }.to_h
     opts[:reason_text] = nil
@@ -476,11 +473,11 @@ class MiqRequestController < ApplicationController
       :type       => request_types_for_model.keys,
       :created_on => (30.days.ago.utc)..(Time.now.utc)
     )).each_with_object({}) do |r, h|
-      h[r.requester_id] =  if r.requester.nil?
-                             (_("%{name} (no longer exists)") % {:name => r.requester_name})
-                           else
-                             r.requester_name
-                           end
+      h[r.requester_id] = if r.requester.nil?
+                            (_("%{name} (no longer exists)") % {:name => r.requester_name})
+                          else
+                            r.requester_name
+                          end
     end
 
     unless is_approver
@@ -518,7 +515,7 @@ class MiqRequestController < ApplicationController
       process_requests(miq_requests, "destroy") unless miq_requests.empty?
       add_flash(_("The selected Requests were deleted")) unless flash_errors?
     else # showing 1 request, delete it
-      if params[:id].nil? || MiqRequest.find_by_id(params[:id]).nil?
+      if params[:id].nil? || !MiqRequest.exists?(params[:id])
         add_flash(_("Request no longer exists"), :error)
       else
         miq_requests.push(params[:id])
@@ -552,7 +549,7 @@ class MiqRequestController < ApplicationController
                  :userid       => session[:userid]}
       end
       begin
-        miq_request.public_send(task.to_sym) if miq_request.respond_to?(task)    # Run the task
+        miq_request.public_send(task.to_sym) if miq_request.respond_to?(task) # Run the task
       rescue => bang
         add_flash(_("Request \"%{name}\": Error during '%{task}': %{message}") %
                       {:name    => request_name,
