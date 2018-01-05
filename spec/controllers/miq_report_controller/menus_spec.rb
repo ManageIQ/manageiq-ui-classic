@@ -5,9 +5,10 @@ describe ReportController do
       controller.instance_variable_set(:@sb, :new => {})
       controller.instance_variable_set(:@_params, :button => "default")
       tenant = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant, :name => "foo - bar", :subdomain => "foo - bar")
-      user = FactoryGirl.create(:user, :tenant => tenant)
-      @report = FactoryGirl.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group)
-      @user = stub_user(:features => :all)
+      @user = FactoryGirl.create(:user_with_group, :tenant => tenant)
+      @report = FactoryGirl.create(:miq_report, :rpt_type => "Custom", :miq_group => @user.current_group)
+      allow(controller).to receive(:current_user).and_return(@user)
+      login_as @user
     end
 
     it "set menus to default and sets correct title for custom reports" do
