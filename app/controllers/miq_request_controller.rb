@@ -20,14 +20,19 @@ class MiqRequestController < ApplicationController
   def button
     params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
     @refresh_div = "main_div" # Default div for button.rjs to refresh
-    deleterequests if params[:pressed] == "miq_request_delete"
-    request_edit if params[:pressed] == "miq_request_edit"
-    request_copy if params[:pressed] == "miq_request_copy"
 
-    if ! @refresh_partial && params[:pressed] != "miq_request_reload" # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
+    case params[:pressed]
+    when 'miq_request_delete'
+      deleterequests
+    when 'miq_request_edit'
+      request_edit
+    when 'miq_request_copy'
+      request_copy
+    when 'miq_request_reload'
+    else
+      add_flash(_('Button not yet implemented'), :error)
+      @refresh_partial = 'layouts/flash_msg'
+      @refresh_div = 'flash_msg_div'
     end
 
     return if params[:pressed] == "miq_request_edit" && @refresh_partial == "reconfigure"
