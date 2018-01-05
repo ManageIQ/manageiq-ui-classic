@@ -121,9 +121,15 @@ module GtlHelper
           isExplorer: '#{options[:explorer]}' === 'true' ? true : false,
           records: #{!options[:selected_records].nil? ? h(j_str(options[:selected_records].to_json)) : "\'\'"},
           hideSelect: #{options[:selected_records].kind_of?(Array)},
-          showUrl: '#{view_to_url(options[:view], options[:parent]) if options[:view].present? && options[:view].db.present?}'
+          showUrl: '#{gtl_show_url(options)}'
         }
       }});
 EOJ
+  end
+
+  def gtl_show_url(options)
+    # TODO: the "what happens on nil" logic should probably live here, not in ReportDataController.prototype.initObjects
+
+    view_to_url(options[:view], options[:parent]) if options[:view].present? && options[:view].db.present?
   end
 end
