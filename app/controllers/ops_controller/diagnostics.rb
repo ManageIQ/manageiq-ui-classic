@@ -41,7 +41,7 @@ module OpsController::Diagnostics
   def pm_restart_workers
     assert_privileges("restart_workers")
     @refresh_partial = "#{@sb[:active_tab]}_tab"
-    worker = MiqWorker.find_by_id(@sb[:selected_worker_id])
+    worker = MiqWorker.find_by_id(checked_or_params.first)
     wtype = worker.normalized_type
     case wtype
     when "ems_vimbroker"
@@ -419,7 +419,6 @@ module OpsController::Diagnostics
 
   def diagnostics_worker_selected
     @explorer = true
-    @sb[:selected_worker_id] = params[:id]
     get_workers
 
     render :update do |page|
@@ -543,7 +542,6 @@ module OpsController::Diagnostics
   end
 
   def pm_get_workers
-    @sb[:selected_worker_id] = nil
     get_workers
   end
 

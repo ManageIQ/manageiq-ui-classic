@@ -75,8 +75,6 @@
       - table.data.each do |row|
         - @id = to_cid(row['id'])
         - classes = []
-        - if view.db == "MiqWorker" && @sb[:selected_worker_id].to_i == row['id'].to_i
-          - classes.append("selected")
         - if %w(MiqEventDefinition MiqTask VmdbDatabaseConnection VmdbDatabaseSetting).include?(view.db) || @embedded
           - classes.append("no-hover")
         %tr{:class => classes.join(' ')}
