@@ -188,8 +188,6 @@ class AuthKeyPairCloudController < ApplicationController
   end
 
   def process_deletions(key_pairs)
-    return if key_pairs.empty?
-
     ManageIQ::Providers::CloudManager::AuthKeyPair.where(:id => key_pairs).order('lower(name)').each do |kp|
       audit = {
         :event        => "auth_key_pair_cloud_record_delete_initiateed",
