@@ -43,6 +43,8 @@ class CloudSubnetController < ApplicationController
 
   def new
     assert_privileges("cloud_subnet_new")
+    assert_privileges("ems_network_show_list")
+
     @subnet = CloudSubnet.new
     @in_a_form = true
     @network_provider_choices = {}
