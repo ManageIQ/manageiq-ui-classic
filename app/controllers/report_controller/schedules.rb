@@ -119,20 +119,10 @@ module ReportController::Schedules
 
   def schedule_toggle(enable)
     assert_privileges("miq_report_schedule_#{enable ? 'enable' : 'disable'}")
-    msg1, msg2 = if enable
-                   [_("No Report Schedules were selected to be enabled"),
-                    _("The selected Report Schedules were enabled")]
-                 else
-                   [_("No Report Schedules were selected to be disabled"),
-                    _("The selected Report Schedules were disabled")]
-                 end
+    msg = enable ? _("The selected Report Schedules were enabled") : _("The selected Report Schedules were disabled")
     scheds = find_records_with_rbac(MiqSchedule, checked_or_params)
-    if scheds.empty?
-      add_flash(msg1, :error)
-      javascript_flash
-    end
-    schedule_enable_disable(scheds, enable) unless scheds.empty?
-    add_flash(msg2, :info, true) unless flash_errors?
+    schedule_enable_disable(scheds, enable)
+    add_flash(msg, :info, true)
     schedule_get_all
     replace_right_cell
   end

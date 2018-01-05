@@ -11,22 +11,14 @@ describe OpsController do
         silence_warnings { OpsController::Settings::Schedules::STGROOT = 'ST'.freeze }
 
         allow(controller).to receive(:find_checked_items).and_return([])
-        expect(controller).to receive(:render)
-        expect(controller).to receive(:schedule_build_list)
-        expect(controller).to receive(:settings_get_info)
-        expect(controller).to receive(:replace_right_cell)
       end
 
       it "#schedule_enable" do
-        controller.schedule_enable
-        flash_messages = controller.instance_variable_get(:@flash_array)
-        expect(flash_messages.first).to eq(:message => "The selected Schedules were enabled", :level => :error)
+        expect { controller.schedule_enable }.to raise_error("Can't access records without an id")
       end
 
       it "#schedule_disable" do
-        controller.schedule_disable
-        flash_messages = controller.instance_variable_get(:@flash_array)
-        expect(flash_messages.first).to eq(:message => "The selected Schedules were disabled", :level => :error)
+        expect { controller.schedule_disable }.to raise_error("Can't access records without an id")
       end
     end
 

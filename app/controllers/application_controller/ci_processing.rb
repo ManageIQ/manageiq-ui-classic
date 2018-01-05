@@ -180,7 +180,6 @@ module ApplicationController::CiProcessing
   def identify_record(id, klass = self.class.model)
     begin
       record = find_record_with_rbac(klass, from_cid(id))
-    rescue ActiveRecord::RecordNotFound
     rescue => @bang
       self.x_node = "root" if @explorer
       add_flash(@bang.message, :error, true)

@@ -33,7 +33,7 @@ describe Mixins::CheckedIdMixin do
       before { allow(Rbac).to receive(:filtered).and_return([vm1, vm2]) }
       let(:model) { VmOrTemplate }
       let(:id) { [vm1.id, vm2.id, vm3.id] }
-      it 'is expected to raise exeption' do
+      it 'is expected to raise exception' do
         expect { subject }.to raise_error("Can't access selected records")
       end
     end
@@ -42,8 +42,24 @@ describe Mixins::CheckedIdMixin do
       let(:model) { VmOrTemplate }
       let(:missing_vm_id) { VmOrTemplate.maximum(:id) + 1000 }
       let(:id) { [vm1.id, vm2.id, missing_vm_id] }
-      it 'is expected to raise exeption' do
+      it 'is expected to raise exception' do
         expect { subject }.to raise_error("Can't access selected records")
+      end
+    end
+
+    context 'when there is no record id' do
+      let(:model) { VmOrTemplate }
+      let(:id) { [] }
+      it 'is expected to raise exception' do
+        expect { subject }.to raise_error("Can't access records without an id")
+      end
+    end
+
+    context 'when user tries to access record with nil id ' do
+      let(:model) { VmOrTemplate }
+      let(:id) { [vm1.id, nil] }
+      it 'is expected to raise exception' do
+        expect { subject }.to raise_error("Can't access records without an id")
       end
     end
   end
