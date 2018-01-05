@@ -506,7 +506,6 @@ module ApplicationHelper
       controller = "ansible_credential"
     when "MiqWorker"
       controller = request.parameters[:controller]
-      action = "diagnostics_worker_selected"
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScriptBase"

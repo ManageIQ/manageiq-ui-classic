@@ -417,22 +417,6 @@ module OpsController::Diagnostics
     update_gtl_div('diagnostics_server_list') if pagination_or_gtl_request?
   end
 
-  def diagnostics_worker_selected
-    @explorer = true
-    get_workers
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html(@sb[:active_tab], :partial => "#{@sb[:active_tab]}_tab")
-      if center_toolbar_filename.present?
-        page << "$('#toolbar').show();"
-        page << javascript_reload_toolbars
-      else
-        page << "$('#toolbar').hide();"
-      end
-    end
-  end
-
   private ############################
 
   # Build the Utilization screen for a server

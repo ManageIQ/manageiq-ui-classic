@@ -50,7 +50,6 @@ describe "routing for OpsController" do
     db_list
     diagnostics_server_list
     diagnostics_tree_select
-    diagnostics_worker_selected
     edit_rhn
     explorer
     fetch_build

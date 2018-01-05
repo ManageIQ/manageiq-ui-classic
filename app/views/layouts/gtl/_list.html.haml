@@ -154,8 +154,6 @@
               - click = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_cr-#{to_cid(row['id'])}');"
             - when "MiqDialog"
               - click = "miqTreeActivateNode('old_dialogs_tree', '#{TreeBuilder.get_prefix_for_model("MiqDialog")}-#{to_cid(row['id'])}');"
-            - when "MiqWorker"
-              - click = remote_function(:url => {:action => 'diagnostics_worker_selected', :id => "#{row['id']}"})
             - else
               - click = "DoNav('#{url_for_db(view.db)}');"
           %td.table-view-pf-select{:title => title, :onclick => click}
@@ -250,8 +248,6 @@
                     - click = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_cr-#{to_cid(row['id'])}');"
                   - when "MiqDialog"
                     - click = "miqTreeActivateNode('old_dialogs_tree', '#{TreeBuilder.get_prefix_for_model("MiqDialog")}-#{to_cid(row['id'])}');"
-                  - when "MiqWorker"
-                    - click = remote_function(:url => {:action => 'diagnostics_worker_selected', :id => "#{row['id']}"})
                   - else
                     - if view.db == "Action"
                       - click = "DoNav('#{url_for_db("miq_action")}');"
