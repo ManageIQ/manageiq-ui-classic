@@ -28,9 +28,11 @@ class MiqRequestController < ApplicationController
         javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
       end
     when 'miq_request_edit'
-      return if request_edit
+      request_edit
+      return
     when 'miq_request_copy'
       request_copy
+      return
     when 'miq_request_reload'
       handle_request_reload
       return
@@ -40,9 +42,7 @@ class MiqRequestController < ApplicationController
       @refresh_div = 'flash_msg_div'
     end
 
-    if ["miq_request_copy", "miq_request_edit"].include?(params[:pressed])
-      handle_request_edit_copy_redirect
-    elsif params[:pressed].ends_with?("_edit")
+    if params[:pressed].ends_with?("_edit")
       if @refresh_partial == "show_list"
         javascript_redirect :action      => 'show_list',
                             :flash_msg   => _("Default Requests can not be edited"),
@@ -69,13 +69,12 @@ class MiqRequestController < ApplicationController
     provision_request = MiqRequest.find_by_id(params[:id])
     if provision_request.workflow_class || provision_request.kind_of?(MiqProvisionConfiguredSystemRequest)
       request_edit_settings(provision_request)
-      false # further handling needed
+      handle_request_edit_copy_redirect
     else
       session[:checked_items] = provision_request.options[:src_ids]
       @refresh_partial = "reconfigure"
       @_params[:controller] = "vm"
       reconfigurevms
-      true # no further handling needed
     end
   end
 
@@ -84,6 +83,7 @@ class MiqRequestController < ApplicationController
     provision_request = MiqRequest.find_by_id(params[:id])
     @refresh_partial = "prov_copy"
     request_settings_for_edit_or_copy(provision_request)
+    handle_request_edit_copy_redirect
   end
 
   def page_display_options
