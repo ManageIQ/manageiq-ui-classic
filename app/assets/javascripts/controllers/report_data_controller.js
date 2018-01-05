@@ -37,22 +37,6 @@
     return splitUrl && (splitUrl[1] === ManageIQ.controller || splitUrl[2] === 'policies');
   }
 
-  function isCurrentOpsWorkerSelected(items, initObject) {
-    if (initObject.activeTree === 'diagnostics_tree' && ManageIQ.controller === 'ops') {
-      var lastSlash = _.isString(initObject.showUrl) && initObject.showUrl.indexOf('/', 5) + 1;
-      var itemId = lastSlash && initObject.showUrl.substring(lastSlash);
-      if (itemId && itemId.indexOf('?id=') === -1) {
-        initObject.showUrl = initObject.showUrl.substring(0, lastSlash);
-        if (itemId) {
-          itemId = itemId[itemId.length - 1] === '/' ? itemId.substring(0, itemId.length - 1) : itemId;
-          return _.find(items, {id: itemId});
-        }
-      }
-    }
-
-    return;
-  }
-
   /**
   * Method for init paging component for GTL.
   * Default paging has 5, 10, 20, 50, 100, 1000
@@ -454,7 +438,6 @@
             this.initObject.showUrl = splitUrl.join('/');
           }
         }
-        this.onItemSelect(isCurrentOpsWorkerSelected(this.gtlData.rows, this.initObject), true);
         gtlData.messages && gtlData.messages.forEach(function(oneMessage) {
           add_flash(oneMessage.msg, oneMessage.level);
         });
