@@ -16,8 +16,6 @@ module UiServiceMixin
       :FloatingIp              => {:type => "glyph", :class => 'ff ff-floating-ip'},
       :Host                    => {:type => "glyph", :class => 'pficon pficon-screen'},
       :LoadBalancer            => {:type => "glyph", :class => 'ff ff-load-balancer'},
-      :MiddlewareDomain        => {:type => "glyph", :class => 'pficon pficon-domain'},
-      :MiddlewareServerGroup   => {:type => "glyph", :class => 'pficon pficon-server-group'},
       :NetworkRouter           => {:type => "glyph", :class => 'pficon pficon-route'},
       :PhysicalServer          => {:type => "glyph", :class => 'pficon pficon-server-group'},
       :SecurityGroup           => {:type => "glyph", :class => 'pficon pficon-cloud-security'},

@@ -20,20 +20,4 @@ module MiddlewareSummaryHelper
   def textual_middleware_server
     textual_link(@record.middleware_server)
   end
-
-  def textual_middleware_domain
-    textual_link(@record.middleware_domain)
-  end
-
-  def textual_middleware_domains
-    textual_link(@record.middleware_domains)
-  end
-
-  def textual_middleware_server_group
-    textual_link(@record.middleware_server_group)
-  end
-
-  def textual_middleware_server_groups
-    textual_link(@record.middleware_server_groups)
-  end
 end

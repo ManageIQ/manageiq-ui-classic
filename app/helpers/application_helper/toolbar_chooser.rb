@@ -524,8 +524,6 @@ class ApplicationHelper::ToolbarChooser
               container_topology
               cloud_topology
               middleware_server
-              middleware_domain
-              middleware_server_group
               orchestration_stack
               physical_infra_topology
               physical_server

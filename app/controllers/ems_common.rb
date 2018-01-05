@@ -109,8 +109,6 @@ module EmsCommon
         images
         instances
         load_balancers
-        middleware_domains
-        middleware_server_groups
         middleware_servers
         miq_templates
         network_ports
