@@ -75,10 +75,7 @@ class AuthKeyPairCloudController < ApplicationController
     set_form_vars
     @in_a_form = true
     session[:changed] = nil
-    drop_breadcrumb(
-      :name => _("Add New Key Pair"),
-      :url  => "/auth_key_pair_cloud/new"
-    )
+    drop_breadcrumb(:name => _("Add New Key Pair"), :url => "/auth_key_pair_cloud/new")
   end
 
   def create
