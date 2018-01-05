@@ -28,27 +28,6 @@ describe MiddlewareServerController do
 
     subject { get :show, :params => {:id => server.id} }
 
-    context 'render' do
-      render_views
-
-      it 'display textual groups' do
-        is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => 'layouts/_textual_groups_generic')
-      end
-
-      it 'display listnav partial' do
-        is_expected.to render_template(:partial => 'layouts/listnav/_middleware_server')
-      end
-
-      it 'display other specific partials' do
-        is_expected.to render_template(:partial => 'middleware_shared/_ops_params')
-        is_expected.to render_template(:partial => 'middleware_server/_deploy')
-        is_expected.to render_template(:partial => 'middleware_server/_add_jdbc_driver')
-        is_expected.to render_template(:partial => 'middleware_server/_add_datasource')
-        is_expected.to render_template(:partial => 'middleware_server/_dr_reports_list')
-      end
-    end
-
     it 'show associated server entities' do
       assert_nested_list(server, [deployment], 'middleware_deployments', 'All Middleware Deployments')
       assert_nested_list(server, [datasource], 'middleware_datasources', 'All Middleware Datasources')
