@@ -10,7 +10,7 @@
 %ng-form#mw_server_form{"name"          => "mw_server_form",
                         "ng-controller" => "mwServerController",
                         "novalidate"    => "true"}
-  = render :partial => 'middleware_shared/ops_params', :locals => {:opsController => 'mwServerOpsController'}
+  = render :partial => 'ops_params'
 
 :javascript
   miq_bootstrap('#mw_server_form');

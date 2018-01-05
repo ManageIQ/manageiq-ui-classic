@@ -1518,7 +1518,6 @@ Rails.application.routes.draw do
         form_field_changed
         listnav_search_selected
         quick_search
-        run_operation
         sections_field_changed
         show
         show_list

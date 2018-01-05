@@ -55,7 +55,6 @@ module Mixins::MiddlewareOperationsMixin
     end
     operation_triggered = run_operation_batch(operation_info, items, klass)
     add_flash(_(success_msg) % {:msg => operation_info.fetch(:msg)}) if operation_triggered
-    operation_triggered
   end
 
   def run_operation_on_record(operation_info, item_record)

@@ -79,20 +79,10 @@ function MwServerController($scope, miqService, $timeout, $document) {
 }
 
 ManageIQ.angular.app.controller('mwServerOpsController', MwServerOpsController);
-ManageIQ.angular.app.controller('mwServerGroupOpsController', MwServerGroupOpsController);
 
 MwServerOpsController.$inject = ['miqService', 'serverOpsService'];
 
-function MwServerOpsController(miqService, serverOpsService) {
-  return MwServerOpsControllerFactory(miqService, serverOpsService);
-}
-
-MwServerGroupOpsController.$inject = ['miqService', 'serverGroupOpsService'];
-function MwServerGroupOpsController(miqService, serverGroupOpsService) {
-  return MwServerOpsControllerFactory(miqService, serverGroupOpsService);
-}
-
-function MwServerOpsControllerFactory(miqService, serverOpsService) {
+function MwServerOpsController( miqService, serverOpsService) {
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
     if (event.type === 'mwSeverOpsEvent') {
@@ -112,22 +102,12 @@ function MwServerOpsControllerFactory(miqService, serverOpsService) {
 }
 
 ManageIQ.angular.app.service('serverOpsService', ServerOpsService);
-ManageIQ.angular.app.service('serverGroupOpsService', ServerGroupOpsService);
 
 ServerOpsService.$inject = ['$http', '$q'];
+
 function ServerOpsService($http, $q) {
-  return ServerOpsServiceFactory($http, $q, false);
-}
-
-ServerGroupOpsService.$inject = ['$http', '$q'];
-function ServerGroupOpsService($http, $q) {
-  return ServerOpsServiceFactory($http, $q, true);
-}
-
-function ServerOpsServiceFactory($http, $q, isGroup) {
-  var runOperation = function runOperation(id, operation, timeout) {
-    var errorMsg = isGroup ? _('Error running operation on this server.')
-                           : _('Error running operation on this server group.');
+  this.runOperation = function runOperation(id, operation, timeout) {
+    var errorMsg = _('Error running operation on this server.');
     var deferred = $q.defer();
     var payload = {
       'id': id,
@@ -135,8 +115,7 @@ function ServerOpsServiceFactory($http, $q, isGroup) {
       'timeout': timeout,
     };
 
-    var url = '/middleware_server' + (isGroup ? '_group' : '') + '/run_operation';
-    $http.post(url, angular.toJson(payload))
+    $http.post('/middleware_server/run_operation', angular.toJson(payload))
       .then(
         function(response) { // success
           var data = response.data;
@@ -156,8 +135,5 @@ function ServerOpsServiceFactory($http, $q, isGroup) {
         deferred.resolve(data.msg);
       });
     return deferred.promise;
-  };
-  return {
-    runOperation: runOperation,
   };
 }
