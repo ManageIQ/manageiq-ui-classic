@@ -124,19 +124,6 @@ module Menu
         end
       end
 
-      def middleware_menu_section
-        Menu::Section.new(:mdl, N_("Middleware"), 'pficon pficon-middleware', [
-          Menu::Item.new('ems_middleware',        N_('Providers'),   'ems_middleware',        {:feature => 'ems_middleware_show_list'},          '/ems_middleware'),
-          Menu::Item.new('middleware_domain',     N_('Domains'),     'middleware_domain',     {:feature => 'middleware_domain_show_list'},       '/middleware_domain'),
-          Menu::Item.new('middleware_server',     N_('Servers'),     'middleware_server',     {:feature => 'middleware_server_show_list'},       '/middleware_server'),
-          Menu::Item.new('middleware_deployment', N_('Deployments'), 'middleware_deployment', {:feature => 'middleware_deployment_show_list'},   '/middleware_deployment'),
-          Menu::Item.new('middleware_datasource', N_('Datasources'), 'middleware_datasource', {:feature => 'middleware_datasource_show_list'},   '/middleware_datasource'),
-          Menu::Item.new('middleware_messaging',  N_('Messagings'),  'middleware_messaging',  {:feature => 'middleware_messaging_show_list'},    '/middleware_messaging'),
-          Menu::Item.new('middleware_topology',   N_('Topology'),    'middleware_topology',   {:feature => 'middleware_topology', :any => true}, '/middleware_topology')
-
-        ])
-      end
-
       def network_menu_section
         Menu::Section.new(:net, N_("Networks"), 'pficon pficon-network', [
           Menu::Item.new('ems_network',      N_('Providers'),       'ems_network',      {:feature => 'ems_network_show_list'},    '/ems_network'),
@@ -303,7 +290,7 @@ module Menu
 
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
-         network_menu_section, middleware_menu_section, datawarehouse_menu_section, storage_menu_section,
+         network_menu_section, datawarehouse_menu_section, storage_menu_section,
          control_menu_section, automation_menu_section, optimize_menu_section, monitor_menu_section,
          settings_menu_section, help_menu_section].compact
       end
