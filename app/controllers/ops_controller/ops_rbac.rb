@@ -726,7 +726,7 @@ module OpsController::OpsRbac
     when :group then
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
-      rbac_group_set_record_vars(record)
+      rbac_group_set_record_vars(record) if validated
     when :role  then
       record = @edit[:role_id] ? MiqUserRole.find_by(:id => @edit[:role_id]) : MiqUserRole.new
       validated = rbac_role_validate?
@@ -1421,6 +1421,7 @@ module OpsController::OpsRbac
 
   # Validate some of the role fields
   def rbac_group_validate?
+    return false if @edit[:new][:description].nil?
     @assigned_filters = [] if @edit[:new][:filters].empty? || @edit[:new][:use_filter_expression]
     @filter_expression = [] if @edit[:new][:filter_expression].empty? || @edit[:new][:use_filter_expression] == false
     if @edit[:new][:role].nil? || @edit[:new][:role] == ""
