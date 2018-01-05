@@ -25,7 +25,7 @@ class MiqRequestController < ApplicationController
     when 'miq_request_delete'
       deleterequests
     when 'miq_request_edit'
-      request_edit
+      return if request_edit
     when 'miq_request_copy'
       request_copy
     when 'miq_request_reload'
@@ -36,8 +36,6 @@ class MiqRequestController < ApplicationController
       @refresh_partial = 'layouts/flash_msg'
       @refresh_div = 'flash_msg_div'
     end
-
-    return if params[:pressed] == "miq_request_edit" && @refresh_partial == "reconfigure"
 
     if !@flash_array.nil? && params[:pressed] == "miq_request_delete"
       javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
@@ -70,11 +68,13 @@ class MiqRequestController < ApplicationController
     provision_request = MiqRequest.find_by_id(params[:id])
     if provision_request.workflow_class || provision_request.kind_of?(MiqProvisionConfiguredSystemRequest)
       request_edit_settings(provision_request)
+      false # further handling needed
     else
       session[:checked_items] = provision_request.options[:src_ids]
       @refresh_partial = "reconfigure"
       @_params[:controller] = "vm"
       reconfigurevms
+      true # no further handling needed
     end
   end
 
