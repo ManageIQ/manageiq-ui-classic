@@ -29,6 +29,8 @@ class MiqRequestController < ApplicationController
     when 'miq_request_copy'
       request_copy
     when 'miq_request_reload'
+      handle_request_reload
+      return
     else
       add_flash(_('Button not yet implemented'), :error)
       @refresh_partial = 'layouts/flash_msg'
@@ -49,8 +51,6 @@ class MiqRequestController < ApplicationController
       else
         javascript_redirect :action => @refresh_partial, :id => @redirect_id
       end
-    elsif params[:pressed] == "miq_request_reload"
-      handle_request_reload
     else
       if @refresh_partial.nil?
         render :nothing
