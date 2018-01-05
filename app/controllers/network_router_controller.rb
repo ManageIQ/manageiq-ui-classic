@@ -94,6 +94,8 @@ class NetworkRouterController < ApplicationController
   def new
     @router = NetworkRouter.new
     assert_privileges("network_router_new")
+    assert_privileges("ems_network_show_list")
+
     @in_a_form = true
     @network_provider_choices = {}
     network_managers.each do |network_manager|
