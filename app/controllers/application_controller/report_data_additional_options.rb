@@ -22,7 +22,8 @@ class ApplicationController
     :lastaction,
     :display,
     :gtl_type,
-    :supported_features_filter
+    :supported_features_filter,
+    :clickable,
   ) do
     def self.from_options(options)
       additional_options = new
@@ -36,6 +37,7 @@ class ApplicationController
       additional_options.view_suffix = options[:view_suffix]
       additional_options.parent_method = options[:parent_method]
       additional_options.supported_features_filter = options[:supported_features_filter]
+      additional_options.clickable = options[:clickable]
       additional_options
     end
 
