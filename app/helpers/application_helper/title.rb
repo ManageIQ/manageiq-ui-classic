@@ -19,8 +19,18 @@ module ApplicationHelper
       return title if layout.blank?  # no layout, leave title alone
 
       title + case layout
+              when "automation_manager"
+                _(": Automation Managers")
+              when "catalogs"
+                _(": Catalogs")
               when "configuration"
                 _(": My Settings")
+              when "configuration_job"
+                _(": Configuration Jobs")
+              when "container_dashboard"
+                _(": Container Dashboard")
+              when "container_topology"
+                _(": Container Topology")
               when "dashboard"
                 _(": Dashboard")
               when "chargeback"
@@ -29,18 +39,34 @@ module ApplicationHelper
                 _(": About")
               when "ems_cluster"
                 ": #{title_for_clusters}"
+              when "generic_object_definition"
+                _(": Generic Object Definitions")
               when "host"
                 ": #{title_for_hosts}"
-
-              # Specific titles for certain layouts
+              when "infra_topology"
+                _(": Infrastructure Topology")
               when "miq_server"
                 _(": Servers")
+              when "monitor_alerts_list"
+                _(": Monitor Alerts")
+              when "monitor_alerts_most_recent"
+                _(": Most Recent Monitor Alerts")
+              when "monitor_alerts_overview"
+                _(": Monitor Alerts Overview")
+              when "network_topology"
+                _(": Network Topology")
+              when "physical_infra_topology"
+                _(": Physical Infrastructure Topology")
+              when "services"
+                _(": Services")
               when "usage"
                 _(": VM Usage")
               when "scan_profile"
                 _(": Analysis Profiles")
               when "miq_policy_rsop"
                 _(": Policy Simulation")
+              when "report"
+                _(": Reports")
               when "rss"
                 _(": RSS")
               when "ops"
@@ -49,8 +75,12 @@ module ApplicationHelper
                 _(": Configuration Management")
               when "pxe"
                 _(": PXE")
+              when "switch"
+                _(": Switches")
               when "explorer"
                 ": #{controller_model_name(params[:controller])} Explorer"
+              when "timeline"
+                _(": Timelines")
               when "vm_cloud"
                 _(": Instances")
               when "vm_infra"
