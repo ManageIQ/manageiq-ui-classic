@@ -35,13 +35,7 @@ class MiqRequestController < ApplicationController
     if !@flash_array.nil? && params[:pressed] == "miq_request_delete"
       javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
     elsif ["miq_request_copy", "miq_request_edit"].include?(params[:pressed])
-      javascript_redirect :controller     => @redirect_controller,
-                          :action         => @refresh_partial,
-                          :id             => @redirect_id,
-                          :prov_type      => @prov_type,
-                          :req_id         => @req_id,
-                          :org_controller => @org_controller,
-                          :prov_id        => @prov_id
+      handle_request_edit_copy_redirect
     elsif params[:pressed].ends_with?("_edit")
       if @refresh_partial == "show_list"
         javascript_redirect :action      => 'show_list',
@@ -382,6 +376,16 @@ class MiqRequestController < ApplicationController
   end
 
   private
+
+  def handle_request_edit_copy_redirect
+    javascript_redirect :controller     => @redirect_controller,
+                        :action         => @refresh_partial,
+                        :id             => @redirect_id,
+                        :prov_type      => @prov_type,
+                        :req_id         => @req_id,
+                        :org_controller => @org_controller,
+                        :prov_id        => @prov_id
+  end
 
   def handle_request_reload
     if @display == "main" && params[:id].present?
