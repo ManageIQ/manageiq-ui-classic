@@ -51,28 +51,7 @@ class MiqRequestController < ApplicationController
         javascript_redirect :action => @refresh_partial, :id => @redirect_id
       end
     elsif params[:pressed] == "miq_request_reload"
-      if @display == "main" && params[:id].present?
-        show
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("request_div", :partial => "miq_request/request")
-          page << javascript_reload_toolbars
-        end
-      elsif @display == "miq_provisions"
-        show
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("gtl_div", :partial => "layouts/gtl")  # Replace the provisioned vms list
-        end
-      else
-        # forcing to refresh the view when reload button is pressed
-        @_params[:refresh] = "y"
-        show_list
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("main_div", :template => "miq_request/show_list")
-        end
-      end
+      handle_request_reload
     else
       if @refresh_partial.nil?
         render :nothing
@@ -402,7 +381,33 @@ class MiqRequestController < ApplicationController
     end
   end
 
-  private ############################
+  private
+
+  def handle_request_reload
+    if @display == "main" && params[:id].present?
+      show
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("request_div", :partial => "miq_request/request")
+        page << javascript_reload_toolbars
+      end
+    elsif @display == "miq_provisions"
+      show
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("gtl_div", :partial => "layouts/gtl")  # Replace the provisioned vms list
+      end
+    else
+      # forcing to refresh the view when reload button is pressed
+      @_params[:refresh] = "y"
+      show_list
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("main_div", :template => "miq_request/show_list")
+      end
+    end
+  end
+
 
   def get_request_tab_type
     case @layout
