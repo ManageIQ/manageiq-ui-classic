@@ -526,10 +526,6 @@ module OpsController::Diagnostics
   end
 
   def pm_get_workers
-    get_workers
-  end
-
-  def get_workers
     @lastaction = "pm_workers_list"
     @force_no_grid_xml = true
     @no_checkboxes = true
