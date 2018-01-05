@@ -24,6 +24,9 @@ class MiqRequestController < ApplicationController
     case params[:pressed]
     when 'miq_request_delete'
       deleterequests
+      if @flash_array.present?
+        javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+      end
     when 'miq_request_edit'
       return if request_edit
     when 'miq_request_copy'
@@ -37,9 +40,7 @@ class MiqRequestController < ApplicationController
       @refresh_div = 'flash_msg_div'
     end
 
-    if !@flash_array.nil? && params[:pressed] == "miq_request_delete"
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-    elsif ["miq_request_copy", "miq_request_edit"].include?(params[:pressed])
+    if ["miq_request_copy", "miq_request_edit"].include?(params[:pressed])
       handle_request_edit_copy_redirect
     elsif params[:pressed].ends_with?("_edit")
       if @refresh_partial == "show_list"
