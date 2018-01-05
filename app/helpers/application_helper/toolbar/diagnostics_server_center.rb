@@ -104,7 +104,9 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
           N_('Select a worker to restart'),
           N_('Restart selected worker'),
           :confirm => N_("Warning: Selected node will be restarted, do you want to continue?"),
-          :klass   => ApplicationHelper::Button::RestartWorkers),
+          :klass   => ApplicationHelper::Button::RefreshWorkers,
+          :enabled => false,
+          :onwhen => "1"),
       ]
     ),
   ])
