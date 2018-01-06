@@ -129,7 +129,7 @@ EOJ
 
   def gtl_show_url(options)
     # only false, nil is true
-    return false if options[:report_data_additional_options][:clickable] == false
+    return false if options.fetch_path(:report_data_additional_options, :clickable) == false
 
     # TODO: the "what happens on nil" logic should probably live here, not in ReportDataController.prototype.initObjects
 
