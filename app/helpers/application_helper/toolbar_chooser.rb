@@ -448,6 +448,7 @@ class ApplicationHelper::ToolbarChooser
                     security_groups storages middleware_deployments middleware_datasources
                     middleware_messagings middleware_servers)
     to_display_center = %w(stack_orchestration_template topology cloud_object_store_objects generic_objects physical_servers)
+    performance_layouts = %w(vm host ems_container)
     if @lastaction == 'show' && (@view || @display != 'main') && !@layout.starts_with?("miq_request")
       if @display == "vms" || @display == "all_vms"
         return "vm_infras_center_tb"
@@ -457,7 +458,7 @@ class ApplicationHelper::ToolbarChooser
         return "vm_clouds_center_tb"
       elsif @display == "miq_templates"
         return "template_infras_center_tb"
-      elsif (@layout == "vm" || @layout == "host") && @display == "performance"
+      elsif performance_layouts.include?(@layout) && @display == "performance"
         return "#{@explorer ? "x_" : ""}vm_performance_tb"
       elsif @display == "dashboard"
         return "#{@layout}_center_tb"
