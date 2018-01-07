@@ -8,6 +8,7 @@ class ContainerProjectController < ApplicationController
   after_action :set_session_data
 
   def show_list
+    @showtype = "main"
     process_show_list(:named_scope => :active)
   end
 
