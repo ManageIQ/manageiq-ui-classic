@@ -15,7 +15,12 @@
                     "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class    => "selectpicker")
       :javascript
         miqInitSelectPicker();
-        miqSelectPickerEvent("cbshow_typ", "#{url}")
+        miqSelectPickerEvent("cbshow_typ", "#{url}", {callback: function() {
+          if ($('#cbshow_typ').val() == "container_image-labels") {
+            // trigger dropdown change for when container_image-labels is picked so that the default image will be loaded to the view.
+            $("#cblabel_key").trigger('change');
+          }
+        }});
     - if !@edit[:new][:cbshow_typ].blank? && @edit[:new][:cbshow_typ].ends_with?("-tags")
       .form-group
         %label.col-md-2.control-label
@@ -32,8 +37,9 @@
         %label.col-md-2.control-label
           = _('Image Labels')
         .col-md-8
+          - default_options = Array(@edit[:cb_assign][:docker_label_default_keys].invert).sort_by { |a| a.first.downcase }
           - options = Array(@edit[:cb_assign][:docker_label_keys].invert).sort_by { |a| a.first.downcase }
-          = select_tag("cblabel_key", options_for_select([["<#{_('Choose a Label')}>", ""]] + options, @edit[:new][:cblabel_key].to_s),
+          = select_tag("cblabel_key", options_for_select(default_options  + options, @edit[:new][:cblabel_key].to_s),
                       "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class    => "selectpicker")
         :javascript
           miqInitSelectPicker();
