@@ -8,7 +8,7 @@ module Mixins
       obj
     end
 
-    def show_association(action, display_name, listicon, method, klass, association = nil, conditions = nil)
+    def show_association(action, display_name, listicon, method, klass, association = nil, scopes = nil)
       params[:display] = klass.name
       # Ajax request means in explorer, or if current explorer is one of the explorer controllers
       @explorer = true if request.xml_http_request? && explorer_controller?
@@ -39,7 +39,7 @@ module Mixins
                         :url  => "/#{controller_name}/#{action}/#{@record.id}")
         @listicon = listicon
 
-        show_details(klass, :association => association, :conditions => conditions)
+        show_details(klass, :association => association, :scopes => scopes)
       end
     end
 
@@ -189,18 +189,17 @@ module Mixins
     # Build the vm detail gtl view
     def show_details(db, options = {})  # Pass in the db, parent vm is in @vm
       association = options[:association]
-      conditions  = options[:conditions]
+      scopes = options[:scopes]
       # generate the grid/tile/list url to come back here when gtl buttons are pressed
       @gtl_url       = "/#{@db}/#{@listicon.pluralize}/#{@record.id}?"
       @showtype      = "details"
       @display       = "main"
       @no_checkboxes = @no_checkboxes.nil? || @no_checkboxes
       @showlinks     = true
-
       @view, @pages = get_view(db,
                                :parent      => @record,
                                :association => association,
-                               :conditions  => conditions,
+                               :named_scope => scopes,
                                :dbname      => "#{@db}item")  # Get the records into a view & paginator
 
       if @explorer # In explorer?

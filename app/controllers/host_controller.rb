@@ -46,61 +46,48 @@ class HostController < ApplicationController
   alias display_storage_adapters display_tree_resources
 
   def filesystems_subsets
-    condition = nil
+    scope = nil
     label     = _('Files')
 
     host_service_group = HostServiceGroup.where(:id => params['host_service_group']).first
     if host_service_group
-      condition = host_service_group.host_service_group_filesystems_condition
+      scope = [[:host_service_group_filesystems, host_service_group.id]]
       label     = _("Configuration files of nova service")
     end
 
-    # HACK: UI get_view can't do arel relations, so I need to expose conditions
-    condition = condition.to_sql if condition
-
-    return label, condition
+    return label, scope
   end
 
   def filesystems
-    label, condition = filesystems_subsets
-    show_association('filesystems', label, 'filesystems', :filesystems, Filesystem, nil, condition)
+    label, scope = filesystems_subsets
+    show_association('filesystems', label, 'filesystems', :filesystems, Filesystem, nil, scope)
   end
 
   def host_services_subsets
-    condition = nil
+    scope = nil
     label     = _('Services')
 
     host_service_group = HostServiceGroup.where(:id => params['host_service_group']).first
     if host_service_group
       case params[:status]
       when 'running'
-        condition = host_service_group.running_system_services_condition
-        label     = _("Running system services of %{name}") % {:name => host_service_group.name}
+        scope = [[:host_service_group_running_systemd, host_service_group.id]]
+        label = _("Running system services of %{name}") % {:name => host_service_group.name}
       when 'failed'
-        condition =  host_service_group.failed_system_services_condition
-        label     = _("Failed system services of %{name}") % {:name => host_service_group.name}
+        scope = [[:host_service_group_failed_systemd, host_service_group.id]]
+        label = _("Failed system services of %{name}") % {:name => host_service_group.name}
       when 'all'
-        condition = nil
-        label     = _("All system services of %{name}") % {:name => host_service_group.name}
-      end
-
-      if condition
-        # Amend the condition with the openstack host service foreign key
-        condition = condition.and(host_service_group.host_service_group_system_services_condition)
-      else
-        condition = host_service_group.host_service_group_system_services_condition
+        scope = [[:host_service_group_systemd, host_service_group.id]]
+        label = _("All system services of %{name}") % {:name => host_service_group.name}
       end
     end
 
-    # HACK: UI get_view can't do arel relations, so I need to expose conditions
-    condition = condition.to_sql if condition
-
-    return label, condition
+    return label, scope
   end
 
   def host_services
-    label, condition = host_services_subsets
-    show_association('host_services', label, 'service', :host_services, SystemService, nil, condition)
+    label, scope = host_services_subsets
+    show_association('host_services', label, 'service', :host_services, SystemService, nil, scope)
     session[:host_display] = "host_services"
   end
 
