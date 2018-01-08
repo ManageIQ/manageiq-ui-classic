@@ -7,6 +7,7 @@ class AuthKeyPairCloudController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericButtonMixin
 
   def self.display_methods
     %w(instances)
@@ -28,27 +29,14 @@ class AuthKeyPairCloudController < ApplicationController
     ManageIQ::Providers::CloudManager::AuthKeyPair
   end
 
-  # handle buttons pressed on the button bar
-  def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
-    return tag("ManageIQ::Providers::CloudManager::AuthKeyPair") if params[:pressed] == 'auth_key_pair_cloud_tag'
-    delete_auth_key_pairs if params[:pressed] == 'auth_key_pair_cloud_delete'
-    new if params[:pressed] == 'auth_key_pair_cloud_new'
-
-    if single_delete_test
-      single_delete_redirect
-    elsif params[:pressed] == "auth_key_pair_cloud_new"
-      if @flash_array
-        show_list
-        replace_gtl_main_div
-      else
-        javascript_redirect :action => "new"
-      end
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    else
-      render_flash
+  def specific_buttons(pressed)
+    case pressed
+    when 'auth_key_pair_cloud_delete'
+      delete_auth_key_pairs
+      false
+    when 'auth_key_pair_cloud_new'
+      javascript_redirect :action => 'new'
+      true
     end
   end
 
@@ -87,10 +75,7 @@ class AuthKeyPairCloudController < ApplicationController
     set_form_vars
     @in_a_form = true
     session[:changed] = nil
-    drop_breadcrumb(
-      :name => _("Add New Key Pair"),
-      :url  => "/auth_key_pair_cloud/new"
-    )
+    drop_breadcrumb(:name => _("Add New Key Pair"), :url => "/auth_key_pair_cloud/new")
   end
 
   def create
@@ -200,8 +185,6 @@ class AuthKeyPairCloudController < ApplicationController
   end
 
   def process_deletions(key_pairs)
-    return if key_pairs.empty?
-
     ManageIQ::Providers::CloudManager::AuthKeyPair.where(:id => key_pairs).order('lower(name)').each do |kp|
       audit = {
         :event        => "auth_key_pair_cloud_record_delete_initiateed",
