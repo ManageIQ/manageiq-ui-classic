@@ -1341,7 +1341,7 @@ describe ReportController do
     end
   end
 
-  describe "#reports_menu_in_sb" do
+  describe "#populate_reports_menu" do
     let(:user) { FactoryGirl.create(:user_with_group) }
     subject! { FactoryGirl.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group) }
 

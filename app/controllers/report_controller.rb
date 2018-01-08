@@ -132,7 +132,7 @@ class ReportController < ApplicationController
       return
     end
 
-    reports_menu_in_sb
+    populate_reports_menu("reports", "default")
     build_accordions_and_trees
 
     self.x_active_tree = x_last_active_tree if x_last_active_tree
@@ -637,11 +637,6 @@ class ReportController < ApplicationController
     add_nodes = {:key => existing_node, :nodes => tree_add_child_nodes(existing_node)} if existing_node
     self.x_node = params[:id]
     add_nodes
-  end
-
-  def reports_menu_in_sb
-    @sb[:rpt_menu]  = populate_reports_menu("reports", "default")
-    @sb[:grp_title] = reports_group_title
   end
 
   def replace_right_cell(options = {})  # :replace_trees key can be an array of tree symbols to be replaced
