@@ -214,11 +214,7 @@ module OpsController::Settings::Schedules
             _("The selected Schedules were disabled")
           end
     schedules = find_records_with_rbac(MiqSchedule, checked_or_params)
-    if schedules.empty?
-      add_flash(msg, :error)
-      javascript_flash
-    end
-    schedule_enable_disable(schedules, enable)  unless schedules.empty?
+    schedule_enable_disable(schedules, enable)
     add_flash(msg, :info, true) unless flash_errors?
     schedule_build_list
     settings_get_info("st")

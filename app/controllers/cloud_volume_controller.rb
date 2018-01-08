@@ -337,9 +337,6 @@ class CloudVolumeController < ApplicationController
   def delete_volumes
     assert_privileges("cloud_volume_delete")
     volumes = find_records_with_rbac(CloudVolume, checked_or_params)
-    if volumes.empty?
-      add_flash(_("No Cloud Volumes were selected for deletion."), :error)
-    end
 
     volumes_to_delete = []
     volumes.each do |volume|
