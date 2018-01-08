@@ -110,7 +110,6 @@ class PlanningController < ApplicationController
            (@sb[:vm_opts][:vcpus] && @sb[:options][:trend_vcpus]) ||
            (@sb[:vm_opts][:memory] && @sb[:options][:trend_memory]) ||
            (@sb[:vm_opts][:storage] && @sb[:options][:trend_storage])
-      add_flash(_("At least one VM Option must be selected"), :error)
       @sb[:options][:trend_cpu] = true if params[:trend_cpu]
       @sb[:options][:trend_vcpus] = true if params[:trend_vcpus]
       @sb[:options][:trend_memory] = true if params[:trend_memory]
