@@ -11,7 +11,7 @@ class ServiceController < ApplicationController
     'service_delete'      => :service_delete,
     'service_edit'        => :service_edit,
     'service_ownership'   => :service_ownership,
-    'service_tag'         => :service_tag_edit,
+    'service_tag'         => :service_tag,
     'service_retire'      => :service_retire,
     'service_retire_now'  => :service_retire_now,
     'service_reconfigure' => :service_reconfigure
@@ -32,10 +32,6 @@ class ServiceController < ApplicationController
     display_options[:display] = @display
     display_options[:display_id] = params[:id]
     custom_buttons(ids, display_options)
-  end
-
-  def x_button
-    generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
   end
 
   def title
@@ -242,12 +238,6 @@ class ServiceController < ApplicationController
     replace_right_cell(:action => 'ownership')
   end
 
-  def service_tag_edit
-    @explorer = true
-    service_tag
-    replace_right_cell(:action => 'tag')
-  end
-
   def service_retire
     @explorer = true
     retirevms
@@ -394,6 +384,7 @@ class ServiceController < ApplicationController
       return
     end
     action, replace_trees = options.values_at(:action, :replace_trees)
+    action = @sb[:action] if action.nil?
     @explorer = true
     partial, action_url, @right_cell_text = set_right_cell_vars(action) if action # Set partial name, action and cell header
     get_node_info(x_node) if !action && !@in_a_form && !params[:display]
