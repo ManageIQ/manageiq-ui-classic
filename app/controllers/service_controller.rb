@@ -7,16 +7,6 @@ class ServiceController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  SERVICE_X_BUTTON_ALLOWED_ACTIONS = {
-    'service_delete'      => :service_delete,
-    'service_edit'        => :service_edit,
-    'service_ownership'   => :service_ownership,
-    'service_tag'         => :service_tag,
-    'service_retire'      => :service_retire,
-    'service_retire_now'  => :service_retire_now,
-    'service_reconfigure' => :service_reconfigure
-  }
-
   def button
     case params[:pressed]
     when 'generic_object_tag'
