@@ -126,7 +126,9 @@
           }
 
           sendDataWithRx({toolbarEvent: 'itemClicked'});
-          miqToolbarOnClick.bind($event.delegateTarget)($event);
+          miqToolbarOnClick.bind($event.delegateTarget)($event).then(function(data) {
+            sendDataWithRx({type: 'TOOLBAR_CLICK_FINISH', payload: data});
+          });
         };
       })
       .value();
