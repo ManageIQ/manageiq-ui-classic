@@ -2,7 +2,7 @@
   %span.input-group-btn
     %button.btn.btn-primary{:alt => t = _("Add Row"), :title => t, "ng-click" => "vm.addRow(vm.keyType + vm.noOfRows)"}
       {{vm.addRowText}}
-  %table.table.datatable.table-striped.table-bordered
+  %table.table.table-striped.table-bordered.dataTable
     %thead
       %tr
         %th{"ng-repeat" => "header in vm.tableHeaders track by $index"}{{header}}
@@ -52,7 +52,7 @@
                               "ng-model"    => "vm.values[$index]",
                               "ng-change"   => "vm.tableCellValueChanged()",
                               "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
-        %td{:align => "center", :style => "width: 50px"}
-          %span.input-group-btn
+        %td.table-view-pf-actions
+          .table-view-pf-btn
             .btn.btn-default{:alt => t = _("Delete Row"), :title => t, "ng-click" => "vm.deleteRow($index)"}
-              %i.fa.fa-minus
+              = _("Delete")
