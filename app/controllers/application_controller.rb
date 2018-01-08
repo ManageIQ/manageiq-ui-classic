@@ -986,6 +986,8 @@ class ApplicationController < ActionController::Base
           folders.push([title[1], reports]) unless folders.include?([title[1], reports])
         end
       end
+
+      rptmenu = rptmenu.concat(group.settings[:report_menus]) if group.settings && group.settings[:report_menus] && mode == "default"
     else
       # Building custom reports array for super_admin/admin roles, it doesnt show up on menu if their menu was set which didnt contain custom folder in it
       temp = []
