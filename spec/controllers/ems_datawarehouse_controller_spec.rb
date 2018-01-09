@@ -83,7 +83,7 @@ describe EmsDatawarehouseController do
           "cred_type"        => "default",
           "name"             => "not_so_much_data",
           "emstype"          => "hawkular_datawarehouse",
-          "default_hostname" => "host_hawkular_updated",
+          "default_hostname" => "hawkular.updated.example.com",
           "default_userid"   => "",
           "default_password" => "MUCH_WOW",
         }
