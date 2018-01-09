@@ -661,7 +661,7 @@ describe EmsInfraController do
         create
         rhevm = ManageIQ::Providers::Redhat::InfraManager.where(:name => "foo_rhevm").first
 
-        updated_metrics_params = { "default_hostname"      => "host_rhevm",
+        updated_metrics_params = { "default_hostname"      => "default.hostname.example.com",
                                    "metrics_hostname"      => "foo_metrics.com",
                                    "metrics_api_port"      => "5672",
                                    "metrics_userid"        => "metrics_foo",

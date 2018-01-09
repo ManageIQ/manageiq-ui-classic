@@ -48,7 +48,7 @@ describe EmsCloudController do
       expect do
         post :create, :params => {
           "button"           => "add",
-          "default_hostname" => "host_openstack",
+          "default_hostname" => "openstack.example.com",
           "name"             => "foo_openstack",
           "emstype"          => "openstack",
           "provider_region"  => "",
@@ -67,7 +67,7 @@ describe EmsCloudController do
         post :update, :params => {
           "id"               => openstack.id,
           "button"           => "save",
-          "default_hostname" => "host_openstack_updated",
+          "default_hostname" => "openstack.example.com",
           "name"             => "foo_openstack",
           "emstype"          => "openstack",
           "provider_region"  => "",
@@ -142,7 +142,7 @@ describe EmsCloudController do
     it 'gets the ems cloud form fields on a get' do
       post :create, :params => {
         "button"           => "add",
-        "default_hostname" => "host_openstack",
+        "default_hostname" => "openstack.example.com",
         "name"             => "foo_openstack",
         "emstype"          => "openstack",
         "provider_region"  => "",
@@ -162,7 +162,7 @@ describe EmsCloudController do
     let(:openstack_form_params) do
       {
         "button"                 => "add",
-        "default_hostname"       => "host_openstack",
+        "default_hostname"       => "openstack.example.com",
         "name"                   => "foo_openstack",
         "emstype"                => "openstack",
         "tenant_mapping_enabled" => "on",
@@ -202,7 +202,7 @@ describe EmsCloudController do
     it 'strips whitespace from name, hostname and api_port form fields on create' do
       post :create, :params => {
         "button"           => "add",
-        "default_hostname" => "  host_openstack     ",
+        "default_hostname" => "openstack.example.com",
         "name"             => "  foo_openstack     ",
         "emstype"          => "openstack",
         "provider_region"  => "",
@@ -211,9 +211,8 @@ describe EmsCloudController do
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
       }
-
       expect(response.status).to eq(200)
-      expect(ManageIQ::Providers::Openstack::CloudManager.with_hostname('host_openstack')
+      expect(ManageIQ::Providers::Openstack::CloudManager.with_hostname('openstack.example.com')
                                                          .with_port('5000')
                                                          .where(:name => 'foo_openstack')
                                                          .count).to eq(1)
@@ -231,7 +230,7 @@ describe EmsCloudController do
       session[:settings] = {:views => {:vm_summary_cool => ""}}
       post :create, :params => {
         "button"           => "add",
-        "default_hostname" => "host_openstack",
+        "default_hostname" => "openstack.example.com",
         "name"             => "foo_openstack",
         "emstype"          => "openstack",
         "provider_region"  => "",
@@ -500,7 +499,7 @@ describe EmsCloudController do
     it "creates ceilometer endpoint and on update to AMQP deletes ceilometer endpoint" do
       post :create, :params => {
         "button"                    => "add",
-        "default_hostname"          => "default_hostname",
+        "default_hostname"          => "openstack.default.example.com",
         "default_userid"            => "",
         "default_password"          => "",
         "name"                      => "openstack_cloud",
@@ -525,7 +524,7 @@ describe EmsCloudController do
       post :update, :params => {
         "id"                        => ems_openstack.id,
         "button"                    => "save",
-        "default_hostname"          => "default_hostname",
+        "default_hostname"          => "openstack.default.example.com",
         "default_userid"            => "",
         "default_password"          => "",
         "name"                      => "openstack_cloud",
@@ -535,7 +534,7 @@ describe EmsCloudController do
         "default_api_port"          => "5000",
         "default_security_protocol" => "ssl-with-validation",
         "event_stream_selection"    => "amqp",
-        "amqp_hostname"             => "amqp_hostname",
+        "amqp_hostname"             => "amqp.example.com",
         "amqp_api_port"             => "5672",
         "amqp_security_protocol"    => "ssl",
         "amqp_userid"               => "",
@@ -550,7 +549,7 @@ describe EmsCloudController do
     it "restarts event monitor worker on endpoints or credentials change" do
       post :create, :params => {
         "button"                    => "add",
-        "default_hostname"          => "default_hostname",
+        "default_hostname"          => "openstack.default.example.com",
         "default_userid"            => "",
         "default_password"          => "",
         "name"                      => "openstack_cloud",
@@ -571,7 +570,7 @@ describe EmsCloudController do
       post :update, :params => {
         "id"                        => ems_openstack.id,
         "button"                    => "save",
-        "default_hostname"          => "default_hostname",
+        "default_hostname"          => "openstack.default.example.com",
         "default_userid"            => "",
         "default_password"          => "",
         "name"                      => "openstack_cloud",
@@ -581,7 +580,7 @@ describe EmsCloudController do
         "default_api_port"          => "5000",
         "default_security_protocol" => "ssl-with-validation",
         "event_stream_selection"    => "amqp",
-        "amqp_hostname"             => "amqp_hostname",
+        "amqp_hostname"             => "amqp.example.com",
         "amqp_api_port"             => "5672",
         "amqp_security_protocol"    => "ssl",
         "amqp_userid"               => "",
@@ -598,7 +597,7 @@ describe EmsCloudController do
       post :update, :params => {
         "id"                        => ems_openstack.id,
         "button"                    => "save",
-        "default_hostname"          => "default_hostname_changed",
+        "default_hostname"          => "openstack.default.changed.example.com",
         "default_userid"            => "changed",
         "default_password"          => "changed",
         "name"                      => "openstack_cloud",
@@ -608,7 +607,7 @@ describe EmsCloudController do
         "default_api_port"          => "5000",
         "default_security_protocol" => "ssl-with-validation",
         "event_stream_selection"    => "amqp",
-        "amqp_hostname"             => "amqp_hostname_changed",
+        "amqp_hostname"             => "amqp.changed.example.com",
         "amqp_api_port"             => "5672",
         "amqp_security_protocol"    => "ssl",
         "amqp_userid"               => "changed",
@@ -623,7 +622,7 @@ describe EmsCloudController do
       post :update, :params => {
         "id"                        => ems_openstack.id,
         "button"                    => "save",
-        "default_hostname"          => "default_hostname_changed",
+        "default_hostname"          => "openstack.default.changed.example.com",
         "default_userid"            => "changed",
         "default_password"          => "changed",
         "name"                      => "openstack_cloud",
