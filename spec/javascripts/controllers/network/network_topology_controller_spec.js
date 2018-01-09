@@ -24,21 +24,21 @@ describe('networkTopologyController', function() {
 
     describe('data loads successfully', function() {
       it('in all main objects', function() {
-        expect(scope.items).toBeDefined();
-        expect(scope.relations).toBeDefined();
-        expect(scope.kinds).toBeDefined();
+        expect($controller.items).toBeDefined();
+        expect($controller.relations).toBeDefined();
+        expect($controller.kinds).toBeDefined();
       });
     });
 
     describe('kinds contain all expected kinds', function() {
       it('in all main objects', function() {
-        expect(Object.keys(scope.kinds).length).toBeGreaterThan(7);
-        expect(scope.kinds["CloudSubnet"]).toBeDefined();
-        expect(scope.kinds["NetworkRouter"]).toBeDefined();
-        expect(scope.kinds["FloatingIp"]).toBeDefined();
-        expect(scope.kinds["Vm"]).toBeDefined();
-        expect(scope.kinds["SecurityGroup"]).toBeDefined();
-        expect(scope.kinds["CloudTenant"]).toBeDefined();
+        expect(Object.keys($controller.kinds).length).toBeGreaterThan(7);
+        expect($controller.kinds["CloudSubnet"]).toBeDefined();
+        expect($controller.kinds["NetworkRouter"]).toBeDefined();
+        expect($controller.kinds["FloatingIp"]).toBeDefined();
+        expect($controller.kinds["Vm"]).toBeDefined();
+        expect($controller.kinds["SecurityGroup"]).toBeDefined();
+        expect($controller.kinds["CloudTenant"]).toBeDefined();
       });
     });
 
