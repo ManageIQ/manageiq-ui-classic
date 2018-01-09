@@ -520,6 +520,9 @@ module Mixins
           :verify_ssl            => params[:default_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
           :certificate_authority => params[:default_tls_ca_certs],
         }
+      end
+
+      if ems.kind_of?(ManageIQ::Providers::Redhat::InfraManager) && metrics_database_name
         metrics_endpoint = { :role     => :metrics,
                              :hostname => metrics_hostname,
                              :port     => metrics_port,
