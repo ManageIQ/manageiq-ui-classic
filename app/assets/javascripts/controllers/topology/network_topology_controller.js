@@ -15,7 +15,7 @@ function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyServic
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
     if (event.name === 'refreshTopology') {
-      $scope.refresh();
+      vm.refresh();
     }
   });
 
