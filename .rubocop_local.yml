@@ -6,8 +6,3 @@ GlobalVars:
   - $miq_ae_logger
   - $policy_log
   - $rails_log
-#
-# Special Exclusions
-#
-AllCops:
-  TargetRubyVersion: 2.2
