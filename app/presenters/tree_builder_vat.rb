@@ -38,20 +38,20 @@ class TreeBuilderVat < TreeBuilderDatacenter
     objects = count_only ? 0 : []
 
     if parent.name == "Datacenters"
-      objects = count_only_or_many_objects(count_only, parent.folders_only, parent.datacenters_only, "name")
+      objects = count_only_or_many_objects(count_only, Rbac.filtered(parent.folders_only), Rbac.filtered(parent.datacenters_only), "name")
     elsif parent.name == "host" && parent.parent.kind_of?(Datacenter)
       unless @vat
-        objects = count_only_or_many_objects(count_only, parent.folders_only, parent.clusters, parent.hosts, "name")
+        objects = count_only_or_many_objects(count_only, Rbac.filtered(parent.folders_only), Rbac.filtered(parent.clusters), Rbac.filtered(parent.hosts), "name")
       end
     elsif parent.name == "datastore" && parent.parent.kind_of?(Datacenter)
       # Skip showing the datastore folder and sub-folders
     elsif parent.name == "vm" && parent.parent.kind_of?(Datacenter)
       if @vat
-        objects = count_only_or_many_objects(count_only, parent.folders_only, parent.vms, "name")
+        objects = count_only_or_many_objects(count_only, Rbac.filtered(parent.folders_only), Rbac.filtered(parent.vms), "name")
       end
     else
-      objects = count_only_or_many_objects(count_only, parent.folders_only, parent.datacenters_only,
-                                           parent.clusters, parent.hosts, parent.vms, "name")
+      objects = count_only_or_many_objects(count_only, Rbac.filtered(parent.folders_only), Rbac.filtered(parent.datacenters_only),
+                                           Rbac.filtered(parent.clusters), Rbac.filtered(parent.hosts), Rbac.filtered(parent.vms), "name")
     end
     objects
   end
