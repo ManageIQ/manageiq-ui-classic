@@ -202,6 +202,12 @@
   ReportDataController.prototype.onItemClicked = function(item, event) {
     event.stopPropagation();
     event.preventDefault();
+
+    // clicks just outside the checkbox
+    if ($(event.target).is('.is-checkbox-cell')) {
+      return false;
+    }
+
     if (this.initObject.showUrl) {
       var prefix = this.initObject.showUrl;
       var splitUrl = this.initObject.showUrl.split('/');
