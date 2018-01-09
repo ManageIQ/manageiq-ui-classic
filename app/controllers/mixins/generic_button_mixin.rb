@@ -35,6 +35,8 @@ module Mixins
       when 'network_port_tag'                 then tag(NetworkPort)
       when 'network_router_tag'               then tag(NetworkRouter)
       when 'security_group_tag'               then tag(SecurityGroup)
+      when 'host_tag'                         then tag(Host)
+      when 'rp_tag'                           then tag(ResourcePool)
       end
 
       @flash_array.nil? ? :finished : :continue
@@ -42,7 +44,8 @@ module Mixins
 
     def button
       @edit = session[:edit] # Restore @edit for adv search box
-      params[:display] = @display if %w(vms images instances).include?(@display)
+      # FIXME: can the line below be replaced with a test agains display_message?
+      params[:display] = @display if %w(all_vms vms images instances hosts resource_pools).include?(@display)
       params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
       if params[:pressed] == "custom_button"

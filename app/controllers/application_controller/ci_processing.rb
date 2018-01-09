@@ -22,6 +22,7 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::HostActions::Discover
     include Mixins::Actions::HostActions::Power
     include Mixins::Actions::HostActions::Misc
+    include Mixins::Actions::HostActions::General
 
     include Mixins::Actions::ProviderActions::MassTransform
 
