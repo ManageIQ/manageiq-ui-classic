@@ -1389,82 +1389,6 @@ Rails.application.routes.draw do
                save_post
     },
 
-    :ems_middleware            => {
-      :get  => %w(
-        download_data
-        download_summary_pdf
-        ems_middleware_form_fields
-        show_list
-        tagging_edit
-        tag_edit_form_field_changed
-      ) +
-               compare_get,
-      :post => %w(
-        button
-        create
-        dynamic_checkbox_refresh
-        form_field_changed
-        listnav_search_selected
-        quick_search
-        sections_field_changed
-        show
-        show_list
-        tl_chooser
-        update
-        wait_for_task
-        tagging_edit
-        tag_edit_form_field_changed
-      ) +
-               adv_search_post +
-               compare_post +
-               exp_post +
-               save_post
-    },
-
-    :middleware_server            => {
-      :get  => %w(
-        download_data
-        download_summary_pdf
-        edit
-        index
-        new
-        perf_top_chart
-        show
-        show_list
-        tagging_edit
-        tag_edit_form_field_changed
-        dr_download
-        dr_report_download
-        protect
-      ) +
-               compare_get,
-      :post => %w(
-        button
-        create
-        dynamic_checkbox_refresh
-        form_field_changed
-        listnav_search_selected
-        perf_chart_chooser
-        quick_search
-        run_operation
-        sections_field_changed
-        show
-        show_list
-        tl_chooser
-        update
-        wait_for_task
-        tagging_edit
-        tag_edit_form_field_changed
-        dr_delete
-        protect
-      ) +
-               adv_search_post +
-               compare_post +
-               exp_post +
-               policy_post +
-               save_post
-    },
-
     :ems_network              => {
       :get  => %w(
         dialog_load
@@ -3239,7 +3163,7 @@ Rails.application.routes.draw do
   controller_routes.each do |controller_name, controller_actions|
     # Default route with no action to controller's index action
     unless [
-      :ems_cloud, :ems_infra, :ems_physical_infra, :ems_container, :ems_middleware, :ems_network
+      :ems_cloud, :ems_infra, :ems_physical_infra, :ems_container, :ems_network
     ].include?(controller_name)
       match controller_name.to_s, :controller => controller_name, :action => :index, :via => :get
     end
@@ -3281,6 +3205,5 @@ Rails.application.routes.draw do
   resources :ems_infra,          :as => :ems_infras
   resources :ems_physical_infra, :as => :ems_physical_infras
   resources :ems_container,      :as => :ems_containers
-  resources :ems_middleware,     :as => :ems_middlewares
   resources :ems_network,        :as => :ems_networks
 end

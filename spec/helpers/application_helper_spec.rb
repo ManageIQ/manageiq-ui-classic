@@ -1280,17 +1280,6 @@ describe ApplicationHelper do
         expect(helper.multiple_relationship_link(ems, "container_project")).to eq("<li><a title=\"Show Projects\" href=\"/ems_container/#{ems.id}?display=container_projects\">Projects (1)</a></li>")
       end
     end
-
-    context "When record is a Middleware Provider" do
-      it "Routes to the controller's show action" do
-        stub_user(:features => :all)
-        allow(helper).to receive_messages(:controller_name => "ems_middleware")
-        ems = FactoryGirl.create(:ems_hawkular)
-        FactoryGirl.create(:hawkular_middleware_datasource, :ext_management_system => ems, :name => "Test Middleware")
-        expect(helper.multiple_relationship_link(ems, "middleware_datasource")).to eq("<li><a title=\"Show Middleware \
-Datasources\" href=\"/ems_middleware/#{ems.id}?display=middleware_datasources\">Middleware Datasources (1)</a></li>")
-      end
-    end
   end
 
   describe "#model_to_report_data" do

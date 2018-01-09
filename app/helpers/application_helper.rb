@@ -341,9 +341,6 @@ module ApplicationHelper
       if controller == "ems_container" && action == "show"
         return ems_containers_path
       end
-      if controller == "ems_middleware" && action == "show"
-        return ems_middlewares_path
-      end
       if controller == "ems_network" && action == "show"
         return ems_networks_path
       end
@@ -880,7 +877,6 @@ module ApplicationHelper
        ems_cluster
        ems_container
        ems_infra
-       ems_middleware
        ems_network
        ems_physical_infra
        ems_storage
@@ -890,7 +886,6 @@ module ApplicationHelper
        host
        host_aggregate
        load_balancer
-       middleware_server
        miq_template
        network_port
        network_router
@@ -1328,7 +1323,6 @@ module ApplicationHelper
                         ems_container
                         ems_infra
                         ems_infra_dashboard
-                        ems_middleware
                         ems_network
                         ems_physical_infra
                         ems_storage
@@ -1343,7 +1337,6 @@ module ApplicationHelper
                         load_balancer
                         manageiq/providers/embedded_ansible/automation_manager/playbook
                         manageiq/providers/embedded_automation_manager/authentication
-                        middleware_server
                         miq_schedule
                         miq_template
                         monitor_alerts_overview
@@ -1428,7 +1421,6 @@ module ApplicationHelper
           ems_cluster
           ems_container
           ems_infra
-          ems_middleware
           ems_network
           ems_physical_infra
           ems_storage
@@ -1437,7 +1429,6 @@ module ApplicationHelper
           generic_object_definition
           host
           load_balancer
-          middleware_server
           miq_template
           network_port
           network_router
@@ -1493,7 +1484,6 @@ module ApplicationHelper
              ems_cluster
              ems_container
              ems_infra
-             ems_middleware
              ems_network
              ems_physical_infra
              ems_storage
@@ -1503,7 +1493,6 @@ module ApplicationHelper
              host
              host_aggregate
              load_balancer
-             middleware_server
              miq_schedule
              miq_template
              network_port

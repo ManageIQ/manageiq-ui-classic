@@ -161,8 +161,6 @@ module Mixins
         [user, params[:default_password], endpoint_opts]
       when 'ManageIQ::Providers::Lenovo::PhysicalInfraManager'
         [user, password, params[:default_hostname], params[:default_api_port], "token", false, true]
-      when 'ManageIQ::Providers::Hawkular::MiddlewareManager'
-        [params[:default_hostname], params[:default_api_port], user, params[:default_password], params[:default_security_protocol], params[:default_tls_ca_certs], true]
       end
     end
 
@@ -423,19 +421,6 @@ module Mixins
                          :provider_options                    => provider_options,
                          :alerts_selection                    => retrieve_alerts_selection}
       end
-
-      if controller_name == "ems_middleware"
-        render :json => {:name                      => @ems.name,
-                         :emstype                   => @ems.emstype,
-                         :zone                      => zone,
-                         :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
-                         :default_api_port          => @ems.connection_configurations.default.endpoint.port,
-                         :default_userid            => @ems.authentication_userid.to_s,
-                         :default_security_protocol => default_security_protocol,
-                         :default_tls_ca_certs      => default_tls_ca_certs,
-                         :ems_controller            => controller_name,
-                         :default_auth_status       => default_auth_status}
-      end
     end
 
     private ############################
@@ -449,7 +434,6 @@ module Mixins
     def security_protocol_default
       case controller_name
       when "ems_container" then "ssl-with-validation"
-      when "ems_middleware" then "non-ssl"
       else "ssl"
       end
     end
@@ -571,11 +555,6 @@ module Mixins
           prometheus_alerts_endpoint = {:role => :prometheus_alerts, :hostname => prometheus_alerts_hostname, :port => prometheus_alerts_api_port}
           prometheus_alerts_endpoint.merge!(endpoint_security_options(prometheus_alerts_security_protocol, prometheus_alerts_tls_ca_certs))
         end
-      end
-
-      if ems.kind_of?(ManageIQ::Providers::MiddlewareManager)
-        default_endpoint = {:role => :default, :hostname => hostname, :port => port}
-        default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
       end
 
       if ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
