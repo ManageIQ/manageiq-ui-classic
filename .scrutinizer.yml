@@ -1,4 +1,6 @@
 build:
   dependencies:
     before:
-      - source tools/ci/scrutinizer_before_install.sh
+      -
+        command: source tools/ci/scrutinizer_before_install.sh
+        idle_timeout: 600
