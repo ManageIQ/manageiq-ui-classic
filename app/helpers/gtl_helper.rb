@@ -128,8 +128,11 @@ EOJ
   end
 
   def gtl_show_url(options)
-    # only false, nil is true
-    return false if options.fetch_path(:report_data_additional_options, :clickable) == false
+    # FIXME fetch_path doesn't work on structs in a hash
+    if options[:report_data_additional_options].present?
+      # only false, nil is true
+      return false if options[:report_data_additional_options].clickable == false
+    end
 
     # TODO: the "what happens on nil" logic should probably live here, not in ReportDataController.prototype.initObjects
 
