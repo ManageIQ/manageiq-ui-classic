@@ -4,6 +4,7 @@ class EmsClusterController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericButtonMixin
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
   include Mixins::GenericShowMixin
@@ -17,75 +18,26 @@ class EmsClusterController < ApplicationController
     %w(descendant_vms all_vms miq_templates vms hosts resource_pools config_info storage)
   end
 
-  # handle buttons pressed on the button bar
-  def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    params[:display] = @display if ["all_vms", "vms", "hosts", "resource_pools"].include?(@display)  # Were we displaying sub-items
-
-    if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
-                                     "miq_template_",
-                                     "guest_",
-                                     "host_",
-                                     "rp_")
-
-      scanhosts if params[:pressed] == "host_scan"
-      analyze_check_compliance_hosts if params[:pressed] == "host_analyze_check_compliance"
-      check_compliance_hosts if params[:pressed] == "host_check_compliance"
-      refreshhosts if params[:pressed] == "host_refresh"
-      tag(Host) if params[:pressed] == "host_tag"
-      assign_policies(Host) if params[:pressed] == "host_protect"
-      comparemiq  if params[:pressed] == "host_compare"
-      edit_record  if params[:pressed] == "host_edit"
-      deletehosts if params[:pressed] == "host_delete"
-
-      tag(ResourcePool) if params[:pressed] == "rp_tag"
-
-      pfx = pfx_for_vm_button_pressed(params[:pressed])
-      # Handle Host power buttons
-      if host_power_button?(params[:pressed])
-        handle_host_power_button(params[:pressed])
-      else
-        process_vm_buttons(pfx)
-        return if ["host_tag", "#{pfx}_policy_sim", "host_scan", "host_refresh", "host_protect",
-                   "host_compare", "#{pfx}_compare", "#{pfx}_drift", "#{pfx}_tag", "#{pfx}_retire",
-                   "#{pfx}_protect", "#{pfx}_ownership", "#{pfx}_right_size",
-                   "#{pfx}_reconfigure", "rp_tag"].include?(params[:pressed]) &&
-                  @flash_array.nil?   # Some other screen is showing, so return
-
-        unless ["host_edit", "#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-          @refresh_div = "main_div"
-          @refresh_partial = "layouts/gtl"
-          show
-        end
-      end
-    else
-      @refresh_div = "main_div" # Default div for button.rjs to refresh
-      drift_analysis if params[:pressed] == "common_drift"
-      tag(EmsCluster) if params[:pressed] == "ems_cluster_tag"
-      scanclusters if params[:pressed] == "ems_cluster_scan"
-      comparemiq if params[:pressed] == "ems_cluster_compare"
-      deleteclusters if params[:pressed] == "ems_cluster_delete"
-      assign_policies(EmsCluster) if params[:pressed] == "ems_cluster_protect"
-      custom_buttons if params[:pressed] == "custom_button"
+  def specific_buttons(pressed)
+    case pressed
+    when 'common_drift'
+      drift_analysis
+      return @flash_array.nil?
+    #tag(EmsCluster) if params[:pressed] == "ems_cluster_tag"
+    when 'ems_cluster_scan'
+      scanclusters
+    when 'ems_cluster_compare'
+      comparemiq
+      return @flash_array.nil?
+    when 'ems_cluster_delete'
+      deleteclusters
+    when 'ems_cluster_protect'
+      assign_policies(EmsCluster)
+      return @flash_array.nil?
+    else # we also want to handle the host buttons
+      return host_buttons(pressed)
     end
-
-    return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
-    return if ["ems_cluster_tag", "ems_cluster_compare", "common_drift", "ems_cluster_protect"].include?(params[:pressed]) && @flash_array.nil?   # Tag screen showing, so return
-
-    check_if_button_is_implemented
-
-    if single_delete_test
-      single_delete_redirect
-    elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
-                                                   "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-      render_or_redirect_partial(pfx)
-    else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
-    end
+    false
   end
 
   private
