@@ -58,7 +58,8 @@ class PlanningController < ApplicationController
       filter_typ = params[:filter_typ] == "<Choose>" ? nil : params[:filter_typ]
 
       @sb[:options][:filter_typ] = filter_typ
-      @sb[:vms] = wizard_get_vms('all', nil) if filter_typ == 'all'
+      @sb[:vms] = filter_typ == 'all' ? wizard_get_vms('all', nil) : nil
+      @sb[:options][:filter_value] = @sb[:options][:chosen_vm] = nil
     end
 
     if params[:filter_value].present?
