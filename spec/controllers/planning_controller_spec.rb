@@ -52,28 +52,40 @@ describe PlanningController do
       expect(sb[:vms]).to eq(@vm1.id.to_s => @vm1.name, @vm3.id.to_s => @vm3.name, @vm4.id.to_s => @vm4.name)
     end
 
-    it 'successfully resets data' do
+    it 'successfully resets data and sets all default options' do
       allow(controller).to receive(:render)
-      controller.instance_variable_set(:@sb, :vms => {}, :options => {})
       controller.send(:reset)
-      sb = controller.instance_variable_get(:@sb)
       sb_result = {
-        :options    => {
-          :time_profile      => nil,
-          :time_profile_tz   => nil,
-          :time_profile_days => nil,
-          :tz                => nil
-        },
-        :emss       => {},
         :clusters   => {},
+        :datastores => {},
+        :emss       => {},
         :hosts      => {
           @host1.id.to_s => "Host1",
           @host2.id.to_s => "Host2"
         },
-        :datastores => {},
-        :vm_filters => {}
+        :vm_filters => {},
+        :options    => {
+          :days              => 7,
+          :vm_mode           => :allocated,
+          :trend_cpu         => true,
+          :trend_vcpus       => true,
+          :trend_memory      => true,
+          :trend_storage     => true,
+          :tz                => nil,
+          :values            => {},
+          :time_profile      => nil,
+          :time_profile_tz   => nil,
+          :time_profile_days => nil,
+          :target_typ        => "EmsCluster",
+          :target_filters    => {},
+          :limit_cpu         => 90,
+          :limit_vcpus       => 10,
+          :limit_memory      => 90,
+          :limit_storage     => 90,
+          :display_vms       => 100
+        }
       }
-      expect(sb).to eq(sb_result)
+      expect(assigns(:sb)).to include(sb_result)
     end
   end
 

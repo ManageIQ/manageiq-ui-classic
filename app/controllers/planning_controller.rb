@@ -106,15 +106,6 @@ class PlanningController < ApplicationController
                        params[:time_profile]
 
     @sb[:vm_opts] = VimPerformancePlanning.vm_default_options(@sb[:options][:vm_mode])
-    unless (@sb[:vm_opts][:cpu] && @sb[:options][:trend_cpu]) || # Check that at least one required metric is checked
-           (@sb[:vm_opts][:vcpus] && @sb[:options][:trend_vcpus]) ||
-           (@sb[:vm_opts][:memory] && @sb[:options][:trend_memory]) ||
-           (@sb[:vm_opts][:storage] && @sb[:options][:trend_storage])
-      @sb[:options][:trend_cpu] = true if params[:trend_cpu]
-      @sb[:options][:trend_vcpus] = true if params[:trend_vcpus]
-      @sb[:options][:trend_memory] = true if params[:trend_memory]
-      @sb[:options][:trend_storage] = true if params[:trend_storage]
-    end
     if params.key?(:display_vms)
       perf_planning_gen_data
       replace_right_cell
@@ -209,7 +200,7 @@ class PlanningController < ApplicationController
 
   def build_options
     @sb[:options] ||= {}
-    @sb[:options].reverse_merge(
+    @sb[:options].reverse_merge!(
       :days => 7, :vm_mode => :allocated, :trend_cpu => true, :trend_vcpus => true,
       :trend_memory => true, :trend_storage => true, :tz => session[:user_tz], :values => {}
     )
@@ -224,7 +215,7 @@ class PlanningController < ApplicationController
       set_time_profile_vars(selected_time_profile_for_pull_down, @sb[:options])
     end
 
-    @sb[:options].reverse_merge(
+    @sb[:options].reverse_merge!(
       :target_typ => 'EmsCluster',
       :target_filters => MiqSearch.where(:db => @sb[:options][:target_typ]).descriptions,
       :limit_cpu => 90, :limit_vcpus => 10, :limit_memory => 90, :limit_storage => 90,
