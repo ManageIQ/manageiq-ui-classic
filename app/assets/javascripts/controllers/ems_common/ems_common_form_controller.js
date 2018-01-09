@@ -58,7 +58,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       metrics_auth_status: '',
       ssh_keypair_auth_status: '',
       hawkular_auth_status: '',
-      vmware_cloud_api_version: ''
+      vmware_cloud_api_version: '',
+      console_auth_status: true,
     };
     $scope.formId = emsCommonFormId;
     $scope.afterGet = false;
