@@ -274,7 +274,7 @@ module ApplicationController::CiProcessing
 
     # Either a list or coming from a different controller (e.g. from host screen, go to its vms)
     if @lastaction == "show_list" ||
-       !%w(service vm_cloud vm_infra vm miq_template vm_or_template).include?(controller_name)
+       !%w(service vm_cloud vm_infra vm miq_template vm_or_template orchestration_stack).include?(controller_name)
 
       # FIXME: retrieving vms from DB two times
       items = find_checked_ids_with_rbac(klass, task)
