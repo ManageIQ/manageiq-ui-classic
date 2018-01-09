@@ -206,6 +206,14 @@ describe OrchestrationStackController do
         expect(response.status).to eq(200)
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
+
+      it "retires the orchestration stack now when called from the summary page" do
+        record = FactoryGirl.create(:orchestration_stack_cloud)
+        session[:orchestration_stack_lastaction] = 'show'
+        post :button, :params => {:id => record.id, :pressed => "orchestration_stack_retire_now"}
+        expect(response.status).to eq(200)
+        expect(controller.send(:flash_errors?)).not_to be_truthy
+      end
     end
   end
 end

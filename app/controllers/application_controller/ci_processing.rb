@@ -1829,7 +1829,7 @@ module ApplicationController::CiProcessing
     klass = get_rec_cls
     # Either a list or coming from a different controller (eg from host screen, go to its selected_items)
     if @lastaction == "show_list" ||
-       !%w(service vm_cloud vm_infra vm miq_template vm_or_template).include?(
+       !%w(service vm_cloud vm_infra vm miq_template vm_or_template orchestration_stack).include?(
          request.parameters["controller"]) # showing a list
 
       # FIXME retrieving vms from DB two times
