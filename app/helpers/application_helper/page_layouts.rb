@@ -170,7 +170,6 @@ module ApplicationHelper::PageLayouts
       ems_cluster
       ems_container
       ems_infra
-      ems_middleware
       ems_network
       ems_physical_infra
       ems_storage
@@ -180,8 +179,6 @@ module ApplicationHelper::PageLayouts
       host
       host_aggregate
       load_balancer
-      middleware_domain
-      middleware_server
       miq_template
       network_port
       network_router
