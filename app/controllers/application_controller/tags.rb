@@ -5,6 +5,7 @@ module ApplicationController::Tags
   def tagging_edit(db = nil, assert = true)
     assert_privileges("#{controller_for_common_methods}_tag") if assert
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
+    @tagging = session[:tag_db].to_s
     case params[:button]
     when "cancel"
       tagging_edit_tags_cancel
@@ -17,6 +18,7 @@ module ApplicationController::Tags
   end
 
   def service_tag
+    identify_service
     tagging_edit('Service')
   end
 

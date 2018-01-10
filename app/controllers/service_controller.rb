@@ -19,7 +19,8 @@ class ServiceController < ApplicationController
 
   def button
     case params[:pressed]
-    when 'generic_object_tag'
+      when 'generic_object_tag'
+      params[:id] = @sb[:rec_id]
       tag(GenericObject)
     when "custom_button"
       @display == 'generic_objects' ? generic_object_custom_buttons : custom_buttons
@@ -426,12 +427,7 @@ class ServiceController < ApplicationController
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]
       elsif record_showing
         presenter.remove_sand
-        if action
-          cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
-          r[:partial => partial, :locals => {:item_id => @item.id}]
-        else
-          r[:partial => "service/svcs_show", :locals => {:controller => "service"}]
-        end
+        r[:partial => "service/svcs_show", :locals => {:controller => "service"}]
       else
         r[:partial => "layouts/x_gtl"]
       end
