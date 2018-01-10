@@ -181,36 +181,8 @@ module ApplicationController::Performance
     report = @sb[:chart_reports].kind_of?(Array) ? @sb[:chart_reports][chart_click_data.chart_index] : @sb[:chart_reports]
     data_row = report.table.data[chart_click_data.data_index]
     ts = data_row["timestamp"].in_time_zone(@perf_options[:tz]) # Grab the timestamp from the row in selected tz
-    request_displayed, unavailability_reason = case chart_click_data.cmd
-    when "Display"
-      if chart_click_data.model == "Current" && chart_click_data.type == "Top"
-        display_current_top(data_row)
-      elsif chart_click_data.type == "bytag"
-        display_by_tag(chart_click_data, data_row, report, ts, bc_model)
-      else
-        display_selected(chart_click_data, ts, data_row, bc_model)
-      end
-    when "Timeline"
-      if chart_click_data.model == "Current"
-        timeline_current(chart_click_data, ts)
-      elsif chart_click_data.model == "Selected"
-        timeline_selected(chart_click_data, data_row, ts)
-      end
-    when "Chart"
-      if chart_click_data.model == "Current" && chart_click_data.type == "Hourly"
-        chart_current_hourly(ts)
-      elsif chart_click_data.model == "Current" && chart_click_data.type == "Daily"
-        chart_current_daily
-      elsif chart_click_data.model == "Selected"
-        chart_selected(chart_click_data, data_row, ts)
-      elsif chart_click_data.type.starts_with?("top") && @perf_options[:cat]
-        chart_top_by_tag(chart_click_data, data_row, report, ts, bc_model)
-      elsif chart_click_data.type.starts_with?("top")
-        chart_top(chart_click_data, data_row, ts, bc_model)
-      end
-    else
-      [false, _("Chart menu selection not yet implemented")]
-    end
+
+    request_displayed, unavailability_reason = process_chart_action(chart_click_data, data_row, report, ts, bc_model)
 
     if request_displayed
       return
@@ -221,6 +193,59 @@ module ApplicationController::Performance
     end
 
     javascript_flash(:spinner_off => true)
+  end
+
+  def process_chart_action(chart_click_data, data_row, report, ts, bc_model)
+    request_displayed, unavailability_reason =
+    case chart_click_data.cmd
+    when "Display"
+      process_display_click(chart_click_data, data_row, report, ts, bc_model)
+    when "Timeline"
+      process_timeline_click(chart_click_data, data_row, ts)
+    when "Chart"
+      process_chart_click(chart_click_data, data_row, report, ts, bc_model)
+    else
+      [false, _("Chart menu selection not yet implemented")]
+    end
+    [request_displayed, unavailability_reason]
+  end
+
+  def process_display_click(chart_click_data, data_row, report, ts, bc_model)
+    request_displayed, unavailability_reason =
+    if chart_click_data.model == "Current" && chart_click_data.type == "Top"
+      display_current_top(data_row)
+    elsif chart_click_data.type == "bytag"
+      display_by_tag(chart_click_data, data_row, report, ts, bc_model)
+    else
+      display_selected(chart_click_data, ts, data_row, bc_model)
+    end
+    [request_displayed, unavailability_reason]
+  end
+
+  def process_timeline_click(chart_click_data, data_row, ts)
+    request_displayed, unavailability_reason =
+    if chart_click_data.model == "Current"
+      timeline_current(chart_click_data, ts)
+    elsif chart_click_data.model == "Selected"
+      timeline_selected(chart_click_data, data_row, ts)
+    end
+    [request_displayed, unavailability_reason]
+  end
+
+  def process_chart_click(chart_click_data, data_row, report, ts, bc_model)
+    request_displayed, unavailability_reason =
+    if chart_click_data.model == "Current" && chart_click_data.type == "Hourly"
+      chart_current_hourly(ts)
+    elsif chart_click_data.model == "Current" && chart_click_data.type == "Daily"
+      chart_current_daily
+    elsif chart_click_data.model == "Selected"
+      chart_selected(chart_click_data, data_row, ts)
+    elsif chart_click_data.type.starts_with?("top") && @perf_options[:cat]
+      chart_top_by_tag(chart_click_data, data_row, report, ts, bc_model)
+    elsif chart_click_data.type.starts_with?("top")
+      chart_top(chart_click_data, data_row, ts, bc_model)
+    end
+    [request_displayed, unavailability_reason]
   end
 
   # display the CI selected from a Top chart
