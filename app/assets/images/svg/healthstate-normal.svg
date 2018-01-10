@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Creator: CorelDRAW X8 -->
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="149mm" height="199mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-viewBox="0 0 14900 19900"
- xmlns:xlink="http://www.w3.org/1999/xlink">
- <defs>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" height="356.66" viewBox="0 0 356.66 356.66" width="356.66" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" id="svg2" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<defs>
   <style type="text/css">
-   <![CDATA[
-    .str0 {stroke:green;stroke-width:931.25;stroke-linejoin:round}
-    .fil0 {fill:none}
-   ]]>
+    <![CDATA[
+      .str0 {stroke:#008000;stroke-width:32.9877;stroke-miterlimit:4.0}
+      .fil0 {fill:none}
+    ]]>
   </style>
- </defs>
- <g id="Camada_x0020_1">
-  <metadata id="CorelCorpID_0Corel-Layer"/>
-  <g id="_2787316749280">
-   <g id="_8-Check" data-name="8-Check">
-    <circle class="fil0 str0" cx="7521" cy="7826" r="4539"/>
-    <polyline class="fil0 str0" points="5101,7826 6613,9339 9942,6010 "/>
-   </g>
+</defs>
+<g>
+  <g>
+    <path class="fil0 str0" d="M 339.1599,178.3299 C 339.1599,267.138 267.1395,339.1584 178.3314,339.1584 89.5233,339.1584 17.503,267.138 17.503,178.3299 17.503,89.5219 89.5233,17.5015 178.3314,17.5015 267.1395,17.5015 339.1599,89.5219 339.1599,178.3299 Z" />
+    <path class="fil0 str0" d="M 92.5846,178.3299 L 146.1586,231.9394 264.1137,113.9844" />
   </g>
- </g>
+</g>
 </svg>
