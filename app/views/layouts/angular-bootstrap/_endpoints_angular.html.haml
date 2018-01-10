@@ -18,7 +18,7 @@
                             "(emsCommonModel.emstype == 'vmware_cloud' && '#{prefix}' === 'amqp') || " |
                             "emsCommonModel.emstype == 'scvmm' || " +                                  |
                             "emsCommonModel.ems_controller == 'ems_container' || " +                   |
-                            "emsCommonModel.emstype == 'kubevirt' || " +                               |
+                            "emsCommonModel.emstype === 'kubevirt' || " +                              |
                             "emsCommonModel.emstype == 'hawkular'"}                                    |
     %label.col-md-2.control-label{"for" => "#{prefix}_security_protocol"}
       = _('Security Protocol')
@@ -50,7 +50,7 @@
                        "selectpicker-for-select-tag" => "",
                        "prefix"                      => prefix.to_s,
                        "reset-validation-status"     => "#{prefix}_auth_status")
-    .col-md-8{"ng-if" => "emsCommonModel.ems_controller == 'ems_container' || emsCommonModel.emstype == 'kubevirt'"}
+    .col-md-8{"ng-if" => "emsCommonModel.ems_controller == 'ems_container' || emsCommonModel.emstype === 'kubevirt'"}
       = select_tag("#{prefix}_security_protocol",
                        options_for_select([["<#{_('Choose')}>", nil]] + @container_security_protocols, :disabled => ["<#{_('Choose')}>", nil]),
                        "disabled"                    => ng_readonly_ems_container_security_protocol,
@@ -157,7 +157,7 @@
                          "emsCommonModel.emstype == 'openstack_infra'        || " + |
                          "emsCommonModel.emstype == 'nuage_network'          || " + |
                          "emsCommonModel.emstype == 'rhevm'                  || " + |
-                         "emsCommonModel.emstype == 'kubevirt'               || " + |
+                         "emsCommonModel.emstype === 'kubevirt'              || " + |
                          "emsCommonModel.emstype == 'vmware_cloud'           || " + |
                          "emsCommonModel.emstype == 'hawkular'               || " + |
                          "emsCommonModel.emstype == 'lenovo_ph_infra'        || " + |
@@ -227,7 +227,7 @@
 %div{"ng-if" => defined?(tls_ca_certs_hide) ? false : true}
   .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || " +                                             |
                         "((emsCommonModel.ems_controller == 'ems_container' || " +                            |
-                        " emsCommonModel.emstype == 'kubevirt') && " +                                        |
+                        " emsCommonModel.emstype === 'kubevirt') && " +                                       |
                         " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca') || " |
                         "(emsCommonModel.emstype == 'hawkular' && " +                                         |
                         " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca')"}    |

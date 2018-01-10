@@ -293,7 +293,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
        $scope.emsCommonModel.emstype == "openstack_infra" && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "nuage_network"  && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "rhevm" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "kubevirt" && $scope.emsCommonModel.default_hostname ||
+       $scope.emsCommonModel.emstype === "kubevirt" && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "vmwarews" && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "vmware_cloud" && $scope.emsCommonModel.default_hostname) &&
       ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
@@ -353,7 +353,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.currentTab == "default" ||
       ($scope.currentTab == "service_account" && $scope.emsCommonModel.service_account != ''))) {
       return true;
-    } else if($scope.emsCommonModel.emstype == "kubevirt") {
+    } else if($scope.emsCommonModel.emstype === "kubevirt") {
       return true;
     } else {
       return false;

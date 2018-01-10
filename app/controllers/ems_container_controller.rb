@@ -120,8 +120,7 @@ class EmsContainerController < ApplicationController
   end
 
   def retrieve_virtualization_selection
-    return "disabled" if @ems.connection_configurations.try(:kubevirt).nil?
-    "kubevirt"
+    @ems.connection_configurations.try(:kubevirt).nil? ? "disabled" : "kubevirt"
   end
 
   private
