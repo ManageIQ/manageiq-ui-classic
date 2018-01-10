@@ -20,9 +20,9 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
 
     vm.pictureReset = false;
 
-    vm.attributeTableHeaders = [__("Name"), __("Type")];
-    vm.associationTableHeaders = [__("Name"), __("Class")];
-    vm.methodTableHeaders = [__("Name")];
+    vm.attributeTableHeaders = [__("Name"), __("Type"), __("Actions")];
+    vm.associationTableHeaders = [__("Name"), __("Class"), __("Actions")];
+    vm.methodTableHeaders = [__("Name"), __("Actions")];
 
     vm.types = [];
     vm.classes = [];

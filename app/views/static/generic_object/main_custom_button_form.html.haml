@@ -4,6 +4,7 @@
                       "ng-show"      => "vm.afterGet",
                       "ng-cloak"     => "",
                       "form-changed" => true,
+                      "novalidate"   => true,
                       "miq-form"     => true}
   .form-group{"ng-class" => "{'has-error': angularForm.button_type.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_button_type"}
@@ -115,6 +116,7 @@
     .col-md-8
       %generic-object-table-component{"keys"             => "vm.customButtonModel.attribute_names",
                                       "values"           => "vm.customButtonModel.attribute_values",
+                                      "add-row-text"     => _("Add Attribute/Value Pair"),
                                       "key-type"         => "Attribute",
                                       "table-headers"    => "vm.attributeValueTableHeaders",
                                       "orig-keys-values" => "vm.customButtonModel.resource_action.ae_attributes",
