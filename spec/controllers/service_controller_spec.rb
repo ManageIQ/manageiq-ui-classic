@@ -72,15 +72,6 @@ describe ServiceController do
       ApplicationController.handle_exceptions = true
     end
 
-    describe 'corresponding methods are called for allowed actions' do
-      ServiceController::SERVICE_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
-        it "calls the appropriate method: '#{method}' for action '#{action_name}'" do
-          expect(controller).to receive(method)
-          get :x_button, :params => { :pressed => action_name }
-        end
-      end
-    end
-
     it 'exception is raised for unknown action' do
       get :x_button, :params => { :pressed => 'random_dude', :format => :html }
       expect(response).to render_template('layouts/exception')
