@@ -205,25 +205,22 @@ class ChargebackController < ApplicationController
     if !params[:id] # showing a list
       rates = find_checked_items
       if rates.empty?
-        render_flash(_("No Chargeback Rate were selected for deletion"), :error)
+        add_flash(_("No Chargeback Rates were selected for deletion"), :error)
       end
     else # showing 1 rate, delete it
-      cb_rate = ChargebackRate.find_by_id(params[:id])
+      cb_rate = ChargebackRate.find_by(:id => params[:id])
+      self.x_node = x_node.split('_').first
       if cb_rate.nil?
-        render_flash(_("Chargeback Rate no longer exists"), :error)
+        add_flash(_("Chargeback Rate no longer exists"), :error)
       else
         rates.push(params[:id])
-        self.x_node = "xx-#{cb_rate.rate_type}"
       end
     end
-    process_cb_rates(rates, 'destroy') unless rates.empty?
-    if flash_errors?
-      javascript_flash
-    else
-      cb_rates_list
-      @right_cell_text = _("%{typ} Chargeback Rate") % {:typ => x_node.split('-').last}
-      replace_right_cell(:replace_trees => [:cb_rates])
-    end
+    process_cb_rates(rates, 'destroy') if rates.present?
+
+    cb_rates_list
+    @right_cell_text = _("%<typ>s Chargeback Rates") % {:typ => x_node.split('-').last}
+    replace_right_cell(:replace_trees => [:cb_rates])
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
