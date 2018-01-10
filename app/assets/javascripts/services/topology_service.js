@@ -278,7 +278,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       var url = '';
       if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
         url = controller.dataUrl;
-      } else if ($location.absUrl().match('show/[0-9]*\\?display=topology$') || $location.absUrl().match('show/[0-9]*\\?display=topology/$')) {
+      } else if ($location.absUrl().match('show/[0-9]*\\?display=topology/?$') || $location.absUrl().match('_topology/show/[0-9]+/?$')) {
         id = '/' + (/\/show\/(\d+)/.exec($location.absUrl())[1]);
         url = controller.detailUrl || controller.dataUrl;
         url += id;
