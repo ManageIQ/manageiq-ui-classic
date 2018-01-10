@@ -498,7 +498,6 @@ class ApplicationHelper::ToolbarChooser
               ems_cloud
               ems_cluster
               ems_container
-              ems_datawarehouse
               ems_middleware
               container_project
               container_route
