@@ -43,4 +43,130 @@ describe('topologyService', function() {
       });
     });
 
+  describe('browser url to json endopoint url conversion', function() {
+    var controller;
+
+    beforeEach(function() {
+      controller = {};
+      testService.mixinRefresh(controller);
+    });
+
+    context('cloud', function() {
+      beforeEach(function() {
+        controller.dataUrl = '/cloud_topology/data';
+        controller.detailUrl = null;
+
+        testService.mixinRefresh(controller);
+      });
+
+      it('Compute > Cloud > Topology', function() {
+        var url = controller.parseUrl('/cloud_topology/show');
+        expect(url).toEqual('/cloud_topology/data');
+      });
+
+      it('Compute > Cloud > Providers > detail > Topology', function() {
+        var url = controller.parseUrl('/cloud_topology/show/10000000000004');
+        expect(url).toEqual('/cloud_topology/data/10000000000004');
+      });
+    });
+
+    context('container', function() {
+      beforeEach(function() {
+        controller.dataUrl = '/container_topology/data';
+        controller.detailUrl = '/container_project_topology/data';
+
+        testService.mixinRefresh(controller);
+      });
+
+      it('Compute > Containers > Topology', function() {
+        var url = controller.parseUrl('/container_topology/show');
+        expect(url).toEqual('/container_topology/data');
+      });
+
+      it('Compute > Containers > Providers > detail > Topology', function() {
+        var url = controller.parseUrl('/ems_container/10000000000040?display=topology')
+        expect(url).toEqual('/container_topology/data/10000000000040');
+      });
+    });
+
+    context('container project', function() {
+      beforeEach(function() {
+        controller.dataUrl = '/container_topology/data';
+        controller.detailUrl = '/container_project_topology/data';
+
+        testService.mixinRefresh(controller);
+      });
+
+      it('Compute > Containers > Projects > detail > Topology', function() {
+        var url = controller.parseUrl('/container_project/show/10000000000001?display=topology');
+        expect(url).toEqual('/container_project_topology/data/10000000000001');
+      });
+    });
+
+    context('infra', function() {
+      beforeEach(function() {
+        controller.dataUrl = '/infra_topology/data';
+        controller.detailUrl = null;
+
+        testService.mixinRefresh(controller);
+      });
+
+      it('Compute > Infrastructure > Topology', function() {
+        var url = controller.parseUrl('/infra_topology/show');
+        expect(url).toEqual('/infra_topology/data');
+      });
+
+      it('Compute > Infrastructure > Providers > detail > Topology', function() {
+        var url = controller.parseUrl('/infra_topology/show/10000000000028');
+        expect(url).toEqual('/infra_topology/data/10000000000028');
+      });
+    });
+
+    context('middleware', function() {
+      beforeEach(function() {
+        controller.dataUrl = '/middleware_topology/data';
+        controller.detailUrl = null;
+
+        testService.mixinRefresh(controller);
+      });
+
+      it('Middleware > Topology', function() {
+        var url = controller.parseUrl('/middleware_topology/show');
+        expect(url).toEqual('/middleware_topology/data');
+      });
+
+      it('Middleware > Providers > detail > Topology', function() {
+        var url = controller.parseUrl('/middleware_topology/show/10000000000023');
+        expect(url).toEqual('/middleware_topology/data/10000000000023');
+      });
+    });
+
+    /** TODO: network, once converted
+      it('Networks > Topology', function() {
+        var url = controller.parseUrl('/network_topology/show');
+        expect(url).toEqual('/network_topology/data');
+      });
+
+      it('Networks > Providers > detail > Topology', function() {
+        var url = controller.parseUrl('/network_topology/show/10000000000005');
+        expect(url).toEqual('/network_topology/data/10000000000005');
+      });
+    */
+
+    context('physical infra', function() {
+      beforeEach(function() {
+        controller.dataUrl = '/physical_infra_topology/data';
+        controller.detailUrl = null;
+
+        testService.mixinRefresh(controller);
+      });
+
+      it('Compute > Physical Infrastructure > Topology', function() {
+        var url = controller.parseUrl('/physical_infra_topology/show');
+        expect(url).toEqual('/physical_infra_topology/data');
+      });
+
+      // TODO: physical infrastructure - topology from detail screen, add once there is a working detail screen
+    });
+  });
 });
