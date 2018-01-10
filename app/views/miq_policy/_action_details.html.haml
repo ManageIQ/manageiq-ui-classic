@@ -27,13 +27,13 @@
           .col-md-8
             - if @edit
               = select_tag('miq_action_type',
-                options_for_select([["<#{_('Choose')}>", nil]] + MiqAction::TYPES.invert.sort, @edit[:new][:action_type]),
+                options_for_select([["<#{_('Choose')}>", nil]] + MiqAction::TYPES.map { |k, v| [_(v), k] }.sort, @edit[:new][:action_type]),
                 :class => "selectpicker")
               :javascript
                 miqInitSelectPicker();
                 miqSelectPickerEvent('miq_action_type', '#{url}', {beforeSend: true, complete: true})
             - else
-              = h(@action.action_type == "default" ? "Default" : MiqAction::TYPES[@action.action_type])
+              = h(@action.action_type == "default" ? _('Default') : _(MiqAction::TYPES[@action.action_type]))
       %hr
       - if @edit
         = render :partial => "action_options"
