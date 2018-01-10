@@ -7,10 +7,19 @@
   var TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
   var USE_TREE_ID = ['automation_manager'];
   var DEFAULT_VIEW = 'grid';
+  var TOOLBAR_CLICK_FINISH = 'TOOLBAR_CLICK_FINISH';
 
   function isAllowedParent(initObject) {
     return TREES_WITHOUT_PARENT.indexOf(ManageIQ.controller) === -1 &&
       TREE_TABS_WITHOUT_PARENT.indexOf(initObject.activeTree) === -1;
+  }
+
+  function tileViewSelector() {
+    return document.querySelector('miq-tile-view');
+  }
+
+  function tableViewSelector() {
+    return document.querySelector('miq-data-table');
   }
 
   function constructSuffixForTreeUrl(initObject, item) {
@@ -88,6 +97,8 @@
       } else if (event.unsubscribe && event.unsubscribe === CONTROLLER_NAME) {
         this.onUnsubscribe();
       } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
+        this.setExtraClasses();
+      } else if (event.type === TOOLBAR_CLICK_FINISH && (tileViewSelector() || tableViewSelector())) {
         this.setExtraClasses(this.initObject.gtlType);
       } else if (event.refreshData && event.refreshData.name === CONTROLLER_NAME) {
         this.refreshData();
@@ -224,7 +235,7 @@
         }
         var url = prefix + itemId;
         $.post(url).always(function() {
-          this.setExtraClasses(this.initObject.gtlType);
+          this.setExtraClasses();
         }.bind(this));
       } else if (prefix !== "true") {
         var lastChar = prefix[prefix.length - 1];

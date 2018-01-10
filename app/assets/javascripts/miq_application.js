@@ -1316,7 +1316,10 @@ function miqInitToolbars() {
   $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), ' +
   '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, '+
   '#toolbar:not(.miq-toolbar-menu) .toolbar-pf-view-selector > ul.list-inline > li > a'
-  ).click(miqToolbarOnClick);
+  ).click(function() {
+    miqToolbarOnClick.bind(this)();
+    return false;
+  });
 }
 
 // Function to run transactions when toolbar button is clicked
@@ -1432,8 +1435,7 @@ function miqToolbarOnClick(_e) {
     data: paramstring,
   };
 
-  miqJqueryRequest(tb_url, options);
-  return false;
+  return miqJqueryRequest(tb_url, options);
 
   function getParams(urlParms, sendChecked) {
     var params = [];
