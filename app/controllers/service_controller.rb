@@ -427,9 +427,8 @@ class ServiceController < ApplicationController
       elsif record_showing
         presenter.remove_sand
         if action
-          partial_locals[:item_id] = @item.id
           cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
-          r[:partial => partial, :locals => partial_locals]
+          r[:partial => partial, :locals => {:item_id => @item.id}]
         else
           r[:partial => "service/svcs_show", :locals => {:controller => "service"}]
         end
