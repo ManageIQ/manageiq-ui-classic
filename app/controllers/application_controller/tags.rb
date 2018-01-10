@@ -16,7 +16,7 @@ module ApplicationController::Tags
     end
   end
 
-  def service_tag(_db = nil)
+  def service_tag
     tagging_edit('Service')
   end
 

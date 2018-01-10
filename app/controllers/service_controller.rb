@@ -34,6 +34,10 @@ class ServiceController < ApplicationController
     custom_buttons(ids, display_options)
   end
 
+  def x_button
+    generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
+  end
+
   def title
     _("My Services")
   end
@@ -390,7 +394,6 @@ class ServiceController < ApplicationController
       return
     end
     action, replace_trees = options.values_at(:action, :replace_trees)
-    action = @sb[:action] if action.nil?
     @explorer = true
     partial, action_url, @right_cell_text = set_right_cell_vars(action) if action # Set partial name, action and cell header
     get_node_info(x_node) if !action && !@in_a_form && !params[:display]
