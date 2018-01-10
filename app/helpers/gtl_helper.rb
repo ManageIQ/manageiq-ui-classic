@@ -128,7 +128,7 @@ EOJ
   end
 
   def gtl_show_url(options)
-    # FIXME fetch_path doesn't work on structs in a hash
+    # FIXME: fetch_path doesn't work on structs in a hash
     if options[:report_data_additional_options].present?
       # only false, nil is true
       return false if options[:report_data_additional_options].clickable == false
