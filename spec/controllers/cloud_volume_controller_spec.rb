@@ -90,6 +90,27 @@ describe CloudVolumeController do
     end
   end
 
+  describe "#new" do
+    let(:feature) { MiqProductFeature.find_all_by_identifier(%w(cloud_volume_new)) }
+    let(:role)    { FactoryGirl.create(:miq_user_role, :miq_product_features => feature) }
+    let(:group)   { FactoryGirl.create(:miq_group, :miq_user_role => role) }
+    let(:user)    { FactoryGirl.create(:user, :miq_groups => [group]) }
+
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      EvmSpecHelper.seed_specific_product_features(%w(cloud_volume_new))
+      ApplicationController.handle_exceptions = false
+
+      allow(User).to receive(:current_user).and_return(user)
+      allow(Rbac).to receive(:role_allows?).and_call_original
+      login_as user
+    end
+
+    it "raises exception wheh used have not privilege" do
+      expect { post :new, :params => {:button => "new", :format => :js} }.to raise_error(MiqException::RbacPrivilegeException)
+    end
+  end
+
   describe "#restore_backup" do
     before do
       stub_user(:features => :all)
