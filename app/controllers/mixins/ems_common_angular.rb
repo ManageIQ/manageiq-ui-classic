@@ -441,9 +441,7 @@ module Mixins
     private ############################
 
     def metrics_default_database_name
-      if @ems.class.name == 'ManageIQ::Providers::Redhat::InfraManager'
-        ManageIQ::Providers::Redhat::InfraManager.default_history_database_name
-      end
+      ManageIQ::Providers::Redhat::InfraManager.default_history_database_name
     end
 
     def security_protocol_default
