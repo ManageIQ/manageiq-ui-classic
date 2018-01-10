@@ -222,7 +222,7 @@ module ApplicationController::Tags
     end
 
     # Set to first category, if not already set
-    @edit[:cat] ||= cats.min_by(&:description)
+    @edit[:cat] ||= cats.min_by(&:name)
 
     unless @object_ids.blank?
       @tagitems = @tagging.constantize.where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }
