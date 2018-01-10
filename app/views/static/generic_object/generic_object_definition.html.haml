@@ -3,6 +3,7 @@
                       "model"        => "vm.genericObjectDefinitionModel",
                       "ng-show"      => "vm.afterGet && vm.tableRendered",
                       "ng-cloak"     => "",
+                      "novalidate"   => true,
                       "form-changed" => true,
                       "miq-form"     => true}
   .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
@@ -37,6 +38,7 @@
       %generic-object-table-component{"keys"             => "vm.genericObjectDefinitionModel.attribute_names",
                                       "values"           => "vm.genericObjectDefinitionModel.attribute_types",
                                       "key-type"         => "Attribute",
+                                      "add-row-text"     => _("Add Attribute"),
                                       "table-headers"    => "vm.attributeTableHeaders",
                                       "orig-keys-values" => "vm.genericObjectDefinitionModel.properties.attributes",
                                       "table-changed"    => "vm.genericObjectDefinitionModel.attributesTableChanged",
@@ -54,6 +56,7 @@
       %generic-object-table-component{"keys"             => "vm.genericObjectDefinitionModel.association_names",
                                       "values"           => "vm.genericObjectDefinitionModel.association_classes",
                                       "key-type"         => "Association",
+                                      "add-row-text"     => _("Add Association"),
                                       "table-headers"    => "vm.associationTableHeaders",
                                       "orig-keys-values" => "vm.genericObjectDefinitionModel.properties.associations",
                                       "table-changed"    => "vm.genericObjectDefinitionModel.associationsTableChanged",
@@ -70,6 +73,7 @@
     .col-md-8
       %generic-object-table-component{"keys"             => "vm.genericObjectDefinitionModel.method_names",
                                       "key-type"         => "Method",
+                                      "add-row-text"     => _("Add Method"),
                                       "table-headers"    => "vm.methodTableHeaders",
                                       "orig-keys-values" => "vm.genericObjectDefinitionModel.properties.methods",
                                       "table-changed"    => "vm.genericObjectDefinitionModel.methodsTableChanged",

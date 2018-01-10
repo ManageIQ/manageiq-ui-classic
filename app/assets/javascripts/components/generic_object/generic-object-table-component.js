@@ -3,6 +3,7 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
     keys: '=',
     values: '=',
     keyType: '@',
+    addRowText: '@',
     tableHeaders: '=',
     valueOptions: '<',
     newRecord: '<',
@@ -27,18 +28,16 @@ function genericObjectTableController($timeout) {
   var vm = this;
 
   vm.$onInit = function() {
-    vm.tableHeaders.push('', '');
-
     vm.dupicatePropertyError = [];
     vm.invalidKeyName = __("Invalid name");
     vm.tableRendered = true;
 
     if (vm.newRecord) {
-      vm.addRow(0, vm.keyType + '0', true);
+      vm.addRow(vm.keyType + '0', true);
     }
   };
 
-  vm.addRow = function(_currentRow, element, addFromOtherSource) {
+  vm.addRow = function(element, addFromOtherSource) {
     vm.keys.push('');
     vm.noOfRows = _.size(vm.keys);
 
@@ -59,7 +58,7 @@ function genericObjectTableController($timeout) {
     recalibrateDupes();
 
     if (vm.noOfRows === 0) {
-      vm.addRow(0, vm.keyType + '0', true);
+      vm.addRow(vm.keyType + '0', true);
     }
     checkIfTableChanged();
   };
