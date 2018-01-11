@@ -432,6 +432,7 @@ module EmsCommon
     end
     process_emss(ids, "check_compliance")
     params[:display] = "main"
+    return if @display == 'dashboard'
     showlist ? show_list : show
   end
 
