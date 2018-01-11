@@ -1,22 +1,5 @@
 # noinspection RubyArgCount
 class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::Toolbar::Basic
-  button_group('middleware_server_monitoring', [
-    select(
-      :middleware_server_monitoring_choice,
-      'ff ff-monitoring fa-lg',
-      t = N_('Monitoring'),
-      t,
-      :items => [
-        button(
-          :middleware_server_perf,
-          'ff ff-monitoring fa-lg',
-          N_('Show Capacity & Utilization data for this Server'),
-          N_('Utilization'),
-          :url       => "/show",
-          :url_parms => "?display=performance")
-      ]
-    ),
-  ])
   button_group('middleware_server_policy', [
     select(
       :middleware_server_policy_choice,
