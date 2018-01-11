@@ -11,6 +11,8 @@ ManageIQ.angular.app.directive('formChanged', function() {
       scope.$watchCollection(ctrl.model || scope.model, function() {
         if (angular.equals(model(), modelCopy())) {
           ctrl.$setPristine();
+        } else {
+          ctrl.$setDirty();
         }
       });
     },
