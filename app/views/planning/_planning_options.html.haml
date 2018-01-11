@@ -269,7 +269,7 @@
         = _('Trends for past')
       .col-md-8
         = select_tag("trend_days",
-                      options_for_select(ViewHelper::WEEK_CHOICES.invert.sort_by(&:last), @sb[:options][:days].to_i),
+                      options_for_select(ViewHelper::WEEK_CHOICES.map { |k, v| [_(v), k] }.sort_by(&:last), @sb[:options][:days].to_i),
                       "class"                => "selectpicker",
                       "data-miq_sparkle_on"  => true,
                       "data-miq_sparkle_off" => true)
