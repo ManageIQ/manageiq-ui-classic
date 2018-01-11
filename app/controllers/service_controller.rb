@@ -499,7 +499,8 @@ class ServiceController < ApplicationController
   end
 
   def tagging_explorer_controller?
-    @explorer
+    # this controller behaves explorer-like for services and non-explorer-like for GO
+    @tagging == 'Service'
   end
 
   def get_session_data
