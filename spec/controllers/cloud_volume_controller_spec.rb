@@ -99,7 +99,6 @@ describe CloudVolumeController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       EvmSpecHelper.seed_specific_product_features(%w(cloud_volume_new))
-      ApplicationController.handle_exceptions = false
 
       allow(User).to receive(:current_user).and_return(user)
       allow(Rbac).to receive(:role_allows?).and_call_original
@@ -107,7 +106,10 @@ describe CloudVolumeController do
     end
 
     it "raises exception wheh used have not privilege" do
-      expect { post :new, :params => {:button => "new", :format => :js} }.to raise_error(MiqException::RbacPrivilegeException)
+      expect do
+        bypass_rescue
+        post :new, :params => {:button => "new", :format => :js}
+      end.to raise_error(MiqException::RbacPrivilegeException)
     end
   end
 
