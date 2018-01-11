@@ -273,23 +273,36 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
         controller.kinds = $scope.kinds = topologyService.reduce_kinds(controller.items, controller.kinds, size_limit, controller.remove_hierarchy);
       }
     };
-    var refresh = function() {
-      var id;
-      var url = '';
-      if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
-        url = controller.dataUrl;
-      } else if ($location.absUrl().match('show/[0-9]*\\?display=topology/?$') || $location.absUrl().match('_topology/show/[0-9]+/?$')) {
-        id = '/' + (/\/show\/(\d+)/.exec($location.absUrl())[1]);
-        url = controller.detailUrl || controller.dataUrl;
-        url += id;
+
+    controller.parseUrl = function(screenUrl) {
+      if (screenUrl.match('show/?$')) {
+        return controller.dataUrl;
       }
+
+      var match = screenUrl.match(/(ems_container|show)\/([0-9]+)\?display=topology$/) ||
+        screenUrl.match(/(_topology)\/show\/([0-9]+)\/?$/);
+
+      if (match) {
+        var id = match[2];
+        var url = controller.detailUrl || controller.dataUrl;
+
+        // ems_container is restful? and thus special :(
+        // FIXME: get rid of detailUrl, use a separate container project controller instead
+        if (match[1] === 'ems_container') {
+          url = controller.dataUrl;
+        }
+
+        return url + (id && '/' + id);
+      }
+    };
+
+    controller.refresh = function() {
+      var url = controller.parseUrl($location.absUrl());
 
       $http.get(url)
         .then(controller.getTopologyData ? controller.getTopologyData : getTopologyData)
         .catch(miqService.handleFailure);
     };
-
-    controller.refresh = refresh;
 
     ManageIQ.angular.rxSubject.subscribe(function(event) {
       if (event.name === 'refreshTopology') {
