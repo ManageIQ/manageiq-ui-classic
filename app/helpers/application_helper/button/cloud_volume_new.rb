@@ -7,7 +7,7 @@ class ApplicationHelper::Button::CloudVolumeNew < ApplicationHelper::Button::But
   end
 
   def role_allows_feature?
-    role_allows?(:feature => 'cloud_tenant_show_list')
+    super && role_allows?(:feature => 'cloud_tenant_show_list')
   end
 
   # disable button if no active providers support create action
