@@ -51,8 +51,8 @@ class ServiceController < ApplicationController
 
     set_display
 
-    if self.class.display_methods.include?(@display)
-      nested_list_show
+    if @display == 'generic_objects'
+      show_generic_object
       return
     end
 
@@ -71,8 +71,12 @@ class ServiceController < ApplicationController
     @display ||= default_display unless pagination_or_gtl_request?
   end
 
-  def nested_list_show
-    params[:generic_object_id] ? generic_object : display_nested_list(@display)
+  def show_generic_object
+    if params[:generic_object_id]
+      show_single_generic_object
+    else
+      display_nested_list(@display)
+    end
   end
 
   def show_list
@@ -173,14 +177,15 @@ class ServiceController < ApplicationController
     }
   end
 
-  def generic_object
+  # display a single generic object
+  #
+  def show_single_generic_object
     return unless init_show_variables
 
     @lastaction = 'generic_object'
-    @item ||= @record.generic_objects.find(params[:generic_object_id]).first
-    drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name},
-                    :url  => show_link(@record, :display => @display))
-    drop_breadcrumb(:name => @item.name, :url => "/#{controller_name}/show/#{@record.id}?display=generic_objects&generic_object_id=#{params[:generic_object_id]}")
+    @item = @record.generic_objects.find(params[:generic_object_id]).first
+    drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name}, :url  => show_link(@record, :display => 'generic_objects'))
+    drop_breadcrumb(:name => @item.name, :url  => show_link(@record, :display => 'generic_objects', :generic_object_id => params[:generic_object_id]))
     @view = get_db_view(GenericObject)
     @sb[:rec_id] = params[:generic_object_id]
     show_item
