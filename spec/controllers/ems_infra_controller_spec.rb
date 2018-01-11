@@ -13,8 +13,10 @@ describe EmsInfraController do
 
     it "EmsInfra check compliance is called when Compliance is pressed" do
       ems_infra = FactoryGirl.create(:ems_vmware)
-      expect(controller).to receive(:check_compliance)
+      expect(controller).to receive(:check_compliance).and_call_original
       post :button, :params => {:pressed => "ems_infra_check_compliance", :format => :js, :id => ems_infra.id}
+      expect(controller.send(:flash_errors?)).not_to be_truthy
+      expect(assigns(:flash_array).first[:message]).to include('Check Compliance successfully initiated')
     end
 
     it "when VM Right Size Recommendations is pressed" do
