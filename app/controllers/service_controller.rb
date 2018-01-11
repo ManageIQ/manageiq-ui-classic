@@ -369,18 +369,6 @@ class ServiceController < ApplicationController
       partial = "layouts/tagging"
       header = _("Edit Tags for Service")
       action = "service_tag"
-    when "show_generic_object"
-      table = controller_name
-      partial = "layouts/item"
-      header = _("Generic Object \"%{item_name}\" for %{service} \"%{name}\"") % {
-        :service   => ui_lookup(:table => table),
-        :name      => @record.name,
-        :item_name => @item.name
-      }
-      x_history_add_item(:id     => x_node,
-                         :text   => header,
-                         :action => action,
-                         :item   => @item.id)
     else
       action = nil
     end
