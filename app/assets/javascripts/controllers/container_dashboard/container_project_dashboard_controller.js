@@ -15,11 +15,11 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
 
     $scope.cpuUsageConfig = chartsMixin.chartConfig.cpuUsageConfig;
     $scope.cpuUsageConfig.layout = 'compact';
-    $scope.cpuUsageConfig.title = 'CPU Utilization';
+    $scope.cpuUsageConfig.title = __('CPU Utilization');
 
     $scope.memoryUsageConfig = chartsMixin.chartConfig.memoryUsageConfig;
     $scope.memoryUsageConfig.layout = 'compact';
-    $scope.memoryUsageConfig.title = 'Memory Utilization';
+    $scope.memoryUsageConfig.title = __('Memory Utilization');
 
     function getContainerDashboardData(response) {
       'use strict';
@@ -64,7 +64,7 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
       }
 
       $scope.networkUtilizationConfig.layout = 'compact';
-      $scope.networkUtilizationConfig.title = 'Network Utilization';
+      $scope.networkUtilizationConfig.title = __('Network Utilization');
 
       if (data.network_metrics.xy_data != null) {
         data.network_metrics.xy_data.xData = data.network_metrics.xy_data.xData.map(function(date) {
@@ -81,7 +81,7 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
       $scope.barChartLayoutInline = { 'type': 'inline' };
       angular.forEach(data.quota, function(item) {
         $scope.quotas.push({
-          'title': item.resource,
+          'title': __(item.resource),
           'units': item.units,
           'data': {
             'used': item.quota_observed,
