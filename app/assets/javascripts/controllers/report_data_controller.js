@@ -23,7 +23,7 @@
   }
 
   function constructSuffixForTreeUrl(initObject, item) {
-    var itemId = initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
+    var itemId = _.isString(initObject.showUrl) && initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
     if (item.parent_id && item.parent_id[item.parent_id.length - 1] !== '-') {
       itemId = item.parent_id + '_' + item.tree_id;
     } else if (isAllowedParent(initObject)) {
@@ -44,22 +44,6 @@
 
   function isCurrentControllerOrPolicies(splitUrl) {
     return splitUrl && (splitUrl[1] === ManageIQ.controller || splitUrl[2] === 'policies');
-  }
-
-  function isCurrentOpsWorkerSelected(items, initObject) {
-    if (initObject.activeTree === 'diagnostics_tree' && ManageIQ.controller === 'ops') {
-      var lastSlash = initObject.showUrl.indexOf('/', 5) + 1;
-      var itemId = initObject.showUrl.substring(lastSlash);
-      if (itemId.indexOf('?id=') === -1) {
-        initObject.showUrl = initObject.showUrl.substring(0, lastSlash);
-        if (itemId) {
-          itemId = itemId[itemId.length - 1] === '/' ? itemId.substring(0, itemId.length - 1) : itemId;
-          return _.find(items, {id: itemId});
-        }
-      }
-    }
-
-    return;
   }
 
   /**
@@ -226,7 +210,7 @@
         this.$window.DoNav(item.parent_path + '/' + item.parent_id);
       } else if (this.initObject.isExplorer && isCurrentControllerOrPolicies(splitUrl)) {
         var itemId = item.id;
-        if (this.initObject.showUrl.indexOf('?id=') !== -1 ) {
+        if (_.isString(this.initObject.showUrl) && this.initObject.showUrl.indexOf('?id=') !== -1) {
           itemId = constructSuffixForTreeUrl(this.initObject, item);
           this.activateNodeSilently(itemId);
         }
@@ -465,7 +449,6 @@
             this.initObject.showUrl = splitUrl.join('/');
           }
         }
-        this.onItemSelect(isCurrentOpsWorkerSelected(this.gtlData.rows, this.initObject), true);
         gtlData.messages && gtlData.messages.forEach(function(oneMessage) {
           add_flash(oneMessage.msg, oneMessage.level);
         });
