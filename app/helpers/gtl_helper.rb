@@ -121,9 +121,21 @@ module GtlHelper
           isExplorer: '#{options[:explorer]}' === 'true' ? true : false,
           records: #{!options[:selected_records].nil? ? h(j_str(options[:selected_records].to_json)) : "\'\'"},
           hideSelect: #{options[:selected_records].kind_of?(Array)},
-          showUrl: '#{view_to_url(options[:view], options[:parent]) if options[:view].present? && options[:view].db.present?}'
+          showUrl: '#{gtl_show_url(options)}'
         }
       }});
 EOJ
+  end
+
+  def gtl_show_url(options)
+    # FIXME: fetch_path doesn't work on structs in a hash
+    if options[:report_data_additional_options].present?
+      # only false, nil is true
+      return false if options[:report_data_additional_options].clickable == false
+    end
+
+    # TODO: the "what happens on nil" logic should probably live here, not in ReportDataController.prototype.initObjects
+
+    view_to_url(options[:view], options[:parent]) if options[:view].present? && options[:view].db.present?
   end
 end

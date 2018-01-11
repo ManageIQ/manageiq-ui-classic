@@ -103,8 +103,11 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
           'pficon pficon-restart',
           N_('Select a worker to restart'),
           N_('Restart selected worker'),
-          :confirm => N_("Warning: Selected node will be restarted, do you want to continue?"),
-          :klass   => ApplicationHelper::Button::RestartWorkers),
+          :confirm      => N_("Warning: Selected node will be restarted, do you want to continue?"),
+          :klass        => ApplicationHelper::Button::RefreshWorkers,
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1"),
       ]
     ),
   ])

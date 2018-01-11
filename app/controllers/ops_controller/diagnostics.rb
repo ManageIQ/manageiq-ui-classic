@@ -41,7 +41,7 @@ module OpsController::Diagnostics
   def pm_restart_workers
     assert_privileges("restart_workers")
     @refresh_partial = "#{@sb[:active_tab]}_tab"
-    worker = MiqWorker.find_by_id(@sb[:selected_worker_id])
+    worker = MiqWorker.find(checked_or_params.first)
     wtype = worker.normalized_type
     case wtype
     when "ems_vimbroker"
@@ -417,23 +417,6 @@ module OpsController::Diagnostics
     update_gtl_div('diagnostics_server_list') if pagination_or_gtl_request?
   end
 
-  def diagnostics_worker_selected
-    @explorer = true
-    @sb[:selected_worker_id] = params[:id]
-    get_workers
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html(@sb[:active_tab], :partial => "#{@sb[:active_tab]}_tab")
-      if center_toolbar_filename.present?
-        page << "$('#toolbar').show();"
-        page << javascript_reload_toolbars
-      else
-        page << "$('#toolbar').hide();"
-      end
-    end
-  end
-
   private ############################
 
   # Build the Utilization screen for a server
@@ -543,11 +526,6 @@ module OpsController::Diagnostics
   end
 
   def pm_get_workers
-    @sb[:selected_worker_id] = nil
-    get_workers
-  end
-
-  def get_workers
     @lastaction = "pm_workers_list"
     @force_no_grid_xml = true
     @no_checkboxes = true
@@ -555,8 +533,16 @@ module OpsController::Diagnostics
     @embedded = @pages = false
     @showlinks = true
     status = ["started", "ready", "working"]
-    # passing all_pages option to show all records on same page
-    @view, @pages = get_view(MiqWorker, :named_scope => [[:with_miq_server_id, @sb[:selected_server_id]], [:with_status, status]], :all_pages => true) # Get the records (into a view) and the paginator
+
+    view_options = {
+      :named_scope => [[:with_miq_server_id, @sb[:selected_server_id]],
+                       [:with_status, status]],
+      # passing all_pages option to show all records on same page
+      :all_pages   => true,
+      :clickable   => false,
+    }
+    @view, @pages = get_view(MiqWorker, view_options)
+
     # setting @embedded and @pages to nil, we don't want to show sorting/paging bar on the screen'
     @embedded = @pages = nil
   end
