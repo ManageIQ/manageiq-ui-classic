@@ -67,6 +67,18 @@ module ContainerImageHelper
       {:label => _("Product Name"), :value => name} if name
     end
 
+    def textual_author
+      {:label => _('Author'), :value => @record.author}
+    end
+
+    def textual_entrypoint
+      {:label => _('Entrypoint'), :value => @record.entrypoint.join(' ')}
+    end
+
+    def textual_docker_version
+      {:label => _('Docker Version'), :value => @record.docker_version}
+    end
+
     def textual_compliance_history
       super(:title    => _("Show Compliance History of this Container Image (Last 10 Checks)"),
             :explorer => true)
