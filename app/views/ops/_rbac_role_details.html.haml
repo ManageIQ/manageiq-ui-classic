@@ -27,12 +27,13 @@
           .col-md-8
             - if !@edit
               - if @role.settings.kind_of?(Hash) && @role.settings.fetch_path(:restrictions, :vms)
-                = h(MiqUserRole::RESTRICTIONS[@role.settings.fetch_path(:restrictions, :vms)])
+                = h(_(MiqUserRole::RESTRICTIONS[@role.settings.fetch_path(:restrictions, :vms)]))
               - else
                 = _("None")
             - else
+              - restrictions = MiqUserRole::RESTRICTIONS.map { |k, v| [_(v), k] }.sort_by { |name, _value| name.downcase }
               = select_tag('vm_restriction',
-                           options_for_select([[_("None"), _("none")]] + MiqUserRole::RESTRICTIONS.invert.sort_by { |name, _value| name.downcase },
+                           options_for_select([[_("None"), "none"]] + restrictions,
                            @edit[:new][:vm_restriction].to_sym),
                            :class    => "selectpicker")
           :javascript
