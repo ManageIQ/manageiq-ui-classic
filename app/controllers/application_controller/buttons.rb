@@ -501,7 +501,7 @@ module ApplicationController::Buttons
     @edit[:enablement_expression_table] = exp_build_table_or_nil(@edit[:new][:enablement_expression])
     @in_a_form = true
     @sb[:active_tab] = "ab_advanced_tab"
-    replace_right_cell(:nodetype => x_node)
+    replace_right_cell(:action => 'button_edit')
   end
 
   def ab_button_cancel(typ)
@@ -632,7 +632,7 @@ module ApplicationController::Buttons
     drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
     @lastaction = "automate_button"
     @layout = "miq_ae_automate_button"
-    replace_right_cell(:nodetype => "button_edit")
+    replace_right_cell(:action => "button_edit")
   end
 
   # Set form variables for button add/edit
