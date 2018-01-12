@@ -71,5 +71,26 @@ describe MiqPolicyController do
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
     end
+
+    context "#alert_profile_edit" do
+      before :each do
+        controller.instance_variable_set(:@sb,
+                                         :trees       => {
+                                           :alert_profile_tree => {:active_node => "xx-Vm"}},
+                                         :active_tree => :alert_profile_tree)
+        allow(controller).to receive(:replace_right_cell)
+        edit = {
+          :key => "alert_profile_edit__new"
+        }
+        session[:edit] = edit
+      end
+
+      it "Test cancel button" do
+        controller.instance_variable_set(:@_params, :id => 'new', :button => "cancel")
+        controller.alert_profile_edit
+        expect(assigns(:flash_array).first[:message]).to include("Add of new Alert Profile was cancelled by the user")
+        expect(controller.send(:flash_errors?)).not_to be_truthy
+      end
+    end
   end
 end

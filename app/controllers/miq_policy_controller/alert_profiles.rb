@@ -6,7 +6,7 @@ module MiqPolicyController::AlertProfiles
   end
 
   def alert_profile_edit_cancel
-    alert_profile_load
+    return unless alert_profile_edit_load_edit
     @edit = nil
     if @alert_profile && @alert_profile.id.blank?
       add_flash(_("Add of new Alert Profile was cancelled by the user"))
