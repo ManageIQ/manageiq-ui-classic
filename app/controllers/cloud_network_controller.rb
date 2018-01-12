@@ -149,6 +149,9 @@ class CloudNetworkController < ApplicationController
 
   def new
     assert_privileges("cloud_network_new")
+    assert_privileges("ems_network_show_list")
+    assert_privileges("cloud_tenant_show_list")
+
     @network = CloudNetwork.new
     @in_a_form = true
     @network_ems_provider_choices = {}
