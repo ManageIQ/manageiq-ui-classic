@@ -418,6 +418,7 @@ class ServiceController < ApplicationController
       elsif params[:display]
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]
       elsif record_showing
+        @selected_ids = [] # FIXME: hack to hide checkboxes
         presenter.remove_sand
         r[:partial => "service/svcs_show", :locals => {:controller => "service"}]
       else
