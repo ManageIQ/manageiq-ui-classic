@@ -1124,9 +1124,9 @@ module OpsController::OpsRbac
       else # Belongsto tag checked
         class_prefix, id = parse_nodetype_and_id(params[:id])
         klass = TreeBuilder.get_model_for_prefix(class_prefix)
-        # If ExtManagementSystem is returned get specific class
-        if klass == 'ExtManagementSystem'
-          klass = ExtManagementSystem.find(from_cid(id)).class.to_s
+        # If ExtManagementSystem/Host is returned get specific class
+        if %w(ExtManagementSystem Host).include?(klass)
+          klass = find_record_with_rbac(klass.constantize, from_cid(id)).class.to_s
         end
         if params[:check] == "0" #   unchecked
           @edit[:new][:belongsto].delete("#{klass}_#{from_cid(id)}") # Remove the tag from the belongsto hash
