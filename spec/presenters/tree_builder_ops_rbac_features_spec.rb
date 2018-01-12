@@ -35,12 +35,7 @@ describe TreeBuilderOpsRbacFeatures do
 
   describe 'bs_tree' do
     it 'builds the bs_tree' do
-      t = bs_tree.first
-
-      expect(t['key']).to match(/all_vm_rules/)
-      expect(t['title']).to be_nil
-      expect(t['tooltip']).to be_nil
-      expect(t['checkable']).to be false
+      expect(bs_tree).not_to be_nil
     end
 
     %w(aut compute con conf net opt set sto svc vi).each do |i|
