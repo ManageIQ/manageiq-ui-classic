@@ -135,6 +135,40 @@ describe ApplicationController do
         controller.send(:button_create_update, "add")
         expect(assigns(:sb)[:active_tab]).to eq("ab_advanced_tab")
       end
+
+      it "calls replace_right_cell with action='button_edit' when the edit expression button was pressed" do
+        custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host")
+        controller.instance_variable_set(:@_params, :button => "enablement_expression", :id => custom_button.id)
+        edit = {:new           => {},
+                :current       => {},
+                :custom_button => custom_button}
+        controller.instance_variable_set(:@edit, edit)
+        session[:edit] = edit
+        controller.instance_variable_set(:@sb,
+                                         :trees       => {:ab_tree => {:active_node => "-ub-Host"}},
+                                         :active_tree => :ab_tree)
+        allow(controller).to receive(:ab_get_node_info)
+        allow(controller).to receive(:exp_build_table_or_nil).and_return(nil)
+        expect(controller).to receive(:replace_right_cell).with(:action => 'button_edit')
+        controller.send(:button_create_update, "edit")
+      end
+
+      it "calls replace_right_cell with action='button_edit' when the edit expression button was pressed" do
+        custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host")
+        controller.instance_variable_set(:@_params, :button => "enablement_expression", :id => custom_button.id)
+        edit = {:new           => {},
+                :current       => {},
+                :custom_button => custom_button}
+        controller.instance_variable_set(:@edit, edit)
+        session[:edit] = edit
+        controller.instance_variable_set(:@sb,
+                                         :trees       => {:ab_tree => {:active_node => "-ub-Host"}},
+                                         :active_tree => :ab_tree)
+        allow(controller).to receive(:ab_get_node_info)
+        allow(controller).to receive(:exp_build_table_or_nil).and_return(nil)
+        expect(controller).to receive(:replace_right_cell).with(:action => 'button_edit')
+        controller.send(:button_create_update, "reset")
+      end
     end
   end
 
