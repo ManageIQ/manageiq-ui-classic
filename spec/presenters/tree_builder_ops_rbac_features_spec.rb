@@ -43,21 +43,15 @@ describe TreeBuilderOpsRbacFeatures do
       expect(t['checkable']).to be false
     end
 
-    describe 'main section keys are excluded from top_nodes if they do not exists in permissions.yml' do
-      %w(aut compute con conf mdl net opt set sto svc vi).each do |i|
-        it "includes #{i}" do
-          if i == 'mdl'
-            expect(main_keys).not_to include("100000002___tab_#{i}")
-          else
-            expect(main_keys).to include("100000002___tab_#{i}")
-          end
-        end
+    %w(aut compute con conf net opt set sto svc vi).each do |i|
+      it "includes #{i}" do
+        expect(main_keys).to include("100000002___tab_#{i}")
       end
+    end
 
-      it 'does not include blank nodes' do
-        expect(main_keys).not_to include("100000002__")
-        expect(main_keys).not_to include("100000002___tab_")
-      end
+    it 'does not include blank nodes' do
+      expect(main_keys).not_to include("100000002__")
+      expect(main_keys).not_to include("100000002___tab_")
     end
   end
 end
