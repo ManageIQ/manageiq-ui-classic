@@ -131,12 +131,12 @@
                 = h(group.description)
                 %br
           - else
-            - options = (@edit[:new][:group].present? ? [] : [[_("<Choose a Group>"), nil]]) + @edit[:groups]
             - select_groups = @edit[:new][:userid].blank? ? @edit[:new][:group] : groups.map(&:id)
             = select_tag('chosen_group',
-                         options_for_select(options, select_groups),
+                         options_for_select(@edit[:groups], select_groups),
                          :class    => "selectpicker",
                          :multiple => true,
+                         :title    => "&lt;#{_('Choose one or more Groups')}&gt;",
                          :style    => "overflow-x: scroll;")
             :javascript
               miqInitSelectPicker();
