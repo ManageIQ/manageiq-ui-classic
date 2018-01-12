@@ -44,8 +44,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     %w(all_vm_rules api_exclusive sui).each do |additional_feature|
       top_nodes << MiqProductFeature.obj_features[additional_feature][:feature]
     end
-
-    count_only_or_objects(count_only, top_nodes)
+    count_only_or_objects(count_only, top_nodes.compact)
   end
 
   def x_get_tree_section_kids(parent, count_only = false)
