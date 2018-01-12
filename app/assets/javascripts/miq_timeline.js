@@ -4,7 +4,7 @@
   function handlePopover(element) {
     var popover = '';
     if (element.hasOwnProperty("events")) {
-      popover = 'Group of ' + element.events.length + ' events';
+      popover = sprintf(__("Group of %s events"), element.events.length);
     } else {
       for (var i in element.details) {
         popover = popover + element.details[i];
@@ -25,8 +25,8 @@
     });
 
     if (el.hasOwnProperty("events")) {
-      table = table + '<thead>This is a group of ' + el.events.length + ' events starting on ' + el.date.toLocaleString() + '</thead><tbody>';
-      table = table + '<tr><th>Date</th><th>Event</th></tr>'
+      table = table + '<thead>' + sprintf(__("This is a group of %s events starting on %s"), el.events.length, el.date.toLocaleString()) + '</thead><tbody>';
+      table = table + '<tr><th>' + __("Date") + '</th><th>' + __("Event") + '</th></tr>'
       for (var i = 0; i < el.events.length; i++) {
         table = table + '<tr><td>' + el.events[i].date.toLocaleString() + ' </td> ';
         for (var j in el.events[i].details) {
@@ -36,7 +36,7 @@
       }
       table = table + '</tbody>';
     } else {
-      table = table + 'Date: ' + el.date.toLocaleString() + '<br>';
+      table = table + __('Date: ') + el.date.toLocaleString() + '<br>';
       for (var i in el.details) {
         table = table + el.details[i] + '<br>';
       }
