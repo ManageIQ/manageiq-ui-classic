@@ -33,7 +33,6 @@
                          :style                 => "width: auto;",
                          "data-miq_sparkle_on"  => true,
                          "data-miq_sparkle_off" => true,
-                         "data-container"       => "body",
                          :class                 => "selectpicker")
             :javascript
               miqInitSelectPicker();
@@ -180,7 +179,6 @@
                           :disabled              => disabled,
                           "data-miq_sparkle_on"  => true,
                           "data-miq_sparkle_off" => true,
-                          "data-container"       => "body",
                           :class    => "selectpicker")
             :javascript
               miqInitSelectPicker();
@@ -222,7 +220,6 @@
                          :style                 => "width:auto;",
                          "data-miq_sparkle_on"  => true,
                          "data-miq_sparkle_off" => true,
-                         "data-container"       => "body",
                          :class                 => "selectpicker")
             :javascript
               miqInitSelectPicker();
@@ -271,7 +268,6 @@
                          :disabled              => disabled,
                          "data-miq_sparkle_on"  => true,
                          "data-miq_sparkle_off" => true,
-                         "data-container"       => "body",
                          :class                 => "selectpicker")
             :javascript
               miqInitSelectPicker();
@@ -365,7 +361,6 @@
                            :style                 => "width: auto;",
                            "data-miq_sparkle_on"  => true,
                            "data-miq_sparkle_off" => true,
-                           "data-container"       => "body",
                            :class                 => "selectpicker")
               :javascript
                 miqInitSelectPicker();
@@ -410,7 +405,6 @@
                          :disabled              => disabled,
                          "data-miq_sparkle_on"  => true,
                          "data-miq_sparkle_off" => true,
-                         "data-container"       => "body",
                          :class                 => "selectpicker")
             :javascript
               miqInitSelectPicker();
@@ -480,8 +474,7 @@
             -# Allow editing of the text field
             = select_tag("start_hour",
                          options_for_select((0..23).to_a, options[:start_hour].to_i),
-                         "data-container" => "body",
-                         :class           => "selectpicker selectWidth")
+                         :class => "selectpicker selectWidth")
             %span h
             :javascript
               miqInitSelectPicker();
