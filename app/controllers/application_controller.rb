@@ -890,10 +890,10 @@ class ApplicationController < ActionController::Base
     session[:user_tz] = Time.zone = (user ? user.get_timezone : server_timezone)
   end
 
-  def populate_reports_menu(tree_type = 'reports', mode = 'menu')
+  def populate_reports_menu(mode = 'menu')
     # checking to see if group (used to be role) was selected in menu editor tree, or came in from reports/timeline tree calls
     group = !session[:role_choice].blank? ? MiqGroup.find_by(:description => session[:role_choice]) : current_group
-    @sb[:rpt_menu] = get_reports_menu(group, tree_type, mode)
+    @sb[:rpt_menu] = get_reports_menu(group, mode)
   end
 
   def reports_group_title
@@ -907,7 +907,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def get_reports_menu(group = current_group, tree_type = "reports", mode = "menu")
+  def get_reports_menu(group = current_group, mode = "menu")
     rptmenu = []
     reports = []
     folders = []
@@ -917,7 +917,6 @@ class ApplicationController < ActionController::Base
     if !group.settings || group.settings[:report_menus].blank? || mode == "default"
       # array of all reports if menu not configured
       data = MiqReport.for_user(current_user).where(:template_type => "report").order(:rpt_type, :filename, :name)
-      data.where.not(:timeline => nil) if tree_type == "timeline"
       data.each do |r|
         r_group = r.rpt_group == "Custom" ? "#{@sb[:grp_title]} - Custom" : r.rpt_group # Get the report group
         title = r_group.reverse.split('-', 2).collect(&:reverse).collect(&:strip).reverse
@@ -960,27 +959,7 @@ class ApplicationController < ActionController::Base
 
       subfolder.push(rep) unless subfolder.include?(rep)
       temp.push(@custom_folder) unless temp.include?(@custom_folder)
-      if tree_type == "timeline"
-        temp2 = []
-        group.settings[:report_menus].each do |menu|
-          folder_arr = []
-          menu_name = menu[0]
-          menu[1].each_with_index do |mreports, _i|
-            reports_arr = []
-            folder_name = mreports[0]
-            mreports[1].each do |rpt|
-              r = MiqReport.find_by(:name => rpt)
-              next if r.nil? || r.timeline.nil?
-
-              temp2.push([menu_name, folder_arr]) unless temp2.include?([menu_name, folder_arr])
-              reports_arr.push(rpt) unless reports_arr.include?(rpt)
-              folder_arr.push([folder_name, reports_arr]) unless folder_arr.include?([folder_name, reports_arr])
-            end
-          end
-        end
-      else
-        temp2 = group.settings[:report_menus]
-      end
+      temp2 = group.settings[:report_menus]
       # don't add custom reports to rptmenu when building tree for menu editor form
       rptmenu = mode == "menu" ? temp2 : temp.concat(temp2)
     end
