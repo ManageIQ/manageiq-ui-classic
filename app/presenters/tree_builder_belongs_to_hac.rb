@@ -64,7 +64,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
     if @assign_to.present?
       count_only_or_objects(count_only, ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager"))
     else
-      count_only_or_objects(count_only, ExtManagementSystem)
+      count_only_or_objects(count_only, ExtManagementSystem.all)
     end
   end
 
