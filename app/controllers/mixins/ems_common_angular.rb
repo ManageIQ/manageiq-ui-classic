@@ -460,7 +460,6 @@ module Mixins
                          :kubevirt_auth_status                => kubevirt_auth_status,
                          :kubevirt_password                   => kubevirt_password,
                          :kubevirt_password_exists            => @ems.authentication_token(:kubevirt).nil? ? false : true,
-                         :provider_options                    => provider_options,
                          :virtualization_selection            => retrieve_virtualization_selection}
       end
 
@@ -573,9 +572,9 @@ module Mixins
 
       if ems.kind_of?(ManageIQ::Providers::Kubevirt::InfraManager)
         kubevirt_endpoint = {
-          :role                  => :kubevirt,
-          :hostname              => kubevirt_hostname,
-          :port                  => kubevirt_api_port,
+          :role     => :kubevirt,
+          :hostname => kubevirt_hostname,
+          :port     => kubevirt_api_port,
         }
 
         kubevirt_endpoint.merge!(endpoint_security_options(kubevirt_security_protocol, kubevirt_tls_ca_certs))
