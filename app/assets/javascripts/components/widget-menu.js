@@ -1,6 +1,6 @@
 ManageIQ.angular.app.component('widgetMenu', {
   bindings: {
-    id: '<',
+    widgetId: '@',
   },
   controllerAs: 'vm',
   controller: ['$http', 'miqService', function($http, miqService) {
@@ -12,10 +12,10 @@ ManageIQ.angular.app.component('widgetMenu', {
     };
 
     this.$onInit = function() {
-      $http.get('/dashboard/widget_menu_data/' + vm.id)
+      $http.get('/dashboard/widget_menu_data/' + vm.widgetId)
         .then(function(response) { vm.widgetMenuModel = response.data; })
         .catch(miqService.handleFailure);
-      vm.div_id = 'dd_w' + vm.id + '_box';
+      vm.div_id = 'dd_w' + vm.widgetId + '_box';
     };
   }],
   template: [
