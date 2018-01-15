@@ -59,7 +59,7 @@ describe StorageHelper do
                                              :title => "Show all Managed/Registered VMs")
       end
       it 'returns correct Hash' do
-        allow(@record).to receive(:total_managed_unregistered_vms).and_return(1)
+        allow(@record).to receive(:total_unregistered_vms).and_return(1)
         expect(textual_unregistered_vms).to eq(:label => "Managed/Unregistered VMs",
                                                :icon  => "pficon pficon-virtual-machine",
                                                :value => 1,
