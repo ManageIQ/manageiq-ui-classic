@@ -1626,8 +1626,7 @@ function chartData(type, data, data2) {
   }
 
   correctPatternflyOptions(config);
-  var ret = _.defaultsDeep({}, data, config, data2);
-  return ret;
+  return _.defaultsDeep({}, data, config, data2);
 }
 
 function validateChartAxis(axis) {
