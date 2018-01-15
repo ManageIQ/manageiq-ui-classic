@@ -97,6 +97,13 @@ describe TreeBuilderBelongsToHac do
     end
   end
 
+  describe '#x_get_tree_roots' do
+    it 'returns all ExtManagementSystems except the Embedded Ansible when @assign_to is present' do
+      subject.instance_variable_set(:@assign_to, "ems_folder")
+      expect(subject.send(:x_get_tree_roots, false, nil)).to eq(ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager"))
+    end
+  end
+
   describe '#x_get_tree_provider_kids' do
     it 'returns datacenter or folder' do
       kids = subject.send(:x_get_provider_kids, ems_azure_network, false)
