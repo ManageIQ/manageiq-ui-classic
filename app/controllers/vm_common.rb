@@ -1595,7 +1595,7 @@ module VmCommon
       action = "tagging_edit"
     when "snapshot_add"
       partial = "vm_common/snap"
-      header = _("Adding a new %{snapshot}") % {:snapshot => ui_lookup(:model => "Snapshot")}
+      header = _("Adding a new Snapshot")
       action = "snap_vm"
     when "timeline"
       partial = "layouts/tl_show"

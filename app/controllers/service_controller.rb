@@ -305,7 +305,7 @@ class ServiceController < ApplicationController
     when "Service"
       show_record(from_cid(id))
       drop_breadcrumb(:name => _('Services'), :url => '/service/explorer') if @breadcrumbs.empty?
-      @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => 'Service')}
+      @right_cell_text = _("Service \"%{name}\"") % {:name => @record.name}
       @no_checkboxes = true
       @gtl_type = "grid"
       @items_per_page = ONE_MILLION
