@@ -1345,7 +1345,7 @@ describe ReportController do
       controller.instance_variable_set(:@_params, :controller => "report", :action => "explorer")
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:get_node_info)
-      controller.send(:populate_reports_menu, "reports", "default")
+      controller.send(:populate_reports_menu, "default")
       rpt_menu = controller.instance_variable_get(:@sb)[:rpt_menu]
       expect(rpt_menu.first.first).to eq("#{user.current_tenant.name} (Group): #{user.current_group.name}")
     end
