@@ -85,7 +85,7 @@ module ApplicationController::Explorer
   def x_button
     model, action = pressed2model_action(params[:pressed])
 
-    allowed_models = %w(common image instance vm miq_template provider storage configscript infra_networking automation_manager_provider configuration_manager_provider service)
+    allowed_models = %w(common image instance vm miq_template provider storage configscript infra_networking automation_manager_provider configuration_manager_provider)
     raise ActionController::RoutingError.new('invalid button action') unless
       allowed_models.include?(model)
 

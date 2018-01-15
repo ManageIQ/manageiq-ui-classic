@@ -5,6 +5,24 @@ describe ServiceController do
     stub_user(:features => :all)
   end
 
+  let(:go_definition) do
+    FactoryGirl.create(:generic_object_definition, :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
+  end
+
+  let(:service_with_go) do
+    service = FactoryGirl.create(:service, :name => 'Services with a GO')
+
+    go = FactoryGirl.create(
+      :generic_object,
+      :generic_object_definition => go_definition,
+      :name                      => 'go_assoc',
+      :services                  => [service]
+    )
+    service.add_resource(go)
+
+    service
+  end
+
   describe "#service_delete" do
     it "display flash message with description of deleted Service" do
       st  = FactoryGirl.create(:service_template)
@@ -102,20 +120,10 @@ describe ServiceController do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
       controller.instance_variable_set(:@breadcrumbs, [])
-      service = FactoryGirl.create(:service, :name => "Abc")
-      definition = FactoryGirl.create(:generic_object_definition,
-                                      :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
-      go = FactoryGirl.create(
-        :generic_object,
-        :generic_object_definition => definition,
-        :name                      => 'go_assoc',
-        :services                  => [service]
-      )
-      service.add_resource(go)
 
-      get :show, :params => { :id => service.id, :display => 'generic_objects'}
+      get :show, :params => { :id => service_with_go.id, :display => 'generic_objects'}
       expect(response.status).to eq(200)
-      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"}])
+      expect(assigns(:breadcrumbs)).to eq([{:name => "Services with a GO (All Generic Objects)", :url => "/service/show/#{service_with_go.id}?display=generic_objects"}])
     end
 
     it 'redirects to service detail page when Services maintab is clicked right after viewing the GO object' do
@@ -123,11 +131,9 @@ describe ServiceController do
       login_as FactoryGirl.create(:user)
       controller.instance_variable_set(:@breadcrumbs, [])
       service = FactoryGirl.create(:service, :name => "Abc")
-      definition = FactoryGirl.create(:generic_object_definition,
-                                      :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
       go = FactoryGirl.create(
         :generic_object,
-        :generic_object_definition => definition,
+        :generic_object_definition => go_definition,
         :name                      => 'GOTest',
         :services                  => [service]
       )
@@ -155,11 +161,9 @@ describe ServiceController do
 
       it "when Generic Object Tag is pressed for the generic object nested list" do
         service = FactoryGirl.create(:service, :name => "Service with Generic Objects")
-        definition = FactoryGirl.create(:generic_object_definition,
-                                        :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
         go = FactoryGirl.create(
           :generic_object,
-          :generic_object_definition => definition,
+          :generic_object_definition => go_definition,
           :name                      => 'go_assoc',
           :services                  => [service]
         )
