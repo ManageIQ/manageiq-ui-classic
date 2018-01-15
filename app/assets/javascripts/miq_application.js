@@ -1592,33 +1592,7 @@ function chartData(type, data, data2) {
     if (data.miq.empty) {
       return _.defaultsDeep({}, data, data2);
     }
-    // set maximum count of x axis tick labels for C&U charts
-    if (data.miq.performance_chart) {
-      data.axis.x.tick.centered = true;
-      data.axis.x.tick.culling = { max: 5 };
-    }
-
-    // small C&U charts have very limited height
-    if (data.miq.flat_chart) {
-      var max = _.max(getChartColumnDataValues(data.data.columns));
-      data.axis.y.tick.values = [0, max];
-    }
-
-    if (data.miq.expand_tooltip) {
-      data.tooltip.format.name = function(_name, _ratio, id, _index) {
-        return data.miq.name_table[id];
-      };
-
-      data.tooltip.format.title = function(x) {
-        return data.miq.category_table[x];
-      };
-    }
-    if (data.miq.zoomed) {
-      data.size = { height: $('#lightbox-panel').height() - 200 };
-      data.data.names = data.miq.name_table;
-      data.legend = { position: 'bottom'};
-
-    }
+    customizeChart(data);
   }
 
   // set formating function for tooltip and y tick labels
@@ -1676,6 +1650,34 @@ function emptyChart() {
          };
 }
 
+function customizeChart(data) {
+  // set maximum count of x axis tick labels for C&U charts
+  if (data.miq.performance_chart) {
+    data.axis.x.tick.centered = true;
+    data.axis.x.tick.culling = { max: 5 };
+  }
+
+  // small C&U charts have very limited height
+  if (data.miq.flat_chart) {
+    var max = _.max(getChartColumnDataValues(data.data.columns));
+    data.axis.y.tick.values = [0, max];
+  }
+
+  if (data.miq.expand_tooltip) {
+    data.tooltip.format.name = function(_name, _ratio, id, _index) {
+      return data.miq.name_table[id];
+    };
+
+    data.tooltip.format.title = function(x) {
+      return data.miq.category_table[x];
+    };
+  }
+  if (data.miq.zoomed) {
+    data.size = { height: $('#lightbox-panel').height() - 200 };
+    data.data.names = data.miq.name_table;
+    data.legend = { position: 'bottom'};
+  }
+}
 
 $(function() {
   $(window).on('resize', miqInitAccordions);
