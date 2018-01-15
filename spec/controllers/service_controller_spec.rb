@@ -5,11 +5,11 @@ describe ServiceController do
     stub_user(:features => :all)
   end
 
-  let(:go_definition) {
+  let(:go_definition) do
     FactoryGirl.create(:generic_object_definition, :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
-  }
+  end
 
-  let (:service_with_go) {
+  let(:service_with_go) do
     service = FactoryGirl.create(:service, :name => 'Services with a GO')
 
     go = FactoryGirl.create(
@@ -21,7 +21,7 @@ describe ServiceController do
     service.add_resource(go)
 
     service
-  }
+  end
 
   describe "#service_delete" do
     it "display flash message with description of deleted Service" do

@@ -184,8 +184,8 @@ class ServiceController < ApplicationController
 
     @lastaction = 'generic_object'
     @item = @record.generic_objects.find(params[:generic_object_id]).first
-    drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name}, :url  => show_link(@record, :display => 'generic_objects'))
-    drop_breadcrumb(:name => @item.name, :url  => show_link(@record, :display => 'generic_objects', :generic_object_id => params[:generic_object_id]))
+    drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name}, :url => show_link(@record, :display => 'generic_objects'))
+    drop_breadcrumb(:name => @item.name, :url => show_link(@record, :display => 'generic_objects', :generic_object_id => params[:generic_object_id]))
     @view = get_db_view(GenericObject)
     @sb[:rec_id] = params[:generic_object_id]
     show_item
@@ -412,7 +412,8 @@ class ServiceController < ApplicationController
     reload_trees_by_presenter(presenter, build_replaced_trees(replace_trees, %i(svcs)))
 
     # Replace right cell divs
-    presenter.update(:main_div,
+    presenter.update(
+      :main_div,
       if %w(dialog_provision ownership retire service_edit tag service_tag).include?(action)
         r[:partial => partial, :locals => options[:dialog_locals]]
       elsif params[:display]
@@ -434,7 +435,7 @@ class ServiceController < ApplicationController
       else
         if %w(tag service_tag).include?(action)
           locals = {:action_url => action_url}
-          locals[:multi_record] = true    # need save/cancel buttons on edit screen even tho @record.id is not there
+          locals[:multi_record] = true  # need save/cancel buttons on edit screen even tho @record.id is not there
           locals[:record_id]    = @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]
         elsif action == "ownership"
           locals = {:action_url => action_url}
