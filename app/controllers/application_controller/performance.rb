@@ -195,6 +195,18 @@ module ApplicationController::Performance
     javascript_flash(:spinner_off => true)
   end
 
+  # Params:
+  #   chart_click_data - information about clicked position (cmd, model, type)
+  #   data_row         - a single datapoint from the data that the chart was
+  #                      generated from
+  #   report           - instance of MiqReport that is displayed by the graph
+  #   ts               - timestamp of the clicked datapoint
+  #   bc_model         - information about the model described by the chart used
+  #                      for creating breadcrumbs
+  # Returns:
+  #   an information about whether the request was displayed, or the reason why
+  #   it was not
+  #
   def process_chart_action(chart_click_data, data_row, report, ts, bc_model)
     request_displayed, unavailability_reason =
       case chart_click_data.cmd
