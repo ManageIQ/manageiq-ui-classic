@@ -1579,19 +1579,13 @@ function rbacGroupLoadTab(id) {
 }
 
 function chartData(type, data, data2) {
-  var empty = {
-    data: {
-      columns: [],
-    },
-  };
-
   if (type === undefined) {
-    return empty;
+    return emptyChart();
   }
 
   var config = _.cloneDeep(ManageIQ.charts.c3config[type]);
   if (config === undefined) {
-    return empty;
+    return emptyChart();
   }
 
   if (_.isObject(data.miq)) {
@@ -1672,6 +1666,16 @@ function chartData(type, data, data2) {
   var ret = _.defaultsDeep({}, data, config, data2);
   return ret;
 }
+
+
+function emptyChart() {
+  return {
+           data: {
+             columns: [],
+           },
+         };
+}
+
 
 $(function() {
   $(window).on('resize', miqInitAccordions);
