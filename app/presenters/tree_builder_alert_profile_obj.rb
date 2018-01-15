@@ -46,7 +46,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
           elsif @cat_tree
             @cat ? Classification.find(@cat).entries : []
           elsif @assign_to == "ext_management_system"
-            @assign_to.camelize.constantize.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager")
+            ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager")
           else
             @assign_to.camelize.constantize.all
           end
