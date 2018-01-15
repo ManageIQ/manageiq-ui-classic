@@ -1,4 +1,4 @@
-ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqService', '$timeout', function($location, $http, miqService, $timeout) {
+ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqService', '$timeout', '$interval', function($location, $http, miqService, $timeout, $interval) {
   this.tooltip = function tooltip(d) {
     var status = [
       __('Name: ') + d.item.name,
@@ -35,19 +35,18 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     };
   };
 
-  this.mixinContextMenu = function(self, $scope) {
+  this.contextMenu = function(vm) {
     var topologyService = this;
-    var d3 = $scope.d3;
-    $scope.contextMenuShowing = false;
+    vm.contextMenuShowing = false;
 
     var removeContextMenu = function() {
       d3.event.preventDefault();
       d3.select('.popup').remove();
-      $scope.contextMenuShowing = false;
+      vm.contextMenuShowing = false;
     };
 
-    self.contextMenu = function(_that, data) {
-      if ($scope.contextMenuShowing) {
+    vm.contextMenu = function(_that, data) {
+      if (vm.contextMenuShowing) {
         removeContextMenu();
       } else {
         d3.event.preventDefault();
@@ -63,7 +62,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
 
         if (data.item.kind !== 'Tag') {
           popup.append('p').text(__('Go to summary page')).on('click', function() {
-            self.dblclick(data);
+            vm.dblclick(data);
           });
         }
 
@@ -86,11 +85,11 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
           popup.style('top', 'auto');
           popup.style('bottom', 0);
         }
-        $scope.contextMenuShowing = ! $scope.contextMenuShowing;
+        vm.contextMenuShowing = ! vm.contextMenuShowing;
       }
     };
 
-    self.dblclick = function dblclick(d) {
+    vm.dblclick = function dblclick(d) {
       if (d.item.kind === 'Tag') {
         return false;
       }
@@ -98,7 +97,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     };
 
     d3.select('body').on('click', function() {
-      if ($scope.contextMenuShowing) {
+      if (vm.contextMenuShowing) {
         removeContextMenu();
       }
     });
@@ -211,7 +210,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
   };
 
   // this injects some common code in the controller - temporary pending a proper merge
-  this.mixinSearch = function($scope) {
+  this.search = function($scope) {
     var topologyService = this;
 
     var resetEvent = function() {
@@ -248,13 +247,14 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     });
   };
 
-  this.mixinRefresh = function(controller, $scope) {
+  this.refresh = function(controller, $scope) {
     var topologyService = this;
     var getTopologyData = function(response) {
       var data = response.data;
       var currentSelectedKinds = controller.kinds;
       controller.items = data.data.items;
       controller.relations = data.data.relations;
+      // NOTE: $scope.kinds is required by kubernetes icons used for filtering
       controller.kinds = $scope.kinds = data.data.kinds;
       controller.icons = data.data.icons;
       if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(controller.kinds).length)) {
@@ -275,14 +275,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
 
       if (match) {
         var id = match[2];
-        var url = controller.detailUrl || controller.dataUrl;
-
-        // ems_container is restful? and thus special :(
-        // FIXME: get rid of detailUrl, use a separate container project controller instead
-        if (match[1] === 'ems_container') {
-          url = controller.dataUrl;
-        }
-
+        var url = controller.dataUrl;
         return url + (id && '/' + id);
       }
     };
@@ -302,16 +295,39 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     });
   };
 
-  this.mixinGetIcon = function(controller) {
+  this.getIcon = function(controller) {
     controller.getIcon = function(d) {
       switch (d.item.kind) {
         case 'CloudManager':
         case 'InfraManager':
         case 'PhysicalInfraManager':
+        case 'ContainerManager':
+        case 'NetworkManager':
           return controller.icons[d.item.display_kind];
         default:
           return controller.icons[d.item.kind];
       }
     };
+  };
+
+  this.mixinTopology = function(vm, $scope) {
+    vm.d3 = window.d3;
+    miqHideSearchClearButton();
+    vm.checkboxModel = {
+      value: false,
+    };
+    vm.legendTooltip = __('Click here to show/hide entities of this type');
+    $('input#box_display_names').click(this.showHideNames(vm));
+
+    this.contextMenu(vm);
+    this.refresh(vm, $scope);
+    this.getIcon(vm);
+    vm.refresh();
+
+    var promise = $interval(vm.refresh, 1000 * 60 * 3);
+    $scope.$on('$destroy', function() {
+      $interval.cancel(promise);
+    });
+    this.search(vm);
   };
 }]);

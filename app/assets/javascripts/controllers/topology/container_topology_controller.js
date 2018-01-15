@@ -1,23 +1,11 @@
 angular.module('ManageIQ').controller('containerTopologyController', ContainerTopologyCtrl);
-ContainerTopologyCtrl.$inject = ['$scope', '$interval', 'topologyService'];
+ContainerTopologyCtrl.$inject = ['$scope', 'topologyService', 'topologyDetail'];
 
-function ContainerTopologyCtrl($scope, $interval, topologyService) {
-  ManageIQ.angular.scope = $scope;
-  miqHideSearchClearButton();
+function ContainerTopologyCtrl($scope, topologyService, topologyDetail) {
   var vm = this;
-  vm.dataUrl = '/container_topology/data';
-  vm.detailUrl = '/container_project_topology/data';
+  vm.dataUrl = topologyDetail ? '/container_project_topology/data' : '/container_topology/data';
   vm.vs = null;
   vm.icons = null;
-
-  var d3 = window.d3;
-  vm.d3 = d3;
-
-  topologyService.mixinContextMenu(vm, vm);
-
-  vm.checkboxModel = {
-    value: false
-  };
 
   vm.remove_hierarchy = [
     'Container',
@@ -31,15 +19,7 @@ function ContainerTopologyCtrl($scope, $interval, topologyService) {
     'ContainerManager'
   ];
 
-  vm.legendTooltip = __("Click here to show/hide entities of this type");
-  $('input#box_display_names').click(topologyService.showHideNames(vm));
-  topologyService.mixinRefresh(vm, $scope);
-  vm.refresh();
-  var promise = $interval(vm.refresh, 1000 * 60 * 3);
-
-  $scope.$on('$destroy', function() {
-    $interval.cancel(promise);
-  });
+  topologyService.mixinTopology(vm, $scope);
 
   $scope.$on("render", function(ev, vertices, added) {
     /*
@@ -151,10 +131,6 @@ function ContainerTopologyCtrl($scope, $interval, topologyService) {
     ev.preventDefault();
   });
 
-  vm.getIcon = function getIcon(d) {
-    return d.item.kind === 'ContainerManager' ? vm.icons[d.item.display_kind] : vm.icons[d.item.kind];
-  };
-
   vm.getDimensions = function getDimensions(d) {
     var defaultDimensions = topologyService.defaultElementDimensions();
     switch (d.item.kind) {
@@ -178,6 +154,4 @@ function ContainerTopologyCtrl($scope, $interval, topologyService) {
         return defaultDimensions;
     }
   };
-
-  topologyService.mixinSearch(vm);
 }

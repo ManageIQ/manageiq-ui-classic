@@ -50,6 +50,7 @@ describe('containerTopologyController', function() {
       ctrl = _$controller_('containerTopologyController',
         {
           $scope: scope,
+          topologyDetail: true,
         }
       );
       $httpBackend.flush();

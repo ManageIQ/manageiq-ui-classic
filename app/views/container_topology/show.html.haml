@@ -55,4 +55,5 @@
   %kubernetes-topology-graph{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds"}
 
 :javascript
+  ManageIQ.angular.app.value('topologyDetail', #{params[:controller] == "container_project"});
   miq_bootstrap('.topology');
