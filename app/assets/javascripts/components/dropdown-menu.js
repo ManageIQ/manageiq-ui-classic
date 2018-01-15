@@ -1,6 +1,6 @@
 ManageIQ.angular.app.component('dropdownMenu', {
   bindings: {
-    id: '<',
+    widgetId: '@',
     buttonsData: '@',
   },
   controllerAs: 'vm',
@@ -8,7 +8,7 @@ ManageIQ.angular.app.component('dropdownMenu', {
     var vm = this;
 
     this.$onInit = function() {
-      vm.dropdown_id = 'btn_' + vm.id;
+      vm.dropdown_id = 'btn_' + vm.widgetId;
       vm.buttons = JSON.parse(vm.buttonsData);
     };
   },
