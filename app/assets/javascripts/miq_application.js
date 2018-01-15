@@ -1625,13 +1625,7 @@ function chartData(type, data, data2) {
     };
   }
 
-
-  // some PatternFly default configs define contents function, but it breaks formatting
-  if (_.isObject(config.tooltip)) {
-    config.tooltip.contents = undefined;
-  }
-  // some PatternFly default configs define size of chart
-  config.size = {};
+  correctPatternflyOptions(config);
   var ret = _.defaultsDeep({}, data, config, data2);
   return ret;
 }
@@ -1679,6 +1673,15 @@ function customizeChart(data) {
     data.data.names = data.miq.name_table;
     data.legend = { position: 'bottom'};
   }
+}
+
+function correctPatternflyOptions(config) {
+  // some PatternFly default configs define contents function, but it breaks formatting
+  if (_.isObject(config.tooltip)) {
+    config.tooltip.contents = undefined;
+  }
+  // some PatternFly default configs define size of chart
+  config.size = {};
 }
 
 $(function() {
