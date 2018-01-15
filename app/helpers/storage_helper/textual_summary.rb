@@ -117,7 +117,7 @@ module StorageHelper::TextualSummary
   end
 
   def textual_unregistered_vms
-    value = @record.total_managed_unregistered_vms
+    value = @record.total_unregistered_vms
     h = {:label => _("Managed/Unregistered VMs"),
          :icon  => "pficon pficon-virtual-machine",
          :value => value}
