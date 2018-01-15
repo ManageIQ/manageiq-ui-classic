@@ -1596,12 +1596,7 @@ function chartData(type, data, data2) {
   }
 
   // set formating function for tooltip and y tick labels
-  if (_.isObject(data.axis) &&
-      _.isObject(data.axis.y) &&
-      _.isObject(data.axis.y.tick) &&
-      _.isObject(data.axis.y.tick.format) &&
-      data.axis.y.tick.format.function) {
-
+  if (validateChartAxis(data.axis)) {
     var format = data.axis.y.tick.format;
     var max = _.max(getChartColumnDataValues(data.data.columns));
     var min = _.min(getChartColumnDataValues(data.data.columns));
@@ -1641,6 +1636,13 @@ function chartData(type, data, data2) {
   return ret;
 }
 
+function validateChartAxis(axis) {
+  return _.isObject(axis) &&
+         _.isObject(axis.y) &&
+         _.isObject(axis.y.tick) &&
+         _.isObject(axis.y.tick.format) &&
+         axis.y.tick.format.function
+}
 
 function emptyChart() {
   return {
