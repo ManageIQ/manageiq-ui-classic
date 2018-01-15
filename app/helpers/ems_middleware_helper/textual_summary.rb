@@ -23,13 +23,7 @@ module EmsMiddlewareHelper::TextualSummary
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i(tags))
   end
-
-  def textual_group_topology
-    items = %w(topology)
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualGroup.new(_("Overview"), i)
-  end
-
+  
   #
   # Items
   #
@@ -48,13 +42,6 @@ module EmsMiddlewareHelper::TextualSummary
 
   def textual_port
     @record.supports_port? ? @record.port : nil
-  end
-
-  def textual_topology
-    {:label => _('Topology'),
-     :icon  => "pficon pficon-topology",
-     :link  => url_for_only_path(:controller => 'middleware_topology', :action => 'show', :id => @record.id),
-     :title => _('Show topology')}
   end
 
   def textual_authentication_status

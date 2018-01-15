@@ -53,7 +53,7 @@
       - if (@default_search && @default_search.name != @edit[:adv_search_applied][:name]) || !@default_search
         (#{link_to("clear", {:action => 'adv_search_clear'}, :method => :post, :class => 'active')})
   - else
-    - if %w(container_topology middleware_topology network_topology cloud_topology).include?(@layout)
+    - if %w(container_topology network_topology cloud_topology).include?(@layout)
       = ''
     - else
       - if @right_cell_text

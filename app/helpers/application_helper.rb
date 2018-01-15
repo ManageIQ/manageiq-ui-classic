@@ -1347,7 +1347,6 @@ module ApplicationHelper
                         middleware_messaging
                         middleware_server
                         middleware_server_group
-                        middleware_topology
                         miq_schedule
                         miq_template
                         monitor_alerts_overview

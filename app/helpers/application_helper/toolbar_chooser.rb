@@ -522,7 +522,6 @@ class ApplicationHelper::ToolbarChooser
               infra_topology
               ems_storage
               container_topology
-              middleware_topology
               cloud_topology
               middleware_server
               middleware_deployment

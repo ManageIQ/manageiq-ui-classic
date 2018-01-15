@@ -1026,13 +1026,6 @@ Rails.application.routes.draw do
       )
     },
 
-    :middleware_topology       => {
-      :get => %w(
-        show
-        data
-      )
-    },
-
     :network_topology         => {
       :get => %w(
         show
