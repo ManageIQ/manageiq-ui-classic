@@ -470,7 +470,7 @@ class ApplicationHelper::ToolbarChooser
         return "#{@display}_center"
       end
     elsif @display == 'generic_objects'
-      return "#{@display}_center"
+      return @lastaction == 'generic_object' ? nil : 'generic_objects_center'
     elsif @lastaction == "compare_miq" || @lastaction == "compare_compress"
       return "compare_center_tb"
     elsif @lastaction == "drift_history"
