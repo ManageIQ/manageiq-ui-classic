@@ -1059,7 +1059,6 @@ class ApplicationController < ActionController::Base
         image = "100/#{(@listicon || view.db).underscore}.png" if icon.nil? && image.nil? # TODO: we want to get rid of this
         # FIXME: adding exceptions here is a wrong approach
         icon = nil if params[:controller] == 'pxe'
-        icon = nil if params[:model] == 'MiddlewareServer'
         new_row[:cells] << {:title => _('View this item'),
                             :image   => ActionController::Base.helpers.image_path(image.to_s),
                             :picture => ActionController::Base.helpers.image_path(picture.to_s),
