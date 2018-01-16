@@ -16,9 +16,9 @@
       .col-md-8
         = select_tag("ems_id",
                       options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
-                      "ng-model"                    => "cloudSubnetModel.ems_id",
+                      "ng-model"                    => "vm.cloudSubnetModel.ems_id",
                       "required"                    => "",
-                      "ng-change"                   => "filterNetworkManagerChanged(cloudSubnetModel.ems_id)",
+                      "ng-change"                   => "vm.filterNetworkManagerChanged(vm.cloudSubnetModel.ems_id)",
                       "selectpicker-for-select-tag" => "")
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
