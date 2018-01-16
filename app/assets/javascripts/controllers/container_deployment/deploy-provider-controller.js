@@ -54,15 +54,13 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
           break;
         case 'ldap':
           auth.type = 'AuthenticationLdap';
-          auth.id = vm.data.authentication.ldap.id;
-          auth.email = vm.data.authentication.ldap.email;
-          auth.name = vm.data.authentication.ldap.name;
-          auth.username = vm.data.authentication.ldap.username;
+          Object.assign(auth, vm.data.authentication.ldap);
           auth.bind_dn = vm.data.authentication.ldap.bindDN;
           auth.password = vm.data.authentication.ldap.bindPassword;
           auth.certificate_authority = vm.data.authentication.ldap.ca;
-          auth.insecure = vm.data.authentication.ldap.insecure;
-          auth.url = vm.data.authentication.ldap.url;
+          delete auth.bindDN;
+          delete auth.bindPassword;
+          delete auth.ca;
           break;
         case 'requestHeader':
           auth.type = 'AuthenticationRequestHeader';
