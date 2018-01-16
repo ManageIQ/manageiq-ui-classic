@@ -9,15 +9,15 @@
           = h(presenter.widget.title)
 
     - if presenter.widget.content_type == "menu"
-      %widget-menu{:id => presenter.widget.id}
+      %widget-menu{:id => presenter.widget.id, "widget-id" => presenter.widget.id}
     - elsif presenter.widget.contents_for_user(current_user).blank?
       = render :partial => 'widget_blank', :locals => {:widget => presenter.widget}
     - elsif presenter.widget.content_type == "report"
-      %widget-report{:id => presenter.widget.id}
+      %widget-report{:id => presenter.widget.id, "widget-id" => presenter.widget.id}
     - elsif presenter.widget.content_type == "chart"
-      %widget-chart{:id => presenter.widget.id}
+      %widget-chart{:id => presenter.widget.id, "widget-id" => presenter.widget.id}
     - elsif presenter.widget.content_type == "rss"
-      %widget-rss{:id => presenter.widget.id}
+      %widget-rss{:id => presenter.widget.id, "widget-id" => presenter.widget.id}
     - unless presenter.widget.content_type == "menu"
       = render :partial => 'widget_footer', :locals => {:widget => presenter.widget}
 
