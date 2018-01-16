@@ -1,6 +1,6 @@
 ManageIQ.angular.app.component('widgetChart', {
   bindings: {
-    id: '<',
+    widgetId: '@',
   },
   controllerAs: 'vm',
   controller: ['$http', 'miqService', '$sce', function($http, miqService, $sce) {
@@ -8,10 +8,10 @@ ManageIQ.angular.app.component('widgetChart', {
     vm.widgetChartModel = {};
 
     this.$onInit = function() {
-      $http.get('/dashboard/widget_chart_data/' + vm.id)
+      $http.get('/dashboard/widget_chart_data/' + vm.widgetId)
         .then(vm.getData)
         .catch(miqService.handleFailure);
-      vm.div_id = "dd_w" + vm.id + "_box";
+      vm.div_id = "dd_w" + vm.widgetId + "_box";
     };
 
     vm.getData = function(response) {
