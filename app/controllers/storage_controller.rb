@@ -25,11 +25,11 @@ class StorageController < ApplicationController
   end
 
   def display_registered_vms
-    nested_list(Vm, :parent_method => "registered_vms", :breadcrumb_title => _('Managed/Registered VMs'))
+    nested_list("vm", Vm, :parent_method => "registered_vms", :breadcrumb_title => _('Managed/Registered VMs'))
   end
 
   def display_unregistered_vms
-    nested_list(Vm, :parent_method => "unregistered_vms", :breadcrumb_title => _('Managed/Unregistered VMs'))
+    nested_list("vm", Vm, :parent_method => "unregistered_vms", :breadcrumb_title => _('Managed/Unregistered VMs'))
   end
 
   def show_list
