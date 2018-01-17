@@ -27,7 +27,7 @@ describe EmsCloudController do
 
       it "when Retire Button is pressed for a Cloud provider Instance" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create("ems_vmware")
+        ems = FactoryGirl.create(:ems_vmware)
         vm = FactoryGirl.create(:vm_vmware,
                                 :ext_management_system => ems,
                                 :storage               => FactoryGirl.create(:storage)
@@ -39,7 +39,7 @@ describe EmsCloudController do
 
       it "when Retire Button is pressed for an Orchestration Stack" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create("ems_amazon")
+        ems = FactoryGirl.create(:ems_amazon)
         ost = FactoryGirl.create(:orchestration_stack_cloud, :ext_management_system => ems)
         post :button, :params => { :pressed => "orchestration_stack_retire", "check_#{ost.id}" => "1", :format => :js, :id => ems.id, :display => 'orchestration_stacks' }
         expect(response.status).to eq 200
@@ -48,7 +48,7 @@ describe EmsCloudController do
 
       it "when the Tagging Button is pressed for a Cloud provider Instance" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create("ems_vmware")
+        ems = FactoryGirl.create(:ems_vmware)
         vm = FactoryGirl.create(:vm_vmware,
                                 :ext_management_system => ems,
                                 :storage               => FactoryGirl.create(:storage))
