@@ -360,6 +360,13 @@
     }
   };
 
+  window.miqGtlSetExtraClasses = function() {
+    // need this to work even if there is no GTL instance running
+    return ReportDataController.prototype.setExtraClasses.call({
+      $document: document,
+    });
+  };
+
   ReportDataController.prototype.activateNodeSilently = function(itemId) {
     var treeId = angular.element('.collapse.in .treeview').attr('id');
     if (EXPAND_TREES.indexOf(treeId) !== -1) {
