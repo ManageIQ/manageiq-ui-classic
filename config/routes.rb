@@ -687,6 +687,7 @@ Rails.application.routes.draw do
 
     :container_node           => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -720,6 +721,7 @@ Rails.application.routes.draw do
         launch_external_logging
       ) +
                adv_search_post +
+               dialog_runner_post +
                exp_post +
                perf_post +
                save_post
