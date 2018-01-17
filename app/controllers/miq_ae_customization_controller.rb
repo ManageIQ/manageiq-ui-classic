@@ -304,7 +304,7 @@ class MiqAeCustomizationController < ApplicationController
   def handle_bottom_cell(presenter)
     if @pages || @in_a_form
       if @pages
-        presenter.hide(:form_buttons_div).show(:pc_div_1)
+        presenter.hide(:form_buttons_div)
       elsif @in_a_form && @sb[:action]
         action_url = case x_active_tree
                      when :old_dialogs_tree then 'old_dialogs_update'
@@ -325,7 +325,7 @@ class MiqAeCustomizationController < ApplicationController
           :multi_record => @sb[:action] == 'ab_group_reorder',
         }
         presenter.update(:form_buttons_div, render_proc[:partial => "layouts/x_edit_buttons", :locals => locals])
-        presenter.hide(:pc_div_1).show(:form_buttons_div)
+        presenter.remove_paging.show(:form_buttons_div)
       end
       presenter.show(:paging_div)
     else
@@ -388,7 +388,7 @@ class MiqAeCustomizationController < ApplicationController
 
     if x_active_tree == :dialogs_tree && @sb[:active_tab] == "sample_tab" && nodetype != "root" && @record.buttons
       presenter.update(:form_buttons_div, render_proc[:partial => "dialog_sample_buttons"])
-      presenter.hide(:pc_div_1, :form_buttons_div).show(:paging_div)
+      presenter.remove_paging.hide(:form_buttons_div).show(:paging_div)
     end
   end
 

@@ -2024,7 +2024,7 @@ class CatalogController < ApplicationController
         :force_cancel_button => true,
         :ajax_buttons        => true
       }
-      presenter.show(:form_buttons_div).hide(:pc_div_1)
+      presenter.show(:form_buttons_div).remove_paging
       presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
     elsif record_showing || @in_a_form || @sb[:buttons_node] ||
           (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0))
@@ -2032,7 +2032,7 @@ class CatalogController < ApplicationController
           'st_new', 'st_catalog_new', 'st_catalog_edit'].include?(action)
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
-        presenter.hide(:pc_div_1)
+        presenter.remove_paging
         action == 'at_st_new' && ansible_playbook? ? presenter.hide(:form_buttons_div) : presenter.show(:form_buttons_div)
         locals = {:record_id => @edit[:rec_id]}
         case action
@@ -2053,7 +2053,7 @@ class CatalogController < ApplicationController
       elsif action == "dialog_provision"
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
-        presenter.hide(:form_buttons_div, :paging_div, :pc_div_1)
+        presenter.hide(:form_buttons_div, :paging_div).remove_paging
         if Settings.product.old_dialog_user_ui
           presenter.show(:form_buttons_div, :buttons_on)
           presenter.update(
@@ -2068,7 +2068,7 @@ class CatalogController < ApplicationController
           )
         end
       elsif %w(ot_edit ot_copy ot_add service_dialog_from_ot).include?(action)
-        presenter.hide(:toolbar).show(:paging_div, :form_buttons_div).hide(:pc_div_1)
+        presenter.hide(:toolbar).show(:paging_div, :form_buttons_div).remove_paging
         locals = {:record_id  => @edit[:rec_id],
                   :action_url => "#{action}_submit",
                   :serialize  => true}
@@ -2083,7 +2083,7 @@ class CatalogController < ApplicationController
         presenter.hide(:buttons_on, :form_buttons_div).show(:toolbar).hide(:paging_div)
       end
     else
-      presenter.hide(:form_buttons_div).show(:pc_div_1, :toolbar, :paging_div)
+      presenter.hide(:form_buttons_div).show(:toolbar, :paging_div)
     end
 
     presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
