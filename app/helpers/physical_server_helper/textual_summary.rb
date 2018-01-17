@@ -136,27 +136,27 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_support_contact
-    {:label => _("Support contact"), :value => @record.asset_details['contact']}
+    {:label => _("Support contact"), :value => @record.asset_detail['contact']}
   end
 
   def textual_description
-    {:label => _("Description"), :value => @record.asset_details['description']}
+    {:label => _("Description"), :value => @record.asset_detail['description']}
   end
 
   def textual_location
-    {:label => _("Location"), :value => @record.asset_details['location']}
+    {:label => _("Location"), :value => @record.asset_detail['location']}
   end
 
   def textual_room_id
-    {:label => _("Room"), :value => @record.asset_details['room_id']}
+    {:label => _("Room"), :value => @record.asset_detail['room_id']}
   end
 
   def textual_rack_name
-    {:label => _("Rack name"), :value => @record.asset_details['rack_name']}
+    {:label => _("Rack name"), :value => @record.asset_detail['rack_name']}
   end
 
   def textual_lowest_rack_unit
-    {:label => _("Lowest rack name"), :value => @record.asset_details['lowest_rack_unit']}
+    {:label => _("Lowest rack name"), :value => @record.asset_detail['lowest_rack_unit']}
   end
 
   def textual_health_state
