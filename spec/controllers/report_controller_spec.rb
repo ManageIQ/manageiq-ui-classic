@@ -941,7 +941,7 @@ describe ReportController do
       end
 
       context "when the widget importer does not raise an error" do
-        let(:ret) { FactoryGirl.build_stubbed(:import_file_upload, :id => '123') }
+        let(:ret) { FactoryGirl.build(:import_file_upload, :id => '123') }
 
         before do
           allow(ret).to receive(:widget_list).and_return([])
