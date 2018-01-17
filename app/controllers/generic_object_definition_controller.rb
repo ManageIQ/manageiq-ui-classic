@@ -210,7 +210,7 @@ class GenericObjectDefinitionController < ApplicationController
     presenter.replace(:main_div, r[:partial => form_partial])
     presenter.hide(:paging_div)
     presenter[:lock_sidebar] = true
-    build_toolbar("x_summary_view_tb")
+    presenter.set_visibility(false, :toolbar)
 
     render :json => presenter.for_render
   end
