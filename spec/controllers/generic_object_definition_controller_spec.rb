@@ -96,4 +96,33 @@ describe GenericObjectDefinitionController do
       expect(toolbar_array[0][2][:url]).to eq('/show_list')
     end
   end
+
+  context "Render form/Toolbar" do
+    render_views
+
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+      ApplicationController.handle_exceptions = true
+      allow(controller).to receive(:build_tree)
+    end
+
+    it "does not display toolbar and paging div when custom button is edited" do
+      custom_button = FactoryGirl.create(:custom_button,
+                                         :applies_to_class => "GenericObjectDefinition",
+                                         :name             => "Default",
+                                         :options          => {
+                                           'button_icon'  => 'ff ff-view-expanded',
+                                           'button_color' => '#4727ff',
+                                           'display'      => true,
+                                         },)
+
+      allow(controller).to receive(:x_node) { "cb-#{custom_button.id}" }
+      post :tree_select, :params => {'id' => "cb-#{custom_button.id}"}
+
+      post :custom_button_edit, :params => {:id => custom_button.id, :format => :js}
+      expect(response.status).to eq(200)
+      expect(response.body).to include('"setVisibility":{"paging_div":false,"toolbar":false}')
+    end
+  end
 end
