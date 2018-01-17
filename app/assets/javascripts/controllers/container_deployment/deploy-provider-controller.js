@@ -22,7 +22,7 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
     vm.deploymentDetailsGeneralComplete = false;
     vm.nextButtonTitle = __("Next >");
 
-    var initializeDeploymentWizard = function () {
+    var initializeDeploymentWizard = vm.initializeDeploymentWizard = function () {
       vm.data = {
         providerName: '',
         providerType: 'openshiftEnterprise',
@@ -42,7 +42,7 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
       vm.deployProviderReady = true;
     };
 
-    var create_auth_object = function () {
+    var create_auth_object = vm.create_auth_object = function () {
       var auth = {};
       switch (vm.data.authentication.mode) {
         case 'all':
@@ -53,8 +53,8 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
           auth.htpassd_users = vm.data.authentication.htPassword.users;
           break;
         case 'ldap':
-          auth.type = 'AuthenticationLdap';
           Object.assign(auth, vm.data.authentication.ldap);
+          auth.type = 'AuthenticationLdap';
           auth.bind_dn = vm.data.authentication.ldap.bindDN;
           auth.password = vm.data.authentication.ldap.bindPassword;
           auth.certificate_authority = vm.data.authentication.ldap.ca;
@@ -92,7 +92,7 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
       return auth;
     };
 
-    var create_nodes_object = function() {
+    var create_nodes_object = vm.create_nodes_object = function() {
       var nodes = [];
       vm.nodeData.allNodes.forEach(function(item) {
         var name = "";
@@ -168,7 +168,7 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
     vm.deployComplete = false;
     vm.deployInProgress = false;
 
-    var startDeploy = function () {
+    var startDeploy = vm.startDeploy = function () {
       vm.deployInProgress = true;
       vm.deployComplete = false;
       vm.deploySuccess = false;
