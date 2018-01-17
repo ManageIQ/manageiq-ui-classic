@@ -94,7 +94,7 @@ module ReportFormatter
             ems_cloud =  true if ems.kind_of?(EmsCloud)
             ems_container = true if ems.kind_of?(::ManageIQ::Providers::ContainerManager)
           end
-          if !(ems_cloud)
+          unless ems_cloud
             e_title = if rec[:vm_name] # Create the title using VM name
                         rec[:vm_name]
                       elsif rec[:host_name] # or Host Name
