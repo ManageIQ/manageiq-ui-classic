@@ -40,38 +40,4 @@ describe MiddlewareDomainController do
       end
     end
   end
-
-  describe 'domain operations:' do
-    let(:ems) { FactoryGirl.create(:ems_hawkular) }
-    let(:mw_domain) do
-      FactoryGirl.create(
-        :hawkular_middleware_domain,
-        :ext_management_system => ems,
-        :ems_ref               => '/t;hawkular/f;master.Unnamed%20Domain/r;Local~~/r;Local~%2Fhost%3Dmaster'
-      )
-    end
-
-    before(:each) do
-      MiqServer.seed
-    end
-
-    it 'stop operation should create timeline event' do
-      allow(controller).to receive(:trigger_mw_operation)
-
-      post :button, :params => {
-        :id      => mw_domain.id,
-        :pressed => :middleware_domain_stop
-      }
-
-      # Simulate queue delivery, and test that the event has been placed in the timeline
-      MiqQueue.last.deliver
-      event = EmsEvent.last
-      expect(event.ems_id).to eq(ems.id)
-      expect(event.source).to eq('EVM')
-      expect(event.event_type).to eq('MwDomain.Stop.UserRequest')
-      expect(event.middleware_domain_id).to eq(mw_domain.id)
-      expect(event.middleware_domain_name).to eq(mw_domain.name)
-      expect(event.username).to eq(user.userid)
-    end
-  end
 end

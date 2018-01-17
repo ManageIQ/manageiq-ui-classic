@@ -159,60 +159,6 @@ describe MiddlewareServerController do
     end
   end
 
-  describe('Standalone server operations:') do
-    def timeline_event_expectations(event, operation_info, mw_server)
-      expect(event.ems_id).to eq(ems.id)
-      expect(event.source).to eq('EVM')
-      expect(event.event_type).to eq(operation_info.fetch(:log_timeline))
-      expect(event.message).to eq(_('%{server} will be %{operation} per user request') %
-                                    {:operation => operation_info.fetch(:hawk), :server => mw_server.name})
-      expect(event.middleware_server_id).to eq(mw_server.id)
-      expect(event.middleware_server_name).to eq(mw_server.name)
-      expect(event.username).to eq(user.userid)
-    end
-
-    let(:ems) { FactoryGirl.create(:ems_middleware) }
-    let(:mw_server) do
-      FactoryGirl.create(:hawkular_middleware_server,
-                         :ext_management_system => ems,
-                         :ems_ref               => '/f;f1/r;server')
-    end
-
-    before(:each) do
-      EvmSpecHelper.create_guid_miq_server_zone
-      allow(controller).to receive(:trigger_mw_operation)
-    end
-
-    %w(reload suspend resume stop shutdown restart).each do |operation|
-      it("#{operation} button operation should create timeline event") do
-        op_name = "middleware_server_#{operation}"
-        operation_info = described_class::ALL_OPERATIONS.fetch(op_name.to_sym)
-
-        post :button, :params => {
-          :id      => mw_server.id,
-          :pressed => op_name,
-          :timeout => 10
-        }
-
-        MiqQueue.last.deliver
-        timeline_event_expectations(EmsEvent.last, operation_info, mw_server)
-      end
-
-      it("#{operation} dialog operation should create timeline event") do
-        operation_info = described_class::ALL_OPERATIONS.fetch("middleware_server_#{operation}".to_sym)
-
-        post :run_operation, :params => {
-          :id        => mw_server.id,
-          :operation => operation,
-          :timeout   => 10
-        }
-
-        MiqQueue.last.deliver
-        timeline_event_expectations(EmsEvent.last, operation_info, mw_server)
-      end
-    end
-  end
-
   describe '#report_data' do
     context 'list of middleware servers' do
       let!(:server) { FactoryGirl.create(:middleware_server) }
