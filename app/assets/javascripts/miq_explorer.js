@@ -1,5 +1,5 @@
 /* global miqAccordionSwap miqAddNodeChildren miqAsyncAjax miqBuildCalendar miqButtons miqDeleteTreeCookies miqDomElementExists miqExpandParentNodes miqInitDashboardCols
- * miqInitAccordions miqInitMainContent miqInitToolbars miqRemoveNodeChildren miqSparkle miqSparkleOff miqTreeActivateNode miqTreeActivateNodeSilently miqTreeFindNodeByKey miqTreeObject load_c3_charts */
+ * miqInitAccordions miqInitMainContent miqInitToolbars miqRemoveNodeChildren miqSparkle miqSparkleOff miqTreeActivateNode miqTreeActivateNodeSilently miqTreeFindNodeByKey miqTreeObject load_c3_charts miqGtlSetExtraClasses */
 ManageIQ.explorer = {};
 
 ManageIQ.explorer.updateElement = function(element, options) {
@@ -154,6 +154,10 @@ ManageIQ.explorer.removeSand = function() {
   mainContent.removeClass('miq-sand-paper');
 };
 
+ManageIQ.explorer.removePaging = function() {
+  miqGtlSetExtraClasses();
+};
+
 ManageIQ.explorer.processReplaceRightCell = function(data) {
   /* variables for the expression editor */
   if (_.isObject(data.expEditor)) {
@@ -298,6 +302,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   if (data.lockSidebar !== undefined) { ManageIQ.explorer.lockSidebar(data.lockSidebar); }
 
   if (data.removeSand) { ManageIQ.explorer.removeSand(); }
+  if (data.removePaging) { ManageIQ.explorer.removePaging(); }
 
   if (_.isString(data.ajaxUrl)) {
     miqAsyncAjax(data.ajaxUrl);

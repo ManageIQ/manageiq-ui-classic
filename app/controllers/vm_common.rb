@@ -1296,7 +1296,7 @@ module VmCommon
     # Handle bottom cell
     if @pages || @in_a_form
       if @pages && !@in_a_form
-        presenter.hide(:form_buttons_div).show(:pc_div_1)
+        presenter.hide(:form_buttons_div)
       elsif @in_a_form
         # these subviews use angular, so they need to use a special partial
         # so the form buttons on the outer frame can be updated.
@@ -1322,7 +1322,7 @@ module VmCommon
         # such as "edit tags" or "manage policies".
         presenter.update(:form_buttons_div, '') if action == "retire"
 
-        presenter.hide(:pc_div_1).show(:form_buttons_div)
+        presenter.remove_paging.show(:form_buttons_div)
       end
       presenter.show(:paging_div)
     else

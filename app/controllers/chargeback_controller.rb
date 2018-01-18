@@ -888,7 +888,7 @@ class ChargebackController < ApplicationController
          (x_active_tree == :cb_assignments_tree && ["Compute", "Storage"].include?(x_node.split('-').last))
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
-        presenter.show(:paging_div, :form_buttons_div).hide(:pc_div_1)
+        presenter.show(:paging_div, :form_buttons_div).remove_paging
         locals = {:record_id => @edit[:rec_id]}
         if x_active_tree == :cb_rates_tree
           locals[:action_url] = 'cb_rate_edit'
@@ -906,11 +906,11 @@ class ChargebackController < ApplicationController
         presenter.hide(:form_buttons_div) if params[:button]
       end
     else
-      presenter.hide(:form_buttons_div).show(:pc_div_1)
+      presenter.hide(:form_buttons_div)
       if (x_active_tree == :cb_assignments_tree && x_node == "root") ||
          (x_active_tree == :cb_reports_tree && !@report) ||
          (x_active_tree == :cb_rates_tree && x_node == "root")
-        presenter.hide(:toolbar, :pc_div_1)
+        presenter.hide(:toolbar).remove_paging
       end
       presenter.show(:paging_div)
     end
