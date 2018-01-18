@@ -52,19 +52,11 @@ class MiqRequestController < ApplicationController
   end
 
   def page_display_options
-    resource_type = request_tab_type
-    time_period = 7
-    if is_approver && (!@sb[:prov_options] || (@sb[:prov_options] && !@sb[:prov_options].key?(resource_type.to_sym)))
-      gv_options = {:filter => prov_condition(:resource_type => resource_type, :time_period => time_period)}
-    elsif @sb[:prov_options] && @sb[:prov_options].key?(resource_type.to_sym) # added this here so grid can be drawn when page redraws, when there were no records on initial load.
-      prov_set_default_options if @sb[:def_prov_options][:applied_states].blank? && !params[:button] == "apply" # no filter statuses selected, setting to default
-      gv_options = {:filter => prov_condition(@sb[:def_prov_options][resource_type.to_sym])}
+    if @sb[:prov_options] && @sb[:prov_options].key?(request_tab_type.to_sym)
+      {:named_scope => prov_scope(@sb[:def_prov_options][request_tab_type.to_sym])}
     else
-      gv_options = {:filter => prov_condition(:resource_type => resource_type,
-                                              :time_period   => time_period,
-                                              :requester_id  => current_user.try(:id))}
+      {}
     end
-    gv_options
   end
 
   # Show the main Requests list view
@@ -326,9 +318,10 @@ class MiqRequestController < ApplicationController
     end
     show_list
 
+    options = {"additionalOptions" => page_display_options}
     render :update do |js|
       js << javascript_prologue
-      js << 'sendDataWithRx({refreshData: {name: "reportDataController"}});'
+      js << "sendDataWithRx({refreshData: {name: \"reportDataController\"}, data: #{options.to_json}});"
     end
   end
 
@@ -396,47 +389,21 @@ class MiqRequestController < ApplicationController
     end
   end
 
-  def remote_and_global_requestors(requestor)
-    condition = []
-    requestors = User.where(:userid => requestor.try(:userid))
-    if requestors.count > 1
-      condition.push("or" => requestors.collect { |user| {"=" => {"value" => user.id, "field" => "MiqRequest-requester_id"}} })
-    else
-      condition.push("=" => {"value" => requestor.try(:id), "field" => "MiqRequest-requester_id"})
-    end
-  end
-
   # Create a condition from the passed in options
-  def prov_condition(opts)
-    cond = [{"AFTER" => {"value" => "#{opts[:time_period].to_i} Days Ago", "field" => "MiqRequest-created_on"}}] # Start with setting time
+  def prov_scope(opts)
+    scope = []
+    # Request date (created since X days ago)
+    scope << [:created_recently, opts[:time_period].to_i] if opts[:time_period].present?
+    # Select requester user across regions
+    scope << [:with_requester, current_user.id] unless is_approver
+    scope << [:with_requester, opts[:user_choice]] if opts[:user_choice] && opts[:user_choice] != "all"
 
-    unless is_approver
-      cond.push(*remote_and_global_requestors(current_user))
-    end
+    scope << [:with_approval_state, opts[:applied_states]] if opts[:applied_states].present?
+    scope << [:with_type, MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].keys]
+    scope << [:with_request_type, opts[:type_choice]] if opts[:type_choice] && opts[:type_choice] != "all"
+    scope << [:with_reason_like, opts[:reason_text]] if opts[:reason_text].present?
 
-    if opts[:user_choice] && opts[:user_choice] != "all"
-      cond.push(*remote_and_global_requestors(User.find_by(:id => opts[:user_choice])))
-    end
-
-    if (a_s = opts[:applied_states].presence)
-      cond.push("or" => a_s.collect { |s| {"=" => {"value" => s, "field" => "MiqRequest-approval_state"}} })
-    end
-
-    cond.push("or" => request_types_for_model.keys.collect { |k| {"=" => {"value" => k.to_s, "field" => "MiqRequest-type"}} })
-
-    if opts[:type_choice] && opts[:type_choice] != "all" # Add request_type filter, if selected
-      cond.push("=" => {"value" => opts[:type_choice], "field" => "MiqRequest-request_type"})
-    end
-
-    if (text = opts[:reason_text].presence)
-      cond.push(prov_condition_reason_text_expression_key(text) => {"value" => prov_condition_reason_text_sanitized(text), "field" => "MiqRequest-reason"})
-    end
-
-    MiqExpression.new("and" => cond)
-  end
-
-  def request_types_for_model
-    MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].map { |k, v| [k, v.map { |x, y| [x, _(y)] }.to_h] }.to_h
+    scope
   end
 
   def model_request_type_from_layout
@@ -447,18 +414,10 @@ class MiqRequestController < ApplicationController
     end
   end
 
-  def prov_condition_reason_text_sanitized(text)
-    text.sub(/\A\*?(.+?)\*?\z/, '\1') # Remove leading and/or trailing "*"
-  end
-
-  def prov_condition_reason_text_expression_key(text)
-    return "STARTS WITH" if text =~ /\A\*(.+?)[^*]\z/  # Starts with and does not end with "*"
-    return "ENDS WITH"   if text =~ /\A[^*](.+?)\*\z/  # Ends with and does not start with "*"
-    "INCLUDES"
-  end
-
   def request_types_for_dropdown
-    request_types_for_model.values.each_with_object({}) { |t, h| t.each { |k, v| h[k] = v } }
+    MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].values.reduce({}) do |hash, item|
+      hash.merge(item) { |_key, val| _(val) }
+    end
   end
 
   # Set all task options to default
@@ -470,7 +429,7 @@ class MiqRequestController < ApplicationController
     opts[:types] = request_types_for_dropdown
 
     opts[:users] = Rbac::Filterer.filtered(MiqRequest.where(
-      :type       => request_types_for_model.keys,
+      :type       => MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].keys,
       :created_on => (30.days.ago.utc)..(Time.now.utc)
     )).each_with_object({}) do |r, h|
       h[r.requester_id] = if r.requester.nil?

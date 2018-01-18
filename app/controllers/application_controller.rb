@@ -373,8 +373,6 @@ class ApplicationController < ActionController::Base
     # handle exceptions
     if params[:model_name]
       options = case params[:model_name]
-                when 'MiqRequest'
-                  page_display_options
                 when 'miq_tasks'
                   jobs_info
                 when 'physical_servers_with_host'

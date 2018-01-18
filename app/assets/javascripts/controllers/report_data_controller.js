@@ -85,7 +85,7 @@
       } else if (event.type === TOOLBAR_CLICK_FINISH && (tileViewSelector() || tableViewSelector())) {
         this.setExtraClasses(this.initObject.gtlType);
       } else if (event.refreshData && event.refreshData.name === CONTROLLER_NAME) {
-        this.refreshData();
+        this.refreshData(event.data);
       }
 
       if (event.controller === CONTROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
@@ -143,8 +143,8 @@
     vm.perPage = defaultPaging();
   };
 
-  ReportDataController.prototype.refreshData = function() {
-    this.initController(this.initObject);
+  ReportDataController.prototype.refreshData = function(data) {
+    this.initController(_.merge(this.initObject, data));
   };
 
   ReportDataController.prototype.setSort = function(headerId, isAscending) {

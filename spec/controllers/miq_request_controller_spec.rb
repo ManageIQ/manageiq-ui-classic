@@ -43,138 +43,81 @@ describe MiqRequestController do
     end
   end
 
-  context "#prov_condition builds correct MiqExpression hash" do
-    let(:user) { FactoryGirl.create(:user_admin) }
+  describe "#prov_scope" do
+    let(:user) { FactoryGirl.create(:user_miq_request_approver, :userid => "Approver") }
+    let(:options) { {} }
+    subject { controller.send(:prov_scope, options) }
     before { login_as user }
 
-    it "MiqRequest-created_on" do
-      content = {"value" => "9 Days Ago", "field" => "MiqRequest-created_on"}
-      expect(MiqExpression).to receive(:new) do |h|
-        expect(h.fetch_path("and", 0, "AFTER")).to eq(content)
+    context "created_on" do
+      let(:options) do
+        { :time_period => 9 }
       end
-      controller.send(:prov_condition, :time_period => 9)
+      it { is_expected.to include [:created_recently, 9] }
     end
 
-    context "MiqRequest-requester_id set based on user_id" do
-      it "user with approver priveleges" do
-        content = {"value" => user.id, "field" => "MiqRequest-requester_id"}
-        expect(MiqExpression).to receive(:new) do |h|
-          expect(h.fetch_path("and", 1, "=")).to eq(content)
-        end
-        controller.send(:prov_condition, {})
+    context "requester_id" do
+      context "logged as an approver" do
+        it { is_expected.not_to include [:with_requester, user.id] }
       end
-
-      it "user without approver priveleges" do
-        user = FactoryGirl.create(:user)
-        login_as user
-        content = {"value" => user.id, "field" => "MiqRequest-requester_id"}
-        expect(MiqExpression).to receive(:new) do |h|
-          expect(h.fetch_path("and", 1, "=")).to eq(content)
-        end
-        controller.send(:prov_condition, {})
+      context "logged without approval privileges" do
+        let(:user) { FactoryGirl.create(:user) }
+        it { is_expected.to include [:with_requester, user.id] }
       end
-    end
-
-    context "in Global region" do
-      let(:remote_user) { FactoryGirl.create(:user, :userid => "SomeUser") }
-      let(:global_user) { create_user_in_other_region(remote_user.userid) }
-
-      before { login_as global_user }
-
-      it "selected specific user" do
-        path = ["and", 2, "or"]
-        expect(MiqExpression).to receive(:new) do |h|
-          expect(h.fetch_path(path)).to include({"=" => {"value" => global_user.id,
-                                                         "field" => "MiqRequest-requester_id"}},
-                                                {"=" => {"value" => remote_user.id,
-                                                         "field" => "MiqRequest-requester_id"}})
+      context "selected 'another_user'" do
+        let(:another_user) { FactoryGirl.create(:user) }
+        let(:options) do
+          { :user_choice => another_user.id }
         end
-        controller.send(:prov_condition, :user_choice => remote_user.id)
+        it { is_expected.to include [:with_requester, another_user.id] }
       end
-
-      it "user without approver priveleges" do
-        path = ["and", 1, "or"]
-        expect(MiqExpression).to receive(:new) do |h|
-          expect(h.fetch_path(path)).to include({"=" => {"value" => global_user.id,
-                                                         "field" => "MiqRequest-requester_id"}},
-                                                {"=" => {"value" => remote_user.id,
-                                                         "field" => "MiqRequest-requester_id"}})
+      context "selected 'all'" do
+        let(:options) do
+          { :user_choice => 'all' }
         end
-        controller.send(:prov_condition, {})
+        it { expect(subject.collect(&:first)).not_to include :with_requester }
       end
     end
 
-    context "MiqRequest-requester_id set based on user_choice" do
-      let(:path) { ["and", 2, "=", "value"] }
+    context "approval_state" do
+      let(:options) do
+        { :applied_states => %w(state_1 state_2) }
+      end
+      it { is_expected.to include [:with_approval_state, %w(state_1 state_2)] }
+    end
 
-      it "selected 'all'" do
-        expect(MiqExpression).to receive(:new) do |h|
-          expect(h.fetch_path(path) == "all").to be_falsey
+    context "type" do
+      it { is_expected.to include [:with_type, MiqRequest::MODEL_REQUEST_TYPES[:Service].keys.collect(&:to_sym)] }
+    end
+
+    context "request_type" do
+      context "selected '1'" do
+        let(:options) do
+          { :type_choice => "1" }
         end
-        controller.send(:prov_condition, :user_choice => "all")
+        it { is_expected.to include [:with_request_type, "1"] }
       end
-
-      it "selected specific user" do
-        selected_user = FactoryGirl.create(:user)
-        expect(MiqExpression).to receive(:new) do |h|
-          expect(h.fetch_path(path) == selected_user.id).to be_truthy
+      context "selected 'all'" do
+        let(:options) do
+          { :type_choice => "all" }
         end
-        controller.send(:prov_condition, :user_choice => selected_user.id)
+        it { is_expected.not_to include [:with_request_type, "all"] }
       end
     end
 
-    it "MiqRequest-approval_state set with :applied_states" do
-      content = [{"=" => {"value" => "state", "field" => "MiqRequest-approval_state"}}, {"=" => {"value" => "state 2", "field" => "MiqRequest-approval_state"}}]
-      expect(MiqExpression).to receive(:new) do |h|
-        expect(h.fetch_path("and", 2, "or")).to eq(content)
-      end
-      controller.send(:prov_condition, :applied_states => ["state", "state 2"])
-    end
-
-    it "MiqRequest-type" do
-      content = MiqRequest::MODEL_REQUEST_TYPES[:Service].keys.collect do |klass|
-        {"=" => {"value" => klass.to_s, "field" => "MiqRequest-type"}}
-      end
-
-      expect(MiqExpression).to receive(:new) do |h|
-        expect(h.fetch_path("and", 2, "or")).to match_array(content)
-      end
-      controller.send(:prov_condition, {})
-    end
-
-    context "MiqRequest-request_type set based on type_choice" do
-      let(:path) { ["and", 3, "=", "value"] }
-
-      it "selected 'all'" do
-        expect(MiqExpression).to receive(:new) do |h|
-          expect(h.fetch_path(path)).to be_nil
+    context "reason" do
+      %w(*starts_with *includes* ends_with*).each do |pattern|
+        context "is matched to '#{pattern}'" do
+          let(:options) do
+            { :reason_text => pattern }
+          end
+          it { is_expected.to include [:with_reason_like, pattern] }
         end
-        controller.send(:prov_condition, :type_choice => "all")
-      end
-
-      it "selected '1'" do
-        expect(MiqExpression).to receive(:new) do |h|
-          expect(h.fetch_path(path)).to eq(1)
-        end
-        controller.send(:prov_condition, :type_choice => 1)
       end
     end
 
-    it "MiqRequest-reason_text" do
-      content = {"value" => "just because", "field" => "MiqRequest-reason"}
-      expect(MiqExpression).to receive(:new) do |h|
-        expect(h.fetch_path("and", 3, "INCLUDES")).to eq(content)
-      end
-      controller.send(:prov_condition, :reason_text => "just because")
-    end
-
-    it "empty options hash" do
-      expect(MiqExpression).to receive(:new) do |h|
-        expect(h.fetch_path("and", 2, "or", 0, "=", "field") == "MiqRequest-approval_state")
-          .to be_falsey # Doesn't set approval_states
-        expect(h.fetch_path("and", 3, "INCLUDES")).to be_nil # Doesn't set reason_text
-      end
-      controller.send(:prov_condition, {})
+    context "empty options hash" do
+      it { expect(subject.collect(&:first)).to contain_exactly :with_type }
     end
   end
 
@@ -201,32 +144,98 @@ describe MiqRequestController do
 
   render_views
 
-  context 'showing the list of tasks' do
+  describe '#show_list' do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
     end
 
-    describe '#show_list' do
-      it 'renders GTL with MiqRequest model' do
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
-          :model_name      => 'MiqRequest',
-          :gtl_type_string => 'list',
-        )
-        get :show_list
-      end
+    it 'renders GTL with MiqRequest model' do
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name      => 'MiqRequest',
+        :gtl_type_string => 'list',
+      )
+      get :show_list
+    end
+  end
+
+  describe '#report_data' do
+    let(:user1) { FactoryGirl.create(:user) }
+    let(:user2) { create_user_in_other_region(user1.userid) }
+    let(:miq_request1) do
+      FactoryGirl.create(:miq_provision_request, :with_approval,
+                         :source_type    => 'VmOrTemplate',
+                         :source_id      => template.id,
+                         :created_on     => 2.days.ago,
+                         :requester      => user1,
+                         :approval_state => "denied",
+                         :request_type   => "template",
+                         :reason         => "abcdef")
+    end
+    let(:miq_request2) do
+      FactoryGirl.create(:miq_provision_request, :with_approval,
+                         :source_type    => 'VmOrTemplate',
+                         :source_id      => template.id,
+                         :created_on     => 10.days.ago,
+                         :requester      => FactoryGirl.create(:user),
+                         :approval_state => "approved",
+                         :request_type   => "clone_to_vm",
+                         :reason         => "abc")
+    end
+    let(:miq_request3) do
+      FactoryGirl.create(:miq_provision_request, :with_approval,
+                         :source_type    => 'VmOrTemplate',
+                         :source_id      => template.id,
+                         :created_on     => 45.days.ago,
+                         :requester      => user2,
+                         :approval_state => "pending_approval",
+                         :request_type   => "clone_to_template",
+                         :reason         => "cdef")
     end
 
-    context '#report_data' do
-      it 'calls "page_display_options" and returns the MiqRequest data' do
-        FactoryGirl.create(:miq_provision_request, request_body)
+    subject do
+      report_data_request(:model       => 'MiqRequest',
+                          :named_scope => scope)
 
-        expect(controller).to receive(:page_display_options).and_call_original
-        report_data_request(
-          :model => 'MiqRequest',
-        )
-        results = assert_report_data_response
-        expect(results['data']['rows'].length).to eq(1)
+      result = assert_report_data_response
+      result['data']['rows'].length
+    end
+
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+
+      miq_request1
+      miq_request2
+      miq_request3
+    end
+
+    context 'filters by created_on' do
+      let(:scope) { [[:created_recently, 14]] }
+      it { is_expected.to eq(2) }
+    end
+
+    context 'filters by requester_id' do
+      let(:scope) { [[:with_requester, user1.id]] }
+      it { is_expected.to eq(2) }
+    end
+
+    context 'filters by approval_state' do
+      let(:scope) { [[:with_approval_state, %w(approved pending_approval)]] }
+      it { is_expected.to eq(2) }
+    end
+
+    context 'filters by request_type' do
+      let(:scope) { [[:with_request_type, %w(clone_to_vm clone_to_template)]] }
+      it { is_expected.to eq(2) }
+    end
+
+    context 'filters by reason' do
+      %w(*cd cd* *cde*).each do |reason|
+        context "'#{reason}'" do
+          let(:scope) { [[:with_reason_like, reason]] }
+          it { is_expected.to eq(2) }
+        end
       end
     end
   end
