@@ -26,8 +26,8 @@ module ManageIQ
   module UI
     module Classic
       class Engine < ::Rails::Engine
-        config.autoload_paths << File.expand_path(File.join(root, 'app', 'controllers', 'mixins'), __FILE__)
-        config.autoload_paths << File.expand_path(File.join(root, 'lib'), __FILE__)
+        config.autoload_paths << root.join('app', 'controllers', 'mixins').to_s
+        config.autoload_paths << root.join('lib').to_s
 
         initializer 'manageiq-ui-classic.assets.precompile' do |app|
           app.config.assets.precompile << proc do |filename, path|
