@@ -14,5 +14,4 @@
             = render :partial => 'layouts/tabs'
         .col-md-12
           = yield
-      - if layout_uses_paging? && !@in_a_form
-        .row#paging_div
+      .row#paging_div{:style => (layout_uses_paging? && !@in_a_form) ? '' : 'display: none'}
