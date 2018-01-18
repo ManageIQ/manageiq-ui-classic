@@ -46,6 +46,42 @@ describe VmInfraController do
     expect(response.status).to eq(200)
   end
 
+  let(:custom_attr1) do
+    FactoryGirl.create(
+      :custom_attribute,
+      :resource => vm_vmware,
+      :name     => 'Proč by si jeden nepokrad',
+      :value    => 'jó, v tom je Pepa demokrat'
+    )
+  end
+
+  let(:custom_attr2) do
+    FactoryGirl.create(
+      :custom_attribute,
+      :resource => vm_vmware,
+      :name     => nil,
+      :value    => 'a šikulovi má být dána šance'
+    )
+  end
+
+  # http://localhost:3000/vm_infra/show/10000000000449
+  it 'can display VM details for vm with ems_custom_attributes and a null attribute name' do
+    vm_vmware.ems_custom_attributes.push(custom_attr1, custom_attr2)
+    expect(controller).to receive(:identify_record).and_return(vm_vmware)
+
+    get :show, :params => { :id => vm_vmware.id }
+    expect(response).to redirect_to(:action => 'explorer')
+
+    post :explorer
+
+    expect(response.body).to match(/VC Custom Attributes/)
+    expect(response.body).to match(custom_attr1.name)
+    expect(response.body).to match(custom_attr1.value)
+    expect(response.body).to match(custom_attr2.value)
+
+    expect(response.status).to eq(200)
+  end
+
   it 'can render the snapshot info' do
     ApplicationController.handle_exceptions = true
     seed_session_trees('vm_infra', 'vms_instances_filter_tree')
