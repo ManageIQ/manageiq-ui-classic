@@ -105,6 +105,7 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
           N_('Restart selected worker'),
           :confirm      => N_("Warning: Selected node will be restarted, do you want to continue?"),
           :klass        => ApplicationHelper::Button::RefreshWorkers,
+          :url_parms    => "unused_div",
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1"),
