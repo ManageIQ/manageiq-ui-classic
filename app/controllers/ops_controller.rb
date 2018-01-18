@@ -796,14 +796,14 @@ class OpsController < ApplicationController
     # Handle bottom cell
     if @pages || @in_a_form
       if @pages
-        presenter.hide(:form_buttons_div).show(:pc_div_1)
+        presenter.hide(:form_buttons_div)
       elsif @in_a_form
         if nodetype == "log_depot_edit"
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
         else
           presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
         end
-        presenter.show(:form_buttons_div).hide(:pc_div_1)
+        presenter.show(:form_buttons_div).remove_paging
       end
       presenter.show(:paging_div)
     else

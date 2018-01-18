@@ -227,9 +227,9 @@ class PxeController < ApplicationController
       else
         presenter.hide(:form_buttons_div)
       end
-      presenter.hide(:pc_div_1)
+      presenter.remove_paging
     else
-      presenter.hide(:form_buttons_div).show(:pc_div_1)
+      presenter.hide(:form_buttons_div)
     end
 
     presenter[:record_id] = determine_record_id_for_presenter

@@ -427,7 +427,7 @@ class ServiceController < ApplicationController
       end
     )
     if %w(dialog_provision ownership tag service_tag).include?(action)
-      presenter.show(:form_buttons_div).hide(:pc_div_1, :toolbar).show(:paging_div)
+      presenter.show(:form_buttons_div).remove_paging.hide(:toolbar).show(:paging_div)
       if action == "dialog_provision" && params[:pressed] == "service_reconfigure"
         presenter.update(:form_buttons_div, r[:partial => "layouts/x_dialog_buttons",
                                               :locals  => {:action_url => action_url,
@@ -452,7 +452,7 @@ class ServiceController < ApplicationController
       # when trying to change a node on tree after saving a record
       presenter.hide(:form_buttons_div, :paging_div).show(:toolbar)
     else
-      presenter.hide(:form_buttons_div).show(:pc_div_1, :toolbar, :paging_div)
+      presenter.hide(:form_buttons_div).show(:toolbar, :paging_div)
     end
 
     # Clear the JS gtl_list_grid var if changing to a type other than list

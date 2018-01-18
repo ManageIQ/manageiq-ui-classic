@@ -858,13 +858,13 @@ class ReportController < ApplicationController
     # Handle bottom cell
     if (@in_a_form || @pages) || (@sb[:pages] && @html)
       if @pages
-        presenter.hide(:form_buttons_div, :rpb_div_1).show(:pc_div_1)
+        presenter.hide(:form_buttons_div, :rpb_div_1)
       elsif @in_a_form
         presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
-        presenter.hide(:pc_div_1, :rpb_div_1).show(:form_buttons_div)
+        presenter.remove_paging.hide(:rpb_div_1).show(:form_buttons_div)
       elsif @sb[:pages]
         presenter.update(:paging_div, r[:partial => 'layouts/saved_report_paging_bar', :locals => @sb[:pages]])
-        presenter.hide(:form_buttons_div).show(:rpb_div_1).hide(:pc_div_1)
+        presenter.hide(:form_buttons_div).show(:rpb_div_1).remove_paging
       end
       presenter.show(:paging_div)
     else
