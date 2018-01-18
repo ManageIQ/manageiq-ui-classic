@@ -146,7 +146,7 @@ describe QuadiconHelper do
         service_template_ansible_tower
       ).each do |obj|
         it "renders a quadicon for #{obj}" do
-          item = FactoryGirl.create(obj)
+          item = FactoryGirl.create(obj.to_sym)
           subject = helper.render_quadicon(item, :mode => :icon)
 
           expect(subject).to have_selector('div.quadicon')
