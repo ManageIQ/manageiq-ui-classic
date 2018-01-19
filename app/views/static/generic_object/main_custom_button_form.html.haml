@@ -139,6 +139,8 @@
               "pf-select"                   => true,}
       %span.help-block{"ng-show" => "angularForm.visibility.$error.required"}
         = _("Required")
+  %br
+  %br
   .form-group{"ng-if" => "vm.customButtonModel.current_visibility === 'role'"}
     %label.col-md-2.control-label{"for" => "custom_button_open_url"}
       = _("User Roles")
