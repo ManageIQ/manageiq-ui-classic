@@ -34,8 +34,6 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
       allow(record).to receive(:has_active_proxy?).and_return(has_active_proxy?)
     end
 
-    it_behaves_like 'a smart state scan button'
-
     context 'when smart_roles are enabled' do
       before do
         roles = %w(smartproxy smartstate).collect { |role| FactoryGirl.create(:server_role, :name => role) }
