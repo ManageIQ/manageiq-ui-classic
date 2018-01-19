@@ -72,7 +72,7 @@ module ContainerImageHelper
     end
 
     def textual_entrypoint
-      {:label => _('Entrypoint'), :value => @record.entrypoint.join(' ')}
+      {:label => _('Entrypoint'), :value => @record.entrypoint.present? ? @record.entrypoint.join(' ') : nil}
     end
 
     def textual_docker_version
