@@ -153,7 +153,7 @@ module ContainerSummaryHelper
     object = @record.container_image_registry
     if object.nil? && @record.respond_to?(:display_registry)
       {
-        :label => ui_lookup(:model => ContainerImageRegistry.name),
+        :label => _('Image Registry'),
         :image => "100/container_image_registry_unknown.png",
         :value => @record.display_registry
       }

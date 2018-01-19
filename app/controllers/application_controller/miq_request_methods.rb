@@ -405,7 +405,7 @@ module ApplicationController::MiqRequestMethods
       "mem_cpu"                       => _("Memory"),
       "allocated_disk_storage"        => _("Disk Size"),
       "deprecated"                    => _("Deprecated"),
-      "ext_management_system.name"    => ui_lookup(:model => 'ExtManagementSystem'),
+      "ext_management_system.name"    => _("Provider"),
       "v_total_snapshots"             => _("Snapshots"),
     }
 
