@@ -464,8 +464,8 @@ describe OpsController do
       edit[:filter_expression].history.reset(edit[:filter_expression][:expression])
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@expkey, :filter_expression)
-      edit[:filter_expression][:exp_table] = controller.send(:exp_build_table, edit[:filter_expression][:expression])
-      edit[:filter_expression][:exp_model] = @group.class.to_s
+      edit[:group_filter_expression][:exp_table] = controller.send(:exp_build_table, edit[:group_filter_expression][:expression])
+      edit[:group_filter_expression][:exp_model] = @group.class.to_s
       session[:edit] = edit
       session[:expkey] = :filter_expression
       controller.instance_variable_set(:@edit, edit)

@@ -1159,7 +1159,7 @@ module OpsController::OpsRbac
     @edit = {
       :new => {
         :filters     => {},
-        :filter_expression => {},
+        :group_filter_expression => {},
         :belongsto   => {},
         :description => @group.description,
       },
@@ -1202,7 +1202,7 @@ module OpsController::OpsRbac
     @edit[:projects_tenants].push(["Tenants", all_tenants]) unless all_tenants.blank?
     @edit[:new][:group_tenant] = @group.tenant_id
 
-    rbac_group_filter_expression_vars(:filter_expression, :filter_expression_table)
+    rbac_group_filter_expression_vars(:group_filter_expression, :group_filter_expression_table)
     @edit[:current] = copy_hash(@edit[:new])
 
     @right_cell_text = if @edit[:group_id]
@@ -1215,8 +1215,8 @@ module OpsController::OpsRbac
   end
 
   def rbac_group_filter_expression_vars(field_expression, field_expression_table)
-    if @group && @group.entitlement && @group.entitlement[field_expression].kind_of?(MiqExpression)
-      @edit[:new][field_expression] = @group.entitlement[field_expression].exp
+    if @group && @group.entitlement && @group.entitlement[:filter_expression].kind_of?(MiqExpression)
+      @edit[:new][field_expression] = @group.entitlement[:filter_expression].exp
     else
       @edit[:new][field_expression] = nil
     end
@@ -1248,8 +1248,8 @@ module OpsController::OpsRbac
     if @edit[:new][:use_filter_expression]
       @edit[:new][:filters].clear
     else
-      exp_remove_tokens(@edit[:new][:filter_expression])
-      @edit[:new][:filter_expression] = nil
+      exp_remove_tokens(@edit[:new][:group_filter_expression])
+      @edit[:new][:group_filter_expression] = nil
     end
 
     rbac_group_set_filters(group) # Go set the filters for the group
@@ -1260,7 +1260,7 @@ module OpsController::OpsRbac
     group.entitlement ||= Entitlement.new
     if @edit[:new][:use_filter_expression]
       group.entitlement.set_managed_filters(nil) if group.entitlement.get_managed_filters.present?
-      group.entitlement.filter_expression = @edit[:new][:filter_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:filter_expression])
+      group.entitlement.filter_expression = @edit[:new][:group_filter_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:group_filter_expression])
     else
       group.entitlement.filter_expression = nil if group.entitlement.filter_expression
       @set_filter_values = []
@@ -1423,7 +1423,7 @@ module OpsController::OpsRbac
   def rbac_group_validate?
     return false if @edit[:new][:description].nil?
     @assigned_filters = [] if @edit[:new][:filters].empty? || @edit[:new][:use_filter_expression]
-    @filter_expression = [] if @edit[:new][:filter_expression].empty? || @edit[:new][:use_filter_expression] == false
+    @filter_expression = [] if @edit[:new][:group_filter_expression].empty? || @edit[:new][:use_filter_expression] == false
     if @edit[:new][:role].nil? || @edit[:new][:role] == ""
       add_flash(_("A User Group must be assigned a Role"), :error)
       return false

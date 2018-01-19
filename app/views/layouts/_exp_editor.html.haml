@@ -109,4 +109,4 @@
             = token
 
   - if @edit[@expkey][:exp_token]
-    = render(:partial => 'layouts/exp_atom/editor')
+    = render(:partial => 'layouts/exp_atom/editor', :locals => { :expression_type => defined?(expression_type) ? expression_type : nil}  )
