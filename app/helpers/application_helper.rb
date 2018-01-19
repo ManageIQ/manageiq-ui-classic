@@ -991,8 +991,13 @@ module ApplicationHelper
 
   def model_from_active_tree(tree)
     case tree
-    when :configuration_manager_cs_filter_tree, :automation_manager_cs_filter_tree
-      "ConfiguredSystem"
+    when :automation_manager_cs_filter_tree
+      "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
+    when :configuration_manager_cs_filter_tree
+      "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"
+    when :configuration_manager_providers_tree
+      "ManageIQ::Providers::Foreman::ConfigurationManager" if x_node.include?("fr")
+      "ManageIQ::Providers::ConfigurationManager" if x_node == "root"
     when :instances_filter_tree
       "ManageIQ::Providers::CloudManager::Vm"
     when :images_filter_tree
@@ -1012,8 +1017,10 @@ module ApplicationHelper
 
   def configuration_manager_scripts_tree(tree)
     case tree
-    when :automation_manager_cs_filter_tree, :configuration_manager_cs_filter_tree
-      "ConfiguredSystem"
+    when :automation_manager_cs_filter_tree
+      "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
+    when :configuration_manager_cs_filter_tree
+      "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"
     when :configuration_scripts_tree
       "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript"
     end

@@ -15,7 +15,7 @@ module ApplicationController::AdvancedSearch
     @expkey = :expression # Reset to use default expression key
     if session.fetch_path(:adv_search, model.to_s)
       adv_search_model = session[:adv_search][model.to_s]
-      @edit = copy_hash(adv_search_model[@expkey] ? adv_search_model : session[:edit])
+      @edit ||= copy_hash(adv_search_model[@expkey] ? adv_search_model : session[:edit])
       adv_search_clear_default_search_if_cant_be_seen
       @edit.delete(:exp_token)                                          # Remove any existing atom being edited
     else                                                                # Create new exp fields
@@ -186,7 +186,7 @@ module ApplicationController::AdvancedSearch
 
   def adv_search_redraw_left_div
     if x_active_tree.to_s == "configuration_manager_cs_filter_tree"
-      build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
+      build_configuration_manager_cs_filter_tree(x_active_tree)
       build_accordions_and_trees
       load_or_clear_adv_search
     elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree svcs_tree).include?(x_active_tree.to_s)
