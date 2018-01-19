@@ -67,6 +67,7 @@ module GtlHelper
       :view                           => @view,
       :db                             => @db,
       :parent                         => @parent,
+      :pages                          => @pages,
 
       :report_data_additional_options => @report_data_additional_options,
     }
@@ -121,7 +122,8 @@ module GtlHelper
           isExplorer: '#{options[:explorer]}' === 'true' ? true : false,
           records: #{!options[:selected_records].nil? ? h(j_str(options[:selected_records].to_json)) : "\'\'"},
           hideSelect: #{options[:selected_records].kind_of?(Array)},
-          showUrl: '#{gtl_show_url(options)}'
+          showUrl: '#{gtl_show_url(options)}',
+          pages: #{options[:pages].to_json},
         }
       }});
 EOJ
