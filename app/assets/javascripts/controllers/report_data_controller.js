@@ -203,12 +203,13 @@
     event.stopPropagation();
     event.preventDefault();
     if (this.initObject.showUrl) {
-      miqSparkleOn();
       var prefix = this.initObject.showUrl;
       var splitUrl = this.initObject.showUrl.split('/');
       if (item.parent_path && item.parent_id) {
+        miqSparkleOn();
         this.$window.DoNav(item.parent_path + '/' + item.parent_id);
       } else if (this.initObject.isExplorer && isCurrentControllerOrPolicies(splitUrl)) {
+        miqSparkleOn();
         var itemId = item.id;
         if (_.isString(this.initObject.showUrl) && this.initObject.showUrl.indexOf('?id=') !== -1) {
           itemId = constructSuffixForTreeUrl(this.initObject, item);
@@ -222,6 +223,7 @@
           this.setExtraClasses();
         }.bind(this));
       } else if (prefix !== "true") {
+        miqSparkleOn();
         var lastChar = prefix[prefix.length - 1];
         prefix = (lastChar !== '/' && lastChar !== '=') ? prefix + '/' : prefix;
         this.$window.DoNav(prefix + (item.long_id || item.id));
