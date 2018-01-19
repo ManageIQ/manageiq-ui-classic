@@ -2,9 +2,13 @@ class ApplicationHelper::Button::SmartStateScan < ApplicationHelper::Button::Bas
   def check_smart_roles
     my_zone = MiqServer.my_server.my_zone
     MiqServer::ServerSmartProxy::SMART_ROLES.each do |role|
-      unless MiqServer.all.any? { |s| s.has_active_role?(role) && (s.my_zone == my_zone) }
-        @error_message = _("There is no server with the %{role_name} role enabled") % {:role_name => role}
+      next if MiqServer.all.any? do |s|
+        s.has_active_role?(role) &&
+        s.my_zone == (@record.respond_to?(:zone) ? @record.zone : my_zone)
       end
+
+      @error_message = _("There is no server with the %{role_name} role enabled") %
+                       {:role_name => role}
     end
   end
 
