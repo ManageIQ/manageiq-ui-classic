@@ -407,6 +407,11 @@
         $(pagingDiv).append(col);
         col[0].appendChild(pagination[0]);
       }
+
+      if (this.initObject.pages) {
+        $(pagingDiv).show();
+      }
+
       // calculates the height of main content from toolbar and footer, needed
       // to make sure the paginator is not off the screen
       miqInitMainContent();

@@ -6,7 +6,7 @@
         .row.toolbar-pf#toolbar
           .col-sm-12
             = render :partial => "layouts/angular/toolbar"
-      .row#main-content{:class => @lastaction == "show_dashboard" ? 'miq-sand-paper' : ''}
+      .row#main-content.miq-layout-center_div_no_listnav{:class => @lastaction == "show_dashboard" ? 'miq-sand-paper' : ''}
         .col-md-12
           = render :partial => "layouts/breadcrumbs"
         - if layout_uses_tabs?
@@ -14,5 +14,4 @@
             = render :partial => 'layouts/tabs'
         .col-md-12
           = yield
-      - if layout_uses_paging? && !@in_a_form
-        .row#paging_div
+      .row#paging_div{:style => (layout_uses_paging? && !@in_a_form) ? '' : 'display: none'}

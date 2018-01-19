@@ -17,7 +17,7 @@
         = render :partial => "layouts/angular/toolbar"
     .row.max-height
       #right_div.resizable.max-height{:class => "col-md-#{maindiv} col-md-push-#{sidewidth}"}
-        #main-content.row
+        #main-content.row.miq-layout-content
           .col-md-12
             .row
               .col-md-7#explorer
@@ -44,7 +44,7 @@
                 = yield
         .col-md-12.no-padding
           = render :partial => 'layouts/x_form_buttons'
-          .row#paging_div
+          .row#paging_div{:style => saved_report_paging? ? "" : "display: none"}
             - if saved_report_paging?
               = render(:partial => 'layouts/saved_report_paging_bar',
                        :locals  => {:pages => @sb[:pages]})
