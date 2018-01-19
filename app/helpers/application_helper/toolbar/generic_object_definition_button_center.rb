@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionButtonCenter < Applicat
       :items => [
         button(
           :ab_group_edit,
-          'pficon pficon-add-circle-o fa-lg',
+          'pficon pficon-edit fa-lg',
           N_('Edit this Button'),
           :url => 'custom_button_edit',
         ),
