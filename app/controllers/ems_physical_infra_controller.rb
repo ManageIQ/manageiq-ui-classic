@@ -61,6 +61,18 @@ class EmsPhysicalInfraController < ApplicationController
     javascript_open_window(@ems.console_url.to_s)
   end
 
+  def change_password_ems_physical_infra_path(id = nil)
+    "/ems_physical_infra/change_password/#{id}"
+  end
+
+  # This method handle view objects of page
+  # +/ems_physical_infra/change_password/<id>+
+  def change_password
+    @record = find_record_with_rbac(model, params[:id])
+    @title = _("Change Password for Physical Infrasctructure Provider '#{@record.name}'")
+    @in_a_form = true # to show the page on all content frame
+  end
+
   private
 
   ############################
