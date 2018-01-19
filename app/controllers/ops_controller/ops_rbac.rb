@@ -808,7 +808,7 @@ module OpsController::OpsRbac
     when "role"  then rbac_role_get_form_vars
     end
 
-    @edit[:new][:group] = rbac_user_get_group_ids.map(&:to_i)
+    @edit[:new][:group] = rbac_user_get_group_ids.map(&:to_i) if rec_type == "user"
     session[:changed] = changed = (@edit[:new] != @edit[:current])
     bad = false
     if rec_type == "group"
