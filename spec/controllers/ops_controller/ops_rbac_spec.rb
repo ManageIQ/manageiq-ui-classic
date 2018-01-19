@@ -564,4 +564,52 @@ describe OpsController do
       expect(controller.instance_variable_get(:@users_count)).to eq(5)
     end
   end
+
+  describe '#rbac_field_changed' do
+    let(:getvars) { "rbac_#{rec_type}_get_form_vars".to_sym }
+
+    before do
+      allow(controller).to receive(:load_edit).and_return(true)
+      allow(controller).to receive(getvars).and_call_original
+      allow(controller).to receive(:render).and_return(true)
+
+      controller.instance_variable_set(:@_params, params)
+      controller.instance_variable_set(:@edit, edit)
+    end
+
+    subject { controller.instance_variable_get(:@edit)[:new][:group] }
+
+    context 'editing/adding a new user' do
+      let(:rec_type) { "user" }
+      let(:params) { {:name => "new_user", :id => "new", :chosen_group => "12,34"} }
+      let(:edit) { {:new => {:name => nil, :group => []}} }
+
+      it 'sets list of selected groups' do
+        controller.send(:rbac_field_changed, rec_type)
+        expect(subject.count).to eq(2)
+      end
+    end
+
+    context 'editing/adding a new group' do
+      let(:rec_type) { "group" }
+      let(:params) { {:description => "new_group", :id => "new"} }
+      let(:edit) { {:new => {:description => nil}} }
+
+      it 'does not set list of selected groups' do
+        controller.send(:rbac_field_changed, rec_type)
+        expect(subject).to be_nil
+      end
+    end
+
+    context 'editing/adding a new role' do
+      let(:rec_type) { "role" }
+      let(:params) { {:description => "new_role", :id => "new"} }
+      let(:edit) { {:new => {:description => nil, :features => []}} }
+
+      it 'does not set list of selected groups' do
+        controller.send(:rbac_field_changed, rec_type)
+        expect(subject).to be_nil
+      end
+    end
+  end
 end
