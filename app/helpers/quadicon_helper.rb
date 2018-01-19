@@ -19,6 +19,8 @@ module QuadiconHelper
   # session[:policies]
   # request.parameters[:controller]
 
+  include QuadiconHelper::Decorator
+
   def quadicon_truncate_mode
     @settings.fetch_path(:display, :quad_truncate) || 'm'
   end
@@ -191,12 +193,7 @@ module QuadiconHelper
   end
 
   def img_for_auth_status(item)
-    case item.authentication_status
-    when "Invalid" then "100/x.png"
-    when "Valid"   then "100/checkmark.png"
-    when "None"    then "100/unknown.png"
-    else                "100/exclamationpoint.png"
-    end
+    status_img(item)
   end
 
   def render_quadicon_text(item, row)
@@ -224,7 +221,7 @@ module QuadiconHelper
   end
 
   # Renders a quadicon for PhysicalServer
-  #
+  # TODO: use quadicon decorator
   def render_physical_server_quadicon(item, options)
     output = []
     if settings(:quadicons, :physical_server)
@@ -475,7 +472,7 @@ module QuadiconHelper
   end
 
   # Renders a quadicon for resource_pools
-  #
+  # TODO: use quadicon decorator
   def render_resource_pool_quadicon(item, options)
     img = item.vapp ? "100/vapp.png" : "100/resource_pool.png"
     output = []
@@ -505,7 +502,7 @@ module QuadiconHelper
   end
 
   # Renders a quadicon for hosts
-  #
+  # TODO: use quadicon decorator
   def render_host_quadicon(item, options)
     output = []
 
@@ -549,32 +546,71 @@ module QuadiconHelper
     end
   end
 
+  POSITION_MAPPER = {
+    :top_left     => "a72",
+    :top_right    => "b72",
+    :bottom_left  => "c72",
+    :bottom_right => "d72",
+  }.freeze
+
+  # Render text inside quadicon, every text with more than 3 characters will use smaller font.
+  # Returns text inside html element
+  #
+  # ==== Attributes
+  #
+  # * +text+ - text to render inside quad
+  # * +position+ - where to render text
+  def render_quad_text(text, position)
+    font_size = text.to_s.size > 2 ? "font-size: 12px;" : ""
+    flobj_p_simple(position, text, font_size)
+  end
+
+  # Render images and fonticons.
+  # Returns img string inside html element.
+  #
+  # ==== Attributes
+  #
+  # * +img+ - either URL to img or fonticon text
+  # * +position+ - where to render image
+  # * +type+ - default to nil, if small given it will use :flobj_img_smal for others it uses :flobj_img_simple
+  def render_quad_image(img, position, type = nil)
+    method = type == "small" ? method(:flobj_img_small) : method(:flobj_img_simple)
+    method.call(img, position)
+  end
+
+  # Transforms quadicon hash to array of strings with their location in quadicon.
+  # Returns array of strings
+  #
+  # ==== Attributes
+  #
+  # * +quadicon+ - item with quadicon
+  def transform_quadicon(quadicon)
+    quadicon.map do |key, value|
+      if value.try(:[], :text)
+        render_quad_text(value[:text], POSITION_MAPPER[key])
+      elsif value.try(:[], :state_icon)
+        currentstate_icon(value[:state_icon])
+      elsif value.try(:[], :fileicon) || value.try(:[], :img)
+        render_quad_image(value.try(:[], :fileicon) || value.try(:[], :img), POSITION_MAPPER[key], value.try(:type))
+      else
+        ""
+      end
+    end
+  end
 
   # Renders a quadicon for ext_management_systems
   #
   def render_ext_management_system_quadicon(item, options)
     output = []
 
-    if settings(:quadicons, db_for_quadicon)
+    quadicon = item.decorate.try(:quadicon)
+    if settings(:quadicons, db_for_quadicon) && quadicon
       output << flobj_img_simple("layout/base.svg")
-      item_count = case item
-                   when EmsPhysicalInfra then item.physical_servers.size
-                   when EmsCloud         then item.total_vms
-                   when ::ManageIQ::Providers::ContainerManager then item.container_nodes.size
-                   else
-                     item.hosts ? item.hosts.size : 0
-                   end
-      # reduce font-size of the item_count so it will fit in its quadrant
-      output << flobj_p_simple("a72", item_count, item_count.to_s.size > 2 ? "font-size: 12px;" : "")
-      output << flobj_p_simple("b72", item.total_miq_templates) if item.kind_of?(EmsCloud)
-      output << flobj_p_simple("b72", item.total_vms) if item.kind_of?(EmsInfra)
-      output << currentstate_icon(item.enabled? ? "on" : "paused") if item.kind_of?(::ManageIQ::Providers::ContainerManager)
-      output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "c72")
-      output << flobj_img_simple(img_for_auth_status(item), "d72")
+      output.concat(transform_quadicon(quadicon))
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple("layout/base-single.svg")
-      output << flobj_img_small("svg/vendor-#{h(item.image_name)}.svg", "e72")
+      output << flobj_img_small(item.decorate.try(:fileicon), "e72")
     end
 
     if options[:typ] == :listnav
@@ -595,7 +631,7 @@ module QuadiconHelper
   end
 
   # Renders quadicon for ems_clusters
-  #
+  # TODO: use quadicon decorator
   def render_ems_cluster_quadicon(item, options)
     output = []
 
@@ -714,7 +750,7 @@ module QuadiconHelper
   end
 
   # Renders a storage quadicon
-  #
+  # TODO: use quadicon decorator
   def render_storage_quadicon(item, options)
     output = []
 
@@ -781,7 +817,7 @@ module QuadiconHelper
   end
 
   # Renders a vm quadicon
-  #
+  # TODO: use quadicon decorator
   def render_vm_or_template_quadicon(item, options)
     output = []
 
