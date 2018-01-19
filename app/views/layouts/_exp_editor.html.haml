@@ -7,7 +7,7 @@
   = javascript_tag("ManageIQ.expEditor.second.title = '#{@edit[@expkey][:val2][:title]}';")
 
 #exp_editor_div
-  = render :partial => 'layouts/flash_msg', :locals => {:flash_div_id => 'exp_editor_flash'}
+  = render :partial => 'layouts/flash_msg', :locals => {:flash_div_id => 'exp_editor_flash'} if !params[:button] == "reset"
   %fieldset
     .toolbar-pf-actions{:style => "margin-left: 20px"}
       .form-group
