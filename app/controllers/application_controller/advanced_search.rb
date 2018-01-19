@@ -15,7 +15,8 @@ module ApplicationController::AdvancedSearch
     @expkey = :expression # Reset to use default expression key
     if session.fetch_path(:adv_search, model.to_s)
       adv_search_model = session[:adv_search][model.to_s]
-      @edit ||= copy_hash(adv_search_model[@expkey] ? adv_search_model : session[:edit])
+      @edit ||= {}
+      @edit.merge!(copy_hash(adv_search_model[@expkey] ? adv_search_model : session[:edit]))
       adv_search_clear_default_search_if_cant_be_seen
       @edit.delete(:exp_token)                                          # Remove any existing atom being edited
     else                                                                # Create new exp fields
