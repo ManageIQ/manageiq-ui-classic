@@ -16,6 +16,18 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           :url_parms    => "main_div",
           :send_checked => true,
           :onwhen       => "1+"),
+        button(
+          :ems_container_capture_metrics,
+          'fa pficon-import fa-lg',
+          N_('Capture metrics for selected Containers Providers'),
+          N_('Capture metrics'),
+          :confirm      => N_("Capture metrics for selected Containers Providers?"),
+          :enabled      => false,
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :onwhen       => "1+",
+          :klass        => ApplicationHelper::Button::EmsCaptureMetrics,
+        ),
         separator,
         button(
           :ems_container_new,

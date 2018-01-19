@@ -1,5 +1,6 @@
 module EmsCommon
   extend ActiveSupport::Concern
+  include EmsCommonHelper
 
   included do
     include Mixins::GenericSessionMixin
@@ -279,7 +280,8 @@ module EmsCommon
       @refresh_div = "main_div" # Default div for button.rjs to refresh
       redirect_to :action => "new" if params[:pressed] == "new"
       deleteemss if params[:pressed] == "#{table_name}_delete"
-      refreshemss if params[:pressed] == "#{table_name}_refresh"
+      refresh_or_capture_emss("refresh_ems", _("Refresh")) if params[:pressed] == "#{table_name}_refresh"
+      refresh_or_capture_emss("capture_ems", _("Capture Metrics")) if params[:pressed] == "#{table_name}_capture_metrics"
       pause_or_resume_emss(:pause => true) if params[:pressed] == "#{table_name}_pause"
       pause_or_resume_emss(:resume => true) if params[:pressed] == "#{table_name}_resume"
       tag(model) if params[:pressed] == "#{table_name}_tag"
@@ -530,20 +532,7 @@ module EmsCommon
 
     return if emss.empty?
 
-    if task == "refresh_ems"
-      model.refresh_ems(emss, true)
-      add_flash(n_("%{task} initiated for %{count} %{model} from the %{product} Database",
-                   "%{task} initiated for %{count} %{models} from the %{product} Database", emss.length) % \
-        {:task    => task_name(task).gsub("Ems", ui_lookup(:tables => table_name)),
-         :count   => emss.length,
-         :product => Vmdb::Appliance.PRODUCT_NAME,
-         :model   => ui_lookup(:table => table_name),
-         :models  => ui_lookup(:tables => table_name)})
-      AuditEvent.success(:userid => session[:userid], :event => "#{table_name}_#{task}",
-          :message => _("'%{task}' successfully initiated for %{table}") %
-            {:task => task, :table => pluralize(emss.length, ui_lookup(:tables => table_name))},
-          :target_class => model.to_s)
-    elsif task == "destroy"
+    if task == "destroy"
       model.where(:id => emss).order("lower(name)").each do |ems|
         id = ems.id
         ems_name = ems.name
@@ -629,39 +618,6 @@ module EmsCommon
     if @lastaction == "show_list"
       show_list
       @refresh_partial = "layouts/gtl"
-    end
-  end
-
-  def call_ems_refresh(emss)
-    process_emss(emss, "refresh_ems") unless emss.empty?
-    return if @flash_array.present?
-
-    add_flash(n_("Refresh initiated for %{count} %{model} from the %{product} Database",
-                 "Refresh initiated for %{count} %{models} from the %{product} Database", emss.length) %
-      {:count   => emss.length,
-       :product => Vmdb::Appliance.PRODUCT_NAME,
-       :model   => ui_lookup(:table => table_name),
-       :models  => ui_lookup(:tables => table_name)})
-  end
-
-  # Refresh VM states for all selected or single displayed ems(s)
-  def refreshemss
-    assert_privileges(params[:pressed])
-    if @lastaction == "show_list"
-      emss = find_checked_items
-      if emss.empty?
-        add_flash(_("No %{model} were selected for refresh") % {:model => ui_lookup(:table => table_name)}, :error)
-      end
-      call_ems_refresh(emss)
-      show_list
-      @refresh_partial = "layouts/gtl"
-    else
-      if params[:id].nil? || model.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => table_name)}, :error)
-      else
-        call_ems_refresh([params[:id]])
-      end
-      params[:display] = @display
     end
   end
 
