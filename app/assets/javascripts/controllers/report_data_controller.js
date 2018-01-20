@@ -202,7 +202,7 @@
   ReportDataController.prototype.onItemClicked = function(item, event) {
     event.stopPropagation();
     event.preventDefault();
-    if (this.initObject.showUrl) {
+    if (this.initObject.showUrl && !this.settings.hideSelect) {
       var prefix = this.initObject.showUrl;
       var splitUrl = this.initObject.showUrl.split('/');
       if (item.parent_path && item.parent_id) {
