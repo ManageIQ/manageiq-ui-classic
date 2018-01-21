@@ -5,12 +5,13 @@
 # Nathalie Stoquart <nateltrad@gmail.com>, 2017. #zanata
 # Sean Flanigan <sflaniga@redhat.com>, 2017. #zanata
 # croe <croe@redhat.com>, 2017. #zanata
+# Milan Zázrivec <mzazrivec@redhat.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-31 14:32+0100\n"
-"PO-Revision-Date: 2017-11-22 05:27-0500\n"
+"PO-Revision-Date: 2018-01-21 08:40-0500\n"
 "Last-Translator: Milan Zázrivec <mzazrivec@redhat.com>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -22,11 +23,11 @@ msgstr ""
 
 #: ../app/views/ops/_ap_form_nteventlog.html.haml:12
 msgid " # of Days"
-msgstr "Nb de jours"
+msgstr "Nb de jours\n"
 
 #: ../app/controllers/ems_infra_controller.rb:235
 msgid " %{host_uid_ems} is not a compute node "
-msgstr "%{host_uid_ems} n''est pas un nœud compute"
+msgstr "%{host_uid_ems} n'est pas un nœud compute"
 
 #: ../app/controllers/ems_infra_controller.rb:230
 msgid " %{host_uid_ems} needs to be evacuated before it can be removed "
@@ -543,15 +544,15 @@ msgstr "%{button_name} Bouton non encore implémenté"
 
 #: ../app/helpers/application_helper/button/cockpit_console.rb:8
 msgid "%{canned_msg} %{record_type} is not powered on"
-msgstr "%{canned_msg} %{record_type} n''est pas activé"
+msgstr "%{canned_msg} %{record_type} n'est pas activé"
 
 #: ../app/helpers/application_helper/button/cockpit_console.rb:6
 msgid "%{canned_msg} 'Cockpit' role is not enabled."
-msgstr "%{canned_msg} Le rôle 'Cockpit' n''est pas activé."
+msgstr "%{canned_msg} Le rôle 'Cockpit' n'est pas activé."
 
 #: ../app/helpers/application_helper/button/cockpit_console.rb:9
 msgid "%{canned_msg} Windows platform is not supported"
-msgstr "%{canned_msg} La plateforme Windows n''est pas prise en charge"
+msgstr "%{canned_msg} La plateforme Windows n'est pas prise en charge"
 
 #: ../app/views/report/_form_filter_chargeback.html.haml:185
 msgid "%{chargeback_interval} Ending with"
@@ -885,7 +886,7 @@ msgstr "%{name} Type"
 #: ../app/controllers/dashboard_controller.rb:749
 msgid "%{name} dashboard for user %{id} in group id %{current_group_id}"
 msgstr ""
-"%{name} tableau de bord pour l''utilisateur %{id} dans l''ID de groupe "
+"%{name} tableau de bord pour l'utilisateur %{id} dans l'ID de groupe "
 "%{current_group_id}"
 
 #: ../app/controllers/miq_ae_class_controller.rb:190
@@ -2340,7 +2341,7 @@ msgstr "Une balise doit être sélectionnée"
 
 #: ../app/controllers/report_controller/reports/editor.rb:1662
 msgid "A Tenant Category must be selected"
-msgstr "Vous devez sélectionner une catégorie de tenants"
+msgstr "Vous devez sélectionner une catégorie de clients"
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:1423
 msgid "A User Group must be assigned a Role"
@@ -2561,7 +2562,7 @@ msgstr "Rôles  de contrôle d'accès"
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:903
 msgid "Access Control Tenants"
-msgstr "Tenants  de contrôle d'accès"
+msgstr "clients  de contrôle d'accès"
 
 #: ../app/views/ops/_settings_authentication_tab.html.haml:124
 msgid "Access Key"
@@ -2645,11 +2646,11 @@ msgstr "Action \"%{name}\""
 
 #: ../app/controllers/miq_policy_controller/miq_actions.rb:48
 msgid "Action \"%{name}\" was added"
-msgstr "L''action \"%{name}\" a été ajoutée"
+msgstr "L'action \"%{name}\" a été ajoutée"
 
 #: ../app/controllers/miq_policy_controller/miq_actions.rb:46
 msgid "Action \"%{name}\" was saved"
-msgstr "L''action \"%{name}\" a été enregistrée"
+msgstr "L'action \"%{name}\" a été enregistrée"
 
 #: ../app/views/catalog/_form_resources_info.html.haml:32
 #: ../app/views/catalog/_sandt_tree_show.html.haml:158
@@ -2813,7 +2814,7 @@ msgstr "Ajouter un profil d'analyse d'hôte"
 #: ../app/controllers/host_aggregate_controller.rb:344
 msgid "Add Host not supported by Host Aggregate \"%{name}\""
 msgstr ""
-"L''ajout d''un hôte n''est pas pris en charge par l''agrégat de machines "
+"L'ajout d''un hôte n'est pas pris en charge par l'agrégat de machines "
 "\"%{name}\""
 
 #: ../app/helpers/application_helper/toolbar/host_aggregate_center.rb:23
@@ -2823,20 +2824,20 @@ msgstr "Ajouter l'Hôte à la Collection d'hôtes"
 
 #: ../app/controllers/host_aggregate_controller.rb:307
 msgid "Add Host to Host Aggregate \"%{name}\""
-msgstr "Ajout d''un hôte à l''agrégat de machines \"%{name}\""
+msgstr "Ajout d''un hôte à l'agrégat de machines \"%{name}\""
 
 #: ../app/controllers/host_aggregate_controller.rb:331
 msgid ""
 "Add Host to Host Aggregate \"%{name}\" failed: Task start failed: ID [%{id}]"
 msgstr ""
-"L''ajout d''un hôte à l''agrégat de machines \"%{name}\" a échoué : échec de"
-" démarrage de la tâche : ID [%{id}]"
+"L'ajout d''un hôte à l'agrégat de machines \"%{name}\" a échoué : échec de "
+"démarrage de la tâche : ID [%{id}]"
 
 #: ../app/controllers/host_aggregate_controller.rb:319
 msgid "Add Host to Host Aggregate \"%{name}\" was cancelled by the user"
 msgstr ""
-"L''ajout d''un hôte à l''agrégat de machines \"%{name}\" a été annulé par "
-"l''utilisateur"
+"L'ajout d''un hôte à l'agrégat de machines \"%{name}\" a été annulé par "
+"l'utilisateur"
 
 #: ../app/helpers/application_helper/toolbar/host_aggregates_center.rb:29
 msgid "Add Host to Selected Host Aggregate"
@@ -2912,7 +2913,7 @@ msgstr ""
 
 #: ../app/controllers/cloud_tenant_controller.rb:69
 msgid "Add New Cloud Tenant"
-msgstr "Ajouter un nouveau tenant cloud"
+msgstr "Ajouter un nouveau client cloud"
 
 #: ../app/controllers/cloud_volume_controller.rb:217
 #: ../app/controllers/cloud_volume_controller.rb:246
@@ -2968,7 +2969,7 @@ msgstr "Ajouter une remarque"
 
 #: ../app/helpers/application_helper/toolbar/tenant_center.rb:20
 msgid "Add Project to this Tenant"
-msgstr "Ajouter un projet à ce tenant"
+msgstr "Ajouter un projet à ce client"
 
 #: ../app/views/static/generic_object/generic_object_table.html.haml:40
 msgid "Add Row"
@@ -3332,7 +3333,7 @@ msgstr "Ajouter un widget"
 
 #: ../app/helpers/application_helper/toolbar/tenant_center.rb:12
 msgid "Add child Tenant to this Tenant"
-msgstr "Ajouter un tenant enfant à ce tenant"
+msgstr "Ajouter un client enfant à ce client"
 
 #: ../app/controllers/report_controller.rb:758
 msgid "Add folder to selected Accordion"
@@ -3364,7 +3365,7 @@ msgstr "L'ajout d'un article du catalogue a été annulé par l'utilisateur"
 
 #: ../app/controllers/cloud_tenant_controller.rb:79
 msgid "Add of Cloud Tenant was cancelled by the user"
-msgstr "L'ajout du tenant de cloud a été annulé par l'utilisateur"
+msgstr "L'ajout du client de cloud a été annulé par l'utilisateur"
 
 #: ../app/assets/javascripts/controllers/ansible_credentials/ansible_credentials_form_controller.js:76
 msgid "Add of Credential \\\"%s\\\" has been successfully queued."
@@ -3393,7 +3394,7 @@ msgstr "L'ajout du référentiel a été annulé par l'utilisateur."
 #: ../app/controllers/miq_policy_controller/conditions.rb:13
 msgid "Add of new %{model} Condition was cancelled by the user"
 msgstr ""
-"L''ajout d''une nouvelle condition %{model} a été annulé par l''utilisateur"
+"L'ajout d''une nouvelle condition %{model} a été annulé par l'utilisateur"
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:109
 msgid "Add of new %{model} was cancelled by the user"
@@ -3921,11 +3922,11 @@ msgstr "Alerte \"%{name}\""
 
 #: ../app/controllers/miq_policy_controller/alerts.rb:33
 msgid "Alert \"%{name}\" was added"
-msgstr "L''alerte \"%{name}\" a été ajoutée"
+msgstr "L'alerte \"%{name}\" a été ajoutée"
 
 #: ../app/controllers/miq_policy_controller/alerts.rb:33
 msgid "Alert \"%{name}\" was saved"
-msgstr "L''alerte \"%{name}\" a été enregistrée"
+msgstr "L'alerte \"%{name}\" a été enregistrée"
 
 #: ../app/controllers/miq_policy_controller/alert_profiles.rb:115
 msgid "Alert Profile \"%{alert_profile}\" assignments successfully saved"
@@ -4645,7 +4646,7 @@ msgstr ""
 #: ../app/controllers/mixins/embedded_ansible_refresh_mixin.rb:9
 msgid "An error occurred while initiating Embedded Ansible refresh: %{error}"
 msgstr ""
-"Une erreur s''est produite lors du rafraîchissement d''Ansible intégré : "
+"Une erreur s'est produite lors du rafraîchissement d''Ansible intégré : "
 "%{error}"
 
 #: ../app/views/layouts/_exception_contents.html.haml:22
@@ -4688,7 +4689,7 @@ msgstr "Le profil d''analyse \"%{name}\" a été enregistré"
 #: ../app/controllers/ops_controller/settings/analysis_profiles.rb:514
 msgid "Analysis Profile \"%{name}\": Error during 'update': %{message}"
 msgstr ""
-"Profil d''analyse \"%{name}\"  : erreur lors de l''opération 'update' : "
+"Profil d''analyse \"%{name}\"  : erreur lors de l'opération 'update' : "
 "%{message}"
 
 #: ../app/controllers/miq_policy_controller/miq_actions.rb:370
@@ -5199,7 +5200,7 @@ msgstr "Affectations"
 
 #: ../app/controllers/miq_policy_controller.rb:668
 msgid "Assignments for Alert \"%{name}\""
-msgstr "Affectations pour l''alerte \"%{name}\""
+msgstr "Affectations pour l'alerte \"%{name}\""
 
 #: ../app/views/vm_common/_associate_floating_ip.html.haml:4
 msgid "Associate Floating IP"
@@ -5207,7 +5208,7 @@ msgstr "Associer une adresse IP flottante"
 
 #: ../app/controllers/floating_ip_controller.rb:129
 msgid "Associate Floating IP \"%{address}\""
-msgstr "Associer l''adresse IP flottante \"%{address}\""
+msgstr "Associer l'adresse IP flottante \"%{address}\""
 
 #: ../app/controllers/mixins/actions/vm_actions/associate_floating_ip.rb:35
 msgid "Associate Floating IP with Instance '%{name}'"
@@ -5384,7 +5385,7 @@ msgstr "Associer le volume cloud à %{model} \"%{name}\""
 
 #: ../app/controllers/vm_cloud_controller.rb:23
 msgid "Attach Cloud Volume to Instance \"%{instance_name}\""
-msgstr "Associer le volume cloud à l''instance \"%{instance_name}\""
+msgstr "Associer le volume cloud à l'instance \"%{instance_name}\""
 
 #: ../app/views/vm_common/_attach.html.haml:9
 #: ../app/views/cloud_volume/attach.html.haml:10
@@ -5409,8 +5410,7 @@ msgstr "Associé à une stratégie"
 
 #: ../app/controllers/cloud_volume_controller.rb:104
 msgid "Attaching Cloud Volume \"%{name}\" was cancelled by the user"
-msgstr ""
-"L''association du volume cloud \"%{name}\" a été annulée par l''utilisateur"
+msgstr "L'association du volume cloud \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/cloud_volume_controller.rb:134
 #: ../app/controllers/vm_cloud_controller.rb:85
@@ -5422,8 +5422,8 @@ msgid ""
 "Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the"
 " user"
 msgstr ""
-"L''association du volume cloud à l''instance \"%{instance_name}\" a été "
-"annulée par l''utilisateur"
+"L'association du volume cloud à l'instance \"%{instance_name}\" a été "
+"annulée par l'utilisateur"
 
 #: ../app/controllers/cloud_volume_controller.rb:116
 #: ../app/controllers/vm_cloud_controller.rb:67
@@ -5593,11 +5593,11 @@ msgstr "Instance d'automatisation"
 
 #: ../app/controllers/miq_ae_class_controller.rb:635
 msgid "Automate Instance \"%{name}\" was added"
-msgstr "L''instance d''automatisation \"%{name}\" a été ajoutée"
+msgstr "L'instance d''automatisation \"%{name}\" a été ajoutée"
 
 #: ../app/controllers/miq_ae_class_controller.rb:590
 msgid "Automate Instance \"%{name}\" was saved"
-msgstr "L''instance d''automatisation \"%{name}\" a été enregistrée"
+msgstr "L'instance d''automatisation \"%{name}\" a été enregistrée"
 
 #: ../app/controllers/miq_ae_class_controller.rb:105
 msgid "Automate Method"
@@ -5807,8 +5807,7 @@ msgstr "Sauvegarde du volume cloud \"%{name}\" créée"
 
 #: ../app/controllers/cloud_volume_controller.rb:419
 msgid "Backup of Cloud Volume \"%{name}\" was cancelled by the user"
-msgstr ""
-"La sauvegarde du volume cloud \"%{name}\" a été annulée par l''utilisateur"
+msgstr "La sauvegarde du volume cloud \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/views/ops/_ldap_region_show.html.haml:32
 #: ../app/views/ops/_ldap_domain_show.html.haml:83
@@ -8195,7 +8194,7 @@ msgstr "Le volume cloud \"%{name}\" a été créé"
 
 #: ../app/helpers/application_helper/button/volume_detach.rb:6
 msgid "Cloud Volume \"%{name}\" is not attached to any Instances"
-msgstr "Le volume cloud \"%{name}\" n''est associé à aucune instance"
+msgstr "Le volume cloud \"%{name}\" n'est associé à aucune instance"
 
 #: ../app/controllers/cloud_volume_controller.rb:342
 msgid "Cloud Volume \"%{name}\" updated"
@@ -8204,7 +8203,7 @@ msgstr "Le volume cloud \"%{name}\" a été mis à jour"
 #: ../app/controllers/cloud_volume_controller.rb:48
 #: ../app/controllers/cloud_tenant_controller.rb:34
 msgid "Cloud Volume \"%{volume_name}\" is not attached to any Instances"
-msgstr "Le volume cloud \"%{volume_name}\" n''est associé à aucune instance"
+msgstr "Le volume cloud \"%{volume_name}\" n'est associé à aucune instance"
 
 #: ../app/views/cloud_volume/backup_select.html.haml:12
 msgid "Cloud Volume Backup"
@@ -9113,12 +9112,12 @@ msgstr "Images du conteneur"
 #: ../app/controllers/ops_controller/settings/label_tag_mapping.rb:202
 msgid "Container Label Tag Mapping \"%{name}\" was added"
 msgstr ""
-"L''association de balises du libellé de conteneur \"%{name}\" a été ajoutée"
+"L'association de balises du libellé de conteneur \"%{name}\" a été ajoutée"
 
 #: ../app/controllers/ops_controller/settings/label_tag_mapping.rb:219
 msgid "Container Label Tag Mapping \"%{name}\" was saved"
 msgstr ""
-"L''association de balises du libellé de conteneur \"%{name}\" a été "
+"L'association de balises du libellé de conteneur \"%{name}\" a été "
 "enregistrée"
 
 #: ../app/controllers/ops_controller/settings/label_tag_mapping.rb:238
@@ -9614,7 +9613,7 @@ msgstr "Créer un cliché pour le volume cloud \"%{name}\""
 
 #: ../app/controllers/vm_common.rb:455
 msgid "Create Snapshot for VM and Instance \"%{name}\" was started"
-msgstr "La création du cliché pour la VM et l''instance \"%{name}\" a été lancée"
+msgstr "La création du cliché pour la VM et l'instance \"%{name}\" a été lancée"
 
 #: ../app/helpers/application_helper/toolbar/cloud_volume_center.rb:12
 msgid "Create a Backup of this Cloud Volume"
@@ -9783,7 +9782,7 @@ msgstr "Fichier image personnalisé actuel"
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:598
 msgid "Current EVM User \"%{name}\" cannot be deleted"
-msgstr "Impossible de supprimer l''utilisateur EVM actuel \"%{name}\""
+msgstr "Impossible de supprimer l'utilisateur EVM actuel \"%{name}\""
 
 #: ../app/views/vm_common/_resize.html.haml:12
 msgid "Current Flavor"
@@ -10399,11 +10398,11 @@ msgstr "Impossible de supprimer la boîte de dialogue par défaut \"%{name}\""
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:604
 msgid "Default EVM User \"%{name}\" cannot be copied"
-msgstr "Impossible de copier l''utilisateur EVM par défaut \"%{name}\""
+msgstr "Impossible de copier l'utilisateur EVM par défaut \"%{name}\""
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:596
 msgid "Default EVM User \"%{name}\" cannot be deleted"
-msgstr "Impossible de supprimer l''utilisateur EVM par défaut \"%{name}\""
+msgstr "Impossible de supprimer l'utilisateur EVM par défaut \"%{name}\""
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:312
 msgid "Default EVM User \"Administrator\" cannot be deleted"
@@ -10608,7 +10607,7 @@ msgstr "Supprimer la zone %{server_name} [%{server_id}]"
 #: ../app/controllers/host_aggregate_controller.rb:259
 msgid "Delete aggregate not supported by Host Aggregate \"%{name}\""
 msgstr ""
-"La suppression de l''agrégat n''est pas prise en charge par l''agrégat de "
+"La suppression de l'agrégat n'est pas prise en charge par l'agrégat de "
 "machines \"%{name}\""
 
 #: ../app/helpers/application_helper/toolbar/tasks_center.rb:42
@@ -11017,7 +11016,7 @@ msgstr "Suppression du serveur LDAP '%{hostname}'. En êtes-vous sûr ?"
 
 #: ../app/controllers/ansible_credential_controller.rb:67
 msgid "Deletion of Credential \"%{name}\" was successfully initiated."
-msgstr "La suppression de l''identifiant \"%{name}\" a été lancée."
+msgstr "La suppression de l'identifiant \"%{name}\" a été lancée."
 
 #: ../app/controllers/middleware_server_controller.rb:235
 msgid "Deletion of one JDR report succeeded."
@@ -11281,7 +11280,7 @@ msgstr "Dissocier le volume cloud de %{model} \"%{name}\""
 
 #: ../app/controllers/vm_cloud_controller.rb:43
 msgid "Detach Cloud Volume from Instance \"%{instance_name}\""
-msgstr "Dissocier le volume cloud de l''instance \"%{instance_name}\""
+msgstr "Dissocier le volume cloud de l'instance \"%{instance_name}\""
 
 #: ../app/views/vm_common/_detach.html.haml:9
 #: ../app/views/cloud_volume/detach.html.haml:10
@@ -11303,7 +11302,7 @@ msgstr "Dissocier ce volume cloud d'une instance"
 #: ../app/controllers/cloud_volume_controller.rb:159
 msgid "Detaching Cloud Volume \"%{name}\" was cancelled by the user"
 msgstr ""
-"La dissociation du volume cloud %{name} a été annulée par l''utilisateur"
+"La dissociation du volume cloud %{name} a été annulée par l'utilisateur"
 
 #: ../app/controllers/cloud_volume_controller.rb:190
 #: ../app/controllers/vm_cloud_controller.rb:140
@@ -11323,8 +11322,8 @@ msgid ""
 "Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by"
 " the user"
 msgstr ""
-"La dissociation d''un volume cloud de l''instance \"%{instance_name}\" a été"
-" annulée par l''utilisateur"
+"La dissociation d''un volume cloud de l'instance \"%{instance_name}\" a été "
+"annulée par l'utilisateur"
 
 #: ../app/helpers/service_helper/textual_summary.rb:20
 #: ../app/helpers/service_helper/textual_summary.rb:40
@@ -12388,7 +12387,7 @@ msgstr "Modifier Agrégat de machines"
 
 #: ../app/controllers/host_aggregate_controller.rb:175
 msgid "Edit Host Aggregate \"%{name}\""
-msgstr "Modifier l''agrégat de machines \"%{name}\""
+msgstr "Modifier l'agrégat de machines \"%{name}\""
 
 #: ../app/controllers/ops_controller/diagnostics.rb:88
 msgid "Edit Log Depot settings was cancelled by the user"
@@ -13164,7 +13163,7 @@ msgstr "La modification de %{model} \"%{name}\" a été annulée par l'utilisate
 msgid "Edit of %{model} Condition \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification de la condition %{model} \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/application_controller/miq_request_methods.rb:186
 msgid "Edit of %{model} Request \"%{name}\" was cancelled by the user"
@@ -13178,42 +13177,42 @@ msgstr "La modification de \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/miq_policy_controller/miq_actions.rb:11
 msgid "Edit of Action \"%{name}\" was cancelled by the user"
-msgstr "La modification de l''action \"%{name}\" a été annulée par l''utilisateur"
+msgstr "La modification de l'action \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/miq_policy_controller/alerts.rb:12
 msgid "Edit of Alert \"%{name}\" was cancelled by the user"
-msgstr "La modification de l''alerte \"%{name}\" a été annulée par l''utilisateur"
+msgstr "La modification de l'alerte \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/miq_policy_controller/alert_profiles.rb:14
 msgid "Edit of Alert Profile \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du profil d''alerte  \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/ops_controller/settings/analysis_profiles.rb:227
 msgid "Edit of Analysis Profile \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du profil d''analyse \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/miq_ae_class_controller.rb:1024
 msgid "Edit of Automate Class \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification de la classe d''automatisation \"%{name}\" a été annulée par"
-" l''utilisateur"
+" l'utilisateur"
 
 #: ../app/controllers/miq_ae_class_controller.rb:562
 msgid "Edit of Automate Instance \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de l''instance d''automatisation \"%{name}\" a été annulée "
-"par l''utilisateur"
+"La modification de l'instance d''automatisation \"%{name}\" a été annulée "
+"par l'utilisateur"
 
 #: ../app/controllers/miq_ae_class_controller.rb:1149
 #: ../app/controllers/miq_ae_class_controller.rb:1191
 msgid "Edit of Automate Method \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification de la méthode d''automatisation \"%{name}\" a été annulée "
-"par l''utilisateur"
+"par l'utilisateur"
 
 #: ../app/controllers/application_controller/buttons.rb:514
 #: ../app/controllers/application_controller/buttons.rb:586
@@ -13225,11 +13224,11 @@ msgstr "Modification du bouton"
 msgid "Edit of Button Group \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du groupe de boutons \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/catalog_controller.rb:563
 msgid "Edit of Catalog \"%{name}\" was cancelled by the user"
-msgstr "La modification du catalogue \"%{name}\" a été annulée par l''utilisateur"
+msgstr "La modification du catalogue \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/catalog_controller.rb:295
 msgid "Edit of Catalog Bundle \"%{name}\" was cancelled by the user"
@@ -13246,13 +13245,13 @@ msgstr ""
 #: ../app/controllers/ops_controller/settings/tags.rb:43
 msgid "Edit of Category \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de la catégorie \"%{name}\" a été annulée par l''utilisateur"
+"La modification de la catégorie \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/chargeback_controller.rb:99
 msgid "Edit of Chargeback Rate \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du taux de rétrofacturation \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/miq_ae_class_controller.rb:2436
 msgid "Edit of Class Schema Sequence '%{name}'"
@@ -13278,13 +13277,13 @@ msgstr ""
 #: ../app/controllers/cloud_volume_controller.rb:304
 msgid "Edit of Cloud Volume \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification du volume cloud \"%{name}\" a été annulée par l''utilisateur"
+"La modification du volume cloud \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/ops_controller/settings/label_tag_mapping.rb:38
 msgid "Edit of Container Label Tag Mapping \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de l''association de balises du libellé de conteneur "
-"\"%{name}\" a été annulée par l''utilisateur"
+"La modification de l'association de balises du libellé de conteneur "
+"\"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/assets/javascripts/controllers/ansible_credentials/ansible_credentials_form_controller.js:57
 msgid "Edit of Credential \\\"%s\\\" was canceled by the user."
@@ -13294,7 +13293,7 @@ msgstr "La modification de l'identifiant \\\"%s\\\" a été annulée par l'utili
 msgid "Edit of Custom Button \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du bouton personnalisé \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/ops_controller/settings/common.rb:575
 msgid "Edit of Customer Information was cancelled"
@@ -13304,7 +13303,7 @@ msgstr "La modification des informations sur le client a été annulée"
 msgid "Edit of Customization Template \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du modèle de personnalisation \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/report_controller/dashboards.rb:61
 msgid "Edit of Dashboard \"%{name}\" was cancelled by the user"
@@ -13323,47 +13322,47 @@ msgstr ""
 msgid "Edit of Dialog \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification de la boîte de dialogue \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/floating_ip_controller.rb:184
 msgid "Edit of Floating IP \"%{address}\" was cancelled by the user"
 msgstr ""
-"La modification de l''IP flottante \"%{address}\" a été annulée par "
-"l''utilisateur"
+"La modification de l'IP flottante \"%{address}\" a été annulée par "
+"l'utilisateur"
 
 #: ../app/controllers/host_controller.rb:227
 msgid "Edit of Host / Node \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de l''hôte/du nœud \"%{name}\" a été annulée par "
-"l''utilisateur"
+"La modification de l'hôte/du nœud \"%{name}\" a été annulée par "
+"l'utilisateur"
 
 #: ../app/controllers/host_aggregate_controller.rb:197
 msgid "Edit of Host Aggregate \"%{name}\" failed: Task start failed: ID [%{id}]"
 msgstr ""
-"La modification de l''agrégat de machines \"%{name}\" a échoué : échec de "
+"La modification de l'agrégat de machines \"%{name}\" a échoué : échec de "
 "démarrage de la tâche : ID [%{id}]"
 
 #: ../app/controllers/host_aggregate_controller.rb:186
 msgid "Edit of Host Aggregate \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de l''agrégat de machines \"%{name}\" a été annulée par "
-"l''utilisateur"
+"La modification de l'agrégat de machines \"%{name}\" a été annulée par "
+"l'utilisateur"
 
 #: ../app/controllers/pxe_controller/iso_datastores.rb:164
 msgid "Edit of ISO Image \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de l''image ISO \"%{name}\" a été annulée par l''utilisateur"
+"La modification de l'image ISO \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/ops_controller/settings/ldap.rb:148
 msgid "Edit of LDAP Domain \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification du domaine LDAP \"%{name}\" a été annulée par l''utilisateur"
+"La modification du domaine LDAP \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/ops_controller/settings/ldap.rb:32
 msgid "Edit of LDAP Region \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification de la région LDAP \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/catalog_controller.rb:990
 msgid "Edit of Orchestration Template \"%{name}\" was cancelled by the user"
@@ -13374,23 +13373,23 @@ msgstr ""
 #: ../app/controllers/pxe_controller/pxe_servers.rb:180
 msgid "Edit of PXE Image \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de l''image PXE \"%{name}\" a été annulée par l''utilisateur"
+"La modification de l'image PXE \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/pxe_controller/pxe_servers.rb:42
 msgid "Edit of PXE Server \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification du serveur PXE \"%{name}\" a été annulée par l''utilisateur"
+"La modification du serveur PXE \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/miq_policy_controller/policies.rb:9
 msgid "Edit of Policy \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de la stratégie \"%{name}\" a été annulée par l''utilisateur"
+"La modification de la stratégie \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/miq_policy_controller/policy_profiles.rb:12
 msgid "Edit of Policy Profile \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du profil de stratégie \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/miq_ae_class_controller.rb:1593
 msgid "Edit of Priority Order was cancelled by the user"
@@ -13403,7 +13402,7 @@ msgstr "La modification du fournisseur a été annulée par l'utilisateur"
 
 #: ../app/controllers/report_controller/reports/editor.rb:66
 msgid "Edit of Report \"%{name}\" was cancelled by the user"
-msgstr "La modification du rapport \"%{name}\" a été annulée par l''utilisateur"
+msgstr "La modification du rapport \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/report_controller/menus.rb:194
 msgid "Edit of Report Menu for role \"%{role}\" was cancelled by the user"
@@ -13426,7 +13425,7 @@ msgstr "La modification du router \"%{name}\" a été annulée par l'utilisateur
 #: ../app/controllers/report_controller/schedules.rb:210
 #: ../app/controllers/ops_controller/settings/schedules.rb:44
 msgid "Edit of Schedule \"%{name}\" was cancelled by the user"
-msgstr "La modification du planning \"%{name}\" a été annulée par l''utilisateur"
+msgstr "La modification du planning \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/security_group_controller.rb:174
 msgid "Edit of Security Group \"%{name}\" was cancelled by the user"
@@ -13441,8 +13440,8 @@ msgstr "La modification du service \"%{name}\" a été annulée par l'utilisateu
 #: ../app/controllers/catalog_controller.rb:86
 msgid "Edit of Service Catalog Item \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de l''élément du catalogue de services \"%{name}\" a été "
-"annulée par l''utilisateur"
+"La modification de l'élément du catalogue de services \"%{name}\" a été "
+"annulée par l'utilisateur"
 
 #: ../app/controllers/cloud_subnet_controller.rb:161
 msgid "Edit of Subnet \"%{name}\" was cancelled by the user"
@@ -13453,33 +13452,33 @@ msgstr ""
 msgid "Edit of System Image Type \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du type d''image système \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/configuration_controller.rb:354
 msgid "Edit of Time Profile \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du profil temporel \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/vm_common.rb:768
 msgid "Edit of VM and Instance \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de la VM et de l''instance \"%{name}\" a été annulée par "
-"l''utilisateur"
+"La modification de la VM et de l'instance \"%{name}\" a été annulée par "
+"l'utilisateur"
 
 #: ../app/controllers/report_controller/widgets.rb:79
 msgid "Edit of Widget \"%{name}\" was cancelled by the user"
-msgstr "La modification du widget \"%{name}\" a été annulée par l''utilisateur"
+msgstr "La modification du widget \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/pxe_controller/pxe_servers.rb:231
 msgid "Edit of Windows Image \"%{name}\" was cancelled by the user"
 msgstr ""
-"La modification de l''image Windows \"%{name}\" a été annulée par "
-"l''utilisateur"
+"La modification de l'image Windows \"%{name}\" a été annulée par "
+"l'utilisateur"
 
 #: ../app/controllers/ops_controller/settings/zones.rb:10
 msgid "Edit of Zone \"%{name}\" was cancelled by the user"
-msgstr "La modification de la zone \"%{name}\" a été annulée par l''utilisateur"
+msgstr "La modification de la zone \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/host_controller.rb:222
 msgid ""
@@ -13492,7 +13491,7 @@ msgstr ""
 msgid "Edit of schema for Automate Class \"%{name}\" was cancelled by the user"
 msgstr ""
 "La modification du schéma de la classe d''automatisation \"%{name}\" a été "
-"annulée par l''utilisateur"
+"annulée par l'utilisateur"
 
 #: ../app/controllers/application_controller/policy_support.rb:29
 msgid "Edit policy assignments was cancelled by the user"
@@ -13934,11 +13933,11 @@ msgstr "Modification de %{vm_or_template} \"%{name}\""
 
 #: ../app/controllers/miq_policy_controller.rb:647
 msgid "Editing Action \"%{name}\""
-msgstr "Modification de l''action \"%{name}\""
+msgstr "Modification de l'action \"%{name}\""
 
 #: ../app/controllers/miq_policy_controller.rb:672
 msgid "Editing Alert \"%{name}\""
-msgstr "Modification de l''alerte \"%{name}\""
+msgstr "Modification de l'alerte \"%{name}\""
 
 #: ../app/controllers/ops_controller.rb:626
 msgid "Editing Analysis Profile \"%{name}\""
@@ -13946,7 +13945,7 @@ msgstr "Modification du profil d''analyse \"%{name}\""
 
 #: ../app/controllers/miq_ae_class_controller.rb:542
 msgid "Editing Automate Instance \"%{name}\""
-msgstr "Modification de l''instance d''automatisation \"%{name}\""
+msgstr "Modification de l'instance d''automatisation \"%{name}\""
 
 #: ../app/controllers/miq_ae_class_controller.rb:753
 msgid "Editing Automate Method \"%{name}\""
@@ -14000,7 +13999,7 @@ msgstr "Modification du groupe EVM \"%{name}\""
 
 #: ../app/controllers/miq_policy_controller.rb:641
 msgid "Editing Event \"%{name}\""
-msgstr "Modification de l''événement \"%{name}\""
+msgstr "Modification de l'événement \"%{name}\""
 
 #: ../app/views/ops/_log_collection.html.haml:13
 #: ../app/views/layouts/_edit_log_depot_settings.html.haml:10
@@ -14039,7 +14038,7 @@ msgstr "Modification du service \"%{name}\" en cours"
 
 #: ../app/controllers/catalog_controller.rb:1333
 msgid "Editing Service Catalog Item \"%{name}\""
-msgstr "Modification de l''élément de catalogue de services \"%{name}\""
+msgstr "Modification de l'élément de catalogue de services \"%{name}\""
 
 #: ../app/controllers/report_controller.rb:743
 msgid "Editing Widget \"%{name}\""
@@ -14051,7 +14050,7 @@ msgstr "Modification de la zone \"%{name}\""
 
 #: ../app/controllers/miq_policy_controller.rb:666
 msgid "Editing assignments for Alert \"%{name}\""
-msgstr "Modification d''affectations pour l''alerte \"%{name}\""
+msgstr "Modification d''affectations pour l'alerte \"%{name}\""
 
 #: ../app/controllers/ops_controller.rb:617
 msgid "Editing tag mapping from label \"%{name}\""
@@ -16137,11 +16136,11 @@ msgstr[1] "Hôtes"
 
 #: ../app/controllers/host_aggregate_controller.rb:362
 msgid "Host \"%{hostname}\" added to Host Aggregate \"%{name}\""
-msgstr "Hôte \"%{hostname}\" ajouté à l''agrégat de machines \"%{name}\""
+msgstr "Hôte \"%{hostname}\" ajouté à l'agrégat de machines \"%{name}\""
 
 #: ../app/controllers/host_aggregate_controller.rb:457
 msgid "Host \"%{hostname}\" removed from Host Aggregate \"%{name}\""
-msgstr "Hôte \"%{hostname}\" supprimé de l''agrégat de machines \"%{name}\""
+msgstr "Hôte \"%{hostname}\" supprimé de l'agrégat de machines \"%{name}\""
 
 #: ../app/controllers/mixins/actions/host_actions/misc.rb:13
 msgid "Host \"%{name}\": Error during '%{task}': %{message}"
@@ -16153,11 +16152,11 @@ msgstr "Hôte / Nœud"
 
 #: ../app/controllers/host_controller.rb:157
 msgid "Host / Node \"%{name}\" was added"
-msgstr "L''hôte/le nœud \"%{name}\" a été ajouté"
+msgstr "L'hôte/le nœud \"%{name}\" a été ajouté"
 
 #: ../app/controllers/host_controller.rb:238
 msgid "Host / Node \"%{name}\" was saved"
-msgstr "L''hôte/le nœud \"%{name}\" a été enregistré"
+msgstr "L'hôte/le nœud \"%{name}\" a été enregistré"
 
 #: ../app/presenters/tree_node/host.rb:3
 #: ../app/views/layouts/listnav/_physical_server.html.haml:20
@@ -16526,7 +16525,7 @@ msgstr "Image ISO \"%{name}\""
 
 #: ../app/controllers/pxe_controller/iso_datastores.rb:173
 msgid "ISO Image \"%{name}\" was saved"
-msgstr "L''image ISO \"%{name}\" a été enregistrée"
+msgstr "L'image ISO \"%{name}\" a été enregistrée"
 
 #: ../app/presenters/tree_builder_iso_datastores.rb:38
 #: ../app/presenters/tree_builder_iso_datastores.rb:40
@@ -16595,7 +16594,7 @@ msgstr "Image"
 
 #: ../app/controllers/mixins/containers_common_mixin.rb:152
 msgid "Image \"%{name}\": Error during 'Analysis': %{message}"
-msgstr "Image \"%{name}\" : erreur pendant l''opération 'Analysis' : %{message}"
+msgstr "Image \"%{name}\" : erreur pendant l'opération 'Analysis' : %{message}"
 
 #: ../app/helpers/container_image_helper/textual_summary.rb:48
 msgid "Image Id"
@@ -16987,7 +16986,7 @@ msgstr "Instance"
 
 #: ../app/controllers/vm_cloud_controller.rb:37
 msgid "Instance \"%{instance_name}\" has no attached Cloud Volumes"
-msgstr "Aucun volume cloud n''est associé à l''instance \"%{instance_name}\""
+msgstr "Aucun volume cloud n'est associé à l'instance \"%{instance_name}\""
 
 #: ../app/helpers/application_helper/button/instance_disassociate_floating_ip.rb:6
 msgid "Instance \"%{name}\" does not have any associated Floating IPs"
@@ -19446,8 +19445,7 @@ msgstr "Nom: %{name} | Nom d'hôte : %{hostname}"
 #: ../app/helpers/quadicon_helper.rb:584
 msgid "Name: %{name} | Hostname: %{hostname} | Refresh Status: %{status}"
 msgstr ""
-"Nom: %{name} | Nom d'hôte : %{hostname} |  Statut d'actualisation : "
-"%{status}"
+"Nom: %{name} | Nom d'hôte : %{hostname} | Statut d'actualisation : %{status}"
 
 #: ../app/views/miq_ae_class/_copy_objects_form.html.haml:62
 msgid "Namespace"
@@ -19839,7 +19837,7 @@ msgstr "Aucun %{model} sélectionné à supprimer."
 
 #: ../app/controllers/ems_common.rb:727
 msgid "No %{model} were selected for pause"
-msgstr "Aucun %{model} n''a été sélectionné pour la pause"
+msgstr "Aucun %{model} n'a été sélectionné pour la pause"
 
 #: ../app/controllers/ems_common.rb:690
 msgid "No %{model} were selected for refresh"
@@ -19874,7 +19872,7 @@ msgstr "Aucun %{record} sélectionné à supprimer"
 
 #: ../app/controllers/application_controller/performance.rb:487
 msgid "No %{tag} %{model}  were running %{time}"
-msgstr "Aucun %{model} %{tag} n''était en cours d''exécution à %{time}"
+msgstr "Aucun %{model} %{tag} n'était en cours d''exécution à %{time}"
 
 #: ../app/controllers/application_controller/performance.rb:245
 msgid "No %{tag} %{model} were running %{time}"
@@ -19920,7 +19918,7 @@ msgstr "Aucun(e) attribut/paire de valeurs trouvé(e)."
 #: ../app/controllers/miq_ae_class_controller.rb:2591
 msgid "No Automate Domain were selected to be marked as %{action}"
 msgstr ""
-"Aucun domaine d''automatisation n''a été sélectionné pour être marqué comme "
+"Aucun domaine d''automatisation n'a été sélectionné pour être marqué comme "
 "%{action}"
 
 #: ../app/views/ops/_diagnostics_database_tab.html.haml:51
@@ -20031,7 +20029,7 @@ msgstr "Aucun volume cloud n'a été sélectionné pour la suppression."
 
 #: ../app/controllers/application_controller/ci_processing.rb:708
 msgid "No Clusters / Deployment Roles were selected for %{task}"
-msgstr "Aucun cluster/rôle de déploiement n''a été sélectionné pour %{task}"
+msgstr "Aucun cluster/rôle de déploiement n'a été sélectionné pour %{task}"
 
 #: ../app/presenters/tree_builder_compliance_history.rb:39
 msgid "No Compliance Policies Found"
@@ -20051,7 +20049,7 @@ msgstr "Aucune stratégie de conformité attribuée à cette machine virtuelle"
 
 #: ../app/controllers/pxe_controller/pxe_customization_templates.rb:211
 msgid "No Customization Templates were selected to %{button}"
-msgstr "Aucun modèle de personnalisation n''a été sélectionné pour %{button}"
+msgstr "Aucun modèle de personnalisation n'a été sélectionné pour %{button}"
 
 #: ../app/controllers/application_controller/performance.rb:28
 msgid "No Daily data is available"
@@ -20071,7 +20069,7 @@ msgstr "Aucun magasin de données trouvé dans la région actuelle."
 #: ../app/controllers/application_controller/ci_processing.rb:840
 #: ../app/controllers/application_controller/ci_processing.rb:914
 msgid "No Datastores were selected for %{task}"
-msgstr "Aucun magasin de données n''a été sélectionné pour %{task}"
+msgstr "Aucun magasin de données n'a été sélectionné pour %{task}"
 
 #: ../app/controllers/catalog_controller.rb:1767
 #: ../app/controllers/application_controller/buttons.rb:1171
@@ -20082,7 +20080,7 @@ msgstr "Aucune boîte de dialogue"
 #: ../app/controllers/miq_ae_customization_controller/old_dialogs.rb:62
 #: ../app/controllers/miq_ae_customization_controller/dialogs.rb:1404
 msgid "No Dialogs were selected for %{task}"
-msgstr "Aucune boîte de dialogue n''a été sélectionnée pour %{task}"
+msgstr "Aucune boîte de dialogue n'a été sélectionnée pour %{task}"
 
 #: ../app/views/shared/buttons/_ab_show.html.haml:110
 msgid "No Enablement Expression defined, this button will be always enabled"
@@ -20113,7 +20111,7 @@ msgstr "Aucun agrégat de machines n'a été sélectionné pour la suppression."
 
 #: ../app/controllers/mixins/actions/host_actions/misc.rb:227
 msgid "No Hosts were selected for %{task}"
-msgstr "Aucun hôte n''a été sélectionné pour %{task}"
+msgstr "Aucun hôte n'a été sélectionné pour %{task}"
 
 #: ../app/controllers/application_controller/performance.rb:24
 msgid ""
@@ -20125,7 +20123,7 @@ msgstr ""
 
 #: ../app/controllers/pxe_controller/iso_datastores.rb:104
 msgid "No ISO Datastores were selected to %{button}"
-msgstr "Aucun magasin de données ISO n''a été sélectionné pour %{button}"
+msgstr "Aucun magasin de données ISO n'a été sélectionné pour %{button}"
 
 #: ../app/controllers/mixins/containers_common_mixin.rb:112
 msgid "No Images were selected for Analysis"
@@ -20168,7 +20166,7 @@ msgstr "Aucun serveur PXE n'est disponible pour la mise en service d'hôte"
 
 #: ../app/controllers/pxe_controller/pxe_servers.rb:123
 msgid "No PXE Servers were selected to %{button}"
-msgstr "Aucun serveur PXE n''a été sélectionné pour %{button}"
+msgstr "Aucun serveur PXE n'a été sélectionné pour %{button}"
 
 #: ../app/helpers/container_build_helper/textual_summary.rb:89
 msgid "No Pod"
@@ -20306,7 +20304,7 @@ msgstr ""
 
 #: ../app/controllers/pxe_controller/pxe_image_types.rb:92
 msgid "No System Image Types were selected to %{button}"
-msgstr "Aucun type d''image système n''a été sélectionné sur %{button}"
+msgstr "Aucun type d''image système n'a été sélectionné sur %{button}"
 
 #: ../app/views/planning/_planning_vm_profile.html.haml:64
 msgid "No Time Profile Selected"
@@ -20624,11 +20622,11 @@ msgstr "Aucun filtre défini."
 
 #: ../app/controllers/host_aggregate_controller.rb:295
 msgid "No hosts available to add to Host Aggregate \"%{name}\""
-msgstr "Aucun hôte disponible à ajouter à l''agrégat de machines \"%{name}\""
+msgstr "Aucun hôte disponible à ajouter à l'agrégat de machines \"%{name}\""
 
 #: ../app/controllers/host_aggregate_controller.rb:390
 msgid "No hosts to remove from Host Aggregate \"%{name}\""
-msgstr "Aucun hôte à supprimer de l''agrégat de machines \"%{name}\""
+msgstr "Aucun hôte à supprimer de l'agrégat de machines \"%{name}\""
 
 #: ../app/views/layouts/_user_input_filter.html.haml:84
 msgid "No input to apply"
@@ -20640,7 +20638,7 @@ msgstr "Aucune instance trouvée"
 
 #: ../app/controllers/application_controller/ci_processing.rb:250
 msgid "No items were selected for %{task}"
-msgstr "Aucun élément n''a été sélectionné pour %{task}"
+msgstr "Aucun élément n'a été sélectionné pour %{task}"
 
 #: ../app/views/miq_ae_class/_class_methods.html.haml:27
 msgid "No methods found"
@@ -21924,7 +21922,7 @@ msgstr "Image PXE \"%{name}\""
 
 #: ../app/controllers/pxe_controller/pxe_servers.rb:189
 msgid "PXE Image \"%{name}\" was saved"
-msgstr "L''image PXE \"%{name}\" a été enregistrée"
+msgstr "L'image PXE \"%{name}\" a été enregistrée"
 
 #: ../app/views/pxe/_pxe_form.html.haml:72
 #: ../app/views/pxe/_pxe_server_details.html.haml:13
@@ -23795,11 +23793,11 @@ msgstr "Mis en file d'attente à"
 
 #: ../app/controllers/mixins/actions/vm_actions/evacuate.rb:85
 msgid "Queued evacuation of Instance \"%{name}\""
-msgstr "Évacuation mise en file d''attente de l''instance \"%{name}\""
+msgstr "Évacuation mise en file d''attente de l'instance \"%{name}\""
 
 #: ../app/controllers/mixins/actions/vm_actions/live_migrate.rb:76
 msgid "Queued live migration of Instance \"%{name}\""
-msgstr "Migration dynamique mise en file d''attente de l''instance \"%{name}\""
+msgstr "Migration dynamique mise en file d''attente de l'instance \"%{name}\""
 
 #: ../app/helpers/cloud_tenant_helper/textual_summary.rb:21
 msgid "Quotas"
@@ -24192,8 +24190,7 @@ msgstr ""
 #: ../app/controllers/mixins/actions/vm_actions/resize.rb:47
 msgid "Reconfigure of Instance \"%{name}\" was cancelled by the user"
 msgstr ""
-"La reconfiguration de l''instance \"%{name}\" a été annulée par "
-"l''utilisateur"
+"La reconfiguration de l'instance \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:73
 msgid "Reconfigure selected Instance"
@@ -24239,7 +24236,7 @@ msgstr "Reconfiguration du/de la %{vm_or_template} \"%{name}\""
 #: ../app/controllers/mixins/actions/vm_actions/resize.rb:60
 msgid "Reconfiguring Instance \"%{name}\" from %{old_flavor} to %{new_flavor}"
 msgstr ""
-"Reconfiguration de l''instance \"%{name}\" de %{old_flavor} en %{new_flavor}"
+"Reconfiguration de l'instance \"%{name}\" de %{old_flavor} en %{new_flavor}"
 
 #: ../app/helpers/application_helper.rb:950
 msgid "Record is not ExtManagementSystem class"
@@ -25260,13 +25257,13 @@ msgstr "Supprimer l'hôte de l'agrégat de machines"
 
 #: ../app/controllers/host_aggregate_controller.rb:402
 msgid "Remove Host from Host Aggregate \"%{name}\""
-msgstr "Supprimer l''hôte de l''agrégat de machines \"%{name}\""
+msgstr "Supprimer l'hôte de l'agrégat de machines \"%{name}\""
 
 #: ../app/controllers/host_aggregate_controller.rb:414
 msgid "Remove Host from Host Aggregate \"%{name}\" was cancelled by the user"
 msgstr ""
-"La suppression de l''hôte de l''agrégat de machines \"%{name}\" a été "
-"annulée par l''utilisateur"
+"La suppression de l'hôte de l'agrégat de machines \"%{name}\" a été annulée "
+"par l'utilisateur"
 
 #: ../app/helpers/application_helper/toolbar/host_aggregates_center.rb:38
 msgid "Remove Host from Selected Host Aggregate"
@@ -25275,15 +25272,15 @@ msgstr "Supprimer l'hôte de l'agrégat de machines sélectionné"
 #: ../app/controllers/host_aggregate_controller.rb:439
 msgid "Remove Host not supported by Host Aggregate \"%{name}\""
 msgstr ""
-"La suppression de l''hôte n''est pas prise en charge par l''agrégat de "
-"machines \"%{name}\""
+"La suppression de l'hôte n'est pas prise en charge par l'agrégat de machines"
+" \"%{name}\""
 
 #: ../app/controllers/host_aggregate_controller.rb:426
 msgid ""
 "Remove Host to Host Aggregate \"%{name}\" failed: Task start failed: ID "
 "[%{id}]"
 msgstr ""
-"La suppression de l''hôte de l''agrégat de machines \"%{name}\" a échoué : "
+"La suppression de l'hôte de l'agrégat de machines \"%{name}\" a échoué : "
 "échec de démarrage de la tâche : ID [%{id}]"
 
 #: ../app/helpers/application_helper/toolbar/iso_datastores_center.rb:19
@@ -26044,7 +26041,7 @@ msgstr "Rapport \"%{name}\" : suppression réussie"
 #: ../app/controllers/report_controller/reports.rb:95
 msgid "Report \"%{name}\": Error during 'miq_report_delete': %{message}"
 msgstr ""
-"Rapport \"%{name}\" : erreur pendant l''opération 'miq_report_delete': "
+"Rapport \"%{name}\" : erreur pendant l'opération 'miq_report_delete': "
 "%{message}"
 
 #: ../app/controllers/chargeback_controller.rb:475
@@ -26212,7 +26209,7 @@ msgstr "Demande \"%{name}\" : suppression réussie"
 
 #: ../app/controllers/miq_request_controller.rb:588
 msgid "Request \"%{name}\": Error during '%{task}': %{message}"
-msgstr "Demande \"%{name}\" : erreur pendant l''opération '%{task}': %{message}"
+msgstr "Demande \"%{name}\" : erreur pendant l'opération '%{task}': %{message}"
 
 #: ../app/controllers/miq_request_controller.rb:228
 msgid "Request Approval"
@@ -26671,7 +26668,7 @@ msgstr "Pool de ressources \"%{name}\" : %{task} lancé avec succès"
 #: ../app/controllers/application_controller/ci_processing.rb:691
 msgid "Resource Pool \"%{name}\": Error during '%{task}': %{error_message}"
 msgstr ""
-"Pool de ressources \"%{name}\" : erreur pendant l''opération '%{task}' : "
+"Pool de ressources \"%{name}\" : erreur pendant l'opération '%{task}' : "
 "%{error_message}"
 
 #: ../app/presenters/tree_builder_datacenter.rb:57
@@ -26892,13 +26889,13 @@ msgstr "Restaurer à partir d'une sauvegarde de ce volume cloud"
 #: ../app/controllers/cloud_volume_controller.rb:482
 msgid "Restore of Cloud Volume \"%{name}\" was cancelled by the user"
 msgstr ""
-"La restauration du volume cloud \"%{name}\" a été annulée par l''utilisateur"
+"La restauration du volume cloud \"%{name}\" a été annulée par l'utilisateur"
 
 #: ../app/controllers/cloud_volume_backup_controller.rb:41
 msgid "Restore to Cloud Volume \"%{name}\" was cancelled by the user"
 msgstr ""
 "La restauration sur le volume cloud \"%{name}\" a été annulée par "
-"l''utilisateur"
+"l'utilisateur"
 
 #: ../app/controllers/cloud_volume_backup_controller.rb:62
 msgid "Restoring Cloud Volume \"%{name}\""
@@ -27505,7 +27502,7 @@ msgstr "Exemple"
 
 #: ../app/controllers/ops_controller/settings/analysis_profiles.rb:298
 msgid "Sample Analysis Profile \"%{name}\" can not be edited"
-msgstr "L''exemple de profil d''analyse \"%{name}\" ne peut pas être modifié"
+msgstr "L'exemple de profil d''analyse \"%{name}\" ne peut pas être modifié"
 
 #: ../app/helpers/application_helper/button/ap_delete.rb:5
 msgid "Sample Analysis Profile cannot be deleted"
@@ -27719,7 +27716,7 @@ msgstr "Informations sur le planning"
 msgid "Schedule [%{schedule}] queued to run from the UI by user %{user}"
 msgstr ""
 "Le planning [%{schedule}] a été mis en file d''attente pour être exécuté par"
-" l''utilisateur %{user} à partir de l''IU"
+" l'utilisateur %{user} à partir de l'IU"
 
 #: ../app/controllers/report_controller/schedules.rb:79
 msgid "Schedule is not available or no longer exists"
@@ -27777,7 +27774,7 @@ msgstr "Rechercher"
 #: ../app/controllers/application_controller/advanced_search.rb:104
 msgid "Search \"%{name}\": Error during 'delete': %{error_message}"
 msgstr ""
-"Rechercher \"%{name}\" : erreur pendant l''opération 'delete' : "
+"Rechercher \"%{name}\" : erreur pendant l'opération 'delete' : "
 "%{error_message}"
 
 #: ../app/views/layouts/_adv_search_body.html.haml:56
@@ -28483,7 +28480,7 @@ msgstr "Serveur \"%{name}\" : suppression réussie"
 
 #: ../app/controllers/ops_controller/diagnostics.rb:614
 msgid "Server \"%{name}\": Error during 'destroy': "
-msgstr "Serveur \"%{name}\" : erreur durant l''opération 'destroy' :"
+msgstr "Serveur \"%{name}\" : erreur durant l'opération 'destroy' :"
 
 #: ../app/helpers/application_helper/button/delete_server.rb:6
 msgid ""
@@ -28596,16 +28593,16 @@ msgstr "JSON compte de service"
 
 #: ../app/controllers/catalog_controller.rb:935
 msgid "Service Catalog Item \"%{name}\" was added"
-msgstr "L''élément de catalogue de services \"%{name}\" a été ajouté"
+msgstr "L'élément de catalogue de services \"%{name}\" a été ajouté"
 
 #: ../app/controllers/catalog_controller.rb:935
 msgid "Service Catalog Item \"%{name}\" was saved"
-msgstr "L''élément de catalogue de services \"%{name}\" a été enregistré"
+msgstr "L'élément de catalogue de services \"%{name}\" a été enregistré"
 
 #: ../app/controllers/catalog_controller.rb:631
 msgid "Service Catalog Item \"%{name}\": Error during '%{task}': %{error_message}"
 msgstr ""
-"Élément de catalogue de services \"%{name}\" : erreur pendant l''opération "
+"Élément de catalogue de services \"%{name}\" : erreur pendant l'opération "
 "'%{task}' : %{error_message}"
 
 #: ../app/controllers/catalog_controller.rb:838
@@ -32327,7 +32324,7 @@ msgstr ""
 
 #: ../app/helpers/application_helper/button/smart_state_scan.rb:6
 msgid "There is no server with the %{role_name} role enabled"
-msgstr "Il n''existe pas de serveur avec le rôle %{role_name} activé"
+msgstr "Il n'existe pas de serveur avec le rôle %{role_name} activé"
 
 #: ../app/helpers/application_helper/button/db_seq_edit.rb:5
 msgid "There should be at least 2 Dashboards to Edit Sequence"
@@ -33374,7 +33371,7 @@ msgstr "Impossible d'ajouter le référentiel"
 #: ../app/controllers/mixins/actions/vm_actions/add_security_group.rb:17
 msgid "Unable to add Security Group to Instance \"%{name}\": %{details}"
 msgstr ""
-"Impossible d''ajouter le groupe de sécurité à l''instance \"%{name}\" : "
+"Impossible d''ajouter le groupe de sécurité à l'instance \"%{name}\" : "
 "%{details}"
 
 #: ../app/controllers/network_router_controller.rb:329
@@ -33430,11 +33427,11 @@ msgstr "Impossible de créer le volume cloud \"%{name}\": %{details}"
 
 #: ../app/controllers/floating_ip_controller.rb:85
 msgid "Unable to create Floating IP \"%{address}\": %{details}"
-msgstr "Impossible de créer l''IP flottante \"%{address}\" : %{details}"
+msgstr "Impossible de créer l'IP flottante \"%{address}\" : %{details}"
 
 #: ../app/controllers/host_aggregate_controller.rb:157
 msgid "Unable to create Host Aggregate \"%{name}\": %{details}"
-msgstr "Impossible de créer l''agrégat de machines \"%{name}\": %{details}"
+msgstr "Impossible de créer l'agrégat de machines \"%{name}\": %{details}"
 
 #: ../app/controllers/auth_key_pair_cloud_controller.rb:153
 msgid "Unable to create Key Pair \"%{name}\": %{details}"
@@ -33483,7 +33480,7 @@ msgstr "Impossible de supprimer la sauvegarde \"%{name}\" : %{details}"
 
 #: ../app/controllers/ansible_credential_controller.rb:69
 msgid "Unable to delete Credential \"%{name}\": %{details}"
-msgstr "Impossible de supprimer l''identifiant \"%{name}\" : %{details}"
+msgstr "Impossible de supprimer l'identifiant \"%{name}\" : %{details}"
 
 #: ../app/controllers/flavor_controller.rb:57
 msgid "Unable to delete Flavor \"%{name}\": %{details}"
@@ -33526,15 +33523,15 @@ msgstr "Impossible de modifier le référentiel"
 
 #: ../app/controllers/mixins/actions/vm_actions/evacuate.rb:87
 msgid "Unable to evacuate Instance \"%{name}\": %{details}"
-msgstr "Impossible d''évacuer l''instance \"%{name}\" : %{details}"
+msgstr "Impossible d''évacuer l'instance \"%{name}\" : %{details}"
 
 #: ../app/controllers/ems_infra_controller.rb:204
 msgid "Unable to initiate scale down: %{message}"
-msgstr "Impossible de lancer l''opération de réduction : %{message}"
+msgstr "Impossible de lancer l'opération de réduction : %{message}"
 
 #: ../app/controllers/ems_infra_controller.rb:192
 msgid "Unable to initiate scale up: %{message}"
-msgstr "Impossible de lancer l''opération d''augmentation : %{message}"
+msgstr "Impossible de lancer l'opération d''augmentation : %{message}"
 
 #: ../app/assets/javascripts/controllers/middleware_datasource/middleware_datasource_controller.js:93
 msgid "Unable to install the Datasource on this server."
@@ -33562,12 +33559,12 @@ msgstr ""
 #: ../app/controllers/mixins/actions/vm_actions/resize.rb:65
 #: ../app/controllers/mixins/actions/vm_actions/resize.rb:70
 msgid "Unable to reconfigure Instance \"%{name}\": %{details}"
-msgstr "Impossible de reconfigurer l''instance \"%{name}\" : %{details}"
+msgstr "Impossible de reconfigurer l'instance \"%{name}\" : %{details}"
 
 #: ../app/controllers/mixins/actions/vm_actions/remove_security_group.rb:17
 msgid "Unable to remove Security Group from Instance \"%{name}\": %{details}"
 msgstr ""
-"Impossible de supprimer le groupe de sécurité de l''instance \"%{name}\": "
+"Impossible de supprimer le groupe de sécurité de l'instance \"%{name}\": "
 "%{details}"
 
 #: ../app/controllers/network_router_controller.rb:424
@@ -33602,14 +33599,14 @@ msgstr "Impossible de mettre à jour le volume cloud  \"%{name}\": %{details}"
 
 #: ../app/controllers/floating_ip_controller.rb:219
 msgid "Unable to update Floating IP \"%{address}\": %{details}"
-msgstr "Impossible de mettre à jour l''IP flottante \"%{address}\" : %{details}"
+msgstr "Impossible de mettre à jour l'IP flottante \"%{address}\" : %{details}"
 
 #: ../app/controllers/host_aggregate_controller.rb:227
 #: ../app/controllers/host_aggregate_controller.rb:367
 #: ../app/controllers/host_aggregate_controller.rb:462
 msgid "Unable to update Host Aggregate \"%{name}\": %{details}"
 msgstr ""
-"Impossible de mettre à jour l''agrégat de machines \"%{name}\" : %{details}"
+"Impossible de mettre à jour l'agrégat de machines \"%{name}\" : %{details}"
 
 #: ../app/controllers/network_router_controller.rb:238
 msgid "Unable to update Network Router \"%{name}\": %{details}"
@@ -33790,7 +33787,7 @@ msgstr "Mettre à jour le statut"
 #: ../app/controllers/host_aggregate_controller.rb:210
 msgid "Update aggregate not supported by Host Aggregate \"%{name}\""
 msgstr ""
-"La mise à jour de l''agrégat n''est pas prise en charge par l''agrégat de "
+"La mise à jour de l'agrégat n'est pas prise en charge par l'agrégat de "
 "machines \"%{name}\""
 
 #: ../app/views/ansible_repository/_repository_form.html.haml:88
@@ -36059,7 +36056,7 @@ msgstr "Image Windows \"%{name}\""
 
 #: ../app/controllers/pxe_controller/pxe_servers.rb:240
 msgid "Windows Image \"%{name}\" was saved"
-msgstr "L''image Windows \"%{name}\" a été enregistrée"
+msgstr "L'image Windows \"%{name}\" a été enregistrée"
 
 #: ../app/presenters/tree_builder_pxe_servers.rb:47
 #: ../app/presenters/tree_builder_pxe_servers.rb:49

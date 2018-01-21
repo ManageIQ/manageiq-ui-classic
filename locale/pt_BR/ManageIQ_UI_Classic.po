@@ -1,13 +1,14 @@
 # Ludek Janda <ljanda@redhat.com>, 2017. #zanata
 # Milan Zázrivec <mzazrivec@redhat.com>, 2017. #zanata
 # renata <translator01_redhat@roundtableinc.net>, 2017. #zanata
+# sreedevisamudrala <sreedevi.samudrala@welocalize.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-31 14:32+0100\n"
-"PO-Revision-Date: 2017-11-22 05:06-0500\n"
-"Last-Translator: Milan Zázrivec <mzazrivec@redhat.com>\n"
+"PO-Revision-Date: 2018-01-18 04:48-0500\n"
+"Last-Translator: sreedevisamudrala <sreedevi.samudrala@welocalize.com>\n"
 "Language-Team: Portuguese (Brazil)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1186,7 +1187,7 @@ msgstr "Caixas de diálogo %{typ}"
 #: ../app/controllers/miq_policy_controller.rb:588
 #: ../app/controllers/miq_policy_controller.rb:922
 msgid "%{typ} Policies"
-msgstr "Políticas %{typ}"
+msgstr "Políticas de %{typ}"
 
 #: ../app/controllers/report_controller.rb:465
 #: ../app/controllers/report_controller.rb:485
@@ -2401,7 +2402,7 @@ msgstr "Um Modelo único"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:608
 msgid "A single VM"
-msgstr "Uma Máquina virtual único"
+msgstr "Uma VM única"
 
 #: ../app/controllers/report_controller/reports/editor.rb:1671
 msgid "A specific %{chargeback} or all must be selected"
@@ -2873,7 +2874,7 @@ msgstr "Adicionar novas %{tables}"
 
 #: ../app/controllers/ems_common.rb:148
 msgid "Add New %{table}"
-msgstr "Adicionar nova %{table}"
+msgstr "Adicionar novo(a) %{table}"
 
 #: ../app/controllers/cloud_network_controller.rb:159
 msgid "Add New Cloud Network"
@@ -3007,7 +3008,7 @@ msgstr "Adicionar uma nova política %{model} %{mode}"
 
 #: ../app/helpers/application_helper/toolbar/miq_alerts_center.rb:12
 msgid "Add a New Alert"
-msgstr "Adicionar um novo alerto"
+msgstr "Adicionar um novo alerta"
 
 #: ../app/helpers/application_helper/toolbar/servicetemplatecatalogs_center.rb:12
 msgid "Add a New Catalog"
@@ -3043,7 +3044,7 @@ msgstr "Adicionar um novo domínio"
 
 #: ../app/helpers/application_helper/toolbar/host_aggregates_center.rb:12
 msgid "Add a New Host Aggregate"
-msgstr "Adicionar um novo host agregado"
+msgstr "Adicionar uma nova agregação de host"
 
 #: ../app/helpers/application_helper/toolbar/iso_datastores_center.rb:12
 msgid "Add a New ISO Datastore"
@@ -4015,7 +4016,7 @@ msgstr "Todas as condições %{typ}"
 #: ../app/controllers/miq_policy_controller.rb:579
 #: ../app/controllers/miq_policy_controller.rb:930
 msgid "All %{typ} Policies"
-msgstr "Todas as políticas %{typ}"
+msgstr "Todas as políticas de %{typ}"
 
 #: ../app/helpers/host_helper/textual_summary.rb:104
 #: ../app/helpers/ems_cluster_helper/textual_summary.rb:82
@@ -4374,7 +4375,7 @@ msgstr "Todas as VMs de clusters/funções de implantação"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:607
 msgid "All VMs for Host"
-msgstr "Todas as máquinas virtuais para host"
+msgstr "Todas as VMs para host"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:605
 msgid "All VMs for Providers"
@@ -5298,7 +5299,7 @@ msgstr "Pelo menos um host deve ser especificado para o modo manual"
 
 #: ../app/views/configuration/_timeprofile_form.html.haml:173
 msgid "At least one hour needs to be selected"
-msgstr "Pelo menos uma hora deve ser selecionada"
+msgstr "Pelo menos um horário deve ser selecionado"
 
 #: ../app/controllers/ops_controller/settings/analysis_profiles.rb:245
 msgid "At least one item must be entered to create Analysis Profile"
@@ -5731,7 +5732,7 @@ msgstr "Voltar"
 
 #: ../app/views/configuration/_ui_1.html.haml:38
 msgid "Back (ABCD...)"
-msgstr "Voltar (ABCD...)"
+msgstr "Fim (ABCD...)"
 
 #: ../app/helpers/container_helper/textual_summary.rb:69
 msgid "Backing Ref (Container ID)"
@@ -7832,7 +7833,7 @@ msgstr "ID de cliente"
 msgid ""
 "Client ID, Client Key, Azure Tenant ID and Subscription ID are required"
 msgstr ""
-"ID do cliente, chave do cliente, ID do tenant do Azure e ID de subscrição "
+"ID do cliente, Chave do cliente, ID do tenant do Azure e ID de subscrição "
 "são necessários"
 
 #: ../app/views/static/deploy_containers_provider/deploy-provider-auth-settings-review.html.haml:69
@@ -9821,7 +9822,7 @@ msgstr "Imagem personalizada removida com êxito"
 
 #: ../app/views/ops/_settings_custom_logos_tab.html.haml:29
 msgid "Custom Login & 'About' Screen Background Image"
-msgstr "Login personalizado e imagem de plano de fundo da tela \"Sobre\""
+msgstr "Imagem de fundo da tela de Login e \"Sobre\" personalizada"
 
 #: ../app/views/ops/_settings_custom_logos_tab.html.haml:64
 msgid "Custom Login Panel Text ("
@@ -9912,7 +9913,7 @@ msgstr "Modelos de personalização dos tipos de imagem do sistema \"%{name}\""
 
 #: ../app/views/ops/_settings_help_menu_tab.html.haml:4
 msgid "Customize Help Menu"
-msgstr "Menu de ajuda da personalização"
+msgstr "Personalização do Menu de ajuda"
 
 #: ../app/views/miq_request/_prov_host_dialog.html.haml:87
 #: ../app/views/shared/views/_prov_dialog.html.haml:216
@@ -11043,7 +11044,7 @@ msgstr "Implantação iniciada para o(s) servidor(es) selecionado(s)"
 #: ../app/helpers/application_helper/toolbar/middleware_server_center.rb:135
 #: ../app/views/middleware_topology/show.html.haml:13
 msgid "Deployments"
-msgstr "Implementações "
+msgstr "Implantações "
 
 #: ../app/views/layouts/angular/_edit_log_depot_settings_angular.html.haml:4
 #: ../app/views/layouts/_edit_log_depot_settings.html.haml:26
@@ -11980,7 +11981,7 @@ msgstr "Fazer download do resumo no formato PDF"
 #: ../app/helpers/application_helper/toolbar/logs_center.rb:14
 #: ../app/helpers/application_helper/toolbar/diagnostics_server_center.rb:53
 msgid "Download the Entire %{log_type} Log File"
-msgstr "Fazer download de todo o arquivo de log %{log_type}"
+msgstr "Fazer download de todo o arquivo de log da %{log_type}"
 
 #: ../app/helpers/application_helper/toolbar/diagnostics_server_center.rb:24
 msgid "Download the Entire Audit Log File"
@@ -15279,7 +15280,7 @@ msgstr "Primeiro"
 
 #: ../app/views/report/_form_sort.html.haml:110
 msgid "First %{number}"
-msgstr "Primeiro(s) %{number}"
+msgstr "Primeiras %{number}"
 
 #: ../app/views/ems_container/ad_hoc/_list_view_form.html.haml:55
 msgid "First Page"
@@ -15460,7 +15461,7 @@ msgstr "Do endereço de e-mail"
 
 #: ../app/views/configuration/_ui_1.html.haml:38
 msgid "Front (...1234)"
-msgstr "Frente (...1234)"
+msgstr "Início (...1234)"
 
 #: ../app/helpers/container_image_helper/textual_summary.rb:52
 #: ../app/views/ops/_rbac_user_details.html.haml:18
@@ -17308,7 +17309,7 @@ msgstr "Árvores grandes"
 
 #: ../app/helpers/ops_helper/textual_summary.rb:128
 msgid "Largest Tables"
-msgstr "Tabelas grandes"
+msgstr "Tabelas maiores"
 
 #: ../app/views/report/_form_tl_settings.html.haml:26
 #: ../app/views/layouts/_paging_bar.html.haml:53
@@ -18561,7 +18562,7 @@ msgstr "Microsoft System Center VMM"
 
 #: ../app/views/configuration/_ui_1.html.haml:38
 msgid "Middle (AB...34)"
-msgstr "Middle (AB...34)"
+msgstr "Meio (AB...34)"
 
 #: ../app/presenters/menu/default_menu.rb:128
 #: ../app/views/configuration/_ui_2.html.haml:84
@@ -18570,19 +18571,19 @@ msgstr "Middleware"
 
 #: ../app/views/configuration/_ui_2.html.haml:85
 msgid "Middleware Datasources"
-msgstr "Fontes de dados middleware"
+msgstr "Fontes de dados de middleware"
 
 #: ../app/views/configuration/_ui_2.html.haml:85
 msgid "Middleware Deployments"
-msgstr "Implantações middleware"
+msgstr "Implantações de middleware"
 
 #: ../app/views/configuration/_ui_2.html.haml:85
 msgid "Middleware Domains"
-msgstr "Domínios middleware"
+msgstr "Domínios de middleware"
 
 #: ../app/views/configuration/_ui_2.html.haml:85
 msgid "Middleware Messaging"
-msgstr "Mensagem middleware"
+msgstr "Mensagem de middleware"
 
 #: ../app/views/configuration/_ui_2.html.haml:85
 msgid "Middleware Providers"
@@ -18608,7 +18609,7 @@ msgstr "Grupos de servidores middleware"
 
 #: ../app/views/configuration/_ui_2.html.haml:85
 msgid "Middleware Servers"
-msgstr "Servidores middleware"
+msgstr "Servidores de middleware "
 
 #: ../app/controllers/vm_common.rb:1535
 msgid "Migrate %{vm_or_template}"
@@ -19681,7 +19682,7 @@ msgstr "Nenhum %{tag} %{model} estava em execução %{time}"
 
 #: ../app/views/layouts/_tag_edit_assignments.html.haml:17
 msgid "No %{tenant_name} Tags are assigned"
-msgstr "Nenhum tenant %{tenant_name} foi atribuído"
+msgstr "Nenhuma Tag do %{tenant_name} foi atribuída"
 
 #: ../app/views/layouts/_tag_edit_assignments.html.haml:19
 msgid "No %{tenant_name} Tags are common to all of the items below"
@@ -20877,7 +20878,7 @@ msgstr ""
 #: ../app/views/ops/_rbac_tenant_details.html.haml:73
 msgid "Note: Total quota can be restricted by quotas defined at upper levels"
 msgstr ""
-"Nota: a cota total pode ser restrita por cotar definidas em todos os níveis "
+"Nota: a cota total pode ser restrita por cotas definidas em todos os níveis "
 "superiores"
 
 #: ../app/views/static/auth-credentials.html.haml:26
@@ -21104,7 +21105,7 @@ msgstr "Gerenciadores de armazenamento de objetos"
 
 #: ../app/views/configuration/_ui_2.html.haml:102
 msgid "Object Store"
-msgstr "Armazenamento do objeto"
+msgstr "Armazenamento de objeto"
 
 #: ../app/presenters/menu/default_menu.rb:194
 msgid "Object Store Containers"
@@ -23906,7 +23907,7 @@ msgstr "Reconfigurar CPU"
 
 #: ../app/views/catalog/_form_basic_info.html.haml:144
 msgid "Reconfigure Entry Point"
-msgstr "Reconfigurar ponto de entrada"
+msgstr "Ponto de entrada de reconfiguração"
 
 #: ../app/views/catalog/_form_basic_info.html.haml:143
 msgid "Reconfigure Entry Point (NameSpace/Class/Instance)"
@@ -28676,11 +28677,11 @@ msgstr "Agendamento \"%{name}\" das configurações"
 
 #: ../app/controllers/ops_controller/settings/common.rb:1176
 msgid "Settings Schedules"
-msgstr "Agendamentos das configurações"
+msgstr "Configurações de agendamentos"
 
 #: ../app/controllers/ops_controller/settings/common.rb:1170
 msgid "Settings Zones"
-msgstr "Zonas das configurações"
+msgstr "Configurações de zonas"
 
 #: ../app/views/miq_policy/_alert_details.html.haml:37
 #: ../app/assets/javascripts/services/alerts_center_service.js:74
@@ -30083,7 +30084,7 @@ msgstr ""
 #: ../app/controllers/middleware_server_controller.rb:58
 #: ../app/views/catalog/_form_resources_info.html.haml:79
 msgid "Shutdown"
-msgstr "Desligar"
+msgstr "Forçar desligamento"
 
 #: ../app/helpers/application_helper/toolbar/middleware_domain_center.rb:30
 msgid "Shutdown Domain"
@@ -30576,7 +30577,7 @@ msgstr "Data de Início"
 
 #: ../app/views/configuration/_ui_1.html.haml:49
 msgid "Start Page"
-msgstr "Iniciar página"
+msgstr "Página inicial"
 
 #: ../app/helpers/application_helper/toolbar/diagnostics_region_center.rb:36
 #: ../app/helpers/application_helper/toolbar/diagnostics_zone_center.rb:38
@@ -31806,8 +31807,8 @@ msgstr "O %{label} selecionado não está na região atual"
 #: ../app/controllers/catalog_controller.rb:281
 msgid "The selected %{number} Catalog Item was deleted"
 msgid_plural "The selected %{number} Catalog Items were deleted"
-msgstr[0] "O item de catálogo %{number} selecionado foi excluído"
-msgstr[1] "Os itens de catálogo %{number} selecionados foram excluídos"
+msgstr[0] "O %{number} item de catálogo selecionado foi excluído"
+msgstr[1] "Os %{number} itens de catálogo selecionados foram excluídos"
 
 #: ../app/controllers/ems_common.rb:622
 #: ../app/controllers/application_controller/ci_processing.rb:967
@@ -33795,7 +33796,7 @@ msgstr "Configurações da interface de usuário salvas para esta sessão"
 #: ../app/views/layouts/_about_modal.html.haml:12
 #: ../app/views/middleware_server/_add_datasource_step3.html.haml:24
 msgid "User Name"
-msgstr "Nome de Usuário"
+msgstr "Nome de usuário"
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:544
 msgid "User Password must be entered to perform LDAP Group Look Up"
@@ -33810,7 +33811,7 @@ msgstr "Nome da entidade de usuário"
 
 #: ../app/views/layouts/_about_modal.html.haml:12
 msgid "User Role"
-msgstr "Função de Usuário"
+msgstr "Função de usuário"
 
 #: ../app/views/shared/buttons/_ab_show.html.haml:156
 #: ../app/views/layouts/_role_visibility.html.haml:20
@@ -34623,7 +34624,7 @@ msgstr "Exibir a tabela"
 
 #: ../app/views/miq_policy/_profile_details.html.haml:79
 msgid "View this %{model} Policy"
-msgstr "Exibir a política deste %{model}"
+msgstr "Exibir a política do(a) %{model}"
 
 #: ../app/views/miq_policy/_alert_details.html.haml:321
 msgid "View this Action"
