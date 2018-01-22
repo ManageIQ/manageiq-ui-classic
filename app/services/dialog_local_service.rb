@@ -91,7 +91,7 @@ class DialogLocalService
       cancel_endpoint = "/storage/explorer"
     when /Vm/
       api_collection_name = "vms"
-      cancel_endpoint = "/vm_infra/explorer"
+      cancel_endpoint = display_options[:cancel_endpoint] || "/vm_infra/explorer"
     end
 
     submit_endpoint = "/api/#{api_collection_name}/#{obj.id}"
