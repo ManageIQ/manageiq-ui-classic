@@ -470,7 +470,7 @@
         for (var i = 0;  i < gtlData.cols.length; i++) {
           var column = gtlData.cols[i];
           if (column.hasOwnProperty('text')) {
-            column.text = __(column.text);
+            column.header_text = __(column.text);
           }
         }
         return gtlData;

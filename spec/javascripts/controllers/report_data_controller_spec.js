@@ -43,7 +43,7 @@ describe('reportDataController', function () {
       var result = $controller
           .getData(initObject.modelName, initObject.activeTree, initObject.parentId, initObject.isExplorer, settings);
       result.then(function(data) {
-        expect(angular.equals($controller.gtlData.cols, report_data.data.head)).toBeTruthy();
+        expect($controller.gtlData.cols.length).toEqual(report_data.data.head.length);
         expect(angular.equals($controller.gtlData.rows, report_data.data.rows)).toBeTruthy();
         expect(angular.equals($controller.settings, report_data.settings)).toBeTruthy();
         expect(angular.equals($controller.perPage.value, report_data.settings.perpage)).toBeTruthy();
