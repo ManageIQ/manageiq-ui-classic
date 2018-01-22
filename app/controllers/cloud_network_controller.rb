@@ -35,6 +35,8 @@ class CloudNetworkController < ApplicationController
       javascript_redirect :action => "edit", :id => checked_item_id
     when "cloud_network_new"
       javascript_redirect :action => "new"
+    when "cloud_subnet_tag"
+      return tag("CloudSubnet")
     else
       if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
         replace_gtl_main_div
