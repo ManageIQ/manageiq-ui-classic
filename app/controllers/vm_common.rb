@@ -27,7 +27,8 @@ module VmCommon
 
     case params[:pressed]
     when 'custom_button'
-      custom_buttons
+      cancel_endpoint = "/#{params[:controller]}/explorer"
+      custom_buttons(nil, :cancel_endpoint => cancel_endpoint)
       return
     when 'perf_reload'
       perf_chart_chooser

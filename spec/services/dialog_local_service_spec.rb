@@ -222,20 +222,41 @@ describe DialogLocalService do
     end
 
     context "when the object is a Vm" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Vm, :id => 123) }
+      context "when there is a cancel endpoint in the display options" do
+        let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Vm, :id => 123) }
+        let(:display_options) { {:cancel_endpoint => "/vm_cloud/explorer"} }
 
-      it "returns a hash" do
-        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
-          :resource_action_id     => 321,
-          :target_id              => 123,
-          :target_type            => 'vm',
-          :dialog_id              => 654,
-          :force_old_dialog_use   => false,
-          :api_submit_endpoint    => "/api/vms/123",
-          :api_action             => "custom-button-name",
-          :finish_submit_endpoint => "/vm_infra/explorer",
-          :cancel_endpoint        => "/vm_infra/explorer"
-        )
+        it "returns a hash" do
+          expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action, display_options)).to eq(
+            :resource_action_id     => 321,
+            :target_id              => 123,
+            :target_type            => 'vm',
+            :dialog_id              => 654,
+            :force_old_dialog_use   => false,
+            :api_submit_endpoint    => "/api/vms/123",
+            :api_action             => "custom-button-name",
+            :finish_submit_endpoint => "/vm_cloud/explorer",
+            :cancel_endpoint        => "/vm_cloud/explorer"
+          )
+        end
+      end
+
+      context "when there is not a cancel endpoint in the display options" do
+        let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Vm, :id => 123) }
+
+        it "returns a hash" do
+          expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+            :resource_action_id     => 321,
+            :target_id              => 123,
+            :target_type            => 'vm',
+            :dialog_id              => 654,
+            :force_old_dialog_use   => false,
+            :api_submit_endpoint    => "/api/vms/123",
+            :api_action             => "custom-button-name",
+            :finish_submit_endpoint => "/vm_infra/explorer",
+            :cancel_endpoint        => "/vm_infra/explorer"
+          )
+        end
       end
     end
 
