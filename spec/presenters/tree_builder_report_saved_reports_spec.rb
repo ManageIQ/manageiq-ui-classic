@@ -1,8 +1,6 @@
 require ManageIQ::UI::Classic::Engine.root.join("spec/helpers/report_helper_spec.rb")
 
 describe TreeBuilderReportSavedReports do
-  include CompressedIds
-
   context "User1 has Group1(current group: Group1), User2 has Group1, Group2(current group: Group2)" do
     context "User2 generates report under Group1" do
       before do
@@ -30,11 +28,11 @@ describe TreeBuilderReportSavedReports do
           saved_reports_in_tree = JSON.parse(tree.tree_nodes).first['nodes']
 
           displayed_report_ids = saved_reports_in_tree.map do |saved_report|
-            from_cid(saved_report["key"].gsub("xx-", ""))
+            saved_report["key"].gsub("xx-", "")
           end
 
           # logged User1 can see report with Group1
-          expect(displayed_report_ids).to include(@rpt.id)
+          expect(displayed_report_ids).to include(@rpt.id.to_s)
         end
       end
 
@@ -43,7 +41,7 @@ describe TreeBuilderReportSavedReports do
           report_result = MiqReportResult.first
 
           tree = TreeBuilderReportSavedReports.new('savedreports_tree', 'savedreports', {})
-          tree_report_results = tree.send(:x_get_tree_custom_kids, {:id => to_cid(@rpt.id)}, false, {})
+          tree_report_results = tree.send(:x_get_tree_custom_kids, {:id => @rpt.id.to_s}, false, {})
 
           expect(tree_report_results).to include(report_result)
         end

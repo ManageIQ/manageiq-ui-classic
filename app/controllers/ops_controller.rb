@@ -308,7 +308,7 @@ class OpsController < ApplicationController
     end
 
     if x_active_tree == :diagnostics_tree
-      x_node_set("svr-#{to_cid(my_server.id)}", :diagnostics_tree) unless x_node(:diagnostics_tree)
+      x_node_set("svr-#{my_server.id}", :diagnostics_tree) unless x_node(:diagnostics_tree)
       @sb[:active_tab] ||= "diagnostics_summary"
     end
 
@@ -697,7 +697,7 @@ class OpsController < ApplicationController
         tab = @sb[:active_tab] == 'settings_tags' ? @sb[:active_subtab] : @sb[:active_tab]
         presenter[:update_partials][tab] = r[:partial => "#{tab}_tab"]
       end
-      active_id = from_cid(x_node.split("-").last)
+      active_id = x_node.split("-").last
       # server node
       if x_node.split("-").first == "svr" && my_server.id == active_id.to_i
         # show all the tabs if on current server node
@@ -744,7 +744,7 @@ class OpsController < ApplicationController
   # set all needed things before calling replace_right_cell with nodetype
   def dialog_replace_right_cell
     model, id = TreeBuilder.extract_node_model_and_id(x_node)
-    @record = model.constantize.find(from_cid(id))
+    @record = model.constantize.find(id)
     rbac_group_get_details(@record.id) if @record.kind_of?(MiqGroup) # set Group's trees
     replace_right_cell(:nodetype => 'dialog_return')
   end

@@ -110,7 +110,7 @@ module QuadiconHelper
   #
   def quadicon_url_to_xshow_from_cid(item, options = {})
     # Previously: {:action => 'x_show', :id => controller.send(:list_row_id, item)}
-    {:action => 'x_show', :id => to_cid(item.id) || options[:x_show_id]}
+    {:action => 'x_show', :id => item.id || options[:x_show_id]}
   end
 
   # Currently only used once
@@ -298,7 +298,7 @@ module QuadiconHelper
     else
       attrs[:controller] = controller_name
       attrs[:action]  = 'x_show'
-      attrs[:id]      = to_cid(row['id']) || row['x_show_id']
+      attrs[:id]      = row['id'] || row['x_show_id']
     end
 
     url_for_only_path(attrs)

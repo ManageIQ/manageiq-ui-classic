@@ -249,7 +249,7 @@ module MiqAeCustomizationController::Dialogs
 
         if params[:button] == "add"
           d = Dialog.find_by_label(dialog.label)
-          self.x_node = "dg-#{to_cid(d.id)}"
+          self.x_node = "dg-#{d.id}"
         end
 
         get_node_info
@@ -1431,7 +1431,7 @@ module MiqAeCustomizationController::Dialogs
       @right_cell_text = _("All Dialogs")
     else
       @sb[:active_tab] = "sample_tab" unless params[:tab_id]     # reset active tab if not coming in from change_tab
-      @record = Dialog.find_by_id(from_cid(treenodeid.split('-').last))
+      @record = Dialog.find_by_id(treenodeid.split('-').last)
       if @record.nil?
         @replace_tree = true      # refresh tree and go back to root node if previously selected dialog record is deleted outside UI from vmdb
         self.x_node = "root"

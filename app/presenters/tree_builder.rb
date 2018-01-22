@@ -1,6 +1,4 @@
 class TreeBuilder
-  include CompressedIds
-  extend CompressedIds
   include TreeKids
 
   attr_reader :name, :type, :tree_nodes
@@ -38,7 +36,7 @@ class TreeBuilder
       # Creating empty record to show items under unassigned catalog node
       ConfigurationProfile.new
     else
-      model.constantize.find(from_cid(rec_id))
+      model.constantize.find(rec_id)
     end
   end
 
@@ -84,7 +82,7 @@ class TreeBuilder
       prefix = get_prefix_for_model(record_or_id.class.base_model)
       id = record_or_id.id
     end
-    "#{prefix}-#{to_cid(id)}"
+    "#{prefix}-#{id}"
   end
 
   def self.hide_vms

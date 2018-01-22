@@ -59,7 +59,7 @@ module MiqAeCustomizationController::CustomButtons
         end
       end
     elsif (@nodetype[0] == "xx-ab" && nodeid.length == 4) || (nodeid.length == 4 && nodeid[1] == "ub")       # button selected
-      @record = @custom_button = CustomButton.find(from_cid(nodeid.last))
+      @record = @custom_button = CustomButton.find(nodeid.last)
       build_resolve_screen
       @resolve[:new][:attrs] = []
       if @custom_button.uri_attributes
@@ -98,7 +98,7 @@ module MiqAeCustomizationController::CustomButtons
       @right_cell_text = _("Button \"%{name}\"") % {:name => @custom_button.name}
     else                # assigned buttons node/folder
       @sb[:applies_to_class] = @nodetype[1]
-      @record = CustomButtonSet.find(from_cid(nodeid.last))
+      @record = CustomButtonSet.find(nodeid.last)
       @right_cell_text = _("%{typ} Button Group \"%{name}\"") %
                          {:typ  => @sb[:target_classes].invert[@nodetype[2]],
                           :name => @record.name.split("|").first}

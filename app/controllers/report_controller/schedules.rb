@@ -227,7 +227,7 @@ module ReportController::Schedules
 
         self.x_active_tree   = "schedules_tree"
         self.x_active_accord = "schedules"
-        self.x_node = "msc-#{to_cid(schedule.id)}"
+        self.x_node = "msc-#{schedule.id}"
         @_params[:accord] = "schedules"
         replace_right_cell(:replace_trees => [:schedules])
       else
@@ -467,7 +467,7 @@ module ReportController::Schedules
   end
 
   def get_schedule(nodeid)
-    @record = @schedule = MiqSchedule.find(from_cid(nodeid.split('__').last).to_i)
+    @record = @schedule = MiqSchedule.find(nodeid.split('__').last.to_i)
     show_schedule
     @right_cell_text = _("Schedule \"%{name}\"") % {:name => @schedule.name}
     @right_cell_div  = "schedule_list"

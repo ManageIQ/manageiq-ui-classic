@@ -29,7 +29,7 @@ class TreeBuilderChargebackReports < TreeBuilder
       objects = []
       items.each_with_index do |item, idx|
         objects.push(
-          :id    => "#{to_cid(item.miq_report_id)}-#{idx}",
+          :id    => "#{item.miq_report_id}-#{idx}",
           :text  => item.miq_report.name,
           :icon  => "fa fa-file-text-o",
           :tip   => item.name
@@ -41,7 +41,7 @@ class TreeBuilderChargebackReports < TreeBuilder
 
   # Handle custom tree nodes (object is a Hash)
   def x_get_tree_custom_kids(object, count_only, _options)
-    objects = MiqReportResult.with_saved_chargeback_reports(from_cid(object[:id].split('-').first))
+    objects = MiqReportResult.with_saved_chargeback_reports(object[:id].split('-').first)
                              .select(:id, :miq_report_id, :name, :last_run_on, :miq_task_id)
                              .order(:last_run_on => :desc)
 

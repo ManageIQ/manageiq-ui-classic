@@ -58,7 +58,7 @@ module OpsController::Settings::Ldap
           ldap_regions_list
           settings_get_info("st")
         else          # set selected ldap_region
-          self.x_node = "lr-#{to_cid(@ldap_region.id)}"
+          self.x_node = "lr-#{@ldap_region.id}"
           get_node_info(x_node)
         end
         replace_right_cell(:nodetype => "root", :replace_trees => [:settings])
@@ -128,7 +128,7 @@ module OpsController::Settings::Ldap
     if params[:button] == "verify"
       return unless load_edit("ldap_domain_edit__#{params[:domain_id]}", "replace_cell__explorer")
       ldap_domain_get_form_vars
-      ldap_domain = params[:domain_id] == "new" ? LdapDomain.new : LdapDomain.find_by_id(from_cid(params[:domain_id]))
+      ldap_domain = params[:domain_id] == "new" ? LdapDomain.new : LdapDomain.find_by_id(params[:domain_id])
       ldap_domain_set_record_vars(ldap_domain, :validate)
       ldap_server = ldap_domain.ldap_servers[params[:id].to_i]
       @in_a_form = true
@@ -174,9 +174,9 @@ module OpsController::Settings::Ldap
         add_flash(_("LDAP Domain \"%{name}\" was saved") % {:name => @ldap_domain.name})
         @in_a_form = @edit = session[:edit] = nil # clean out the saved info
         if params[:button] == "add"
-          self.x_node  = "lr-#{to_cid(@ldap_domain.ldap_region_id)}"  # reset node to show list
+          self.x_node  = "lr-#{@ldap_domain.ldap_region_id}"  # reset node to show list
         else          # set selected ldap_domain
-          self.x_node = "ld-#{to_cid(@ldap_domain.id)}"
+          self.x_node = "ld-#{@ldap_domain.id}"
         end
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node, :replace_trees => [:settings])
@@ -374,7 +374,7 @@ module OpsController::Settings::Ldap
   def ldap_region_set_record_vars(ldap_region)
     ldap_region.name = @edit[:new][:name]
     ldap_region.description = @edit[:new][:description]
-    ldap_region.zone = Zone.find_by_id(from_cid(@edit[:new][:zone_id]))
+    ldap_region.zone = Zone.find_by_id(@edit[:new][:zone_id])
   end
 
   # Common ldap_region button handler routines follow
@@ -450,7 +450,7 @@ module OpsController::Settings::Ldap
     ldap_domain.get_direct_groups = @edit[:new][:get_direct_groups]
     ldap_domain.follow_referrals = @edit[:new][:follow_referrals]
     ldap_domain.base_dn = @edit[:new][:base_dn]
-    ldap_domain.ldap_region = LdapRegion.find_by_id(from_cid(@edit[:ldap_region_id])) if ldap_domain.ldap_region.nil?
+    ldap_domain.ldap_region = LdapRegion.find_by_id(@edit[:ldap_region_id]) if ldap_domain.ldap_region.nil?
     creds = {}
     creds[:default] = {:userid => @edit[:new][:bind_dn], :password => @edit[:new][:bind_pwd]} unless @edit[:new][:bind_dn].blank?
     ldap_domain.update_authentication(creds, :save => (mode != :validate))

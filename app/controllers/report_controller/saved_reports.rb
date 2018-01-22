@@ -10,12 +10,12 @@ module ReportController::SavedReports
   end
 
   def show_saved_report
-    @sb[:last_savedreports_id] = params[:id].split('-').last if params[:id] && params[:id] != "savedreports"
+    @sb[:last_savedreports_id] = params[:id].to_s.split('-').last if params[:id] && params[:id] != "savedreports"
     fetch_saved_report(@sb[:last_savedreports_id])
   end
 
   def fetch_saved_report(id)
-    rr = MiqReportResult.for_user(current_user).find_by_id(from_cid(id.split('-').last))
+    rr = MiqReportResult.for_user(current_user).find_by_id(id.split('-').last)
     if rr.nil?  # Saved report no longer exists
       @report = nil
       return
@@ -44,12 +44,12 @@ module ReportController::SavedReports
                 :error)
       get_all_reps(rr.miq_report_id.to_s)
       if x_active_tree == :savedreports_tree
-        self.x_node = "xx-#{to_cid(rr.miq_report_id)}"
+        self.x_node = "xx-#{rr.miq_report_id}"
       else
         @sb[:rpt_menu].each_with_index do |lvl1, i|
           next unless lvl1[0] == @sb[:grp_title]
           lvl1[1].each_with_index do |lvl2, k|
-            x_node_set("xx-#{i}_xx-#{i}-#{k}_rep-#{to_cid(rr.miq_report_id)}", :reports_tree) if lvl2[0].downcase == "custom"
+            x_node_set("xx-#{i}_xx-#{i}-#{k}_rep-#{rr.miq_report_id}", :reports_tree) if lvl2[0].downcase == "custom"
           end
         end
       end
@@ -89,7 +89,7 @@ module ReportController::SavedReports
     unless savedreports.present?
       report_result = x_node.split('_').last
       savedreport = report_result.split('-').last
-      savedreports = Array.wrap(from_cid(savedreport))
+      savedreports = Array.wrap(savedreport)
     end
 
     if savedreports.empty? && params[:id].present? && !MiqReportResult.for_user(current_user).exists?(params[:id].to_i)
@@ -104,7 +104,7 @@ module ReportController::SavedReports
       add_flash(_("The selected Saved Report was deleted")) if @flash_array.nil?
       @report_deleted = true
     end
-    self.x_node = "xx-#{to_cid(@sb[:miq_report_id])}" if x_active_tree == :savedreports_tree &&
+    self.x_node = "xx-#{@sb[:miq_report_id]}" if x_active_tree == :savedreports_tree &&
                                                          x_node.split('-').first == "rr"
     replace_right_cell(:replace_trees => [:reports, :savedreports])
   end

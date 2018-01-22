@@ -195,7 +195,7 @@ describe QuadiconHelper do
         @embedded = false
         @explorer = true
         allow(controller).to receive(:list_row_id).with(item) do
-          ApplicationRecord.compress_id(item.id)
+          item.id
         end
         allow(controller).to receive(:default_url_options) do
           {:controller => "provider_foreman"}
@@ -330,10 +330,8 @@ describe QuadiconHelper do
       subject { helper.render_quadicon_text(item, row) }
 
       it "renders a label based on the address" do
-        @id = ApplicationRecord.compress_id(item.id)
-
         expect(subject).to have_link(item.address)
-        expect(subject).to include("/floating_ip/show/#{@id}")
+        expect(subject).to include("/floating_ip/show/#{item.id}")
       end
     end
 
@@ -353,9 +351,8 @@ describe QuadiconHelper do
       subject { helper.render_quadicon_text(item, row) }
 
       it 'renders a link with auth_key_pair_cloud path' do
-        cid = ApplicationRecord.compress_id(item.id)
         expect(subject).to have_link("Auth")
-        expect(subject).to include("href=\"/auth_key_pair_cloud/show/#{cid}\"")
+        expect(subject).to include("href=\"/auth_key_pair_cloud/show/#{item.id}\"")
       end
     end
 
@@ -432,7 +429,7 @@ describe QuadiconHelper do
       context "when controller is not service or view.db is not Vm" do
         before(:each) do
           allow(controller).to receive(:list_row_id).with(row) do
-            ApplicationRecord.compress_id(vm.id)
+            vm.id
           end
         end
 
@@ -470,9 +467,8 @@ describe QuadiconHelper do
         )
 
         subject = helper.render_quadicon_text(item, row)
-        cid = ApplicationRecord.compress_id(item.id)
         expect(subject).to include("evm")
-        expect(subject).to include("/vm_infra/show/#{cid}")
+        expect(subject).to include("/vm_infra/show/#{item.id}")
       end
 
       it 'renders a link with the row key if set' do
@@ -488,10 +484,9 @@ describe QuadiconHelper do
         row = Ruport::Data::Record.new(:id => rand(9999), "name" => "name")
 
         subject = helper.render_quadicon_text(item, row)
-        cid = ApplicationRecord.compress_id(item.id)
 
         expect(subject).to include("name")
-        expect(subject).to include("/vm_infra/show/#{cid}")
+        expect(subject).to include("/vm_infra/show/#{item.id}")
       end
     end
   end
@@ -758,8 +753,7 @@ describe QuadiconHelper do
 
       it 'links to the item when not embedded' do
         @embedded = false
-        cid = ApplicationRecord.compress_id(item.id)
-        expect(subject).to have_selector("a[href*='resource_pool/show/#{cid}']")
+        expect(subject).to have_selector("a[href*='resource_pool/show/#{item.id}']")
       end
     end
 
@@ -818,8 +812,7 @@ describe QuadiconHelper do
 
         it 'links to the record with no @edit' do
           @edit = nil
-          cid = ApplicationRecord.compress_id(item.id)
-          expect(host_quad).to have_selector("a[href^='/host/show/#{cid}']")
+          expect(host_quad).to have_selector("a[href^='/host/show/#{item.id}']")
         end
       end
 
@@ -859,8 +852,7 @@ describe QuadiconHelper do
         end
 
         it 'links to the record' do
-          cid = ApplicationRecord.compress_id(item.id)
-          expect(ems_cluster_quad).to have_selector("a[href^='/ems_cluster/show/#{cid}']")
+          expect(ems_cluster_quad).to have_selector("a[href^='/ems_cluster/show/#{item.id}']")
         end
       end
 
@@ -884,7 +876,7 @@ describe QuadiconHelper do
       @embedded = false
       @explorer = true
       allow(controller).to receive(:list_row_id).with(item) do
-        ApplicationRecord.compress_id(item.id)
+        item.id
       end
       allow(controller).to receive(:default_url_options) do
         {:controller => "provider_foreman"}
@@ -938,15 +930,13 @@ describe QuadiconHelper do
             include_examples :has_sparkle_link
 
             it 'links to x_show with compressed id' do
-              cid = ApplicationRecord.compress_id(item.id)
-              expect(subject).to have_selector("a[href*='x_show/#{cid}']")
+              expect(subject).to have_selector("a[href*='x_show/#{item.id}']")
             end
           end
 
           context "when not explorer" do
             it 'links to the record' do
-              cid = ApplicationRecord.compress_id(item.id)
-              expect(subject).to have_selector("a[href*='#{cid}']")
+              expect(subject).to have_selector("a[href*='#{item.id}']")
             end
           end
         end
@@ -1075,8 +1065,7 @@ describe QuadiconHelper do
           include_examples :has_sparkle_link
 
           it 'links to the record' do
-            cid = ApplicationRecord.compress_id(item.id)
-            expect(storage_quad).to have_selector("a[href*='x_show/#{cid}']")
+            expect(storage_quad).to have_selector("a[href*='x_show/#{item.id}']")
           end
         end
 
@@ -1107,8 +1096,7 @@ describe QuadiconHelper do
           end
 
           it 'links to the record' do
-            cid = ApplicationRecord.compress_id(item.id)
-            expect(storage_quad).to have_selector("a[href^='/storage/show/#{cid}']")
+            expect(storage_quad).to have_selector("a[href^='/storage/show/#{item.id}']")
           end
 
           include_examples :has_reflection
@@ -1269,8 +1257,7 @@ describe QuadiconHelper do
             end
 
             it 'links to x_show' do
-              cid = ApplicationRecord.compress_id(item.id)
-              expect(vm_quad).to have_selector("a[href*='x_show/#{cid}']")
+              expect(vm_quad).to have_selector("a[href*='x_show/#{item.id}']")
             end
 
             include_examples :has_remote_link
@@ -1321,8 +1308,7 @@ describe QuadiconHelper do
             end
 
             it 'links to policies action with cid' do
-              cid = ApplicationRecord.compress_id(item.id)
-              expect(subject).to have_selector("a[href*='policies/#{cid}']")
+              expect(subject).to have_selector("a[href*='policies/#{item.id}']")
             end
           end
         end

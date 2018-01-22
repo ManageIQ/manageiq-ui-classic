@@ -1,6 +1,4 @@
 describe InfraNetworkingController do
-  include CompressedIds
-
   let(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'true') }
   let(:host) { FactoryGirl.create(:host, :name => 'test_host1') }
   let(:ems_vmware) { FactoryGirl.create(:ems_vmware, :name => 'test_vmware') }
@@ -68,7 +66,7 @@ describe InfraNetworkingController do
                                   :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).with(switch).and_return([tag1, tag2])
 
-        tree_node_id = "sw-#{ApplicationRecord.compress_id(switch.id)}"
+        tree_node_id = "sw-#{switch.id}"
         seed_session_trees('infra_networking', :infra_networking_tree)
         post :tree_select, :params => { :id => tree_node_id, :tree => :infra_networking_tree, :format => :js }
 

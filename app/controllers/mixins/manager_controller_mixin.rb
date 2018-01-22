@@ -234,7 +234,7 @@ module Mixins
         save_provider
       else
         assert_privileges("#{privilege_prefix}_edit_provider")
-        manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
+        manager_id            = params[:miq_grid_checks] || params[:id] || find_checked_items[0]
         @provider_manager     = find_record(concrete_model, manager_id)
         @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
         render_form
@@ -328,7 +328,7 @@ module Mixins
         self.x_node = "root"
         get_node_info("root")
       else
-        show_record(from_cid(id))
+        show_record(id)
         model_string = ui_lookup(:model => @record.class.to_s)
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => model_string}
       end

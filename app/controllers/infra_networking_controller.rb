@@ -189,7 +189,7 @@ class InfraNetworkingController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      show_record(from_cid(id))
+      show_record(id)
       model_string = ui_lookup(:model => (model ? model : @record.class).to_s)
       @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => model_string}
     end

@@ -33,13 +33,13 @@ class TreeBuilderRegion < TreeBuilder
     else
       objects = []
       if emses.count > 0
-        objects.push(:id   => "folder_e_xx-#{to_cid(object.id)}",
+        objects.push(:id   => "folder_e_xx-#{object.id}",
                      :text => _("Providers"),
                      :icon => "pficon pficon-folder-close",
                      :tip  => _("Providers (Click to open)"))
       end
       if storages.count > 0
-        objects.push(:id   => "folder_ds_xx-#{to_cid(object.id)}",
+        objects.push(:id   => "folder_ds_xx-#{object.id}",
                      :text => _("Datastores"),
                      :icon => "pficon pficon-folder-close",
                      :tip  => _("Datastores (Click to open)"))
@@ -50,7 +50,7 @@ class TreeBuilderRegion < TreeBuilder
 
   def x_get_tree_custom_kids(object, count_only, _options)
     nodes = object[:id].split('_')
-    id = from_cid(nodes.last.split('-').last)
+    id = nodes.last.split('-').last
     if object_ems?(nodes, object)
       rec = MiqRegion.find_by_id(id)
       objects = rbac_filtered_sorted_objects(rec.ems_infras, "name")

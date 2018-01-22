@@ -61,7 +61,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
   def x_get_compliance_detail_kids(parent, count_only, parents)
     kids = []
     model, id = TreeBuilder.extract_node_model_and_id(parents.first)
-    grandpa = model.constantize.find_by(:id => from_cid(id))
+    grandpa = model.constantize.find_by(:id => id)
     grandpa.compliance_details.order("miq_policy_desc, condition_desc").each do |node|
       next unless node.miq_policy_id == parent.miq_policy_id
       kids.push(get_policy_elm(parent, node))

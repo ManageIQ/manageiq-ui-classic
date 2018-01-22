@@ -1,5 +1,4 @@
 describe TreeBuilderServiceCatalog do
-  include CompressedIds
   before do
     Tenant.seed
     @catalog = FactoryGirl.create(:service_template_catalog, :name => "My Catalog")

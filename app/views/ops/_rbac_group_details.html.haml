@@ -36,7 +36,7 @@
           - if @group.miq_user_role
             - if role_allows?(:feature => "rbac_role_show")
               - params = {:class   => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{to_cid(@group.miq_user_role.id)}');",
+                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{@group.miq_user_role.id}');",
                           :title   => _("View this Role")}
             - else
               - params = {}
@@ -59,7 +59,7 @@
             - params = {:class => "pficon pficon-#{tenant.divisible ? "tenant" : "project"}"}
             - if role_allows?(:feature => "rbac_tenant_view")
               - params[:class] = "#{params[:class]} pointer"
-              - params[:onclick] = "miqTreeActivateNode('rbac_tree', 'tn-#{to_cid(tenant.id)}');"
+              - params[:onclick] = "miqTreeActivateNode('rbac_tree', 'tn-#{tenant.id}');"
               - params[:title] = tenant.divisible ? _("View this Tenant") : _("View this Project")
             %i{params}
             = h(tenant.name)
@@ -78,7 +78,7 @@
           - if role_allows?(:feature => "rbac_user_show")
             - @group.users.sort_by { |a| a.name.downcase }.each do |u|
               - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('u-#{to_cid(u.id)}');",
+                          :onclick => "miqOnClickSelectRbacTreeNode('u-#{u.id}');",
                           :title => _("View this User")}
               %i.pficon.pficon-user{params}
               = link_to(u.name, "#", params)

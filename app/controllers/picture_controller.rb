@@ -3,8 +3,8 @@ class PictureController < ApplicationController
   skip_after_action :set_global_session_data
 
   def show # GET /pictures/:basename
-    compressed_id, extension = params[:basename].split('.')
-    picture = Picture.find_by_id(from_cid(compressed_id))
+    id, extension = params[:basename].split('.')
+    picture = Picture.find_by_id(id)
     if picture && picture.extension == extension
       render_picture_content(picture)
     else

@@ -23,7 +23,7 @@ describe OpsController do
         tenant = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
 
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-        post :tree_select, :params => { :id => "tn-#{controller.to_cid(tenant.id)}", :format => :js }
+        post :tree_select, :params => { :id => "tn-#{tenant.id}", :format => :js }
 
         expect(response).to render_template('ops/_rbac_details_tab')
         expect(response.status).to eq(200)
@@ -33,7 +33,7 @@ describe OpsController do
         tenant = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
 
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-        post :tree_select, :params => { :id => "tn-#{controller.to_cid(tenant.id)}", :format => :js }
+        post :tree_select, :params => { :id => "tn-#{tenant.id}", :format => :js }
 
         expect(response).to render_template('ops/_rbac_details_tab')
         expect(response.status).to eq(200)
@@ -47,7 +47,7 @@ describe OpsController do
                           :mem_allocated => {:value => four_terabytes})
 
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-        post :tree_select, :params => { :id => "tn-#{controller.to_cid(tenant.id)}", :format => :js }
+        post :tree_select, :params => { :id => "tn-#{tenant.id}", :format => :js }
 
         expect(response).to render_template('ops/_rbac_details_tab')
         expect(response.status).to eq(200)
@@ -75,7 +75,7 @@ describe OpsController do
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
         @t = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
         sb_hash = {
-          :trees       => {:rbac_tree => {:active_node => "tn-#{controller.to_cid(@t.id)}"}},
+          :trees       => {:rbac_tree => {:active_node => "tn-#{@t.id}"}},
           :active_tree => :rbac_tree,
           :active_tab  => "rbac_details"
         }
@@ -108,7 +108,7 @@ describe OpsController do
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
         t = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
         sb_hash = {
-          :trees       => {:rbac_tree => {:active_node => "tn-#{controller.to_cid(t.id)}"}},
+          :trees       => {:rbac_tree => {:active_node => "tn-#{t.id}"}},
           :active_tree => :rbac_tree,
           :active_tab  => "rbac_details"
         }
@@ -153,7 +153,7 @@ describe OpsController do
                                      :parent    => Tenant.root_tenant,
                                      :subdomain => "test")
         sb_hash = {
-          :trees       => {:rbac_tree => {:active_node => "tn-#{controller.to_cid(@tenant.id)}"}},
+          :trees       => {:rbac_tree => {:active_node => "tn-#{@tenant.id}"}},
           :active_tree => :rbac_tree,
           :active_tab  => "rbac_details"
         }
@@ -251,7 +251,7 @@ describe OpsController do
       it "sets value of parent & divisible fields for new record" do
         tenant = FactoryGirl.build(:tenant, :parent => Tenant.root_tenant)
         sb_hash = {
-          :trees       => {:rbac_tree => {:active_node => "tn-#{controller.to_cid(@tenant.id)}"}},
+          :trees       => {:rbac_tree => {:active_node => "tn-#{@tenant.id}"}},
           :active_tree => :rbac_tree,
           :active_tab  => "rbac_details"
         }
@@ -271,7 +271,7 @@ describe OpsController do
                                      :domain    => "test",
                                      :subdomain => "test")
         sb_hash = {
-          :trees       => {:rbac_tree => {:active_node => "tn-#{controller.to_cid(@tenant.id)}"}},
+          :trees       => {:rbac_tree => {:active_node => "tn-#{@tenant.id}"}},
           :active_tree => :rbac_tree,
           :active_tab  => "rbac_details"
         }
@@ -326,7 +326,7 @@ describe OpsController do
                                      :parent    => Tenant.root_tenant,
                                      :domain    => "test",
                                      :subdomain => "test")
-        sb_hash = { :trees       => {:rbac_tree => {:active_node => "tn-#{controller.to_cid(@tenant.id)}"}},
+        sb_hash = { :trees       => {:rbac_tree => {:active_node => "tn-#{@tenant.id}"}},
                     :active_tree => :rbac_tree,
                     :active_tab  => "rbac_details"
                   }

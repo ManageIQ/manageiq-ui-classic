@@ -25,12 +25,12 @@ class TreeBuilderReportSavedReports < TreeBuilderReportReportsClass
     u = User.current_user
     user_groups = u.admin_user? ? nil : u.miq_groups
     having_report_results(user_groups).pluck(:name, :id).sort.map do |name, id|
-      {:id => to_cid(id.to_i), :text => name, :icon => 'fa fa-file-text-o', :tip => name}
+      {:id => id.to_i.to_s, :text => name, :icon => 'fa fa-file-text-o', :tip => name}
     end
   end
 
   def x_get_tree_custom_kids(object, count_only, _options)
-    scope = MiqReportResult.with_current_user_groups_and_report(from_cid(object[:id].split('-').last))
+    scope = MiqReportResult.with_current_user_groups_and_report(object[:id].split('-').last)
     count_only ? 1 : scope.order("last_run_on DESC").includes(:miq_task).to_a
   end
 

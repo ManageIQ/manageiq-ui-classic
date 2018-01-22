@@ -1,6 +1,4 @@
 describe EmsInfraController do
-  include CompressedIds
-
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryGirl.build(:zone) }
   context "#button" do
@@ -76,7 +74,7 @@ describe EmsInfraController do
       allow(controller).to receive(:find_records_with_rbac) { [vm] }
       post :button, :params => { :pressed => "vm_right_size", :id => ems_infra.id, :display => 'vms', "check_#{vm.id}" => '1' }
       expect(controller.send(:flash_errors?)).not_to be_truthy
-      expect(response.body).to include("/vm/right_size/#{ApplicationRecord.uncompress_id(vm.id)}")
+      expect(response.body).to include("/vm/right_size/#{vm.id}")
     end
 
     it "when Host Analyze then Check Compliance is pressed" do
@@ -313,7 +311,7 @@ describe EmsInfraController do
       datastore.parent = @ems
       controller.instance_variable_set(:@_orig_action, "x_history")
       get :show, :params => {:id => @ems.id, :display => 'storages'}
-      post :button, :params => {:id => @ems.id, :display => 'storages', :miq_grid_checks => to_cid(datastore.id), :pressed => "storage_tag", :format => :js}
+      post :button, :params => {:id => @ems.id, :display => 'storages', :miq_grid_checks => datastore.id, :pressed => "storage_tag", :format => :js}
       expect(response.status).to eq(200)
       _breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
       expect(assigns(:breadcrumbs)).to eq([{:name => "#{@ems.name} (All Datastores)",

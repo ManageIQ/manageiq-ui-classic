@@ -8,7 +8,7 @@
       %table.table.table-striped.table-bordered.table-hover
         %tbody
           - @zones.sort_by(&:description).each do |z|
-            %tr{:onclick => "miqTreeActivateNode('settings_tree', 'z-#{to_cid(z.id)}');", :title => _("View this Zone's settings")}
+            %tr{:onclick => "miqTreeActivateNode('settings_tree', 'z-#{z.id}');", :title => _("View this Zone's settings")}
               %td.table-view-pf-select
                 %i.pficon.pficon-zone
               %td

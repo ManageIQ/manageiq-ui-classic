@@ -59,7 +59,7 @@ describe TreeBuilderComplianceHistory do
     it 'returns Policy with multiple Conditions' do
       grandparents = @ch_tree.send(:x_get_tree_roots, false)
       grandparent = grandparents.find { |x| x.compliance_details.present? }
-      grandparent_id = "cm-" + ApplicationRecord.compress_id(grandparent.id)
+      grandparent_id = "cm-#{grandparent.id}"
       parents = @ch_tree.send(:x_get_compliance_kids, grandparent, false)
       parent = parents.find { |x| x.miq_policy_id == 1234 }
       kids = @ch_tree.send(:x_get_compliance_detail_kids, parent, false, [grandparent_id])

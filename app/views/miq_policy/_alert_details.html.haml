@@ -281,7 +281,7 @@
                 %table
                   %tbody
                     - @alert_profiles.each do |ap|
-                      - id = "xx-#{@alert.db}_ap-#{to_cid(ap.id)}"
+                      - id = "xx-#{@alert.db}_ap-#{ap.id}"
                       %tr{:title => _("View this Alert Profile"),
                           :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=alert_profile")}
                         %td
@@ -300,7 +300,7 @@
                 %table.table.table-striped.table-bordered.table-hover
                   %tbody
                     - @alert.owning_miq_actions.each do |oa|
-                      - id = "a-#{to_cid(oa.id)}"
+                      - id = "a-#{oa.id}"
                       %tr{:title => _("View this Action"),
                         :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")}
                         %td.table-view-pf-select

@@ -44,7 +44,7 @@ class ServiceController < ApplicationController
 
   # Service show selected, redirect to proper controller
   def show
-    @record = Service.find(from_cid(params[:id]))
+    @record = Service.find(params[:id])
     @lastaction = "show"
 
     @gtl_url = "/show"
@@ -98,7 +98,7 @@ class ServiceController < ApplicationController
     if params[:id] # Tree node id came in, show it in the tree.
       @find_with_aggregates = true
       nodetype, id = params[:id].split("-")
-      x_node_to_set = "#{nodetype}-#{to_cid(id)}"
+      x_node_to_set = "#{nodetype}-#{id}"
     end
 
     @breadcrumbs.clear if @breadcrumbs.present?
@@ -117,7 +117,7 @@ class ServiceController < ApplicationController
 
   # ST clicked on in the explorer right cell
   def x_show
-    identify_service(from_cid(params[:id]))
+    identify_service(params[:id])
     generic_x_show(x_tree(:svcs_tree))
   end
 
@@ -153,7 +153,7 @@ class ServiceController < ApplicationController
 
   def service_reconfigure
     @explorer = true
-    s = Service.find_by_id(from_cid(params[:id]))
+    s = Service.find_by_id(params[:id])
     st = s.service_template
     ra = st.resource_actions.find_by_action('Reconfigure') if st
     if ra && ra.dialog_id
@@ -303,7 +303,7 @@ class ServiceController < ApplicationController
 
     case TreeBuilder.get_model_for_prefix(@nodetype)
     when "Service"
-      show_record(from_cid(id))
+      show_record(id)
       drop_breadcrumb(:name => _('Services'), :url => '/service/explorer') if @breadcrumbs.empty?
       @right_cell_text = _("Service \"%{name}\"") % {:name => @record.name}
       @no_checkboxes = true
@@ -343,7 +343,7 @@ class ServiceController < ApplicationController
     @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
     if @nodetype == "ms"
-      listnav_search_selected(from_cid(id)) unless params.key?(:search_text)
+      listnav_search_selected(id) unless params.key?(:search_text)
       if @edit[:adv_search_applied] &&
          MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
          %w(reload tree_select).include?(params[:action])

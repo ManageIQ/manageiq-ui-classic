@@ -36,19 +36,19 @@ describe BottlenecksController do
       host = FactoryGirl.create(:host, :name => "My Host")
       ds = FactoryGirl.create(:storage_vmware, :name => "My Datastore")
       title_suffix = 'Bottlenecks Summary'
-      tree_nodes = {:region => {:active_node  => "mr-#{MiqRegion.compress_id(mr.id)}",
+      tree_nodes = {:region => {:active_node  => "mr-#{mr.id}",
                                 :title_prefix => "Region",
                                 :title        => mr.description},
-                    :e      => {:active_node  => "e-#{MiqRegion.compress_id(e.id)}",
+                    :e      => {:active_node  => "e-#{e.id}",
                                 :title_prefix => "Provider",
                                 :title        => e.name},
-                    :cl     => {:active_node  => "c-#{MiqRegion.compress_id(cl.id)}",
+                    :cl     => {:active_node  => "c-#{cl.id}",
                                 :title_prefix => "Cluster / Deployment Role",
                                 :title        => cl.name},
-                    :host   => {:active_node  => "h-#{MiqRegion.compress_id(host.id)}",
+                    :host   => {:active_node  => "h-#{host.id}",
                                 :title_prefix => "Host / Node",
                                 :title        => host.name},
-                    :ds     => {:active_node  => "ds-#{MiqRegion.compress_id(ds.id)}",
+                    :ds     => {:active_node  => "ds-#{ds.id}",
                                 :title_prefix => "Datastore",
                                 :title        => ds.name}}
       tree_nodes.each do |_key, node|

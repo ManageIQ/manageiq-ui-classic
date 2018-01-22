@@ -16,9 +16,9 @@ module Mixins::MiddlewareDeploymentsMixin
 
   def find_existing_deployment
     if @is_server
-      MiddlewareDeployment.find_by(:name => @deployment_name, :server_id => from_cid(@entity_id))
+      MiddlewareDeployment.find_by(:name => @deployment_name, :server_id => @entity_id)
     else
-      MiddlewareDeployment.find_by(:name => @deployment_name, :server_group_id => from_cid(@entity_id))
+      MiddlewareDeployment.find_by(:name => @deployment_name, :server_group_id => @entity_id)
     end
   end
 

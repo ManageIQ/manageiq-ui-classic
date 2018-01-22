@@ -303,7 +303,7 @@ describe OpsController do
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
-      seed_session_trees('ops', :diagnostics_tree, "z-#{ApplicationRecord.compress_id(@zone.id)}")
+      seed_session_trees('ops', :diagnostics_tree, "z-#{@zone.id}")
       post :change_tab, :params => {:tab_id => "diagnostics_collect_logs"}
     end
 

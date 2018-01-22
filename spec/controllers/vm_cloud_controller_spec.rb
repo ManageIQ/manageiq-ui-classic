@@ -1,6 +1,4 @@
 describe VmCloudController do
-  include CompressedIds
-
   let(:vm_openstack) do
     FactoryGirl.create(:vm_openstack,
                        :ext_management_system => FactoryGirl.create(:ems_openstack))
@@ -67,7 +65,7 @@ describe VmCloudController do
     it 'can open instance resize tab' do
       post :explorer
       expect(response.status).to eq(200)
-      allow(controller).to receive(:x_node).and_return("v-#{vm_openstack.compressed_id}")
+      allow(controller).to receive(:x_node).and_return("v-#{vm_openstack.id}")
 
       post :x_button, :params => {:pressed => 'instance_resize', :id => vm_openstack.id}
       expect(response.status).to eq(200)
@@ -90,7 +88,7 @@ describe VmCloudController do
     it 'can open instance live migrate tab' do
       post :explorer
       expect(response.status).to eq(200)
-      allow(controller).to receive(:x_node).and_return("v-#{vm_openstack.compressed_id}")
+      allow(controller).to receive(:x_node).and_return("v-#{vm_openstack.id}")
 
       post :x_button, :params => {:pressed => 'instance_live_migrate', :id => vm_openstack.id}
       expect(response.status).to eq(200)
@@ -114,7 +112,7 @@ describe VmCloudController do
     it 'can open instance evacuate tab' do
       post :explorer
       expect(response.status).to eq(200)
-      allow(controller).to receive(:x_node).and_return("v-#{vm_openstack.compressed_id}")
+      allow(controller).to receive(:x_node).and_return("v-#{vm_openstack.id}")
       allow(controller).to receive(:find_records_with_rbac) { [vm_openstack] }
 
       post :x_button, :params => {:pressed => 'instance_evacuate', :id => vm_openstack.id}
@@ -147,7 +145,7 @@ describe VmCloudController do
     it 'can open the instance Ownership form from a list' do
       post :explorer
       expect(response.status).to eq(200)
-      post :x_button, :params => { :pressed => 'instance_ownership', "check_#{ApplicationRecord.compress_id(vm_openstack.id)}" => "1"}
+      post :x_button, :params => { :pressed => 'instance_ownership', "check_#{vm_openstack.id}" => "1"}
       expect(response.status).to eq(200)
       expect(response).to render_template(:partial => 'shared/views/_ownership')
     end

@@ -35,7 +35,7 @@ module MiqPolicyController::Conditions
     case params[:button]
     when "save", "add"
       assert_privileges("condition_#{@condition.id ? "edit" : "new"}")
-      policy = MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"])) unless x_active_tree == :condition_tree
+      policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]) unless x_active_tree == :condition_tree
       adding = @condition.id.blank?
       condition = adding ? Condition.new : Condition.find(@condition.id)  # Get new or existing record
       condition.description = @edit[:new][:description]
@@ -67,15 +67,15 @@ module MiqPolicyController::Conditions
           condition_get_info(condition)
           case x_active_tree
           when :condition_tree
-            @new_condition_node = "xx-#{condition.towhat.downcase}_co-#{to_cid(condition.id)}"
+            @new_condition_node = "xx-#{condition.towhat.downcase}_co-#{condition.id}"
             replace_right_cell(:nodetype => "co", :replace_trees => [:condition])
           when :policy_tree
             node_ids = @sb[:node_ids][x_active_tree]  # Get the selected node ids
-            @new_policy_node = "xx-#{policy.mode.downcase}_xx-#{policy.mode.downcase}-#{policy.towhat.downcase}_p-#{node_ids["p"]}_co-#{to_cid(condition.id)}"
+            @new_policy_node = "xx-#{policy.mode.downcase}_xx-#{policy.mode.downcase}-#{policy.towhat.downcase}_p-#{node_ids["p"]}_co-#{condition.id}"
             replace_right_cell(:nodetype => "co", :replace_trees => [:policy_profile, :policy, :condition])
           when :policy_profile_tree
             node_ids = @sb[:node_ids][x_active_tree]  # Get the selected node ids
-            @new_profile_node = "pp-#{node_ids["pp"]}_p-#{node_ids["p"]}_co-#{to_cid(condition.id)}"
+            @new_profile_node = "pp-#{node_ids["pp"]}_p-#{node_ids["p"]}_co-#{condition.id}"
             replace_right_cell(:nodetype => "co", :replace_trees => [:policy_profile, :policy, :condition])
           end
         else
@@ -168,7 +168,7 @@ module MiqPolicyController::Conditions
     if params[:id] && params[:typ] != "new"   # If editing existing condition, grab model
       @edit[:new][:towhat] = Condition.find(params[:id]).towhat
     else
-      @edit[:new][:towhat] = x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"])).towhat
+      @edit[:new][:towhat] = x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).towhat
     end
 
     @edit[:condition_id] = @condition.id
@@ -236,7 +236,7 @@ module MiqPolicyController::Conditions
     if x_active_tree == :condition_tree
       @condition_policies = @condition.miq_policies.sort_by { |p| p.description.downcase }
     else
-      @condition_policy = MiqPolicy.find(from_cid(@sb[:node_ids][x_active_tree]["p"]))
+      @condition_policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"])
     end
     add_flash(_("Ruby scripts are no longer supported in expressions, please change or remove them."), :warning) if @condition.expression.exp.key?('RUBY')
   end

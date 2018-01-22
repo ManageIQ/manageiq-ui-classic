@@ -44,7 +44,7 @@ module StorageController::StorageD
       nodes = treenodeid.split("-")
       if nodes[0] == "ds"
         @right_cell_div = "storage_details"
-        @record = Storage.find_by_id(from_cid(nodes.last))
+        @record = Storage.find_by_id(nodes.last)
         @right_cell_text = _("Datastore \"%{name}\"") % {:name => @record.name}
       else
         miq_search_node

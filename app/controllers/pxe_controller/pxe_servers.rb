@@ -190,7 +190,7 @@ module PxeController::PxeServers
         return
       end
     when "reset", nil
-      @img = PxeImage.find_by_id(from_cid(params[:id]))
+      @img = PxeImage.find_by_id(params[:id])
       pxe_img_set_form_vars
       @in_a_form = true
       session[:changed] = false
@@ -240,7 +240,7 @@ module PxeController::PxeServers
         return
       end
     when "reset", nil
-      @wimg = WindowsImage.find_by_id(from_cid(params[:id]))
+      @wimg = WindowsImage.find_by_id(params[:id])
       pxe_wimg_set_form_vars
       @in_a_form = true
       session[:changed] = false
@@ -344,7 +344,6 @@ module PxeController::PxeServers
     wimg.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
   end
 
-
   # Delete all selected or single displayed PXE Server(s)
   def deletepxes
     pxe_button_operation('destroy', 'deletion')
@@ -444,13 +443,13 @@ module PxeController::PxeServers
       nodes = treenodeid.split("-")
       if (nodes[0] == "ps" && nodes.length == 2) || (["pxe_xx", "win_xx"].include?(nodes[1]) && nodes.length == 3)
         # on pxe server node OR folder node is selected
-        @record = @ps = PxeServer.find_by_id(from_cid(nodes.last))
+        @record = @ps = PxeServer.find_by_id(nodes.last)
         @right_cell_text = _("PXE Server \"%{name}\"") % {:name => @ps.name}
       elsif nodes[0] == "pi"
-        @record = @img = PxeImage.find_by_id(from_cid(nodes.last))
+        @record = @img = PxeImage.find_by_id(nodes.last)
         @right_cell_text = _("PXE Image \"%{name}\"") % {:name => @img.name}
       elsif nodes[0] == "wi"
-        @record = @wimg = WindowsImage.find_by_id(from_cid(nodes[1]))
+        @record = @wimg = WindowsImage.find_by_id(nodes[1])
         @right_cell_text = _("Windows Image \"%{name}\"") % {:name => @wimg.name}
       end
     end

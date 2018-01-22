@@ -82,7 +82,7 @@ describe ChargebackController do
 
         parent_reports = controller.instance_variable_get(:@parent_reports)
 
-        tree_id = "#{ApplicationRecord.compress_id(chargeback_report.id)}-0"
+        tree_id = "#{chargeback_report.id}-0"
         expected_result = {chargeback_report.miq_report_results.first.miq_report.name => tree_id}
         expect(parent_reports).to eq(expected_result)
       end
@@ -585,7 +585,7 @@ describe ChargebackController do
     end
 
     it "fetch existing report" do
-      controller.send(:cb_rpts_fetch_saved_report, controller.to_cid(miq_report_result.id))
+      controller.send(:cb_rpts_fetch_saved_report, miq_report_result.id)
 
       fetched_report = controller.instance_variable_get(:@report)
 

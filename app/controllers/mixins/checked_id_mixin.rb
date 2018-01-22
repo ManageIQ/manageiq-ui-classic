@@ -11,13 +11,13 @@ module Mixins
     # "check_xxx" where xxx is the item id or index)
     def find_checked_items(prefix = nil)
       if params[:miq_grid_checks].present?
-        params[:miq_grid_checks].split(",").collect { |c| from_cid(c) }
+        params[:miq_grid_checks].split(",").collect(&:to_i)
       else
         prefix = "check" if prefix.nil?
         params.each_with_object([]) do |(var, val), items|
           vars = var.to_s.split("_")
           if vars[0] == prefix && val == "1"
-            ids = vars[1..-1].collect { |v| from_cid(v) }
+            ids = vars[1..-1]
             items << ids.join("_")
           end
         end
@@ -91,7 +91,6 @@ module Mixins
     def checked_or_params_id
       objs = find_checked_items
       obj = objs.blank? && params[:id].present? ? params[:id] : objs[0]
-      obj = from_cid(obj) if obj.present?
       obj
     end
 
@@ -109,7 +108,7 @@ module Mixins
     #   Instance of selected item
     #
     def find_record_with_rbac(klass, id, options = {})
-      find_records_with_rbac(klass, Array.wrap(id).map { |record_id| from_cid(record_id) }, options).first
+      find_records_with_rbac(klass, Array.wrap(id), options).first
     end
 
     # Find records by model and id and test it with RBAC
@@ -136,9 +135,7 @@ module Mixins
     #   Array of ids of the items as a Fixnum
     #
     def checked_or_params
-      objs = (checked = find_checked_items).blank? && params[:id].present? ? Array(params[:id]) : checked
-      objs.map! { |compressed| from_cid(compressed) } if objs.present?
-      objs
+      (checked = find_checked_items).blank? && params[:id].present? ? Array(params[:id]) : checked
     end
 
     # Either creates a new instance or loads the one passed in 'ids'.

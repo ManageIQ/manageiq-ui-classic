@@ -184,7 +184,7 @@ module PxeController::PxeImageTypes
     else
       @right_cell_div = "pxe_image_type_details"
       nodes = treenodeid.split("-")
-      @record = @pxe_image_type = PxeImageType.find(from_cid(nodes.last))
+      @record = @pxe_image_type = PxeImageType.find(nodes.last)
       @right_cell_text = _("System Image Types \"%{name}\"") % {:name => @pxe_image_type.name}
     end
   end

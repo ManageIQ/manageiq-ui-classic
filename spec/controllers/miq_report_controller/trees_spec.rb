@@ -143,11 +143,11 @@ describe ReportController do
       end
 
       let(:params_default_row_value) do
-        {:id => "xx-r_-#{widget_with_default_row_value.compressed_id}", :format => :js, :accord => 'widgets'}
+        {:id => "xx-r_-#{widget_with_default_row_value.id}", :format => :js, :accord => 'widgets'}
       end
 
       let(:params_row_value) do
-        {:id => "xx-r_-#{widget_with_row_value.compressed_id}", :format => :js, :accord => 'widgets'}
+        {:id => "xx-r_-#{widget_with_row_value.id}", :format => :js, :accord => 'widgets'}
       end
 
       def row_count_html(row_count_value)

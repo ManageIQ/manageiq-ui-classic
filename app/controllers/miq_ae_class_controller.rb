@@ -21,7 +21,7 @@ class MiqAeClassController < ApplicationController
     # resetting flash array so messages don't get displayed when tab is changed
     @flash_array = []
     @explorer = true
-    @record = @ae_class = MiqAeClass.find(from_cid(x_node.split('-').last))
+    @record = @ae_class = MiqAeClass.find(x_node.split('-').last)
     @sb[:active_tab] = params[:tab_id]
     render :update do |page|
       page << javascript_prologue
@@ -149,10 +149,10 @@ class MiqAeClassController < ApplicationController
     when "aem"
       get_method_node_info(id)
     when "aen"
-      @record = MiqAeNamespace.find(from_cid(id[1]))
+      @record = MiqAeNamespace.find(id[1])
       # need to set record as Domain record if it's a domain, editable_domains, enabled_domains,
       # visible domains methods returns list of Domains, need this for toolbars to hide/disable correct records.
-      @record = MiqAeDomain.find(from_cid(id[1])) if @record.domain?
+      @record = MiqAeDomain.find(id[1]) if @record.domain?
       @version_message = domain_version_message(@record) if @record.domain?
       if @record.nil?
         set_root_node
@@ -214,7 +214,7 @@ class MiqAeClassController < ApplicationController
       if i == nodes.length - 1
         selected_node = x_node.split("-")
         parents.push(record.ae_class) if %w(aei aem).include?(selected_node[0])
-        self.x_node = "#{selected_node[0]}-#{to_cid(record.id)}"
+        self.x_node = "#{selected_node[0]}-#{record.id}"
         parents.push(record)
       else
         ns = MiqAeNamespace.find_by_fqname(nodes[0..i].join("/"))
@@ -231,9 +231,9 @@ class MiqAeClassController < ApplicationController
     # set x_node after building tree nodes so parent node of new nodes can be selected in the tree.
     unless params[:action] == "x_show"
       self.x_node = if @record.kind_of?(MiqAeClass)
-                      "aen-#{to_cid(@record.namespace_id)}"
+                      "aen-#{@record.namespace_id}"
                     else
-                      "aec-#{to_cid(@record.class_id)}"
+                      "aec-#{@record.class_id}"
                     end
     end
     {:key => existing_node, :nodes => children}
@@ -410,7 +410,7 @@ class MiqAeClassController < ApplicationController
         rec_name = ERB::Util.html_escape(rec_name)
         rec_name = rec_name.gsub(/\\/, "&#92;")
       end
-      srow = root.add_element("row", "id" => "#{cls}-#{to_cid(kids.id)}", "style" => "border-bottom: 1px solid #CCCCCC;color:black; text-align: center")
+      srow = root.add_element("row", "id" => "#{cls}-#{kids.id}", "style" => "border-bottom: 1px solid #CCCCCC;color:black; text-align: center")
       srow.add_element("cell").text = "0" # Checkbox column unchecked
       srow.add_element("cell", "image" => "blank.png", "title" => cls.to_s, "style" => "border-bottom: 1px solid #CCCCCC;text-align: left;height:28px;").text = REXML::CData.new("<i class='#{glyphicon}' alt='#{cls}' title='#{cls}'></i>")
       srow.add_element("cell", "image" => "blank.png", "title" => rec_name.to_s, "style" => "border-bottom: 1px solid #CCCCCC;text-align: left;height:28px;").text = rec_name
@@ -432,14 +432,14 @@ class MiqAeClassController < ApplicationController
     assert_privileges("miq_ae_class_edit")
     if params[:pressed] == "miq_ae_item_edit" # came from Namespace details screen
       id = @sb[:row_selected].split('-')
-      @ae_class = find_record_with_rbac(MiqAeClass, from_cid(id[1]))
+      @ae_class = find_record_with_rbac(MiqAeClass, id[1])
     else
       @ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     end
     set_form_vars
     # have to get name and set node info, to load multiple tabs correctly
     # rec_name = get_rec_name(@ae_class)
-    # get_node_info("aec-#{to_cid(@ae_class.id)}")
+    # get_node_info("aec-#{@ae_class.id}")
     @in_a_form = true
     @in_a_form_props = true
     session[:changed] = @changed = false
@@ -450,7 +450,7 @@ class MiqAeClassController < ApplicationController
     assert_privileges("miq_ae_field_edit")
     if params[:pressed] == "miq_ae_item_edit" # came from Namespace details screen
       id = @sb[:row_selected].split('-')
-      @ae_class = find_record_with_rbac(MiqAeClass, from_cid(id[1]))
+      @ae_class = find_record_with_rbac(MiqAeClass, id[1])
     else
       @ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     end
@@ -480,7 +480,7 @@ class MiqAeClassController < ApplicationController
     else
       id = x_node.split('-')
     end
-    initial_setup_for_instances_form_vars(from_cid(id[1]))
+    initial_setup_for_instances_form_vars(id[1])
     set_instances_form_vars
     @in_a_form = true
     session[:changed] = @changed = false
@@ -496,7 +496,7 @@ class MiqAeClassController < ApplicationController
     else
       id = x_node.split('-')
     end
-    @ae_method = find_record_with_rbac(MiqAeMethod, from_cid(id[1]))
+    @ae_method = find_record_with_rbac(MiqAeMethod, id[1])
     if @ae_method.location == "playbook"
       angular_form_specific_data
     else
@@ -771,7 +771,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def ae_class_for_instance_or_method(record)
-    record.id ? record.ae_class : MiqAeClass.find(from_cid(x_node.split("-").last))
+    record.id ? record.ae_class : MiqAeClass.find(x_node.split("-").last)
   end
 
   def validate_method_data
@@ -980,7 +980,7 @@ class MiqAeClassController < ApplicationController
       :name                => method.name,
       :display_name        => method.display_name,
       :namespace_path      => @sb[:namespace_path],
-      :class_id            => method.id ? method.class_id : MiqAeClass.find(from_cid(x_node.split("-").last)).id,
+      :class_id            => method.id ? method.class_id : MiqAeClass.find(x_node.split("-").last).id,
       :location            => 'playbook',
       :language            => 'ruby',
       :scope               => "instance",
@@ -1350,7 +1350,7 @@ class MiqAeClassController < ApplicationController
       add_ae_ns = if @edit[:typ] == "MiqAeDomain"
                     current_tenant.ae_domains.new
                   else
-                    MiqAeNamespace.new(:parent_id => from_cid(x_node.split('-')[1]))
+                    MiqAeNamespace.new(:parent_id => x_node.split('-')[1])
                   end
       ns_set_record_vars(add_ae_ns) # Set the record variables, but don't save
       if add_ae_ns.valid? && !flash_errors? && add_ae_ns.save
@@ -1551,7 +1551,7 @@ class MiqAeClassController < ApplicationController
       replace_right_cell
 
     when "reset", nil # Reset or first time in
-      id = params[:id] ? params[:id] : from_cid(@edit[:ae_class_id])
+      id = params[:id] ? params[:id] : @edit[:ae_class_id]
       @in_a_form = true
       fields_seq_edit_screen(id)
       if params[:button] == "reset"
@@ -1706,7 +1706,7 @@ class MiqAeClassController < ApplicationController
 
   def x_show
     typ, id = params[:id].split("-")
-    @record = TreeBuilder.get_model_for_prefix(typ).constantize.find(from_cid(id))
+    @record = TreeBuilder.get_model_for_prefix(typ).constantize.find(id)
     tree_select
   end
 
@@ -1852,7 +1852,7 @@ class MiqAeClassController < ApplicationController
     model = @edit[:selected_items].count > 1 ? :models : :model
     add_flash(_("Copy selected %{record} was saved") % {:record => ui_lookup(model => @edit[:typ].to_s)})
     @record = res.kind_of?(Array) ? @edit[:typ].find(res.first) : res
-    self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{to_cid(@record.id)}"
+    self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{@record.id}"
     @in_a_form = @changed = session[:changed] = false
     @sb[:action] = @edit = session[:edit] = nil
     replace_right_cell
@@ -1883,7 +1883,7 @@ class MiqAeClassController < ApplicationController
     domains = {}
     selected_items = {}
     ids.each_with_index do |id, i|
-      record = find_record_with_rbac(typ, from_cid(id))
+      record = find_record_with_rbac(typ, id)
       selected_items[record.id] = record.display_name.blank? ? record.name : "#{record.display_name} (#{record.name})"
       @record = record if i.zero?
     end
@@ -1904,8 +1904,8 @@ class MiqAeClassController < ApplicationController
       :domain_id      => @record.domain.id,
       :old_name       => @record.name,
       :fqname         => @record.fqname,
-      :rec_id         => from_cid(@record.id),
-      :key            => "copy_objects__#{from_cid(@record.id)}",
+      :rec_id         => @record.id,
+      :key            => "copy_objects__#{@record.id}",
       :domains        => domains,
       :selected_items => selected_items,
       :namespaces     => {}
@@ -1980,14 +1980,14 @@ class MiqAeClassController < ApplicationController
     if @sb[:row_selected]
       @sb[:row_selected].each do |items|
         item = items.split('-')
-        item = find_id_with_rbac(MiqAeInstance, from_cid(item[1]))
-        aeinstances.push(from_cid(item[1]))
+        item = find_id_with_rbac(MiqAeInstance, item[1])
+        aeinstances.push(item[1])
       end
     else
       node = x_node.split('-')
-      aeinstances.push(from_cid(node[1]))
-      inst = find_record_with_rbac(MiqAeInstance, from_cid(node[1]))
-      self.x_node = "aec-#{to_cid(inst.class_id)}"
+      aeinstances.push(node[1])
+      inst = find_record_with_rbac(MiqAeInstance, node[1])
+      self.x_node = "aec-#{inst.class_id}"
     end
 
     process_aeinstances(aeinstances, "destroy") unless aeinstances.empty?
@@ -2007,14 +2007,14 @@ class MiqAeClassController < ApplicationController
     if @sb[:row_selected]
       @sb[:row_selected].each do |items|
         item = items.split('-')
-        item = find_id_with_rbac(MiqAeMethod, from_cid(item[1]))
-        aemethods.push(from_cid(item[1]))
+        item = find_id_with_rbac(MiqAeMethod, item[1])
+        aemethods.push(item[1])
       end
     else
       node = x_node.split('-')
-      aemethods.push(from_cid(node[1]))
-      inst = find_record_with_rbac(MiqAeMethod, from_cid(node[1]))
-      self.x_node = "aec-#{to_cid(inst.class_id)}"
+      aemethods.push(node[1])
+      inst = find_record_with_rbac(MiqAeMethod, node[1])
+      self.x_node = "aec-#{inst.class_id}"
     end
 
     process_aemethods(aemethods, "destroy") unless aemethods.empty?
@@ -2035,7 +2035,7 @@ class MiqAeClassController < ApplicationController
       self.x_node = "root"
     else
       selected = find_checked_items
-      selected_ids = selected.map { |x| from_cid(x.split('-')[1]) }
+      selected_ids = selected.map { |x| x.split('-')[1] }
       # TODO: replace with RBAC safe method #14665 is merged
       domains = MiqAeDomain.where(:id => selected_ids)
       domains.each do |domain|
@@ -2067,14 +2067,14 @@ class MiqAeClassController < ApplicationController
     node = x_node.split('-')
     if params[:id] && params[:miq_grid_checks].blank? && node.first == "aen"
       ae_ns.push(params[:id])
-      ns = find_record_with_rbac(MiqAeNamespace, from_cid(node[1]))
-      self.x_node = ns.parent_id ? "aen-#{to_cid(ns.parent_id)}" : "root"
+      ns = find_record_with_rbac(MiqAeNamespace, node[1])
+      self.x_node = ns.parent_id ? "aen-#{ns.parent_id}" : "root"
     elsif selected
       ae_ns, ae_cs = items_to_delete(selected)
     else
-      ae_cs.push(from_cid(node[1]))
-      cls = find_record_with_rbac(MiqAeClass, from_cid(node[1]))
-      self.x_node = "aen-#{to_cid(cls.namespace_id)}"
+      ae_cs.push(node[1])
+      cls = find_record_with_rbac(MiqAeClass, node[1])
+      self.x_node = "aen-#{cls.namespace_id}"
     end
     process_ae_ns(ae_ns, "destroy")     unless ae_ns.empty?
     process_aeclasses(ae_cs, "destroy") unless ae_cs.empty?
@@ -2087,16 +2087,16 @@ class MiqAeClassController < ApplicationController
     selected.each do |items|
       item = items.split('-')
       if item[0] == "aen"
-        record = find_record_with_rbac(MiqAeNamespace, from_cid(item[1]))
+        record = find_record_with_rbac(MiqAeNamespace, item[1])
         if (record.domain? && record.editable_properties?) || record.editable?
-          ns_list.push(from_cid(item[1]))
+          ns_list.push(item[1])
         else
           add_flash(_("\"%{field}\" Automate Domain cannot be deleted") %
                       {:field => get_record_display_name(record)},
                     :error)
         end
       else
-        cs_list.push(from_cid(item[1]))
+        cs_list.push(item[1])
       end
     end
     return ns_list, cs_list
@@ -2109,7 +2109,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def get_form_vars
-    @ae_class = MiqAeClass.find_by(:id => from_cid(@edit[:ae_class_id]))
+    @ae_class = MiqAeClass.find_by(:id => @edit[:ae_class_id])
     # for class add tab
     @edit[:new][:name] = params[:name].blank? ? nil : params[:name] if params[:name]
     @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
@@ -2144,7 +2144,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def fields_get_form_vars
-    @ae_class = MiqAeClass.find_by(:id => from_cid(@edit[:ae_class_id]))
+    @ae_class = MiqAeClass.find_by(:id => @edit[:ae_class_id])
     @in_a_form = true
     @in_a_form_fields = true
     if params[:item].blank? && !%w(accept save).include?(params[:button]) && params["action"] != "field_delete"
@@ -2216,7 +2216,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def get_method_form_vars
-    @ae_method = @edit[:ae_method_id] ? MiqAeMethod.find(from_cid(@edit[:ae_method_id])) : MiqAeMethod.new
+    @ae_method = @edit[:ae_method_id] ? MiqAeMethod.find(@edit[:ae_method_id]) : MiqAeMethod.new
     @in_a_form = true
     if params[:item].blank? && params[:button] != "accept" && params["action"] != "field_delete"
       # for method_inputs view
@@ -2272,7 +2272,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def get_ns_form_vars
-    @ae_ns = @edit[:typ].constantize.find_by(:id => from_cid(@edit[:ae_ns_id]))
+    @ae_ns = @edit[:typ].constantize.find_by(:id => @edit[:ae_ns_id])
     @edit[:new][:enabled] = params[:ns_enabled] == '1' if params[:ns_enabled]
     [:ns_name, :ns_description].each do |field|
       next unless params[field]
@@ -2299,7 +2299,7 @@ class MiqAeClassController < ApplicationController
   def get_instances_form_vars
     # resetting inst/class/values from id stored in @edit.
     @ae_inst   = @edit[:ae_inst_id] ? MiqAeInstance.find(@edit[:ae_inst_id]) : MiqAeInstance.new
-    @ae_class  = MiqAeClass.find(from_cid(@edit[:ae_class_id]))
+    @ae_class  = MiqAeClass.find(@edit[:ae_class_id])
     @ae_values = @ae_class.ae_fields.sort_by { |a| a.priority.to_i }.collect do |fld|
       MiqAeValue.find_or_initialize_by(:field_id => fld.id.to_s, :instance_id => @ae_inst.id.to_s)
     end
@@ -2321,7 +2321,7 @@ class MiqAeClassController < ApplicationController
     miqaeclass.inherits = @edit[:new][:inherits]
     ns = x_node.split("-")
     if ns.first == "aen" && !miqaeclass.namespace_id
-      rec = MiqAeNamespace.find(from_cid(ns[1]))
+      rec = MiqAeNamespace.find(ns[1])
       miqaeclass.namespace_id = rec.id.to_s
       # miqaeclass.namespace = rec.name
     end
@@ -2339,7 +2339,7 @@ class MiqAeClassController < ApplicationController
                        else
                          @edit[:new][:data]
                        end
-    miqaemethod.class_id = from_cid(@edit[:ae_class_id])
+    miqaemethod.class_id = @edit[:ae_class_id]
     miqaemethod.embedded_methods = @edit[:new][:embedded_methods] if @edit[:new][:location] == 'inline'
   end
 
@@ -2403,7 +2403,7 @@ class MiqAeClassController < ApplicationController
     instance_column_names.each do |attr|
       miqaeinst.send("#{attr}=", @edit[:new][:ae_inst][attr].try(:strip))
     end
-    miqaeinst.class_id = from_cid(@edit[:ae_class_id])
+    miqaeinst.class_id = @edit[:ae_class_id]
   end
 
   # Set record variables to new values
@@ -2427,7 +2427,7 @@ class MiqAeClassController < ApplicationController
     @edit = {}
     @edit[:new] = {}
     @edit[:current] = {}
-    @ae_class = MiqAeClass.find_by(:id => from_cid(id))
+    @ae_class = MiqAeClass.find_by(:id => id)
     @edit[:rec_id] = @ae_class.try(:id)
     @edit[:ae_class_id] = @ae_class.id
     @edit[:new][:fields] = @ae_class.ae_fields.to_a.deep_clone
@@ -2512,7 +2512,7 @@ class MiqAeClassController < ApplicationController
     obj = find_checked_items
     obj = [x_node] if obj.nil? && params[:id]
     typ = params[:pressed] == "miq_ae_domain_edit" ? MiqAeDomain : MiqAeNamespace
-    @ae_ns = find_record_with_rbac(typ, from_cid(obj[0].split('-')[1]))
+    @ae_ns = find_record_with_rbac(typ, obj[0].split('-')[1])
     if @ae_ns.domain? && !@ae_ns.editable_properties?
       add_flash(_("Read Only Automate Domain \"%{name}\" cannot be edited") %
                   {:name => get_record_display_name(@ae_ns)},
@@ -2536,7 +2536,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def new_domain_or_namespace(klass)
-    parent_id = x_node == "root" ? nil : from_cid(x_node.split("-").last)
+    parent_id = x_node == "root" ? nil : x_node.split("-").last
     @ae_ns = klass.new(:parent_id => parent_id)
     ns_set_form_vars
     @in_a_form = true
@@ -2668,7 +2668,7 @@ class MiqAeClassController < ApplicationController
 
   def get_instance_node_info(id)
     begin
-      @record = MiqAeInstance.find(from_cid(id[1]))
+      @record = MiqAeInstance.find(id[1])
     rescue ActiveRecord::RecordNotFound
       set_root_node
       return
@@ -2682,7 +2682,7 @@ class MiqAeClassController < ApplicationController
 
   def get_method_node_info(id)
     begin
-      @record = @ae_method = MiqAeMethod.find(from_cid(id[1]))
+      @record = @ae_method = MiqAeMethod.find(id[1])
     rescue ActiveRecord::RecordNotFound
       set_root_node
       return
@@ -2720,7 +2720,7 @@ class MiqAeClassController < ApplicationController
   def get_class_node_info(id)
     @sb[:active_tab] = "instances" if !@in_a_form && !params[:button] && !params[:pressed]
     begin
-      @record = @ae_class = MiqAeClass.find(from_cid(id[1]))
+      @record = @ae_class = MiqAeClass.find(id[1])
     rescue ActiveRecord::RecordNotFound
       set_root_node
       return

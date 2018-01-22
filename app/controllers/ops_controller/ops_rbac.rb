@@ -39,7 +39,7 @@ module OpsController::OpsRbac
   def rbac_user_copy
     # get users id either from gtl check or detail id
     user_id = params[:miq_grid_checks].present? ? params[:miq_grid_checks] : params[:id]
-    user = User.find(from_cid(user_id))
+    user = User.find(user_id)
     # check if it is allowed to copy the user
     if rbac_user_copy_restriction?(user)
       rbac_restricted_user_copy_flash(user)
@@ -98,7 +98,7 @@ module OpsController::OpsRbac
     assert_privileges("rbac_tenant_add")
     @_params[:typ] = "new"
     @tenant_type = params[:tenant_type] == "tenant"
-    @tenant_parent = Tenant.find(from_cid(x_node.split('-').last)).id
+    @tenant_parent = Tenant.find(x_node.split('-').last).id
     rbac_tenant_edit
   end
   alias_method :rbac_project_add, :rbac_tenant_add
@@ -193,7 +193,7 @@ module OpsController::OpsRbac
     tenant.description = params[:description]
     tenant.use_config_for_attributes = tenant.root? && (params[:use_config_for_attributes] == "on")
     unless tenant.id # only set for new records
-      tenant.parent    = Tenant.find(from_cid(x_node.split('-').last))
+      tenant.parent    = Tenant.find(x_node.split('-').last)
       tenant.divisible = params[:divisible] == "true"
     end
   end
@@ -306,7 +306,7 @@ module OpsController::OpsRbac
       process_users(users, "destroy") unless users.empty?
       self.x_node = "xx-u" # reset node to show list
     else # showing 1 user, delete it
-      ids = find_checked_items.collect { |r| from_cid(r.to_s.split("-").last) }
+      ids = find_checked_items.collect { |r| r.to_s.split("-").last }
       users = User.where(:id => ids).compact
       if users.empty?
         add_flash(_("Default EVM User \"Administrator\" cannot be deleted"), :error)
@@ -334,7 +334,7 @@ module OpsController::OpsRbac
     assert_privileges("rbac_role_delete")
     roles = []
     if !params[:id] # showing a role list
-      ids = find_checked_items.collect { |r| from_cid(r.to_s.split("-").last) }
+      ids = find_checked_items.collect { |r| r.to_s.split("-").last }
       roles = MiqUserRole.where(:id => ids)
       process_roles(roles, "destroy") unless roles.empty?
     else # showing 1 role, delete it
@@ -374,7 +374,7 @@ module OpsController::OpsRbac
     else # showing 1 tenant, delete it
       tenants.push(params[:id])
       parent_id = Tenant.find(params[:id]).parent.id
-      self.x_node = "tn-#{to_cid(parent_id)}"
+      self.x_node = "tn-#{parent_id}"
     end
     process_tenants(tenants, "destroy") unless tenants.empty?
     get_node_info(x_node)
@@ -385,7 +385,7 @@ module OpsController::OpsRbac
     assert_privileges("rbac_group_delete")
     groups = []
     if !params[:id] # showing a list
-      ids = find_checked_items.collect { |r| from_cid(r.to_s.split("-").last) }
+      ids = find_checked_items.collect { |r| r.to_s.split("-").last }
       groups = MiqGroup.where(:id => ids)
       process_groups(groups, "destroy") unless groups.empty?
       self.x_node = "xx-g" # reset node to show list
@@ -799,7 +799,7 @@ module OpsController::OpsRbac
   # AJAX driven routine to check for changes in ANY field on the form
   def rbac_field_changed(rec_type)
     id = params[:id].split('__').first # Get the record id
-    id = from_cid(id) unless %w(new seq).include?(id)
+    id = id unless %w(new seq).include?(id)
     return unless load_edit("rbac_#{rec_type}_edit__#{id}", "replace_cell__explorer")
 
     case rec_type
@@ -890,14 +890,14 @@ module OpsController::OpsRbac
         rbac_tenants_list
       end
     when "u"
-      @right_cell_text = _("EVM User \"%{name}\"") % {:name => User.find(from_cid(id)).name}
+      @right_cell_text = _("EVM User \"%{name}\"") % {:name => User.find(id).name}
       rbac_user_get_details(id)
     when "g"
-      @right_cell_text = _("EVM Group \"%{name}\"") % {:name => MiqGroup.find(from_cid(id)).description}
+      @right_cell_text = _("EVM Group \"%{name}\"") % {:name => MiqGroup.find(id).description}
       @edit = nil
       rbac_group_get_details(id)
     when "ur"
-      @right_cell_text = _("Role \"%{name}\"") % {:name => MiqUserRole.find(from_cid(id)).name}
+      @right_cell_text = _("Role \"%{name}\"") % {:name => MiqUserRole.find(id).name}
       rbac_role_get_details(id)
     when "tn"
       rbac_tenant_get_details(id)
@@ -915,17 +915,17 @@ module OpsController::OpsRbac
 
   def rbac_user_get_details(id)
     @edit = nil
-    @record = @user = User.find(from_cid(id))
+    @record = @user = User.find(id)
     get_tagdata(@user)
   end
 
   def rbac_tenant_get_details(id)
-    @record = @tenant = Tenant.find(from_cid(id))
+    @record = @tenant = Tenant.find(id)
     get_tagdata(@tenant)
   end
 
   def rbac_group_get_details(id)
-    @record = @group = MiqGroup.find_by(:id => from_cid(id))
+    @record = @group = MiqGroup.find_by(:id => id)
     @belongsto = {}
     @filters = {}
     @filter_expression = []
@@ -980,7 +980,7 @@ module OpsController::OpsRbac
 
   def rbac_role_get_details(id)
     @edit = nil
-    @record = @role = MiqUserRole.find(from_cid(id))
+    @record = @role = MiqUserRole.find(id)
     @rbac_menu_tree = build_rbac_feature_tree
   end
 
@@ -1114,7 +1114,7 @@ module OpsController::OpsRbac
     if params[:check]                               # User checked/unchecked a tree node
       if params[:tree_typ] == "tags"                # MyCompany tag checked
         cat, tag = params[:id].split('cl-').last.split("_xx-") # Get the category and tag
-        cat_name = Classification.find_by(:id => from_cid(cat)).name
+        cat_name = Classification.find_by(:id => cat).name
         tag_name = Classification.find_by(:id => tag).name
         if params[:check] == "0" #   unchecked
           @edit[:new][:filters].except!("#{cat_name}-#{tag_name}") # Remove the tag from the filters array
@@ -1126,14 +1126,14 @@ module OpsController::OpsRbac
         klass = TreeBuilder.get_model_for_prefix(class_prefix)
         # If ExtManagementSystem/Host is returned get specific class
         if %w(ExtManagementSystem Host).include?(klass)
-          klass = find_record_with_rbac(klass.constantize, from_cid(id)).class.to_s
+          klass = find_record_with_rbac(klass.constantize, id).class.to_s
         end
         if params[:check] == "0" #   unchecked
-          @edit[:new][:belongsto].delete("#{klass}_#{from_cid(id)}") # Remove the tag from the belongsto hash
+          @edit[:new][:belongsto].delete("#{klass}_#{id}") # Remove the tag from the belongsto hash
         else
-          object = klass.safe_constantize.find(from_cid(id))
+          object = klass.safe_constantize.find(id)
           # Put the tag into the belongsto hash
-          @edit[:new][:belongsto]["#{klass}_#{from_cid(id)}"] = MiqFilter.object2belongsto(object)
+          @edit[:new][:belongsto]["#{klass}_#{id}"] = MiqFilter.object2belongsto(object)
         end
       end
     end

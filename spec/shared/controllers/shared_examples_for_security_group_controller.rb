@@ -1,8 +1,6 @@
 require_relative 'shared_network_manager_context'
 
 shared_examples :shared_examples_for_security_group_controller do |providers|
-  include CompressedIds
-
   render_views
   before :each do
     stub_user(:features => :all)
@@ -56,7 +54,7 @@ shared_examples :shared_examples_for_security_group_controller do |providers|
 
       describe "#test_toolbars" do
         it 'edit security group tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@security_group.id), :pressed => "security_group_tag"}
+          post :button, :params => {:miq_grid_checks => @security_group.id, :pressed => "security_group_tag"}
           expect(response.status).to eq(200)
         end
       end

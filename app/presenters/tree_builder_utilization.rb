@@ -48,7 +48,7 @@ class TreeBuilderUtilization < TreeBuilderRegion
 
     [
       {
-        :id    => "folder_c_xx-#{to_cid(object.id)}",
+        :id    => "folder_c_xx-#{object.id}",
         :text  => _("Cluster / Deployment Role"),
         :icon  => "pficon pficon-folder-close",
         :tip   => _("Cluster / Deployment Role (Click to open)")

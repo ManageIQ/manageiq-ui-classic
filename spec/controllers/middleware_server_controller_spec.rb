@@ -101,7 +101,7 @@ describe MiddlewareServerController do
     end
 
     it 'should stream diagnostic report file to client for download' do
-      get :dr_download, :params => {:id => mw_server.compressed_id, :key => mw_dr.compressed_id }
+      get :dr_download, :params => {:id => mw_server.id, :key => mw_dr.id }
 
       expect(response.headers['Content-Disposition']).to eq('attachment; filename=diagnostic_report.zip')
       expect(response.headers['Content-Length']).to eq(mw_dr.binary_blob.size)
@@ -109,22 +109,22 @@ describe MiddlewareServerController do
     end
 
     it 'should not stream deleted diagnostic report file to client for download' do
-      action = get :dr_download, :params => {:id => mw_server.compressed_id, :key => mw_dr_missing.compressed_id }
+      action = get :dr_download, :params => {:id => mw_server.id, :key => mw_dr_missing.id }
 
       expect(action).to redirect_to(
         :action      => 'show',
-        :id          => mw_server.compressed_id,
+        :id          => mw_server.id,
         :flash_msg   => 'Unable to locate a report in database, please try again.',
         :flash_error => true
       )
     end
 
     it 'should delete one report if requested' do
-      action = post :dr_delete, :params => { :id => mw_server.compressed_id, :mw_dr_selected => mw_dr.compressed_id }
+      action = post :dr_delete, :params => { :id => mw_server.id, :mw_dr_selected => mw_dr.id }
 
       expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect(mw_dr_erred.reload).to be_truthy
-      expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
+      expect(action).to redirect_to(:action => 'show', :id => mw_server.id)
       expect(assigns(:flash_array).first[:message]).to include(
         'Deletion of one JDR report succeeded.'
       )
@@ -132,13 +132,13 @@ describe MiddlewareServerController do
 
     it 'should delete more than one report if requested' do
       action = post :dr_delete, :params => {
-        :id             => mw_server.compressed_id,
-        :mw_dr_selected => [mw_dr.compressed_id, mw_dr_erred.compressed_id]
+        :id             => mw_server.id,
+        :mw_dr_selected => [mw_dr.id, mw_dr_erred.id]
       }
 
       expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { mw_dr_erred.reload }.to raise_exception(ActiveRecord::RecordNotFound)
-      expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
+      expect(action).to redirect_to(:action => 'show', :id => mw_server.id)
       expect(assigns(:flash_array).first[:message]).to include(
         'Deletion of 2 JDR reports succeeded.'
       )
@@ -146,13 +146,13 @@ describe MiddlewareServerController do
 
     it 'should not delete a nonexistent report if requested' do
       action = post :dr_delete, :params => {
-        :id             => mw_server.compressed_id,
-        :mw_dr_selected => mw_dr_missing.compressed_id
+        :id             => mw_server.id,
+        :mw_dr_selected => mw_dr_missing.id
       }
 
       expect(mw_dr.reload).to be_truthy
       expect(mw_dr_erred.reload).to be_truthy
-      expect(action).to redirect_to(:action => 'show', :id => mw_server.compressed_id)
+      expect(action).to redirect_to(:action => 'show', :id => mw_server.id)
       expect(assigns(:flash_array)).to eq(
         [{:message => "Unable to locate all reports in database, please try again.", :level => :error}]
       )

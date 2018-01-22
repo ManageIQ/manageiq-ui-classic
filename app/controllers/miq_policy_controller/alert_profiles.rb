@@ -59,7 +59,7 @@ module MiqPolicyController::AlertProfiles
     alert_profile_get_info(MiqAlertSet.find(alert_profile.id))
     alert_profile_sync_provider(current, mems.keys)
     @edit = nil
-    self.x_node = @new_alert_profile_node = "xx-#{alert_profile.mode}_ap-#{to_cid(alert_profile.id)}"
+    self.x_node = @new_alert_profile_node = "xx-#{alert_profile.mode}_ap-#{alert_profile.id}"
     get_node_info(@new_alert_profile_node)
     replace_right_cell(:nodetype => "ap", :replace_trees => [:alert_profile])
   end
@@ -171,10 +171,10 @@ module MiqPolicyController::AlertProfiles
     end
     if params.key?(:id)
       if params[:check] == "1"
-        @assign[:new][:objects].push(from_cid(params[:id].split("-").last))
+        @assign[:new][:objects].push(params[:id].split("-").last)
         @assign[:new][:objects].sort!
       else
-        @assign[:new][:objects].delete(from_cid(params[:id].split("-").last))
+        @assign[:new][:objects].delete(params[:id].split("-").last)
       end
     end
 

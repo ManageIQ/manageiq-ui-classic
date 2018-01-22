@@ -31,7 +31,7 @@ describe OpsController do
         @sch = FactoryGirl.create(:miq_schedule)
         silence_warnings { OpsController::Settings::Schedules::STGROOT = 'ST'.freeze }
 
-        controller.params["check_#{controller.to_cid(@sch.id)}"] = '1'
+        controller.params["check_#{@sch.id}"] = '1'
         expect(controller).to receive(:render).never
         expect(controller).to receive(:schedule_build_list)
         expect(controller).to receive(:settings_get_info)

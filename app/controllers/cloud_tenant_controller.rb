@@ -29,7 +29,7 @@ class CloudTenantController < ApplicationController
         action = params[:pressed].sub("#{target_controller}_", '')
         action = "#{action}_#{target_controller.sub('cloud_','').pluralize}" if action == 'delete'
         if action == 'detach'
-          volume = find_record_with_rbac(CloudVolume, from_cid(params[:miq_grid_checks]))
+          volume = find_record_with_rbac(CloudVolume, params[:miq_grid_checks])
           if volume.attachments.empty?
             render_flash(_("Cloud Volume \"%{volume_name}\" is not attached to any Instances") % {
               :volume_name => volume.name}, :error)

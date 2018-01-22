@@ -15,7 +15,7 @@ module ReportController::Dashboards
       @edit[:new][:dashboard_order].each do |n|
         dashboard_order.push(MiqWidgetSet.where_unique_on(n).first.id)
       end
-      g = MiqGroup.find(from_cid(@sb[:nodes][2]))
+      g = MiqGroup.find(@sb[:nodes][2])
       g.settings ||= {}
       g.settings[:dashboard_order] ||= {}
       g.settings[:dashboard_order] = dashboard_order
@@ -70,7 +70,7 @@ module ReportController::Dashboards
       db_fields_validation
       db_set_record_vars
       if params[:button] == "add"
-        g = MiqGroup.find(from_cid(@sb[:nodes][2]))
+        g = MiqGroup.find(@sb[:nodes][2])
         @db.owner = g
       end
       if @flash_array.nil? && @db.save
@@ -109,7 +109,7 @@ module ReportController::Dashboards
     assert_privileges("db_delete")
     db = MiqWidgetSet.find_by_id(params[:id])       # temp var to determine the parent node of deleted items
     process_elements(db, MiqWidgetSet, "destroy")
-    g = MiqGroup.find(from_cid(@sb[:nodes][2].split('_').first))
+    g = MiqGroup.find(@sb[:nodes][2].split('_').first)
     # delete dashboard id from group settings and save
     db_order = g.settings && g.settings[:dashboard_order] ? g.settings[:dashboard_order] : nil
     if db_order
@@ -213,7 +213,7 @@ module ReportController::Dashboards
       @db_nodes_order = [@default_ws.name, "All Groups"]
 
       @db_nodes[@default_ws.name] = {}
-      @db_nodes[@default_ws.name][:id] = "xx-#{to_cid(@default_ws.id)}"
+      @db_nodes[@default_ws.name][:id] = "xx-#{@default_ws.id}"
       @db_nodes[@default_ws.name][:text] = "#{@default_ws.description} (#{@default_ws.name})"
       @db_nodes[@default_ws.name][:title] = "#{@default_ws.description} (#{@default_ws.name})"
       @db_nodes[@default_ws.name][:glyph] = "fa fa-dashboard"
@@ -229,7 +229,7 @@ module ReportController::Dashboards
       @right_cell_div  = "db_list"
       @right_cell_text = _("All EVM Groups")
     elsif @sb[:nodes].length == 3 && @sb[:nodes][1] == "g_g"
-      g = MiqGroup.find(from_cid(@sb[:nodes].last))
+      g = MiqGroup.find(@sb[:nodes].last)
       @right_cell_text = _("Dashboards for \"%{name}\"") % {:name => g.description}
       @right_cell_div  = "db_list"
       widgetsets = MiqWidgetSet.where(:owner_type => "MiqGroup", :owner_id => g.id)
@@ -249,7 +249,7 @@ module ReportController::Dashboards
           (@sb[:nodes].length == 2 && @sb[:nodes].first == "xx")
       # default dashboard nodes is selected or one under a specific group is selected
       # g = MiqGroup.find(@sb[:nodes][2])
-      @record = @db = MiqWidgetSet.find(from_cid(@sb[:nodes].last))
+      @record = @db = MiqWidgetSet.find(@sb[:nodes].last)
       @right_cell_text = _("Dashboard \"%{name}\"") % {:name => "#{@db.description} (#{@db.name})"}
       @right_cell_div  = "db_list"
       @sb[:new] = {}
@@ -360,7 +360,7 @@ module ReportController::Dashboards
     @edit[:new] = {}
     @edit[:current] = {}
     @edit[:new][:dashboard_order] = []
-    g = MiqGroup.find(from_cid(@sb[:nodes][2]))
+    g = MiqGroup.find(@sb[:nodes][2])
     @sb[:group_desc] = g.description    # saving for cell header
     if g.settings && g.settings[:dashboard_order]
       dbs = g.settings[:dashboard_order]
@@ -389,7 +389,7 @@ module ReportController::Dashboards
       # default dashboard selected
       @available_widgets = MiqWidget.available_for_all_roles.to_a
     else
-      g = MiqGroup.find(from_cid(@sb[:nodes][2].split('_').first))
+      g = MiqGroup.find(@sb[:nodes][2].split('_').first)
       @available_widgets = MiqWidget.available_for_group(g).to_a
     end
     @available_widgets.sort_by! { |w| [w.content_type, w.title.downcase] }

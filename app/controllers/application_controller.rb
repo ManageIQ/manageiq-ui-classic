@@ -385,7 +385,7 @@ class ApplicationController < ActionController::Base
     end
 
     if params[:parent_id]
-      parent_id = from_cid(params[:parent_id])
+      parent_id = params[:parent_id]
       unless parent_id.nil?
         options[:parent] = identify_record(parent_id, controller_to_model) if parent_id && options[:parent].nil?
       end
@@ -491,7 +491,7 @@ class ApplicationController < ActionController::Base
     params[:display] = "event_logs"
     if !params[:show].nil? || !params[:x_show].nil?
       id = params[:show] ? params[:show] : params[:x_show]
-      @item = @record.event_logs.find(from_cid(id))
+      @item = @record.event_logs.find(id)
       drop_breadcrumb(:name => @record.name + " (#{bc_text})", :url => "/#{obj}/event_logs/#{@record.id}?page=#{@current_page}")
       drop_breadcrumb(:name => @item.name, :url => "/#{obj}/show/#{@record.id}?show=#{@item.id}")
       show_item
@@ -653,14 +653,14 @@ class ApplicationController < ActionController::Base
           # show this as selected/expanded node when tree loads
           if inst
             @open_nodes.push("aei-#{inst.id}")
-            @active_node = "aei-#{to_cid(inst.id)}"
+            @active_node = "aei-#{inst.id}"
           end
         elsif i == nodes.length - 2
           @cls = MiqAeClass.find_by(:namespace_id => @ns.id, :name => nodes[i])
-          @open_nodes.push("aec-#{to_cid(@cls.id)}") if @cls
+          @open_nodes.push("aec-#{@cls.id}") if @cls
         else
           @ns = MiqAeNamespace.find_by(:name => nodes[i])
-          @open_nodes.push("aen-#{to_cid(@ns.id)}") if @ns
+          @open_nodes.push("aen-#{@ns.id}") if @ns
         end
       end
     end
@@ -1037,7 +1037,7 @@ class ApplicationController < ActionController::Base
         :quadicon => quadicon
       }
       if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
-        new_row[:parent_id] = "xx-#{to_cid(row.data['miq_report_id'])}" if row.data['miq_report_id']
+        new_row[:parent_id] = "xx-#{row.data['miq_report_id']}" if row.data['miq_report_id']
       end
       new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
       new_row[:tree_id] = TreeBuilder.build_node_cid(target) if target
@@ -1222,7 +1222,7 @@ class ApplicationController < ActionController::Base
   end
 
   def rbac_free_for_custom_button?(task, button_id)
-    task == "custom_button" && CustomButton.find_by(:id => from_cid(button_id))
+    task == "custom_button" && CustomButton.find_by(:id => button_id)
   end
 
   def check_button_rbac
@@ -2206,7 +2206,7 @@ class ApplicationController < ActionController::Base
   end
 
   def list_row_id(row)
-    to_cid(row['id'])
+    row['id'].to_s
   end
 
   def render_flash_not_applicable_to_model(type, model_type = nil)
@@ -2293,6 +2293,6 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_name_from_object(klass, id)
-    klass.find_by(:id => from_cid(id)).try(:name)
+    klass.find_by(:id => id).try(:name)
   end
 end

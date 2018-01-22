@@ -1,6 +1,4 @@
 describe EmsPhysicalInfraController do
-  include CompressedIds
-
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryGirl.build(:zone) }
 
@@ -69,7 +67,7 @@ describe EmsPhysicalInfraController do
       get :show, :params => {:id => @ems.id, :display => 'storages'}
       post :button, :params => {:id              => @ems.id,
                                 :display         => 'storages',
-                                :miq_grid_checks => to_cid(datastore.id),
+                                :miq_grid_checks => datastore.id,
                                 :pressed         => "storage_tag",
                                 :format          => :js}
       expect(response.status).to eq(200)

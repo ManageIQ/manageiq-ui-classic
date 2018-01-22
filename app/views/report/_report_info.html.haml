@@ -75,7 +75,7 @@
         - @schedules.each do |s|
           - tz = s.run_at && s.run_at[:tz] ? s.run_at[:tz] : session[:user_tz]
           - if role_allows?(:feature => "miq_report_schedules")
-            - params = {:title => _("View this Schedule"), :onclick => remote_function(:url => "/report/x_show/msc-#{to_cid(s.id)}?accord=schedules")}
+            - params = {:title => _("View this Schedule"), :onclick => remote_function(:url => "/report/x_show/msc-#{s.id}?accord=schedules")}
           - else
             - params = {}
           %tr{params}
@@ -120,7 +120,7 @@
         - @widget_nodes.each do |w|
           - if role_allows?(:feature => "miq_report_widget_editor")
             - params = {:title => _("Click to view selected widget"),
-              :onclick => remote_function(:url => "/report/x_show/xx-#{ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[w.content_type]}_-#{to_cid(w.id)}?accord=widgets")}
+              :onclick => remote_function(:url => "/report/x_show/xx-#{ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[w.content_type]}_-#{w.id}?accord=widgets")}
           - else
             - params = {}
           %tr{params}

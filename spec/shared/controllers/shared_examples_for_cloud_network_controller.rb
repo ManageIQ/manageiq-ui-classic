@@ -1,8 +1,6 @@
 require_relative 'shared_network_manager_context'
 
 shared_examples :shared_examples_for_cloud_network_controller do |providers|
-  include CompressedIds
-
   render_views
   before :each do
     stub_user(:features => :all)
@@ -60,7 +58,7 @@ shared_examples :shared_examples_for_cloud_network_controller do |providers|
 
       describe "#test_toolbars" do
         it 'edit Cloud Network tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@cloud_network.id), :pressed => "cloud_network_tag"}
+          post :button, :params => {:miq_grid_checks => @cloud_network.id, :pressed => "cloud_network_tag"}
           expect(response.status).to eq(200)
         end
       end

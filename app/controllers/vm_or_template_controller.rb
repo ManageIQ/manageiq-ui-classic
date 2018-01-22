@@ -43,7 +43,7 @@ class VmOrTemplateController < ApplicationController
       return true
     end
     nodetype, id = params[:id].split("-")
-    self.x_node = "#{nodetype}-#{to_cid(id)}"
+    self.x_node = "#{nodetype}-#{id}"
     get_node_info(x_node)
   end
 

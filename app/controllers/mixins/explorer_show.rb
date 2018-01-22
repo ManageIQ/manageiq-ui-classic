@@ -24,7 +24,7 @@ module Mixins
 
       id = params[:show] ? params[:show] : params[:x_show]
       if id.present?
-        @item = send_nested(@record, method).find(from_cid(id))
+        @item = send_nested(@record, method).find(id)
 
         drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
                         :url  => "/#{controller_name}/#{action}/#{@record.id}?page=#{@current_page}")
@@ -70,7 +70,7 @@ module Mixins
 
       id = params[:show] || params[:x_show]
       if id.present?
-        @item = @record.guest_applications.find(from_cid(id))
+        @item = @record.guest_applications.find(id)
         item_breadcrumbs(breadcrumb_name, 'guest_applications')
         @view = get_db_view(GuestApplication)
         show_item
@@ -95,7 +95,7 @@ module Mixins
       @lastaction = "patches"
       id = params[:show] || params[:x_show]
       if id.present?
-        @item = @record.patches.find(from_cid(id))
+        @item = @record.patches.find(id)
         item_breadcrumbs(_("Patches"), 'patches')
         @view = get_db_view(Patch)
         show_item
@@ -113,7 +113,7 @@ module Mixins
       @lastaction = "groups"
       id = params[:show] || params[:x_show]
       if id.present?
-        @item = @record.groups.find(from_cid(id))
+        @item = @record.groups.find(id)
         item_breadcrumbs(_("Groups"), 'groups')
         @user_names = @item.users
         @view = get_db_view(Account, :association => "groups")
@@ -132,7 +132,7 @@ module Mixins
       @lastaction = "users"
       id = params[:show] || params[:x_show]
       if id.present?
-        @item = @record.users.find(from_cid(id))
+        @item = @record.users.find(id)
         item_breadcrumbs(_("Users"), 'users')
         @group_names = @item.groups
         @view = get_db_view(Account, :association => "users")
@@ -153,7 +153,7 @@ module Mixins
       @lastaction = "hosts"
       id = params[:show] || params[:x_show]
       if id.present?
-        @item = @record.hosts.find(from_cid(id))
+        @item = @record.hosts.find(id)
         item_breadcrumbs(_("Hosts"), 'hosts')
         @view = get_db_view(Host)
         show_item

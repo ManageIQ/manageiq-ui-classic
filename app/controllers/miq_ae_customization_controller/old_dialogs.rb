@@ -80,7 +80,7 @@ module MiqAeCustomizationController::OldDialogs
         @refresh_partial = "layouts/gtl"
       else
         dialogs.push(params[:id])
-        dialog = MiqDialog.find_by_id(from_cid(params[:id]))  if method == 'destroy'        # need to set this for destroy method so active node can be set to image_type folder node after record is deleted
+        dialog = MiqDialog.find_by_id(params[:id])  if method == 'destroy'        # need to set this for destroy method so active node can be set to image_type folder node after record is deleted
         if dialog.default
           add_flash(_("Default Dialog \"%{name}\" cannot be deleted") % {:name => dialog.name}, :error)
         else
@@ -104,7 +104,7 @@ module MiqAeCustomizationController::OldDialogs
       nodes = treenodeid.split("_")
       if nodes[0].split('-').first == "odg"
         @right_cell_div = "dialogs_details"
-        @record = @dialog = MiqDialog.find_by_id(from_cid(nodes[0].split('-').last))
+        @record = @dialog = MiqDialog.find_by_id(nodes[0].split('-').last)
         @right_cell_text = _("Dialogs \"%{name}\"") % {:name => @dialog.description}
       else
         old_dialogs_list
@@ -182,7 +182,7 @@ module MiqAeCustomizationController::OldDialogs
     end
 
     if params[:typ] == "copy"
-      dialog = MiqDialog.find_by_id(from_cid(params[:id]))
+      dialog = MiqDialog.find_by_id(params[:id])
       @dialog = MiqDialog.new
       @dialog.name = "Copy of " + dialog.name
       @dialog.description = dialog.description
@@ -268,7 +268,7 @@ module MiqAeCustomizationController::OldDialogs
         else
           if params[:button] == "add"
             d = MiqDialog.find_by(:name => dialog.name, :dialog_type => dialog.dialog_type)
-            self.x_node = "odg-#{to_cid(d.id)}"
+            self.x_node = "odg-#{d.id}"
           end
         end
         get_node_info

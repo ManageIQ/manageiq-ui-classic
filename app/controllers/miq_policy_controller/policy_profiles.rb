@@ -57,7 +57,7 @@ module MiqPolicyController::PolicyProfiles
         profile_get_info(MiqPolicySet.find(profile.id))
         @edit = nil
         @nodetype = "pp"
-        @new_profile_node = "pp-#{to_cid(profile.id)}"
+        @new_profile_node = "pp-#{profile.id}"
         replace_right_cell(:nodetype => "pp", :replace_trees => [:policy_profile])
       else
         profile.errors.each do |field, msg|

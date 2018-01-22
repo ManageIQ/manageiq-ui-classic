@@ -191,7 +191,7 @@ describe TreeBuilder do
   context "#build_node_cid" do
     it "returns correct cid for VM" do
       vm = FactoryGirl.create(:vm)
-      expect(TreeBuilder.build_node_cid(vm)).to eq("v-#{ApplicationRecord.compress_id(vm.id)}")
+      expect(TreeBuilder.build_node_cid(vm)).to eq("v-#{vm.id}")
     end
   end
 

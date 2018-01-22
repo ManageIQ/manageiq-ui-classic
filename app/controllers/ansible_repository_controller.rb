@@ -27,7 +27,7 @@ class AnsibleRepositoryController < ApplicationController
 
   def button
     if params[:pressed] == "embedded_configuration_script_source_edit"
-      id = from_cid(params[:miq_grid_checks])
+      id = params[:miq_grid_checks]
       javascript_redirect :action => 'edit', :id => id
     elsif params[:pressed] == "embedded_configuration_script_source_add"
       javascript_redirect :action => 'new'

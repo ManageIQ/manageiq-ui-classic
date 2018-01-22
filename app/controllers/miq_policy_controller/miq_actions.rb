@@ -50,7 +50,7 @@ module MiqPolicyController::MiqActions
         action_get_info(MiqAction.find(action.id))
         @edit = nil
         @nodetype = "a"
-        @new_action_node = "a-#{to_cid(action.id)}"
+        @new_action_node = "a-#{action.id}"
         replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? [:policy_profile, :policy, :action] : [:action])
         @sb[:action] = nil
       else
@@ -162,7 +162,7 @@ module MiqPolicyController::MiqActions
     @edit = session[:edit]
     @action = @edit[:action_id] ? MiqAction.find_by_id(@edit[:action_id]) : MiqAction.new
     _, id = parse_nodetype_and_id(params[:id])
-    tag_name = Classification.find(from_cid(id)).tag.name
+    tag_name = Classification.find(id).tag.name
     @tag_selected = Classification.tag2human(tag_name)
     @edit[:new][:options][:tags] = {} unless tag_name.nil?
     @edit[:new][:options][:tags] = [tag_name] unless tag_name.nil?

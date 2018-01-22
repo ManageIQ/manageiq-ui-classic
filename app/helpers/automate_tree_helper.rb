@@ -93,7 +93,7 @@ module AutomateTreeHelper
   end
 
   def at_tree_select(edit_key)
-    id = from_cid(parse_nodetype_and_id(params[:id]).last)
+    id = parse_nodetype_and_id(params[:id]).last
     if params[:id].start_with?("aei-")
       record = MiqAeInstance.find_by_id(id)
     elsif params[:id].start_with?("aen-") && controller_name == "miq_ae_class"

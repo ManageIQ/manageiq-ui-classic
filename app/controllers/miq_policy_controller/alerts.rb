@@ -34,7 +34,7 @@ module MiqPolicyController::Alerts
     alert_sync_provider(@edit[:alert_id] ? :update : :new)
     @edit = nil
     @nodetype = "al"
-    @new_alert_node = "al-#{to_cid(alert.id)}"
+    @new_alert_node = "al-#{alert.id}"
     replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert])
   end
 

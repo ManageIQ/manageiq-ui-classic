@@ -194,7 +194,7 @@ module MiqPolicyController::Policies
   end
 
   def policy_node(policy)
-    [policies_node(policy.mode, policy.towhat), "p-#{to_cid(policy.id)}"].join("_")
+    [policies_node(policy.mode, policy.towhat), "p-#{policy.id}"].join("_")
   end
 
   private

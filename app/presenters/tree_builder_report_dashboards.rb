@@ -27,7 +27,7 @@ class TreeBuilderReportDashboards < TreeBuilder
     objects = []
     default_ws = MiqWidgetSet.find_by(:name => 'default', :read_only => true)
     text = "#{default_ws.description} (#{default_ws.name})"
-    objects.push(:id => to_cid(default_ws.id), :text => text, :icon => 'fa fa-tachometer', :tip => text)
+    objects.push(:id => default_ws.id.to_s, :text => text, :icon => 'fa fa-tachometer', :tip => text)
     objects.push(:id => 'g', :text => _('All Groups'), :icon => 'pficon pficon-folder-close', :tip => _('All Groups'))
     count_only_or_objects(count_only, objects)
   end

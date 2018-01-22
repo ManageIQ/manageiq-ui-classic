@@ -29,7 +29,7 @@ class AnsibleCredentialController < ApplicationController
     if params[:pressed] == 'embedded_automation_manager_credentials_add'
       javascript_redirect :action => 'new'
     elsif params[:pressed] == 'embedded_automation_manager_credentials_edit'
-      javascript_redirect :action => 'edit', :id => from_cid(params[:miq_grid_checks])
+      javascript_redirect :action => 'edit', :id => params[:miq_grid_checks]
     elsif params[:pressed] == 'embedded_automation_manager_credentials_delete'
       delete_credentials
     end

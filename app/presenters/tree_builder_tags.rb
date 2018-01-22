@@ -51,7 +51,7 @@ class TreeBuilderTags < TreeBuilder
     # open node if at least one of his kids is selected
     if @edit.present? || @filters.present?
       @categories.each do |c|
-        open_node("cl-#{to_cid(c.id)}") if contain_selected_kid(c)
+        open_node("cl-#{c.id}") if contain_selected_kid(c)
       end
     end
     count_only_or_objects(count_only, @categories)

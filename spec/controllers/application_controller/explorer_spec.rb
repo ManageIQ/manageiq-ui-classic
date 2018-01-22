@@ -45,7 +45,7 @@ describe VmInfraController do
         user.current_group.entitlement = Entitlement.create!
         user.current_group.entitlement.set_managed_filters([["/managed/service_level/gold"]])
         user.current_group.save
-        
+
         ems_folder.add_child(vm)
       end
 
@@ -116,7 +116,7 @@ describe ReportController do
                                       )
       TreeBuilderReportWidgets.new('widgets_tree', 'widgets', {})
       nodes = controller.send(:tree_add_child_nodes, 'xx-r')
-      expected = [{:key        => "xx-r_-#{controller.to_cid(widget.id)}",
+      expected = [{:key        => "xx-r_-#{widget.id}",
                    :text       => "Foo",
                    :icon       => 'fa fa-file-text-o',
                    :tooltip    => "Foo",

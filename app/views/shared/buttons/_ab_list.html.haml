@@ -47,7 +47,7 @@
             - else
               - typ = "cbg"
               - rec_type = "Group"
-            %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{tree_id}_#{typ}-#{to_cid(obj[:id])}')"}
+            %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{tree_id}_#{typ}-#{obj[:id]}')"}
               %td.table-view-pf-select
                 %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}
               %td
@@ -102,7 +102,7 @@
       %tbody
         - @sb[:buttons].each do |obj|
           - tree_box = x_active_tree == :sandt_tree ? 'sandt_tree' : 'ab_tree'
-          - id = @nodetype[0].split('-')[1] == "ub" ? "#{@nodetype[0]}_cb-#{to_cid(obj[:id])}" : "#{x_node}_cb-#{to_cid(obj[:id])}"
+          - id = @nodetype[0].split('-')[1] == "ub" ? "#{@nodetype[0]}_cb-#{obj[:id]}" : "#{x_node}_cb-#{obj[:id]}"
           %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{id}')"}
             %td.table-view-pf-select
               %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}

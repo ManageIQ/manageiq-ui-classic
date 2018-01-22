@@ -14,7 +14,7 @@ module StorageController::StoragePod
     @sortdir = session[:dsc_sortdir].nil? ? "ASC" : session[:dsc_sortdir]
 
     dsc_id = x_node.split('-').last
-    @view, @pages = get_view(Storage, :association => 'storages', :parent => EmsFolder.find(from_cid(dsc_id)))
+    @view, @pages = get_view(Storage, :association => 'storages', :parent => EmsFolder.find(dsc_id))
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:ct_sortcol] = @sortcol
@@ -35,12 +35,12 @@ module StorageController::StoragePod
       nodes = treenodeid.split("-")
       if nodes[0] == "ds"
         @right_cell_div = "storage_details"
-        @record = Storage.find_by_id(from_cid(nodes[1]))
+        @record = Storage.find_by_id(nodes[1])
         @right_cell_text = _("Datastore \"%{name}\"") % {:name => @record.name}
       else
         storage_pod_list
         dsc_id= x_node.split('-').last
-        @record = @storage_pod = EmsFolder.find_by_id(from_cid(dsc_id))
+        @record = @storage_pod = EmsFolder.find_by_id(dsc_id)
         @right_cell_text = _("Datastores in cluster %{name}") % {:name => @record.name}
         @right_cell_div  = "storage_list"
       end

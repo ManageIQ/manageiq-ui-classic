@@ -1,7 +1,6 @@
 require_relative 'shared_storage_manager_context'
 
 shared_examples :shared_examples_for_ems_storage_controller do |providers|
-  include CompressedIds
   render_views
   before :each do
     stub_user(:features => :all)
@@ -52,7 +51,7 @@ shared_examples :shared_examples_for_ems_storage_controller do |providers|
         end
 
         it 'edit network provider tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_storage_tag"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_storage_tag"}
           expect(response.status).to eq(200)
         end
 
@@ -60,7 +59,7 @@ shared_examples :shared_examples_for_ems_storage_controller do |providers|
           allow(controller).to receive(:protect_build_tree).and_return(nil)
           controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
 
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_storage_protect"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_storage_protect"}
           expect(response.status).to eq(200)
 
           get :protect

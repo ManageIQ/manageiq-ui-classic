@@ -1,5 +1,4 @@
 describe MiqAeClassController do
-  include CompressedIds
   context "#set_record_vars" do
     it "Namespace remains unchanged when a class is edited" do
       ns = FactoryGirl.create(:miq_ae_namespace)
@@ -692,7 +691,7 @@ describe MiqAeClassController do
                                        :trees       => {},
                                        :active_tree => :ae_tree)
       allow(controller).to receive(:replace_right_cell)
-      controller.x_node = "aen-#{@namespace.compressed_id}"
+      controller.x_node = "aen-#{@namespace.id}"
     end
 
     it "Should delete multiple selected items from list" do
@@ -756,7 +755,7 @@ describe MiqAeClassController do
                                        :trees       => {},
                                        :active_tree => :ae_tree)
       allow(controller).to receive(:replace_right_cell)
-      controller.x_node = "aen-#{@namespace.compressed_id}"
+      controller.x_node = "aen-#{@namespace.id}"
       allow(controller).to receive(:find_records_with_rbac).and_return([@namespace])
     end
 
@@ -783,7 +782,7 @@ describe MiqAeClassController do
     end
 
     it "Should delete selected class in the tree" do
-      controller.x_node = "aec-#{@ae_class.compressed_id}"
+      controller.x_node = "aec-#{@ae_class.id}"
       controller.instance_variable_set(:@_params,
                                        :id => @namespace.id
                                       )
@@ -791,7 +790,7 @@ describe MiqAeClassController do
       controller.send(:deleteclasses)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Class \"foo_class\": Delete successful")
-      expect(controller.x_node).to eq("aen-#{@namespace.compressed_id}")
+      expect(controller.x_node).to eq("aen-#{@namespace.id}")
     end
   end
 
@@ -942,10 +941,10 @@ describe MiqAeClassController do
       )
       tree_node = controller.send(:open_parent_nodes, method)
       node_to_add = {
-        :key   => "aen-#{ApplicationRecord.compress_id(ns.id)}",
+        :key   => "aen-#{ns.id}",
         :nodes => [
           {
-            :key        => "aec-#{ApplicationRecord.compress_id(cls.id)}",
+            :key        => "aec-#{cls.id}",
             :text       => "foo_cls",
             :tooltip    => "Automate Class: foo_cls",
             :icon       => "ff ff-class",

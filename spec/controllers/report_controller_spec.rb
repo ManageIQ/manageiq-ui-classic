@@ -1260,7 +1260,7 @@ describe ReportController do
       before do
         stub_user(:features => :all)
 
-        seed_session_trees('report', :reports_tree, "xx-0_xx-0-1_rep-#{controller.to_cid(rpt.id)}")
+        seed_session_trees('report', :reports_tree, "xx-0_xx-0-1_rep-#{rpt.id}")
         session[:sandboxes]["report"][:rep_tree_build_time] = rpt.created_on
         session[:sandboxes]["report"][:active_accord] = :reports
       end
@@ -1269,7 +1269,7 @@ describe ReportController do
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
           :model_name                     => 'MiqReportResult',
           :report_data_additional_options => {
-            :named_scope => [[:with_current_user_groups_and_report, rpt.id]],
+            :named_scope => [[:with_current_user_groups_and_report, rpt.id.to_s]],
             :model       => 'MiqReportResult'
           }
         )
@@ -1318,7 +1318,7 @@ describe ReportController do
 
         it "is allowed to see miq report result for User1(with current group Group2)" do
           report_result_id = @rpt.miq_report_results.first.id
-          controller.instance_variable_set(:@_params, :id => controller.to_cid(report_result_id),
+          controller.instance_variable_set(:@_params, :id => report_result_id,
                                                       :controller => "report", :action => "explorer")
           controller.instance_variable_set(:@sb, :last_savedreports_id => nil)
           allow(controller).to receive(:get_all_reps)
