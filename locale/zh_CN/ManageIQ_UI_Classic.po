@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-31 14:32+0100\n"
-"PO-Revision-Date: 2017-11-16 03:28-0500\n"
-"Last-Translator: Joy Cai <joy.sh@linguitronics.com>\n"
+"PO-Revision-Date: 2017-12-19 09:35-0500\n"
+"Last-Translator: Tony Fu <tfu@redhat.com>\n"
 "Language-Team: Chinese (Simplified)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -747,7 +747,7 @@ msgstr "%{model}：成功启动发现"
 
 #: ../app/controllers/application_controller/compare.rb:706
 msgid "%{name} '%{vm_name}' Drift Report"
-msgstr "%{name} '%{vm_name}' Drift 报表"
+msgstr "%{name} '%{vm_name}' 偏差报表"
 
 #: ../app/controllers/ems_cluster_controller.rb:103
 #: ../app/controllers/infra_networking_controller.rb:160
@@ -923,7 +923,7 @@ msgstr "%{number} 字节"
 #: ../app/controllers/report_controller.rb:254
 msgid "%{number} widget imported successfully"
 msgid_plural "%{number} widgets imported successfully"
-msgstr[0] "%{number} 个 widget 已成功导入"
+msgstr[0] "%{number} 个小组件已成功导入"
 
 #: ../app/controllers/vm_common.rb:1147
 msgid ""
@@ -1130,7 +1130,7 @@ msgstr "%{typ} 按钮组"
 
 #: ../app/controllers/chargeback_controller.rb:224
 msgid "%{typ} Chargeback Rate"
-msgstr "%{typ} 拒付率"
+msgstr "%{typ} 计费率"
 
 #: ../app/controllers/miq_ae_customization_controller/old_dialogs.rb:120
 msgid "%{typ} Dialogs"
@@ -1160,11 +1160,11 @@ msgstr "%{typ} 请求已重新提交，当 %{title} 准备好时您将收到通�
 
 #: ../app/controllers/report_controller/widgets.rb:292
 msgid "%{typ} Widget \"%{name}\""
-msgstr "%{typ} Widget \"%{name}\""
+msgstr "%{typ} 小组件 \"%{name}\""
 
 #: ../app/controllers/report_controller/widgets.rb:286
 msgid "%{typ} Widgets"
-msgstr "%{typ} Widget"
+msgstr "%{typ} 小组件"
 
 #: ../app/controllers/miq_ae_tools_controller.rb:413
 #: ../app/controllers/miq_ae_tools_controller.rb:414
@@ -1350,7 +1350,7 @@ msgstr "* 输入这次拒绝的原因并按“提交”"
 #: ../app/views/report/_widget_form.html.haml:44
 #: ../app/views/report/_widget_show.html.haml:183
 msgid "* Fields are read only for default Widgets"
-msgstr "* 字段对于默认 Widget 是只读的"
+msgstr "* 字段对于默认小组件是只读的"
 
 #: ../app/views/miq_policy/_policy_details.html.haml:100
 msgid ""
@@ -1388,11 +1388,11 @@ msgstr "* 没有为这个事件配置动作。"
 
 #: ../app/views/miq_request/_prov_field.html.haml:310
 msgid "* Only a single value can be assigned from these Tag Categories"
-msgstr "* 这些标签类别（Tag Categories）只能分配单个值"
+msgstr "* 这些标签类别只能分配单个值"
 
 #: ../app/views/layouts/_tag_edit.html.haml:29
 msgid "* Only a single value can be assigned from these categories"
-msgstr "* 这些标签类别（Tag Categories）只能分配单个值"
+msgstr "* 这些标签类别只能分配单个值"
 
 #: ../app/views/report/_form_columns_performance.html.haml:4
 msgid "* Performance Interval"
@@ -2341,7 +2341,7 @@ msgstr "A4 - 210mm x 297mm (默认值)"
 #: ../app/views/miq_request/_prov_field.html.haml:26
 #: ../app/views/bottlenecks/_bottlenecks_options.html.haml:10
 msgid "ALL"
-msgstr "所有的"
+msgstr "所有"
 
 #: ../app/views/configuration/_timeprofile_form.html.haml:101
 msgid "AM"
@@ -2592,7 +2592,7 @@ msgstr "激活的"
 #: ../app/presenters/tree_builder_services.rb:29
 #: ../app/controllers/service_controller.rb:270
 msgid "Active Services"
-msgstr "活动服务"
+msgstr "活跃服务"
 
 #: ../app/helpers/application_helper/toolbar/ems_container_center.rb:78
 #: ../app/helpers/application_helper/toolbar/container_node_center.rb:29
@@ -3115,7 +3115,7 @@ msgstr "添加新的供应商"
 #: ../app/helpers/application_helper/toolbar/miq_report_center.rb:20
 #: ../app/helpers/application_helper/toolbar/miq_reports_center.rb:12
 msgid "Add a new Report"
-msgstr "添加新的报表"
+msgstr "添加新报表"
 
 #: ../app/controllers/ansible_repository_controller.rb:91
 msgid "Add a new Repository"
@@ -3133,7 +3133,7 @@ msgstr "添加新路由器"
 #: ../app/helpers/application_helper/toolbar/miq_report_center.rb:58
 #: ../app/helpers/application_helper/toolbar/miq_report_schedules_center.rb:12
 msgid "Add a new Schedule"
-msgstr "添加新的时间表"
+msgstr "添加新的任务调度"
 
 #: ../app/helpers/application_helper/toolbar/security_groups_center.rb:14
 msgid "Add a new Security Group"
@@ -3161,7 +3161,7 @@ msgstr "添加新的 VM Analysis 配置集"
 
 #: ../app/helpers/application_helper/toolbar/miq_widgets_center.rb:19
 msgid "Add a new Widget"
-msgstr "添加新的 Widget"
+msgstr "添加新的小组件"
 
 #: ../app/helpers/application_helper/toolbar/zones_center.rb:12
 msgid "Add a new Zone"
@@ -3174,7 +3174,7 @@ msgstr "添加新的层"
 
 #: ../app/views/dashboard/_widgets_menu.html.haml:13
 msgid "Add a widget"
-msgstr "添加 Widget"
+msgstr "添加小组件"
 
 #: ../app/helpers/application_helper/toolbar/tenant_center.rb:12
 msgid "Add child Tenant to this Tenant"
@@ -3302,7 +3302,7 @@ msgstr "用户取消了添加新类别"
 
 #: ../app/controllers/chargeback_controller.rb:101
 msgid "Add of new Chargeback Rate was cancelled by the user"
-msgstr "用户取消了添加新拒付率"
+msgstr "用户取消了添加新计费率"
 
 #: ../app/controllers/cloud_network_controller.rb:50
 msgid "Add of new Cloud Network was cancelled by the user"
@@ -3380,7 +3380,7 @@ msgstr "用户取消了添加新报表"
 #: ../app/controllers/report_controller/schedules.rb:208
 #: ../app/controllers/ops_controller/settings/schedules.rb:42
 msgid "Add of new Schedule was cancelled by the user"
-msgstr "用户取消了添加新时间表"
+msgstr "用户取消了添加新任务调度"
 
 #: ../app/controllers/security_group_controller.rb:59
 msgid "Add of new Security Group was cancelled by the user"
@@ -3396,7 +3396,7 @@ msgstr "用户取消了添加新系统镜像类型"
 
 #: ../app/controllers/report_controller/widgets.rb:77
 msgid "Add of new Widget was cancelled by the user"
-msgstr "用户取消了添加新 Widget"
+msgstr "用户取消了添加新小组件"
 
 #: ../app/controllers/ops_controller/settings/zones.rb:12
 msgid "Add of new Zone was cancelled by the user"
@@ -3420,7 +3420,7 @@ msgstr "添加标记以查看可用指标"
 
 #: ../app/controllers/dashboard_controller.rb:247
 msgid "Add this Chart Widget"
-msgstr "添加这个 Chart Widget"
+msgstr "添加这个 Chart 小组件"
 
 #: ../app/views/ops/_ldap_server_entry.html.haml:5
 msgid "Add this LDAP Server"
@@ -3428,15 +3428,15 @@ msgstr "添加这个 LDAP 服务器"
 
 #: ../app/controllers/dashboard_controller.rb:245
 msgid "Add this Menu Widget"
-msgstr "添加这个 Menu Widget"
+msgstr "添加这个菜单小组件"
 
 #: ../app/controllers/dashboard_controller.rb:246
 msgid "Add this RSS Feed Widget"
-msgstr "添加这个 RSS 订阅 Widget"
+msgstr "添加这个 RSS 订阅小组件"
 
 #: ../app/controllers/dashboard_controller.rb:248
 msgid "Add this Report Widget"
-msgstr "添加这个 Report Widget"
+msgstr "添加这个 Report 小组件"
 
 #: ../app/views/ops/_ap_form_registry.html.haml:42
 #: ../app/views/ops/_ap_form_file.html.haml:27
@@ -3576,7 +3576,7 @@ msgstr "添加新报表"
 #: ../app/controllers/report_controller.rb:729
 #: ../app/controllers/ops_controller.rb:636
 msgid "Adding a new Schedule"
-msgstr "添加新时间表"
+msgstr "添加新任务调度"
 
 #: ../app/controllers/catalog_controller.rb:234
 #: ../app/controllers/catalog_controller.rb:1331
@@ -3601,7 +3601,7 @@ msgstr "添加新的系统镜像类型"
 
 #: ../app/controllers/report_controller.rb:744
 msgid "Adding a new Widget"
-msgstr "添加新  Widget"
+msgstr "添加新的小组件"
 
 #: ../app/controllers/ops_controller.rb:595
 msgid "Adding a new Zone"
@@ -3826,7 +3826,7 @@ msgstr "要评估的警告"
 #: ../app/views/layouts/gtl/_list.html.haml:71
 #: ../app/views/planning/_planning_options.html.haml:198
 msgid "All"
-msgstr "所有的"
+msgstr "所有"
 
 #: ../app/views/report/_form_filter_chargeback.html.haml:117
 msgid "All %{chargeback_type}"
@@ -3834,7 +3834,7 @@ msgstr "所有 %{chargeback_type}"
 
 #: ../app/controllers/miq_policy_controller.rb:401
 msgid "All %{items}"
-msgstr "所有的 %{items}"
+msgstr "所有 %{items}"
 
 #: ../app/controllers/miq_policy_controller.rb:563
 #: ../app/controllers/vm_common.rb:1136
@@ -3842,35 +3842,35 @@ msgstr "所有的 %{items}"
 #: ../app/controllers/catalog_controller.rb:1717
 #: ../app/controllers/generic_object_definition_controller.rb:132
 msgid "All %{models}"
-msgstr "所有的 %{models}"
+msgstr "所有 %{models}"
 
 #: ../app/controllers/ems_cluster_controller.rb:117
 #: ../app/controllers/infra_networking_controller.rb:174
 msgid "All %{titles} with %{name}"
-msgstr "所有的 %{titles} with %{name}"
+msgstr "所有 %{titles} with %{name}"
 
 #: ../app/controllers/vm_common.rb:1104
 #: ../app/controllers/infra_networking_controller.rb:258
 msgid "All %{title}"
-msgstr "所有的 %{title}"
+msgstr "所有 %{title}"
 
 #: ../app/controllers/mixins/manager_controller_mixin.rb:355
 msgid "All %{title} Configured Systems"
-msgstr "所有的 %{title} 已配置的系统"
+msgstr "所有 %{title} 已配置的系统"
 
 #: ../app/controllers/mixins/manager_controller_mixin.rb:347
 msgid "All %{title} Providers"
-msgstr "所有的 %{title} 供应商"
+msgstr "所有 %{title} 供应商"
 
 #: ../app/controllers/miq_policy_controller.rb:591
 #: ../app/controllers/miq_policy_controller.rb:943
 msgid "All %{typ} Alert Profiles"
-msgstr "所有的 %{typ} 警告配置集"
+msgstr "所有 %{typ} 警告配置集"
 
 #: ../app/controllers/miq_policy_controller.rb:584
 #: ../app/controllers/miq_policy_controller.rb:937
 msgid "All %{typ} Conditions"
-msgstr "所有的 %{typ} 条件"
+msgstr "所有 %{typ} 条件"
 
 #: ../app/controllers/miq_policy_controller.rb:579
 #: ../app/controllers/miq_policy_controller.rb:930
@@ -3880,7 +3880,7 @@ msgstr "所有 %{typ} 策略"
 #: ../app/helpers/host_helper/textual_summary.rb:104
 #: ../app/helpers/ems_cluster_helper/textual_summary.rb:82
 msgid "All (%{number})"
-msgstr "所有的 (%{number})"
+msgstr "所有 (%{number})"
 
 #: ../app/presenters/tree_builder_action.rb:11
 msgid "All Actions"
@@ -3907,7 +3907,7 @@ msgstr "所有由 Ansible Tower 配置的系统"
 #: ../app/controllers/automation_manager_controller.rb:312
 #: ../app/controllers/automation_manager_controller.rb:340
 msgid "All Ansible Tower Job Templates"
-msgstr "所有的 Ansible Tower 任务模板"
+msgstr "所有 Ansible Tower 任务模板"
 
 #: ../app/presenters/tree_builder_automation_manager_providers.rb:18
 #: ../app/controllers/automation_manager_controller.rb:330
@@ -3929,7 +3929,7 @@ msgstr "所有目录"
 
 #: ../app/controllers/chargeback_controller.rb:387
 msgid "All Chargeback Rate"
-msgstr "所有拒付率"
+msgstr "所有计费率"
 
 #: ../app/controllers/chargeback_controller.rb:51
 msgid "All Chargeback Rates"
@@ -4012,7 +4012,7 @@ msgstr "基础架构供应商的所有数据存储区"
 #: ../app/controllers/miq_ae_customization_controller/old_dialogs.rb:106
 #: ../app/controllers/miq_ae_customization_controller/dialogs.rb:1433
 msgid "All Dialogs"
-msgstr "所有的对话框"
+msgstr "所有对话框"
 
 #: ../app/presenters/tree_builder_infra_networking.rb:25
 msgid "All Distributed Switches"
@@ -4027,13 +4027,13 @@ msgstr "所有 EVM 组"
 #: ../app/presenters/tree_builder_event.rb:11
 #: ../app/controllers/miq_policy_controller/events.rb:114
 msgid "All Events"
-msgstr "所有的事件"
+msgstr "所有事件"
 
 #: ../app/helpers/storage_helper/textual_summary.rb:125
 #: ../app/controllers/storage_controller.rb:140
 #: ../app/views/layouts/listnav/_storage.html.haml:37
 msgid "All Files"
-msgstr "所有的文件"
+msgstr "所有文件"
 
 #: ../app/presenters/tree_builder_generic_object_definition.rb:11
 msgid "All Generic Object Classes"
@@ -4059,11 +4059,11 @@ msgstr "基础架构供应商的所有主机"
 #: ../app/controllers/pxe_controller.rb:171
 #: ../app/controllers/pxe_controller/iso_datastores.rb:299
 msgid "All ISO Datastores"
-msgstr "所有的 ISO 数据存储区"
+msgstr "所有 ISO 数据存储区"
 
 #: ../app/presenters/tree_builder_images_filter.rb:15
 msgid "All Images"
-msgstr "所有的镜像"
+msgstr "所有镜像"
 
 #: ../app/presenters/tree_builder_images.rb:25
 msgid "All Images by Provider that I can see"
@@ -4130,7 +4130,7 @@ msgstr "所有已保存的报表"
 #: ../app/presenters/tree_builder_report_schedules.rb:18
 #: ../app/controllers/report_controller/schedules.rb:51
 msgid "All Schedules"
-msgstr "所有时间表"
+msgstr "所有任务调度"
 
 #: ../app/controllers/application_controller/compare.rb:868
 msgid "All Sections"
@@ -4246,7 +4246,7 @@ msgstr "所有虚拟机/实例"
 #: ../app/controllers/report_controller/widgets.rb:266
 #: ../app/controllers/report_controller/widgets.rb:280
 msgid "All Widgets"
-msgstr "所有 Widget"
+msgstr "所有小组件"
 
 #: ../app/views/miq_task/_tasks_options.html.haml:12
 msgid "All Zones"
@@ -4712,7 +4712,7 @@ msgstr "归档的虚拟机和模板"
 
 #: ../app/helpers/application_helper/toolbar/miq_widget_center.rb:32
 msgid "Are you sure you want initiate content generation for this Widget now?"
-msgstr "您确定要下载为这个 Widget 初始化内容生成吗？"
+msgstr "您确定要现在为这个小组件生成内容吗？"
 
 #: ../app/views/catalog/_confirmation_modal.html.haml:25
 msgid ""
@@ -5040,7 +5040,7 @@ msgstr "必须为比较选择至少两个 %{model}"
 
 #: ../app/controllers/application_controller/compare.rb:800
 msgid "At least 2 Analyses must be selected for Drift"
-msgstr "必须为 Drift 选择至少两个分析"
+msgstr "必须为偏差选择至少两个分析"
 
 #: ../app/controllers/miq_policy_controller/miq_actions.rb:380
 msgid "At least one Alert must be selected"
@@ -5494,7 +5494,7 @@ msgstr "可用的虚拟机："
 
 #: ../app/views/report/_export_widgets.html.haml:55
 msgid "Available Widgets:"
-msgstr "可用的 Widget"
+msgstr "可用的小组件"
 
 #: ../app/helpers/vm_helper/textual_summary.rb:538
 #: ../app/helpers/vm_helper/textual_summary.rb:547
@@ -5551,7 +5551,7 @@ msgstr "备份名称"
 
 #: ../app/views/ops/_diagnostics_database_tab.html.haml:44
 msgid "Backup Schedules"
-msgstr "备份时间表"
+msgstr "备份任务调度"
 
 #: ../app/controllers/cloud_volume_controller.rb:448
 msgid "Backup for Cloud Volume \"%{name}\" created"
@@ -5991,11 +5991,11 @@ msgstr "按角色"
 
 #: ../app/views/miq_policy/_policy_details.html.haml:45
 msgid "By Username %{username} %{created_on}"
-msgstr "按用户名 %{username} %{created_on}"
+msgstr "由用户 %{username} 于 %{created_on} 创建"
 
 #: ../app/views/miq_policy/_policy_details.html.haml:52
 msgid "By Username %{username} %{updated_on}"
-msgstr "按用户名 %{username} %{updated_on}"
+msgstr "由用户 %{username} 于 %{updated_on} 创建"
 
 #: ../app/views/ops/_all_tabs.html.haml:54
 msgid "C & U Collection"
@@ -6016,11 +6016,11 @@ msgstr "容量和利用率数据库"
 
 #: ../app/views/ops/_all_tabs.html.haml:115
 msgid "C & U Gap Collection"
-msgstr "容量和利用率 Gap Collection"
+msgstr "容量和利用率差距收集"
 
 #: ../app/controllers/ops_controller/diagnostics.rb:252
 msgid "C & U Gap Collection successfully initiated"
-msgstr "容量和利用率 Gap Collection 被成功初始"
+msgstr "容量和利用率差距收集被成功初始"
 
 #: ../app/views/static/deploy_containers_provider/deploy-provider-config-auth-settings.html.haml:45
 msgid "CA"
@@ -6067,7 +6067,7 @@ msgstr "CPU 内核"
 
 #: ../app/helpers/host_helper/textual_summary.rb:206
 msgid "CPU Cores Per Socket"
-msgstr "每个插槽的 CPU 核心"
+msgstr "每个插槽的 CPU 内核"
 
 #: ../app/helpers/resource_pool_helper/textual_summary.rb:188
 #: ../app/helpers/resource_pool_helper.rb:27
@@ -6370,7 +6370,7 @@ msgstr "无法访问 '%{hostname}。确保日志路由可以访问"
 #: ../app/views/dashboard/_widgets_menu.html.haml:10
 msgid ""
 "Cannot add a Widget, this Dashboard has been locked by the Administrator"
-msgstr "无法添加 Widget，这个 Dashboard 已被管理员锁住"
+msgstr "无法添加小组件，这个仪表板已被管理员锁住"
 
 #: ../app/helpers/application_helper/button/collect_logs.rb:7
 msgid "Cannot collect current logs unless the Server is started"
@@ -6688,15 +6688,15 @@ msgstr "计费预览"
 
 #: ../app/controllers/chargeback_controller.rb:134
 msgid "Chargeback Rate \"%{name}\" was added"
-msgstr "已添加拒付率 \"%{name}\""
+msgstr "已添加计费率 \"%{name}\""
 
 #: ../app/controllers/chargeback_controller.rb:137
 msgid "Chargeback Rate \"%{name}\" was saved"
-msgstr "已保存拒付率 \"%{name}\""
+msgstr "已保存计费率 \"%{name}\""
 
 #: ../app/controllers/chargeback_controller.rb:213
 msgid "Chargeback Rate no longer exists"
-msgstr "拒付率不再存在"
+msgstr "计费率不再存在"
 
 #: ../app/views/report/_form_filter_chargeback.html.haml:4
 msgid "Chargeback Resources"
@@ -7176,7 +7176,7 @@ msgstr "从左侧选择要编辑的角色"
 
 #: ../app/views/report/_schedule_list.html.haml:9
 msgid "Choose a Schedule to view from the menus on the left."
-msgstr "从左侧的菜单里选择要查看的时间表"
+msgstr "从左侧的菜单里选择要查看的任务调度"
 
 #: ../app/helpers/application_helper/button/timeline_download.rb:7
 #: ../app/views/dashboard/_tl_detail.html.haml:15
@@ -7518,7 +7518,7 @@ msgstr "点击以查看已保存的报表"
 
 #: ../app/views/report/_report_info.html.haml:122
 msgid "Click to view selected widget"
-msgstr "点击以查看所选的 widget"
+msgstr "点击以查看所选的小组件"
 
 #: ../app/views/layouts/gtl/_list.html.haml:182
 msgid "Click to view target %{model}"
@@ -8840,7 +8840,7 @@ msgstr "内容长度"
 
 #: ../app/controllers/report_controller/widgets.rb:145
 msgid "Content generation for this Widget has been initiated"
-msgstr "这个 Widget 的内容生成已初始化"
+msgstr "小组件的内容生成已初始化"
 
 #: ../app/views/layouts/_item.html.haml:39
 msgid "Contents"
@@ -9063,7 +9063,7 @@ msgstr "把这个用户复制到一个新用户"
 
 #: ../app/helpers/application_helper/toolbar/miq_widget_center.rb:17
 msgid "Copy this Widget"
-msgstr "复制这个 Widget"
+msgstr "复制这个小组件"
 
 #: ../app/helpers/application_helper/toolbar/scan_profile_center.rb:18
 msgid "Copy this selected Analysis Profile"
@@ -9658,7 +9658,7 @@ msgstr "仪表板视图"
 
 #: ../app/controllers/report_controller.rb:307
 msgid "Dashboard Widgets"
-msgstr "仪表板 Widget"
+msgstr "仪表板小组件"
 
 #: ../app/controllers/report_controller.rb:303
 msgid "Dashboards"
@@ -10424,7 +10424,7 @@ msgstr "从 VMDB 删除所选的角色"
 #: ../app/helpers/application_helper/toolbar/miq_schedules_center.rb:26
 #: ../app/helpers/application_helper/toolbar/miq_report_schedules_center.rb:27
 msgid "Delete the selected Schedules"
-msgstr "删除所选的时间表"
+msgstr "删除所选的任务调度"
 
 #: ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:296
 msgid "Delete the selected items"
@@ -10521,11 +10521,11 @@ msgstr "从数据库删除这个保存的报表"
 
 #: ../app/helpers/application_helper/toolbar/miq_report_schedule_center.rb:17
 msgid "Delete this Schedule"
-msgstr "删除这个时间表"
+msgstr "删除这个任务调度"
 
 #: ../app/helpers/application_helper/toolbar/miq_schedule_center.rb:17
 msgid "Delete this Schedule from the Database"
-msgstr "从数据库删除这个时间表"
+msgstr "从数据库删除这个任务调度"
 
 #: ../app/helpers/application_helper/toolbar/security_group_center.rb:24
 msgid "Delete this Security Group"
@@ -10537,7 +10537,7 @@ msgstr "删除这个用户"
 
 #: ../app/helpers/application_helper/toolbar/miq_widget_center.rb:22
 msgid "Delete this Widget from the Database"
-msgstr "从数据库删除这个 Widget"
+msgstr "从数据库删除这个小组件"
 
 #: ../app/helpers/application_helper/toolbar/zone_center.rb:17
 msgid "Delete this Zone"
@@ -11062,7 +11062,7 @@ msgstr "所选部署已初始化禁用"
 #: ../app/helpers/application_helper/toolbar/miq_schedules_center.rb:45
 #: ../app/helpers/application_helper/toolbar/miq_report_schedules_center.rb:46
 msgid "Disable the selected Schedules"
-msgstr "禁用选择的时间表"
+msgstr "禁用选择的任务调度"
 
 #: ../app/helpers/application_helper/toolbar/middleware_deployments_center.rb:47
 msgid "Disable these Middleware Deployments"
@@ -11659,7 +11659,7 @@ msgstr "将这个标签页拖至新位置"
 
 #: ../app/views/report/_db_widget.html.haml:5
 msgid "Drag/drop Widget \"%{widget_title}\""
-msgstr "拖/放 Widget \"%{widget_title}\""
+msgstr "拖/放小组件 \"%{widget_title}\""
 
 #: ../app/views/configuration/_ui_2.html.haml:14
 msgid "Drift"
@@ -11678,11 +11678,11 @@ msgstr[0] "偏差历史"
 
 #: ../app/views/configuration/_ui_2.html.haml:14
 msgid "Drift Mode"
-msgstr "Drift 模式"
+msgstr "偏差模式"
 
 #: ../app/views/layouts/listnav/_compare_sections.html.haml:74
 msgid "Drift Sections"
-msgstr "Drift 部分"
+msgstr "偏差部分"
 
 #: ../app/controllers/vm_common.rb:1496
 msgid "Drift for %{vm_or_template} \"%{name}\""
@@ -12730,7 +12730,7 @@ msgstr "用户取消了对类别 \"%{name}\" 的编辑"
 
 #: ../app/controllers/chargeback_controller.rb:99
 msgid "Edit of Chargeback Rate \"%{name}\" was cancelled by the user"
-msgstr "用户取消了对拒付率 \"%{name}\" 的编辑"
+msgstr "用户取消了对计费率 \"%{name}\" 的编辑"
 
 #: ../app/controllers/miq_ae_class_controller.rb:2436
 msgid "Edit of Class Schema Sequence '%{name}'"
@@ -12864,7 +12864,7 @@ msgstr "用户取消了对路由器 \"%{name}\" 的编辑"
 #: ../app/controllers/report_controller/schedules.rb:210
 #: ../app/controllers/ops_controller/settings/schedules.rb:44
 msgid "Edit of Schedule \"%{name}\" was cancelled by the user"
-msgstr "用户取消了对时间表 \"%{name}\" 的编辑"
+msgstr "用户取消了对任务调度 \"%{name}\" 的编辑"
 
 #: ../app/controllers/security_group_controller.rb:174
 msgid "Edit of Security Group \"%{name}\" was cancelled by the user"
@@ -12896,7 +12896,7 @@ msgstr "用户取消了对虚拟机和实例 \"%{name}\" 的编辑"
 
 #: ../app/controllers/report_controller/widgets.rb:79
 msgid "Edit of Widget \"%{name}\" was cancelled by the user"
-msgstr "用户取消了对 Widget \"%{name}\" 的编辑"
+msgstr "用户取消了对小组件 \"%{name}\" 的编辑"
 
 #: ../app/controllers/pxe_controller/pxe_servers.rb:231
 msgid "Edit of Windows Image \"%{name}\" was cancelled by the user"
@@ -13050,7 +13050,7 @@ msgstr "编辑选择的角色"
 #: ../app/helpers/application_helper/toolbar/miq_schedules_center.rb:17
 #: ../app/helpers/application_helper/toolbar/miq_report_schedules_center.rb:18
 msgid "Edit the selected Schedule"
-msgstr "编辑选择的时间表"
+msgstr "编辑选择的任务调度"
 
 #: ../app/helpers/application_helper/toolbar/pxe_image_types_center.rb:19
 msgid "Edit the selected System Image Type"
@@ -13265,7 +13265,7 @@ msgstr "编辑这个路由器"
 #: ../app/helpers/application_helper/toolbar/miq_report_schedule_center.rb:12
 #: ../app/helpers/application_helper/toolbar/miq_schedule_center.rb:12
 msgid "Edit this Schedule"
-msgstr "编辑这个时间表"
+msgstr "编辑这个任务调度"
 
 #: ../app/helpers/application_helper/toolbar/security_group_center.rb:14
 msgid "Edit this Security Group"
@@ -13293,11 +13293,11 @@ msgstr "编辑这个虚拟机"
 
 #: ../app/helpers/application_helper/toolbar/miq_widget_center.rb:12
 msgid "Edit this Widget"
-msgstr "编辑这个 Widget"
+msgstr "编辑这个小组件"
 
 #: ../app/views/report/_widget_show.html.haml:174
 msgid "Edit this Widget to configure a timer."
-msgstr "编辑这个 Widget 以配置定时器。"
+msgstr "编辑这个小组件以配置定时器。"
 
 #: ../app/helpers/application_helper/toolbar/windows_image_center.rb:12
 msgid "Edit this Windows Image"
@@ -13443,7 +13443,7 @@ msgstr "正在编辑报表 \"%{name}\""
 #: ../app/controllers/report_controller.rb:712
 #: ../app/controllers/report_controller.rb:728
 msgid "Editing Schedule \"%{name}\""
-msgstr "正在编辑时间表 \"%{name}\""
+msgstr "正在编辑任务调度 \"%{name}\""
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:466
 msgid "Editing Sequence of User Groups"
@@ -13459,7 +13459,7 @@ msgstr "正在编辑服务目录项 \"%{name}\""
 
 #: ../app/controllers/report_controller.rb:743
 msgid "Editing Widget \"%{name}\""
-msgstr "正在编辑 Widget \"%{name}\""
+msgstr "正在编辑小组件 \"%{name}\""
 
 #: ../app/controllers/ops_controller.rb:599
 msgid "Editing Zone \"%{name}\""
@@ -13583,7 +13583,7 @@ msgstr "已初始化所选部署的启用"
 #: ../app/helpers/application_helper/toolbar/miq_schedules_center.rb:36
 #: ../app/helpers/application_helper/toolbar/miq_report_schedules_center.rb:37
 msgid "Enable the selected Schedules"
-msgstr "启用选择的时间表"
+msgstr "启用选择的任务调度"
 
 #: ../app/helpers/application_helper/toolbar/middleware_deployments_center.rb:58
 msgid "Enable these Middleware Deployments"
@@ -13858,7 +13858,7 @@ msgstr "在 'Appliance restart' 过程中出错：%{message}"
 
 #: ../app/controllers/ops_controller/diagnostics.rb:249
 msgid "Error during 'C & U Gap Collection': %{message}"
-msgstr "在 '容量和利用率 Gap Collection' 过程中出错：%{message}"
+msgstr "在 '容量和利用率差距收集' 过程中出错：%{message}"
 
 #: ../app/controllers/catalog_controller.rb:579
 msgid "Error during 'Catalog Edit': %{error_message}"
@@ -14103,7 +14103,7 @@ msgstr "错误文本："
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:70
 msgid "Error when adding a new schedule: %{message}"
-msgstr "添加新的时间表时出错：%{message}"
+msgstr "添加新的任务调度时出错：%{message}"
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:131
 msgid "Error when adding a new tenant: %{message}"
@@ -14172,7 +14172,7 @@ msgstr "错误：新密码与现有密码相同"
 
 #: ../app/controllers/report_controller.rb:251
 msgid "Error: No widget was selected to be imported."
-msgstr "错误：未选择要导入的 widget。"
+msgstr "错误：未选择要导入的小组件。"
 
 #: ../app/helpers/application_helper.rb:1279
 #: ../app/controllers/provider_foreman_controller.rb:171
@@ -14189,7 +14189,7 @@ msgstr "错误：记录不再存在于数据库里"
 
 #: ../app/controllers/report_controller.rb:257
 msgid "Error: Widget import file upload expired"
-msgstr "错误：Widget 导入文件上传过期"
+msgstr "错误：小组件导入文件上传过期"
 
 #: ../app/controllers/miq_ae_tools_controller.rb:135
 msgid "Error: import failed: %{message}"
@@ -14201,7 +14201,7 @@ msgstr "错误：导入处理失败：%{message}"
 
 #: ../app/controllers/report_controller.rb:238
 msgid "Error: the file uploaded contains no widgets"
-msgstr "错误：上传的文件没有包含 widget"
+msgstr "错误：上传的文件没有包含小组件"
 
 #: ../app/controllers/report_controller.rb:235
 #: ../app/controllers/miq_ae_customization_controller.rb:57
@@ -14395,7 +14395,7 @@ msgstr "展开的视图"
 #: ../app/presenters/menu/default_menu.rb:240
 #: ../app/controllers/miq_ae_class_controller.rb:74
 msgid "Explorer"
-msgstr "浏览器"
+msgstr "浏览"
 
 #: ../app/views/miq_policy/_export.html.haml:57
 #: ../app/views/miq_policy/_export.html.haml:94
@@ -14579,7 +14579,7 @@ msgstr "订阅网址"
 
 #: ../app/views/ops/_diagnostics_database_tab.html.haml:47
 msgid "Fetch settings from a schedule"
-msgstr "从时间表获取设置"
+msgstr "从任务调度获取设置"
 
 #: ../app/helpers/exp_atom_helper.rb:10
 #: ../app/views/layouts/exp_atom/_editor.html.haml:50
@@ -15050,7 +15050,7 @@ msgstr "生成报表预览"
 
 #: ../app/helpers/application_helper/toolbar/miq_widget_center.rb:30
 msgid "Generate Widget content now"
-msgstr "现在产生 Widget 内容"
+msgstr "产生小组件内容"
 
 #: ../app/presenters/tree_node/miq_report_result.rb:7
 msgid "Generating Report"
@@ -15876,7 +15876,7 @@ msgstr "如果"
 msgid ""
 "If this widget is new or has just been added to your dashboard, the data is "
 "being generated and should be available soon."
-msgstr "如果这个 Widget 已添加至您的仪表板，数据应在生成且很快就可使用。"
+msgstr "如果这个小组件是新的小组件，或已添加至您的仪表板，数据应正在生成且很快就可使用。"
 
 #: ../app/views/static/deploy_containers_provider/deploy-provider-review-progress.html.haml:11
 msgid ""
@@ -15993,7 +15993,7 @@ msgstr "导入变量"
 
 #: ../app/views/report/_export_widgets.html.haml:5
 msgid "Import Widgets"
-msgstr "导入 Widget"
+msgstr "导入小组件"
 
 #: ../app/controllers/miq_policy_controller.rb:201
 msgid "Import cancelled by user"
@@ -16425,7 +16425,7 @@ msgstr "无效的图表数据。"
 
 #: ../app/assets/javascripts/components/widget-chart.js:44
 msgid "Invalid chart data. Try regenerating the widgets."
-msgstr "无效的图表数据。请尝试重新生成 Widget。"
+msgstr "无效的图表数据。请尝试重新生成小组件。"
 
 #: ../lib/report_formatter/chart_common.rb:499
 msgid "Invalid chart definition"
@@ -16798,13 +16798,13 @@ msgstr "最近 10 分钟"
 
 #: ../app/views/ops/_log_viewer.html.haml:3
 msgid "Last 1000 lines from server %{name} [%{id}] in zone %{zone}"
-msgstr "区 %{zone} 里服务器 %{name} [%{id}] 的最后 1000 行"
+msgstr "%{zone} 区中的服务器 %{name} [%{id}] 的最后 1000 行"
 
 #: ../app/views/layouts/_log_viewer.html.haml:1
 msgid ""
 "Last 1000 lines from server %{server_name} [%{server_id}] in zone "
 "%{zone_name}"
-msgstr "区 %{zone_name} 里的服务器 %{server_name} [%{server_id}] 的最后 1000 行"
+msgstr "%{zone_name} 区中的服务器 %{server_name} [%{server_id}] 的最后 1000 行"
 
 #: ../app/controllers/miq_ae_tools_controller.rb:48
 #: ../app/views/show.html.haml:6 ../app/views/miq_ae_tools/show.html.haml:3
@@ -16899,7 +16899,7 @@ msgstr "最后的季度"
 
 #: ../app/helpers/textual_mixins/textual_refresh_status.rb:9
 msgid "Last Refresh"
-msgstr "最后的刷新时间"
+msgstr "最后刷新"
 
 #: ../app/helpers/textual_mixins/textual_refresh_status.rb:18
 msgid "Last Refresh Date"
@@ -18218,7 +18218,7 @@ msgstr "右移所选的按钮"
 
 #: ../app/views/vm_common/_form.html.haml:79
 msgid "Move all VMs to right"
-msgstr "右移所有的虚拟机"
+msgstr "右移所有虚拟机"
 
 #: ../app/controllers/report_controller.rb:757
 msgid "Move selected Accordion down"
@@ -19155,7 +19155,7 @@ msgstr "没有选择要标记为 %{action} 的 Automate 域"
 
 #: ../app/views/ops/_diagnostics_database_tab.html.haml:51
 msgid "No Backup Schedules are defined"
-msgstr "没有定义备份时间表"
+msgstr "没有定义备份任务调度"
 
 #: ../app/controllers/application_controller/buttons.rb:79
 msgid "No Button Group was selected!"
@@ -19207,7 +19207,7 @@ msgstr "没有选择要删除的目录"
 
 #: ../app/controllers/chargeback_controller.rb:208
 msgid "No Chargeback Rate were selected for deletion"
-msgstr "没有选择要删除的拒付率"
+msgstr "没有选择要删除的计费率"
 
 #: ../app/views/miq_request/_prov_field.html.haml:170
 #: ../app/views/miq_request/_prov_field.html.haml:204
@@ -19396,7 +19396,7 @@ msgstr "没有可用的策略配置集。"
 #: ../app/views/miq_policy/_policy_details.html.haml:82
 msgid ""
 "No Policy scope defined, the scope of this policy includes all elements."
-msgstr "没有定义策略作用域，这个策略的作用域包含所有的元素。"
+msgstr "没有定义策略作用域，这个策略的作用域包含所有元素。"
 
 #: ../app/helpers/application_helper/button/iso_datastore_new.rb:4
 msgid "No Providers are available to create an ISO Datastore on"
@@ -19430,11 +19430,11 @@ msgstr "没有找到记录。"
 
 #: ../app/controllers/report_controller/schedules.rb:126
 msgid "No Report Schedules were selected to be disabled"
-msgstr "没有选择要禁用的报表时间表"
+msgstr "没有选择要禁用的报表任务调度"
 
 #: ../app/controllers/report_controller/schedules.rb:123
 msgid "No Report Schedules were selected to be enabled"
-msgstr "没有选择要启用的的报表时间表"
+msgstr "没有选择要启用的的报表任务调度"
 
 #: ../app/views/report/_report_list.html.haml:13
 #: ../app/views/chargeback/_reports_list.html.haml:11
@@ -19457,7 +19457,7 @@ msgstr "没有可用的保存的报表。"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:189
 msgid "No Schedules were selected for deletion"
-msgstr "没有选择要删除的时间表"
+msgstr "没有选择要删除的任务调度"
 
 #: ../app/controllers/security_group_controller.rb:115
 msgid "No Security Group were selected for deletion."
@@ -19607,11 +19607,11 @@ msgstr "没有定义 Visibility 表达式，此按钮将始终可见"
 
 #: ../app/views/report/_widget_form_report.html.haml:41
 msgid "No Widget compatible Reports found"
-msgstr "没有找到兼容 Widget 的报表"
+msgstr "没有找到兼容小组件的报表"
 
 #: ../app/views/dashboard/_widgets_menu.html.haml:4
 msgid "No Widgets available to add"
-msgstr "没有要添加的可用 Widget"
+msgstr "没有要添加的可用小组件"
 
 #: ../app/views/ops/_diagnostics_zones_tab.html.haml:5
 #: ../app/views/ops/_settings_list_tab.html.haml:5
@@ -19808,7 +19808,7 @@ msgstr "未找到方法"
 
 #: ../app/controllers/application_controller/compare.rb:804
 msgid "No more than 10 Analyses can be selected for Drift"
-msgstr "不能为 Drift 选择多于 10 分析"
+msgstr "不能为偏差选择多于 10 个分析"
 
 #: ../app/controllers/application_controller/compare.rb:755
 msgid "No more than 32 %{model} can be selected for Compare"
@@ -19889,7 +19889,7 @@ msgstr "未找到 Schema"
 
 #: ../app/views/miq_policy/_condition_details.html.haml:51
 msgid "No scope defined, the scope of this condition includes all elements."
-msgstr "没有定义作用域，这个条件的作用域涵盖所有的元素。"
+msgstr "没有定义作用域，这个条件的作用域涵盖所有元素。"
 
 #: ../app/controllers/middleware_server_controller.rb:345
 msgid "No servers selected"
@@ -19934,7 +19934,7 @@ msgstr "没有选择要删除的任务"
 
 #: ../app/views/report/_widget_show.html.haml:173
 msgid "No timer is attached to this Widget, its contents will not be updated."
-msgstr "这个 Widget 没有附加定时器，它的内容不会被更新。"
+msgstr "这个小组件没有附加定时器，它的内容不会被更新。"
 
 #: ../app/views/miq_policy/_alert_builtin_exp.html.haml:21
 msgid "No type set"
@@ -20185,7 +20185,7 @@ msgstr "没有在 Hawkular 服务器中添加新数据源"
 
 #: ../app/controllers/ems_infra_controller.rb:220
 msgid "Not all hosts can be removed from the deployment."
-msgstr "不能从部署删除所有的主机。"
+msgstr "不能从部署删除所有主机。"
 
 #: ../app/helpers/host_helper/textual_summary.rb:434
 msgid "Not available. Did you assigned Cloud Provider and run SSA?"
@@ -20226,7 +20226,7 @@ msgstr "注：用 * 标记的字段是必需的。"
 #: ../app/views/ops/_diagnostics_cu_repair_tab.html.haml:41
 msgid ""
 "Note: Gap Collection is only available for VMware vSphere Infrastructures"
-msgstr "注意：Gap Collection 只适用于 VMware vSphere 基础架构"
+msgstr "注意：差距收集只适用于 VMware vSphere 基础架构"
 
 #: ../app/views/report/_form_filter_performance.html.haml:44
 msgid "Note: Only Time Profiles with 'Roll Up Performance' set are shown."
@@ -20560,11 +20560,11 @@ msgstr "必须为 Set Ownership 选择一个或多个 %{model} "
 msgid ""
 "One or more selected reports are not owned by your group, they cannot be "
 "moved"
-msgstr "一个或多个选择的报表不是您的组所有的，它们不能被移动。"
+msgstr "一个或多个选择的报表不是您的组所有，它们不能被移动。"
 
 #: ../app/controllers/report_controller/dashboards.rb:332
 msgid "One widget must be selected"
-msgstr "必须选择一个 widget"
+msgstr "必须选择一个小组件"
 
 #: ../app/helpers/application_helper/button/db_new.rb:6
 msgid "Only %{dashboard_count} Dashboards are allowed for a group"
@@ -22266,11 +22266,11 @@ msgstr "进程 ID"
 
 #: ../app/views/miq_request/_reconfigure_show.html.haml:22
 msgid "Processor Cores_Per_Socket"
-msgstr "每个套接字的处理器核心"
+msgstr "处理器的 Cores_Per_Socket"
 
 #: ../app/views/miq_request/_reconfigure_show.html.haml:16
 msgid "Processor Sockets"
-msgstr "处理器套接字"
+msgstr "处理器插槽"
 
 #: ../app/helpers/textual_mixins/textual_devices.rb:17
 #: ../app/views/vm_common/_reconfigure.html.haml:52
@@ -22645,20 +22645,20 @@ msgstr "置备 %{vms_or_templates}"
 
 #: ../app/views/miq_request/_pre_prov.html.haml:5
 msgid "Provision %{what} based on the selected %{type}"
-msgstr "根据所选 %{type} 提供 %{what}"
+msgstr "根据所选%{type}置备%{what}"
 
 #: ../app/helpers/application_helper/toolbar/x_provider_foreman_foreman_configured_system_center.rb:13
 #: ../app/helpers/application_helper/toolbar/x_foreman_configured_system_center.rb:13
 msgid "Provision Configured System"
-msgstr "置备 配置的系统"
+msgstr "置备配置的系统"
 
 #: ../app/helpers/application_helper/toolbar/configured_system/lifecycle_mixin.rb:14
 msgid "Provision Configured Systems"
-msgstr "置备 配置的系统"
+msgstr "置备配置的系统"
 
 #: ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:141
 msgid "Provision Instances"
-msgstr "置备 实例"
+msgstr "置备实例"
 
 #: ../app/controllers/vm_common.rb:1560
 msgid "Provision Instances - Select an Image"
@@ -24032,7 +24032,7 @@ msgstr "重新加载这个服务器组中的服务器"
 
 #: ../app/helpers/application_helper/toolbar/miq_widgets_center.rb:6
 msgid "Reload Widgets"
-msgstr "重新加载 Widget"
+msgstr "重新加载小组件"
 
 #: ../app/helpers/application_helper/toolbar/x_history.rb:23
 msgid "Reload current display"
@@ -24389,7 +24389,7 @@ msgstr "从库存删除虚拟机"
 
 #: ../app/presenters/widget_presenter.rb:29
 msgid "Remove Widget"
-msgstr "删除 Widget"
+msgstr "删除小组件"
 
 #: ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:82
 msgid "Remove a Security Group from this Instance"
@@ -24398,19 +24398,19 @@ msgstr "从该实例删除安全组"
 #: ../app/views/miq_policy/_event_details.html.haml:50
 #: ../app/views/miq_policy/_event_details.html.haml:145
 msgid "Remove all Actions from this Event"
-msgstr "从这个事件里删除所有的动作"
+msgstr "从这个事件里删除所有动作"
 
 #: ../app/views/miq_policy/_alert_profile_details.html.haml:59
 msgid "Remove all Alerts from this Profile"
-msgstr "从这个配置集里删除所有的警告"
+msgstr "从这个配置集里删除所有警告"
 
 #: ../app/views/miq_policy/_policy_details.html.haml:105
 msgid "Remove all Conditions from this Policy"
-msgstr "从这个配置集里删除所有的条件"
+msgstr "从这个配置集里删除所有条件"
 
 #: ../app/views/miq_policy/_profile_details.html.haml:43
 msgid "Remove all Policies from this Profile"
-msgstr "从这个配置集里删除所有的策略"
+msgstr "从这个配置集里删除所有策略"
 
 #: ../app/presenters/widget_presenter.rb:28
 msgid "Remove from Dashboard"
@@ -24848,7 +24848,7 @@ msgstr "从库存删除此项"
 
 #: ../app/views/report/_db_widget_remove.html.haml:4
 msgid "Remove this widget"
-msgstr "删除这个 widget"
+msgstr "删除这个小组件"
 
 #: ../app/helpers/application_helper/toolbar/custom_button_set_center.rb:31
 #: ../app/helpers/application_helper/toolbar/catalogitem_button_set_center.rb:31
@@ -24984,11 +24984,11 @@ msgstr "报表无法保存，除非图表配置了排序字段。"
 
 #: ../app/controllers/report_controller/reports.rb:87
 msgid "Report cannot be deleted if it's being used by one or more Widgets"
-msgstr "如果一个或多个 Widget 正在使用报表，它无法被删除。"
+msgstr "如果一个或多个小组件正在使用报表，它无法被删除。"
 
 #: ../app/views/report/_report_info.html.haml:108
 msgid "Report doesn't belong to Widgets."
-msgstr "报表不属于 Widget"
+msgstr "报表不属于小组件。"
 
 #: ../app/controllers/application_controller/report_downloads.rb:64
 msgid "Report generation returned: Status [%{status}] Message [%{message}]"
@@ -25425,7 +25425,7 @@ msgstr "重置修改"
 
 #: ../app/views/dashboard/_widgets_menu.html.haml:31
 msgid "Reset Dashboard Widgets to the defaults"
-msgstr "重置仪表板 Widget 为默认值"
+msgstr "重置仪表板小组件为默认值"
 
 #: ../app/helpers/textual_mixins/textual_os_info.rb:46
 msgid "Reset Lockout Counter"
@@ -26543,24 +26543,24 @@ msgstr "正在扫描"
 
 #: ../app/controllers/ops_controller.rb:638
 msgid "Schedule"
-msgstr "时间表"
+msgstr "任务调度"
 
 #: ../app/controllers/report_controller/schedules.rb:482
 msgid "Schedule \"%{name}\""
-msgstr "时间表 \"%{name}\""
+msgstr "任务调度 \"%{name}\""
 
 #: ../app/controllers/report_controller/schedules.rb:230
 msgid "Schedule \"%{name}\" was added"
-msgstr "已添加时间表 \"%{name}\""
+msgstr "已添加任务调度 \"%{name}\""
 
 #: ../app/controllers/report_controller/schedules.rb:229
 #: ../app/controllers/ops_controller/settings/schedules.rb:74
 msgid "Schedule \"%{name}\" was saved"
-msgstr "已保存时间表 \"%{name}\""
+msgstr "已保存任务调度 \"%{name}\""
 
 #: ../app/controllers/report_controller/schedules.rb:84
 msgid "Schedule %{name} was deleted"
-msgstr "已删除时间表 %{name} "
+msgstr "已删除任务调度 %{name} "
 
 #: ../app/views/miq_request/_prov_host_dialog.html.haml:104
 #: ../app/views/miq_request/_prov_vm_migrate_dialog.html.haml:75
@@ -26568,19 +26568,19 @@ msgstr "已删除时间表 %{name} "
 #: ../app/views/shared/views/_prov_dialog.html.haml:402
 #: ../app/views/report/_show_schedule.html.haml:2
 msgid "Schedule Info"
-msgstr "时间表信息"
+msgstr "任务调度信息"
 
 #: ../app/controllers/report_controller/schedules.rb:100
 msgid "Schedule [%{schedule}] queued to run from the UI by user %{user}"
-msgstr "时间表 [%{schedule}] 已加入列队，以便用户 %{user} 从 UI 运行"
+msgstr "任务调度 [%{schedule}] 已加入列队，以便用户 %{user} 从 UI 运行"
 
 #: ../app/controllers/report_controller/schedules.rb:79
 msgid "Schedule is not available or no longer exists"
-msgstr "时间表不可用或不再存在"
+msgstr "任务调度不可用或不再存在"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:198
 msgid "Schedule no longer exists"
-msgstr "时间表不再存在"
+msgstr "任务调度不再存在"
 
 #: ../app/presenters/tree_builder_ops_settings.rb:37
 #: ../app/controllers/report_controller.rb:299
@@ -26588,7 +26588,7 @@ msgstr "时间表不再存在"
 #: ../app/views/ops/_settings_evm_servers_tab.html.haml:54
 #: ../app/views/report/_report_info.html.haml:50
 msgid "Schedules"
-msgstr "时间表"
+msgstr "任务调度"
 
 #: ../app/views/miq_ae_class/_all_tabs.html.haml:15
 #: ../app/views/miq_ae_class/_class_fields.html.haml:5
@@ -27759,11 +27759,11 @@ msgstr "设置区域 \"%{name}\""
 
 #: ../app/controllers/ops_controller/settings/common.rb:1190
 msgid "Settings Schedule \"%{name}\""
-msgstr "设置时间表 \"%{name}\""
+msgstr "设置任务调度 \"%{name}\""
 
 #: ../app/controllers/ops_controller/settings/common.rb:1176
 msgid "Settings Schedules"
-msgstr "设置时间表"
+msgstr "设置任务调度"
 
 #: ../app/controllers/ops_controller/settings/common.rb:1170
 msgid "Settings Zones"
@@ -28366,7 +28366,7 @@ msgstr "显示虚拟机和模板"
 
 #: ../app/helpers/textual_mixins/textual_devices.rb:10
 msgid "Show VMs devices"
-msgstr "显示所有的虚拟机设备"
+msgstr "显示所有虚拟机设备"
 
 #: ../app/views/configuration/_ui_2.html.haml:70
 msgid "Show VMs in Explorer tree."
@@ -28404,11 +28404,11 @@ msgstr "显示所有 %{associated_models}"
 #: ../app/helpers/storage_helper/textual_summary.rb:81
 #: ../app/helpers/storage_helper/textual_summary.rb:92
 msgid "Show all %{label}"
-msgstr "显示所有的 %{label}"
+msgstr "显示所有 %{label}"
 
 #: ../app/helpers/application_helper.rb:1090
 msgid "Show all %{names}"
-msgstr "显示所有的 %{names}"
+msgstr "显示所有 %{names}"
 
 #: ../app/helpers/ems_cluster_helper/textual_summary.rb:142
 msgid "Show all %{title}"
@@ -28425,7 +28425,7 @@ msgstr "显示所有子编配栈"
 #: ../app/helpers/vm_helper/textual_summary.rb:410
 #: ../app/views/layouts/listnav/_orchestration_stack.html.haml:40
 msgid "Show all Cloud Networks"
-msgstr "显示所有的云网络"
+msgstr "显示所有云网络"
 
 #: ../app/helpers/cloud_tenant_helper/textual_summary.rb:86
 msgid "Show all Cloud Object Store Containers"
@@ -28437,7 +28437,7 @@ msgstr "显示所有云对象存储库"
 
 #: ../app/helpers/vm_helper/textual_summary.rb:375
 msgid "Show all Cloud Subnets"
-msgstr "显示所有的云子网"
+msgstr "显示所有云子网"
 
 #: ../app/helpers/cloud_volume_helper/textual_summary.rb:88
 msgid "Show all Cloud Volume Backups"
@@ -28476,7 +28476,7 @@ msgstr "显示所有主机"
 #: ../app/helpers/cloud_tenant_helper/textual_summary.rb:42
 #: ../app/views/layouts/listnav/_cloud_tenant.html.haml:31
 msgid "Show all Images"
-msgstr "显示所有的图像"
+msgstr "显示所有图像"
 
 #: ../app/helpers/auth_key_pair_cloud_helper/textual_summary.rb:27
 #: ../app/helpers/ems_cloud_helper/textual_summary.rb:85
@@ -28503,7 +28503,7 @@ msgstr "显示所有的图像"
 #: ../app/views/layouts/listnav/_availability_zone.html.haml:19
 #: ../app/views/layouts/listnav/_security_group.html.haml:17
 msgid "Show all Instances"
-msgstr "显示所有的实例"
+msgstr "显示所有实例"
 
 #: ../app/helpers/vm_helper/textual_summary.rb:399
 msgid "Show all Load Balancers"
@@ -28523,12 +28523,12 @@ msgstr "显示所有网络路由器"
 
 #: ../app/views/layouts/listnav/_orchestration_stack.html.haml:50
 msgid "Show all Outputs"
-msgstr "显示所有的输出"
+msgstr "显示所有输出"
 
 #: ../app/views/layouts/listnav/_configuration_job.html.haml:28
 #: ../app/views/layouts/listnav/_orchestration_stack.html.haml:45
 msgid "Show all Parameters"
-msgstr "显示所有的参数"
+msgstr "显示所有参数"
 
 #: ../app/helpers/ansible_repository_helper/textual_summary.rb:37
 msgid "Show all Playbooks"
@@ -28548,14 +28548,14 @@ msgstr "显示这个资源池中的所有资源池"
 
 #: ../app/views/layouts/listnav/_orchestration_stack.html.haml:55
 msgid "Show all Resources"
-msgstr "显示所有的资源"
+msgstr "显示所有资源"
 
 #: ../app/helpers/ems_cloud_helper/textual_summary.rb:143
 #: ../app/helpers/vm_helper/textual_summary.rb:342
 #: ../app/views/layouts/listnav/_cloud_tenant.html.haml:19
 #: ../app/views/layouts/listnav/_orchestration_stack.html.haml:35
 msgid "Show all Security Groups"
-msgstr "显示所有的安全组"
+msgstr "显示所有安全组"
 
 #: ../app/helpers/ems_cloud_helper/textual_summary.rb:112
 msgid "Show all Storage Managers"
@@ -28564,7 +28564,7 @@ msgstr "显示所有存储管理者"
 #: ../app/views/layouts/listnav/_host.html.haml:112
 #: ../app/views/layouts/listnav/_ems_infra.html.haml:56
 msgid "Show all Templates"
-msgstr "显示所有的模板"
+msgstr "显示所有模板"
 
 #: ../app/views/layouts/listnav/_ems_cluster.html.haml:53
 msgid "Show all Templates in this %{cluster_title}"
@@ -28577,7 +28577,7 @@ msgstr "显示这个 %{title} 里的所有模板"
 #: ../app/views/layouts/listnav/_host.html.haml:105
 #: ../app/views/layouts/listnav/_ems_infra.html.haml:50
 msgid "Show all VMs"
-msgstr "显示所有的虚拟机"
+msgstr "显示所有虚拟机"
 
 #: ../app/views/layouts/listnav/_ems_cluster.html.haml:47
 msgid "Show all VMs in this %{cluster_title}"
@@ -28590,7 +28590,7 @@ msgstr "显示这个 %{title} 里的所有虚拟机"
 #: ../app/helpers/resource_pool_helper/textual_summary.rb:116
 #: ../app/views/layouts/listnav/_resource_pool.html.haml:41
 msgid "Show all VMs in this Resource Pool"
-msgstr "显示这个资源池里所有的虚拟机"
+msgstr "显示这个资源池里所有虚拟机"
 
 #: ../app/views/layouts/listnav/_cloud_tenant.html.haml:43
 msgid "Show all Volume Snapshots"
@@ -28627,12 +28627,12 @@ msgstr "显示所有受管的数据存储区"
 
 #: ../app/helpers/orchestration_stack_helper/textual_summary.rb:124
 msgid "Show all outputs"
-msgstr "显示所有的输出"
+msgstr "显示所有输出"
 
 #: ../app/helpers/orchestration_stack_helper/textual_summary.rb:114
 #: ../app/helpers/configuration_job_helper/textual_summary.rb:63
 msgid "Show all parameters"
-msgstr "显示所有的参数"
+msgstr "显示所有参数"
 
 #: ../app/views/layouts/listnav/_storage.html.haml:22
 msgid "Show all registered %{hosts}"
@@ -28640,7 +28640,7 @@ msgstr "显示所有注册的 %{hosts}"
 
 #: ../app/helpers/orchestration_stack_helper/textual_summary.rb:134
 msgid "Show all resources"
-msgstr "显示所有的资源"
+msgstr "显示所有资源"
 
 #: ../app/views/configuration/_ui_1.html.haml:52
 msgid "Show at Login"
@@ -28666,11 +28666,11 @@ msgstr "显示这个虚拟机上的 ESX 日志"
 #: ../app/helpers/application_helper/toolbar/saved_reports_center.rb:21
 #: ../app/helpers/application_helper/toolbar/saved_report_center.rb:12
 msgid "Show full screen Report"
-msgstr "显示全屏报表"
+msgstr "全屏显示报表"
 
 #: ../app/helpers/application_helper/toolbar/chargeback_center.rb:36
 msgid "Show full screen report"
-msgstr "显示全屏报表"
+msgstr "全屏显示报表"
 
 #: ../app/views/report/_form_filter_performance.html.haml:8
 msgid "Show hourly data from"
@@ -29133,7 +29133,7 @@ msgstr "关闭域"
 #: ../app/helpers/application_helper/toolbar/x_vm_center.rb:195
 #: ../app/controllers/application_controller/ci_processing.rb:601
 msgid "Shutdown Guest"
-msgstr "关闭客户"
+msgstr "关闭客机"
 
 #: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:235
 msgid "Shutdown the Guest OS on the selected items"
@@ -29408,7 +29408,7 @@ msgstr "快照"
 
 #: ../app/views/vm_common/_reconfigure.html.haml:67
 msgid "Sockets"
-msgstr "套接字"
+msgstr "插槽"
 
 #: ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:78
 #: ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:275
@@ -30874,11 +30874,11 @@ msgstr "所选的策略配置集已删除"
 
 #: ../app/controllers/report_controller/schedules.rb:127
 msgid "The selected Report Schedules were disabled"
-msgstr "所选的报表时间表已禁用"
+msgstr "所选的报表任务调度已禁用"
 
 #: ../app/controllers/report_controller/schedules.rb:124
 msgid "The selected Report Schedules were enabled"
-msgstr "所选的报表时间表已启用"
+msgstr "所选的报表任务调度已启用"
 
 #: ../app/controllers/miq_request_controller.rb:567
 msgid "The selected Request was deleted"
@@ -30898,23 +30898,23 @@ msgstr "所选的已保存报表被删除"
 
 #: ../app/controllers/report_controller/schedules.rb:110
 msgid "The selected Schedule has been queued to run"
-msgstr "所选的时间表已放入队列等待运行"
+msgstr "所选的任务调度已放入队列等待运行"
 
 #: ../app/controllers/report_controller/schedules.rb:112
 msgid "The selected Schedules have been queued to run"
-msgstr "所选的时间表已放入队列等待运行"
+msgstr "所选的任务调度已放入队列等待运行"
 
 #: ../app/controllers/report_controller/schedules.rb:86
 msgid "The selected Schedules were deleted"
-msgstr "所选的时间表已删除"
+msgstr "所选的任务调度已删除"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:214
 msgid "The selected Schedules were disabled"
-msgstr "所选的时间表已被禁用。"
+msgstr "所选的任务调度已被禁用。"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:212
 msgid "The selected Schedules were enabled"
-msgstr "所选的时间表已被启用。"
+msgstr "所选的任务调度已被启用。"
 
 #: ../app/controllers/security_group_controller.rb:140
 msgid "The selected Security Group was deleted"
@@ -30976,7 +30976,7 @@ msgstr "基于 Web 的控制台不可用，因为"
 
 #: ../app/controllers/dashboard_controller.rb:397
 msgid "The widget \"%{widget_name}\" is already part of the edited dashboard"
-msgstr "Widget \"%{widget_name}\" 已经是被修改的仪表板的一部分"
+msgstr "小组件 \"%{widget_name}\" 已经是被修改的仪表板的一部分"
 
 #: ../app/helpers/application_helper/button/instance_attach.rb:4
 msgid "There are no Cloud Volumes available to attach to this Instance."
@@ -31143,7 +31143,7 @@ msgstr "本周（部分）"
 
 #: ../app/helpers/application_helper/button/widget_generate_content.rb:14
 msgid "This Widget content generation is already running or queued up"
-msgstr "该 Widget 内容生成已经在运行或排队"
+msgstr "该小组件内容生成已经在运行，或在队列中"
 
 #: ../app/helpers/view_helper.rb:114
 msgid "This Year"
@@ -31564,7 +31564,7 @@ msgstr "拓扑视图"
 #: ../app/helpers/resource_pool_helper/textual_summary.rb:62
 #: ../app/helpers/ems_cluster_helper/textual_summary.rb:112
 msgid "Total %{title} CPU Cores"
-msgstr "总共的 %{title} CPU 核心"
+msgstr "总共的 %{title} CPU 内核"
 
 #: ../app/helpers/resource_pool_helper/textual_summary.rb:47
 msgid "Total %{title} CPU Resources"
@@ -32937,7 +32937,7 @@ msgstr "虚拟机电源功能"
 #: ../app/controllers/storage_controller.rb:145
 #: ../app/views/layouts/listnav/_storage.html.haml:44
 msgid "VM Provisioned Disk Files"
-msgstr "虚拟机的 置备ed 磁盘文件"
+msgstr "虚拟机置备的磁盘文件"
 
 #: ../app/controllers/mixins/actions/vm_actions/reconfigure.rb:240
 msgid "VM Reconfigure Request was cancelled by the user"
@@ -33001,7 +33001,7 @@ msgid ""
 "collected for a %{cluster} and all of its %{hosts} when at least one %{host}"
 " is selected."
 msgstr ""
-"将只为选择的 %{hosts} 下的虚拟机采集虚拟机数据。当选择了至少一个 %{host} 时，%{cluster}  及其所有的 %{hosts} "
+"将只为选择的 %{hosts} 下的虚拟机采集虚拟机数据。当选择了至少一个 %{host} 时，%{cluster}  及其所有 %{hosts} "
 "都将采集数据。"
 
 #: ../app/controllers/vm_common.rb:228
@@ -33459,7 +33459,7 @@ msgstr "查看 SOP"
 #: ../app/views/ops/_settings_details_tab.html.haml:49
 #: ../app/views/ops/_settings_details_tab.html.haml:51
 msgid "View Schedules"
-msgstr "查看时间表"
+msgstr "查看任务调度"
 
 #: ../app/views/chargeback/_rates_list.html.haml:10
 #: ../app/views/chargeback/_rates_list.html.haml:12
@@ -33591,7 +33591,7 @@ msgstr "查看这个用户"
 
 #: ../app/views/report/_db_widget.html.haml:8
 msgid "View this Widget"
-msgstr "查看这个 Widget"
+msgstr "查看这个小组件"
 
 #: ../app/views/pxe/_pxe_server_details.html.haml:48
 msgid "View this Windows Image"
@@ -33620,7 +33620,7 @@ msgstr "虚拟基础架构交换机"
 #: ../app/helpers/container_group_helper/textual_summary.rb:109
 #: ../app/helpers/container_node_helper/textual_summary.rb:89
 msgid "Virtual Machine"
-msgstr "虚拟机器"
+msgstr "虚拟机"
 
 #: ../app/presenters/menu/default_menu.rb:69
 #: ../app/helpers/ems_infra_helper/textual_summary.rb:150
@@ -34009,7 +34009,7 @@ msgstr "警告: 所选的已保存的报表将永久从数据库中删除！"
 msgid ""
 "Warning: The selected Schedules and ALL of their components will be "
 "permanently removed!"
-msgstr "警告: 所选的时间表及其全部组件都将被永久删除！"
+msgstr "警告: 所选的任务调度及其全部组件都将被永久删除！"
 
 #: ../app/helpers/application_helper/toolbar/service/vmdb_mixin.rb:29
 msgid ""
@@ -34247,7 +34247,7 @@ msgstr "警告: 这个已保存的报表及其全部组件都将被永久删除�
 msgid ""
 "Warning: This Schedule and ALL of its components will be permanently "
 "removed!"
-msgstr "警告: 这个时间表及其全部组件都将被永久删除！"
+msgstr "警告: 这个任务调度及其全部组件都将被永久删除！"
 
 #: ../app/helpers/application_helper/toolbar/security_group_center.rb:28
 msgid ""
@@ -34285,7 +34285,7 @@ msgstr "警告: 这个虚拟机及其全部组件都将被永久删除！"
 #: ../app/helpers/application_helper/toolbar/miq_widget_center.rb:25
 msgid ""
 "Warning: This Widget and ALL of its components will be permanently removed!"
-msgstr "警告: 这个 Widget 及其全部组件都将被永久删除！"
+msgstr "警告: 这个小组件及其全部组件都将被永久删除！"
 
 #: ../app/helpers/application_helper/toolbar/ems_cluster_center.rb:21
 msgid ""
@@ -34312,7 +34312,7 @@ msgstr "警告：此供应商被暂停时，不会向其收集数据。这可能
 msgid ""
 "Warning: You will loose all of your current retirement options if you "
 "continue with this action"
-msgstr "警告：如果继续此操作，您将丢失目前所有的退订选项"
+msgstr "警告：如果继续此操作，您将丢失目前所有退订选项"
 
 #: ../app/helpers/ops_helper/textual_summary.rb:138
 #: ../app/views/ops/_db_info.html.haml:32
@@ -34372,7 +34372,7 @@ msgstr "要评估的内容"
 
 #: ../app/controllers/report_controller/widgets.rb:93
 msgid "Widget \"%{name}\" was saved"
-msgstr "Widget \"%{name}\" 已保存"
+msgstr "小组件 \"%{name}\" 已保存"
 
 #: ../app/controllers/report_controller/widgets.rb:143
 msgid "Widget content generation error: %{message}"

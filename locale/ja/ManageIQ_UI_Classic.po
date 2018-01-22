@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-31 14:32+0100\n"
-"PO-Revision-Date: 2017-11-20 05:45-0500\n"
+"PO-Revision-Date: 2017-12-06 09:25-0500\n"
 "Last-Translator: asasaki <asasaki@redhat.com>\n"
 "Language-Team: English\n"
 "MIME-Version: 1.0\n"
@@ -1048,7 +1048,7 @@ msgstr "%{status} - %{time}"
 
 #: ../app/controllers/application_controller.rb:2319
 msgid "%{task} does not apply to at least one of the selected %{model}"
-msgstr "1 つ以上の選択した%{model}に%{task}は適用されません"
+msgstr "%{task}は 1 つ以上の選択した%{model}に適用されません"
 
 #: ../app/controllers/application_controller.rb:2323
 #: ../app/controllers/application_controller/ci_processing.rb:324
@@ -1057,7 +1057,7 @@ msgstr "1 つ以上の選択した項目に%{task}は適用されません"
 
 #: ../app/controllers/application_controller/ci_processing.rb:322
 msgid "%{task} does not apply to this item"
-msgstr "この項目に%{task}は適用されません"
+msgstr "%{task}はこの項目に適用されません"
 
 #: ../app/controllers/ems_common.rb:531
 msgid "%{task} initiated for %{count} %{model} from the %{product} Database"
@@ -5317,7 +5317,7 @@ msgstr "ゾーン \"%{zone}\" 内の %{product}  サーバー \"%{name} [%{serve
 msgid ""
 "Authentication status will be saved and workers will be restarted for the "
 "selected %{controller_name}"
-msgstr "認証ステータスは保存され、選択した%{controller_name} のワーカーが再起動します。"
+msgstr "認証ステータスは保存され、選択した%{controller_name}のワーカーが再起動します。"
 
 #: ../app/views/dashboard/auth_error.html.haml:3
 msgid "Authorization Error"
@@ -6021,11 +6021,11 @@ msgstr "ロール別"
 
 #: ../app/views/miq_policy/_policy_details.html.haml:45
 msgid "By Username %{username} %{created_on}"
-msgstr "ユーザー名別:  %{username} %{created_on}"
+msgstr "ユーザー名:  %{username}、%{created_on}"
 
 #: ../app/views/miq_policy/_policy_details.html.haml:52
 msgid "By Username %{username} %{updated_on}"
-msgstr "ユーザー名別: %{username} %{updated_on}"
+msgstr "ユーザー名: %{username}、%{updated_on}"
 
 #: ../app/views/ops/_all_tabs.html.haml:54
 msgid "C & U Collection"
@@ -15469,7 +15469,7 @@ msgstr "ヘルプメニューのカスタマイズ変更が正常に保存され
 
 #: ../app/views/report/_form_sort.html.haml:58
 msgid "Hide Detail Rows"
-msgstr "詳細列の非表示"
+msgstr "詳細列を非表示にする"
 
 #: ../app/views/miq_ae_class/_method_form.html.haml:92
 msgid "Hide Input Parameters"
@@ -15477,7 +15477,7 @@ msgstr "入力パラメーターを非表示にする"
 
 #: ../app/views/miq_request/_pre_prov.html.haml:11
 msgid "Hide deprecated"
-msgstr "非推奨項目の非表示"
+msgstr "非推奨項目を非表示にする"
 
 #: ../app/helpers/container_image_helper/textual_summary.rb:91
 #: ../app/helpers/vm_helper/textual_summary.rb:538
@@ -17206,7 +17206,7 @@ msgstr "場所"
 
 #: ../app/helpers/application_helper/toolbar/miq_ae_domain_center.rb:31
 msgid "Lock this Domain"
-msgstr "このドメインをロック"
+msgstr "このドメインのロック"
 
 #: ../app/helpers/host_helper/textual_summary.rb:168
 msgid "Lockdown Mode"
@@ -17771,7 +17771,7 @@ msgstr "タグのマップ"
 
 #: ../app/controllers/ops_controller/settings/label_tag_mapping.rb:183
 msgid "Mapping for %{entity}, Label \"%{label}\" already exists"
-msgstr "%{entity} のマッピング、ラベル \"%{label}\" はすでに存在します"
+msgstr "%{entity} のマッピング、ラベル \"%{label}\" がすでに存在します"
 
 #: ../app/views/static/notification_drawer/notification-footer.html.haml:7
 msgid "Mark All Read"
@@ -19563,7 +19563,7 @@ msgstr "サーバーが選択されていません"
 
 #: ../app/views/ops/_smartproxy_affinity.html.haml:7
 msgid "No Servers with the SmartProxy role are in Zone: \"%{zone_description}\""
-msgstr "SmartProxy ロールを持つサーバーはゾーンにありません: \"%{zone_description}\""
+msgstr "SmartProxy ロールを持つサーバーはゾーン \"%{zone_description}\" にありません"
 
 #: ../app/controllers/catalog_controller.rb:278
 msgid "No Service Catalog Items were selected for deletion"
@@ -20255,7 +20255,7 @@ msgstr "利用不可"
 
 #: ../app/views/vm_common/_evm_relationship.html.haml:11
 msgid "Not a Server"
-msgstr "サーバーではありません"
+msgstr "サーバーはありません"
 
 #: ../app/controllers/middleware_server_controller.rb:84
 msgid "Not adding new datasource to Hawkular server"
@@ -20334,7 +20334,7 @@ msgstr "注: 検証が必要です"
 msgid ""
 "Note: displaying a very large number of objects in the topology display can "
 "adversely affect the performance of some web browsers."
-msgstr "注: トポロジー表示に非常に多くのオブジェクトを表示すると、一部の web ブラウザーのパフォーマンスに負の影響が及ぶ可能性があります。"
+msgstr "注: トポロジー表示に非常に多くのオブジェクトを表示すると、一部の web ブラウザーのパフォーマンスに影響が及ぶ可能性があります。"
 
 #: ../app/helpers/textual_mixins/textual_vmm_info.rb:29
 #: ../app/views/miq_policy/_alert_profile_details.html.haml:92
@@ -21914,7 +21914,7 @@ msgstr "ポリシー"
 
 #: ../app/controllers/miq_policy_controller/policies.rb:122
 msgid "Policy \"%{name}\" already exists"
-msgstr "ポリシー \"%{name}\" はすでに存在します"
+msgstr "ポリシー \"%{name}\" がすでに存在します"
 
 #: ../app/controllers/miq_policy_controller/policies.rb:69
 #: ../app/controllers/miq_policy_controller/policies.rb:132
@@ -30937,7 +30937,7 @@ msgstr "選択した分析プロファイルは削除されました"
 
 #: ../app/controllers/miq_ae_class_controller.rb:2596
 msgid "The selected Automate Domain were marked as %{action}"
-msgstr "選択した自動化ドメインは%{action}としてマークが付けられました"
+msgstr "選択した自動化ドメインには%{action}のマークが付けられました"
 
 #: ../app/controllers/catalog_controller.rb:272
 msgid "The selected Catalog Item was deleted"

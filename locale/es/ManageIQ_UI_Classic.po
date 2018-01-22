@@ -9,13 +9,14 @@
 # Translator <tr.rh02@oceantranslations.com>, 2017. #zanata
 # sreedevisamudrala <sreedevi.samudrala@welocalize.com>, 2017. #zanata
 # sven werner <sven.werner@welocalize.com>, 2017. #zanata
+# sreedevisamudrala <sreedevi.samudrala@welocalize.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-31 14:32+0100\n"
-"PO-Revision-Date: 2017-11-17 04:06-0500\n"
-"Last-Translator: Julieta Scenna <julieta.scenna@gmail.com>\n"
+"PO-Revision-Date: 2018-01-17 04:26-0500\n"
+"Last-Translator: sreedevisamudrala <sreedevi.samudrala@welocalize.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -81,7 +82,7 @@ msgstr "(Contenedor)"
 
 #: ../app/controllers/mixins/dashboard_view_mixin.rb:15
 msgid " (Dashboard)"
-msgstr " (Dashboard)"
+msgstr " (Panel)"
 
 #: ../app/controllers/vm_common.rb:221
 msgid " (Devices)"
@@ -522,8 +523,8 @@ msgstr "%{alert_profiles} con etiquetas %{type}"
 #: ../app/views/layouts/_tag_edit_items.html.haml:5
 msgid "%{amount} %{object} Being Tagged"
 msgid_plural "%{amount} %{objects} Being Tagged"
-msgstr[0] "%{amount} %{object} se está etiquetando."
-msgstr[1] "%{amount} %{objects} se están etiquetando."
+msgstr[0] "%{amount} %{object} se está etiquetando"
+msgstr[1] "%{amount} %{objects} se están etiquetando"
 
 #: ../app/helpers/application_helper/button/miq_request_delete.rb:10
 msgid "%{approval_states} requests cannot be deleted"
@@ -559,7 +560,7 @@ msgstr "%{count} notificaciones sin leer"
 
 #: ../app/views/ops/_rbac_group_details.html.haml:174
 msgid "%{current_tenant} Tags"
-msgstr "%{current_tenant} etiquetas"
+msgstr "Etiquetas de %{current_tenant}"
 
 #: ../app/controllers/application_controller/performance.rb:675
 msgid "%{date_from} to %{date_to}"
@@ -960,8 +961,8 @@ msgstr "%{number} bytes"
 #: ../app/controllers/report_controller.rb:254
 msgid "%{number} widget imported successfully"
 msgid_plural "%{number} widgets imported successfully"
-msgstr[0] "%{number} widget importado correctamente"
-msgstr[1] "%{number} widgets importados correctamente"
+msgstr[0] "%{number} asistente importado correctamente"
+msgstr[1] "%{number} asistentes importados correctamente"
 
 #: ../app/controllers/vm_common.rb:1147
 msgid ""
@@ -1219,11 +1220,11 @@ msgstr ""
 
 #: ../app/controllers/report_controller/widgets.rb:292
 msgid "%{typ} Widget \"%{name}\""
-msgstr "%{typ} Widget \"%{name}\""
+msgstr "%{typ} Asistente \"%{name}\""
 
 #: ../app/controllers/report_controller/widgets.rb:286
 msgid "%{typ} Widgets"
-msgstr "%{typ} Widgets"
+msgstr "%{typ} Asistentes"
 
 #: ../app/controllers/miq_ae_tools_controller.rb:413
 #: ../app/controllers/miq_ae_tools_controller.rb:414
@@ -1341,7 +1342,7 @@ msgstr "(opcional) su información del proxy HTTP"
 msgid ""
 "* 'Name' and 'Single Value' fields cannot be edited after adding a category."
 msgstr ""
-"*Los campos  'Name' y 'Single Value' no pueden ser editados después de "
+"*Los campos  'Nombre' y 'Valor único' no pueden ser editados después de "
 "añadir una categoría."
 
 #: ../app/views/report/_form_columns.html.haml:11
@@ -1398,7 +1399,7 @@ msgstr ""
 
 #: ../app/views/report/_db_form.html.haml:40
 msgid "* Dashboard name cannot be changed"
-msgstr "* El nombre del Panel de control no puede ser cambiado"
+msgstr "* El nombre del panel no puede ser cambiado"
 
 #: ../app/views/layouts/_tl_show.html.haml:10
 msgid "* Dates/Times on this page are based on time zone: %{time_zone}."
@@ -1597,7 +1598,7 @@ msgstr " 1 día"
 
 #: ../app/helpers/miq_task_helper.rb:4
 msgid "1 Day Ago"
-msgstr "Hace un dia"
+msgstr "Hace un día"
 
 #: ../app/helpers/view_helper.rb:37
 #: ../app/controllers/miq_policy_controller/alerts.rb:479
@@ -1880,7 +1881,7 @@ msgstr "3-4"
 
 #: ../app/views/shared/views/_retire.html.haml:40
 msgid "30 Days before retirement"
-msgstr "30 Días antes del vencimiento"
+msgstr "30 días antes del vencimiento"
 
 #: ../app/helpers/view_helper.rb:35
 #: ../app/controllers/miq_policy_controller/alerts.rb:479
@@ -1909,7 +1910,7 @@ msgstr "4 días"
 
 #: ../app/helpers/miq_task_helper.rb:7 ../app/helpers/view_helper.rb:81
 msgid "4 Days Ago"
-msgstr "Hace 4 dias"
+msgstr "Hace 4 días"
 
 #: ../app/helpers/report_helper/timer.rb:16
 #: ../app/controllers/miq_policy_controller/alerts.rb:480
@@ -1968,11 +1969,11 @@ msgstr "5 - Presione el botón Enviar."
 
 #: ../app/helpers/report_helper/timer.rb:8
 msgid "5 Days"
-msgstr "5 dias"
+msgstr "5 días"
 
 #: ../app/helpers/miq_task_helper.rb:8 ../app/helpers/view_helper.rb:82
 msgid "5 Days Ago"
-msgstr "Hace 5 dias"
+msgstr "Hace 5 días"
 
 #: ../app/helpers/view_helper.rb:55
 msgid "5 Hours Ago"
@@ -1997,11 +1998,11 @@ msgstr "Promedio de 5 min"
 
 #: ../app/helpers/report_helper/timer.rb:9
 msgid "6 Days"
-msgstr "6 dias"
+msgstr "6 días"
 
 #: ../app/helpers/miq_task_helper.rb:9 ../app/helpers/view_helper.rb:83
 msgid "6 Days Ago"
-msgstr "Hace 6 dias"
+msgstr "Hace 6 días"
 
 #: ../app/helpers/report_helper/timer.rb:17
 #: ../app/controllers/miq_policy_controller/alerts.rb:480
@@ -2032,7 +2033,7 @@ msgstr "Arquitectura de 64 bits"
 
 #: ../app/helpers/view_helper.rb:84
 msgid "7 Days Ago"
-msgstr "Hace 7 dias"
+msgstr "Hace 7 días"
 
 #: ../app/helpers/view_helper.rb:57
 msgid "7 Hours Ago"
@@ -3639,7 +3640,7 @@ msgstr "Añadiendo un nuevo %{snapshot}"
 
 #: ../app/controllers/ops_controller.rb:699
 msgid "Adding a new %{tenant}"
-msgstr "Agregando una nueva %{tenant}"
+msgstr "Agregando un nuevo %{tenant}"
 
 #: ../app/controllers/miq_policy_controller.rb:645
 msgid "Adding a new Action"
@@ -5105,8 +5106,8 @@ msgstr "¿Está seguro de que desea eliminar su Punto de entrada de jubilación?
 msgid ""
 "Are you sure you want to reset this Dashboard's Widgets to the defaults?"
 msgstr ""
-"¿Está seguro de que desea restablecer los asistentes de este panel de "
-"control a los valores predeterminados?"
+"¿Está seguro de que desea restablecer los asistentes de este panel a los "
+"valores predeterminados?"
 
 #: ../app/views/report/_form_sort.html.haml:35
 #: ../app/views/miq_ae_customization/_dialog_field_form_non_dynamic_options.html.haml:142
@@ -5340,7 +5341,7 @@ msgstr "Se debe especificar al menos un host para el modo manual"
 
 #: ../app/views/configuration/_timeprofile_form.html.haml:173
 msgid "At least one hour needs to be selected"
-msgstr "Se debe seleccionar al menos una hora."
+msgstr "Se debe seleccionar al menos un horario."
 
 #: ../app/controllers/ops_controller/settings/analysis_profiles.rb:245
 msgid "At least one item must be entered to create Analysis Profile"
@@ -7952,7 +7953,7 @@ msgstr "Cerrar"
 msgid ""
 "Close any duplicate browser sessions, then select an option from the menu."
 msgstr ""
-"Cerrar las sesiones del navegador duplicadas y seleccionar una opción del "
+"Cierre las sesiones del navegador duplicadas y seleccione una opción del "
 "menú."
 
 #: ../app/helpers/service_helper/textual_summary.rb:238
@@ -9065,7 +9066,7 @@ msgstr "Compilaciones del contenedor"
 
 #: ../app/controllers/container_dashboard_controller.rb:35
 msgid "Container Dashboard"
-msgstr "Panel de control del contenedor"
+msgstr "Panel del contenedor"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:584
 msgid "Container Image Analysis"
@@ -9592,7 +9593,9 @@ msgstr "Crear una instantánea para volumen de nube \"%{name}\""
 
 #: ../app/controllers/vm_common.rb:455
 msgid "Create Snapshot for VM and Instance \"%{name}\" was started"
-msgstr "Se inició el proceso de Crear instantánea para MV e instancia \"%{name}\""
+msgstr ""
+"Se inició el proceso de creación de instantánea para la MV e instancia "
+"\"%{name}\""
 
 #: ../app/helpers/application_helper/toolbar/cloud_volume_center.rb:12
 msgid "Create a Backup of this Cloud Volume"
@@ -10417,7 +10420,7 @@ msgstr "Límite predeterminado"
 
 #: ../app/views/ops/_settings_server_tab.html.haml:80
 msgid "Default Locale"
-msgstr "Región predeterminada"
+msgstr "Idioma predeterminado"
 
 #: ../app/views/ops/_settings_server_tab.html.haml:109
 msgid "Default Repository SmartProxy"
@@ -10638,48 +10641,53 @@ msgid "Delete initiated for %{count} %{model} from the %{product} Database"
 msgid_plural ""
 "Delete initiated for %{count} %{models} from the %{product} Database"
 msgstr[0] ""
-"Eliminar iniciado para %{count} %{model} de la base de datos de %{product}"
+"Se inició la eliminación de %{count} %{model} de la base de datos de "
+"%{product}"
 msgstr[1] ""
-"Eliminar iniciado para %{count} %{models} de la base de datos de %{product}"
+"Se inició la eliminación de %{count} %{models} de la base de datos de "
+"%{product}"
 
 #: ../app/controllers/mixins/manager_controller_mixin.rb:263
 msgid "Delete initiated for %{count} Provider"
 msgid_plural "Delete initiated for %{count} Providers"
-msgstr[0] "Eliminar iniciado para %{count} proveedor"
-msgstr[1] "Eliminar iniciado para %{count} proveedores"
+msgstr[0] "Se inició la eliminación de %{count} proveedor"
+msgstr[1] "Se inició la eliminación de %{count} proveedores"
 
 #: ../app/controllers/miq_task_controller.rb:228
 msgid "Delete initiated for %{count} Task from the %{product} Database"
 msgid_plural ""
 "Delete initiated for %{count} Tasks from the %{product} Database"
 msgstr[0] ""
-"Eliminar iniciado para %{count} tarea de la base de datos de %{product}"
+"Se inició la eliminación de %{count} tarea de la base de datos de %{product}"
 msgstr[1] ""
-"Eliminar iniciado para %{count} tareas de la base de datos de %{product}"
+"Se inició la eliminación de %{count} tareas de la base de datos de "
+"%{product}"
 
 #: ../app/controllers/cloud_network_controller.rb:274
 msgid "Delete initiated for %{number} Cloud Network."
 msgid_plural "Delete initiated for %{number} Cloud Networks."
-msgstr[0] "Eliminar iniciado para %{number} red de nube"
-msgstr[1] "Eliminar iniciado para %{number} redes de nube"
+msgstr[0] "Se inició la eliminación de %{number} red de nube."
+msgstr[1] "Se inició la eliminación de %{number} redes de nube."
 
 #: ../app/controllers/cloud_tenant_controller.rb:262
 msgid "Delete initiated for %{number} Cloud Tenant."
 msgid_plural "Delete initiated for %{number} Cloud Tenants."
-msgstr[0] "Eliminar iniciado para %{number} inquilino de nube"
-msgstr[1] "Eliminar iniciado para %{number} inquilinos de nube"
+msgstr[0] "Se inició la eliminación de %{number} inquilino de nube."
+msgstr[1] "Se inició la eliminación de %{number} inquilinos de nube."
 
 #: ../app/controllers/cloud_volume_snapshot_controller.rb:89
 msgid "Delete initiated for %{number} Cloud Volume Snapshot."
 msgid_plural "Delete initiated for %{number} Cloud Volume Snapshots."
-msgstr[0] "Eliminar iniciado para %{number} instantánea de volumen de nube"
-msgstr[1] "Eliminar iniciado para %{number} instantáneas de volúmenes de nube"
+msgstr[0] ""
+"Se inició la eliminación de %{number} instantánea de volumen de nube."
+msgstr[1] ""
+"Se inició la eliminación de %{number} instantáneas de volúmenes de nube."
 
 #: ../app/controllers/cloud_volume_controller.rb:644
 msgid "Delete initiated for %{number} Cloud Volume."
 msgid_plural "Delete initiated for %{number} Cloud Volumes."
-msgstr[0] "Eliminar iniciado para %{number} volumen de nube"
-msgstr[1] "Eliminar iniciado para %{number} volúmenes de nube"
+msgstr[0] "Se inició la eliminación de %{number} volumen de nube."
+msgstr[1] "Se inició la eliminación de %{number} volúmenes de nube."
 
 #: ../app/controllers/floating_ip_controller.rb:265
 msgid "Delete initiated for %{number} Floating IP."
@@ -10975,8 +10983,8 @@ msgstr "Eliminado"
 msgid ""
 "Deleting all Tasks older than %{date} from the %{product} Database initiated"
 msgstr ""
-"Se inició el proceso de Eliminar todas las tareas anteriores a %{date} desde"
-" la base de datos %{product}"
+"Se inició el proceso de eliminación de todas las tareas anteriores al "
+"%{date} desde la base de datos %{product}"
 
 #: ../app/views/ops/_classification_entry.html.haml:55
 msgid ""
@@ -13264,7 +13272,7 @@ msgstr ""
 
 #: ../app/controllers/report_controller/dashboards.rb:61
 msgid "Edit of Dashboard \"%{name}\" was cancelled by the user"
-msgstr "El usuario cancelo la edición del panel \"%{name}\"."
+msgstr "El usuario canceló la edición del panel \"%{name}\"."
 
 #: ../app/controllers/report_controller/dashboards.rb:9
 msgid "Edit of Dashboard Sequence was cancelled by the user"
@@ -13393,9 +13401,7 @@ msgstr ""
 
 #: ../app/controllers/configuration_controller.rb:354
 msgid "Edit of Time Profile \"%{name}\" was cancelled by the user"
-msgstr ""
-"El proceso de Editar perfil de tiempo \"%{name}\" fue cancelado por el "
-"usuario"
+msgstr "La edición del perfil de tiempo \"%{name}\" fue cancelada por el usuario"
 
 #: ../app/controllers/vm_common.rb:768
 msgid "Edit of VM and Instance \"%{name}\" was cancelled by the user"
@@ -13978,7 +13984,7 @@ msgstr "Edición de artículo del catálogo de servicios \"%{name}\""
 
 #: ../app/controllers/report_controller.rb:743
 msgid "Editing Widget \"%{name}\""
-msgstr "Edición de Widget \"%{name}\""
+msgstr "Edición del asistente \"%{name}\""
 
 #: ../app/controllers/ops_controller.rb:599
 msgid "Editing Zone \"%{name}\""
@@ -14732,7 +14738,7 @@ msgstr "Error: La nueva contraseña es la contraseña existente"
 
 #: ../app/controllers/report_controller.rb:251
 msgid "Error: No widget was selected to be imported."
-msgstr "Error: no se seleccionó ningún Widget para importar"
+msgstr "Error: no se seleccionó ningún asistente para importar."
 
 #: ../app/helpers/application_helper.rb:1279
 #: ../app/controllers/provider_foreman_controller.rb:171
@@ -16703,7 +16709,7 @@ msgstr "Información para las máquinas virtuales registradas"
 #: ../app/views/static/deploy_containers_provider/deploy-provider-details-existing-vms.html.haml:148
 #: ../app/views/static/deploy_containers_provider/deploy-provider-details-no-provider.html.haml:176
 msgid "Infrastructure"
-msgstr "Infraestructuras"
+msgstr "Infraestructura"
 
 #: ../app/helpers/container_node_helper/textual_summary.rb:81
 msgid "Infrastructure Machine ID"
@@ -17105,7 +17111,7 @@ msgstr "Tipo de elemento"
 
 #: ../app/assets/javascripts/controllers/report_data_controller.js:63
 msgid "Items"
-msgstr "Artículos"
+msgstr "Elementos"
 
 #: ../app/presenters/tree_builder_policy_simulation.rb:60
 msgid "Items out of scope"
@@ -17735,7 +17741,7 @@ msgstr "Cargando resumen..."
 
 #: ../app/views/configuration/_ui_1.html.haml:95
 msgid "Locale"
-msgstr "Local"
+msgstr "Idioma"
 
 #: ../app/views/miq_policy/_action_options.html.haml:341
 #: ../app/views/shared/_playbook_options.html.haml:24
@@ -19400,7 +19406,7 @@ msgstr "Proveedor de gestión de red"
 #: ../app/views/cloud_network/_common_new_edit.html.haml:6
 #: ../app/views/network_router/_common_new_edit.haml:16
 msgid "Network Manager"
-msgstr "Adminitrador de red"
+msgstr "Administrador de red"
 
 #: ../app/views/cloud_network/_common_new_edit.html.haml:83
 msgid "Network Name"
@@ -20380,7 +20386,7 @@ msgid ""
 "true."
 msgstr ""
 "No hay condiciones definidas. Esta política es incondicional y SIEMPRE "
-"arrojará el valor true."
+"arrojará el valor verdadero."
 
 #: ../app/views/catalog/_sandt_tree_show.html.haml:122
 msgid "No custom image has been uploaded"
@@ -21236,7 +21242,7 @@ msgstr "Desactivar"
 
 #: ../app/views/miq_task/_tasks_options.html.haml:58
 msgid "Ok"
-msgstr "Aceptar"
+msgstr "Correcto"
 
 #: ../app/views/ops/_settings_server_tab.html.haml:101
 msgid "On"
@@ -25346,7 +25352,7 @@ msgstr "Eliminar máquina virtual del inventario"
 
 #: ../app/presenters/widget_presenter.rb:29
 msgid "Remove Widget"
-msgstr "Eliminar Widget"
+msgstr "Eliminar asistente"
 
 #: ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:82
 msgid "Remove a Security Group from this Instance"
@@ -25371,7 +25377,7 @@ msgstr "Eliminar todas las políticas de este perfil"
 
 #: ../app/presenters/widget_presenter.rb:28
 msgid "Remove from Dashboard"
-msgstr "Eliminar del escritorio"
+msgstr "Eliminar del panel"
 
 #: ../app/helpers/application_helper/toolbar/chargeback_center.rb:70
 msgid "Remove from the VMDB"
@@ -25963,7 +25969,7 @@ msgstr ""
 
 #: ../app/views/report/_report_info.html.haml:108
 msgid "Report doesn't belong to Widgets."
-msgstr "El informe no pertenece a los widgets."
+msgstr "El informe no pertenece a los asistentes."
 
 #: ../app/controllers/application_controller/report_downloads.rb:64
 msgid "Report generation returned: Status [%{status}] Message [%{message}]"
@@ -26380,7 +26386,7 @@ msgstr "Reserva"
 #: ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:42
 #: ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:8
 msgid "Reset"
-msgstr "Reiniciar"
+msgstr "Restablecer"
 
 #: ../app/views/layouts/_x_edit_buttons.html.haml:113
 #: ../app/views/layouts/_x_edit_buttons.html.haml:144
@@ -27381,7 +27387,7 @@ msgstr "No se puede Modificar el perfil de análisis de muestra"
 
 #: ../app/views/report/_db_widgets.html.haml:4
 msgid "Sample Dashboard"
-msgstr "Tablero de muestra"
+msgstr "Panel de muestra"
 
 #: ../app/views/report/_form_tl_sample.html.haml:5
 msgid "Sample Timeline"
@@ -33564,7 +33570,7 @@ msgstr "Deshacer el último cambio"
 
 #: ../app/views/layouts/_exception_contents.html.haml:3
 msgid "Unexpected error encountered"
-msgstr "Encontrado un error inexperado"
+msgstr "Se encontró un error inesperado"
 
 #: ../app/assets/javascripts/controllers/alerts/alerts_overview_controller.js:27
 #: ../app/assets/javascripts/controllers/alerts/alerts_overview_controller.js:28
@@ -33999,7 +34005,7 @@ msgstr "Sufijo de usuario:"
 #: ../app/views/ops/_settings_authentication_tab.html.haml:73
 #: ../app/views/_ldap_domain_form.html.haml:24
 msgid "User Type"
-msgstr "Tipo/Perfil de usuario"
+msgstr "Tipo de usuario"
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:540
 msgid "User must be entered to perform LDAP Group Look Up"
@@ -35853,7 +35859,7 @@ msgstr "Qué evaluar"
 
 #: ../app/controllers/report_controller/widgets.rb:93
 msgid "Widget \"%{name}\" was saved"
-msgstr "Se guardó el Widget \"%{name}\""
+msgstr "Se guardó el asistente \"%{name}\""
 
 #: ../app/controllers/report_controller/widgets.rb:143
 msgid "Widget content generation error: %{message}"
@@ -35873,7 +35879,7 @@ msgstr "Nombre del asistente"
 
 #: ../app/controllers/report_controller/widgets.rb:126
 msgid "Widget no longer exists"
-msgstr "El Widget ya no existe"
+msgstr "El asistente ya no existe"
 
 #: ../app/presenters/tree_builder_report_export.rb:32
 #: ../app/views/report/_export_widgets.html.haml:35
