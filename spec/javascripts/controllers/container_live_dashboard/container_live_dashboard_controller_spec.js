@@ -21,7 +21,7 @@ describe('adHocMetricsController', function() {
       $controller = _$controller_('adHocMetricsController');
       $httpBackend.flush();
 
-      $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_system&limit=10000&query=metric_definitions&tags={}&page=1&items_per_page=8').respond(mock_metrics_data);
+      $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_system&limit=10000&query=metric_definitions&tags={}&page=1&items_per_page=20').respond(mock_metrics_data);
       $controller.refreshList();
       $httpBackend.flush();
     }));
@@ -43,36 +43,7 @@ describe('adHocMetricsController', function() {
       });
     });
 
-    describe('count increment', function() {
-      it('should increment the count', function() {
-        $controller.countIncrement();
-        expect($controller.timeFilter.range_count).toBe(2);
-      });
-
-      it('should decrement the count', function() {
-        $controller.timeFilter.range_count = 10;
-        $controller.countDecrement();
-        expect($controller.timeFilter.range_count).toBe(9);
-      });
-    });
-
     describe('utility functions', function() {
-      it('should calculate units correctly', function() {
-        var m;
-
-        m = $controller.metricPrefix(10000, 'ms');
-        expect(m.multiplier).toBe(Math.pow(10, -3));
-        expect(m.unitLabel).toBe('s');
-
-        m = $controller.metricPrefix(10000, 'ns');
-        expect(m.multiplier).toBe(Math.pow(10, -9));
-        expect(m.unitLabel).toBe('s');
-
-        m = $controller.metricPrefix(10000, 's');
-        expect(m.multiplier).toBe(Math.pow(10, -3));
-        expect(m.unitLabel).toBe('Ks');
-      });
-
       it('should calculate differentials currectly', function() {
         var data = [1, 2, 3, 4, 5, 6];
 
@@ -111,7 +82,7 @@ describe('adHocMetricsController', function() {
       $controller = _$controller_('adHocMetricsController');
       $httpBackend.flush();
 
-      $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_ops&limit=10000&query=metric_definitions&tags={}&page=1&items_per_page=8').respond(mock_metrics_data);
+      $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_ops&limit=10000&query=metric_definitions&tags={}&page=1&items_per_page=20').respond(mock_metrics_data);
       $controller.refreshList();
       $httpBackend.flush();
     }));

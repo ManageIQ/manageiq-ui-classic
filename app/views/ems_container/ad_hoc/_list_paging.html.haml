@@ -1,0 +1,30 @@
+%ul.pagination
+  %li
+    %a{"ng-class" => "{disabled: dash.pageNumber === 1}",
+       "ng-click" => "dash.onChangePage({pageNumber: 1})",
+       "href"     => "javascript:void(0)"}
+      %span.i.fa.fa-angle-double-left
+  %li
+    %a{"ng-class" => "{disabled: dash.pageNumber === 1}",
+       "ng-click" => "dash.onChangePage({pageNumber: dash.pageNumber - 1})",
+       "href"     => "javascript:void(0)"}
+      %span.i.fa.fa-angle-left
+  %li.page-selector
+    %span
+      %input{"type"             => "number",
+             "ng-disabled"      => "dash.maxPageNumber <= 1",
+             "ng-model"         => "dash.pageNumber",
+             "ng-model-options" => "{updateOn : 'change blur'}",
+             "ng-change"        => "dash.onChangePage()"}
+      %label
+        of {{dash.maxPageNumber}}
+  %li
+    %a{"ng-class" => "{disabled: dash.pageNumber === dash.maxPageNumber}",
+       "ng-click" => "dash.onChangePage({pageNumber: (dash.pageNumber + 1)})",
+       "href"     => "javascript:void(0)"}
+      %span.i.fa.fa-angle-right
+  %li
+    %a{"ng-class" => "{disabled: dash.pageNumber === dash.maxPageNumber}",
+       "ng-click" => "dash.onChangePage({pageNumber: dash.maxPageNumber})",
+       "href"     => "javascript:void(0)"}
+      %span.i.fa.fa-angle-double-right

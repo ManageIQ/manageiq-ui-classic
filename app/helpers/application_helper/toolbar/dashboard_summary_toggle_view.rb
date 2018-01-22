@@ -24,7 +24,17 @@ class ApplicationHelper::Toolbar::DashboardSummaryToggleView < ApplicationHelper
       nil,
       :url       => "/",
       :url_parms => "?display=topology",
-      :klass     => ApplicationHelper::Button::TopologyFeatureButton)
+      :klass     => ApplicationHelper::Button::TopologyFeatureButton
+    ),
+    twostate(
+      :view_ad_hoc_metrics,
+      'fa fa-line-chart fa-1xplus',
+      N_('Ad hoc Metrics View'),
+      nil,
+      :url       => "/",
+      :url_parms => "?display=ad_hoc_metrics",
+      :klass     => ApplicationHelper::Button::ViewDashboard
+    ),
   ])
   button_group('summary_download', [
     button(
