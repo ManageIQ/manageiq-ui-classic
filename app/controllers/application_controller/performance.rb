@@ -201,7 +201,7 @@ module ApplicationController::Performance
     elsif cmd == "Chart" && model == "Selected"
       return if chart_selected(data_row, typ, ts)
     elsif cmd == "Chart" && typ.starts_with?("top") && @perf_options[:cat]
-      return if chart_top_by_tag(data_row, report, legend_idx, model, ts, bc_model)
+      return if chart_top_by_tag(data_row, report, legend_idx, typ, model, ts, bc_model)
     elsif cmd == "Chart" && typ.starts_with?("top")
       return if chart_top(data_row, typ, ts, model, bc_model)
     else
@@ -466,7 +466,7 @@ module ApplicationController::Performance
   end
 
   # create top chart for selected timestamp/model by tag
-  def chart_top_by_tag(data_row, report, legend_idx, model, ts, bc_model)
+  def chart_top_by_tag(data_row, report, legend_idx, typ, model, ts, bc_model)
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
