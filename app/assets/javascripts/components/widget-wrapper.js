@@ -56,6 +56,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
     '        </h2>',
     '      </div>',
     '    </div>',
+    '    <i ng-if="!vm.widgetModel && vm.widgetBlank == \'false\'" class="fa fa-spin fa-spinner"></i>',
     '    <div ng-if="vm.widgetBlank === \'true\' || vm.widgetModel" class="mc" id="{{vm.innerDivId}}" ng-class="{ hidden: vm.widgetModel.minimized }">',
     '      <div ng-if="vm.widgetBlank === \'true\'">',
     '        <div class="blank-slate-pf" style="padding: 10px">',
