@@ -26,8 +26,8 @@ describe ApplicationHelper::Button::VmWebmksConsole do
     context 'when record.vendor == vmware' do
       let(:power_state) { 'on' }
       let(:api_version) { 6.5 }
-      let(:ems) { FactoryGirl.create(:ems_vmware, :api_version => api_version) }
-      let(:record) { FactoryGirl.create(:vm_vmware, :ems_id => ems.id) }
+      let(:host) { FactoryGirl.create(:host_vmware_esx, :vmm_version => api_version) }
+      let(:record) { FactoryGirl.create(:vm_vmware, :host => host) }
 
       context 'and the power is on' do
         it_behaves_like 'vm_console_with_power_state_on_off',
