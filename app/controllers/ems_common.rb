@@ -109,12 +109,6 @@ module EmsCommon
         images
         instances
         load_balancers
-        middleware_datasources
-        middleware_deployments
-        middleware_domains
-        middleware_messagings
-        middleware_server_groups
-        middleware_servers
         miq_templates
         network_ports
         network_routers
@@ -285,10 +279,6 @@ module EmsCommon
       pause_or_resume_emss(:pause => true) if params[:pressed] == "#{table_name}_pause"
       pause_or_resume_emss(:resume => true) if params[:pressed] == "#{table_name}_resume"
       tag(model) if params[:pressed] == "#{table_name}_tag"
-
-      # Edit Tags for Middleware Manager Relationship pages
-      tag(@display.camelize.singularize) if @display && @display != 'main' &&
-                                            params[:pressed] == "#{@display.singularize}_tag"
       assign_policies(model) if params[:pressed] == "#{table_name}_protect"
       check_compliance(model) if params[:pressed] == "#{table_name}_check_compliance"
       edit_record if params[:pressed] == "#{table_name}_edit"
@@ -326,7 +316,6 @@ module EmsCommon
       if params[:pressed] == "ems_cloud_recheck_auth_status"          ||
          params[:pressed] == "ems_infra_recheck_auth_status"          ||
          params[:pressed] == "ems_physical_infra_recheck_auth_status" ||
-         params[:pressed] == "ems_middleware_recheck_auth_status"     ||
          params[:pressed] == "ems_container_recheck_auth_status"
         if params[:id]
           table_key = :table

@@ -5,6 +5,3 @@ input.ng-invalid-validatemultiple, select.ng-invalid-validatemultiple,
 button.btn-red-border {
   border-color: #a94442;
 }
-.ng-error-messages {
-  color: #a94442;
-}

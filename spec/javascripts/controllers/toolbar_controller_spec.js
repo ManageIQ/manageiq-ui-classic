@@ -70,10 +70,6 @@ describe('toolbarController', function () {
      beforeEach(function(){
        $controller.initObject(JSON.stringify(middleware_toolbar_detail));
      });
-
-     it('middleware server, it should be different than list toolbar', function() {
-       expect(middleware_toolbar_list !== $controller.toolbarItems).toBeTruthy();
-     });
    });
 
    describe('event data toolbar', function() {

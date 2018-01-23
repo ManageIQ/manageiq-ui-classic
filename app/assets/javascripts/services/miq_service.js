@@ -4,8 +4,7 @@ add_flash miqFlashLater miqFlashSaved */
 ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API', '$window', function($timeout, $document, $q, API, $window) {
   var miqService = this;
 
-  this.storedPasswordPlaceholder = '●●●●●●●●';
-  this.deploymentExists = 'EXISTS';
+  this.storedPasswordPlaceholder = "●●●●●●●●";
 
   this.showButtons = function() {
     miqButtons('show');
