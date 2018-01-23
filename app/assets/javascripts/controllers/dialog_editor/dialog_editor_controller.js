@@ -67,16 +67,6 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
           });
         });
       });
-
-      _.forEach(allFields, function(field) {
-        _.forEach(field.dialog_field_responders, function(responder, index) {
-          _.forEach(dynamicFields, function(dynamicField) {
-            if (responder === dynamicField.name) {
-              field.dialog_field_responders[index] = dynamicField.id;
-            }
-          });
-        });
-      });
     }
 
     translateResponderNamesToIds(dialog.content[0]);
