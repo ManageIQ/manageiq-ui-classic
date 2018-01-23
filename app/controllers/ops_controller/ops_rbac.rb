@@ -1215,11 +1215,8 @@ module OpsController::OpsRbac
   end
 
   def rbac_group_filter_expression_vars(field_expression, field_expression_table)
-    if @group && @group.entitlement && @group.entitlement[:filter_expression].kind_of?(MiqExpression)
-      @edit[:new][field_expression] = @group.entitlement[:filter_expression].exp
-    else
-      @edit[:new][field_expression] = nil
-    end
+    @edit[:new][field_expression]
+    @edit[:new][field_expression] = @group.entitlement[:filter_expression].exp if !@group.nil? && @group.entitlement && @group.entitlement[:filter_expression].kind_of?(MiqExpression)
     @edit[:new][:use_filter_expression] = true
     # Populate exp editor fields for the expression column
     @edit[field_expression] ||= ApplicationController::Filter::Expression.new

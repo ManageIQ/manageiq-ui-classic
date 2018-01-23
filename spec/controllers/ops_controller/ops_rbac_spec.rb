@@ -417,26 +417,26 @@ describe OpsController do
 
     it "saves the filters when use_filter_expression is false" do
       @group.entitlement = Entitlement.create!
-      controller.instance_variable_set(:@edit, :new => {:use_filter_expression => false,
-                                                        :name                  => 'Name',
-                                                        :description           => "Test",
-                                                        :role                  => @role.id,
-                                                        :filter_expression     => @exp.exp,
-                                                        :belongsto             => {},
-                                                        :filters               => {'managed/env' => '/managed/env'}})
+      controller.instance_variable_set(:@edit, :new => {:use_filter_expression   => false,
+                                                        :name                    => 'Name',
+                                                        :description             => "Test",
+                                                        :role                    => @role.id,
+                                                        :group_filter_expression => @exp.exp,
+                                                        :belongsto               => {},
+                                                        :filters                 => {'managed/env' => '/managed/env'}})
       controller.send(:rbac_group_set_record_vars, @group)
       expect(@group.entitlement.filter_expression).to be_nil
       expect(@group.entitlement.get_managed_filters).to match([["/managed/env"]])
     end
 
     it "saves the filter_expression when use_filter_expression true" do
-      controller.instance_variable_set(:@edit, :new => {:use_filter_expression => true,
-                                                        :name                  => 'Name',
-                                                        :description           => "Test",
-                                                        :role                  => @role.id,
-                                                        :filter_expression     => @exp.exp,
-                                                        :belongsto             => {},
-                                                        :filters               => {'managed/env' => '/managed/env'}})
+      controller.instance_variable_set(:@edit, :new => {:use_filter_expression   => true,
+                                                        :name                    => 'Name',
+                                                        :description             => "Test",
+                                                        :role                    => @role.id,
+                                                        :group_filter_expression => @exp.exp,
+                                                        :belongsto               => {},
+                                                        :filters                 => {'managed/env' => '/managed/env'}})
       controller.send(:rbac_group_set_record_vars, @group)
       expect(@group.entitlement.get_managed_filters).to eq([])
       expect(@group.entitlement.filter_expression.exp).to match(@exp.exp)
@@ -458,16 +458,16 @@ describe OpsController do
               :new      => new,
               :current  => new,
               :edit_exp => {:key => '???'}}
-      edit[:filter_expression] ||= ApplicationController::Filter::Expression.new
-      edit[:filter_expression][:expression] = {"???" => "???"}
-      edit[:new][:filter_expression] = copy_hash(edit[:filter_expression][:expression])
-      edit[:filter_expression].history.reset(edit[:filter_expression][:expression])
+      edit[:group_filter_expression] ||= ApplicationController::Filter::Expression.new
+      edit[:group_filter_expression][:expression] = {"???" => "???"}
+      edit[:new][:group_filter_expression] = copy_hash(edit[:group_filter_expression][:expression])
+      edit[:group_filter_expression].history.reset(edit[:group_filter_expression][:expression])
       controller.instance_variable_set(:@edit, edit)
-      controller.instance_variable_set(:@expkey, :filter_expression)
+      controller.instance_variable_set(:@expkey, :group_filter_expression)
       edit[:group_filter_expression][:exp_table] = controller.send(:exp_build_table, edit[:group_filter_expression][:expression])
       edit[:group_filter_expression][:exp_model] = @group.class.to_s
       session[:edit] = edit
-      session[:expkey] = :filter_expression
+      session[:expkey] = :group_filter_expression
       controller.instance_variable_set(:@edit, edit)
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
       allow(controller).to receive(:replace_right_cell)
@@ -480,13 +480,13 @@ describe OpsController do
     it "initializes the group record and tag tree when switching tabs" do
       controller.instance_variable_set(:@edit,
                                        :group_id => @group.id,
-                                       :new      => {:use_filter_expression => true,
-                                                     :name                  => 'Name',
-                                                     :description           => "Test",
-                                                     :role                  => @role.id,
-                                                     :filter_expression     => @exp.exp,
-                                                     :belongsto             => {},
-                                                     :filters               => {'managed/env' => '/managed/env'}})
+                                       :new      => {:use_filter_expression   => true,
+                                                     :name                    => 'Name',
+                                                     :description             => "Test",
+                                                     :role                    => @role.id,
+                                                     :group_filter_expression => @exp.exp,
+                                                     :belongsto               => {},
+                                                     :filters                 => {'managed/env' => '/managed/env'}})
       controller.instance_variable_set(:@sb, :active_rbac_group_tab => 'rbac_customer_tags')
       controller.instance_variable_set(:@_params, :use_filter_expression => "false", :id => @group.id)
       controller.send(:rbac_group_get_form_vars)
