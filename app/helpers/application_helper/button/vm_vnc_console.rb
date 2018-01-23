@@ -17,7 +17,11 @@ class ApplicationHelper::Button::VmVncConsole < ApplicationHelper::Button::VmCon
 
   private
 
-  def unsupported_vendor_api_version
+  def supported_vendor_api?
+    @record.host.vmm_version.to_f < unsupported_api_version
+  end
+
+  def unsupported_api_version
     6.5
   end
 end
