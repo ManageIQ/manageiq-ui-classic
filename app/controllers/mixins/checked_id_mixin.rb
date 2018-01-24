@@ -86,10 +86,10 @@ module Mixins
 
     # Find a record by model and ID.
     # Set flash errors for not found/not authorized.
-    def find_record_with_rbac_flash(model, id, resource_name = nil)
+    def find_record_with_rbac_flash(klass, id, resource_name = nil)
       tested_object = klass.find(id)
       if tested_object.nil?
-        record_name = resource_name ? "#{ui_lookup(:model => model)} '#{resource_name}'" : _("The selected record")
+        record_name = resource_name ? "#{ui_lookup(:model => klass)} '#{resource_name}'" : _("The selected record")
         add_flash(_("%{record_name} no longer exists in the database") % {:record_name => record_name}, :error)
         return nil
       end
