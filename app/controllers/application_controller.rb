@@ -1606,7 +1606,7 @@ class ApplicationController < ActionController::Base
 
       if typ == "bytag"
         ["\"#{model.downcase.pluralize}\".id IN (?)",
-         data_row["assoc_ids_#{report.extras[:group_by_tags][legend_index]}"][model.downcase.to_sym][:on]]
+         data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]]
       else
         ["\"#{model.downcase.pluralize}\".id IN (?)",
          data_row["assoc_ids"][model.downcase.to_sym][typ.to_sym]]

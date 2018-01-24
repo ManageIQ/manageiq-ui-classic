@@ -187,7 +187,7 @@ module ApplicationController::Performance
       display_current_top(data_row)
       return
     elsif cmd == "Display" && typ == "bytag"
-      return if display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
+      return if display_by_tag(data_row, report, ts, bc_model, model, legend_idx, typ)
     elsif cmd == "Display"
       return if display_selected(ts, typ, data_row, model, bc_model)
     elsif cmd == "Timeline" && model == "Current"
@@ -201,7 +201,7 @@ module ApplicationController::Performance
     elsif cmd == "Chart" && model == "Selected"
       return if chart_selected(data_row, typ, ts)
     elsif cmd == "Chart" && typ.starts_with?("top") && @perf_options[:cat]
-      return if chart_top_by_tag(data_row, report, legend_idx, model, ts, bc_model)
+      return if chart_top_by_tag(data_row, report, legend_idx, typ, model, ts, bc_model)
     elsif cmd == "Chart" && typ.starts_with?("top")
       return if chart_top(data_row, typ, ts, model, bc_model)
     else
@@ -227,7 +227,7 @@ module ApplicationController::Performance
   end
 
   # display selected resources from a tag chart
-  def display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
+  def display_by_tag(data_row, report, ts, bc_model, model, legend_idx, typ)
     dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
     bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
@@ -466,7 +466,7 @@ module ApplicationController::Performance
   end
 
   # create top chart for selected timestamp/model by tag
-  def chart_top_by_tag(data_row, report, legend_idx, model, ts, bc_model)
+  def chart_top_by_tag(data_row, report, legend_idx, typ, model, ts, bc_model)
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
