@@ -161,8 +161,6 @@ module Mixins
         [user, params[:default_password], endpoint_opts]
       when 'ManageIQ::Providers::Lenovo::PhysicalInfraManager'
         [user, password, params[:default_hostname], params[:default_api_port], "token", false, true]
-      when 'ManageIQ::Providers::Hawkular::MiddlewareManager'
-        [params[:default_hostname], params[:default_api_port], user, params[:default_password], params[:default_security_protocol], params[:default_tls_ca_certs], true]
       end
     end
 
@@ -571,11 +569,6 @@ module Mixins
           prometheus_alerts_endpoint = {:role => :prometheus_alerts, :hostname => prometheus_alerts_hostname, :port => prometheus_alerts_api_port}
           prometheus_alerts_endpoint.merge!(endpoint_security_options(prometheus_alerts_security_protocol, prometheus_alerts_tls_ca_certs))
         end
-      end
-
-      if ems.kind_of?(ManageIQ::Providers::MiddlewareManager)
-        default_endpoint = {:role => :default, :hostname => hostname, :port => port}
-        default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
       end
 
       if ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
