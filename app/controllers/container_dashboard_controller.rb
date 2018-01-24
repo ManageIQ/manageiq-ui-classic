@@ -9,6 +9,7 @@ class ContainerDashboardController < ApplicationController
   after_action :set_session_data
 
   def show
+    @lastaction = "show_dashboard"
     if params[:id].nil?
       @breadcrumbs.clear
     end

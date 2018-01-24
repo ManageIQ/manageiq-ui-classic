@@ -202,9 +202,9 @@ body#dashboard .blank-slate-pf {
 @media (min-width: $screen-md) {
   .aggregate-object-card .card-pf {
     min-height: 137px;
-
-    img {
-      margin-top: 20px;
+   > .card-pf-title > span > img {
+      height: 60px;margin-top:0;
+      width: 60px
     }
   }
 }
