@@ -528,7 +528,7 @@ module QuadiconHelper
              end
 
       output << content_tag(:div, :class => 'flobj') do
-        title = _("Name: %{name} | Hostname: %{hostname}") % {:name => h(item.name), :hostname => h(item.hostname)}
+        title = _("Name: %{name} Hostname: %{hostname}") % {:name => h(item.name), :hostname => h(item.hostname)}
 
         link_to(href, :title => title) do
           quadicon_reflection_img
@@ -617,7 +617,7 @@ module QuadiconHelper
       output << flobj_img_simple("layout/reflection.png")
     else
       output << content_tag(:div, :class => 'flobj') do
-        title = _("Name: %{name} | Hostname: %{hostname} | Refresh Status: %{status}") %
+        title = _("Name: %{name} Hostname: %{hostname} Refresh Status: %{status}") %
           {:name     => h(item.name),
            :hostname => h(item.hostname),
            :status   => h(item.last_refresh_status.titleize)}
@@ -810,7 +810,7 @@ module QuadiconHelper
 
   def quadicon_storage_img_options(item)
     opts = {
-      :title  => _("Name: %{name} | Datastore Type: %{storage_type}") % {:name => h(item.name), :storage_type => h(item.store_type)}
+      :title  => _("Name: %{name} Datastore Type: %{storage_type}") % {:name => h(item.name), :storage_type => h(item.store_type)}
     }
 
     opts
