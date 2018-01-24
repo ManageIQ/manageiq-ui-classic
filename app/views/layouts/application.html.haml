@@ -17,6 +17,7 @@
       = stylesheet_link_tag 'miq_debug'
     = csrf_meta_tag
     = render :partial => 'layouts/i18n_js'
+    = javascript_pack_tag 'vendor'
     -# FIXME: the conditional below is a temporary fix for a webpacker issue, remove when it's resolved
     - unless Rails.env.test?
       - Webpacker::Manifest.instance.data.keys.each do |pack|

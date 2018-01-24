@@ -56,16 +56,18 @@ module.exports = {
 
     new ManifestPlugin({
       publicPath: output.publicPath,
-      writeToFileEmit: true
-    })
+      writeToFileEmit: true,
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
   ],
 
   resolve: {
     extensions: settings.extensions,
-    modules: [
-      resolve(settings.source_path),
-      'node_modules'
-    ]
+    modules: [resolve(settings.source_path)].concat(
+      Object.values(engines).map(engine => `${engine}/node_modules`)
+    ),
   },
 
   resolveLoader: {
