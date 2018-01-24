@@ -193,6 +193,10 @@ class ProviderForemanController < ApplicationController
     true
   end
 
+  def provider_active_tree?
+    x_active_tree == :configuration_manager_providers_tree
+  end
+
   private
 
   def textual_group_list
@@ -366,6 +370,13 @@ class ProviderForemanController < ApplicationController
     node
   end
 
+  def replace_search_box(presenter)
+    # Replace the searchbox
+    presenter.replace(:adv_searchbox_div,
+                      r[:partial => 'layouts/x_adv_searchbox',
+                        :locals  => {:nameonly => provider_active_tree?}])
+  end
+
   def update_partials(record_showing, presenter)
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
@@ -390,6 +401,7 @@ class ProviderForemanController < ApplicationController
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
+    replace_search_box(presenter)
   end
 
   def group_summary_tab_selected?
