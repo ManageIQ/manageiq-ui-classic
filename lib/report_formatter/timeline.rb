@@ -93,9 +93,8 @@ module ReportFormatter
             ems = ExtManagementSystem.find(rec[:ems_id])
             ems_cloud =  true if ems.kind_of?(EmsCloud)
             ems_container = true if ems.kind_of?(::ManageIQ::Providers::ContainerManager)
-            ems_mw = true if ems.kind_of?(::ManageIQ::Providers::MiddlewareManager)
           end
-          if !(ems_cloud || ems_mw)
+          if !ems_cloud
             e_title = if rec[:vm_name] # Create the title using VM name
                         rec[:vm_name]
                       elsif rec[:host_name] # or Host Name
@@ -111,10 +110,6 @@ module ReportFormatter
                       elsif rec[:container_node_name]
                         rec[:container_node_name]
                       end
-          elsif ems_mw
-            mw_name_cols = EmsEvent.column_names.select { |n| n.match('middleware_.+_name') }
-            title_col = mw_name_cols.find { |c| rec[c] }
-            e_title = rec[title_col] unless title_col.nil?
           end
           e_title ||= ems ? ems.name : "No VM, Host, or MS"
         else
@@ -158,7 +153,6 @@ module ReportFormatter
 
       flags = {:ems_cloud     => ems_cloud,
                :ems_container => ems_container,
-               :ems_mw        => ems_mw,
                :time_zone     => tz}
       tl_message = TimelineMessage.new(row, rec, flags, mri.db)
       e_text = ''
