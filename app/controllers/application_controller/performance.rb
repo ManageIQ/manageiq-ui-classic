@@ -187,7 +187,7 @@ module ApplicationController::Performance
       display_current_top(data_row)
       return
     elsif cmd == "Display" && typ == "bytag"
-      return if display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
+      return if display_by_tag(data_row, report, ts, bc_model, model, legend_idx, typ)
     elsif cmd == "Display"
       return if display_selected(ts, typ, data_row, model, bc_model)
     elsif cmd == "Timeline" && model == "Current"
@@ -227,7 +227,7 @@ module ApplicationController::Performance
   end
 
   # display selected resources from a tag chart
-  def display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
+  def display_by_tag(data_row, report, ts, bc_model, model, legend_idx, typ)
     dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
     bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
