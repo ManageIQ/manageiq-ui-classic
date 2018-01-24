@@ -66,7 +66,7 @@ module.exports = {
   resolve: {
     extensions: settings.extensions,
     modules: [resolve(settings.source_path)].concat(
-      Object.values(engines).map(engine => `${engine}/node_modules`)
+      Object.keys(engines).map(key => engines[key]).map(engine => `${engine}/node_modules`)
     ),
   },
 
