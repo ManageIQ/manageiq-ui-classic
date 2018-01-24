@@ -1579,61 +1579,24 @@ function rbacGroupLoadTab(id) {
 }
 
 function chartData(type, data, data2) {
-  var empty = {
-    data: {
-      columns: [],
-    },
-  };
-
   if (type === undefined) {
-    return empty;
+    return emptyChart();
   }
 
   var config = _.cloneDeep(ManageIQ.charts.c3config[type]);
   if (config === undefined) {
-    return empty;
+    return emptyChart();
   }
 
   if (_.isObject(data.miq)) {
     if (data.miq.empty) {
       return _.defaultsDeep({}, data, data2);
     }
-    // set maximum count of x axis tick labels for C&U charts
-    if (data.miq.performance_chart) {
-      data.axis.x.tick.centered = true;
-      data.axis.x.tick.culling = { max: 5 };
-    }
-
-    // small C&U charts have very limited height
-    if (data.miq.flat_chart) {
-      var max = _.max(getChartColumnDataValues(data.data.columns));
-      data.axis.y.tick.values = [0, max];
-    }
-
-    if (data.miq.expand_tooltip) {
-      data.tooltip.format.name = function(_name, _ratio, id, _index) {
-        return data.miq.name_table[id];
-      };
-
-      data.tooltip.format.title = function(x) {
-        return data.miq.category_table[x];
-      };
-    }
-    if (data.miq.zoomed) {
-      data.size = { height: $('#lightbox-panel').height() - 200 };
-      data.data.names = data.miq.name_table;
-      data.legend = { position: 'bottom'};
-
-    }
+    customizeChart(data);
   }
 
   // set formating function for tooltip and y tick labels
-  if (_.isObject(data.axis) &&
-      _.isObject(data.axis.y) &&
-      _.isObject(data.axis.y.tick) &&
-      _.isObject(data.axis.y.tick.format) &&
-      data.axis.y.tick.format.function) {
-
+  if (validateChartAxis(data.axis)) {
     var format = data.axis.y.tick.format;
     var max = _.max(getChartColumnDataValues(data.data.columns));
     var min = _.min(getChartColumnDataValues(data.data.columns));
@@ -1662,15 +1625,62 @@ function chartData(type, data, data2) {
     };
   }
 
+  correctPatternflyOptions(config);
+  return _.defaultsDeep({}, data, config, data2);
+}
 
+function validateChartAxis(axis) {
+  return _.isObject(axis) &&
+         _.isObject(axis.y) &&
+         _.isObject(axis.y.tick) &&
+         _.isObject(axis.y.tick.format) &&
+         axis.y.tick.format.function
+}
+
+function emptyChart() {
+  return {
+           data: {
+             columns: [],
+           },
+         };
+}
+
+function customizeChart(data) {
+  // set maximum count of x axis tick labels for C&U charts
+  if (data.miq.performance_chart) {
+    data.axis.x.tick.centered = true;
+    data.axis.x.tick.culling = { max: 5 };
+  }
+
+  // small C&U charts have very limited height
+  if (data.miq.flat_chart) {
+    var max = _.max(getChartColumnDataValues(data.data.columns));
+    data.axis.y.tick.values = [0, max];
+  }
+
+  if (data.miq.expand_tooltip) {
+    data.tooltip.format.name = function(_name, _ratio, id, _index) {
+      return data.miq.name_table[id];
+    };
+
+    data.tooltip.format.title = function(x) {
+      return data.miq.category_table[x];
+    };
+  }
+  if (data.miq.zoomed) {
+    data.size = { height: $('#lightbox-panel').height() - 200 };
+    data.data.names = data.miq.name_table;
+    data.legend = { position: 'bottom'};
+  }
+}
+
+function correctPatternflyOptions(config) {
   // some PatternFly default configs define contents function, but it breaks formatting
   if (_.isObject(config.tooltip)) {
     config.tooltip.contents = undefined;
   }
   // some PatternFly default configs define size of chart
   config.size = {};
-  var ret = _.defaultsDeep({}, data, config, data2);
-  return ret;
 }
 
 $(function() {
