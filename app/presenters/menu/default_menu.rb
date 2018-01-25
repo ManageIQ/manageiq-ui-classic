@@ -2,6 +2,12 @@
 module Menu
   class DefaultMenu
     class << self
+      def graphql_menu_section
+        Menu::Section.new(:graphql, N_("Graphql"), 'fa fa-lightbulb-o', [
+          Menu::Item.new('graphql', N_('Explorer'), 'utilization', {:feature => 'utilization'}, '/graphql'),
+        ])
+      end
+
       def compute_menu_section
         Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu', [
           clouds_menu_section,
@@ -283,7 +289,7 @@ module Menu
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, storage_menu_section, control_menu_section, automation_menu_section,
-         optimize_menu_section, monitor_menu_section, settings_menu_section, help_menu_section].compact
+         optimize_menu_section, monitor_menu_section, settings_menu_section, graphql_menu_section, help_menu_section].compact
       end
 
       private

@@ -2065,6 +2065,15 @@ Rails.application.routes.draw do
         save_post
     },
 
+    :graphql => {
+      :get => %w(
+        index
+      ),
+      :post => %w(
+
+      )
+    },
+
     :ansible_credential => {
       :get => %w(
         download_data
