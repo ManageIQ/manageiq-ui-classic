@@ -121,7 +121,7 @@ module ApplicationController::Buttons
     render :update do |page|
       page << javascript_prologue
       if [:instance_name, :other_name, :target_class, :button_type].any? { |k| params.key?(k) }
-        @sb[:active_tab] = "ab_options_tab"
+        @sb[:active_tab] = params[:instance_name] ? "ab_advanced_tab" : "ab_options_tab"
         page.replace("ab_form", :partial => "shared/buttons/ab_form")
       end
       if params[:visibility_typ]
