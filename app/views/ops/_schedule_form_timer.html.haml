@@ -7,7 +7,7 @@
           = _("Run")
         .col-md-10
           = select_tag("timer_typ",
-                       options_for_select(%w(Once Hourly Daily Weekly Monthly)),
+                       options_for_select([[_('Once'), 'Once'], [_('Hourly'), 'Hourly'], [_('Daily'), 'Daily'], [_('Weekly'), 'Weekly'], [_('Monthly'), 'Monthly']]),
                        "ng-model"                    => "scheduleModel.timer_typ",
                        "ng-change"                   => "scheduleTimerTypeChanged()",
                        "checkchange"                 => "",
