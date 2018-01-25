@@ -352,6 +352,13 @@ class MiqRequestController < ApplicationController
 
   private
 
+  def replace_gtl
+    render :update do |page|
+      page << javascript_prologue
+      page.replace('gtl_div', :partial => 'layouts/gtl', :locals => {:no_flash_div => true})
+    end
+  end
+
   def handle_request_edit_copy_redirect
     javascript_redirect :controller     => @redirect_controller,
                         :action         => @refresh_partial,
@@ -372,18 +379,10 @@ class MiqRequestController < ApplicationController
       end
     elsif @display == "miq_provisions"
       show
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/gtl") # Replace the provisioned vms list
-      end
+      replace_gtl
     else
-      # forcing to refresh the view when reload button is pressed
-      @_params[:refresh] = "y"
       show_list
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("main_div", :template => "miq_request/show_list")
-      end
+      replace_gtl
     end
   end
 
