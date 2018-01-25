@@ -20,7 +20,7 @@ describe ContainerGroupController do
     get :show, :params => { :id => container_group.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Pods",
+    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Pods",
                                           :url  => "/container_group/show_list?page=&refresh=y"},
                                          {:name => "Test Group (Summary)",
                                           :url  => "/container_group/show/#{container_group.id}"}])
