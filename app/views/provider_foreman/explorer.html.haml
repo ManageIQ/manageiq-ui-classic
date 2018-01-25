@@ -1,5 +1,5 @@
 - content_for :search do
-  = render(:partial => "layouts/x_adv_searchbox")
+  = render(:partial => "layouts/x_adv_searchbox", :locals => {:nameonly => controller.provider_active_tree?})
   = render(:partial => 'layouts/quick_search')
 
 -# These are the initial divs that will go inside center_cell_div
