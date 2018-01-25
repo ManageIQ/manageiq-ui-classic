@@ -76,7 +76,7 @@ class FloatingIpController < ApplicationController
 
   def create_finished
     task_id = session[:async][:params][:task_id]
-    floating_ip_address = session[:async][:params][:floating_ip_address]
+    floating_ip_address = session[:async][:params][:address]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Floating IP \"%{address}\" created") % { :address => floating_ip_address })
@@ -201,10 +201,10 @@ class FloatingIpController < ApplicationController
   def form_params
     options = {}
     options[:ems_id] = params[:ems_id] if params[:ems_id] && params[:ems_id] != 'new'
-    options[:floating_ip_address] = params[:floating_ip_address] if params[:floating_ip_address]
+    options[:floating_ip_address] = params[:address] if params[:address]
     options[:cloud_network_id] = params[:cloud_network_id] if params[:cloud_network_id]
     options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
-    options[:network_port_ems_ref] = params[:network_port_ems_ref] if params[:network_port_ems_ref]
+    options[:port_id] = params[:network_port][:ems_ref] if params[:network_port] && params[:network_port][:ems_ref]
     options[:router_id] = params[:router_id] if params[:router_id]
     options
   end
