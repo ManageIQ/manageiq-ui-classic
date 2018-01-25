@@ -527,10 +527,8 @@ class MiqRequestController < ApplicationController
       session[:flash_msgs] = @flash_array.dup
       javascript_redirect :action => 'show_list'
     else
-      render :update do |page|
-        page << javascript_prologue
-        page.replace_html('main_div', :partial => 'layouts/gtl')
-      end
+      show_list
+      replace_gtl
     end
   end
 
