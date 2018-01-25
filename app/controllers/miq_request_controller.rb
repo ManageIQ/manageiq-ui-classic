@@ -524,7 +524,8 @@ class MiqRequestController < ApplicationController
 
 
     if @flash_array.present?
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+      session[:flash_msgs] = @flash_array.dup
+      javascript_redirect :action => 'show_list'
     else
       render :update do |page|
         page << javascript_prologue
