@@ -259,7 +259,7 @@ describe ReportController do
       rpt = FactoryGirl.create(:miq_report_chargeback)
       controller.send(:valid_report?, rpt)
       flash_messages = assigns(:flash_array)
-      flash_str = 'A specific Project or all must be selected'
+      flash_str = 'A specific Container Project or all must be selected'
       expect(flash_messages.first[:message]).to eq(flash_str)
       expect(flash_messages.first[:level]).to eq(:error)
     end
