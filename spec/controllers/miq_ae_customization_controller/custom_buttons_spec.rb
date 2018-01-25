@@ -74,5 +74,28 @@ describe MiqAeCustomizationController do
       expect(response.status).to eq(200)
       expect(response.body).to include('name=\"disabled_text\" id=\"disabled_text\" value=\"a_new_disabled_text\"')
     end
+
+    it "the active tab is Advanced when the System/process field is updated" do
+      @sb = {:active_tree => :ab_tree,
+             :trees       => {:ab_tree => {:tree => :ab_tree}},
+             :params      => {:instance_name => 'MiqEvent'}}
+      controller.instance_variable_set(:@sb, @sb)
+      controller.instance_variable_set(:@breadcrumbs, [])
+
+      edit = {:new               => {:button_images => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
+                                    :instance_name  => 'MiqEvent',
+                                    :attrs          => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                                    :disabled_text  => 'a_disabled_text',
+                                    :visibility_typ => 'Type1'},
+              :instance_names    => %w(CustomButton_1 CustomButton_2),
+              :visibility_types  => %w(Type1 Type2),
+              :ansible_playbooks => [],
+              :current           => {}}
+      controller.instance_variable_set(:@edit, edit)
+      session[:edit] = edit
+      session[:resolve] = {}
+      post :automate_button_field_changed, :params => {:id => 'new', :instance_name => "Request"}
+      expect(assigns(:sb)[:active_tab]).to eq("ab_advanced_tab")
+    end
   end
 end
