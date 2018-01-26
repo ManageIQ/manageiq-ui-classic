@@ -301,6 +301,34 @@ describe ServiceController do
         expect(response.status).to eq(200)
       end
     end
+
+    context 'applying filter from Advanced Search' do
+      describe '#get_node_info' do
+        let(:edit) { {:new => {}, :adv_search_applied => {:text => " - Filtered by Filter1"}} }
+
+        before do
+          controller.instance_variable_set(:@edit, edit)
+          controller.instance_variable_set(:@right_cell_text, nil)
+          controller.instance_variable_set(:@sb, {})
+        end
+
+        it 'does not call load_adv_search method' do
+          expect(controller).not_to receive(:load_adv_search)
+          controller.send(:get_node_info, "root")
+        end
+
+        it 'calls process_show_list method' do
+          expect(controller).to receive(:process_show_list)
+          controller.send(:get_node_info, "root")
+        end
+
+        it 'sets right cell text properly' do
+          allow(controller).to receive(:x_tree).and_return("type" => :svcs)
+          controller.send(:get_node_info, "root")
+          expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Services - Filtered by Filter1")
+        end
+      end
+    end
   end
 
   it_behaves_like "explorer controller with custom buttons"
