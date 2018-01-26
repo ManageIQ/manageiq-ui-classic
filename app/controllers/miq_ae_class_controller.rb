@@ -1981,7 +1981,7 @@ class MiqAeClassController < ApplicationController
       @sb[:row_selected].each do |items|
         item = items.split('-')
         item = find_id_with_rbac(MiqAeInstance, from_cid(item[1]))
-        aeinstances.push(from_cid(item[1]))
+        aeinstances.push(item) if item
       end
     else
       node = x_node.split('-')
@@ -2008,7 +2008,7 @@ class MiqAeClassController < ApplicationController
       @sb[:row_selected].each do |items|
         item = items.split('-')
         item = find_id_with_rbac(MiqAeMethod, from_cid(item[1]))
-        aemethods.push(from_cid(item[1]))
+        aemethods.push(item) if item
       end
     else
       node = x_node.split('-')
