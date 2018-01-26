@@ -352,6 +352,13 @@ class MiqRequestController < ApplicationController
 
   private
 
+  def replace_gtl
+    render :update do |page|
+      page << javascript_prologue
+      page.replace('gtl_div', :partial => 'layouts/gtl', :locals => {:no_flash_div => true})
+    end
+  end
+
   def handle_request_edit_copy_redirect
     javascript_redirect :controller     => @redirect_controller,
                         :action         => @refresh_partial,
@@ -372,18 +379,10 @@ class MiqRequestController < ApplicationController
       end
     elsif @display == "miq_provisions"
       show
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/gtl") # Replace the provisioned vms list
-      end
+      replace_gtl
     else
-      # forcing to refresh the view when reload button is pressed
-      @_params[:refresh] = "y"
       show_list
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("main_div", :template => "miq_request/show_list")
-      end
+      replace_gtl
     end
   end
 
@@ -506,63 +505,51 @@ class MiqRequestController < ApplicationController
   # Delete all selected or single displayed action(s)
   def deleterequests
     assert_privileges("miq_request_delete")
-    miq_requests = []
-    if @lastaction == "show_list" # showing a list
-      miq_requests = find_checked_items
-      if miq_requests.empty?
-        add_flash(_("No Requests were selected for deletion"), :error)
-      end
-      process_requests(miq_requests, "destroy") unless miq_requests.empty?
-      add_flash(_("The selected Requests were deleted")) unless flash_errors?
-    else # showing 1 request, delete it
-      if params[:id].nil? || !MiqRequest.exists?(params[:id])
-        add_flash(_("Request no longer exists"), :error)
-      else
-        miq_requests.push(params[:id])
-      end
-      @single_delete = true
-      process_requests(miq_requests, "destroy") unless miq_requests.empty?
-      add_flash(_("The selected Request was deleted")) unless flash_errors?
+
+    miq_requests = find_records_with_rbac(MiqRequest, checked_or_params)
+    if miq_requests.empty?
+      add_flash(_("No Requests were selected for deletion"), :error)
+    else
+      destroy_requests(miq_requests)
     end
-    show_list
+
+    unless flash_errors?
+      if @lastaction == "show_list" # showing a list
+        add_flash(_("The selected Requests were deleted"))
+      else
+        @single_delete = true
+        add_flash(_("The selected Request was deleted"))
+      end
+    end
+
 
     if @flash_array.present?
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+      session[:flash_msgs] = @flash_array.dup
+      javascript_redirect :action => 'show_list'
     else
-      render :update do |page|
-        page << javascript_prologue
-        page.replace_html('main_div', :partial => 'layouts/gtl')
-      end
+      show_list
+      replace_gtl
     end
   end
 
-  # Common Request button handler routines
-  def process_requests(miq_requests, task)
-    MiqRequest.where(:id => miq_requests).each do |miq_request|
-      id = miq_request.id
+  def destroy_requests(miq_requests)
+    miq_requests.each do |miq_request|
       request_name = miq_request.description
-      if task == "destroy"
-        audit = {:event        => "MiqRequest_record_delete",
-                 :message      => _("[%{name}] Record deleted") % {:name => request_name},
-                 :target_id    => id,
-                 :target_class => "MiqRequest",
-                 :userid       => session[:userid]}
-      end
+      audit = {:event        => "MiqRequest_record_delete",
+               :message      => _("[%{name}] Record deleted") % {:name => request_name},
+               :target_id    => miq_request.id,
+               :target_class => "MiqRequest",
+               :userid       => session[:userid]}
       begin
-        miq_request.public_send(task.to_sym) if miq_request.respond_to?(task) # Run the task
+        miq_request.destroy
       rescue => bang
-        add_flash(_("Request \"%{name}\": Error during '%{task}': %{message}") %
+        add_flash(_("Request \"%{name}\": Error during 'destroy': %{message}") %
                       {:name    => request_name,
-                       :task    => task,
                        :message => bang.message},
                   :error)
       else
-        if task == "destroy"
-          AuditEvent.success(audit)
-          add_flash(_("Request \"%{name}\": Delete successful") % {:name => request_name})
-        else
-          add_flash(_("Request \"%{name}\": %{task} successfully initiated") % {:name => request_name, :task => task})
-        end
+        AuditEvent.success(audit)
+        add_flash(_("Request \"%{name}\": Delete successful") % {:name => request_name})
       end
     end
   end
