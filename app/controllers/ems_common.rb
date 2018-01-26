@@ -112,7 +112,6 @@ module EmsCommon
         middleware_datasources
         middleware_deployments
         middleware_domains
-        middleware_messagings
         middleware_server_groups
         middleware_servers
         miq_templates

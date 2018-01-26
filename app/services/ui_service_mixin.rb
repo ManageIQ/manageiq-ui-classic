@@ -21,7 +21,6 @@ module UiServiceMixin
       :MiddlewareDeploymentEar => {:type => "glyph", :class => 'ff ff-file-ear-o'},
       :MiddlewareDeploymentWar => {:type => "glyph", :class => 'ff ff-file-war-o'},
       :MiddlewareDomain        => {:type => "glyph", :class => 'pficon pficon-domain'},
-      :MiddlewareMessaging     => {:type => "glyph", :class => 'fa fa-exchange (placeholder)'},
       :MiddlewareServerGroup   => {:type => "glyph", :class => 'pficon pficon-server-group'},
       :NetworkRouter           => {:type => "glyph", :class => 'pficon pficon-route'},
       :PhysicalServer          => {:type => "glyph", :class => 'pficon pficon-server-group'},

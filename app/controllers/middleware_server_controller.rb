@@ -252,7 +252,7 @@ class MiddlewareServerController < ApplicationController
   end
 
   def self.display_methods
-    %w(middleware_datasources middleware_deployments middleware_messagings)
+    %w(middleware_datasources middleware_deployments)
   end
 
   def self.default_show_template
