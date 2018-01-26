@@ -153,7 +153,7 @@ class HostAggregateController < ApplicationController
     @host_aggregate = HostAggregate.new
     @in_a_form = true
     @ems_choices = {}
-    ManageIQ::Providers::CloudManager.select { |ems| ems.supports?(:create_host_aggregate) }.each do |ems|
+    Rbac::Filterer.filtered(ManageIQ::Providers::CloudManager).select { |ems| ems.supports?(:create_host_aggregate) }.each do |ems|
       @ems_choices[ems.name] = ems.id
     end
 

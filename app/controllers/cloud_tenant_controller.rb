@@ -56,11 +56,11 @@ class CloudTenantController < ApplicationController
     @tenant = CloudTenant.new
     @in_a_form = true
     @ems_choices = {}
-    ManageIQ::Providers::Openstack::CloudManager.all.each do |ems|
+    Rbac::Filterer.filtered(ManageIQ::Providers::Openstack::CloudManager).each do |ems|
       @ems_choices[ems.name] = ems.id
       # keystone v3 allows for hierarchical tenants
       if ems.api_version == "v3"
-        ems.cloud_tenants.each do |ems_cloud_tenant|
+        Rbac::Filterer.filtered(ems.cloud_tenants).each do |ems_cloud_tenant|
           tenant_choice_name = ems.name + " (" + ems_cloud_tenant.name + ")"
           tenant_choice_id = ems.id.to_s + ":" + ems_cloud_tenant.id.to_s
           @ems_choices[tenant_choice_name] = tenant_choice_id
