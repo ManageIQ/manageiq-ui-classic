@@ -184,10 +184,6 @@ module QuadiconHelper
     status_img(item)
   end
 
-  def render_quadicon_text(item, row)
-    render_quadicon_label(item, row)
-  end
-
   def render_quadicon_label(item, row)
     return unless item
 
