@@ -25,10 +25,6 @@ module QuadiconHelper
     @settings.fetch_path(:display, :quad_truncate) || 'm'
   end
 
-  def listicon_nil?
-    @listicon.nil?
-  end
-
   def quadicon_vm_attributes(item)
     vm_quad_link_attributes(item)
   end
@@ -731,11 +727,11 @@ module QuadiconHelper
   # Renders a single_quad uh, quadicon
   #
   def render_single_quad_quadicon(item, options)
-    output =  if listicon_nil?
-                render_non_listicon_single_quadicon(item, options)
-              else
-                render_listicon_single_quadicon(item, options)
-              end
+    output = if @listicon.nil?
+               render_non_listicon_single_quadicon(item, options)
+             else
+               render_listicon_single_quadicon(item, options)
+             end
 
     output.collect(&:html_safe).join('').html_safe
   end
