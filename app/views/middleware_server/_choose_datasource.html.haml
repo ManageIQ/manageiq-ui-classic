@@ -1,3 +1,4 @@
+/ begin: app/views/middleware_server/_choose_datasource.html.haml
 .mw_ds_add_choose{"ng-show" => "vm.dsModel.step == 'CHOOSE_DS'"}
   %h3
     = _("Choose Datasource:")
@@ -39,3 +40,4 @@
                             "ng-click"    => "vm.addDatasourceChooseNext()",
                             "ng-disabled" => "dsChooseForm.$invalid"}
       = t
+/ end: app/views/middleware_server/_choose_datasource.html.haml

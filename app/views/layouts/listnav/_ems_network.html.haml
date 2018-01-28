@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_ems_network.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -22,3 +23,4 @@
             :record_id     => @record.id,
             :display       => 'security_groups',
             :tables        => 'security_group')
+/ end: app/views/layouts/listnav/_ems_network.html.haml

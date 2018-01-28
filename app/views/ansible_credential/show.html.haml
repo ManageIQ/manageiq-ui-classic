@@ -1,5 +1,7 @@
+/ begin: app/views/ansible_credential/show.html.haml
 #main_div
   - if %w(repositories).include?(@display)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     = render :partial => 'layouts/textual_groups_generic'
+/ end: app/views/ansible_credential/show.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_replication_tab.html.haml
 - if @sb[:active_tab] == "settings_replication"
   - @angular_form = true
 
@@ -202,3 +203,4 @@
   :javascript
     ManageIQ.angular.app.value('pglogicalReplicationFormId', 'new');
     miq_bootstrap('#form_div');
+/ end: app/views/ops/_settings_replication_tab.html.haml

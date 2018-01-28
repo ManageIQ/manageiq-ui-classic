@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/login.html.haml
 = render :partial => 'layouts/doctype'
 %html.login-pf{:class => ::Settings.server.custom_login_logo ? '' : 'rcue-login', :lang => I18n.locale.to_s.sub('-', '_')}
   %head
@@ -24,3 +25,4 @@
       delete localStorage['patternfly-navigation-secondary'];
       delete localStorage['patternfly-navigation-tertiary'];
       miqFlashClearSaved();
+/ end: app/views/layouts/login.html.haml

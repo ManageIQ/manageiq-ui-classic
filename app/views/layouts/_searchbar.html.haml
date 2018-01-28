@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_searchbar.html.haml
 - if @lastaction == "show_list" && !session[:menu_click] && display_adv_search? && !@in_a_form
   = hidden_div_if(@edit && @edit[:adv_search_open] != true, :id => "adv_search_div") do
     - if @edit && @edit[:adv_search_open]
@@ -46,3 +47,4 @@
       return true;
     });
   });
+/ end: app/views/layouts/_searchbar.html.haml

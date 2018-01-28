@@ -1,3 +1,4 @@
+/ begin: app/views/shared/views/_compliance_history.html.haml
 #compliance_history_div
   = render :partial => "layouts/flash_msg"
   .btn.btn-default{:id => "squash_button", :onclick => "miqSquashToggle('#{j_str(@ch_tree.name.to_s)}')", :title => _('Expand All')}
@@ -5,3 +6,4 @@
   %br{:style => "line-height: 2.5em"}
   %div
     = render(:partial => 'shared/tree', :locals => {:tree => @ch_tree, :name => @ch_tree.name.to_s})
+/ end: app/views/shared/views/_compliance_history.html.haml

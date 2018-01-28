@@ -1,3 +1,4 @@
+/ begin: app/views/infra_networking/explorer.html.haml
 - content_for :search do
   = render(:partial => "layouts/x_adv_searchbox", :locals => {:nameonly => (x_active_tree == :infra_networking_tree)})
   = render(:partial => 'layouts/quick_search')
@@ -11,3 +12,4 @@
   -# Showing a list of switches
   #main_div
     = render(:partial => 'layouts/x_gtl')
+/ end: app/views/infra_networking/explorer.html.haml

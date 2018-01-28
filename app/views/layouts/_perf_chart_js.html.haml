@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_perf_chart_js.html.haml
 - if chart_data[chart_index][:data2]
   %div{"style" => "margin-bottom: 50px"}
     .card-pf
@@ -62,3 +63,4 @@
         $("#miq_chartmenu_#{chart_set}_#{chart_index}").empty();
         $("#miq_chart_parent_#{chart_set}_#{chart_index} .overlay").hide();
       });
+/ end: app/views/layouts/_perf_chart_js.html.haml

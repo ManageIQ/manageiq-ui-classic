@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_x_dialog_buttons.html.haml
 -# Set default action url, if none passed in
 - action_url ||= nil
 -# Set default record id to nil, if none passed in
@@ -58,3 +59,4 @@
              :alt     => t,
              :title   => t,
              :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :id => record_id, :button => "cancel")}', false, { complete: false });")
+/ end: app/views/layouts/_x_dialog_buttons.html.haml

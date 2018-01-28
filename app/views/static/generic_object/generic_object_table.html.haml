@@ -1,3 +1,4 @@
+/ begin: app/views/static/generic_object/generic_object_table.html.haml
 %add_row_div{:align => "right", :style => "width: 50px"}
   %span.input-group-btn
     %button.btn.btn-primary{:alt => t = _("Add Row"), :title => t, "ng-click" => "vm.addRow(vm.keyType + vm.noOfRows)"}
@@ -56,3 +57,4 @@
           .table-view-pf-btn
             .btn.btn-default{:alt => t = _("Delete Row"), :title => t, "ng-click" => "vm.deleteRow($index)"}
               = _("Delete")
+/ end: app/views/static/generic_object/generic_object_table.html.haml

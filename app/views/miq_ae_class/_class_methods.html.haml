@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_class_methods.html.haml
 #class_methods_div
   - if !@in_a_form && !@angular_form
     %h3= _('Methods')
@@ -33,3 +34,4 @@
     .form_div
       - partial_name = @angular_form ? 'angular_method_form' : 'method_form'
       = render :partial => partial_name, :locals  => {:prefix => "cls_"}
+/ end: app/views/miq_ae_class/_class_methods.html.haml

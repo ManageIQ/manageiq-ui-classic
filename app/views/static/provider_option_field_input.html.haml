@@ -1,3 +1,4 @@
+/ begin: app/views/static/provider_option_field_input.html.haml
 .form-group{"ng-class" => "{{ \"{'has_error': angularForm.\"  + $ctrl.elemID + \".$invalid}\" }}"}
   %label.col-md-2.control-label{"for" => "{{ $ctrl.elemID }}"}
     {{ $ctrl.option.label }}
@@ -13,3 +14,4 @@
                         "prefix"        => "{{ 'provider_options_' + $ctrl.sectionName }}"}
     %span.help-block{"ng-show" => '{{ "angularForm." + $ctrl.elemID + ".$error.detectedSpaces" }}'}
       = _("Spaces are prohibited")
+/ end: app/views/static/provider_option_field_input.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_alert_profile_assign.html.haml
 - url = url_for_only_path(:action => 'alert_profile_assign_changed')
 #alert_profile_assign_div
   = render :partial => "layouts/flash_msg"
@@ -37,3 +38,4 @@
     - if @assign[:obj_tree]
       = render(:partial => 'shared/tree', :locals => {:tree => @assign[:obj_tree], :name => @assign[:obj_tree].name})
 
+/ end: app/views/miq_policy/_alert_profile_assign.html.haml

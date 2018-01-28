@@ -1,3 +1,4 @@
+/ begin: app/views/static/pf_charts/aggregate-status-card.html.haml
 %div
 %div{"ng-if" => "!$ctrl.isMiniLayout", "class" => "card-pf card-pf-aggregate-status", "ng-class" => "{'card-pf-accented': $ctrl.shouldShowTopBorder, 'card-pf-aggregate-status-alt': $ctrl.isAltLayout}"}
   %h2{:class => "card-pf-title"}
@@ -58,3 +59,4 @@
           %span{"ng-if" => "$ctrl.status.notification.iconClass", :class => "{{$ctrl.status.notification.iconClass}}"}
           %span{"ng-if" => "$ctrl.status.notification.count"}
             {{$ctrl.status.notification.count}}
+/ end: app/views/static/pf_charts/aggregate-status-card.html.haml

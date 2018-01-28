@@ -1,3 +1,4 @@
+/ begin: app/views/container_image/show.html.haml
 - if %w(container_projects container_groups containers container_nodes).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - else
@@ -10,3 +11,4 @@
     = render :partial => "shared/views/compliance_history"
   - when "main"
     = render :partial => "layouts/textual_groups_generic"
+/ end: app/views/container_image/show.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/report/_schedule_form_filter.html.haml
 - url = url_for_only_path(:action => 'schedule_form_field_changed',  :id => (@schedule.id || 'new'))
 #form_filter_div
   %h3
@@ -78,3 +79,4 @@
             :javascript
               miqSelectPickerEvent('repfilter_typ', '#{url}', {beforeSend: true, complete: true});
   %hr
+/ end: app/views/report/_schedule_form_filter.html.haml

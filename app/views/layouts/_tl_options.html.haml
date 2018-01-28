@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_tl_options.html.haml
 - url = url_for_only_path(:action => 'tl_chooser', :id => @record.id)
 
 #tl_options_div
@@ -102,3 +103,4 @@
   ManageIQ.angular.app.value('url', '#{url}');
   ManageIQ.angular.app.value('categories', '#{@tl_options.management.events.keys.sort}');
   miq_bootstrap('#form_div');
+/ end: app/views/layouts/_tl_options.html.haml

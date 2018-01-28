@@ -1,5 +1,7 @@
+/ begin: app/views/generic_object/show.html.haml
 #main_div
   - if @record.property_associations.keys.include?(@display)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     = render :partial => 'layouts/textual_groups_generic'
+/ end: app/views/generic_object/show.html.haml

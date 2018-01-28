@@ -1,3 +1,4 @@
+/ begin: app/views/report/_widget_columns.html.haml
 - url = url_for_only_path(:action => 'widget_form_field_changed', :id => (@widget.id || "new"))
 .form-group
   %label.control-label.col-md-2
@@ -55,3 +56,4 @@
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent("chosen_pivot4", "#{url}");
+/ end: app/views/report/_widget_columns.html.haml

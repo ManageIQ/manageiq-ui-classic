@@ -1,3 +1,4 @@
+/ begin: app/views/report/_export_custom_reports.html.haml
 - url = url_for_only_path(:action => 'export_field_changed')
 = render :partial => "layouts/flash_msg"
 
@@ -53,3 +54,4 @@
               $('#export_button').addClass('disabled');
             }
           });
+/ end: app/views/report/_export_custom_reports.html.haml

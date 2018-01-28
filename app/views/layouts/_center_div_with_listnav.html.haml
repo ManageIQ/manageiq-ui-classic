@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_center_div_with_listnav.html.haml
 = render :partial => "layouts/vertical_navbar"
 .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.max-height{:style => "overflow: hidden !important"}
   - if !@in_a_form && taskbar_in_header?
@@ -27,3 +28,4 @@
       -# listnav_div
       = render :partial => "layouts/listnav"
 
+/ end: app/views/layouts/_center_div_with_listnav.html.haml

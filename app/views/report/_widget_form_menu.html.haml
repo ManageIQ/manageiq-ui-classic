@@ -1,3 +1,4 @@
+/ begin: app/views/report/_widget_form_menu.html.haml
 - url = url_for_only_path(:action => 'widget_form_field_changed', :id => (@widget.id || "new"))
 %h3
   = _('Menu Shortcuts')
@@ -38,3 +39,4 @@
                 :maxlength         => 50,
                 :style             => "width: 250px;",
                 "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+/ end: app/views/report/_widget_form_menu.html.haml

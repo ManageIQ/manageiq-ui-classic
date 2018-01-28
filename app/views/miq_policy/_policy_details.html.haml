@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_policy_details.html.haml
 - if @edit
   - url = url_for_only_path(:action => 'policy_field_changed', :id => (@policy.id || 'new'))
   - observe_with_interval = {:interval => '.5', :url => url}.to_json
@@ -271,3 +272,4 @@
                     %td
                       = pp.description
   %br
+/ end: app/views/miq_policy/_policy_details.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/static/pf_charts/heatmap.html.haml
 .heatmap-pf-container
   .h3
     {{$ctrl.chartTitle}}
@@ -7,3 +8,4 @@
   %pf-empty-chart{"ng-if" => "$ctrl.chartDataAvailable === false", "chart-height" => "$ctrl.height"}
   %div{"ng-if" => "!$ctrl.loadingDone", :class => "spinner spinner-lg loading"}
   %pf-heatmap-legend{"ng-if" => "$ctrl.showLegend", "legend" => "$ctrl.legendLabels", "legend-colors" => "$ctrl.heatmapColorPattern"}
+/ end: app/views/static/pf_charts/heatmap.html.haml

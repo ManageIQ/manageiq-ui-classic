@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_tools/_import_export.html.haml
 %iframe.import-hidden-iframe{:name => "upload_target", :style => "display: none;"}
 
 = render :partial => "layouts/flash_msg"
@@ -161,3 +162,4 @@
     ImportSetup.listenForGitPostMessages();
     Automate.setUpAutomateImportClickHandlers();
   });
+/ end: app/views/miq_ae_tools/_import_export.html.haml

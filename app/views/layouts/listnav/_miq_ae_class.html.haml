@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_miq_ae_class.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon")
@@ -14,3 +15,4 @@
             :title  => _("View Instances"),
             :align  => 'left',
             :border => '0')
+/ end: app/views/layouts/listnav/_miq_ae_class.html.haml

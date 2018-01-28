@@ -1,5 +1,7 @@
+/ begin: app/views/shared/topology/_not_found_vm.html.haml
 .floating-not-found{'ng-show' => 'vm.searching && vm.notFound'}
   = _("No results match the search criteria")
   %br
   %a.btn.btn-link{:href => "", 'ng-click' => "vm.resetSearch()"}
     = _("Clear Search")
+/ end: app/views/shared/topology/_not_found_vm.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_user_options.html.haml
 - if current_user
   %li.dropdown
     %a{:href => "#", :class => "dropdown-toggle nav-item-iconic", :id => "dropdownMenu2", "data-toggle" => "dropdown", "aria-haspopup" => "true"}
@@ -48,3 +49,4 @@
 - else
   = _('Logging into')
   = appliance_name
+/ end: app/views/layouts/_user_options.html.haml

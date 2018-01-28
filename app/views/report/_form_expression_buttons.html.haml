@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_expression_buttons.html.haml
 - report_id = @edit[:rpt_id] || 'new'
 -# FIXME: alt/title incosistency
 = link_to({:action => 'filter_change', :button => @expkey, :id => report_id},
@@ -20,3 +21,4 @@
           = h(single_token)
     - else
       = h(single_token)
+/ end: app/views/report/_form_expression_buttons.html.haml

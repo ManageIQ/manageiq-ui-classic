@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_diagnostics_savedreports.html.haml
 = render :partial => "layouts/flash_msg"
 %h3= _("Report Results by User")
 
@@ -20,3 +21,4 @@
             = image_tag(image_path('toolbars/delete.png'), :class => "rollover small")
           %td= h(rec[:userid])
           %td= h(rec[:count])
+/ end: app/views/ops/_diagnostics_savedreports.html.haml

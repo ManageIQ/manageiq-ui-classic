@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_rbac_group_selected.html.haml
 #group_selected
   - if @edit[:new][:group].present? && @edit[:new][:group] != 'null'
     - selected_group_ids = @edit[:new][:group].split(',').delete_if(&:blank?)
@@ -6,3 +7,4 @@
       %i.ff.ff-group
       = g
       %br
+/ end: app/views/ops/_rbac_group_selected.html.haml

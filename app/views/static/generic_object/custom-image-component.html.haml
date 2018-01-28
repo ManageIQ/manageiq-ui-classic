@@ -1,3 +1,4 @@
+/ begin: app/views/static/generic_object/custom-image-component.html.haml
 .form-group{"ng-show" => "vm.newRecord || vm.changeImage || vm.pictureUrlPath === '' || vm.pictureRemove",
             "ng-class" => "{'has-error': vm.angularForm.generic_object_definition_image_file_status.$invalid}"}
   %label.col-md-2.control-label{"for" => "generic_object_definition_image_file_status"}
@@ -41,3 +42,4 @@
 
 :javascript
   $(":file").filestyle({placeholder: __("No file chosen"), icon: false});
+/ end: app/views/static/generic_object/custom-image-component.html.haml

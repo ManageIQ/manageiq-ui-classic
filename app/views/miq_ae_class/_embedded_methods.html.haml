@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_embedded_methods.html.haml
 #embedded_methods_div
   - if !@in_a_form && @ae_method
     - if !@record[:embedded_methods].nil? && !@record[:embedded_methods].empty?
@@ -45,3 +46,4 @@
                    :remote                => true,
                    :class                 => "btn btn-default btn-block btn-sm",
                    :title                 => _("Click to delete this input field from method")})
+/ end: app/views/miq_ae_class/_embedded_methods.html.haml

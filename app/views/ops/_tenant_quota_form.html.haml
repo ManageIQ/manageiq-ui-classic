@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_tenant_quota_form.html.haml
 - @angular_form = true
 
 %form#form_div{"name"          => "angularForm",
@@ -49,3 +50,4 @@
   ManageIQ.angular.app.value('tenantQuotaFormId', '#{@tenant.id}');
   ManageIQ.angular.app.value('tenantType', '#{@tenant_type}');
   miq_bootstrap('#form_div');
+/ end: app/views/ops/_tenant_quota_form.html.haml

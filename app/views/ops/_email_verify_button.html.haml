@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_email_verify_button.html.haml
 #email_verify_button_on{:style => "#{hide_button(@test_email_button, "on")}"}
   = link_to(_("Verify"),
     {:action => "settings_update",
@@ -14,3 +15,4 @@
 #email_verify_button_off{:style => "#{hide_button(@test_email_button, "off")}"}
   = button_tag(_("Verify"), :class => "btn btn-default disabled",
     :title => _("SMTP E-mail Server settings and Test E-mail Address are needed to send test email"))
+/ end: app/views/ops/_email_verify_button.html.haml

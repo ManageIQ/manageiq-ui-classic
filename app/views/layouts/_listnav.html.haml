@@ -1,5 +1,7 @@
+/ begin: app/views/layouts/_listnav.html.haml
 #listnav_div
   - filename = render_listnav_filename
   - locals = {:truncate_length => 23}
   - locals.merge!(:size => 72) if @compare
   = render :partial => "layouts/listnav/#{filename}", :locals => locals if filename
+/ end: app/views/layouts/_listnav.html.haml

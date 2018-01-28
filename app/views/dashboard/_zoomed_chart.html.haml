@@ -1,3 +1,4 @@
+/ begin: app/views/dashboard/_zoomed_chart.html.haml
 -#
   Parameters:
     widget -- MiqWidget object
@@ -12,3 +13,4 @@
     .card-pf-body
       = chart_remote('dashboard', :id => 'my_chart', :zoomed => true)
     = render :partial => 'widget_footer', :locals => {:widget => widget}
+/ end: app/views/dashboard/_zoomed_chart.html.haml

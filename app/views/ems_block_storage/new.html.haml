@@ -1,3 +1,4 @@
+/ begin: app/views/ems_block_storage/new.html.haml
 - url = url_for_only_path(:controller => 'ems_block_storage', :action => 'create', :id => (@ems.id || 'new'))
 = form_for(@ems,
            :url    => url,
@@ -18,3 +19,4 @@
   ManageIQ.angular.app.value('emsCommonFormId', '#{@ems.id || "new"}');
   miq_bootstrap($('#form_id').val());
 
+/ end: app/views/ems_block_storage/new.html.haml

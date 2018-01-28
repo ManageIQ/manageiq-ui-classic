@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_iso_datastore_details.html.haml
 - binf = _('Basic Information')
 #iso_datastore_details_div
   - if @isd
@@ -30,3 +31,4 @@
         = render :partial => "layouts/flash_msg"
         = render :partial => "shared/summary/textual",
           :locals  => {:title => binf, :items => textual_iso_img_info}
+/ end: app/views/pxe/_iso_datastore_details.html.haml

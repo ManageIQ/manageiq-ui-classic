@@ -1,3 +1,4 @@
+/ begin: app/views/shared/_file_chooser.html.haml
 - options = {:class => "filestyle", "data-buttonName" => "btn-default"}
 - if local_assigns.key? :custom_options
   - options.merge!(custom_options)
@@ -8,3 +9,4 @@
 - button_text = _("Choose file")
 :javascript
   $(":file").filestyle({icon: false, placeholder: "#{j_str placeholder}", buttonText: "#{j_str button_text}"});
+/ end: app/views/shared/_file_chooser.html.haml

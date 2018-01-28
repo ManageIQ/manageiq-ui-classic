@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_rbac_group_details.html.haml
 - if @edit
   - url = url_for_only_path(:action => 'rbac_group_field_changed', :id => (@edit[:group_id] || "new"))
   - combo_url = "/ops/rbac_group_field_changed/#{@edit[:group_id] || 'new'}"
@@ -200,3 +201,4 @@
       $('#user_id_form_group').show();
       $('#user_name_form_group').show();
       $('#user_password_form_group').show();
+/ end: app/views/ops/_rbac_group_details.html.haml

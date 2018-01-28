@@ -1,3 +1,4 @@
+/ begin: app/views/orchestration_stack/_copy_orchestration_template.html.haml
 %form#form_div.form-horizontal{:name => 'angularForm',
                                 'ng-controller' => 'orchestrationTemplateCopyController as vm',
                                 "miq-form" => 'true',
@@ -49,3 +50,4 @@
   ManageIQ.editor.refresh();
   ManageIQ.angular.app.value('stackId', #{@record.id});
   miq_bootstrap('#form_div');
+/ end: app/views/orchestration_stack/_copy_orchestration_template.html.haml

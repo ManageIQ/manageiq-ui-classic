@@ -1,3 +1,4 @@
+/ begin: app/views/chargeback/_reports_list.html.haml
 #reports_list_div
   - if @report
     = render :partial => "layouts/flash_msg"
@@ -52,3 +53,4 @@
   - else
     %br
       = render :partial => 'layouts/info_msg', :locals => {:message => _("No Reports available.")}
+/ end: app/views/chargeback/_reports_list.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/service/show.html.haml
 #main_div
   - if %w(generic_objects).include?(@display)
     - if @lastaction == 'generic_object' && @item
@@ -6,3 +7,4 @@
       = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     = render :partial => 'layouts/textual_groups_generic'
+/ end: app/views/service/show.html.haml

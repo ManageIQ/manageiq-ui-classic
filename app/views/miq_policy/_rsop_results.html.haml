@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_rsop_results.html.haml
 - url = url_for_only_path(:action => 'rsop_show_options')
 - observe = {:url => url}.to_json
 #rsop_results_div
@@ -49,3 +50,4 @@
     &nbsp;
     %strong
       = _("* Enter Policy Simulation options on the left and press Submit")
+/ end: app/views/miq_policy/_rsop_results.html.haml

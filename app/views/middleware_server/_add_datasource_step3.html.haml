@@ -1,3 +1,4 @@
+/ begin: app/views/middleware_server/_add_datasource_step3.html.haml
 .mw_ds_add_step3{"ng-show" => "vm.dsModel.step == 'STEP3'"}
   %h3
     = _("Step 3/3: Connection Settings")
@@ -104,3 +105,4 @@
                               "ng-click"    => "vm.finishAddDatasource()",
                               "ng-disabled" => "step3Form.$invalid"}
         = t
+/ end: app/views/middleware_server/_add_datasource_step3.html.haml

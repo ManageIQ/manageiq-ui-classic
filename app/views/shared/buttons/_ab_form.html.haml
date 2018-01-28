@@ -1,3 +1,4 @@
+/ begin: app/views/shared/buttons/_ab_form.html.haml
 #ab_form
   #policy_bar
     - if @resolve[:uri] && Hash[*@resolve[:target_classes].flatten].invert[@resolve[:new][:target_class]] == @edit[:new][:target_class]
@@ -31,3 +32,4 @@
 
   :javascript
     miq_tabs_init('#custom_button_tabs');
+/ end: app/views/shared/buttons/_ab_form.html.haml

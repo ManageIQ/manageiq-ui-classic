@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_storage_manager.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -9,3 +10,4 @@
           = link_to(_("Summary"),
             {:action => 'show', :id => @record, :display => 'main'},
             :title => _("Show Summary"))
+/ end: app/views/layouts/listnav/_storage_manager.html.haml

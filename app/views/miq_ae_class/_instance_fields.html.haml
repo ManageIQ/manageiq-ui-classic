@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_instance_fields.html.haml
 = render :partial => "domain_overrides", :locals => {:node_prefix => "aei", :model => "Instance"}
 %h3= _('Fields')
 #instance_fields_div
@@ -48,3 +49,4 @@
   - else
     #form_div
       = render :partial => "instance_form", :locals => {:prefix => ""}
+/ end: app/views/miq_ae_class/_instance_fields.html.haml

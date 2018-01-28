@@ -1,3 +1,4 @@
+/ begin: app/views/chargeback/_tier_row.haml
 - i = params[:detail_index]
 - url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => (@edit[:rec_id] || "new"))
 - n = @edit[:new][:num_tiers][i.to_i]
@@ -19,3 +20,4 @@
         $('.new_tier').addClass('new_tier_off').removeClass('new_tier');
     });
     $('tbody tr.rdetail').hover( function(){hoverRowIn(this)}, function(row){hoverRowOut(this)});
+/ end: app/views/chargeback/_tier_row.haml

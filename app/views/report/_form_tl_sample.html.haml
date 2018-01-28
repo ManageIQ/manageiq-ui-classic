@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_tl_sample.html.haml
 #tl_sample_div
   - if @tl_field != ReportHelper::NOTHING_STRING
     %hr
@@ -9,3 +10,4 @@
     = render(:partial => "layouts/timeline",
       :locals         => {:tl_json       => @tl_json,
                           :position_time => @position_time})
+/ end: app/views/report/_form_tl_sample.html.haml

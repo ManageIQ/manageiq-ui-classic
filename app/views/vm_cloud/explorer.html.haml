@@ -1,3 +1,4 @@
+/ begin: app/views/vm_cloud/explorer.html.haml
 - content_for :search do
   = render(:partial => "layouts/x_adv_searchbox", :locals => {:nameonly => [:images_tree, :instances_tree].include?(x_active_tree)})
   = render(:partial => 'layouts/quick_search')
@@ -16,3 +17,4 @@
   -# Showing a list of VMs
   #main_div
     = render(:partial => 'layouts/x_gtl')
+/ end: app/views/vm_cloud/explorer.html.haml

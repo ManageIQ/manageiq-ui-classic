@@ -1,4 +1,6 @@
+/ begin: app/views/layouts/_tl_show_async.html.haml
 = render(:partial => "layouts/tl_show")
 
 :javascript
   ManageIQ.afterOnload = "miqAsyncAjax('#{url_for_only_path(:action => @ajax_action, :id => @record.id)}');"
+/ end: app/views/layouts/_tl_show_async.html.haml

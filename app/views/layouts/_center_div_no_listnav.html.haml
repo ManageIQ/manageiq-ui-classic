@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_center_div_no_listnav.html.haml
 = render :partial => "layouts/vertical_navbar"
 .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus{:style => "overflow: hidden !important; height: 100%;"}
   .row.max-height
@@ -15,3 +16,4 @@
         .col-md-12
           = yield
       .row#paging_div{:style => (layout_uses_paging? && !@in_a_form) ? '' : 'display: none'}
+/ end: app/views/layouts/_center_div_no_listnav.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_vmtree.html.haml
 #vm_tree_div
   = render :partial => "layouts/flash_msg"
   %input#ds_toggle{:name    => "ds_toggle",
@@ -7,3 +8,4 @@
   %p
   = render(:partial => "shared/tree",
            :locals  => {:tree => @genealogy_tree, :name => @genealogy_tree.name})
+/ end: app/views/vm_common/_vmtree.html.haml

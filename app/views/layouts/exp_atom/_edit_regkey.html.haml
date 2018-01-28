@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/exp_atom/_edit_regkey.html.haml
 - url = url_for_only_path(:action => 'exp_changed')
 - input_attrs = {:maxlength => 500, "data-miq_observe" => {:interval => '.5', :url => url}.to_json}
 
@@ -23,3 +24,4 @@
 :javascript
   miqInitSelectPicker();
   miqSelectPickerEvent('chosen_key', '#{url}');
+/ end: app/views/layouts/exp_atom/_edit_regkey.html.haml

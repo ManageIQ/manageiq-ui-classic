@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_custom_logos_tab.html.haml
 - if @sb[:active_tab] == "settings_custom_logos"
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => "#{@sb[:active_tab].split('_')[1]}_#{@sb[:active_tab].split('_').last}")
   %h3= _("Custom Logo Image (Shown on top right of all screens)")
@@ -83,3 +84,4 @@
         miqInitBootstrapSwitch('server_uselogintext', "#{url}");
         miqInitBootstrapSwitch('server_uselogo', "#{url}");
         miqInitBootstrapSwitch('server_useloginlogo', "#{url}");
+/ end: app/views/ops/_settings_custom_logos_tab.html.haml

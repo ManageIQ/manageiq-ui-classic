@@ -1,3 +1,4 @@
+/ begin: app/views/ems_infra/_form_fields.html.haml
 - unless @edit[:new][:emstype].blank?
   .form-group
     %label.control-label.col-md-2
@@ -32,3 +33,4 @@
                            :class             => "form-control",
                            "data-miq_observe" => {:interval => ".5",
                                                   :url => url}.to_json)
+/ end: app/views/ems_infra/_form_fields.html.haml

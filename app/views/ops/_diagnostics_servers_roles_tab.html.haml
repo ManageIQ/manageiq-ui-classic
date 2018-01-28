@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_diagnostics_servers_roles_tab.html.haml
 - if @sb[:active_tab] == "diagnostics_servers_roles"
   = render(:partial => "layouts/flash_msg")
   - if @server_tree
@@ -8,3 +9,4 @@
         = render :partial => "selected"
   - else
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Servers found.")}
+/ end: app/views/ops/_diagnostics_servers_roles_tab.html.haml

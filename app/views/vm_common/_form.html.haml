@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_form.html.haml
 
 #main_div
   - url = url_for_only_path(:action => 'form_field_changed', :id => (@record.id || "new"))
@@ -108,3 +109,4 @@
 
   - unless @edit[:explorer]
     = render(:partial => '/layouts/edit_form_buttons', :locals  => {:action_url => "edit_vm", :ajax_buttons => true, :record_id => @record.id})
+/ end: app/views/vm_common/_form.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/middleware_server/_dr_reports_list.html.haml
 - if @record.middleware_diagnostic_reports.any?
   .row#mw_dr_header
     .col-md-12
@@ -69,3 +70,4 @@
                           'onclick'  => "DoNav('#{url_for(:action => 'dr_download', :id => @record.id, :key => item.id)}');",
                           'title'    => _('Download JDR file')}
                     = _('Download')
+/ end: app/views/middleware_server/_dr_reports_list.html.haml

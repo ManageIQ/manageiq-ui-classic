@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_snapshots_tree.html.haml
 #snapshots_tree_div
   - if @record.snapshots.count > 0
     %fieldset
@@ -5,3 +6,4 @@
       = render(:partial => 'shared/tree', :locals => {:tree => @snapshot_tree, :name => @snapshot_tree.name})
     :javascript
       miqTreeActivateNodeSilently("#{j_str @snapshot_tree.name}", "#{j_str @snapshot_tree.selected_node}");
+/ end: app/views/vm_common/_snapshots_tree.html.haml

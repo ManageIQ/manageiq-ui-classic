@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_alert_details.html.haml
 - if @edit
   - url = url_for_only_path(:action => 'alert_field_changed', :id => (@alert.id || 'new'))
   - observe = {:url => url}.to_json
@@ -308,3 +309,4 @@
                         %td.table-view-pf-select
                           = oa.description
               %hr
+/ end: app/views/miq_policy/_alert_details.html.haml

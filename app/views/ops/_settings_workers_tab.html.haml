@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_workers_tab.html.haml
 - if @sb[:active_tab] == "settings_workers"
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
   .row
@@ -249,3 +250,4 @@
                           :class    => "selectpicker")
           :javascript
             miqSelectPickerEvent('websocket_worker_count', "#{url}")
+/ end: app/views/ops/_settings_workers_tab.html.haml

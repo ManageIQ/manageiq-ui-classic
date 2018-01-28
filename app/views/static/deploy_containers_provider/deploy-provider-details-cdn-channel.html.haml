@@ -1,3 +1,4 @@
+/ begin: app/views/static/deploy_containers_provider/deploy-provider-details-cdn-channel.html.haml
 %div{"ng-controller" => "containers.deployProviderCDNChannelController"}
   %div{"miq-wizard-substep" => "", "next-enabled" => "deploymentDetailsCDNComplete", "on-show" => "onCdnShow",
   "review-template" => "{{reviewTemplate}}", "step-id" => "details-channel", "step-priority" => "3", "step-title" => _("CDN Channel")}
@@ -29,3 +30,4 @@
               %input#satellite-url.miq-checkbox-input{:name => "name", "ng-change" => "validateForm()",
               "ng-disabled" => "!data.cdnEnabled || data.specifySatelliteUrl === false",
               "ng-model" => "data.rhnSatelliteUrl", :required => "", :type => "text"}/
+/ end: app/views/static/deploy_containers_provider/deploy-provider-details-cdn-channel.html.haml

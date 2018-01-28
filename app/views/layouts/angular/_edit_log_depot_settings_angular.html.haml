@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/angular/_edit_log_depot_settings_angular.html.haml
 - ng_readonly ||= false
 .form-group{'ng-show' => ng_show}
   %label.col-md-2.control-label
@@ -28,3 +29,4 @@
            :name => "uri_prefix",
            'ng-value' => ng_model_uri_prefix}
     = javascript_tag("$('.uri-input').focus()")
+/ end: app/views/layouts/angular/_edit_log_depot_settings_angular.html.haml

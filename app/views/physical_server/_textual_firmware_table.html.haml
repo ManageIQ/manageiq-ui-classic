@@ -1,3 +1,4 @@
+/ begin: app/views/physical_server/_textual_firmware_table.html.haml
 - items = expand_textual_group(items)
 - if items.present? && items[0][:value].present?
   %table.table.table-bordered.table-striped.table-summary-screen
@@ -15,3 +16,4 @@
             = subitem[:label]
           %td
             = subitem[:value]
+/ end: app/views/physical_server/_textual_firmware_table.html.haml

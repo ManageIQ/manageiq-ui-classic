@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_all_tabs.html.haml
 #ops_tabs
   -# Settings
   - case x_active_tree
@@ -242,3 +243,4 @@
             = render(:partial => "layouts/performance")
 :javascript
   miq_tabs_init("#ops_tabs", "/ops/change_tab");
+/ end: app/views/ops/_all_tabs.html.haml

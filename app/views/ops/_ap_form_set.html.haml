@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_ap_form_set.html.haml
 - url = url_for_only_path(:action => 'ap_form_field_changed', :item_type => "category", :id => (@scan.id || "new"))
 #form_div
   %h3
@@ -18,3 +19,4 @@
                   "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true,
                   "data-miq_observe_checkbox" => {:url => url}.to_json)
                 = _(v)
+/ end: app/views/ops/_ap_form_set.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/chargeback/_tier_first_row.haml
 - i = params[:detail_index]
 - r = @edit[:new][:details][i.to_i]
 - url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => (@edit[:rec_id] || "new"))
@@ -36,3 +37,4 @@
                  :onclick => "miqAjaxButton('#{url_for_only_path(:action       => "cb_tier_add",
                                                        :detail_index => i,
                                                        :button       => "add")}');")
+/ end: app/views/chargeback/_tier_first_row.haml

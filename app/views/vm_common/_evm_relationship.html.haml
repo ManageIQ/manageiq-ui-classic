@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_evm_relationship.html.haml
 - url = url_for_only_path(:action => 'evm_relationship_field_changed')
 #tab_div
   = render :partial => "layouts/flash_msg"
@@ -20,3 +21,4 @@
   - unless @edit[:explorer]
     = render(:partial => '/layouts/edit_form_buttons',
       :locals => {:action_url => 'evm_relationship_update', :ajax_buttons => true})
+/ end: app/views/vm_common/_evm_relationship.html.haml

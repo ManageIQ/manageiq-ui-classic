@@ -1,3 +1,4 @@
+/ begin: app/views/_ldap_domain_form.html.haml
 - url = url_for_only_path(:action => 'ldap_domain_form_field_changed', :id => @edit[:ldap_domain_id] || "new")
 #form_div
   = form_tag({:action => 'ldap_domain_edit',
@@ -105,3 +106,4 @@
                              :class => "form-control",
                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
     = render :partial => 'ldap_server_entries', :locals => {:entry => nil, :domain_id => "#{@edit[:ldap_domain_id] || "new"}"}
+/ end: app/views/_ldap_domain_form.html.haml

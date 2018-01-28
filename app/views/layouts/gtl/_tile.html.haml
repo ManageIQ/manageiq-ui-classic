@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/gtl/_tile.html.haml
 .row
   - table.data.each do |row|
     .col-md-6.col-lg-5
@@ -47,3 +48,4 @@
                   :alt     => @row_button[:title],
                   :title   => @row_button[:title],
                   :onclick => "#{@row_button[:function]}('#{@id}');")
+/ end: app/views/layouts/gtl/_tile.html.haml

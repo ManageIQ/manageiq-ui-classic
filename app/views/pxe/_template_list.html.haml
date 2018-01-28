@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_template_list.html.haml
 - if x_active_tree == :customization_templates_tree
   - if (x_node == "root" && !@in_a_form) || @view
     #template_list_div
@@ -8,3 +9,4 @@
   - else
     = render :partial => "template_details"
   #null_div
+/ end: app/views/pxe/_template_list.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/ems_infra/_utilization-trend-chart.html.haml
 #div{'ng-controller' => "utilizationTrendChartController as vm"}
   .card-pf.card-pf-utilization
     .card-pf-heading
@@ -15,3 +16,4 @@
           %span.trend-footer-pf{{"ng-class" => "{ 'chart-transparent-text': data_hash.data.dataAvailable === false }"}}
             {{vm.timeframeLabel}}
 
+/ end: app/views/ems_infra/_utilization-trend-chart.html.haml

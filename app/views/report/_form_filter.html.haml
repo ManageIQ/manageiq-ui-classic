@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_filter.html.haml
 #filter_div
   - if @edit[:new][:perf_interval]
     = render :partial => "form_filter_performance"
@@ -34,3 +35,4 @@
               = render :partial => 'report/form_expression_buttons',
                        :locals => {:create_label => _('Create Display Filter'),
                                    :display_label => _('Edit Display Filter')}
+/ end: app/views/report/_form_filter.html.haml

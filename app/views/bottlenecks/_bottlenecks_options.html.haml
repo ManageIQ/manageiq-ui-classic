@@ -1,3 +1,4 @@
+/ begin: app/views/bottlenecks/_bottlenecks_options.html.haml
 - url = url_for_only_path :action => 'tl_chooser'
 #tl_options_div
   %h3
@@ -38,3 +39,4 @@
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent("tl_#{typ}_tz", "#{url}");
+/ end: app/views/bottlenecks/_bottlenecks_options.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_tl_detail.html.haml
 #tl_div.timeline-container
   - if @report && @report.table && @report.table.data.blank?
   - elsif @report
@@ -13,3 +14,4 @@
         = _('Timeline View')
       %h3.timeline-info
         = _('Select your desired settings and click the apply button to view timeline data.')
+/ end: app/views/layouts/_tl_detail.html.haml

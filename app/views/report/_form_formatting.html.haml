@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_formatting.html.haml
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 #formatting_div
   %h3
@@ -45,3 +46,4 @@
                 options_for_select(opts, @edit[:new][:col_formats][f.last] || ci[:default_format]),
                 "data-miq_sparkle_on" => true,
                 "data-miq_observe"    => {:url => url}.to_json)
+/ end: app/views/report/_form_formatting.html.haml

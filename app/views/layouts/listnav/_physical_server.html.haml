@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_physical_server.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -20,3 +21,4 @@
             = link_to(_("Host / Node: %{name}") % {:name => @record.host.name},
               "/host/show/#{@record.host.id}",
               :title => _("Show Host"))
+/ end: app/views/layouts/listnav/_physical_server.html.haml

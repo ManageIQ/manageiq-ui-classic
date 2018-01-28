@@ -1,3 +1,4 @@
+/ begin: app/views/report/_widget_list.html.haml
 - if x_active_tree == :widgets_tree
   - if (@sb[:nodes].nil? || (@sb[:nodes] && @sb[:nodes].length == 1)) && @view
     = render :partial => 'layouts/x_gtl'
@@ -9,3 +10,4 @@
     = render :partial => "widget_show"
   - elsif @in_a_form
     = render :partial => 'widget_form'
+/ end: app/views/report/_widget_list.html.haml

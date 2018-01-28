@@ -1,3 +1,4 @@
+/ begin: app/views/dashboard/_widgets_menu.html.haml
 .form-group
   .btn-group.dropdown
     - if @widgets_menu[:blank]
@@ -30,3 +31,4 @@
   - if @widgets_menu[:allow_reset]
     %button.btn.btn-default{:title => _('Reset Dashboard Widgets to the defaults'), 'data-click' => 'reset'}
       %i.fa.fa-reply.fa-lg
+/ end: app/views/dashboard/_widgets_menu.html.haml

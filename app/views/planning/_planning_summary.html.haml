@@ -1,3 +1,4 @@
+/ begin: app/views/planning/_planning_summary.html.haml
 - url = url_for_only_path(:action => 'option_changed')
 #planning_summary_div
   = render :partial => "layouts/flash_msg"
@@ -47,3 +48,4 @@
       = _("* Information shown is based on available trend data going back %{weeks}.") % {:weeks => _(ViewHelper::WEEK_CHOICES[@sb[:options][:days]])}
   - else
     = render :partial => "planning_instructions"
+/ end: app/views/planning/_planning_summary.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_classification_entry.html.haml
 - if edit
   - url = url_for_only_path(:action => "ce_accept", :id => "accept")
   - if entry == "new"
@@ -55,3 +56,4 @@
                                            :confirm => _("Deleting the '%{entry_name}' entry will also unassign it from all items, are you sure?") % {:entry_name => entry.name}),
                                            :title => _("Click to delete this entry")}
           = _("Delete")
+/ end: app/views/ops/_classification_entry.html.haml

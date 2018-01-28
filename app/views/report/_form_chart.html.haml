@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_chart.html.haml
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 #chart_div
   %h3
@@ -64,3 +65,4 @@
   - unless @edit[:new][:graph_type].blank?
     = _('* Some charts my not produce desired results with a single sort field')
   %hr
+/ end: app/views/report/_form_chart.html.haml

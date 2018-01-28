@@ -1,3 +1,4 @@
+/ begin: app/views/cloud_subnet/new.html.haml
 %form#form_div{"name"          => "angularForm",
    "form-changed"  => true,
    "miq-form"      => true,
@@ -64,3 +65,4 @@
 :javascript
   ManageIQ.angular.app.value('cloudSubnetFormId', '#{@subnet.id || "new"}');
   miq_bootstrap('#form_div');
+/ end: app/views/cloud_subnet/new.html.haml

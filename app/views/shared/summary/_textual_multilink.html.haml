@@ -1,3 +1,4 @@
+/ begin: app/views/shared/summary/_textual_multilink.html.haml
 - if items
   %table.table.table-bordered.table-hover.table-striped.table-summary-screen
     %thead
@@ -17,3 +18,4 @@
                 :onclick => sub_item[:link] ? "DoNav('#{sub_item[:link]}');" : ""}
               = render :partial => "shared/summary/icon_or_image", :locals => {:item => sub_item}
               = sub_item[:value]
+/ end: app/views/shared/summary/_textual_multilink.html.haml

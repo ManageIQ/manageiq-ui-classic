@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_db_info.html.haml
 = render :partial => "layouts/flash_msg"
 - if @vmdb_index
   %h3
@@ -104,3 +105,4 @@
               %td{:align => "right"}= number_to_human_size(metrics.size)
               %td{:align => "right"}= number_to_human_size(metrics.wasted_bytes)
               %td{:align => "right"}= h(metrics.percent_bloat)
+/ end: app/views/ops/_db_info.html.haml

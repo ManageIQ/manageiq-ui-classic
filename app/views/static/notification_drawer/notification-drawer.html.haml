@@ -1,3 +1,4 @@
+/ begin: app/views/static/notification_drawer/notification-drawer.html.haml
 .drawer-pf{'ng-class' => "{'hide': drawerHidden, 'drawer-pf-expanded': drawerExpanded}"}
   .drawer-pf-title{'ng-if' => "drawerTitle"}
     %a.drawer-pf-toggle-expand{'ng-if'    => "allowExpand",
@@ -48,3 +49,4 @@
 
           %div{'ng-if'      => "notificationFooterInclude",
                'ng-include' => "notificationFooterInclude"}
+/ end: app/views/static/notification_drawer/notification-drawer.html.haml

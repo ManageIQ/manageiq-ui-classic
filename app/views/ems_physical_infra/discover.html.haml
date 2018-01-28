@@ -1,3 +1,4 @@
+/ begin: app/views/ems_physical_infra/discover.html.haml
 - url = url_for_only_path(:action => 'discover_field_changed')
 = render :partial => 'layouts/flash_msg'
 = form_tag({:action => 'discover'}, {:id     => 'discover_form',
@@ -78,3 +79,4 @@
                    :alt   => t = _("Cancel"),
                    :title => t,
                    :type  => "submit")
+/ end: app/views/ems_physical_infra/discover.html.haml

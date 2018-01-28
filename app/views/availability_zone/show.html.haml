@@ -1,3 +1,4 @@
+/ begin: app/views/availability_zone/show.html.haml
 #main_div
   - if @showtype == "performance"
     = render :partial => "layouts/performance_async"
@@ -12,3 +13,4 @@
       = render :partial => "layouts/tl_show_async"
     - elsif @showtype == "main"
       = render :partial => "layouts/textual_groups_generic"
+/ end: app/views/availability_zone/show.html.haml

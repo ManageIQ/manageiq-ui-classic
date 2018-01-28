@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_resource_pool.html.haml
 - if @record.try(:name)
   - host_title = title_for_host
   #accordion.panel-group
@@ -57,3 +58,4 @@
             :display       => "resource_pools",
             :record_id     => @record.id,
             :title         => _('Show all Resource Pools in this Resource Pool'))
+/ end: app/views/layouts/listnav/_resource_pool.html.haml

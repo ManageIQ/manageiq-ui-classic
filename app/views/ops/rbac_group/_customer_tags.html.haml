@@ -1,3 +1,4 @@
+/ begin: app/views/ops/rbac_group/_customer_tags.html.haml
 #customer_tags_div
   - if @edit
     - rec_id = @edit && @edit[:group_id] ? @edit[:group_id] : "new"
@@ -28,3 +29,4 @@
     %br
     %br
     = render(:partial => 'shared/tree', :locals => {:tree => @tags_tree, :name => @tags_tree.name})
+/ end: app/views/ops/rbac_group/_customer_tags.html.haml

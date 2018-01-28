@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_selected_by_servers.html.haml
 -# tree type is roles by server
 - if rec.class == MiqServer
   .form-horizontal.static
@@ -94,3 +95,4 @@
           %label.col-md-3.control-label= _("Max Concurrent")
           .col-md-9
             = h(max == 0 ? _("unlimited") : max)
+/ end: app/views/ops/_selected_by_servers.html.haml

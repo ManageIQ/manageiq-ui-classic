@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/gtl/_list.html.haml
 - if @grid_hash
   - url = @showlinks == false ? nil : view_to_url(view, @parent)
   - grid_options = {:grid_id         => "list_grid",
@@ -290,3 +291,4 @@
                     - tz = view.db.downcase == "miqschedule" ? server_timezone : Time.zone
                     - col_data = view.format(col, row[col], :tz => celltz || tz).gsub(/\\/, '\&')
                     = h(col_data)
+/ end: app/views/layouts/gtl/_list.html.haml

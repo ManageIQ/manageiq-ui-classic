@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_class_props.html.haml
 #class_props_div
   - if x_node.split('-')[0] == "aec" || params[:pressed] || ["field_select","field_accept","field_delete"].include?(params[:action]) || (x_node.split('-')[0] == "aen" && params[:button] == "reset")
     - if !@in_a_form_props
@@ -34,3 +35,4 @@
       #form_div
         %div{:style => "padding-top: 10px;"}
         = render :partial => "class_form"
+/ end: app/views/miq_ae_class/_class_props.html.haml

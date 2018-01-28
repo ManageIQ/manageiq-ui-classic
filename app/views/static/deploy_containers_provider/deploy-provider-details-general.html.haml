@@ -1,3 +1,4 @@
+/ begin: app/views/static/deploy_containers_provider/deploy-provider-details-general.html.haml
 %div{"ng-controller" => "containers.deployProviderDetailsGeneralController"}
   %div{"miq-wizard-substep" => "", "next-enabled" => "deploymentDetailsGeneralComplete", "on-show" => "onShow",
   "review-template" => "{{reviewTemplate}}", "show-review-details" => "true", "step-id" => "details-general",
@@ -32,3 +33,4 @@
         %label.radio
           %input{"ng-model" => "data.provisionOn", :type => "radio", :value => "noProvider"}
             = _("Specify a list of machines to deploy on (No existing provider)")
+/ end: app/views/static/deploy_containers_provider/deploy-provider-details-general.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_generic_object_definition.html.haml
 #accordion.panel-group
   = render :partial => "layouts/listnav/#{controller_name}_show_list_with_treeview"
   - if @record.try(:name)
@@ -12,3 +13,4 @@
             :tables        => 'instances',
             :record        => @record,
             :display       => 'generic_objects')
+/ end: app/views/layouts/listnav/_generic_object_definition.html.haml

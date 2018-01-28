@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_customization/_dialog_group_form.html.haml
 - url = url_for_only_path(:action => 'dialog_form_field_changed', :id => (@record.id || 'new'))
 %h3
   = _('Box Information')
@@ -21,3 +22,4 @@
                         :maxlength         => 100,
                         :class => "form-control",
                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+/ end: app/views/miq_ae_customization/_dialog_group_form.html.haml

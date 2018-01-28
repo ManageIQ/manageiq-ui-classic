@@ -1,3 +1,4 @@
+/ begin: app/views/planning/_planning_tabs.html.haml
 #planning_tabs
   %ul.nav.nav-tabs
     = miq_tab_header('summary') do
@@ -15,3 +16,4 @@
 - if @sb[:active_tab] != 'report'
   :javascript
     $('#toolbar').hide();
+/ end: app/views/planning/_planning_tabs.html.haml

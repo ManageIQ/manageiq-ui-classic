@@ -1,3 +1,4 @@
+/ begin: app/views/orchestration_stack/show.html.haml
 #main_div
   - case @showtype
   - when "details"
@@ -11,3 +12,4 @@
       = render :partial => "stack_orchestration_template"
     - elsif @showtype == 'main'
       = render :partial => "layouts/textual_groups_generic"
+/ end: app/views/orchestration_stack/show.html.haml

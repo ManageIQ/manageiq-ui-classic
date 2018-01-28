@@ -1,3 +1,4 @@
+/ begin: app/views/configuration/_ui_3.html.haml
 = render :partial => "layouts/flash_msg"
 #tab_div
   = form_tag({:action => 'update'},
@@ -17,3 +18,4 @@
       = render(:partial => 'shared/tree', :locals => {:tree => @df_tree, :name => @df_tree.name})
 
     = render :partial => '/layouts/form_buttons'
+/ end: app/views/configuration/_ui_3.html.haml

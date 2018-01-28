@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_zone_tree.html.haml
 #zone_tree_div
   %h3
     - params = {:kind => ui_lookup(:model => @selected_server.class.to_s), :description => @selected_server.description}
@@ -10,3 +11,4 @@
   = format(_("* Primary Server Roles shown as %{bold} text."), :bold => content_tag(:b, _("bold"))).html_safe
   - if @selected_server.kind_of?(Zone)
     = format(_("Region based nodes shown as %{dimmed} text."), :dimmed => content_tag(:span, _("dimmed"), :class => 'dimmed')).html_safe
+/ end: app/views/ops/_zone_tree.html.haml

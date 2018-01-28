@@ -1,4 +1,6 @@
+/ begin: app/views/report/_form_chart_sample.html.haml
 #chart_sample_div
   - unless @edit[:new][:graph_type].blank?
     %fieldset
       = chart_remote('report', :action => 'sample_chart', :id => "my_chart", :zoomed => false)
+/ end: app/views/report/_form_chart_sample.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_template_folders.html.haml
 #template_folders_div
   - if @folders.any?
     = render(:partial => "layouts/flash_msg")
@@ -15,3 +16,4 @@
               %i.pficon.pficon-folder-close
             %td
               = h(f.name)
+/ end: app/views/pxe/_template_folders.html.haml

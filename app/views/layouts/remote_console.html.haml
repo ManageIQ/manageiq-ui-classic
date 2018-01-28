@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/remote_console.html.haml
 = render :partial => 'layouts/doctype'
 %html{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
@@ -10,3 +11,4 @@
   %body
     #remote-console{'data-url' => @console[:url], 'data-secret' => @console[:secret]}
     = render :partial => 'shared/remote_console_footer', :layout   => false, :locals   => { :console_type => @console[:type].upcase }
+/ end: app/views/layouts/remote_console.html.haml

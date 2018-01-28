@@ -1,3 +1,4 @@
+/ begin: app/views/shared/views/_ownership.html.haml
 - @angular_form = true
 
 %form#form_div.form-horizontal{"name"          => "angularForm",
@@ -66,3 +67,4 @@
   ManageIQ.angular.app.value('ownershipFormId', '#{"ownership"}');
   ManageIQ.angular.app.value('objectIds', #{ @ownershipitems.collect(&:id) });
   miq_bootstrap('#form_div');
+/ end: app/views/shared/views/_ownership.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_log_collection.html.haml
 - @angular_form = true
 
 %form.form-horizontal#form_div{:name                                 => "angularForm",
@@ -55,3 +56,4 @@
 :javascript
   ManageIQ.angular.app.value('serverId', '#{@record.id || "new"}');
   miq_bootstrap('#form_div');
+/ end: app/views/ops/_log_collection.html.haml

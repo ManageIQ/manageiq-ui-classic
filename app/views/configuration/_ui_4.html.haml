@@ -1,3 +1,4 @@
+/ begin: app/views/configuration/_ui_4.html.haml
 = render :partial => "layouts/flash_msg"
 
 #tab_div
@@ -25,3 +26,4 @@
                   row["rollup_daily_metrics"].to_s.capitalize].each do |column|
                 %td{:onclick => "DoNav('/configuration/timeprofile_edit/#{row["id"]}');", :title => title}
                   = h(column)
+/ end: app/views/configuration/_ui_4.html.haml

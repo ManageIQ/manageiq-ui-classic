@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_instance_form.html.haml
 - url = url_for_only_path(:action => 'form_instance_field_changed', :id => (@ae_inst.id || "new"))
 - obs = {:interval => '.5', :url => url}.to_json
 %h3
@@ -101,3 +102,4 @@
             flds["collect"].blank? ? '' : flds["collect"],
             :placeholder       => default_value,
             "data-miq_observe" => obs)
+/ end: app/views/miq_ae_class/_instance_form.html.haml

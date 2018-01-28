@@ -1,3 +1,4 @@
+/ begin: app/views/vm/show.html.haml
 #main_div
   - if @ownershipedit
     = render :partial => "shared/views/ownership"
@@ -17,3 +18,4 @@
     = render :partial => "vm_common/disassociate_floating_ip"
   - else
     = render :partial => "vm_common/#{@showtype}", :locals => {:controller => "vm"}
+/ end: app/views/vm/show.html.haml

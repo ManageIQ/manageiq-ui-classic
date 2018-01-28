@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_profile_list.html.haml
 - if x_node == "root"
   - if @profiles
     = render :partial => "layouts/flash_msg"
@@ -19,3 +20,4 @@
                 = profile.description
 - else
   = render :partial => "profile_details"
+/ end: app/views/miq_policy/_profile_list.html.haml

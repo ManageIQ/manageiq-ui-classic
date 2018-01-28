@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_item.html.haml
 = render :partial => "layouts/flash_msg"
 .form-horizontal
   - j = (%w(scan_histories registry_items filesystems).include?(@lastaction) ? 0 : 1)
@@ -49,3 +50,4 @@
           = _("Not Available")
 %tr
   %th{:colspan => "3", :class => "footer"}
+/ end: app/views/layouts/_item.html.haml

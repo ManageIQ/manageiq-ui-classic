@@ -1,3 +1,4 @@
+/ begin: app/views/container_project/show.html.haml
 - if %w(container_routes container_services container_replicators container_groups container_nodes container_images container_templates containers).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - elsif @showtype == "timeline"
@@ -10,3 +11,4 @@
   = render :file => 'container_project/show_dashboard'
 - elsif @showtype == "topology"
   = render :file => 'container_topology/show'
+/ end: app/views/container_project/show.html.haml

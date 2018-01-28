@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_ns_details.html.haml
 #ns_details_div
   - unless @in_a_form
     = render :partial => 'layouts/info_msg', :locals => {:message => @version_message} if @version_message
@@ -22,3 +23,4 @@
       $(function () {
         $('#ns_details_grid').miqGrid();
       });
+/ end: app/views/miq_ae_class/_ns_details.html.haml

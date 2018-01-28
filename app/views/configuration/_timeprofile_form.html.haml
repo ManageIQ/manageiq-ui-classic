@@ -1,3 +1,4 @@
+/ begin: app/views/configuration/_timeprofile_form.html.haml
 %h3
   = _('Time Profile Information')
   %br
@@ -217,3 +218,4 @@
 :javascript
   ManageIQ.angular.app.value('timeProfileFormId', '#{@timeprofile.id || "new"}');
   miq_bootstrap('#form_div');
+/ end: app/views/configuration/_timeprofile_form.html.haml

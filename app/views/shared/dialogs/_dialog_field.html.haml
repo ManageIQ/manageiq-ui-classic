@@ -1,3 +1,4 @@
+/ begin: app/views/shared/dialogs/_dialog_field.html.haml
 - url = url_for_only_path(:action => 'dialog_field_changed', :id => @edit[:rec_id] || "new") if @edit
 - dialog_mode = @edit[:dialog_mode] if @edit
 
@@ -61,3 +62,4 @@
 
     :javascript
       dialogFieldRefresh.setVisible($('#field_#{field.id}_tr'), #{field.visible});
+/ end: app/views/shared/dialogs/_dialog_field.html.haml

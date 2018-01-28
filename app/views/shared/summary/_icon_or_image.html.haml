@@ -1,4 +1,6 @@
+/ begin: app/views/shared/summary/_icon_or_image.html.haml
 - if item[:icon]
   %i{:class => item[:icon], :title => item[:title]}
 - elsif item[:image]
   = encodable_image_tag(item[:image], :alt => item[:title], :title => item[:title])
+/ end: app/views/shared/summary/_icon_or_image.html.haml

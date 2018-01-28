@@ -1,3 +1,4 @@
+/ begin: app/views/static/deploy_containers_provider/deploy-provider-review-progress.html.haml
 %div{"ng-controller" => "containers.deployProviderReviewProgressController"}
   %div{"allow-click-nav" => "false", "miq-wizard-substep" => "", "on-show" => "onShow", "step-id" => "review-progress",
   "step-priority" => "1", "step-title" => "Progress", "wz-disabled" => "false"}
@@ -17,3 +18,4 @@
         %span.pficon.pficon-error-circle-o
         = _("Failed to deploy %{name}. Error:") % {:name => "{{data.providerName}}"}
         {{deployFailureMessage}}
+/ end: app/views/static/deploy_containers_provider/deploy-provider-review-progress.html.haml

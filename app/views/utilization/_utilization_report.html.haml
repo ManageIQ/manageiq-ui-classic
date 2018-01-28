@@ -1,3 +1,4 @@
+/ begin: app/views/utilization/_utilization_report.html.haml
 #utilization_report_div
   = render :partial => "layouts/flash_msg"
   - if @sb[:trend_rpt] && @sb[:summary]
@@ -35,3 +36,4 @@
   - if @sb[:trend_rpt]
     %hr
     = _('* Information shown is based on available trend data from %{start_time} to %{end_time} in the %{timezone} time zone.') % {:start_time => format_timezone(@sb[:options][:trend_start], @sb[:options][:tz], "date"), :end_time => format_timezone(@sb[:options][:trend_end], @sb[:options][:tz], "date"), :timezone => @sb[:options][:time_profile_tz] || @sb[:options][:tz]}
+/ end: app/views/utilization/_utilization_report.html.haml

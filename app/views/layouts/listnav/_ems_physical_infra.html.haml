@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_ems_physical_infra.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -25,3 +26,4 @@
             :text          => _('Physical Servers with Host'),
             :record        => @record,
             :display       => 'physical_servers_with_host')
+/ end: app/views/layouts/listnav/_ems_physical_infra.html.haml

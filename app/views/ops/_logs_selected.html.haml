@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_logs_selected.html.haml
 - record               = @selected_server
 - log_depot_uri        = "#{record.log_file_depot.try(:uri) || "N/A"}"
 - last_time            = record.last_log_sync_on
@@ -19,3 +20,4 @@
         %label.col-md-2.control-label= _("Last Message")
         .col-md-10
           %p.form-control-static= h(record.last_log_sync_message)
+/ end: app/views/ops/_logs_selected.html.haml

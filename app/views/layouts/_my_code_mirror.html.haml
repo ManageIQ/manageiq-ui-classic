@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_my_code_mirror.html.haml
 - text_area_id ||= "miqNone"
 - url ||= "form_field_changed"
 - mode ||= "yaml"
@@ -20,3 +21,4 @@
 
 :javascript
   miqInitCodemirror(#{options.to_json});
+/ end: app/views/layouts/_my_code_mirror.html.haml

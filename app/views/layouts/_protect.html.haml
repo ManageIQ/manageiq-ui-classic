@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_protect.html.haml
 #main_div
   = render :partial => "layouts/flash_msg"
   %h3= _("Select Policy Profiles")
@@ -23,3 +24,4 @@
     - @embedded = true
     - @quadicon_no_url = true
     = render :partial => "layouts/gtl", :locals => {:no_flash_div => true}
+/ end: app/views/layouts/_protect.html.haml

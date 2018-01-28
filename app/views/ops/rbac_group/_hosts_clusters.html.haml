@@ -1,5 +1,7 @@
+/ begin: app/views/ops/rbac_group/_hosts_clusters.html.haml
 %br
 = _("This user is limited to the selected items and their children.")
 %br
 %br
 = render(:partial => 'shared/tree', :locals => {:tree => @hac_tree, :name => @hac_tree.name})
+/ end: app/views/ops/rbac_group/_hosts_clusters.html.haml

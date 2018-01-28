@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_filter_performance.html.haml
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 %h3
   = _('Performance Timeframe')
@@ -42,3 +43,4 @@
           miqInitSelectPicker();
           miqSelectPickerEvent('chosen_time_profile', '#{url}')
 = _("Note: Only Time Profiles with 'Roll Up Performance' set are shown.")
+/ end: app/views/report/_form_filter_performance.html.haml

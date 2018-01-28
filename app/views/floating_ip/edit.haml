@@ -1,3 +1,4 @@
+/ begin: app/views/floating_ip/edit.haml
 %form#form_div{:name           => "angularForm",
                'ng-controller' => "floatingIpFormController as vm",
                "miq-form"      => true,
@@ -23,3 +24,4 @@
 :javascript
   ManageIQ.angular.app.value('floatingIpFormId', '#{@floating_ip.id}');
   miq_bootstrap('#form_div');
+/ end: app/views/floating_ip/edit.haml

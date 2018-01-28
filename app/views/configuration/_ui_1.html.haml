@@ -1,3 +1,4 @@
+/ begin: app/views/configuration/_ui_1.html.haml
 - url = url_for_only_path(:action => "form_field_changed")
 = render :partial => "layouts/flash_msg"
 
@@ -109,3 +110,4 @@
                 miqSelectPickerEvent("#{display_settings[1]}", "#{url}")
 
     = render :partial => '/layouts/form_buttons'
+/ end: app/views/configuration/_ui_1.html.haml

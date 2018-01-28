@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_security_group.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -24,3 +25,4 @@
             = link_to(_("Stack: %{name}") % {:name => @record.orchestration_stack.name},
               {:controller => "orchestration_stack", :action => 'show', :id => @record.orchestration_stack.id.to_s},
               :title => _("Show parent Orchestration Stack for this Security Group"))
+/ end: app/views/layouts/listnav/_security_group.html.haml

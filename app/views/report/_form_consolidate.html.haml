@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_consolidate.html.haml
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 #consolidate_div
   %h3
@@ -76,3 +77,4 @@
     %strong
       = _('Note:')
     = _('Leave all options unchecked to show the original column value from the first record in the group.')
+/ end: app/views/report/_form_consolidate.html.haml

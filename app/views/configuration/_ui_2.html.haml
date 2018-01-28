@@ -1,3 +1,4 @@
+/ begin: app/views/configuration/_ui_2.html.haml
 - url = url_for_only_path(:action => "view_selected")
 = render :partial => "layouts/flash_msg"
 
@@ -141,3 +142,4 @@
                     %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
 
     = render :partial => "/layouts/form_buttons"
+/ end: app/views/configuration/_ui_2.html.haml

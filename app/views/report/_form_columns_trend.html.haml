@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_columns_trend.html.haml
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 .form-group
   %label.control-label.col-md-2
@@ -57,3 +58,4 @@
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent("percent#{index}", '#{url}', {beforeSend: true, complete: true});
+/ end: app/views/report/_form_columns_trend.html.haml

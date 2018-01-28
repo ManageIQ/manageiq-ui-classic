@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_flash_msg.html.haml
 - flash_div_id ||= 'flash_msg_div'
 
 %div{:id => flash_div_id, :style => ("display: none" unless @flash_array)}
@@ -26,3 +27,4 @@
               %span.pficon.pficon-close
             %span.pficon.pficon-ok
             %strong= h(fl[:message])
+/ end: app/views/layouts/_flash_msg.html.haml

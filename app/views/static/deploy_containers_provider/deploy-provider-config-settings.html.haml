@@ -1,3 +1,4 @@
+/ begin: app/views/static/deploy_containers_provider/deploy-provider-config-settings.html.haml
 %div{"ng-controller" => "containers.deployProviderConfigSettingsController"}
   %div{"miq-wizard-substep" => "", "next-enabled" => "configStorageComplete", "on-show" => "onShow",
   "review-template" => "{{reviewTemplate}}", "step-id" => "config-storage", "step-priority" => "3", "step-title" => _("Settings"), "wz-disabled" => "false"}
@@ -73,3 +74,4 @@
             %label
               %input{"ng-change" => "validateForm()", "ng-disabled" => "!validateInfraNode()", "ng-model" => "data.configureRouter", :type => "checkbox"}
                 = _("Router")
+/ end: app/views/static/deploy_containers_provider/deploy-provider-config-settings.html.haml

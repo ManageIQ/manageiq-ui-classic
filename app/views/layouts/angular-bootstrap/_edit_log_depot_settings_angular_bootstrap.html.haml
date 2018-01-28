@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/angular-bootstrap/_edit_log_depot_settings_angular_bootstrap.html.haml
 - ng_readonly ||= false
 %div{"ng-show" => "#{ng_show}"}
   .form-group{"ng-class" => "{'has-error': angularForm.depot_name.$invalid}"}
@@ -32,3 +33,4 @@
       %span.help-block{"ng-show" => "angularForm.uri.$invalid"}
         = _("Required")
       %input{"type" => "hidden", "name" => "uri_prefix", "ng-value" => "#{ng_model_uri_prefix}"}
+/ end: app/views/layouts/angular-bootstrap/_edit_log_depot_settings_angular_bootstrap.html.haml

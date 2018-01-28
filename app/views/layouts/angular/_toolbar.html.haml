@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/angular/_toolbar.html.haml
 %ng-csp#miq-toolbar-menu{"ng-controller" => "miqToolbarController as toolbarCtrl",
      "ng-init" => "toolbarCtrl.initObject('#{j_str(toolbar_from_hash.to_json)}')"}
   %miq-toolbar-menu{"toolbar-items" => "toolbarCtrl.toolbarItems",
@@ -5,3 +6,4 @@
                     "on-view-click" => "toolbarCtrl.onViewClick(item, $event)"}
 :javascript
   miq_bootstrap('#miq-toolbar-menu', 'ManageIQ.toolbar');
+/ end: app/views/layouts/angular/_toolbar.html.haml

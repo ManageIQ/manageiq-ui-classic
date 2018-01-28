@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/show_pdf.html.haml
 = render :partial => "layouts/pdf_styles"
 - controller = %w(miq_template vm_infra vm_or_template vm).include?(controller_name) ? "vm_common" : controller_name
 #xyz_main.encode_images
@@ -10,3 +11,4 @@
   = render :partial => "#{controller}/configuration_script"
 - else
   = render :partial => "layouts/textual_groups_generic"
+/ end: app/views/layouts/show_pdf.html.haml

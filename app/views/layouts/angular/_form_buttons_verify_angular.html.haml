@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/angular/_form_buttons_verify_angular.html.haml
 - if !session[:host_items].nil?
   - verify_title_on ||= _("Validate the credentials by logging into the selected %{title_for_host}") % {:title_for_host => title_for_host}
   - verify_title_off ||= _("%{host} to validate against, Username and matching password fields are needed to perform verification of credentials") % {:host => title_for_host}
@@ -33,3 +34,4 @@
                             "post-validation-model-registry" => "$parent.#{main_scope}.postValidationModelRegistry"}
         %span.help-block{"ng-if" => "angularForm.#{valtype}_auth_status.$error.validationRequired"}
           = _("Validation Required")
+/ end: app/views/layouts/angular/_form_buttons_verify_angular.html.haml

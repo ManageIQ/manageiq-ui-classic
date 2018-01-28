@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_tools/_results_xml.html.haml
 #results_xml_div
   - if @results
     #xml_holder
@@ -6,3 +7,4 @@
   - else
     = render(:partial => 'layouts/info_msg',
       :locals => {:message => _("Enter Automation Simulation options on the left and press Submit.")})
+/ end: app/views/miq_ae_tools/_results_xml.html.haml

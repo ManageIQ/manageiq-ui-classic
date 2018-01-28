@@ -1,3 +1,4 @@
+/ begin: app/views/report/_role_list.html.haml
 #menu_roles_div
   - if @sb[:active_accord] == :roles
     - if @menu_roles_tree
@@ -24,3 +25,4 @@
                   = pp[0]
     - else
       = render :partial => 'layouts/info_msg', :locals => {:message => _("Choose a Role to edit from the left.")}
+/ end: app/views/report/_role_list.html.haml

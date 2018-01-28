@@ -1,3 +1,4 @@
+/ begin: app/views/automation_manager/explorer.html.haml
 - content_for :search do
   = render(:partial => "layouts/x_adv_searchbox", :locals => {:nameonly => x_active_tree == :configuration_manager_providers_tree})
   = render(:partial => 'layouts/quick_search')
@@ -18,3 +19,4 @@
   #main_div
     = render(:partial => 'layouts/x_gtl')
 
+/ end: app/views/automation_manager/explorer.html.haml

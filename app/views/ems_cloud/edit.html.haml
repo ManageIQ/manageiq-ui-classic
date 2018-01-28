@@ -1,3 +1,4 @@
+/ begin: app/views/ems_cloud/edit.html.haml
 = form_for(@ems,
            :url    => ems_cloud_path(@ems),
            :method => :patch,
@@ -15,3 +16,4 @@
 :javascript
   ManageIQ.angular.app.value('emsCommonFormId', '#{@ems.id || "new"}');
   miq_bootstrap($('#form_id').val());
+/ end: app/views/ems_cloud/edit.html.haml

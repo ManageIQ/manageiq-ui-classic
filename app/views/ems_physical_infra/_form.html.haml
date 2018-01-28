@@ -1,3 +1,4 @@
+/ begin: app/views/ems_physical_infra/_form.html.haml
 - @angular_form = true
 
 .form-horizontal{'ng-cloak' => '',
@@ -67,3 +68,4 @@
   = render :partial => "/layouts/angular/multi_auth_credentials", :locals  => {:record => @ems, :ng_model => "emsCommonModel"}
 
   = render :partial => "layouts/angular/x_edit_buttons_angular", :locals => {:record => @ems, :restful => true}
+/ end: app/views/ems_physical_infra/_form.html.haml

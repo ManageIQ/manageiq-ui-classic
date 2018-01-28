@@ -1,3 +1,4 @@
+/ begin: app/views/bottlenecks/_bottlenecks_tabs.html.haml
 #bottlenecks_tabs
   %ul.nav.nav-tabs
     = miq_tab_header('summary', @sb[:active_tab]) do
@@ -12,3 +13,4 @@
 
 :javascript
   miq_tabs_init('bottlenecks_tabs', '/bottlenecks/change_tab/');
+/ end: app/views/bottlenecks/_bottlenecks_tabs.html.haml

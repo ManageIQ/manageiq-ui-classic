@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_ap_form_file.html.haml
 - scan_id = "#{@scan.id || 'new'}"
 - url = url_for_only_path(:action => 'ap_edit',
                 :id     => scan_id)
@@ -61,3 +62,4 @@
                 'data-click_url'      => {:url => "#{url}?accept=accept"}.to_json}
                 = _("Save")
 
+/ end: app/views/ops/_ap_form_file.html.haml

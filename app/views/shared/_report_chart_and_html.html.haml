@@ -1,3 +1,4 @@
+/ begin: app/views/shared/_report_chart_and_html.html.haml
 -# locals: chart, html, report
 - if chart
   = chart_remote('report', :id => 'my_chart', :zoomed => false)
@@ -8,3 +9,4 @@
 
 - if html
   = render :partial => 'layouts/report_html'
+/ end: app/views/shared/_report_chart_and_html.html.haml

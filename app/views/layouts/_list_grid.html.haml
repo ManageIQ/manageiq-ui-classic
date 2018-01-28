@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_list_grid.html.haml
 :javascript
   ManageIQ.gridChecks = [];
 
@@ -83,3 +84,4 @@
               - elsif cell[:image]
                 = image_tag(image_path(cell[:image]), :alt => cell[:title], :title => cell[:title])
               = cell[:text]
+/ end: app/views/layouts/_list_grid.html.haml

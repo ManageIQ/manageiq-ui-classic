@@ -1,3 +1,4 @@
+/ begin: app/views/infra_topology/show.html.haml
 - tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{vm.legendTooltip}}"}
 .topology{'ng-controller' => "infraTopologyController as vm"}
   .legend
@@ -33,3 +34,4 @@
 
 :javascript
   miq_bootstrap('.topology');
+/ end: app/views/infra_topology/show.html.haml

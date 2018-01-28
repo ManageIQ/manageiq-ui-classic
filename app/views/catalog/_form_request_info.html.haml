@@ -1,3 +1,4 @@
+/ begin: app/views/catalog/_form_request_info.html.haml
 - if !@edit[:wf]
   %span{:style => "color: red;"}
     = @no_wf_msg
@@ -7,3 +8,4 @@
   = render :partial => "miq_request/prov_wf", :locals  => {:wf => @edit[:wf]}
   %br
   = _("Note: Fields marked with * are required.")
+/ end: app/views/catalog/_form_request_info.html.haml

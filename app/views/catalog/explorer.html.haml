@@ -1,3 +1,4 @@
+/ begin: app/views/catalog/explorer.html.haml
 -# Include the center cell divs
 - nodetypes = %w(MiqTemplate OrchestrationTemplate ServiceResource ServiceTemplate ServiceTemplateCatalog)
 - if nodetypes.include?(TreeBuilder.get_model_for_prefix(@nodetype)) && !@view
@@ -26,3 +27,4 @@
                       :mode         => "htmlmixed",
                       :height       => '350px',
                       :width        => '600px'}
+/ end: app/views/catalog/explorer.html.haml

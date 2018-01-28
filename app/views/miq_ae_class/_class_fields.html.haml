@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_class_fields.html.haml
 #class_fields_div
   - if x_node.split('-')[0] == "aec" || params[:pressed] || %w(field_select field_accept field_delete).include?(params[:action])
     - if !@in_a_form_fields
@@ -143,3 +144,4 @@
                       "data-miq_observe" => obs)
 :javascript
   miqInitSelectPicker();
+/ end: app/views/miq_ae_class/_class_fields.html.haml

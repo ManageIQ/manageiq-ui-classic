@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_customization/_dialog_form.html.haml
 - nodes = x_node.split('_')
 = render :partial => "layouts/flash_msg"
 #form_div
@@ -20,3 +21,4 @@
     = hidden_div_if(!@edit[:ae_tree_select], :id => 'ae_tree_select_div') do
       = render :partial => 'layouts/ae_tree_select'
     = render(:partial => 'dialog_field_form')
+/ end: app/views/miq_ae_customization/_dialog_form.html.haml

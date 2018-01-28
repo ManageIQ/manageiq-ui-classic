@@ -1,3 +1,4 @@
+/ begin: app/views/shared/dialogs/_auto_refresh_javascript.html.haml
 :javascript
   dialogFieldRefresh.listenForAutoRefreshMessages(JSON.parse("#{j(auto_refresh_options.to_json)}"), function(initializingIndex) {
     dialogFieldRefresh.refreshField(JSON.parse("#{j(refresh_field_parameters.to_json)}"), function() {
@@ -7,3 +8,4 @@
       dialogFieldRefresh.triggerAutoRefresh(jsonOptions);
     });
   });
+/ end: app/views/shared/dialogs/_auto_refresh_javascript.html.haml

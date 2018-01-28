@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_co_tags_tab.html.haml
 - if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_co_tags"
   #tab_div
     - url = url_for_only_path(:action => 'ce_new_cat')
@@ -28,3 +29,4 @@
             = h(@cat.show)
       %hr
       = render :partial => 'classification_entries', :locals => {:entry => nil}
+/ end: app/views/ops/_settings_co_tags_tab.html.haml

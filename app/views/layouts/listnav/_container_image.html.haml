@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_container_image.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -14,3 +15,4 @@
         = single_relationship_link(@record, :container_image_registry)
         - %i(container_project container_group container container_node).each do |ent|
           = multiple_relationship_link(@record, ent)
+/ end: app/views/layouts/listnav/_container_image.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/ems_infra/_heatmap.html.haml
 .heatmap{"ng-controller" => "heatmapController as vm"}
   .card-pf.card-pf-heatmap
     .card-pf-heading
@@ -9,3 +10,4 @@
           %pf-heatmap{'ng-attr-id' => "{{data[0].id}}", "chart-title" => "key", "data" => "data", "chart-data-available" => "vm.dataAvailable", "show-legend" => "vm.showLegends", "legend-labels" => "vm.legendLabels", "max-block-size" => "20", "block-padding" => "5", "heatmap-color-pattern" => "vm.heatmapColorPattern", "thresholds" => "vm.thresholds", "click-action" => "vm.clickAction", "loading-done" => true}
           %span.trend-footer-pf
             {{vm.timeframeLabel}}
+/ end: app/views/ems_infra/_heatmap.html.haml

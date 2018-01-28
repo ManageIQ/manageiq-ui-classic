@@ -1,3 +1,4 @@
+/ begin: app/views/miq_template/show.html.haml
 #main_div
   - if @ownershipedit
     = render :partial => "shared/views/ownership"
@@ -31,3 +32,4 @@
       = render :partial => "shared/views/compliance_history"
     - else
       = render :partial => "vm_common/#{@showtype}", :locals => {:controller => "miq_template"}
+/ end: app/views/miq_template/show.html.haml

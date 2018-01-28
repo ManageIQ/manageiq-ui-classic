@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_container_template.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -12,3 +13,4 @@
       %ul.nav.nav-pills.nav-stacked
         = single_relationship_link(@record, :ems_container, "ext_management_system")
         = single_relationship_link(@record, :container_project)
+/ end: app/views/layouts/listnav/_container_template.html.haml

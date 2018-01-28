@@ -1,3 +1,4 @@
+/ begin: app/views/chargeback/_cb_rate_show.html.haml
 = render :partial => 'layouts/flash_msg'
 - breakdown_present = @record.chargeback_rate_details.any? { |d| d.sub_metric.present? }
 %h3= _('Basic Info')
@@ -78,3 +79,4 @@
         $("tr[id = '"+this.id+"']").removeClass("active");
       }
     );
+/ end: app/views/chargeback/_cb_rate_show.html.haml

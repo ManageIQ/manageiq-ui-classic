@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_rbac_role_details.html.haml
 - if @edit
   - url = url_for_only_path(:action => 'rbac_role_field_changed', :id => (@edit[:role_id] || "new"))
 = render :partial => "layouts/flash_msg"
@@ -62,3 +63,4 @@
         = _("Product Features (Read Only)")
       %h3
       = render(:partial => "shared/tree", :locals => {:tree => @rbac_menu_tree, :name => @rbac_menu_tree.name})
+/ end: app/views/ops/_rbac_role_details.html.haml

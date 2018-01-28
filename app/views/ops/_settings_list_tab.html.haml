@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_list_tab.html.haml
 - if @sb[:active_tab] == "settings_list"
   - if @zones
     = render(:partial => "layouts/flash_msg")
@@ -35,3 +36,4 @@
       = render :partial => "ldap_region_show"
     - elsif tree_node.split("-").first == "ld"
       = render :partial => "ldap_domain_show"
+/ end: app/views/ops/_settings_list_tab.html.haml

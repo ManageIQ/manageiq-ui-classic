@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_log_viewer.html.haml
 = render :partial => "layouts/flash_msg"
 
 - legend_text ||= _("Last 1000 lines from server %{name} [%{id}] in zone %{zone}") % |
@@ -8,3 +9,4 @@
 
 %pre
   = @log
+/ end: app/views/ops/_log_viewer.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_drift_history.html.haml
 - if @timestamps.length == 0
   .alert.alert-warning
     %span.pficon-layered
@@ -21,3 +22,4 @@
           %td
             = h(format_timezone(ts, Time.zone, "view"))
             (#{h(time_ago_in_words(ts.in_time_zone(Time.zone)))} ago)
+/ end: app/views/layouts/_drift_history.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/bottlenecks/_bottlenecks_summary.html.haml
 #bottlenecks_summary_div
   - if x_node == ""
     = render :partial => 'layouts/info_msg', :locals => {:message => _("Select a node on the left to view Bottlenecks timeline.")}
@@ -5,3 +6,4 @@
     = render :partial => "layouts/flash_msg"
     = render :partial => 'bottlenecks_options', :locals  => {:typ => "summ"}
   = render :partial => 'bottlenecks_tl_detail'
+/ end: app/views/bottlenecks/_bottlenecks_summary.html.haml

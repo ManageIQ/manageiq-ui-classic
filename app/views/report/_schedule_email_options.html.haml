@@ -1,3 +1,4 @@
+/ begin: app/views/report/_schedule_email_options.html.haml
 - url = url_for_only_path(:action => 'schedule_form_field_changed', :id => @schedule.id || "new")
 - url_json = {:url => url}.to_json
 #schedule_email_options_div
@@ -31,3 +32,4 @@
                               Array(@edit[:new][:email][:attach]).include?(:pdf),
                               "data-miq_observe_checkbox" => url_json)
               = _("PDF")
+/ end: app/views/report/_schedule_email_options.html.haml

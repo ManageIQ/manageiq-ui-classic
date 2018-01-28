@@ -1,3 +1,4 @@
+/ begin: app/views/alert/_rss_list.html.haml
 #tab_div
   - if @rss_feeds.empty?
     .alert.alert-warning
@@ -32,3 +33,4 @@
               = h(feed.description)
             %td
               = h(feed.url(request.host_with_port))
+/ end: app/views/alert/_rss_list.html.haml

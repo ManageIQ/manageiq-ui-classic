@@ -1,3 +1,4 @@
+/ begin: app/views/report/_widget_form.html.haml
 - url = url_for_only_path(:action => 'widget_form_field_changed', :id => (@widget.id || "new"))
 #form_div
   = render :partial => "layouts/flash_msg"
@@ -42,3 +43,4 @@
 
   - if @edit[:read_only]
     = _('* Fields are read only for default Widgets')
+/ end: app/views/report/_widget_form.html.haml

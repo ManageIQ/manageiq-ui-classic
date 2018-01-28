@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml
 - return unless %w(ems_cloud ems_infra ems_container ems_middleware ems_network ems_physical_infra).include?(controller_name)
 - prefix ||= "default"
 - ng_reqd_hostname ||= true
@@ -252,3 +253,4 @@
       = _("Required")
     %span.help-block{"ng-show" => "angularForm.realm.$error.detectedSpaces"}
       = _("Spaces are prohibited")
+/ end: app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml

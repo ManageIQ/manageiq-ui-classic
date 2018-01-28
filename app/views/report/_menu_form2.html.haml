@@ -1,3 +1,4 @@
+/ begin: app/views/report/_menu_form2.html.haml
 #menu_div2
   - if @selected && @selected[1] && (!@edit[:selected_reports].blank? || !@edit[:available_reports].blank?)
     - url = url_for_only_path(:action => 'menu_field_changed')
@@ -130,3 +131,4 @@
                   = _('Discard')
     - unless @edit[:user_typ]
       = _('* Report is not owned by your group so it cannot be removed')
+/ end: app/views/report/_menu_form2.html.haml

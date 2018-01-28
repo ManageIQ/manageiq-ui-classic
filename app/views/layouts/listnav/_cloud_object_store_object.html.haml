@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_cloud_object_store_object.html.haml
 - if @record.try(:key)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.key, :length => truncate_length), true, "icon") do
@@ -23,3 +24,4 @@
             = link_to(_("Cloud Object Store: %{name}") % {:name => @record.cloud_object_store_container.key},
               {:action => 'show', :id => @record.cloud_object_store_container.id, :controller => 'cloud_object_store_container'},
               :title => _("Show this Cloud Object's parent Cloud Object Store"))
+/ end: app/views/layouts/listnav/_cloud_object_store_object.html.haml

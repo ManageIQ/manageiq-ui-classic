@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_exp_editor.html.haml
 -# Set the JS type vars if a saved expression atom already exists when first showing the editor
 - if @edit && @edit.fetch_path(@expkey, :val1, :type)
   = javascript_tag("ManageIQ.expEditor.first.type = '#{@edit[@expkey][:val1][:type]}';")
@@ -110,3 +111,4 @@
 
   - if @edit[@expkey][:exp_token]
     = render(:partial => 'layouts/exp_atom/editor')
+/ end: app/views/layouts/_exp_editor.html.haml

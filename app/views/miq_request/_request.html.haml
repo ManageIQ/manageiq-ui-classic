@@ -1,3 +1,4 @@
+/ begin: app/views/miq_request/_request.html.haml
 - if @edit && @edit[:stamp_typ]
   - url = url_for_only_path(:action => 'stamp_field_changed', :id => @edit[:request].id)
 #request_div
@@ -135,3 +136,4 @@
   - else
     = render :partial => "reconfigure_show"
 
+/ end: app/views/miq_request/_request.html.haml

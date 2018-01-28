@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_ldap_verify_button.html.haml
 - validate_disabled = @edit[:new][:authentication][:ldaphost].empty? || @edit[:new][:authentication][:ldapport].nil?
 
 = hidden_div_if(validate_disabled, :id => "verify_button_on") do
@@ -17,3 +18,4 @@
   = button_tag(_("Validate"),
     :class => "btn btn-primary btn-xs disabled",
     :title => _("LDAP Hostname and Port fields are needed to perform verification of LDAP Settings"))
+/ end: app/views/ops/_ldap_verify_button.html.haml

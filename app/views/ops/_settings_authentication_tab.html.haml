@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_authentication_tab.html.haml
 - if @sb[:active_tab] == "settings_authentication"
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
   %h3
@@ -273,3 +274,4 @@
       if (miqDomElementExists('user_type_base')) $('#user_type_base').hide();
     - else
       if (miqDomElementExists('user_type_samaccountname')) $('#user_type_samaccountname').hide();
+/ end: app/views/ops/_settings_authentication_tab.html.haml

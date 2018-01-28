@@ -1,3 +1,4 @@
+/ begin: app/views/storage/_storage_pod_list.html.haml
 - if x_active_tree == :storage_pod_tree
   - if (x_node == "root" && !@in_a_form) || @view
     #storage_pod_list_div
@@ -8,3 +9,4 @@
   - else
     = render :partial => "storage_details"
   #null_div
+/ end: app/views/storage/_storage_pod_list.html.haml

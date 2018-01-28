@@ -1,6 +1,8 @@
+/ begin: app/views/static/pf_charts/line-chart.html.haml
 %span
   .h3{'ng-if' => "$ctrl.chartData.dataAvailable === false"}
     {{$ctrl.chartConfig.headTitle}}
   %div{"ng-if" => "!$ctrl.loadingDone", :class => "spinner spinner-lg loading"}
   %pf-c3-chart{'id' => "{{$ctrl.lineChartId}}", 'ng-if' => "$ctrl.chartData.dataAvailable !== false && $ctrl.loadingDone", 'config' => "$ctrl.chartConfig"}
   %pf-empty-chart{'ng-if' => "$ctrl.chartData.dataAvailable === false", 'chart-height' => "$ctrl.chartConfig.size.height"}
+/ end: app/views/static/pf_charts/line-chart.html.haml

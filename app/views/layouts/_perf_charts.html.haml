@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_perf_charts.html.haml
 %div{:id => "#{chart_set}_charts_div", :onmousedown => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
   - if @charts || @perf_options[:chart_type] != :performance
     - perf_options ||= @perf_options
@@ -64,3 +65,4 @@
                       = @p_html.html_safe
         - else
           = render :partial => 'layouts/info_msg', :locals => {:message => _("No Capacity & Utilization data available.")}
+/ end: app/views/layouts/_perf_charts.html.haml

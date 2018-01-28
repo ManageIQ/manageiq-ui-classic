@@ -1,3 +1,4 @@
+/ begin: app/views/shared/summary/_textual_multivalue.html.haml
 %table{:cellpadding => "0", :cellspacing => "0"}
   - items.each do |item|
     %tr{:class => item[:title] ? '' : 'no-hover',
@@ -6,3 +7,4 @@
       %td{:style => "border: 0; margin: 0; padding: 0"}
         = render :partial => "shared/summary/icon_or_image", :locals => {:item => item}
         = item[:value]
+/ end: app/views/shared/summary/_textual_multivalue.html.haml

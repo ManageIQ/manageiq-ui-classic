@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_condition_details.html.haml
 - if @edit
   - url = url_for_only_path(:action => 'condition_field_changed', :id => (@condition.id || 'new'))
   - observe_with_interval = {:interval => '.5', :url => url}.to_json
@@ -111,3 +112,4 @@
                         %i{:class => p.decorate.fonticon}
                       %td
                         = p.description
+/ end: app/views/miq_policy/_condition_details.html.haml

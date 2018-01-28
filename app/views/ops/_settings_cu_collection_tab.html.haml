@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_cu_collection_tab.html.haml
 - if @sb[:active_tab] == "settings_cu_collection"
   - url = url_for_only_path(:action => 'cu_collection_field_changed')
   - clusters_title = title_for_clusters
@@ -67,3 +68,4 @@
           - else
             .note
               %b= _("Note: No Datastores available.")
+/ end: app/views/ops/_settings_cu_collection_tab.html.haml

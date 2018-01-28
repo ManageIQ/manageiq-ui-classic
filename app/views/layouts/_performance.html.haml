@@ -1,4 +1,6 @@
+/ begin: app/views/layouts/_performance.html.haml
 = render(:partial => "layouts/flash_msg")
 = render(:partial => "layouts/perf_options")
 = render(:partial => "layouts/perf_charts",
          :locals  => {:chart_data => @chart_data, :chart_set => "candu"})
+/ end: app/views/layouts/_performance.html.haml

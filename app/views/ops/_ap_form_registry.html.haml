@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_ap_form_registry.html.haml
 - scan_id = "#{@scan.id || 'new'}"
 - url = url_for_only_path(:action => 'ap_edit',
                 :id     => scan_id)
@@ -100,3 +101,4 @@
             %td.action-cell{:onclick => remote_link, :title => _("Click to delete this entry")}
               %button.btn.btn-default.btn-block.btn-sm
                 = _("Delete")
+/ end: app/views/ops/_ap_form_registry.html.haml

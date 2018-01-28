@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_disassociate_floating_ip.html.haml
 %form#form_div{:name => "angularForm", 'ng-controller' => "vmCloudDisassociateFloatingIpFormController as vm"}
   = render :partial => "layouts/flash_msg"
   %h3
@@ -18,3 +19,4 @@
 :javascript
   ManageIQ.angular.app.value('vmCloudDisassociateFloatingIpFormId', '#{@record.id}');
   miq_bootstrap('#form_div');
+/ end: app/views/vm_common/_disassociate_floating_ip.html.haml

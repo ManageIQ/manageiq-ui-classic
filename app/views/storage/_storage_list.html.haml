@@ -1,3 +1,4 @@
+/ begin: app/views/storage/_storage_list.html.haml
 - if x_active_tree == :storage_tree
   - if x_node == "root" || @view
     = render :partial => 'layouts/gtl', :locals => {:action_url => "show_list"}
@@ -5,3 +6,4 @@
       ManageIQ.afterOnload = "if (miqDomElementExists('adv_searchbox_div')) $('#adv_searchbox_div').show();"
   - else
     = render :partial => "storage_details"
+/ end: app/views/storage/_storage_list.html.haml

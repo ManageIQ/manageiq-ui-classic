@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_edit_email.html.haml
 - box_title ||= _("E-mail")
 - action_url ||= "form_field_changed"
 - if @edit
@@ -30,3 +31,4 @@
   - if @edit[:new][:send_email]
     = render(:partial => "layouts/edit_to_email", :locals => {:action_url => action_url, :record => record})
   %hr
+/ end: app/views/layouts/_edit_email.html.haml

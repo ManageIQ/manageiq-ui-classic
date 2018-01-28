@@ -1,5 +1,7 @@
+/ begin: app/views/pxe/_pxe_server_list.html.haml
 - if x_active_tree == :pxe_servers_tree
   - if x_node == "root" && @view
     = render :partial => 'layouts/x_gtl', :locals => {:action_url => "pxe_server_list"}
   - else
     = render :partial => "pxe_server_details"
+/ end: app/views/pxe/_pxe_server_list.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/host/_network_tree.html.haml
 -# Network or Storage Adpater Tree
 - if x_active_tree == :sa_tree
   %div
@@ -7,3 +8,4 @@
     = render(:partial => 'shared/tree', :locals => {:tree => @network_tree, :name => @network_tree.name.to_s})
 
 
+/ end: app/views/host/_network_tree.html.haml

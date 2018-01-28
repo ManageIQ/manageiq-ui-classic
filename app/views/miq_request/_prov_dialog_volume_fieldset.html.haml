@@ -1,3 +1,4 @@
+/ begin: app/views/miq_request/_prov_dialog_volume_fieldset.html.haml
 - url = url_for_only_path(:action => 'prov_field_changed', :id => (@edit[:req_id] || 'new')) if @edit
 - options = @options ? @options : @edit[:new]
 - draw_fields = true
@@ -87,3 +88,4 @@
         return out;
       }
   })();
+/ end: app/views/miq_request/_prov_dialog_volume_fieldset.html.haml

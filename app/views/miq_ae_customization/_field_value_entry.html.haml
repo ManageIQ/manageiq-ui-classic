@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_customization/_field_value_entry.html.haml
 - if edit
   - if entry == "new"
     %tr
@@ -79,3 +80,4 @@
       %td{:onclick => remote_function(:url => {:action => 'field_value_select', :id => "#{@record.id || 'new'}", :entry_id => idx, :field => "description"}),
         :title => _("Click to update this entry")}
         = h(entry[1])
+/ end: app/views/miq_ae_customization/_field_value_entry.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_amazon_verify_button.html.haml
 = hidden_div_if(@edit[:new][:authentication][:amazon_key].nil? || @edit[:new][:authentication][:amazon_secret].nil?, :id => "amazon_verify_button_on") do
   = link_to(_("Validate"),
     {:action => "settings_update",
@@ -15,3 +16,4 @@
   = button_tag(_("Validate"),
     :class => "btn btn-primary btn-xs disabled",
     :title => _("Amazon access key and secret are needed to validate Amazon Settings"))
+/ end: app/views/ops/_amazon_verify_button.html.haml

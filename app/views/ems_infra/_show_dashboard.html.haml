@@ -1,3 +1,4 @@
+/ begin: app/views/ems_infra/_show_dashboard.html.haml
 = render :partial => "layouts/flash_msg"
 .container-fluid.container-tiles-pf.ems-infra-dashboard
   .row.row-tile-pf
@@ -16,3 +17,4 @@
   :javascript
     ManageIQ.angular.app.value('providerId', '#{@record.id}');
     miq_bootstrap('.ems-infra-dashboard');
+/ end: app/views/ems_infra/_show_dashboard.html.haml

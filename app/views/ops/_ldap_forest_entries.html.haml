@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_ldap_forest_entries.html.haml
 - url = url_for_only_path(:action => 'forest_form_field_changed', :id => @sb[:active_tab].split('_').last)
 #forest_entries_div
   %h3= _("Trusted Forest Settings")
@@ -90,3 +91,4 @@
                 %td{:onclick => remote_function(:url => {:action => 'forest_select', :ldaphost_id => forest[:ldaphost].to_s}), :title => _("Click to edit this forest")}
                   - if forest[:bind_pwd].to_s.length > 0
                     ******
+/ end: app/views/ops/_ldap_forest_entries.html.haml

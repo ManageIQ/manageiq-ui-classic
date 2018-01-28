@@ -1,3 +1,4 @@
+/ begin: app/views/report/_db_list.html.haml
 - if x_active_tree == :db_tree
   - if @sb[:nodes].nil? || (@sb[:nodes] && @sb[:nodes].length == 1)
     = render :partial => "layouts/flash_msg"
@@ -59,3 +60,4 @@
       = render :partial => "db_seq_form"
     - else
       = render :partial => "db_form"
+/ end: app/views/report/_db_list.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/miq_request/_pre_prov.html.haml
 = render :partial => "layouts/flash_msg"
 #pre_prov_div
   - typ = request.parameters[:controller] == "vm_cloud" ? ui_lookup(:table => "template_cloud") : ui_lookup(:table => "template_infra")
@@ -33,3 +34,4 @@
           = render :partial => "miq_request/pre_prov_volumes_snapshots", :locals => {:row => row}
         - else
           = render :partial => "miq_request/pre_prov_images", :locals => {:row => row}
+/ end: app/views/miq_request/_pre_prov.html.haml

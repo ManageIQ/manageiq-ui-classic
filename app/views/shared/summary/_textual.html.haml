@@ -1,3 +1,4 @@
+/ begin: app/views/shared/summary/_textual.html.haml
 - items = expand_textual_group(items, @record)
 - if items.present?
   %table.table.table-bordered.table-hover.table-striped.table-summary-screen
@@ -24,3 +25,4 @@
             %td
               = render :partial => "shared/summary/icon_or_image", :locals => {:item => item}
               = !item[:value].kind_of?(Array) ? item[:value] : render(:partial => "shared/summary/textual_multivalue", :locals => {:items => item[:value]})
+/ end: app/views/shared/summary/_textual.html.haml

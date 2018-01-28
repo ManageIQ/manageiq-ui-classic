@@ -1,3 +1,4 @@
+/ begin: app/views/report/_savedreports_list.html.haml
 - if @sb[:active_accord] == :savedreports
   - if @report
     = render :partial => 'layouts/flash_msg'
@@ -10,3 +11,4 @@
     = render :partial => 'layouts/x_gtl'
   - else
     = render :partial => 'layouts/info_msg', :locals => {:message => _("Choose a Report from the menus on the left.")}
+/ end: app/views/report/_savedreports_list.html.haml

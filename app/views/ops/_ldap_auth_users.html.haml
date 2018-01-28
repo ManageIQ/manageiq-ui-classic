@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_ldap_auth_users.html.haml
 #ldap_user_div
   - unless @edit[:ldap_groups_by_user].empty?
     %form.form-horizontal
@@ -12,3 +13,4 @@
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('ldap_groups_user', "#{url}")
+/ end: app/views/ops/_ldap_auth_users.html.haml

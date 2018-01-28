@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_ems_storage.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -31,3 +32,4 @@
             :display       => 'cloud_object_store_containers',
             :tables        => 'cloud_object_store_container',
             :controller    => "ems_storage")
+/ end: app/views/layouts/listnav/_ems_storage.html.haml

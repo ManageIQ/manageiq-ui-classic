@@ -1,3 +1,5 @@
+/ begin: app/views/static/pf_charts/sparkline-chart.html.haml
 %span
   %pf-c3-chart{'ng-if' => "$ctrl.chartData.dataAvailable !== false", 'id' => "{{$ctrl.sparklineChartId}}", 'config' => "$ctrl.chartConfig"}
   %pf-empty-chart{'ng-if' => "$ctrl.chartData.dataAvailable === false", 'chart-height' => "$ctrl.chartHeight"}
+/ end: app/views/static/pf_charts/sparkline-chart.html.haml

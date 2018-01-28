@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_group_filter_expression.html.haml
 - if @edit.nil?
   %h3
     = _('Filter Expression')
@@ -12,3 +13,4 @@
                        :action          => "rbac_group_edit",
                        :id              => @edit[:group_id] || 'new',
                        :title           => _('Expression')}
+/ end: app/views/layouts/_group_filter_expression.html.haml

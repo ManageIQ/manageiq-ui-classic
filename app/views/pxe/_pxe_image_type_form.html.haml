@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_pxe_image_type_form.html.haml
 - url = url_for_only_path(:action => 'pxe_image_type_form_field_changed', :id => (@pxe_image_type.id || "new"))
 #form_div
   = render :partial => "layouts/flash_msg"
@@ -22,3 +23,4 @@
     :javascript
        miqInitSelectPicker();
        miqSelectPickerEvent("provision_type", "#{url}")
+/ end: app/views/pxe/_pxe_image_type_form.html.haml

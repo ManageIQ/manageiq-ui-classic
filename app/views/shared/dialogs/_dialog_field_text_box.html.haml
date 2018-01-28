@@ -1,3 +1,4 @@
+/ begin: app/views/shared/dialogs/_dialog_field_text_box.html.haml
 - if edit
   - if field.protected?
     = password_field_tag(field.name + "__protected", field.value, textbox_tag_options(field, url, auto_refresh_options.merge(:initial_trigger => true)))
@@ -31,3 +32,4 @@
     ********
   - else
     = h(field.value)
+/ end: app/views/shared/dialogs/_dialog_field_text_box.html.haml

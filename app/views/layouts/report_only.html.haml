@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/report_only.html.haml
 = render :partial => 'layouts/doctype'
 %html.layout-pf.layout-pf-fixed.transitions{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
@@ -12,3 +13,4 @@
     = render :partial => 'layouts/i18n_js'
   %body{:style => "overflow: scroll; padding: 0 20px 0 20px !important"}
     = yield
+/ end: app/views/layouts/report_only.html.haml

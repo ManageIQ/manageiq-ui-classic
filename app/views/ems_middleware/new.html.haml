@@ -1,3 +1,4 @@
+/ begin: app/views/ems_middleware/new.html.haml
 - url = @ems.persisted? ? ems_middlewares_path(@ems) : ems_middlewares_path
 = form_for(@ems,
            :url    => url,
@@ -17,3 +18,4 @@
 :javascript
   ManageIQ.angular.app.value('emsCommonFormId', '#{@ems.id || "new"}');
   miq_bootstrap($('#form_id').val());
+/ end: app/views/ems_middleware/new.html.haml

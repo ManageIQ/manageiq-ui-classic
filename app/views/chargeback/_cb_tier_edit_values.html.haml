@@ -1,3 +1,4 @@
+/ begin: app/views/chargeback/_cb_tier_edit_values.html.haml
 - tier = @edit[:new][:tiers][detail_index][row_within_rate]
 - detail = @edit[:new][:details][detail_index]
 %td
@@ -18,3 +19,4 @@
   - else
     = text_field_tag("variable_rate_#{detail_index}_#{row_within_rate}", tier[:variable_rate],
       :maxlength => ViewHelper::MAX_NAME_LEN, 'data-miq_observe' => {:interval => '.5', :url => url}.to_json)
+/ end: app/views/chargeback/_cb_tier_edit_values.html.haml

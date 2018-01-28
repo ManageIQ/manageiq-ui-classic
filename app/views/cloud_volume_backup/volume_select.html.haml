@@ -1,3 +1,4 @@
+/ begin: app/views/cloud_volume_backup/volume_select.html.haml
 %form#form_div{:name => "angularForm",
                'ng-controller' => "cloudVolumeBackupFormController as vm",
                "miq-form"      => true,
@@ -26,3 +27,4 @@
 :javascript
   ManageIQ.angular.app.value('cloudVolumeBackupFormId', '#{@backup.id}');
   miq_bootstrap(jQuery('#form_div'));
+/ end: app/views/cloud_volume_backup/volume_select.html.haml

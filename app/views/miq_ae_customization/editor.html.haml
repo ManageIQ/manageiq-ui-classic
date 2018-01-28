@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_customization/editor.html.haml
 #dialog-editor{"ng-controller" => "dialogEditorController as vm"}
   %div{"ng-if" => "vm.dialog"}
     = render :partial => "layouts/flash_msg"
@@ -50,3 +51,4 @@
   // Fixes wrong coordinates of draggable element after scrolling in #main-content.
   // To be selected as scrollParent it cannot have position: static(default setting of #main-content) so it's overridden here
   $("#main-content").css("position", "relative");
+/ end: app/views/miq_ae_customization/editor.html.haml

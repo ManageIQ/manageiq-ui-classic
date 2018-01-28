@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_configuration_job.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -30,3 +31,4 @@
           :action        => 'parameters',
           :record_id     => @record.id,
           :title         => _("Show all Parameters"))
+/ end: app/views/layouts/listnav/_configuration_job.html.haml

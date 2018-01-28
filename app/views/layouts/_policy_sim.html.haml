@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_policy_sim.html.haml
 - url = url_for_only_path(:action => 'policy_sim_add')
 #main_div
 
@@ -47,3 +48,4 @@
     - session[:edit][:policy_sim] = @policy_sim
     = render :partial => "layouts/gtl",
              :locals  => {:view => @pol_view}
+/ end: app/views/layouts/_policy_sim.html.haml

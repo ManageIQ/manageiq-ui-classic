@@ -1,3 +1,4 @@
+/ begin: app/views/generic_object_definition/_show_god.html.haml
 #main_div
   - if %w(generic_objects).include?(@display)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
@@ -20,3 +21,4 @@
 :javascript
   miq_bootstrap('#generic_object_definition_show_form');
   $('#searchbox').hide();
+/ end: app/views/generic_object_definition/_show_god.html.haml

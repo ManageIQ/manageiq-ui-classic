@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_rhn_edit_tab.html.haml
 - url = url_for_only_path(:action => 'settings_form_field_changed', :id => 'rhn_edit')
 - url_jsh = {:url => url}.to_json
 - url_int_jsh = {:interval => '.5', :url => url}.to_json
@@ -105,3 +106,4 @@
   = _("Forgot your login or password? Look it up at")
   %a{:target => 'rh_lost_passwd', :href => 'http://redhat.com/forgot_password'}
     http://redhat.com/forgot_password
+/ end: app/views/ops/_settings_rhn_edit_tab.html.haml

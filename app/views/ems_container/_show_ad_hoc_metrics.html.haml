@@ -1,3 +1,4 @@
+/ begin: app/views/ems_container/_show_ad_hoc_metrics.html.haml
 = render :partial => "layouts/flash_msg"
 .ad-hoc-metrics.row.miq-dashboard-view.miq-metrics{"ng-controller" => "adHocMetricsController as dash"}
   .row.toolbar-pf.list-view{"ng-show" => "!dash.showGraph"}
@@ -10,3 +11,4 @@
 
 :javascript
   miq_bootstrap('.ad-hoc-metrics');
+/ end: app/views/ems_container/_show_ad_hoc_metrics.html.haml

@@ -1,4 +1,6 @@
+/ begin: app/views/report/_export.html.haml
 - if @right_cell_div.in?(%w(export_custom_reports export_widgets))
   = render :partial => @right_cell_div
 - else
   = render :partial => 'layouts/info_msg', :locals => {:message => _("Choose a Import/Export type from the menus on the left.")}
+/ end: app/views/report/_export.html.haml

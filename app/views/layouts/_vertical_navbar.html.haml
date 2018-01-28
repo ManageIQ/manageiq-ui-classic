@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_vertical_navbar.html.haml
 .nav-pf-vertical.nav-pf-vertical-with-sub-menus.nav-pf-vertical-collapsible-menus
   %ul#maintab.list-group
     - Menu::Manager.menu do |menu_section|
@@ -55,3 +56,4 @@
                       %a{menu_item.link_params}
                         %span.list-group-item-value
                           = _(menu_item.name)
+/ end: app/views/layouts/_vertical_navbar.html.haml

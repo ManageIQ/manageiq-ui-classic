@@ -1,3 +1,4 @@
+/ begin: app/views/shared/dialogs/_dialog_provision.html.haml
 - wf = @edit[:wf] if @edit && @edit[:wf]
 = render :partial => "layouts/flash_msg"
 - if @dialog_locals
@@ -51,3 +52,4 @@
                 :api_submit_endpoint    => api_submit_endpoint,
                 :api_action             => api_action,
                 :cancel_endpoint        => cancel_endpoint}
+/ end: app/views/shared/dialogs/_dialog_provision.html.haml

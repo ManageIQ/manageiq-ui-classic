@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_selected_by_roles.html.haml
 -# tree type is servers by role
 - if rec.class == ServerRole
   .form-horizontal.static
@@ -83,3 +84,4 @@
             = _("Version / Build")
           .col-md-8
             = h(rec.miq_server["version"])
+/ end: app/views/ops/_selected_by_roles.html.haml

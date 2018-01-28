@@ -1,3 +1,4 @@
+/ begin: app/views/report/_widget_form_report.html.haml
 - url = url_for_only_path(:action => 'widget_form_field_changed', :id => @widget.id || "new")
 %h3
   = _("Report Options")
@@ -50,3 +51,4 @@
         miqInitSelectPicker();
         miqSelectPickerEvent("row_count", "#{url}");
 %hr
+/ end: app/views/report/_widget_form_report.html.haml

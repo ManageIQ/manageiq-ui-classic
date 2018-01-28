@@ -1,3 +1,4 @@
+/ begin: app/views/report/_widget_show.html.haml
 #form_div
   - s = @widget.miq_schedule
   - tz = @timezone = s && s.run_at && s.run_at[:tz] ? s.run_at[:tz] : session[:user_tz]
@@ -181,3 +182,4 @@
         %p.form-control-static= visibility_options(@widget)
   - if @widget.read_only
     = _('* Fields are read only for default Widgets')
+/ end: app/views/report/_widget_show.html.haml

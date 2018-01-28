@@ -1,3 +1,4 @@
+/ begin: app/views/planning/_planning_vm_profile.html.haml
 %hr
 %h3= _('Reference VM Profile')
 %dl.dl-horizontal
@@ -75,3 +76,4 @@
       - ViewHelper::ALL_TIMEZONES.each do |tz|
         - if tz[1] == @sb[:options][:tz]
           = h(tz[0])
+/ end: app/views/planning/_planning_vm_profile.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/static/wizard.html.haml
 .wizard-miq-body
   .wizard-miq-content
     %ul.wizard-miq-steps-indicator{"ng-class" => '[ "wizard-miq-steps-" + getEnabledSteps().length, { invisible: !wizardReady } ]', "ng-if" => "!hideIndicators"}
@@ -17,3 +18,4 @@
     .tooltip-wrapper{:tooltip => "{{nextTooltip}}", "tooltip-placement" => "left"}
       %button.btn.btn-primary{"ng-disabled" => "!wizardReady || !stepsLoaded || !nextEnabled", :callback => "nextCallback", "miq-wiz-next" => ""}
         {{nextTitle}}
+/ end: app/views/static/wizard.html.haml

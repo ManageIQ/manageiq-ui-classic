@@ -1,3 +1,4 @@
+/ begin: app/views/service/_service_form.html.haml
 - @angular_form = true
 
 %form.form-horizontal#form_div{"name"          => "angularForm",
@@ -41,3 +42,4 @@
 :javascript
   ManageIQ.angular.app.value('serviceFormId', '#{@service.id}');
   miq_bootstrap('#form_div');
+/ end: app/views/service/_service_form.html.haml

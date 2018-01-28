@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_advanced_tab.html.haml
 - if @sb[:active_tab] == "settings_advanced"
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
   #form_div
@@ -16,3 +17,4 @@
                           :url          => url}
     :javascript
       ManageIQ.editor.refresh();
+/ end: app/views/ops/_settings_advanced_tab.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_snapshots_desc.html.haml
 - if session[:snap_selected].nil? && @record.snapshots.count > 0
   - selected_id = @record.snapshots.first
 - else
@@ -31,3 +32,4 @@
     %hr
   - else
     = render :partial => 'layouts/info_msg', :locals => {:message => _("%{record_name} has no snapshots") % {:record_name => @record.name}}
+/ end: app/views/vm_common/_snapshots_desc.html.haml

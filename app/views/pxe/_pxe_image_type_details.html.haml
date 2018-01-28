@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_pxe_image_type_details.html.haml
 #pxe_image_type_details_div
   -# if PXE Server is selected %>
   - if @pxe_image_type
@@ -7,3 +8,4 @@
     - else
       = render :partial => "shared/summary/textual",
         :locals  => {:title => _("Basic Information"), :items => textual_sysimg_type_basicinfo}
+/ end: app/views/pxe/_pxe_image_type_details.html.haml

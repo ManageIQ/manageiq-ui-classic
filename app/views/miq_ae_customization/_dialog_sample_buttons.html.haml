@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_customization/_dialog_sample_buttons.html.haml
 -# if dialogs is selected
 #sample_form_buttons_div
   - if @record.buttons
@@ -7,3 +8,4 @@
           #buttons
             - @record.buttons.split(',').each do |b|
               = button_tag("#{b.strip}", :class => "btn btn-default")
+/ end: app/views/miq_ae_customization/_dialog_sample_buttons.html.haml

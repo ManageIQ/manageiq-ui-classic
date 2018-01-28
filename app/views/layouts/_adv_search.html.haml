@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_adv_search.html.haml
 - if show_adv_search? && @edit && @edit[@expkey].present?
   - mode ||= "search"
 
@@ -33,3 +34,4 @@
       return true;
     });
   });
+/ end: app/views/layouts/_adv_search.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/miq_request/_prov_wf.html.haml
 -# wf					The workflow object currently in use
 -# dialog			The name (symbol) of the selected dialog
 - if (@options && @options[:wf]) || (@edit && @edit[:wf])
@@ -30,3 +31,4 @@
 :javascript
   miq_tabs_init('#prov_tabs', '/miq_request/prov_field_changed');
 
+/ end: app/views/miq_request/_prov_wf.html.haml

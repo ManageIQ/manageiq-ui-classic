@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_dc_tree_page.html.haml
 .tree_div
   %table{:style => 'height:100px;'}
     %tr
@@ -5,3 +6,4 @@
         = render(:partial => 'shared/tree',
                  :locals  => {:tree => @datacenter_tree,
                               :name => @datacenter_tree.name.to_s})
+/ end: app/views/layouts/_dc_tree_page.html.haml

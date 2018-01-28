@@ -1,3 +1,4 @@
+/ begin: app/views/static/deploy_containers_provider/deploy-provider-config-auth-settings.html.haml
 %div{"ng-controller" => "containers.deployProviderAuthSettingsController"}
   %div{"miq-wizard-substep" => "", "next-enabled" => "deploymentDetailsAuthSettingsComplete", "on-show" => "onShow",
   "review-template" => "{{reviewTemplate}}", "step-id" => "auth-settings", "step-priority" => "1",
@@ -124,3 +125,4 @@
       "pf-label-class" => "miq-input-label-class miq-input-label-class-lg", :required => ""}
         %input{:name => "clientSecret", "ng-change" => "validateForm()",
         "ng-model" => "data.authentication.github.clientSecret", :required => "", :type => "password"}/
+/ end: app/views/static/deploy_containers_provider/deploy-provider-config-auth-settings.html.haml

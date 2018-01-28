@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_diagnostics_zones_tab.html.haml
 - if @sb[:active_tab] == "diagnostics_zones"
   - if @zones
     = render :partial => "layouts/flash_msg"
@@ -21,3 +22,4 @@
                   = ": #{h(z.description)}"
 
   %div{:style => "padding-bottom: 20px"}
+/ end: app/views/ops/_diagnostics_zones_tab.html.haml

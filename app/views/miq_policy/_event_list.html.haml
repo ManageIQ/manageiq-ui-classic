@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_event_list.html.haml
 #event_list_div
   - if @events
     - if @events.empty?
@@ -16,3 +17,4 @@
                 %i{:class => e.decorate.try(:fonticon)}
               %td
                 = e.description
+/ end: app/views/miq_policy/_event_list.html.haml

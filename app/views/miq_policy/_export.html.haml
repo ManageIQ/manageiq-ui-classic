@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_export.html.haml
 - url = url_for_only_path(:action => 'export_field_changed')
 #profile_export_div
   = render :partial => "layouts/flash_msg"
@@ -109,3 +110,4 @@
       $('.export-policies').addClass('disabled');
     }
   });
+/ end: app/views/miq_policy/_export.html.haml

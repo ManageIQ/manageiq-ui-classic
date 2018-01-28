@@ -1,3 +1,4 @@
+/ begin: app/views/shared/summary/_textual_tags.html.haml
 - items = expand_textual_group(items)
 - if items.present?
   #table_div
@@ -23,3 +24,4 @@
             %td
               = render :partial => "shared/summary/icon_or_image", :locals => {:item => item}
               = item[:value]
+/ end: app/views/shared/summary/_textual_tags.html.haml

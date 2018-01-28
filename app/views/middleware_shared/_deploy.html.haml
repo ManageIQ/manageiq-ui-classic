@@ -1,3 +1,4 @@
+/ begin: app/views/middleware_shared/_deploy.html.haml
 - @angular_form = true
 
 %ng-form.form-horizontal#form_deploy{"name"          => "angularForm",
@@ -76,3 +77,4 @@
                                   "ng-disabled" => "!deployAddModel.filePath",
                                   "ng-click"    => "addDeployment()"}
             = t
+/ end: app/views/middleware_shared/_deploy.html.haml

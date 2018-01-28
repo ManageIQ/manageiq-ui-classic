@@ -1,3 +1,4 @@
+/ begin: app/views/planning/_planning_report.html.haml
 #planning_report_div
   = render :partial => "layouts/flash_msg"
 
@@ -15,3 +16,4 @@
       = _("* Information shown is based on available trend data going back %{weeks}.") % {:weeks => _(ViewHelper::WEEK_CHOICES[@sb[:options][:days]])}
   - else
     = render :partial => "planning_instructions"
+/ end: app/views/planning/_planning_report.html.haml

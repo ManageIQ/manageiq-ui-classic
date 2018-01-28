@@ -1,3 +1,4 @@
+/ begin: app/views/shared/buttons/_ab_advanced_form.html.haml
 - url = url_for_only_path(:action => 'automate_button_field_changed')
 #ab_form
   %h3
@@ -31,3 +32,4 @@
       :field_changed_url         => "automate_button_field_changed"})
   = render(:partial => "layouts/role_visibility",
            :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
+/ end: app/views/shared/buttons/_ab_advanced_form.html.haml

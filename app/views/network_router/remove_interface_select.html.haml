@@ -1,3 +1,4 @@
+/ begin: app/views/network_router/remove_interface_select.html.haml
 %form#form_div{:name           => "angularForm",
                'ng-controller' => "networkRouterFormController as vm",
                :novalidate     => true,
@@ -22,3 +23,4 @@
 :javascript
   ManageIQ.angular.app.value('networkRouterFormId', '#{@router.id}');
   miq_bootstrap('#form_div');
+/ end: app/views/network_router/remove_interface_select.html.haml

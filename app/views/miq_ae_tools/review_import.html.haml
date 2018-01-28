@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_tools/review_import.html.haml
 :javascript
   var postMessageData = {
     import_file_upload_id: '#{j(@import_file_upload_id)}',
@@ -7,3 +8,4 @@
   $(function() {
     parent.postMessage(postMessageData, '*');
   });
+/ end: app/views/miq_ae_tools/review_import.html.haml

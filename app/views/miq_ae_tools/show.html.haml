@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_tools/show.html.haml
 #main_div
   - if @lastaction == "log"
     = render :partial => "layouts/log_viewer", :locals => {:legend_text => _("Last 1000 lines from the Automation log")}
@@ -5,3 +6,4 @@
     = render :partial => "import_export"
   - elsif @resolve
     = render :partial => "resolve"
+/ end: app/views/miq_ae_tools/show.html.haml

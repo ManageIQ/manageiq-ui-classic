@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_reconfigure.html.haml
 - @angular_form = true
 
 %form#form_div.form-horizontal{"name"          => "angularForm",
@@ -282,3 +283,4 @@
   ManageIQ.angular.app.value('reconfigureFormId', '#{@request_id || "new"}');
   ManageIQ.angular.app.value('objectIds', #{ @reconfigitems.collect(&:id) });
   miq_bootstrap('#form_div');
+/ end: app/views/vm_common/_reconfigure.html.haml

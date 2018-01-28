@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_condition_folders.html.haml
 #condition_folders_div
   - if @folders
     = render :partial => "layouts/flash_msg"
@@ -10,3 +11,4 @@
               %i{:class => TreeBuilderCondition.folder_icon(f)}
             %td
               = _("%{object} Conditions") % {:object => ui_lookup(:model => f)}
+/ end: app/views/miq_policy/_condition_folders.html.haml

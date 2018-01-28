@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_ldap_domain_show.html.haml
 #main_div
   = render(:partial => "layouts/flash_msg")
   %h3
@@ -119,3 +120,4 @@
               = svr.mode == "ldaps" ? _("LDAPS") : _("LDAP")
             %td
               = svr.port
+/ end: app/views/ops/_ldap_domain_show.html.haml

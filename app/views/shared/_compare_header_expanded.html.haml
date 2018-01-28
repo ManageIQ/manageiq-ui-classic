@@ -1,3 +1,4 @@
+/ begin: app/views/shared/_compare_header_expanded.html.haml
 - if base
   %b{:title => _("%{name} is the base") % {:name => h[:name]}}
     = h[:name]
@@ -10,3 +11,4 @@
 %br
 .quadicon_grid
   = render_quadicon(@sb[:compare_db].constantize.find(vm_id), :mode => "icon", :db => @sb[:compare_db])
+/ end: app/views/shared/_compare_header_expanded.html.haml

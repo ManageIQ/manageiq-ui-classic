@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_compare.html.haml
 = render :partial => "layouts/flash_msg"
 - if @compare.nil?
   = render :partial => 'layouts/info_msg', :locals => {:message => _("No Records Found.")}
@@ -28,3 +29,4 @@
           miqJqueryRequest('/' + ManageIQ.controller + '/compare_set_state?rowId=' + exp_id + '&state=' + state);
         }
       });
+/ end: app/views/layouts/_compare.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/network_router/_common_new_edit.haml
 %form#form_div{:name           => "angularForm",
                'ng-controller' => "networkRouterFormController as vm",
                'ng-cloak'      => '',
@@ -119,3 +120,4 @@
 :javascript
   ManageIQ.angular.app.value('networkRouterFormId', '#{@router.id || "new"}');
   miq_bootstrap('#form_div');
+/ end: app/views/network_router/_common_new_edit.haml

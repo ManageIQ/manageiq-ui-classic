@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_evacuate.html.haml
 %form#form_div{:name           => "angularForm",
                'ng-controller' => "vmCloudEvacuateFormController as vm",
                "miq-form"      => true,
@@ -81,3 +82,4 @@
 :javascript
   ManageIQ.angular.app.value('vmCloudEvacuateFormId', "#{@evacuate_items.length == 1 ? @evacuate_items[0].id : ''}");
   miq_bootstrap('#form_div');
+/ end: app/views/vm_common/_evacuate.html.haml

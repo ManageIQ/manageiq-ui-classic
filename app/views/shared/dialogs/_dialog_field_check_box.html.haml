@@ -1,3 +1,4 @@
+/ begin: app/views/shared/dialogs/_dialog_field_check_box.html.haml
 = check_box_tag(field.name, "1", field.checked?, {:disabled => !edit}.merge(checkbox_tag_options(field, url, auto_refresh_options)))
 
 - if field.dynamic
@@ -21,3 +22,4 @@
         dialogFieldRefresh.triggerAutoRefresh(jsonOptions);
       });
     });
+/ end: app/views/shared/dialogs/_dialog_field_check_box.html.haml

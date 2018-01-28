@@ -1,3 +1,4 @@
+/ begin: app/views/middleware_server/show.html.haml
 - if %w(middleware_datasources middleware_deployments).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - elsif @showtype == "performance"
@@ -19,3 +20,4 @@
 
 :javascript
   miq_bootstrap('#mw_server_form');
+/ end: app/views/middleware_server/show.html.haml

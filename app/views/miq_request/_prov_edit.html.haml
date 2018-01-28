@@ -1,3 +1,4 @@
+/ begin: app/views/miq_request/_prov_edit.html.haml
 = render :partial => "layouts/flash_msg"
 = render :partial => "miq_request/prov_wf", :locals => {:wf => @edit[:wf]}
 %br
@@ -6,3 +7,4 @@
   = _("Note: Fields marked with * are required.")
 :javascript
   miqDeleteTreeCookies('prov_trees')
+/ end: app/views/miq_request/_prov_edit.html.haml

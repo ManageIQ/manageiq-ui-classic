@@ -1,3 +1,4 @@
+/ begin: app/views/chargeback/_cb_rate_edit_table.html.haml
 - url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => @edit[:rec_id] || "new")
 - breakdown_present = @edit[:new][:details].any? { |d| d[:sub_metric].present? }
 %table.table.table-bordered{:id => "chargeback_rate_edit_form"}
@@ -75,3 +76,4 @@
       function hoverRowOut(row) {
         $("tr[id ^= '"+row.id.substr(0, row.id.lastIndexOf("_"))+"']").removeClass("active");
       }
+/ end: app/views/chargeback/_cb_rate_edit_table.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_disks.html.haml
 = render :partial => "layouts/flash_msg"
 %table#disks_grid.table.table-striped.table-bordered
   %thead
@@ -25,3 +26,4 @@
           = calculate_disk_size(disk.size_on_disk)
         %td
           = disk.used_percent_of_provisioned
+/ end: app/views/vm_common/_disks.html.haml

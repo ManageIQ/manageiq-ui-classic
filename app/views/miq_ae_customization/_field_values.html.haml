@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_customization/_field_values.html.haml
 #field_values_div
   = form_tag({:action => 'field_value_accept',
               :id     => @record.id || 'new'},
@@ -22,3 +23,4 @@
               = render :partial => "field_value_entry", :locals => {:entry => e, :idx => i, :edit => true}
             - else
               = render :partial => "field_value_entry", :locals => {:entry => e, :idx => i, :edit => false}
+/ end: app/views/miq_ae_customization/_field_values.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/chargeback/_rates_tabs.html.haml
 #rates_tabs_div
   - if x_node == "root"
     = render :partial => "rates_list"
@@ -7,3 +8,4 @@
     = render :partial => 'layouts/x_gtl', :locals => {:action_url => "cb_rates_list"}
   - else
     = render :partial => "cb_rate_show"
+/ end: app/views/chargeback/_rates_tabs.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_template_form.html.haml
 - url = url_for_only_path(:action => 'template_form_field_changed', :id => (@ct.id || "new"))
 
 #form_div
@@ -47,3 +48,4 @@
   %hr
   %h3= _('Script')
   = render :partial => "template_script_data"
+/ end: app/views/pxe/_template_form.html.haml

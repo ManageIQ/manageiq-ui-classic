@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_diagnostics_cu_repair_tab.html.haml
 - if @sb[:active_tab] == "diagnostics_cu_repair"
   - url = url_for_only_path(:action => 'cu_repair_field_changed')
   - url_json = {:url => url}.to_json
@@ -39,3 +40,4 @@
           "data-miq_observe_date" => url_json) |
 
   .note= _("Note: Gap Collection is only available for VMware vSphere Infrastructures")
+/ end: app/views/ops/_diagnostics_cu_repair_tab.html.haml

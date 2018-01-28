@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_label_tag_mapping_form.html.haml
 - url = url_for_only_path(:action => 'label_tag_mapping_field_changed', :id => @lt_map && @lt_map.id ? @lt_map.id.to_s : "new")
 #main_div
   = render :partial => "layouts/flash_msg"
@@ -45,3 +46,4 @@
     .form-group
       %label.col-md-2.control-label
       .col-md-8
+/ end: app/views/ops/_label_tag_mapping_form.html.haml

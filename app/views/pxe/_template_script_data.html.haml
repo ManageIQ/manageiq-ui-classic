@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_template_script_data.html.haml
 #script_div
   = text_area_tag("script_data", @edit[:new][:script], :style => "display:none;")
 :javascript
@@ -9,3 +10,4 @@
     :line_numbers => true,
     :url => url_for_only_path(:action => 'template_form_field_changed',
       :id => "#{@ct.id || "new"}", :transOne => '1')})
+/ end: app/views/pxe/_template_script_data.html.haml

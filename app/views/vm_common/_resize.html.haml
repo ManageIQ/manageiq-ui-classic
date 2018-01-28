@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_resize.html.haml
 %form#form_div{"name"          => "angularForm",
                "ng-controller" => "vmCloudResizeFormController as vm",
                "miq-form"      => true,
@@ -42,3 +43,4 @@
 :javascript
   ManageIQ.angular.app.value('vmCloudResizeFormId', '#{@record.id}');
   miq_bootstrap('#form_div');
+/ end: app/views/vm_common/_resize.html.haml

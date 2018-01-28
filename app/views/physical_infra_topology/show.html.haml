@@ -1,3 +1,4 @@
+/ begin: app/views/physical_infra_topology/show.html.haml
 - tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{vm.legendTooltip}}"}
 .topology{'ng-controller' => "physicalInfraTopologyController as vm"}
   .legend
@@ -29,3 +30,4 @@
 
 :javascript
   miq_bootstrap('.topology');
+/ end: app/views/physical_infra_topology/show.html.haml

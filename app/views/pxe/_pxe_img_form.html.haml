@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_pxe_img_form.html.haml
 - url = url_for_only_path(:action => 'pxe_img_form_field_changed', :id => (@img.id || "new"))
 #form_div
   = render :partial => "layouts/flash_msg"
@@ -23,3 +24,4 @@
                         "data-miq_observe_checkbox" => {:url => url}.to_json)
         &nbsp;&nbsp;
         = _('* Checking this box will remove this setting from all other PXE Images on this PXE Server')
+/ end: app/views/pxe/_pxe_img_form.html.haml

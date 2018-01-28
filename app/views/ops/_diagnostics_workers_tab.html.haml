@@ -1,6 +1,8 @@
+/ begin: app/views/ops/_diagnostics_workers_tab.html.haml
 - if @sb[:active_tab] == "diagnostics_workers"
   - if x_node.split('-').first == "root"
     = render :partial => "diagnostics_database_tab"
   - else
     = render :partial => 'layouts/x_gtl'
   %div{:style => "padding-bottom: 20px"}
+/ end: app/views/ops/_diagnostics_workers_tab.html.haml

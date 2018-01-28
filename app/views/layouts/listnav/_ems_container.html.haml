@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_ems_container.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -29,3 +30,4 @@
       %ul.nav.nav-pills.nav-stacked
         - %w(container_project container_route container_service container_replicator container_group container container_node container_image_registry container_image persistent_volume container_build container_template).each do |ent|
           = multiple_relationship_link(@record, ent)
+/ end: app/views/layouts/listnav/_ems_container.html.haml

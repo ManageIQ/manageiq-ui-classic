@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_performance_summary.html.haml
 %script{:type => "text/javascript"}
   var ManageIQ.calendar.calDateFrom = new Date(#{@perf_options[:sdate]});
   var ManageIQ.calendar.calDateTo = new Date(#{@perf_options[:edate]});
@@ -7,3 +8,4 @@
 = render :partial => "layouts/flash_msg"
 = render :partial => "layouts/perf_options"
 = render :partial => "layouts/perf_charts"
+/ end: app/views/layouts/_performance_summary.html.haml

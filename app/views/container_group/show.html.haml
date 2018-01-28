@@ -1,3 +1,4 @@
+/ begin: app/views/container_group/show.html.haml
 - if %w(containers container_services container_images).include?(@display)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - else
@@ -10,3 +11,4 @@
         = render :partial => "layouts/performance_async"
     - when "compliance_history"
         = render :partial => "shared/views/compliance_history"
+/ end: app/views/container_group/show.html.haml

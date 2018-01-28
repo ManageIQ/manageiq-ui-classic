@@ -1,3 +1,4 @@
+/ begin: app/views/static/deploy_containers_provider/deploy-provider-details-create-vms.html.haml
 %div{"ng-controller" => "containers.deployProviderDetailsCreateVMsController"}
   %div{"miq-wizard-substep" => "", "next-enabled" => "newVMsComplete", "on-show" => "onShow",
   "review-template" => "{{reviewTemplate}}", "step-id" => "details-new-vms", "step-priority" => "1",
@@ -69,3 +70,4 @@
       "pf-label-class" => "miq-input-label-class miq-input-label-class-lg", :required => ""}
         %input{"ng-change" => "validateForm()", "ng-disabled" => "data.createNodesLikeMasters",
         "ng-model" => "data.createNodesDisk", :required => "", :type => "text"}/
+/ end: app/views/static/deploy_containers_provider/deploy-provider-details-create-vms.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/miq_request/_st_prov_show.html.haml
 #main_div
   - st = @miq_request.source
   - ra = st.resource_actions.find_by_action('Provision') if st
@@ -11,3 +12,4 @@
         .col-md-12.col-lg-12
           = render :partial => "shared/dialogs/dialog_provision",
                    :locals  => {:wf => ResourceActionWorkflow.new(values, current_user, ra, opts)}
+/ end: app/views/miq_request/_st_prov_show.html.haml

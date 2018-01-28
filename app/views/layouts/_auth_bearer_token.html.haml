@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_auth_bearer_token.html.haml
 - validate_url ||= (record.id || @edit[:hostitems]) ? "update" : "create"
 - change_url ||= "form_field_changed"
 - pfx ||= ""
@@ -23,3 +24,4 @@
                               :valtype      => "#{pfx}",
                               :ujs_button   => ujs_button,
                               :record       => record})
+/ end: app/views/layouts/_auth_bearer_token.html.haml

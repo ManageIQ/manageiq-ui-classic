@@ -1,3 +1,4 @@
+/ begin: app/views/host/_form.html.haml
 - @angular_form = true
 
 .form-horizontal
@@ -106,3 +107,4 @@
 :javascript
   ManageIQ.angular.app.value('hostFormId', '#{(@host.id || (session[:host_items] && session[:host_items].join(","))) || "new"}');
   miq_bootstrap('#form_div');
+/ end: app/views/host/_form.html.haml

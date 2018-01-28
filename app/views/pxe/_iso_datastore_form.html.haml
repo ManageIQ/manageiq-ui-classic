@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_iso_datastore_form.html.haml
 - url = url_for_only_path(:action => 'iso_datastore_form_field_changed', :id => (@isd.id || "new"))
 #form_div
   = render :partial => "layouts/flash_msg"
@@ -14,3 +15,4 @@
     :javascript
        miqInitSelectPicker();
        miqSelectPickerEvent("ems_id", "#{url}")
+/ end: app/views/pxe/_iso_datastore_form.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/miq_request/_prov_dialog_fieldset.html.haml
 - if keys.any? { |key| workflow.get_field(key, dialog)[:display] && workflow.get_field(key, dialog)[:display].to_s != "hide" }
   %h3
     = label
@@ -8,3 +9,4 @@
       - locals[:disabled] = workflow.get_field(key, dialog)[:read_only] ? true : false
       = render :partial => "#{prefix}prov_field", :locals => locals
   %hr
+/ end: app/views/miq_request/_prov_dialog_fieldset.html.haml

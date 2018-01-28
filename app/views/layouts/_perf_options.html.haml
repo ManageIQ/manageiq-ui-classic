@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_perf_options.html.haml
 - url = url_for_only_path(:action => 'perf_chart_chooser',
                 :id     => @record.id)
 #perf_options_div{:onclick => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
@@ -147,3 +148,4 @@
           .col-md-8
             = _("* Daily charts only include days for which all 24 hours of data has been collected.")
   %hr
+/ end: app/views/layouts/_perf_options.html.haml

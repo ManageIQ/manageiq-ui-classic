@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_show_list.html.haml
 - if @def_searches.blank? && @my_searches.blank? && !controller.respond_to?(:display_tree)
   %br
   = render :partial => 'layouts/info_msg', :locals => {:message => _("No filters defined.")}
@@ -66,3 +67,4 @@
     = button_tag(_("Set Default"),
       :class => "btn btn-default disabled pull-right",
       :title => _("Select a filter to set it as my default"))
+/ end: app/views/layouts/listnav/_show_list.html.haml

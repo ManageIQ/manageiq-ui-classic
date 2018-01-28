@@ -1,3 +1,4 @@
+/ begin: app/views/bottlenecks/_bottlenecks_tl_detail.html.haml
 #tl_div
   - if @sb[:report] && @sb[:report].table && @sb[:report].table.data.blank?
   - elsif @sb[:report]
@@ -12,3 +13,4 @@
   - else
     - unless x_node == ""
       = render :partial => 'layouts/info_msg', :locals => {:message => _("No Timeline data available.")}
+/ end: app/views/bottlenecks/_bottlenecks_tl_detail.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_profile_details.html.haml
 - if @edit
   - url = url_for_only_path(:action => 'profile_field_changed', :id => (@profile.id || 'new'))
   - observe_with_interval = {:interval => '.5', :url => url}.to_json
@@ -109,3 +110,4 @@
         = text_area_tag("notes", @profile.notes, :readonly => true, :rows => 4)
       %hr
     %br/
+/ end: app/views/miq_policy/_profile_details.html.haml

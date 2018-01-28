@@ -1,3 +1,4 @@
+/ begin: app/views/shared/dialogs/_dialog_user.html.haml
 .row.wrapper{"ng-controller" => "dialogUserController as vm"}
   .spinner{'ng-show' => "!vm.dialogLoaded"}
 
@@ -28,3 +29,4 @@
   ManageIQ.angular.app.value('apiAction', '#{api_action}');
   ManageIQ.angular.app.value('cancelEndpoint', '#{cancel_endpoint}');
   miq_bootstrap('.wrapper');
+/ end: app/views/shared/dialogs/_dialog_user.html.haml

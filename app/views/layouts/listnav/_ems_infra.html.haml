@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_ems_infra.html.haml
 - if @record.try(:name)
   - hosts_title    = title_for_hosts
   - clusters_title = title_for_clusters
@@ -58,3 +59,4 @@
             :record        => @record,
             :display       => 'miq_templates',
             :title         => _("Show all Templates"))
+/ end: app/views/layouts/listnav/_ems_infra.html.haml

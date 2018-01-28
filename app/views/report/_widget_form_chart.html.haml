@@ -1,3 +1,4 @@
+/ begin: app/views/report/_widget_form_chart.html.haml
 - url = url_for_only_path(:action => 'widget_form_field_changed', :id => (@widget.id || "new"))
 %h3
   = _('Chart Report')
@@ -16,3 +17,4 @@
         miqInitSelectPicker();
         miqSelectPickerEvent('repfilter_typ', '#{url}', {beforeSend: true, complete: true});
 %hr
+/ end: app/views/report/_widget_form_chart.html.haml

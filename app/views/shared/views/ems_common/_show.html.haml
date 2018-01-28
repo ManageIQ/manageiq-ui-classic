@@ -1,3 +1,4 @@
+/ begin: app/views/shared/views/ems_common/_show.html.haml
 #main_div
   - arr = (controller_name.camelize + "Controller").constantize.display_methods
   - if arr.include?(@display) && @showtype != "compare"
@@ -28,3 +29,4 @@
     = render :partial => 'show_ad_hoc_metrics'
   - elsif @showtype == 'topology'
     = render :file => 'container_topology/show'
+/ end: app/views/shared/views/ems_common/_show.html.haml

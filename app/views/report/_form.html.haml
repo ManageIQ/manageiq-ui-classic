@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form.html.haml
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 #form_div
   = render :partial => '/layouts/tabs'
@@ -51,3 +52,4 @@
     = render :partial => "form_consolidate"
   - when "9"
     = render :partial => "form_styling"
+/ end: app/views/report/_form.html.haml

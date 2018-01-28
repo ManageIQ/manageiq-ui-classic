@@ -1,3 +1,4 @@
+/ begin: app/views/catalog/_stcat_form.html.haml
 - url = url_for_only_path(:action => "st_catalog_form_field_changed", :id => (@edit[:rec_id] || "new"))
 
 #form_div
@@ -33,3 +34,4 @@
   %h3
     = _('Assign Catalog Items')
   = render :partial => "column_lists"
+/ end: app/views/catalog/_stcat_form.html.haml

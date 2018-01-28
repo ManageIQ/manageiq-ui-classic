@@ -1,3 +1,4 @@
+/ begin: app/views/catalog/_st_form.html.haml
 - url = url_for_only_path(:id => (@edit[:rec_id] || "new"),
   :action => @edit[:new][:service_type] == "composite" ? "st_form_field_changed" : "atomic_form_field_changed")
 #form_div
@@ -23,3 +24,4 @@
             miqSelectPickerEvent('st_prov_type', "#{url}", {beforeSend: true, complete: true})
   - else
     = render :partial => "form"
+/ end: app/views/catalog/_st_form.html.haml

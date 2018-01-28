@@ -1,3 +1,4 @@
+/ begin: app/views/miq_request/_prov_configured_system_grid.html.haml
 - options = @edit || @options
 - id = options.try(:[], :req_id) || "new"
 
@@ -29,3 +30,4 @@
             = h(row.send(col))
 :javascript
   miqScrollToSelected('prov_configured_system_div')
+/ end: app/views/miq_request/_prov_configured_system_grid.html.haml

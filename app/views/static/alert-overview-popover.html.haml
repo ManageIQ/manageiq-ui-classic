@@ -1,3 +1,4 @@
+/ begin: app/views/static/alert-overview-popover.html.haml
 %div
   .tip-title
     {{item.name}}
@@ -8,3 +9,4 @@
       {{alert.description}}
     .tip-col.date-col{"ng-if" => "$index < 5"}
       {{alert.evaluated_on | date:"yyyy-MM-dd hh:mm:ss"}}
+/ end: app/views/static/alert-overview-popover.html.haml

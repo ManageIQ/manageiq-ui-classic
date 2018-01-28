@@ -1,6 +1,8 @@
+/ begin: app/views/miq_request/show.html.haml
 #main_div
   = render :partial => "layouts/flash_msg"
   - if @showtype == "main"
     = render :partial => "request"
   - elsif @showtype == "miq_provisions"
     = render :partial => "provisions"
+/ end: app/views/miq_request/show.html.haml

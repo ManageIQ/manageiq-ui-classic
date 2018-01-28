@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_evm_servers_tab.html.haml
 - if @sb[:active_tab] == "settings_evm_servers"
   - if @servers
     = render(:partial => "layouts/flash_msg")
@@ -74,3 +75,4 @@
                 - else
                   = h(ui_lookup(:model => s.class.to_s))
                   \: #{h(s.name)} [#{h(s.id)}]
+/ end: app/views/ops/_settings_evm_servers_tab.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/security_group/new.html.haml
 %form#form_div{:name           => "angularForm",
    "form-changed"  => true,
    "miq-form"      => true,
@@ -50,3 +51,4 @@
 :javascript
   ManageIQ.angular.app.value('securityGroupFormId', '#{@security_group.id || "new"}');
   miq_bootstrap('#form_div');
+/ end: app/views/security_group/new.html.haml

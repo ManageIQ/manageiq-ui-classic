@@ -1,3 +1,4 @@
+/ begin: app/views/report/_schedule_form.html.haml
 - url = url_for_only_path(:action => 'schedule_form_field_changed', :id => (@schedule.id || 'new'))
 #form_div
   = render :partial => "layouts/flash_msg"
@@ -35,3 +36,4 @@
                         :action_url => "schedule_form_field_changed",
                         :record     => @schedule})
   = render :partial => "schedule_email_options"
+/ end: app/views/report/_schedule_form.html.haml

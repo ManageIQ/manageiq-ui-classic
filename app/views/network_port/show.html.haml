@@ -1,5 +1,7 @@
+/ begin: app/views/network_port/show.html.haml
 #main_div
   - if %w(instances cloud_subnets floating_ips security_groups).include?(@display) && @showtype != "compare"
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - elsif @showtype == 'main'
     = render :partial => "layouts/textual_groups_generic"
+/ end: app/views/network_port/show.html.haml

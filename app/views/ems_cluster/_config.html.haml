@@ -1,3 +1,4 @@
+/ begin: app/views/ems_cluster/_config.html.haml
 #maincontent
   = render :partial => "layouts/flash_msg"
   - if @display == "config_info"
@@ -18,3 +19,4 @@
               = h(item2[:description])
   - elsif @display == "descendant_vms"
     = render :partial => "layouts/dc_tree_page"
+/ end: app/views/ems_cluster/_config.html.haml

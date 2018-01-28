@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_smartproxy_affinity.html.haml
 %h3
   = _("Assign Hosts and Datastores to Embedded SmartProxies in Zone: \"%{zone_description}\"") % {:zone_description => @selected_zone.description}
 - if @smartproxy_affinity_tree.blank?
@@ -9,3 +10,4 @@
   :javascript
     miqTreeResetState('#{j_str @smartproxy_affinity_tree.name}');
   = render(:partial => 'shared/tree', :locals => {:tree => @smartproxy_affinity_tree, :name => @smartproxy_affinity_tree.name})
+/ end: app/views/ops/_smartproxy_affinity.html.haml

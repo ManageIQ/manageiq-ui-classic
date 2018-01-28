@@ -1,3 +1,4 @@
+/ begin: app/views/catalog/_form_resources_info.html.haml
 - url = url_for_only_path(:id => (@edit[:rec_id] || "new").to_s,
   :action => @edit[:new][:service_type] == "composite" ? "st_form_field_changed" : "atomic_form_field_changed")
 
@@ -98,3 +99,4 @@
                     options_for_select(delay_values, (sr[:stop_delay] / 60).to_s),
                     "data-miq_sparkle_on" => true,
                     "data-miq_observe" => {:url => url}.to_json)
+/ end: app/views/catalog/_form_resources_info.html.haml

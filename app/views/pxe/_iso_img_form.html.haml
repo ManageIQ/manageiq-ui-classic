@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_iso_img_form.html.haml
 - url = url_for_only_path(:action => 'iso_img_form_field_changed', :id => (@img.id || "new"))
 #form_div
   = render :partial => "layouts/flash_msg"
@@ -15,3 +16,4 @@
       :javascript
          miqInitSelectPicker();
          miqSelectPickerEvent("image_typ", "#{url}")
+/ end: app/views/pxe/_iso_img_form.html.haml

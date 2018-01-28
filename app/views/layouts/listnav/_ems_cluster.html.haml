@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_ems_cluster.html.haml
 - if @record.try(:name)
   - cluster_title = title_for_cluster_record(@record)
   #accordion.panel-group
@@ -73,3 +74,4 @@
             :record_id    => @record.id,
             :action       => 'drift_history',
             :title        => _("Show %{cluster_title} drift history") % {:cluster_title => cluster_title})
+/ end: app/views/layouts/listnav/_ems_cluster.html.haml

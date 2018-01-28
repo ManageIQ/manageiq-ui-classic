@@ -1,3 +1,4 @@
+/ begin: app/views/static/generic_object/main_custom_button_form.html.haml
 %form.form-horizontal{"name"         => "angularForm",
                       "model-copy"   => "vm.modelCopy",
                       "model"        => "vm.customButtonModel",
@@ -157,3 +158,4 @@
                               "ng-model"        => "vm.customButtonModel.available_roles[$index].value"}
           {{vm.customButtonModel.available_roles[$index].name}}
   = render :partial => "layouts/angular/generic_form_buttons"
+/ end: app/views/static/generic_object/main_custom_button_form.html.haml

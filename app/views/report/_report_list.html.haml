@@ -1,3 +1,4 @@
+/ begin: app/views/report/_report_list.html.haml
 #report_list_div
   - if @sb[:active_accord] == :reports
     - if @in_a_form
@@ -111,3 +112,4 @@
           miq_tabs_init('#rep_tabs', '/report/rep_change_tab');
     - else
       = render :partial => 'layouts/info_msg', :locals => {:message => _("Choose a Report to view from the menus on the left.")}
+/ end: app/views/report/_report_list.html.haml

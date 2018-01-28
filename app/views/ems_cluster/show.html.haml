@@ -1,3 +1,4 @@
+/ begin: app/views/ems_cluster/show.html.haml
 #main_div
   - list = %w(vms all_vms hosts miq_templates resource_pools storage storage_extents storage_systems)
   - if list.include?(@display) && !%w(compare drift_history).include?(@showtype)
@@ -20,3 +21,4 @@
       = render :partial => "layouts/textual_groups_generic"
     - when "config"
       = render :partial => "config"
+/ end: app/views/ems_cluster/show.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_method_form.html.haml
 - if @sb[:active_tab] == "methods"
 - url = url_for_only_path(:action => 'form_method_field_changed', :id => (@ae_method.id || 'new'))
 - obs = {:interval => '.5', :url => url}.to_json
@@ -99,3 +100,4 @@
 
       %div{:id => 'inputs_div', :style => @sb[:squash_state] ? "display: none;" : ""}
         = render :partial => "inputs"
+/ end: app/views/miq_ae_class/_method_form.html.haml

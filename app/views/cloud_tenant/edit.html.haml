@@ -1,3 +1,4 @@
+/ begin: app/views/cloud_tenant/edit.html.haml
 %form#form_div{:name            => "angularForm",
                'ng-controller'  => "cloudTenantFormController as vm",
                'miq-form'       => true,
@@ -23,3 +24,4 @@
 :javascript
   ManageIQ.angular.app.value('cloudTenantFormId', '#{@tenant.id}');
   miq_bootstrap(jQuery('#form_div'));
+/ end: app/views/cloud_tenant/edit.html.haml

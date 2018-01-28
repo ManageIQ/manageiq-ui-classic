@@ -1,3 +1,4 @@
+/ begin: app/views/shared/dialogs/_dialog_field_drop_down_list.html.haml
 - if edit
   - select_values = field.values.collect(&:reverse)
   - selected ||= wf.value(field.name)
@@ -38,3 +39,4 @@
 
 - else
   = h(field.value.nil? ? "<None>" : dialog_dropdown_selected_value(field))
+/ end: app/views/shared/dialogs/_dialog_field_drop_down_list.html.haml

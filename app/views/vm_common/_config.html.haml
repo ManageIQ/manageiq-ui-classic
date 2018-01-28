@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_config.html.haml
 = render :partial => "layouts/flash_msg"
 - case @display
 - when "devices"
@@ -132,3 +133,4 @@
             = label
           %td
             = @record.send(sym)
+/ end: app/views/vm_common/_config.html.haml

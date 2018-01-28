@@ -1,3 +1,4 @@
+/ begin: app/views/middleware_server/_add_datasource_step2.html.haml
 .mw_ds_add_step2{"ng-show" => "vm.dsModel.step == 'STEP2'"}
   %h3
     = _("Step 2/3: JDBC Driver")
@@ -44,3 +45,4 @@
                               "ng-click"    => "vm.addDatasourceStep2Next()",
                               "ng-disabled" => "step2Form.$invalid"}
         = t
+/ end: app/views/middleware_server/_add_datasource_step2.html.haml

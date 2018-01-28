@@ -1,3 +1,4 @@
+/ begin: app/views/dashboard/_widget_chart.html.haml
 - datum = widget.contents_for_user(current_user).contents
 -# we need to count all charts to be able to display multiple
 -# charts on a dashboard screen
@@ -7,3 +8,4 @@
 
 = chart_local(chart_data, :id => "miq_widgetchart_#{chart_index}".html_safe)
 
+/ end: app/views/dashboard/_widget_chart.html.haml

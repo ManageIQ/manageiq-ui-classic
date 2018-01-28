@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_selected.html.haml
 - rec = @record
 %div{:id => "selected_#{@sb[:active_tab].split('_').last}_div"}
   %hr
@@ -9,3 +10,4 @@
   - else
     -# servers by roles
     = render :partial => "ops/selected_by_roles", :locals => {:rec => rec}
+/ end: app/views/ops/_selected.html.haml

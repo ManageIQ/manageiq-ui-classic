@@ -1,3 +1,4 @@
+/ begin: app/views/miq_request/_prov_field.html.haml
 - url = url_for_only_path(:action => 'prov_field_changed', :id => (@edit[:req_id] || 'new')) if @edit
 -# wf          The workflow object currently in use
 -# dialog      Dialog name (symbol)
@@ -513,3 +514,4 @@
                   = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
                 .col-md-6
                   = submit_tag(_("Upload"), :class => "upload btn btn-default")
+/ end: app/views/miq_request/_prov_field.html.haml

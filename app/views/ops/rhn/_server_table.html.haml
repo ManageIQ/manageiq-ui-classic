@@ -1,3 +1,4 @@
+/ begin: app/views/ops/rhn/_server_table.html.haml
 %hr
 %h3
   = _("Appliance Updates")
@@ -70,3 +71,4 @@
           %td{:style => "color: #{update.color}"}= update.version
           %td= update.updates_available
           %td= update.last_message.to_s.capitalize
+/ end: app/views/ops/rhn/_server_table.html.haml

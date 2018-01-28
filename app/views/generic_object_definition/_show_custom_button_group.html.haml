@@ -1,3 +1,4 @@
+/ begin: app/views/generic_object_definition/_show_custom_button_group.html.haml
 #main_div
   = render :partial => "layouts/flash_msg"
   - if @record && @record.kind_of?(CustomButtonSet)
@@ -59,3 +60,4 @@
   miq_bootstrap('#generic_object_definition_show_form');
   $('#searchbox').hide();
 
+/ end: app/views/generic_object_definition/_show_custom_button_group.html.haml

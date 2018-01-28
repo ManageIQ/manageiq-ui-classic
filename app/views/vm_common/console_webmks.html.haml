@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/console_webmks.html.haml
 = render :partial => 'layouts/doctype'
 %html{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
@@ -33,3 +34,4 @@
   %body
     #remote-console
     = render :partial => 'shared/remote_console_footer', :layout => false, :locals => { :console_type => 'WebMKS' }
+/ end: app/views/vm_common/console_webmks.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_ldap_region_form.html.haml
 - url = url_for_only_path(:action => 'ldap_region_form_field_changed', :id => @edit[:ldap_region_id] || "new")
 #form_div
   = render :partial => "layouts/flash_msg"
@@ -34,3 +35,4 @@
     :javascript
        miqInitSelectPicker();
        miqSelectPickerEvent('zone_id', "#{url}")
+/ end: app/views/ops/_ldap_region_form.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/static/deploy_containers_provider/deploy-provider-master-nodes-review.html.haml
 %div{"ng-controller" => "containers.deployProviderReviewController"}
   %form.form
     .wizard-miq-review-item{"ng-if" => "data.provisionOn == 'noProvider'"}
@@ -9,3 +10,4 @@
         = _("Username:")
       %span.wizard-miq-review-item-value {{data.deploymentUsername}}
     %div{"ng-include" => "'/static/deploy_containers_provider/deploy-provider-master-nodes-review-tables.html.haml'"}
+/ end: app/views/static/deploy_containers_provider/deploy-provider-master-nodes-review.html.haml

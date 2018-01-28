@@ -1,5 +1,7 @@
+/ begin: app/views/static/pf_charts/heatmap-legend.html.haml
 %ul{:class => "heatmap-pf-legend-container"}
   %li{"ng-repeat" => "item in $ctrl.legendItems", :class => "heatmap-pf-legend-items"}
     %span{:class => "legend-pf-color-box", "ng-style" => "{background: item.color}"}
     %span{:class => "legend-pf-text"}
       {{item.text}}
+/ end: app/views/static/pf_charts/heatmap-legend.html.haml

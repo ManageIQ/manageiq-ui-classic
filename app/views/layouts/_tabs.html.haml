@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_tabs.html.haml
 - if @tabs
   %ul{:class => "nav nav-tabs #{@layout == 'dashboard' ? 'nav-tabs-pf' : nil}"}
     - @tabs.each do |tab|
@@ -63,3 +64,4 @@
       - else
         %h1
           = @title
+/ end: app/views/layouts/_tabs.html.haml

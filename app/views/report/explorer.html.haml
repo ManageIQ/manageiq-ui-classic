@@ -1,3 +1,4 @@
+/ begin: app/views/report/explorer.html.haml
 #main_div
   - @lists.each do |list|
     = render :partial => list
@@ -24,3 +25,4 @@
 -# Create from/to date JS vars to limit calendar starting from
 :javascript
   ManageIQ.calendar.calDateFrom = miqCalendarDateConversion("#{@timezone_offset}");
+/ end: app/views/report/explorer.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_form_buttons_verify.html.haml
 - valtype ||= "default"
 - statuskey  = (valtype + "_verify_status").to_sym
 - record ||= nil
@@ -41,3 +42,4 @@
   = button_tag(_("Validate"),
                :class    => "btn btn-primary disabled btn-xs pull-right",
                :disabled => true)
+/ end: app/views/layouts/_form_buttons_verify.html.haml

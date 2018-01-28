@@ -1,3 +1,4 @@
+/ begin: app/views/configuration/_timeprofile_days_hours.html.haml
 - url = url_for_only_path(:action => "timeprofile_field_changed")
 - url_json = {:url => url}.to_json
 #timeprofile_days_hours_div
@@ -73,3 +74,4 @@
                                 @edit[:new][:profile][:hours].include?(i),
                                 :disabled => disabled,
                                 "data-miq_observe_checkbox" => url_json)
+/ end: app/views/configuration/_timeprofile_days_hours.html.haml

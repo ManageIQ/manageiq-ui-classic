@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_class_instances.html.haml
 #class_instances_div
   - unless @angular_form
     - if !@in_a_form
@@ -30,3 +31,4 @@
     - elsif @edit[:new][:ae_inst]
       #form_div
         = render :partial => "instance_form", :locals => {:prefix => "cls_"}
+/ end: app/views/miq_ae_class/_class_instances.html.haml

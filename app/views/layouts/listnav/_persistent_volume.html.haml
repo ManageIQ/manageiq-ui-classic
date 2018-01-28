@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_persistent_volume.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -22,3 +23,4 @@
           %li
             = link_to(_("Pods (%{count})") % {:count => @record.number_of(:container_groups)},
                         url_for_only_path(:id => @record.id, :action => "show", :display => "container_groups"))
+/ end: app/views/layouts/listnav/_persistent_volume.html.haml

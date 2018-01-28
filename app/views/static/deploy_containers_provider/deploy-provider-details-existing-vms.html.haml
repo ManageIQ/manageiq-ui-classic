@@ -1,3 +1,4 @@
+/ begin: app/views/static/deploy_containers_provider/deploy-provider-details-existing-vms.html.haml
 %div{"ng-controller" => "containers.deployProviderDetailsExistingVMsController"}
   %form.form-horizontal{"ng-if" => "data.provisionOn == 'existingVms'"}
     .form-group
@@ -146,3 +147,4 @@
         %span.pficon.pficon-warning-triangle-o{"ng-if" => "infrastructureWarning && infrastructureWarning != ''"}
         %span
           = "{{infrastructureCount}} " + _("Infrastructure")
+/ end: app/views/static/deploy_containers_provider/deploy-provider-details-existing-vms.html.haml

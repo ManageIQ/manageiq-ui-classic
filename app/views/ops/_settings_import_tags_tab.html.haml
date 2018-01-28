@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_import_tags_tab.html.haml
 - if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_import_tags"
   #tab_div
     %h3
@@ -18,3 +19,4 @@
               .col-md-6
                 = submit_tag(_("Upload"), :id => "upload_tags", :class => "btn btn-default")
                 = _("* Requirements: CSV formatted file.")
+/ end: app/views/ops/_settings_import_tags_tab.html.haml

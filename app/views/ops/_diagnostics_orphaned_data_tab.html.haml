@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_diagnostics_orphaned_data_tab.html.haml
 - if @sb[:active_tab] == "diagnostics_orphaned_data"
   - if x_node.split('-').first == "root"
     = render :partial => "diagnostics_savedreports"
@@ -6,3 +7,4 @@
     = render :partial => "logs_selected"
 
   %div{:style => "padding-bottom: 20px"}
+/ end: app/views/ops/_diagnostics_orphaned_data_tab.html.haml

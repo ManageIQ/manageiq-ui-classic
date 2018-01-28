@@ -1,3 +1,4 @@
+/ begin: app/views/auth_key_pair_cloud/_form.html.haml
 %h3
   = _('Basic Information')
   %br
@@ -54,3 +55,4 @@
 :javascript
   ManageIQ.angular.app.value('keyPairFormId', '#{@key_pair.id || "new"}');
   miq_bootstrap('#form_div');
+/ end: app/views/auth_key_pair_cloud/_form.html.haml

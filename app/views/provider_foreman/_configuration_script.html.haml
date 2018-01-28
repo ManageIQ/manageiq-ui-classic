@@ -1,3 +1,4 @@
+/ begin: app/views/provider_foreman/_configuration_script.html.haml
 = render :partial => "layouts/flash_msg"
 .row
   .col-md-12.col-lg-8
@@ -7,3 +8,4 @@
   .col-md-12.col-lg-8
     - if @record.survey_spec['spec']
       = render :partial => "shared/summary/textual_listview", :locals => textual_configuration_script_survey
+/ end: app/views/provider_foreman/_configuration_script.html.haml

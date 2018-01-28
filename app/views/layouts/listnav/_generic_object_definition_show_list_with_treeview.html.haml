@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_generic_object_definition_show_list_with_treeview.html.haml
 - return if @display == 'generic_objects' || @display == 'main'
 = miq_accordion_panel(_("Generic Object Classes"), true, "god") do
   %tree_div{'ng-controller' => 'treeViewController as vm'}
@@ -12,3 +13,4 @@
 
 :javascript
   miq_bootstrap('tree_div', 'ManageIQ.treeView');
+/ end: app/views/layouts/listnav/_generic_object_definition_show_list_with_treeview.html.haml

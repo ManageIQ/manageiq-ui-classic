@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_rsop_form.html.haml
 - url = url_for_only_path(:action => 'rsop_option_changed')
 - observe = {:url => url}.to_json
 #rsop_form_div
@@ -53,3 +54,4 @@
               = select_tag('filter_value',
                 options_for_select(["<#{_('Choose')}>"] + Array(@sb[:rsop][:vms].invert).sort, @sb[:rsop][:filter_value]),
                 "data-miq_observe" => observe)
+/ end: app/views/miq_policy/_rsop_form.html.haml

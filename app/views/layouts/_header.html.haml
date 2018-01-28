@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_header.html.haml
 = render :partial => 'layouts/about_modal'
 %nav.navbar.navbar-pf-vertical#notification-app{'ng-controller' => "headerController as vm"}
   .navbar-header
@@ -44,3 +45,4 @@
 - if @miq_after_onload
   :javascript
     ManageIQ.afterOnload = '#{j @miq_after_onload}';
+/ end: app/views/layouts/_header.html.haml

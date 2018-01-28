@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_rbac_user_details.html.haml
 - change_stored_password ||= _("Change stored password")
 - cancel_password_change ||= _("Cancel password change")
 - stored_password_placeholder = "●●●●●●●●"
@@ -167,3 +168,4 @@
   %hr
   - unless @edit
     = render :partial => "rbac_tag_box"
+/ end: app/views/ops/_rbac_user_details.html.haml

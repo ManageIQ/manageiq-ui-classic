@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_details_tab.html.haml
 - if @sb[:active_tab] == "settings_details"
   - if super_admin_user?
     - region = MiqRegion.my_region
@@ -58,3 +59,4 @@
             %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-l');", :title => _("View LDAP Regions")}
               = _("LDAP Regions")
               (#{h(@ldap_regions.size)})
+/ end: app/views/ops/_settings_details_tab.html.haml

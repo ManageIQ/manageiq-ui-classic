@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_tools/review_git_import.html.haml
 :javascript
   var postMessageData = {
     git_repo_id: '#{j(@git_repo_id)}',
@@ -9,3 +10,4 @@
   $(function() {
     parent.postMessage(postMessageData, '*');
   });
+/ end: app/views/miq_ae_tools/review_git_import.html.haml

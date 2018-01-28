@@ -1,3 +1,4 @@
+/ begin: app/views/storage/show.html.haml
 #main_div
   - if %w(all_vms hosts miq_proxies all_miq_templates storage_extents storage_systems registered_vms unregistered_vms).include?(@display) && @showtype != "compare"
     = render :partial => "layouts/x_gtl", :locals => {:action_url => "show/#{@record.id}"}
@@ -11,3 +12,4 @@
       = render :partial => "layouts/performance_async"
     - when "main"
       = render :partial => "layouts/textual_groups_generic"
+/ end: app/views/storage/show.html.haml

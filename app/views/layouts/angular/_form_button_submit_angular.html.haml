@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/angular/_form_button_submit_angular.html.haml
 - submit_title_on ||= _("Run a Database backup now")
 - submit_title_off ||= _("Username and matching password fields are needed to run a database backup")
 - confirm ||= ""
@@ -10,3 +11,4 @@
               :enabled         => "saveable(angularForm)",
               'on-click'       => "submitButtonClicked('#{confirm}')",
               :primary         => 'true'}
+/ end: app/views/layouts/angular/_form_button_submit_angular.html.haml

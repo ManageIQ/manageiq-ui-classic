@@ -1,3 +1,4 @@
+/ begin: app/views/container_topology/show.html.haml
 - tooltip_options = {"tooltip-placement" => "bottom", "tooltip" => "{{vm.legendTooltip}}"}
 .topology{'ng-controller' => "containerTopologyController as vm"}
   .legend
@@ -56,3 +57,4 @@
 
 :javascript
   miq_bootstrap('.topology');
+/ end: app/views/container_topology/show.html.haml

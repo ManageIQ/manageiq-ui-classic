@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_server_tab.html.haml
 - if @sb[:active_tab] == "settings_server"
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
   %h3
@@ -316,3 +317,4 @@
                           :maxlength => ViewHelper::MAX_DESC_LEN,
                           :class => "form-control",
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+/ end: app/views/ops/_settings_server_tab.html.haml

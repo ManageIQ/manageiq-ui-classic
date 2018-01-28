@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_settings_help_menu_tab.html.haml
 - if @sb[:active_tab] == "settings_help_menu"
   - url = url_for_only_path(:action => 'help_menu_form_field_changed')
 
@@ -40,3 +41,4 @@
           :javascript
             miqInitSelectPicker();
             miqSelectPickerEvent("#{item.id}_type", '#{url}')
+/ end: app/views/ops/_settings_help_menu_tab.html.haml

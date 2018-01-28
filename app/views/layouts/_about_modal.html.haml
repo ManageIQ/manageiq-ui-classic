@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_about_modal.html.haml
 .modal.fade{:id => "aboutModal", "tabindex" => "-1", "role" => "dialog1", "aria-labelledby" => "aboutModalLabel", "aria-hidden" => "true"}
   .modal-dialog
     .modal-content.about-modal-pf{:class => ::Settings.server.custom_login_logo ? 'whitelabel' : ''}
@@ -31,3 +32,4 @@
       $('#aboutModal').modal("hide")
     });
   });
+/ end: app/views/layouts/_about_modal.html.haml

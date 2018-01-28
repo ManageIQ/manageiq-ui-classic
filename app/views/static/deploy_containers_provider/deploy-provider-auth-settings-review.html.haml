@@ -1,3 +1,4 @@
+/ begin: app/views/static/deploy_containers_provider/deploy-provider-auth-settings-review.html.haml
 %div{"ng-controller" => "containers.deployProviderReviewController"}
   %form.form-horizontal{"ng-if" => "data.authentication.mode == 'htPassword'"}
     .wizard-miq-review-inline{"ng-repeat" => "user in data.authentication.htPassword.users track by $index"}
@@ -106,3 +107,4 @@
       %span.wizard-miq-review-item-label
         = _("Client Secret:")
       %span.wizard-miq-review-item-value ******
+/ end: app/views/static/deploy_containers_provider/deploy-provider-auth-settings-review.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/ems_infra/scaling.html.haml
 = render :partial => "layouts/flash_msg"
 = form_tag('/ems_infra/scaling', :method => :post)
 = hidden_field_tag('id', @infra.id)
@@ -35,3 +36,4 @@
                        :alt   => t = _("Cancel"),
                        :title => t,
                        :type  => "submit")
+/ end: app/views/ems_infra/scaling.html.haml

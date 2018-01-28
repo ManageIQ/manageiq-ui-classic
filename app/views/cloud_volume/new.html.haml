@@ -1,3 +1,4 @@
+/ begin: app/views/cloud_volume/new.html.haml
 %form#form_div{:name           => "angularForm",
                'ng-controller' => "cloudVolumeFormController as vm",
                "ng-show"       => "vm.afterGet",
@@ -13,3 +14,4 @@
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id || "new"}');
   ManageIQ.angular.app.value('storageManagerId', #{@storage_manager.try(:id) || "undefined"});
   miq_bootstrap('#form_div');
+/ end: app/views/cloud_volume/new.html.haml

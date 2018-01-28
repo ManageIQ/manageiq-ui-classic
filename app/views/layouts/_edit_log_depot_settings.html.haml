@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_edit_log_depot_settings.html.haml
 - action ||= "log_depot_field_changed"
 - record    = @schedule || @record
 - url       = url_for_only_path(:action => action, :id => (record.try(:id) || "new"))
@@ -48,3 +49,4 @@
                             :change_url   => action,
                             :validate_url => validate_url,
                             :record       => record})
+/ end: app/views/layouts/_edit_log_depot_settings.html.haml

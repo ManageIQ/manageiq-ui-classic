@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_pdf_styles.html.haml
 %style
   @page { size: #{pdf_page_size_style} }
   @page { margin: 40pt 30pt 40pt 30pt }
@@ -9,3 +10,4 @@
   @page{ @bottom-left   {font-size: 75%;  content: 'Summary View'; font-style: italic}}
   @page{ @bottom-center {font-size: 75%;  content: '#{@options[:run_date]}' }}
   @page{ @bottom-right  {font-size: 75%;  content: 'Page ' counter(page) ' of ' counter(pages) }}
+/ end: app/views/layouts/_pdf_styles.html.haml

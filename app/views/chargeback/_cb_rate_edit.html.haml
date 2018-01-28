@@ -1,3 +1,4 @@
+/ begin: app/views/chargeback/_cb_rate_edit.html.haml
 - url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => @edit[:rec_id] || "new")
 - currency = ChargebackRateDetailCurrency.currencies_for_select
 = render :partial => "layouts/flash_msg"
@@ -33,3 +34,4 @@
   %strong
     = _('* Caution: The value Range end will not be included in the tier.')
   = render "cb_rate_edit_table"
+/ end: app/views/chargeback/_cb_rate_edit.html.haml

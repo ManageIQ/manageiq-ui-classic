@@ -1,3 +1,4 @@
+/ begin: app/views/vm_common/_policy_options.html.haml
 - url = {:url => url_for_only_path(:action => 'policy_options', :id => @record.id)}.to_json
 - url2 = {:url => url_for_only_path(:action => 'policy_show_options', :id => @record.id)}.to_json
 #policy_options_div
@@ -28,3 +29,4 @@
                           "data-miq_sparkle_off" => true,
                           "data-miq_observe_checkbox" => url2)
           = _("Failed").html_safe
+/ end: app/views/vm_common/_policy_options.html.haml

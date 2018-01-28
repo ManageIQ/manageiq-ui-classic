@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_adv_search_body.html.haml
 - url = url_for_only_path(:action => 'adv_search_load_choice')
 - url2 = url_for_only_path(:action => 'adv_search_name_typed')
 - report_expressions = MiqReport.get_expressions_by_model(@edit[@expkey][:exp_model])
@@ -82,3 +83,4 @@
               = check_box_tag("search_type", "1", checked,
                 :style                      => "width: 20px",
                 "data-miq_observe_checkbox" => {:url => url2}.to_json)
+/ end: app/views/layouts/_adv_search_body.html.haml

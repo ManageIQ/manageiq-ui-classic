@@ -1,3 +1,4 @@
+/ begin: app/views/catalog/_column_lists.html.haml
 #column_lists
   - url = url_for_only_path(:action => 'st_catalog_form_field_changed', :id => (@edit[:rec_id] || "new"))
   .col-md-5
@@ -53,3 +54,4 @@
              :style    => "overflow-x: scroll;",
              :size     => 8,
              :id       => "selected_fields")
+/ end: app/views/catalog/_column_lists.html.haml

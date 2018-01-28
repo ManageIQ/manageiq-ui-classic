@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_action_options.html.haml
 - url = url_for_only_path(:action => 'action_field_changed', :id => (@action.id || 'new'))
 - observe_with_interval = {:interval => '.5', :url => url}.to_json
 - observe = {:url => url}.to_json
@@ -360,3 +361,4 @@
                   :class             => "form-control",
                   "data-miq_observe" => observe_with_interval)
                 = _('Enter a comma separated list of IP or DNS names')
+/ end: app/views/miq_policy/_action_options.html.haml

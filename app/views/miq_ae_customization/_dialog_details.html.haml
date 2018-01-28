@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_customization/_dialog_details.html.haml
 -# if dialogs is selected
 -# Need to include the tree JS files in case no tree is initially displayed
 - if @record
@@ -18,3 +19,4 @@
           = render :partial => "dialog_info"
     :javascript
       miq_tabs_init('#dialog_info_tabs', '/miq_ae_customization/change_tab/');
+/ end: app/views/miq_ae_customization/_dialog_details.html.haml

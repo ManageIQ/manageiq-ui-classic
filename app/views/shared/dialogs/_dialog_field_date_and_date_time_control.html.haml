@@ -1,3 +1,4 @@
+/ begin: app/views/shared/dialogs/_dialog_field_date_and_date_time_control.html.haml
 - if field.type == "DialogFieldDateControl"
   - if edit
     = datepicker_input_tag("miq_date__#{field.name}", field.value, date_tag_options(field, url, auto_refresh_options))
@@ -43,3 +44,4 @@
         dialogFieldRefresh.triggerAutoRefresh(jsonOptions);
       });
     });
+/ end: app/views/shared/dialogs/_dialog_field_date_and_date_time_control.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_class/_angular_method_form.html.haml
 - @angular_form = true
 %form.form-horizontal#form_div{"name"          => "angularForm",
                                "ng-controller" => "aeMethodFormController as vm",
@@ -60,3 +61,4 @@
   ManageIQ.angular.app.value('aeMethodFormId', '#{@record.id || "new"}');
   ManageIQ.angular.app.value('currentRegion', '#{@current_region}');
   miq_bootstrap('#form_div');
+/ end: app/views/miq_ae_class/_angular_method_form.html.haml

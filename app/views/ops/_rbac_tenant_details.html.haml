@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_rbac_tenant_details.html.haml
 = render :partial => "layouts/flash_msg"
 #tenant_info
   - type = @record.tenant? ? "Tenant" : "Project"
@@ -73,3 +74,4 @@
         = _("Note: Total quota can be restricted by quotas defined at upper levels")
       %hr
   = render :partial => "rbac_tag_box"
+/ end: app/views/ops/_rbac_tenant_details.html.haml

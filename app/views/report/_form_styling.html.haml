@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_styling.html.haml
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 -# JSON hash to hold text fields and types for miqValueStylePrefill
 = javascript_tag("ManageIQ.reportEditor.valueStyles = {};")
@@ -105,3 +106,4 @@
 
 -# Initiate the prefill function to show text field background images when empty
 = javascript_tag("miqValueStylePrefill();")
+/ end: app/views/report/_form_styling.html.haml

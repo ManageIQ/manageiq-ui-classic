@@ -1,3 +1,4 @@
+/ begin: app/views/ems_container/_deploy.html.haml
 .container-fluid.container-tiles-pf.containers-dashboard.miq-dashboard-view{"ng-app" => "miq.containers.providersModule",
  "ng-controller" => "containers.deployProviderController"}
   .wizard-miq{"miq-modal" => "", "modal-size" => "large", "modal-title" => _("Create Containers Provider"),
@@ -21,3 +22,4 @@
         %div{"miq-wizard-step" => "", "step-id" => "review", "step-priority" => "2", "step-title" => _("Review"), :substeps => "true", "sub-step-count" => "2"}
           %div{"ng-include" => "'/static/deploy_containers_provider/deploy-provider-review-summary.html.haml'"}
           %div{"ng-include" => "'/static/deploy_containers_provider/deploy-provider-review-progress.html.haml'"}
+/ end: app/views/ems_container/_deploy.html.haml

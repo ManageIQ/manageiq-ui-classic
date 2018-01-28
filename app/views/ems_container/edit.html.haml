@@ -1,3 +1,4 @@
+/ begin: app/views/ems_container/edit.html.haml
 = form_for(@ems,
            :url    => "/#{controller_name}/#{@ems.id}",
            :method => :patch,
@@ -16,3 +17,4 @@
 :javascript
   ManageIQ.angular.app.value('emsCommonFormId', '#{@ems.id || "new"}');
   miq_bootstrap($('#form_id').val());
+/ end: app/views/ems_container/edit.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_pxe_server_details.html.haml
 #pxe_server_details_div
   -# if PXE Server is seleted
   - if @ps
@@ -74,3 +75,4 @@
         = render(:partial => "layouts/flash_msg")
         = render :partial => "shared/summary/textual",
           :locals  => {:title => _("Basic Information"), :items => textual_win_img_basicinfo}
+/ end: app/views/pxe/_pxe_server_details.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_storage.html.haml
 - if @record.try(:name)
   - hosts_title = title_for_hosts
   #accordion.panel-group
@@ -75,3 +76,4 @@
             :action        => 'debris_files',
             :title         => _("Show non-VM files on this Datastore"),
             :link_text     => _('Non-VM Files'))
+/ end: app/views/layouts/listnav/_storage.html.haml

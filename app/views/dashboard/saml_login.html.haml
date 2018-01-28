@@ -1,3 +1,4 @@
+/ begin: app/views/dashboard/saml_login.html.haml
 %html.login-pf{:class => ::Settings.server.custom_login_logo ? '' : 'rcue-login', :lang => I18n.locale.to_s.sub('-', '_')}
   %head
     = favicon_link_tag
@@ -14,3 +15,4 @@
       :javascript
         miqFlashClearSaved();
         window.location = '/dashboard/logout';
+/ end: app/views/dashboard/saml_login.html.haml

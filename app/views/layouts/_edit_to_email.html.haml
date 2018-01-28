@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_edit_to_email.html.haml
 - url = url_for_only_path(:action => action_url, :id => (record.id || "new"))
 #edit_to_email_div
   %br
@@ -58,3 +59,4 @@
               .btn.btn-default{:alt => t = _("Add"), :title => t, :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :button => 'add_email', :id => (record.id || 'new'))}');"}
                 %i.fa.fa-plus
 
+/ end: app/views/layouts/_edit_to_email.html.haml

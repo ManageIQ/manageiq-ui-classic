@@ -1,3 +1,4 @@
+/ begin: app/views/miq_policy/_policy_folders.html.haml
 - if @folders
   - folders_i18n = {"Compliance"                         => _("Compliance Policies"),
                     "Control"                            => _("Control Policies"),
@@ -34,3 +35,4 @@
             %i{:class => model_name.camelize.safe_constantize.try(:decorate).try(:fonticon)}
           %td
             = folders_i18n[f]
+/ end: app/views/miq_policy/_policy_folders.html.haml

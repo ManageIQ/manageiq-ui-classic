@@ -1,3 +1,5 @@
+/ begin: app/views/layouts/_i18n_js.html.haml
 - if ::Settings.ui.mark_translated_strings && !Rails.env.test?
   :javascript
     ManageIQ.i18n.mark_translated_strings = true
+/ end: app/views/layouts/_i18n_js.html.haml

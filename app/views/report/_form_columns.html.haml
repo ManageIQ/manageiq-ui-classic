@@ -1,3 +1,4 @@
+/ begin: app/views/report/_form_columns.html.haml
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 #columns_div
   = form_tag({:action => 'create',
@@ -45,3 +46,4 @@
               miqInitSelectPicker();
               miqSelectPickerEvent("chosen_queue_timeout", "#{url}")
     %hr
+/ end: app/views/report/_form_columns.html.haml

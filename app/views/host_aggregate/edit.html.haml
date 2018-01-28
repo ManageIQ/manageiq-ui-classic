@@ -1,3 +1,4 @@
+/ begin: app/views/host_aggregate/edit.html.haml
 %form#form_div{:name => "angularForm", 'ng-controller' => "hostAggregateFormController"}
   = render :partial => "layouts/flash_msg"
   %h3
@@ -34,3 +35,4 @@
 :javascript
   ManageIQ.angular.app.value('hostAggregateFormId', '#{@host_aggregate.id}');
   miq_bootstrap('#form_div');
+/ end: app/views/host_aggregate/edit.html.haml

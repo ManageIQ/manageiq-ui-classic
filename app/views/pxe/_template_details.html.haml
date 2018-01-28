@@ -1,3 +1,4 @@
+/ begin: app/views/pxe/_template_details.html.haml
 #template_details_div
   -# if Customization template is selected
   - if @ct
@@ -21,3 +22,4 @@
             :mode => @ct.type == "CustomizationTemplateKickstart" ? "shell" : "xml",
             :line_numbers => true,
             :read_only => true})
+/ end: app/views/pxe/_template_details.html.haml

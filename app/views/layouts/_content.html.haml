@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_content.html.haml
 - if big_iframe
   = render :partial => "layouts/vertical_navbar"
   .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.resizable-sidebar.max-height{:style => "overflow: hidden !important"}
@@ -82,3 +83,4 @@
 - else
   :javascript
     ManageIQ.record.recordId = null;
+/ end: app/views/layouts/_content.html.haml

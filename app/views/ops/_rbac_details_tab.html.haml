@@ -1,3 +1,4 @@
+/ begin: app/views/ops/_rbac_details_tab.html.haml
 - if x_active_tree == :rbac_tree
   - node = x_node.split("-")
   - if @tagging
@@ -45,3 +46,4 @@
               %i.pficon.pficon-tenant
             %td{:onclick => "miqTreeActivateNode('rbac_tree', 'xx-tn');", :title => _("View Tenants")}
               = _("Tenants (%{tenants_count})") % {:tenants_count => @tenants_count.to_s}
+/ end: app/views/ops/_rbac_details_tab.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/shared/dialogs/_dialog_field_text_area_box.html.haml
 - if edit
   = text_area_tag(field.name, field.value, textarea_tag_options(field, url, auto_refresh_options.merge(:initial_trigger => true)))
 - else
@@ -24,3 +25,4 @@
           dialogFieldRefresh.triggerAutoRefresh(jsonOptions);
         });
       });
+/ end: app/views/shared/dialogs/_dialog_field_text_area_box.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/cloud_volume/show.html.haml
 - if %w(cloud_volume_backups cloud_volume_snapshots instances).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - else
@@ -5,3 +6,4 @@
     = render :partial => "layouts/item"
   - else
     = render :partial => "layouts/textual_groups_generic"
+/ end: app/views/cloud_volume/show.html.haml

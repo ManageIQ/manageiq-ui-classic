@@ -1,3 +1,4 @@
+/ begin: app/views/host/_config.html.haml
 = render :partial => "layouts/flash_msg"
 - case @display
 - when "devices"
@@ -55,3 +56,4 @@
     %tr
       %td{:width => "55%", :valign => "top"}
         = render :partial => "network_tree"
+/ end: app/views/host/_config.html.haml

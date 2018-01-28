@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/_exception_contents.html.haml
 #content{:style => "overflow: scroll; height: 100%; padding-left: 50px;"}
   %h1{:style => "color: #c90813"}
     = _("Unexpected error encountered")
@@ -30,3 +31,4 @@
   %br
   %h3 
     = message + " [#{params[:controller]}/#{params[:action]}]"
+/ end: app/views/layouts/_exception_contents.html.haml

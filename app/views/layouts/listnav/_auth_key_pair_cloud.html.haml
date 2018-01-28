@@ -1,3 +1,4 @@
+/ begin: app/views/layouts/listnav/_auth_key_pair_cloud.html.haml
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
@@ -19,3 +20,4 @@
               = link_to(_("Instances (%{count})") % {:count => @record.number_of(:vms)},
                 {:action => 'show', :id => @record, :display => 'instances'},
                 :title => _("Show all Instances"))
+/ end: app/views/layouts/listnav/_auth_key_pair_cloud.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/static/notification_drawer/notification-body.html.haml
 %div{"ng-if"    => "!drawerExpanded",
      "ng-click" => "customScope.markNotificationRead(notification, notificationGroup)"}
   %div.dropdown.pull-right.dropdown-kebab-pf
@@ -66,3 +67,4 @@
         %button.btn.btn-link.dropdown-toggle{:type      => "button",
                                              "ng-click" => "customScope.clearNotification(notification, notificationGroup)"}
           %span.pficon.pficon-close
+/ end: app/views/static/notification_drawer/notification-body.html.haml

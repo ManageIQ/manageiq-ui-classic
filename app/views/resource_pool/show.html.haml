@@ -1,3 +1,4 @@
+/ begin: app/views/resource_pool/show.html.haml
 #main_div
   - if %w(vms all_vms hosts clusters resource_pools).include?(@display) && @showtype != "compare"
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
@@ -9,3 +10,4 @@
       = render :partial => "layouts/textual_groups_generic"
     - when 'config'
       = render :partial => "config"
+/ end: app/views/resource_pool/show.html.haml

@@ -1,3 +1,4 @@
+/ begin: app/views/miq_ae_customization/_dialog_field_form.html.haml
 - url = url_for_only_path(:action => 'dialog_form_field_changed', :id => (@record.id || 'new'))
 #dialog_field_div
   %h3
@@ -107,3 +108,4 @@
                           @edit[:field_reconfigurable],
                           "data-miq_observe_checkbox" => {:url => url}.to_json)
 
+/ end: app/views/miq_ae_customization/_dialog_field_form.html.haml
