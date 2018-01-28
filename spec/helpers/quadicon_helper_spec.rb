@@ -223,7 +223,7 @@ describe QuadiconHelper do
     end
   end
 
-  describe "#render_quadicon_text" do
+  describe "#render_quadicon_label" do
     before(:each) do
       @settings = {:display => {:quad_truncate => "m"}}
       allow(controller).to receive(:controller_name).and_return("service")
@@ -238,7 +238,7 @@ describe QuadiconHelper do
     end
 
     it "returns nil if no item" do
-      expect(helper.render_quadicon_text(nil, nil)).to be(nil)
+      expect(helper.render_quadicon_label(nil, nil)).to be(nil)
     end
 
     context "when @embedded is defined" do
@@ -255,13 +255,13 @@ describe QuadiconHelper do
       end
 
       it "renders a span tag with truncated text" do
-        expect(helper.render_quadicon_text(sys, sys_row)).to include("Bar")
-        expect(helper.render_quadicon_text(item, row)).to include("Baz")
+        expect(helper.render_quadicon_label(sys, sys_row)).to include("Bar")
+        expect(helper.render_quadicon_label(item, row)).to include("Baz")
       end
 
       it "renders a link when @showlinks is true" do
         @showlinks = true
-        expect(helper.render_quadicon_text(item, row)).to have_selector('a')
+        expect(helper.render_quadicon_label(item, row)).to have_selector('a')
       end
     end
 
@@ -273,7 +273,7 @@ describe QuadiconHelper do
         @policy_sim = true
         session[:policies] = ["thing"]
 
-        expect(helper.render_quadicon_text(item, row)).to include("Show policy details")
+        expect(helper.render_quadicon_label(item, row)).to include("Show policy details")
       end
     end
 
@@ -293,7 +293,7 @@ describe QuadiconHelper do
         )
       end
 
-      subject { helper.render_quadicon_text(ems, row) }
+      subject { helper.render_quadicon_label(ems, row) }
 
       it "renders a link with the v_qualified_desc" do
         expect(subject).to include("My Em...")
@@ -306,7 +306,7 @@ describe QuadiconHelper do
         FactoryGirl.create(:ems_container, :name => "Ems Container")
       end
 
-      subject { helper.render_quadicon_text(ems, row) }
+      subject { helper.render_quadicon_label(ems, row) }
 
       it "renders a link to ems_container" do
         @id = ems.id
@@ -327,7 +327,7 @@ describe QuadiconHelper do
 
       let(:row) { Ruport::Data::Record.new(:id => rand(9999)) }
 
-      subject { helper.render_quadicon_text(item, row) }
+      subject { helper.render_quadicon_label(item, row) }
 
       it "renders a label based on the address" do
         expect(subject).to have_link(item.address)
@@ -348,7 +348,7 @@ describe QuadiconHelper do
         Ruport::Data::Record.new(:id => rand(999), "name" => "Auth")
       end
 
-      subject { helper.render_quadicon_text(item, row) }
+      subject { helper.render_quadicon_label(item, row) }
 
       it 'renders a link with auth_key_pair_cloud path' do
         expect(subject).to have_link("Auth")
@@ -393,7 +393,7 @@ describe QuadiconHelper do
         )
       end
 
-      subject { helper.render_quadicon_text(vm, row) }
+      subject { helper.render_quadicon_label(vm, row) }
 
       context "when controller is service and view.db is Vm" do
         before(:each) do
@@ -413,7 +413,7 @@ describe QuadiconHelper do
         end
 
         it "renders a link from inferred url_options for ServiceResources" do
-          subject = helper.render_quadicon_text(serv_res, row)
+          subject = helper.render_quadicon_label(serv_res, row)
 
           expect(subject).to include("Service Res")
           expect(subject).to have_selector('a')
@@ -456,7 +456,7 @@ describe QuadiconHelper do
       it "renders the full name in the title tag" do
         long_name = "A really long truncatable name"
         row.name = long_name
-        label = helper.render_quadicon_text(item, row)
+        label = helper.render_quadicon_label(item, row)
         expect(label).to match(/title=\"#{long_name}\"/)
       end
 
@@ -466,7 +466,7 @@ describe QuadiconHelper do
           "evm_display_name" => "evm"
         )
 
-        subject = helper.render_quadicon_text(item, row)
+        subject = helper.render_quadicon_label(item, row)
         expect(subject).to include("evm")
         expect(subject).to include("/vm_infra/show/#{item.id}")
       end
@@ -477,40 +477,17 @@ describe QuadiconHelper do
           "key" => "key"
         )
 
-        expect(helper.render_quadicon_text(item, row)).to include("key")
+        expect(helper.render_quadicon_label(item, row)).to include("key")
       end
 
       it 'renders a link with the row name if set' do
         row = Ruport::Data::Record.new(:id => rand(9999), "name" => "name")
 
-        subject = helper.render_quadicon_text(item, row)
+        subject = helper.render_quadicon_label(item, row)
 
         expect(subject).to include("name")
         expect(subject).to include("/vm_infra/show/#{item.id}")
       end
-    end
-  end
-
-  it 'determines if in embedded view' do
-    @embedded = true
-
-    expect(helper.quadicon_in_embedded_view?).to be(true)
-  end
-
-  describe "#render_quadicon_label" do
-    before(:each) do
-      @settings = {:display => {:quad_truncate => "m"}}
-      allow(controller).to receive(:controller_name).and_return("service")
-    end
-
-    subject { helper.render_quadicon_label(item, row) }
-
-    let(:item) do
-      FactoryGirl.build(:vm_vmware)
-    end
-
-    let(:row) do
-      Ruport::Data::Record.new(:id => rand(9999), "name" => "Baz")
     end
 
     context "when in embedded view" do

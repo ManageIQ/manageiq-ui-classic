@@ -25,10 +25,6 @@ module QuadiconHelper
     @settings.fetch_path(:display, :quad_truncate) || 'm'
   end
 
-  def listicon_nil?
-    @listicon.nil?
-  end
-
   def quadicon_vm_attributes(item)
     vm_quad_link_attributes(item)
   end
@@ -37,20 +33,12 @@ module QuadiconHelper
     quadicon_vm_attributes(item) && !quadicon_vm_attributes(item).empty?
   end
 
-  def quadicon_in_embedded_view?
-    !!@embedded
-  end
-
-  def quadicon_show_link_ivar?
-    !!@showlinks
-  end
-
   def quadicon_hide_links?
     !quadicon_show_links?
   end
 
   def quadicon_show_links?
-    !quadicon_in_embedded_view? || quadicon_show_link_ivar?
+    !@embedded || !!@showlinks
   end
 
   def quadicon_show_url?
@@ -69,70 +57,21 @@ module QuadiconHelper
     !!@explorer
   end
 
-  def quadicon_policies_are_set?
-    !session[:policies].empty?
-  end
-
-  def quadicon_in_service_controller?
-    request.parameters[:controller] == "service"
-  end
-
-  def quadicon_view_db_is_vm?
-    @view.db == "Vm"
-  end
-
   def quadicon_service_ctrlr_and_vm_view_db?
-    quadicon_in_service_controller? && quadicon_view_db_is_vm?
-  end
-
-  def quadicon_render_for_policy_sim?
-    quadicon_policy_sim? && quadicon_policies_are_set?
+    request.parameters[:controller] == "service" && @view.db == "Vm"
   end
 
   def quadicon_edit_key?(key)
     !!(@edit && @edit[key])
   end
 
-  #
-  # Ways of Building URLs
-  # Collect here to see if any can be eliminated
-  #
-
-  # def quadicon_url_for_record(item)
-  #   url_for_record(item)
-  # end
-
-  # Replaces url options where private controller method was called
-  # Pretty sure this is unnecessary as list_row_id just returns a cid.
-  #
-  # Currently can't use `url_for_record` because it attempts to guess the
-  # controller and guesses incorrectly for some situations.
-  #
-  def quadicon_url_to_xshow_from_cid(item, options = {})
-    # Previously: {:action => 'x_show', :id => controller.send(:list_row_id, item)}
-    {:action => 'x_show', :id => item.id || options[:x_show_id]}
-  end
-
-  # Currently only used once
-  #
-  def quadicon_url_with_parent_and_lastaction(item)
-    url_for_only_path(
-      :controller => @parent.class.base_class.to_s.underscore,
-      :action     => @lastaction,
-      :id         => @parent.id,
-      :show       => item.id
-    )
-  end
-
-  # Normalize default options
-
-  def quadicon_default_inline_styles(height: 80)
+  def quadicon_default_inline_styles
     [
       "margin-left: auto",
       "margin-right: auto",
       "width: 75px",
-      "height: #{height}px",
-      "z-index: 0"
+      "height: 80px",
+      "z-index: 0",
     ].join("; ")
   end
 
@@ -184,20 +123,8 @@ module QuadiconHelper
     end
   end
 
-  def img_for_vendor(item)
-    "svg/vendor-#{h(item.vendor)}.svg"
-  end
-
   def img_for_host_vendor(item)
     "svg/vendor-#{h(item.vmm_vendor_display.downcase)}.svg"
-  end
-
-  def img_for_auth_status(item)
-    status_img(item)
-  end
-
-  def render_quadicon_text(item, row)
-    render_quadicon_label(item, row)
   end
 
   def render_quadicon_label(item, row)
@@ -311,7 +238,7 @@ module QuadiconHelper
       }
     }
 
-    if quadicon_render_for_policy_sim?
+    if quadicon_policy_sim? && session[:policies].present?
       link_options[:options][:title] = _("Show policy details for %{name}") % {:name => row['name']}
     end
 
@@ -512,7 +439,7 @@ module QuadiconHelper
       output << flobj_p_simple("a72", item.vms.size)
       output << currentstate_icon(item.normalized_state.downcase)
       output << flobj_img_simple(img_for_host_vendor(item), "c72")
-      output << flobj_img_simple(img_for_auth_status(item), "d72")
+      output << flobj_img_simple(status_img(item), "d72")
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple
@@ -679,7 +606,7 @@ module QuadiconHelper
       if quadicon_show_links?
         if quadicon_in_explorer_view?
           img_opts.delete(:path)
-          url = quadicon_url_to_xshow_from_cid(item, options)
+          url = {:action => 'x_show', :id => item.id || options[:x_show_id]}
           link_opts = {:sparkle => true, :remote => true}
         else
           url = url_for_record(item)
@@ -715,7 +642,12 @@ module QuadiconHelper
       url = nil
 
       if quadicon_show_links?
-        url = quadicon_url_with_parent_and_lastaction(item)
+        url = url_for_only_path(
+          :controller => @parent.class.base_class.to_s.underscore,
+          :action     => @lastaction,
+          :id         => @parent.id,
+          :show       => item.id
+        )
       end
 
       output << content_tag(:div, :class => 'flobj') do
@@ -731,11 +663,11 @@ module QuadiconHelper
   # Renders a single_quad uh, quadicon
   #
   def render_single_quad_quadicon(item, options)
-    output =  if listicon_nil?
-                render_non_listicon_single_quadicon(item, options)
-              else
-                render_listicon_single_quadicon(item, options)
-              end
+    output = if @listicon.nil?
+               render_non_listicon_single_quadicon(item, options)
+             else
+               render_listicon_single_quadicon(item, options)
+             end
 
     output.collect(&:html_safe).join('').html_safe
   end
@@ -785,7 +717,7 @@ module QuadiconHelper
     url = nil
 
     if quadicon_in_explorer_view? && quadicon_show_links?
-      url = quadicon_url_to_xshow_from_cid(item)
+      url = {:action => 'x_show', :id => item.id}
     end
 
     if !quadicon_in_explorer_view? && quadicon_show_links?
@@ -845,7 +777,7 @@ module QuadiconHelper
         output << flobj_img_small(img_for_compliance(item), "e72")
       end
 
-      output << flobj_img_small(img_for_vendor(item), "e72")
+      output << flobj_img_small("svg/vendor-#{h(item.vendor)}.svg", "e72")
     end
 
     unless options[:typ] == :listnav

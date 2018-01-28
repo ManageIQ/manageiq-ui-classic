@@ -124,49 +124,46 @@ describe('reportDataController', function () {
       expect($controller.setPaging).toHaveBeenCalled();
     });
 
+    var rowsById = function(id) {
+      return $controller.gtlData.rows.filter(function(item) {
+        return item.id === id;
+      });
+    };
+
     it('should select item and call rowSelect', function() {
       var itemId = "10";
-      var itemLongId = "10";
       var selected = true;
       spyOn(window, 'sendDataWithRx');
-      $controller.onItemSelect({id: itemId, long_id: itemLongId}, selected);
-      selectedItem = $controller.gtlData.rows.filter(function(item) {
-        return item.long_id === itemLongId;
-      });
+      $controller.onItemSelect({id: itemId}, selected);
+      selectedItem = rowsById(itemId);
       expect(selectedItem[0].checked).toBe(selected);
       expect(selectedItem[0].selected).toBe(selected);
       expect(window.sendDataWithRx).toHaveBeenCalledWith({rowSelect: selectedItem[0]});
-      expect(ManageIQ.gridChecks.indexOf(itemLongId) !== -1).toBeTruthy();
+      expect(ManageIQ.gridChecks.indexOf(itemId) !== -1).toBeTruthy();
     });
 
     it('should deselect item and call rowSelect', function() {
       var itemId = "10";
-      var itemLongId = "10";
       var selected = false;
       spyOn(window, 'sendDataWithRx');
-      $controller.onItemSelect({id: itemId, long_id: itemLongId}, selected);
-      selectedItem = $controller.gtlData.rows.filter(function(item) {
-        return item.long_id === itemLongId;
-      });
+      $controller.onItemSelect({id: itemId}, selected);
+      selectedItem = rowsById(itemId);
       expect(selectedItem[0].checked).toBe(selected);
       expect(selectedItem[0].selected).toBe(selected);
       expect(window.sendDataWithRx).toHaveBeenCalledWith({rowSelect: selectedItem[0]});
-      expect(ManageIQ.gridChecks.indexOf(itemLongId) === -1).toBeTruthy();
+      expect(ManageIQ.gridChecks.indexOf(itemId) === -1).toBeTruthy();
     });
 
     it('should create redirect for non explorer click on item', function() {
       var itemId = "10";
-      var itemLongId = "10";
       var clickEvent = $.Event('click');
       initObject.isExplorer = false;
       spyOn(clickEvent, 'stopPropagation');
       spyOn(clickEvent, 'preventDefault');
       spyOn(window, 'DoNav');
-      selectedItem = $controller.gtlData.rows.filter(function(item) {
-        return item.long_id === itemLongId;
-      });
+      selectedItem = rowsById(itemId);
       $controller.onItemClicked(selectedItem[0], clickEvent);
-      expect(window.DoNav).toHaveBeenCalledWith(initObject.showUrl + '/' + selectedItem[0].long_id);
+      expect(window.DoNav).toHaveBeenCalledWith(initObject.showUrl + '/' + selectedItem[0].id);
       expect(clickEvent.stopPropagation).toHaveBeenCalled();
       expect(clickEvent.preventDefault).toHaveBeenCalled();
     });

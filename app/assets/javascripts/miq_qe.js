@@ -112,7 +112,7 @@ ManageIQ.qe.gtl = {
       }
       if (foundItem.length === 0) {
         foundItem = rows.filter(function(oneRow) {
-          return oneRow.id == identificator || oneRow.long_id == identificator;
+          return oneRow.id == identificator;
         });
       }
       return multiple ? foundItem : foundItem[0];
@@ -127,7 +127,6 @@ ManageIQ.qe.gtl = {
         }.bind(this), {}),
         gtlType: this.gtlType,
         id: item.id,
-        long_id: item.long_id,
         quadicon: item.quadicon
       }
     }.bind(this);

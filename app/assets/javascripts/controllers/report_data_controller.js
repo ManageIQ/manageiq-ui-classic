@@ -226,7 +226,7 @@
         miqSparkleOn();
         var lastChar = prefix[prefix.length - 1];
         prefix = (lastChar !== '/' && lastChar !== '=') ? prefix + '/' : prefix;
-        this.$window.DoNav(prefix + (item.long_id || item.id));
+        this.$window.DoNav(prefix + item.id);
       }
     }
     return false;
@@ -240,15 +240,15 @@
   */
   ReportDataController.prototype.onItemSelect = function(item, isSelected) {
     if (typeof item !== 'undefined') {
-      var selectedItem = _.find(this.gtlData.rows, {long_id: item.long_id});
+      var selectedItem = _.find(this.gtlData.rows, {id: item.id});
       if (selectedItem) {
         selectedItem.checked = isSelected;
         selectedItem.selected = isSelected;
         this.$window.sendDataWithRx({rowSelect: selectedItem});
         if (isSelected) {
-          ManageIQ.gridChecks.push(item.long_id);
+          ManageIQ.gridChecks.push(item.id);
         } else {
-          var index = ManageIQ.gridChecks.indexOf(item.long_id);
+          var index = ManageIQ.gridChecks.indexOf(item.id);
           index !== -1 && ManageIQ.gridChecks.splice(index, 1);
         }
       }
