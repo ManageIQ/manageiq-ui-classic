@@ -491,12 +491,6 @@ describe QuadiconHelper do
     end
   end
 
-  it 'determines if in embedded view' do
-    @embedded = true
-
-    expect(helper.quadicon_in_embedded_view?).to be(true)
-  end
-
   describe "#render_quadicon_label" do
     before(:each) do
       @settings = {:display => {:quad_truncate => "m"}}

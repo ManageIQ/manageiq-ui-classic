@@ -33,20 +33,12 @@ module QuadiconHelper
     quadicon_vm_attributes(item) && !quadicon_vm_attributes(item).empty?
   end
 
-  def quadicon_in_embedded_view?
-    !!@embedded
-  end
-
-  def quadicon_show_link_ivar?
-    !!@showlinks
-  end
-
   def quadicon_hide_links?
     !quadicon_show_links?
   end
 
   def quadicon_show_links?
-    !quadicon_in_embedded_view? || quadicon_show_link_ivar?
+    !@embedded || !!@showlinks
   end
 
   def quadicon_show_url?
