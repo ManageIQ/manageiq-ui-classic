@@ -61,10 +61,6 @@ module QuadiconHelper
     request.parameters[:controller] == "service" && @view.db == "Vm"
   end
 
-  def quadicon_render_for_policy_sim?
-    quadicon_policy_sim? && !session[:policies].empty?
-  end
-
   def quadicon_edit_key?(key)
     !!(@edit && @edit[key])
   end
@@ -283,7 +279,7 @@ module QuadiconHelper
       }
     }
 
-    if quadicon_render_for_policy_sim?
+    if quadicon_policy_sim? && session[:policies].present?
       link_options[:options][:title] = _("Show policy details for %{name}") % {:name => row['name']}
     end
 
