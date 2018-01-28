@@ -295,7 +295,7 @@ describe StorageController do
         )
         results = assert_report_data_response
         expect(results['data']['rows'].length).to eq(1)
-        expect(results['data']['rows'][0]['long_id']).to eq(storage.id.to_s)
+        expect(results['data']['rows'][0]['id']).to eq(storage.id.to_s)
       end
     end
   end
