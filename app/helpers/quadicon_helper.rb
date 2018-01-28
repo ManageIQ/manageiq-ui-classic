@@ -65,26 +65,6 @@ module QuadiconHelper
     !!(@edit && @edit[key])
   end
 
-  #
-  # Ways of Building URLs
-  # Collect here to see if any can be eliminated
-  #
-
-  # def quadicon_url_for_record(item)
-  #   url_for_record(item)
-  # end
-
-  # Replaces url options where private controller method was called
-  # Pretty sure this is unnecessary as list_row_id just returns a cid.
-  #
-  # Currently can't use `url_for_record` because it attempts to guess the
-  # controller and guesses incorrectly for some situations.
-  #
-  def quadicon_url_to_xshow_from_cid(item, options = {})
-    # Previously: {:action => 'x_show', :id => controller.send(:list_row_id, item)}
-    {:action => 'x_show', :id => item.id || options[:x_show_id]}
-  end
-
   # Currently only used once
   #
   def quadicon_url_with_parent_and_lastaction(item)
@@ -647,7 +627,7 @@ module QuadiconHelper
       if quadicon_show_links?
         if quadicon_in_explorer_view?
           img_opts.delete(:path)
-          url = quadicon_url_to_xshow_from_cid(item, options)
+          url = {:action => 'x_show', :id => item.id || options[:x_show_id]}
           link_opts = {:sparkle => true, :remote => true}
         else
           url = url_for_record(item)
@@ -753,7 +733,7 @@ module QuadiconHelper
     url = nil
 
     if quadicon_in_explorer_view? && quadicon_show_links?
-      url = quadicon_url_to_xshow_from_cid(item)
+      url = {:action => 'x_show', :id => item.id}
     end
 
     if !quadicon_in_explorer_view? && quadicon_show_links?
