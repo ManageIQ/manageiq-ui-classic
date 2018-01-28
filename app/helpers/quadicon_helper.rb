@@ -127,10 +127,6 @@ module QuadiconHelper
     "svg/vendor-#{h(item.vmm_vendor_display.downcase)}.svg"
   end
 
-  def img_for_auth_status(item)
-    status_img(item)
-  end
-
   def render_quadicon_label(item, row)
     return unless item
 
@@ -443,7 +439,7 @@ module QuadiconHelper
       output << flobj_p_simple("a72", item.vms.size)
       output << currentstate_icon(item.normalized_state.downcase)
       output << flobj_img_simple(img_for_host_vendor(item), "c72")
-      output << flobj_img_simple(img_for_auth_status(item), "d72")
+      output << flobj_img_simple(status_img(item), "d72")
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple
