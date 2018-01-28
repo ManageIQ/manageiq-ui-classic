@@ -61,16 +61,8 @@ module QuadiconHelper
     !session[:policies].empty?
   end
 
-  def quadicon_in_service_controller?
-    request.parameters[:controller] == "service"
-  end
-
-  def quadicon_view_db_is_vm?
-    @view.db == "Vm"
-  end
-
   def quadicon_service_ctrlr_and_vm_view_db?
-    quadicon_in_service_controller? && quadicon_view_db_is_vm?
+    request.parameters[:controller] == "service" && @view.db == "Vm"
   end
 
   def quadicon_render_for_policy_sim?
