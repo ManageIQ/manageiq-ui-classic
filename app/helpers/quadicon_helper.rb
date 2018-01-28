@@ -65,19 +65,6 @@ module QuadiconHelper
     !!(@edit && @edit[key])
   end
 
-  # Currently only used once
-  #
-  def quadicon_url_with_parent_and_lastaction(item)
-    url_for_only_path(
-      :controller => @parent.class.base_class.to_s.underscore,
-      :action     => @lastaction,
-      :id         => @parent.id,
-      :show       => item.id
-    )
-  end
-
-  # Normalize default options
-
   def quadicon_default_inline_styles
     [
       "margin-left: auto",
@@ -663,7 +650,12 @@ module QuadiconHelper
       url = nil
 
       if quadicon_show_links?
-        url = quadicon_url_with_parent_and_lastaction(item)
+        url = url_for_only_path(
+          :controller => @parent.class.base_class.to_s.underscore,
+          :action     => @lastaction,
+          :id         => @parent.id,
+          :show       => item.id
+        )
       end
 
       output << content_tag(:div, :class => 'flobj') do
