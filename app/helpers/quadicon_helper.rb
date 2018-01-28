@@ -123,10 +123,6 @@ module QuadiconHelper
     end
   end
 
-  def img_for_vendor(item)
-    "svg/vendor-#{h(item.vendor)}.svg"
-  end
-
   def img_for_host_vendor(item)
     "svg/vendor-#{h(item.vmm_vendor_display.downcase)}.svg"
   end
@@ -785,7 +781,7 @@ module QuadiconHelper
         output << flobj_img_small(img_for_compliance(item), "e72")
       end
 
-      output << flobj_img_small(img_for_vendor(item), "e72")
+      output << flobj_img_small("svg/vendor-#{h(item.vendor)}.svg", "e72")
     end
 
     unless options[:typ] == :listnav
