@@ -57,16 +57,12 @@ module QuadiconHelper
     !!@explorer
   end
 
-  def quadicon_policies_are_set?
-    !session[:policies].empty?
-  end
-
   def quadicon_service_ctrlr_and_vm_view_db?
     request.parameters[:controller] == "service" && @view.db == "Vm"
   end
 
   def quadicon_render_for_policy_sim?
-    quadicon_policy_sim? && quadicon_policies_are_set?
+    quadicon_policy_sim? && !session[:policies].empty?
   end
 
   def quadicon_edit_key?(key)
