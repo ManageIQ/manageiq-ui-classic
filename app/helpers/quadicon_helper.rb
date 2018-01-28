@@ -98,13 +98,13 @@ module QuadiconHelper
 
   # Normalize default options
 
-  def quadicon_default_inline_styles(height: 80)
+  def quadicon_default_inline_styles
     [
       "margin-left: auto",
       "margin-right: auto",
       "width: 75px",
-      "height: #{height}px",
-      "z-index: 0"
+      "height: 80px",
+      "z-index: 0",
     ].join("; ")
   end
 
