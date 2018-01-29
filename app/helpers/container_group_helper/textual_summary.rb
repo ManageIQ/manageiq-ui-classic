@@ -123,22 +123,6 @@ module ContainerGroupHelper::TextualSummary
     TextualGroup.new(_("Container Statuses Summary"), %i(waiting running terminated))
   end
 
-  def container_statuses_summary
-    @container_statuses_summary ||= @record.container_states_summary
-  end
-
-  def textual_waiting
-    {:label => _('Waiting'), :value => container_statuses_summary[:waiting] || 0}
-  end
-
-  def textual_running
-    {:label => _('Running'), :value => container_statuses_summary[:running] || 0}
-  end
-
-  def textual_terminated
-    {:label => _('Terminated'), :value => container_statuses_summary[:terminated] || 0}
-  end
-
   def textual_compliance_history
     super(:title => _("Show Compliance History of this Replicator (Last 10 Checks)"))
   end
