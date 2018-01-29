@@ -1124,6 +1124,8 @@ function miqJqueryRequest(url, options) {
     });
   }
 
+  ManageIQ.qe.loading++;
+
   options = options || {};
   var ajax_options = {
     type: 'POST',

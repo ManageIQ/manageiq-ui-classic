@@ -9,6 +9,10 @@ function logError(fn) {
         console.debug('script follows:', text);
       }
       return text;
+    } finally {
+      setTimeout(function() {
+        ManageIQ.qe.loading--;
+      });
     }
   };
 }
