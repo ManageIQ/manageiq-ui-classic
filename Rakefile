@@ -111,6 +111,17 @@ namespace :spec do
     system('yarn test')
     exit $CHILD_STATUS.exitstatus
   end
+
+  namespace :jest do
+    desc 'Run Jest tests with node debugger'
+    task :debug do
+      puts
+      puts "open your chrome://inspect/#devices on your chrome based browser (see https://facebook.github.io/jest/docs/en/troubleshooting.html for more details)"
+      puts
+      system('node --inspect-brk node_modules/.bin/jest --runInBand')
+    end
+
+  end
   namespace :jest do
     desc "Does nothing, needed by Travis"
     task :setup
