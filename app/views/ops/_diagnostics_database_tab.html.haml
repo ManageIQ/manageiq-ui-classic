@@ -70,8 +70,6 @@
   %h3
     = _("Database Backup Settings")
   .form-group
-    %label
-      test
     %label.col-md-2.control-label
       = _("Type")
     .col-md-8
@@ -80,7 +78,6 @@
                   "ng-model"                       => "vm.diagnosticsDatabaseModel.log_protocol",
                   "ng-change"                      => "vm.logProtocolChanged(vm.diagnosticsDatabaseModel)",
                   "ng-required"                    => "vm.logProtocolNotSelected(vm.diagnosticsDatabaseModel)",
-                  "checkchange"                    => "",
                   "selectpicker-for-select-tag"    => "")
   = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
                  :locals  => {:ng_show             => "vm.logProtocolSelected()",
