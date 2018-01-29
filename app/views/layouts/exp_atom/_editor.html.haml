@@ -57,7 +57,7 @@
           - if @expkey == :filter_expression
             - opts = [[_('Tag'), 'tags']]
             - @edit[@expkey][:exp_typ] = 'tags'
-          -else
+          - else
             - opts += exptypes
         - else
           - opts += exptypes
