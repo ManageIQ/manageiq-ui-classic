@@ -1,6 +1,5 @@
-/ begin: app/views/layouts/login.html.haml
 = render :partial => 'layouts/doctype'
-%html.login-pf{:class => ::Settings.server.custom_login_logo ? '' : 'rcue-login', :lang => I18n.locale.to_s.sub('-', '_')}
+%html.login-pf.miq-layout-login{:class => ::Settings.server.custom_login_logo ? '' : 'rcue-login', :lang => I18n.locale.to_s.sub('-', '_')}
   %head
     %title
       = h productized_title(_(": Login"))
@@ -25,4 +24,3 @@
       delete localStorage['patternfly-navigation-secondary'];
       delete localStorage['patternfly-navigation-tertiary'];
       miqFlashClearSaved();
-/ end: app/views/layouts/login.html.haml

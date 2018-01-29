@@ -1,6 +1,5 @@
-/ begin: app/views/vm_common/console_vmrc.html.haml
 = render :partial => 'layouts/doctype'
-%html{:lang => I18n.locale.to_s.sub('-', '_')}
+%html.miq-layout-console_vmrc{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
     = favicon_link_tag
     = javascript_include_tag 'jquery/dist/jquery.js'
@@ -13,4 +12,3 @@
 
   %body
     = _('Starting the VMRC application ...')
-/ end: app/views/vm_common/console_vmrc.html.haml

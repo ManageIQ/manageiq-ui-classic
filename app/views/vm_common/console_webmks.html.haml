@@ -1,6 +1,5 @@
-/ begin: app/views/vm_common/console_webmks.html.haml
 = render :partial => 'layouts/doctype'
-%html{:lang => I18n.locale.to_s.sub('-', '_')}
+%html.miq-layout-console_webmks{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
     %title
       = _('%{product_name} WebMKS Remote Console') % {:product_name => Vmdb::Appliance.PRODUCT_NAME}
@@ -34,4 +33,3 @@
   %body
     #remote-console
     = render :partial => 'shared/remote_console_footer', :layout => false, :locals => { :console_type => 'WebMKS' }
-/ end: app/views/vm_common/console_webmks.html.haml

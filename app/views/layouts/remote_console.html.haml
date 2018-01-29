@@ -1,6 +1,5 @@
-/ begin: app/views/layouts/remote_console.html.haml
 = render :partial => 'layouts/doctype'
-%html{:lang => I18n.locale.to_s.sub('-', '_')}
+%html.miq-layout-remote_console{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
     %title
       = _('%{product_name} HTML5 Remote Console') % {:product_name => Vmdb::Appliance.PRODUCT_NAME}
@@ -11,4 +10,3 @@
   %body
     #remote-console{'data-url' => @console[:url], 'data-secret' => @console[:secret]}
     = render :partial => 'shared/remote_console_footer', :layout   => false, :locals   => { :console_type => @console[:type].upcase }
-/ end: app/views/layouts/remote_console.html.haml
