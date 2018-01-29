@@ -175,3 +175,89 @@ angular.module('miq.debug', [])
       };
     }],
   });
+
+function domStructure() {
+  return Array.from( $('*').contents().map(processNode) );
+
+  function miqClass(x) {
+    return x.match(/^miq-/);
+  }
+
+  function processComment(n) {
+    var comment = n.nodeValue;
+    var match = comment.match(/^\s*(begin|end): (app.*?)\s*$/);
+
+    return presence(compactObject({
+      begin: match && match[1] === 'begin' && match[2],
+      end: match && match[1] === 'end' && match[2],
+    }));
+  }
+
+  function truthyKeys(o) {
+    return Object.keys(o).filter(function(k) {
+      return o[k];
+    });
+  }
+
+  function compactObject(o) {
+    return _.pick(o, truthyKeys(o));
+  }
+
+  function presence(o) {
+    return Object.keys(o).length ? o : null;
+  }
+
+  function processElement(n) {
+    var id = n.id;
+    var miq = Array.from(n.classList || []).filter(miqClass).join(' ');
+
+    return presence(compactObject({
+      id: id,
+      klass: miq,
+    }));
+  }
+
+  function indentLevel(n) {
+    var level = 0;
+
+    while (n.parentNode && (n.parentNode !== n)) {
+      n = n.parentNode;
+      level++;
+    }
+
+    return level;
+  }
+
+  function processText(n) {
+    var tag = n.parentElement.tagName.toLowerCase();
+    var text = n.textContent.trim();
+
+    if (tag.match(/^h\d$/) && text) {
+      var o = {};
+      o[tag] = text;
+      return o;
+    }
+
+    return null;
+  }
+
+  function processNodeInner(n) {
+    if (n.nodeType === 8) {  // comment
+      return processComment(n);
+    } else if (n.nodeType === 3) { // text
+      return processText(n);
+    } else {
+      return processElement(n);
+    }
+  }
+
+  function processNode() {
+    var n = processNodeInner(this);
+
+    if (n) {
+      n.indent = indentLevel(this);
+    }
+
+    return n;
+  }
+}
