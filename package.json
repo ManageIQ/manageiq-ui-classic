@@ -7,7 +7,8 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:current": "jest --watch",
-    "lint": "eslint -c app/javascript/.eslintrc.js --fix app/javascript || exit 0"
+    "lint": "eslint -c app/javascript/.eslintrc.js --fix app/javascript || exit 0",
+    "stylelint": "stylelint 'app/**/*css'"
   },
   "repository": {
     "type": "git",
@@ -79,6 +80,8 @@
     "resolve-url-loader": "^2.0.2",
     "sass-loader": "~6.0.3",
     "style-loader": "~0.16.1",
+    "stylelint": "^8.2.0",
+    "stylelint-config-standard": "^17.0.0",
     "ts-loader": "~2.0.3",
     "typescript": "~2.2.2",
     "webpack": "~3.2.0",

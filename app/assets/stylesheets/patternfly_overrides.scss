@@ -2,40 +2,48 @@
 /// begin layout styling
 /// ===================================================================
 
-/// this media query makes the left column and the main area independently 
+/// this media query makes the left column and the main area independently
 /// scrollable and sets the paging_div at the bottom of the column
 
 @media (min-width: $screen-sm) {
-  html, body {
+  html,
+  body {
     width: 100%;
     height: 100%;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
   }
 
-  #listnav_div .panel:first-child { /* hides panel top border to prevent double border with toolbar  */
+  #listnav_div .panel:first-child {
+    /* hides panel top border to prevent double border with toolbar  */
     border-top: 0;
   }
 
-  #main-content { /* inserts height calculation for scrollable area */
+  #main-content {
+    /* inserts height calculation for scrollable area */
     overflow: auto;
   }
+
   .max-height {
     height: 100%;
   }
-  #miq_ae_tools .scrollable { /* inserts height calculation for scrollable area */
+
+  #miq_ae_tools .scrollable {
+    /* inserts height calculation for scrollable area */
     height: calc(100% - 50px);
     overflow: auto;
   }
 
-  .no-padding { /* removings left-right padding from column */
+  .no-padding {
+    /* removings left-right padding from column */
     padding: 0 !important;
     margin: 0 !important;
   }
+
   .login-pf body {
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 }
 
@@ -47,27 +55,29 @@
   left: 0;
   width: 0;
   height: 100%;
-  z-index: 600
+  z-index: 600;
 }
+
 .resizer-box {
   position: absolute;
   bottom: 100px;
   left: -18px;
-  width: 38px
+  width: 38px;
 }
 
 .resizer .btn {
-  border-color: #d0d0d0
+  border-color: #d0d0d0;
 }
 
-iframe, .iframe {
-  width: 100%; height: 100%;
+iframe,
+.iframe {
+  width: 100%;
+  height: 100%;
 }
 
 /// ===================================================================
 /// end layout styling
 /// ===================================================================
-
 
 /// ===================================================================
 /// begin login screen styling
@@ -93,28 +103,29 @@ div#saml-login hr {
 /// end login screen styling
 /// ===================================================================
 
-
 /// ===================================================================
 /// begin header styling
 /// ===================================================================
 
 /// toast notifications positioning
 .toast-notifications-list-pf {
-  top: 65px
+  top: 65px;
 }
 
 .navbar__user-name {
   display: inline-block;
-  color: #FFFFFF; margin-left: 1ex;
+  color: #ffffff;
+  margin-left: 1ex;
 }
 
 /// group switcher styling
 
 .navbar-right .dropdown-submenu > a {
-  padding-left: 20px !important
+  padding-left: 20px !important;
 }
-.navbar-right .dropdown-submenu > a:after {
-  content: "\f104";
+
+.navbar-right .dropdown-submenu > a::after {
+  content: '\f104';
   left: 10px;
 }
 
@@ -125,7 +136,6 @@ div#saml-login hr {
   max-height: 500px;
   overflow-x: hidden;
 }
-
 
 /// style changes applied when customer logo is active
 
@@ -141,17 +151,18 @@ li.brand-white-label.whitelabeled {
 /// end header styling
 /// ===================================================================
 
-
 /// ===================================================================
 /// begin vertical navigation styling
 /// ===================================================================
 
-.secondary-collapse-toggle-pf, .tertiary-collapse-toggle-pf {
-  &:before {
+.secondary-collapse-toggle-pf,
+.tertiary-collapse-toggle-pf {
+  &::before {
     content: '\f08d';
   }
+
   &.collapsed {
-    &:before {
+    &::before {
       content: '\f08d';
       display: inline-block;
       transform: rotate(45deg);
@@ -165,7 +176,6 @@ li.brand-white-label.whitelabeled {
 /// end vertical navigation styling
 /// ===================================================================
 
-
 /// ===================================================================
 /// begin dashboard styling
 /// ===================================================================
@@ -173,7 +183,7 @@ li.brand-white-label.whitelabeled {
 /// make it possible to drop a dashboard widget into a previously empty column
 
 .db_widgets_target {
-  padding-top: 20px;  // same as .panel's margin-bottom
+  padding-top: 20px; // same as .panel's margin-bottom
   min-height: 78px; // .panel.height + (2 * 20px)
 }
 
@@ -183,7 +193,7 @@ body#dashboard .blank-slate-pf {
   padding: 0 !important;
 }
 
-.blank-slate-pf .pficon-warning-triangle-o:before {
+.blank-slate-pf .pficon-warning-triangle-o::before {
   color: #9c9c9c;
 }
 
@@ -192,8 +202,9 @@ body#dashboard .blank-slate-pf {
 @media (min-width: $screen-md) {
   .aggregate-object-card .card-pf {
     min-height: 137px;
+
     img {
-      margin-top:20px;
+      margin-top: 20px;
     }
   }
 }
@@ -211,18 +222,19 @@ body#dashboard .blank-slate-pf {
   width: 20% !important;
   padding-top: 6px;
   min-width: 200px;
-  font: normal 12px OpenSansSemibold,Arial,Helvetica,sans-serif;
+  font: normal 12px OpenSansSemibold, Arial, Helvetica, sans-serif;
   cursor: default;
   color: #333;
   text-align: left;
-  white-space: normal
+  white-space: normal;
 }
 
-table.table-summary-screen i { /* font icon styling in table view (equivalent to fa-lg) */
-  display: inline-block; 
+table.table-summary-screen i {
+  /* font icon styling in table view (equivalent to fa-lg) */
+  display: inline-block;
   font-size: 1.333em;
   line-height: 0.75em;
-  text-align:center;
+  text-align: center;
   vertical-align: -15%;
   width: 1.25em;
 }
@@ -237,13 +249,13 @@ table.table.table-summary-screen tbody td img {
 /// end summary screen styling
 /// ===================================================================
 
-
 /// ===================================================================
 /// begin compare screen styling
 /// ===================================================================
 
 #compare-grid {
-  table.table-expanded, .table-compressed {
+  table.table-expanded,
+  .table-compressed {
     table-layout: fixed !important;
     word-wrap: break-word !important;
     width: auto !important;
@@ -258,14 +270,12 @@ table.table.table-summary-screen tbody td img {
   }
 
   table.table-compressed thead tr th div.rotated-text {
-    transform:
-      translate(0px, 110px)
-      rotate(270deg);
+    transform: translate(0, 110px) rotate(270deg);
     width: 26px;
   }
 
   table.table-expanded thead tr th div.quadicon_grid {
-    padding-left: 40px
+    padding-left: 40px;
   }
 
   table.table-compressed thead th,
@@ -294,7 +304,6 @@ table.table.table-summary-screen tbody td img {
 /// end compare screen styling
 /// ===================================================================
 
-
 /// ===================================================================
 /// begin compact list view styling
 /// ===================================================================
@@ -303,38 +312,48 @@ table.table.table-summary-screen tbody td img {
   .list-group-item {
     padding-top: 7px;
     padding-bottom: 7px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
+
   .list-view-pf-main-info {
     padding: 0;
   }
+
   .list-view-pf-left {
     padding-right: 40px;
   }
+
   .row {
     margin-left: -10px;
     margin-right: -10px;
   }
-  [class^="col-"] {
+
+  [class^='col-'] {
     padding-left: 10px;
     padding-right: 10px;
   }
+
   .no-wrap {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
   }
+
   .list-view-pf-actions {
     margin: 0;
   }
+
   .dropdown-kebab-pf .btn-link {
     margin-top: -7px;
   }
-  .list-view-pf-checkbox, .list-view-pf-expand {
+
+  .list-view-pf-checkbox,
+  .list-view-pf-expand {
     margin-bottom: 0;
     margin-top: -2px;
   }
+
   .list-group-item.list-view-pf-expand-active {
     padding-bottom: 0;
   }
@@ -344,42 +363,131 @@ table.table.table-summary-screen tbody td img {
 /// end compact list view styling
 /// ===================================================================
 
-
 /// ===================================================================
 /// begin quadicon styling
 /// ===================================================================
 
-.quadicon { position:relative;float:left;padding: 0 1px 1px 0;width: 72px; height: 80px;color: #e3e4e4;text-transform: none;}
-.quadicon:hover{ padding: 1px 0 0 1px;}
+.quadicon {
+  position: relative;
+  float: left;
+  padding: 0 1px 1px 0;
+  width: 72px;
+  height: 80px;
+  color: #e3e4e4;
+  text-transform: none;
+}
+
+.quadicon:hover {
+  padding: 1px 0 0 1px;
+}
 
 /// adjust power state images for use in quad icon
 .b72 .stretch {
   background-repeat: no-repeat;
   width: 36px;
   height: 34px;
-  margin: -3px 0 -2px 0px;
+  margin: -3px 0 -2px 0;
   border-top-right-radius: 15px;
 }
 
-.flobj { position: absolute;z-index: auto;width: 72px;}
-.flobj p { margin: 5px 0 0 0;padding: 0;color: #e3e4e4;vertical-align: middle;text-align:center;text-transform: none;text-shadow: 0 0 3px #000;font: normal 16px OpenSansSemibold,Arial,Helvetica,sans-serif;}
-.a72 { padding: 3px  0 0 5px; width: 28px; height: 28px;font-size: 1.3em;line-height: 1.8em;}
-.b72 { padding: 3px 0 0 37px; font-size: 1.3em;line-height: 1.8em;}
-.c72 { padding: 38px 0 0 5px; width: 31px; height: 31px;font-size: 1.3em;line-height: 1.7em;}
-.d72 { padding: 38px 0 0 39px; font-size: 1.3em;line-height: 1.7em;}
-.e72 { padding: 6px  0 0 6px; width: 35px; height: 35px;font-size: 1.3em;line-height: 2em;}
-.f72 { padding: 22px 0 0 24px; width: 24px; height: 24px;}
-.g72 { padding: 16px 0 0 19px; width: 24px; height: 24px;}
-.b72 img {margin-top: -3px; width: 34px; height: 34px;}
-.a72 img,.c72 img,.d72 img{ width: 28px; height: 28px;}
-.f72 img,.f72 img { width: 24px; height: 24px;}
-.g72 img,.g72 img { width: 36px; height: 36px;}
-.e72 img { width: 60px; height: 60px;}
+.flobj {
+  position: absolute;
+  z-index: auto;
+  width: 72px;
+}
+
+.flobj p {
+  margin: 5px 0 0 0;
+  padding: 0;
+  color: #e3e4e4;
+  vertical-align: middle;
+  text-align: center;
+  text-transform: none;
+  text-shadow: 0 0 3px #000;
+  font: normal 16px OpenSansSemibold, Arial, Helvetica, sans-serif;
+}
+
+.a72 {
+  padding: 3px 0 0 5px;
+  width: 28px;
+  height: 28px;
+  font-size: 1.3em;
+  line-height: 1.8em;
+}
+
+.b72 {
+  padding: 3px 0 0 37px;
+  font-size: 1.3em;
+  line-height: 1.8em;
+}
+
+.c72 {
+  padding: 38px 0 0 5px;
+  width: 31px;
+  height: 31px;
+  font-size: 1.3em;
+  line-height: 1.7em;
+}
+
+.d72 {
+  padding: 38px 0 0 39px;
+  font-size: 1.3em;
+  line-height: 1.7em;
+}
+
+.e72 {
+  padding: 6px 0 0 6px;
+  width: 35px;
+  height: 35px;
+  font-size: 1.3em;
+  line-height: 2em;
+}
+
+.f72 {
+  padding: 22px 0 0 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.g72 {
+  padding: 16px 0 0 19px;
+  width: 24px;
+  height: 24px;
+}
+
+.b72 img {
+  margin-top: -3px;
+  width: 34px;
+  height: 34px;
+}
+
+.a72 img,
+.c72 img,
+.d72 img {
+  width: 28px;
+  height: 28px;
+}
+
+.f72 img,
+.f72 img {
+  width: 24px;
+  height: 24px;
+}
+
+.g72 img,
+.g72 img {
+  width: 36px;
+  height: 36px;
+}
+
+.e72 img {
+  width: 60px;
+  height: 60px;
+}
 
 /// ===================================================================
 /// end quadicon styling
 /// ===================================================================
-
 
 /// ===================================================================
 /// begin report styling
@@ -387,39 +495,87 @@ table.table.table-summary-screen tbody td img {
 
 /// report column styling
 
-.miq_rpt_red_bg {background: #fbdbdb !important}
-.miq_rpt_yellow_bg {background: #ffdc99 !important}
-.miq_rpt_green_bg {background: #cef7c9 !important}
-.miq_rpt_blue_bg {background-color: #76badf !important}
-.miq_rpt_maroon_bg {background-color: #d4edfa !important} /*now light blue*/
-.miq_rpt_purple_bg {background-color: #c0acdc !important}
-.miq_rpt_gray_bg {background-color: #d1d1d1 !important}
+.miq_rpt_red_bg {
+  background: #fbdbdb !important;
+}
 
-.miq_rpt_red_text {color: #cc0000; font-weight: bold}
-.miq_rpt_yellow_text {color:#cccc00; font-weight: bold}
-.miq_rpt_green_text {color: #3f9c35; font-weight: bold}
-.miq_rpt_blue_text {color: #006e9c; font-weight: bold}
-.miq_rpt_purple_text {color: #925bad; font-weight: bold}
-.miq_rpt_maroon_text {color: #76badf; font-weight: bold}
-.miq_rpt_gray_text {color: gray; font-weight: bold}
+.miq_rpt_yellow_bg {
+  background: #ffdc99 !important;
+}
+
+.miq_rpt_green_bg {
+  background: #cef7c9 !important;
+}
+
+.miq_rpt_blue_bg {
+  background-color: #76badf !important;
+}
+
+.miq_rpt_maroon_bg {
+  background-color: #d4edfa !important;
+}
+
+/* now light blue */
+.miq_rpt_purple_bg {
+  background-color: #c0acdc !important;
+}
+
+.miq_rpt_gray_bg {
+  background-color: #d1d1d1 !important;
+}
+
+.miq_rpt_red_text {
+  color: #cc0000;
+  font-weight: bold;
+}
+
+.miq_rpt_yellow_text {
+  color: #cccc00;
+  font-weight: bold;
+}
+
+.miq_rpt_green_text {
+  color: #3f9c35;
+  font-weight: bold;
+}
+
+.miq_rpt_blue_text {
+  color: #006e9c;
+  font-weight: bold;
+}
+
+.miq_rpt_purple_text {
+  color: #925bad;
+  font-weight: bold;
+}
+
+.miq_rpt_maroon_text {
+  color: #76badf;
+  font-weight: bold;
+}
+
+.miq_rpt_gray_text {
+  color: gray;
+  font-weight: bold;
+}
 
 /// report menu editor accordion
 
 .panel-heading.active {
-  background: #ddd !important
+  background: #ddd !important;
 }
 
 /// ===================================================================
 /// end report styling
 /// ===================================================================
 
-
 /// ===================================================================
 /// begin classic ui-specific overrides of ui-components styling
 /// ===================================================================
 
-.no-action .miq-data-table, .no-action .miq-tile-section {
-  td{
+.no-action .miq-data-table,
+.no-action .miq-tile-section {
+  td {
     cursor: default !important;
   }
 }
@@ -427,13 +583,16 @@ table.table.table-summary-screen tbody td img {
 /// begin paginator styling
 
 @media (min-width: $screen-sm) {
-  #paging_div { /* sets paging_div at bottom of screen and styles */
+  #paging_div {
+    /* sets paging_div at bottom of screen and styles */
     border-top: 1px solid #d1d1d1;
     margin-top: 0;
-    top:0;
+    top: 0;
+
     .col-md-12 {
       padding: 0;
     }
+
     .content-view-pf-pagination {
       border: 0;
       height: 44px;
@@ -447,18 +606,20 @@ table.table.table-summary-screen tbody td img {
 
 /// begin table view styling
 
-table.table td:not(.table-view-pf-select) { //Force word break but prevent bs-switch from wrapping
-  word-break: break-all
+table.table td:not(.table-view-pf-select) {
+  //Force word break but prevent bs-switch from wrapping
+  word-break: break-all;
 }
 
-#gtl_div table.table td { // Enable word wrapping 
+#gtl_div table.table td {
+  // Enable word wrapping
   word-break: normal !important;
 }
 
 .card .card-content .miq-info-section > div {
   position: absolute;
   top: -35px;
-  right: 0px;
+  right: 0;
 }
 
 table.table tbody td img {
@@ -477,7 +638,6 @@ table.table tbody td img {
 /// end Classic UI-specific overrides of ui-components styling
 /// ===================================================================
 
-
 /// ===================================================================
 /// begin misc styling
 /// ===================================================================
@@ -490,7 +650,7 @@ table.table tbody td img {
 /// Adds vertical space between tabs and content
 
 .tab-content {
-  margin-top: 10px
+  margin-top: 10px;
 }
 
 /// replaces onmouseover="this.style.cursor='pointer'"
@@ -521,17 +681,20 @@ table.table tbody td img {
 
 // Table View override for policy action options
 
-.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+.table-borderless tbody tr td,
+.table-borderless tbody tr th,
+.table-borderless thead tr th {
   border: none;
 }
 
-// override font-weight for dropdowns within table headers 
+// override font-weight for dropdowns within table headers
 
 .table thead th select {
-  font-weight: normal
+  font-weight: normal;
 }
 
-table .table-view-pf-select i { /* font icon styling in table view (equivalent to fa-lg) */
+table .table-view-pf-select i {
+  /* font icon styling in table view (equivalent to fa-lg) */
   padding-left: 2px;
   font-size: 1.33333333em;
   line-height: 0.75em;
@@ -542,16 +705,18 @@ table .table-view-pf-select i { /* font icon styling in table view (equivalent t
 // disables hover and pointer on row
 
 table.table-hover tbody tr:nth-child(odd).no-hover:hover td {
-  background: transparent; cursor:default
+  background: transparent;
+  cursor: default;
 }
 
 table.table-hover tbody tr:nth-child(even).no-hover:hover td {
-  background-color: $table-bg-accent; cursor:default
+  background-color: $table-bg-accent;
+  cursor: default;
 }
 
 table.table.table-selectable tbody tr.selected td {
   background-color: $link-color;
-  color: #fff
+  color: #fff;
 }
 
 /* static class form-horizontal for displaying static info with reduced row height */
@@ -562,18 +727,18 @@ table.table.table-selectable tbody tr.selected td {
 
 /* resize png files displayed in form-groups */
 
-.form-horizontal.static .form-group img{
+.form-horizontal.static .form-group img {
   height: 20px;
   width: 20px;
 }
 
-.form-horizontal.static .form-group .control-labelimage img{
+.form-horizontal.static .form-group .control-labelimage img {
   height: 80px;
   width: 80px;
 }
 
 /* extra vertical margin to accomodate multiple switches */
-.form-horizontal .form-group .bootstrap-switch{
+.form-horizontal .form-group .bootstrap-switch {
   margin-top: 2px;
   margin-bottom: 4px;
 }
@@ -585,15 +750,15 @@ table.table.table-selectable tbody tr.selected td {
 
 /* prevents empty dd from collapsing */
 
-.dl-horizontal > dd:after {
+.dl-horizontal > dd::after {
   display: table;
-  content: "";
+  content: '';
   clear: both;
 }
 
 /* eliminates horizontal scrollbar in some browsers */
 .bootstrap-select .dropdown-menu {
-  overflow-y: visible !important
+  overflow-y: visible !important;
 }
 
 /* sets width to auto for bootstrap-select */
@@ -603,20 +768,20 @@ table.table.table-selectable tbody tr.selected td {
 
 /* compensates for scrollbars in browsers that cover options in very narrow dropdowns */
 
-.selectWidth .dropdown-menu ul li{
+.selectWidth .dropdown-menu ul li {
   padding-right: 10px;
 }
 
 /* Sets font icon styling for view buttons on Default Views screen */
 
-#tab_div ul.list-inline a{
+#tab_div ul.list-inline a {
   font-size: 16px;
-  color: #222222 !important
+  color: #222222 !important;
 }
 
 #tab_div ul.list-inline li.active {
   font-size: 16px;
-  color: $link-color !important
+  color: $link-color !important;
 }
 
 .icon-green {
@@ -630,17 +795,17 @@ table.table.table-selectable tbody tr.selected td {
 /* Action cell */
 
 .action-cell {
-    position: relative;
-    width: 100px;
+  position: relative;
+  width: 100px;
 }
 
 .action-cell .btn {
-    border: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 /// chargeback edit view
@@ -648,8 +813,9 @@ table.table.table-selectable tbody tr.selected td {
 tr.rdetail > td {
   white-space: nowrap;
 }
+
 td.action > .btn.btn-default {
-    width: 50px;
+  width: 50px;
 }
 
 .cards-pf .nav-tabs > li.active > a,
@@ -662,7 +828,7 @@ td.action > .btn.btn-default {
 @media (min-width: $screen-sm) {
   .modal-xl {
     width: 90%;
-    max-width:1200px;
+    max-width: 1200px;
   }
 }
 
@@ -678,7 +844,7 @@ td.action > .btn.btn-default {
   overflow-x: hidden;
 }
 
-/// error modal 
+/// error modal
 
 .error-modal-miq {
   & .error-icon {
@@ -696,11 +862,12 @@ td.action > .btn.btn-default {
 /// Panel in sidebar doesn't need bottom margin
 .sidebar-pf-left {
   .panel-group {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 }
 
-table .label {  // Adds margin to the label to vertically align with text
+table .label {
+  // Adds margin to the label to vertically align with text
   margin-top: 3px;
 }
 
@@ -711,38 +878,39 @@ table .label {  // Adds margin to the label to vertically align with text
 }
 
 #notification {
-  position:absolute;
-  left:0;
-  bottom:0;
-  z-index:1000;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
   display: block;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height:100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-#notification, #search_notification {
-  position:fixed;
-  bottom:0;
-  z-index:1000;
+#notification,
+#search_notification {
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
   display: block;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height:100%;
+  height: 100%;
   background: image-url('layout/overlay_dark.png');
   color: #fff;
-  text-align:center;
+  text-align: center;
   text-shadow: #000 2px 2px 0;
-  font: normal 116% OpenSansSemibold,Arial,Helvetica,sans-serif;
+  font: normal 116% OpenSansSemibold, Arial, Helvetica, sans-serif;
 }
 
 #blocker_div {
   position: fixed;
   bottom: 0;
-  z-index:48;
+  z-index: 48;
   display: block;
   margin: 0;
   padding: 100px 0 0 0;
@@ -753,14 +921,13 @@ table .label {  // Adds margin to the label to vertically align with text
   text-shadow: #000 2px 2px 0;
 }
 
-
 #spinner_div {
   position: absolute;
   top: 20px;
-  left:0;
-  width:100%;
+  left: 0;
+  width: 100%;
   height: 180px;
-  z-index:1;
+  z-index: 1;
 }
 
 // display pointer on disabled elements
@@ -769,39 +936,60 @@ div.disabled {
   cursor: default;
 }
 
-textarea { width: 98.5%; border: 1px solid #d1d1d1; padding: 7px; line-height: 1.5em}
+textarea {
+  width: 98.5%;
+  border: 1px solid #d1d1d1;
+  padding: 7px;
+  line-height: 1.5em;
+}
 
 fieldset {
   position: relative;
-  margin: 0 7px 20px 0px;
+  margin: 0 7px 20px 0;
   padding: 10px;
-  border:1px solid #e9e8e8;
+  border: 1px solid #e9e8e8;
 }
 
-/*Centering for Hovered VMs*/
-#outer { position: absolute;top: 50%;left: 0;overflow: visible;width: 100%;height: 1px;}
-#inner {position: absolute;/***  height / 2   ***/ top: -50px;left: 50%;margin-left: -50px;width: 100px;height: 100px;  /***  width / 2  ***/}
-
-#notification, #search_notification {
-  position:fixed;
-  bottom:0;
-  z-index:1000;
-  display: block;
-  margin:0;
-  padding:0;
+/* Centering for Hovered VMs */
+#outer {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  overflow: visible;
   width: 100%;
-  height:100%;
+  height: 1px;
+}
+
+#inner {
+  position: absolute; /***  height / 2   ***/
+  top: -50px;
+  left: 50%;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px; /***  width / 2  ***/
+}
+
+#notification,
+#search_notification {
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
   background: image-url('layout/overlay_dark.png');
   color: #fff;
-  text-align:center;
+  text-align: center;
   text-shadow: #000 2px 2px 0;
-  font: normal 116% OpenSansSemibold,Arial,Helvetica,sans-serif;
+  font: normal 116% OpenSansSemibold, Arial, Helvetica, sans-serif;
 }
 
 #blocker_div {
   position: fixed;
   bottom: 0;
-  z-index:48;
+  z-index: 48;
   display: block;
   margin: 0;
   padding: 100px 0 0 0;
@@ -813,19 +1001,52 @@ fieldset {
 }
 
 /************ Hover Buttons ************/
-.rollover img, input.rollover { display:block;}
-.rollover img:hover, img.rollover:hover, input.rollover:hover, i.rollover:hover { background:#e4e4e4;}
-.dimmed { background:#f5f5f5; opacity:0.4; filter:alpha(opacity=40);filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);}
+.rollover img,
+input.rollover {
+  display: block;
+}
 
-img.small, input.small { float: left;margin: 0;padding: 0;width:24px;height:24px;border: 0;}
-img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-align:bottom;}
+.rollover img:hover,
+img.rollover:hover,
+input.rollover:hover,
+i.rollover:hover {
+  background: #e4e4e4;
+}
 
+.dimmed {
+  background: #f5f5f5;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  filter: progid:dximagetransform.microsoft.alpha(Opacity=40);
+}
+
+img.small,
+input.small {
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  border: 0;
+}
+
+img.tiny {
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  vertical-align: bottom;
+}
 
 /************ Misc ************/
-/*select boxes*/
-.form .widthed{ width:400px;}
 
-/*Lightbox background */
+/* select boxes */
+.form .widthed {
+  width: 400px;
+}
+
+/* Lightbox background */
 
 #lightbox {
   position: absolute;
@@ -836,7 +1057,8 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
   min-width: 100%;
   min-height: 100%;
   background: #fff;
-  opacity: 0.5;filter:alpha(opacity=50);
+  opacity: 0.5;
+  filter: alpha(opacity=50);
 }
 
 /* Lightbox panel with some content */
@@ -851,11 +1073,18 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
   padding: 10px 15px 10px 15px;
   width: 80%;
   height: 85%;
-  border: 2px solid #CCC;
+  border: 2px solid #ccc;
   background: #fff;
 }
 
-#spinner_div { margin-top: -45px; margin-left: -35px; width:180px; height: 180px; border-radius: 8px; background: image-url('layout/overlay_dark.png');}
+#spinner_div {
+  margin-top: -45px;
+  margin-left: -35px;
+  width: 180px;
+  height: 180px;
+  border-radius: 8px;
+  background: image-url('layout/overlay_dark.png');
+}
 
 .sidebar-disabled {
   pointer-events: none;
@@ -879,4 +1108,3 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
 /// ===================================================================
 /// end misc styling
 /// ===================================================================
-

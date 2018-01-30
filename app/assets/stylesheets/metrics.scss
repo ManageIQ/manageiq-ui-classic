@@ -1,18 +1,21 @@
 .miq-metrics {
   overflow-x: hidden;
   overflow-y: hidden;
+
   i.pficon-trend-up {
     &::before {
       color: #1e4f18;
       margin-right: 10px;
     }
   }
+
   i.fa-tachometer {
     &::before {
       color: #004368;
       margin-right: 10px;
     }
   }
+
   #pagination-title {
     font-weight: 700;
     margin-right: 10px;
@@ -20,18 +23,23 @@
     vertical-align: bottom;
     line-height: 27px;
   }
+
   .ad-hoc-toolbar {
     margin-left: 20px;
   }
+
   .toolbar-pf {
     border: 0;
   }
+
   .toolbar-pf-include-actions {
     margin-left: 8px !important;
   }
+
   .form-group.toolbar-actions {
     border: 0;
   }
+
   .graph-view {
     .toolbar-pf {
       .toolbar-pf-actions {
@@ -40,26 +48,32 @@
         }
       }
     }
+
     overflow-x: hidden;
     overflow-y: hidden;
+
     .rate-switch {
       margin-left: 5px;
       margin-right: 5px;
     }
+
     .bootstrap-select.btn-group {
       .dropdown-menu {
         margin-left: 5px;
       }
     }
+
     .form-group.toolbar-actions.ng-scope {
       margin-bottom: 10px;
     }
+
     .toolbar-pf-actions {
       .dropdown-kebab-pf {
         float: none;
       }
     }
   }
+
   .list-view {
     .toolbar-pf {
       .toolbar-pf-actions {
@@ -68,98 +82,120 @@
           margin-bottom: 0 !important;
         }
       }
+
       .form-group {
         padding-right: 0;
+
         .btn-group {
           margin-left: 0;
         }
+
         .btn {
           margin-left: 0;
         }
       }
     }
+
     overflow-x: hidden;
     overflow-y: hidden;
+
     label {
       font-weight: 500;
       font-size: 14px;
       color: #004368;
     }
+
     .toolbar-pf-results {
       .list-inline {
         margin-left: 2px;
       }
     }
+
     .tooltip-inner {
       padding: 0;
       padding-right: 10px;
       padding-left: 10px;
     }
+
     .list-view-pf-expand-active {
       border: 0;
       border-top: 1px solid #39a5dc;
       border-bottom: 1px solid #39a5dc;
     }
+
     .list-group.list-view-pf.list-view-pf-view {
       margin-top: 5px;
     }
+
     .list-group-item-container {
       margin-top: 10px;
       padding: 15px;
       border: 0;
     }
+
     .form-group.toolbar-actions.ng-scope {
       border: 0;
       padding-left: 0;
     }
+
     .dropdown-kebab-pf {
       .dropdown-menu {
         left: -5px;
       }
     }
+
     .toolbar-pf-actions {
       .dropdown-kebab-pf {
         float: none;
-        margin-left: 0px;
+        margin-left: 0;
       }
     }
+
     .filter-pf.filter-fields {
       .form-group {
         width: 410px;
       }
     }
   }
+
   .ad-hoc-back-button {
     margin-bottom: 10px;
   }
-  .ad-hoc-chart-toolbar{
+
+  .ad-hoc-chart-toolbar {
     margin-left: -18px;
   }
+
   .ad-hoc-tenant {
     input {
       display: inline;
-      width: 190px;
     }
+
     button {
       vertical-align: top;
       margin-bottom: 10px;
     }
+
     .btn {
       margin-left: 0;
     }
   }
+
   .form-group.toolbar-pf-filter {
     margin-bottom: 0;
   }
+
   .form-group.toolbar-actions.ng-scope {
     margin-bottom: 0;
   }
+
   .pagination {
     display: flex;
     float: right;
     margin: 0;
     margin-bottom: 0;
   }
+
   .pagination-div {
     display: flex;
     float: right;
@@ -169,6 +205,7 @@
     margin-right: 5px;
     padding-right: 0;
     border: 0;
+
     .page-input {
       width: 40px;
       margin-left: 10px;
@@ -176,55 +213,66 @@
       text-align: right;
     }
   }
+
   .list-view-container {
     min-height: calc(100vh - 353px);
     padding-top: 10px;
     margin-bottom: 0;
   }
+
   .line-chart {
     min-height: calc(100vh - 347px);
-    margin-top: 36px;
-    margin-left: 30px;
-    margin-right: 50px;
-    margin-bottom: 0;
+    margin: 36px 30px 0 50px;
   }
+
   .blank-slate-pf {
     min-height: calc(100vh - 353px);
     margin-bottom: 0;
   }
+
   .timeline-date-input {
     padding-left: 5px;
     width: 300px;
   }
+
   .list-group {
     border-top: none;
   }
+
   .bootstrap-touchspin {
     text-align: center;
   }
+
   .tenant-filter-bar {
     margin-left: 0;
+
     .dropdown-menu.open {
       margin-top: -11px;
     }
   }
+
   .timeline-stepper {
     margin-right: 5px;
   }
+
   .toolbar-pf-include-actions.ng-scope {
     width: 100%;
   }
+
   .toolbar-pf-actions.ng-pristine.ng-valid.no-filter-results {
     margin-bottom: 0;
   }
+
   .btn.btn-default.dropdown-toggle.filter-fields {
     min-width: 100px;
   }
+
   .filters-selector {
     .btn {
       margin-left: 0;
     }
   }
+
   .tenants-selector {
     .btn {
       margin-left: 0;

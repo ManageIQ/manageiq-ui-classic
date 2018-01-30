@@ -1,3 +1,4 @@
+/* stylelint-disable selector-type-no-unknown */
 kubernetes-topology-graph {
   border-top: 1px solid #eee;
   position: fixed;
@@ -13,6 +14,7 @@ kubernetes-topology-graph {
   display: inline-block;
   vertical-align: middle;
 }
+
 .topology .legend label {
   font-weight: 400;
   cursor: pointer;
@@ -58,15 +60,15 @@ kubernetes-topology-icon svg {
 }
 
 .kube-topology g circle.success {
-  stroke: #3F9C35;
+  stroke: #3f9c35;
 }
 
 .kube-topology g circle.error {
-  stroke: #CC0000;
+  stroke: #cc0000;
 }
 
 .kube-topology g circle.warning {
-  stroke: #EC7A08;
+  stroke: #ec7a08;
 }
 
 .kube-topology g circle.unknown {
@@ -99,12 +101,12 @@ kubernetes-topology-icon svg {
 }
 
 .topology .popup p:hover {
-  color : #0099cc;
+  color: #0099cc;
   cursor: pointer;
 }
 
 .topology label.checkbox-inline {
-  font-size:14px;
+  font-size: 14px;
 }
 
 .floating-not-found {

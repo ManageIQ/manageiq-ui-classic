@@ -26,8 +26,6 @@ $wz-substep-nav-width: 250px;
   display: inline-block;
   width: 100%;
 }
-.wizard-miq-content {
-}
 
 .wizard-miq-step {
   border-top: solid 1px #d1d1d1;
@@ -41,7 +39,7 @@ $wz-substep-nav-width: 250px;
   float: left;
   overflow-x: hidden;
   overflow-y: auto;
-  left: 0px;
+  left: 0;
   position: relative;
   top: 0;
   width: $wz-substep-nav-width;
@@ -49,6 +47,7 @@ $wz-substep-nav-width: 250px;
   .list-group {
     border-top: 0;
     margin-bottom: 0;
+
     > .list-group-item {
       background-color: transparent;
       border-color: #ededed;
@@ -70,39 +69,43 @@ $wz-substep-nav-width: 250px;
         width: $wz-substep-nav-width;
 
         .wizard-miq-substep-number {
-          display:inline-block;
+          display: inline-block;
           margin-right: 5px;
           vertical-align: middle;
           width: 25px;
         }
+
         .wizard-miq-substep-title {
-          display:inline-block;
+          display: inline-block;
           margin-right: 5px;
           vertical-align: middle;
           text-align: left;
         }
+
         &:hover {
           text-decoration: none;
         }
       }
+
       &.active {
         > a {
           color: #199dde;
           cursor: default;
         }
 
-        > a:before {
+        > a::before {
           background: #199dde;
-          content: " ";
+          content: ' ';
           height: 100%;
           left: 0;
           position: absolute;
           top: 0;
           width: 3px;
         }
-        > a:after {
+
+        > a::after {
           color: #199dde;
-          content: "\f105";
+          content: '\f105';
           display: block;
           font-family: FontAwesome;
           font-size: 24px;
@@ -143,8 +146,6 @@ $wz-substep-nav-width: 250px;
   }
 }
 
-
-
 .wizard-miq-steps-indicator {
   background-color: #ffffff;
   right: 0;
@@ -159,7 +160,7 @@ $wz-substep-nav-width: 250px;
     visibility: hidden;
   }
 
-  &:before {
+  &::before {
     background-color: $wz-default-border-color;
     content: '';
     position: absolute;
@@ -174,7 +175,6 @@ $wz-substep-nav-width: 250px;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
-
 
   li {
     position: relative;
@@ -192,7 +192,7 @@ $wz-substep-nav-width: 250px;
       transition: 0.25s;
       cursor: pointer;
 
-      &:before {
+      &::before {
         position: absolute;
         top: 27px;
         left: calc(50% - 13px);
@@ -210,7 +210,7 @@ $wz-substep-nav-width: 250px;
       }
 
       &:hover {
-        &:before {
+        &::before {
           border-color: $wz-current-border-color;
         }
       }
@@ -218,100 +218,110 @@ $wz-substep-nav-width: 250px;
   }
 
   &.wizard-miq-steps-2 {
-    &:before {
+    &::before {
       left: calc(100% / 2 / 2);
       right: calc(100% / 2 / 2);
     }
+
     li {
       width: calc(100% / 2);
     }
   }
 
   &.wizard-miq-steps-3 {
-    &:before {
-      left: calc(100% / 3 /  2);
+    &::before {
+      left: calc(100% / 3 / 2);
       right: calc(100% / 3 / 2);
     }
+
     li {
       width: calc(100% / 3);
     }
   }
 
   &.wizard-miq-steps-4 {
-    &:before {
+    &::before {
       left: calc(100% / 4 / 2);
       right: calc(100% / 4 / 2);
     }
+
     li {
       width: calc(100% / 4);
     }
   }
 
   &.wizard-miq-steps-5 {
-    &:before {
+    &::before {
       left: calc(100% / 5 / 2);
       right: calc(100% / 5 / 2);
     }
+
     li {
       width: calc(100% / 5);
     }
   }
 
   &.wizard-miq-steps-6 {
-    &:before {
+    &::before {
       left: calc(100% / 6 / 2);
       right: calc(100% / 6 / 2);
     }
+
     li {
       width: calc(100% / 6);
     }
   }
 
   &.wizard-miq-steps-7 {
-    &:before {
+    &::before {
       left: calc(100% / 7 / 2);
       right: calc(100% / 7 / 2);
     }
+
     li {
       width: calc(100% / 7);
     }
   }
 
   &.wizard-miq-steps-8 {
-    &:before {
+    &::before {
       left: calc(100% / 8 / 2);
       right: calc(100% / 8 / 2);
     }
+
     li {
       width: calc(100% / 8);
     }
   }
 
   &.wizard-miq-steps-9 {
-    &:before {
+    &::before {
       left: calc(100% / 9 / 2);
       right: calc(100% / 9 / 2);
     }
+
     li {
       width: calc(100% / 9);
     }
   }
 
   &.wizard-miq-steps-10 {
-    &:before {
+    &::before {
       left: calc(100% / 10 / 2);
       right: calc(100% / 10 / 2);
     }
+
     li {
       width: calc(100% / 10);
     }
   }
 
   &.wizard-miq-steps-11 {
-    &:before {
+    &::before {
       left: calc(100% / 11 / 2);
       right: calc(100% / 11 / 2);
     }
+
     li {
       width: calc(100% / 11);
     }
@@ -319,7 +329,8 @@ $wz-substep-nav-width: 250px;
 
   li.current a {
     cursor: default;
-    &:before {
+
+    &::before {
       background-color: $wz-current-bg-color;
       border-color: $wz-current-border-color;
       color: $wz-current-color;
@@ -327,13 +338,14 @@ $wz-substep-nav-width: 250px;
   }
 
   li.done a {
-    &:before {
+    &::before {
       background-color: $wz-done-bg-color;
       border-color: $wz-done-border-color;
       color: $wz-done-color;
     }
+
     &:hover {
-      &:before {
+      &::before {
         border-color: $wz-current-border-color;
       }
     }
@@ -341,7 +353,8 @@ $wz-substep-nav-width: 250px;
 
   li.editing a {
     cursor: default;
-    &:before {
+
+    &::before {
       background-color: $wz-editing-bg-color;
       border-color: $wz-editing-border-color;
       color: $wz-editing-color;
@@ -352,7 +365,8 @@ $wz-substep-nav-width: 250px;
 .wizard-miq-review-steps {
   list-style: none;
 
-  .list-group, .list-group-item {
+  .list-group,
+  .list-group-item {
     border: none;
     margin-bottom: 0;
   }
@@ -374,8 +388,8 @@ $wz-substep-nav-width: 250px;
         padding-left: 30px;
         padding-right: 5px;
 
-        &:before {
-          content: "\f107";
+        &::before {
+          content: '\f107';
           display: block;
           font-family: FontAwesome;
           font-size: 24px;
@@ -385,8 +399,8 @@ $wz-substep-nav-width: 250px;
         }
 
         &.collapsed {
-          &:before {
-            content: "\f105";
+          &::before {
+            content: '\f105';
           }
         }
       }
@@ -401,6 +415,7 @@ $wz-substep-nav-width: 250px;
 
 .wizard-miq-review-substeps {
   padding-left: 22px;
+
   > ul {
     > li {
       position: relative;
@@ -418,8 +433,8 @@ $wz-substep-nav-width: 250px;
         padding-left: 30px;
         padding-right: 5px;
 
-        &:before {
-          content: "\f107";
+        &::before {
+          content: '\f107';
           display: block;
           font-family: FontAwesome;
           font-size: 24px;
@@ -429,8 +444,8 @@ $wz-substep-nav-width: 250px;
         }
 
         &.collapsed {
-          &:before {
-            content: "\f105";
+          &::before {
+            content: '\f105';
           }
         }
       }
@@ -449,35 +464,42 @@ $wz-substep-nav-width: 250px;
       padding-top: 0;
     }
   }
+
   .wizard-miq-review-item {
     padding: 5px 0;
+
     &.sub-item {
       margin-left: 10px;
     }
+
     .wizard-miq-review-item-label {
       font-weight: 700;
       padding-right: 10px;
     }
-    .wizard-miq-review-item-value {
-    }
+
     .wizard-miq-review-item-subvalue {
       padding-left: 20px;
     }
+
     .wizard-miq-review-item-field {
       font-weight: 700;
       padding-right: 10px;
       margin: 5px 0;
+
       &:first-of-type {
-        margin-top: 0
+        margin-top: 0;
       }
+
       &:last-of-type {
         margin-bottom: 0;
       }
+
       &.sub-field {
         margin-left: 10px;
       }
     }
   }
+
   .wizard-miq-review-subform {
     padding-left: 15px;
   }
@@ -487,6 +509,7 @@ $wz-substep-nav-width: 250px;
   padding-bottom: 17px;
   background-color: #f8f8f8;
 }
+
 .wizard-miq-btn-container {
   border-top: solid 1px #d1d1d1;
   float: right;
@@ -524,7 +547,7 @@ $wz-substep-nav-width: 250px;
     &.disabled {
       pointer-events: none;
       cursor: default;
-      color: #E6E6E6;
+      color: #e6e6e6;
     }
   }
 
@@ -551,6 +574,7 @@ $wz-substep-nav-width: 250px;
     cursor: pointer;
     font-weight: 700;
     margin-left: 85px;
+
     &:hover {
       text-decoration: none;
     }
@@ -558,11 +582,12 @@ $wz-substep-nav-width: 250px;
 
   .miq-wizard-remove-user-button {
     background-color: #fff;
-    color: #BABABA;
+    color: #bababa;
     cursor: pointer;
     font-size: 16px;
     margin-left: -15px;
     padding: 4px;
+
     &:hover {
       color: #00618a;
       text-decoration: none;
@@ -586,19 +611,20 @@ $wz-substep-nav-width: 250px;
   }
 
   .miq-clear-input-button {
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     background-color: #fff;
-    border: 1px solid #BABABA;
+    border: 1px solid #bababa;
     border-left: none;
     border-radius: 1px;
-    box-shadow: inset 0 1px 1px 0 rgba(0,0,0,.075);
-    color: #BABABA;
+    box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.075);
+    color: #bababa;
     cursor: pointer;
     margin-left: -36px;
     margin-right: 10px;
-    padding: 3px 0px 5px 3px;
+    padding: 3px 0 5px 3px;
     width: 100%;
     z-index: 10;
+
     &:hover {
       color: #00618a;
       text-decoration: none;
@@ -612,23 +638,28 @@ $wz-substep-nav-width: 250px;
     width: 0;
   }
 
-  .miq-radio-form, .miq-checkbox-form {
+  .miq-radio-form,
+  .miq-checkbox-form {
     padding-left: 20px;
   }
 
   .miq-input-checkbox-form {
     padding-left: 55px;
     padding-bottom: 10px;
+
     .miq-checkbox-input-label {
       padding-right: 20px;
+
       input {
         margin-right: 20px;
         position: static;
       }
+
       &.miq-checkbox-input-label-lg {
         padding-left: 55px;
       }
     }
+
     .miq-input-label-class {
       width: 130px;
       padding-left: 15px;
@@ -636,14 +667,16 @@ $wz-substep-nav-width: 250px;
       text-align: left;
       vertical-align: middle;
     }
+
     .miq-checkbox-input {
-      border: 1px solid #BABABA;
+      border: 1px solid #bababa;
       border-radius: 1px;
       background-image: none;
       width: 300px;
+
       &[disabled] {
         -webkit-box-shadow: none;
-        background-color: #F8F8F8;
+        background-color: #f8f8f8;
         border-color: #d4d4d4 !important;
         box-shadow: none;
         color: #969696;
@@ -652,6 +685,7 @@ $wz-substep-nav-width: 250px;
       }
     }
   }
+
   .miq-input-class {
     width: 200px;
     padding: 0 20px 0 10px;
@@ -672,9 +706,11 @@ $wz-substep-nav-width: 250px;
     .form-control {
       height: 24px;
     }
+
     .btn {
       padding-bottom: 1px;
     }
+
     .form-control[readonly] {
       background-color: #fff;
     }
@@ -692,49 +728,60 @@ $wz-substep-nav-width: 250px;
         padding-left: 10px;
         padding-right: 10px;
       }
+
       .toolbar-pf-filter {
         padding-right: 10px;
         width: 225px;
       }
+
       .toolbar-pf-results {
         margin-left: -10px;
         margin-right: -10px;
       }
+
       .toolbar-pf-actions {
         .add-nodes-table & {
           padding-bottom: 0;
         }
+
         > .form-group {
           border-right: none;
           float: right;
-          padding-right: 0px;
+          padding-right: 0;
         }
+
         .dropdown-kebab-pf .dropdown-menu {
           left: auto;
           right: -15px;
 
-          &:before, &:after {
-            left:auto;
-            right:6px;
+          &::before,
+          &::after {
+            left: auto;
+            right: 6px;
           }
         }
       }
+
       .sort-pf > form > .form-group {
         padding-left: 10px;
         padding-right: 10px;
       }
+
       .include-actions {
         .dropdown {
           float: left;
           margin-left: 0;
         }
+
         .btn.btn-default {
           float: right;
           margin-left: 5px;
+
           &.btn-left {
-            float:left;
+            float: left;
           }
         }
+
         .dropdown-container {
           padding-left: 30px;
           padding-right: 20px;
@@ -745,22 +792,26 @@ $wz-substep-nav-width: 250px;
         }
       }
     }
+
     &.add-nodes-table {
       .checkbox-col {
         padding-left: 6px;
         padding-right: 6px;
         width: 20px;
       }
+
       .toolbar-pf-actions {
         padding-bottom: 0;
       }
+
       .select-all-roles.btn-link {
         color: #0099d3;
         font-size: 12px;
         margin-left: -20px;
-        marging-top: 10px;
+        margin-top: 10px;
         padding: 0;
       }
+
       .role-column {
         .label {
           border: none;
@@ -777,15 +828,19 @@ $wz-substep-nav-width: 250px;
           &:focus {
             outline: none;
           }
+
           .fa-close {
             margin-left: 5px;
           }
+
           &.label-default {
             cursor: pointer;
           }
         }
+
         a {
           cursor: pointer;
+
           &:hover {
             text-decoration: none;
           }
@@ -802,6 +857,7 @@ $wz-substep-nav-width: 250px;
             color: #fff;
             background-color: #00a8e1;
             font-weight: 600;
+
             &[disabled] {
               background-color: #d1d1d1;
               color: #72767b;
@@ -817,17 +873,18 @@ $wz-substep-nav-width: 250px;
       overflow-x: hidden;
       overflow-y: auto;
     }
+
     &.add-nodes-table {
       .table-responsive {
         max-height: 190px;
         min-height: 190px;
       }
     }
+
     .table {
       border: none;
       width: calc(100% + 3px);
       margin-left: -1px;
-
     }
 
     .table-footer {
@@ -849,13 +906,16 @@ $wz-substep-nav-width: 250px;
       }
     }
   }
+
   .miq-add-dialog-text {
     font-weight: 700;
     padding: 15px;
   }
+
   .miq-add-dialog-input {
     padding: 0 15px;
     width: 100%;
+
     > input {
       width: 100%;
     }
@@ -863,18 +923,23 @@ $wz-substep-nav-width: 250px;
 
   .wizard-miq-review-inline {
     padding: 5px 0;
-    .wizard-miq-review-item  {
+
+    .wizard-miq-review-item {
       display: inline;
+
       span {
         display: inline-block;
         margin-left: 10px;
+
         &:first-of-type {
-          margin-left: 0px;
+          margin-left: 0;
         }
       }
+
       .wizard-miq-review-item-label {
         width: 85px;
       }
+
       .wizard-miq-review-item-value {
         width: 100px;
       }
@@ -890,30 +955,35 @@ $wz-substep-nav-width: 250px;
     line-height: 20px;
     margin-bottom: 15px;
   }
+
   .miq-review-edit-field {
     cursor: pointer;
     float: left;
     padding-right: 20px;
     position: relative;
-    &:after {
-      content: "\e60a";
+
+    &::after {
+      content: '\e60a';
       font-family: 'PatternFlyIcons-webfont';
       position: absolute;
       right: 0;
     }
   }
+
   .miq-review-edit-text {
     margin-right: 20px;
     margin-top: 5px;
     resize: none;
     width: 100%;
   }
+
   .miq-review-button-panel {
     float: right;
     width: 100%;
     padding: 10px 0;
     margin-top: 0;
   }
+
   .miq-wizard-review-list {
     li {
       margin: 5px 0;
@@ -926,6 +996,7 @@ $wz-substep-nav-width: 250px;
     margin-top: 240px;
   }
 }
+
 .miq-wait-dialog-content {
   padding: 15px;
 
@@ -941,6 +1012,7 @@ $wz-substep-nav-width: 250px;
     width: 400px;
   }
 }
+
 .miq-add-dialog-content {
   padding: 20px 20px 0 20px;
 }
