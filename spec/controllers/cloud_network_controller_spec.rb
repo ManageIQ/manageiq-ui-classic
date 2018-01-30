@@ -123,7 +123,9 @@ describe CloudNetworkController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name => "test", :admin_state_up => false, :shared => false, :external_facing => false}]
+          :args        => [{:name => "test", :admin_state_up => true, :shared => false,
+             :external_facing => false, :provider_network_type => 'vxlan', :tenant_id => 'íd',
+             :vlan_transparent => false}]
         }
       end
 
@@ -135,7 +137,9 @@ describe CloudNetworkController do
       it "queues the create action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :create, :params => { :button => "add", :format => :js, :name => 'test',
-                                   :tenant_id => 'id', :ems_id => @ems.id }
+          :cloud_tenant => {:id => 'id'}, :enabled => true, :external_facing => false, :shared => false,
+          :provider_network_type => 'vxlan', :id => 'new', :vlan_transparent => false,
+          :controller => "cloud_network"}
       end
     end
   end

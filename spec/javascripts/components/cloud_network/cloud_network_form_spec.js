@@ -68,7 +68,7 @@ describe('cloud-network-form', function() {
     });
 
     it('calls API.get with the appropriate URL', function () {
-      expect(API.get).toHaveBeenCalledWith('/api/cloud_networks/1111?attributes=cloud_tenant,ext_management_system');
+      expect(API.get).toHaveBeenCalledWith('/api/cloud_networks/1111?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name');
     });
 
     it('sets vm.cloudNetworkModel.name', function () {

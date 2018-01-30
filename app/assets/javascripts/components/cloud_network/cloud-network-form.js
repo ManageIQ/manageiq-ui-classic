@@ -47,7 +47,7 @@ function cloudNetworkFormController(API, miqService) {
         miqService.sparkleOff();
       }).catch(miqService.handleFailure);
     } else {
-      API.get("/api/cloud_networks/" + vm.cloudNetworkFormId + "?attributes=cloud_tenant,ext_management_system").then(function(data) {
+      API.get("/api/cloud_networks/" + vm.cloudNetworkFormId + "?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name").then(function(data) {
         Object.assign(vm.cloudNetworkModel, data);
         vm.afterGet = true;
         vm.modelCopy = angular.copy( vm.cloudNetworkModel );
