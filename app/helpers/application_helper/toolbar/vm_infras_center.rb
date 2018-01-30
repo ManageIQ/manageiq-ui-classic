@@ -179,7 +179,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1",
-          :klass        => ApplicationHelper::Button::BasicImage),
+          :klass        => ApplicationHelper::Button::VmInstanceTemplateScan),
         button(
           :vm_publish,
           'pficon pficon-export fa-lg',
