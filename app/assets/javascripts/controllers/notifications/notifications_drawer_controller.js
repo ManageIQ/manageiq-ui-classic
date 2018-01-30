@@ -127,5 +127,9 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
     eventNotifications.clearAll(group);
   };
 
+  vm.customScope.unreadCountText = function(count) {
+    return sprintf(__("%d New"), count);
+  }
+
   refresh();
 }
