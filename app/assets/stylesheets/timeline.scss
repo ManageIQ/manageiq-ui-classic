@@ -1,7 +1,7 @@
 // Override patternfly css for the timeline so no margin is added to the select all buttons
 .category-selector .btn-group,
 .category-selector .actions-btn {
-  margin-left: 0px !important;
+  margin-left: 0 !important;
 }
 
 .timeline-toolbar .dropdown-menu {
@@ -18,8 +18,8 @@
 .timeline-option .radio {
   display: inline-block;
   width: 150px;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .timeline-container {
@@ -56,13 +56,13 @@
 }
 
 .timeline-stepper .btn {
-  margin-left: 0px !important;
+  margin-left: 0 !important;
 }
 
 .timeline-empty-state {
   text-align: center;
   padding-top: 20px;
-  padding-bottom: 20px
+  padding-bottom: 20px;
 }
 
 .timeline-info {

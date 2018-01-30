@@ -3,13 +3,16 @@
     &.strikethrough {
       text-decoration: line-through;
     }
+
     &.red {
       color: red;
     }
+
     &.opacity {
       opacity: 0.4;
       filter: alpha(opacity=40);
     }
+
     &.no-cursor {
       cursor: default;
     }
