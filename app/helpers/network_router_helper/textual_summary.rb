@@ -7,7 +7,7 @@ module NetworkRouterHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name type status))
+    TextualGroup.new(_("Properties"), %i(name type status main_route_table route_propagation routes))
   end
 
   def textual_group_relationships
@@ -24,8 +24,41 @@ module NetworkRouterHelper::TextualSummary
     {:label => _('Type'), :value => ui_lookup(:model => @record.type)}
   end
 
+  def textual_main_route_table
+    return nil if @record.main_route_table.nil?
+
+    if @record.main_route_table
+      message = _("(Subnets not explicitely assigned to a route table are assigned to this main route table, for this VPC)")
+    end
+
+    {:label => _('Main Route Table'), :value => "#{@record.main_route_table} #{message}"}
+  end
+
+  def textual_route_propagation
+    return nil if @record.propagating_vgws.nil?
+
+    {:label => _('Route Propagation'), :value => @record.propagating_vgws.to_s }
+  end
+
   def textual_status
     @record.status
+  end
+
+  def textual_routes
+    # TODO: Should be TextualTable if possible
+    # AWS compatible fields, add another format for another provider or comply with AWS format
+    labels = {
+      "destination_cidr_block" => _("Destination CIDR"),
+      "gateway_id"             => _("Gateway ID"),
+      "state"                  => _("State")
+    }
+
+    return nil unless @record.routes.kind_of?(Array)
+    return @record.routes.to_s if !@record.routes.first || !@record.routes.first.kind_of?(Hash) || !labels.keys.all? { |x| @record.routes.first.key?(x) }
+
+    @record.routes.each_with_object([]) do |route, obj|
+      obj << labels.keys.map { |key| "#{labels[key]}: #{route[key]}" }.join(", ")
+    end.join(" | ")
   end
 
   def textual_parent_ems_cloud

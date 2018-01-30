@@ -15,45 +15,6 @@ class ApplicationHelper::Toolbar::NetworkRoutersCenter < ApplicationHelper::Tool
             t,
             :klass => ApplicationHelper::Button::NetworkRouterNew
           ),
-          separator,
-          button(
-            :network_router_edit,
-            'pficon pficon-edit fa-lg',
-            t = N_('Edit selected Router'),
-            t,
-            :url_parms    => 'main_div',
-            :send_checked => true,
-            :enabled      => false,
-            :onwhen       => '1'
-          ),
-          button(
-            :network_router_add_interface,
-            'pficon pficon-edit fa-lg',
-            t = N_('Add Interface to selected Router'),
-            t,
-            :url_parms    => "main_div",
-            :send_checked => true,
-            :enabled      => false,
-            :onwhen       => "1"),
-          button(
-            :network_router_remove_interface,
-            'pficon pficon-edit fa-lg',
-            t = N_('Remove Interface from selected Router'),
-            t,
-            :url_parms    => "main_div",
-            :send_checked => true,
-            :enabled      => false,
-            :onwhen       => "1"),
-          button(
-            :network_router_delete,
-            'pficon pficon-delete fa-lg',
-            t = N_('Delete selected Routers'),
-            t,
-            :url_parms    => 'main_div',
-            :send_checked => true,
-            :confirm      => N_('Warning: The selected Routers and ALL of their components will be removed!'),
-            :enabled      => false,
-            :onwhen       => '1+'),
         ]
       )
     ]
