@@ -22,8 +22,12 @@ class NetworkRouterController < ApplicationController
     @refresh_div = "main_div"
 
     case params[:pressed]
+    when "cloud_subnet_tag"
+      return tag("CloudSubnet")
     when "custom_button"
       custom_buttons
+    when "instance_tag"
+      return tag("VmOrTemplate")
     when "network_router_add_interface"
       javascript_redirect(:action => "add_interface_select", :id => checked_item_id)
     when "network_router_delete"
