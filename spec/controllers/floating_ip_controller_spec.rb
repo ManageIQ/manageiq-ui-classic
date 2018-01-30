@@ -134,7 +134,7 @@ describe FloatingIpController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:port_id => ""}]
+          :args        => [{:network_port_ems_ref => ""}]
         }
       end
 
@@ -146,7 +146,7 @@ describe FloatingIpController do
       it "queues the update action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :update, :params => { :button => "save", :format => :js, :id => @floating_ip.id,
-                                   :network_port => {:port_id => "" } }
+                                   :network_port => {:ems_ref => ""}}
       end
     end
   end

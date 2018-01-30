@@ -48,7 +48,7 @@ class FloatingIpController < ApplicationController
       javascript_redirect :action    => 'show_list',
                           :flash_msg => _("Add of new Floating IP was cancelled by the user")
     when "add"
-      options = form_params
+      options = filter_params
       ems = ExtManagementSystem.find(options[:ems_id])
 
       if FloatingIp.class_by_ems(ems).supports_create?
@@ -149,7 +149,7 @@ class FloatingIpController < ApplicationController
 
     when "save"
       if @floating_ip.supports_update?
-        options = form_params
+        options = filter_params
         options.delete(:ems_id)
         task_id = @floating_ip.update_floating_ip_queue(session[:userid], options)
 
@@ -198,13 +198,15 @@ class FloatingIpController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def form_params
+  def filter_params
     options = {}
     options[:ems_id] = params[:ems_id] if params[:ems_id] && params[:ems_id] != 'new'
-    options[:floating_ip_address] = params[:address] if params[:address]
+    options[:address] = params[:address] if params[:address]
     options[:cloud_network_id] = params[:cloud_network_id] if params[:cloud_network_id]
-    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
-    options[:port_id] = params[:network_port][:ems_ref] if params[:network_port] && params[:network_port][:ems_ref]
+    options[:cloud_tenant_id] = params[:cloud_tenant_id] if params[:cloud_tenant_id]
+    if params[:network_port] && params[:network_port][:ems_ref]
+      options[:network_port_ems_ref] = params[:network_port][:ems_ref]
+    end
     options[:router_id] = params[:router_id] if params[:router_id]
     options
   end
