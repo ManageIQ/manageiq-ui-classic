@@ -1,4 +1,4 @@
-Rails.application.config.assets.paths << ManageIQ::UI::Classic::Engine.root.join('vendor', 'assets', 'bower_components')
+Rails.application.config.assets.paths << ManageIQ::UI::Classic::Engine.root.join('vendor', 'assets') # all bower deps need to be prefixed by bower_components/
 Rails.application.config.assets.paths << ManageIQ::UI::Classic::Engine.root.join('node_modules')
 
 Rails.application.config.assets.precompile << proc do |filename, path|
