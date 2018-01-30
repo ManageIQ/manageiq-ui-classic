@@ -45,6 +45,7 @@ class CloudSubnetController < ApplicationController
     assert_privileges("cloud_subnet_new")
     assert_privileges("ems_network_show_list")
     assert_privileges("cloud_tenant_show_list")
+    assert_privileges("cloud_network_show_list")
 
     @subnet = CloudSubnet.new
     @in_a_form = true
