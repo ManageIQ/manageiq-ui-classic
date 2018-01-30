@@ -179,7 +179,7 @@ module OpsController::Diagnostics
 
   def refresh_log
     assert_privileges("refresh_log")
-    @log = $log.contents(120, 1000)
+    @log = $log.contents(nil, 1000)
     @selected_server = MiqServer.find(x_node.split("-").last.to_i)
     add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
@@ -753,7 +753,7 @@ module OpsController::Diagnostics
       @selected_server ||= MiqServer.find(@sb[:selected_server_id])  # Reread the server record
       if @sb[:selected_server_id] == my_server.id
         if @sb[:active_tab] == "diagnostics_evm_log"
-          @log = $log.contents(120, 1000)
+          @log = $log.contents(nil, 1000)
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("ManageIQ")
           @refresh_action = "refresh_log"
