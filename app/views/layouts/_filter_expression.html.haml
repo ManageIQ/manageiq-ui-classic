@@ -8,7 +8,7 @@
         = title
       .col-md-8
         = _("Choose an element of the expression to edit")
-        = render :partial => 'layouts/exp_editor'
+        = render :partial => 'layouts/exp_editor', :locals => {:expression_type => expression_type || nil}
   - else
     .form-group
       %label.control-label.col-md-2

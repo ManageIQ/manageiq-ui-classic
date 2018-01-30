@@ -8,7 +8,7 @@
       = render :partial => 'layouts/info_msg', :locals => {:message => _("No Filter Expression defined")}
 - else
   = render :partial => 'layouts/filter_expression',
-           :locals => {:expression_type => :filter_expression,
-                       :action          => "rbac_group_edit",
-                       :id              => @edit[:group_id] || 'new',
-                       :title           => _('Expression')}
+           :locals => {:expression_type        => :group_filter_expression,
+                       :action                 => "rbac_group_edit",
+                       :id                     => @edit[:group_id] || 'new',
+                       :title                   => _('Expression')}
