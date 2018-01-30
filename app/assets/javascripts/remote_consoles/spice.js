@@ -13,7 +13,7 @@ $(function() {
 
   $('#ctrlaltdel').click(sendCtrlAltDel);
 
-  var spice = new SpiceMainConn({
+  sc = new SpiceMainConn({
     uri: (encrypt ? 'wss://' : 'ws://') + host + ':' + port + '/' + $('#remote-console').attr('data-url'),
     screen_id: "remote-console",
     password: $('#remote-console').attr('data-secret'),
