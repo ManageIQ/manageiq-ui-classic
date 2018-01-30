@@ -7,12 +7,12 @@
 //= require ./i18n
 //= require bower_components/patternfly/dist/js/patternfly
 //= require bower_components/jquery-ujs/src/rails
-//= require bower_components/angular/angular
+//= require angular
 //= require bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists
 //= require bower_components/angular-patternfly/dist/angular-patternfly
 //= require bower_components/angular-bootstrap/ui-bootstrap
 //= require bower_components/angular-bootstrap/ui-bootstrap-tpls
-//= require bower_components/angular-sanitize/angular-sanitize
+//= require angular-sanitize
 //= require bower_components/angular.validators/angular.validators
 //= require ng-redux/dist/ng-redux
 //= require bower_components/moment/moment
