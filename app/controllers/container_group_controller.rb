@@ -15,7 +15,7 @@ class ContainerGroupController < ApplicationController
   def textual_group_list
     [
       %i(properties container_labels container_node_selectors volumes),
-      %i(relationships conditions smart_management container_statuses_summary)
+      %i(relationships conditions smart_management)
     ]
   end
   helper_method :textual_group_list
