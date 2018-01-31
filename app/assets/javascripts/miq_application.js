@@ -707,7 +707,7 @@ function miqAjaxAuth(url) {
     serialized: miqSerializeForm('login_div'),
   };
 
-  vanillaJsAPI.login(credentials.login, credentials.password)
+  return vanillaJsAPI.login(credentials.login, credentials.password)
   .then(function() {
     return vanillaJsAPI.ws_init();
   })
