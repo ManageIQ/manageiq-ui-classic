@@ -560,8 +560,6 @@ class TreeBuilder
     "isd" => "IsoDatastore",
     "isi" => "IsoImage",
     "l"   => "Lan",
-    "ld"  => "LdapDomain",
-    "lr"  => "LdapRegion",
     "me"  => "MiqEnterprise",
     "mr"  => "MiqRegion",
     "msc" => "MiqSchedule",

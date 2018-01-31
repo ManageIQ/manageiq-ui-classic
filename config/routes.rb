@@ -2578,7 +2578,6 @@ Rails.application.routes.draw do
         show_product_update
         tenant_quotas_form_fields
         tenant_form_fields
-        ldap_regions_list
       ),
       :post => %w(
         accordion_select
@@ -2681,11 +2680,6 @@ Rails.application.routes.draw do
         x_show
         zone_edit
         zone_field_changed
-        ldap_region_add
-        ldap_region_edit
-        ldap_region_form_field_changed
-        ldap_domain_edit
-        ldap_domain_form_field_changed
         ls_select
         ldap_entry_changed
         ls_delete
