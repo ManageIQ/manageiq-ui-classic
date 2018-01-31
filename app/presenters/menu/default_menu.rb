@@ -3,6 +3,7 @@ module Menu
   class DefaultMenu
     class << self
       def graphql_menu_section
+        return nil unless Rails.env.development?
         Menu::Section.new(:graphql, N_("GraphQL"), 'fa fa-lightbulb-o', [
           Menu::Item.new('graphql', N_('Explorer'), 'utilization', {:feature => 'utilization'}, '/graphql_explorer'),
         ])

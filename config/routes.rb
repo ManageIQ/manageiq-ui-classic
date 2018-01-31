@@ -2065,15 +2065,6 @@ Rails.application.routes.draw do
         save_post
     },
 
-    :graphql_explorer => {
-      :get => %w(
-        index
-      ),
-      :post => %w(
-
-      )
-    },
-
     :ansible_credential => {
       :get => %w(
         download_data
@@ -3365,6 +3356,17 @@ Rails.application.routes.draw do
                snap_post
     },
   }
+
+  if Rails.env.development?
+    controller_routes[:graphql_explorer] = {
+      :get => %w(
+        index
+      ),
+      :post => %w(
+
+      )
+    }
+  end
 
   root :to => 'dashboard#login'
 
