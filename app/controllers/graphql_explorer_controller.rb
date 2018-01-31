@@ -1,4 +1,4 @@
-class GraphQLController < ApplicationController
+class GraphQLExplorerController < ApplicationController
   before_action :check_privileges
 
   after_action :cleanup_action
@@ -7,6 +7,6 @@ class GraphQLController < ApplicationController
 
   def index
     @in_a_form = true
-    @layout = "graphql"
+    @layout = "graphql_explorer"
   end
 end

@@ -2065,7 +2065,7 @@ Rails.application.routes.draw do
         save_post
     },
 
-    :graphql => {
+    :graphql_explorer => {
       :get => %w(
         index
       ),
