@@ -3,6 +3,8 @@
 //= require_tree ../locale
 //= require gettext/all
 
+var sc;
+
 $(function() {
   var host = window.location.hostname;
   var encrypt = window.location.protocol === 'https:';
@@ -11,9 +13,7 @@ $(function() {
     port = window.location.port;
   }
 
-  $('#ctrlaltdel').click(sendCtrlAltDel);
-
-  sc = new SpiceMainConn({
+  var spice = new SpiceMainConn({
     uri: (encrypt ? 'wss://' : 'ws://') + host + ':' + port + '/' + $('#remote-console').attr('data-url'),
     screen_id: "remote-console",
     password: $('#remote-console').attr('data-secret'),
@@ -28,4 +28,6 @@ $(function() {
       $('#connection-status').text(__('Connected'));
     },
   });
+
+  $('#ctrlaltdel').click(function(){sendCtrlAltDel(spice);});
 });
