@@ -7,6 +7,7 @@ module ApplicationController::Tags
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
     @tagging = session[:tag_db] = params[:db] ? params[:db] : db if params[:db] || db
+    @tagging ||= session[:tag_db] if session[:tag_db]
     case params[:button]
     when "cancel"
       tagging_edit_tags_cancel
