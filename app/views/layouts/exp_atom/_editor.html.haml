@@ -54,8 +54,11 @@
           - unless @edit[@expkey].tags_for_display_filters.empty?
             - opts.push([_('Tag'), 'tag'])
         - when 'MiqGroup'
-          - opts = [[_('Tag'), 'tags']]
-          - @edit[@expkey][:exp_typ] = 'tags'
+          - if @expkey == :filter_expression
+            - opts = [[_('Tag'), 'tags']]
+            - @edit[@expkey][:exp_typ] = 'tags'
+          - else
+            - opts += exptypes
         - else
           - opts += exptypes
 

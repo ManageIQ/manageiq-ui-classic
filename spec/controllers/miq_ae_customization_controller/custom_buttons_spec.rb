@@ -97,5 +97,40 @@ describe MiqAeCustomizationController do
       post :automate_button_field_changed, :params => {:id => 'new', :instance_name => "Request"}
       expect(assigns(:sb)[:active_tab]).to eq("ab_advanced_tab")
     end
+
+    it "uses available expression fields when editing the custom buttons expressions" do
+      allow(MiqAeClass).to receive_messages(:find_distinct_instances_across_domains => [double(:name => "foo")])
+
+      e_exp = MiqExpression.new("=" => {:field => "MiqGroup.name", :value => "TestEnablementExpression"}, :token => 1)
+
+      @sb = {:active_tree => :ab_tree,
+             :trees       => {:ab_tree => {:tree => :ab_tree}},
+             :params      => {:instance_name => 'CustomButton_1'}}
+      controller.instance_variable_set(:@sb, @sb)
+      controller.instance_variable_set(:@breadcrumbs, [])
+
+      edit = {:new               => {:button_images         => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
+                                     :instance_name         => 'CustomButton_1',
+                                     :attrs                 => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                                     :enablement_expression => e_exp.exp},
+              :instance_names    => %w(CustomButton_1 CustomButton_2),
+              :exp_key           => 'foo',
+              :ansible_playbooks => [],
+              :current           => {}}
+      edit[:enablement_expression] ||= ApplicationController::Filter::Expression.new
+      edit[:enablement_expression][:expression] = {:test => "foo", :token => 1}
+      edit[:new][:enablement_expression] = copy_hash(edit[:enablement_expression][:expression])
+      edit[:enablement_expression].history.reset(edit[:enablement_expression][:expression])
+      controller.instance_variable_set(:@edit, edit)
+      controller.instance_variable_set(:@expkey, :enablement_expression)
+      edit[:enablement_expression][:exp_table] = controller.send(:exp_build_table, edit[:enablement_expression][:expression])
+      edit[:enablement_expression][:exp_model] = 'MiqGroup'
+      session[:edit] = edit
+      session[:expkey] = :enablement_expression
+      controller.instance_variable_set(:@edit, edit)
+      post :exp_token_pressed, :params => {:id => 'new', :token => 1}
+      @edit = controller.instance_variable_get(:@edit)
+      expect(@edit[:enablement_expression][:exp_typ]).to be_nil
+    end
   end
 end

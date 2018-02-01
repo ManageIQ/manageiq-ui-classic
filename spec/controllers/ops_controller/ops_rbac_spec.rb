@@ -444,6 +444,43 @@ describe OpsController do
 
     render_views
 
+    it "uses tags field only when editing the group filter_expression" do
+      new = {:use_filter_expression => true,
+             :name                  => 'Name',
+             :description           => "Test",
+             :role                  => @role.id,
+             :filter_expression     => @exp.exp,
+             :exp_key               => 'foo',
+             :belongsto             => {},
+             :filters               => {'managed/env' => '/managed/env'}}
+      allow(controller).to receive(:replace_right_cell)
+      controller.instance_variable_set(:@_params, :use_filter_expression => "true", :id => "new")
+
+      edit = {:key      => "rbac_group_edit__new",
+              :new      => new,
+              :current  => new,
+              :edit_exp => {:key => '???'}}
+      edit[:filter_expression] ||= ApplicationController::Filter::Expression.new
+      edit[:filter_expression][:expression] = {:test => "foo", :token => 1}
+      edit[:new][:filter_expression] = copy_hash(edit[:filter_expression][:expression])
+      edit[:filter_expression].history.reset(edit[:filter_expression][:expression])
+      controller.instance_variable_set(:@edit, edit)
+      controller.instance_variable_set(:@expkey, :filter_expression)
+      edit[:filter_expression][:exp_table] = controller.send(:exp_build_table, edit[:filter_expression][:expression])
+      edit[:filter_expression][:exp_model] = @group.class.to_s
+      session[:edit] = edit
+      session[:expkey] = :filter_expression
+      controller.instance_variable_set(:@edit, edit)
+      session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
+      allow(controller).to receive(:replace_right_cell)
+
+      post :tree_select, :params => { :id => 'root', :format => :js }
+      expect(MiqExpression).to receive(:tag_details)
+      post :exp_token_pressed, :params => {:id => 'new', :use_filter_expression => "true", :token => 1}
+      @edit = controller.instance_variable_get(:@edit)
+      expect(@edit[:filter_expression][:exp_typ]).to eq('tags')
+    end
+
     it "calls MiqExpression.tag_details to get only the My Company type tag categories" do
       new = {:use_filter_expression => true,
              :name                  => 'Name',
