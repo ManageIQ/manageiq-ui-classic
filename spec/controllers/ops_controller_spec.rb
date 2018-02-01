@@ -128,6 +128,25 @@ describe OpsController do
       expect(flash_messages.first[:message]).to eq("A User must be assigned to a Group")
       expect(flash_messages.first[:level]).to eq(:error)
     end
+
+    it 'does not update the user without validation' do
+      user1 = FactoryGirl.create(:user, :name => "User1", :userid => "User1", :miq_groups => [group], :email => "user1@test.com")
+
+      session[:edit] = {:key => "rbac_user_edit__#{user1.id}",
+                        :new => {:name     => 'test8',
+                                 :userid   => 'test8',
+                                 :email    => 'test8@foo.bar',
+                                 :group    => nil,
+                                 :password => 'test8',
+                                 :verify   => 'test8'}}
+      expect(controller).to receive(:render_flash)
+      post :rbac_user_edit, :params => {:button => 'save', :id => user1.id}
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to eq("A User must be assigned to a Group")
+      expect(flash_messages.first[:level]).to eq(:error)
+      expect(user1.miq_groups).to eq([group])
+      expect(user1.name).to eq('User1')
+    end
   end
 
   context "#db_backup" do

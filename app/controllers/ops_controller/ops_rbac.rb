@@ -731,7 +731,7 @@ module OpsController::OpsRbac
     when :user
       record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
       validated = rbac_user_validate?
-      rbac_user_set_record_vars(record)
+      rbac_user_set_record_vars(record) if validated
     when :group then
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
