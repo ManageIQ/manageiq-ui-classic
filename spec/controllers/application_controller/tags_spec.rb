@@ -85,4 +85,30 @@ describe ApplicationController do
         .to eq(convert_to_region_id(assigns(:entries)['Bishop']))
     end
   end
+
+  describe '#tagging_edit' do
+    let(:params) { nil }
+    let(:s) { nil }
+
+    before do
+      allow(controller).to receive(:assert_privileges)
+      allow(controller).to receive(:session).and_return(s)
+
+      controller.instance_variable_set(:@_params, params)
+    end
+
+    context 'resetting changes' do
+      let(:params) { {:button => "reset"} }
+      let(:s) { {:tag_db => VmOrTemplate} }
+
+      before do
+        allow(controller).to receive(:tagging_edit_tags_reset)
+      end
+
+      it 'sets @tagging properly' do
+        controller.send(:tagging_edit)
+        expect(controller.instance_variable_get(:@tagging)).not_to be_nil
+      end
+    end
+  end
 end
