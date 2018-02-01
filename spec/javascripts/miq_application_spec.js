@@ -521,40 +521,39 @@ describe('miq_application.js', function() {
           </div>\
         </div>\
         <div class="col-xs-4 col-md-3 submit">\
-          <a id="login" class="btn btn-primary" alt="Log In" title="Log In" onclick="miqAjaxAuth("/dashboard/authenticate?button=login"); return false;" href="">Log In</a>\
-          <a id="sso_login" class="btn btn-primary" alt="SSO Log In" title="SSO Log In" style="display: none;" onclick="miqAjaxAuthSso("/dashboard/kerberos_authenticate?button=sso_login"); return false;" href="">SSO Log In</a>\
+          <a id="login" class="btn btn-primary" alt="Log In" title="Log In" onclick="miqAjaxAuth(\'/dashboard/authenticate?button=login\'); return false;" href="">Log In</a>\
+          <a id="sso_login" class="btn btn-primary" alt="SSO Log In" title="SSO Log In" style="display: none;" onclick="miqAjaxAuthSso(\'/dashboard/kerberos_authenticate?button=sso_login\'); return false;" href="">SSO Log In</a>\
         </div>\
       </div>';
 
       setFixtures(html);
     });
+
     context('failed login', function() {
-      var deferred;
+      beforeEach(function() {
+        // simulate failed authentication api call
+        spyOn(vanillaJsAPI, 'login').and.callFake(function() {
+          return Promise.reject();
+        });
 
-      beforeEach(module('ManageIQ'));
-      beforeEach(
-        inject(function(_API_, $q) {
-          var API = _API_;
-          deferred = $q.defer();
+        spyOn(window, 'miqClearLoginFields').and.callThrough();
+      });
 
-          // simulate failed authentication api call
-          spyOn(API, 'get').and.callFake(function() {return deferred.reject();});
-        })
-      );
-
-      it('removes user and password field from log in form', function() {
+      it('removes user and password field from log in form', function(done) {
         var user = $('#user_name');
         var password = $('#user_password');
 
         user.val('Bob');
         password.val('shh');
-        $('#login').trigger('click');
 
-        deferred.promise.then(function() {
-          expect(miqClearLoginFields).toHaveBeenCalled();
-          expect(user.val()).toBe('');
-          expect(password.val()).toBe('');
-        });
+        miqAjaxAuth('/dashboard/authenticate?button=login')
+          .then(function() {
+            expect(miqClearLoginFields).toHaveBeenCalled();
+            expect(user.val()).toBe('');
+            expect(password.val()).toBe('');
+
+            done();
+          });
       });
     });
   });
