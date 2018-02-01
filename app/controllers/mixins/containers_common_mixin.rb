@@ -16,7 +16,7 @@ module ContainersCommonMixin
     @refresh_div = "main_div" # Default div for button.rjs to refresh
     model = self.class.model
     tag(model) if params[:pressed] == "#{params[:controller]}_tag"
-    if [ContainerReplicator, ContainerGroup, ContainerNode, ContainerImage].include?(model)
+    if [ContainerReplicator, ContainerGroup, ContainerNode, ContainerImage, ContainerProject].include?(model)
       assign_policies(model) if params[:pressed] == "#{model.name.underscore}_protect"
       check_compliance(model) if params[:pressed] == "#{model.name.underscore}_check_compliance"
     end

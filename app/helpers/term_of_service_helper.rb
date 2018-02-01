@@ -36,6 +36,9 @@ module TermOfServiceHelper
     "ContainerNode" => {
       "enterprise" => N_("The Enterprise"),
     },
+    "ContainerProject" => {
+      "enterprise" => N_("The Enterprise"),
+    },
     # This set of assignments was created for chargeback_rates
     :chargeback_compute => {
       "enterprise"             => N_("The Enterprise"),

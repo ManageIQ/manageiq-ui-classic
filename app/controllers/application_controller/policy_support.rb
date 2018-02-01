@@ -154,8 +154,8 @@ module ApplicationController::PolicySupport
       javascript_redirect :action => 'protect', :db => db # redirect to build policy screen
     end
   end
-  %w(image instance vm miq_template
-     container container_replicator container_group container_node container_image ems_container).each do |old_name|
+  %w(image instance vm miq_template container container_replicator container_group
+     container_node container_image ems_container container_project).each do |old_name|
     alias_method "#{old_name}_protect".to_sym, :assign_policies
   end
 
