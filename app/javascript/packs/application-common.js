@@ -7,9 +7,12 @@
 // layout file, like app/views/layouts/application.html.erb
 import { mount } from '../react/mounter';
 import componentRegistry from '../react/componentRegistry';
+import * as numeral from 'numeral';
 
 // TODO: use ManageIQ object, once race conditions are fixed
 window.MiqReact = Object.assign(window.MiqReact || {}, {
   mount: mount,
   componentRegistry: componentRegistry
 });
+
+window.numeral = numeral;
