@@ -1,8 +1,19 @@
 class PhysicalInfraTopologyService < TopologyService
   @provider_class = ManageIQ::Providers::PhysicalInfraManager
 
+  # Keep it in a 'topological order' e.g: racks, chassis, servers
   @included_relations = [
     :writable_classification_tags,
+    :physical_racks   => [
+      :writable_classification_tags,
+      :physical_servers => [
+        :writable_classification_tags,
+        :host => [
+          :writable_classification_tags,
+          :vms => :writable_classification_tags
+        ]
+      ]
+    ],
     :physical_servers => [
       :writable_classification_tags,
       :host => [
@@ -12,7 +23,7 @@ class PhysicalInfraTopologyService < TopologyService
     ],
   ]
 
-  @kinds = %i(PhysicalInfraManager PhysicalServer Host Vm Tag)
+  @kinds = %i(PhysicalInfraManager PhysicalRack PhysicalServer Host Vm Tag)
 
   def entity_type(entity)
     if entity.kind_of?(Host)
@@ -54,5 +65,17 @@ class PhysicalInfraTopologyService < TopologyService
     else
       _('Unknown')
     end
+  end
+
+  # Decide whether or not to add an entity to the graph stack
+  def add_to_graph?(entity, links_index, links, parent_id)
+    return true if entity.kind_of?(Tag)
+    idx = links_index[entity_id(entity)]
+    # If a node has already been processed, change its parent rather than pushing to the stack
+    if idx
+      links[idx][:source] = parent_id
+      return false
+    end
+    true
   end
 end
