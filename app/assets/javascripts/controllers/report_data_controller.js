@@ -86,6 +86,8 @@
         this.setExtraClasses(this.initObject.gtlType);
       } else if (event.refreshData && event.refreshData.name === CONTROLLER_NAME) {
         this.refreshData(event.data);
+      } else if (event.setScope && event.setScope.name === CONTROLLER_NAME) {
+        this.setScope(event.data);
       }
 
       if (event.controller === CONTROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
@@ -145,6 +147,11 @@
 
   ReportDataController.prototype.refreshData = function(data) {
     this.initController(_.merge(this.initObject, data));
+  };
+
+  ReportDataController.prototype.setScope = function(scope) {
+    this.initObject.additionalOptions.named_scope = [];
+    this.refreshData({additionalOptions: {named_scope: scope}});
   };
 
   ReportDataController.prototype.setSort = function(headerId, isAscending) {
