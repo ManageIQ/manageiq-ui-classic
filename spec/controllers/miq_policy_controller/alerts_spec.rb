@@ -49,6 +49,38 @@ describe MiqPolicyController do
         end
       end
 
+      context "#alert_field_changed" do
+        before :each do
+          controller.params = {:id => 0, :exp_name => ""}
+          session[:edit] = {:key => "alert_edit__0", :new => {}}
+          allow(controller).to receive(:send_button_changes).and_return(nil)
+          allow(controller).to receive(:build_snmp_options).and_return(nil)
+        end
+
+        it "does not reset repeat_time for most inputs" do
+          expect(controller).to receive(:apply_default_repeat_time?).and_call_original
+          expect(controller).not_to receive(:alert_default_repeat_time)
+          controller.send(:alert_field_changed)
+          expect(session[:edit][:new]).not_to include(:repeat_time)
+        end
+
+        it "resets repeat_time to defult for dwh events" do
+          session[:edit][:new] = {:eval_method => 'dwh_generic'}
+          expect(controller).to receive(:apply_default_repeat_time?).and_call_original
+          expect(controller).to receive(:alert_default_repeat_time).and_call_original
+          controller.send(:alert_field_changed)
+          expect(session[:edit][:new]).to include(:repeat_time)
+        end
+
+        it "resets repeat_time to defult for hourly performance" do
+          session[:edit][:new] = {:eval_method => 'hourly_performance'}
+          expect(controller).to receive(:apply_default_repeat_time?).and_call_original
+          expect(controller).to receive(:alert_default_repeat_time).and_call_original
+          controller.send(:alert_field_changed)
+          expect(session[:edit][:new]).to include(:repeat_time)
+        end
+      end
+
       context "#alert_edit_cancel" do
         before :each do
           allow(controller).to receive(:replace_right_cell).and_return(true)
