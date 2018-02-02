@@ -1206,8 +1206,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_generic_rbac
-    pass = check_generic_rbac
+  def handle_generic_rbac(pass)
     unless pass
       if request.xml_http_request?
         javascript_redirect :controller => 'dashboard', :action => 'auth_error'
@@ -1228,7 +1227,7 @@ class ApplicationController < ActionController::Base
 
     return if action_name == 'auth_error'
 
-    pass = %w(button x_button).include?(action_name) ? handle_button_rbac : handle_generic_rbac
+    pass = %w(button x_button).include?(action_name) ? handle_button_rbac : handle_generic_rbac(check_generic_rbac)
     $audit_log.failure("Username [#{current_userid}], Role ID [#{current_user.miq_user_role.try(:id)}] attempted to access area [#{controller_name}], type [Action], task [#{action_name}]") unless pass
   end
 
