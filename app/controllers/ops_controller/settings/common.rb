@@ -280,7 +280,8 @@ module OpsController::Settings::Common
         :password        => '●●●●●●●●',
         :port            => sub.port,
         :provider_region => sub.provider_region,
-        :backlog         => number_to_human_size(sub.backlog)
+        :backlog         => number_to_human_size(sub.backlog),
+        :status          => sub.status
       }
     end
   end
