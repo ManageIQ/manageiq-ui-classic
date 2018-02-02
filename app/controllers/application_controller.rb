@@ -1485,7 +1485,7 @@ class ApplicationController < ActionController::Base
       :supported_features_filter => options[:supported_features_filter],
       :page                      => options[:all_pages] ? 1 : @current_page,
       :per_page                  => options[:all_pages] ? ONE_MILLION : @items_per_page,
-      :where_clause              => get_view_where_clause(options[:where_clause], options[:sb_controller]),
+      :where_clause              => get_chart_where_clause(options[:sb_controller]),
       :named_scope               => options[:named_scope],
       :display_filter_hash       => options[:display_filter_hash],
       :userid                    => session[:userid],
@@ -1520,26 +1520,24 @@ class ApplicationController < ActionController::Base
       !@force_no_grid_xml && (@gtl_type == "list" || @force_grid_xml)
   end
 
-  def get_view_where_clause(default_where_clause, sb_controller = nil)
+  def get_chart_where_clause(sb_controller = nil)
     # If doing charts, limit the records to ones showing in the chart
-    sb_controller = params[:sb_controller] if sb_controller.nil?
-    if !sb_controller.nil? && session[:menu_click] && session[:sandboxes][sb_controller][:chart_reports]
-      chart_reports = session[:sandboxes][sb_controller][:chart_reports]
-      chart_click = parse_chart_click(Array(session[:menu_click]).first)
-      model_downcase = chart_click.model.downcase
+    sb_controller ||= params[:sb_controller]
+    return if sb_controller.nil? || !session[:menu_click] || !session[:sandboxes][sb_controller][:chart_reports]
 
-      report = chart_reports.kind_of?(Array) ? chart_reports[chart_click.chart_index] : chart_reports
-      data_row = report.table.data[chart_click.data_index]
+    chart_reports = session[:sandboxes][sb_controller][:chart_reports]
+    chart_click = parse_chart_click(Array(session[:menu_click]).first)
+    model_downcase = chart_click.model.downcase
 
-      if chart_click.type == "bytag"
-        ["\"#{model_downcase.pluralize}\".id IN (?)",
-         data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click.legend_index]}"][model_downcase.to_sym][:on]]
-      else
-        ["\"#{model_downcase.pluralize}\".id IN (?)",
-         data_row["assoc_ids"][model_downcase.to_sym][chart_click.type.to_sym]]
-      end
+    report = chart_reports.kind_of?(Array) ? chart_reports[chart_click.chart_index] : chart_reports
+    data_row = report.table.data[chart_click.data_index]
+
+    if chart_click.type == "bytag"
+      ["\"#{model_downcase.pluralize}\".id IN (?)",
+       data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click.legend_index]}"][model_downcase.to_sym][:on]]
     else
-      default_where_clause
+      ["\"#{model_downcase.pluralize}\".id IN (?)",
+       data_row["assoc_ids"][model_downcase.to_sym][chart_click.type.to_sym]]
     end
   end
 
