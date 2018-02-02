@@ -8,11 +8,11 @@
 @media (min-width: $screen-sm) {
   html,
   body {
-    width: 100%;
     height: 100%;
     margin: 0;
-    padding: 0;
     overflow: hidden;
+    padding: 0;
+    width: 100%;
   }
 
   #listnav_div .panel:first-child {
@@ -37,31 +37,31 @@
 
   .no-padding {
     /* removings left-right padding from column */
-    padding: 0 !important;
     margin: 0 !important;
+    padding: 0 !important;
   }
 
   .login-pf body {
-    padding-top: 0 !important;
     padding-bottom: 0 !important;
+    padding-top: 0 !important;
   }
 }
 
 /// resizer styling (used in explorer type screens)
 
 .resizer {
+  height: 100%;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
   width: 0;
-  height: 100%;
   z-index: 600;
 }
 
 .resizer-box {
-  position: absolute;
   bottom: 100px;
   left: -18px;
+  position: absolute;
   width: 38px;
 }
 
@@ -71,8 +71,8 @@
 
 iframe,
 .iframe {
-  width: 100%;
   height: 100%;
+  width: 100%;
 }
 
 /// ===================================================================
@@ -84,8 +84,8 @@ iframe,
 /// ===================================================================
 
 .login-pf body {
-  padding-top: 0 !important;
   padding-bottom: 0 !important;
+  padding-top: 0 !important;
 }
 
 div#saml-login {
@@ -113,8 +113,8 @@ div#saml-login hr {
 }
 
 .navbar__user-name {
-  display: inline-block;
   color: #ffffff;
+  display: inline-block;
   margin-left: 1ex;
 }
 
@@ -140,11 +140,11 @@ div#saml-login hr {
 /// style changes applied when customer logo is active
 
 li.brand-white-label.whitelabeled {
-  margin-top: 10px;
-  width: 320px;
-  height: 38px;
   background: url(/upload/custom_logo.png) right top no-repeat;
   background-size: auto 38px;
+  height: 38px;
+  margin-top: 10px;
+  width: 320px;
 }
 
 /// ===================================================================
@@ -183,8 +183,8 @@ li.brand-white-label.whitelabeled {
 /// make it possible to drop a dashboard widget into a previously empty column
 
 .db_widgets_target {
-  padding-top: 20px; // same as .panel's margin-bottom
   min-height: 78px; // .panel.height + (2 * 20px)
+  padding-top: 20px; // same as .panel's margin-bottom
 }
 
 /// styles PF blank-slate within widgets
@@ -218,15 +218,15 @@ body#dashboard .blank-slate-pf {
 /// ===================================================================
 
 .table-summary-screen .label {
-  display: table-cell;
-  width: 20% !important;
-  padding-top: 6px;
-  min-width: 200px;
-  font: normal 12px OpenSansSemibold, Arial, Helvetica, sans-serif;
-  cursor: default;
   color: #333;
+  cursor: default;
+  display: table-cell;
+  font: normal 12px OpenSansSemibold, Arial, Helvetica, sans-serif;
+  min-width: 200px;
+  padding-top: 6px;
   text-align: left;
   white-space: normal;
+  width: 20% !important;
 }
 
 table.table-summary-screen i {
@@ -256,17 +256,17 @@ table.table.table-summary-screen tbody td img {
 #compare-grid {
   table.table-expanded,
   .table-compressed {
-    table-layout: fixed !important;
-    word-wrap: break-word !important;
-    width: auto !important;
     max-width: auto !important;
+    table-layout: fixed !important;
+    width: auto !important;
+    word-wrap: break-word !important;
   }
 
   table.table-compressed thead tr th {
     height: 150px !important;
-    width: 26px !important;
     text-align: center;
     white-space: nowrap;
+    width: 26px !important;
   }
 
   table.table-compressed thead tr th div.rotated-text {
@@ -280,23 +280,23 @@ table.table.table-summary-screen tbody td img {
 
   table.table-compressed thead th,
   table.table-compressed tr td {
-    width: 26px !important;
     text-align: center;
+    width: 26px !important;
   }
 
   table.table-expanded thead th,
   table.table-expanded tr td {
-    width: 175px !important;
     min-width: 175px !important;
     text-align: center;
+    width: 175px !important;
   }
 
   // sets styling of first column
   table.table-expanded tbody tr th.treegrid-node,
   table.table-compressed tbody th.treegrid-node {
-    width: 270px !important;
     text-align: left;
     white-space: nowrap !important;
+    width: 270px !important;
   }
 }
 
@@ -310,9 +310,9 @@ table.table.table-summary-screen tbody td img {
 
 .list-view-compact .list-view-pf {
   .list-group-item {
-    padding-top: 7px;
-    padding-bottom: 7px;
     margin-bottom: 0;
+    padding-bottom: 7px;
+    padding-top: 7px;
   }
 
   .list-view-pf-main-info {
@@ -334,10 +334,10 @@ table.table.table-summary-screen tbody td img {
   }
 
   .no-wrap {
-    white-space: nowrap;
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: block;
+    white-space: nowrap;
   }
 
   .list-view-pf-actions {
@@ -368,12 +368,12 @@ table.table.table-summary-screen tbody td img {
 /// ===================================================================
 
 .quadicon {
-  position: relative;
-  float: left;
-  padding: 0 1px 1px 0;
-  width: 72px;
-  height: 80px;
   color: #e3e4e4;
+  float: left;
+  height: 80px;
+  padding: 0 1px 1px 0;
+  position: relative;
+  width: 72px;
   text-transform: none;
 }
 
@@ -384,105 +384,105 @@ table.table.table-summary-screen tbody td img {
 /// adjust power state images for use in quad icon
 .b72 .stretch {
   background-repeat: no-repeat;
-  width: 36px;
+  border-top-right-radius: 15px;
   height: 34px;
   margin: -3px 0 -2px 0;
-  border-top-right-radius: 15px;
+  width: 36px;
 }
 
 .flobj {
   position: absolute;
-  z-index: auto;
   width: 72px;
+  z-index: auto;
 }
 
 .flobj p {
+  color: #e3e4e4;
+  font: normal 16px OpenSansSemibold, Arial, Helvetica, sans-serif;
   margin: 5px 0 0 0;
   padding: 0;
-  color: #e3e4e4;
-  vertical-align: middle;
   text-align: center;
-  text-transform: none;
   text-shadow: 0 0 3px #000;
-  font: normal 16px OpenSansSemibold, Arial, Helvetica, sans-serif;
+  text-transform: none;
+  vertical-align: middle;
 }
 
 .a72 {
+  font-size: 1.3em;
+  height: 28px;
+  line-height: 1.8em;
   padding: 3px 0 0 5px;
   width: 28px;
-  height: 28px;
-  font-size: 1.3em;
-  line-height: 1.8em;
 }
 
 .b72 {
-  padding: 3px 0 0 37px;
   font-size: 1.3em;
   line-height: 1.8em;
+  padding: 3px 0 0 37px;
 }
 
 .c72 {
+  font-size: 1.3em;
+  height: 31px;
+  line-height: 1.7em;
   padding: 38px 0 0 5px;
   width: 31px;
-  height: 31px;
-  font-size: 1.3em;
-  line-height: 1.7em;
 }
 
 .d72 {
-  padding: 38px 0 0 39px;
   font-size: 1.3em;
   line-height: 1.7em;
+  padding: 38px 0 0 39px;
 }
 
 .e72 {
+  font-size: 1.3em;
+  height: 35px;
+  line-height: 2em;
   padding: 6px 0 0 6px;
   width: 35px;
-  height: 35px;
-  font-size: 1.3em;
-  line-height: 2em;
 }
 
 .f72 {
+  height: 24px;
   padding: 22px 0 0 24px;
   width: 24px;
-  height: 24px;
 }
 
 .g72 {
+  height: 24px;
   padding: 16px 0 0 19px;
   width: 24px;
-  height: 24px;
 }
 
 .b72 img {
+  height: 34px;
   margin-top: -3px;
   width: 34px;
-  height: 34px;
 }
 
 .a72 img,
 .c72 img,
 .d72 img {
-  width: 28px;
   height: 28px;
+  width: 28px;
 }
 
 .f72 img,
 .f72 img {
-  width: 24px;
   height: 24px;
+  width: 24px;
 }
 
 .g72 img,
 .g72 img {
-  width: 36px;
   height: 36px;
+  width: 36px;
 }
 
 .e72 img {
-  width: 60px;
   height: 60px;
+  width: 60px;
 }
 
 /// ===================================================================
@@ -618,8 +618,8 @@ table.table td:not(.table-view-pf-select) {
 
 .card .card-content .miq-info-section > div {
   position: absolute;
-  top: -35px;
   right: 0;
+  top: -35px;
 }
 
 table.table tbody td img {
@@ -655,8 +655,8 @@ table.table tbody td img {
 
 /// replaces onmouseover="this.style.cursor='pointer'"
 .table-hover tbody tr:hover > td {
-  cursor: pointer;
   cursor: hand;
+  cursor: pointer;
 }
 
 /// same for other tables than originally style3
@@ -675,8 +675,8 @@ table.table tbody td img {
 .nav-stacked > li.disabled:hover > a {
   background: transparent;
   border: transparent;
-  margin-top: 1px;
   margin-bottom: 1px;
+  margin-top: 1px;
 }
 
 // Table View override for policy action options
@@ -695,11 +695,11 @@ table.table tbody td img {
 
 table .table-view-pf-select i {
   /* font icon styling in table view (equivalent to fa-lg) */
-  padding-left: 2px;
+  display: inline-table;
   font-size: 1.33333333em;
   line-height: 0.75em;
+  padding-left: 2px;
   vertical-align: -15%;
-  display: inline-table;
 }
 
 // disables hover and pointer on row
@@ -721,8 +721,8 @@ table.table.table-selectable tbody tr.selected td {
 
 /* static class form-horizontal for displaying static info with reduced row height */
 .form-horizontal.static .form-group {
-  min-height: 28px;
   margin-bottom: 5px;
+  min-height: 28px;
 }
 
 /* resize png files displayed in form-groups */
@@ -739,8 +739,8 @@ table.table.table-selectable tbody tr.selected td {
 
 /* extra vertical margin to accomodate multiple switches */
 .form-horizontal .form-group .bootstrap-switch {
-  margin-top: 2px;
   margin-bottom: 4px;
+  margin-top: 2px;
 }
 
 /* Ensure .form-control-static doesn't change height when it's empty - Bootstrap fix #15699 */
@@ -751,9 +751,9 @@ table.table.table-selectable tbody tr.selected td {
 /* prevents empty dd from collapsing */
 
 .dl-horizontal > dd::after {
-  display: table;
-  content: '';
   clear: both;
+  content: '';
+  display: table;
 }
 
 /* eliminates horizontal scrollbar in some browsers */
@@ -775,13 +775,13 @@ table.table.table-selectable tbody tr.selected td {
 /* Sets font icon styling for view buttons on Default Views screen */
 
 #tab_div ul.list-inline a {
-  font-size: 16px;
   color: #222222 !important;
+  font-size: 16px;
 }
 
 #tab_div ul.list-inline li.active {
-  font-size: 16px;
   color: $link-color !important;
+  font-size: 16px;
 }
 
 .icon-green {
@@ -801,11 +801,11 @@ table.table.table-selectable tbody tr.selected td {
 
 .action-cell .btn {
   border: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 /// chargeback edit view
@@ -827,8 +827,8 @@ td.action > .btn.btn-default {
 /// custom modal class for adv search
 @media (min-width: $screen-sm) {
   .modal-xl {
-    width: 90%;
     max-width: 1200px;
+    width: 90%;
   }
 }
 
@@ -840,8 +840,8 @@ td.action > .btn.btn-default {
 }
 /// scrollable
 .scrollable {
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /// error modal
@@ -878,16 +878,16 @@ table .label {
 }
 
 #notification {
-  position: absolute;
-  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   bottom: 0;
-  z-index: 1000;
   display: block;
+  height: 100%;
+  left: 0;
   margin: 0;
   padding: 0;
+  position: absolute;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 #notification,
@@ -908,25 +908,25 @@ table .label {
 }
 
 #blocker_div {
-  position: fixed;
+  background: image-url('layout/overlay_dark.png');
   bottom: 0;
-  z-index: 48;
+  color: #fff;
   display: block;
+  height: 100%;
   margin: 0;
   padding: 100px 0 0 0;
-  width: 100%;
-  height: 100%;
-  background: image-url('layout/overlay_dark.png');
-  color: #fff;
+  position: fixed;
   text-shadow: #000 2px 2px 0;
+  width: 100%;
+  z-index: 48;
 }
 
 #spinner_div {
+  height: 180px;
+  left: 0;
   position: absolute;
   top: 20px;
-  left: 0;
   width: 100%;
-  height: 180px;
   z-index: 1;
 }
 
@@ -937,67 +937,67 @@ div.disabled {
 }
 
 textarea {
-  width: 98.5%;
   border: 1px solid #d1d1d1;
-  padding: 7px;
   line-height: 1.5em;
+  padding: 7px;
+  width: 98.5%;
 }
 
 fieldset {
-  position: relative;
+  border: 1px solid #e9e8e8;
   margin: 0 7px 20px 0;
   padding: 10px;
-  border: 1px solid #e9e8e8;
+  position: relative;
 }
 
 /* Centering for Hovered VMs */
 #outer {
-  position: absolute;
-  top: 50%;
+  height: 1px;
   left: 0;
   overflow: visible;
+  position: absolute;
+  top: 50%;
   width: 100%;
-  height: 1px;
 }
 
 #inner {
-  position: absolute; /***  height / 2   ***/
-  top: -50px;
+  height: 100px; /***  width / 2  ***/
   left: 50%;
   margin-left: -50px;
+  position: absolute; /***  height / 2   ***/
+  top: -50px;
   width: 100px;
-  height: 100px; /***  width / 2  ***/
 }
 
 #notification,
 #search_notification {
-  position: fixed;
+  background: image-url('layout/overlay_dark.png');
   bottom: 0;
-  z-index: 1000;
+  color: #fff;
   display: block;
+  font: normal 116% OpenSansSemibold, Arial, Helvetica, sans-serif;
+  height: 100%;
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
-  background: image-url('layout/overlay_dark.png');
-  color: #fff;
+  position: fixed;
   text-align: center;
   text-shadow: #000 2px 2px 0;
-  font: normal 116% OpenSansSemibold, Arial, Helvetica, sans-serif;
+  width: 100%;
+  z-index: 1000;
 }
 
 #blocker_div {
-  position: fixed;
+  background: image-url('layout/overlay_dark.png');
   bottom: 0;
-  z-index: 48;
+  color: #fff;
   display: block;
+  height: 100%;
   margin: 0;
   padding: 100px 0 0 0;
-  width: 100%;
-  height: 100%;
-  background: image-url('layout/overlay_dark.png');
-  color: #fff;
+  position: fixed;
   text-shadow: #000 2px 2px 0;
+  width: 100%;
+  z-index: 48;
 }
 
 /************ Hover Buttons ************/
@@ -1015,28 +1015,28 @@ i.rollover:hover {
 
 .dimmed {
   background: #f5f5f5;
-  opacity: 0.4;
   filter: alpha(opacity=40);
   filter: progid:dximagetransform.microsoft.alpha(Opacity=40);
+  opacity: 0.4;
 }
 
 img.small,
 input.small {
+  border: 0;
   float: left;
+  height: 24px;
   margin: 0;
   padding: 0;
   width: 24px;
-  height: 24px;
-  border: 0;
 }
 
 img.tiny {
+  border: 0;
+  height: 20px;
   margin: 0;
   padding: 0;
-  width: 20px;
-  height: 20px;
-  border: 0;
   vertical-align: bottom;
+  width: 20px;
 }
 
 /************ Misc ************/
@@ -1049,41 +1049,41 @@ img.tiny {
 /* Lightbox background */
 
 #lightbox {
+  background: #fff;
+  display: none;
+  filter: alpha(opacity=50);
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  opacity: 0.5;
   position: absolute;
   top: 0;
-  left: 0;
   z-index: 1000;
-  display: none;
-  min-width: 100%;
-  min-height: 100%;
-  background: #fff;
-  opacity: 0.5;
-  filter: alpha(opacity=50);
 }
 
 /* Lightbox panel with some content */
 
 #lightbox-panel {
-  position: fixed;
-  top: 100px;
-  left: 50%;
-  z-index: 1001;
+  background: #fff;
+  border: 2px solid #ccc;
   display: none;
+  height: 85%;
+  left: 50%;
   margin-left: -35%;
   padding: 10px 15px 10px 15px;
+  position: fixed;
+  top: 100px;
   width: 80%;
-  height: 85%;
-  border: 2px solid #ccc;
-  background: #fff;
+  z-index: 1001;
 }
 
 #spinner_div {
-  margin-top: -45px;
-  margin-left: -35px;
-  width: 180px;
-  height: 180px;
-  border-radius: 8px;
   background: image-url('layout/overlay_dark.png');
+  border-radius: 8px;
+  height: 180px;
+  margin-left: -35px;
+  margin-top: -45px;
+  width: 180px;
 }
 
 .sidebar-disabled {
@@ -1101,8 +1101,8 @@ img.tiny {
 }
 
 .text-vertical-overflow-pf {
-  overflow-y: auto;
   max-height: 17ex;
+  overflow-y: auto;
 }
 
 /// ===================================================================
