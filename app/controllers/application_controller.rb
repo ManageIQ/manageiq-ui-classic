@@ -1243,7 +1243,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_generic_rbac
-    ident = "#{controller_name}_#{action_name}"
+    ident = "#{controller_name}_#{action_name == 'report_data' ? 'show_list' : action_name}"
     if MiqProductFeature.feature_exists?(ident)
       role_allows?(:feature => ident, :any => true)
     else
