@@ -31,7 +31,7 @@
                           = text_field_tag(field_id, field.sample_text, :maxlength => 20, :disabled => true)
 
                       - when "DialogFieldCheckBox"
-                        = check_box_tag(field_id, "1", false, :disabled => true)
+                        = check_box_tag(field_id, "1", field.default_value == 't', :disabled => true)
                       - when "DialogFieldDateControl", "DialogFieldDateTimeControl"
                         - if field.show_past_dates
                           :javascript
@@ -90,8 +90,10 @@
 
                             - else
                               - val.each_with_index do |rb, i|
-                                %input{:type => "radio", :disabled => true, :checked => (field.default_value == rb[0]),
-                                  :id => rb[0], :value => rb[1], :name => rb[0]}
+                                %input{:type     => "radio",
+                                       :disabled => true,
+                                       :checked  => (field.default_value == rb[0]),
+                                       :value    => rb[0]}
                                 &nbsp;
                                 = rb[1]
                                 &nbsp;
