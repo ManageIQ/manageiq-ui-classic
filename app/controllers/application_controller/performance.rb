@@ -69,8 +69,10 @@ module ApplicationController::Performance
         page << Charting.js_load_statement
       end
       page << 'miqSparkle(false);'
-      if request.parameters["controller"] == "storage" && @perf_options[:cat]
-        page << javascript_disable_field('perf_typ')
+
+      if request.parameters["controller"] == "storage"
+        page << javascript_disable_field('perf_typ') if @perf_options[:cat]
+        page << javascript_disable_field('perf_cat') if @perf_options[:typ] == 'Daily' && @perf_options[:no_daily]
       end
     end
   end
