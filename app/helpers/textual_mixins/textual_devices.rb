@@ -42,16 +42,21 @@ module TextualMixins::TextualDevices
 
     # HDDs
     disks = @record.hardware.hard_disks.map do |disk|
-      ctrl_type = disk.controller_type.upcase
-      location = disk.location
-      size = disk.size
-      prov = disk.size_on_disk.nil? ? 'N/A' : disk.used_percent_of_provisioned
-      device_name = _("Hard Disk (%{controller_type} %{location}), Size %{size}, " \
-                      "Percent Used Provisioned Space %{space}") % {:controller_type => ctrl_type,
-                                                                    :location        => location,
-                                                                    :size            => size,
-                                                                    :space           => prov}
-      description = _("%{filename}, Mode: %{mode}") % {:filename => disk.filename, :mode => disk.mode}
+      device_name = _("Hard Disk")
+
+      hd_name = disk.device_name.upcase
+      location = disk.location.presence || _("N/A")
+      size = disk.size.presence || _("N/A")
+      pct_prov = disk.size_on_disk.nil? ? _("N/A") : disk.used_percent_of_provisioned
+      filename = disk.filename.presence || _("N/A")
+      mode = disk.mode.presence || _("N/A")
+      description = _("Name: %{hd_name}, Location: %{location}, Size: %{size}, Percent Used Provisioned Space: %{prov}, " \
+                      "Filename: %{filename}, Mode: %{mode}") % {:hd_name  => hd_name,
+                                                                 :location => location,
+                                                                 :size     => size,
+                                                                 :prov     => pct_prov,
+                                                                 :filename => filename,
+                                                                 :mode     => mode}
       Device.new(device_name, description, nil, :disk)
     end
 
