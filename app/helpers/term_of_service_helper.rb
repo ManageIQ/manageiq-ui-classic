@@ -24,7 +24,6 @@ module TermOfServiceHelper
       "enterprise"    => N_("The Enterprise"),
       "storage"       => N_("Selected Datastores"),
       "storage-tags"  => N_("Tagged Datastores"),
-      "ems_container" => N_("Selected Containers Providers"),
       "tenant"        => N_("Tenants")
     },
     "MiqServer" => {
@@ -42,7 +41,6 @@ module TermOfServiceHelper
       "enterprise"             => N_("The Enterprise"),
       "ext_management_system"  => N_("Selected Providers"),
       "ems_cluster"            => N_("Selected Cluster / Deployment Roles"),
-      "ems_container"          => N_("Selected Containers Providers"),
       "vm-tags"                => N_("Tagged VMs and Instances"),
       "container_image-tags"   => N_("Tagged Container Images"),
       "container_image-labels" => N_("Labeled Container Images"),
