@@ -204,4 +204,28 @@ describe SecurityGroupController do
       end
     end
   end
+
+  describe '#button' do
+    before do
+      controller.instance_variable_set(:@_params, params)
+    end
+
+    context 'tagging instances from their list, accessed from the details page of a security group' do
+      let(:params) { {:pressed => "instance_tag"} }
+
+      it 'calls tag method for tagging instances' do
+        expect(controller).to receive(:tag).with("VmOrTemplate")
+        controller.send(:button)
+      end
+    end
+
+    context 'tagging network ports from their list, accessed from the details page of a security group' do
+      let(:params) { {:pressed => "network_port_tag"} }
+
+      it 'calls tag method for tagging network ports' do
+        expect(controller).to receive(:tag).with("NetworkPort")
+        controller.send(:button)
+      end
+    end
+  end
 end
