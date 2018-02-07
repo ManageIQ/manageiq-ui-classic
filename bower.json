@@ -58,6 +58,7 @@
     "bootstrap-switch": "~3.3.4",
     "moment": ">=2.10.5",
     "bootstrap-select": "~1.12.2",
-    "font-awesome-sass": "~4.7.0"
+    "font-awesome-sass": "~4.7.0",
+    "angular": "1.6.9"
   }
 }
