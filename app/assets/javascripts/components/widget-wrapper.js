@@ -24,7 +24,10 @@ ManageIQ.angular.app.component('widgetWrapper', {
               vm.widgetModel.content =  $sce.trustAsHtml(vm.widgetModel.content);
             };
           })
-          .catch(miqService.handleFailure);
+          .catch(function(){
+            vm.error = true;
+            miqService.handleFailure;
+          });
       };
     };
 
@@ -39,7 +42,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
         case 'rss':
           return '/dashboard/widget_rss_data/' + vm.widgetId;
         default:
-          console.log('Something happened. You can see: ', vm.widgetType);
+          console.log('Something went wrong. There is no support for widget type of ', vm.widgetType);
       };
     };
 
@@ -56,7 +59,23 @@ ManageIQ.angular.app.component('widgetWrapper', {
     '        </h2>',
     '      </div>',
     '    </div>',
-    '    <i ng-if="!vm.widgetModel && vm.widgetBlank == \'false\'" class="fa fa-spin fa-spinner"></i>',
+    '      <div ng-if="vm.error === true">',
+    '        <div class="blank-slate-pf" style="padding: 10px">',
+    '          <div class="blank-slate-pf-icon">',
+    '            <i class="fa fa-cog"></i>',
+    '          </div>',
+    '           <h1>',
+    __('There was an error during '),
+    '           </h1>',
+    '        </div>',
+    '      </div>',
+    '      <div ng-if="!vm.widgetModel && vm.widgetBlank == \'false\' && !vm.error">',
+    '        <div class="blank-slate-pf" style="padding: 10px">',
+    '          <div class="blank-slate-pf-icon">',
+    '          <i class="fa fa-spin fa-spinner"></i>',
+    '          </div>',
+    '        </div>',
+    '      </div>',
     '    <div ng-if="vm.widgetBlank === \'true\' || vm.widgetModel" class="mc" id="{{vm.innerDivId}}" ng-class="{ hidden: vm.widgetModel.minimized }">',
     '      <div ng-if="vm.widgetBlank === \'true\'">',
     '        <div class="blank-slate-pf" style="padding: 10px">',
