@@ -15,24 +15,24 @@ ManageIQ.angular.app.component('widgetWrapper', {
     this.$onInit = function() {
       vm.divId = "w_" + vm.widgetId;
       vm.innerDivId = 'dd_w' + vm.widgetId + '_box';
-      if (vm.widgetBlank == 'false') {
+      if (vm.widgetBlank === 'false') {
         $http.get(vm.widgetUrl())
           .then(function(response) {
             vm.widgetModel = response.data;
             // if there's html make it passable
             if (vm.widgetModel.content) {
               vm.widgetModel.content =  $sce.trustAsHtml(vm.widgetModel.content);
-            };
+            }
           })
-          .catch(function(){
+          .catch(function() {
             vm.error = true;
             miqService.handleFailure;
           });
-      };
+      }
     };
 
     vm.widgetUrl  = function() {
-      switch(vm.widgetType){
+      switch (vm.widgetType) {
         case 'menu':
           return '/dashboard/widget_menu_data/' + vm.widgetId;
         case 'report':
@@ -43,9 +43,8 @@ ManageIQ.angular.app.component('widgetWrapper', {
           return '/dashboard/widget_rss_data/' + vm.widgetId;
         default:
           console.log('Something went wrong. There is no support for widget type of ', vm.widgetType);
-      };
+      }
     };
-
   }],
   template: [
     '<div id="{{vm.divId}}">',
@@ -59,37 +58,10 @@ ManageIQ.angular.app.component('widgetWrapper', {
     '        </h2>',
     '      </div>',
     '    </div>',
-    '      <div ng-if="vm.error === true">',
-    '        <div class="blank-slate-pf" style="padding: 10px">',
-    '          <div class="blank-slate-pf-icon">',
-    '            <i class="fa fa-cog"></i>',
-    '          </div>',
-    '           <h1>',
-    __('There was an error during '),
-    '           </h1>',
-    '        </div>',
-    '      </div>',
-    '      <div ng-if="!vm.widgetModel && vm.widgetBlank == \'false\' && !vm.error">',
-    '        <div class="blank-slate-pf" style="padding: 10px">',
-    '          <div class="blank-slate-pf-icon">',
-    '          <i class="fa fa-spin fa-spinner"></i>',
-    '          </div>',
-    '        </div>',
-    '      </div>',
+    '      <widget-error ng-if="vm.error === true"></widget-error>',
+    '      <widget-spinner ng-if="!vm.widgetModel && vm.widgetBlank == \'false\' && !vm.error"></widget-spinner>',
     '    <div ng-if="vm.widgetBlank === \'true\' || vm.widgetModel" class="mc" id="{{vm.innerDivId}}" ng-class="{ hidden: vm.widgetModel.minimized }">',
-    '      <div ng-if="vm.widgetBlank === \'true\'">',
-    '        <div class="blank-slate-pf" style="padding: 10px">',
-    '          <div class="blank-slate-pf-icon">',
-    '            <i class="fa fa-cog"></i>',
-    '          </div>',
-    '           <h1>',
-    __('No data found.'),
-    '           </h1>',
-    '           <p>',
-    __('If this widget is new or has just been added to your dashboard, the data is being generated and should be available soon.'),
-    '           </p>',
-    '        </div>',
-    '      </div>',
+    '      <widget-empty ng-if="vm.widgetBlank === \'true\'"></widget-empty>',
     '      <div ng-if="vm.widgetBlank === \'false\'" ng-switch on="vm.widgetType">',
     '        <widget-menu ng-switch-when="menu" widget-id="{{vm.widgetId}}" widget-model="vm.widgetModel">',
     '        </widget-menu>',
@@ -100,13 +72,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
     '        <widget-rss ng-switch-when="rss" widget-id="{{vm.widgetId}}" widget-model="vm.widgetModel">',
     '        </widget-rss>',
     '      </div>',
-    '      <div ng-if="vm.widgetType !=\'menu\'" class="card-pf-footer">',
-    __('Updated'),
-    "{{vm.widgetLastRun}}",
-    ' | ',
-    __('Next'),
-    "{{vm.widgetNextRun}}",
-    '      </div>',
+    '      <widget-footer widget-last-run="{{vm.widgetLastRun}}" widget-next-run="{{vm.widgetNextRun}}" ng-if="vm.widgetType !=\'menu\'"></widget-footer>',
     '    </div>',
     '  </div>',
     '</div>',

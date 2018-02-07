@@ -4,10 +4,6 @@ ManageIQ.angular.app.component('widgetChart', {
     widgetModel: '<',
   },
   controllerAs: 'vm',
-  controller: ['$http', 'miqService', '$sce', function($http, miqService, $sce) {
-    var vm = this;
-
-  }],
   template: [
     '  <div class="blank-slate-pf " style="padding: 10px" ng-if="vm.widgetModel.state === \'no_data\'">',
     '    <div class="blank-slate-pf-icon">',
