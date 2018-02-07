@@ -617,10 +617,13 @@ module QuadiconHelper
       output << flobj_img_simple("layout/reflection.png")
     else
       output << content_tag(:div, :class => 'flobj') do
-        title = _("Name: %{name} Hostname: %{hostname} Refresh Status: %{status}") %
-          {:name     => h(item.name),
-           :hostname => h(item.hostname),
-           :status   => h(item.last_refresh_status.titleize)}
+        title = _("Name: %{name} Hostname: %{hostname} Refresh Status: %{status} Authentication Status: %{auth_status}") %
+                {
+                  :name        => h(item.name),
+                  :hostname    => h(item.hostname),
+                  :status      => h(item.last_refresh_status.titleize),
+                  :auth_status => h(item.authentication_status)
+                }
 
         link_to(url_for_record(item), :title => title) do
           quadicon_reflection_img
