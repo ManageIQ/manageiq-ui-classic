@@ -778,7 +778,7 @@ function miqEnableLoginFields(enabled) {
 
 // reset form fields on login failure
 function miqClearLoginFields() {
-  $('#user_name').val('');
+  $('#user_name').val('').focus();
   $('#user_password').val('');
 }
 

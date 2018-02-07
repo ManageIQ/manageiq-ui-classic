@@ -549,6 +549,7 @@ describe('miq_application.js', function() {
         miqAjaxAuth('/dashboard/authenticate?button=login')
           .then(function() {
             expect(miqClearLoginFields).toHaveBeenCalled();
+            expect(document.activeElement.id).toEqual(user.attr('id'));
             expect(user.val()).toBe('');
             expect(password.val()).toBe('');
 
