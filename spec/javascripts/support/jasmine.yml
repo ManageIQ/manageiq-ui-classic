@@ -12,10 +12,10 @@
 #
 src_files:
 - __spec__/helpers/i18n-test.js
-- assets/phantomjs-polyfill/bind-polyfill
+- assets/bower_components/phantomjs-polyfill/bind-polyfill
 - assets/application
-- assets/jasmine-jquery
-- assets/angular-mocks
+- assets/bower_components/jasmine-jquery/lib/jasmine-jquery
+- assets/bower_components/angular-mocks/angular-mocks
 - __spec__/helpers/fixtures-fix.js
 - packs/vendor.js
 - packs/manageiq-ui-classic/application-common.js
