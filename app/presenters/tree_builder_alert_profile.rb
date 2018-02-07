@@ -30,25 +30,7 @@ class TreeBuilderAlertProfile < TreeBuilder
       # Set alert profile folder nodes to open so we pre-load all children
       open_node("xx-#{db}")
       text = _("%{model} Alert Profiles") % {:model => ui_lookup(:model => db)}
-      graphic = case db
-                when 'EmsCluster'
-                  {:icon => 'pficon pficon-cluster'}
-                when 'Storage'
-                  {:icon => 'fa fa-database'}
-                when 'Host'
-                  {:icon => 'pficon pficon-screen'}
-                when 'MiddlewareServer'
-                  {:image => 'svg/vendor-wildfly.svg'}
-                when 'ContainerNode'
-                  {:icon => 'pficon pficon-container-node'}
-                when 'ExtManagementSystem'
-                  {:icon => 'pficon pficon-server'}
-                when 'MiqServer'
-                  {:icon => 'pficon pficon-server'}
-                when 'Vm'
-                  {:icon => 'pficon pficon-virtual-machine'}
-                end
-      {:id => db, :text => text, :tip => text}.merge(graphic)
+      {:id => db, :text => text, :tip => text, :icon => db.constantize.decorate.fonticon}
     end
 
     count_only_or_objects(count_only, objects)
