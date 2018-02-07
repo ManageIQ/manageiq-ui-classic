@@ -1325,7 +1325,7 @@ module VmCommon
         # these subviews use angular, so they need to use a special partial
         # so the form buttons on the outer frame can be updated.
         if @sb[:action] == 'dialog_provision'
-          if params[:pressed] == 'vm_transform_mass' || Settings.product.old_dialog_user_ui
+          if %w(vm_transform vm_transform_mass).include?(params[:pressed]) || Settings.product.old_dialog_user_ui
             presenter.update(:form_buttons_div, r[
               :partial => 'layouts/x_dialog_buttons',
               :locals  => {
