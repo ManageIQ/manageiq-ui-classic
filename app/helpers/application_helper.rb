@@ -236,12 +236,13 @@ module ApplicationHelper
   }.freeze
 
   HAS_ASSOCATION = {
-    "groups"         => "groups",
-    "users"          => "users",
-    "event_logs"     => "event_logs",
-    "OsProcess"      => "processes",
-    "scan_histories" => "scan_histories",
-    "based_volumes"  => "based_volumes"
+    "groups"           => "groups",
+    "users"            => "users",
+    "event_logs"       => "event_logs",
+    "OsProcess"        => "processes",
+    "scan_histories"   => "scan_histories",
+    "based_volumes"    => "based_volumes",
+    "PersistentVolume" => "persistent_volumes"
   }.freeze
 
   def model_to_report_data

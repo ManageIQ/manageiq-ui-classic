@@ -171,7 +171,7 @@ module ContainerSummaryHelper
   end
 
   def textual_persistent_volumes
-    textual_link(@record.persistent_volumes)
+    textual_link(@record.persistent_volumes, :as => PersistentVolume)
   end
 
   def textual_parent
