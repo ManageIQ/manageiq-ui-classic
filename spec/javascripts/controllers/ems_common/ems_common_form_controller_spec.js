@@ -843,6 +843,69 @@ describe('emsCommonFormController in the context of ems infra provider', functio
       expect($scope.emsCommonModel.default_api_port).toEqual('');
     });
   });
+
+  describe('when the emsCommonFormId is a Kubevirt Id', function () {
+    var emsCommonFormResponse = {
+      id: 12345,
+      name: 'myKubevirt',
+      kubevirt_hostname: '10.22.33.44',
+      emstype: 'kubevirt',
+      zone: 'default',
+      kubevirt_api_port: '8443',
+      kubevirt_password_exists: true,
+      kubevirt_security_protocol: 'ssl-with-validation-custom-ca',
+      kubevirt_tls_ca_certs: '-----BEGIN DUMMY...',
+    };
+
+    beforeEach(inject(function (_$controller_) {
+      $httpBackend.whenGET('/ems_infra/ems_infra_form_fields/12345').respond(emsCommonFormResponse);
+
+      $controller = _$controller_('emsCommonFormController',
+        {
+          $scope: $scope,
+          $attrs: {
+            'formFieldsUrl': '/ems_infra/ems_infra_form_fields/',
+            'updateUrl': '/ems_infra/update/'
+          },
+          emsCommonFormId: 12345,
+          miqService: miqService,
+          API: API
+        });
+      $httpBackend.flush();
+    }));
+
+    it('sets the name to the Kubevirt Provider', function () {
+      expect($scope.emsCommonModel.name).toEqual('myKubevirt');
+    });
+
+    it('sets the type to kubevirt', function () {
+      expect($scope.emsCommonModel.emstype).toEqual('kubevirt');
+    });
+
+    it('sets the hostname', function () {
+      expect($scope.emsCommonModel.kubevirt_hostname).toEqual('10.22.33.44');
+    });
+
+    it('sets the zone to default', function () {
+      expect($scope.emsCommonModel.zone).toEqual('default');
+    });
+
+    it('sets the password', function () {
+      expect($scope.emsCommonModel.kubevirt_password).toEqual(miqService.storedPasswordPlaceholder);
+    });
+
+    it('sets the kubevirt api port', function () {
+      expect($scope.emsCommonModel.kubevirt_api_port).toEqual('8443');
+    });
+
+    it('sets the kubevirt security protocol', function () {
+      expect($scope.emsCommonModel.kubevirt_security_protocol).toEqual('ssl-with-validation-custom-ca');
+    });
+
+    it('sets the kubevirt certificate', function () {
+      expect($scope.emsCommonModel.kubevirt_tls_ca_certs).toEqual('-----BEGIN DUMMY...');
+    });
+  });
 });
 
 describe('emsCommonFormController in the context of ems middleware provider', function () {

@@ -244,5 +244,137 @@ describe EmsContainerController do
     end
   end
 
+  describe "Kubevirt Disabled/Enabled" do
+    let(:zone) { FactoryGirl.build(:zone) }
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+
+    before do
+      allow(controller).to receive(:check_privileges).and_return(true)
+      allow(controller).to receive(:assert_privileges).and_return(true)
+    end
+
+    context "Provider creation" do
+      it "Creates a provider with only one endpoint if kubevirt is disabled" do
+        post :create, :params => {
+          "button"                    => "add",
+          "cred_type"                 => "kubevirt",
+          "name"                      => "openshift_no_kubevirt",
+          "emstype"                   => "openshift",
+          "zone"                      => 'default',
+          "default_security_protocol" => "ssl-without-validation",
+          "default_hostname"          => "openstack.default.example.com",
+          "default_api_port"          => "5000",
+          "default_userid"            => "",
+          "default_password"          => "",
+          "provider_region"           => "",
+          "virtualization_selection"  => "disabled"
+        }
+        expect(response.status).to eq(200)
+        ems_openshift = ManageIQ::Providers::ContainerManager.first
+        expect(ems_openshift.endpoints.pluck(:role)).to contain_exactly('default')
+      end
+
+      it "Creates a provider with two endpoints if kubevirt is enabled" do
+        post :create, :params => {
+          "button"                     => "add",
+          "cred_type"                  => "kubevirt",
+          "name"                       => "openshift_with_kubevirt",
+          "emstype"                    => "openshift",
+          "zone"                       => 'default',
+          "default_security_protocol"  => "ssl-without-validation",
+          "default_hostname"           => "server.example.com",
+          "default_api_port"           => "5000",
+          "default_userid"             => "",
+          "default_password"           => "",
+          "provider_region"            => "",
+          "virtualization_selection"   => "kubevirt",
+          "kubevirt_security_protocol" => "ssl-without-validation",
+          "kubevirt_hostname"          => "server.example.com",
+          "kubevirt_api_port"          => "5000",
+        }
+        expect(response.status).to eq(200)
+        ems_openshift = ManageIQ::Providers::ContainerManager.first
+        expect(ems_openshift.endpoints.count).to be(2)
+        expect(ems_openshift.endpoints.pluck(:role)).to contain_exactly('default', 'kubevirt')
+      end
+    end
+
+    context "Provider update with kubevirt provider" do
+      context "update when virtualization selection is enabled" do
+        before :each do
+          stub_user(:features => :all)
+          session[:edit] = assigns(:edit)
+        end
+
+        def test_setting_many_fields
+          controller.instance_variable_set(:@_params,
+                                           :name                       => 'EMS 2',
+                                           :default_userid             => '_',
+                                           :default_hostname           => '10.10.10.11',
+                                           :default_api_port           => '5000',
+                                           :default_security_protocol  => 'ssl-with-validation-custom-ca',
+                                           :default_tls_ca_certs       => '-----BEGIN DUMMY...',
+                                           :default_password           => 'valid-token',
+                                           :virtualization_selection   => 'kubevirt',
+                                           :kubevirt_hostname          => '10.10.10.11',
+                                           :kubevirt_api_port          => '5000',
+                                           :kubevirt_security_protocol => 'ssl-with-validation-custom-ca',
+                                           :kubevirt_tls_ca_certs      => '-----BEGIN DUMMY...',
+                                           :kubevirt_password          => 'other-valid-token',
+                                           :emstype                    => @type)
+          controller.send(:set_ems_record_vars, @ems)
+          expect(@flash_array).to be_nil
+          cc = @ems.connection_configurations
+
+          # verify default endpoint expectations
+          expect(cc.default.endpoint.hostname).to eq('10.10.10.11')
+          expect(cc.default.endpoint.port).to eq(5000)
+          expect(cc.default.endpoint.security_protocol).to eq('ssl-with-validation-custom-ca')
+          expect(cc.default.endpoint.verify_ssl?).to eq(true)
+          expect(cc.default.endpoint.certificate_authority).to eq('-----BEGIN DUMMY...')
+
+          # verify kubevirt endpoint expectations
+          expect(cc.kubevirt.endpoint.hostname).to eq('10.10.10.11')
+          expect(cc.kubevirt.endpoint.port).to eq(5000)
+          expect(cc.kubevirt.endpoint.security_protocol).to eq('ssl-with-validation-custom-ca')
+          expect(cc.kubevirt.endpoint.verify_ssl?).to eq(true)
+          expect(cc.kubevirt.endpoint.certificate_authority).to eq('-----BEGIN DUMMY...')
+
+          # verify authentications for default and kubevirt providers
+          expect(@ems.authentication_token("default")).to eq('valid-token')
+          expect(@ems.authentication_token("kubevirt")).to eq('other-valid-token')
+          expect(@ems.hostname).to eq('10.10.10.11')
+        end
+
+        def test_setting_few_fields
+          controller.remove_instance_variable(:@_params)
+          controller.instance_variable_set(:@_params, :name => 'EMS 3', :default_userid => '_')
+          controller.send(:set_ems_record_vars, @ems)
+          expect(@flash_array).to be_nil
+          expect(@ems.authentication_token("default")).to eq('valid-token')
+          expect(@ems.authentication_type("default")).to be_nil
+        end
+
+        it "when editing kubernetes EMS" do
+          @type = 'kubernetes'
+          @ems  = ManageIQ::Providers::Kubernetes::ContainerManager.new
+          test_setting_many_fields
+
+          test_setting_few_fields
+          expect(@ems.connection_configurations.kubevirt.endpoint.hostname).to eq('10.10.10.11')
+        end
+
+        it "when editing openshift EMS" do
+          @type = 'openshift'
+          @ems  = ManageIQ::Providers::Openshift::ContainerManager.new
+          test_setting_many_fields
+
+          test_setting_few_fields
+          expect(@ems.connection_configurations.kubevirt.endpoint.hostname).to eq('10.10.10.11')
+        end
+      end
+    end
+  end
+
   include_examples '#download_summary_pdf', :ems_kubernetes
 end
