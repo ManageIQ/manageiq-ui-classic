@@ -339,6 +339,7 @@ class StorageController < ApplicationController
     when :storage_tree     then storage_get_node_info(node)
     when :storage_pod_tree then storage_pod_get_node_info(node)
     end
+    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present?
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :storage && @edit && @edit[:adv_search_applied]
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
