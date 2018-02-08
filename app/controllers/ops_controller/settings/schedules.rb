@@ -311,6 +311,8 @@ module OpsController::Settings::Schedules
     when "global"
       if action_type == "miq_template"
         action_type = action_type.camelize
+      elsif action_type == "vm"
+        action_type = "VmInfra"
       else
         action_type = action_type.split("_").first.capitalize
       end
