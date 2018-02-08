@@ -3,6 +3,10 @@
   .legend
     %label#selected
     %div{'ng-if' => "vm.kinds"}
+      %kubernetes-topology-icon{tooltipOptions, :kind => "PhysicalRack"}
+        %label
+          %i.pficon.pficon-enterprise
+          = _("Physical Racks")
       %kubernetes-topology-icon{tooltipOptions, :kind => "PhysicalServer"}
         %label
           %i.pficon.pficon-server-group
