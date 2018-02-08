@@ -1,6 +1,7 @@
 ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', function($http, $scope, $attrs, miqService, miqDBBackupService) {
+  var vm = this;
   var init = function() {
-    $scope.diagnosticsDatabaseModel = {
+    vm.diagnosticsDatabaseModel = {
       action_typ: 'db_backup',
       backup_schedule_type: '',
       depot_name: '',
@@ -10,110 +11,106 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       log_userid: '',
       log_password: '',
     };
-    $scope.afterGet = true;
-    $scope.modelCopy = angular.copy( $scope.diagnosticsDatabaseModel );
-    $scope.dbBackupFormFieldChangedUrl = $attrs.dbBackupFormFieldChangedUrl;
-    $scope.submitUrl = $attrs.submitUrl;
-    $scope.validateClicked = miqService.validateWithAjax;
-    $scope.model = 'diagnosticsDatabaseModel';
-
-    ManageIQ.angular.scope = $scope;
+    vm.afterGet = true;
+    vm.modelCopy = angular.copy( vm.diagnosticsDatabaseModel );
+    vm.dbBackupFormFieldChangedUrl = $attrs.dbBackupFormFieldChangedUrl;
+    vm.submitUrl = $attrs.submitUrl;
+    vm.model = 'diagnosticsDatabaseModel';
+    vm.saveable = miqService.saveable;
+    vm.prefix = 'log';
+    vm.validateUrl = '/ops/log_depot_validate?button=validate&type=' + vm.prefix;
+    ManageIQ.angular.scope = vm;
   };
 
-  $scope.backupScheduleTypeChanged = function() {
-    if($scope.diagnosticsDatabaseModel.backup_schedule_type == '') {
-      $scope.diagnosticsDatabaseModel.depot_name = '';
-      $scope.diagnosticsDatabaseModel.uri = '';
-      $scope.diagnosticsDatabaseModel.uri_prefix = '';
-      $scope.diagnosticsDatabaseModel.log_userid = '';
-      $scope.diagnosticsDatabaseModel.log_password = '';
-      $scope.diagnosticsDatabaseModel.log_protocol = '';
+  vm.validateClicked = function() {
+    miqService.validateWithAjax(vm.validateUrl);
+  }
+
+  vm.backupScheduleTypeChanged = function() {
+    if (vm.diagnosticsDatabaseModel.backup_schedule_type === '') {
+      vm.diagnosticsDatabaseModel.depot_name = '';
+      vm.diagnosticsDatabaseModel.uri = '';
+      vm.diagnosticsDatabaseModel.uri_prefix = '';
+      vm.diagnosticsDatabaseModel.log_userid = '';
+      vm.diagnosticsDatabaseModel.log_password = '';
+      vm.diagnosticsDatabaseModel.log_protocol = '';
       return;
     }
 
     miqService.sparkleOn();
 
-    var url = $scope.dbBackupFormFieldChangedUrl;
-    $http.post(url + $scope.diagnosticsDatabaseModel.backup_schedule_type)
+    var url = vm.dbBackupFormFieldChangedUrl;
+    $http.post(url + vm.diagnosticsDatabaseModel.backup_schedule_type)
       .then(postdiagnosticsDatabaseFormData)
       .catch(miqService.handleFailure);
   };
 
-  $scope.showSubmitButton = function() {
-    return true;
-  }
-
-  $scope.isBasicInfoValid = function() {
-    if($scope.angularForm.depot_name.$valid &&
-      $scope.angularForm.uri.$valid &&
-      $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid)
-      return true;
-    else
-      return false;
+  vm.isBasicInfoValid = function() {
+    return $scope.angularForm.depot_name.$valid &&
+      $scope.angularForm.uri.$valid;
   };
 
-  $scope.submitButtonClicked = function(confirm_msg) {
-    if (confirm(confirm_msg)) {
+  vm.submitButtonClicked = function(confirmMsg) {
+    if (confirm(confirmMsg)) {
       miqService.sparkleOn();
-      var url = $scope.submitUrl;
+      var url = vm.submitUrl;
       miqService.miqAjaxButton(url, true);
     }
   };
 
-  $scope.canValidateBasicInfo = function () {
-    return $scope.isBasicInfoValid();
-  }
+  vm.canValidateBasicInfo = function() {
+    return vm.isBasicInfoValid();
+  };
 
-  $scope.logProtocolChanged = function() {
-    $scope.diagnosticsDatabaseModel.backup_schedule_type = '';
-    if($scope.logProtocolSelected()) {
+  vm.logProtocolChanged = function() {
+    vm.diagnosticsDatabaseModel.backup_schedule_type = '';
+    if (vm.logProtocolSelected()) {
       $scope.$broadcast('setNewRecord');
       $scope.$broadcast('reactiveFocus');
-      miqDBBackupService.logProtocolChanged($scope.diagnosticsDatabaseModel);
+      miqDBBackupService.logProtocolChanged(vm.diagnosticsDatabaseModel);
     }
   };
 
-  $scope.logProtocolNotSelected = function() {
-    return miqDBBackupService.logProtocolNotSelected($scope.diagnosticsDatabaseModel);
+  vm.logProtocolNotSelected = function() {
+    return miqDBBackupService.logProtocolNotSelected(vm.diagnosticsDatabaseModel);
   };
 
-  $scope.logProtocolSelected = function() {
-    return miqDBBackupService.logProtocolSelected($scope.diagnosticsDatabaseModel);
+  vm.logProtocolSelected = function() {
+    return miqDBBackupService.logProtocolSelected(vm.diagnosticsDatabaseModel);
   };
 
-  $scope.sambaBackup = function() {
-    return miqDBBackupService.sambaBackup($scope.diagnosticsDatabaseModel);
+  vm.sambaBackup = function() {
+    return miqDBBackupService.sambaBackup(vm.diagnosticsDatabaseModel);
   };
 
-  $scope.sambaRequired = function(value) {
-    return miqDBBackupService.sambaRequired($scope.diagnosticsDatabaseModel, value);
+  vm.sambaRequired = function(value) {
+    return miqDBBackupService.sambaRequired(vm.diagnosticsDatabaseModel, value);
   };
 
   function postdiagnosticsDatabaseFormData(response) {
     var data = response.data;
 
     $scope.$broadcast('resetClicked');
-    $scope.diagnosticsDatabaseModel.depot_name = data.depot_name;
-    $scope.diagnosticsDatabaseModel.uri = data.uri;
-    $scope.diagnosticsDatabaseModel.uri_prefix = data.uri_prefix;
-    $scope.diagnosticsDatabaseModel.log_userid = data.log_userid;
+    vm.diagnosticsDatabaseModel.depot_name = data.depot_name;
+    vm.diagnosticsDatabaseModel.uri = data.uri;
+    vm.diagnosticsDatabaseModel.uri_prefix = data.uri_prefix;
+    vm.diagnosticsDatabaseModel.log_userid = data.log_userid;
 
-    if ($scope.diagnosticsDatabaseModel.uri_prefix === 'nfs') {
-      $scope.diagnosticsDatabaseModel.log_protocol = 'Network File System';
+    if (vm.diagnosticsDatabaseModel.uri_prefix === 'nfs') {
+      vm.diagnosticsDatabaseModel.log_protocol = 'Network File System';
     } else {
-      $scope.diagnosticsDatabaseModel.log_protocol = 'Samba';
+      vm.diagnosticsDatabaseModel.log_protocol = 'Samba';
     }
 
-    $scope.diagnosticsDatabaseModel.action_typ = 'db_backup';
+    vm.diagnosticsDatabaseModel.action_typ = 'db_backup';
 
-    if ($scope.diagnosticsDatabaseModel.log_userid !== '') {
-      $scope.diagnosticsDatabaseModel.log_password = miqService.storedPasswordPlaceholder;
+    if (vm.diagnosticsDatabaseModel.log_userid !== '') {
+      vm.diagnosticsDatabaseModel.log_password = miqService.storedPasswordPlaceholder;
     }
 
     $scope.$broadcast('setNewRecord', { newRecord: false });
     $scope.$broadcast('setUserId', { userIdName: 'log_userid',
-      userIdValue: $scope.diagnosticsDatabaseModel.log_userid });
+      userIdValue: vm.diagnosticsDatabaseModel.log_userid });
 
     miqService.sparkleOff();
   }

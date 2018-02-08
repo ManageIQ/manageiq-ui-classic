@@ -1,10 +1,14 @@
 - @angular_form = true
 
 %form#form_div.form-horizontal{:name                                  => "angularForm",
-                              'ng-controller'                         => "diagnosticsDatabaseFormController",
-                              'ng-show'                               => "afterGet",
+                              'ng-controller'                         => "diagnosticsDatabaseFormController as vm",
+                              'ng-show'                               => "vm.afterGet",
                               'data-db-backup-form-field-changed-url' => "/#{controller_name}/db_backup_form_field_changed/",
-                              'data-submit-url'                       => "/#{controller_name}/db_backup/"}
+                              'data-submit-url'                       => "/#{controller_name}/db_backup/",
+                              'miq-form'                              => true,
+                              'model'                                 => 'vm.diagnosticsDatabaseModel',
+                              'model-copy'                            => 'vm.modelCopy',
+                              'form-changed'                          => true,}
   - if @sb[:active_tab] == "diagnostics_database"
     %h3
       = _("Basic Info")
@@ -57,9 +61,8 @@
 
         = select_tag('backup_schedule_type',
                      options,
-                     "ng-model"                    => "diagnosticsDatabaseModel.backup_schedule_type",
-                     "ng-change"                   => "backupScheduleTypeChanged()",
-                     "checkchange"                 => "",
+                     "ng-model"                    => "vm.diagnosticsDatabaseModel.backup_schedule_type",
+                     "ng-change"                   => "vm.backupScheduleTypeChanged()",
                      "selectpicker-for-select-tag" => "")
 
 
@@ -72,35 +75,40 @@
     .col-md-8
       - default_option = [_("<No Depot>"), nil]
       = select_tag('log_protocol', options_for_select([default_option] + @database_backup_options_for_select),
-                  "ng-model"                       => "diagnosticsDatabaseModel.log_protocol",
-                  "ng-change"                      => "logProtocolChanged(diagnosticsDatabaseModel)",
-                  "ng-required"                    => "logProtocolNotSelected(diagnosticsDatabaseModel)",
-                  "checkchange"                    => "",
+                  "ng-model"                       => "vm.diagnosticsDatabaseModel.log_protocol",
+                  "ng-change"                      => "vm.logProtocolChanged(vm.diagnosticsDatabaseModel)",
+                  "ng-required"                    => "vm.logProtocolNotSelected(vm.diagnosticsDatabaseModel)",
                   "selectpicker-for-select-tag"    => "")
   = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
-                 :locals  => {:ng_show             => "logProtocolSelected()",
+                 :locals  => {:ng_show             => "vm.logProtocolSelected()",
                               :ng_reqd_depot_name  => true,
-                              :ng_model_depot_name => "diagnosticsDatabaseModel.depot_name",
+                              :ng_model_depot_name => "vm.diagnosticsDatabaseModel.depot_name",
                               :ng_reqd_uri         => true,
-                              :ng_model_uri        => "diagnosticsDatabaseModel.uri",
-                              :ng_model_uri_prefix => "diagnosticsDatabaseModel.uri_prefix",
-                              :uri_prefix_display  =>  "{{diagnosticsDatabaseModel.uri_prefix}}://"}
-  = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
-                 :locals  => {:ng_show           => "sambaBackup()",
-                              :ng_model          => "diagnosticsDatabaseModel",
-                              :ng_reqd_userid    => "sambaRequired(diagnosticsDatabaseModel.log_userid)",
-                              :ng_reqd_password  => "sambaRequired(diagnosticsDatabaseModel.log_password)",
-                              :validate_url      => "log_depot_validate",
-                              :id                => nil,
-                              :valtype           => "log",
-                              :basic_info_needed => true}
+                              :ng_model_uri        => "vm.diagnosticsDatabaseModel.uri",
+                              :ng_model_uri_prefix => "vm.diagnosticsDatabaseModel.uri_prefix",
+                              :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
+
+  %auth-credentials{'ng-if'                => 'vm.sambaBackup()',
+                    'form-model'           => 'vm.diagnosticsDatabaseModel',
+                    'model-copy'           => 'vm.modelCopy',
+                    'prefix'               => '{{vm.prefix}}',
+                    'user-required'        => 'vm.sambaRequired(vm.diagnosticsDatabaseModel.log_userid)',
+                    'password-required'    => 'vm.sambaRequired(vm.diagnosticsDatabaseModel.log_password)',
+                    'enable-valid-button'  => 'vm.canValidateBasicInfo()',
+                    'validate'             => 'vm.validateClicked',
+                    'new-record'           => true}
+
   %input{:type => "hidden", :value => "db_backup", :name => "action_typ"}
 
   %table{:width => "100%"}
     %tr
       %td{:align => "right"}
-        = render :partial => "layouts/angular/form_button_submit_angular",
-                 :locals  => {:confirm => _("Are you sure you want to Run a Database Backup Now?")}
+        %miq-button{:name            => _("Submit"),
+                    "disabled-title" => _("Username and matching password fields are needed to run a database backup"),
+                    "enabled-title"  => _("Run a Database backup now"),
+                    :enabled         => "vm.saveable(angularForm)",
+                    'on-click'       => "vm.submitButtonClicked('#{_("Are you sure you want to Run a Database Backup Now?")}')",
+                    :primary         => 'true'}
 
 
   %hr

@@ -1,5 +1,5 @@
 describe('diagnosticsDatabaseFormController', function() {
-  var $scope, $controller, $httpBackend, miqService;
+  var $scope, $controller, $httpBackend, miqService, vm;
 
   beforeEach(module('ManageIQ'));
 
@@ -20,7 +20,7 @@ describe('diagnosticsDatabaseFormController', function() {
 
   $httpBackend = _$httpBackend_;
 
-  $controller = _$controller_('diagnosticsDatabaseFormController',
+  $controller = vm = _$controller_('diagnosticsDatabaseFormController',
                               {$scope: $scope,
                                $attrs: {'dbBackupFormFieldChangedUrl': '/ops/db_backup_form_field_changed/'},
                                miqService: miqService
@@ -34,23 +34,23 @@ describe('diagnosticsDatabaseFormController', function() {
 
   describe('when the diagnostics database form loads', function() {
     it('sets the depot_name to blank', function () {
-      expect($scope.diagnosticsDatabaseModel.depot_name).toEqual('');
+      expect(vm.diagnosticsDatabaseModel.depot_name).toEqual('');
     });
 
     it('sets the uri to blank', function () {
-      expect($scope.diagnosticsDatabaseModel.uri).toEqual('');
+      expect(vm.diagnosticsDatabaseModel.uri).toEqual('');
     });
 
     it('sets the uri_prefix to blank', function () {
-      expect($scope.diagnosticsDatabaseModel.uri_prefix).toEqual('');
+      expect(vm.diagnosticsDatabaseModel.uri_prefix).toEqual('');
     });
 
     it('sets the log_userid to blank', function () {
-      expect($scope.diagnosticsDatabaseModel.log_userid).toEqual('');
+      expect(vm.diagnosticsDatabaseModel.log_userid).toEqual('');
     });
 
     it('sets the log_password to blank', function () {
-      expect($scope.diagnosticsDatabaseModel.log_password).toEqual('');
+      expect(vm.diagnosticsDatabaseModel.log_password).toEqual('');
     });
   });
 
@@ -65,29 +65,29 @@ describe('diagnosticsDatabaseFormController', function() {
 
     beforeEach(inject(function() {
       $httpBackend.whenPOST('/ops/db_backup_form_field_changed/12345').respond(200, diagnosticsDBFormResponse);
-      $scope.diagnosticsDatabaseModel.backup_schedule_type = '12345';
-      $scope.backupScheduleTypeChanged();
+      vm.diagnosticsDatabaseModel.backup_schedule_type = '12345';
+      vm.backupScheduleTypeChanged();
       $httpBackend.flush();
     }));
 
     it('sets the depot_name to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.depot_name).toEqual('my_nfs_depot');
+      expect(vm.diagnosticsDatabaseModel.depot_name).toEqual('my_nfs_depot');
     });
 
     it('sets the uri to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.uri).toEqual('nfs://nfs_location');
+      expect(vm.diagnosticsDatabaseModel.uri).toEqual('nfs://nfs_location');
     });
 
     it('sets the uri_prefix to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.uri_prefix).toEqual('nfs');
+      expect(vm.diagnosticsDatabaseModel.uri_prefix).toEqual('nfs');
     });
 
     it('sets the log_userid to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.log_userid).toEqual('');
+      expect(vm.diagnosticsDatabaseModel.log_userid).toEqual('');
     });
 
     it('sets the log_password to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.log_password).toEqual('');
+      expect(vm.diagnosticsDatabaseModel.log_password).toEqual('');
     });
   });
 
@@ -101,30 +101,30 @@ describe('diagnosticsDatabaseFormController', function() {
 
     beforeEach(inject(function() {
       $httpBackend.whenPOST('/ops/db_backup_form_field_changed/123456').respond(200, diagnosticsDBFormResponse);
-      $scope.diagnosticsDatabaseModel.log_protocol = 'Samba';
-      $scope.diagnosticsDatabaseModel.backup_schedule_type = '123456';
-      $scope.backupScheduleTypeChanged();
+      vm.diagnosticsDatabaseModel.log_protocol = 'Samba';
+      vm.diagnosticsDatabaseModel.backup_schedule_type = '123456';
+      vm.backupScheduleTypeChanged();
       $httpBackend.flush();
     }));
 
     it('sets the depot_name to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.depot_name).toEqual('my_samba_depot');
+      expect(vm.diagnosticsDatabaseModel.depot_name).toEqual('my_samba_depot');
     });
 
     it('sets the uri to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.uri).toEqual('smb://smb_location');
+      expect(vm.diagnosticsDatabaseModel.uri).toEqual('smb://smb_location');
     });
 
     it('sets the uri_prefix to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.uri_prefix).toEqual('smb');
+      expect(vm.diagnosticsDatabaseModel.uri_prefix).toEqual('smb');
     });
 
     it('sets the log_userid to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.log_userid).toEqual('admin');
+      expect(vm.diagnosticsDatabaseModel.log_userid).toEqual('admin');
     });
 
     it('sets the log_password to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
+      expect(vm.diagnosticsDatabaseModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
     });
   });
 });
