@@ -31,6 +31,7 @@ describe TextualMixins::TextualDevices do
         FactoryGirl.create(:hardware,
                            :disks => [FactoryGirl.create(:disk,
                                                          :device_type     => "disk",
+                                                         :device_name     => "HD01",
                                                          :controller_type => "scsi")])
       end
       it { is_expected.not_to be_empty }
@@ -41,10 +42,37 @@ describe TextualMixins::TextualDevices do
         FactoryGirl.create(:hardware,
                            :disks => [FactoryGirl.create(:disk,
                                                          :device_type     => "disk",
+                                                         :device_name     => "HD01",
                                                          :size            => "1072693248",
                                                          :controller_type => "AZURE")])
       end
-      it { expect(subject[0][:name]).to include("Hard Disk (AZURE ), Size 1072693248, Percent Used Provisioned Space N/A") }
+      it { expect(subject[0][:name]).to include("Hard Disk") }
+      it { expect(subject[0][:description]).to include("Name: HD01, Location: N/A, Size: 1072693248, Percent Used Provisioned Space: N/A, Filename: N/A, Mode: N/A") }
+    end
+
+    context "with hdd with size_on_disk and percent provisioned collected (AZURE)" do
+      let(:hw) do
+        FactoryGirl.create(:hardware,
+                           :disks => [FactoryGirl.create(:disk,
+                                                         :device_type     => "disk",
+                                                         :device_name     => "CLIA566D60F38FB9ECC",
+                                                         :location        => "https://jdg.blob.core.windows.net/vhds/clia566d60f38fb9ecc.vhd",
+                                                         :size            => "1072693248",
+                                                         :size_on_disk    => "357564416",
+                                                         :controller_type => "AZURE")])
+      end
+      it { expect(subject[0][:name]).to include("Hard Disk") }
+
+      it "expect hard disk description with percent provisioned " do
+        expected_description = "Name: CLIA566D60F38FB9ECC, " \
+                               "Location: https://jdg.blob.core.windows.net/vhds/clia566d60f38fb9ecc.vhd, " \
+                               "Size: 1072693248, " \
+                               "Percent Used Provisioned Space: 33.3, " \
+                               "Filename: N/A, " \
+                               "Mode: N/A"
+
+        expect(subject[0][:description]).to include(expected_description)
+      end
     end
   end
 
