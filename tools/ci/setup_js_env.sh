@@ -1,11 +1,11 @@
 which bower || npm install -g bower
 
 # Check if the bower cache is valid, otherwise delete it
-if ! cmp --silent bower.json vendor/assets/bower_components/bower.json; then
-  rm -rf vendor/assets/bower_components
+if ! cmp --silent bower.json vendor/assets/bower/bower_components/bower.json; then
+  rm -rf vendor/assets/bower/bower_components
 fi
 
-if [ -d vendor/assets/bower_components ]; then
+if [ -d vendor/assets/bower/bower_components ]; then
   # Using bower_components from cache
   echo "bower assets installed... moving on."
 else
@@ -15,7 +15,7 @@ else
 
   # fail the whole test suite if bower install failed
   [ $STATUS = 0 ] || exit 1
-  [ -d vendor/assets/bower_components ] || exit 1
+  [ -d vendor/assets/bower/bower_components ] || exit 1
 fi
 
 # make sure yarn is installed, in the right version
