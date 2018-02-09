@@ -197,4 +197,28 @@ describe CloudNetworkController do
       end
     end
   end
+
+  describe '#button' do
+    before do
+      controller.instance_variable_set(:@_params, params)
+    end
+
+    context 'tagging instances from a list of instances, accessed from the details page of a network' do
+      let(:params) { {:pressed => "instance_tag"} }
+
+      it 'calls tag method for tagging instances' do
+        expect(controller).to receive(:tag).with("VmOrTemplate")
+        controller.send(:button)
+      end
+    end
+
+    context 'tagging network routers from a list of routers, accessed from the details page of a network' do
+      let(:params) { {:pressed => "network_router_tag"} }
+
+      it 'calls tag method for tagging network routers' do
+        expect(controller).to receive(:tag).with("NetworkRouter")
+        controller.send(:button)
+      end
+    end
+  end
 end

@@ -294,4 +294,28 @@ describe NetworkRouterController do
       end
     end
   end
+
+  describe '#button' do
+    before do
+      controller.instance_variable_set(:@_params, params)
+    end
+
+    context 'tagging instances from a list of instances, accessed from the details page of a network router' do
+      let(:params) { {:pressed => "instance_tag"} }
+
+      it 'calls tag method for tagging instances' do
+        expect(controller).to receive(:tag).with("VmOrTemplate")
+        controller.send(:button)
+      end
+    end
+
+    context 'tagging cloud subnets from a list of subnets, accessed from the details page of a network router' do
+      let(:params) { {:pressed => "cloud_subnet_tag"} }
+
+      it 'calls tag method for tagging cloud subnets' do
+        expect(controller).to receive(:tag).with("CloudSubnet")
+        controller.send(:button)
+      end
+    end
+  end
 end

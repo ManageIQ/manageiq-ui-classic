@@ -23,9 +23,13 @@ class SecurityGroupController < ApplicationController
     @refresh_div = "main_div"
 
     case params[:pressed]
+    when "instance_tag"
+      return tag("VmOrTemplate")
+    when "network_port_tag"
+      return tag("NetworkPort")
     when "security_group_tag"
       return tag("SecurityGroup")
-    when 'security_group_delete'
+    when "security_group_delete"
       delete_security_groups
     when "security_group_edit"
       javascript_redirect :action => "edit", :id => checked_item_id(params)

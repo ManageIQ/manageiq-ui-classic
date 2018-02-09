@@ -37,6 +37,10 @@ class CloudNetworkController < ApplicationController
       javascript_redirect :action => "new"
     when "cloud_subnet_tag"
       return tag("CloudSubnet")
+    when "instance_tag"
+      return tag("VmOrTemplate")
+    when "network_router_tag"
+      return tag("NetworkRouter")
     else
       if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
         replace_gtl_main_div
