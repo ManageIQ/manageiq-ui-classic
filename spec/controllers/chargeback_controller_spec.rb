@@ -589,4 +589,57 @@ describe ChargebackController do
       expect(fetched_report).to eq(chargeback_report)
     end
   end
+
+  describe '#cb_rates_delete' do
+    let(:params) { {:id => rate.id} }
+    let(:rate) { FactoryGirl.create(:chargeback_rate, :rate_type => "Compute") }
+    let(:sandbox) { {:active_tree => :cb_rates_tree, :trees => {:cb_rates_tree => {:active_node => "xx-#{rate.rate_type}_cr-#{rate.id}"}}} }
+
+    before do
+      allow(controller).to receive(:x_node).and_call_original
+      allow(controller).to receive(:render).and_return(true)
+
+      controller.instance_variable_set(:@_params, params)
+      controller.instance_variable_set(:@sb, sandbox)
+    end
+
+    it 'sets right cell text properly' do
+      controller.send(:cb_rates_delete)
+      expect(controller.instance_variable_get(:@right_cell_text)).to eq("#{rate.rate_type} Chargeback Rates")
+    end
+
+    context 'deleting a list of rates' do
+      let(:params) { {:miq_grid_checks => rate.id.to_s} }
+
+      it 'calls cb_rates_list method when there are no errors' do
+        expect(controller).to receive(:cb_rates_list)
+        controller.send(:cb_rates_delete)
+      end
+
+      context 'no checked item found' do
+        let(:params) { nil }
+
+        it 'calls cb_rates_list method when there is an error' do
+          expect(controller).to receive(:cb_rates_list)
+          controller.send(:cb_rates_delete)
+        end
+      end
+    end
+
+    context 'deleting a rate from its details page' do
+      it 'calls cb_rates_list method when there are no errors' do
+        expect(controller).to receive(:cb_rates_list)
+        controller.send(:cb_rates_delete)
+      end
+
+      context 'rate not found by id' do
+        let(:params) { {:id => 123} }
+
+        it 'calls cb_rates_list method when there is an error' do
+          expect(controller).to receive(:cb_rates_list)
+          controller.send(:cb_rates_delete)
+        end
+      end
+    end
+  end
 end

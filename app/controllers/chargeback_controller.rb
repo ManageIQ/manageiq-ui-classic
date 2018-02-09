@@ -205,27 +205,24 @@ class ChargebackController < ApplicationController
     if !params[:id] # showing a list
       rates = find_checked_items
       if rates.empty?
-        render_flash(_("No %{records} were selected for deletion") %
+        add_flash(_("No %{records} were selected for deletion") %
           {:records => ui_lookup(:models => "ChargebackRate")}, :error)
       end
     else # showing 1 rate, delete it
-      cb_rate = ChargebackRate.find_by_id(params[:id])
+      cb_rate = ChargebackRate.find_by(:id => params[:id])
+      self.x_node = x_node.split('_').first
       if cb_rate.nil?
-        render_flash(_("%{record} no longer exists") % {:record => ui_lookup(:model => "ChargebackRate")}, :error)
+        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:model => "ChargebackRate")}, :error)
       else
         rates.push(params[:id])
-        self.x_node = "xx-#{cb_rate.rate_type}"
       end
     end
-    process_cb_rates(rates, 'destroy') unless rates.empty?
-    if flash_errors?
-      javascript_flash
-    else
-      cb_rates_list
-      @right_cell_text = _("%{typ} %{model}") % {:typ   => x_node.split('-').last,
-                                                 :model => ui_lookup(:models => 'ChargebackRate')}
-      replace_right_cell(:replace_trees => [:cb_rates])
-    end
+    process_cb_rates(rates, 'destroy') if rates.present?
+
+    cb_rates_list
+    @right_cell_text = _("%<typ>s %{model}") % {:typ   => x_node.split('-').last,
+                                                :model => ui_lookup(:models => 'ChargebackRate')}
+    replace_right_cell(:replace_trees => [:cb_rates])
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
