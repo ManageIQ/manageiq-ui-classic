@@ -356,6 +356,22 @@ describe StorageController do
     end
   end
 
+  describe '#get_node_info' do
+    before do
+      controller.instance_variable_set(:@right_cell_text, "")
+      controller.instance_variable_set(:@search_text, search)
+    end
+
+    context 'searching text' do
+      let(:search) { "Datastore" }
+
+      it 'updates right cell text according to search text' do
+        controller.send(:get_node_info, "root")
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq(" (Names with \"#{search}\")")
+      end
+    end
+  end
+
   include_examples '#download_summary_pdf', :storage
 
   it_behaves_like "controller with custom buttons"
