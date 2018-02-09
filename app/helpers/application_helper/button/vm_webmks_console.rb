@@ -14,7 +14,7 @@ class ApplicationHelper::Button::VmWebmksConsole < ApplicationHelper::Button::Vm
   end
 
   def supported_vendor_api?
-    @record.host.vmm_version.to_f > min_supported_api_version
+    @record.host.vmm_version.to_f >= min_supported_api_version
   end
 
   def min_supported_api_version

@@ -40,8 +40,11 @@ describe ApplicationHelper::Button::VmWebmksConsole do
           it_behaves_like 'a disabled button',
                           'The web-based WebMKS console is not available because the VM does not support the minimum required vSphere API version.'
         end
-        context 'is >= 6' do
-          it_behaves_like 'an enabled button'
+        [6.0, 6.5].each do |ver|
+          context "is #{ver}" do
+            let(:api_version) { ver }
+            it_behaves_like 'an enabled button'
+          end
         end
       end
     end
