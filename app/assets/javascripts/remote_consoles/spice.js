@@ -3,8 +3,6 @@
 //= require_tree ../locale
 //= require gettext/all
 
-var sc;
-
 $(function() {
   var host = window.location.hostname;
   var encrypt = window.location.protocol === 'https:';
