@@ -40,6 +40,10 @@ class CloudNetworkController < ApplicationController
     when "custom_button"
       custom_buttons
       return
+    when "instance_tag"
+      return tag("VmOrTemplate")
+    when "network_router_tag"
+      return tag("NetworkRouter")
     end
   end
 

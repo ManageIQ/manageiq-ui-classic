@@ -20,21 +20,26 @@ class NetworkRouterController < ApplicationController
     params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
     @refresh_div = "main_div"
-    return tag("NetworkRouter") if params[:pressed] == "network_router_tag"
-    delete_network_routers if params[:pressed] == 'network_router_delete'
 
-    if params[:pressed] == "network_router_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    elsif params[:pressed] == "network_router_new"
-      javascript_redirect :action => "new"
-    elsif params[:pressed] == "custom_button"
+    case params[:pressed]
+    when "cloud_subnet_tag"
+      return tag("CloudSubnet")
+    when "custom_button"
       custom_buttons
-    elsif params[:pressed] == "network_router_add_interface"
-      javascript_redirect :action => "add_interface_select", :id => checked_item_id
-    elsif params[:pressed] == "network_router_remove_interface"
-      javascript_redirect :action => "remove_interface_select", :id => checked_item_id
-    elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
+    when "instance_tag"
+      return tag("VmOrTemplate")
+    when "network_router_add_interface"
+      javascript_redirect(:action => "add_interface_select", :id => checked_item_id)
+    when "network_router_delete"
+      delete_network_routers
+    when "network_router_edit"
+      javascript_redirect(:action => "edit", :id => checked_item_id)
+    when "network_router_new"
+      javascript_redirect(:action => "new")
+    when "network_router_remove_interface"
+      javascript_redirect(:action => "remove_interface_select", :id => checked_item_id)
+    when "network_router_tag"
+      return tag("NetworkRouter")
     else
       render_flash
     end
