@@ -658,7 +658,7 @@ module ApplicationController::Performance
                              from_dt,
                              to_dt,
                              interval_type]
-      elsif %w(MiddlewareServer MiddlewareDatasource).any? { |e| @perf_record.kind_of?(e.constantize) }
+      elsif %w(MiddlewareServer).any? { |e| @perf_record.kind_of?(e.constantize) }
         rpt = perf_get_chart_rpt("vim_perf_#{interval_type}_#{@perf_record.chart_report_name}")
         rpt.where_clause = ["resource_type = ? and resource_id = ? and timestamp >= ? and timestamp <= ? " \
                             "and capture_interval_name = ?",
@@ -683,7 +683,7 @@ module ApplicationController::Performance
     when "realtime"
       f, to_dt = @perf_record.first_and_last_capture("realtime")
       from_dt = to_dt.nil? ? nil : to_dt - @perf_options[:rt_minutes]
-      suffix = if %w(MiddlewareServer MiddlewareDatasource)
+      suffix = if %w(MiddlewareServer)
                   .any? { |e| @perf_record.kind_of?(e.constantize) }
                  "_#{@perf_record.chart_report_name}"
                else

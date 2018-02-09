@@ -1,4 +1,4 @@
-- if %w(middleware_datasources middleware_deployments).include?(@display)
+- if %w(middleware_deployments).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - elsif @showtype == "performance"
   = render(:partial => "layouts/performance_async")
@@ -14,8 +14,6 @@
                         "novalidate"    => "true"}
   = render :partial => 'middleware_shared/ops_params', :locals => {:opsController => 'mwServerOpsController'}
   = render :partial => 'deploy'
-  = render :partial => 'add_jdbc_driver'
-  = render :partial => 'add_datasource'
 
 :javascript
   miq_bootstrap('#mw_server_form');

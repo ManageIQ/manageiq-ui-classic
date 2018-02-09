@@ -1433,7 +1433,6 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-        jdbc_drivers
         dr_download
         dr_report_download
         protect
@@ -1441,8 +1440,6 @@ Rails.application.routes.draw do
                compare_get,
       :post => %w(
         add_deployment
-        add_jdbc_driver
-        add_datasource
         button
         create
         dynamic_checkbox_refresh
@@ -1502,43 +1499,6 @@ Rails.application.routes.draw do
                compare_post +
                exp_post +
                save_post
-    },
-
-    :middleware_datasource => {
-      :get  => %w(
-        download_data
-        download_summary_pdf
-        edit
-        index
-        new
-        perf_chart_chooser
-        show
-        show_list
-        tagging_edit
-        tag_edit_form_field_changed
-      ) +
-      compare_get,
-      :post => %w(
-        button
-        create
-        dynamic_checkbox_refresh
-        form_field_changed
-        listnav_search_selected
-        quick_search
-        sections_field_changed
-        perf_chart_chooser
-        show
-        show_list
-        tl_chooser
-        update
-        wait_for_task
-        tagging_edit
-        tag_edit_form_field_changed
-      ) +
-      adv_search_post +
-      compare_post +
-      exp_post +
-      save_post
     },
 
     :middleware_domain => {
