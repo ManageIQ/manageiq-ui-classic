@@ -10,7 +10,7 @@ module ReportController::Menus
       @rpt_menu = copy_array(@edit[:new])
     elsif @menu_lastaction == "default"
     else
-      populate_reports_menu("menu")
+      populate_reports_menu(true)
       tree = build_menu_roles_tree
       @rpt_menu = tree.rpt_menu
     end
@@ -209,7 +209,7 @@ module ReportController::Menus
       get_tree_data
       replace_right_cell(:menu_edit_action => "menu_reset")
     elsif params[:button] == "default"
-      populate_reports_menu("default")
+      @sb[:rpt_menu]   = default_reports_menu
       @menu_roles_tree = build_menu_roles_tree
       @edit[:new]      = copy_array(@sb[:rpt_menu])
       @menu_lastaction = "default"

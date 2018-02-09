@@ -237,7 +237,7 @@ module ReportController::Reports
 
   # Build the main reports tree
   def build_reports_tree
-    populate_reports_menu("default")
+    populate_reports_menu
     TreeBuilderReportReports.new('reports_tree', 'reports', @sb)
   end
 end

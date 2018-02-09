@@ -381,7 +381,7 @@ module ReportController::Widgets
       @edit[:schedule].name = @widget.resource.name
       @edit[:schedule].description = @widget.resource.title
       @edit[:rpt] = MiqReport.find_by_id(@widget.resource_id)
-      @menu = get_reports_menu(current_group, "default")
+      @menu = get_reports_menu
       if @sb[:wtype] == "r"
         @menu.each do |m|
           m[1].each do |f|
@@ -403,7 +403,7 @@ module ReportController::Widgets
       end
       @edit[:new][:repfilter] = @edit[:rpt].id
     elsif ["r", "c"].include?(@sb[:wtype])
-      @menu = get_reports_menu(current_group, "default")
+      @menu = get_reports_menu
       if @sb[:nodes][1] == "c"
         widget_graph_menus      # to build report pulldown with only reports with grpahs
       else
