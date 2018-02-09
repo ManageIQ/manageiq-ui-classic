@@ -1,5 +1,10 @@
 which bower || npm install -g bower
 
+# Clean up old bower_components location
+if [ -d vendor/assets/bower_components ]; then
+  rm -rf vendor/assets/bower_components
+fi
+
 # Check if the bower cache is valid, otherwise delete it
 if ! cmp --silent bower.json vendor/assets/bower/bower_components/bower.json; then
   rm -rf vendor/assets/bower/bower_components
