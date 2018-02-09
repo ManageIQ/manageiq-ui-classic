@@ -718,6 +718,22 @@ describe ProviderForemanController do
     end
   end
 
+  describe '#get_node_info' do
+    before do
+      controller.instance_variable_set(:@right_cell_text, "")
+      controller.instance_variable_set(:@search_text, search)
+    end
+
+    context 'searching text' do
+      let(:search) { "some_text" }
+
+      it 'updates right cell text according to search text' do
+        controller.send(:get_node_info, "root")
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq(" (Names with \"#{search}\")")
+      end
+    end
+  end
+
   def user_with_feature(features)
     features = EvmSpecHelper.specific_product_features(*features)
     FactoryGirl.create(:user, :features => features)
