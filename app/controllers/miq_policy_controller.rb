@@ -551,6 +551,7 @@ class MiqPolicyController < ApplicationController
 
       presenter.update(:main_div, r[:partial => partial_name])
       right_cell_text = _("All %{models}") % {:models => model}
+      right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w(alert_profile_tree condition_tree policy_tree).exclude?(x_active_tree.to_s)
     when 'pp'
       presenter.update(:main_div, r[:partial => 'profile_details'])
       right_cell_text =
@@ -588,6 +589,7 @@ class MiqPolicyController < ApplicationController
           r[:partial => 'alert_profile_list']
         end
       )
+      right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && !@folders
     when 'p'
       presenter.update(:main_div, r[:partial => 'policy_details', :locals => {:read_only => true}])
       model_name = ui_lookup(:model => @sb[:nodeid].try(:camelize))
