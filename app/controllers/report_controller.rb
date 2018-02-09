@@ -132,7 +132,7 @@ class ReportController < ApplicationController
       return
     end
 
-    populate_reports_menu("default")
+    populate_reports_menu
     build_accordions_and_trees
 
     self.x_active_tree = x_last_active_tree if x_last_active_tree
