@@ -14,7 +14,14 @@ namespace :update do
     end
   end
 
-  task :ui => ['update:bower', 'update:yarn', 'webpack:compile']
+  task :clean do
+    Dir.chdir ManageIQ::UI::Classic::Engine.root do
+      # clean up old bower install to prevent it from winning over npm
+      system("rm -rf vendor/assets/bower_components")
+    end
+  end
+
+  task :ui => ['update:clean', 'update:bower', 'update:yarn', 'webpack:compile']
 end
 
 namespace :webpack do
