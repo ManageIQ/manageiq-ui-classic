@@ -233,6 +233,38 @@ describe MiqPolicyController do
       expect(presenter[:right_cell_text]).not_to equal('foo')
       expect(presenter[:right_cell_text]).to_not be_nil
     end
+
+    context 'searching text' do
+      let(:search) { "some_text" }
+
+      before do
+        allow(controller).to receive(:params).and_return(:action => 'x_search_by_name')
+        allow(controller).to receive(:render)
+        controller.instance_variable_set(:@conditions, {})
+        controller.instance_variable_set(:@sb, tree)
+        controller.instance_variable_set(:@search_text, search)
+      end
+
+      subject { controller.instance_variable_get(:@right_cell_text) }
+
+      context 'policy profiles root node' do
+        let(:tree) { {:active_tree => :policy_profile_tree} }
+
+        it 'updates right cell text according to search text' do
+          controller.send(:replace_right_cell, :nodetype => 'root')
+          expect(subject).to eq("All Policy Profiles (Names with \"#{search}\")")
+        end
+      end
+
+      context 'conditions node' do
+        let(:tree) { {:active_tree => :condition_tree, :folder => "host"} }
+
+        it 'updates right cell text according to search text' do
+          controller.send(:replace_right_cell, :nodetype => 'xx')
+          expect(subject).to eq("All Host / Node Conditions (Names with \"#{search}\")")
+        end
+      end
+    end
   end
 
   describe 'x_button' do

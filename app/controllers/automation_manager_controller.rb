@@ -242,6 +242,9 @@ class AutomationManagerController < ApplicationController
     else
       default_node
     end
+
+    # Edit right cell text if searching text
+    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w(ConfiguredSystem ConfigurationScript).exclude?(model)
     # Edit right cell text if using filter
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && filtering? && @edit && @edit[:adv_search_applied]
 

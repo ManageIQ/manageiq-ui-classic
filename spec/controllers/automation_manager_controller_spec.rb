@@ -243,6 +243,19 @@ describe AutomationManagerController do
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
       expect(right_cell_text).to eq("All Ansible Tower Providers")
     end
+
+    context 'searching text' do
+      let(:search) { "some_text" }
+
+      before do
+        controller.instance_variable_set(:@search_text, search)
+      end
+
+      it 'updates right cell text according to search text' do
+        controller.send(:get_node_info, "root")
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Ansible Tower Providers (Names with \"#{search}\")")
+      end
+    end
   end
 
   it "builds ansible tower child tree" do
