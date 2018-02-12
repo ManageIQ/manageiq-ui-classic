@@ -329,6 +329,19 @@ describe ServiceController do
           controller.send(:get_node_info, "root")
           expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Services - Filtered by Filter1")
         end
+
+        context 'searching text' do
+          let(:search) { "Service" }
+
+          before do
+            controller.instance_variable_set(:@search_text, search)
+          end
+
+          it 'updates right cell text properly' do
+            controller.send(:get_node_info, "root")
+            expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Services (Names with \"#{search}\")")
+          end
+        end
       end
     end
   end
