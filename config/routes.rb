@@ -2681,7 +2681,6 @@ Rails.application.routes.draw do
         zone_edit
         zone_field_changed
         ls_select
-        ldap_entry_changed
         ls_delete
       ) + exp_post + dialog_runner_post
    },
