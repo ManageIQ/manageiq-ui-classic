@@ -4,7 +4,7 @@
  *= require ./main
  *= require ./automate_import_export
  *= require ./dialog_fields
- *= require bower_components/angular/angular-csp
+ *= require angular
  *= require ./notifications
  *= require bower_components/angular-patternfly/dist/styles/angular-patternfly
  *= require ./schedule_editor
