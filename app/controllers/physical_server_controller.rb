@@ -9,6 +9,14 @@ class PhysicalServerController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def self.display_methods
+    %w(guest_devices)
+  end
+
+  def display_guest_devices  
+    nested_list(GuestDevice, {:named_scope => :with_ethernet_type})
+  end
+
   def self.table_name
     @table_name ||= "physical_servers"
   end
