@@ -42,7 +42,7 @@ function miqTreeResetState(treename) {
 function miqRemoveNodeChildren(treename, key) {
   var node = miqTreeFindNodeByKey(treename, key);
   if (node.nodes) {
-    node.nodes.forEach(function (child) {
+    node.nodes.slice().forEach(function (child) {
       miqTreeObject(treename).removeNode(child);
     });
   }
