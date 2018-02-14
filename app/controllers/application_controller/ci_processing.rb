@@ -280,6 +280,12 @@ module ApplicationController::CiProcessing
 
       vm_button_operation_internal(items, task, display_name) || return
 
+      if task == 'retire_now' && role_allows?(:feature => "miq_request_show_list", :any => true)
+        javascript_redirect(:controller => 'miq_request',
+                            :action     => 'show_list',
+                            :flash_msg  => @flash_array[0][:message])
+      end
+
       # In non-explorer case, render the list (filling in @view).
       if @lastaction == "show_list"
         show_list unless @explorer
@@ -296,6 +302,12 @@ module ApplicationController::CiProcessing
       end
 
       vm_button_operation_internal(items, task, display_name)
+
+      if task == 'retire_now' && role_allows?(:feature => "miq_request_show_list", :any => true)
+        javascript_redirect(:controller => 'miq_request',
+                            :action     => 'show_list',
+                            :flash_msg  => @flash_array[0][:message])
+      end
 
       # Tells callers to go back to show_list because this item may be gone.
       @single_delete = task == 'destroy' && !flash_errors?
@@ -410,7 +422,12 @@ module ApplicationController::CiProcessing
     options = {:ids => objs, :task => task, :userid => session[:userid]}
     options[:snap_selected] = session[:snap_selected] if task == "remove_snapshot" || task == "revert_to_snapshot"
 
-    klass.process_tasks(options)
+    if task == 'retire_now'
+      options = {:task => task, :userid => session[:userid], :ids => objs, :src_ids => objs}
+      (klass.to_s + "RetireRequest").constantize.make_request(@request_id, options, current_user)
+    else
+      klass.process_tasks(options)
+    end
   rescue => err
     add_flash(_("Error during '%{task}': %{error_message}") % {:task => task, :error_message => err.message}, :error)
   else

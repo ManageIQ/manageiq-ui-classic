@@ -872,6 +872,8 @@ describe ServiceController do
                                    )
       service.update_attribute(:id, template.id)
       service.reload
+      login_as FactoryGirl.create(:user_admin)
+      allow(User).to receive_messages(:server_timezone => "UTC")
       controller.instance_variable_set(:@_params, :miq_grid_checks => service.id.to_s)
       expect(controller).to receive(:show_list)
       controller.send(:vm_button_operation, 'retire_now', "Retirement")
@@ -945,6 +947,8 @@ describe VmOrTemplateController do
         :storage               => FactoryGirl.create(:storage)
       )
 
+      login_as FactoryGirl.create(:user_admin)
+      allow(User).to receive_messages(:server_timezone => "UTC")
       controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
       expect(controller).to receive(:show_list)
       controller.send(:vm_button_operation, 'retire_now', "Retirement")
