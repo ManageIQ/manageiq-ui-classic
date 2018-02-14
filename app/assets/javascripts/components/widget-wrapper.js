@@ -12,6 +12,9 @@ ManageIQ.angular.app.component('widgetWrapper', {
   controller: ['$http', 'miqService', '$sce', function($http, miqService, $sce) {
     var vm = this;
 
+    var deferred = miqDeferred();
+    vm.promise = deferred.promise;
+
     this.$onInit = function() {
       vm.divId = "w_" + vm.widgetId;
       vm.innerDivId = 'dd_w' + vm.widgetId + '_box';
@@ -23,10 +26,12 @@ ManageIQ.angular.app.component('widgetWrapper', {
             if (vm.widgetModel.content) {
               vm.widgetModel.content =  $sce.trustAsHtml(vm.widgetModel.content);
             }
+            deferred.resolve();
           })
-          .catch(function() {
+          .catch(function(e) {
             vm.error = true;
-            miqService.handleFailure;
+            miqService.handleFailure(e);
+            deferred.reject();
           });
       }
     };
@@ -47,7 +52,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
     };
   }],
   template: [
-    '<div id="{{vm.divId}}">',
+    '<div ng-attr-id="{{vm.divId}}">',
     '  <div class="card-pf card-pf-view">',
     '    <div class="card-pf-body">',
     '      <div class="card-pf-heading-kebab">',
@@ -58,8 +63,8 @@ ManageIQ.angular.app.component('widgetWrapper', {
     '        </h2>',
     '      </div>',
     '    </div>',
-    '      <widget-error ng-if="vm.error === true"></widget-error>',
-    '      <widget-spinner ng-if="!vm.widgetModel && vm.widgetBlank == \'false\' && !vm.error"></widget-spinner>',
+    '    <widget-error ng-if="vm.error === true"></widget-error>',
+    '    <widget-spinner ng-if="!vm.widgetModel && vm.widgetBlank == \'false\' && !vm.error"></widget-spinner>',
     '    <div ng-if="vm.widgetBlank === \'true\' || vm.widgetModel" class="mc" id="{{vm.innerDivId}}" ng-class="{ hidden: vm.widgetModel.minimized }">',
     '      <widget-empty ng-if="vm.widgetBlank === \'true\'"></widget-empty>',
     '      <div ng-if="vm.widgetBlank === \'false\'" ng-switch on="vm.widgetType">',
