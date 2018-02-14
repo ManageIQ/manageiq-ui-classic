@@ -54,7 +54,7 @@ describe('reconfigureFormController', function() {
     });
 
     it('initializes the delete_backing flag to false if not retrived', function() {
-      expect(vm.reconfigureModel.vmdisks).toEqual([{hdFilename: "test_disk.vmdk", hdType: "thick", hdMode: "persistent", new_controller_type: "VirtualLsiLogicController", hdSize: "0", hdUnit: "MB", add_remove: "", delete_backing: false}]);
+      expect(vm.reconfigureModel.vmdisks[0].delete_backing).toEqual(false);
     });
   });
 
@@ -95,7 +95,7 @@ describe('reconfigureFormController', function() {
                            memory_type:            vm.reconfigureModel.memory_type,
                            socket_count:           vm.reconfigureModel.socket_count,
                            cores_per_socket_count: vm.reconfigureModel.cores_per_socket_count,
-                           vmAddDisks: [  ], vmRemoveDisks: [  ] };
+                           vmAddDisks: [  ], vmRemoveDisks: [  ], vmResizeDisks: [  ] };
 
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('reconfigure_update/1000000000003?button=submit', submitContent);
     });
