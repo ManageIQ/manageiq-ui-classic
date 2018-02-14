@@ -115,6 +115,9 @@ describe CloudNetworkController do
           :userid => controller.current_user.userid
         }
       end
+      let(:cloud_tenant) do
+        FactoryGirl.create(:cloud_tenant)
+      end
       let(:queue_options) do
         {
           :class_name  => @ems.class.name,
@@ -123,9 +126,14 @@ describe CloudNetworkController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name => "test", :admin_state_up => true, :shared => false,
-             :external_facing => false, :provider_network_type => 'vxlan', :tenant_id => 'íd',
-             :vlan_transparent => false}]
+          :args        => [{
+            :admin_state_up        => true,
+            :external_facing       => false,
+            :name                  => 'test',
+            :provider_network_type => 'vxlan',
+            :shared                => false,
+            :tenant_id             => cloud_tenant.ems_ref,
+          }]
         }
       end
 
@@ -136,10 +144,19 @@ describe CloudNetworkController do
 
       it "queues the create action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :create, :params => { :button => "add", :format => :js, :name => 'test',
-          :cloud_tenant => {:id => 'id'}, :enabled => true, :external_facing => false, :shared => false,
-          :provider_network_type => 'vxlan', :id => 'new', :vlan_transparent => false,
-          :controller => "cloud_network"}
+        post :create, :params => {
+          :button                => 'add',
+          :controller            => 'cloud_network',
+          :format                => :js,
+          :cloud_tenant          => {:id => cloud_tenant.id},
+          :ems_id                => @ems.id,
+          :enabled               => true,
+          :external_facing       => false,
+          :id                    => 'new',
+          :name                  => 'test',
+          :provider_network_type => 'vxlan',
+          :shared                => false
+        }
       end
     end
   end

@@ -46,7 +46,12 @@ describe('cloud-network-form', function() {
 
       var cloudNetworkFormResponse = {
         name: 'abc',
-        description: 'ABC desc'
+        admin_state_up: true,
+        shared: false,
+        external_facing: false,
+        provider_network_type: 'vxlan',
+        tenant_id: 'íd',
+        vlan_transparent: false
       };
 
       spyOn(API, 'get').and.callFake(function() {
@@ -75,8 +80,8 @@ describe('cloud-network-form', function() {
       expect(vm.cloudNetworkModel.name).toBe('abc');
     });
 
-    it('sets vm.cloudNetworkModel.description', function () {
-      expect(vm.cloudNetworkModel.description).toBe('ABC desc');
+    it('sets vm.cloudNetworkModel.admin_state_up', function () {
+      expect(vm.cloudNetworkModel.admin_state_up).toBe(true);
     });
 
     it('updates a Cloud Network record', function () {
