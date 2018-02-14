@@ -16,3 +16,9 @@ Rails.application.config.assets.precompile += %w(
   remote_consoles/*.js
   remote_console.js
 )
+
+if Rails.env.development?
+  Rails.application.config.assets.precompile += %w(
+    bower_components/tota11y/build/tota11y.js
+  )
+end
