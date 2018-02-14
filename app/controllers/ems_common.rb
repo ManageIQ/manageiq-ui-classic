@@ -89,6 +89,7 @@ module EmsCommon
         cloud_tenants
         cloud_volumes
         cloud_volume_snapshots
+        cloud_volume_backups
         configuration_jobs
         container_builds
         container_groups
