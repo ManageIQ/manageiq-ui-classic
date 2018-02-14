@@ -135,7 +135,10 @@
           %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Dependent')
           %th= _('Delete Backing')
           %th{"ng-if" => @reconfigitems.first.vendor == 'redhat'}= _('Bootable')
-          %th= _('Actions')
+          - if supports_reconfigure_disksize?
+            %th{:colspan => 2}= _('Actions')
+          - else
+            %th= _('Actions')
         %tbody
           %tr{"ng-if"       => "vm.reconfigureModel.addEnabled",
               "ng-form"     => "rowForm"}
@@ -198,8 +201,14 @@
                      "name"          => "vm.cb_bootable",
                      "ng-model"      => "vm.reconfigureModel.cb_bootable"}
             %td.action-cell
-              %button.btn.btn-default.btn-block.btn-sm{:type => "button", "ng-click" => "vm.addDisk()", "ng-disabled" => "rowForm.dvcSize.$invalid"}= _(' Add ')
-          %tr{"ng-repeat" => "disk in vm.reconfigureModel.vmdisks", "ng-class" => "{'danger': disk.add_remove == 'remove', 'active': disk.add_remove == 'add'}"}
+              %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                                "ng-click" => "vm.addDisk()",
+                                                                "ng-disabled" => "rowForm.dvcSize.$invalid"}= _(' Add ')
+            - if supports_reconfigure_disksize?
+              %td.action-cell
+                %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                                  "ng-click" => "vm.hideAddDisk()"}= _('Cancel Add')
+          %tr{"ng-form" => "trForm", "ng-repeat" => "disk in vm.reconfigureModel.vmdisks", "ng-class" => "{'danger': disk.add_remove == 'remove', 'active': disk.add_remove == 'add'}"}
             %td
               {{disk.hdFilename}}
             %td
@@ -208,10 +217,33 @@
               {{disk.hdMode}}
             %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
               {{disk.new_controller_type}}
-            %td
+            %td{"ng-if" => "disk.add_remove != 'resizing'"}
               {{disk.hdSize}}
-            %td
+            %td{"ng-if" => "disk.add_remove == 'resizing'"}
+              %input.form-control{"type"        => "text",
+                                  "id"          => "dvcResize",
+                                  "name"        => "dvcResize",
+                                  "ng-model"    => "disk.hdSize",
+                                  "required"    => "",
+                                  "ng-pattern"  => "hdpattern",
+                                  "placeholder" => "Enter Size",
+                                  "ng-change"   => "vm.hdChanged()",
+                                  "validate-multiple" => "1",
+                                  :miqmin             => "{{ (disk.orgHdUnit === 'GB') ? (1024 * disk.orgHdSize + 1) : (1 * disk.orgHdSize + 1) }}",
+                                  :miqmax             => "2097152",
+                                  :memtype            => "{{disk.hdUnit}}"}
+              %span{"style" => "color:red", "ng-show" => "trForm.dvcResize.$invalid"}
+                = _("Disk size between {{1*disk.orgHdSize+1}} {{disk.orgHdUnit}} and 2TB required")
+            %td{"ng-if" => "disk.add_remove != 'resizing'"}
               {{disk.hdUnit}}
+            %td{"ng-if" => "disk.add_remove == 'resizing'"}
+              = select_tag('hdUnit',
+                       options_for_select(%w(MB GB)),
+                       "ng-model"                    => "disk.hdUnit",
+                       "ng-change"                   => "vm.resizeDiskUnitChanged(disk, trForm)",
+                       "data-width"                  => "auto",
+                       "required"                    => "",
+                       "selectpicker-for-select-tag" => "")
             %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
               %input{"bs-switch"     => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
@@ -238,6 +270,15 @@
                      "ng-model"      => "disk.cb_bootable",
                      "ng-readonly"   => true,
                      "switch-active" => false}
+            - if supports_reconfigure_disksize?
+              %td.action-cell
+                %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
+                                              "ng-if"    => "disk.add_remove == ''",
+                                              "ng-click" => "vm.enableResizeDisk(disk)"}= _('Resize')
+                %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
+                                              "ng-if"    => "disk.add_remove == 'resizing'",
+                                              "ng-disabled" => "trForm.dvcResize.$invalid || disk.hdSize == disk.orgHdSize",
+                                              "ng-click" => "vm.resizeDisk(disk)"}= _('Confirm Resize')
             %td.action-cell
               %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
                                             "ng-if"    => "disk.add_remove == ''",
@@ -248,6 +289,12 @@
               %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
                                              "ng-if"    => "disk.add_remove == 'add'",
                                              "ng-click" => "vm.cancelAddRemoveDisk(disk)"}= _('Cancel Add')
+              %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
+                                            "ng-if"    => "disk.add_remove == 'resizing'",
+                                            "ng-click" => "vm.cancelAddRemoveDisk(disk)"}= _('Cancel Resize')
+              %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
+                                            "ng-if"    => "disk.add_remove == 'resize'",
+                                            "ng-click" => "vm.cancelAddRemoveDisk(disk)"}= _('Cancel Resize')
   %hr
 
   %table{:width => "100%", :align => "bottom"}

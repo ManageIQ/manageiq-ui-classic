@@ -119,6 +119,7 @@ module Mixins
             # check if there is only one VM that supports disk reconfiguration
 
             @reconfig_values[:disk_add] = @req.options[:disk_add]
+            @reconfig_values[:disk_resize] = @req.options[:disk_resize]
             @reconfig_values[:disk_remove] = @req.options[:disk_remove]
             vmdisks = []
             if @req.options[:disk_add]
@@ -219,6 +220,10 @@ module Mixins
           @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disks?
         end
 
+        def supports_reconfigure_disksize?
+          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disksize? && @reconfigitems.first.supports_reconfigure_disks?
+        end
+
         private
 
         # 'true' => true
@@ -263,14 +268,21 @@ module Mixins
 
           # set the disk_add and disk_remove options
           if params[:vmAddDisks]
-            params[:vmAddDisks].values.each do |p|
+            params[:vmAddDisks].each_value do |p|
               p.transform_values! { |v| eval_if_bool_string(v) }
             end
             options[:disk_add] = params[:vmAddDisks].values
           end
 
+          if params[:vmResizeDisks]
+            params[:vmResizeDisks].each_value do |p|
+              p.transform_values! { |v| eval_if_bool_string(v) }
+            end
+            options[:disk_resize] = params[:vmResizeDisks].values
+          end
+
           if params[:vmRemoveDisks]
-            params[:vmRemoveDisks].values.each do |p|
+            params[:vmRemoveDisks].each_value do |p|
               p.transform_values! { |v| eval_if_bool_string(v) }
             end
             options[:disk_remove] = params[:vmRemoveDisks].values
