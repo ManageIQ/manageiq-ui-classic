@@ -814,6 +814,7 @@ module OpsController::OpsRbac
     if rec_type == "group"
       bad = (@edit[:new][:role].blank? || @edit[:new][:group_tenant].blank?)
     end
+    bad = @edit[:new][:name].blank? if rec_type == 'role'
 
     render :update do |page|
       page << javascript_prologue
