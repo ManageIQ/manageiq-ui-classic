@@ -47,7 +47,7 @@
     "phantomjs-polyfill": "~0.0.2",
     "qs": "~0.3.10",
     "rxjs": "~4.1.0",
-    "spice-html5-bower": "himdel/spice-html5-bower#~1.7.1",
+    "spice-html5-bower": "himdel/spice-html5-bower#~1.7.2",
     "spin.js": "~2.3.2",
     "sprintf": "~1.0.3",
     "xml_display": "~0.1.1"

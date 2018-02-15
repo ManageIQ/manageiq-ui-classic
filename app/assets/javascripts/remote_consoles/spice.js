@@ -11,8 +11,6 @@ $(function() {
     port = window.location.port;
   }
 
-  $('#ctrlaltdel').click(sendCtrlAltDel);
-
   var spice = new SpiceMainConn({
     uri: (encrypt ? 'wss://' : 'ws://') + host + ':' + port + '/' + $('#remote-console').attr('data-url'),
     screen_id: "remote-console",
@@ -28,4 +26,6 @@ $(function() {
       $('#connection-status').text(__('Connected'));
     },
   });
+
+  $('#ctrlaltdel').click(function(){sendCtrlAltDel(spice);});
 });
