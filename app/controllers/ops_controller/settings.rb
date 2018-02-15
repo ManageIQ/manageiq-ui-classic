@@ -5,7 +5,6 @@ module OpsController::Settings
   include_concern 'AnalysisProfiles'
   include_concern 'CapAndU'
   include_concern 'Common'
-  include_concern 'Ldap'
   include_concern 'Schedules'
   include_concern 'AutomateSchedules'
   include_concern 'Tags'

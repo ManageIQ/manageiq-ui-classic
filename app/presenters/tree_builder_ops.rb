@@ -1,6 +1,5 @@
 class TreeBuilderOps < TreeBuilder
   # common methods for OPS subclasses
-  has_kids_for LdapRegion, [:x_get_tree_lr_kids]
   has_kids_for Zone, [:x_get_tree_zone_kids]
 
   private
@@ -24,13 +23,5 @@ class TreeBuilderOps < TreeBuilder
     region = MiqRegion.my_region
     objects = region.zones.sort_by { |z| z.name.downcase }
     count_only_or_objects(count_only, objects)
-  end
-
-  def x_get_tree_lr_kids(object, count_only)
-    if count_only
-      return (object.ldap_domains.count)
-    else
-      return (object.ldap_domains.sort_by { |a| a.name.to_s })
-    end
   end
 end

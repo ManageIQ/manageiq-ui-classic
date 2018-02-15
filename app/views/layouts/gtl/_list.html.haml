@@ -100,8 +100,6 @@
               - click = "DoNav('/vm/#{@listicon.pluralize}/#{@vm.id}?show=#{@id}');"
             - when "Action"
               - click = "DoNav('#{url_for_db("miq_action")}');"
-            - when "LdapRegion"
-              - click = "miqTreeActivateNode('settings_tree', 'lr-#{row['id']}');"
             - when "MiqAction"
               - click = "miqTreeActivateNode('action_tree', 'a-#{row['id']}');"
             - when "MiqAlert"
@@ -191,8 +189,6 @@
                   - case view.db
                   - when "VmdbDatabaseConnection", "VmdbDatabaseSetting"
                     -# No onclick for DB settings
-                  - when "LdapRegion"
-                    - click = "miqTreeActivateNode('settings_tree', 'lr-#{row['id']}');"
                   - when "MiqAction"
                     - click = "miqTreeActivateNode('action_tree', 'a-#{row['id']}');"
                   - when "MiqAlert"

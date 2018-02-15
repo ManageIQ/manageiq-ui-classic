@@ -51,10 +51,3 @@
           %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-msc');", :title => _("View Schedules")}
             = _("Schedules")
             (#{h(@miq_schedules.size)})
-        - if ::Settings.product.new_ldap
-          %tr
-            %td.table-view-pf-select{:onclick => "miqTreeActivateNode('settings_tree', 'xx-l');", :title => _("View LDAP Regions")}
-              %i.pficon.pficon-regions
-            %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-l');", :title => _("View LDAP Regions")}
-              = _("LDAP Regions")
-              (#{h(@ldap_regions.size)})

@@ -79,12 +79,6 @@ class OpsController < ApplicationController
     'schedule_delete'           => :schedule_delete,
     'schedule_enable'           => :schedule_enable,
     'schedule_disable'          => :schedule_disable,
-    'ldap_region_add'           => :ldap_region_add,
-    'ldap_region_edit'          => :ldap_region_edit,
-    'ldap_region_delete'        => :ldap_region_delete,
-    'ldap_domain_add'           => :ldap_domain_add,
-    'ldap_domain_edit'          => :ldap_domain_edit,
-    'ldap_domain_delete'        => :ldap_domain_delete,
   }.freeze
 
   def collect_current_logs
@@ -441,12 +435,6 @@ class OpsController < ApplicationController
         if %w(ap_copy ap_edit ap_host_edit ap_vm_edit).include?(@sb[:action])
           action_url = "ap_edit"
           record_id = @edit[:scan_id] ? @edit[:scan_id] : nil
-        elsif %w(ldap_region_add ldap_region_edit).include?(@sb[:action])
-          action_url = "ldap_region_edit"
-          record_id = @edit[:ldap_region_id] ? @edit[:ldap_region_id] : nil
-        elsif %w(ldap_domain_add ldap_domain_edit).include?(@sb[:action])
-          action_url = "ldap_domain_edit"
-          record_id = @edit[:ldap_domain_id] ? @edit[:ldap_domain_id] : nil
         elsif %w(schedule_add schedule_edit).include?(@sb[:action])
           action_url = "schedule_edit"
           record_id = @edit[:sched_id] ? @edit[:sched_id] : nil
@@ -662,28 +650,6 @@ class OpsController < ApplicationController
         @right_cell_text = @edit ?
           _("Editing %{model} \"%{name}\"") % {:name => @schedule.name, :model => model} :
           _("%{model} \"%{name}\"") % {:model => model, :name => @schedule.name}
-      end
-    when "lde"          # ldap_region edit
-      # when editing/adding ldap domain in settings tree
-      presenter.update(:settings_list, r[:partial => "ldap_domain_form"])
-      if !@ldap_domain.id
-        @right_cell_text = _("Adding a new LDAP Domain")
-      else
-        model = _('LDAP Domain')
-        @right_cell_text = @edit ?
-          _("Editing %{model} \"%{name}\"") % {:name => @ldap_domain.name, :model => model} :
-          _("%{model} \"%{name}\"") % {:model => model, :name => @ldap_domain.name}
-      end
-    when "lre"          # ldap_region edit
-      # when edi ting/adding ldap region in settings tree
-      presenter.update(:settings_list, r[:partial => "ldap_region_form"])
-      if !@ldap_region.id
-        @right_cell_text = _("Adding a new LDAP Region")
-      else
-        model = _('LDAP Region')
-        @right_cell_text = @edit ?
-          _("Editing %{model} \"%{name}\"") % {:name => @ldap_region.name, :model => model} :
-          _("%{model} \"%{name}\"") % {:model => model, :name => @ldap_region.name}
       end
     when 'rhn'          # rhn subscription edit
       presenter[:update_partials][:settings_rhn] = r[:partial => "#{@sb[:active_tab]}_tab"]

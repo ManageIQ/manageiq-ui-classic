@@ -1176,9 +1176,6 @@ module OpsController::Settings::Common
       when "msc"
         @right_cell_text = _("Settings Schedules")
         schedules_list
-      when "l"
-        @right_cell_text = _("Settings LDAP Regions")
-        ldap_regions_list
       end
     when "svr"
       # @sb[:tabform] = "operations_1" if @sb[:selected_server] && @sb[:selected_server].id != nodetype.downcase.split("-").last.to_i #reset tab if server node was changed, current server has 10 tabs, current active tab may not be available for other server nodes.
@@ -1190,17 +1187,6 @@ module OpsController::Settings::Common
       @record = @selected_schedule = MiqSchedule.find(nodes.last)
       @right_cell_text = _("Settings Schedule \"%{name}\"") % {:name => @selected_schedule.name}
       schedule_show
-    when "ld", "lr"
-      nodes = nodetype.split('-')
-      if nodes[0] == "lr"
-        @record = @selected_lr = LdapRegion.find(nodes[1])
-        @right_cell_text = _("Settings LDAP Region \"%{name}\"") % {:name => @selected_lr.name}
-        ldap_region_show
-      else
-        @record = @selected_ld = LdapDomain.find(nodes[1])
-        @right_cell_text = _("Settings LDAP Domain \"%{name}\"") % {:name => @selected_ld.name}
-        ldap_domain_show
-      end
     when "sis"
       @record = @selected_scan = ScanItemSet.find(nodes.last)
       @right_cell_text = _("Settings Analysis Profile \"%{name}\"") % {:name => @selected_scan.name}
@@ -1232,7 +1218,6 @@ module OpsController::Settings::Common
       # Enterprise Details tab
       @scan_items = ScanItemSet.all
       @zones = Zone.in_my_region
-      @ldap_regions = LdapRegion.in_my_region
       @miq_schedules = MiqSchedule.where("(prod_default != 'system' or prod_default is null) and adhoc IS NULL")
                        .sort_by { |s| s.name.downcase }
     end
