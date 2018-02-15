@@ -3,16 +3,10 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
 
   vm.saveDialogDetails = saveDialogDetails;
   vm.dismissChanges = dismissChanges;
-  vm.setupModalOptions = setupModalOptions;
 
   // treeSelector related
   vm.lazyLoad = DialogEditorHttp.treeSelectorLazyLoadData;
-  vm.onSelect = onSelect;
-  vm.showFullyQualifiedName = showFullyQualifiedName;
   vm.node = {};
-  vm.treeSelectorToggle = treeSelectorToggle;
-  vm.treeSelectorIncludeDomain = false;
-  vm.treeSelectorShow = false;
   DialogEditorHttp.treeSelectorLoadData().then(function(data) {
     vm.treeSelectorData = data;
   });
@@ -72,48 +66,6 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     vm.dialog = dialog;
     vm.DialogValidation = DialogValidation;
     vm.DialogEditor = DialogEditor;
-  }
-
-  function setupModalOptions(type, tab, box, field) {
-    var components = {
-      tab: 'dialog-editor-modal-tab',
-      box: 'dialog-editor-modal-box',
-      field: 'dialog-editor-modal-field'
-    };
-    vm.modalOptions = {
-      component: components[type],
-      size: 'lg',
-    };
-    vm.elementInfo = { type: type, tabId: tab, boxId: box, fieldId: field };
-    vm.visible = true;
-  }
-
-
-  function onSelect(node, elementData) {
-    var fqname = node.fqname.split('/');
-    if (vm.treeSelectorIncludeDomain === false) {
-      fqname.splice(1, 1);
-    }
-    elementData.resource_action.ae_instance = fqname.pop();
-    elementData.resource_action.ae_class = fqname.pop();
-    elementData.resource_action.ae_namespace = fqname.filter(String).join('/');
-    vm.treeSelectorShow = false;
-  }
-
-  function showFullyQualifiedName(resourceAction) {
-    if (typeof resourceAction.ae_namespace === 'undefined' ||
-        typeof resourceAction.ae_class === 'undefined' ||
-        typeof resourceAction.ae_instance === 'undefined') {
-      return '';
-    }
-    var fqname = resourceAction.ae_namespace
-      + '/' + resourceAction.ae_class
-      + '/' + resourceAction.ae_instance;
-    return fqname;
-  }
-
-  function treeSelectorToggle() {
-    vm.treeSelectorShow = ! vm.treeSelectorShow;
   }
 
   var beingCloned = null; // hack that solves recursion problem for cloneDeep
