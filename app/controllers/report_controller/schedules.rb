@@ -314,7 +314,7 @@ module ReportController::Schedules
     @edit[:new]      = {}
     @edit[:current]  = {}
     @edit[:key]      = "schedule_edit__#{@schedule.id || "new"}"
-    @menu            = get_reports_menu
+    @menu            = get_reports_menu(true)
     @menu.each { |r| @folders.push(r[0]) }
 
     @edit[:new][:name]        = @schedule.name

@@ -729,10 +729,10 @@ class ApplicationController < ActionController::Base
     @server_options[:ipaddress] = ""
   end
 
-  def populate_reports_menu(tree_type = 'reports', mode = 'menu')
+  def populate_reports_menu(hide_custom = false)
     # checking to see if group (used to be role) was selected in menu editor tree, or came in from reports/timeline tree calls
-    group = !session[:role_choice].blank? ? MiqGroup.find_by_description(session[:role_choice]) : current_group
-    @sb[:rpt_menu] = get_reports_menu(group, tree_type, mode)
+    group = !session[:role_choice].blank? ? MiqGroup.find_by(:description => session[:role_choice]) : current_group
+    @sb[:rpt_menu] = get_reports_menu(hide_custom, group)
   end
 
   def reports_group_title
@@ -747,96 +747,26 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def get_reports_menu(group = current_group, tree_type = "reports", mode = "menu")
-    rptmenu = []
-    reports = []
-    folders = []
-    user = current_user
-    @sb[:grp_title] = reports_group_title
-    @data = []
-    if !group.settings || group.settings[:report_menus].blank? || mode == "default"
-      # array of all reports if menu not configured
-      @rep = MiqReport.for_user(current_user).sort_by { |r| [r.rpt_type, r.filename.to_s, r.name] }
-      if tree_type == "timeline"
-        @data = @rep.reject { |r| r.timeline.nil? }
-      else
-        @data = @rep.select do |r|
-          r.template_type == "report" && !r.template_type.blank?
-        end
-      end
-      @data.each do |r|
-        next if r.template_type != "report" && !r.template_type.blank?
-        r_group = r.rpt_group == "Custom" ? "#{@sb[:grp_title]} - Custom" : r.rpt_group # Get the report group
-        title = r_group.reverse.split('-', 2).collect(&:reverse).collect(&:strip).reverse
-        if @temp_title != title[0]
-          @temp_title = title[0]
-          reports = []
-          folders = []
-        end
-
-        if title[1].nil?
-          if title[0] == @temp_title
-            reports.push(r.name) unless reports.include?(r.name)
-            rptmenu.push([title[0], reports]) unless rptmenu.include?([title[0], reports])
-          end
-        else
-          if @temp_title1 != title[1]
-            reports = []
-            @temp_title1 = title[1]
-          end
-          rptmenu.push([title[0], folders]) unless rptmenu.include?([title[0], folders])
-          reports.push(r.name) unless reports.include?(r.name)
-          folders.push([title[1], reports]) unless folders.include?([title[1], reports])
-        end
-      end
-    else
-      # Building custom reports array for super_admin/admin roles, it doesnt show up on menu if their menu was set which didnt contain custom folder in it
-      temp = []
-      subfolder = %w( Custom )
-      @custom_folder = [@sb[:grp_title]]
-      @custom_folder.push([subfolder]) unless @custom_folder.include?([subfolder])
-
-      custom = MiqReport.for_user(current_user).sort_by { |r| [r.rpt_type, r.filename.to_s, r.name] }
-      rep = custom.select do |r|
-        r.rpt_type == "Custom" && (user.admin_user? || r.miq_group_id.to_i == current_group.try(:id))
-      end.map(&:name).uniq
-
-      subfolder.push(rep) unless subfolder.include?(rep)
-      temp.push(@custom_folder) unless temp.include?(@custom_folder)
-      if tree_type == "timeline"
-        temp2 = []
-        group.settings[:report_menus].each do |menu|
-          folder_arr = []
-          menu_name = menu[0]
-          menu[1].each_with_index do |reports, _i|
-            reports_arr = []
-            folder_name = reports[0]
-            reports[1].each do |rpt|
-              r = MiqReport.find_by_name(rpt)
-              if r && !r.timeline.nil?
-                temp2.push([menu_name, folder_arr]) unless temp2.include?([menu_name, folder_arr])
-                reports_arr.push(rpt) unless reports_arr.include?(rpt)
-                folder_arr.push([folder_name, reports_arr]) unless folder_arr.include?([folder_name, reports_arr])
-              end
-            end
-          end
-        end
-      else
-        temp2 = group.settings[:report_menus]
-      end
-      rptmenu = temp.concat(temp2)
+  def default_reports_menu
+    # TODO: move this into a named scope
+    data = MiqReport.for_user(current_user).where(:template_type => "report").where.not(:rpt_type => 'Custom').order(:rpt_type, :name).pluck(:rpt_group, :name)
+    data.map { |grp, items| [grp.split(/ *- */), items].flatten }.group_by(&:first).map do |grp, items|
+      # Group the items by the secondary group and throw out the group names from the final items list
+      [grp, items.group_by(&:second).map { |subgroup, subitems| [subgroup, subitems.map(&:third)] }]
     end
-    # move Customs folder as last item in tree
-    rptmenu[0].each do |r|
-      if r.class == String && r == @sb[:grp_title]
-        @custom_folder = copy_array(rptmenu[0]) if @custom_folder.nil?
-        # Keeping My Company Reports folder on top of the menu tree only if user is on edit tab, else delete it from tree
-        # only add custom folder if it has any reports
-        rptmenu.push(rptmenu[0]) unless rptmenu[0][1][0][1].empty?
-        rptmenu.delete_at(0)
-      end
+  end
+
+  def get_reports_menu(hide_custom = false, group = current_group)
+    reports = group.try(:settings).try(:[], :report_menus) || default_reports_menu
+    # TODO: move this into a named scope
+    unless hide_custom
+      # TODO: move this into a named scope
+      @sb[:grp_title] = reports_group_title
+      custom = MiqReport.for_user(current_user).where(:template_type => "report", :rpt_type => 'Custom').order(:name).pluck(:name, :miq_group_id)
+      custom.select! { |item| item.second.to_i == current_group.try(:id) } unless current_user.admin_user?
+      reports.push([@sb[:grp_title], [[_("Custom"), custom.map(&:first)]]])
     end
-    rptmenu
+    reports
   end
 
   # Render the view data to a Hash structure for the list view
