@@ -115,9 +115,11 @@ describe CloudNetworkController do
           :userid => controller.current_user.userid
         }
       end
+
       let(:cloud_tenant) do
         FactoryGirl.create(:cloud_tenant)
       end
+
       let(:queue_options) do
         {
           :class_name  => @ems.class.name,
@@ -176,6 +178,7 @@ describe CloudNetworkController do
           :userid => controller.current_user.userid
         }
       end
+
       let(:queue_options) do
         {
           :class_name  => @network.class.name,

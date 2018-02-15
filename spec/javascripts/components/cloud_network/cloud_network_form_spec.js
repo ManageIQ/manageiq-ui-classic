@@ -28,8 +28,15 @@ describe('cloud-network-form', function() {
 
     it('adds a Cloud Network record', function () {
       vm.cloudNetworkModel.name = 'newNetwork';
-      vm.cloudNetworkModel.description = 'newNetwork_desc';
       vm.cloudNetworkModel.ems_id = 1;
+      vm.cloudNetworkModel.id = 'new';
+      vm.cloudNetworkModel.cloud_tenant = {id: 'tenant_id'};
+      vm.cloudNetworkModel.admin_state_up = true;
+      vm.cloudNetworkModel.enabled = true;
+      vm.cloudNetworkModel.external_facing = false;
+      vm.cloudNetworkModel.provider_network_type = 'vxlan';
+      vm.cloudNetworkModel.shared = false;
+      vm.cloudNetworkModel.vlan_transparent = false;
       vm.addClicked();
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('create/new?button=add', vm.cloudNetworkModel, { complete: false });
     });
@@ -45,13 +52,9 @@ describe('cloud-network-form', function() {
       spyOn(miqService, 'miqAjaxButton');
 
       var cloudNetworkFormResponse = {
-        name: 'abc',
-        admin_state_up: true,
-        shared: false,
-        external_facing: false,
-        provider_network_type: 'vxlan',
-        tenant_id: 'íd',
-        vlan_transparent: false
+        id: 'id',
+        name: 'test',
+        enabled: true
       };
 
       spyOn(API, 'get').and.callFake(function() {
@@ -68,7 +71,7 @@ describe('cloud-network-form', function() {
       vm.$onInit();
     }));
 
-    it('sets newRecord to true', function () {
+    it('sets newRecord to false', function () {
       expect(vm.newRecord).toBe(false);
     });
 
@@ -77,17 +80,15 @@ describe('cloud-network-form', function() {
     });
 
     it('sets vm.cloudNetworkModel.name', function () {
-      expect(vm.cloudNetworkModel.name).toBe('abc');
+      expect(vm.cloudNetworkModel.name).toBe('test');
     });
 
-    it('sets vm.cloudNetworkModel.admin_state_up', function () {
-      expect(vm.cloudNetworkModel.admin_state_up).toBe(true);
+    it('sets vm.cloudNetworkModel.enabled', function () {
+      expect(vm.cloudNetworkModel.enabled).toBe(true);
     });
 
     it('updates a Cloud Network record', function () {
-
       vm.cloudNetworkModel.name = 'xyz';
-      vm.cloudNetworkModel.description = 'XYZ Desc';
       vm.saveClicked();
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/cloud_network/update/1111?button=save', vm.cloudNetworkModel, { complete: false });
     });
