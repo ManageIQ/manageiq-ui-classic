@@ -139,6 +139,7 @@
       - opts = [["#{_('Date')}", "date"], ["#{_(@edit[:new][:cb_model])}", "vm"]]
       - opts += [["#{_('Tag')}", "tag"]] unless @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
       - opts += [["#{_('Project')}", "project"], [_('Label'), 'label']] if @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
+      - opts += [["#{_('Tenant')}", "tenant"]] if %w(ChargebackVm MeteringVm).include?(@edit[:new][:model])
       = select_tag("cb_groupby",
         options_for_select(opts, @edit[:new][:cb_groupby]),
         :class                 => "selectpicker")
