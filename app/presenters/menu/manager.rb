@@ -73,6 +73,12 @@ module Menu
 
     def merge_sections(sections)
       sections.each do |section|
+        duplicate = @menu.find { |existing_section| existing_section.id == section.id }
+        if duplicate
+          duplicate.items.push(*section.items)
+          next
+        end
+
         position = nil
         if section.before
           position = @menu.index { |existing_section| existing_section.id == section.before }
