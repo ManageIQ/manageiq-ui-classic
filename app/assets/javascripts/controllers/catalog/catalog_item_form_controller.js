@@ -16,7 +16,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       provisioning_cloud_credential_id: '',
       provisioning_execution_ttl: '',
       provisioning_inventory: 'localhost',
-      provisioning_dialog_existing: 'existing',
+      provisioning_dialog_existing: '',
       provisioning_dialog_id: '',
       provisioning_dialog_name: '',
       provisioning_key: '',
