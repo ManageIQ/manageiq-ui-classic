@@ -28,11 +28,13 @@
         = _('Select a Group:')
       .col-md-8
         - if @ownershipitems.length > 1
-          - opts = [["<#{_("Don't change")}>", ApplicationController::CiProcessing::DONT_CHANGE_OWNER]] + @groups.sort
+          - opts = [["<#{_("Don't change")}>", ApplicationController::CiProcessing::DONT_CHANGE_OWNER], ["<#{_('No User Group')}>", '']] + @groups.sort
         - else
-          - opts = @groups.sort
+          - user_group = MiqGroup.find_by(:id => @group).tenant_group? ? @group : ''
+          - opts =  [["<#{_('No User Group')}>", user_group]]
+        - opts += @groups.sort
         = select_tag("group",
-                      options_for_select(opts, @group),
+                      options_for_select(opts, user_group),
                       "ng-model"                    => "ownershipModel.group",
                       "id"                          => "group_name",
                       "checkchange"                 => "",
