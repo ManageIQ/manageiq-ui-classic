@@ -9,10 +9,10 @@ describe PhysicalServerController do
     EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryGirl.create(:user)
     ems = FactoryGirl.create(:ems_physical_infra)
-    asset_details = FactoryGirl.create(:asset_details)
+    asset_detail = FactoryGirl.create(:asset_detail)
     computer_system = FactoryGirl.create(:computer_system, :hardware => FactoryGirl.create(:hardware))
     @physical_server = FactoryGirl.create(:physical_server,
-                                          :asset_details   => asset_details,
+                                          :asset_detail    => asset_detail,
                                           :computer_system => computer_system,
                                           :ems_id          => ems.id,
                                           :id              => 1)
