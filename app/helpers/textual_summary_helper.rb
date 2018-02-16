@@ -35,17 +35,53 @@ module TextualSummaryHelper
     end
   end
 
-  def expand_textual_group(summaries, context = @record)
-    Array.wrap(summaries).map { |summary| expand_textual_summary(summary, context) }.compact
+  def post_process_textual_summary(item)
+    item[:hoverClass] = hover_class(item)
+    item[:image] = image_url(item[:image]) if item[:image].present?
+    item[:explorer] &&= @explorer
+    item
   end
 
-  def textual_group_render_options(group_symbol)
-    group = send("textual_group_#{group_symbol}")
-    return nil unless group
+  def expand_textual_group(summaries, context = @record)
+    Array.wrap(summaries)
+         .map { |summary| expand_textual_summary(summary, context) }
+         .compact
+         .map { |summary| post_process_textual_summary(summary) }
+  end
+
+  def expand_generic_group(group_result, record)
+    items = expand_textual_group(group_result.items, record)
+    return nil if items.length.zero?
+
+    locals = group_result.locals
     {
-      :partial => group.template,
-      :locals  => group.locals,
+      :title     => locals[:title],
+      :component => locals[:component],
+      :items     => items,
     }
+  end
+
+  def process_textual_info(groups, record)
+    groups.collect do |big_group|
+      big_group.collect do |group_symbol|
+        group_result = send("textual_group_#{group_symbol}")
+        next if group_result.nil?
+
+        locals = group_result.locals
+        case locals[:component]
+        when 'GenericGroup', 'TagGroup', 'OperationRanges'
+          expand_generic_group(group_result, record)
+        when 'SimpleTable', 'EmptyGroup', 'TableListView', 'MultilinkTable'
+          locals
+        else
+          raise "Unexpected summary component: #{locals[:component]}"
+        end
+      end.compact
+    end
+  end
+
+  def textual_tags_render_data(record)
+    expand_generic_group(textual_group_smart_management, record)
   end
 
   def textual_key_value_group(items)

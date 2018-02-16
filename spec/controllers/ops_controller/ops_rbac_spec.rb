@@ -72,8 +72,9 @@ describe OpsController do
 
         tab_content = JSON.parse(response.body)['replacePartials']['ops_tabs']
         expect(tab_content).to include('Tenant Quota')
-        expect(tab_content).to include("<th>\nName\n<\/th>\n<th>\nTotal Quota\n<\/th>\n<th>\nIn Use\n" \
-                                         "<\/th>\n<th>\nAllocated\n<\/th>\n<th>\nAvailable\n<\/th>")
+        expect(tab_content).to include('Name')
+        expect(tab_content).to include('Total Quota')
+        expect(tab_content).to include('In Use')
         expect(tab_content).to include('4096.0 GB')
         expect(tab_content).to include('1024 Count')
         expect(tab_content).to include('27 Count')

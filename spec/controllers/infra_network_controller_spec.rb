@@ -71,7 +71,8 @@ describe InfraNetworkingController do
         post :tree_select, :params => { :id => tree_node_id, :tree => :infra_networking_tree, :format => :js }
 
         expect(response.status).to eq(200)
-        expect(response.body).to include("Department: #{tag1.description}")
+        expect(response.body).to include('Department')
+        expect(response.body).to include(tag1.description)
         expect(response.body).to include(tag2.description)
       end
     end

@@ -32,15 +32,25 @@ module GenericObjectDefinitionHelper::TextualSummary
   end
 
   def textual_group_attribute_details_list
-    record_properties_list(_("Attributes (%{count})") % {:count => @record.property_attributes.count},
-                           :property_attributes,
-                           [_("Name"), _("Type")])
+    if @record.property_attributes.count.zero?
+      TextualEmpty.new(_('Attributes'), _('No Attributes defined'))
+    else
+      record_properties_list(
+        _('Attributes (%{count})') % {:count => @record.property_attributes.count},
+        :property_attributes, [_("Name"), _("Type")]
+      )
+    end
   end
 
   def textual_group_association_details_list
-    record_properties_list(_("Associations (%{count})") % {:count => @record.property_associations.count},
-                           :property_associations,
-                           [_("Name"), _("Class")])
+    if @record.property_associations.count.zero?
+      TextualEmpty.new(_('Associations'), _('No Associations defined'))
+    else
+      record_properties_list(
+        _('Associations (%{count})') % {:count => @record.property_associations.count },
+        :property_associations, [_("Name"), _("Class")]
+      )
+    end
   end
 
   def record_properties_list(type_and_count, type, labels)
@@ -48,28 +58,19 @@ module GenericObjectDefinitionHelper::TextualSummary
       type_and_count,
       :additional_table_class => "table-fixed",
       :labels                 => labels,
-      :values                 => record_properties(type)
+      :values                 => @record.send(type).map { |a| a.take(labels.length) }
     )
   end
 
   def textual_group_method_details_list
-    TextualMultilabel.new(
-      _("Methods (%{count})") % {:count => @record.property_methods.count},
-      :additional_table_class => "table-fixed",
-      :labels                 => [_("Name")],
-      :values                 => methods_array
-    )
-  end
-
-  def record_properties(property)
-    @record.send(property).each do |var|
-      [var[0], var[1]]
-    end
-  end
-
-  def methods_array
-    @record.property_methods.collect do |var|
-      [var]
+    if @record.property_methods.count.zero?
+      TextualEmpty.new(_('Methods'), _('No Methods defined'))
+    else
+      TextualMultilabel.new(
+        _('Methods (%{count})') % {:count => @record.property_methods.count},
+        :additional_table_class => "table-fixed",
+        :labels => [_("Name")], :values => @record.property_methods.map { |a| [a] }
+      )
     end
   end
 end

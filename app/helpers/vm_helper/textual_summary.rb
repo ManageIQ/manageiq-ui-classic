@@ -90,7 +90,7 @@ module VmHelper::TextualSummary
   def textual_group_normal_operating_ranges
     TextualCustom.new(
       _("Normal Operating Ranges (over 30 days)"),
-      'shared/summary/textual_normal_operating_ranges',
+      'OperationRanges',
       %i(
         normal_operating_ranges_cpu normal_operating_ranges_cpu_usage normal_operating_ranges_memory
         normal_operating_ranges_memory_usage

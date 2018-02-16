@@ -1,9 +1,5 @@
-TextualCustom = Struct.new(:title, :template_name, :items) do
-  def template
-    template_name
-  end
-
+TextualCustom = Struct.new(:title, :component_name, :items) do
   def locals
-    {:title => title, :items => items}
+    {:title => title, :items => items, :component => component_name}
   end
 end
