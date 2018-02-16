@@ -11,6 +11,8 @@ class MiqPolicyDecorator < MiqDecorator
              'fa fa-cubes'
            when 'ContainerNode'
              'pficon pficon-container-node'
+           when 'ContainerProject'
+             'pficon pficon-project'
            when 'ContainerImage'
              'pficon pficon-image'
            when 'ExtManagementSystem'

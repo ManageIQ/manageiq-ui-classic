@@ -33,6 +33,8 @@ class TreeBuilderCondition < TreeBuilder
       'pficon pficon-container-node'
     when 'ContainerImage'
       'pficon pficon-image'
+    when 'ContainerProject'
+      'pficon pficon-project'
     when 'ExtManagementSystem'
       'pficon pficon-server'
     when 'PhysicalServer'
@@ -48,6 +50,7 @@ class TreeBuilderCondition < TreeBuilder
                  :ContainerGroup      => _("Pod Conditions"),
                  :ContainerNode       => _("Container Node Conditions"),
                  :ContainerImage      => _("Container Image Conditions"),
+                 :ContainerProject    => _("Container Project Conditions"),
                  :ExtManagementSystem => _("Provider Conditions"),
                  :PhysicalServer      => _("Physical Infrastructure Conditions")}
 

@@ -21,6 +21,7 @@ class TreeBuilderPolicy < TreeBuilder
                                  :ContainerGroup      => _("Pod Compliance Policies"),
                                  :ContainerNode       => _("Container Node Compliance Policies"),
                                  :ContainerImage      => _("Container Image Compliance Policies"),
+                                 :ContainerProject    => _("Container Project Compliance Policies"),
                                  :ExtManagementSystem => _("Provider Compliance Policies"),
                                  :PhysicalServer      => _("Physical Infrastructure Compliance Policies")},
                  :control    => {:Host                => _("Host Control Policies"),
@@ -29,6 +30,7 @@ class TreeBuilderPolicy < TreeBuilder
                                  :ContainerGroup      => _("Pod Control Policies"),
                                  :ContainerNode       => _("Container Node Control Policies"),
                                  :ContainerImage      => _("Container Image Control Policies"),
+                                 :ContainerProject    => _("Container Project Control Policies"),
                                  :ExtManagementSystem => _("Provider Control Policies"),
                                  :PhysicalServer      => _("Physical Infrastructure Control Policies")}}
 
@@ -47,6 +49,8 @@ class TreeBuilderPolicy < TreeBuilder
                'pficon pficon-container-node'
              when 'ContainerImage'
                'pficon pficon-image'
+             when 'ContainerProject'
+               'pficon pficon-project'
              when 'ExtManagementSystem'
                'pficon pficon-server'
              when 'PhysicalServer'
