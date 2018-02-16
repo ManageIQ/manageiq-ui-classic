@@ -1,22 +1,20 @@
-ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', 'API', 'miqService', 'DialogEditor', 'DialogValidation', 'dialogIdAction', function($window, $http, API, miqService, DialogEditor, DialogValidation, dialogIdAction) {
+ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqService', 'DialogEditor', 'DialogEditorHttp', 'DialogValidation', 'dialogIdAction', function($window, miqService, DialogEditor, DialogEditorHttp, DialogValidation, dialogIdAction) {
   var vm = this;
-
-  vm.$http = $http;
 
   vm.saveDialogDetails = saveDialogDetails;
   vm.dismissChanges = dismissChanges;
   vm.setupModalOptions = setupModalOptions;
 
   // treeSelector related
-  vm.lazyLoad = lazyLoad;
+  vm.lazyLoad = DialogEditorHttp.treeSelectorLazyLoadData;
   vm.onSelect = onSelect;
   vm.showFullyQualifiedName = showFullyQualifiedName;
   vm.node = {};
   vm.treeSelectorToggle = treeSelectorToggle;
   vm.treeSelectorIncludeDomain = false;
   vm.treeSelectorShow = false;
-  vm.$http.get('/tree/automate_entrypoint').then(function(response) {
-    vm.treeSelectorData = response.data;
+  DialogEditorHttp.treeSelectorLoadData().then(function(data) {
+    vm.treeSelectorData = data;
   });
 
   function requestDialogId() {
@@ -43,11 +41,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
     };
     init(dialogInitContent);
   } else {
-    API.get(
-      '/api/service_dialogs/'
-      + requestDialogId()
-      + '?attributes=content,buttons,label'
-    ).then(init);
+    DialogEditorHttp.loadDialog(requestDialogId()).then(init);
   }
 
   function init(dialog) {
@@ -94,13 +88,6 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
     vm.visible = true;
   }
 
-
-  function lazyLoad(node) {
-    return vm.$http.get('/tree/automate_entrypoint?id=' + encodeURIComponent(node.key))
-    .then(function(response) {
-      return response.data;
-    });
-  }
 
   function onSelect(node, elementData) {
     var fqname = node.fqname.split('/');
@@ -185,12 +172,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
       dialogData.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
     }
 
-    API.post('/api/service_dialogs' + dialogId, {
-      action: action,
-      resource: dialogData,
-    }, { // options - don't show the error modal on validation errors
-      skipErrors: [400],
-    }).then(saveSuccess, saveFailure);
+    DialogEditorHttp.saveDialog(dialogId, action, dialogData).then(saveSuccess, saveFailure);
   }
 
   function dismissChanges() {
