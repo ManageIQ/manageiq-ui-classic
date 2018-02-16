@@ -4,12 +4,13 @@
 # Milan Zázrivec <mzazrivec@redhat.com>, 2016. #zanata
 # asasaki <asasaki@redhat.com>, 2017. #zanata
 # miey <myamamot@redhat.com>, 2017. #zanata
+# asasaki <asasaki@redhat.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-31 14:32+0100\n"
-"PO-Revision-Date: 2017-12-06 09:25-0500\n"
+"PO-Revision-Date: 2018-02-11 08:12-0500\n"
 "Last-Translator: asasaki <asasaki@redhat.com>\n"
 "Language-Team: English\n"
 "MIME-Version: 1.0\n"
@@ -13632,7 +13633,7 @@ msgid ""
 "Enable event monitoring. Used to automatically resync state when changes are"
 " performed on VMware vCloud Director directly."
 msgstr ""
-"エベント監視を有効にします。VMware vCloud Director で直接変更が行われたときに状態を自動的に再同期するために使用されます。"
+"イベント監視を有効にします。VMware vCloud Director で直接変更が行われたときに状態を自動的に再同期するために使用されます。"
 
 #: ../app/controllers/middleware_deployment_controller.rb:32
 msgid "Enable initiated for selected deployment(s)"
@@ -15027,7 +15028,7 @@ msgstr "開始アドレス"
 
 #: ../app/views/miq_ae_class/_copy_objects_form.html.haml:10
 msgid "From Domain"
-msgstr "開始ドメイン"
+msgstr "コピー元ドメイン"
 
 #: ../app/views/report/_show_schedule.html.haml:20
 msgid "From E-mail"
@@ -21608,7 +21609,7 @@ msgstr "物理サーバー"
 #: ../app/controllers/ems_physical_infra_controller.rb:55
 #: ../app/views/layouts/listnav/_ems_physical_infra.html.haml:24
 msgid "Physical Servers with Host"
-msgstr "ホストを含む物理サーバー"
+msgstr "ホストに関連付けられた物理サーバー"
 
 #: ../app/views/floating_ip/new.html.haml:69
 #: ../app/views/cloud_subnet/edit.html.haml:23
@@ -25833,7 +25834,7 @@ msgstr "このサーバーの再起動"
 #: ../app/helpers/application_helper/toolbar/physical_servers_center.rb:115
 #: ../app/helpers/application_helper/toolbar/physical_server_center.rb:101
 msgid "Restart to System Setup"
-msgstr "サーバーセットアップに対する再起動"
+msgstr "システムセットアップに対する再起動"
 
 #: ../app/controllers/cloud_volume_controller.rb:471
 msgid "Restore Cloud Volume \"%{name}\" from a Backup"
@@ -31570,7 +31571,7 @@ msgstr "すべてのユーザーを対象"
 
 #: ../app/views/miq_ae_class/_copy_objects_form.html.haml:16
 msgid "To Domain"
-msgstr "終了ドメイン"
+msgstr "コピー先ドメイン"
 
 #: ../app/views/report/_show_schedule.html.haml:28
 msgid "To E-mail"
