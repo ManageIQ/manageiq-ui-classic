@@ -57,14 +57,6 @@ module QuadiconHelper
     !@quadicon_no_url
   end
 
-  def quadicon_policy_sim?
-    !!@policy_sim
-  end
-
-  def quadicon_lastaction_is_policy_sim?
-    @lastaction == "policy_sim"
-  end
-
   def quadicon_in_explorer_view?
     !!@explorer
   end
@@ -171,25 +163,86 @@ module QuadiconHelper
     end
   end
 
+  def calculate_quad_db(item)
+    if item.class.base_model.to_s.underscore == "ext_management_system"
+      db_for_quadicon
+    else
+      item.class.base_model.name.underscore.to_sym
+    end
+  end
+
+  private :calculate_quad_db
+
+  def quadicons_from_settings(db_name)
+    if respond_to?(:settings)
+      settings(:quadicons, db_name)
+    elsif @settings && @settings[:quadicons]
+      @settings[:quadicons][db_name]
+    end
+  end
+
+  private :quadicons_from_settings
+
+  def quad_image(item)
+    if @listicon
+      "100/#{@listicon}.png"
+    elsif item.decorate.try(:fileicon)
+      item.decorate.try(:fileicon)
+    else
+      "100/#{item.class.base_class.to_s.underscore}.png"
+    end
+  end
+
+  def single_quad(item)
+    output = []
+    output << flobj_img_simple
+    if item.kind_of?(VmOrTemplate) && quadicon_policy_sim? && !session[:policies].empty?
+      output << flobj_img_small(img_for_compliance(item), "e72")
+    end
+    output << flobj_img_simple('100/shield.png', "g72") unless item.try(:get_policies).try(:empty?)
+    output << flobj_img_simple(quad_image(item), "e72")
+  end
+
+  private :single_quad
+
+  def quad_decorator(quad, item)
+    output = []
+    output << flobj_img_simple("layout/base.svg")
+    output.concat(transform_quadicon(quad))
+    if item.try(:get_policies) && !item.try(:get_policies).try(:empty?)
+      output << flobj_img_simple('100/shield.png', "g72")
+    end
+    output
+  end
+
+  def quadicon_for_item(item)
+    quad_settings = if item.kind_of?(VmOrTemplate)
+                      {
+                        :show_compliance => quadicon_lastaction_is_policy_sim? || quadicon_policy_sim?,
+                        :policies        => session[:policies]
+                      }
+                    else
+                      {}
+                    end
+    quadicon = item.decorate.try(:quadicon, quad_settings)
+    if quadicons_from_settings(calculate_quad_db(item)) && quadicon
+      quad_decorator(quadicon, item)
+    else
+      single_quad(item)
+    end
+  end
+
   def quadicon_tag(options = {}, &block)
     options = {:class => "quadicon"}.merge!(options)
     content_tag(:div, options, &block)
   end
 
   def img_for_compliance(item)
-    case item.passes_profiles?(session[:policies].keys)
-    when true  then '100/check.png'
-    when 'N/A' then '100/na.png'
-    else            '100/x.png'
-    end
+    compliance_img(item, session[:policies])
   end
 
   def img_for_vendor(item)
     "svg/vendor-#{h(item.vendor)}.svg"
-  end
-
-  def img_for_host_vendor(item)
-    "svg/vendor-#{h(item.vmm_vendor_display.downcase)}.svg"
   end
 
   def img_for_auth_status(item)
@@ -221,21 +274,9 @@ module QuadiconHelper
   end
 
   # Renders a quadicon for PhysicalServer
-  # TODO: use quadicon decorator
+  #
   def render_physical_server_quadicon(item, options)
-    output = []
-    if settings(:quadicons, :physical_server)
-      output << flobj_img_simple("layout/base.svg")
-
-      output << flobj_p_simple("a72", (item.host ? 1 : 0))
-      output << flobj_img_simple("svg/currentstate-#{h(item.power_state.try(:downcase))}.svg", "b72")
-      output << flobj_img_simple(item.ext_management_system.decorate.fileicon, "c72")
-      output << flobj_img_simple(img_for_health_state(item), "d72")
-      output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
-    else
-      output << flobj_img_simple
-      output << flobj_img_simple(item.ext_management_system.decorate.fileicon, "e72")
-    end
+    output = quadicon_for_item(item)
 
     if options[:typ] == :listnav
       # Listnav, no href needed
@@ -472,14 +513,9 @@ module QuadiconHelper
   end
 
   # Renders a quadicon for resource_pools
-  # TODO: use quadicon decorator
+  #
   def render_resource_pool_quadicon(item, options)
-    img = item.vapp ? "100/vapp.png" : "100/resource_pool.png"
-    output = []
-
-    output << flobj_img_simple
-    output << flobj_img_small(img, "e72")
-    output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
+    output = quadicon_for_item(item)
 
     unless options[:typ] == :listnav
       # listnav, no clear image needed
@@ -502,22 +538,9 @@ module QuadiconHelper
   end
 
   # Renders a quadicon for hosts
-  # TODO: use quadicon decorator
+  #
   def render_host_quadicon(item, options)
-    output = []
-
-    if settings(:quadicons, :host)
-      output << flobj_img_simple("layout/base.svg")
-
-      output << flobj_p_simple("a72", item.vms.size)
-      output << currentstate_icon(item.normalized_state.downcase)
-      output << flobj_img_simple(img_for_host_vendor(item), "c72")
-      output << flobj_img_simple(img_for_auth_status(item), "d72")
-      output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
-    else
-      output << flobj_img_simple
-      output << flobj_img_small(img_for_host_vendor(item), "e72")
-    end
+    output = quadicon_for_item(item)
 
     if options[:typ] == :listnav
       # Listnav, no href needed
@@ -561,7 +584,7 @@ module QuadiconHelper
   # * +text+ - text to render inside quad
   # * +position+ - where to render text
   def render_quad_text(text, position)
-    font_size = text.to_s.size > 2 ? "font-size: 12px;" : ""
+    font_size = text.to_s.size > 2 ? "font-size: 12px;" : nil
     flobj_p_simple(position, text, font_size)
   end
 
@@ -590,8 +613,8 @@ module QuadiconHelper
         render_quad_text(value[:text], POSITION_MAPPER[key])
       elsif value.try(:[], :state_icon)
         currentstate_icon(value[:state_icon])
-      elsif value.try(:[], :fileicon) || value.try(:[], :img)
-        render_quad_image(value.try(:[], :fileicon) || value.try(:[], :img), POSITION_MAPPER[key], value.try(:type))
+      elsif value.try(:[], :fileicon)
+        render_quad_image(value.try(:[], :fileicon), POSITION_MAPPER[key], value.try(:type))
       else
         ""
       end
@@ -601,18 +624,7 @@ module QuadiconHelper
   # Renders a quadicon for ext_management_systems
   #
   def render_ext_management_system_quadicon(item, options)
-    output = []
-
-    quadicon = item.decorate.try(:quadicon)
-    if settings(:quadicons, db_for_quadicon) && quadicon
-      output << flobj_img_simple("layout/base.svg")
-      output.concat(transform_quadicon(quadicon))
-      output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
-    else
-      output << flobj_img_simple("layout/base-single.svg")
-      output << flobj_img_small(item.decorate.try(:fileicon), "e72")
-    end
-
+    output = quadicon_for_item(item)
     if options[:typ] == :listnav
       output << flobj_img_simple("layout/reflection.png")
     else
@@ -634,13 +646,9 @@ module QuadiconHelper
   end
 
   # Renders quadicon for ems_clusters
-  # TODO: use quadicon decorator
+  #
   def render_ems_cluster_quadicon(item, options)
-    output = []
-
-    output << flobj_img_simple("layout/base-single.svg")
-    output << flobj_img_small("100/emscluster.png", "e72")
-    output << flobj_img_simple("100/shield.png", "g72") unless item.get_policies.empty?
+    output = quadicon_for_item(item)
 
     unless options[:typ] == :listnav
       # Listnav, no clear image needed
@@ -656,12 +664,7 @@ module QuadiconHelper
   end
 
   def render_non_listicon_single_quadicon(item, options)
-    output = []
-
-    img_path = item.try(:decorate).try(:fileicon) || "100/#{item.class.base_class.to_s.underscore}.png"
-
-    output << flobj_img_simple("layout/base-single.svg")
-    output << flobj_img_simple(img_path, "e72")
+    output = quadicon_for_item(item)
 
     unless options[:typ] == :listnav
       name = if item.kind_of?(MiqProvisionRequest)
@@ -700,10 +703,7 @@ module QuadiconHelper
   end
 
   def render_listicon_single_quadicon(item, options)
-    output = []
-
-    output << flobj_img_simple("layout/base-single.svg")
-    output << flobj_img_small("100/#{@listicon}.png", "e72")
+    output = quadicon_for_item(item)
 
     unless options[:typ] == :listnav
       title = case @listicon
@@ -743,33 +743,10 @@ module QuadiconHelper
     output.collect(&:html_safe).join('').html_safe
   end
 
-  def img_for_health_state(item)
-    case item.health_state
-    when "Valid"    then "svg/healthstate-normal.svg"
-    when "Critical" then "svg/healthstate-critical.svg"
-    when "Warning"  then "100/warning.png"
-    else "svg/healthstate-unknown.svg"
-    end
-  end
-
   # Renders a storage quadicon
-  # TODO: use quadicon decorator
+  #
   def render_storage_quadicon(item, options)
-    output = []
-
-    if settings(:quadicons, :storage)
-      output << flobj_img_simple("layout/base.svg")
-      output << flobj_img_simple("100/storagetype-#{item.store_type.nil? ? "unknown" : h(item.store_type.to_s.downcase)}.png", "a72")
-      output << flobj_p_simple("b72", item.v_total_vms)
-      output << flobj_p_simple("c72", item.v_total_hosts)
-
-      space_percent = item.free_space_percent_of_total == 100 ? 20 : ((item.free_space_percent_of_total.to_i + 2) / 5.25).round
-      output << flobj_img_simple("100/piecharts/datastore/#{h(space_percent)}.png", "d72")
-    else
-      space_percent = (item.used_space_percent_of_total.to_i + 9) / 10
-      output << flobj_img_simple("layout/base-single.svg")
-      output << flobj_img_simple("100/datastore-#{h(space_percent)}.png", "e72")
-    end
+    output = quadicon_for_item(item)
 
     if options[:typ] == :listnav
       output << flobj_img_simple("layout/reflection.png")
@@ -820,37 +797,9 @@ module QuadiconHelper
   end
 
   # Renders a vm quadicon
-  # TODO: use quadicon decorator
+  #
   def render_vm_or_template_quadicon(item, options)
-    output = []
-
-    if settings(:quadicons, item.class.base_model.name.underscore.to_sym)
-      output << flobj_img_simple("layout/base.svg")
-      output << flobj_img_simple("svg/os-#{h(item.os_image_name.downcase)}.svg", "a72")
-      output << currentstate_icon(item.normalized_state.downcase)
-      output << flobj_img_simple("svg/vendor-#{h(item.vendor.downcase)}.svg", "c72")
-
-      unless item.get_policies.empty?
-        output << flobj_img_simple("100/shield.png", "g72")
-      end
-
-      if quadicon_policy_sim? && !session[:policies].empty? && quadicon_lastaction_is_policy_sim?
-        output << flobj_img_simple(img_for_compliance(item), "d72")
-      end
-
-      unless quadicon_lastaction_is_policy_sim?
-        output << flobj_p_simple("d72", h(item.v_total_snapshots))
-      end
-    else
-      output << flobj_img_simple("layout/base-single.svg")
-
-      if quadicon_policy_sim? && !session[:policies].empty?
-        output << flobj_img_small(img_for_compliance(item), "e72")
-      end
-
-      output << flobj_img_small(img_for_vendor(item), "e72")
-    end
-
+    output = quadicon_for_item(item)
     unless options[:typ] == :listnav
       output << content_tag(:div, :class => 'flobj') do
         quadicon_link_to(quadicon_vt_url(item), **quadicon_vt_link_options) do

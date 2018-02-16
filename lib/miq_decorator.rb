@@ -20,6 +20,21 @@ class MiqDecorator < SimpleDelegator
   # Call the class methods with identical names if these are not set
   delegate :fonticon, :to => :class
   delegate :fileicon, :to => :class
+
+  protected
+
+  def compliance_image(policies)
+    {
+      :fileicon => compliance_img(self, policies),
+      :tooltip  => passes_profiles?(get_policies)
+    }
+  end
+
+  def total_snapshots
+    {
+      :text => ERB::Util.h(v_total_snapshots)
+    }
+  end
 end
 
 module MiqDecorator::Instance

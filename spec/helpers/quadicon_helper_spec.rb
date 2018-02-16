@@ -839,7 +839,7 @@ describe QuadiconHelper do
     include_examples :has_base_single
 
     it 'includes an ems-cluster img' do
-      expect(ems_cluster_quad).to have_selector("img[src*='emscluster']")
+      expect(ems_cluster_quad).to have_selector("img[src*='ems_cluster']")
     end
 
     context "when type not is listnav" do
