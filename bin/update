@@ -11,4 +11,6 @@ else
 end
 
 require gem_root.join("spec/manageiq/lib/manageiq/environment").to_s
-ManageIQ::Environment.manageiq_plugin_update
+ManageIQ::Environment.manageiq_plugin_update(gem_root)
+
+ManageIQ::Environment.update_ui
