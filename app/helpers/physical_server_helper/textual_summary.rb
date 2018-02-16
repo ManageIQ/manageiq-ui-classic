@@ -13,9 +13,6 @@ module PhysicalServerHelper::TextualSummary
     )
   end
 
-  def textual_group_compliance
-  end
-
   def textual_group_networks
     TextualGroup.new(_("Management Networks"), %i(mac ipv4 ipv6))
   end
@@ -35,7 +32,14 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_group_firmware_details
-    TextualTable.new(_('Firmware'), firmware_details, [_('Name'), _('Version')])
+    TextualTable.new(_('Firmwares'), firmware_details, [_('Name'), _('Version')])
+  end
+
+  def textual_group_firmware_compliance
+    TextualGroup.new(
+      _("Firmware Compliance"),
+      %i(compliance_name compliance_status)
+    )
   end
 
   def textual_group_smart_management
@@ -173,6 +177,14 @@ module PhysicalServerHelper::TextualSummary
 
   def firmware_details
     @record.hardware.firmwares.collect { |fw| [fw.name, fw.version] }
+  end
+
+  def textual_compliance_name
+    {:label => _("Name"), :value => @record.ems_compliance_name }
+  end
+
+  def textual_compliance_status
+    {:label => _("Status"), :value => @record.ems_compliance_status }
   end
 
   private
