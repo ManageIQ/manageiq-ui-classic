@@ -1,7 +1,6 @@
 ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', 'API', 'miqService', 'DialogEditor', 'DialogValidation', 'dialogIdAction', function($window, $http, API, miqService, DialogEditor, DialogValidation, dialogIdAction) {
   var vm = this;
 
-  vm.cache = {};
   vm.$http = $http;
 
   vm.saveDialogDetails = saveDialogDetails;
@@ -99,7 +98,6 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', '$http', '
   function lazyLoad(node) {
     return vm.$http.get('/tree/automate_entrypoint?id=' + encodeURIComponent(node.key))
     .then(function(response) {
-      vm.cache[node.key] = response.data;
       return response.data;
     });
   }
