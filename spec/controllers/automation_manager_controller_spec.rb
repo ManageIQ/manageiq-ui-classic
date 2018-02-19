@@ -264,7 +264,7 @@ describe AutomationManagerController do
     automation_manager3 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider3.id)
     user = login_as user_with_feature(%w(automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
     allow(User).to receive(:current_user).and_return(user)
-    controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
+    TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, :automation_manager_providers, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerProviders.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
     expected_objects = [automation_manager1, automation_manager2, automation_manager3]
@@ -272,7 +272,7 @@ describe AutomationManagerController do
   end
 
   it "constructs the ansible tower inventory tree node" do
-    controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
+    TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, :automation_manager_providers, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerProviders.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_objects, @inventory_group, nil, false, nil)
     expected_objects = [@ans_configured_system, @ans_configured_system2a]
@@ -282,7 +282,7 @@ describe AutomationManagerController do
   it "builds ansible tower job templates tree" do
     user = login_as user_with_feature(%w(automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
     allow(User).to receive(:current_user).and_return(user)
-    controller.send(:build_automation_manager_tree, :configuration_scripts, :configuration_scripts_tree)
+    TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, :configuration_scripts, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
     expect(objects).to include(@automation_manager1)
@@ -292,7 +292,7 @@ describe AutomationManagerController do
   it "constructs the ansible tower job templates tree node" do
     user = login_as user_with_feature(%w(providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
     allow(User).to receive(:current_user).and_return(user)
-    controller.send(:build_automation_manager_tree, :configuration_scripts, :configuration_scripts_tree)
+    TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, :configuration_scripts, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
     root_objects = tree_builder.send(:x_get_tree_roots, false, {})
     objects = tree_builder.send(:x_get_tree_cmat_kids, root_objects[1], false)
@@ -452,7 +452,7 @@ describe AutomationManagerController do
   end
 
   it "renders tree_select as js" do
-    controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
+    TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, :automation_manager_providers, controller.instance_variable_get(:@sb))
 
     allow(controller).to receive(:process_show_list)
     allow(controller).to receive(:replace_explorer_trees)
@@ -481,7 +481,7 @@ describe AutomationManagerController do
     end
 
     it "does not hide Configuration button in the toolbar" do
-      controller.send(:build_automation_manager_tree, :automation_manager_provider, :automation_manager_providers_tree)
+      TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, :automation_manager_providers, controller.instance_variable_get(:@sb))
       key = ems_key_for_provider(automation_provider1)
       post :tree_select, :params => { :id => key, :format => :js }
       expect(response.status).to eq(200)
@@ -597,8 +597,8 @@ describe AutomationManagerController do
     it "builds foreman tree with no nodes after rbac filtering" do
       user_filters = {'belongs' => [], 'managed' => [tags]}
       allow(@user).to receive(:get_filters).and_return(user_filters)
-      controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
-      first_child = find_treenode_for_provider(automation_provider1)
+      tree_json = TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, :automation_manager_providers, controller.instance_variable_get(:@sb)).tree_nodes
+      first_child = find_treenode_for_provider(automation_provider1, tree_json)
       expect(first_child).to eq(nil)
     end
   end
@@ -702,9 +702,9 @@ describe AutomationManagerController do
     FactoryGirl.create(:user, :features => features)
   end
 
-  def find_treenode_for_provider(provider)
+  def find_treenode_for_provider(provider, tree_json)
     key = ems_key_for_provider(provider)
-    tree = JSON.parse(controller.instance_variable_get(:@automation_manager_providers_tree))
+    tree = JSON.parse(tree_json)
     tree[0]['nodes'].find { |c| c['key'] == key } unless tree[0]['nodes'].nil?
   end
 
