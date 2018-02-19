@@ -35,7 +35,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     };
   };
 
-  this.minxContextMenu = function(vm) {
+  this.mixinContextMenu = function(vm) {
     var topologyService = this;
     vm.contextMenuShowing = false;
 
@@ -210,7 +210,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
   };
 
   // this injects some common code in the controller - temporary pending a proper merge
-  this.search = function($scope) {
+  this.mixinSearch = function($scope) {
     var topologyService = this;
 
     var resetEvent = function() {
@@ -319,7 +319,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     vm.legendTooltip = __('Click here to show/hide entities of this type');
     $('input#box_display_names').click(this.showHideNames(vm));
 
-    this.minxContextMenu(vm);
+    this.mixinContextMenu(vm);
     this.mixinRefresh(vm, $scope);
     this.mixinGetIcon(vm);
     vm.refresh();
@@ -328,6 +328,6 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     $scope.$on('$destroy', function() {
       $interval.cancel(promise);
     });
-    this.search(vm);
+    this.mixinSearch(vm);
   };
 }]);

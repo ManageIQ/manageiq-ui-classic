@@ -36,14 +36,14 @@ describe('topologyService', function() {
 
     beforeEach(function() {
       controller = {};
-      testService.refresh(controller);
+      testService.mixinRefresh(controller);
     });
 
     context('cloud', function() {
       beforeEach(function() {
         controller.dataUrl = '/cloud_topology/data';
 
-        testService.refresh(controller);
+        testService.mixinRefresh(controller);
       });
 
       it('Compute > Cloud > Topology', function() {
@@ -60,7 +60,7 @@ describe('topologyService', function() {
     context('container', function() {
       beforeEach(function() {
         controller.dataUrl = '/container_topology/data';
-        testService.refresh(controller);
+        testService.mixinRefresh(controller);
       });
 
       it('Compute > Containers > Topology', function() {
@@ -77,7 +77,7 @@ describe('topologyService', function() {
     context('container project', function() {
       beforeEach(function() {
         controller.dataUrl = '/container_project_topology/data';
-        testService.refresh(controller);
+        testService.mixinRefresh(controller);
       });
 
       it('Compute > Containers > Projects > detail > Topology', function() {
@@ -90,7 +90,7 @@ describe('topologyService', function() {
       beforeEach(function() {
         controller.dataUrl = '/infra_topology/data';
 
-        testService.refresh(controller);
+        testService.mixinRefresh(controller);
       });
 
       it('Compute > Infrastructure > Topology', function() {
@@ -108,7 +108,7 @@ describe('topologyService', function() {
       beforeEach(function() {
         controller.dataUrl = '/middleware_topology/data';
 
-        testService.refresh(controller);
+        testService.mixinRefresh(controller);
       });
 
       it('Middleware > Topology', function() {
@@ -126,7 +126,7 @@ describe('topologyService', function() {
       beforeEach(function () {
         controller.dataUrl = '/network_topology/data';
 
-        testService.refresh(controller);
+        testService.mixinRefresh(controller);
       });
       it('Networks > Topology', function() {
         var url = controller.parseUrl('/network_topology/show');
@@ -143,7 +143,7 @@ describe('topologyService', function() {
       beforeEach(function() {
         controller.dataUrl = '/physical_infra_topology/data';
 
-        testService.refresh(controller);
+        testService.mixinRefresh(controller);
       });
 
       it('Compute > Physical Infrastructure > Topology', function() {
