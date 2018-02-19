@@ -69,6 +69,7 @@ class ServiceController < ApplicationController
   def set_display
     @display = params[:display]
     @display ||= default_display unless pagination_or_gtl_request?
+    @display ||= 'generic_objects' if role_allows?(:feature => "generic_object_view") && @record.number_of(:generic_objects).positive?
   end
 
   def show_generic_object
