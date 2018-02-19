@@ -186,19 +186,29 @@ module ApplicationController::Buttons
     button_create_update("create")
   end
 
+  def group_form_valid
+    required = %i(name description button_icon)
+
+    required.none? do |field|
+      @edit[:new][field].blank?
+    end
+  end
+
   # AJAX driven routine to check for changes in ANY field on the form
   def group_form_field_changed
     return unless load_edit("bg_edit__#{params[:id]}", "replace_cell__explorer")
     group_get_form_vars
     @custom_button_set = @edit[:custom_button_set_id] ? CustomButtonSet.find_by_id(@edit[:custom_button_set_id]) : CustomButtonSet.new
     @changed = (@edit[:new] != @edit[:current])
+    valid = group_form_valid
+
     render :update do |page|
       page << javascript_prologue
       page.replace(@refresh_div, :partial => "shared/buttons/#{@refresh_partial}") if @refresh_div
       if @flash_array
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       else
-        page << javascript_for_miq_button_visibility(@changed)
+        page << javascript_for_miq_button_visibility(@changed && valid)
       end
     end
   end
