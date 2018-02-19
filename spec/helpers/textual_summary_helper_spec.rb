@@ -1,4 +1,6 @@
 describe TextualSummaryHelper do
+  include ApplicationHelper
+
   before do
     stub_user(:features => :all)
   end

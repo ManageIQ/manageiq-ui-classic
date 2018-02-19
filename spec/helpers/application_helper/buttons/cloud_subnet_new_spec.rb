@@ -1,4 +1,6 @@
 describe ApplicationHelper::Button::CloudSubnetNew do
+  include ApplicationHelper
+
   describe '#disabled?' do
     it "when at least one provider supports subnet create then the button is not disabled" do
       view_context = setup_view_context_with_sandbox({})

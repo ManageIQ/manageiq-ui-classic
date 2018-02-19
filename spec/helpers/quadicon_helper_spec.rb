@@ -98,6 +98,7 @@ end
 # FIXME: complex describe blocks mirror the existing complex control flow
 
 describe QuadiconHelper do
+  include ApplicationHelper
   helper ImageEncodeHelper
 
   describe "#render_quadicon" do
