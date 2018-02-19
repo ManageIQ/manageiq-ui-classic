@@ -2,27 +2,27 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   var vm = this;
   var init = function() {
     vm.reconfigureModel = {
-      memory:                  '0',
-      memory_type:             '',
-      socket_count:            '1',
-      cores_per_socket_count:  '1',
-      total_cpus:              '1',
-      vmdisks:                 [],
-      hdType:                  'thin',
-      hdMode:                  'persistent',
-      hdSize:                  '',
-      hdUnit:                  'MB',
-      new_controller_type:     'VirtualLsiLogicController',
-      cb_dependent:            true,
-      nicsEnabled:             false,
-      addEnabled:              false,
-      enableAddDiskButton:     true,
+      memory: '0',
+      memory_type: '',
+      socket_count: '1',
+      cores_per_socket_count: '1',
+      total_cpus: '1',
+      vmdisks: [],
+      hdType: 'thin',
+      hdMode: 'persistent',
+      hdSize: '',
+      hdUnit: 'MB',
+      new_controller_type: 'VirtualLsiLogicController',
+      cb_dependent: true,
+      nicsEnabled: false,
+      addEnabled: false,
+      enableAddDiskButton: true,
       enableAddNetworkAdapterButton: true,
-      cb_bootable:             false,
-      vmAddDisks:              [],
-      vmRemoveDisks:           [],
-      vmResizeDisks:           [],
-      vLan_requested:          ''
+      cb_bootable: false,
+      vmAddDisks: [],
+      vmRemoveDisks: [],
+      vmResizeDisks: [],
+      vLan_requested: '',
     };
     vm.cb_disks = false;
     vm.cb_networkAdapters = false;
@@ -65,9 +65,9 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.reconfigureModel.enableAddDiskButton = (nrDisksAfterReconfigure < 4);
   };
 
-  vm.setEnableAddNetworkAdapterButton = function () {
-    var nrNetworksAfterReconfigure=0;
-    angular.forEach(vm.reconfigureModel.vmNetworkAdapters, function(network){
+  vm.setEnableAddNetworkAdapterButton = function() {
+    var nrNetworksAfterReconfigure = 0;
+    angular.forEach(vm.reconfigureModel.vmNetworkAdapters, function(network) {
       switch (network.add_remove) {
         case "remove":
           break;
@@ -79,8 +79,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.reconfigureModel.enableAddNetworkAdapterButton = (nrNetworksAfterReconfigure < 4);
   };
 
-  vm.canValidateBasicInfo = function () {
-    if (vm.isBasicInfoValid())
+  vm.canValidateBasicInfo = function() {
+    if (vm.isBasicInfoValid()) {
       return true;
     }
     return false;
@@ -206,22 +206,19 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.updateNetworkAdaptersAddRemove = function() {
-    vm.reconfigureModel.vmAddNetworkAdapters=[];
+    vm.reconfigureModel.vmAddNetworkAdapters = [];
     vm.reconfigureModel.vmRemoveNetworkAdapters = [];
-    angular.forEach(vm.reconfigureModel.vmNetworkAdapters, function (networkAdapter)
-    {
-      if (networkAdapter['add_remove'] === 'add') {
+    angular.forEach(vm.reconfigureModel.vmNetworkAdapters, function(networkAdapter) {
+      if (networkAdapter.add_remove === 'add') {
         vm.reconfigureModel.vmAddNetworkAdapters.push({network: networkAdapter.vlan});
       }
-      if (networkAdapter['add_remove'] === 'remove') {
+      if (networkAdapter.add_remove === 'remove') {
         vm.reconfigureModel.vmRemoveNetworkAdapters.push({network: networkAdapter});
       }
     });
     vm.setEnableAddNetworkAdapterButton();
-    if( vm.reconfigureModel.vmAddNetworkAdapters.length > 0  || vm.reconfigureModel.vmRemoveNetworkAdapters.length > 0)
-      vm.cb_networkAdapters = true;
-    else
-      vm.cb_networkAdapters = false;
+    vm.cb_networkAdapters = vm.reconfigureModel.vmAddNetworkAdapters.length > 0  ||
+                            vm.reconfigureModel.vmRemoveNetworkAdapters.length > 0;
   };
 
   vm.resetAddValues = function() {
@@ -240,15 +237,15 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       {
         name: 'to be determined',
         vlan: vm.reconfigureModel.vLan_requested,
-        mac:  'not available yet',
-        add_remove: 'add'
+        mac: 'not available yet',
+        add_remove: 'add',
       });
     vm.resetAddNetworkAdapterValues();
     vm.updateNetworkAdaptersAddRemove();
   };
 
   vm.removeExistingNetworkAdapter = function(thisNetworkAdapter) {
-    thisNetworkAdapter['add_remove'] = 'remove';
+    thisNetworkAdapter.add_remove = 'remove';
     vm.updateNetworkAdaptersAddRemove();
   };
 
@@ -259,7 +256,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.reconfigureModel.vLan_requested = '';
   };
 
-  vm.hideAddNetworkAdapter= function() {
+  vm.hideAddNetworkAdapter = function() {
     vm.resetAddNetworkAdapterValues();
   };
 
@@ -272,9 +269,9 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.cancelAddRemoveNetworkAdapter = function(vmNetworkAdapter) {
-    if (vmNetworkAdapter.add_remove ==="remove"){
-      vmNetworkAdapter.add_remove= "";
-    } else if (vmNetworkAdapter.add_remove === "add"){
+    if (vmNetworkAdapter.add_remove === "remove") {
+      vmNetworkAdapter.add_remove = "";
+    } else if (vmNetworkAdapter.add_remove === "add") {
       var index = vm.reconfigureModel.vmNetworkAdapters.indexOf(vmNetworkAdapter);
       vm.reconfigureModel.vmNetworkAdapters.splice(index, 1);
     }
@@ -294,6 +291,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       add_remove: 'add'});
     vm.resetAddValues();
     vm.updateDisksAddRemove();
+
+    vm.cb_disks = vm.reconfigureModel.vmAddDisks.length > 0  || vm.reconfigureModel.vmRemoveDisks.length > 0;
   };
 
   vm.enableDiskAdd = function() {
@@ -331,6 +330,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       }
     }
     vm.updateDisksAddRemove();
+
+    vm.cb_disks = vm.reconfigureModel.vmAddDisks.length > 0  || vm.reconfigureModel.vmRemoveDisks.length > 0;
   };
 
   vm.cancelAddRemoveDisk = function(vmDisk) {
@@ -373,7 +374,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
         vmRemoveDisks: vm.reconfigureModel.vmRemoveDisks,
         vmResizeDisks: vm.reconfigureModel.vmResizeDisks,
         vmAddNetworkAdapters: vm.reconfigureModel.vmAddNetworkAdapters,
-        vmRemoveNetworkAdapters: vm.reconfigureModel.vmRemoveNetworkAdapters
+        vmRemoveNetworkAdapters: vm.reconfigureModel.vmRemoveNetworkAdapters,
       });
     }
   };

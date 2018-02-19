@@ -310,14 +310,15 @@
                                       "ng-disabled" => "!vm.reconfigureModel.enableAddNetworkAdapterButton"}= _('Add Network')
               %button.btn.btn-default.btn-sm{:type      => "button",
                                              "ng-click" => "vm.hideAddNetworkAdapter()",
-                                             "ng-show"  => "vm.reconfigureModel.nicsEnabled"}= ('Cancel Add')
+                                             "ng-show"  => "vm.reconfigureModel.nicsEnabled"}= _('Cancel Add')
       %table.table.table-striped.table-condensed.table-bordered
         %thead
           %th= _('Name')
           %th= _('vLan')
           %th= _('MAC Address')
           %th{:colspan => 2}= _('Actions')
-        %tr{"ng-repeat" => "networkAdapter in vm.reconfigureModel.vmNetworkAdapters", "ng-class" => "{'danger': networkAdapter.add_remove == 'remove', 'active': networkAdapter.add_remove == 'add'}"}
+        %tr{"ng-repeat" => "networkAdapter in vm.reconfigureModel.vmNetworkAdapters",
+            "ng-class"  => "{'danger': networkAdapter.add_remove == 'remove', 'active': networkAdapter.add_remove == 'add'}"}
           %td
             {{networkAdapter.name}}
           %td
@@ -343,7 +344,7 @@
           %td
           %td
             = select_tag('vLan',
-                       options_for_select([["<#{_('Choose')}>", '']] + @vlan_options, disabled: ["<#{_('Choose')}>", nil]),
+                       options_for_select([["<#{_('Choose')}>", '']] + @vlan_options, :disabled => ["<#{_('Choose')}>", nil]),
                        "ng-model"                    => "vm.reconfigureModel.vLan_requested",
                        "ng-change"                   => "",
                        "data-width"                  => "auto",
@@ -352,8 +353,8 @@
           %td
           %td.action-cell
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
-                                                              "ng-click" => "vm.processAddSelectedNetwork();rowForm.vLan.selectionpicker('refresh')",
-                                                              "ng-disabled" => "rowForm.vLan.$invalid || !vm.reconfigureModel.vmNetworkAdapters.length >= 4"}= _('Confirm Add')
+                       "ng-click" => "vm.processAddSelectedNetwork();rowForm.vLan.selectionpicker('refresh')",
+                       "ng-disabled" => "rowForm.vLan.$invalid || !vm.reconfigureModel.vmNetworkAdapters.length >= 4"}= _('Confirm Add')
           %td.action-cell
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                                                               "ng-click" => "vm.hideAddNetworkAdapter()"}= _('Cancel Add')

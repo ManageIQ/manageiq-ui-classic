@@ -16,7 +16,8 @@ describe('reconfigureFormController', function() {
       cb_cpu:                 'on',
       socket_count:           '2',
       cores_per_socket_count: '3',
-      disks:                 [{hdFilename: "test_disk.vmdk", hdType: "thick", hdMode: "persistent", new_controller_type: "VirtualLsiLogicController", hdSize: "0", hdUnit: "MB", add_remove: ""}]};
+      disks:                 [{hdFilename: "test_disk.vmdk", hdType: "thick", hdMode: "persistent", new_controller_type: "VirtualLsiLogicController", hdSize: "0", hdUnit: "MB", add_remove: ""}],
+      network_adapters:      [{name: "Network adapter 1", vlan: "test_network", mac: "00:00:00:00:00:00", add_remove: ""}]};
 
     $httpBackend = _$httpBackend_;
     $httpBackend.whenGET('reconfigure_form_fields/1000000000003,1000000000001,1000000000002').respond(reconfigureFormResponse);
@@ -55,6 +56,9 @@ describe('reconfigureFormController', function() {
 
     it('initializes the delete_backing flag to false if not retrived', function() {
       expect(vm.reconfigureModel.vmdisks[0].delete_backing).toEqual(false);
+    });
+    it('sets the network adapter data to the network adapter data returned with the http request', function() {
+      expect(vm.reconfigureModel.vmNetworkAdapters).toEqual([{name: "Network adapter 1", vlan: "test_network", mac: "00:00:00:00:00:00", add_remove: ""}]);
     });
   });
 
@@ -95,7 +99,8 @@ describe('reconfigureFormController', function() {
                            memory_type:            vm.reconfigureModel.memory_type,
                            socket_count:           vm.reconfigureModel.socket_count,
                            cores_per_socket_count: vm.reconfigureModel.cores_per_socket_count,
-                           vmAddDisks: [  ], vmRemoveDisks: [  ], vmResizeDisks: [  ] };
+                           vmAddDisks: [  ], vmRemoveDisks: [  ], vmResizeDisks: [  ],
+                           vmAddNetworkAdapters: [  ], vmRemoveNetworkAdapters: [  ] };
 
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('reconfigure_update/1000000000003?button=submit', submitContent);
     });

@@ -234,9 +234,9 @@ module Mixins
           if @reconfigureitems.size == 1
             vm = @reconfigureitems.first
 
-            vm.hardware.guest_devices.order(device_name: 'asc').each do |guest_device|
-              lan = Lan.find_by(id: guest_device.lan_id)
-              network_adapters << {name: guest_device.device_name, vlan: lan.name, mac: guest_device.address, :add_remove  => ''} unless lan.nil?
+            vm.hardware.guest_devices.order(:device_name => 'asc').each do |guest_device|
+              lan = Lan.find_by(:id => guest_device.lan_id)
+              network_adapters << {:name => guest_device.device_name, :vlan => lan.name, :mac => guest_device.address, :add_remove => ''} unless lan.nil?
             end
           end
 
@@ -326,15 +326,15 @@ module Mixins
           end
 
           if params[:vmAddNetworkAdapters]
-            params[:vmAddNetworkAdapters].values.each do |p|
-              p.transform_values!{ |v| eval_if_bool_string(v) }
+            params[:vmAddNetworkAdapters].each_value do |p|
+              p.transform_values! { |v| eval_if_bool_string(v) }
             end
             options[:network_adapter_add] = params[:vmAddNetworkAdapters].values
           end
 
           if params[:vmRemoveNetworkAdapters]
-            params[:vmRemoveNetworkAdapters].values.each do |p|
-              p.transform_values!{ |v| eval_if_bool_string(v) }
+            params[:vmRemoveNetworkAdapters].each_value do |p|
+              p.transform_values! { |v| eval_if_bool_string(v) }
             end
             options[:network_adapter_remove] = params[:vmRemoveNetworkAdapters].values
           end
