@@ -610,17 +610,23 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     $scope.authType = authType;
     miqService.validateWithREST($event, authType, $scope.actionUrl, formSubmit)
       .then(function success(data) {
-        $timeout(function() {
-          $scope.$apply(function() {
-            if(data.level == "error") {
-              $scope.updateAuthStatus(false);
-            } else {
-              $scope.updateAuthStatus(true);
-            }
-            miqService.miqFlash(data.level, data.message, data.options);
-            miqSparkleOff();
+        // check if data object is a JSON, otherwise (recieved JS or HTML) output a warning to the user.
+        if (data === Object(data)) {
+          $timeout(function() {
+            $scope.$apply(function() {
+              if(data.level == "error") {
+                $scope.updateAuthStatus(false);
+              } else {
+                $scope.updateAuthStatus(true);
+              }
+              miqService.miqFlash(data.level, data.message, data.options);
+              miqSparkleOff();
+            });
           });
-        });
+        } else {
+          miqService.miqFlash("error", __('Something went wrong, please check the logs for more information.'));
+          miqSparkleOff();
+        }
       });
   };
 
