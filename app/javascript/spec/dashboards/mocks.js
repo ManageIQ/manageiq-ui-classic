@@ -11,7 +11,7 @@ window.ManageIQ = {
 window.__ = (x) => x;
 
 // FIXME: app/assets/javascripts/services/
-ManageIQ.angular.app.service('miqService', function() {
+ManageIQ.angular.app.service('miqService', function () {
   this.handleFailure = () => null;
 });
 
@@ -19,7 +19,7 @@ ManageIQ.angular.app.service('miqService', function() {
 window.miqDeferred = () => {
   var deferred = {};
 
-  deferred.promise = new Promise(function(resolve, reject) {
+  deferred.promise = new Promise(function (resolve, reject) {
     deferred.resolve = resolve;
     deferred.reject = reject;
   });
