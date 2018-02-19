@@ -205,15 +205,6 @@ class InfraNetworkingController < ApplicationController
     end
   end
 
-  def build_infra_networking_tree(type, name)
-    tree = case name
-           when :infra_networking_tree
-             TreeBuilderConfigurationManager.new(name, type, @sb)
-           end
-    instance_variable_set :"@#{name}", tree.tree_nodes
-    tree
-  end
-
   def get_node_info(treenodeid, show_list = true)
     @sb[:action] = nil
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
