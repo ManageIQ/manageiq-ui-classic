@@ -1,0 +1,70 @@
+#form_timer_div
+  %div
+    = _("Timer Options")
+    %div
+      %label test
+      .form-group
+        %label.col-md-2.control-label{"for" => "timer-typ"}
+          = _("Run")
+        .col-md-10
+          %select#timer-typ{"pf-select"                 => true,
+                              "ng-model"                  => "$ctrl.timerTyp",
+                              "name"                      => "timer-typ",
+                              "ng-options"                => "timerItem.key as timerItem.name for timerItem in $ctrl.timerTypeOptions",
+                              "ng-change"                 => "$ctrl.scheduleTimerTypeChanged({type: $ctrl.timerTyp})"}
+
+          %span{"ng-show" => '!$ctrl.timerTypeOnce'}
+            = _("every")
+          %select#timer-value{"pf-select"                 => "$ctrl.timerTypeOnce",
+                              "ng-model"                  => "$ctrl.timerValue",
+                              "name"                      => "timer-value",
+                              "ng-options"                => "timerItem.value as timerItem.text for timerItem in $ctrl.timerItems",
+                              "ng-if"                     => "!$ctrl.timerTypeOnce",
+                              "ng-change"                 => "$ctrl.timerValueChange({value: $ctrl.timerValue})"}
+      .form-group
+        %label.col-md-2.control-label{"for" => "time-zone"}
+          = _("Time Zone")
+        .col-md-10
+          = select_tag("time-zone",
+                       options_for_select(ViewHelper::ALL_TIMEZONES),
+                       "ng-model"                    => "$ctrl.timeZone",
+                       "data-live-search"            => "true",
+                       "ng-change"                   => "$ctrl.timeZoneChange({zone: $ctrl.timeZone})",
+                       "selectpicker-for-select-tag" => "")
+          \&nbsp;&nbsp;
+          = _("* Changing the Time Zone will reset the Starting Date and Time fields below")
+
+      .form-group
+        %label.col-md-2.control-label{"for" => "start-date"}
+          = _("Starting Date")
+        .col-md-3
+          = datepicker_input_tag('start-date', nil,
+                                 'id'                => 'start-date',
+                                 'class'             => 'form-control',
+                                 'ng-model'          => '$ctrl.startDate',
+                                 'miq-datepicker'    => true,
+                                 'miq-cal-date-from' => '$ctrl.dateFrom',
+                                 'required'          => true,
+                                 'ng-change'         => '$ctrl.dateChange({date: $ctrl.startDate})')
+
+      .form-group
+        %label.col-md-2.control-label{"for" => "start-hour"}
+          = _("Starting Time")
+          (
+          %span#tz_span {{$ctrl.timeZone}}
+          )
+        .col-md-10
+          = select_tag("start-hour",
+                       options_for_select(Array.new(24) { |i| i }),
+                       "ng-model"    => "$ctrl.startHour",
+                       'ng-change'   => "$ctrl.startHourChange({hour: $ctrl.startHour})",
+                       :class        => "selectWidth",
+                       "selectpicker-for-select-tag" => "")
+          %span h
+          = select_tag("start-min",
+                       options_for_select(Array.new(12) { |i| i * 5 }),
+                       "ng-model"    => "$ctrl.startMin",
+                       'ng-chnage'   => "$ctrl.startMinChange({min: $ctrl.startMin})",
+                       :class        => "selectWidth",
+                       "selectpicker-for-select-tag" => "")
+          %span m
