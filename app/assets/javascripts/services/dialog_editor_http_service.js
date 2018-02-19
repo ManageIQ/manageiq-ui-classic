@@ -23,4 +23,11 @@ ManageIQ.angular.app.service('DialogEditorHttp', ['$http', 'API', function($http
       return response.data;
     });
   };
+
+  // Load categories data from API.
+  this.loadCategories = function() {
+    return API.get('/api/categories' +
+                        '?expand=resources' +
+                        '&attributes=description,single_value,children');
+  };
 }]);
