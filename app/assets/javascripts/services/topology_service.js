@@ -35,7 +35,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     };
   };
 
-  this.contextMenu = function(vm) {
+  this.minxContextMenu = function(vm) {
     var topologyService = this;
     vm.contextMenuShowing = false;
 
@@ -247,7 +247,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     });
   };
 
-  this.refresh = function(controller, $scope) {
+  this.mixinRefresh = function(controller, $scope) {
     var topologyService = this;
     var getTopologyData = function(response) {
       var data = response.data;
@@ -295,7 +295,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     });
   };
 
-  this.getIcon = function(controller) {
+  this.mixinGetIcon = function(controller) {
     controller.getIcon = function(d) {
       switch (d.item.kind) {
         case 'CloudManager':
@@ -319,9 +319,9 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     vm.legendTooltip = __('Click here to show/hide entities of this type');
     $('input#box_display_names').click(this.showHideNames(vm));
 
-    this.contextMenu(vm);
-    this.refresh(vm, $scope);
-    this.getIcon(vm);
+    this.minxContextMenu(vm);
+    this.mixinRefresh(vm, $scope);
+    this.mixinGetIcon(vm);
     vm.refresh();
 
     var promise = $interval(vm.refresh, 1000 * 60 * 3);
