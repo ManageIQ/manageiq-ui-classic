@@ -23,6 +23,12 @@ ManageIQ.angular.app.directive('datetimepicker', function() {
         elem.trigger('change', event);
       });
 
+      elem.on('dp.error', function(event) {
+        if (elem.val() === '') {
+          elem.trigger('change', event);
+        }
+      });
+
       // date & time format
       if (attr.datetimeFormat) {
         elem.data('DateTimePicker').format(attr.datetimeFormat);
