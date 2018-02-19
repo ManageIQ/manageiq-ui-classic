@@ -2,22 +2,26 @@
   %div
     = _("Timer Options")
     %div
-      %label test
       .form-group
         %label.col-md-2.control-label{"for" => "timer-typ"}
           = _("Run")
         .col-md-10
-          %select#timer-typ{"pf-select"                 => true,
-                              "ng-model"                  => "$ctrl.timerTyp",
-                              "name"                      => "timer-typ",
-                              "ng-options"                => "timerItem.key as timerItem.name for timerItem in $ctrl.timerTypeOptions",
-                              "ng-change"                 => "$ctrl.scheduleTimerTypeChanged({type: $ctrl.timerTyp})"}
+          = select_tag("timer_typ",
+                      options_for_select([[_('Once'), 'Once'], [_('Hourly'), 'Hourly'], [_('Daily'), 'Daily'], [_('Weekly'), 'Weekly'], [_('Monthly'), 'Monthly']]),
+                      "ng-model"                    => "$ctrl.timerTyp",
+                      "ng-change"                   => "$ctrl.scheduleTimerTypeChanged({type: $ctrl.timerTyp})",
+                      "selectpicker-for-select-tag" => "")
+          -#%select#timer-typ{"pf-select"                 => true,
+                            "ng-model"                  => "$ctrl.timerTyp",
+                            "name"                      => "timer_typ",
+                            "ng-options"                => "timerItem.key as timerItem.name for timerItem in $ctrl.timerTypeOptions",
+                            "ng-change"                 => "$ctrl.scheduleTimerTypeChanged({type: $ctrl.timerTyp})"}
 
           %span{"ng-show" => '!$ctrl.timerTypeOnce'}
             = _("every")
           %select#timer-value{"pf-select"                 => "$ctrl.timerTypeOnce",
                               "ng-model"                  => "$ctrl.timerValue",
-                              "name"                      => "timer-value",
+                              "name"                      => "timer_value",
                               "ng-options"                => "timerItem.value as timerItem.text for timerItem in $ctrl.timerItems",
                               "ng-if"                     => "!$ctrl.timerTypeOnce",
                               "ng-change"                 => "$ctrl.timerValueChange({value: $ctrl.timerValue})"}
@@ -25,7 +29,7 @@
         %label.col-md-2.control-label{"for" => "time-zone"}
           = _("Time Zone")
         .col-md-10
-          = select_tag("time-zone",
+          = select_tag("time_zone",
                        options_for_select(ViewHelper::ALL_TIMEZONES),
                        "ng-model"                    => "$ctrl.timeZone",
                        "data-live-search"            => "true",
@@ -38,7 +42,7 @@
         %label.col-md-2.control-label{"for" => "start-date"}
           = _("Starting Date")
         .col-md-3
-          = datepicker_input_tag('start-date', nil,
+          = datepicker_input_tag('start_date', nil,
                                  'id'                => 'start-date',
                                  'class'             => 'form-control',
                                  'ng-model'          => '$ctrl.startDate',
@@ -54,14 +58,14 @@
           %span#tz_span {{$ctrl.timeZone}}
           )
         .col-md-10
-          = select_tag("start-hour",
+          = select_tag("start_hour",
                        options_for_select(Array.new(24) { |i| i }),
                        "ng-model"    => "$ctrl.startHour",
                        'ng-change'   => "$ctrl.startHourChange({hour: $ctrl.startHour})",
                        :class        => "selectWidth",
                        "selectpicker-for-select-tag" => "")
           %span h
-          = select_tag("start-min",
+          = select_tag("start_min",
                        options_for_select(Array.new(12) { |i| i * 5 }),
                        "ng-model"    => "$ctrl.startMin",
                        'ng-chnage'   => "$ctrl.startMinChange({min: $ctrl.startMin})",

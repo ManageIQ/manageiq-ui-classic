@@ -25,6 +25,25 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     $scope.validateClicked = miqService.validateWithAjax;
     $scope.modelCopy = angular.copy( $scope.scheduleModel );
     $scope.model = "scheduleModel";
+    // NOTE: values for tymer-typ select
+    $scope.timerTypeOptions = [
+      {
+        name: __('Once'),
+        key: 'Once'
+      },{
+        name: __('Hourly'),
+        key: 'Hourly'
+      },{
+        name: __('Daily'),
+        key: 'Daily'
+      },{
+        name: __('Weekly'),
+        key: 'Weekly'
+      },{
+        name: _('Monthly'),
+        key: 'Monthly'
+      }
+    ];
 
     ManageIQ.angular.scope = $scope;
 
@@ -294,9 +313,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   $scope.filterValueChanged = function() {
   };
 
-  $scope.scheduleTimerTypeChanged = function() {
+  $scope.scheduleTimerTypeChanged = function(type) {
+    if(type) $scope.scheduleModel.timer_typ = type;
     $scope.setTimerType();
-
     $scope.timer_items = timerOptionService.getOptions($scope.scheduleModel.timer_typ);
 
     if ($scope.timerNotOnce()) {
@@ -395,6 +414,26 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
         $scope.angularForm.log_userid.$dirty ||
         $scope.angularForm.log_password.$dirty);
   };
+
+  $scope.setTimerValue = function (value) {
+    $scope.scheduleModel.timer_value = value;
+  }
+
+  $scope.setTimeZone = function (zone) {
+    $scope.scheduleModel.time_zone = zone;
+  }
+
+  $scope.setStartDate = function (date) {
+    $scope.scheduleModel.start_date = date;
+  }
+
+  $scope.setStartHour = function (hour) {
+    $scope.scheduleModel.start_hour = hour;
+  }
+
+  $scope.setStartMinute = function (min) {
+    $scope.scheduleModel.start_min = min;
+  }
 
   init();
 }]);
