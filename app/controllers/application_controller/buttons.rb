@@ -440,7 +440,7 @@ module ApplicationController::Buttons
         replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
       else
         @custom_button_set.errors.each do |field, msg|
-          add_flash(_("Error during 'add': %{field_name} %{error_name}") %
+          add_flash(_("Error during 'add': %{field_name} %{error_message}") %
             {:field_name => field.to_s.capitalize, :error_message => msg}, :error)
         end
         @lastaction = "automate_button"
