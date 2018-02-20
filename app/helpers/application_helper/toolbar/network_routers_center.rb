@@ -15,6 +15,19 @@ class ApplicationHelper::Toolbar::NetworkRoutersCenter < ApplicationHelper::Tool
             t,
             :klass => ApplicationHelper::Button::NetworkRouterNew
           ),
+          button(
+            :network_router_delete,
+            'pficon pficon-delete fa-lg',
+            t = N_('Delete selected Routers'),
+            t,
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :confirm      => N_('Warning: This Router and ALL of its components will be removed!'),
+            :enabled      => false,
+            :onwhen       => "1+",
+            :data         => {'function'      => 'sendDataWithRx',
+                              'function-data' => '{"type": "delete", "payload": {"entity": "network_routers"}}'},
+          )
         ]
       )
     ]

@@ -1,21 +1,31 @@
 import { IModule } from 'angular';
 import { ComponentApi } from '../miq-component/component-typings';
 import { ReduxApi } from '../miq-redux/redux-typings';
+import 'jasmine';
 
 interface MiqAngular {
   app: IModule;
+  rxSubject: any;
 }
 
 declare global {
-  // `ManageIQ` runtime global, holding application-specific objects.
+  type msgType = 'error' | 'warn' | 'warning' | 'info' | 'success';
+
+  function __(translate: string);
+  const angular: any;
+
+  /**
+   * `ManageIQ` runtime global, holding application-specific objects.
+   */
   namespace ManageIQ {
     const angular: MiqAngular;
     let component: ComponentApi;
-    let redux: ReduxApi;
+    let redux: ReduxApi; // initialized by miq-redux pack
+    const gridChecks: any[];
+    const record: any;
   }
 
-  // This global is available when running tests with Jasmine.
-  const jasmine: any;
+  function add_flash(msg: string, type: msgType, options?: any);
 
   // Truthy value means the code runs in a test environment.
   const __testing__: boolean;
