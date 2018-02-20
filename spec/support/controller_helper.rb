@@ -102,7 +102,7 @@ module Spec
           'model_id'    => options[:parent_id],
           'explorer'    => explorer,
           'additional_options' => {
-            'named_scope'           => nil,
+            'named_scope'           => options[:named_scope],
             'gtl_dbname'            => options[:gtl_dbname],
             'model'                 => options[:model],
             'match_via_descendants' => nil,
@@ -118,7 +118,8 @@ module Spec
       # Fires a POST request to the current controller's /report_data action
       #
       def report_data_request(options)
-        post :report_data, :params => report_data_request_data(options)
+        request.headers['Content-Type'] = 'application/json'
+        post :report_data, report_data_request_data(options)
       end
 
       # Assert a valid /report_data response, parse the response.
