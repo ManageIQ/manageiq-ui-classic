@@ -1,5 +1,5 @@
 #main_div
-  - if %w(physical_servers).include?(@display)
+  - if %w(guest_devices physical_servers).include?(@display)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     - case @showtype
