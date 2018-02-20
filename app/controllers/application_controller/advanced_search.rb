@@ -193,8 +193,13 @@ module ApplicationController::AdvancedSearch
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, tree_type, @sb)
-      adv_search_redraw_tree_and_main(tree)
-      return
+      if tree_for_building_accordions?
+        @explorer = true
+        build_accordions_and_trees
+      else
+        adv_search_redraw_tree_and_main(tree)
+        return
+      end
     elsif %w(ems_cloud ems_infra).include?(@layout)
       build_listnav_search_list(@view.db)
     else
@@ -202,6 +207,18 @@ module ApplicationController::AdvancedSearch
     end
 
     adv_search_redraw_listnav_and_main
+  end
+
+  def tree_for_building_accordions?
+    %w(automation_manager_cs_filter_tree
+       configuration_scripts_tree
+       images_filter_tree
+       instances_filter_tree
+       svcs_tree
+       storage_tree
+       templates_filter_tree
+       vms_filter_tree
+       vms_instances_filter_tree).include?(x_active_tree.to_s)
   end
 
   def adv_search_redraw_search_partials(display_mode = nil)
