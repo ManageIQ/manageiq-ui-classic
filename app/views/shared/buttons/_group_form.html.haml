@@ -15,7 +15,7 @@
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
           .input-group-addon
             %label.checkbox-inline
-              - display = @record.set_data.key?(:display) && @record.set_data[:display] == '1'
+              - display = @record.set_data.present? ? [true, "1"].include?(@record.set_data[:display]) : @edit[:new][:display]
               = check_box_tag("display", "1", display,
                               "data-miq_observe_checkbox" => {:url => url}.to_json)
               = _('Display on Button')
