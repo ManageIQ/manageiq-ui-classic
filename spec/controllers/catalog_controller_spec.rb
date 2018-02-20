@@ -794,6 +794,53 @@ describe CatalogController do
       controller.send(:get_available_resources, "ServiceTemplate")
       expect(assigns(:edit)[:new][:available_resources].count).to eq(2)
     end
+
+    context "#get_available_resources" do
+      let(:user_role) { FactoryGirl.create(:miq_user_role) }
+      let(:miq_group) { FactoryGirl.create(:miq_group, :miq_user_role => user_role, :entitlement => Entitlement.create!) }
+
+      before :each do
+        @st1 = FactoryGirl.create(:service_template, :type => "ServiceTemplate")
+        @st2 = FactoryGirl.create(:service_template, :type => "ServiceTemplate")
+        @st3 = FactoryGirl.create(:service_template, :type => "ServiceTemplate")
+        @st1.tag_with('/managed/service_level/one', :ns => '*')
+        @st2.tag_with('/managed/service_level/one', :ns => '*')
+        @st3.tag_with('/managed/service_level/two', :ns => '*')
+      end
+
+      it "list of available resources should contain the ones for the group matching tag Rbac" do
+        user = FactoryGirl.create(:user, :miq_groups => [miq_group])
+        user.current_group.entitlement = Entitlement.create!
+        user.current_group.entitlement.set_managed_filters([["/managed/service_level/one"]])
+        user.current_group.save
+        allow(User).to receive(:current_user).and_return(user)
+        controller.instance_variable_set(:@edit, :new => {:selected_resources => []})
+        controller.send(:get_available_resources, "ServiceTemplate")
+        expect(assigns(:edit)[:new][:available_resources].count).to eq(2)
+      end
+
+      it "list of available resources should not contain the ones for the group not matching tag Rbac" do
+        user = FactoryGirl.create(:user, :miq_groups => [miq_group])
+        user.current_group.entitlement = Entitlement.create!
+        user.current_group.entitlement.set_managed_filters([["/managed/service_level/zero"]])
+        user.current_group.save
+        allow(User).to receive(:current_user).and_return(user)
+        controller.instance_variable_set(:@edit, :new => {:selected_resources => []})
+        controller.send(:get_available_resources, "ServiceTemplate")
+        expect(assigns(:edit)[:new][:available_resources].count).to eq(0)
+      end
+
+      it "list of available resources for all tags matching Rbac" do
+        user = FactoryGirl.create(:user, :miq_groups => [miq_group])
+        user.current_group.entitlement = Entitlement.create!
+        user.current_group.entitlement.set_managed_filters([])
+        user.current_group.save
+        allow(User).to receive(:current_user).and_return(user)
+        controller.instance_variable_set(:@edit, :new => {:selected_resources => []})
+        controller.send(:get_available_resources, "ServiceTemplate")
+        expect(assigns(:edit)[:new][:available_resources].count).to eq(5)
+      end
+    end
   end
 
   context "#fetch_playbook_details" do
