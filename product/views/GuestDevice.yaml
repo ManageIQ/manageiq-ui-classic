@@ -11,7 +11,6 @@ db: GuestDevice
 # Columns to fetch from main table
 cols:
 - device_name
-- device_type
 - location
 - manufacturer
 - field_replaceable_unit
@@ -26,7 +25,6 @@ include_for_find:
 
 col_order:
 - device_name
-- device_type
 - location
 - manufacturer
 - field_replaceable_unit
@@ -35,7 +33,6 @@ col_formats:
 
 headers:
 - Device Name
-- Device Type
 - Location
 - Manufacturer
 - Field Replaceable Unit
