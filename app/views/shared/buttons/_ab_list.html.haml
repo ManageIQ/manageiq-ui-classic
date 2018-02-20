@@ -70,7 +70,7 @@
           = _('Text')
         .col-md-8
           = @record.name.split('|').first
-          - display = @record.set_data.key?(:display) && @record.set_data[:display] == '1'
+          - display = @record.set_data.present? && [true, "1"].include?(@record.set_data[:display])
           &nbsp;
           .checkbox-inline
             %label{:style => "font-weight: normal"}
