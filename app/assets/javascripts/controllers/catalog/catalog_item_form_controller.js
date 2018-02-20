@@ -179,7 +179,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       redirectUrl + '?button=save',
       setConfigInfo(vm.catalogItemModel),
       successMsg);
-    $scope.angularForm.$setPristine(true);
   };
 
   $scope.addClicked = function($event, _formSubmit) {
@@ -188,7 +187,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       redirectUrl + '?button=add',
       setConfigInfo(vm.catalogItemModel),
       successMsg);
-    $scope.angularForm.$setPristine(true);
   };
 
   var formatExtraVars = function(extraVars) {

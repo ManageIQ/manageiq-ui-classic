@@ -57,7 +57,6 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
       }
     }
     tenantManageQuotasButtonClicked('save', { 'quotas' : data});
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.check_quotas_changed = function() {

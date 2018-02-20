@@ -57,7 +57,6 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
 
   $scope.saveClicked = function() {
     ownershipEditButtonClicked('save', true);
-    $scope.angularForm.$setPristine(true);
   };
 
   $scope.addClicked = function() {

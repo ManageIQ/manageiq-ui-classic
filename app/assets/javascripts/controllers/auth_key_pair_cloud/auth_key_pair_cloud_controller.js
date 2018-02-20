@@ -49,7 +49,6 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
 
   vm.saveClicked = function() {
     keyPairEditButtonClicked('save', true);
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.addClicked = vm.saveClicked;

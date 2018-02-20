@@ -378,7 +378,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     if (formSubmit) {
       angular.element('#button_name').val('save');
       emsCommonEditButtonClicked('save', true, $event);
-      $scope.angularForm.$setPristine(true);
     } else {
       $event.preventDefault();
     }
@@ -388,7 +387,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     if (formSubmit) {
       angular.element('#button_name').val('add');
       emsCommonAddButtonClicked('add', true, $event);
-      $scope.angularForm.$setPristine(true);
     } else {
       $event.preventDefault();
     }

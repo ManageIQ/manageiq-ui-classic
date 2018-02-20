@@ -126,12 +126,10 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
 
   vm.saveClicked = function() {
     methodEditButtonClicked('save');
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.addClicked = function() {
     methodEditButtonClicked('add');
-    $scope.angularForm.$setPristine(true);
   };
 
   var setConfigInfo = function(configData) {
