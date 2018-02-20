@@ -205,19 +205,6 @@ class AutomationManagerController < ApplicationController
     ]
   end
 
-  def build_automation_manager_tree(type, name)
-    tree = case name
-           when :automation_manager_providers_tree
-             TreeBuilderAutomationManagerProviders.new(name, type, @sb)
-           when :automation_manager_cs_filter_tree
-             TreeBuilderAutomationManagerConfiguredSystems.new(name, type, @sb)
-           else
-             TreeBuilderAutomationManagerConfigurationScripts.new(name, type, @sb)
-           end
-    instance_variable_set :"@#{name}", tree.tree_nodes
-    tree
-  end
-
   def get_node_info(treenodeid, _show_list = true)
     @sb[:action] = nil
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
