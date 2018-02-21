@@ -227,8 +227,10 @@ class SecurityGroupController < ApplicationController
     if MiqTask.status_ok?(task.status)
       add_flash(_("#{td[:resource]} #{td[:action]}d"))
     else
-      add_flash(_("Unable to #{td[:action]} #{td[:resource]}: %{details}") % {
-        :details => task.message
+      add_flash(_("Unable to %{action} %{resource}: %{details}") % {
+        :action   => td[:action],
+        :resource => td[:resource],
+        :details  => task.message
       }, :error)
     end
 
@@ -287,7 +289,7 @@ class SecurityGroupController < ApplicationController
 
   def task_started(task_id, message)
     unless task_id.kind_of?(Integer)
-      add_flash(_("#{message}: Task start failed: ID [%{id}]") % {:id => task_id.to_s}, :error)
+      add_flash(_("%{message}: Task start failed: ID [%{id}]") % {:message => message, :id => task_id.to_s}, :error)
       return nil
     end
     true
