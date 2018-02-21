@@ -345,7 +345,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
   $scope.saveClicked = function() {
     scheduleEditButtonClicked('save', true);
-    $scope.angularForm.$setPristine(true);
   };
 
   $scope.addClicked = function() {

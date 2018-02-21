@@ -50,7 +50,6 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       'subscriptions' : $scope.pglogicalReplicationModel.subscriptions,
       'exclusion_list' : updated_exclusion_list
     });
-    $scope.angularForm.$setPristine(true);
   };
 
   // check if subscription values have been changed

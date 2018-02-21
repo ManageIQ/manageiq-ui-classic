@@ -318,7 +318,6 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   vm.submitClicked = function() {
     // change memory value based ontype
     reconfigureEditButtonClicked('submit', true);
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.addClicked = function() {
