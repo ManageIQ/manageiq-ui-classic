@@ -13,8 +13,8 @@ class PhysicalServerController < ApplicationController
     %w(guest_devices)
   end
 
-  def display_guest_devices  
-    nested_list(GuestDevice, {:named_scope => :with_ethernet_type})
+  def display_guest_devices
+    nested_list(GuestDevice, :named_scope => :with_ethernet_type)
   end
 
   def self.table_name
