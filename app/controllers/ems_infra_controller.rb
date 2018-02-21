@@ -35,6 +35,11 @@ class EmsInfraController < ApplicationController
     redirect_to :action => 'show_list'
   end
 
+  def new
+    @disabled_ems_infra_types = [['KubeVirt', 'kubevirt']]
+    super
+  end
+
   def scaling
     assert_privileges("ems_infra_scale")
 

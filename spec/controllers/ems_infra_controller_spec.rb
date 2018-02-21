@@ -688,6 +688,83 @@ describe EmsInfraController do
     end
   end
 
+  describe "Kubevirt - update" do
+    before do
+      allow(controller).to receive(:check_privileges).and_return(true)
+      allow(controller).to receive(:assert_privileges).and_return(true)
+      login_as FactoryGirl.create(:user, :features => "ems_infra_new")
+    end
+
+    render_views
+
+    it 'creates ems container with virtualization endpoint on post' do
+      expect do
+        post :create, :params => {
+          "button"                     => "add",
+          "cred_type"                  => "kubevirt",
+          "name"                       => "openshift_with_kubevirt",
+          "emstype"                    => "openshift",
+          "zone"                       => 'default',
+          "default_security_protocol"  => "ssl-without-validation",
+          "default_hostname"           => "server.example.com",
+          "default_api_port"           => "5000",
+          "default_userid"             => "",
+          "default_password"           => "",
+          "provider_region"            => "",
+          "virtualization_selection"   => "kubevirt",
+          "kubevirt_security_protocol" => "ssl-without-validation",
+          "kubevirt_hostname"          => "server.example.com",
+          "kubevirt_api_port"          => "5000",
+        }
+      end.to change { ManageIQ::Providers::Kubevirt::InfraManager.count }.by(1)
+    end
+
+    it 'creates and updates an authentication record on post' do
+      expect do
+        post :create, :params => {
+          "button"                     => "add",
+          "cred_type"                  => "kubevirt",
+          "name"                       => "openshift_with_kubevirt",
+          "emstype"                    => "openshift",
+          "zone"                       => 'default',
+          "default_security_protocol"  => "ssl-without-validation",
+          "default_hostname"           => "server.example.com",
+          "default_api_port"           => "5000",
+          "default_userid"             => "",
+          "default_password"           => "",
+          "provider_region"            => "",
+          "virtualization_selection"   => "kubevirt",
+          "kubevirt_security_protocol" => "ssl-without-validation",
+          "kubevirt_hostname"          => "server.example.com",
+          "kubevirt_api_port"          => "5000",
+          "kubevirt_password"          => "[FILTERED]"
+        }
+      end.to change { ManageIQ::Providers::Kubevirt::InfraManager.count }.by(1)
+
+      expect(response.status).to eq(200)
+      kubevirt = ManageIQ::Providers::Kubevirt::InfraManager.where(:name => "openshift_with_kubevirt Virtualization Manager").first
+      expect(kubevirt.authentications.size).to eq(2)
+      expect(kubevirt.authentication_token(:kubevirt)).to eq('[FILTERED]')
+
+      expect do
+        post :update, :params => {
+          "id"                => kubevirt.id,
+          "button"            => "save",
+          "name"              => "foo_kubevirt_name_changed",
+          "emstype"           => "kubevirt",
+          "cred_type"         => "kubevirt",
+          "kubevirt_password" => "XXXXXX",
+        }
+      end.not_to change { Authentication.count }
+
+      expect(response.status).to eq(200)
+
+      kubevirt.reload
+      expect(kubevirt.name).to eq('foo_kubevirt_name_changed')
+      expect(kubevirt.authentication_token(:kubevirt)).to eq('XXXXXX')
+    end
+  end
+
   describe "VMWare - create, update" do
     before do
       allow(controller).to receive(:check_privileges).and_return(true)

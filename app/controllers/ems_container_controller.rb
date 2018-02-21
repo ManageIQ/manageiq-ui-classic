@@ -72,6 +72,7 @@ class EmsContainerController < ApplicationController
                  else
                    params[:metrics_selection]
                  end
+
     route, project = OPENSHIFT_ROUTES[route_type]
     verify_ems ||= find_record_with_rbac(model, params[:id])
     set_ems_record_vars(verify_ems, :validate)
@@ -116,6 +117,10 @@ class EmsContainerController < ApplicationController
   def retrieve_alerts_selection
     return "disabled" if @ems.connection_configurations.try(:prometheus_alerts).nil?
     "prometheus"
+  end
+
+  def retrieve_virtualization_selection
+    @ems.connection_configurations.try(:kubevirt).nil? ? "disabled" : "kubevirt"
   end
 
   private

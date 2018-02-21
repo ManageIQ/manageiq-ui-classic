@@ -4,6 +4,11 @@
 - ng_reqd_api_port ||= true
 - ng_reqd_db_name ||= false
 - detection ||= false
+- ng_readonly_hostname ||= false
+- ng_readonly_api_port ||= false
+- ng_readonly_ems_container_security_protocol ||= false
+- ng_readonly_tls_verify ||= false
+- ng_readonly_tls_ca_certs ||= false
 
 %div{"ng-if" => defined?(security_protocol_hide) ? false : true}
   .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_security_protocol.$invalid}",
@@ -13,6 +18,7 @@
                             "(emsCommonModel.emstype == 'vmware_cloud' && '#{prefix}' === 'amqp') || " |
                             "emsCommonModel.emstype == 'scvmm' || " +                                  |
                             "emsCommonModel.ems_controller == 'ems_container' || " +                   |
+                            "emsCommonModel.emstype === 'kubevirt' || " +                              |
                             "emsCommonModel.emstype == 'hawkular'"}                                    |
     %label.col-md-2.control-label{"for" => "#{prefix}_security_protocol"}
       = _('Security Protocol')
@@ -44,9 +50,10 @@
                        "selectpicker-for-select-tag" => "",
                        "prefix"                      => prefix.to_s,
                        "reset-validation-status"     => "#{prefix}_auth_status")
-    .col-md-8{"ng-if" => "emsCommonModel.ems_controller == 'ems_container'"}
+    .col-md-8{"ng-if" => "emsCommonModel.ems_controller == 'ems_container' || emsCommonModel.emstype === 'kubevirt'"}
       = select_tag("#{prefix}_security_protocol",
                        options_for_select([["<#{_('Choose')}>", nil]] + @container_security_protocols, :disabled => ["<#{_('Choose')}>", nil]),
+                       "disabled"                    => ng_readonly_ems_container_security_protocol,
                        "ng-model"                    => "#{ng_model}.#{prefix}_security_protocol",
                        "checkchange"                 => "",
                        "required"                    => "",
@@ -73,6 +80,7 @@
                           "id"                      => "#{prefix}_hostname",
                           "name"                    => "#{prefix}_hostname",
                           "ng-model"                => "#{ng_model}.#{prefix}_hostname",
+                          "ng-readonly"             => ng_readonly_hostname,
                           "maxlength"               => ViewHelper::MAX_NAME_LEN.to_s,
                           "ng-required"             => ng_reqd_hostname.to_s,
                           "ng-trim"                 => false,
@@ -149,6 +157,7 @@
                          "emsCommonModel.emstype == 'openstack_infra'        || " + |
                          "emsCommonModel.emstype == 'nuage_network'          || " + |
                          "emsCommonModel.emstype == 'rhevm'                  || " + |
+                         "emsCommonModel.emstype === 'kubevirt'              || " + |
                          "emsCommonModel.emstype == 'vmware_cloud'           || " + |
                          "emsCommonModel.emstype == 'hawkular'               || " + |
                          "emsCommonModel.emstype == 'lenovo_ph_infra'        || " + |
@@ -162,6 +171,7 @@
                           "ng-model"                    => "#{ng_model}.#{prefix}_api_port",
                           "maxlength"                   => 15,
                           "ng-required"                 => ng_reqd_api_port.to_s,
+                          "ng-readonly"                 => ng_readonly_api_port,
                           "checkchange"                 => "",
                           "ng-trim"                     => false,
                           "detect-spaces"               => "",
@@ -205,6 +215,7 @@
       %input{"type"            => "checkbox",
              "id"              => "#{prefix}_tls_verify",
              "name"            => "#{prefix}_tls_verify",
+             "ng-readonly"     => ng_readonly_tls_verify,
              "bs-switch"       => "",
              "switch-on-text"  => _("Yes"),
              "switch-off-text" => _("No"),
@@ -215,7 +226,8 @@
 
 %div{"ng-if" => defined?(tls_ca_certs_hide) ? false : true}
   .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || " +                                             |
-                        "(emsCommonModel.ems_controller == 'ems_container' && " +                             |
+                        "((emsCommonModel.ems_controller == 'ems_container' || " +                            |
+                        " emsCommonModel.emstype === 'kubevirt') && " +                                       |
                         " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca') || " |
                         "(emsCommonModel.emstype == 'hawkular' && " +                                         |
                         " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca')"}    |
@@ -226,6 +238,7 @@
                              "name"        => "#{prefix}_tls_ca_certs",
                              "ng-model"    => "#{ng_model}.#{prefix}_tls_ca_certs",
                              "ng-disabled" => "emsCommonModel.emstype == 'rhevm' && !#{ng_model}.#{prefix}_tls_verify",
+                             "ng-readonly" => ng_readonly_tls_ca_certs,
                              "ng-required" => false,
                              "ng-trim"     => false,
                              "prefix"      => prefix.to_s,

@@ -31,6 +31,7 @@ module UiServiceMixin
       :Azure                   => {:type => "image", :icon => provider_icon(:Azure)},
       :Google                  => {:type => "image", :icon => provider_icon(:Google)},
       :Kubernetes              => {:type => "image", :icon => provider_icon(:Kubernetes)},
+      :Kubevirt                => {:type => "image", :icon => provider_icon(:Kubevirt)},
       :Lenovo                  => {:type => "image", :icon => provider_icon(:Lenovo)},
       :Microsoft               => {:type => "image", :icon => provider_icon(:Microsoft)},
       :Nuage                   => {:type => "image", :icon => provider_icon(:Nuage_Network)},

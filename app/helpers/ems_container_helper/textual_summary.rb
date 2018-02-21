@@ -105,6 +105,10 @@ module EmsContainerHelper::TextualSummary
       :prometheus_alerts => {
         :name => _("Alerts"),
         :type => _("prometheus"),
+      },
+      :kubevirt          => {
+        :name => _("Virtualization"),
+        :type => _("kubevirt"),
       }
     }
 

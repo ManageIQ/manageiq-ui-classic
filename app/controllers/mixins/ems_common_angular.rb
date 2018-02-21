@@ -154,6 +154,14 @@ module Mixins
           :metrics_port     => params[:metrics_api_port],
           :metrics_database => params[:metrics_database_name],
         }]
+      when 'ManageIQ::Providers::Kubevirt::InfraManager'
+        [{
+          :password   => params[:kubevirt_password],
+          :server     => params[:kubevirt_hostname],
+          :port       => params[:kubevirt_api_port],
+          :verify_ssl => params[:kubevirt_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
+          :ca_certs   => params[:kubevirt_tls_ca_certs],
+        }]
       when 'ManageIQ::Providers::Vmware::InfraManager'
         [{:pass => password, :user => user, :ip => params[:default_hostname], :use_broker => false}]
       when 'ManageIQ::Providers::Nuage::NetworkManager'
@@ -219,6 +227,12 @@ module Mixins
       prometheus_alerts_api_port = ""
       prometheus_alerts_security_protocol = security_protocol_default
       prometheus_alerts_tls_ca_certs = ""
+      kubevirt_hostname = ""
+      kubevirt_api_port = ""
+      kubevirt_security_protocol = default_security_protocol
+      kubevirt_tls_ca_certs = ""
+      kubevirt_password = ""
+      kubevirt_tls_verify = false
 
       provider_options = @ems.options || {}
 
@@ -285,6 +299,16 @@ module Mixins
         prometheus_alerts_security_protocol = @ems.connection_configurations.prometheus_alerts.endpoint.security_protocol
         prometheus_alerts_security_protocol ||= security_protocol_default
         prometheus_alerts_tls_ca_certs = @ems.connection_configurations.prometheus_alerts.endpoint.certificate_authority
+      end
+
+      if @ems.connection_configurations.kubevirt.try(:endpoint)
+        kubevirt_hostname = @ems.connection_configurations.kubevirt.endpoint.hostname
+        kubevirt_api_port = @ems.connection_configurations.kubevirt.endpoint.port
+        kubevirt_auth_status = @ems.authentication_status_ok?(:kubevirt)
+        kubevirt_security_protocol = @ems.connection_configurations.kubevirt.endpoint.security_protocol
+        kubevirt_security_protocol ||= default_security_protocol
+        kubevirt_tls_ca_certs = @ems.connection_configurations.kubevirt.endpoint.certificate_authority
+        kubevirt_tls_verify = @ems.connection_configurations.kubevirt.endpoint.verify_ssl
       end
 
       if @ems.connection_configurations.default.try(:endpoint)
@@ -387,7 +411,15 @@ module Mixins
                         :default_auth_status           => default_auth_status,
                         :console_auth_status           => console_auth_status,
                         :metrics_auth_status           => metrics_auth_status.nil? ? true : metrics_auth_status,
-                        :ssh_keypair_auth_status       => ssh_keypair_auth_status.nil? ? true : ssh_keypair_auth_status
+                        :ssh_keypair_auth_status       => ssh_keypair_auth_status.nil? ? true : ssh_keypair_auth_status,
+                        :kubevirt_api_port             => kubevirt_api_port,
+                        :kubevirt_hostname             => kubevirt_hostname,
+                        :kubevirt_security_protocol    => kubevirt_security_protocol,
+                        :kubevirt_tls_verify           => kubevirt_tls_verify,
+                        :kubevirt_tls_ca_certs         => kubevirt_tls_ca_certs,
+                        :kubevirt_auth_status          => kubevirt_auth_status,
+                        :kubevirt_password             => kubevirt_password,
+                        :kubevirt_password_exists      => @ems.authentication_token(:kubevirt).nil? ? false : true,
       } if controller_name == "ems_infra"
 
       if controller_name == "ems_container"
@@ -419,7 +451,16 @@ module Mixins
                          :prometheus_alerts_tls_ca_certs      => prometheus_alerts_tls_ca_certs,
                          :prometheus_alerts_auth_status       => prometheus_alerts_auth_status,
                          :provider_options                    => provider_options,
-                         :alerts_selection                    => retrieve_alerts_selection}
+                         :alerts_selection                    => retrieve_alerts_selection,
+                         :kubevirt_api_port                   => kubevirt_api_port,
+                         :kubevirt_hostname                   => kubevirt_hostname,
+                         :kubevirt_security_protocol          => kubevirt_security_protocol,
+                         :kubevirt_tls_verify                 => kubevirt_tls_verify,
+                         :kubevirt_tls_ca_certs               => kubevirt_tls_ca_certs,
+                         :kubevirt_auth_status                => kubevirt_auth_status,
+                         :kubevirt_password                   => kubevirt_password,
+                         :kubevirt_password_exists            => @ems.authentication_token(:kubevirt).nil? ? false : true,
+                         :virtualization_selection            => retrieve_virtualization_selection}
       end
 
       if controller_name == "ems_middleware"
@@ -486,6 +527,10 @@ module Mixins
       prometheus_alerts_hostname = params[:prometheus_alerts_hostname].strip if params[:prometheus_alerts_hostname]
       prometheus_alerts_api_port = params[:prometheus_alerts_api_port].strip if params[:prometheus_alerts_api_port]
       prometheus_alerts_security_protocol = params[:prometheus_alerts_security_protocol].strip if params[:prometheus_alerts_security_protocol]
+      kubevirt_tls_ca_certs = params[:kubevirt_tls_ca_certs].strip if params[:kubevirt_tls_ca_certs]
+      kubevirt_hostname = params[:kubevirt_hostname].strip if params[:kubevirt_hostname]
+      kubevirt_api_port = params[:kubevirt_api_port].strip if params[:kubevirt_api_port]
+      kubevirt_security_protocol = ems.security_protocol
       default_endpoint = {}
       amqp_endpoint = {}
       amqp_fallback_endpoint1 = {}
@@ -496,6 +541,7 @@ module Mixins
       hawkular_endpoint = {}
       prometheus_endpoint = {}
       prometheus_alerts_endpoint = {}
+      kubevirt_endpoint = {}
 
       if ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) || ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
@@ -522,6 +568,16 @@ module Mixins
                              :hostname => metrics_hostname,
                              :port     => metrics_port,
                              :path     => metrics_database_name }
+      end
+
+      if ems.kind_of?(ManageIQ::Providers::Kubevirt::InfraManager)
+        kubevirt_endpoint = {
+          :role     => :kubevirt,
+          :hostname => kubevirt_hostname,
+          :port     => kubevirt_api_port,
+        }
+
+        kubevirt_endpoint.merge!(endpoint_security_options(kubevirt_security_protocol, kubevirt_tls_ca_certs))
       end
 
       if ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
@@ -569,6 +625,11 @@ module Mixins
           prometheus_alerts_endpoint = {:role => :prometheus_alerts, :hostname => prometheus_alerts_hostname, :port => prometheus_alerts_api_port}
           prometheus_alerts_endpoint.merge!(endpoint_security_options(prometheus_alerts_security_protocol, prometheus_alerts_tls_ca_certs))
         end
+
+        if params[:virtualization_selection] == 'kubevirt'
+          kubevirt_endpoint = {:role => :kubevirt, :hostname => kubevirt_hostname, :port => kubevirt_api_port}
+          kubevirt_endpoint.merge!(endpoint_security_options(kubevirt_security_protocol, kubevirt_tls_ca_certs))
+        end
       end
 
       if ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
@@ -612,7 +673,8 @@ module Mixins
                    :metrics           => metrics_endpoint,
                    :hawkular          => hawkular_endpoint,
                    :prometheus        => prometheus_endpoint,
-                   :prometheus_alerts => prometheus_alerts_endpoint}
+                   :prometheus_alerts => prometheus_alerts_endpoint,
+                   :kubevirt          => kubevirt_endpoint}
 
       build_connection(ems, endpoints, mode)
     end
@@ -629,7 +691,7 @@ module Mixins
       authentications = build_credentials(ems, mode)
       configurations = []
 
-      [:default, :ceilometer, :amqp, :amqp_fallback1, :amqp_fallback2, :console, :smartstate_docker, :ssh_keypair, :metrics, :hawkular, :prometheus, :prometheus_alerts].each do |role|
+      [:default, :ceilometer, :amqp, :amqp_fallback1, :amqp_fallback2, :console, :smartstate_docker, :ssh_keypair, :metrics, :hawkular, :prometheus, :prometheus_alerts, :kubevirt].each do |role|
         configurations << build_configuration(ems, authentications, endpoints, role)
       end
 
@@ -676,6 +738,12 @@ module Mixins
         metrics_password = params[:metrics_password] ? params[:metrics_password] : ems.authentication_password(:metrics)
         creds[:metrics] = {:userid => params[:metrics_userid], :password => metrics_password, :save => (mode != :validate)}
       end
+      if ems.kind_of?(ManageIQ::Providers::Kubevirt::InfraManager)
+        creds[:kubevirt] = {
+          :auth_key => params[:kubevirt_password] ? params[:kubevirt_password] : ems.authentication_token(:kubevirt),
+          :save     => mode != :validate,
+        }
+      end
       if ems.supports_authentication?(:auth_key) && params[:service_account]
         creds[:default] = {:auth_key => params[:service_account], :userid => "_", :save => (mode != :validate)}
       end
@@ -698,6 +766,10 @@ module Mixins
         end
         if params[:alerts_selection] == 'prometheus'
           creds[:prometheus_alerts] = {:auth_key => default_key, :save => (mode != :validate)}
+        end
+        if params[:virtualization_selection] == 'kubevirt'
+          kubevirt_key = params[:kubevirt_password] ? params[:kubevirt_password] : default_key
+          creds[:kubevirt] = { :auth_key => kubevirt_key, :save => (mode != :validate) }
         end
         creds[:bearer] = {:auth_key => default_key, :save => (mode != :validate)}
         creds.delete(:default)
