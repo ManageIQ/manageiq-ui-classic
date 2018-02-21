@@ -7,7 +7,7 @@
 - opts = ["<#{_('Choose')}>"]
 - opts += @edit[@expkey].tags_for_display_filters
 
-%br
+.spacer
 
 = select_tag('chosen_tag', options_for_select(opts, @edit[@expkey][:exp_tag]),
   :multiple              => false,
@@ -17,7 +17,6 @@
   'data-miq_sparkle_off' => true)
 
 - if adv_search_show_alias_checkbox? && !@edit[@expkey][:exp_tag].blank?
-  %br
   = check_box_tag("use_alias", "1", !@edit[@expkey][:alias].blank?,
     :style                      => "width: 20px",
     "data-miq_sparkle_on"       => true,
@@ -31,10 +30,10 @@
       "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
 
 - if @edit[@expkey][:exp_tag]
-  %br
+  .spacer
   %font{:color => "black"}
     = h(@edit[@expkey][:exp_key])
-  %br
+  .spacer
   - if @edit[@expkey][:exp_value] == :user_input
     = "<#{_('user input')}>"
   - else
