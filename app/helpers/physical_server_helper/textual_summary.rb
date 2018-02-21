@@ -156,9 +156,10 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_network_devices
-    device = {:label => _("Network Devices"), :value => @record.hardware.nics.count, :icon => "ff ff-network-card"}
-    unless @record.hardware.nics.nil?
-      device.update(:link => "/physical_server/show/#{@record.id}?display=guest_devices")
+    hardware_nics_count = @record.hardware.nics.count
+    device = {:label => _("Network Devices"), :value => hardware_nics_count, :icon => "ff ff-network-card"}
+    if hardware_nics_count > 0
+      device[:link] = "/physical_server/show/#{@record.id}?display=guest_devices"
     end
     device
   end
