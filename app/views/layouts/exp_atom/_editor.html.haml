@@ -21,23 +21,6 @@
       - exptypes -= [[_(ExpAtomHelper::EXP_FIND_TYPE[0]), ExpAtomHelper::EXP_FIND_TYPE[1]]]
   #exp_atom_editor_div
     %fieldset
-      .toolbar-pf-actions{:style => "margin-left: 20px"}
-        .form-group
-          - t = _('Commit expression element changes')
-          %button.btn.btn-default{"data-method" => :post,
-          "data-miq_sparkle_on" => true,
-          :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'commit')}');",
-          :remote               => true,
-          :title                => t}
-            %i.fa.fa-lg.fa-check
-          - t = _("Discard expression element changes")
-          %button.btn.btn-default{"data-method" => :post,
-          "data-miq_sparkle_on" => true,
-          :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'discard')}');",
-          :remote               => true,
-          :title                => t}
-            %i.fa-lg.pficon.pficon-close
-
       - if @edit[@expkey][:exp_key] == "NOT"
         %font{:color => "black"}
           = _('NOT')
@@ -82,6 +65,23 @@
           "data-miq_sparkle_off"      => true,
           "data-miq_observe_checkbox" => {:url => url}.to_json)
         = _('User will input the value')
+
+      .spacer
+      - t = _('Commit expression element changes')
+      %button.btn.btn-primary{"data-method" => :post,
+      "data-miq_sparkle_on" => true,
+      :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'commit')}');",
+      :remote               => true,
+      :title                => t}
+        = _("Commit")
+      - t = _("Discard expression element changes")
+      %button.btn.btn-default{"data-method" => :post,
+      "data-miq_sparkle_on" => true,
+      :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'discard')}');",
+      :remote               => true,
+      :title                => t}
+        = _("Discard")
+
   %script{:type => "text/javascript"}
     -# Set the expression value prefill images and hover text
     miqExpressionPrefill(ManageIQ.expEditor, true);
