@@ -2,7 +2,7 @@
 //= require bower_components/es6-shim/es6-shim
 //= require bower_components/array-includes/array-includes
 //= require bower_components/fetch/fetch
-//= require bower_components/jquery/dist/jquery
+//= require jquery
 //= require ./jquery_overrides
 //= require ./i18n
 //= require bower_components/patternfly/dist/js/patternfly
