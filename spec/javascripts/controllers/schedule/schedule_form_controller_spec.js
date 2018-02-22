@@ -331,7 +331,10 @@ describe('scheduleFormController', function() {
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/schedule_edit/new?button=save', $scope.scheduleModel);
+      var serializeFields = angular.copy($scope.scheduleModel);
+      var date = moment(serializeFields.start_date).format("MM/DD/YYYY");
+      serializeFields.start_date = date;
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/schedule_edit/new?button=save', serializeFields);
     });
   });
 
@@ -348,7 +351,10 @@ describe('scheduleFormController', function() {
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/schedule_edit/new?button=save', $scope.scheduleModel);
+      var serializeFields = angular.copy($scope.scheduleModel);
+      var date = moment(serializeFields.start_date).format("MM/DD/YYYY");
+      serializeFields.start_date = date;
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/schedule_edit/new?button=save', serializeFields);
     });
   });
 

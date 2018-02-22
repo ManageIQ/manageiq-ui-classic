@@ -16,8 +16,8 @@ ManageIQ.angular.app.component('scheduleFormTimer', {
     startHour: '<',
     startMin: '<',
   },
-  controller: ['$scope', function($scope) {
-    this.dateFrom = new Date()
-  }],
-  templateUrl: '/static/ops/schedules/schedule-form-timer.html.haml'
-})
+  controller: function() {
+    this.dateFrom = new Date();
+  },
+  templateUrl: '/static/ops/schedules/schedule-form-timer.html.haml',
+});

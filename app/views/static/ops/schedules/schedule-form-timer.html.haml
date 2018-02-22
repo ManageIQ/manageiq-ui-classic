@@ -63,7 +63,7 @@
           = select_tag("start_min",
                        options_for_select(Array.new(12) { |i| i * 5 }),
                        "ng-model"    => "$ctrl.startMin",
-                       'ng-chnage'   => "$ctrl.startMinChange({min: $ctrl.startMin})",
+                       'ng-change'   => "$ctrl.startMinChange({min: $ctrl.startMin})",
                        :class        => "selectWidth",
                        "selectpicker-for-select-tag" => "")
           %span m
