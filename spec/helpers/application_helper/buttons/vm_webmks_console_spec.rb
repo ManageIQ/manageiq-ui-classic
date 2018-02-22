@@ -26,7 +26,8 @@ describe ApplicationHelper::Button::VmWebmksConsole do
     context 'when record.vendor == vmware' do
       let(:power_state) { 'on' }
       let(:api_version) { 6.5 }
-      let(:host) { FactoryGirl.create(:host_vmware_esx, :vmm_version => api_version) }
+      let(:ems) { FactoryGirl.create(:ems_vmware, :api_version => api_version) }
+      let(:host) { FactoryGirl.create(:host_vmware_esx, :ems_id => ems.id, :vmm_version => api_version) }
       let(:record) { FactoryGirl.create(:vm_vmware, :host => host) }
 
       context 'and the power is on' do
@@ -43,6 +44,12 @@ describe ApplicationHelper::Button::VmWebmksConsole do
         [6.0, 6.5].each do |ver|
           context "is #{ver}" do
             let(:api_version) { ver }
+            it_behaves_like 'an enabled button'
+          end
+
+          context 'and Host is nil' do
+            let(:host) { nil }
+            let(:record) { FactoryGirl.create(:vm_vmware, :ems_id => ems.id) }
             it_behaves_like 'an enabled button'
           end
         end
