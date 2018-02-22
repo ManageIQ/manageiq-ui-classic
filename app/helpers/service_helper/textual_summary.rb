@@ -2,6 +2,8 @@ module ServiceHelper::TextualSummary
   include TextualMixins::TextualDescription
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
+  include GenericObjectHelper::TextualSummary
+
   #
   # Groups
   #
