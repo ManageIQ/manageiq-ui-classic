@@ -6,12 +6,7 @@
         %label.col-md-2.control-label{"for" => "timer-typ"}
           = _("Run")
         .col-md-10
-          = select_tag("timer_typ",
-                      options_for_select([[_('Once'), 'Once'], [_('Hourly'), 'Hourly'], [_('Daily'), 'Daily'], [_('Weekly'), 'Weekly'], [_('Monthly'), 'Monthly']]),
-                      "ng-model"                    => "$ctrl.timerTyp",
-                      "ng-change"                   => "$ctrl.scheduleTimerTypeChanged({type: $ctrl.timerTyp})",
-                      "selectpicker-for-select-tag" => "")
-          -#%select#timer-typ{"pf-select"                 => true,
+          %select#timer-typ{"pf-select"                 => true,
                             "ng-model"                  => "$ctrl.timerTyp",
                             "name"                      => "timer_typ",
                             "ng-options"                => "timerItem.key as timerItem.name for timerItem in $ctrl.timerTypeOptions",
