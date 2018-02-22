@@ -82,7 +82,6 @@
                                  "ng-required"                => "!automateRequest() && filterValueRequired(scheduleModel.filter_value)",
                                  "checkchange"                => ""}
               %option{"disabled" => "", "value" => ""} &lt;Choose&gt;
-            %input{"type" => "hidden", "name" => "filter_value", "value" => "{{scheduleModel.filter_value}}"}
 
         = render :partial => "layouts/angular-bootstrap/ae_resolve_options",
                  :locals  => {:ng_show => "automateRequest()"}

@@ -20,7 +20,6 @@
                               "ng-options"                => "timerItem.value as timerItem.text for timerItem in timer_items",
                               "timer-hide"                => "timerTypeOnce",
                               "checkchange"               => ""}
-          %input{"type" => "hidden", "ng-value" => "scheduleModel.timer_value", "name" => "timer_value"}
       .form-group
         %label.col-md-2.control-label{"for" => "time_zone"}
           = _("Time Zone")
