@@ -91,7 +91,8 @@ module Menu
           Menu::Item.new('ems_physical_infra',    N_('Providers'), 'ems_physical_infra',    {:feature => 'ems_physical_infra_show_list'},    '/ems_physical_infra'),
           Menu::Item.new('physical_switch', N_('Switches'),  'physical_switch', {:feature => 'physical_switch_show_list'}, '/physical_switch'),
           Menu::Item.new('physical_server', N_('Servers'),   'physical_server', {:feature => 'physical_server_show_list'}, '/physical_server'),
-          Menu::Item.new('physical_infra_topology', N_('Topology'), 'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology')
+          Menu::Item.new('physical_infra_topology', N_('Topology'), 'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology'),
+          Menu::Item.new('physical_rack',    N_('Rack Providers'), 'physical_rack',    {:feature => 'physical_rack_show_list'},    '/physical_rack')
         ])
       end
 
