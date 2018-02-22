@@ -662,4 +662,21 @@ describe ChargebackController do
       end
     end
   end
+
+  describe '#get_node_info' do
+    let(:sandbox) { {:active_tree => :cb_rates_tree, :trees => {:cb_rates_tree => {:active_node => node}}} }
+
+    before do
+      controller.instance_variable_set(:@sb, sandbox)
+    end
+
+    context 'root node' do
+      let(:node) { "root" }
+
+      it 'sets right cell text properly' do
+        controller.send(:get_node_info, node)
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Chargeback Rates")
+      end
+    end
+  end
 end

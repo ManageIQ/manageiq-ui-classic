@@ -381,7 +381,7 @@ class ChargebackController < ApplicationController
     if x_active_tree == :cb_rates_tree
       if node == "root"
         @record = nil
-        @right_cell_text = _("All Chargeback Rate")
+        @right_cell_text = _("All Chargeback Rates")
       elsif ["xx-Compute", "xx-Storage"].include?(node)
         @record = nil
         @right_cell_text = case node
