@@ -126,6 +126,7 @@ class CloudNetworkController < ApplicationController
 
     # refresh the list if applicable
     if @lastaction == "show_list"
+      render_flash
       show_list
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "cloud_network"
