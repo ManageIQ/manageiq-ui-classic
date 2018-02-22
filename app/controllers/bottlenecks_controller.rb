@@ -196,7 +196,7 @@ class BottlenecksController < ApplicationController
     @timeline = true
     if @sb[:report].table.data.empty?
       @flash_array = nil
-      add_flash(_("No records found for this timeline"), :warning)
+      add_flash(_("No records found for this timeline"), :info)
     else
       tz = @sb[:report].tz ? @sb[:report].tz : Time.zone
       @sb[:report].extras[:browser_name] = browser_info(:name)
