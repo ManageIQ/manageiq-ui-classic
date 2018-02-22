@@ -97,8 +97,7 @@ module ReportController::Schedules
       MiqSchedule.queue_scheduled_work(schedule.id, nil, Time.now.utc.to_i, nil)
       audit = {
         :event        => "queue_scheduled_work",
-        :message      => _("Schedule [%{schedule}] queued to run from the UI by user %{user}") %
-                          { :schedule => schedule.name, :user => current_user.name },
+        :message      => "Schedule [#{schedule.name}] queued to run from the UI by user #{current_user.name}",
         :target_id    => schedule.id,
         :target_class => "MiqSchedule",
         :userid       => session[:userid]
