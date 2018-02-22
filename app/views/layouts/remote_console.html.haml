@@ -6,7 +6,7 @@
     = favicon_link_tag
     = stylesheet_link_tag 'application'
     -# Load the required JS based on the console type
-    = javascript_include_tag 'bower_components/jquery/dist/jquery.js', "remote_consoles/#{@console[:type]}", 'remote_console'
+    = javascript_include_tag 'jquery', "remote_consoles/#{@console[:type]}", 'remote_console'
   %body
     #remote-console{'data-url' => @console[:url], 'data-secret' => @console[:secret]}
     = render :partial => 'shared/remote_console_footer', :layout   => false, :locals   => { :console_type => @console[:type].upcase }

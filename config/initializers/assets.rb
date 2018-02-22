@@ -8,7 +8,7 @@ end
 Rails.application.config.assets.precompile += %w(
   bower_components/codemirror/modes/*.js
   bower_components/codemirror/themes/*.css
-  bower_components/jquery/dist/jquery.js
+  jquery.js
   bower_components/jquery-ui/jquery-ui.js
 
   jquery_overrides.js
