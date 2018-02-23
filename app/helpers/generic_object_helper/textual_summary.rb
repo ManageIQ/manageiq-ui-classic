@@ -1,12 +1,12 @@
 module GenericObjectHelper::TextualSummary
   include TextualMixins::TextualName
 
-  def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name created updated))
+  def textual_group_go_properties
+    TextualGroup.new(_("Properties"), %i(definition created updated))
   end
 
-  def textual_name
-    {:label => _("Name"), :value => @record.name}
+  def textual_definition
+    {:label => _("Definition"), :value => @record.generic_object_definition_name}
   end
 
   def textual_created

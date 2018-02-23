@@ -142,7 +142,6 @@ describe ServiceController do
       expect(response.status).to eq(200)
       expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"},
                                            {:name => "GOTest", :url => "/service/show/#{service.id}?display=generic_objects&generic_object_id=#{go.id}"}])
-      is_expected.to render_template("layouts/_item")
       is_expected.to render_template("service/show")
 
       get :show, :params => { :id => service.id}
