@@ -18,7 +18,8 @@ class ApplicationHelper::Button::VmVncConsole < ApplicationHelper::Button::VmCon
   private
 
   def supported_vendor_api?
-    @record.host.vmm_version.to_f < unsupported_api_version
+    return @record.host.vmm_version.to_f < unsupported_api_version unless @record.host.nil?
+    false
   end
 
   def unsupported_api_version
