@@ -171,6 +171,10 @@ class AutomationManagerController < ApplicationController
     true
   end
 
+  def providers_active_tree?
+    x_active_tree == :automation_manager_providers_tree
+  end
+
   private
 
   def textual_group_list
@@ -257,7 +261,7 @@ class AutomationManagerController < ApplicationController
     elsif x_active_tree == :configuration_scripts_tree
       cs_provider_node(provider)
     else
-      @show_adv_search = true
+      @show_adv_search = false
       @no_checkboxes = true
       options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryRootGroup",
                  :match_via_descendants => 'ConfiguredSystem',
@@ -287,7 +291,7 @@ class AutomationManagerController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      @show_adv_search = true
+      @show_adv_search = false
       options = {:model                 => "ConfiguredSystem",
                  :match_via_descendants => 'ConfiguredSystem',
                  :named_scope           => [[:with_inventory_root_group, @inventory_group_record.id]],
@@ -404,6 +408,13 @@ class AutomationManagerController < ApplicationController
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
+    replace_search_box(presenter)
+  end
+
+  def replace_search_box(presenter)
+    presenter.replace(:adv_searchbox_div,
+                      r[:partial => 'layouts/x_adv_searchbox',
+                        :locals  => {:nameonly => providers_active_tree?}])
   end
 
   def group_summary_tab_selected?
