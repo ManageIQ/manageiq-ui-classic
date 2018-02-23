@@ -45,6 +45,12 @@ describe ApplicationHelper::Button::VmWebmksConsole do
             let(:api_version) { ver }
             it_behaves_like 'an enabled button'
           end
+
+          context 'and Host is nil' do
+            let(:host) { nil }
+            it_behaves_like 'a disabled button',
+                            'The web-based WebMKS console is not available because the VM does not support the minimum required vSphere API version.'
+          end
         end
       end
     end

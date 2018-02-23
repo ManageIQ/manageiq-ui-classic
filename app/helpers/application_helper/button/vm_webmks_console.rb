@@ -14,7 +14,8 @@ class ApplicationHelper::Button::VmWebmksConsole < ApplicationHelper::Button::Vm
   end
 
   def supported_vendor_api?
-    @record.host.vmm_version.to_f >= min_supported_api_version
+    return @record.host.vmm_version.to_f >= min_supported_api_version unless @record.host.nil?
+    false
   end
 
   def min_supported_api_version
