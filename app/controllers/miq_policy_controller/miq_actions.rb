@@ -51,7 +51,7 @@ module MiqPolicyController::MiqActions
         @edit = nil
         @nodetype = "a"
         @new_action_node = "a-#{action.id}"
-        replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? [:policy_profile, :policy, :action] : [:action], :remove_form_buttons => true)
+        replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? %i(policy_profile policy action) : %i(action), :remove_form_buttons => true)
         @sb[:action] = nil
       else
         action.errors.each do |field, msg|
@@ -78,7 +78,7 @@ module MiqPolicyController::MiqActions
     process_actions(actions, "destroy") unless actions.empty?
     @new_action_node = self.x_node = "root"
     get_node_info(x_node)
-    replace_right_cell(:nodetype => "root", :replace_trees => [:action])
+    replace_right_cell(:nodetype => "root", :replace_trees => %i(action))
   end
 
   def action_field_changed

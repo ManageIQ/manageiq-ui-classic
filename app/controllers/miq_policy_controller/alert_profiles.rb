@@ -61,7 +61,7 @@ module MiqPolicyController::AlertProfiles
     @edit = nil
     self.x_node = @new_alert_profile_node = "xx-#{alert_profile.mode}_ap-#{alert_profile.id}"
     get_node_info(@new_alert_profile_node)
-    replace_right_cell(:nodetype => "ap", :replace_trees => [:alert_profile], :remove_form_buttons => true)
+    replace_right_cell(:nodetype => "ap", :replace_trees => %i(alert_profile), :remove_form_buttons => true)
   end
 
   def alert_profile_edit_move
@@ -142,7 +142,7 @@ module MiqPolicyController::AlertProfiles
     nodes.pop
     self.x_node = nodes.join("_")
     get_node_info(x_node)
-    replace_right_cell(:nodetype => "xx", :replace_trees => [:alert_profile])
+    replace_right_cell(:nodetype => "xx", :replace_trees => %i(alert_profile))
   end
 
   def alert_profile_field_changed
