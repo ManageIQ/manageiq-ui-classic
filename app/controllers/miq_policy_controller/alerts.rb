@@ -10,7 +10,7 @@ module MiqPolicyController::Alerts
       add_flash(_("Edit of Alert \"%{name}\" was cancelled by the user") % {:name => @alert.description})
     end
     get_node_info(x_node)
-    replace_right_cell(:nodetype => @nodetype)
+    replace_right_cell(:nodetype => @nodetype, :remove_form_buttons => true)
   end
 
   def alert_edit_save_add
@@ -35,7 +35,7 @@ module MiqPolicyController::Alerts
     @edit = nil
     @nodetype = "al"
     @new_alert_node = "al-#{alert.id}"
-    replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert])
+    replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert], :remove_form_buttons => true)
   end
 
   def alert_edit_reset

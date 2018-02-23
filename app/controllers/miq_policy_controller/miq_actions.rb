@@ -14,7 +14,7 @@ module MiqPolicyController::MiqActions
       end
       @sb[:action] = nil
       get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
+      replace_right_cell(:nodetype => @nodetype, :remove_form_buttons => true)
       return
     when "reset", nil # Reset or first time in
       action_build_edit_screen
@@ -51,7 +51,7 @@ module MiqPolicyController::MiqActions
         @edit = nil
         @nodetype = "a"
         @new_action_node = "a-#{action.id}"
-        replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? [:policy_profile, :policy, :action] : [:action])
+        replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? [:policy_profile, :policy, :action] : [:action], :remove_form_buttons => true)
         @sb[:action] = nil
       else
         action.errors.each do |field, msg|

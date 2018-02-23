@@ -12,7 +12,7 @@ module MiqPolicyController::PolicyProfiles
         add_flash(_("Edit of Policy Profile \"%{name}\" was cancelled by the user") % {:name => @profile.description})
       end
       get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
+      replace_right_cell(:nodetype => @nodetype, :remove_form_buttons => true)
       return
     when "reset", nil # Reset or first time in
       profile_build_edit_screen
@@ -58,7 +58,7 @@ module MiqPolicyController::PolicyProfiles
         @edit = nil
         @nodetype = "pp"
         @new_profile_node = "pp-#{profile.id}"
-        replace_right_cell(:nodetype => "pp", :replace_trees => [:policy_profile])
+        replace_right_cell(:nodetype => "pp", :replace_trees => [:policy_profile], :remove_form_buttons => true)
       else
         profile.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
