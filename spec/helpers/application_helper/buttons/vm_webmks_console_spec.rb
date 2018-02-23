@@ -26,8 +26,7 @@ describe ApplicationHelper::Button::VmWebmksConsole do
     context 'when record.vendor == vmware' do
       let(:power_state) { 'on' }
       let(:api_version) { 6.5 }
-      let(:ems) { FactoryGirl.create(:ems_vmware, :api_version => api_version) }
-      let(:host) { FactoryGirl.create(:host_vmware_esx, :ems_id => ems.id, :vmm_version => api_version) }
+      let(:host) { FactoryGirl.create(:host_vmware_esx, :vmm_version => api_version) }
       let(:record) { FactoryGirl.create(:vm_vmware, :host => host) }
 
       context 'and the power is on' do
@@ -49,8 +48,8 @@ describe ApplicationHelper::Button::VmWebmksConsole do
 
           context 'and Host is nil' do
             let(:host) { nil }
-            let(:record) { FactoryGirl.create(:vm_vmware, :ems_id => ems.id) }
-            it_behaves_like 'an enabled button'
+            it_behaves_like 'a disabled button',
+                            'The web-based WebMKS console is not available because the VM does not support the minimum required vSphere API version.'
           end
         end
       end

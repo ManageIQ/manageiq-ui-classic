@@ -15,7 +15,7 @@ class ApplicationHelper::Button::VmWebmksConsole < ApplicationHelper::Button::Vm
 
   def supported_vendor_api?
     return @record.host.vmm_version.to_f >= min_supported_api_version unless @record.host.nil?
-    ExtManagementSystem.find(@record.ems_id).api_version.to_f >= min_supported_api_version
+    false
   end
 
   def min_supported_api_version

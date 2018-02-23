@@ -43,6 +43,11 @@ describe ApplicationHelper::Button::VmVncConsole do
         it_behaves_like 'vm_console_with_power_state_on_off', "The web-based VNC console is not available because \
 the VM is not powered on"
       end
+      context 'and Host is nil' do
+        let(:api_version) { 6.4 }
+        let(:host) { nil }
+        it_behaves_like 'a disabled button', 'VNC consoles are unsupported on VMware ESXi 6.5 and later.'
+      end
     end
   end
 end
