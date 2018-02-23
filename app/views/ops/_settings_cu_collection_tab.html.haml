@@ -8,8 +8,8 @@
     .row
       .col-md-12.col-lg-6
         %fieldset
-          %h3
-            = clusters_title
+          %h3= clusters_title
+          .form-horizontal
             .form-group
               %label.col-md-4.control-label
                 = _("Collect for All %{clusters}") % {:clusters => clusters_title}
@@ -43,27 +43,28 @@
       .col-md-12.col-lg-6
         %fieldset
           %h3= _("Datastores")
-          .form-group
-            %label.col-md-4.control-label
-              = _("Collect for All Datastores")
-            .col-md-8
-              = check_box_tag("all_storages", true, @edit[:new][:all_storages],
-                "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :data => {:on_text => _('Yes'), :off_text => _('No')})
-            :javascript
-              miqInitBootstrapSwitch('all_storages', "#{url}")
-          - if @datastore_tree.present?
-            #storages_div{:style => "display:#{@edit[:new][:all_storages] ? "none" : ""}"}
-              - if @edit[:new][:storages].blank?
-                = _("No Datastores found in the current region.")
-              - else
-                %br/
-                %b= _("Enable Collection by Datastore")
-                %br/
-                %input#ds_toggle{:name => "ds_toggle", :onchange => "miqCheckCUAll(this,'#{@datastore_tree.name}');", :type => "checkbox"}/
-                = _("Check All")
-                :javascript
-                  miqTreeResetState('#{j_str @datastore_tree.name}');
-                = render(:partial => 'shared/tree', :locals => {:tree => @datastore_tree, :name => @datastore_tree.name})
-          - else
-            .note
-              %b= _("Note: No Datastores available.")
+          .form-horizontal
+            .form-group
+              %label.col-md-4.control-label
+                = _("Collect for All Datastores")
+              .col-md-8
+                = check_box_tag("all_storages", true, @edit[:new][:all_storages],
+                  "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :data => {:on_text => _('Yes'), :off_text => _('No')})
+              :javascript
+                miqInitBootstrapSwitch('all_storages', "#{url}")
+            - if @datastore_tree.present?
+              #storages_div{:style => "display:#{@edit[:new][:all_storages] ? "none" : ""}"}
+                - if @edit[:new][:storages].blank?
+                  = _("No Datastores found in the current region.")
+                - else
+                  %br/
+                  %b= _("Enable Collection by Datastore")
+                  %br/
+                  %input#ds_toggle{:name => "ds_toggle", :onchange => "miqCheckCUAll(this,'#{@datastore_tree.name}');", :type => "checkbox"}/
+                  = _("Check All")
+                  :javascript
+                    miqTreeResetState('#{j_str @datastore_tree.name}');
+                  = render(:partial => 'shared/tree', :locals => {:tree => @datastore_tree, :name => @datastore_tree.name})
+            - else
+              .note
+                %b= _("Note: No Datastores available.")
