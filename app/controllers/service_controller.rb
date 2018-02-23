@@ -189,6 +189,7 @@ class ServiceController < ApplicationController
     drop_breadcrumb(:name => @item.name, :url => show_link(@record, :display => 'generic_objects', :generic_object_id => params[:generic_object_id]))
     @view = get_db_view(GenericObject)
     @sb[:rec_id] = params[:generic_object_id]
+    @record = @item
     show_item
   end
 
@@ -217,7 +218,9 @@ class ServiceController < ApplicationController
   helper_method :sanitize_output
 
   def textual_group_list
-    if @record.type == "ServiceAnsiblePlaybook"
+    if @item && @item.kind_of?(GenericObject)
+      [%i(go_properties attribute_details_list methods)]
+    elsif @record.type == "ServiceAnsiblePlaybook"
       [%i(properties), %i(lifecycle tags generic_objects)]
     else
       [%i(properties lifecycle relationships generic_objects miq_custom_attributes), %i(vm_totals tags)]
