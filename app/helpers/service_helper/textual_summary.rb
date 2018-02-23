@@ -24,7 +24,7 @@ module ServiceHelper::TextualSummary
 
   def textual_group_provisioning_credentials
     return nil unless provisioning_get_job
-    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential))
+    TextualGroup.new(_("Credentials"), %i(machine_credential vault_credential network_credential cloud_credential))
   end
 
   def textual_group_provisioning_plays
@@ -44,7 +44,7 @@ module ServiceHelper::TextualSummary
 
   def textual_group_retirement_credentials
     return nil unless retirement_get_job
-    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential))
+    TextualGroup.new(_("Credentials"), %i(machine_credential vault_credential network_credential cloud_credential))
   end
 
   def textual_group_retirement_plays
@@ -226,6 +226,12 @@ module ServiceHelper::TextualSummary
     credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential')
     return nil unless credential
     credential(credential, _("Machine"))
+  end
+
+  def textual_vault_credential
+    credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential')
+    return nil unless credential
+    credential(credential, _("Vault"))
   end
 
   def textual_network_credential

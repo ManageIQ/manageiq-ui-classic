@@ -2709,6 +2709,7 @@ class MiqAeClassController < ApplicationController
     @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, options[:credential_id])
     @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
     @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
+    @playbook_details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VautCredential, options[:vault_credential_id]) if options[:vault_credential_id]
     @playbook_details[:verbosity] = options[:verbosity]
     @playbook_details[:become_enabled] = options[:become_enabled] == true ? _("Yes") : _("No")
     @playbook_details[:execution_ttl] = options[:execution_ttl]

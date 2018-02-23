@@ -84,4 +84,16 @@ describe ServiceHelper::TextualSummary do
       expect(textual_cloud_credential).to eq({:label=>"Cloud", :value=>nil, :title=>"Credential (Amazon)", :link=>"link"})
     end
   end
+
+  describe ".textual_vault_credential" do
+    subject { textual_vault_credential }
+    it 'displays only vault credentials if available' do
+      @job = FactoryGirl.create(:embedded_ansible_job)
+      machine_credential = FactoryGirl.create(:embedded_ansible_machine_credential)
+      vault_credential = FactoryGirl.create(:embedded_ansible_vault_credential)
+      allow(@job).to receive(:authentications).and_return([vault_credential, machine_credential])
+      allow(self).to receive(:url_for_only_path).and_return('link')
+      expect(textual_cloud_credential).to eq(:label => "Vault", :value => nil, :title => "Credential (Vault)", :link => "link")
+    end
+  end
 end

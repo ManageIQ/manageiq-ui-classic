@@ -143,6 +143,16 @@ function playbookReusableCodeMixin(API, $q, miqService) {
       .catch(miqService.handleFailure)
     );
 
+    // list of machine credentials
+    allApiPromises.push(API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential&expand=resources&attributes=id,name' + sortOptions)
+      .then(function(data) {
+        vm.vault_credentials = data.resources;
+        vm._vault_credential = _.find(vm.vault_credentials, {id: vm[vm.model].retirement_vault_credential_id});
+        vm._provisioning_vault_credential = _.find(vm.vault_credentials, {id: vm[vm.model].provisioning_vault_credential_id});
+      })
+      .catch(miqService.handleFailure)
+    );
+
     // list of network credentials
     allApiPromises.push(API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential&expand=resources&attributes=id,name' + sortOptions)
       .then(function(data) {
