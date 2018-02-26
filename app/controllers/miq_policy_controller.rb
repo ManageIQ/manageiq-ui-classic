@@ -689,8 +689,10 @@ class MiqPolicyController < ApplicationController
     else
       # Added so buttons can be turned off even tho div is not being displayed it still pops up
       # Abandon changes box when trying to change a node on tree after saving a record
-      presenter.hide(:button_on).show(:toolbar).hide(:paging_div)
+      presenter.hide(:buttons_on).show(:toolbar).hide(:paging_div)
     end
+
+    presenter.hide(:form_buttons_div) if options[:remove_form_buttons]
 
     # Replace the searchbox
     presenter.replace(:adv_searchbox_div, r[:partial => 'layouts/x_adv_searchbox', :locals => {:nameonly => true}])
