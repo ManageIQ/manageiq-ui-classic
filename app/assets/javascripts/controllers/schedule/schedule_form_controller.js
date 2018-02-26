@@ -364,9 +364,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.isBasicInfoValid = function() {
-    return ($scope.angularForm.depot_name.$valid &&
-      $scope.angularForm.uri.$valid &&
-      $scope.angularForm.log_userid.$valid &&
+    return ($scope.angularForm.log_userid.$valid &&
       $scope.angularForm.log_password.$valid);
   };
 
@@ -391,9 +389,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.validateFieldsDirty = function() {
-    return ($scope.angularForm.depot_name.$dirty ||
-        $scope.angularForm.uri.$dirty ||
-        $scope.angularForm.log_userid.$dirty ||
+    return ($scope.angularForm.log_userid.$dirty ||
         $scope.angularForm.log_password.$dirty);
   };
 
@@ -411,6 +407,14 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
   $scope.setTargetId = function(targetId) {
     $scope.scheduleModel.target_id = targetId;
+  };
+
+  $scope.setDepotName = function(depotName) {;
+    $scope.scheduleModel.depot_name = depotName;
+  };
+
+  $scope.setDepotUri = function(depotUri) {
+    $scope.scheduleModel.uri = depotUri;
   };
 
   init();

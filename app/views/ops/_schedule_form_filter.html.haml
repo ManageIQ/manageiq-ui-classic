@@ -82,7 +82,7 @@
                                  "ng-required"                => "!automateRequest() && filterValueRequired(scheduleModel.filter_value)",
                                  "checkchange"                => ""}
               %option{"disabled" => "", "value" => ""} &lt;Choose&gt;
-        
+
         %ae-resolve-options{"ng-if"                 => "automateRequest()",
                             "instance-name"         => "scheduleModel.instance_name",
                             "instance-options"      => "scheduleModel.instance_names",
@@ -99,14 +99,15 @@
                             "target-id-change"      => "setTargetId(targetId)",
                             "ui-attrs"              => "scheduleModel.ui_attrs"}
 
-        = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
-                 :locals  => {:ng_show             => "dbBackup()",
-                              :ng_reqd_depot_name  => "dbRequired(scheduleModel.depot_name)",
-                              :ng_model_depot_name => "scheduleModel.depot_name",
-                              :ng_reqd_uri         => "dbRequired(scheduleModel.uri)",
-                              :ng_model_uri        => "scheduleModel.uri",
-                              :ng_model_uri_prefix => "scheduleModel.uri_prefix",
-                              :uri_prefix_display  =>  "{{scheduleModel.uri_prefix}}://"}
+        %edit-log-depot-settings{ "ng-if"                    => "dbBackup()",
+                                  "depot-name-required"      => "dbRequired(scheduleModel.depot_name)",
+                                  "depot-name"               => "scheduleModel.depot_name",
+                                  "readonly"                 => false,
+                                  "depot-name-changed"       => "setDepotName(depotName)",
+                                  "depot-uri-required"       => "dbRequired(scheduleModel.uri)",
+                                  "depot-uri"                => "scheduleModel.uri",
+                                  "depot-uri-prefix"         => "scheduleModel.uri_prefix",
+                                  "depot-uri-changed"        => "setDepotUri(depotUri)"}
 
         = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
                  :locals  => {:ng_show           => "sambaBackup()",
