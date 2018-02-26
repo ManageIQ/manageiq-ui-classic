@@ -14,7 +14,7 @@ module MiqPolicyController::Conditions
       end
       @edit = nil
       get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
+      replace_right_cell(:nodetype => @nodetype, :remove_form_buttons => true)
       return
     when "reset", nil # Reset or first time in
       condition_build_edit_screen
@@ -68,19 +68,19 @@ module MiqPolicyController::Conditions
           case x_active_tree
           when :condition_tree
             @new_condition_node = "xx-#{condition.towhat.downcase}_co-#{condition.id}"
-            replace_right_cell(:nodetype => "co", :replace_trees => [:condition])
+            replace_right_cell(:nodetype => "co", :replace_trees => %i(condition), :remove_form_buttons => true)
           when :policy_tree
             node_ids = @sb[:node_ids][x_active_tree]  # Get the selected node ids
             @new_policy_node = "xx-#{policy.mode.downcase}_xx-#{policy.mode.downcase}-#{policy.towhat.downcase}_p-#{node_ids["p"]}_co-#{condition.id}"
-            replace_right_cell(:nodetype => "co", :replace_trees => [:policy_profile, :policy, :condition])
+            replace_right_cell(:nodetype => "co", :replace_trees => %i(policy_profile policy condition), :remove_form_buttons => true)
           when :policy_profile_tree
             node_ids = @sb[:node_ids][x_active_tree]  # Get the selected node ids
             @new_profile_node = "pp-#{node_ids["pp"]}_p-#{node_ids["p"]}_co-#{condition.id}"
-            replace_right_cell(:nodetype => "co", :replace_trees => [:policy_profile, :policy, :condition])
+            replace_right_cell(:nodetype => "co", :replace_trees => %i(policy_profile policy condition), :remove_form_buttons => true)
           end
         else
           condition_get_info(Condition.find(condition.id))
-          replace_right_cell(:nodetype => "co", :replace_trees => [:policy_profile, :policy, :condition])
+          replace_right_cell(:nodetype => "co", :replace_trees => %i(policy_profile policy condition), :remove_form_buttons => true)
         end
       else
         condition.errors.each do |field, msg|
@@ -116,7 +116,7 @@ module MiqPolicyController::Conditions
     nodes = x_node.split("_")
     nodes.pop
     @new_policy_node = self.x_node = nodes.join("_")
-    replace_right_cell(:nodetype => "p", :replace_trees => [:policy_profile, :policy])
+    replace_right_cell(:nodetype => "p", :replace_trees => %i(policy_profile policy))
   end
 
   def condition_delete
@@ -132,7 +132,7 @@ module MiqPolicyController::Conditions
     end
     process_conditions(conditions, "destroy") unless conditions.empty?
     get_node_info(@new_condition_node)
-    replace_right_cell(:nodetype => "xx", :replace_trees => [:condition])
+    replace_right_cell(:nodetype => "xx", :replace_trees => %i(condition))
   end
 
   def condition_field_changed
