@@ -1,0 +1,33 @@
+%ng-form{'name'         => 'editLogDepotSettingsForm',
+         'form-changed' => ''}
+  .form-group{'ng-class' => "{'has-error': editLogDepotSettingsForm.depotName.$invalid}"}
+    %label.col-md-2.control-label{'for' => 'depotName'}
+      = _('Depot Name')
+    .col-md-8
+      %input.form-control{'type'        => 'text',
+                          'id'          => 'depotName',
+                          'ng-required' => '$ctrl.depotNameRequired',
+                          'ng-model'    => '$ctrl.depotName',
+                          'name'        => 'depotName',
+                          'auto-focus'  => 'reactiveFocus',
+                          'ng-readonly' => '$ctrl.readOnly',
+                          'ng-change'   => '$ctrl.depotNameChanged({depotName: $ctrl.depotName})'}
+      %span.help-block{"ng-show" => "editLogDepotSettingsForm.depotName.$invalid"}
+        = _("Required")
+  .form-group{"ng-class" => "{'has-error': editLogDepotSettingsForm.depotUri.$invalid}"}
+    %label.col-md-2.control-label{"for" => "depotUri"}
+      = _("URI")
+    .col-md-8
+      .input-group
+        %span.input-group-addon
+          {{$ctrl.depotUriPrefix + '://'}}
+        %input.uri-input.form-control{"type"        => "text",
+                                      "id"          => "depotUri",
+                                      "ng-required" => "$ctrl.depotUriRequired",
+                                      "name"        => "depotUri",
+                                      "ng-model"    => "$ctrl.depotUri",
+                                      "ng-readonly" => "$ctrl.readonly",
+                                      "ng-change"   => '$ctrl.depotUriChanged({depotUri: $ctrl.depotUri})'}
+      %span.help-block{"ng-show" => "editLogDepotSettingsForm.depotUri.$invalid"}
+        = _("Required")
+      %input{"type" => "hidden", "name" => "uriPrefix", "ng-value" => "$ctrl.depotUriPrefix"}
