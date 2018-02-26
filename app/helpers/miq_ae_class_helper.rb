@@ -26,6 +26,8 @@ module MiqAeClassHelper
     domain_name = record.domain.name
     if domain_name == current_domain_name
       return "#{domain_name} (Same Domain)", nil
+    elsif !record.domain.enabled
+      return "#{domain_name} (Disabled)", record.id
     else
       return domain_name, record.id
     end
