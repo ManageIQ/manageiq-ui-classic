@@ -536,7 +536,7 @@ module EmsCommon
         id = ems.id
         ems_name = ems.name
         audit = {:event        => "ems_record_delete_initiated",
-                 :message      => _("[%{name}] Record delete initiated") % {:name => ems_name},
+                 :message      => "[#{ems_name}] Record delete initiated",
                  :target_id    => id,
                  :target_class => model.to_s,
                  :userid       => session[:userid]}
@@ -555,7 +555,7 @@ module EmsCommon
         id = ems.id
         ems_name = ems.name
         audit = {:event        => "ems_record_#{action}_initiated",
-                 :message      => _("[%{name}] Record #{action} initiated") % {:name => ems_name},
+                 :message      => "[#{ems_name}] Record #{action} initiated",
                  :target_id    => id,
                  :target_class => model.to_s,
                  :userid       => session[:userid]}
@@ -573,14 +573,15 @@ module EmsCommon
         rescue => bang
           add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
             {:model => ui_lookup(:table => @table_name), :name => ems_name, :task => _(task.titleize), :error_message => bang.message}, :error)
-          AuditEvent.failure(:userid => session[:userid], :event => "#{table_name}_#{task}",
-            :message      => _("%{name}: Error during '%{task}': %{message}") %
-                          {:name => ems_name, :task => task, :message => bang.message},
-            :target_class => model.to_s, :target_id => id)
+          AuditEvent.failure(:userid       => session[:userid],
+                             :event        => "#{table_name}_#{task}",
+                             :message      => "#{ems_name}: Error during '#{task}': #{bang.message}",
+                             :target_class => model.to_s, :target_id => id)
         else
           add_flash(_("%{model} \"%{name}\": %{task} successfully initiated") % {:model => ui_lookup(:table => @table_name), :name => ems_name, :task => _(task.titleize)})
-          AuditEvent.success(:userid => session[:userid], :event => "#{table_name}_#{task}",
-                             :message      => _("%{name}: '%{task}' successfully initiated") % {:name => ems_name, :task => task},
+          AuditEvent.success(:userid       => session[:userid],
+                             :event        => "#{table_name}_#{task}",
+                             :message      => "#{ems_name}: '#{task}' successfully initiated",
                              :target_class => model.to_s, :target_id => id)
         end
       end

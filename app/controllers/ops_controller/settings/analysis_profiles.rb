@@ -165,7 +165,7 @@ module OpsController::Settings::AnalysisProfiles
 
   # Build the audit object when a record is created, including all of the new fields
   def ap_build_created_audit_set(scanitemset)
-    msg = _("[%{name}] Record created (") % {:name => scanitemset.name}
+    msg = "[#{scanitemset.name}] Record created ("
     event = "scanitemset_record_add"
     i = 0
     @edit[:new].each_key do |k|
@@ -183,7 +183,7 @@ module OpsController::Settings::AnalysisProfiles
 
   # Build the audit object when a record is saved, including all of the changed fields
   def ap_build_saved_audit(scanitemset)
-    msg = _("[%{name}] Record updated (") % {:name => scanitemset.name}
+    msg = "[#{scanitemset.name}] Record updated ("
     event = "scanitemset_record_update"
     i = 0
     @edit[:new].each_key do |k|

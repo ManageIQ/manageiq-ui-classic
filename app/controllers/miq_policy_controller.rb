@@ -307,7 +307,7 @@ class MiqPolicyController < ApplicationController
               :filename => "policy.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_policy_log",
-                       :message => _("Policy log downloaded"))
+                       :message => "Policy log downloaded")
   end
 
   private

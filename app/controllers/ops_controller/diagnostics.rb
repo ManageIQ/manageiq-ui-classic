@@ -28,7 +28,7 @@ module OpsController::Diagnostics
       add_flash(_("Error during 'Appliance restart': %{message}") % {:message => bang.message}, :error)
     else
       audit = {:event        => "restart_server",
-               :message      => _("Server '%{name}' restarted") % {:name => svr.name},
+               :message      => "Server '#{svr.name}' restarted",
                :target_id    => svr.id,
                :target_class => "MiqServer",
                :userid       => session[:userid]}
@@ -54,7 +54,7 @@ module OpsController::Diagnostics
         add_flash(_("Error during 'workers restart': %{message}") % {:message => bang.message}, :error)
       else
         audit = {:event        => "restart_workers",
-                 :message      => _("Worker on Server '%{name}' restarted") % {:name => svr.name},
+                 :message      => "Worker on Server '#{svr.name}' restarted",
                  :target_id    => svr.id,
                  :target_class => "MiqWorker",
                  :userid       => session[:userid]}
@@ -152,7 +152,7 @@ module OpsController::Diagnostics
     disable_client_cache
     send_data($log.contents(nil, nil),
               :filename => "evm.log")
-    AuditEvent.success(:userid => session[:userid], :event => "download_evm_log", :message => _("EVM log downloaded"))
+    AuditEvent.success(:userid => session[:userid], :event => "download_evm_log", :message => "EVM log downloaded")
   end
 
   # Send the audit log in text format
@@ -163,7 +163,7 @@ module OpsController::Diagnostics
               :filename => "audit.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_audit_log",
-                       :message => _("Audit log downloaded"))
+                       :message => "Audit log downloaded")
   end
 
   # Send the production log in text format
@@ -174,7 +174,7 @@ module OpsController::Diagnostics
               :filename => "#{@sb[:rails_log].downcase}.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_#{@sb[:rails_log].downcase}_log",
-                       :message => _("%{log_description} log downloaded") % {:log_description => @sb[:rails_log]})
+                       :message => "#{@sb[:rails_log]} log downloaded")
   end
 
   def refresh_log
@@ -388,7 +388,7 @@ module OpsController::Diagnostics
     javascript_flash(:spinner_off => true)
   else
     audit = {:event        => "orphaned_record_delete",
-             :message      => _("Orphaned Records deleted for userid [%{number}]") % {:number => params[:userid]},
+             :message      => "Orphaned Records deleted for userid [#{params[:userid]}]",
              :target_id    => params[:userid],
              :target_class => "MiqReport",
              :userid       => session[:userid]}
@@ -482,7 +482,7 @@ module OpsController::Diagnostics
         add_flash(_("Error during 'Clear Connection Broker cache': %{message}") % {:message => bang.message}, :error)
       else
         audit = {:event        => "reset_broker",
-                 :message      => _("Connection Broker cache cleared successfully"),
+                 :message      => "Connection Broker cache cleared successfully",
                  :target_id    => ms.id,
                  :target_class => "ExtManagementSystem",
                  :userid       => session[:userid]}
@@ -602,7 +602,7 @@ module OpsController::Diagnostics
   else
     AuditEvent.success(
       :event        => "svr_record_delete",
-      :message      => _("[%{name}] Record deleted") % {:name => server.name},
+      :message      => "[#{server.name}] Record deleted",
       :target_id    => server.id,
       :target_class => "MiqServer",
       :userid       => session[:userid]
