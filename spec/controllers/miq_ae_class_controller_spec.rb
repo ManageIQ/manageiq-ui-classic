@@ -220,8 +220,8 @@ describe MiqAeClassController do
   end
 
   context "get selected Class/Instance/Method record back" do
-    let(:miq_ae_domain) { double("MiqAeDomain", :name => "yet_another_fqname", :id => 1) }
-    let(:miq_ae_domain2) { double("MiqAeDomain", :name => "yet_another_fqname2", :id => 2) }
+    let(:miq_ae_domain) { double("MiqAeDomain", :name => "yet_another_fqname", :id => 1, :enabled => true) }
+    let(:miq_ae_domain2) { double("MiqAeDomain", :name => "yet_another_fqname2", :id => 2, :enabled => true) }
 
     let(:miq_ae_class) do
       double("MiqAeClass",
