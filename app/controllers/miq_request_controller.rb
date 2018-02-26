@@ -552,7 +552,7 @@ class MiqRequestController < ApplicationController
       request_name = miq_request.description
       if task == "destroy"
         audit = {:event        => "MiqRequest_record_delete",
-                 :message      => _("[%{name}] Record deleted") % {:name => request_name},
+                 :message      => "[#{request_name}] Record deleted",
                  :target_id    => id,
                  :target_class => "MiqRequest",
                  :userid       => session[:userid]}

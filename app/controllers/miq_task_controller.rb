@@ -127,8 +127,7 @@ class MiqTaskController < ApplicationController
     task = MiqTask.find_by(:id => taskid)
     if task
       MiqTask.delete_older(task.updated_on, tasks_condition(@tasks_options[@tabform], false))
-      message = _("Delete started for records older than %{date}, conditions: %{conditions}") %
-                {:date => task.updated_on, :conditions => @tasks_options[@tabform].inspect}
+      message = "Delete started for records older than #{task.updated_on}, conditions: #{@tasks_options[@tabform].inspect}"
       AuditEvent.success(:userid       => session[:userid],
                          :event        => "Delete older tasks",
                          :message      => message,
@@ -223,7 +222,7 @@ class MiqTaskController < ApplicationController
       MiqTask.delete_by_id(task_ids)
       AuditEvent.success(:userid       => session[:userid],
                          :event        => event_message,
-                         :message      => _("Delete started for record ids: %{id}") % {:id => task_ids.inspect},
+                         :message      => "Delete started for record ids: #{task_ids.inspect}",
                          :target_class => "MiqTask")
       add_flash(n_("Delete initiated for %{count} Task from the %{product} Database",
                    "Delete initiated for %{count} Tasks from the %{product} Database",

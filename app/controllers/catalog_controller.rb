@@ -624,7 +624,7 @@ class CatalogController < ApplicationController
       id = st.id
       st_name = st.name
       audit = {:event        => "st_record_delete",
-               :message      => _("[%{name}] Record deleted") % {:name => st_name},
+               :message      => "[#{st_name}] Record deleted",
                :target_id    => id,
                :target_class => "ServiceTemplate",
                :userid       => session[:userid]}

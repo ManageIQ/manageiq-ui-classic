@@ -1733,9 +1733,9 @@ class ApplicationController < ActionController::Base
   def build_saved_audit_hash_angular(old_record_attributes, new_record, add)
     name  = new_record.respond_to?(:name) ? new_record.name : new_record.description
     msg   = if add
-              _("[%{name}] Record added (") % {:name => name}
+              "[#{name}] Record added ("
             else
-              _("[%{name}] Record updated (") % {:name => name}
+              "[#{name}] Record updated ("
             end
     event = "#{new_record.class.to_s.downcase}_record_#{add ? "add" : "update"}"
 
@@ -1745,7 +1745,7 @@ class ApplicationController < ActionController::Base
     difference_messages = []
 
     attribute_difference.each do |key, value|
-      difference_messages << _("%{key} changed to %{value}") % {:key => key, :value => value}
+      difference_messages << "#{key} changed to #{value}"
     end
 
     msg = msg + difference_messages.join(", ") + ")"
