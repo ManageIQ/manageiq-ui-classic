@@ -270,13 +270,24 @@ describe ReportController do
   chargeback_tabs = [:formatting, :filter, :preview]
 
   describe '#build_edit_screen' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:default_tenant) { Tenant.seed }
+    let(:user) { FactoryGirl.create(:user_with_group, :tenant => default_tenant) }
+    let(:user_group) do
+      group = user.miq_groups.first
+      group.tenant = default_tenant
+      group.save
+      group
+    end
+
     let(:chargeback_report) do
       FactoryGirl.create(:miq_report, :db => 'ChargebackVm', :db_options => {:options => {:owner => user.userid}},
                                     :col_order => ['name'], :headers => ['Name'])
     end
 
-    before { login_as user }
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as user
+    end
 
     tabs.slice(*chargeback_tabs).each do |tab_number|
       it 'flash messages should be nil' do
@@ -284,6 +295,11 @@ describe ReportController do
         controller.send(:set_form_vars)
         controller.instance_variable_set(:@sb, :miq_tab => "edit_#{tab_number.second}")
         controller.send(:build_edit_screen)
+
+        if tab_number == [:filter, 3]
+          expect(controller.instance_variable_get(:@edit)[:cb_users]).to eq(user.userid => user.name)
+          expect(controller.instance_variable_get(:@edit)[:cb_tenant]).to eq(default_tenant.id => default_tenant.name)
+        end
 
         expect(assigns(:flash_array)).to be_nil
       end
