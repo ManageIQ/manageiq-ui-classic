@@ -260,7 +260,7 @@ class NetworkRouterController < ApplicationController
     @in_a_form = true
     @subnet_choices = {}
 
-    (@router.ext_management_system.cloud_subnets - @router.cloud_subnets).each do |subnet|
+    Rbac::Filterer.filtered(@router.ext_management_system.cloud_subnets - @router.cloud_subnets).each do |subnet|
       @subnet_choices[subnet.name] = subnet.id
     end
     if @subnet_choices.empty?
