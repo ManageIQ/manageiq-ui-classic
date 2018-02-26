@@ -313,10 +313,16 @@
         }
         this.setDefaults();
         this.movePagination();
+
+        // pagination doesn't update on no records (components/data-table/data-table.html:4:99), hide it instead
+        if (! this.gtlData.rows.length) {
+          this.setExtraClasses();
+        }
+
         this.$timeout(function() {
           this.$window.ManageIQ.gtl.loading = false;
           this.$window.ManageIQ.gtl.isFirst = this.settings.current === 1;
-          this.$window.ManageIQ.gtl.isLast = this.settings.current === this.settings.totla;
+          this.$window.ManageIQ.gtl.isLast = this.settings.current === this.settings.total;
         }.bind(this));
         return data;
       }.bind(this));
