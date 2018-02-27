@@ -47,7 +47,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', 
         vm.AggStatus.push({
           "id": attrHsh[attributes[i]] + '_' + providerId,
           "iconClass": attrIconHsh[attributes[i]],
-          "title": attrHsh[attributes[i]],
+          "title": __(attrHsh[attributes[i]]),
           "count": vm.provider[attributes[i]].length,
           "href": getUrl(attributes[i]),
           "notification": {
