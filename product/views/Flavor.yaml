@@ -47,6 +47,8 @@ col_order:
 - cpus
 - cpu_cores
 - memory
+- enabled
+- publicly_available
 - supports_32_bit
 - supports_64_bit
 - supports_hvm
@@ -69,6 +71,8 @@ headers:
 - CPUs
 - CPU Cores
 - Memory
+- Enabled
+- Publicly Available
 - 32 Bit Architecture
 - 64 Bit Architecture
 - HVM (Hardware Virtual Machine)
