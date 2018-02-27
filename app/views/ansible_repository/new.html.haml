@@ -1,2 +1,5 @@
 #main_div
-  = render :partial => 'repository_form'
+  %repository-form-component
+:javascript
+  ManageIQ.angular.app.value('repositoryId', '#{@id}');
+  miq_bootstrap('repository-form-component')
