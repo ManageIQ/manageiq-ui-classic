@@ -40,7 +40,8 @@ var selectListElement = function(scope, timeout, ctrl, refresh) {
         angular.element(scope['form_' + ctrl.$name]).selectpicker('hide');
       } else {
         angular.element(scope['form_' + ctrl.$name]).selectpicker({
-          dropupAuto: false
+          dropupAuto: false,
+          noneSelectedText: __('Nothing selected')
         });
         angular.element(scope['form_' + ctrl.$name]).selectpicker('show');
         angular.element(scope['form_' + ctrl.$name]).selectpicker('refresh');
