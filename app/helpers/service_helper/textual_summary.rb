@@ -243,6 +243,7 @@ module ServiceHelper::TextualSummary
   def textual_cloud_credential
     cloud_credential = nil
     excluded_types = ["ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential",
+                      "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential",
                       "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential"]
     @job.authentications.each do |authentication|
       cloud_credential = authentication unless excluded_types.include?(authentication.type)
