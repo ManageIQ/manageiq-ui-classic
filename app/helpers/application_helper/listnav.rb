@@ -50,6 +50,7 @@ module ApplicationHelper
            offline
            orchestration_stack
            persistent_volume
+           physical_rack
            physical_server
            physical_switch
            resource_pool
@@ -119,6 +120,7 @@ module ApplicationHelper
                network_router
                orchestration_stack
                persistent_volume
+               physical_rack
                physical_server
                physical_switch
                policy

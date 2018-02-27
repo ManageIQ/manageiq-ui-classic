@@ -1374,11 +1374,12 @@ Rails.application.routes.draw do
         protect
         show_list
         show
-      ) + compare_get,
+      ),
 
       :post   =>  %w(
         button
         show_list
+        quick_search
         create
         update
       )

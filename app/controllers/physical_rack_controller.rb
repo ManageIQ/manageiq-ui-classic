@@ -5,7 +5,7 @@ class PhysicalRackController < ApplicationController
   include Mixins::MoreShowActions
 
   before_action :check_privileges
-  before_action :session_data
+  before_action :get_session_data
   after_action :cleanup_action
   after_action :set_session_data
 
@@ -13,7 +13,7 @@ class PhysicalRackController < ApplicationController
     @table_name ||= "physical_racks"
   end
 
-  def session_data
+  def get_session_data
     @title  = _("Physical Racks")
     @layout = "physical_rack"
     @lastaction = session[:physical_rack_lastaction]
@@ -32,5 +32,16 @@ class PhysicalRackController < ApplicationController
     disable_client_cache
 
     process_show_list
+  end
+
+  def textual_group_list
+    [
+      %i(properties relationships),
+    ]
+  end
+  helper_method(:textual_group_list)
+
+  def self.display_methods
+    %w(physical_servers)
   end
 end
