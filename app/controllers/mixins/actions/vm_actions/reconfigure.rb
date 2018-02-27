@@ -89,7 +89,7 @@ module Mixins
           @reconfig_limits = VmReconfigureRequest.request_limits(:src_ids => reconfigure_ids)
           mem1, fmt1 = reconfigure_calculations(@reconfig_limits[:min__vm_memory])
           mem2, fmt2 = reconfigure_calculations(@reconfig_limits[:max__vm_memory])
-          @reconfig_memory_note = "Between #{mem1}#{fmt1} and #{mem2}#{fmt2}"
+          @reconfig_memory_note = _("Between %{min} and %{max}") % {:min => "#{mem1}#{fmt1}", :max => "#{mem2}#{fmt2}"}
 
           @socket_options = []
           @reconfig_limits[:max__number_of_sockets].times do |tidx|
