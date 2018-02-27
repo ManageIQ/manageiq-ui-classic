@@ -772,7 +772,7 @@ class DashboardController < ApplicationController
 
   # Gather information for the report accordians
   def build_timeline_listnav
-    @timelines_tree = TreeBuilderTimelines.new(:timelines_tree, :timelines, @sb, true, :title => @sb[:grp_title])
+    @timelines_tree = TreeBuilderTimelines.new(:timelines_tree, :timelines, @sb, true, :title => reports_group_title)
   end
 
   def build_timeline
