@@ -55,7 +55,8 @@
     "spin.js": "~2.3.2",
     "sprintf": "~1.0.3",
     "tota11y": "~0.1.6",
-    "xml_display": "~0.1.1"
+    "xml_display": "~0.1.1",
+    "bootstrap-select": "1.12.2"
   },
   "resolutions": {
     "d3": "~3.5.0",
