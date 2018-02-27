@@ -250,6 +250,51 @@ describe NetworkRouterController do
         expect(assigns(:flash_array)).to be_nil
       end
 
+      it 'list subnet choices' do
+        allow(controller).to receive(:drop_breadcrumb)
+        controller.instance_variable_set(:@router, @router)
+        controller.instance_variable_set(:@_params, :id => @router.id)
+        controller.send(:add_interface_select)
+        subnet_choices = controller.instance_variable_get(:@subnet_choices)
+
+        expect(subnet_choices).to eq(@subnet.name => @subnet.id)
+        expect(assigns(:flash_array)).to be_nil
+      end
+
+      context 'with restricted user' do
+        let!(:subnet_2) { FactoryGirl.create(:cloud_subnet, :ext_management_system => @ems) }
+        let(:role)    { FactoryGirl.create(:miq_user_role) }
+        let(:group)   { FactoryGirl.create(:miq_group, :miq_user_role => role) }
+        let(:user)    { FactoryGirl.create(:user, :miq_groups => [group]) }
+        let(:tag)     { "/managed/environment/prod" }
+
+        before :each do
+          allow(controller).to receive(:drop_breadcrumb)
+          controller.instance_variable_set(:@router, @router)
+          controller.instance_variable_set(:@_params, :id => @router.id)
+
+          @router.tag_with(tag, :ns => '')
+          subnet_2.tag_with(tag, :ns => '')
+
+          group.entitlement = Entitlement.new
+          group.entitlement.set_managed_filters([["/managed/environment/prod"]])
+          group.save!
+
+          allow(User).to receive(:current_user).and_return(user)
+          login_as user
+        end
+
+        it 'list subnet choices' do
+          controller.instance_variable_set(:@router, @router)
+          controller.instance_variable_set(:@_params, :id => @router.id)
+
+          controller.send(:add_interface_select)
+          subnet_choices = controller.instance_variable_get(:@subnet_choices)
+          expect(subnet_choices).to eq(subnet_2.name => subnet_2.id)
+          expect(assigns(:flash_array)).to be_nil
+        end
+      end
+
       it "queues the add interface action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :add_interface, :params => {
