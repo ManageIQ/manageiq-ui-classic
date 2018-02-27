@@ -9,7 +9,7 @@ module FlavorHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i(
-        cpus cpu_cores memory supports_32_bit supports_64_bit supports_hvm supports_paravirtual
+        cpus cpu_cores memory enabled publicly_available supports_32_bit supports_64_bit supports_hvm supports_paravirtual
         block_storage_based_only cloud_subnet_required
       )
     )
@@ -33,6 +33,14 @@ module FlavorHelper::TextualSummary
 
   def textual_cpu_cores
     {:label => _("CPU Cores"), :value => @record.cpu_cores}
+  end
+
+  def textual_enabled
+    {:label => _("Enabled"), :value => @record.enabled}
+  end
+
+  def textual_publicly_available
+    {:label => _("Public"), :value => @record.publicly_available}
   end
 
   def textual_supports_32_bit
