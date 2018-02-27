@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 80 ending 2018-02-26
+
+### Added
+- Update Expression Editor Styling [(#3449)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3449)
+- Disable editing of NetworkProviders except Nuage [(#3394)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3394)
+- Allow control policies for container projects [(#3360)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3360)
+- Resize disk reconfigure screen [(#3128)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3128)
+
+### Fixed
+- Fix Network Router form styling [(#3473)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3473)
+- Fix Cap & U Collection tab styling [(#3467)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3467)
+- Added text (Disabled) next to disabled domain on the right. [(#3466)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3466)
+- GTL: Hide pagination on no records [(#3465)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3465)
+- Fix styling issue on "Add New Network Router" screen [(#3464)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3464)
+- MiqPolicy - remove form buttons when cancelling a form or sucessfully saving/adding [(#3462)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3462)
+- Render GO summary screen in Service Explorer. [(#3460)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3460)
+- Fix Bottlenecks timeline no data message [(#3458)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3458)
+- Fix nil:nilClass error on VM summary [(#3457)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3457)
+- Fix evacuate host param handling in controller [(#3456)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3456)
+- Remove gettext from audit.log messages [(#3455)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3455)
+- Update Expression Editor Styling [(#3449)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3449)
+- Fix Chargeback Rates page title [(#3447)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3447)
+- Fix closing dialog window when applying filter in Workloads [(#3444)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3444)
+- Add missing storage type images [(#3443)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3443)
+- Update icons used in Cloud Tenants for consistency [(#3438)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3438)
+- Remove setPristine from save/add [(#3432)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3432)
+- Button Group: Fix 'Display on Button' checkbox visibility [(#3431)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3431)
+- Custom button group - validate required fields before enabling buttons [(#3424)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3424)
+- Add Rbac filtering to the catalog bundle resource list [(#3421)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3421)
+- Fix logic for selecting radio button on Catalog Item edit screen [(#3413)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3413)
+- link to volume backups from storage provider page [(#3408)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3408)
+- Allow the ownership to be set to 'No group' [(#3404)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3404)
+- Instances without tenants should not cause navigation to fail on InstanceAttach checks [(#3403)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3403)
+- Deactivate Add button when name field is cleared [(#3402)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3402)
+- Copy nodes object to fix iteration when adding new tree items [(#3400)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3400)
+- Fix folding of accordion after adding a schedule [(#3399)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3399)
+- Better handling of responses from validation [(#3393)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3393)
+- Fix logic to correctly check 'display on button' checkbox [(#3383)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3383)
+- Group by tenant for chargeback|metering Vm reports [(#3380)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3380)
+- Fix CTRL-ALT-DEL button on Spice consoles [(#3339)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3339)
+- Add kubevirt provider [(#3143)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3143)
+- Display VMs slider buttons Enabled/Disabled fix [(#2748)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2748)
+
 ## Unreleased as of Sprint 79 ending 2018-02-12
 
 ### Added
