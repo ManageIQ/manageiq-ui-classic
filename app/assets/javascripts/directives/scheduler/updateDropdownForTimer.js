@@ -22,7 +22,8 @@ ManageIQ.angular.app.directive('updateDropdownForTimer', ['$timeout', function($
         var selectPickerShow = function(name) {
           if (scope.timer_items != undefined && scope.timer_items.length > 0) {
             $(scope['form_' + ctrl.$name]).selectpicker({
-              dropupAuto: false
+              dropupAuto: false,
+              noneSelectedText: __('Nothing selected')
             });
             $(scope['form_' + name]).selectpicker('show');
             $(scope['form_' + name]).selectpicker('refresh');

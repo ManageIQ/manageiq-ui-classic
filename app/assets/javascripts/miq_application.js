@@ -1186,6 +1186,7 @@ function miqInitSelectPicker() {
   $('.selectpicker').selectpicker({
     size: 10,
     dropupAuto: false,
+    noneSelectedText: __('Nothing selected')
   });
   $('.bootstrap-select > button[title]').not('.selectpicker').tooltip({container: 'none'});
 }

@@ -538,7 +538,7 @@ module MiqAeCustomizationController::Dialogs
       page << "$('#field_default_value').selectpicker('destroy');"
       page.replace("field_default_value",
                    :text => select_tag('field_default_value', options_for_select(values, selected)))
-      page << "$('#field_default_value').selectpicker();"
+      page << "$('#field_default_value').selectpicker({noneSelectedText: __('Nothing selected')});"
       page << "miqSelectPickerEvent('field_default_value', '#{url}');"
     end
   end
@@ -581,7 +581,7 @@ module MiqAeCustomizationController::Dialogs
                    :text => select_tag('field_default_value',
                                        options_for_select(values, selected),
                                        'data-miq_observe' => {:interval => '.5', :url => url}.to_json))
-      page << "$('#field_default_value').selectpicker();"
+      page << "$('#field_default_value').selectpicker({noneSelectedText: __('Nothing selected')});"
     end
   end
 

@@ -7,6 +7,7 @@ ManageIQ.angular.app.directive('selectpickerForSelectTag', function() {
       scope.$watch(attr.ngModel, function() {
         angular.element(scope['form_' + ctrl.$name]).selectpicker({
           dropupAuto: false,
+          noneSelectedText: __('Nothing selected'),
         });
         angular.element(scope['form_' + ctrl.$name]).selectpicker('show');
         angular.element(scope['form_' + ctrl.$name]).selectpicker('refresh');
