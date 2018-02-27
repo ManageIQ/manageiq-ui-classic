@@ -36,11 +36,6 @@ class GuestDeviceController < ApplicationController
     session[:guest_device_lastaction] = @lastaction
   end
 
-  def show_list
-    options = {:model => "GuestDevice", :named_scope => [:with_ethernet_type]}
-    process_show_list(options)
-  end
-
   def textual_group_list
     [
       %i(properties ports firmware),
