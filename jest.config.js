@@ -5,5 +5,14 @@ module.exports = {
     __testing__: true
   },
   roots: ['app/javascript'],
-  testMatch: ['**/*.test.js']
+  setupFiles: ['./config/jest.setup.js'],
+  testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.(jsx?|tsx?)$',
+  transform: {
+    '^.+\\.js$': 'babel-jest',
+    '.(ts|tsx)': 'ts-jest'
+  },
+  moduleFileExtensions: [
+    'ts',
+    'js'
+  ],
 };
