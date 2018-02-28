@@ -1,4 +1,16 @@
 class DialogFieldVisibilityService
+  attr_accessor :auto_placement_visibility_service
+  attr_accessor :number_of_vms_visibility_service
+  attr_accessor :service_template_fields_visibility_service
+  attr_accessor :network_visibility_service
+  attr_accessor :sysprep_auto_logon_visibility_service
+  attr_accessor :retirement_visibility_service
+  attr_accessor :customize_fields_visibility_service
+  attr_accessor :sysprep_custom_spec_visibility_service
+  attr_accessor :request_type_visibility_service
+  attr_accessor :pxe_iso_visibility_service
+  attr_accessor :linked_clone_visibility_service
+
   def initialize(
     auto_placement_visibility_service = AutoPlacementVisibilityService.new,
     number_of_vms_visibility_service = NumberOfVmsVisibilityService.new,
@@ -39,33 +51,33 @@ class DialogFieldVisibilityService
     @field_names_to_edit = []
     @field_names_to_show = []
 
-    add_to_visibility_arrays(@service_template_fields_visibility_service, options[:service_template_request])
-    add_to_visibility_arrays(@auto_placement_visibility_service, options[:auto_placement_enabled])
-    add_to_visibility_arrays(@number_of_vms_visibility_service, options[:number_of_vms], options[:platform])
+    add_to_visibility_arrays(service_template_fields_visibility_service, options[:service_template_request])
+    add_to_visibility_arrays(auto_placement_visibility_service, options[:auto_placement_enabled])
+    add_to_visibility_arrays(number_of_vms_visibility_service, options[:number_of_vms], options[:platform])
 
     add_to_visibility_arrays(
-      @network_visibility_service,
+      network_visibility_service,
       options[:sysprep_enabled],
       options[:supports_pxe],
       options[:supports_iso],
       options[:addr_mode]
     )
 
-    add_to_visibility_arrays(@sysprep_auto_logon_visibility_service, options[:sysprep_auto_logon])
-    add_to_visibility_arrays(@retirement_visibility_service, options[:retirement])
+    add_to_visibility_arrays(sysprep_auto_logon_visibility_service, options[:sysprep_auto_logon])
+    add_to_visibility_arrays(retirement_visibility_service, options[:retirement])
 
     add_to_visibility_arrays(
-      @customize_fields_visibility_service,
+      customize_fields_visibility_service,
       options[:platform],
       options[:supports_customization_template],
       options[:customize_fields_list]
     )
 
-    add_to_visibility_arrays(@sysprep_custom_spec_visibility_service, options[:sysprep_custom_spec])
-    add_to_visibility_arrays(@request_type_visibility_service, options[:request_type])
-    add_to_visibility_arrays(@pxe_iso_visibility_service, options[:supports_iso], options[:supports_pxe])
+    add_to_visibility_arrays(sysprep_custom_spec_visibility_service, options[:sysprep_custom_spec])
+    add_to_visibility_arrays(request_type_visibility_service, options[:request_type])
+    add_to_visibility_arrays(pxe_iso_visibility_service, options[:supports_iso], options[:supports_pxe])
     add_to_visibility_arrays(
-      @linked_clone_visibility_service,
+      linked_clone_visibility_service,
       options[:provision_type],
       options[:linked_clone],
       options[:snapshot_count]

@@ -1,6 +1,63 @@
 describe DialogFieldVisibilityService do
   let(:subject) { described_class.new }
 
+  context "accessors" do
+    it "defines an auto_placement_visibility_service accessor" do
+      expect(subject).to respond_to(:auto_placement_visibility_service)
+      expect(subject).to respond_to(:auto_placement_visibility_service=)
+    end
+
+    it "defines an number_of_vms_visibility_service accessor" do
+      expect(subject).to respond_to(:number_of_vms_visibility_service)
+      expect(subject).to respond_to(:number_of_vms_visibility_service=)
+    end
+
+    it "defines an service_template_fields_visibility_service accessor" do
+      expect(subject).to respond_to(:service_template_fields_visibility_service)
+      expect(subject).to respond_to(:service_template_fields_visibility_service=)
+    end
+
+    it "defines an network_visibility_service accessor" do
+      expect(subject).to respond_to(:network_visibility_service)
+      expect(subject).to respond_to(:network_visibility_service=)
+    end
+
+    it "defines an sysprep_auto_logon_visibility_service accessor" do
+      expect(subject).to respond_to(:sysprep_auto_logon_visibility_service)
+      expect(subject).to respond_to(:sysprep_auto_logon_visibility_service=)
+    end
+
+    it "defines an retirement_visibility_service accessor" do
+      expect(subject).to respond_to(:retirement_visibility_service)
+      expect(subject).to respond_to(:retirement_visibility_service=)
+    end
+
+    it "defines an customize_fields_visibility_service accessor" do
+      expect(subject).to respond_to(:customize_fields_visibility_service)
+      expect(subject).to respond_to(:customize_fields_visibility_service=)
+    end
+
+    it "defines an sysprep_custom_spec_visibility_service accessor" do
+      expect(subject).to respond_to(:sysprep_custom_spec_visibility_service)
+      expect(subject).to respond_to(:sysprep_custom_spec_visibility_service=)
+    end
+
+    it "defines an request_type_visibility_service accessor" do
+      expect(subject).to respond_to(:request_type_visibility_service)
+      expect(subject).to respond_to(:request_type_visibility_service=)
+    end
+
+    it "defines an pxe_iso_visibility_service accessor" do
+      expect(subject).to respond_to(:pxe_iso_visibility_service)
+      expect(subject).to respond_to(:pxe_iso_visibility_service=)
+    end
+
+    it "defines an linked_clone_visibility_service accessor" do
+      expect(subject).to respond_to(:linked_clone_visibility_service)
+      expect(subject).to respond_to(:linked_clone_visibility_service=)
+    end
+  end
+
   describe "#determine_visibility" do
     let(:subject) do
       described_class.new(
