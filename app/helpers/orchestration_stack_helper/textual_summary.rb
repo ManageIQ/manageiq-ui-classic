@@ -118,7 +118,7 @@ module OrchestrationStackHelper::TextualSummary
 
   def textual_outputs
     num   = @record.number_of(:outputs)
-    h     = {:label => _("Outputs"), :icon => "ff ff-output", :value => num}
+    h     = {:label => _("Outputs"), :icon => "ff ff-file-output-o", :value => num}
     if num > 0
       h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'outputs', :id => @record)
       h[:title] = _("Show all outputs")
