@@ -192,11 +192,11 @@ module Mixins
 
           # determine available switches for this host...
           switch_ids = []
-          HostSwitch.where("host_id = ?", host_id).each do |host_switch|
+          Rbac.filtered(HostSwitch.where("host_id = ?", host_id)).each do |host_switch|
             switch_ids << host_switch.switch_id
           end
 
-          Lan.where("switch_id IN (?)", switch_ids).each do |lan|
+          Rbac.filtered(Lan.where("switch_id IN (?)", switch_ids)).each do |lan|
             vlan_options << lan.name
           end
           vlan_options
