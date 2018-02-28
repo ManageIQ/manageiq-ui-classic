@@ -61,6 +61,15 @@ describe PhysicalServerController do
         expect(controller.send(:flash_errors?)).to be_falsey
       end
     end
+
+    context "display=guest_devices" do
+      it do
+        post :show, :params => {:id => @physical_server.id, :display => "guest_devices"}
+        expect(response.status).to eq 200
+        is_expected.to render_template(:partial => "layouts/_gtl")
+        expect(controller.send(:flash_errors?)).to be_falsey
+      end
+    end
   end
 
   describe "#button" do
