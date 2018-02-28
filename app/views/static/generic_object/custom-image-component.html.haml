@@ -11,6 +11,10 @@
                         "id"          => "generic_object_definition_image_file_status",
                         "ng-model"    => "vm.imageUploadStatus",
                         "name"        => "generic_object_definition_image_file_status"}
+    .btn.btn-default{"ng-if" => "vm.changeImage", :alt => t = _("Cancel Updating Custom Image"), :title => t, "ng-click" => "vm.cancelUpdateImage()"}
+      %i.pficon.pficon-close
+    .btn.btn-default{"ng-if" => "vm.pictureRemove", :alt => t = _("Cancel Deleting Custom Image"), :title => t, "ng-click" => "vm.cancelDeleteImage()"}
+      %i.pficon.pficon-close
     %span.help-block
       {{vm.imageUploadStatus}}
 
@@ -25,19 +29,10 @@
     = _("Current Custom Image File")
   .col-md-4
     %img.form-control{'ng-src' => "{{vm.pictureUrlPath}}", :style => "width:100px; height:100px;"}
-      .btn.btn-default{:alt => t = _("Remove Custom Image"), :title => t, "ng-click" => "vm.removeImage()"}
+      .btn.btn-default{:alt => t = _("Delete Custom Image"), :title => t, "ng-click" => "vm.removeImage()"}
         %i.pficon.pficon-delete
-.form-group{'ng-if' => "vm.pictureUrlPath !== '' && !vm.pictureRemove"}
-  %label.col-md-2.control-label{"for" => "update_image"}
-    = _("Update Current Image")
-  .col-md-4
-    %input.form-control{"type"      => "checkbox",
-                        "id"        => "update_image",
-                        "name"      => "update_image",
-                        "bs-switch" => "",
-                        :data       => {:on_text => _('Yes'), :off_text => _('No')},
-                        "ng-change" => "vm.changeImageSelected()",
-                        "ng-model"  => "vm.changeImage"}
+      .btn.btn-default{:alt => t = _("Update Custom Image"), :title => t, "ng-click" => "vm.changeImage = true"}
+        %i.pficon.pficon-edit
 
 :javascript
   $(":file").filestyle({placeholder: __("No file chosen"), icon: false});
