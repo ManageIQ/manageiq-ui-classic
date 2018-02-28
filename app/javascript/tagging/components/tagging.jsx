@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Grid, Row, Col } from 'patternfly-react';
 import TagModifier from './tagModifier';
 import TagView from './tagView';
+
 
 class Tagging extends React.Component {
   onTagCategoryChange = (selectedTagCategory) => {
@@ -18,21 +20,23 @@ class Tagging extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <TagModifier
-            tags={this.props.tags}
-            onTagValueChange={this.onTagValueChange}
-            onTagCategoryChange={this.onTagCategoryChange}
-            selectedTagCategory={this.props.selectedTagCategory}
-            selectedTagValue={this.props.selectedTagValue}
-          />
-
-          <div className="col-lg-6">
+      <Grid>
+        <Row>
+          <Col xs={12} md={8} lg={6}>
+            <TagModifier
+              tags={this.props.tags}
+              onTagValueChange={this.onTagValueChange}
+              onTagCategoryChange={this.onTagCategoryChange}
+              selectedTagCategory={this.props.selectedTagCategory}
+              selectedTagValue={this.props.selectedTagValue}
+            />
+          </Col>
+          <Col xs={12} md={4} lg={6}>
             <TagView setTags={this.props.setTags} onTagDeleteClick={this.onTagDeleteClick} />
-          </div>
-        </div>
-      </div>
+          </Col>
+
+        </Row>
+      </Grid>
     );
   }
 }
