@@ -20,3 +20,4 @@ vendor/assets/bower_components/
 vendor/assets/bower/bower_components/
 node_modules/
 config/webpack/paths.json
+*.sw[po]
