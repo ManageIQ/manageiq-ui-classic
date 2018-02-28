@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import TagSelector from './tagSelector';
 import ValueSelector from './valueSelector';
 
-const TagModifier = (props) => {
-  const tagValues = props.tags[props.selectedTagCategory] || [];
-  const tagCategories = Object.keys(props.tags) || [];
+const TagModifier = ({
+  tags, selectedTagCategory, selectedTagValue, onTagCategoryChange, onTagValueChange,
+}) => {
+  const tagValues = tags[selectedTagCategory] || [];
+  const tagCategories = Object.keys(tags) || [];
   return (
     <div className="col-lg-6">
       <div className="row">
@@ -16,7 +18,7 @@ const TagModifier = (props) => {
           <h2>Category:</h2>
         </div>
         <div className="col-lg-6">
-          <TagSelector tagCategories={tagCategories} onTagCategoryChange={props.onTagCategoryChange} selectedOption={props.selectedTagCategory} />
+          <TagSelector tagCategories={tagCategories} onTagCategoryChange={onTagCategoryChange} selectedOption={selectedTagCategory} />
         </div>
       </div>
       <div className="row">
@@ -24,7 +26,7 @@ const TagModifier = (props) => {
           <h2>Assigned Value:</h2>
         </div>
         <div className="col-lg-6">
-          <ValueSelector tagValues={tagValues} onTagValueChange={props.onTagValueChange} selectedOption={props.selectedTagValue} />
+          <ValueSelector tagValues={tagValues} onTagValueChange={onTagValueChange} selectedOption={selectedTagValue} />
         </div>
       </div>
     </div>
