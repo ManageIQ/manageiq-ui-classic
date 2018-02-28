@@ -4,9 +4,7 @@ module ServiceHelper::TextualSummary
   include TextualMixins::TextualName
   include GenericObjectHelper::TextualSummary
 
-  #
   # Groups
-  #
 
   def textual_group_properties
     TextualGroup.new(_("Properties"), %i(name description guid))
@@ -79,9 +77,8 @@ module ServiceHelper::TextualSummary
     TextualGroup.new(_("Generic Objects"), %i(generic_object_instances))
   end
 
-  #
   # Items
-  #
+
   def textual_guid
     {:label => _("Management Engine GUID"), :value => @record.guid}
   end
@@ -148,12 +145,10 @@ module ServiceHelper::TextualSummary
   def textual_orchestration_stack
     ost = @record.try(:orchestration_stack)
     if ost && !ost.id.present?
-      {
-        :label => _("Orchestration Stack"),
-        :image => "100/orchestration_stack.png",
-        :value => ost.name,
-        :title => _("Invalid Stack")
-      }
+      {:label => _("Orchestration Stack"),
+       :image => "100/orchestration_stack.png",
+       :value => ost.name,
+       :title => _("Invalid Stack")}
     elsif ost
       ost
     end
@@ -284,12 +279,10 @@ module ServiceHelper::TextualSummary
 
   def fetch_job_plays
     items = @job.job_plays.sort_by(&:start_time).collect do |play|
-      [
-        play.name,
-        format_timezone(play.start_time),
-        format_timezone(play.finish_time),
-        play.finish_time && play.start_time ? calculate_elapsed_time(play.start_time, play.finish_time) : '/A'
-      ]
+      [play.name,
+       format_timezone(play.start_time),
+       format_timezone(play.finish_time),
+       play.finish_time && play.start_time ? calculate_elapsed_time(play.start_time, play.finish_time) : '/A']
     end.sort
 
     TextualTable.new(
