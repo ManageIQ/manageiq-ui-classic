@@ -16,8 +16,8 @@
              "name"            => "cb_memory",
              "ng-model"        => "vm.cb_memory",
              "ng-change"       => "vm.cbChange()",
-             "switch-on-text"  => "Yes",
-             "switch-off-text" => "No"}
+             "switch-on-text"  => _("Yes"),
+             "switch-off-text" => _("No")}
     #memory_div{"ng-if" => "vm.cb_memory"}
       .col-md-4
         %input.form-control{"type"              => "text",
@@ -56,8 +56,8 @@
          "name"            => "cb_cpu",
          "ng-model"        => "vm.cb_cpu",
          "ng-change"       => "vm.cbChange()",
-         "switch-on-text"  => "Yes",
-         "switch-off-text" => "No"}
+         "switch-on-text"  => _("Yes"),
+         "switch-off-text" => _("No")}
     %br
     #cpu_div{"ng-if" => "vm.cb_cpu", :style => "margin-left: 20px"}
       %h3= _(' Processor Options')
@@ -123,7 +123,7 @@
                                       "ng-show"  => "!vm.reconfigureModel.addEnabled"}= _('Add Disk')
               %button.btn.btn-default.btn-sm{:type      => "button",
                                              "ng-click" => "vm.hideAddDisk()",
-                                             "ng-show"  => "vm.reconfigureModel.addEnabled"}= ('Cancel Add')
+                                             "ng-show"  => "vm.reconfigureModel.addEnabled"}= _('Cancel Add')
       %table.table.table-striped.table-condensed.table-bordered
         %thead
           %th= _('Name')
@@ -175,7 +175,7 @@
                                   "ng-model"    => "vm.reconfigureModel.hdSize",
                                   "required"    => "",
                                   "ng-pattern"  => "hdpattern",
-                                  "placeholder" => "Enter New Size",
+                                  "placeholder" => _("Enter New Size"),
                                   "ng-change"   => "vm.hdChanged()"}
               %span{"style" => "color:red", "ng-show" => "rowForm.dvcSize.$invalid"}
                 = _(" Valid numeric disk size required ")
@@ -189,14 +189,14 @@
                        "selectpicker-for-select-tag" => "")
             %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
               %input{"bs-switch" => "",
-                     :data       => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
+                     :data       => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
                      "type"      => "checkbox",
                      "name"      => "vm.cb_dependent",
                      "ng-model"  => "vm.reconfigureModel.cb_dependent"}
             %td
             %td{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
               %input{"bs-switch" => "",
-                     :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
+                     :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
                      "type"          => "checkbox",
                      "name"          => "vm.cb_bootable",
                      "ng-model"      => "vm.reconfigureModel.cb_bootable"}
@@ -226,7 +226,7 @@
                                   "ng-model"    => "disk.hdSize",
                                   "required"    => "",
                                   "ng-pattern"  => "hdpattern",
-                                  "placeholder" => "Enter Size",
+                                  "placeholder" => _("Enter Size"),
                                   "ng-change"   => "vm.hdChanged()",
                                   "validate-multiple" => "1",
                                   :miqmin             => "{{ (disk.orgHdUnit === 'GB') ? (1024 * disk.orgHdSize + 1) : (1 * disk.orgHdSize + 1) }}",
@@ -246,7 +246,7 @@
                        "selectpicker-for-select-tag" => "")
             %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
               %input{"bs-switch"     => "",
-                     :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
+                     :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
                      "type"          => "checkbox",
                      "name"          => "vm.cb_dependent",
                      "ng-model"      => "disk.cb_dependent",
@@ -255,7 +255,7 @@
                      "ng-if"         => "disk.add_remove=='add'"}
             %td
               %input{"bs-switch"     => "",
-                     :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
+                     :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
                      "type"          => "checkbox",
                      "name"          => "cb_deletebacking",
                      "ng-model"      => "disk.delete_backing",
@@ -264,7 +264,7 @@
                      "ng-if"         => "disk.add_remove!='add'"}
             %td{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
               %input{"bs-switch"     => "",
-                     :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
+                     :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
                      "type"          => "checkbox",
                      "name"          => "cb_bootable",
                      "ng-model"      => "disk.cb_bootable",
