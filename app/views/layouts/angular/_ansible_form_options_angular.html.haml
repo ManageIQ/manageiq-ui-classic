@@ -188,14 +188,14 @@
         %input{:type         => "text",
                'ng-model'    => "#{ng_model}.#{prefix}_key",
                :name         => "#{prefix}_key",
-               "placeholder" => "Variable",
+               "placeholder" => _("Variable"),
                "checkchange" => ""}
         %span.help-block{"ng-show" => "(#{ng_model}.#{prefix}_key === '' && #{ng_model}.#{prefix}_value !== '')"}
           = _("Required")
         %input{:type         => "text",
                'ng-model'    => "#{ng_model}.#{prefix}_value",
                :name         => "#{prefix}_value",
-               "placeholder" => "Default value",
+               "placeholder" => _("Default value"),
                "checkchange" => ""}
         %span.help-block{"ng-show" => "(#{ng_model}.#{prefix}_key !== '' && #{ng_model}.#{prefix}_value === '')"}
           = _("Required")

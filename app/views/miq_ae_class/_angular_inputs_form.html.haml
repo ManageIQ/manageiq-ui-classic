@@ -9,7 +9,7 @@
           %input{:type         => "text",
                  'ng-model'    => "#{ng_model}.#{prefix}_key",
                  :name         => "#{prefix}_key",
-                 "placeholder" => "Input Name",
+                 "placeholder" => _("Input Name"),
                  "checkchange" => ""}
           %span.help-block{"ng-show" => "#{ng_model}.#{prefix}_key === ''"}
             = _("Required")
@@ -24,7 +24,7 @@
                  'ng-model'    => "#{ng_model}.#{prefix}_value",
                  'ng-if'       => "#{ng_model}.#{prefix}_type != 'password'",
                  :name         => "#{prefix}_value",
-                 "placeholder" => "Default value",
+                 "placeholder" => _("Default value"),
                  "checkchange" => ""}
           %input{"type"        => "password",
                  :name         => "#{prefix}_value",

@@ -123,7 +123,7 @@
                           "checkchange"             => "",
                           "prefix"                  => prefix.to_s,
                           "reset-validation-status" => "#{prefix}_auth_status",
-                          "placeholder"             => "Hostname or IPv4 or IPv6 address"}
+                          "placeholder"             => _("Hostname or IPv4 or IPv6 address")}
       %span.help-block{"ng-show" => "angularForm.#{prefix}_fallback_hostname1.$error.required"}
         = _("Required")
       %span.help-block{"ng-show" => "angularForm.#{prefix}_fallback_hostname1.$error.detectedSpaces"}
@@ -145,7 +145,7 @@
                           "checkchange"             => "",
                           "prefix"                  => prefix.to_s,
                           "reset-validation-status" => "#{prefix}_auth_status",
-                          "placeholder"             => "Hostname or IPv4 or IPv6 address"}
+                          "placeholder"             => _("Hostname or IPv4 or IPv6 address")}
       %span.help-block{"ng-show" => "angularForm.#{prefix}_fallback_hostname2.$error.required"}
         = _("Required")
       %span.help-block{"ng-show" => "angularForm.#{prefix}_fallback_hostname2.$error.detectedSpaces"}
