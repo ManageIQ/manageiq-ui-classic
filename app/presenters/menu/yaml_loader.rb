@@ -33,13 +33,15 @@ module Menu
         raise Menu::Manager::InvalidMenuDefinition,
               "incomplete definition -- missing #{property}" if properties[property].blank?
       end
-      item = Item.new(properties['id'],
-                            properties['name'],
-                            properties['feature'],
-                            rbac,
-                            properties['href'],
-                            item_type)
-      item.parent = properties['parent'].to_sym
+      item = Item.new(
+        properties['id'],
+        properties['name'],
+        properties['feature'],
+        rbac,
+        properties['href'],
+        item_type,
+        properties['parent'].to_sym
+      )
       item
     end
 

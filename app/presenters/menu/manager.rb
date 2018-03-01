@@ -74,23 +74,32 @@ module Menu
     def merge_sections(sections)
       sections.each do |section|
         position = nil
+
+        parent = if section.parent_id && @id_to_section.key?(section.parent_id)
+                   @id_to_section[section.parent_id].items
+                 else
+                   @menu
+                 end
+
         if section.before
-          position = @menu.index { |existing_section| existing_section.id == section.before }
+          position = parent.index { |existing_section| existing_section.id == section.before }
         end
 
         if position
-          @menu.insert(position, section)
+          parent.insert(position, section)
         else
-          @menu << section
+          parent << section
         end
       end
     end
 
     def merge_items(items)
       items.each do |item|
-        raise InvalidMenuDefinition, 'Invalid parent' unless @id_to_section.key?(item.parent)
-        @id_to_section[item.parent].items << item
-        item.parent = @id_to_section[item.parent]
+        parent = @id_to_section[item.parent_id]
+        raise InvalidMenuDefinition, 'Invalid parent' if parent.nil?
+
+        parent.items << item
+        item.parent = parent
       end
     end
 
