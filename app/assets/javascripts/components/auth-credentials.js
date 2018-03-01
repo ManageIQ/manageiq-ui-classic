@@ -14,6 +14,8 @@ ManageIQ.angular.app.component('authCredentials', {
     postValidationModelRegistry: '<?',
     postValidationModel: '<?',
     checkAuthentication: '<?',
+    userDisabled: '<?',
+    passwordDisabled: '<?'
   },
   controllerAs: 'vm',
   controller: ['$scope', function($scope) {
