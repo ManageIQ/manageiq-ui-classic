@@ -15,8 +15,8 @@ ManageIQ.angular.app.component('aeResolveOptions', {
     targetIdChange: '&',
     uiAttrs: '<',
   },
-  controller: function () {
+  controller: function() {
 
   },
-  templateUrl: '/static/ae_resolve_options/ae-resolve-options-component.html.haml'
+  templateUrl: '/static/ae_resolve_options/ae-resolve-options-component.html.haml',
 });

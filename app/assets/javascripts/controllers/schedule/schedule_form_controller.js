@@ -411,7 +411,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
   $scope.setTargetId = function(targetId) {
     $scope.scheduleModel.target_id = targetId;
-  }
+  };
 
   init();
 }]);
