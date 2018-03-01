@@ -964,6 +964,7 @@ class CatalogController < ApplicationController
                        :function => "miqOrderService",
                        :title    => _("Order this Service")} # Show a button instead of the checkbox
       end
+      options[:gtl_dbname] = :catalog
     end
     options[:named_scope] = scope
     process_show_list(options)
