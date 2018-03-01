@@ -241,8 +241,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     }
   };
 
-  $scope.targetClassChanged = function() {
+  $scope.targetClassChanged = function(targetClass) {
     miqService.sparkleOn();
+    $scope.scheduleModel.target_class = targetClass;
     $http.post('/ops/fetch_target_ids/?target_class=' + $scope.scheduleModel.target_class)
       .then(postFetchTargetIdsComplete)
       .catch(miqService.handleFailure);
@@ -395,6 +396,22 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
         $scope.angularForm.log_userid.$dirty ||
         $scope.angularForm.log_password.$dirty);
   };
+
+  $scope.setInstanceName = function(instanceName) {
+    $scope.scheduleModel.instance_name = instanceName;
+  };
+
+  $scope.setObjectMessage = function(objectMessage) {
+    $scope.scheduleModel.object_message = objectMessage;
+  };
+
+  $scope.setObjectRequest = function(objectRequest) {
+    $scope.scheduleModel.object_request = objectRequest;
+  };
+
+  $scope.setTargetId = function(targetId) {
+    $scope.scheduleModel.target_id = targetId;
+  }
 
   init();
 }]);
