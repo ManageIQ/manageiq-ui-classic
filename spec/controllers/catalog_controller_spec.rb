@@ -1079,4 +1079,21 @@ describe CatalogController do
       end
     end
   end
+
+  describe '#service_template_list' do
+    let(:sandbox) { {:active_tree => tree} }
+
+    before do
+      controller.instance_variable_set(:@sb, sandbox)
+    end
+
+    context 'Service Catalogs accordion' do
+      let(:tree) { :svccat_tree }
+
+      it 'sets options for rendering proper type of view' do
+        expect(controller).to receive(:process_show_list).with(:gtl_dbname => :catalog, :named_scope => {})
+        controller.send(:service_template_list, {})
+      end
+    end
+  end
 end
