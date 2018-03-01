@@ -1,5 +1,5 @@
 module.exports = {
-  test: /\.(js|jsx)?(\.erb)?$/,
+  test: /\.(js|jsx)$/,
   exclude: /node_modules/,
   loader: 'babel-loader',
   query: {
