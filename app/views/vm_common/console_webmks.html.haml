@@ -28,6 +28,10 @@
         $('#ctrlaltdel').on('click', function() {
           wmks.sendCAD();
         });
+
+        $('#keymap').on('change', function() {
+          wmks.setOption('keyboardLayoutId', this.value);
+        });
       });
 
   %body
