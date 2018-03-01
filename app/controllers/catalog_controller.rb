@@ -979,6 +979,7 @@ class CatalogController < ApplicationController
                        :function => "miqOrderService",
                        :title    => _("Order this Service")} # Show a button instead of the checkbox
       end
+      options[:gtl_dbname] = :catalog
     end
     options[:model] = "ServiceCatalog" unless options[:model]
     options[:where_clause] = condition
