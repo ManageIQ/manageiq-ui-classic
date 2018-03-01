@@ -22,9 +22,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     $scope.date_from = new Date();
     $scope.formId = scheduleFormId;
     $scope.afterGet = false;
-    $scope.validateClicked = miqService.validateWithAjax;
     $scope.modelCopy = angular.copy( $scope.scheduleModel );
     $scope.model = "scheduleModel";
+    $scope.validationUrl = '/ops/log_depot_validate/' + scheduleFormId + '?button=validate&type=log';
 
     ManageIQ.angular.scope = $scope;
 
@@ -365,9 +365,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
   $scope.isBasicInfoValid = function() {
     return ($scope.angularForm.depot_name.$valid &&
-      $scope.angularForm.uri.$valid &&
-      $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid);
+      $scope.angularForm.uri.$valid);
   };
 
   $scope.setTimerType = function() {

@@ -108,14 +108,14 @@
                               :ng_model_uri_prefix => "scheduleModel.uri_prefix",
                               :uri_prefix_display  =>  "{{scheduleModel.uri_prefix}}://"}
 
-        = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
-                 :locals  => {:ng_show           => "sambaBackup()",
-                              :ng_model          => "scheduleModel",
-                              :ng_reqd_userid    => "sambaRequired(scheduleModel.log_userid)",
-                              :ng_reqd_password  => "sambaRequired(scheduleModel.log_password)",
-                              :userid_disabled   => "scheduleModel.uri_prefix == 'nfs'",
-                              :password_disabled => "scheduleModel.uri_prefix == 'nfs'",
-                              :validate_url      => "log_depot_validate",
-                              :id                => @schedule.id || "new",
-                              :valtype           => "log",
-                              :basic_info_needed => true}
+        %auth-credentials{"ng-if"                 => "sambaBackup()",
+                          "form-model"            => "scheduleModel",
+                          "model-copy"            => "modelCopy",
+                          "prefix"                => "log",
+                          "user-required"         => "sambaRequired(scheduleModel.log_userid)",
+                          "password-required"     => "sambaRequired(scheduleModel.log_password)",
+                          "user-disabled"         => "scheduleModel.uri_prefix == 'nfs'",
+                          "password-disabled"     => "scheduleModel.uri_prefix == 'nfs'",
+                          "enable-valid-button"   => "canValidateBasicInfo()",
+                          "new-record"            => @schedule.id || "new",
+                          "validate"              => "validateClicked"}
