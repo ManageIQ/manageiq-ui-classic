@@ -86,7 +86,7 @@ module MiqPolicyController::Conditions
         condition.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
-        replace_right_cell(:nodetype => "co")
+        javascript_flash
       end
     when "expression", "applies_to_exp"
       session[:changed] = (@edit[:new] != @edit[:current])
