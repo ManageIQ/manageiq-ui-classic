@@ -3,6 +3,8 @@
     %span#console-type.label.label-info= j console_type.to_s
     %span#connection-status.label.label-warning= _('Connecting')
   .pull-right
+    - if console_type == 'WebMKS'
+      = select_tag(:keymap, options_for_select(VmwareConsoleHelper::KEYBOARD_LAYOUTS), :id => 'keymap')
     %button#ctrlaltdel.btn.btn-default{:title => _('Send CTRL+ALT+DEL')}
       %i.fa.fa-keyboard-o
     %button#fullscreen.btn.btn-default{:title => _('Toggle Fullscreen')}
