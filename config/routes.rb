@@ -2062,6 +2062,7 @@ Rails.application.routes.draw do
         edit
         new
         repository_refresh
+        show
         show_list
       )
     },

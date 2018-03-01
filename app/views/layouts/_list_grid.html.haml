@@ -16,6 +16,8 @@
       ManageIQ.record.parentClass = "policy";
     } else if (ManageIQ.record.parentClass == "ext_management_system") {
       ManageIQ.record.parentClass = "#{j layout}";
+    } else if (ManageIQ.record.parentClass == "configuration_script_source") {
+      ManageIQ.record.parentClass = "ansible_repository";
     }
 
 - if options[:action_url]
