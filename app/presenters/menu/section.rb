@@ -1,5 +1,5 @@
 module Menu
-  Section = Struct.new(:id, :name, :icon, :items, :placement, :before, :type, :href) do
+  Section = Struct.new(:id, :name, :icon, :items, :placement, :before, :type, :href, :parent_id) do
     extend ActiveModel::Naming
 
     def self.base_class
