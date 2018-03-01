@@ -985,19 +985,18 @@ class MiqAeClassController < ApplicationController
       :language            => 'ruby',
       :scope               => "instance",
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
-      :config_info         => {
-        :repository_id         => method.options[:repository_id] || '',
-        :playbook_id           => method.options[:playbook_id] || '',
-        :credential_id         => method.options[:credential_id] || '',
-        :network_credential_id => method.options[:network_credential_id] || '',
-        :cloud_credential_id   => method.options[:cloud_credential_id] || '',
-        :verbosity             => method.options[:verbosity],
-        :become_enabled        => method.options[:become_enabled] || false,
-        :execution_ttl         => method.options[:execution_ttl] || '',
-        :hosts                 => method.options[:hosts] || 'localhost',
-        :log_output            => method.options[:log_output] || 'on_error',
-        :extra_vars            => method.inputs
-      }
+      :config_info         => { :repository_id         => method.options[:repository_id] || '',
+                                :playbook_id           => method.options[:playbook_id] || '',
+                                :credential_id         => method.options[:credential_id] || '',
+                                :vault_credential_id   => method.options[:vault_credential_id] || '',
+                                :network_credential_id => method.options[:network_credential_id] || '',
+                                :cloud_credential_id   => method.options[:cloud_credential_id] || '',
+                                :verbosity             => method.options[:verbosity],
+                                :become_enabled        => method.options[:become_enabled] || false,
+                                :execution_ttl         => method.options[:execution_ttl] || '',
+                                :hosts                 => method.options[:hosts] || 'localhost',
+                                :log_output            => method.options[:log_output] || 'on_error',
+                                :extra_vars            => method.inputs }
     }
     render :json => method_hash
   end
@@ -1749,6 +1748,7 @@ class MiqAeClassController < ApplicationController
     params_list = %i(repository_id
                      playbook_id
                      credential_id
+                     vault_credential_id
                      verbosity
                      network_credential_id
                      cloud_credential_id
@@ -2709,7 +2709,7 @@ class MiqAeClassController < ApplicationController
     @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, options[:credential_id])
     @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
     @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
-    @playbook_details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VautCredential, options[:vault_credential_id]) if options[:vault_credential_id]
+    @playbook_details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
     @playbook_details[:verbosity] = options[:verbosity]
     @playbook_details[:become_enabled] = options[:become_enabled] == true ? _("Yes") : _("No")
     @playbook_details[:execution_ttl] = options[:execution_ttl]

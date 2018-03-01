@@ -105,7 +105,7 @@ function playbookReusableCodeMixin(API, $q, miqService) {
       .then(function(data) {
         vm[type + '_credentials'] = data.resources;
         for (var i = 0; i < prefixLen; i++) {
-          vm['_' + prefixes[i] + type + '_credential'] = _.find(vm[type + '_credentials'], {id: vm[vm.model][prefixes[i] + '_' + type + '_credential_id']});
+          vm['_' + prefixes[i] + '_' + type + '_credential'] = _.find(vm[type + '_credentials'], {id: vm[vm.model][prefixes[i] + '_' + type + '_credential_id']});
         }
       })
       .catch(miqService.handleFailure)

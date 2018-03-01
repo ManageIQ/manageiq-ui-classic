@@ -133,6 +133,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     }
 
     vm.catalogItemModel.retirement_network_credential_id = configData.retirement.network_credential_id;
+    vm.catalogItemModel.retirement_vault_credential_id = configData.retirement.vault_credential_id;
     vm.catalogItemModel.retirement_cloud_credential_id = playbookReusableCodeMixin.setIfDefined(configData.retirement.cloud_credential_id);
     vm.catalogItemModel.retirement_execution_ttl = configData.retirement.execution_ttl;
     vm.catalogItemModel.retirement_inventory = configData.retirement.hosts;
@@ -399,7 +400,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   };
 
   // watch for all the drop downs on screen
-  'catalog provisioning_playbook retirement_playbook provisioning_machine_credential retirement_machine_credential provisioning_network_credential retirement_network_credential provisioning_cloud_credential retirement_cloud_credential provisioning_dialog'.split(' ').forEach(idWatch);
+  'catalog provisioning_playbook retirement_playbook provisioning_machine_credential retirement_machine_credential provisioning_vault_credential retirement_vault_credential provisioning_network_credential retirement_network_credential provisioning_cloud_credential retirement_cloud_credential provisioning_dialog'.split(' ').forEach(idWatch);
 
   function idWatch(name) {
     var fieldName = 'vm._' + name;
