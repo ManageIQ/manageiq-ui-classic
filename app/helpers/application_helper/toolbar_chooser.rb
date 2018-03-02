@@ -441,7 +441,7 @@ class ApplicationHelper::ToolbarChooser
                     load_balancers network_ports network_routers orchestration_stacks resource_pools
                     security_groups storages middleware_deployments
                     middleware_servers)
-    to_display_center = %w(stack_orchestration_template topology cloud_object_store_objects generic_objects physical_servers)
+    to_display_center = %w(stack_orchestration_template topology cloud_object_store_objects generic_objects physical_servers guest_devices)
     performance_layouts = %w(vm host ems_container)
     if @lastaction == 'show' && (@view || @display != 'main') && !@layout.starts_with?("miq_request")
       if @display == "vms" || @display == "all_vms"
@@ -530,6 +530,7 @@ class ApplicationHelper::ToolbarChooser
               ems_object_storage
               timeline
               usage
+              guest_device
               generic_object_definition).include?(@layout)
           if ["show_list"].include?(@lastaction)
             return "#{@layout.pluralize}_center_tb"

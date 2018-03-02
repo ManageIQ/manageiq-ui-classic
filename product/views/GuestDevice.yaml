@@ -1,0 +1,56 @@
+#Report title
+title: Guest Devices
+
+#Menu name
+name: Guest Device
+
+
+db: GuestDevice
+
+
+# Columns to fetch from main table
+cols:
+- device_name
+- location
+- manufacturer
+- field_replaceable_unit
+
+
+include:
+
+
+include_for_find:
+  :ext_management_system: {}
+
+
+col_order:
+- device_name
+- location
+- manufacturer
+- field_replaceable_unit
+
+col_formats:
+
+headers:
+- Device Name
+- Location
+- Manufacturer
+- Field Replaceable Unit
+
+
+conditions:
+
+
+order: Ascending
+
+
+sortby:
+- device_name
+
+group: n
+
+
+graph:
+
+
+dims:

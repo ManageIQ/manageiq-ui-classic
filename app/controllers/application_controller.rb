@@ -137,6 +137,7 @@ class ApplicationController < ActionController::Base
       :emscluster                               => "grid",
       :emscontainer                             => "grid",
       :filesystem                               => "list",
+      :guestdevice                              => "list",
       :flavor                                   => "list",
       :host                                     => "grid",
       :job                                      => "list",

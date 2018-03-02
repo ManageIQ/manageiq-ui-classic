@@ -2,7 +2,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name model product_name manufacturer machine_type serial_number ems_ref capacity memory cores health_state loc_led_state)
+      %i(name model product_name manufacturer machine_type serial_number ems_ref capacity memory cores network_devices health_state loc_led_state)
     )
   end
 
@@ -39,14 +39,6 @@ module PhysicalServerHelper::TextualSummary
       _("Firmware"),
       "textual_firmware_table",
       %i(fw_details)
-    )
-  end
-
-  def textual_group_network_adapters
-    TextualCustom.new(
-      _("Network Devices"),
-      "textual_network_adapter_table",
-      %i(network_adapter)
     )
   end
 
@@ -163,6 +155,15 @@ module PhysicalServerHelper::TextualSummary
     {:label => _("Health State"), :value => @record.health_state}
   end
 
+  def textual_network_devices
+    hardware_nics_count = @record.hardware.nics.count
+    device = {:label => _("Network Devices"), :value => hardware_nics_count, :icon => "ff ff-network-card"}
+    if hardware_nics_count.positive?
+      device[:link] = "/physical_server/show/#{@record.id}?display=guest_devices"
+    end
+    device
+  end
+
   def textual_fw_details
     fw_details = []
     @record.hardware.firmwares.each do |fw|
@@ -170,30 +171,5 @@ module PhysicalServerHelper::TextualSummary
     end
 
     {:value => fw_details}
-  end
-
-  def textual_network_adapter
-    network_adapters = []
-
-    @record.hardware.nics.each do |nic|
-      port_names = []
-      mac_addresses = []
-
-      child_devices = nic.child_devices.sort_by(&:device_name)
-
-      child_devices.each do |child_device|
-        port_names.push(child_device.device_name)
-        mac_addresses.push(child_device.address)
-      end
-
-      network_adapters.push(:location      => nic.location,
-                            :adapter_name  => nic.device_name,
-                            :manufacturer  => nic.manufacturer,
-                            :fru           => nic.field_replaceable_unit,
-                            :port_names    => port_names,
-                            :mac_addresses => mac_addresses)
-    end
-
-    {:value => network_adapters}
   end
 end

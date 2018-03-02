@@ -1342,6 +1342,22 @@ Rails.application.routes.draw do
           save_post
     },
 
+    :guest_device    =>  {
+      :get  =>  %w(
+        show_list
+        show
+        quick_search
+      ) + compare_get,
+
+      :post   =>  %w(
+        button
+        show_list
+      ) +
+          adv_search_post +
+          exp_post +
+          save_post
+    },
+
     :ems_physical_infra_dashboard      => {
       :get => %w(
         show

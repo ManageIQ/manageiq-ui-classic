@@ -1341,6 +1341,7 @@ module ApplicationHelper
                         floating_ip
                         generic_object
                         generic_object_definition
+                        guest_device
                         host
                         host_aggregate
                         load_balancer
@@ -1441,6 +1442,7 @@ module ApplicationHelper
           flavor
           floating_ip
           generic_object_definition
+          guest_device
           host
           load_balancer
           middleware_deployment
@@ -1509,6 +1511,7 @@ module ApplicationHelper
              flavor
              floating_ip
              generic_object_definition
+             guest_device
              host
              host_aggregate
              load_balancer
