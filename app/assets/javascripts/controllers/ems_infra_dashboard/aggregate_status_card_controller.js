@@ -1,15 +1,8 @@
 /* global miqHttpInject */
 
-angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', ['$q', 'providerId', 'API', 'miqService', function($q, providerId, API, miqService) {
+angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', ['$q', 'providerId', 'API', 'miqService', 'chartsMixin', function($q, providerId, API, miqService, chartsMixin) {
   var vm = this;
   var attributes = ["ems_clusters", "hosts", "storages", "vms", "miq_templates"];
-  var attrHsh = {
-    "ems_clusters": "Clusters",
-    "hosts": "Hosts",
-    "storages": "Datastores",
-    "vms": "VMs",
-    "miq_templates": "Templates",
-  };
 
   var attrIconHsh = {
     "ems_clusters": "pficon pficon-cluster",
@@ -40,6 +33,14 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', 
 //         "title": vm.provider.name,
         "iconImage": "/assets/svg/vendor-" + getIcon(vm.provider.type) + ".svg",
         "largeIcon": true,
+      };
+
+      var attrHsh = {
+        "ems_clusters": chartsMixin.isOpenstack(vm.provider.type) ? "Deployment Roles" : "Clusters",
+        "hosts": chartsMixin.isOpenstack(vm.provider.type) ? "Nodes" : "Hosts",
+        "storages": "Datastores",
+        "vms": "VMs",
+        "miq_templates": "Templates",
       };
 
       vm.AggStatus = [];
