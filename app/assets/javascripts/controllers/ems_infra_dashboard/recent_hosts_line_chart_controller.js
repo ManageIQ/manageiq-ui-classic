@@ -20,6 +20,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentHostsLineChartControlle
       } else {
         vm.data = chartsMixin.processData(vm.data.recentHosts, 'dates', vm.data.recentHosts.config.label);
       }
+      Object.assign(vm.config, vm.data);
       vm.loadingDone = true;
     });
 

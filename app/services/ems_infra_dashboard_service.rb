@@ -77,30 +77,32 @@ class EmsInfraDashboardService < DashboardService
   def recentHosts
     # Get recent hosts
     all_hosts = recentRecords(Host)
-    return { :dataAvailable => false } if all_hosts.blank?
+    config = {
+      :title => openstack? ? _('Recent Nodes') : _('Recent Hosts'),
+      :label => openstack? ? _('Nodes') : _('Hosts')
+    }
+    return { :dataAvailable => false, :config => config} if all_hosts.blank?
     {
       :dataAvailable => true,
       :xData         => all_hosts.keys,
       :yData         => all_hosts.values.map,
-      :config        => {
-        :title => openstack? ? _('Recent Nodes') : _('Recent Hosts'),
-        :label => openstack? ? _('Nodes') : _('Hosts'),
-      }
+      :config        => config
     }
   end
 
   def recentVms
     # Get recent VMs
     all_vms = recentRecords(VmOrTemplate)
-    return { :dataAvailable => false } if all_vms.blank?
+    config = {
+      :title => _('Recent VMs'),
+      :label => _('VMs'),
+    }
+    return { :dataAvailable => false, :config => config } if all_vms.blank?
     {
       :dataAvailable => true,
       :xData         => all_vms.keys,
       :yData         => all_vms.values.map,
-      :config        => {
-        :title => _('Recent VMs'),
-        :label => _('VMs'),
-      }
+      :config        => config
     }
   end
 

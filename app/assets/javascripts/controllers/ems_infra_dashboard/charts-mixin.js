@@ -31,6 +31,10 @@ angular.module('miq.util').factory('chartsMixin', ['$document', function($docume
     };
   };
 
+  var isOpenstack = function isOpenstack(providerType) {
+    return (providerType === "ManageIQ::Providers::Openstack::InfraManager");
+  };
+
   var chartConfig = {
     cpuUsageConfig: {
       chartId: 'cpuUsageChart',
@@ -70,8 +74,6 @@ angular.module('miq.util').factory('chartsMixin', ['$document', function($docume
     },
     recentHostsConfig: {
       chartId: 'recentHostsChart',
-      headTitle: __('Recent Hosts'),
-      label: __('Hosts'),
       tooltip: {
         contents: dailyTimeTooltip,
         position: lineChartTooltipPositionFactory('recentHostsChart'),
@@ -83,8 +85,6 @@ angular.module('miq.util').factory('chartsMixin', ['$document', function($docume
     },
     recentVmsConfig: {
       chartId: 'recentVmsChart',
-      headTitle: __('Recent VMs'),
-      label: __('VMs'),
       tooltip: {
         contents: dailyTimeTooltip,
         position: lineChartTooltipPositionFactory('recentVmsChart'),
@@ -111,5 +111,6 @@ angular.module('miq.util').factory('chartsMixin', ['$document', function($docume
     chartConfig: chartConfig,
     processData: processData,
     dailyTimeTooltip: dailyTimeTooltip,
+    isOpenstack: isOpenstack,
   };
 }]);
