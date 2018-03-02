@@ -469,7 +469,7 @@ module EmsCommon
   end
 
   def retrieve_provider_regions
-    managers = model.supported_subclasses.select { |s| s.supports_regions? && s.try(:region_required?) != false }
+    managers = model.supported_subclasses.select(&:supports_regions?)
     managers.each_with_object({}) do |manager, provider_regions|
       regions = manager.parent::Regions.all.sort_by { |r| r[:description] }
       provider_regions[manager.ems_type] = regions.map do |region|
