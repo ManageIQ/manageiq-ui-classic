@@ -2069,10 +2069,13 @@ Rails.application.routes.draw do
         new
         show
         show_list
+        tagging_edit
       ),
       :post => %w(
         button
         show_list
+        tag_edit_form_field_changed
+        tagging_edit
       )
     },
 
