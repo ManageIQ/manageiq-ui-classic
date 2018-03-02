@@ -174,11 +174,11 @@
         %label.col-md-3.control-label{"for" => "catalog_id"}
           = _('Remove resources?')
         .col-md-9
-          %select{"ng-model"   => "vm.#{ng_model}.retirement_remove_resources",
-                  "name"       => "vm.#{ng_model}.retirement_remove_resources",
-                  'ng-options' => "v as k for (k, v) in vm.remove_resources_types",
-                  :checkchange => true,
-                  "pf-select"  => true}
+          %select{"ng-model"    => "#{ng_model}.retirement_remove_resources",
+                  "name"        => "retirement_remove_resources",
+                  'ng-options'  => "v as k for (k, v) in vm.remove_resources_types",
+                  'checkchange' => "",
+                  "pf-select"   => true}
 
   .col-md-12.col-lg-6{'ng-if' => "#{ng_model}.#{prefix}_variables!==undefined"}
     .form-group
