@@ -409,7 +409,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
 
   _this.getAlertsData = function(limit, offset, filters, sortField, sortAscending) {
     var deferred = $q.defer();
-    var resourceOptions = '?expand=resources,alert_actions&attributes=assignee,resource&filter[]=resolved=false&filter[]=or+resolved=nil';
+    var resourceOptions = '?expand=resources,alert_actions&attributes=assignee,resource,labels&filter[]=resolved=false&filter[]=or+resolved=nil';
     var limitOptions = '';
     var offsetOptions = '';
     var sortOptions = '';
@@ -508,6 +508,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       evaluated_on: convertApiTime(alertData.evaluated_on),
       severity: alertData.severity,
       alert_actions: alertData.alert_actions,
+      labels: alertData.labels,
     };
 
     if (newAlert.severity == 'error') {

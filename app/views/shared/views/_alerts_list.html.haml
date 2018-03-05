@@ -67,6 +67,29 @@
           .col-md-12
             %a{"ng-href" => '{{$parent.$parent.item.sopLink}}', "target" => "_blank", "ng-if" => "$parent.item.sopLink"}
               = _("View SOP")
+        .row{"ng-if" => "$parent.item.labels && $parent.item.labels.length > 0"}
+          .col-md-12
+            %span.header
+              = _("Labels")
+          .col-md-12
+            %table.table.table-striped.table-bordered.table-hover
+              %colgroup
+                %col.fixed-col
+                %col.grow-col
+              %thead
+                %tr
+                  %th
+                    = _("Name")
+                  %th
+                    = _("Value")
+              %tbody
+                %tr{"ng-repeat" => "label in $parent.$parent.item.labels"}
+                  %td
+                    .no-wrap
+                      {{label.name}}
+                  %td
+                    .no-wrap
+                      {{label.value}}
         .row
           .col-md-12
             %span.header
