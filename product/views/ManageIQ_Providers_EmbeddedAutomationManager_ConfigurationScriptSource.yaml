@@ -45,7 +45,7 @@ headers:
 - Description
 - Playbooks
 - Created On
-- Updated On
+- Last refresh on
 - Status
 
 col_formats:
