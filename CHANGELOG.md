@@ -5,7 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-1
+## Gaprindashvili-2
+
+### Added
+- Add note about vm restart for cpu hot plug change [(#3308)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3308)
+- Add role(assert) check for cloud network in subnet new form [(#3333)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3333)
+- Fix network router buttons for AWS [(#2234)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2234)
+
+### Fixed
+- Disable cloud network editing and deletion for list view. [(#3349)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3349)
+- Render flash message or reload list view after Delete is pressed. [(#3354)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3354)
+- Fix Reset button when tagging vms, templates, instances, images [(#3352)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3352)
+- Fixed code to display dialog form buttons when loading old dialog runner [(#3361)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3361)
+- Increased username maxlength from 50 to 255 [(#3362)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3362)
+- Fix cloud network topology icon [(#3365)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3365)
+- Merged Container Providers with all other providers in the list [(#3368)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3368)
+- Change VMware console api detection from vCenter to ESXi Host [(#3256)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3256)
+- Disable group_by options when there is no daily data [(#3372)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3372)
+- Fix for different behavior of items in regards to default values on dialog sample page [(#3371)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3371)
+- Added vm_transform button pressed id to the list [(#3384)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3384)
+- Fix logic error preventing WebMKS console access on 6.0 Hosts [(#3390)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3390)
+- Instances without tenants should not cause navigation to fail on InstanceAttach checks [(#3403)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3403)
+
+## Gaprindashvili-1 - Released 2018-02-01
 
 ### Added
 - Alerts
