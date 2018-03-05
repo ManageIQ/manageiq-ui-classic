@@ -26,12 +26,15 @@ class AnsibleCredentialController < ApplicationController
   end
 
   def button
-    if params[:pressed] == 'embedded_automation_manager_credentials_add'
+    case params[:pressed]
+    when 'embedded_automation_manager_credentials_add'
       javascript_redirect :action => 'new'
-    elsif params[:pressed] == 'embedded_automation_manager_credentials_edit'
+    when 'embedded_automation_manager_credentials_edit'
       javascript_redirect :action => 'edit', :id => from_cid(params[:miq_grid_checks])
-    elsif params[:pressed] == 'embedded_automation_manager_credentials_delete'
+    when 'embedded_automation_manager_credentials_delete'
       delete_credentials
+    when 'ansible_credential_tag'
+      tag(self.class.model)
     end
   end
 
@@ -54,7 +57,7 @@ class AnsibleCredentialController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships options)]
+    [%i(properties relationships options smart_management)]
   end
   helper_method :textual_group_list
 

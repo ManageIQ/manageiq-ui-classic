@@ -29,6 +29,10 @@ module AnsibleCredentialHelper::TextualSummary
     TextualGroup.new(_("Credential Options"), options)
   end
 
+  def textual_group_smart_management
+    TextualTags.new(_("Smart Management"), %i(tags))
+  end
+
   def textual_type
     {:label => _("Authentication Type"), :value => ui_lookup(:model => @record.type)}
   end
