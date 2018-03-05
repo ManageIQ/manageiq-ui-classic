@@ -24,4 +24,20 @@ class ApplicationHelper::Toolbar::AnsibleCredentialCenter < ApplicationHelper::T
       ]
     ),
   ])
+  button_group('embedded_ansible_credentials_policy', [
+                 select(
+                   :embedded_ansible_credentials_policy_choice,
+                   'fa fa-shield fa-lg',
+                   t = N_('Policy'),
+                   t,
+                   :items => [
+                     button(
+                       :ansible_credential_tag,
+                       'pficon pficon-edit fa-lg',
+                       N_('Edit Tags for the selected Ansible Credentials'),
+                       N_('Edit Tags'),
+                     ),
+                   ]
+                 )
+               ])
 end
