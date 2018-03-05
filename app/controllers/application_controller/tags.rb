@@ -183,10 +183,13 @@ module ApplicationController::Tags
 
   # Add/remove tags in a single transaction
   def tagging_save_tags
-    Classification.bulk_reassignment(:model      => @edit[:tagging],
-                                     :object_ids => @edit[:object_ids],
-                                     :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
-                                     :delete_ids => @edit[:current][:assignments] - @edit[:new][:assignments])
+    @edit[:new][:assignments] = JSON.parse(params['data']).map {|tag| tag['tagValues'].map {|v| v['id']}}.flatten
+
+    Classification.bulk_reassignment({:model      => @edit[:tagging],
+                                      :object_ids => @edit[:object_ids],
+                                      :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
+                                      :delete_ids => @edit[:current][:assignments] - @edit[:new][:assignments]
+                                    })
   rescue => bang
     add_flash(_("Error during 'Save Tags': %{error_message}") % {:error_message => bang.message}, :error)
   else
@@ -239,6 +242,23 @@ module ApplicationController::Tags
     @edit[:new][:assignments].sort!
     @assignments = Classification.find(@edit.fetch_path(:new, :assignments))
     tag_edit_build_entries_pulldown
+    # ||             ||
+    # \/ new tagging \/
+    # binding.pry
+    @tags = cats.map do |cat| {:id => cat.id, :description => cat.description, :single_value => cat.single_value, :values =>  cat.entries.map {|entry|
+      {:id => entry.id, :description => entry.description}}.sort_by {|e| e[:description.downcase]}}
+    end
+    assignedTags = @assignments.map do |a|
+      {:tagCategory => {:description => a.parent.description, :id => a.parent.id},
+      :tagValues => [{:description => a.description, :id => a.id}]}
+    end
+    @tags = {:tags => @tags, :assignedTags => assignedTags, :affectedItems => @tagitems.map { |item| item.id }}
+    @tags = JSON.generate(@tags)
+    @button_urls =  JSON.generate({
+      :save_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "save"),
+      :cancel_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "cancel") }
+    )
+
   end
 
   # Build the second pulldown containing the entries for the selected category

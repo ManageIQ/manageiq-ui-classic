@@ -1,5 +1,6 @@
 - url = url_for_only_path(:action => 'tag_edit_form_field_changed', :id => @sb[:rec_id] || @edit[:object_ids][0])
 #tab_div
+  #demo-app
   %h3
     - if @tagitems.length > 1
       = _("Tag Assignment (Tags common to all selected items)")
@@ -21,7 +22,12 @@
             "class"                => "selectpicker")
           :javascript
             miqInitSelectPicker();
+<<<<<<< HEAD
             miqSelectPickerEvent("tag_cat", "#{url}", {beforeSend: true});
+=======
+            miqSelectPickerEvent("tag_cat", "#{url}", {beforeSend: true, complete: true});
+            mountTagging(#{@tags}, #{@button_urls});
+>>>>>>> Add tagging component
         %th
           = render :partial => "layouts/tag_edit_cat_tags"
   = render :partial => 'layouts/tag_edit_assignments', :locals => {:entry => nil}
