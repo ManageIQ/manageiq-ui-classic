@@ -630,9 +630,10 @@ module EmsCommon
 
     process_emss(emss, "#{action}_ems") unless emss.empty?
     return if @flash_array.present?
-    add_flash(n_("#{action.capitalize} initiated for %{count} %{model} from the %{product} Database",
-                 "#{action.capitalize} initiated for %{count} %{models} from the %{product} Database", emss.length) %
+    add_flash(n_("%{action} initiated for %{count} %{model} from the %{product} Database",
+                 "%{action} initiated for %{count} %{models} from the %{product} Database", emss.length) %
                 {:count   => emss.length,
+                 :action  => action.capitalize,
                  :product => Vmdb::Appliance.PRODUCT_NAME,
                  :model   => ui_lookup(:table => table_name),
                  :models  => ui_lookup(:tables => table_name)})

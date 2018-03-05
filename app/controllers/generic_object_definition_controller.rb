@@ -103,7 +103,7 @@ class GenericObjectDefinitionController < ApplicationController
   def custom_button_group_edit
     assert_privileges('ab_group_edit')
     @custom_button_group = CustomButtonSet.find(params[:id])
-    title = _("Edit Custom Button Group '#{@custom_button_group.name}'")
+    title = _("Edit Custom Button Group '%{name}'") % {:name => @custom_button_group.name}
     render_form(title, 'custom_button_group_form')
   end
 
@@ -122,7 +122,7 @@ class GenericObjectDefinitionController < ApplicationController
   def custom_button_edit
     assert_privileges('ab_button_edit')
     @custom_button = CustomButton.find(params[:id])
-    title = _("Edit Custom Button '#{@custom_button.name}'")
+    title = _("Edit Custom Button '%{name}'") % {:name => @custom_button.name}
     render_form(title, 'custom_button_form')
   end
 

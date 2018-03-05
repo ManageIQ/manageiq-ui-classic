@@ -129,7 +129,7 @@ module Mixins
             w = params[:retire_warn].to_i
 
             ts = t.strftime("%x %R %Z")
-            flash = n_("Retirement date set to #{ts}", "Retirement dates set to #{ts}", session[:retire_items].length)
+            flash = n_("Retirement date set to %{time}", "Retirement dates set to %{time}", session[:retire_items].length) % {:time => ts}
           end
           kls.retire(session[:retire_items], :date => t, :warn => w) # Call the model to retire the VM(s)
           @sb[:action] = nil

@@ -32,13 +32,13 @@ module GenericObjectDefinitionHelper::TextualSummary
   end
 
   def textual_group_attribute_details_list
-    record_properties_list(_("Attributes (#{@record.property_attributes.count})"),
+    record_properties_list(_("Attributes (%{count})") % {:count => @record.property_attributes.count},
                            :property_attributes,
                            [_("Name"), _("Type")])
   end
 
   def textual_group_association_details_list
-    record_properties_list(_("Associations (#{@record.property_associations.count})"),
+    record_properties_list(_("Associations (%{count})") % {:count => @record.property_associations.count},
                            :property_associations,
                            [_("Name"), _("Class")])
   end
@@ -54,7 +54,7 @@ module GenericObjectDefinitionHelper::TextualSummary
 
   def textual_group_method_details_list
     TextualMultilabel.new(
-      _("Methods (#{@record.property_methods.count})"),
+      _("Methods (%{count})") % {:count => @record.property_methods.count},
       :additional_table_class => "table-fixed",
       :labels                 => [_("Name")],
       :values                 => methods_array

@@ -58,7 +58,7 @@ class MiqAeCustomizationController < ApplicationController
       rescue DialogImportValidator::ParsedNonDialogYamlError
         add_flash(_("Error during upload: incorrect Dialog format, only service dialogs can be imported"), :error)
       rescue DialogImportValidator::DialogFieldAssociationCircularReferenceError
-        add_flash(_("Error during upload: the following dialog fields to be imported contain circular association references: #{$ERROR_INFO}"), :error)
+        add_flash(_("Error during upload: the following dialog fields to be imported contain circular association references: %{error}") % {:error => $ERROR_INFO}, :error)
       rescue DialogImportValidator::InvalidDialogFieldTypeError
         add_flash(_("Error during upload: one of the DialogField types is not supported"), :error)
       end
