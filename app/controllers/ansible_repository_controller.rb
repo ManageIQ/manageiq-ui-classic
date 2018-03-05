@@ -26,26 +26,29 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def button
-    if params[:pressed] == "embedded_configuration_script_source_edit"
+    case params[:pressed]
+    when "embedded_configuration_script_source_edit"
       id = params[:miq_grid_checks]
       javascript_redirect :action => 'edit', :id => id
-    elsif params[:pressed] == "embedded_configuration_script_source_add"
+    when "embedded_configuration_script_source_add"
       javascript_redirect :action => 'new'
-    elsif params[:pressed] == "embedded_configuration_script_source_delete"
+    when "embedded_configuration_script_source_delete"
       delete_repositories
-    elsif params[:pressed] == 'ansible_repositories_reload'
+    when "ansible_repositories_reload"
       show_list
       render :update do |page|
         page << javascript_prologue
         page.replace("gtl_div", :partial => "layouts/gtl")
       end
-    elsif params[:pressed] == 'ansible_repository_reload'
+    when "ansible_repository_reload"
       params[:display] = @display if @display
       show
       render :update do |page|
         page << javascript_prologue
         page.replace("main_div", :template => "ansible_repository/show")
       end
+    when "ansible_repository_tag"
+      tag(self.class.model)
     end
   end
 
