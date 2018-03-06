@@ -113,7 +113,7 @@ class AnsibleRepositoryController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships options)]
+    [%i(properties relationships options smart_management)]
   end
   helper_method :textual_group_list
 end
