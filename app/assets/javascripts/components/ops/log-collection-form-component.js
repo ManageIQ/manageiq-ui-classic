@@ -1,4 +1,16 @@
-ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope', 'serverId', '$attrs', 'miqService', 'miqDBBackupService', function($http, $scope, serverId, $attrs, miqService, miqDBBackupService) {
+ManageIQ.angular.app.component('logCollectionFormComponent', {
+  controllerAs: 'vm',
+  controller: logCollectionFormController,
+  templateUrl: "/static/ops/logcollection/log_collection.html.haml",
+  bindings: {
+    'serverId': '@',
+    'selectOptions': '<',
+  },
+
+});
+
+logCollectionFormController.$inject = ['$http', '$scope',  '$attrs', 'miqService', 'miqDBBackupService'];
+function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBackupService) {
   var vm = this;
   var init = function() {
     vm.logCollectionModel = {
@@ -20,7 +32,7 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     vm.miqDBBackupService = miqDBBackupService;
     ManageIQ.angular.scope = vm;
 
-    if (serverId == 'new') {
+    if (vm.serverId == 'new') {
       vm.logCollectionModel.depot_name = '';
       vm.logCollectionModel.uri = '';
       vm.logCollectionModel.uri_prefix = '';
@@ -34,7 +46,7 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
       miqService.sparkleOn();
 
       var url = vm.logCollectionFormFieldsUrl;
-      $http.get(url + serverId)
+      $http.get(url + vm.serverId)
         .then(getLogCollectionFormData)
         .catch(miqService.handleFailure);
     }
@@ -42,14 +54,14 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
 
   vm.validateClicked = function() {
     miqService.validateWithAjax(vm.saveUrl + '?button=validate&type=' + vm.prefix);
-  }
+  };
 
   vm.logProtocolChanged = function() {
     miqService.sparkleOn();
-    if(miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) == -1 &&
+    if (miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) == -1 &&
        vm.logCollectionModel.log_protocol != '') {
       var url = vm.logProtocolChangedUrl;
-      $http.get(url + serverId + '?log_protocol=' + vm.logCollectionModel.log_protocol)
+      $http.get(url + vm.serverId + '?log_protocol=' + vm.logCollectionModel.log_protocol)
         .then(getLogProtocolData)
         .catch(miqService.handleFailure);
     }
@@ -60,12 +72,12 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
 
   vm.isBasicInfoValid = function() {
     return $scope.angularForm.depot_name.$valid &&
-      $scope.angularForm.uri.$valid
+      $scope.angularForm.uri.$valid;
   };
 
   vm.saveClicked = function() {
     miqService.sparkleOn();
-    var url = vm.saveUrl + serverId + '?button=save';
+    var url = vm.saveUrl + vm.serverId + '?button=save';
     var moreUrlParams = $.param(miqService.serializeModel(vm.logCollectionModel));
     if (moreUrlParams) {
       url += '&' + decodeURIComponent(moreUrlParams);
@@ -82,13 +94,13 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
 
   vm.cancelClicked = function() {
     miqService.sparkleOn();
-    var url = vm.saveUrl + serverId + '?button=cancel';
+    var url = vm.saveUrl + vm.serverId + '?button=cancel';
     miqService.miqAjaxButton(url, true);
   };
 
-  vm.canValidateBasicInfo = function () {
+  vm.canValidateBasicInfo = function() {
     return vm.isBasicInfoValid();
-  }
+  };
 
   function getLogCollectionFormData(response) {
     var data = response.data;
@@ -118,5 +130,5 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     miqService.sparkleOff();
   }
 
-  init();
-}]);
+  vm.$onInit = init;
+}
