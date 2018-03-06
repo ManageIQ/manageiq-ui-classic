@@ -23,3 +23,5 @@ export const toggle = (state = { tagCategory: '', tagValue: '' }, action) => {
       return state;
   }
 };
+
+export const tags = (state = {}) => state;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import Tagging from '../components/tagging';
@@ -8,15 +8,17 @@ import TagView from '../components/tagView';
 import TaggingConnected from '../containers/tagging';
 import taggingApp from '../reducers/'
 
-const store = createStore(taggingApp);
-const tags = { animal: ['duck', 'pig'], food: ['steak', 'salad'] };
+const tags_obj = { animal: ['duck', 'pig'], food: ['steak', 'salad'] };
+function tags() { return tags_obj; }
 const setTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'food', tagValue: 'steak' }];
 const selectedTagCategory = 'animal';
 const selectedTagValue = 'pig';
+const taggingApp2 = combineReducers({ taggingApp, tags });
+const store = createStore(taggingApp2);
 
 storiesOf('Tagging', module)
   .add('Tagging dummy', () => <Tagging
-    tags={tags}
+    tags={tags_obj}
     setTags={setTags}
     onTagValueChange={action('onTagValueChange')}
     onTagCategoryChange={action('onTagCategoryChange')}
