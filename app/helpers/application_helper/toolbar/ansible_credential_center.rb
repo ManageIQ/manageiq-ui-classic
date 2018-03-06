@@ -34,7 +34,7 @@ class ApplicationHelper::Toolbar::AnsibleCredentialCenter < ApplicationHelper::T
                      button(
                        :ansible_credential_tag,
                        'pficon pficon-edit fa-lg',
-                       N_('Edit Tags for the selected Ansible Credentials'),
+                       N_('Edit Tags for this Ansible Credential'),
                        N_('Edit Tags'),
                      ),
                    ]
