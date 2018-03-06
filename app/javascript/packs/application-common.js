@@ -6,17 +6,16 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import { mount } from '../react/mounter';
-import componentRegistry from '../react/componentRegistry';
+import 'proxy-polyfill';
 import miqRedux from 'miq-redux';
-
-// TODO: use ManageIQ object, once race conditions are fixed
-window.MiqReact = Object.assign(window.MiqReact || {}, {
-  mount: mount,
-  componentRegistry: componentRegistry
-});
+import miqComponent from 'miq-component';
+import miqComponentReact from 'miq-component-react';
 
 const app = ManageIQ.angular.app;
 
 // TODO(vs) link to article at http://talk.manageiq.org/c/developers
 miqRedux(app);
+
+// TODO(vs) link to article at http://talk.manageiq.org/c/developers
+miqComponent();
+miqComponentReact();
