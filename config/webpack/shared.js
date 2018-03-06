@@ -14,11 +14,11 @@ const { env, settings, output, loadersDir, engines } = require('./configuration.
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*` // */
 const entryPath = join(settings.source_path, settings.source_entry_path)
-let packPaths = {}
+const packPaths = {}
 
 Object.keys(engines).forEach(function(k) {
-  let root = engines[k]
-  let glob = join(root, entryPath, extensionGlob)
+  const root = engines[k]
+  const glob = join(root, entryPath, extensionGlob)
   packPaths[k] = sync(glob)
 })
 
@@ -60,6 +60,7 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
+      minChunks: module => /node_modules/.test(module.resource)
     }),
   ],
 
