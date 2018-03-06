@@ -421,13 +421,7 @@ module ApplicationController::CiProcessing
 
     options = {:ids => objs, :task => task, :userid => session[:userid]}
     options[:snap_selected] = session[:snap_selected] if task == "remove_snapshot" || task == "revert_to_snapshot"
-
-    if task == 'retire_now'
-      options = {:task => task, :userid => session[:userid], :ids => objs, :src_ids => objs}
-      (klass.to_s + "RetireRequest").constantize.make_request(@request_id, options, current_user)
-    else
-      klass.process_tasks(options)
-    end
+    klass.process_tasks(options)
   rescue => err
     add_flash(_("Error during '%{task}': %{error_message}") % {:task => task, :error_message => err.message}, :error)
   else

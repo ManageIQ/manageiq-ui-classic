@@ -320,8 +320,9 @@ describe VmInfraController do
     post :explorer
     expect(response.status).to eq(200)
 
+    expect(controller).to receive(:render).at_least(:once)
     post :x_button, :params => {:pressed => 'vm_retire_now', :id => vm_vmware.id}
-    expect(response.status).to eq(200)
+    expect(response).to render_template(:partial => 'layouts/_flash_msg')
   end
 
   it 'can reset selected items' do

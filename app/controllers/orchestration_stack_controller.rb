@@ -94,6 +94,7 @@ class OrchestrationStackController < ApplicationController
         orchestration_stack_retire
       when "orchestration_stack_retire_now"
         orchestration_stack_retire_now
+        return
       when "orchestration_stack_tag"
         tag(OrchestrationStack)
       when params[:pressed] == "custom_button"
