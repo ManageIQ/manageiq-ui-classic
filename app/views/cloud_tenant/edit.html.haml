@@ -1,25 +1,6 @@
-%form#form_div{:name            => "angularForm",
-               'ng-controller'  => "cloudTenantFormController as vm",
-               'miq-form'       => true,
-               'model'          => 'vm.cloudTenantModel',
-               'model-copy'     => 'vm.modelCopy',
-               'form-changed'   => true}
-  = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Edit Cloud Tenant')
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Tenant Name')
-      .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "name",
-                            'ng-model'     => "vm.cloudTenantModel.name",
-                            'ng-maxlength' => 128,
-                            :miqrequired   => false}
-
-  = render :partial => "layouts/angular/generic_form_buttons"
-
+#main_div
+%cloud-tenant-form
+%cloud-tenant-form{'repository-id' => @id }
 :javascript
-  ManageIQ.angular.app.value('cloudTenantFormId', '#{@tenant.id}');
-  miq_bootstrap(jQuery('#form_div'));
+   #ManageIQ.angular.app.value('repositoryId', '#{@id}');
+   miq_bootstrap('cloud-tenant-form')

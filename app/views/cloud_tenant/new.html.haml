@@ -1,35 +1,6 @@
-%form#form_div{:name            => "angularForm",
-               'ng-controller'  => "cloudTenantFormController as vm",
-               'miq-form'       => true,
-               'model'          => 'vm.cloudTenantModel',
-               'model-copy'     => 'vm.modelCopy',
-               'form-changed'   => true}
-  = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Basic Information')
-  .form-horizontal
-    .form-group{"ng-class" => "{'has-error': angularForm.ems_id.$invalid}"}
-      %label.col-md-2.control-label
-        = _('Cloud Provider')
-      .col-md-8
-        = select_tag("ems_id",
-          options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
-                      "ng-model"  => "vm.cloudTenantModel.ems_id",
-                      "required"  => "",
-                      "pf-select" => "")
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Tenant Name')
-      .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "name",
-                            'ng-model'     => "vm.cloudTenantModel.name",
-                            'ng-maxlength' => 128,
-                            :required      => ''}
-
-  = render :partial => "layouts/angular/generic_form_buttons"
-
+#main_div
+%cloud-tenant-form
+%repository-form-component{'cloudTenantFormId' => 'new'}
 :javascript
-  ManageIQ.angular.app.value('cloudTenantFormId', '#{@tenant.id || "new"}');
-  miq_bootstrap('#form_div');
+  #ManageIQ.nagular.app.value('repositoryId', '#(@id)');
+  miq_bootstrap('cloud-tenant-formt')
