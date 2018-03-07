@@ -12,6 +12,7 @@ class VmOrTemplateDecorator < MiqDecorator
   end
 
   def quadicon(settings = {})
+    show_compliance = settings[:show_compliance] && settings[:policies].present?
     {
       :top_left     => {
         :fileicon => os_image,
@@ -25,7 +26,7 @@ class VmOrTemplateDecorator < MiqDecorator
         :fileicon => fileicon,
         :tooltip  => type
       },
-      :bottom_right => settings[:show_compliance] ? compliance_image(settings[:policies]) : total_snapshots
+      :bottom_right => show_compliance ? compliance_image(settings[:policies].keys) : total_snapshots
     }
   end
 
