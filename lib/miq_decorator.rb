@@ -25,8 +25,8 @@ class MiqDecorator < SimpleDelegator
 
   def compliance_image(policies)
     {
-      :fileicon => compliance_img(self, policies),
-      :tooltip  => passes_profiles?(get_policies)
+      :fileicon => QuadiconHelper::Decorator.compliance_img(passes_profiles?(policies)),
+      :tooltip  => QuadiconHelper::Decorator.passes_profiles?(get_policies)
     }
   end
 end

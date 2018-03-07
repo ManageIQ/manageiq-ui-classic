@@ -236,7 +236,7 @@ module QuadiconHelper
   end
 
   def img_for_compliance(item)
-    compliance_img(item, session[:policies])
+    QuadiconHelper::Decorator.compliance_img(item.passes_profiles?(session[:policies]))
   end
 
   def img_for_vendor(item)

@@ -8,13 +8,13 @@ module QuadiconHelper::Decorator
       else                "100/exclamationpoint.png"
       end
     end
-  end
 
-  def compliance_img(item, policies = {})
-    case item.passes_profiles?(policies)
-    when true  then '100/check.png'
-    when 'N/A' then '100/na.png'
-    else            '100/x.png'
+    def compliance_img(status)
+      case status
+      when true  then '100/check.png'
+      when 'N/A' then '100/na.png'
+      else            '100/x.png'
+      end
     end
   end
 
