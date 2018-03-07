@@ -244,7 +244,7 @@ module QuadiconHelper
   end
 
   def img_for_auth_status(item)
-    status_img(item)
+    QuadiconHelper::Decorator.status_img(item.authentication_status)
   end
 
   def render_quadicon_text(item, row)
