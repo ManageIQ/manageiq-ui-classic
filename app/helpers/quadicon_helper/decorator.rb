@@ -10,15 +10,6 @@ module QuadiconHelper::Decorator
     end
   end
 
-  def health_state_img(item = nil)
-    case item.health_state
-    when "Valid"    then "svg/healthstate-normal.svg"
-    when "Critical" then "svg/healthstate-critical.svg"
-    when "Warning"  then "100/warning.png"
-    else "svg/healthstate-unknown.svg"
-    end
-  end
-
   def compliance_img(item, policies = {})
     case item.passes_profiles?(policies)
     when true  then '100/check.png'
