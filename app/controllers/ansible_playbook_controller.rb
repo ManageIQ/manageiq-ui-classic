@@ -16,6 +16,12 @@ class AnsiblePlaybookController < ApplicationController
     ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook
   end
 
+  def button
+    if params[:pressed] == "embedded_configuration_script_payload_tag"
+      tag(self.class.model)
+    end
+  end
+
   private
 
   def textual_group_list

@@ -2089,6 +2089,7 @@ Rails.application.routes.draw do
         tagging_edit
       ),
       :post => %w(
+        button
         show_list
         tag_edit_form_field_changed
         tagging_edit
