@@ -176,6 +176,7 @@ module Mixins
       ems = model.model_from_emstype(params[:emstype]).new
       set_ems_record_vars(ems) unless @flash_array
       if ems.valid? && ems.save
+        ems.add_current_user_tags if ems.respond_to?(:add_current_user_tags)
         construct_edit_for_audit(ems)
         AuditEvent.success(build_created_audit(ems, @edit))
         add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => table_name), :name => ems.name})
