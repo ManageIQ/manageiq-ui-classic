@@ -19,8 +19,6 @@ module QuadiconHelper
   # session[:policies]
   # request.parameters[:controller]
 
-  include QuadiconHelper::Decorator
-
   def quadicon_truncate_mode
     @settings.fetch_path(:display, :quad_truncate) || 'm'
   end

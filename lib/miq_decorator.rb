@@ -1,6 +1,4 @@
 class MiqDecorator < SimpleDelegator
-  include QuadiconHelper::Decorator
-
   class << self
     def for(klass)
       decorator = nil
