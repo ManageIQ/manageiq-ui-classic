@@ -1,9 +1,7 @@
 module.exports = {
-  test: /\.(js|jsx)?(\.erb)?$/,
-  exclude: /node_modules/,
+  test: /\.(js|jsx)$/,
   loader: 'babel-loader',
   query: {
     presets: ['react'],
   },
 };
-
