@@ -14,6 +14,10 @@ module AnsibleRepositoryHelper::TextualSummary
     TextualGroup.new(_("Repository Options"), %i(scm_type scm_url scm_branch scm_clean scm_delete_on_update scm_update_on_launch))
   end
 
+  def textual_group_smart_management
+    TextualTags.new(_("Smart Management"), %i(tags))
+  end
+
   def textual_created
     {:label => _("Created On"), :value => format_timezone(@record.created_at)}
   end

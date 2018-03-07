@@ -45,4 +45,20 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
       ]
     ),
   ])
+  button_group('ansible_repositories_policy', [
+                 select(
+                   :ansible_repositories_policy_choice,
+                   'fa fa-shield fa-lg',
+                   t = N_('Policy'),
+                   t,
+                   :items => [
+                     button(
+                       :ansible_repository_tag,
+                       'pficon pficon-edit fa-lg',
+                       N_('Edit Tags for this Ansible Repository'),
+                       N_('Edit Tags'),
+                     ),
+                   ]
+                 )
+               ])
 end
