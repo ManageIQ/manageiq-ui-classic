@@ -20,15 +20,6 @@ class MiqDecorator < SimpleDelegator
   # Call the class methods with identical names if these are not set
   delegate :fonticon, :to => :class
   delegate :fileicon, :to => :class
-
-  protected
-
-  def compliance_image(policies)
-    {
-      :fileicon => QuadiconHelper::Decorator.compliance_img(passes_profiles?(policies)),
-      :tooltip  => QuadiconHelper::Decorator.passes_profiles?(get_policies)
-    }
-  end
 end
 
 module MiqDecorator::Instance
