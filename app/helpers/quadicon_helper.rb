@@ -73,6 +73,10 @@ module QuadiconHelper
     @view.db == "Vm"
   end
 
+  def quadicon_policy_sim?
+    !!@policy_sim
+  end
+
   def quadicon_service_ctrlr_and_vm_view_db?
     quadicon_in_service_controller? && quadicon_view_db_is_vm?
   end
@@ -216,7 +220,7 @@ module QuadiconHelper
   def quadicon_for_item(item)
     quad_settings = if item.kind_of?(VmOrTemplate)
                       {
-                        :show_compliance => quadicon_lastaction_is_policy_sim? || quadicon_policy_sim?,
+                        :show_compliance => @lastaction == "policy_sim" || quadicon_policy_sim?,
                         :policies        => session[:policies]
                       }
                     else

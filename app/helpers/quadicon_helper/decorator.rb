@@ -17,12 +17,4 @@ module QuadiconHelper::Decorator
       end
     end
   end
-
-  def quadicon_lastaction_is_policy_sim?
-    @lastaction == "policy_sim"
-  end
-
-  def quadicon_policy_sim?
-    !!@policy_sim
-  end
 end
