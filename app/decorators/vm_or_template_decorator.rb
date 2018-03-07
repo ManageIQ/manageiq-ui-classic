@@ -26,7 +26,7 @@ class VmOrTemplateDecorator < MiqDecorator
         :fileicon => fileicon,
         :tooltip  => type
       },
-      :bottom_right => show_compliance ? compliance_image(settings[:policies].keys) : total_snapshots
+      :bottom_right => show_compliance ? compliance_image(settings[:policies].keys) : {:text => ERB::Util.h(v_total_snapshots)}
     }
   end
 

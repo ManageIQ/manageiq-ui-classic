@@ -29,12 +29,6 @@ class MiqDecorator < SimpleDelegator
       :tooltip  => passes_profiles?(get_policies)
     }
   end
-
-  def total_snapshots
-    {
-      :text => ERB::Util.h(v_total_snapshots)
-    }
-  end
 end
 
 module MiqDecorator::Instance
