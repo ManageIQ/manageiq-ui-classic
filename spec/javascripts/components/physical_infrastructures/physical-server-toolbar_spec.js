@@ -15,7 +15,7 @@ describe('physical-server-toolbar', function() {
       var bindings = {physicalServerId: 1};
       toolbar = $componentController('physicalServerToolbar', null, bindings);
 
-      sendDataWithRx({type: 'power_on'});
+      sendDataWithRx({type: 'power_on', controller: 'physicalServerToolbarController'});
     }));
 
     it('sets action to "power_on"', function () {
@@ -46,9 +46,9 @@ describe('physical-server-toolbar', function() {
       ManageIQ.gridChecks = [1,2];
       toolbar = $componentController('physicalServerToolbar', null, {});
 
-      sendDataWithRx({type: 'blink_loc_led'});
+      sendDataWithRx({type: 'blink_loc_led', controller: 'physicalServerToolbarController'});
     }));
-    
+
     it('sets action to "blink_loc_led"', function () {
       expect(toolbar.action).toEqual('blink_loc_led');
     });
