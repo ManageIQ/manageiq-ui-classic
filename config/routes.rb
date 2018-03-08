@@ -1314,6 +1314,7 @@ Rails.application.routes.draw do
     :physical_server    =>  {
       :get  =>  %w(
         download_data
+        download_summary_pdf
         perf_top_chart
         protect
         show_list
