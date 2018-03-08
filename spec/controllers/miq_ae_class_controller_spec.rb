@@ -982,7 +982,7 @@ describe MiqAeClassController do
     end
 
     it "Should delete selected instance in the list" do
-      controller.x_node = "aec-#{@ae_class.id}"
+      controller.x_node = "aec-#{ApplicationRecord.compress_id(@ae_class.id)}"
       controller.instance_variable_set(:@_params,
                                        :miq_grid_checks => "aei-#{@instance.id}",
                                        :pressed         => "miq_ae_instance_delete",
@@ -993,7 +993,7 @@ describe MiqAeClassController do
     after(:each) do
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Instance \"#{@instance.name}\": Delete successful")
-      expect(controller.x_node).to eq("aec-#{@ae_class.id}")
+      expect(controller.x_node).to eq("aec-#{ApplicationRecord.compress_id(@ae_class.id)}")
     end
   end
 
@@ -1022,7 +1022,7 @@ describe MiqAeClassController do
     end
 
     it "Should delete selected method in the list" do
-      controller.x_node = "aec-#{@ae_class.id}"
+      controller.x_node = "aec-#{ApplicationRecord.compress_id(@ae_class.id)}"
       controller.instance_variable_set(:@_params,
                                        :miq_grid_checks => "aem-#{@method.id},aem-#{@method2.id}",
                                        :pressed         => "miq_ae_method_delete",
@@ -1033,7 +1033,7 @@ describe MiqAeClassController do
     after(:each) do
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Method \"#{@method.name}\": Delete successful")
-      expect(controller.x_node).to eq("aec-#{@ae_class.id}")
+      expect(controller.x_node).to eq("aec-#{ApplicationRecord.compress_id(@ae_class.id)}")
     end
   end
 end
