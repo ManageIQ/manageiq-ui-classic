@@ -10,7 +10,7 @@ class HostDecorator < MiqDecorator
   def quadicon(_n = nil)
     {
       :top_left     => {:text => vms.size},
-      :top_right    => {:state_icon => normalized_state.downcase},
+      :top_right    => {:fileicon => "svg/currentstate-#{ERB::Util.h(normalized_state.downcase)}.svg"},
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => type
