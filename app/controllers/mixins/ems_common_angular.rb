@@ -497,10 +497,6 @@ module Mixins
       self.class.table_name
     end
 
-    def no_blank(thing)
-      thing.blank? ? nil : thing
-    end
-
     def set_ems_record_vars(ems, mode = nil)
       ems.name                   = params[:name].strip if params[:name]
       ems.provider_region        = params[:provider_region] if params[:provider_region]
