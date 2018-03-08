@@ -2,12 +2,13 @@
 # Joy Cai <joy.sh@linguitronics.com>, 2017. #zanata
 # Milan Zázrivec <mzazrivec@redhat.com>, 2017. #zanata
 # Tony Fu <tfu@redhat.com>, 2017. #zanata
+# Tony Fu <tfu@redhat.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-31 14:32+0100\n"
-"PO-Revision-Date: 2017-12-19 09:35-0500\n"
+"PO-Revision-Date: 2018-02-07 09:57-0500\n"
 "Last-Translator: Tony Fu <tfu@redhat.com>\n"
 "Language-Team: Chinese (Simplified)\n"
 "MIME-Version: 1.0\n"
@@ -2939,7 +2940,7 @@ msgstr "添加新的中间件供应商"
 #: ../app/helpers/application_helper/toolbar/miq_ae_namespace_center.rb:26
 #: ../app/helpers/application_helper/toolbar/miq_ae_domain_center.rb:44
 msgid "Add a New Namespace"
-msgstr "添加新的 PXE 服务器"
+msgstr "添加新的命名空间"
 
 #: ../app/helpers/application_helper/toolbar/ems_networks_center.rb:23
 msgid "Add a New Network Provider"
