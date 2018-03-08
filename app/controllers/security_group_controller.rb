@@ -161,11 +161,6 @@ class SecurityGroupController < ApplicationController
     assert_privileges("security_group_new")
     @security_group = SecurityGroup.new
     @in_a_form = true
-    @ems_choices = {}
-    network_managers.each do |network_manager|
-      @ems_choices[network_manager.name] = network_manager.id
-    end
-
     drop_breadcrumb(:name => _("Add New Security Group"), :url => "/security_group/new")
   end
 

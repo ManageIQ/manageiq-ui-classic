@@ -61,7 +61,6 @@ class ApplicationController < ActionController::Base
   include_concern 'Explorer'
   include_concern 'Filter'
   include_concern 'MiqRequestMethods'
-  include_concern 'Network'
   include_concern 'Performance'
   include_concern 'PolicySupport'
   include_concern 'ReportDownloads'
