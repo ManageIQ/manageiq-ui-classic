@@ -344,11 +344,6 @@ module PxeController::PxeServers
     wimg.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
   end
 
-  # Delete all selected or single displayed PXE Server(s)
-  def deletepxes
-    pxe_button_operation('destroy', 'deletion')
-  end
-
   def pxe_server_set_record_vars(pxe, mode = nil)
     pxe.name = @edit[:new][:name]
     pxe.access_url = @edit[:new][:access_url]
