@@ -5,10 +5,10 @@ module Menu
       def graphql_menu_section
         return nil unless Rails.env.development?
         Menu::Section.new(
-          :graphql,
+          :graphql_explorer,
           N_("GraphQL"),
           'fa fa-lightbulb-o',
-          [Menu::Item.new('graphql', N_('Explorer'), 'product', {:feature => 'product'}, '/graphql_explorer')]
+          [Menu::Item.new('graphql_explorer', N_('Explorer'), 'product', {:feature => 'product'}, '/graphql_explorer')]
         )
       end
 

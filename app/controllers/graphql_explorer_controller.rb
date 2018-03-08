@@ -3,7 +3,7 @@ class GraphQLExplorerController < ApplicationController
 
   after_action :cleanup_action
 
-  menu_section :graphql
+  menu_section :graphql_explorer
 
   def index
     @in_a_form = true
