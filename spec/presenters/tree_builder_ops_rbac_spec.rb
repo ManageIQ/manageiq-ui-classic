@@ -46,7 +46,7 @@ describe TreeBuilderOpsRbac do
 
   describe "#x_get_tree_custom_kids" do
     let(:group) { FactoryGirl.create(:miq_group) }
-    let(:user) { FactoryGirl.create(:user, :miq_groups => [group]) }
+    let(:user) { FactoryGirl.create(:user, :miq_groups => [group, other_group]) }
     let(:other_group) { FactoryGirl.create(:miq_group) }
     let(:other_user) { FactoryGirl.create(:user, :miq_groups => [other_group]) }
 
@@ -60,7 +60,7 @@ describe TreeBuilderOpsRbac do
       expect(objects).to match_array(expected_objects)
     end
 
-    it "is listing all users" do
+    it "is listing all users from current user's groups" do
       x_get_tree_custom_kids_for_and_expect_objects("u", [user, other_user])
     end
 
@@ -69,9 +69,10 @@ describe TreeBuilderOpsRbac do
     end
 
     context "User with self service user" do
-      before :each do
-        allow_any_instance_of(User).to receive_messages(:self_service? => true)
-      end
+      let(:self_service_role) { FactoryGirl.create(:miq_user_role, :settings => {:restrictions => {:vms => :user}}) }
+      let(:group)             { FactoryGirl.create(:miq_group, :miq_user_role => self_service_role) }
+      let(:other_group)       { FactoryGirl.create(:miq_group, :miq_user_role => self_service_role) }
+      let(:user)              { FactoryGirl.create(:user, :miq_groups => [group, other_group], :role => 'user_self_service') }
 
       it "is listing only current user" do
         x_get_tree_custom_kids_for_and_expect_objects("u", [user])
