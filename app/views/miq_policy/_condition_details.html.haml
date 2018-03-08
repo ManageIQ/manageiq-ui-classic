@@ -89,7 +89,6 @@
                   "data-miq_check_max_length" => true,
                   "data-miq_observe"          => observe_with_interval)
           - else
-            %h3= _("Notes")
             - if @condition.notes.blank?
               = render :partial => 'layouts/info_msg', :locals => {:message => _("No notes have been entered.")}
             - else
