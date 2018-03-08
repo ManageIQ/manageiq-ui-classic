@@ -21,7 +21,16 @@ namespace :update do
     end
   end
 
-  task :actual_ui => ['update:clean', 'update:bower', 'update:yarn', 'webpack:compile']
+  task :debug_engines do
+    print "\n"
+    puts "JS plugins:"
+    asset_engines.each_pair do |k, v|
+      puts "  #{k}: #{v}"
+    end
+    print "\n"
+  end
+
+  task :actual_ui => ['update:clean', 'update:bower', 'update:yarn', 'webpack:compile', 'update:debug_engines']
 
   task :ui do
     # when running update:ui from ui-classic, asset_engines won't see the other engines
