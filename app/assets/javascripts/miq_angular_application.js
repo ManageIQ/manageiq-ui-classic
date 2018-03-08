@@ -37,6 +37,12 @@ function miqHttpInject(angular_app) {
     $httpProvider.interceptors.push(['$q', function($q) {
       return {
         responseError: function(err) {
+          if (err.status === 401) {
+            // Unauthorized - always redirect to dashboard#login
+            redirectLogin(__('$http session timed out, redirecting to the login page'));
+            return $q.reject(err);
+          }
+
           sendDataWithRx({
             serverError: err,
             source: '$http',

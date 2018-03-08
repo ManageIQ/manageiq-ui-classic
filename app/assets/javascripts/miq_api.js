@@ -199,9 +199,7 @@
 
       if ((response.status === 401) && !options.skipLoginRedirect) {
         // Unauthorized - always redirect to dashboard#login
-        add_flash(__('API logged out, redirecting to the login page'), 'warning');
-        window.document.location.href = '/dashboard/login?timeout=true';
-
+        redirectLogin(__('API logged out, redirecting to the login page'));
         return ret;
       }
 
