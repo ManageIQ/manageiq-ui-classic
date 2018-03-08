@@ -591,14 +591,14 @@ describe OpsController do
       expect(controller.instance_variable_get(:@users_count)).to eq(1)
     end
 
-    it "displays the access object count for the current tenant" do
+    it "displays the access object count for the current user" do
       login_as @u2a
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
       allow(controller).to receive(:replace_right_cell)
       post :tree_select, :params => { :id => 'root', :format => :js }
-      expect(controller.instance_variable_get(:@groups_count)).to eq(2)
+      expect(controller.instance_variable_get(:@groups_count)).to eq(1)
       expect(controller.instance_variable_get(:@tenants_count)).to eq(1)
-      expect(controller.instance_variable_get(:@users_count)).to eq(5)
+      expect(controller.instance_variable_get(:@users_count)).to eq(2)
     end
   end
 
