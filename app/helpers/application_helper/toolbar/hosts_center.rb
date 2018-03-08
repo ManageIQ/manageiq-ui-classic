@@ -40,8 +40,9 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Register Nodes'),
           t,
-          :url   => "/register_nodes",
-          :klass => ApplicationHelper::Button::HostRegisterNodes),
+          :url     => "/register_nodes",
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
+          :options => {:feature => :add_host}),
         button(
           :host_manageable,
           'pficon pficon-edit fa-lg',
@@ -51,7 +52,8 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :confirm      => N_("Set selected items to manageable state?"),
           :onwhen       => "1+",
-          :klass        => ApplicationHelper::Button::HostManageable),
+          :klass        => ApplicationHelper::Button::GenericFeatureButton,
+          :options      => {:feature => :host_manageable}),
         button(
           :host_introspect,
           'pficon pficon-edit fa-lg',
@@ -61,7 +63,8 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :confirm      => N_("Introspect selected items?"),
           :onwhen       => "1+",
-          :klass        => ApplicationHelper::Button::HostIntrospectProvide),
+          :klass        => ApplicationHelper::Button::GenericFeatureButton,
+          :options      => {:feature => :host_introspect}),
         button(
           :host_provide,
           'pficon pficon-edit fa-lg',
@@ -71,7 +74,8 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :confirm      => N_("Provide selected items?"),
           :onwhen       => "1+",
-          :klass        => ApplicationHelper::Button::HostIntrospectProvide),
+          :klass        => ApplicationHelper::Button::GenericFeatureButton,
+          :options      => {:feature => :host_provide}),
         button(
           :host_discover,
           'fa fa-search fa-lg',
