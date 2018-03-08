@@ -152,7 +152,7 @@ class FloatingIpController < ApplicationController
   def networks_by_ems
     assert_privileges("floating_ip_new")
     networks = []
-    available_networks = CloudNetwork.where(:ems_id => params[:id], :external_facing => true).find_each
+    available_networks = Rbac::Filterer.filtered(CloudNetwork.where(:ems_id => params[:id], :external_facing => true))
     available_networks.each do |network|
       networks << { 'name' => network.name, 'id' => network.id }
     end
