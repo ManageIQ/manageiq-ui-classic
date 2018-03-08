@@ -17,7 +17,7 @@ describe ApplicationHelper do
     end
     let!(:admin_user)             { FactoryGirl.create(:user_admin) }
     let!(:child_user)             { FactoryGirl.create(:user, :miq_groups => [child_group]) }
-    let!(:grand_child_user)       { FactoryGirl.create(:user, :miq_groups => [grand_child_group]) }
+    let!(:grand_child_user)       { FactoryGirl.create(:user, :miq_groups => [grand_child_group, great_grand_child_group]) }
     let!(:great_grand_child_user) { FactoryGirl.create(:user, :miq_groups => [great_grand_child_group]) }
 
     subject { helper.ownership_user_options }
@@ -30,11 +30,10 @@ describe ApplicationHelper do
     end
 
     context 'a tenant user' do
-      it 'lists users in that tenant' do
+      it 'lists users in his group' do
         allow(User).to receive(:server_timezone).and_return('UTC')
         allow(User).to receive(:current_user).and_return(grand_child_user)
-
-        ids = [great_grand_child_tenant, grand_child_tenant].collect(&:user_ids).flatten
+        ids = grand_child_user.miq_groups.collect(&:user_ids).flatten.uniq
         expect(subject.values(&:id).map(&:to_i)).to match_array(ids)
       end
     end
