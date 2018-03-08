@@ -14,7 +14,7 @@ class MiqTemplateDecorator < MiqDecorator
         :tooltip  => os_image_name.humanize.downcase
       },
       :top_right    => {
-        :state_icon => normalized_state.downcase,
+        :fileicon   => "svg/currentstate-#{ERB::Util.h(normalized_state.downcase)}.svg",
         :tooltip    => normalized_state
       },
       :bottom_left  => {

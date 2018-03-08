@@ -528,13 +528,6 @@ module QuadiconHelper
     output.collect(&:html_safe).join('').html_safe
   end
 
-  def currentstate_icon(state)
-    path = "svg/currentstate-#{h(state)}.svg"
-    content_tag(:div, :class => "flobj b72") do
-      content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{encodable_image_source(path)}')")
-    end
-  end
-
   # Renders a quadicon for hosts
   #
   def render_host_quadicon(item, options)
@@ -609,8 +602,6 @@ module QuadiconHelper
     quadicon.map do |key, value|
       if value.try(:[], :text)
         render_quad_text(value[:text], POSITION_MAPPER[key])
-      elsif value.try(:[], :state_icon)
-        currentstate_icon(value[:state_icon])
       elsif value.try(:[], :fileicon)
         render_quad_image(value.try(:[], :fileicon), POSITION_MAPPER[key], value.try(:type))
       else
