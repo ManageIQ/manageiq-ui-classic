@@ -144,7 +144,7 @@ class ProviderForemanController < ApplicationController
     when "cp", "cs" then ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem
     when "xx"       then
       case nodes.second
-      when "fr" then ManageIQ::Providers::Foreman::ConfigurationManager
+      when "fr" then ManageIQ::Providers::ConfigurationManager
       when "csf" then ConfiguredSystem
       end
     else
