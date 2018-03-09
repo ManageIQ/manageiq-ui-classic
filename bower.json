@@ -35,7 +35,7 @@
     "bootstrap-filestyle": "https://github.com/markusslima/bootstrap-filestyle.git#30e9f0b996ab811d468bf0211a0b212cc9cf30fe",
     "bootstrap-hover-dropdown": "https://github.com/CWSpear/twitter-bootstrap-hover-dropdown.git#df0359b25cc8520b6ee6f1b56daf8e18504f8165",
     "bootstrap-sass": "https://github.com/twbs/bootstrap-sass.git#6620202b137a877dc614dd87bf7f81f895af8024",
-    "bootstrap-select": "https://github.com/silviomoreto/bootstrap-select.git#a1b3d496e7ea13054451ddaa941fa217898b8ce4",
+    "bootstrap-select": "https://github.com/silviomoreto/bootstrap-select.git#4eb040b7097fd8eab8184e54efe973ce8468e9b2",
     "bootstrap-switch": "https://github.com/nostalgiaz/bootstrap-switch.git#02721b769a6ac83eabe733fd9f08a2ddc7320756",
     "bootstrap-touchspin": "https://github.com/istvan-ujjmeszaros/bootstrap-touchspin.git#b87fa994778f11285975b5013c761b0376fe6f21",
     "c3": "https://github.com/masayuki0812/c3.git#69f975cfcf54626a36566a8b8236f63aec001951",
@@ -97,7 +97,7 @@
     "bootstrap-filestyle": "30e9f0b996ab811d468bf0211a0b212cc9cf30fe",
     "bootstrap-hover-dropdown": "df0359b25cc8520b6ee6f1b56daf8e18504f8165",
     "bootstrap-sass": "6620202b137a877dc614dd87bf7f81f895af8024",
-    "bootstrap-select": "a1b3d496e7ea13054451ddaa941fa217898b8ce4",
+    "bootstrap-select": "4eb040b7097fd8eab8184e54efe973ce8468e9b2",
     "bootstrap-switch": "02721b769a6ac83eabe733fd9f08a2ddc7320756",
     "bootstrap-touchspin": "b87fa994778f11285975b5013c761b0376fe6f21",
     "c3": "69f975cfcf54626a36566a8b8236f63aec001951",
@@ -141,7 +141,7 @@
     "xml_display": "ed5fb8e5dc10f4d66e05c6c27a50defff14672e4"
   },
   "bowerLocker": {
-    "lastUpdated": "2018-02-21T18:17:09.795Z",
+    "lastUpdated": "2018-03-09T10:19:48.720Z",
     "lockedVersions": {
       "angular": "1.6.6",
       "angular-animate": "1.6.6",
@@ -161,7 +161,7 @@
       "bootstrap-filestyle": "1.2.3",
       "bootstrap-hover-dropdown": "2.2.1",
       "bootstrap-sass": "3.3.7",
-      "bootstrap-select": "1.10.0",
+      "bootstrap-select": "1.12.2",
       "bootstrap-switch": "3.3.4",
       "bootstrap-touchspin": "3.1.2",
       "c3": "0.4.18",
