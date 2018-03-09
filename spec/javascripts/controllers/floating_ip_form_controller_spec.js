@@ -12,11 +12,6 @@ describe('floatingIpFormController', function() {
     spyOn(miqService, 'sparkleOff');
 
     $scope = $rootScope.$new();
-    $scope.vm = {};
-    $scope.vm.floatingIpModel = {
-      name: 'floatingIpName',
-      description: 'floatingIpDescription',
-    };
 
     vm = _$controller_('floatingIpFormController as vm', {
       $scope: $scope,
@@ -34,7 +29,7 @@ describe('floatingIpFormController', function() {
       setTimeout(function() {
         expect(miqService.miqAjaxButton).toHaveBeenCalledWith(
           '/floating_ip/update/1000000000001?button=save',
-          $scope.vm.floatingIpModel,
+          jasmine.objectContaining({ address: $scope.vm.floatingIpModel.address }),
           { complete: false }
         );
         done();
