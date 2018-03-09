@@ -962,6 +962,9 @@ class ApplicationController < ActionController::Base
     end
 
     view.headers.each_with_index do |h, i|
+      col = view.col_order[i]
+      next if view.column_is_hidden?(col)
+
       align = [:fixnum, :integer, :Fixnum, :float].include?(column_type(view.db, view.col_order[i])) ? 'right' : 'left'
 
       root[:head] << {:text    => h,
@@ -1020,6 +1023,8 @@ class ApplicationController < ActionController::Base
       end
 
       view.col_order.each_with_index do |col, col_idx|
+        next if view.column_is_hidden?(col)
+
         celltext = nil
 
         case view.col_order[col_idx]
