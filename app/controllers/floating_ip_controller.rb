@@ -48,7 +48,7 @@ class FloatingIpController < ApplicationController
       javascript_redirect :action    => 'show_list',
                           :flash_msg => _("Add of new Floating IP was cancelled by the user")
     when "add"
-      options = filter_params
+      options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
 
       if FloatingIp.class_by_ems(ems).supports_create?
@@ -147,7 +147,7 @@ class FloatingIpController < ApplicationController
 
     when "save"
       if @floating_ip.supports_update?
-        options = filter_params
+        options = form_params
         options.delete(:ems_id)
         task_id = @floating_ip.update_floating_ip_queue(session[:userid], options)
 
@@ -196,7 +196,7 @@ class FloatingIpController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def filter_params
+  def form_params
     options = {}
     options[:ems_id] = params[:ems_id] if params[:ems_id] && params[:ems_id] != 'new'
     options[:address] = params[:address] if params[:address]
