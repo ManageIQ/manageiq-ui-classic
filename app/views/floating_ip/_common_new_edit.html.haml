@@ -30,11 +30,11 @@
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
       .col-md-8{'ng-if' => "!vm.newRecord"}
-        %input.form-control{'type'         => 'text',
-                            'name'         => 'ems_name',
-                            'ng-disabled'  => true,
-                            'ng-maxlength' => 128,
-                            'ng-model'     => 'vm.floatingIpModel.ext_management_system.name'}
+        %input.form-control{'type'      => 'text',
+                            'name'      => 'ems_name',
+                            'disabled'  => true,
+                            'maxlength' => 128,
+                            'ng-model'  => 'vm.floatingIpModel.ext_management_system.name'}
 
     .form-group{'ng-if' => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label
@@ -51,11 +51,11 @@
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
       .col-md-8{'ng-if' => "!vm.newRecord"}
-        %input.form-control{'type'         => 'text',
-                            'name'         => 'cloud_network_name',
-                            'ng-disabled'  => true,
-                            'ng-maxlength' => 128,
-                            'ng-model'     => 'vm.floatingIpModel.cloud_network.name'}
+        %input.form-control{'type'      => 'text',
+                            'name'      => 'cloud_network_name',
+                            'disabled'  => true,
+                            'maxlength' => 128,
+                            'ng-model'  => 'vm.floatingIpModel.cloud_network.name'}
 
     .form-group{'ng-if' => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label
@@ -72,11 +72,11 @@
         %span.help-block{'ng-show' => "angularForm.cloud_tenant_id.$error.required"}
           = _("Required")
       .col-md-8{'ng-if' => "!vm.newRecord"}
-        %input.form-control{'type'         => 'text',
-                            'name'         => 'cloud_tenant_name',
-                            'ng-disabled'  => true,
-                            'ng-maxlength' => 128,
-                            'ng-model'     => 'vm.floatingIpModel.cloud_tenant.name'}
+        %input.form-control{'type'      => 'text',
+                            'name'      => 'cloud_tenant_name',
+                            'disabled'  => true,
+                            'maxlength' => 128,
+                            'ng-model'  => 'vm.floatingIpModel.cloud_tenant.name'}
 
   %h3
     = _('Association Information')
@@ -86,30 +86,30 @@
       %label.col-md-2.control-label
         = _('Floating IP Address (optional)')
       .col-md-8
-        %input.form-control{'type'         => 'text',
-                            'name'         => 'address',
-                            'ng-disabled'  => '!vm.newRecord',
-                            'ng-maxlength' => 40,
-                            'ng-model'     => 'vm.floatingIpModel.address'}
+        %input.form-control{'type'        => 'text',
+                            'name'        => 'address',
+                            'ng-disabled' => '!vm.newRecord',
+                            'maxlength'   => 40,
+                            'ng-model'    => 'vm.floatingIpModel.address'}
 
     .form-group
       %label.col-md-2.control-label
         = _('Fixed IP Address')
       .col-md-8
-        %input.form-control{'type'          => 'text',
-                            'name'         => 'fixed_ip_address',
-                            'ng-disabled'  => '!vm.newRecord',
-                            'ng-maxlength' => 40,
-                            'ng-model'     => 'vm.floatingIpModel.fixed_ip_address'}
+        %input.form-control{'type'        => 'text',
+                            'name'        => 'fixed_ip_address',
+                            'ng-disabled' => '!vm.newRecord',
+                            'maxlength'   => 40,
+                            'ng-model'    => 'vm.floatingIpModel.fixed_ip_address'}
 
     .form-group
       %label.col-md-2.control-label
         = _('Associated Port ID (blank to disassociate)')
       .col-md-8
-        %input.form-control{'type'         => 'text',
-                            'name'         => 'network_port_ems_ref',
-                            'ng-maxlength' => 40,
-                            'ng-model'     => 'vm.floatingIpModel.network_port.ems_ref'}
+        %input.form-control{'type'      => 'text',
+                            'name'      => 'network_port_ems_ref',
+                            'maxlength' => 40,
+                            'ng-model'  => 'vm.floatingIpModel.network_port.ems_ref'}
 
   = render :partial => "layouts/angular/generic_form_buttons"
 
