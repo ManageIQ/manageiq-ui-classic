@@ -8,11 +8,13 @@ module.exports = {
   setupFiles: ['./config/jest.setup.js'],
   testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.(jsx?|tsx?)$',
   transform: {
-    '^.+\\.js$': 'babel-jest',
+    '^.+\\.jsx?$': 'babel-jest',
     '.(ts|tsx)': 'ts-jest'
   },
   moduleFileExtensions: [
     'ts',
-    'js'
+    'tsx',
+    'js',
+    'jsx'
   ],
 };
