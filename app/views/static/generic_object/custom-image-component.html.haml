@@ -19,7 +19,7 @@
                   :title     => t,
                   :alt       => t,
                   :enabled   => "true",
-                  'on-click' => "vm.uploadClicked(angularForm)"}
+                  'on-click' => "vm.uploadClicked()"}
 .form-group{'ng-if' => "vm.pictureUrlPath !== '' && !vm.changeImage && !vm.pictureRemove"}
   %label.col-md-2.control-label{"for" => "custom_image"}
     = _("Current Custom Image File")
