@@ -19,7 +19,6 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$scope', 'floating
       'cloud_network_id',
       'cloud_tenant_id',
       'ems_id',
-      'fixed_ip_address',
       'network_port.ems_ref',
     ];
 

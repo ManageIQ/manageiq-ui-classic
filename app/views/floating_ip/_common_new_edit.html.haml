@@ -103,7 +103,7 @@
       .col-md-8
         %input.form-control{'type'        => 'text',
                             'name'        => 'fixed_ip_address',
-                            'ng-disabled' => '! vm.newRecord',
+                            'disabled'    => true,
                             'maxlength'   => 40,
                             'ng-model'    => 'vm.floatingIpModel.fixed_ip_address'}
 
