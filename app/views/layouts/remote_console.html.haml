@@ -5,6 +5,7 @@
       = _('%{product_name} HTML5 Remote Console') % {:product_name => Vmdb::Appliance.PRODUCT_NAME}
     = favicon_link_tag
     = stylesheet_link_tag 'application'
+    = stylesheet_link_tag '/custom.css'
     -# Load the required JS based on the console type
     = javascript_include_tag 'jquery', "remote_consoles/#{@console[:type]}", 'remote_console'
   %body
