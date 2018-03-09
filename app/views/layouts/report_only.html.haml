@@ -5,6 +5,7 @@
       = "%{product}: %{title}" % {:product => Vmdb::Appliance.PRODUCT_NAME, :title => @report.title}
     = favicon_link_tag
     = stylesheet_link_tag 'application'
+    = stylesheet_link_tag '/custom.css'
     = javascript_include_tag 'application'
     - if Rails.env.development?
       = javascript_include_tag 'miq_debug'
