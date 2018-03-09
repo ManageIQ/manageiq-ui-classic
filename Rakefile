@@ -50,6 +50,8 @@ class StaticOrHaml
     scope.controller = ActionController::Base.new
     scope.view_paths << File.expand_path("../app/views", __FILE__)
 
+    scope.extend(ApplicationHelper)
+
     compiled = Haml::Engine.new(raw).render(scope)
 
     [200, {"Content-Type" => "text/html"}, [compiled]]
