@@ -13,10 +13,10 @@
     = _('Network Management Provider')
 
   .form-horizontal
-    .form-group
+    .form-group{'ng-class' => '{"has-error": angularForm.ems_id.$invalid}'}
       %label.col-md-2.control-label
         = _('Network Manager')
-      .col-md-8{'ng-class' => "{'has-error': angularForm.ems_id.$invalid}", 'ng-if' => "vm.newRecord"}
+      .col-md-8{'ng-if' => 'vm.newRecord'}
         %select{'name'                        => 'ems_id',
                 'ng-model'                    => 'vm.floatingIpModel.ems_id',
                 'ng-change'                   => 'vm.filterNetworkManagerChanged(vm.floatingIpModel.ems_id)',
@@ -29,17 +29,19 @@
             = "<#{_('Choose')}>"
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
-      .col-md-8{'ng-if' => "!vm.newRecord"}
+
+      .col-md-8{'ng-if' => '! vm.newRecord'}
         %input.form-control{'type'      => 'text',
                             'name'      => 'ems_name',
                             'disabled'  => true,
                             'maxlength' => 128,
                             'ng-model'  => 'vm.floatingIpModel.ext_management_system.name'}
 
-    .form-group{'ng-if' => "vm.floatingIpModel.ems_id"}
+    .form-group{'ng-class' => '{"has-error": angularForm.cloud_network_id.$invalid}',
+                'ng-if'    => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label
         = _('External Network')
-      .col-md-8{'ng-class' => "{'has-error': angularForm.ems_id.$invalid}", 'ng-if' => "vm.newRecord"}
+      .col-md-8{'ng-if' => 'vm.newRecord'}
         %select{'name'                        => 'cloud_network_id',
                 'ng-model'                    => 'vm.floatingIpModel.cloud_network_id',
                 'ng-options'                  => 'network.id as network.name for network in vm.available_networks',
@@ -48,19 +50,21 @@
                 'selectpicker-for-select-tag' => ''}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
-        %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
+        %span.help-block{"ng-show" => "angularForm.cloud_network_id.$error.required"}
           = _("Required")
-      .col-md-8{'ng-if' => "!vm.newRecord"}
+
+      .col-md-8{'ng-if' => '! vm.newRecord'}
         %input.form-control{'type'      => 'text',
                             'name'      => 'cloud_network_name',
                             'disabled'  => true,
                             'maxlength' => 128,
                             'ng-model'  => 'vm.floatingIpModel.cloud_network.name'}
 
-    .form-group{'ng-if' => "vm.floatingIpModel.ems_id"}
+    .form-group{'ng-class' => '{"has-error": angularForm.cloud_tenant_id.$invalid}',
+                'ng-if'    => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label
         = _('Cloud Tenant Placement')
-      .col-md-8{'ng-class' => "{'has-error': angularForm.cloud_tenant_id.$invalid}", 'ng-if' => "vm.newRecord"}
+      .col-md-8{'ng-if' => 'vm.newRecord'}
         %select{'name'                        => 'cloud_tenant_id',
                 'ng-model'                    => 'vm.floatingIpModel.cloud_tenant_id',
                 'ng-options'                  => 'tenant.id as tenant.name for tenant in vm.available_tenants',
@@ -71,7 +75,8 @@
             = "<#{_('Choose')}>"
         %span.help-block{'ng-show' => "angularForm.cloud_tenant_id.$error.required"}
           = _("Required")
-      .col-md-8{'ng-if' => "!vm.newRecord"}
+
+      .col-md-8{'ng-if' => '! vm.newRecord'}
         %input.form-control{'type'      => 'text',
                             'name'      => 'cloud_tenant_name',
                             'disabled'  => true,
@@ -82,13 +87,13 @@
     = _('Association Information')
 
   .form-horizontal
-    .form-group{'ng-if' => "vm.newRecord"}
+    .form-group{'ng-if' => 'vm.newRecord'}
       %label.col-md-2.control-label
         = _('Floating IP Address (optional)')
       .col-md-8
         %input.form-control{'type'        => 'text',
                             'name'        => 'address',
-                            'ng-disabled' => '!vm.newRecord',
+                            'ng-disabled' => '! vm.newRecord',
                             'maxlength'   => 40,
                             'ng-model'    => 'vm.floatingIpModel.address'}
 
@@ -98,7 +103,7 @@
       .col-md-8
         %input.form-control{'type'        => 'text',
                             'name'        => 'fixed_ip_address',
-                            'ng-disabled' => '!vm.newRecord',
+                            'ng-disabled' => '! vm.newRecord',
                             'maxlength'   => 40,
                             'ng-model'    => 'vm.floatingIpModel.fixed_ip_address'}
 
