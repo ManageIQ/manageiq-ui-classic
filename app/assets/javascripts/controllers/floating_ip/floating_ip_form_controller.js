@@ -52,7 +52,7 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['floatingIpFormId',
   vm.resetClicked = function() {
     vm.floatingIpModel = angular.copy( vm.modelCopy );
     vm.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", "All changes have been reset");
+    miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   vm.filterNetworkManagerChanged = function(id) {
