@@ -84,6 +84,7 @@ if (! window.ManageIQ) {
       debounced: {}, // running debounces
       debounce_counter: 1,
     },
-    redux: null // Redux API
+    redux: null, // Redux API
+    component: null // Component API
   };
 }

@@ -1,5 +1,4 @@
 import { Unsubscribe } from 'redux';
-
 import { AppState, AppReducer, Action, AppReducerHash } from './redux-typings';
 
 const reducers: Set<AppReducer> = new Set();
@@ -18,7 +17,7 @@ const reducers: Set<AppReducer> = new Set();
 export function rootReducer(state: AppState, action: Action): AppState {
   let newState = state;
 
-  reducers.forEach((appReducer) => {
+  reducers.forEach(appReducer => {
     newState = appReducer(newState, action);
   });
 
@@ -38,15 +37,6 @@ export function addReducer(appReducer: AppReducer): Unsubscribe {
   return () => {
     reducers.delete(appReducer);
   };
-}
-
-/**
- * Remove all registered application reducers.
- *
- * *For testing purposes only.*
- */
-export function clearReducers(): void {
-  reducers.clear();
 }
 
 /**
@@ -71,4 +61,11 @@ export function applyReducerHash(reducerHash: AppReducerHash, state: AppState, a
   }
 
   return newState;
+}
+
+/**
+ * Test helper: remove all registered application reducers.
+ */
+export function clearReducers(): void {
+  reducers.clear();
 }

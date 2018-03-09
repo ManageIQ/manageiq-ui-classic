@@ -19,7 +19,6 @@ src_files:
 - __spec__/helpers/fixtures-fix.js
 - packs/vendor.js
 - packs/manageiq-ui-classic/application-common.js
-- packs/manageiq-ui-classic/miq-redux-common.js
 
 # stylesheets
 #
@@ -132,5 +131,7 @@ boot_files:
 # show_console_log
 #
 # Tell PhantomJS runner to enable console.log output from your specs.
-
+#
+# EXAMPLE
+#
 # show_console_log: true
