@@ -1194,6 +1194,8 @@ module OpsController::Settings::Common
     when "z"
       @servers = []
       @record = @zone = @selected_zone = Zone.find(nodes.last)
+      @ntp_servers = @selected_zone&.settings_for_resource&.ntp ?
+        @selected_zone.settings_for_resource.ntp.to_h[:server].join(", ") : ''
       @right_cell_text = my_zone_name == @selected_zone.name ?
           _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
                                                           :model => ui_lookup(:model => @selected_zone.class.to_s)} :
