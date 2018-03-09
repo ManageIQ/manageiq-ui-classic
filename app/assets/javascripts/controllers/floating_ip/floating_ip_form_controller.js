@@ -21,7 +21,6 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$scope', 'floating
       'ems_id',
       'fixed_ip_address',
       'network_port.ems_ref',
-      'router_id',
     ];
 
     miqService.sparkleOn();

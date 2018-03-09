@@ -205,7 +205,6 @@ class FloatingIpController < ApplicationController
     if params[:network_port] && params[:network_port][:ems_ref]
       options[:network_port_ems_ref] = params[:network_port][:ems_ref]
     end
-    options[:router_id] = params[:router_id] if params[:router_id]
     options
   end
 
