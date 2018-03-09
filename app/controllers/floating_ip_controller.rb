@@ -128,7 +128,6 @@ class FloatingIpController < ApplicationController
     drop_breadcrumb(
       :name => _("Associate Floating IP \"%{address}\"") % { :address => @floating_ip.address },
       :url  => "/floating_ip/edit/#{@floating_ip.id}")
-    render :action => 'new_edit'
   end
 
   def new
@@ -136,7 +135,6 @@ class FloatingIpController < ApplicationController
     @floating_ip = FloatingIp.new
     @in_a_form = true
     drop_breadcrumb(:name => _("Add New Floating IP"), :url => "/floating_ip/new")
-    render :action => 'new_edit'
   end
 
   def update
