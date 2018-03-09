@@ -1797,7 +1797,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def field_column_names
-    %w(aetype collect datatype default_value display_name name on_entry on_error on_exit substitute)
+    %w(aetype collect datatype default_value display_name name on_entry on_error on_exit max_retries substitute)
   end
 
   def value_column_names

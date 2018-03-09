@@ -46,6 +46,7 @@
       %th= _('On Entry')
       %th= _('On Exit')
       %th= _('On Error')
+      %th= _('Max Retries')
       %th= _('Collect')
   %tbody
     - @edit[:new][:ae_values].each_with_index do |flds, i|
@@ -93,6 +94,12 @@
           - default_value = @edit[:new][:ae_fields][i]["on_error"]
           = text_field_tag("#{prefix}inst_on_error_#{i}",
             flds["on_error"].blank? ? '' : flds["on_error"],
+            :placeholder       => default_value,
+            "data-miq_observe" => obs)
+        %td
+          - default_value = @edit[:new][:ae_fields][i]["max_retries"]
+          = text_field_tag("#{prefix}inst_max_retries_#{i}",
+            flds["max_retries"].blank? ? '' : flds["max_retries"],
             :placeholder       => default_value,
             "data-miq_observe" => obs)
         %td
