@@ -5,6 +5,7 @@
       = _('%{product_name} HTML5 Remote Console') % {:product_name => I18n.t('product.name')}
     = favicon_link_tag
     = stylesheet_link_tag 'application'
+    = stylesheet_link_tag '/custom.css'
     -# Load the required JS based on the console type
     = javascript_include_tag 'jquery/dist/jquery.js', "remote_consoles/#{@console[:type]}", 'remote_console'
   %body
