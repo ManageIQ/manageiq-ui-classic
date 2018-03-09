@@ -1728,3 +1728,8 @@ var fontIconChar = _.memoize(function(klass) {
   }
   return {font: font, char: char};
 });
+
+function redirectLogin(msg) {
+  add_flash(msg, 'warning');
+  window.document.location.href = '/dashboard/login?timeout=true';
+}
