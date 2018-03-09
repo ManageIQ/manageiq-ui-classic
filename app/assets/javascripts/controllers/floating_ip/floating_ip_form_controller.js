@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('floatingIpFormController', ['floatingIpFormId', 'miqService', 'API', function(floatingIpFormId, miqService, API) {
+ManageIQ.angular.app.controller('floatingIpFormController', ['$scope', 'floatingIpFormId', 'miqService', 'API', function($scope, floatingIpFormId, miqService, API) {
   var vm = this;
 
   var init = function() {
@@ -59,7 +59,7 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['floatingIpFormId',
 
   vm.resetClicked = function() {
     vm.floatingIpModel = angular.copy( vm.modelCopy );
-    vm.angularForm.$setPristine(true);
+    $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
