@@ -47,7 +47,17 @@ export type ReduxStore = Store<AppState>;
  * `ManageIQ.redux` API.
  */
 export interface ReduxApi {
+
   store: ReduxStore;
-  addReducer(appReducer: AppReducer): Unsubscribe;
-  applyReducerHash(reducerHash: AppReducerHash, state: AppState, action: Action): AppState;
+
+  addReducer(
+    appReducer: AppReducer
+  ): Unsubscribe;
+
+  applyReducerHash(
+    reducerHash: AppReducerHash,
+    state: AppState,
+    action: Action
+  ): AppState;
+
 }

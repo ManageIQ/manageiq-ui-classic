@@ -1,9 +1,8 @@
 import { IModule } from 'angular';
+import { AppState } from './redux-typings';
 import { devToolsEnhancer, EnhancerOptions } from 'redux-devtools-extension/logOnlyInProduction';
-
 import { rootReducer } from './reducer';
 import { middlewares } from './middleware';
-import { AppState } from './redux-typings';
 
 const devToolsOptions: EnhancerOptions = {};
 
