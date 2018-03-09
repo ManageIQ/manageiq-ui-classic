@@ -132,5 +132,7 @@ boot_files:
 # show_console_log
 #
 # Tell PhantomJS runner to enable console.log output from your specs.
-
+#
+# EXAMPLE
+#
 # show_console_log: true
