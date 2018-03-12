@@ -10,7 +10,7 @@ module ReportController::Menus
       @rpt_menu = copy_array(@edit[:new])
     elsif @menu_lastaction == "default"
     else
-      populate_reports_menu("reports", "menu")
+      populate_reports_menu(true)
       tree = build_menu_roles_tree
       @rpt_menu = tree.rpt_menu
     end
@@ -211,7 +211,7 @@ module ReportController::Menus
       get_tree_data
       replace_right_cell(:menu_edit_action => "menu_reset")
     elsif params[:button] == "default"
-      populate_reports_menu("reports", "default")
+      @sb[:rpt_menu]   = default_reports_menu
       @menu_roles_tree = build_menu_roles_tree
       @edit[:new]      = copy_array(@sb[:rpt_menu])
       @menu_lastaction = "default"
@@ -265,7 +265,7 @@ module ReportController::Menus
     current_group_id = current_user.current_group.try(:id).to_i
     id = session[:node_selected].split('__')
     @selected = id[1].split(':')
-    all = MiqReport.for_user(current_user).sort_by { |r| [r.rpt_type, r.filename.to_s, r.name] }
+    all = MiqReport.all.sort_by { |r| [r.rpt_type, r.filename.to_s, r.name] }
     @all_reports = []
     all.each do |r|
       next if r.template_type != "report" && !r.template_type.blank?

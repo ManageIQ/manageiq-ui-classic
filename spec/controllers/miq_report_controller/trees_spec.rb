@@ -194,7 +194,7 @@ describe ReportController do
       end
 
       it 'renders form to edit Role in Roles tree' do
-        FactoryGirl.create(:miq_report)
+        FactoryGirl.create(:miq_report, :name => "VM 1", :rpt_group => "Configuration Management - Folder Foo", :rpt_type => "Default")
         user = FactoryGirl.create(:user_with_group)
         login_as user
         post :tree_select, :params => { :id => "g-#{user.current_group.id}", :format => :js, :accord => 'roles' }

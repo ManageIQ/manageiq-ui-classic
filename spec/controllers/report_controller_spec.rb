@@ -1255,20 +1255,58 @@ describe ReportController do
 
   describe "#reports_menu_in_sb" do
     let(:user) { FactoryGirl.create(:user_with_group) }
-    subject! { FactoryGirl.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group) }
+    let(:sandbox) { {} }
 
     before do
       EvmSpecHelper.local_miq_server
       login_as user
     end
 
-    it "it returns corrent name for custom folder" do
-      controller.instance_variable_set(:@_params, :controller => "report", :action => "explorer")
+    it 'sets the sandbox' do
+      controller.instance_variable_set(:@sb, sandbox)
+      expect(controller).to receive(:get_reports_menu).and_return('yay')
+      controller.send(:populate_reports_menu)
+      expect(sandbox[:rpt_menu]).to eq('yay')
+    end
+  end
+
+  describe '#get_reports_menu' do
+    let(:group) { FactoryGirl.create(:miq_group, :settings => settings) }
+    let(:settings) { {:report_menus => []} }
+
+    before do
       controller.instance_variable_set(:@sb, {})
-      allow(controller).to receive(:get_node_info)
-      controller.send(:reports_menu_in_sb)
-      rpt_menu = controller.instance_variable_get(:@sb)[:rpt_menu]
-      expect(rpt_menu.first.first).to eq("#{user.current_tenant.name} (EVM Group): #{user.current_group.name}")
+    end
+
+    context 'custom menus configured' do
+      it 'retrieves the custom menu' do
+        expect(controller).not_to receive(:default_reports_menu)
+        controller.send(:get_reports_menu, true, group)
+      end
+    end
+
+    context 'custom menus not configured' do
+      let(:settings) { nil }
+      it 'returns with the default menu' do
+        expect(controller).to receive(:default_reports_menu)
+        controller.send(:get_reports_menu, true, group)
+      end
+    end
+
+    context 'custom reports included' do
+      let(:user) { FactoryGirl.create(:user_with_group) }
+      let(:menu) { controller.instance_variable_get(:@sb)[:rpt_menu] }
+      subject { controller.send(:get_reports_menu, false, user.current_group) }
+
+      before do
+        EvmSpecHelper.local_miq_server
+        login_as user
+        FactoryGirl.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group)
+      end
+
+      it 'returns with the correct name for custom folder' do
+        expect(subject.first.first).to eq("#{user.current_tenant.name} (EVM Group): #{user.current_group.name}")
+      end
     end
   end
 
