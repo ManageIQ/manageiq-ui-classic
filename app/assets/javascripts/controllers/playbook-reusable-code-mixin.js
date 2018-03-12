@@ -174,6 +174,10 @@ function playbookReusableCodeMixin(API, $q, miqService) {
       })
       .catch(miqService.handleFailure)
     );
+    checkFormDataRetrieval(vm);
+  };
+
+  var checkFormDataRetrieval = function(vm) {
     $q.all(allApiPromises)
       .then(retrievedFormData(vm));
   };
@@ -242,5 +246,6 @@ function playbookReusableCodeMixin(API, $q, miqService) {
     formCloudCredentials: formCloudCredentials,
     repositoryChanged: repositoryChanged,
     setIfDefined: setIfDefined,
+    checkFormDataRetrieval: checkFormDataRetrieval,
   };
 }

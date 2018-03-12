@@ -168,6 +168,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel = angular.copy(vm.modelCopy);
     playbookReusableCodeMixin.formOptions(vm);
     playbookReusableCodeMixin.cloudCredentialsList(vm, vm.catalogItemModel.provisioning_cloud_credential_id, vm.catalogItemModel.retirement_cloud_credential_id);
+    playbookReusableCodeMixin.checkFormDataRetrieval(vm);
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash('warn', __('All changes have been reset'));
