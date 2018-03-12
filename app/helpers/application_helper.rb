@@ -1347,6 +1347,7 @@ module ApplicationHelper
                         load_balancer
                         manageiq/providers/embedded_ansible/automation_manager/playbook
                         manageiq/providers/embedded_automation_manager/authentication
+                        manageiq/providers/embedded_automation_manager/configuration_script_source
                         middleware_deployment
                         middleware_domain
                         middleware_server
