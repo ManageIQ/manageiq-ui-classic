@@ -2148,6 +2148,8 @@ class ApplicationController < ActionController::Base
       "configuration_manager_provider"
     when "generic_object_definition" # tagging for nested list on the generic object class
       "generic_object"
+    when "ansible_playbook"
+      "embedded_configuration_script_payload"
     else
       controller_name
     end
