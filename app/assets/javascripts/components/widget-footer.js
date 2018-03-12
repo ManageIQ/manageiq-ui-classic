@@ -7,10 +7,10 @@ ManageIQ.angular.app.component('widgetFooter', {
   template: [
     '<div class="card-pf-footer">',
     __('Updated'),
-    "{{vm.widgetLastRun}}",
+    '{{vm.widgetLastRun}}',
     ' | ',
     __('Next'),
-    "{{vm.widgetNextRun}}",
+    '{{vm.widgetNextRun}}',
     '</div>',
   ].join("\n"),
 });
