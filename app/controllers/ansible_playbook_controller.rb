@@ -10,15 +10,22 @@ class AnsiblePlaybookController < ApplicationController
   include Mixins::GenericShowMixin
 
   menu_section :ansible_playbooks
+  toolbar :ansible_playbook
 
   def self.model
     ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook
   end
 
+  def button
+    if params[:pressed] == "embedded_configuration_script_payload_tag"
+      tag(self.class.model)
+    end
+  end
+
   private
 
   def textual_group_list
-    [%i(properties relationships)]
+    [%i(properties relationships smart_management)]
   end
   helper_method :textual_group_list
 end

@@ -6,7 +6,7 @@ describe AnsiblePlaybookController do
     login_as FactoryGirl.create(:user_admin)
   end
 
-  context "#show" do
+  describe "#show" do
     let(:playbook) { FactoryGirl.create(:embedded_playbook) }
     subject { get :show, :params => {:id => playbook.id} }
     render_views
@@ -19,13 +19,13 @@ describe AnsiblePlaybookController do
       is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
     end
 
-    it "does not display tags" do
+    it "displays tags" do
       get :show, :params => {:id => playbook.id}
-      expect(response.body).not_to include("Smart Management")
+      expect(response.body).to include("Smart Management")
     end
   end
 
-  context "#show_list" do
+  describe "#show_list" do
     subject { get :show_list }
     render_views
 
@@ -35,6 +35,21 @@ describe AnsiblePlaybookController do
 
     it "renders correct template" do
       is_expected.to render_template(:partial => "layouts/_gtl")
+    end
+  end
+
+  describe "#button" do
+    before do
+      controller.instance_variable_set(:@_params, params)
+    end
+
+    context 'tagging one or more playbooks' do
+      let(:params) { {:pressed => "embedded_configuration_script_payload_tag"} }
+
+      it 'calls tag method' do
+        expect(controller).to receive(:tag).with(controller.class.model)
+        controller.send(:button)
+      end
     end
   end
 end

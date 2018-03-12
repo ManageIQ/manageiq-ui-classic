@@ -2179,9 +2179,14 @@ Rails.application.routes.draw do
         download_summary_pdf
         show
         show_list
+        tagging_edit
       ),
       :post => %w(
-        show_list)
+        button
+        show_list
+        tag_edit_form_field_changed
+        tagging_edit
+      )
     },
 
     :ansible_repository => {
