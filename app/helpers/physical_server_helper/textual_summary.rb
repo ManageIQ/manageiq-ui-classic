@@ -35,11 +35,7 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_group_firmware_details
-    TextualCustom.new(
-      _("Firmware"),
-      "textual_firmware_table",
-      %i(fw_details)
-    )
+    TextualTable.new(_('Firmware'), firmware_details, [_('Name'), _('Version')])
   end
 
   def textual_group_smart_management
@@ -164,12 +160,7 @@ module PhysicalServerHelper::TextualSummary
     device
   end
 
-  def textual_fw_details
-    fw_details = []
-    @record.hardware.firmwares.each do |fw|
-      fw_details.push(:label => fw.name, :value => fw.version)
-    end
-
-    {:value => fw_details}
+  def firmware_details
+    @record.hardware.firmwares.collect { |fw| [fw.name, fw.version] }
   end
 end
