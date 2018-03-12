@@ -63,10 +63,10 @@ describe AnsibleRepositoryController do
     end
 
     context 'editing an existing repository' do
-      let(:params) { {:pressed => "embedded_configuration_script_source_edit", :miq_grid_checks => [123]} }
+      let(:params) { {:pressed => "embedded_configuration_script_source_edit", :miq_grid_checks => "123"} }
 
       it 'redirects to action edit' do
-        expect(controller).to receive(:javascript_redirect).with(:action => 'edit', :id => params[:miq_grid_checks])
+        expect(controller).to receive(:javascript_redirect).with(:action => 'edit', :id => from_cid(params[:miq_grid_checks]))
         controller.send(:button)
       end
     end
