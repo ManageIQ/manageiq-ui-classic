@@ -1,40 +1,18 @@
-.list-view-container.list-view-compact{"ng-if"    => "dash.applied",
+.list-view-container.list-view-compact{"ng-if"    => "dash.applied && !dash.loadingMetrics",
                                        "ng-class" => "{'no-filters': dash.filterConfig.fields.length === 0}"}
-  .spinner.spinner-lg.loading{"ng-if" => "dash.loadingMetrics"}
   .col-md-12{"pf-list-view" => "", "config" => "dash.listConfig", "items" => "dash.items"}
-    .list-view-pf-body.row
-      .col-md-6.col-sm-6.no-wrap
-        %span{"ng-if" => "item.type == 'gauge'"}
-          %i.fa.fa-tachometer
-        %span{"ng-if" => "item.type == 'counter'"}
-          %i.pficon.pficon-trend-up
+    .list-view-pf-body
+      .list-group-item-heading
         {{item.id}}
-      .col-md-6.col-sm-12.no-wrap{"ng-if" => "item.data"}
-        .row
-          .col-md-8.col-sm-6.no-wrap
-            %strong
-              = _("Most Recent")
-            %span.time-stamp
-              {{item.data[item.data.length - 1].timestamp | date:'hh:mm:ss yyyy-MM-dd'}}
-          .col-md-4.col-sm-6.no-wrap
-            %span.pull-right
-              {{item.lastValue}}
-      .col-md-6.col-sm-12.no-wrap{"ng-if" => "! item.data"}
-        .row
-          .col-md-8.col-sm-6.no-wrap
-            %strong
-              %i.pficon.pficon-warning-triangle-o
-              = _("Missing Data")
+      .list-group-item-value{"ng-if" => "item.data"}
+        {{item.lastValue}}
+      .list-group-item-value{"ng-if" => "! item.data"}
+        %i.pficon.pficon-warning-triangle-o
+        = _("Missing Data")
     %list-expanded-content
       .row
-        .col-md-6.col-sm-12.no-wrap{"ng-if" => "$parent.item.data"}
-          %label.strong
-            = _("Trend")
-          .values-trend{"pf-trends-chart" => "",
-                        "config"          => "$parent.$parent.item.configTrend",
-                        "chart-data"      => "$parent.$parent.item.lastValues"}
         .col-md-6.col-sm-12.no-wrap
-          %label.strong
+          .section-title
             = _("Tags")
           .row{"ng-repeat" => "(key, value) in $parent.item.tags"}
             .col-md-3.col-sm-6.no-wrap
@@ -42,3 +20,12 @@
                 {{key}}:
             .col-md-9.col-sm-6.no-wrap
               {{value}}
+
+        .col-md-6.col-sm-12.no-wrap{"ng-if" => "$parent.item.data"}
+          .section-title
+            = _("Trend")
+          .values-trend{"pf-trends-chart" => "",
+                        "config"          => "$parent.$parent.item.configTrend",
+                        "chart-data"      => "$parent.$parent.item.lastValues"}
+          .chart_label
+            = _("Last 15 min")

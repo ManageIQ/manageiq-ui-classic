@@ -43,7 +43,7 @@ class ApplicationHelper::ToolbarChooser
       'compare_view_tb'
     elsif @lastaction == "drift"
       'drift_view_tb'
-    elsif %w(ems_container ems_infra).include?(@layout) && %w(main dashboard topology).include?(@display)
+    elsif %w(ems_container ems_infra).include?(@layout) && %w(main dashboard topology ad_hoc_metrics).include?(@display)
       'dashboard_summary_toggle_view_tb'
     elsif %w(container_project).include?(@layout)
       'container_project_view_tb'

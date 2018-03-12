@@ -62,6 +62,7 @@ class HawkularProxyService
       }
     when 'metric_tags'
       {
+        :db_name     => @db_name,
         :metric_tags => metric_tags(params)
       }
     when 'get_data'
@@ -73,6 +74,7 @@ class HawkularProxyService
       }
     when 'get_tenants'
       {
+        :db_name => @db_name,
         :tenants => tenants(params[:limit].to_i)
       }
     else
@@ -109,8 +111,7 @@ class HawkularProxyService
   def get_data(id, params, type = nil)
     client(type).get_data(id,
                           :limit          => params[:limit].to_i,
-                          :starts         => params[:starts].to_i,
-                          :ends           => params[:ends].to_i,
+                          :starts         => params[:starts],
                           :bucketDuration => params[:bucketDuration] || nil,
                           :order          => params[:order] || 'ASC')
   end
@@ -133,16 +134,8 @@ class HawkularProxyService
 
   private
 
-  def get_raw_data(ids, type)
-    starts = 7.days.ago.utc.to_i * 1000
-    ends = DateTime.now.utc.to_i * 1000
-    limit = 12
-
-    data = client(type).raw_data(ids,
-                                 :starts => starts,
-                                 :ends   => ends,
-                                 :limit  => limit)
-
+  def get_last_15mn(ids, type)
+    data = client(type).raw_data(ids, :starts => "-15mn")
     data.map { |m| [type.to_s + m["id"], m["data"]] }.to_h
   end
 
@@ -150,10 +143,10 @@ class HawkularProxyService
     return metrics unless @db_name == "Hawkular"
 
     ids = metrics.map { |m| m["id"] if m["type"] == "gauge" }.compact
-    gauges_data = get_raw_data(ids, "gauge") if ids.any?
+    gauges_data = get_last_15mn(ids, "gauge") if ids.any?
 
     ids = metrics.map { |m| m["id"] if m["type"] == "counter" }.compact
-    counters_data = get_raw_data(ids, "counter") if ids.any?
+    counters_data = get_last_15mn(ids, "counter") if ids.any?
 
     data = (gauges_data || {}).merge(counters_data || {})
     metrics.map { |m| m.merge(:data => data[m["type"] + m["id"]]) }
@@ -175,7 +168,7 @@ class HawkularProxyService
       tenant_labels.merge!(Settings.hawkular_tenant_labels.to_hash)
     end
 
-    tenant_labels.fetch(id.to_sym, id.truncate(TENANT_LABEL_MAX_LEN))
+    "Tenant: " + tenant_labels.fetch(id.to_sym, id.truncate(TENANT_LABEL_MAX_LEN))
   end
 
   def _metric_definitions(params)
@@ -189,13 +182,6 @@ class HawkularProxyService
   end
 
   def _params
-    ends = @params['ends'] || (DateTime.now.utc.to_i * 1000)
-    starts = if @params['starts'].blank?
-               ends.to_i - 8 * 60 * 60 * 1000
-             else
-               @params['starts']
-             end
-
     {
       :type           => @params['type'],
       :metric_id      => @params['metric_id'],
@@ -203,8 +189,7 @@ class HawkularProxyService
       :page           => @params['page'] || 1,
       :items_per_page => @params['items_per_page'] || 15,
       :limit          => @params['limit'] || 10_000,
-      :ends           => ends.to_i,
-      :starts         => starts.to_i,
+      :starts         => @params['starts'] || '-6h',
       :bucketDuration => @params['bucket_duration'],
       :order          => @params['order']
     }

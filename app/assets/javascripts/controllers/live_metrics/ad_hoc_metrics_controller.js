@@ -1,7 +1,24 @@
+/** global: ManageIQ */
 /* global miqHttpInject */
-ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '$timeout', 'miqService',
-  'metricsUtilsFactory', 'metricsHttpFactory', 'metricsConfigFactory', 'metricsParseUrlFactory',
-  function($http, $window, $timeout, miqService, metricsUtilsFactory, metricsHttpFactory, metricsConfigFactory, metricsParseUrlFactory) {
+ManageIQ.angular.app.controller('adHocMetricsController', [
+  '$http',
+  '$window',
+  '$timeout',
+  'miqService',
+  'metricsUtilsFactory',
+  'metricsHttpFactory',
+  'metricsConfigFactory',
+  'metricsParseUrlFactory',
+  function(
+    $http,
+    $window,
+    $timeout,
+    miqService,
+    metricsUtilsFactory,
+    metricsHttpFactory,
+    metricsConfigFactory,
+    metricsParseUrlFactory
+  ) {
     var dash = this;
     var utils = metricsUtilsFactory(dash, $timeout);
     var httpUtils = metricsHttpFactory(dash, $http, utils, miqService);
@@ -12,14 +29,14 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
     dash.setFilterOptions = utils.setFilterOptions;
     dash.metricPrefix = utils.metricPrefix;
     dash.calcDataDifferentials = utils.calcDataDifferentials;
-    dash.setPage = httpUtils.setPage;
+    dash.onChangePage = httpUtils.onChangePage;
 
     var pageSetup = function() {
       // try to parse config variables from page url
       // and set page config variables
       metricsParseUrlFactory(dash, $window);
       metricsConfigFactory(dash);
-    }
+    };
 
     var initialization = function() {
       dash.tenantChanged = false;
@@ -36,24 +53,23 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       dash.tags = {};
       dash.chartData = {};
 
-      dash.page = 1;
-      dash.pages = 1;
-      dash.pagesTitle = "";
+      dash.pageNumber = 1;
+      dash.maxPageNumber = 1;
 
       dash.filterConfig = {
         fields: [],
         appliedFilters: [],
         resultsCount: 0,
-        onFilterChange: filterChange
+        onFilterChange: filterChange,
       };
 
       dash.toolbarConfig = {
         filterConfig: dash.filterConfig,
-        actionsConfig: dash.actionsConfig
+        actionsConfig: dash.actionsConfig,
       };
 
       dash.graphToolbarConfig = {
-        actionsConfig: dash.actionsConfig
+        actionsConfig: dash.actionsConfig,
       };
 
       if (dash.tenant.value) {
@@ -65,11 +81,11 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       }
 
       setAppliedFilters();
-    }
+    };
 
-    var filterChange = function (filters, addOnly) {
+    var filterChange = function(_filters, addOnly) {
       dash.filterChanged = true;
-      dash.filtersText = "";
+      dash.filtersText = '';
       dash.tags = {};
 
       // prevent listing all metrics point
@@ -79,53 +95,38 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
         dash.selectedItems = [];
         dash.tagsLoaded = true;
         dash.items = [];
-        dash.page = 1;
-        dash.pages = 1;
-        dash.pagesTitle = "";
+        dash.pageNumber = 1;
+        dash.maxPageNumber = 1;
         dash.filterConfig.resultsCount = 0;
         return;
       }
 
-      dash.filterConfig.appliedFilters.forEach(function (filter) {
+      dash.filterConfig.appliedFilters.forEach(function(filter) {
         if (filter.title && filter.value) {
-          dash.filtersText += filter.title + " : " + filter.value + "\n";
+          dash.filtersText += filter.title + ' : ' + filter.value + '\n';
           dash.tags[filter.id] = filter.value;
         }
       });
 
       // when change filter we automatically apply changes
-      if (!addOnly) {
+      if (! addOnly) {
         dash.itemSelected = false;
         dash.selectedItems = [];
         dash.items = [];
-        dash.page = 1;
-        dash.pages = 1;
-        dash.pagesTitle = "";
+        dash.pageNumber = 1;
+        dash.maxPageNumber = 1;
         dash.filterChanged = false;
         dash.filterConfig.resultsCount = 0;
-        dash.applyFilters();
+        dash.applied = true;
+        httpUtils.refreshList();
       }
-    };
-
-    dash.doAddFilter = function() {
-      // if field is empty return
-      if ( !dash.filterConfig.currentValue ) return;
-      var filter = $('.filter-pf.filter-fields').scope().currentField;
-
-      dash.filterConfig.appliedFilters.push({
-        id: filter.id,
-        title: filter.title,
-        value: dash.filterConfig.currentValue}
-      );
-      dash.filterConfig.currentValue = "";
-
-      // add a filter but only add (do not apply)
-      filterChange(null, true);
     };
 
     var setAppliedFilters = function() {
       // if user did not send any tags, just exit
-      if (!dash.params.tags) return;
+      if (! dash.params.tags) {
+        return;
+      }
 
       // add the user defined tags as filters
       var tags = JSON.parse(dash.params.tags);
@@ -139,12 +140,6 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
       // apply the new filters
       filterChange();
-    }
-
-    dash.applyFilters = function() {
-      dash.applied = true;
-      dash.filterChanged = false;
-      httpUtils.refreshList();
     };
 
     dash.viewGraph = function() {
@@ -153,7 +148,9 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       httpUtils.refreshGraph();
 
       // enable the bootstrapSwitch to run chart refresh
-      angular.element('[name=rate-switch]').bootstrapSwitch({ onSwitchChange: utils.redrawGraph });
+      angular
+        .element('[name=rate-switch]')
+        .bootstrapSwitch({ onSwitchChange: utils.redrawGraph });
     };
 
     dash.viewMetrics = function() {
@@ -164,10 +161,15 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       initialization();
     };
 
+    dash.onChangePageSize = function() {
+      dash.pageNumber = 1;
+      dash.onChangePage();
+    }
+
     // one time initialization of page elemants
     pageSetup();
 
     // initialize page elemants
     initialization();
-  }
+  },
 ]);

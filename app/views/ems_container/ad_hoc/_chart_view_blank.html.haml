@@ -1,0 +1,11 @@
+.col-sm-12
+  .blank-slate-pf{"ng-if" => "dash.loadingData",
+                  "ng-class" => "{'no-filters': dash.filterConfig.fields.length === 0,
+                                  'loading': !dash.tagsLoaded}"}
+    .spinner.spinner-lg.loading
+    .blank-slate-pf-icon
+      %span.fa.fa-info-circle
+    %h1
+      = _("Chart")
+    %p
+      = _("Loading chart data")

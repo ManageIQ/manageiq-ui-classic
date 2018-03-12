@@ -1,6 +1,4 @@
 class PrometheusProxyService < HawkularProxyService
-  SPECIAL_TAGS = %w(descriptor_name units metric_type type_id).freeze
-
   def initialize(provider_id, controller)
     @db_name = "Prometheus"
     @provider_id = provider_id
@@ -15,44 +13,29 @@ class PrometheusProxyService < HawkularProxyService
     @conn = cli.prometheus_client
   end
 
-  def replace_hawkular_tags(tags)
-    if tags && tags["type"] == "node" && tags["hostname"]
-      tags["id"] = "/"
-      tags["instance"] = tags["hostname"]
-
-      tags.delete("type")
-      tags.delete("hostname")
-    end
-
-    tags
-  end
-
   def metric_definitions(params, no_data = false)
     tags = params[:tags]
 
-    # check for hawkular style type / hostname tags and replace if needed
-    tags = replace_hawkular_tags(tags)
-
     tags_str = if tags.present?
-                 tags.map { |x, y| ",#{x}=~\"#{y}\"" }.join
+                 tags.map { |x, y| "#{x}=~\"#{y}\"" }.join(",")
                else
-                 ""
+                 "job=~\".+\""
                end
     limit = params[:limit].to_i
 
     response = if no_data
-                 @conn.get("query", :query => "{job=\"#{@tenant}\"#{tags_str}}")
+                 @conn.get("query", :query => "{#{tags_str}}")
                else
                  @conn.get(
                    "query_range",
-                   :query => "{job=\"#{@tenant}\"#{tags_str}}",
-                   :start => params[:ends] / 1000 - 10 * 12 * 60,
-                   :end   => params[:ends] / 1000,
-                   :step  => "600s"
+                   :query => "{#{tags_str}}",
+                   :start => time_to_timestamp("-15m"),
+                   :end   => Time.now.getutc.to_i,
+                   :step  => 30
                  )
                end
 
-    list = JSON.parse(response.body)["data"]["result"]
+    list = parse_result(response)
 
     list = list.each_with_index.map do |o, i|
       metric = o['metric']
@@ -62,32 +45,8 @@ class PrometheusProxyService < HawkularProxyService
                  o['values']
                end
 
-      unless no_data
-        # if we are in list view ( we need data )
-        # set the descriptor_name and units for the display title in list view.
-        metric['descriptor_name'] = metric['__name__']
-        metric['units'] = 'bytes' if metric['__name__'].include?('_bytes')
-        metric['units'] = 'seconds' if metric['__name__'].include?('_seconds')
-        metric['units'] = 'milliseconds' if metric['__name__'].include?('_milliseconds')
-        metric['metric_type'] = metric['type']
-
-        if metric['container_name'].nil?
-          metric['type'] = 'machine'
-          metric['type_id'] = metric['instance']
-        elsif metric['container_name'] == "POD"
-          metric['type'] = 'pod'
-          metric['type_id'] = metric['pod_name']
-        else
-          metric['type'] = 'container'
-          metric['type_id'] = metric['container_name']
-        end
-      end
-
-      # users should not have access to the job tag
-      metric.delete("job")
-
       {
-        "id"   => "#{metric['__name__']}/#{metric['type_id']}[#{i}]",
+        "id"   => "#{metric['__name__']}/#{metric['instance']}/#{metric['pod_name']}/#{metric['contianer_name']}[#{i}]",
         "type" => "gauge",
         "tags" => metric,
         "data" => values.map { |v| { :timestamp => v[0] * 1000, :value => v[1] } }
@@ -98,7 +57,7 @@ class PrometheusProxyService < HawkularProxyService
   end
 
   def metric_tags(params)
-    definitions = metric_definitions(params.merge(:tags => {:job => @tenant}), true)
+    definitions = metric_definitions(params, true)
     tags = definitions.map { |x| x["tags"].keys }.flatten.uniq
 
     tags.map do |tag|
@@ -109,37 +68,49 @@ class PrometheusProxyService < HawkularProxyService
   def get_data(_id, params)
     tags = params[:tags]
     tags_str = if tags.present?
-                 tags.delete("type")
-                 tags["type"] = tags["metric_type"] if tags["metric_type"]
-                 tags.except(*SPECIAL_TAGS).map { |x, y| ",#{x}=\"#{y}\"" }.join
+                 tags.map { |x, y| "#{x}=\"#{y}\"" }.join(",")
                else
-                 ""
+                 "job=\"NONE\""
                end
 
     response = @conn.get(
       "query_range",
-      :query => "{job=\"#{@tenant}\"#{tags_str}}",
-      :start => params[:starts] / 1000,
-      :end   => params[:ends] / 1000,
-      :step  => params[:bucketDuration]
+      :query => "{#{tags_str}}",
+      :start => time_to_timestamp(params[:starts]),
+      :end   => Time.now.getutc.to_i,
+      :step  => params[:bucketDuration][0..-2]
     )
-    result = JSON.parse(response.body)["data"]["result"]
+    result = parse_result(response)
 
     data = if result.length == 1
              result[0]['values'].map { |v| { :start => v[0] * 1000, :avg => v[1], :empty => "false" } }
            else
              []
            end
-    data << { :start => params[:starts] - 1, :empty => "true" }
-    data << { :start => params[:ends] + 1, :empty => "true" }
 
     data
   end
 
   def tenants(_limit)
-    jobs = metric_tags_options("job")
+    # prometheus has no tenancy
+    [{:label => "lable", :value => "value"}]
+  end
 
-    jobs.map { |id| { :label => labelize(id), :value => id } }
+  def time_to_timestamp(t_str)
+    now = Time.now.getutc.to_i
+    postfix = t_str[-1]
+    value = t_str[1..-2].to_i
+
+    case postfix
+    when "m"
+      now - value * 60
+    when "h"
+      now - value * 60 * 60
+    when "d"
+      now - value * 60 * 60 * 24
+    else
+      now
+    end
   end
 
   def metric_tags_options(tag)
@@ -148,6 +119,12 @@ class PrometheusProxyService < HawkularProxyService
 
     options = JSON.parse(response.body)["data"]
     options.sort
+  end
+
+  def parse_result(response)
+    JSON.parse(response.body)["data"]["result"]
+  rescue StandardError
+    return []
   end
 
   # may be nil

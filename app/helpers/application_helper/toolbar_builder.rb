@@ -438,20 +438,20 @@ class ApplicationHelper::ToolbarBuilder
 
   # Determine if a button should be selected for buttonTwoState
   def twostate_button_selected(id)
-    return true if id.starts_with?("view_") && id.ends_with?("textual")  # Summary view buttons
-    return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
-    return true if @ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type)  # GHT view buttons on report show
-    return true if id.starts_with?("tree_") && id.ends_with?(settings(:views, :treesize).to_i == 32 ? "large" : "small")
-    return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare))
-    return true if id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift))
-    return true if id == "compare_all"
-    return true if id == "drift_all"
-    return true if id.starts_with?("comparemode_") && id.ends_with?(settings(:views, :compare_mode))
-    return true if id.starts_with?("driftmode_") && id.ends_with?(settings(:views, :drift_mode))
-    return true if id == "view_dashboard" && @showtype == "dashboard"
-    return true if id == "view_topology" && @showtype == "topology"
-    return true if id == "view_summary" && @showtype == "main"
-    false
+    (
+      (id == "compare_all")                                                                                   ||
+      (id == "drift_all")                                                                                     ||
+      (id == "view_#{@display}" && %w(ad_hoc_metrics dashboard topology).include?(@display))                  ||
+      (id == "view_summary" && @display == "main")                                                            ||
+      (@gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type))                                     ||
+      (@ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type))                                     ||
+      (id.starts_with?("view_") && id.ends_with?("textual"))                                                  ||
+      (id.starts_with?("tree_") && id.ends_with?(settings(:views, :treesize).to_i == 32 ? "large" : "small")) ||
+      (id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare)))                              ||
+      (id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift)))                                  ||
+      (id.starts_with?("comparemode_") && id.ends_with?(settings(:views, :compare_mode)))                     ||
+      (id.starts_with?("driftmode_") && id.ends_with?(settings(:views, :drift_mode)))
+    )
   end
 
   def url_for_button(name, url_tpl, controller_restful)

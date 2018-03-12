@@ -1,93 +1,90 @@
 angular.module('miq.util').factory('metricsConfigFactory', function() {
-  return function (dash) {
+  return function(dash) {
     function selectionChange(item) {
       if (item.selected) {
         dash.selectedItems.push(item);
       } else {
-        dash.selectedItems = dash.selectedItems.filter(function( obj ) { return obj.id !== item.id; });
+        dash.selectedItems = dash.selectedItems.filter(function(obj) {
+          return obj.id !== item.id;
+        });
       }
 
       dash.itemSelected = dash.selectedItems.length > 0;
-    };
+    }
 
-    dash.DEFAULT_HAWKULAR_TENANT = "_system";
-    dash.DEFAULT_PROMETHEUS_TENANT = "kubernetes-cadvisor";
-    dash.tenant = {value: null};
+    dash.DEFAULT_HAWKULAR_TENANT = '_system';
+    dash.tenant = { value: null };
 
     dash.actionsConfig = {
-      actionsInclude: true
+      actionsInclude: true,
     };
 
     dash.timeFilter = {
-      time_range: 24,
-      range_count: 1,
-      date: moment()
-    };
-
-    dash.countDecrement = function() {
-      if (dash.timeFilter.range_count > 1) {
-        dash.timeFilter.range_count--;
-      }
-    };
-
-    dash.countIncrement = function() {
-      dash.timeFilter.range_count++;
+      time_range: '-1h',
     };
 
     // Graphs
     dash.chartConfig = {
-      legend       : { show: true },
-      chartId      : 'ad-hoc-metrics-chart',
-      point        : { r: 1 },
-      axis         : {
+      legend: { show: true },
+      chartId: 'ad-hoc-metrics-chart',
+      point: { r: 1 },
+      axis: {
         x: {
           tick: {
             count: 25,
-            format: function (value) { return moment(value).format(__('MM/DD/YYYY HH:mm')); }
-          }},
+            format: function(value) {
+              return moment(value).format(__('MM/DD/YYYY HH:mm'));
+            },
+          },
+        },
         y: {
           tick: {
             count: 4,
-            format: function (value) { return numeral(value).format('0,0.00a'); }
-          }}
+            format: function(value) {
+              return numeral(value).format('0,0.00a');
+            },
+          },
+        },
       },
-      setAreaChart : true,
+      setAreaChart: true,
       subchart: {
-        show: true
-      }
+        show: true,
+      },
     };
 
     dash.listConfig = {
       selectionMatchProp: 'id',
       showSelectBox: true,
       useExpandingRows: true,
-      onCheckBoxChange: selectionChange
+      onCheckBoxChange: selectionChange,
     };
 
     dash.timeRanges = [
-      {title: __("Hours"), value: 1},
-      {title: __("Days"), value: 24},
-      {title: __("Weeks"), value: 168},
-      {title: __("Months"), value: 672}
+      { title: __('Hour'), value: '-1h' },
+      { title: __('6 Hours'), value: '-6h' },
+      { title: __('12 Hours'), value: '-12h' },
+      { title: __('Day'), value: '-1d' },
+      { title: __('7 Days'), value: '-7d' },
     ];
 
-    dash.timeIntervals = [
-      {title: __("1min Average"), value: 1 * 60},
-      {title: __("5min Average"), value: 5 * 60},
-      {title: __("20min Average"), value: 20 * 60},
-      {title: __("1h average"), value: 60 * 60},
-      {title: __("12h average"), value: 12 * 60 * 60}
-    ];
-
-    dash.filterType = "simple";
-
-    dash.filterTypes = [
-      {title: __("Advanced filters"), value: "advanced"},
-      {title: __("Simple filters"), value: "simple"}
-    ];
-
-    dash.dateOptions = {
-      format: __('MM/DD/YYYY HH:mm')
+    dash.timeRangesToSec = {
+      '-1h': 60 * 60,
+      '-6h': 6 * 60 * 60,
+      '-12h': 12 * 60 * 60,
+      '-1d': 24 * 60 * 60,
+      '-7d': 7 * 24 * 60 * 60,
     };
-  }
+
+    dash.dbName = 'Hawkular';
+    dash.bucketDuration = 120;
+    dash.pageSizeIncrements = [
+      { title: __('5 items'), value: 5 },
+      { title: __('10 items'), value: 10 },
+      { title: __('20 items'), value: 20 },
+      { title: __('40 items'), value: 40 },
+      { title: __('80 items'), value: 80 },
+    ];
+
+    dash.showRegexp = false;
+  };
 });

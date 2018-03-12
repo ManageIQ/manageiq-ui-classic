@@ -1,0 +1,12 @@
+#list-pagination.pagination.content-view-pf-pagination
+  %span.spacer
+  %span
+    %select.items-select.selectpicker{"pf-select"  => "",
+                         "ng-options" => "o.value as o.title for o in dash.pageSizeIncrements",
+                         "ng-model"   => "dash.pageSize",
+                         "ng-change"  => "dash.onChangePageSize()"}
+  %span.per-page-label.span-right-border
+  %span{"ng-if" => "dash.filterConfig.resultsCount > 0"}
+    {{dash.pageStartIndex}} - {{dash.pageEndIndex}} of {{dash.filterConfig.resultsCount}}
+  %span
+    = render :partial => "ems_container/ad_hoc/list_paging"

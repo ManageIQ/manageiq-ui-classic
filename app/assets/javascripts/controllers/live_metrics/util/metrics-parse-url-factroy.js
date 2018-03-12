@@ -34,9 +34,8 @@ angular.module('miq.util').factory('metricsParseUrlFactory', function() {
     dash.providerId = '/' + (/^\/[^\/]+\/([r\d]+)$/.exec(pathname)[1]);
 
     dash.tenantList = [];
-    dash.minBucketDurationInSecondes = parseInt(dash.params.bucket, 10) || 20 * 60;
     dash.max_metrics = parseInt(dash.params.max_metrics, 10) || 10000;
-    dash.items_per_page = parseInt(dash.params.items_per_page, 10) || 8;
+    dash.pageSize = parseInt(dash.params.page_size, 10) || 20;
 
     // the proxy service shuold use the currect tenant if none is given
     dash.url = '/container_dashboard/data' + dash.providerId  + '/?live=true';
