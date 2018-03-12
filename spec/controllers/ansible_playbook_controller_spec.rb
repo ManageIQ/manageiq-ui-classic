@@ -42,7 +42,7 @@ describe AnsiblePlaybookController do
     end
 
     context 'tagging one or more playbooks' do
-      let(:params) { {:pressed => "ansible_playbook_tag"} }
+      let(:params) { {:pressed => "embedded_configuration_script_payload_tag"} }
 
       it 'calls tag method' do
         expect(controller).to receive(:tag).with(controller.class.model)
