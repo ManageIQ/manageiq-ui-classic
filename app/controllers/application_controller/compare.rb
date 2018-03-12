@@ -1444,8 +1444,10 @@ module ApplicationController::Compare
   def comp_add_section(view, section, records, fields)
     cell_text = _(section[:header])
     if records.nil? # Show records count if not nil
-      cell_text += " (#{fields.length})"
-    else                # Show fields count
+
+      fields_length = comp_section_fields_total(view, section, fields)
+      cell_text += " (#{fields_length})"
+    else # Show fields count
       cell_text += " (#{records.length})"
     end
     row = {
@@ -1461,6 +1463,27 @@ module ApplicationController::Compare
 
     @section_parent_id = @rows.length
     @rows << row
+  end
+
+  # Section fields counter (in brackets)
+  # Regarding to buttons "Attributes with same/different values"
+  def comp_section_fields_total(view, section, fields)
+    fields_length = 0
+    fields.each_with_index do |field, _fidx|
+      @same = true # reset for each field
+      base_val = view.results.fetch_path(view.ids[0], section[:name], field[:name], :_value_)
+
+      view.ids.each_with_index do |id, idx|
+        fld = view.results.fetch_path(id, section[:name], field[:name])
+        next if fld.nil?
+        if idx != 0 # Not for base object
+          unset_same_flag unless base_val == fld[:_value_]
+        end
+      end
+      fields_length += 1 if compare_delete_row
+    end
+    @same = true # reset for further processing
+    fields_length
   end
 
   def compare_section_data_cols(view, section, records)
