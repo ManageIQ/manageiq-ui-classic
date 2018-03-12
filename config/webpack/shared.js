@@ -60,6 +60,7 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
+      minChunks: module => /node_modules/.test(module.resource),
     }),
   ],
 
