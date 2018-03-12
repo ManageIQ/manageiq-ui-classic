@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "PatternFlyIcons-webfont";
-  src: url(<%= asset_data_uri("PatternFlyIcons-webfont.ttf") %>);
+  src: asset_url("PatternFlyIcons-webfont.ttf");
   font-weight: normal;
   font-style: normal;
 }
