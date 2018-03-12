@@ -8,7 +8,7 @@
 import { mount } from '../react/mounter';
 import componentRegistry from '../react/componentRegistry';
 
-ManageIQ.react = Object.assign(ManageIQ.react || {}, {
-  mount: mount,
-  componentRegistry: componentRegistry,
-});
+ManageIQ.react = {
+  mount,
+  componentRegistry,
+};
