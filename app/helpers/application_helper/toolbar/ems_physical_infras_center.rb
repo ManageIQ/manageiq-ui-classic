@@ -9,11 +9,11 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
         button(
           :ems_physical_infra_refresh,
           'fa fa-refresh fa-lg',
-          N_('Refresh relationships and power states for all items related to the selected Infrastructure Providers'),
+          N_('Refresh relationships and power states for all items related to the selected Physical Infrastructure Providers'),
           N_('Refresh Relationships and Power States'),
           :url_parms    => "main_div",
           :send_checked => true,
-          :confirm      => N_("Refresh relationships and power states for all items related to the selected Infrastructure Providers?"),
+          :confirm      => N_("Refresh relationships and power states for all items related to the selected Physical Infrastructure Providers?"),
           :enabled      => false,
           :onwhen       => "1+"),
         button(
@@ -27,14 +27,14 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
         button(
           :ems_physical_infra_new,
           'pficon pficon-add-circle-o fa-lg',
-          t = N_('Add a New Infrastructure Provider'),
+          t = N_('Add a New Physical Infrastructure Provider'),
           t,
           :url => "/new"),
         button(
           :ems_physical_infra_edit,
           'pficon pficon-edit fa-lg',
-          N_('Select a single Infrastructure Provider to edit'),
-          N_('Edit Selected Infrastructure Providers'),
+          N_('Select a single Physical Infrastructure Provider to edit'),
+          N_('Edit Selected Physical Infrastructure Providers'),
           :url_parms    => "main_div",
           :send_checked => true,
           :enabled      => false,
@@ -42,11 +42,11 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
         button(
           :ems_physical_infra_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected Infrastructure Providers from Inventory'),
-          N_('Remove Infrastructure Providers from Inventory'),
+          N_('Remove selected Physical Infrastructure Providers from Inventory'),
+          N_('Remove Physical Infrastructure Providers from Inventory'),
           :url_parms    => "main_div",
           :send_checked => true,
-          :confirm      => N_("Warning: The selected Infrastructure Providers and ALL of their components will be permanently removed!"),
+          :confirm      => N_("Warning: The selected Physical Infrastructure Providers and ALL of their components will be permanently removed!"),
           :enabled      => false,
           :onwhen       => "1+"),
       ]
