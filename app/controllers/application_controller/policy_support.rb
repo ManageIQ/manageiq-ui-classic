@@ -85,6 +85,7 @@ module ApplicationController::PolicySupport
                     :url  => "/#{request.parameters["controller"]}/policy_sim?continue=true")
     session[:policies] = {} unless params[:continue]  # Clear current policies, unless continuing previous simulation
     records = session[:tag_items] if records.empty? && session[:tag_items].present?
+    session[:tag_items] = records
     policy_sim_build_screen(records)
 
     if @explorer
@@ -228,7 +229,7 @@ module ApplicationController::PolicySupport
   # Build the policy simulation screen
   def policy_sim_build_screen(records = [])
     @edit ||= {}
-    @tagitems = records ? records : session[:tag_db].find(session[:tag_items]) # Get the db records that are being tagged
+    @tagitems = records.presence || session[:tag_items] # Get the db records that are being tagged
     @tagitems = @tagitems.sort_by(&:name)
     @edit[:pol_items] = session[:tag_items]
     @catinfo = {}
@@ -248,6 +249,7 @@ module ApplicationController::PolicySupport
     else
       @all_profs["<select>"] = _("No Policy Profiles are available")
     end
+    @gtl_type = "grid"
     build_targets_hash(@tagitems)
   end
 end
