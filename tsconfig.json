@@ -10,7 +10,9 @@
     "target": "es5",
     "typeRoots": [
       "app/javascript/typings"
-    ]
+    ],
+    "allowJs": true,
+    "jsx": "react"
   },
   "exclude": [
     "**/*.spec.ts",
