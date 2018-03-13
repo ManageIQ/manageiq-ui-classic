@@ -348,14 +348,8 @@ module ApplicationController::CiProcessing
 
   def cloud_object_store_button_operation(klass, task)
     display_name = _(task.capitalize)
-
-    # Map task to instance method name
-    case task
-    when 'delete'
-      method = "#{task}_#{klass.name.underscore.to_sym}"
-    else
-      method = task = "#{klass.name.underscore.to_sym}_#{task}"
-    end
+    method = "#{klass.name.underscore.to_sym}_#{task}"
+    task = method unless task == 'delete'
 
     items = []
     # Either a list or coming from a different controller
