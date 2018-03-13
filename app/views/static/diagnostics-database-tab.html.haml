@@ -8,7 +8,8 @@
                               'model'                                 => 'vm.diagnosticsDatabaseModel',
                               'model-copy'                            => 'vm.modelCopy',
                               'form-changed'                          => true,}
-  - if @sb[:active_tab] == "diagnostics_database"
+  -#- if @sb[:active_tab] == "diagnostics_database"
+  %div{'ng-if' => 'sb == "diagnostics_database"'}
     %h3
       = _("Basic Info")
   .form-group
@@ -39,7 +40,8 @@
   %hr
   %h3
     = _("Run a Database Backup Now")
-  - if @sb[:active_tab] == "diagnostics_database"
+  -#- if @sb[:active_tab] == "diagnostics_database"
+  %div{'ng-if' => 'sb == "diagnostics_database"'}
     -# jak se to resi: 
         -# manageIQ.angular.app.value('moje_jmeno', #{@sb[;active_tab]})
         ..controller ($scope, .. moje_jmeno) ... vm.moje = moje_jmeno;
