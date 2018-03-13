@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFormId', 'miqService', 'API', '$q', function(securityGroupFormId, miqService, API, $q) {
+ManageIQ.angular.app.controller('securityGroupFormController', ['miqService', 'API', '$q', function(miqService, API, $q) {
   var vm = this;
 
   var init = function() {
@@ -13,7 +13,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     vm.networkProtocols = ["IPV4", "IPV6"];
     vm.directions = ["inbound", "outbound"];
 
-    vm.formId = securityGroupFormId;
+    vm.formId = vm.securityId;
     vm.model = "securityGroupModel";
     vm.newRecord = securityGroupFormId === "new";
     vm.saveable = miqService.saveable;
@@ -24,7 +24,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     } else {
       miqService.sparkleOn();
 
-      $q.all([getSecurityGroup(securityGroupFormId), getSecurityGroups()])
+      $q.all([getSecurityGroup(vm.securityId), getSecurityGroups()])
         .then(function() {
           vm.afterGet = true;
           vm.modelCopy = _.cloneDeep(vm.securityGroupModel);
@@ -58,7 +58,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     var index = vm.securityGroupModel.firewall_rules.length;
     vm.securityGroupModel.firewall_rules[index] = {
       id: null,
-      resource_id: securityGroupFormId,
+      resource_id: vm.securityId,
       resource_type: "SecurityGroup",
       direction: "inbound",
       ems_ref: null,
@@ -75,7 +75,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     if (vm.newRecord) {
       var url = '/security_group/create/new?button=cancel';
     } else {
-      var url = '/security_group/update/' + securityGroupFormId + '?button=cancel';
+      var url = '/security_group/update/' + vm.securityId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };
@@ -88,7 +88,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
   };
 
   vm.saveClicked = function() {
-    var url = '/security_group/update/' + securityGroupFormId + '?button=save';
+    var url = '/security_group/update/' + vm.securityId + '?button=save';
     miqService.miqAjaxButton(url, vm.securityGroupModel, { complete: false });
   };
 
@@ -107,5 +107,5 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     vm.available_tenants = data.resources;
   });
 
-  init();
+  vm.$onInit=init;
 }]);
