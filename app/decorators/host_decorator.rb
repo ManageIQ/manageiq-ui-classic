@@ -7,7 +7,7 @@ class HostDecorator < MiqDecorator
     "svg/vendor-#{vmm_vendor_display.downcase}.svg"
   end
 
-  def quadicon(_n = nil)
+  def quadicon
     {
       :top_left     => {:text => vms.size},
       :top_right    => {:fileicon => "svg/currentstate-#{ERB::Util.h(normalized_state.downcase)}.svg"},

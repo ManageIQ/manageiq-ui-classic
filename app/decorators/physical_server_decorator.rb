@@ -7,7 +7,7 @@ class PhysicalServerDecorator < MiqDecorator
     'pficon pficon-server'
   end
 
-  def quadicon(_n = nil)
+  def quadicon
     {
       :top_left     => {:text => (host ? 1 : 0)},
       :top_right    => {
