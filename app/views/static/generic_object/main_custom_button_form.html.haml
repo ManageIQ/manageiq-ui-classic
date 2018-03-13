@@ -36,7 +36,7 @@
           = "<#{_('Choose')}>"
       %span.help-block{"ng-show" => "angularForm.dialog_id.$error.required"}
         = _("Required")
-  .form-group{"ng-class" => "{'has-error': vm.angularForm.display.$invalid}"}
+  .form-group{"ng-class" => "{'has-error': angularForm.display.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_open_url"}
       = _("Open URL")
     .col-md-8
