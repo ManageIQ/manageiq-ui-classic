@@ -220,6 +220,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
       miqService.sparkleOff();
 
+      $scope.hideDisabledTabs();
+
       $scope.emsOptionsModel.provider_options_original_values = data.provider_options;
       $scope.updateProviderOptionsDescription();
     }
@@ -262,11 +264,25 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.kubevirt_password               = data.kubevirt_password;
 
       miqService.sparkleOff();
-
+      $scope.hideDisabledTabs();
       $scope.afterGet  = true;
       $scope.modelCopy = angular.copy( $scope.emsCommonModel );
     }
   };
+
+  $scope.hideDisabledTabs = function() {
+    if ($scope.emsCommonModel.alerts_selection === 'disabled') {
+      angular.element("#alerts_tab").hide();
+    }
+
+    if ($scope.emsCommonModel.metrics_selection === 'disabled') {
+      angular.element("#container_metrics_tab").hide();
+    }
+
+    if ($scope.emsCommonModel.virtualization_selection === 'disabled') {
+      angular.element("#virtualization_tab").hide();
+    }
+  }
 
   $scope.changeAuthTab = function(id) {
     $scope.currentTab = id;
@@ -444,7 +460,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.metricSelectionChanged = function() {
-    $scope.tabSelectionChanged("#metrics_tab", $scope.emsCommonModel.metrics_selection);
+    $scope.tabSelectionChanged("#container_metrics_tab", $scope.emsCommonModel.metrics_selection);
   };
 
   $scope.alertsSelectionChanged = function() {
