@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', 'sb', 'database_display_name', 'database_details', function($http, $scope, $attrs, miqService, miqDBBackupService, sb, database_display_name, database_details) {
+ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', 'sb', 'database_display_name', 'database_details', 'backup_schedules', function($http, $scope, $attrs, miqService, miqDBBackupService, sb, database_display_name, database_details, backup_schedules) {
   var vm = this;
   var init = function() {
     vm.diagnosticsDatabaseModel = {
@@ -23,6 +23,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     vm.sb = sb;
     vm.database_display_name = database_display_name;
     vm.database_details = database_details;
+    vm.backup_schedules = backup_schedules;
   };
 
   vm.validateClicked = function() {
