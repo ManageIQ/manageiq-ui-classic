@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkFormId', 'miqService', 'API', function(cloudNetworkFormId, miqService, API) {
+ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkFormId', 'networkProviderChoices', 'miqService', 'API', function(cloudNetworkFormId, miqService, API) {
   var vm = this;
 
   var init = function() {
