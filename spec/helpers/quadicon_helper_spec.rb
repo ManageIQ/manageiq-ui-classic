@@ -736,8 +736,6 @@ describe QuadiconHelper do
     let(:options) { {:mode => :icon} }
     subject(:quadicon) { helper.render_resource_pool_quadicon(item, options) }
 
-    include_examples :shield_img_with_policies
-
     it 'has a vapp image when vapp' do
       item.vapp = true
 

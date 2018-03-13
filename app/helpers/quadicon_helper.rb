@@ -199,7 +199,6 @@ module QuadiconHelper
     if item.kind_of?(VmOrTemplate) && quadicon_policy_sim? && !session[:policies].empty?
       output << flobj_img_small(img_for_compliance(item), "e72")
     end
-    output << flobj_img_simple('100/shield.png', "g72") if item.try(:get_policies).present?
     output << flobj_img_simple(quad_image(item), "e72")
   end
 
