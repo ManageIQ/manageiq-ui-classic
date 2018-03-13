@@ -25,4 +25,10 @@ class ExtManagementSystemDecorator < MiqDecorator
       }
     }
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

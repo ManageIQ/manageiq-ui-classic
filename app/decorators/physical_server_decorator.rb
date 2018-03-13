@@ -25,6 +25,8 @@ class PhysicalServerDecorator < MiqDecorator
     }
   end
 
+  alias_method :single_quad, :fileicon
+
   private
 
   def health_state_img

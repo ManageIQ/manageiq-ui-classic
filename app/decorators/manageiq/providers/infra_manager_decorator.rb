@@ -25,4 +25,10 @@ class ManageIQ::Providers::InfraManagerDecorator < ExtManagementSystemDecorator
       }
     }
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

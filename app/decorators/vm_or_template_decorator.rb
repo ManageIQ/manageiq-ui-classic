@@ -30,6 +30,12 @@ class VmOrTemplateDecorator < MiqDecorator
     }
   end
 
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
+
   private
 
   def os_image
