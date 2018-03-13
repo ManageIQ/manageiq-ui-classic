@@ -6,4 +6,10 @@ class EmsClusterDecorator < MiqDecorator
   def self.fileicon
     '100/ems_cluster.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

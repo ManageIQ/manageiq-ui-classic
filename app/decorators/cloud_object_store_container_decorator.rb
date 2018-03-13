@@ -6,4 +6,10 @@ class CloudObjectStoreContainerDecorator < MiqDecorator
   def self.fileicon
     '100/cloud_object_store_container.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

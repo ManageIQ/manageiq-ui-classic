@@ -6,4 +6,10 @@ class SecurityGroupDecorator < MiqDecorator
   def self.fileicon
     '100/security_group.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

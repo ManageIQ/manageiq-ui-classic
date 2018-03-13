@@ -6,4 +6,10 @@ class FlavorDecorator < MiqDecorator
   def self.fileicon
     '100/flavor.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

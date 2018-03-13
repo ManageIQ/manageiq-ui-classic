@@ -25,7 +25,11 @@ class PhysicalServerDecorator < MiqDecorator
     }
   end
 
-  alias_method :single_quad, :fileicon
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 
   private
 

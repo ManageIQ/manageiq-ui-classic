@@ -6,4 +6,10 @@ class FloatingIpDecorator < MiqDecorator
   def self.fileicon
     '100/floating_ip.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

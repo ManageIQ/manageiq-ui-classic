@@ -6,4 +6,10 @@ class ContainerReplicatorDecorator < MiqDecorator
   def self.fileicon
     '100/container_replicator.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end
