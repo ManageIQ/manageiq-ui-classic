@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudVolumeForm', {
+ManageIQ.angular.app.component('cloudVolumeForm', {
 bindings: {
   cloudVolumeFormId: '@',
   storageManagerId: '@',
@@ -7,7 +7,7 @@ controllerAs: 'vm',
 controller: ['miqService', 'API', function (miqService, API) {
   var vm = this;
 
-  var init = function() {
+  this.$onInit = function() {
     vm.afterGet = false;
 
     vm.cloudVolumeModel = {
@@ -246,6 +246,5 @@ controller: ['miqService', 'API', function (miqService, API) {
     miqService.sparkleOff();
   };
   }],
-
-  init();
+  templateUrl: '/static/cloud_volume/cloud_volume_form.html.haml',
 });
