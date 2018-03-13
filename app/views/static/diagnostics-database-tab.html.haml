@@ -9,7 +9,7 @@
                               'model-copy'                            => 'vm.modelCopy',
                               'form-changed'                          => true,}
   -#- if @sb[:active_tab] == "diagnostics_database"
-  %div{'ng-if' => 'sb == "diagnostics_database"'}
+  %div{'ng-if' => 'vm.sb == "diagnostics_database"'}
     %h3
       = _("Basic Info")
   .form-group
@@ -17,31 +17,35 @@
       = _("Type")
     .col-md-8
       %p.form-control-static
-        = h(@database_display_name)
+        {{vm.database_display_name}}
+        -#= h(@database_display_name)
   .form-group
     %label.col-md-2.control-label
       = _("Hostname")
     .col-md-8
       %p.form-control-static
-        = h(@database_details["host"])
+        {{vm.database_details.host}}
+        -#= h(@database_details["host"])
   .form-group
     %label.col-md-2.control-label
       = _("Database Name")
     .col-md-8
       %p.form-control-static
-        = h(@database_details["database"])
+        {{vm.database_details.database}}
+        -#= h(@database_details["database"])
   .form-group
     %label.col-md-2.control-label
       = _("Username")
     .col-md-8
       %p.form-control-static
-        = h(@database_details["username"])
+        {{vm.database_details.username}}
+        -#= h(@database_details["username"])
 
   %hr
   %h3
     = _("Run a Database Backup Now")
   -#- if @sb[:active_tab] == "diagnostics_database"
-  %div{'ng-if' => 'sb == "diagnostics_database"'}
+  %div{'ng-if' => 'vm.sb == "diagnostics_database"'}
     -# jak se to resi: 
         -# manageIQ.angular.app.value('moje_jmeno', #{@sb[;active_tab]})
         ..controller ($scope, .. moje_jmeno) ... vm.moje = moje_jmeno;
