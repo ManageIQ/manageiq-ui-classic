@@ -29,9 +29,9 @@
                             "id"          => "object_request",
                             "name"        => "object_request",
                             "ng-model"    => "scheduleModel.object_request",
-                            "miqrequired" => "",
+                            :required     => true,
                             "checkchange" => ""}
-        %span.help-block{"ng-show" => "angularForm.object_request.$error.miqrequired"}
+        %span.help-block{"ng-show" => "angularForm.object_request.$error.required"}
           = _("Required")
 
   %div
