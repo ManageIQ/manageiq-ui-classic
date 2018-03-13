@@ -1,8 +1,7 @@
 #main_div
 
-        %security-group-component
+        %security-group-component{'security-id' => @id}
 :javascript
-        ManageIQ.angular.app.value('securityId', '#{@id}');
         miq_bootstrap('security-group-component')
 
 
