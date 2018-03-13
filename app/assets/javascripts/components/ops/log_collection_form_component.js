@@ -2,7 +2,7 @@ ManageIQ.angular.app.component('logCollectionFormComponent', {
 
   controllerAs: 'vm',
 
-  controller: 'logCollectionFormController',
+  controller: logCollectionFormController,
 
   templateUrl: "/static/ops/logcollection/log_collection.html.haml"
 
