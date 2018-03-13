@@ -1,0 +1,114 @@
+%form#form_div{"name"          => "angularForm",
+   "form-changed"  => true,
+   "miq-form"      => true,
+   "model"         => "vm.cloudSubnetModel",
+   "model-copy"    => "vm.modelCopy",
+   "ng-cloak"      => "",
+   "ng-show"       => "vm.afterGet"}
+  = render :partial => "layouts/flash_msg"
+  %h3
+    = _('Network Provider')
+  .form-horizontal
+    .form-group{"ng-class" => "{'has-error': angularForm.ems_id.$invalid}"}
+      %label.col-md-2.control-label
+        = _('Network Manager')
+      .col-md-8
+        = select_tag("ems_id",
+            options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
+            "ng-model"                    => "vm.cloudSubnetModel.ems_id",
+            "ng-change"                   => "vm.filterNetworkManagerChanged(vm.cloudSubnetModel.ems_id)",
+            "required"                    => "",
+            "selectpicker-for-select-tag" => "")
+        %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
+          = _("Required")
+  %h3
+    = _('Placement')
+  .form-horizontal
+    .form-group{"ng-if"    => "vm.cloudSubnetModel.ems_id",
+                "ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
+      %label.col-md-2.control-label
+        = _('Cloud Tenant')
+      .col-md-8
+        %select{"name"                        => "cloud_tenant_id",
+                "ng-model"                    => "vm.cloudSubnetModel.cloud_tenant_id",
+                "ng-options"                  => "tenant.id as tenant.name for tenant in vm.available_tenants",
+                "pf-select"                   => true,
+                "required"                    => "",
+                "selectpicker-for-select-tag" => ""}
+          %option{"value" => ""}
+            = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
+          = _("Required")
+  %h3
+    = _('Cloud Subnet details')
+  .form-horizontal
+    .form-group{"ng-if"    => "vm.cloudSubnetModel.ems_id",
+                "ng-class" => "{'has-error': angularForm.network_id.$invalid}"}
+      %label.col-md-2.control-label
+        = _('Network')
+      .col-md-8
+        %select{"name"                        => "network_id",
+                "ng-model"                    => "vm.cloudSubnetModel.network_id",
+                "ng-options"                  => "network.ems_ref as network.name for network in vm.available_networks",
+                "pf-select"                   => true,
+                "required"                    => "",
+                "selectpicker-for-select-tag" => ""}
+          %option{"value" => ""}
+            = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.network_id.$error.required"}
+          = _("Required")
+  .form-horizontal
+  .form-group
+    %label.col-md-2.control-label
+      = _('Subnet Name')
+    .col-md-8
+      %input.form-control{"type"         => "text",
+                          "name"         => "name",
+                          "ng-model"     => "vm.cloudSubnetModel.name",
+                          "ng-maxlength" => 128}
+  .form-group
+    %label.col-md-2.control-label
+      = _('Gateway')
+    .col-md-8
+      %input.form-control{"type"         => "text",
+                          "name"         => "gateway_ip",
+                          "ng-model"     => "vm.cloudSubnetModel.gateway",
+                          "ng-maxlength" => 20}
+  .form-group
+    %label.control-label.col-md-2{"for" => "cloud_subnet_dhcp_enabled"}
+      = _('Enable DHCP')
+    .col-md-8
+      %input{"type"        => "checkbox",
+             "name"        => "dhcp_enabled",
+             "bs-switch"   => "",
+             "data"        => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+             "id"          => "cloud_subnet_dhcp_enabled",
+             "ng-model"    => "vm.cloudSubnetModel.dhcp_enabled"}
+  .form-group{"ng-class" => "{'has-error': angularForm.network_protocol.$invalid}"}
+    %label.col-md-2.control-label
+      = _('IP Version')
+    .col-md-8
+      %select{"name"                        => "network_protocol",
+              "ng-model"                    => "vm.cloudSubnetModel.network_protocol",
+              "required"                    => "",
+              "ng-disabled"                 => "!vm.newRecord",
+              "ng-options"                  => "protocol as protocol for protocol in vm.networkProtocols",
+              "pf-select"                   => true,
+              "selectpicker-for-select-tag" => ""}
+      %span.help-block{"ng-show" => "angularForm.network_protocol.$error.required"}
+        = _("Required")
+
+  .form-group
+    %label.col-md-2.control-label
+      = _('Subnet CIDR')
+    .col-md-8
+      %input.form-control{"type"         => "text",
+                          "name"         => "cidr",
+                          "ng-disabled"  => "!vm.newRecord",
+                          "ng-model"     => "vm.cloudSubnetModel.cidr",
+                          "ng-maxlength" => 20}
+  = render :partial => "layouts/angular/generic_form_buttons"
+
+:javascript
+  ManageIQ.angular.app.value('cloudSubnetFormId', '#{@subnet.id || "new"}');
+  miq_bootstrap('cloud-subnet-form')
