@@ -12,7 +12,7 @@ module HostHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i(
-        hostname ipaddress ipmi_ipaddress custom_1 vmm_info model asset_tag service_tag osinfo
+        hostname ipaddress ipmi_ipaddress hypervisor_hostname custom_1 vmm_info model asset_tag service_tag osinfo
         power_state lockdown_mode maintenance_mode devices network storage_adapters num_cpu num_cpu_cores
         cpu_cores_per_socket memory guid
       )
@@ -131,6 +131,10 @@ module HostHelper::TextualSummary
 
   def textual_ipmi_ipaddress
     {:label => _("IPMI IP Address"), :value => @record.ipmi_address.to_s}
+  end
+
+  def textual_hypervisor_hostname
+    {:label => _("Hypervisor Hostname"), :value => @record.hypervisor_hostname.to_s}
   end
 
   def textual_custom_1
