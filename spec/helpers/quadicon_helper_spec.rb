@@ -1033,7 +1033,7 @@ describe QuadiconHelper do
 
     context "when @settings does not include :storage" do
       it 'shows used space' do
-        expect(storage_quad).to have_selector("img[src*='datastore-8']")
+        expect(storage_quad).to have_selector("img[src*='datastore/5']")
       end
 
       it 'includes the base-single img' do
