@@ -26,7 +26,7 @@ class VmOrTemplateDecorator < MiqDecorator
         :fileicon => fileicon,
         :tooltip  => type
       },
-      :bottom_right => show_compliance ? compliance_image(settings[:policies].keys) : total_snapshots
+      :bottom_right => show_compliance ? compliance_image(settings[:policies].keys) : {:text => ERB::Util.h(v_total_snapshots)}
     }
   end
 
@@ -34,5 +34,13 @@ class VmOrTemplateDecorator < MiqDecorator
 
   def os_image
     "svg/os-#{ERB::Util.h(os_image_name.downcase)}.svg"
+  end
+
+  # FIXME: this will be unnecessary after the conditional policies are dropped from the decorators
+  def compliance_image(policies)
+    {
+      :fileicon => QuadiconHelper::Decorator.compliance_img(passes_profiles?(policies)),
+      :tooltip  => passes_profiles?(get_policies)
+    }
   end
 end

@@ -20,7 +20,7 @@ class ManageIQ::Providers::InfraManagerDecorator < ExtManagementSystemDecorator
         :tooltip  => type
       },
       :bottom_right => {
-        :fileicon => status_img(self),
+        :fileicon => QuadiconHelper::Decorator.status_img(authentication_status),
         :tooltip  => authentication_status
       }
     }

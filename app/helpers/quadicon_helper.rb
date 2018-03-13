@@ -19,8 +19,6 @@ module QuadiconHelper
   # session[:policies]
   # request.parameters[:controller]
 
-  include QuadiconHelper::Decorator
-
   def quadicon_truncate_mode
     @settings.fetch_path(:display, :quad_truncate) || 'm'
   end
@@ -71,6 +69,10 @@ module QuadiconHelper
 
   def quadicon_view_db_is_vm?
     @view.db == "Vm"
+  end
+
+  def quadicon_policy_sim?
+    !!@policy_sim
   end
 
   def quadicon_service_ctrlr_and_vm_view_db?
@@ -216,7 +218,7 @@ module QuadiconHelper
   def quadicon_for_item(item)
     quad_settings = if item.kind_of?(VmOrTemplate)
                       {
-                        :show_compliance => quadicon_lastaction_is_policy_sim? || quadicon_policy_sim?,
+                        :show_compliance => @lastaction == "policy_sim" || quadicon_policy_sim?,
                         :policies        => session[:policies]
                       }
                     else
@@ -236,7 +238,7 @@ module QuadiconHelper
   end
 
   def img_for_compliance(item)
-    compliance_img(item, session[:policies])
+    QuadiconHelper::Decorator.compliance_img(item.passes_profiles?(session[:policies]))
   end
 
   def img_for_vendor(item)
@@ -244,7 +246,7 @@ module QuadiconHelper
   end
 
   def img_for_auth_status(item)
-    status_img(item)
+    QuadiconHelper::Decorator.status_img(item.authentication_status)
   end
 
   def render_quadicon_text(item, row)
