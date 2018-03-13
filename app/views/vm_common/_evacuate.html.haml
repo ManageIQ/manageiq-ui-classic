@@ -1,83 +1,9 @@
-%form#form_div{:name           => "angularForm",
-               'ng-controller' => "vmCloudEvacuateFormController as vm",
-               "miq-form"      => true,
-               'form-changed'  => true,
-               "model"         => "vm.vmCloudModel",
-               "model-copy"    => 'vm.modelCopy'}
-  = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Evacuate Host')
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Auto-select Host?')
-      .col-md-8
-        %input{:type         => "checkbox",
-               :name         => "auto_select_host",
-               'ng-model'    => "vm.vmCloudModel.auto_select_host",
-               :required     => true,
-               'ng-disabled' => "vm.hosts.length == 0"}
 
-        %input{:type         => "hidden",
-               :name         => "auto_select_host",
-               :value        => "on",
-               'ng-if'       => "vm.hosts.length == 0"}
-    .form-group
-      %label.col-md-2.control-label
-        = _('On Shared Storage')
-      .col-md-8
-        %input{:type         => "checkbox",
-               :name         => "on_shared_storage",
-               'ng-model'    => "vm.vmCloudModel.on_shared_storage"}
-    .form-group{'ng-hide' => 'vm.vmCloudModel.on_shared_storage'}
-      %label.col-md-2.control-label
-        = _('Admin Password')
-      .col-md-8
-        %input.form-control{:type         => "password",
-                            :name         => "admin_password",
-                            'ng-model'    => "vm.vmCloudModel.admin_password"}
-  #evacuate-select-destination-host{'ng-hide' => 'vm.vmCloudModel.auto_select_host'}
-    %h3
-      = _('Select Destination Host')
-    .form-horizontal
-      .form-group
-        %label.col-md-2.control-label
-          = _('Destination Host')
-        .col-md-8
-          %select{:name        => 'destination_host',
-                  'ng-model'   => 'vm.vmCloudModel.host',
-                  'ng-options' => 'host.name as host.name for host in vm.hosts track by host.id'}
-
-  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                  'paging_div_buttons_state_enabled' => true,
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Submit"}
-
-  %hr
-  %div
-    %h3
-      = n_("1 Instance to be Evacuated", "%{amount} Instances to be Evacuated", @evacuate_items.length) % {:amount => @evacuate_items.length}
-    - if @evacuate_items
-      - @embedded = true
-      - @quadicon_no_url = true
-      = render :partial => "layouts/gtl"
-
-- unless @explorer
-  %table{:width => '100%'}
-    %tr
-      %td{:align => 'right'}
-        #buttons_on
-          = button_tag(t = _('Submit'),
-            :class   => "btn btn-primary",
-            :alt     => t,
-            :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :button => "submit")}');")
-          = button_tag(t = _('Cancel'),
-            :class   => "btn btn-default",
-            :alt     => t,
-            :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :button => "cancel")}');")
+%vm-cloud-evacuate-form
+:javascript
+ManageIQ.angular.app.value('repositoryId', '#{@id}');
+miq_bootstrap('vm-cloud-evacuate-form')
 
 :javascript
   ManageIQ.angular.app.value('vmCloudEvacuateFormId', "#{@evacuate_items.length == 1 ? @evacuate_items[0].id : ''}");
-  miq_bootstrap('#form_div');
+  miq_bootstrap('vm-cloud-evacuate-form');
