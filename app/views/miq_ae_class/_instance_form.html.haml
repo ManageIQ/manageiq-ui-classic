@@ -123,4 +123,5 @@
           = text_field_tag("#{prefix}inst_collect_#{i}",
             flds["collect"].blank? ? '' : flds["collect"],
             :placeholder       => default_value,
+            :disabled          => !%w(relationship state).include?(@edit[:new][:ae_fields][i]["aetype"]),
             "data-miq_observe" => obs)
