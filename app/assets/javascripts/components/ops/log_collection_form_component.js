@@ -2,9 +2,9 @@ ManageIQ.angular.app.component('logCollectionFormComponent', {
 
   controllerAs: 'vm',
 
-  controller: logCollectionFormController,
+  controller: "logCollectionFormController",
 
-  templateUrl: "/static/ops/logcollection/log_collection.html.haml"
+  templateUrl: "/static/ops/logcollection/log_collection.html.haml",
 
   bindings: {
     'serverId': '@',
@@ -12,5 +12,5 @@ ManageIQ.angular.app.component('logCollectionFormComponent', {
 
 });
 
-logCollectionFormComponent.$inject = [];
+//logCollectionFormController.$inject = ['miqService', 'API'];
 

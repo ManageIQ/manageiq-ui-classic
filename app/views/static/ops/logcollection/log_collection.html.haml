@@ -13,15 +13,17 @@
   = render :partial => "layouts/flash_msg"
 
   %h3
-    = _("Editing Log Depot Settings for %{class}: %{display}") % {:class   => Dictionary.gettext(@record.class.name,
-                                                                                                   :type     => :model,
-                                                                                                   :notfound => :titleize),
-                                                                    :display => @record.display_name}
+    :javascript
+        ManageIQ.angular.app.value('message', (_("Editing Log Depot Settings for %{class}: %{display}") % {:class   => Dictionary.gettext(record.class.name, :type => :model, :notfound => :titleize),
+                                                                  :display => @record.display_name}).to_json);
+
+        {{vm.message}}
+
   .form-group
     %label.control-label.col-md-2
       = _("Type")
     .col-md-8
-      - default_option = [_("<Noo Depot>"), nil]
+      - default_option = [_("<Noo Depot>"), "nil"]
       = select_tag('log_protocol', options_for_select([default_option] + @supported_depots_for_select),
                    "ng-model"                    => "vm.logCollectionModel.log_protocol",
                    "ng-change"                   => "vm.logProtocolChanged()",
@@ -52,4 +54,6 @@
   = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
+  ManageIQ.angular.app.value("log_protocol", #(@supported_depots_for_select).sort.to_json);
+  ng-options="choice[1] as choice[0] for choice in vm.log_protocol"
   miq_bootstrap('#form_div');
