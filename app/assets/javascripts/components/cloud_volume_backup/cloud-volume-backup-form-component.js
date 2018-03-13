@@ -1,15 +1,11 @@
 ManageIQ.angular.app.component('cloudVolumeBackupFormComponent', {
 
     templateUrl: '/static/cloud_volume_backup/volume_select.html.haml',
-    controller: 'cloudVolumeBackupFormController',
     controllerAs: 'vm',
     bindings: {
       'cloudVolumeBackupFormId': '@',
     },
-  });
-    cloudVolumeBackupFormController.$inject = ['miqService', 'API'];
-
-    function cloudVolumeBackupFormController(miqService, API) {
+    controller: ['miqService', 'API', function (miqService, API) {
       var vm = this;
 
       var init = function() {
@@ -66,4 +62,5 @@ ManageIQ.angular.app.component('cloudVolumeBackupFormComponent', {
       }
 
       init();
-    }
+    }],
+  });
