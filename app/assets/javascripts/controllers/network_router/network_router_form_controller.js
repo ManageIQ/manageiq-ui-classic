@@ -7,7 +7,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   };
   vm.formId = networkRouterFormId;
   vm.afterGet = false;
-  vm.modelCopy = angular.copy( $scope.networkRouterModel );
+  vm.modelCopy = angular.copy( vm.networkRouterModel );
   vm.model = "networkRouterModel";
 
   vm.saveable = miqService.saveable;
@@ -61,7 +61,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   vm.resetClicked = function() {
     vm.networkRouterModel = angular.copy( vm.modelCopy );
-    vm.angularForm.$setPristine(true);
+    $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
 
