@@ -4,6 +4,6 @@ module OpsHelper::MyServer
   end
 
   def my_server
-    @my_server ||= MiqServer.my_server(true)
+    MiqServer.my_server
   end
 end
