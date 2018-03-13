@@ -8,8 +8,7 @@
 import { mount } from '../react/mounter';
 import componentRegistry from '../react/componentRegistry';
 
-// TODO: use ManageIQ object, once race conditions are fixed
-window.MiqReact = Object.assign(window.MiqReact || {}, {
-  mount: mount,
-  componentRegistry: componentRegistry
-});
+ManageIQ.react = {
+  mount,
+  componentRegistry,
+};
