@@ -93,15 +93,16 @@ class ApplicationController < ActionController::Base
   # Default UI settings
   DEFAULT_SETTINGS = {
     :quadicons => { # Show quad icons, by resource type
-      :service         => true,
-      :ems             => true,
-      :ems_cloud       => true,
-      :host            => true,
-      :miq_template    => true,
-      :physical_server => true,
-      :storage         => true,
-      :vm              => true,
-      :ems_container   => true
+      :service            => true,
+      :ems                => true,
+      :ems_cloud          => true,
+      :ems_physical_infra => true,
+      :host               => true,
+      :miq_template       => true,
+      :physical_server    => true,
+      :storage            => true,
+      :vm                 => true,
+      :ems_container      => true
     },
     :views     => { # List view setting, by resource type
       :authkeypaircloud                                                       => "list",
