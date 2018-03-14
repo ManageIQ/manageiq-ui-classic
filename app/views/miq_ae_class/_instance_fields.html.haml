@@ -2,17 +2,18 @@
 %h3= _('Fields')
 #instance_fields_div
   - if !@in_a_form
-
+    - state_class = state_class?(@record.class_id)
     %table#instance_fields_grid.table.table-striped.table-bordered
       %thead
         %th= _('Name')
         %th= _('Value')
-        %th= _('On Entry')
-        %th= _('On Exit')
-        %th= _('On Error')
+        - if state_class
+          %th= _('On Entry')
+          %th= _('On Exit')
+          %th= _('On Error')
+          %th= _('Max Retries')
+          %th= _('Max Time')
         %th= _('Collect')
-        %th= _('Max Retries')
-        %th= _('Max Time')
         %th= _('Message')
       %tbody
         - @ae_class.ae_fields.each do |field|
@@ -30,18 +31,19 @@
                 ********
               - else
                 = nonblank(ae_value.value, field.default_value)
-            %td
-              = nonblank(ae_value.on_entry, field.on_entry)
-            %td
-              = nonblank(ae_value.on_exit, field.on_exit)
-            %td
-              = nonblank(ae_value.on_error, field.on_error)
+            - if state_class
+              %td
+                = nonblank(ae_value.on_entry, field.on_entry)
+              %td
+                = nonblank(ae_value.on_exit, field.on_exit)
+              %td
+                = nonblank(ae_value.on_error, field.on_error)
+              %td
+                = nonblank(ae_value.max_retries, field.max_retries)
+              %td
+                = nonblank(ae_value.max_time, field.max_time)
             %td
               = nonblank(ae_value.collect, field.collect)
-            %td
-              = nonblank(ae_value.max_retries, field.max_retries)
-            %td
-              = nonblank(ae_value.max_time, field.max_time)
             %td
               = field.message
 
