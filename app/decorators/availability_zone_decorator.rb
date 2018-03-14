@@ -6,4 +6,10 @@ class AvailabilityZoneDecorator < MiqDecorator
   def self.fileicon
     '100/availability_zone.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

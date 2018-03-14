@@ -3,5 +3,11 @@ module ManageIQ::Providers
     def self.fileicon
       '100/auth_key_pair.png'
     end
+
+    def single_quad
+      {
+        :fileicon => fileicon
+      }
+    end
   end
 end

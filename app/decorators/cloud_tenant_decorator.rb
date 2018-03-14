@@ -6,4 +6,10 @@ class CloudTenantDecorator < MiqDecorator
   def self.fileicon
     '100/cloud_tenant.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

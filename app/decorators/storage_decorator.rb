@@ -22,6 +22,12 @@ class StorageDecorator < MiqDecorator
     }
   end
 
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
+
   private
 
   def store_type_icon

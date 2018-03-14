@@ -6,4 +6,10 @@ class ResourcePoolDecorator < MiqDecorator
   def fileicon
     vapp ? '100/vapp.png' : '100/resource_pool.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

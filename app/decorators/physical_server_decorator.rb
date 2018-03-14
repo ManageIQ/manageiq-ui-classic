@@ -25,6 +25,12 @@ class PhysicalServerDecorator < MiqDecorator
     }
   end
 
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
+
   private
 
   def health_state_img

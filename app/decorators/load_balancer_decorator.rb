@@ -6,4 +6,10 @@ class LoadBalancerDecorator < MiqDecorator
   def self.fileicon
     '100/load_balancer.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

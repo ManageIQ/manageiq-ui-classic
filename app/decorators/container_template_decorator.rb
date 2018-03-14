@@ -6,4 +6,10 @@ class ContainerTemplateDecorator < MiqDecorator
   def self.fileicon
     '100/container_template.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end

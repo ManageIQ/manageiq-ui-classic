@@ -6,4 +6,10 @@ class CloudVolumeDecorator < MiqDecorator
   def self.fileicon
     '100/cloud_volume.png'
   end
+
+  def single_quad
+    {
+      :fileicon => fileicon
+    }
+  end
 end
