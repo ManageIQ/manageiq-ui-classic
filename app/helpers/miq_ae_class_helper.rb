@@ -126,4 +126,8 @@ module MiqAeClassHelper
       'fa fa-file-text-o'
     end
   end
+
+  def state_class?(cls_id)
+    MiqAeClass.find_by(:id => cls_id).state_machine?
+  end
 end

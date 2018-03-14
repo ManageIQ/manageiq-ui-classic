@@ -39,16 +39,21 @@
 %hr
 %h3= _('Fields')
 %table.table.table-striped.table-bordered
+  - state_class = state_class?(@edit[:ae_class_id])
   %thead
     %tr
       %th= _('Name')
       %th= _('Value')
-      %th= _('On Entry')
-      %th= _('On Exit')
-      %th= _('On Error')
+      - if state_class
+        %th= _('On Entry')
+        %th= _('On Exit')
+        %th= _('On Error')
+        %th= _('Max Retries')
+        %th= _('Max Time')
       %th= _('Collect')
   %tbody
     - @edit[:new][:ae_values].each_with_index do |flds, i|
+      - non_state_field = @edit[:new][:ae_fields][i]["aetype"] != "state"
       %tr
         - glyphicon = @edit[:new][:ae_fields][i]["substitute"] ? "pficon pficon-ok" : "pficon pficon-close"
         %td.text-nowrap
@@ -77,27 +82,46 @@
               flds["value"].blank? ? '' : flds["value"],
               :placeholder       => default_value,
               "data-miq_observe" => obs)
-        %td
-          - default_value = @edit[:new][:ae_fields][i]["on_entry"]
-          = text_field_tag("#{prefix}inst_on_entry_#{i}",
-            flds["on_entry"].blank? ? '' : flds["on_entry"],
-            :placeholder       => default_value,
-            "data-miq_observe" => obs)
-        %td
-          - default_value = @edit[:new][:ae_fields][i]["on_exit"]
-          = text_field_tag("#{prefix}inst_on_exit_#{i}",
-            flds["on_exit"].blank? ? '' : flds["on_exit"],
-            :placeholder       => default_value,
-            "data-miq_observe" => obs)
-        %td
-          - default_value = @edit[:new][:ae_fields][i]["on_error"]
-          = text_field_tag("#{prefix}inst_on_error_#{i}",
-            flds["on_error"].blank? ? '' : flds["on_error"],
-            :placeholder       => default_value,
-            "data-miq_observe" => obs)
+        - if state_class
+          %td
+            - default_value = @edit[:new][:ae_fields][i]["on_entry"]
+            = text_field_tag("#{prefix}inst_on_entry_#{i}",
+              flds["on_entry"].blank? ? '' : flds["on_entry"],
+              :placeholder       => default_value,
+              :disabled          => non_state_field,
+              "data-miq_observe" => obs)
+          %td
+            - default_value = @edit[:new][:ae_fields][i]["on_exit"]
+            = text_field_tag("#{prefix}inst_on_exit_#{i}",
+              flds["on_exit"].blank? ? '' : flds["on_exit"],
+              :placeholder       => default_value,
+              :disabled          => non_state_field,
+              "data-miq_observe" => obs)
+          %td
+            - default_value = @edit[:new][:ae_fields][i]["on_error"]
+            = text_field_tag("#{prefix}inst_on_error_#{i}",
+              flds["on_error"].blank? ? '' : flds["on_error"],
+              :placeholder       => default_value,
+              :disabled          => non_state_field,
+              "data-miq_observe" => obs)
+          %td
+            - default_value = @edit[:new][:ae_fields][i]["max_retries"]
+            = text_field_tag("#{prefix}inst_max_retries_#{i}",
+              flds["max_retries"].blank? ? '' : flds["max_retries"],
+              :placeholder       => default_value,
+              :disabled          => non_state_field,
+              "data-miq_observe" => obs)
+          %td
+            - default_value = @edit[:new][:ae_fields][i]["max_time"]
+            = text_field_tag("#{prefix}inst_max_time_#{i}",
+              flds["max_time"].blank? ? '' : flds["max_time"],
+              :placeholder       => default_value,
+              :disabled          => non_state_field,
+              "data-miq_observe" => obs)
         %td
           - default_value = @edit[:new][:ae_fields][i]["collect"]
           = text_field_tag("#{prefix}inst_collect_#{i}",
             flds["collect"].blank? ? '' : flds["collect"],
             :placeholder       => default_value,
+            :disabled          => !%w(relationship state).include?(@edit[:new][:ae_fields][i]["aetype"]),
             "data-miq_observe" => obs)
