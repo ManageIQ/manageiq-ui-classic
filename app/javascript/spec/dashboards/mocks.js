@@ -27,6 +27,9 @@ window.miqDeferred = () => {
   return deferred;
 };
 
+// FIXME: don't mock PF functions
+$.fn.setupVerticalNavigation = function() {};
+
 require('../../../assets/javascripts/components/widget-chart');
 require('../../../assets/javascripts/components/widget-empty');
 require('../../../assets/javascripts/components/widget-error');
