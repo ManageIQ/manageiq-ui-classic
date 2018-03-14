@@ -11,7 +11,7 @@ class ExtManagementSystemDecorator < MiqDecorator
     "svg/vendor-#{image_name}.svg"
   end
 
-  def quadicon(_n = nil)
+  def quadicon
     {
       :top_left     => {:text => try(:hosts).try(:size).to_i},
       :top_right    => {:text => ""},

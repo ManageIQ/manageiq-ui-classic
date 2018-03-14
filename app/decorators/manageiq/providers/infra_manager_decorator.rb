@@ -11,7 +11,7 @@ class ManageIQ::Providers::InfraManagerDecorator < ExtManagementSystemDecorator
     "svg/vendor-#{image_name}.svg"
   end
 
-  def quadicon(_n = nil)
+  def quadicon
     {
       :top_left     => {:text => hosts.size},
       :top_right    => {:text => total_vms},

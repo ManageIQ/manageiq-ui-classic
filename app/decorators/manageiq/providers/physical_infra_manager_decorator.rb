@@ -11,7 +11,7 @@ class ManageIQ::Providers::PhysicalInfraManagerDecorator < ExtManagementSystemDe
     "svg/vendor-#{image_name}.svg"
   end
 
-  def quadicon(_n = nil)
+  def quadicon
     {
       :top_left     => {:text => physical_servers.size},
       :top_right    => {:text => ""},

@@ -8,7 +8,7 @@ class StorageDecorator < MiqDecorator
     "100/piecharts/datastore-#{percent}.png"
   end
 
-  def quadicon(_n = nil)
+  def quadicon
     {
       :top_left     => {
         :fileicon => store_type_icon,

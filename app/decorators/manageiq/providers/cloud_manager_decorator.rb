@@ -11,7 +11,7 @@ class ManageIQ::Providers::CloudManagerDecorator < MiqDecorator
     "svg/vendor-#{image_name}.svg"
   end
 
-  def quadicon(_n = nil)
+  def quadicon
     {
       :top_left     => {:text => total_vms},
       :top_right    => {:text => total_miq_templates},
