@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
 const tags = { animal: ['duck', 'pig'], food: ['steak', 'salad'] };
-const setTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'food', tagValue: 'steak' }];
+const assignedTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'food', tagValue: 'steak' }];
 const selectedTagCategory = 'animal';
 const selectedTagValue = 'pig';
 function onChange(x) {
@@ -19,7 +19,7 @@ describe('Tagging component without redux mapping', () => {
   it('match snapshot', () => {
     const component = renderer.create(<Tagging
       tags={tags}
-      setTags={setTags}
+      assignedTags={assignedTags}
       onTagValueChange={onChange}
       onTagCategoryChange={onChange}
       onTagDeleteClick={onDelete}
@@ -36,7 +36,7 @@ describe('Tagging component without redux mapping', () => {
     const onTagDeleteClick = jest.fn();
     const wrapper  = shallow(<Tagging
       tags={tags}
-      setTags={setTags}
+      assignedTags={assignedTags}
       onTagValueChange={onTagValueChange}
       onTagCategoryChange={onTagCategoryChange}
       onTagDeleteClick={onTagDeleteClick}

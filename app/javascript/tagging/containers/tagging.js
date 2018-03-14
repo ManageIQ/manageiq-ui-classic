@@ -1,27 +1,38 @@
 import { connect } from 'react-redux';
-import { addSetTag, deleteSetTag, toggleTagCategoryChange, toggleTagValueChange } from '../actions';
+import { changeAssignedTag, deleteAssignedTag, toggleTagCategoryChange, toggleTagValueChange, loadState, addAssignedTag } from '../actions';
 import Tagging from '../components/tagging';
+import TaggingWithButtons from '../components/taggingWithButtons';
 
 // container compo
 const mapStateToProps = state => ({
-  tags: state.tags,
-  selectedTagCategory: state.selected.tagCategory,
-  selectedTagValue: state.selected.tagValue,
-  setTags: state.setTags,
+  tags: state.appState.tags,
+  selectedTagCategory: state.appState.selected.tagCategory,
+  selectedTagValue: state.appState.selected.tagValue,
+  assignedTags: state.appState.assignedTags,
 });
 
 
 const mapDispatchToProps = dispatch => ({
   onTagDeleteClick: (tag) => {
-    dispatch(deleteSetTag(tag));
+    dispatch(deleteAssignedTag(tag));
   },
   onTagCategoryChange: (cat) => {
     dispatch(toggleTagCategoryChange(cat));
   },
   onTagValueChange: (val) => {
     dispatch(toggleTagValueChange(val));
-    dispatch(addSetTag(val));
+    dispatch(changeAssignedTag(val));
   },
+
+  onTagMultiValueChange: (val) => {
+    dispatch(toggleTagValueChange(val));
+    dispatch(addAssignedTag(val));
+  },
+
+  onLoadState: (state) => {
+    console.log('ON LOAD STATE');
+    dispatch(loadState(state))
+  }
 });
 
 const TaggingConnected = connect(
@@ -29,4 +40,9 @@ const TaggingConnected = connect(
   mapDispatchToProps,
 )(Tagging);
 
-export default TaggingConnected;
+const TaggingWithButtonsConnected = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TaggingWithButtons);
+
+export { TaggingConnected, TaggingWithButtonsConnected };

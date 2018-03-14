@@ -10,7 +10,7 @@ import taggingApp from '../reducers/'
 
 const tags_obj = { animal: ['duck', 'pig'], food: ['steak', 'salad'] };
 function tags() { return tags_obj; }
-const setTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'food', tagValue: 'steak' }];
+const assignedTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'food', tagValue: 'steak' }];
 const selectedTagCategory = 'animal';
 const selectedTagValue = 'pig';
 const taggingApp2 = combineReducers({ taggingApp, tags });
@@ -19,7 +19,7 @@ const store = createStore(taggingApp2);
 storiesOf('Tagging', module)
   .add('Tagging dummy', () => <Tagging
     tags={tags_obj}
-    setTags={setTags}
+    assignedTags={assignedTags}
     onTagValueChange={action('onTagValueChange')}
     onTagCategoryChange={action('onTagCategoryChange')}
     onTagDeleteClick={action('onTagDeleteClick')}
@@ -30,4 +30,4 @@ storiesOf('Tagging', module)
   .add('Tagging with logic', () => <Provider store={store}><TaggingConnected /></Provider>);
 
 storiesOf('Tagging', module)
-  .add('TagView', () => <TagView setTags={setTags} onTagDeleteClick={action('onTagDeleteClick')} />);
+  .add('TagView', () => <TagView assignedTags={assignedTags} onTagDeleteClick={action('onTagDeleteClick')} />);

@@ -10,12 +10,27 @@ export const toggleTagValueChange = tag => ({
   tag,
 });
 
-export const deleteSetTag = tag => ({
-  type: actions.DELETE_SET_TAG,
+export const deleteAssignedTag = tag => ({
+  type: actions.DELETE_ASSIGNED_TAG,
   tag,
 });
 
-export const addSetTag = tag => ({
-  type: actions.ADD_SET_TAG,
+export const changeAssignedTag = tag => ({
+  type: actions.CHANGE_ASSIGNED_TAG,
   tag,
+});
+
+export const addAssignedTag = tag => ({
+  type: actions.ADD_ASSIGNED_TAG,
+  tag,
+});
+
+
+export const loadState = initialState => ({
+  type: actions.LOAD_STATE,
+  initialState,
+});
+
+export const resetState = () => ({
+  type: actions.RESET_STATE,
 });

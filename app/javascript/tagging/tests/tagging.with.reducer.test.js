@@ -8,9 +8,9 @@ import { Provider } from 'react-redux';
 
 
 const tags = { animal: ['duck', 'pig'], food: ['steak', 'salad'] };
-const setTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'food', tagValue: 'steak' }];
+const assignedTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'food', tagValue: 'steak' }];
 
-const initialState = { tags, selected: { tagCategory: 'animal', tagValue: 'pig' }, setTags };
+const initialState = { tags, selected: { tagCategory: 'animal', tagValue: 'pig' }, assignedTags };
 const mockStore = configureStore();
 let store,
   wrapper;
@@ -29,6 +29,6 @@ describe('Test connected Tagging component', () => {
     expect(wrapper.find(Tagging).prop('tags')).toEqual(initialState.tags);
     expect(wrapper.find(Tagging).prop('selectedTagCategory')).toEqual(initialState.selected.tagCategory);
     expect(wrapper.find(Tagging).prop('selectedTagValue')).toEqual(initialState.selected.tagValue);
-    expect(wrapper.find(Tagging).prop('setTags')).toEqual(initialState.setTags);
+    expect(wrapper.find(Tagging).prop('assignedTags')).toEqual(initialState.assignedTags);
   });
 });

@@ -1,11 +1,17 @@
 import { combineReducers } from 'redux';
-import { modifySetTags as setTags, toggle as selected, tags } from './reducers';
+import { modifyassignedTags as assignedTags, toggle as selected, tags, initialize  } from './reducers';
 
-
-const taggingApp = combineReducers({
+const combinedReducers = combineReducers({
   tags,
-  setTags,
+  assignedTags,
   selected,
 });
+
+
+function taggingApp(state = {}, action) {
+  let newState = Object.assign(state);
+  newState = initialize(newState, action);
+  return {appState: combinedReducers(newState.appState, action), initialState: newState.initialState};
+}
 
 export default taggingApp;
