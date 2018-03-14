@@ -234,13 +234,12 @@ describe OpsController do
 
       context 'zone node' do
         it 'sets ntp server info for display' do
-          controller.instance_variable_set(:@sb, :active_tab => 'settings_zone')
-          controller.instance_variable_set(:@edit, :new => {:ntp => {:server => ["example1.com", "example2.com"]}})
           _guid, miq_server, zone = EvmSpecHelper.local_guid_miq_server_zone
+          controller.instance_variable_set(:@sb, :active_tab => 'settings_zone')
+          controller.instance_variable_set(:@edit, :new => {:ntp => {:server => ["1.example.com", "2.example.com"]}})
           controller.send(:zone_save_ntp_server_settings, zone)
-          allow(MiqServer).to receive(:my_server).and_return(miq_server)
           controller.send(:settings_get_info, "z-#{zone.id}")
-          expect(assigns(:ntp_servers)).to eq("example1.com, example2.com")
+          expect(assigns(:ntp_servers)).to eq("1.example.com, 2.example.com")
         end
       end
     end
