@@ -109,10 +109,9 @@ class ConfigurationController < ApplicationController
   def view_selected
     # ui2 form
     return unless load_edit("config_edit__ui2", "configuration")
-    @edit[:new][:views][VIEW_RESOURCES[params[:resource]]] = params[:view] # Capture the new view setting
+    @edit[:new][:views][VIEW_RESOURCES[params[:resource]]] = params[:view] if params[:view].present? # Capture the new view setting
     @edit[:new][:display][:display_vms] = params[:display_vms] == 'true' if params.key?(:display_vms)
-    session[:changed] = (@edit[:new] != @edit[:current])
-    @changed = session[:changed]
+    @changed = session[:changed] = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
       page << javascript_for_miq_button_visibility(@changed)
@@ -474,8 +473,6 @@ class ConfigurationController < ApplicationController
         value.merge!(user_settings[key]) unless user_settings[key].nil?
       end
     end
-    # Override nil settings since we only expect 2 settings: true/false later on
-    settings[:display][:display_vms] = false if settings[:display][:display_vms].nil?
     settings
   end
 
