@@ -208,7 +208,17 @@ describe CloudNetworkController do
       end
       it "queues the delete action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :button, :params => { :id => @network.id, :pressed => "cloud_network_delete", :format => :js }
+        controller.instance_variable_set(:@_params,
+                                         :pressed => "cloud_network_delete",
+                                         :id      => @network.id)
+        allow(controller).to receive(:find_checked_ids_with_rbac).and_return([@network])
+        allow(controller).to receive(:find_id_with_rbac).and_return([@network])
+        controller.instance_variable_set(:@breadcrumbs, [{:url => "cloud_network/show_list"}, 'placeholder'])
+        expect(controller).to receive(:render)
+        controller.send(:button)
+        flash_messages = assigns(:flash_array)
+        expect(flash_messages.first).to eq(:message => "Delete initiated for 1 Cloud Network.",
+                                           :level   => :success)
       end
     end
   end
