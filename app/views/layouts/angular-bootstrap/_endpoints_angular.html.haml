@@ -15,6 +15,7 @@
               "ng-if"    => "emsCommonModel.emstype == 'openstack' || " +                              |
                             "emsCommonModel.emstype == 'openstack_infra' || " +                        |
                             "emsCommonModel.emstype == 'nuage_network' || " +                          |
+                            "emsCommonModel.emstype == 'redfish_ph_infra' || " +                       |
                             "(emsCommonModel.emstype == 'vmware_cloud' && '#{prefix}' === 'amqp') || " |
                             "emsCommonModel.emstype == 'scvmm' || " +                                  |
                             "emsCommonModel.ems_controller == 'ems_container' || " +                   |
@@ -70,6 +71,14 @@
                        "selectpicker-for-select-tag" => "",
                        "prefix"                      => prefix.to_s,
                        "reset-validation-status"     => "#{prefix}_auth_status")
+    .col-md-8{"ng-if" => "emsCommonModel.emstype == 'redfish_ph_infra'"}
+      - security_protocols = @redfish_security_protocols
+      = select_tag("#{prefix}_security_protocol",
+                       options_for_select([["<#{_('Choose')}>", nil]] + security_protocols, :disabled => ["<#{_('Choose')}>", nil]),
+                       "ng-model"                    => "#{ng_model}.#{prefix}_security_protocol",
+                       "checkchange"                 => "",
+                       "required"                    => defined?(security_protocol_not_required) ? false : true,
+                       "selectpicker-for-select-tag" => "")
 
 %div{"ng-if" => defined?(hostname_hide) ? false : true}
   .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_hostname.$invalid}"}
@@ -161,6 +170,7 @@
                          "emsCommonModel.emstype == 'vmware_cloud'           || " + |
                          "emsCommonModel.emstype == 'hawkular'               || " + |
                          "emsCommonModel.emstype == 'lenovo_ph_infra'        || " + |
+                         "emsCommonModel.emstype == 'redfish_ph_infra'       || " + |
                          "emsCommonModel.ems_controller == 'ems_container'"}        |
     %label.col-md-2.control-label{"for" => "#{prefix}_api_port"}
       = _('API Port')
