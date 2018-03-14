@@ -537,7 +537,7 @@ class OpsController < ApplicationController
   def replace_right_cell(options = {}) # replace_trees can be an array of tree symbols to be replaced
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
     if params[:pressed] == "custom_button"
-      presenter = set_custom_button_dialog_presenter
+      presenter = set_custom_button_dialog_presenter(options)
       render :json => presenter.for_render
       return
     end

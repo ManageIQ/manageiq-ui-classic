@@ -1,5 +1,8 @@
 class DialogLocalService
   NEW_DIALOG_USERS = %w(
+    CloudNetwork
+    CloudObjectStoreContainer
+    CloudSubnet
     CloudTenant
     CloudVolume
     ContainerNode
@@ -7,9 +10,12 @@ class DialogLocalService
     GenericObject
     Host
     InfraManager
+    MiqGroup
     MiqTemplate
     Service
     Storage
+    Tenant
+    User
     Vm
   ).freeze
 
@@ -55,6 +61,15 @@ class DialogLocalService
 
   def determine_api_endpoints(obj, display_options = {})
     case obj.class.name.demodulize
+    when /CloudNetwork/
+      api_collection_name = "cloud_networks"
+      cancel_endpoint = "/cloud_network"
+    when /CloudObjectStoreContainer/
+      api_collection_name = "cloud_object_store_containers"
+      cancel_endpoint = "/cloud_object_store_container"
+    when /CloudSubnet/
+      api_collection_name = "cloud_subnets"
+      cancel_endpoint = "/cloud_subnet"
     when /CloudTenant/
       api_collection_name = "cloud_tenants"
       cancel_endpoint = "/cloud_tenant"
@@ -80,6 +95,9 @@ class DialogLocalService
     when /InfraManager/
       api_collection_name = "providers"
       cancel_endpoint = "/ems_infra"
+    when /MiqGroup/
+      api_collection_name = "groups"
+      cancel_endpoint = "/ops/explorer"
     when /MiqTemplate/
       api_collection_name = "templates"
       cancel_endpoint = "/vm_or_template/explorer"
@@ -89,6 +107,12 @@ class DialogLocalService
     when /Storage/
       api_collection_name = "datastores"
       cancel_endpoint = "/storage/explorer"
+    when /Tenant/
+      api_collection_name = "tenants"
+      cancel_endpoint = "/ops/explorer"
+    when /User/
+      api_collection_name = "users"
+      cancel_endpoint = "/ops/explorer"
     when /Vm/
       api_collection_name = "vms"
       cancel_endpoint = display_options[:cancel_endpoint] || "/vm_infra/explorer"
