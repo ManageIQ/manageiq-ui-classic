@@ -215,15 +215,12 @@ module QuadiconHelper
   end
 
   def quadicon_for_item(item)
-    quad_settings = if item.kind_of?(VmOrTemplate)
-                      {
-                        :show_compliance => @lastaction == "policy_sim" || quadicon_policy_sim?,
-                        :policies        => session[:policies]
-                      }
-                    else
-                      {}
-                    end
-    quadicon = item.decorate.try(:quadicon, quad_settings)
+    quadicon = if item.kind_of?(VmOrTemplate)
+                 item.decorate.try(:quadicon, :show_compliance => @lastaction == "policy_sim" || quadicon_policy_sim?,
+                                              :policies        => session[:policies])
+               else
+                 item.decorate.try(:quadicon)
+               end
     if quadicons_from_settings(calculate_quad_db(item)) && quadicon
       quad_decorator(quadicon, item)
     else
