@@ -16,7 +16,6 @@ describe ApplicationController do
 end
 
 describe EmsClusterController do
-
   # view = MiqCompare originally
   # section = Hash[:name => :_model_]
   # fields = [{:name => :name, :header => "Name"},
@@ -68,7 +67,6 @@ describe EmsClusterController do
       view.results = {}
       @fields = []
       init_fields_and_results(sample_values)
-
     end
     # simulation of fields param
     def fill_fields(rows)
@@ -94,13 +92,12 @@ describe EmsClusterController do
       fill_view_results(clusters)
     end
 
-    def get_same_and_diff_totals
+    def same_and_diff_totals
       totals = {}
       totals[:diff_fields_count] = 0
       totals[:same_fields_count] = 0
 
       @fields.each do |field|
-
         # Get reference value from first cluster
         ref_value = sample_values[1].select do |row|
           row[:name] == field[:name]
@@ -128,9 +125,8 @@ describe EmsClusterController do
       totals
     end
 
-
     it "sets total fields in section with 'All attributes' button to number of fields" do
-      controller.instance_variable_set(:@sb, {:miq_temp_params => 'all'})
+      controller.instance_variable_set(:@sb, :miq_temp_params => 'all')
 
       all_fields_count = sample_values[1].size
 
@@ -138,17 +134,16 @@ describe EmsClusterController do
     end
 
     it "sets total fields in section with 'Attributes with different values' button to number of fields where clusters differs" do
-      controller.instance_variable_set(:@sb, {:miq_temp_params => 'different'})
+      controller.instance_variable_set(:@sb, :miq_temp_params => 'different')
 
-      diff_fields_count = get_same_and_diff_totals[:diff_fields_count]
+      diff_fields_count = same_and_diff_totals[:diff_fields_count]
       expect(controller.send(:comp_section_fields_total, view, section, @fields)).to eq(diff_fields_count)
-
     end
 
     it "sets total fields in section with 'Attributes with same values' button to number of fields with same values among clusters" do
       controller.instance_variable_set(:@sb, :miq_temp_params => 'same')
 
-      same_fields_count = get_same_and_diff_totals[:same_fields_count]
+      same_fields_count = same_and_diff_totals[:same_fields_count]
       expect(controller.send(:comp_section_fields_total, view, section, @fields)).to eq(same_fields_count)
     end
   end
