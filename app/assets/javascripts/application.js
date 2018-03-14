@@ -5,7 +5,7 @@
 //= require jquery
 //= require ./jquery_overrides
 //= require ./i18n
-//= require bower_components/patternfly/dist/js/patternfly
+//= require patternfly
 //= require bower_components/jquery-ujs/src/rails
 //= require angular
 //= require bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists
