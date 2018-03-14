@@ -26,11 +26,7 @@ class CloudNetworkController < ApplicationController
       return tag("CloudNetwork")
     when 'cloud_network_delete'
       delete_networks
-      if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      javascript_redirect(previous_breadcrumb_url)
     when "cloud_network_edit"
       javascript_redirect :action => "edit", :id => checked_item_id
     when "cloud_network_new"
@@ -135,7 +131,6 @@ class CloudNetworkController < ApplicationController
         add_flash(_("The selected Cloud Network was deleted"))
       end
       session[:flash_msgs] = @flash_array.dup if @flash_array
-      javascript_redirect(previous_breadcrumb_url)
     end
   end
 
