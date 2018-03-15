@@ -239,7 +239,7 @@ module EmsCommon
       when "orchestration_stack_delete"       then orchestration_stack_delete
       end
 
-      return if params[:pressed].include?("tag") && !%w(host_tag vm_tag miq_template_tag instance_tag).include?(params[:pressed])
+      return if params[:pressed].include?("tag") && !%w(host_tag vm_tag miq_template_tag instance_tag image_tag).include?(params[:pressed])
       if params[:pressed].include?("orchestration_stack_delete")
         session[:flash_msgs] = @flash_array.dup
         javascript_redirect(polymorphic_path(EmsCloud.find(params[:id]), :display => 'orchestration_stacks'))
