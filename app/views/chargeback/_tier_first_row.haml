@@ -6,7 +6,7 @@
 
 %tr.rdetail{:id => "rate_detail_row_#{i}_0"}
   %td{:rowspan => n.to_s}
-    = Dictionary.gettext(r[:group], :type => :rate_detail_group, :notfound => :titleize)
+    = h(rate_detail_group(r[:group]))
   %td{:rowspan => n.to_s}
     = r[:description]
     - if breakdown_present
