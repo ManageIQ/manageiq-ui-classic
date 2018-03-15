@@ -35,6 +35,7 @@
     "lodash": "^4.17.4",
     "ng-redux": "^3.5.2",
     "prop-types": "^15.6.0",
+    "proxy-polyfill": "^0.1.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "redux-devtools-extension": "^2.13.2",
