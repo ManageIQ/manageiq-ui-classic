@@ -24,12 +24,11 @@
           = _("Required")
 
   %h3
-    = _('Cloud Subnet details')
+    = _('Placement')
   .form-horizontal
     .form-group{"ng-if"    => "vm.cloudSubnetModel.ems_id",
                 "ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
       %h3
-        = _('Placement')
       %label.col-md-2.control-label
         = _('Cloud Tenant')
       .col-md-8
