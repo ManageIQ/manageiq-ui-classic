@@ -13,6 +13,7 @@ import componentRegistry from '../react/componentRegistry';
 
 import * as newRegistry from '../miq-component/registry';
 import reactBlueprint from '../miq-component/react-blueprint';
+import * as helpers from '../miq-component/helpers';
 
 ManageIQ.react = {
   mount,
@@ -22,4 +23,5 @@ ManageIQ.react = {
 ManageIQ.component = {
   ...newRegistry,
   reactBlueprint,
+  ...helpers,
 };
