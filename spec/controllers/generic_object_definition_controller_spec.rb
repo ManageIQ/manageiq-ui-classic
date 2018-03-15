@@ -98,6 +98,54 @@ describe GenericObjectDefinitionController do
 
       expect(toolbar_array[0][2][:id]).to eq('view_list')
       expect(toolbar_array[0][2][:url]).to eq('/show_list')
+
+      gtl_type = controller.instance_variable_get(:@gtl_type)
+      expect(gtl_type).to eq('list')
+    end
+  end
+
+  context "GTL rendering for various node types" do
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as FactoryGirl.create(:user)
+      @generic_obj_defn = FactoryGirl.create(:generic_object_definition)
+    end
+
+    it "renders the toolbar for root node with gtl icons" do
+      allow(controller).to receive(:x_node).and_return("root")
+      controller.send(:show_list)
+      gtl_type = controller.instance_variable_get(:@gtl_type)
+      expect(gtl_type).to eq('list')
+    end
+
+    it "renders the toolbar for god node with no gtl icons" do
+      allow(controller).to receive(:x_node).and_return("god-#{@generic_obj_defn.id}")
+      controller.send(:show_list)
+      gtl_type = controller.instance_variable_get(:@gtl_type)
+      expect(gtl_type).to eq(nil)
+    end
+
+    it "renders the toolbar for actions node with no gtl icons" do
+      allow(controller).to receive(:x_node).and_return("xx-#{@generic_obj_defn.id}")
+      controller.send(:show_list)
+      gtl_type = controller.instance_variable_get(:@gtl_type)
+      expect(gtl_type).to eq(nil)
+    end
+
+    it "renders the toolbar for custom_button_group node with no gtl icons" do
+      custom_button_set = FactoryGirl.create(:custom_button_set, :description => "custom button set description")
+      allow(controller).to receive(:x_node).and_return("cbg-#{custom_button_set.id}")
+      controller.send(:show_list)
+      gtl_type = controller.instance_variable_get(:@gtl_type)
+      expect(gtl_type).to eq(nil)
+    end
+
+    it "renders the toolbar for custom_button node with no gtl icons" do
+      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "GenericObjectDefinition", :name => "Some Name")
+      allow(controller).to receive(:x_node).and_return("cb-#{custom_button.id}")
+      controller.send(:show_list)
+      gtl_type = controller.instance_variable_get(:@gtl_type)
+      expect(gtl_type).to eq(nil)
     end
   end
 

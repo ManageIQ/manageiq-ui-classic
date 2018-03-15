@@ -23,8 +23,8 @@ class GenericObjectDefinitionController < ApplicationController
     self.x_active_tree ||= :generic_object_definitions_tree
     self.x_node ||= 'root'
     build_tree
-    node_info(x_node)
     process_show_list
+    node_info(x_node)
   end
 
   def show
@@ -179,6 +179,7 @@ class GenericObjectDefinitionController < ApplicationController
     @center_toolbar = 'generic_object_definition'
     @record = GenericObjectDefinition.find(from_cid(node.split('-').last))
     @right_cell_text = _("Generic Object Class %{record_name}") % {:record_name => @record.name}
+    @gtl_type = nil
   end
 
   def actions_node_info(node)
@@ -186,6 +187,7 @@ class GenericObjectDefinitionController < ApplicationController
     @center_toolbar = 'generic_object_definition_actions_node'
     @record = GenericObjectDefinition.find(from_cid(node.split('-').last))
     @right_cell_text = _("Actions for %{model}") % {:model => _("Generic Object Class")}
+    @gtl_type = nil
   end
 
   def custom_button_group_node_info(node)
@@ -193,6 +195,7 @@ class GenericObjectDefinitionController < ApplicationController
     @center_toolbar = 'generic_object_definition_button_group'
     @record = CustomButtonSet.find(from_cid(node.split("-").last))
     @right_cell_text = _("Custom Button Set %{record_name}") % {:record_name => @record.name}
+    @gtl_type = nil
   end
 
   def custom_button_node_info(node)
@@ -200,6 +203,7 @@ class GenericObjectDefinitionController < ApplicationController
     @center_toolbar = 'generic_object_definition_button'
     @record = CustomButton.find(from_cid(node.split("-").last))
     @right_cell_text = _("Custom Button %{record_name}") % {:record_name => @record.name}
+    @gtl_type = nil
   end
 
   def render_form(title, form_partial)
