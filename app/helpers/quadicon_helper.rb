@@ -555,9 +555,10 @@ module QuadiconHelper
 
   def db_for_quadicon
     case @layout
-    when "ems_infra" then :ems
-    when "ems_cloud" then :ems_cloud
-    else                  :ems_container
+    when "ems_infra"          then :ems
+    when "ems_cloud"          then :ems_cloud
+    when "ems_physical_infra" then :ems_physical_infra
+    else :ems_container
     end
   end
 
