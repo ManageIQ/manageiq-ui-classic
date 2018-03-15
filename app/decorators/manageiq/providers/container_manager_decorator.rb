@@ -14,7 +14,7 @@ class ManageIQ::Providers::ContainerManagerDecorator < MiqDecorator
   def quadicon
     {
       :top_left     => {:text => container_nodes.size},
-      :top_right    => {:state_icon => "svg/currentstate-#{enabled? ? 'on' : 'paused'}.svg"},
+      :top_right    => {:fileicon => "svg/currentstate-#{enabled? ? 'on' : 'paused'}.svg"},
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => type
