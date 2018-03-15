@@ -1685,6 +1685,11 @@ function correctPatternflyOptions(config) {
 }
 
 $(function() {
+  if (window.__testing__) {
+    // in a jest test
+    return;
+  }
+
   $(window).on('resize', miqInitAccordions);
   $(window).on('resize', miqInitMainContent);
   $(window).on('resize', _.debounce(miqResetSizeTimer, 1000));
