@@ -12,7 +12,7 @@ class ManageIQ::Providers::ContainerManagerDecorator < MiqDecorator
   end
 
   def quadicon
-    {
+    icon = {
       :top_left     => {:text => container_nodes.size},
       :top_right    => {:fileicon => "svg/currentstate-#{enabled? ? 'on' : 'paused'}.svg"},
       :bottom_left  => {
@@ -22,8 +22,13 @@ class ManageIQ::Providers::ContainerManagerDecorator < MiqDecorator
       :bottom_right => {
         :fileicon => QuadiconHelper::Decorator.status_img(authentication_status),
         :tooltip  => authentication_status
+      },
+      :middle       => {
+        :fileicon => '100/shield.png'
       }
     }
+    icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
+    icon
   end
 
   def single_quad

@@ -12,7 +12,7 @@ class ExtManagementSystemDecorator < MiqDecorator
   end
 
   def quadicon
-    {
+    icon = {
       :top_left     => {:text => try(:hosts).try(:size).to_i},
       :top_right    => {:text => ""},
       :bottom_left  => {
@@ -24,6 +24,8 @@ class ExtManagementSystemDecorator < MiqDecorator
         :tooltip  => authentication_status
       }
     }
+    icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
+    icon
   end
 
   def single_quad

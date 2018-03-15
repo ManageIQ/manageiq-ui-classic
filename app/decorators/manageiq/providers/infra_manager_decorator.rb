@@ -12,7 +12,7 @@ class ManageIQ::Providers::InfraManagerDecorator < ExtManagementSystemDecorator
   end
 
   def quadicon
-    {
+    icon = {
       :top_left     => {:text => hosts.size},
       :top_right    => {:text => total_vms},
       :bottom_left  => {
@@ -24,6 +24,8 @@ class ManageIQ::Providers::InfraManagerDecorator < ExtManagementSystemDecorator
         :tooltip  => authentication_status
       }
     }
+    icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
+    icon
   end
 
   def single_quad
