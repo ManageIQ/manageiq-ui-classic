@@ -129,7 +129,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_12\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-unknown-49cc42acd6887e02073d45a619abe82b1d62a0321d637a265541e80b176d4f96.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e1\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/12\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -178,7 +178,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_53\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/53\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -227,7 +227,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_52\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/52\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -276,7 +276,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_51\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/51\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -325,7 +325,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_50\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/50\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -374,7 +374,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_49\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/49\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -423,7 +423,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_11\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-off-821237d090ce8883878c067dced4ce8501e05f16677b98da9bbdbb196de1130d.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e1\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/11\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -472,7 +472,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_10\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-off-821237d090ce8883878c067dced4ce8501e05f16677b98da9bbdbb196de1130d.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e1\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/10\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -521,7 +521,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_48\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/48\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -570,7 +570,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_47\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/47\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -619,7 +619,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_46\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/46\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -668,7 +668,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_45\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/45\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -717,7 +717,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_9\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-off-821237d090ce8883878c067dced4ce8501e05f16677b98da9bbdbb196de1130d.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e1\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/9\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -766,7 +766,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_8\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-off-821237d090ce8883878c067dced4ce8501e05f16677b98da9bbdbb196de1130d.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e1\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/8\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -815,7 +815,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_7\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-off-821237d090ce8883878c067dced4ce8501e05f16677b98da9bbdbb196de1130d.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e1\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/7\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -864,7 +864,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_6\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-off-821237d090ce8883878c067dced4ce8501e05f16677b98da9bbdbb196de1130d.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e1\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/6\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -913,7 +913,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_5\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-linux_redhat-c0d4d64bf57b43a5ed8e86109dc00e2dcb4da9b77c715e5fe0cbeb4da39cbfd1.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-off-821237d090ce8883878c067dced4ce8501e05f16677b98da9bbdbb196de1130d.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e1\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/5\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -962,7 +962,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_44\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-unknown-3a897f4dfeba741ebf994e589e1fd5ed0729a61d6a48f9651f0965a473db3f1e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/44\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -1011,7 +1011,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_43\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-unknown-3a897f4dfeba741ebf994e589e1fd5ed0729a61d6a48f9651f0965a473db3f1e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/43\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          },
          {
@@ -1060,7 +1060,7 @@
                   "text":"Region 0"
                }
             ],
-            "quadicon":"\u003cdiv class=\"quadicon\" id=\"quadicon_42\"\u003e\u003cdiv class=\"flobj \"\u003e\u003cimg border=\"0\" src=\"/assets/72/base-2a8ef4bf8b4255fa8ea396816c7c15a4b3c8823ff761177f7fb1fe934f0792ce.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj a72\"\u003e\u003cimg border=\"0\" src=\"/assets/100/os-unknown-3a897f4dfeba741ebf994e589e1fd5ed0729a61d6a48f9651f0965a473db3f1e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj b72\"\u003e\u003cimg border=\"0\" src=\"/assets/72/currentstate-template-95b745426c0f289eeb27b6d3efb7f60625211ffc1d4b9f214e8086c2325df72e.png\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj c72\"\u003e\u003cimg border=\"0\" src=\"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg\" width=\"72\" height=\"72\" /\u003e\u003c/div\u003e\u003cdiv class=\"flobj d72\"\u003e\u003cp\u003e0\u003c/p\u003e\u003c/div\u003e\u003cdiv class=\"flobj\"\u003e\u003ca href=\"/vm_infra/show/42\"\u003e\u003cimg border=\"0\" width=\"72\" height=\"72\" src=\"/assets/72/reflection-1601f9e02c2e0a1c1d2a4229f679746a3109dfc9d7456c55236a57f3a737728b.png\" alt=\"Reflection\" /\u003e\u003c/a\u003e\u003c/div\u003e\u003c/div\u003e",
+            "quad": {"fileicon": "foo.svg"},
             "img_url":"/assets/svg/vendor-redhat-4bdd9c31c5dfc0394839d2b473cc5a5640e4aa7488f91febef8ab08ef9957f98.svg"
          }
       ]

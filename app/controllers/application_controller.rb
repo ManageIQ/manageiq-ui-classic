@@ -987,15 +987,29 @@ class ApplicationController < ActionController::Base
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
-      if fetch_data && defined?(@gtl_type) && @gtl_type != "list"
-        quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
+      if fetch_data && defined?(@gtl_type) && @gtl_type != "list" && !target.nil? && type_has_quadicon(target.class.name)
+        # Quadicons should be displayed when explicitly set or when the user is on the policy simulation screen
+        quad_method = if settings(:quadicons, QuadiconHelper::Decorator.settings_key(target.class, @layout)) || !!@policy_sim
+                        :quadicon
+                      else
+                        :single_quad
+                      end
+
+        quad_icon = target.try(:decorate).try(quad_method)
+
+        # Alter the quadicon's bottom-right quadrant on the policy simulation screen
+        if !!@policy_sim && session[:policies].present?
+          quad_icon = QuadiconHelper::Decorator.policy_sim(quad_icon, target.passes_profiles?(session[:policies].keys))
+        end
       end
+
       new_row = {
-        :id       => list_row_id(row),
-        :long_id  => row['id'].to_s,
-        :cells    => [],
-        :quadicon => quadicon
+        :id      => list_row_id(row),
+        :long_id => row['id'].to_s,
+        :cells   => [],
+        :quad    => QuadiconHelper::Decorator.quadicon_output(quad_icon)
       }
+
       if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
         new_row[:parent_id] = "xx-#{row.data['miq_report_id']}" if row.data['miq_report_id']
       end
