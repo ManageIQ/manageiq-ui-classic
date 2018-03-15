@@ -1,5 +1,5 @@
 import { IModule } from 'angular';
-
+import { ComponentApi } from '../miq-component/component-typings';
 import { ReduxApi } from '../miq-redux/redux-typings';
 
 interface MiqAngular {
@@ -10,7 +10,8 @@ declare global {
   // `ManageIQ` runtime global, holding application-specific objects.
   namespace ManageIQ {
     const angular: MiqAngular;
-    let redux: ReduxApi; // initialized by miq-redux pack
+    let component: ComponentApi;
+    let redux: ReduxApi;
   }
 
   // This global is available when running tests with Jasmine.
