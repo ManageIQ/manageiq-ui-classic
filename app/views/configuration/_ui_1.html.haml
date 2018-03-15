@@ -11,16 +11,17 @@
         %fieldset
           %h3
             = _('Grid/Tile Icons')
-          -# render condition                                 title                                      check_box label & checked T/F
+          -# render condition                                           title                          check_box label & checked T/F
           -# Host Item is commented (condition set as false) until we have host item quads
-          - [[role_allows?(:feature => "ems_infra_show_list"), _("Infrastructure Provider"),              "ems"],
-             [role_allows?(:feature => "ems_cloud_show_list"), _("Cloud Provider"),                       "ems_cloud"],
-             [role_allows?(:feature => "ems_container_show_list"), _("Containers Provider"),              "ems_container"],
-             [role_allows?(:feature => "host_show_list"),      _("Host"),                                 "host"],
-             [role_allows?(:feature => "storage_show_list"),   _("Datastores"),                           "storage"],
-             [true,                                           _("VM"),                                   "vm"],
-             [true,                                           _("Physical Server"),                                   "physical_server"],
-             [true,                                           _("Template"),                             "miq_template"]].each do |icons_checkbox|
+          - [[role_allows?(:feature => "ems_infra_show_list"),          _("Infrastructure Provider"), "ems"],
+             [role_allows?(:feature => "ems_cloud_show_list"),          _("Cloud Provider"),          "ems_cloud"],
+             [role_allows?(:feature => "ems_container_show_list"),      _("Containers Provider"),     "ems_container"],
+             [role_allows?(:feature => "ems_physical_infra_show_list"), _("Physical Infra Provider"), "ems_physical_infra"],
+             [role_allows?(:feature => "host_show_list"),               _("Host"),                    "host"],
+             [role_allows?(:feature => "storage_show_list"),            _("Datastores"),              "storage"],
+             [true,                                                     _("VM"),                      "vm"],
+             [true,                                                     _("Physical Server"),         "physical_server"],
+             [true,                                                     _("Template"),                "miq_template"]].each do |icons_checkbox|
             - if icons_checkbox[0]
               .form-group
                 %label.col-md-3.control-label
