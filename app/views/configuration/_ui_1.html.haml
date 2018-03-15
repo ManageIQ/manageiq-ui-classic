@@ -20,7 +20,7 @@
              [role_allows?(:feature => "host_show_list"),               _("Host"),                    "host"],
              [role_allows?(:feature => "storage_show_list"),            _("Datastores"),              "storage"],
              [true,                                                     _("VM"),                      "vm"],
-             [true,                                                     _("Physical Server"),         "physical_server"],
+             [role_allows?(:feature => "physical_server_show_list"),    _("Physical Server"),         "physical_server"],
              [true,                                                     _("Template"),                "miq_template"]].each do |icons_checkbox|
             - if icons_checkbox[0]
               .form-group
