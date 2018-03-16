@@ -302,7 +302,7 @@ class ApplicationHelper::ToolbarBuilder
       enabled = if cb_enabled_for_nested
                   cb_enabled_value_for_nested
                 else
-                  record ? true : buttons.all? { |button| button[:enabled] }
+                  buttons.any? { |button| button[:enabled] }
                 end
       props = {
         :id      => "custom_#{group[:id]}",
