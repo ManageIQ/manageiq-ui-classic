@@ -147,6 +147,7 @@ class TreeBuilder
   # Subclass this method if active node on initial load is different than root node.
   def active_node_set(tree_nodes)
     @tree_state.x_node_set(tree_nodes.first[:key], @name) unless @tree_state.x_node(@name)
+    @tree_state.x_node(@name)
   end
 
   def set_nodes(nodes)

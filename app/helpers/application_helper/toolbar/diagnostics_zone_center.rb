@@ -17,19 +17,19 @@ class ApplicationHelper::Toolbar::DiagnosticsZoneCenter < ApplicationHelper::Too
       t,
       :items => [
         button(
-          :zone_delete,
+          :zone_delete_server,
           'pficon pficon-delete fa-lg',
           t = proc do
-            _('Delete Zone %{server_name} [%{server_id}]') % {:server_name => @selected_zone.name, :server_id => @selected_zone.id}
+            _('Delete Server %{server_name} [%{server_id}]') % {:server_name => @record.name, :server_id => @record.id}
           end,
           t,
           :confirm => proc do
-                        _("Do you want to delete Zone %{server_name} [%{server_id}]?") % {
-                          :server_name => @selected_zone.name,
-                          :server_id   => @selected_zone.id
+                        _("Do you want to delete Server %{server_name} [%{server_id}]?") % {
+                          :server_name => @record.name,
+                          :server_id   => @record.id
                         }
                       end,
-          :klass => ApplicationHelper::Button::ZoneDelete
+          :klass   => ApplicationHelper::Button::ZoneDeleteServer
         ),
         button(
           :zone_role_start,
