@@ -47,6 +47,101 @@ namespace :update do
   end
 end
 
+namespace :ui do
+  desc "Clean up node_modules and bower assets for all stale ui_classic gems on the system"
+  task :clean do
+    require 'fileutils'
+
+    gem_regexp     = Regexp.new("(#{asset_engines_plugins_hash.keys.join('|')})")
+    git_dirs       = Dir["#{Gem.dir}/bundler/gems/*"].grep(gem_regexp)
+    spec_git_paths = Bundler.definition.spec_git_paths.grep(gem_regexp)
+    stale_ui_gems  = (git_dirs - spec_git_paths)
+    total_savings  = 0
+
+    warn "DRY RUN:  NO OPERATIONS BEING EXECUTED!!" if ENV["DRY_RUN"]
+
+    stale_ui_gems.each do |stale_miq_ui_gem_dir|
+      [
+        File.join(stale_miq_ui_gem_dir, "node_modules"),
+        File.join(stale_miq_ui_gem_dir, "vendor", "assets", "bower")
+      ].each do |file_path_to_delete|
+        path = Pathname.new(file_path_to_delete)
+        next unless path.exist?
+
+        # Disk usage code pulled from Homebrew.  License for Homebrew below:
+        #
+        # BSD 2-Clause License
+        #
+        # Copyright (c) 2009-present, Homebrew contributors
+        # All rights reserved.
+        #
+        # Redistribution and use in source and binary forms, with or without
+        # modification, are permitted provided that the following conditions are met:
+        #
+        # * Redistributions of source code must retain the above copyright notice, this
+        #   list of conditions and the following disclaimer.
+        #
+        # * Redistributions in binary form must reproduce the above copyright notice,
+        #   this list of conditions and the following disclaimer in the documentation
+        #   and/or other materials provided with the distribution.
+        #
+        # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+        # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        # DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        # FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        # DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        # SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        disk_usage = begin
+                       disk_size_path = if path.symlink?
+                                          path.dirname.join(path.readlink)
+                                        else
+                                          path
+                                        end
+
+                       if disk_size_path.directory?
+                         scanned_files = Set.new
+                         disk_usage = 0
+                         path.find do |f|
+                           if f.directory?
+                             disk_usage += f.lstat.size
+                           else
+                             # use Pathname#lstat instead of Pathname#stat to get info of symlink itself.
+                             stat = f.lstat
+                             file_id = [stat.dev, stat.ino]
+                             # count hardlinks only once.
+                             unless scanned_files.include?(file_id)
+                               disk_usage += stat.size
+                               scanned_files.add(file_id)
+                             end
+                           end
+                         end
+                       else
+                         disk_usage = path.lstat.size
+                       end
+
+                       total_savings += disk_usage
+                       disk_usage.to_f / 1_048_576
+                     end
+
+        puts "Removing #{path}... (#{'%.1f' % disk_usage}MB)"
+        FileUtils.rm_rf path, :secure => true, :noop => !!ENV["DRY_RUN"]
+      end
+    end
+
+    total = if total_savings >= 1_073_741_824
+              "#{'%.1f' % (total_savings.to_f / 1_073_741_824)}GB"
+            else
+              "#{'%.1f' % (total_savings.to_f / 1_048_576)}MB"
+            end
+
+    puts "\nTotal Savings: #{total}"
+  end
+end
+
 namespace :webpack do
   task :server do
     root = ManageIQ::UI::Classic::Engine.root
