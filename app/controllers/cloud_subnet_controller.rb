@@ -134,7 +134,8 @@ class CloudSubnetController < ApplicationController
       if @flash_array.nil?
         add_flash(_("The selected Cloud Subnet was deleted"))
       end
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+      session[:flash_msgs] = @flash_array.dup if @flash_array
+      javascript_redirect(:action => 'show_list')
     else
       drop_breadcrumb(:name => 'dummy', :url  => " ") # missing a bc to get correctly back so here's a dummy
       session[:flash_msgs] = @flash_array.dup if @flash_array

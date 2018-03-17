@@ -188,8 +188,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
       redirect_options[:import_file_upload_id] = import_file_upload_id
     end
 
-    redirect_options[:message] = @flash_array.first.to_json
-
+    session[:flash_msgs] = @flash_array.dup if @flash_array
     redirect_to redirect_options
   end
 
@@ -282,10 +281,12 @@ Namespaces updated/added: %{namespace_stats}
 Classes updated/added: %{class_stats}
 Instances updated/added: %{instance_stats}
 Methods updated/added: %{method_stats}") % stat_options)
-        redirect_to :action => 'import_export', :flash_msg => @flash_array[0][:message]         # redirect to build the retire screen
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        redirect_to(:action => 'import_export')
       rescue => bang
         add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
-        redirect_to :action => 'import_export', :flash_msg => @flash_array[0][:message], :flash_error => true         # redirect to build the retire screen
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        redirect_to(:action => 'import_export')
       end
     else
       @in_a_form = true

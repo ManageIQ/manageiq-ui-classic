@@ -293,13 +293,15 @@ module Mixins
           end
 
           VmReconfigureRequest.make_request(@request_id, options, current_user)
-          flash = _("VM Reconfigure Request was saved")
+
+          add_flash(_("VM Reconfigure Request was saved"))
+          session[:flash_msgs] = @flash_array.dup if @flash_array
 
           if role_allows?(:feature => "miq_request_show_list", :any => true)
-            javascript_redirect :controller => 'miq_request', :action => 'show_list', :flash_msg => flash
+            javascript_redirect(:controller => 'miq_request', :action => 'show_list')
           else
             url = previous_breadcrumb_url.split('/')
-            javascript_redirect :controller => url[1], :action => url[2], :flash_msg => flash
+            javascript_redirect(:controller => url[1], :action => url[2])
           end
 
           if @flash_array

@@ -143,7 +143,8 @@ class SecurityGroupController < ApplicationController
       if @flash_array.nil?
         add_flash(_("The selected Security Group was deleted"))
       else # or (if we deleted what we were showing) we redirect to the listing
-        javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        javascript_redirect(:action => 'show_list')
       end
     end
   end

@@ -146,7 +146,7 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.body).to include("redirected")
       expect(response.body).to include("ems_infra")
-      expect(response.body).to include("1+to+2")
+      expect(session[:flash_msgs]).to match [a_hash_including(:message => "Scaling compute-1::count from 1 to 2 ", :level => :success)]
     end
 
     it "when no orchestration stack is available" do
@@ -204,7 +204,7 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.body).to include("redirected")
       expect(response.body).to include("ems_infra")
-      expect(response.body).to include("down+to+1")
+      expect(session[:flash_msgs]).to match [a_hash_including(:message => " Scaling down to 1 compute nodes", :level => :success)]
     end
 
     it "when no orchestration stack is available" do

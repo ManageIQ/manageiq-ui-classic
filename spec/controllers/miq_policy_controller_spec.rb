@@ -57,12 +57,8 @@ describe MiqPolicyController do
     shared_examples_for "MiqPolicyController#upload that cannot locate an import file" do
       it "redirects with a cannot locate import file error message" do
         post :upload, :params => params
-        expect(response).to redirect_to(
-          :action      => "export",
-          :dbtype      => "dbtype",
-          :flash_msg   => "Use the Choose file button to locate an Import file",
-          :flash_error => true
-        )
+        expect(response).to redirect_to(:action => "export", :dbtype => "dbtype")
+        expect(session[:flash_msgs]).to match [a_hash_including(:message => "Use the Choose file button to locate an Import file", :level => :error)]
       end
     end
 
@@ -117,9 +113,8 @@ describe MiqPolicyController do
               expect(response).to redirect_to(
                 :action      => "export",
                 :dbtype      => "dbtype",
-                :flash_msg   => "Error during 'Policy Import': message",
-                :flash_error => true
               )
+              expect(session[:flash_msgs]).to match [a_hash_including(:message => "Error during 'Policy Import': message", :level => :error)]
             end
           end
         end

@@ -19,7 +19,8 @@ class InfraNetworkingController < ApplicationController
   end
 
   def show_list
-    redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
+    session[:flash_msgs] = @flash_array.dup if @flash_array
+    redirect_to(:action => 'explorer')
   end
 
   def tagging_explorer_controller?

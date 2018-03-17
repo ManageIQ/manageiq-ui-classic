@@ -78,7 +78,10 @@ class EmsCloudController < ApplicationController
         password_digest = nil
         password_digest = BCrypt::Password.create(selected_password) unless selected_password.blank?
         ems.sync_users_queue(session[:userid], selected_admin_role, selected_member_role, password_digest)
-        redirect_to(ems_cloud_path(params[:id], :flash_msg => _("Sync users queued.")))
+
+        add_flash(_("Sync users queued."))
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        redirect_to(ems_cloud_path(params[:id]))
       end
     else
       render_sync_page(ems, selected_admin_role, selected_member_role, selected_password, selected_verify)

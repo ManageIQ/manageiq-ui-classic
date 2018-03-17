@@ -218,7 +218,8 @@ class CloudTenantController < ApplicationController
       if flash_errors? # either show the errors and stay on the 'show'
         render_flash
       else             # or (if we deleted what we were showing) we redirect to the listing
-        javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        javascript_redirect(:action => 'show_list')
       end
     end
   end

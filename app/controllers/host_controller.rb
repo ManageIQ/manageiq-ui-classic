@@ -203,16 +203,16 @@ class HostController < ApplicationController
     case params[:button]
     when "cancel"
       session[:edit] = nil  # clean out the saved info
-      flash = "Edit for Host \""
       @breadcrumbs.pop if @breadcrumbs
       if !session[:host_items].nil?
-        flash = _("Edit of credentials for selected Hosts / Nodes was cancelled by the user")
-        # redirect_to :action => @lastaction, :display=>session[:host_display], :flash_msg=>flash
-        javascript_redirect :action => @lastaction, :display => session[:host_display], :flash_msg => flash
+        add_flash(_("Edit of credentials for selected Hosts / Nodes was cancelled by the user"))
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        javascript_redirect(:action => @lastaction, :display => session[:host_display])
       else
         @host = find_record_with_rbac(Host, params[:id])
-        flash = _("Edit of Host / Node \"%{name}\" was cancelled by the user") % {:name => @host.name}
-        javascript_redirect :action => @lastaction, :id => @host.id, :display => session[:host_display], :flash_msg => flash
+        add_flash(_("Edit of Host / Node \"%{name}\" was cancelled by the user") % {:name => @host.name})
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        javascript_redirect(:action => @lastaction, :id => @host.id, :display => session[:host_display])
       end
 
     when "save"
@@ -251,12 +251,12 @@ class HostController < ApplicationController
           @error = Host.batch_update_authentication(session[:host_items], creds)
         end
         if @error || @error.blank?
-          # redirect_to :action => 'show_list', :flash_msg=>_("Credentials/Settings saved successfully")
-          javascript_redirect :action => 'show_list', :flash_msg => _("Credentials/Settings saved successfully")
+          add_flash(_("Credentials/Settings saved successfully"))
+          session[:flash_msgs] = @flash_array.dup if @flash_array
+          javascript_redirect(:action => 'show_list')
         else
           drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
           @in_a_form = true
-          # redirect_to :action => 'edit', :flash_msg=>@error, :flash_error =>true
           javascript_flash
         end
       end

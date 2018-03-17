@@ -193,7 +193,9 @@ class ChargebackController < ApplicationController
   def cb_rate_show
     @display = "main"
     if @record.nil?
-      redirect_to :action => "cb_rates_list", :flash_msg => _("Error: Record no longer exists in the database"), :flash_error => true
+      add_flash(_('Error: Record no longer exists in the database'), :error)
+      session[:flash_msgs] = @flash_array.dup
+      redirect_to(:action => 'cb_rates_list')
       return
     end
   end

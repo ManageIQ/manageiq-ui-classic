@@ -424,13 +424,13 @@ module VmCommon
   def snap_vm
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     if params["cancel"] || params[:button] == "cancel"
-      flash = _("Snapshot of VM %{name} was cancelled by the user") % {:name => @record.name}
+      add_flash(_("Snapshot of VM %{name} was cancelled by the user") % {:name => @record.name})
       if session[:edit] && session[:edit][:explorer]
-        add_flash(flash)
         @_params[:display] = "snapshot_info"
         show
       else
-        redirect_to :action => @lastaction, :id => @record.id, :flash_msg => flash
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        redirect_to(:action => @lastaction, :id => @record.id)
       end
     elsif params["create.x"] || params[:button] == "create"
       @name = params[:name]
@@ -459,14 +459,15 @@ module VmCommon
           flash = _("Create Snapshot for VM and Instance \"%{name}\" was started") % {:name => @record.name}
           #         AuditEvent.success(build_saved_vm_audit(@record))
         end
+        add_flash(flash, flash_error ? :error : :success)
         params[:id] = @record.id.to_s   # reset id in params for show
         # params[:display] = "snapshot_info"
         if session[:edit] && session[:edit][:explorer]
-          add_flash(flash, flash_error ? :error : :success)
           @_params[:display] = "snapshot_info"
           show
         else
-          redirect_to :action => @lastaction, :id => @record.id, :flash_msg => flash, :flash_error => flash_error, :display => "snapshot_info"
+          session[:flash_msgs] = @flash_array.dup if @flash_array
+          redirect_to(:action => @lastaction, :id => @record.id, :display => "snapshot_info")
         end
       end
     end
@@ -605,25 +606,25 @@ module VmCommon
     evm_relationship_get_form_vars
     case params[:button]
     when "cancel"
-      msg = _("Edit Management Engine Relationship was cancelled by the user")
+      add_flash(_("Edit Management Engine Relationship was cancelled by the user"))
       if @edit[:explorer]
-        add_flash(msg)
         @sb[:action] = nil
         replace_right_cell
       else
-        javascript_redirect :action => 'show', :id => @record.id, :flash_msg => msg
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        javascript_redirect(:action => 'show', :id => @record.id)
       end
     when "save"
       svr = @edit[:new][:server] && @edit[:new][:server] != "" ? MiqServer.find(@edit[:new][:server]) : nil
       @record.miq_server = svr
       @record.save
-      msg = _("Management Engine Relationship saved")
+      add_flash(_("Management Engine Relationship saved"))
       if @edit[:explorer]
-        add_flash(msg)
         @sb[:action] = nil
         replace_right_cell
       else
-        javascript_redirect :action => 'show', :id => @record.id, :flash_msg => msg
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        javascript_redirect(:action => 'show', :id => @record.id)
       end
     when "reset"
       @in_a_form = true
@@ -633,7 +634,9 @@ module VmCommon
         add_flash(_("All changes have been reset"), :warning)
         replace_right_cell
       else
-        javascript_redirect :action => 'evm_relationship', :id => @record.id, :flash_msg => _("All changes have been reset"), :flash_warning => true, :escape => true
+        add_flash(_("All changes have been reset"), :warning)
+        session[:flash_msgs] = @flash_array.dup if @flash_array
+        javascript_redirect(:action => 'evm_relationship', :id => @record.id, :escape => true)
       end
     end
   end
@@ -667,8 +670,7 @@ module VmCommon
   def add_vm_to_service
     @record = find_record_with_rbac(Vm, params[:id])
     if params["cancel.x"]
-      flash = _("Add VM \"%{name}\" to a Service was cancelled by the user") % {:name => @record.name}
-      redirect_to :action => @lastaction, :id => @record.id, :flash_msg => flash
+      add_flash(_("Add VM \"%{name}\" to a Service was cancelled by the user") % {:name => @record.name})
     else
       chosen = params[:chosen_service].to_i
       flash = _("VM and Instance \"%{name}\" successfully added to Service \"%{to_name}\"") % {:name => @record.name, :to_name => Service.find(chosen).name}
@@ -677,8 +679,10 @@ module VmCommon
       rescue => bang
         flash = _("Error during 'Add VM to service': %{message}") % {:message => bang}
       end
-      redirect_to :action => @lastaction, :id => @record.id, :flash_msg => flash
+      add_flash(flash)
     end
+    session[:flash_msgs] = @flash_array.dup if @flash_array
+    redirect_to(:action => @lastaction, :id => @record.id)
   end
 
   def remove_service
@@ -865,7 +869,9 @@ module VmCommon
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
     @scan_history = ScanHistory.find_by(:vm_or_template_id => @record.id)
     if @scan_history.nil?
-      redirect_to :action => "scan_history", :flash_msg => _("Error: Record no longer exists in the database"), :flash_error => true
+      add_flash(_("Error: Record no longer exists in the database"), :error)
+      session[:flash_msgs] = @flash_array.dup if @flash_array
+      redirect_to(:action => "scan_history")
       return
     end
     @lastaction = "scan_histories"

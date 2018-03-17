@@ -80,7 +80,8 @@ class ServiceController < ApplicationController
   end
 
   def show_list
-    redirect_to :action => 'explorer', :flash_msg => @flash_array.try(:fetch_path, 0, :message)
+    session[:flash_msgs] = @flash_array.dup if @flash_array
+    redirect_to(:action => 'explorer')
   end
 
   def explorer
