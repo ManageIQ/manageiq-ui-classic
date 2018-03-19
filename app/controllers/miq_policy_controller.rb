@@ -744,6 +744,175 @@ class MiqPolicyController < ApplicationController
     end
   end
 
+  def handle_selection_buttons_left(members,
+                          members_chosen = :members_chosen,
+                          choices = :choices,
+                          choices_chosen = :choices_chosen)
+    if params[members_chosen].nil?
+      add_flash(_("No %{members} were selected to move left") % {:members => members.to_s.split("_").first.titleize},
+                :error)
+    elsif @edit[:event_id]
+      # Handle Actions for an Event
+      params[members_chosen].each do |mc|
+        idx = nil
+        # Find the index of the new members array
+        @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
+        next if idx.nil?
+        desc = @edit[:new][members][idx][0].slice(4..-1) # Remove (x) prefix from the chosen item
+        @edit[choices][desc] = mc.to_i # Add item back into the choices hash
+        @edit[:new][members].delete_at(idx) # Remove item from the array
+      end
+    else
+      mems = @edit[:new][members].invert
+      params[members_chosen].each do |mc|
+        @edit[choices][mems[mc.to_i]] = mc.to_i
+        @edit[:new][members].delete(mems[mc.to_i])
+      end
+    end
+  end
+
+  def handle_selection_buttons_right(members,
+                          members_chosen = :members_chosen,
+                          choices = :choices,
+                          choices_chosen = :choices_chosen)
+    if params[choices_chosen].nil?
+      add_flash(_("No %{member} were selected to move right") %
+        {:member => members.to_s.split("_").first.titleize}, :error)
+    else
+      mems = @edit[choices].invert
+      if @edit[:event_id]
+        # Handle Actions for an Event
+        params[choices_chosen].each do |mc|
+          # Add selection to chosen members array, default to synch = true
+          @edit[:new][members].push(["(S) " + mems[mc.to_i], true, mc.to_i])
+          @edit[choices].delete(mems[mc.to_i]) # Remove from the choices hash
+        end
+      else
+        params[choices_chosen].each do |mc|
+          @edit[:new][members][mems[mc.to_i]] = mc.to_i
+          @edit[choices].delete(mems[mc.to_i])
+        end
+      end
+    end
+  end
+
+  def handle_selection_buttons_allleft(members,
+                          members_chosen = :members_chosen,
+                          choices = :choices,
+                          choices_chosen = :choices_chosen)
+    if @edit[:new][members].length == 0
+      add_flash(_("No %{member} were selected to move left") %
+        {:member => members.to_s.split("_").first.titleize}, :error)
+    elsif @edit[:event_id]
+      # Handle Actions for an Event
+      @edit[:new][members].each do |m|
+        # Put description/id of each chosen member back into choices hash
+        @edit[choices][m.first.slice(4..-1)] = m.last
+      end
+    else
+      @edit[:new][members].each do |key, value|
+        @edit[choices][key] = value
+      end
+    end
+    @edit[:new][members].clear
+  end
+
+
+  def handle_selection_buttons_up(members,
+                          members_chosen = :members_chosen,
+                          choices = :choices,
+                          choices_chosen = :choices_chosen)
+    if params[members_chosen].nil? || params[members_chosen].length != 1
+      add_flash(_("Select only one or consecutive %{member} to move up") %
+        {:member => members.to_s.split("_").first.singularize.titleize}, :error)
+    else
+      if params[:button].starts_with?("true")
+        @true_selected = params[members_chosen][0].to_i
+      else
+        @false_selected = params[members_chosen][0].to_i
+      end
+      idx = nil
+      mc = params[members_chosen][0]
+      # Find item index in new members array
+      @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
+      return if idx.nil? || idx == 0
+      pulled = @edit[:new][members].delete_at(idx)
+      @edit[:new][members].insert(idx - 1, pulled)
+    end
+  end
+
+  def handle_selection_buttons_down(members,
+                          members_chosen = :members_chosen,
+                          choices = :choices,
+                          choices_chosen = :choices_chosen)
+    if params[members_chosen].nil? || params[members_chosen].length != 1
+      add_flash(_("Select only one or consecutive %{member} to move down") %
+        {:member => members.to_s.split("_").first.singularize.titleize}, :error)
+    else
+      if params[:button].starts_with?("true")
+        @true_selected = params[members_chosen][0].to_i
+      else
+        @false_selected = params[members_chosen][0].to_i
+      end
+      idx = nil
+      mc = params[members_chosen][0]
+      # Find item index in new members array
+      @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
+      return if idx.nil? || idx >= @edit[:new][members].length - 1
+      pulled = @edit[:new][members].delete_at(idx)
+      @edit[:new][members].insert(idx + 1, pulled)
+    end
+  end
+
+  def handle_selection_buttons_sync(members,
+                          members_chosen = :members_chosen,
+                          choices = :choices,
+                          choices_chosen = :choices_chosen)
+    if params[members_chosen].nil?
+      add_flash(_("No %{member} selected to set to Synchronous") %
+        {:member => members.to_s.split("_").first.titleize}, :error)
+    else
+      if params[:button].starts_with?("true")
+        @true_selected = params[members_chosen][0].to_i
+      else
+        @false_selected = params[members_chosen][0].to_i
+      end
+      params[members_chosen].each do |mc|
+        idx = nil
+        # Find the index in the new members array
+        @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
+        next if idx.nil?
+        @edit[:new][members][idx][0] = "(S) " + @edit[:new][members][idx][0].slice(4..-1) # Change prefix to (S)
+        @edit[:new][members][idx][1] = true # Set synch to true
+      end
+    end
+  end
+
+  def handle_selection_buttons_async(members,
+                        members_chosen = :members_chosen,
+                        choices = :choices,
+                        choices_chosen = :choices_chosen)
+    if params[members_chosen].nil?
+      add_flash(_("No %{member} selected to set to Asynchronous") %
+        {:member => members.to_s.split("_").first.titleize}, :error)
+    else
+      if params[:button].starts_with?("true")
+        @true_selected = params[members_chosen][0].to_i
+      else
+        @false_selected = params[members_chosen][0].to_i
+      end
+      params[members_chosen].each do |mc|
+        idx = nil
+        # Find the index in the new members array
+        @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
+        next if idx.nil?
+        @edit[:new][members][idx][0] = "(A) " + @edit[:new][members][idx][0].slice(4..-1) # Change prefix to (A)
+
+        @edit[:new][members][idx][1] = false # Set synch to false
+      end
+    end
+  end
+
   # Handle the middle buttons on the add/edit forms
   # pass in member list symbols (i.e. :policies)
   def handle_selection_buttons(members,
@@ -751,138 +920,19 @@ class MiqPolicyController < ApplicationController
                                choices = :choices,
                                choices_chosen = :choices_chosen)
     if params[:button].ends_with?("_left")
-      if params[members_chosen].nil?
-        add_flash(_("No %{members} were selected to move left") % {:members => members.to_s.split("_").first.titleize},
-                  :error)
-      elsif @edit[:event_id]
-        # Handle Actions for an Event
-        params[members_chosen].each do |mc|
-          idx = nil
-          # Find the index of the new members array
-          @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
-          next if idx.nil?
-          desc = @edit[:new][members][idx][0].slice(4..-1) # Remove (x) prefix from the chosen item
-          @edit[choices][desc] = mc.to_i # Add item back into the choices hash
-          @edit[:new][members].delete_at(idx) # Remove item from the array
-        end
-      else
-        mems = @edit[:new][members].invert
-        params[members_chosen].each do |mc|
-          @edit[choices][mems[mc.to_i]] = mc.to_i
-          @edit[:new][members].delete(mems[mc.to_i])
-        end
-      end
+      handle_selection_buttons_left(members, members_chosen, choices, choices_chosen)
     elsif params[:button].ends_with?("_right")
-      if params[choices_chosen].nil?
-        add_flash(_("No %{member} were selected to move right") %
-          {:member => members.to_s.split("_").first.titleize}, :error)
-      else
-        mems = @edit[choices].invert
-        if @edit[:event_id]
-          # Handle Actions for an Event
-          params[choices_chosen].each do |mc|
-            # Add selection to chosen members array, default to synch = true
-            @edit[:new][members].push(["(S) " + mems[mc.to_i], true, mc.to_i])
-            @edit[choices].delete(mems[mc.to_i]) # Remove from the choices hash
-          end
-        else
-          params[choices_chosen].each do |mc|
-            @edit[:new][members][mems[mc.to_i]] = mc.to_i
-            @edit[choices].delete(mems[mc.to_i])
-          end
-        end
-      end
+      handle_selection_buttons_right(members, members_chosen, choices, choices_chosen)
     elsif params[:button].ends_with?("_allleft")
-      if @edit[:new][members].length == 0
-        add_flash(_("No %{member} were selected to move left") %
-          {:member => members.to_s.split("_").first.titleize}, :error)
-      elsif @edit[:event_id]
-        # Handle Actions for an Event
-        @edit[:new][members].each do |m|
-          # Put description/id of each chosen member back into choices hash
-          @edit[choices][m.first.slice(4..-1)] = m.last
-        end
-      else
-        @edit[:new][members].each do |key, value|
-          @edit[choices][key] = value
-        end
-      end
-      @edit[:new][members].clear
+      handle_selection_buttons_allleft(members, members_chosen, choices, choices_chosen)
     elsif params[:button].ends_with?("_up")
-      if params[members_chosen].nil? || params[members_chosen].length != 1
-        add_flash(_("Select only one or consecutive %{member} to move up") %
-          {:member => members.to_s.split("_").first.singularize.titleize}, :error)
-      else
-        if params[:button].starts_with?("true")
-          @true_selected = params[members_chosen][0].to_i
-        else
-          @false_selected = params[members_chosen][0].to_i
-        end
-        idx = nil
-        mc = params[members_chosen][0]
-        # Find item index in new members array
-        @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
-        return if idx.nil? || idx == 0
-        pulled = @edit[:new][members].delete_at(idx)
-        @edit[:new][members].insert(idx - 1, pulled)
-      end
+      handle_selection_buttons_up(members, members_chosen, choices, choices_chosen)
     elsif params[:button].ends_with?("_down")
-      if params[members_chosen].nil? || params[members_chosen].length != 1
-        add_flash(_("Select only one or consecutive %{member} to move down") %
-          {:member => members.to_s.split("_").first.singularize.titleize}, :error)
-      else
-        if params[:button].starts_with?("true")
-          @true_selected = params[members_chosen][0].to_i
-        else
-          @false_selected = params[members_chosen][0].to_i
-        end
-        idx = nil
-        mc = params[members_chosen][0]
-        # Find item index in new members array
-        @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
-        return if idx.nil? || idx >= @edit[:new][members].length - 1
-        pulled = @edit[:new][members].delete_at(idx)
-        @edit[:new][members].insert(idx + 1, pulled)
-      end
+      handle_selection_buttons_down(members, members_chosen, choices, choices_chosen)
     elsif params[:button].ends_with?("_sync")
-      if params[members_chosen].nil?
-        add_flash(_("No %{member} selected to set to Synchronous") %
-          {:member => members.to_s.split("_").first.titleize}, :error)
-      else
-        if params[:button].starts_with?("true")
-          @true_selected = params[members_chosen][0].to_i
-        else
-          @false_selected = params[members_chosen][0].to_i
-        end
-        params[members_chosen].each do |mc|
-          idx = nil
-          # Find the index in the new members array
-          @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
-          next if idx.nil?
-          @edit[:new][members][idx][0] = "(S) " + @edit[:new][members][idx][0].slice(4..-1) # Change prefix to (S)
-          @edit[:new][members][idx][1] = true # Set synch to true
-        end
-      end
+      handle_selection_buttons_sync(members, members_chosen, choices, choices_chosen)
     elsif params[:button].ends_with?("_async")
-      if params[members_chosen].nil?
-        add_flash(_("No %{member} selected to set to Asynchronous") %
-          {:member => members.to_s.split("_").first.titleize}, :error)
-      else
-        if params[:button].starts_with?("true")
-          @true_selected = params[members_chosen][0].to_i
-        else
-          @false_selected = params[members_chosen][0].to_i
-        end
-        params[members_chosen].each do |mc|
-          idx = nil
-          # Find the index in the new members array
-          @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
-          next if idx.nil?
-          @edit[:new][members][idx][0] = "(A) " + @edit[:new][members][idx][0].slice(4..-1) # Change prefix to (A)
-
-          @edit[:new][members][idx][1] = false # Set synch to false
-        end
-      end
+      handle_selection_buttons_async(members, members_chosen, choices, choices_chosen)
     end
   end
 
