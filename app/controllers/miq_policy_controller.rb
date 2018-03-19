@@ -744,7 +744,7 @@ class MiqPolicyController < ApplicationController
     end
   end
 
-  def handle_selection_buttons_left(members, members_chosen, choices, choices_chosen)
+  def handle_selection_buttons_left(members, members_chosen, choices, _choices_chosen)
     if params[members_chosen].nil?
       add_flash(_("No %{members} were selected to move left") % {:members => members.to_s.split("_").first.titleize},
                 :error)
@@ -771,7 +771,7 @@ class MiqPolicyController < ApplicationController
     end
   end
 
-  def handle_selection_buttons_right(members, members_chosen, choices, choices_chosen)
+  def handle_selection_buttons_right(members, _members_chosen, choices, choices_chosen)
     if params[choices_chosen].nil?
       add_flash(_("No %{member} were selected to move right") %
         {:member => members.to_s.split("_").first.titleize}, :error)
@@ -794,7 +794,7 @@ class MiqPolicyController < ApplicationController
     end
   end
 
-  def handle_selection_buttons_allleft(members, members_chosen, choices, choices_chosen)
+  def handle_selection_buttons_allleft(members, _members_chosen, choices, _choices_chosen)
     if @edit[:new][members].empty?
       add_flash(_("No %{member} were selected to move left") %
         {:member => members.to_s.split("_").first.titleize}, :error)
@@ -823,10 +823,13 @@ class MiqPolicyController < ApplicationController
     end
   end
 
-  def handle_selection_buttons_up_down(members, members_chosen, choices, choices_chosen, up)
+  def handle_selection_buttons_up_down(members, members_chosen, _choices, _choices_chosen, up)
     if params[members_chosen].nil? || params[members_chosen].length != 1
-      message = up ? _("Select only one or consecutive %{member} to move up") :
-                     _("Select only one or consecutive %{member} to move down")
+      message = if up
+                  _("Select only one or consecutive %{member} to move up")
+                else
+                  _("Select only one or consecutive %{member} to move down")
+                end
 
       add_flash(message % {:member => members.to_s.split("_").first.singularize.titleize}, :error)
       return
@@ -847,10 +850,13 @@ class MiqPolicyController < ApplicationController
     @edit[:new][members].insert(idx + delta, pulled)
   end
 
-  def handle_selection_buttons_sync_async(members, members_chosen, choices, choices_chosen, sync)
+  def handle_selection_buttons_sync_async(members, members_chosen, _choices, _choices_chosen, sync)
     if params[members_chosen].nil?
-      msg = sync ? _("No %{member} selected to set to Synchronous") :
-                   _("No %{member} selected to set to Asynchronous")
+      msg = if sync
+              _("No %{member} selected to set to Synchronous")
+            else
+              _("No %{member} selected to set to Asynchronous")
+            end
       add_flash(msg % {:member => members.to_s.split("_").first.titleize}, :error)
       return
     end
