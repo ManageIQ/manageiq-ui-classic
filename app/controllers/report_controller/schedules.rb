@@ -164,7 +164,6 @@ module ReportController::Schedules
         page.replace("edit_email_div",
                      :partial => "layouts/edit_email",
                      :locals  => {:action_url => "schedule_form_field_changed",
-                                  :box_title  => "E-Mail after Running",
                                   :record     => @schedule})
         page.replace("schedule_email_options_div", :partial => "schedule_email_options")
       end
