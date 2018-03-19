@@ -193,7 +193,7 @@ module ApplicationController::Tags
   def tag_edit_build_screen
     @showlinks = true
 
-    cats = Classification.categories.select(&:show).sort_by(&:description) # Get the categories, sort by description
+    cats = Classification.categories.select(&:show).sort_by { |t| t.description.try(:downcase) } # Get the categories, sort by description
     @categories = {}    # Classifications array for first chooser
     cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
     cats.each do |c|
