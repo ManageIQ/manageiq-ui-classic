@@ -824,14 +824,16 @@ class MiqPolicyController < ApplicationController
     @edit[:new][members].clear
   end
 
-
-  def handle_selection_buttons_up(members,
+  def handle_selection_buttons_up_down(members,
                           members_chosen = :members_chosen,
                           choices = :choices,
-                          choices_chosen = :choices_chosen)
+                          choices_chosen = :choices_chosen,
+                          up)
     if params[members_chosen].nil? || params[members_chosen].length != 1
-      add_flash(_("Select only one or consecutive %{member} to move up") %
-        {:member => members.to_s.split("_").first.singularize.titleize}, :error)
+      message = up ? _("Select only one or consecutive %{member} to move up") :
+                     _("Select only one or consecutive %{member} to move down")
+
+      add_flash(message % {:member => members.to_s.split("_").first.singularize.titleize}, :error)
       return
     end
 
@@ -844,33 +846,14 @@ class MiqPolicyController < ApplicationController
     mc = params[members_chosen][0]
     # Find item index in new members array
     @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
-    return if idx.nil? || idx == 0
-    pulled = @edit[:new][members].delete_at(idx)
-    @edit[:new][members].insert(idx - 1, pulled)
-  end
 
-  def handle_selection_buttons_down(members,
-                          members_chosen = :members_chosen,
-                          choices = :choices,
-                          choices_chosen = :choices_chosen)
-    if params[members_chosen].nil? || params[members_chosen].length != 1
-      add_flash(_("Select only one or consecutive %{member} to move down") %
-        {:member => members.to_s.split("_").first.singularize.titleize}, :error)
-      return
-    end
+    return if idx.nil?
+    return if up && idx.zero? # cannot go higher
+    return if !up && idx >= @edit[:new][members].length - 1 # canot go lower
 
-    if params[:button].starts_with?("true")
-      @true_selected = params[members_chosen][0].to_i
-    else
-      @false_selected = params[members_chosen][0].to_i
-    end
-    idx = nil
-    mc = params[members_chosen][0]
-    # Find item index in new members array
-    @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
-    return if idx.nil? || idx >= @edit[:new][members].length - 1
     pulled = @edit[:new][members].delete_at(idx)
-    @edit[:new][members].insert(idx + 1, pulled)
+    delta  = up ? -1 : 1
+    @edit[:new][members].insert(idx + delta, pulled)
   end
 
   def handle_selection_buttons_sync(members,
@@ -936,9 +919,9 @@ class MiqPolicyController < ApplicationController
     elsif params[:button].ends_with?("_allleft")
       handle_selection_buttons_allleft(members, members_chosen, choices, choices_chosen)
     elsif params[:button].ends_with?("_up")
-      handle_selection_buttons_up(members, members_chosen, choices, choices_chosen)
+      handle_selection_buttons_up_down(members, members_chosen, choices, choices_chosen, true)
     elsif params[:button].ends_with?("_down")
-      handle_selection_buttons_down(members, members_chosen, choices, choices_chosen)
+      handle_selection_buttons_up_down(members, members_chosen, choices, choices_chosen, false)
     elsif params[:button].ends_with?("_sync")
       handle_selection_buttons_sync(members, members_chosen, choices, choices_chosen)
     elsif params[:button].ends_with?("_async")
