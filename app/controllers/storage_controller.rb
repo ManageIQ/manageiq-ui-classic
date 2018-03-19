@@ -574,8 +574,9 @@ class StorageController < ApplicationController
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
     h_tb = build_toolbar('x_history_tb')
     v_tb = build_toolbar('x_gtl_view_tb') unless record_showing || (x_active_tree == :storage_pod_tree && x_node == 'root') || @in_a_form
+    cb_tb = build_toolbar(custom_toolbar_explorer)
 
-    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
+    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb, :custom => cb_tb)
     presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)
     presenter[:record_id] = @record.try(:id)
 
@@ -618,6 +619,10 @@ class StorageController < ApplicationController
     ]
   end
   helper_method :textual_group_list
+
+  def custom_toolbar_explorer
+    @record.present? ? Mixins::CustomButtons::Result.new(:single) : Mixins::CustomButtons::Result.new(:list)
+  end
 
   menu_section :inf
   has_custom_buttons
