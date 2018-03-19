@@ -10,7 +10,8 @@
                             'ng-options' => 'instance for instance in $ctrl.instanceOptions',
                             'ng-change'  => '$ctrl.instanceNameChange({instanceName: $ctrl.instanceName})',
                             'pf-select'  => true}
-  .form-group
+
+  .form-group{'ng-class' => '{"has-error": aeResolveOptionsForm.object_message.$invalid}'}
     %label.col-md-2.control-label{'for' => 'object_message'}
       = _('Message')
     .col-md-2
@@ -19,7 +20,9 @@
                           'name'        => 'object_message',
                           'ng-model'    => '$ctrl.objectMessage',
                           'ng-change'   => '$ctrl.objectMessageChange({objectMessage: $ctrl.objectMessage})',
-                          'miqrequired' => '',}
+                          'required'    => ''}
+      %span.help-block{'ng-show' => 'aeResolveOptionsForm.object_message.$invalid'}
+        = _('Required')
 
   .form-group{'ng-class' => '{"has-error": aeResolveOptionsForm.object_request.$invalid}'}
     %label.col-md-2.control-label{'for' => 'object_request'}
@@ -30,8 +33,8 @@
                           'name'        => 'object_request',
                           'ng-model'    => '$ctrl.objectRequest',
                           'ng-change'   => '$ctrl.objectRequestChange({objectRequest: $ctrl.objectRequest})',
-                          'miqrequired' => ''}
-      %span.help-block{'ng-show' => 'aeResolveOptionsForm.object_request.$error.miqrequired'}
+                          'required'    => ''}
+      %span.help-block{'ng-show' => 'aeResolveOptionsForm.object_request.$invalid'}
         = _('Required')
 
   %div
