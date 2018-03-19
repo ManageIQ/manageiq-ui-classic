@@ -558,6 +558,7 @@ module QuadiconHelper
     when "ems_infra"          then :ems
     when "ems_cloud"          then :ems_cloud
     when "ems_physical_infra" then :ems_physical_infra
+    when "ems_network"        then :ems_network
     else :ems_container
     end
   end
