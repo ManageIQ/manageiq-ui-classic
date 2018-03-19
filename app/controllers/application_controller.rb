@@ -97,6 +97,7 @@ class ApplicationController < ActionController::Base
       :ems                => true,
       :ems_cloud          => true,
       :ems_physical_infra => true,
+      :ems_network        => true,
       :host               => true,
       :miq_template       => true,
       :physical_server    => true,
