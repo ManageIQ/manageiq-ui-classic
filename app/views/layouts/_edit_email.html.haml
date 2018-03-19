@@ -3,6 +3,10 @@
   - url = url_for_only_path(:action => action_url, :id => (record.id || "new"))
 #edit_email_div
   %h3
+    - if x_active_accord == :schedules
+      = _("E-Mail after Running")
+    - else
+      = _("E-mail")
   .form-horizontal
     .form-group
       %label.control-label.col-md-2
