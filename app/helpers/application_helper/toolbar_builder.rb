@@ -235,7 +235,7 @@ class ApplicationHelper::ToolbarBuilder
       !name.starts_with?("miq_dialog") && !name.starts_with?("custom_button") &&
       !name.starts_with?("instance_") && !name.starts_with?("image_")) &&
        !%w(record_summary summary_main summary_download tree_main
-           x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard infra_networking_policy).include?(name)
+           x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard infra_networking_policy ems_physical_infra_dashboard).include?(name)
   end
 
   def cb_send_checked_list

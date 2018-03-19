@@ -710,6 +710,7 @@ module ApplicationHelper
       chargeback
       container_dashboard
       ems_infra_dashboard
+      ems_physical_infra_dashboard
       exception
       miq_ae_automate_button
       miq_ae_class
@@ -1334,6 +1335,7 @@ module ApplicationHelper
                         ems_middleware
                         ems_network
                         ems_physical_infra
+                        ems_physical_infra_dashboard
                         ems_storage
                         infra_topology
                         event
