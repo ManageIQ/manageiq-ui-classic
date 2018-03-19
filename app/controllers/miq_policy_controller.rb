@@ -856,13 +856,15 @@ class MiqPolicyController < ApplicationController
     @edit[:new][members].insert(idx + delta, pulled)
   end
 
-  def handle_selection_buttons_sync(members,
+  def handle_selection_buttons_sync_async(members,
                           members_chosen = :members_chosen,
                           choices = :choices,
-                          choices_chosen = :choices_chosen)
+                          choices_chosen = :choices_chosen,
+                          sync)
     if params[members_chosen].nil?
-      add_flash(_("No %{member} selected to set to Synchronous") %
-        {:member => members.to_s.split("_").first.titleize}, :error)
+      msg = sync ? _("No %{member} selected to set to Synchronous") :
+                   _("No %{member} selected to set to Asynchronous")
+      add_flash(msg % {:member => members.to_s.split("_").first.titleize}, :error)
       return
     end
 
@@ -871,38 +873,16 @@ class MiqPolicyController < ApplicationController
     else
       @false_selected = params[members_chosen][0].to_i
     end
+
     params[members_chosen].each do |mc|
       idx = nil
       # Find the index in the new members array
       @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
       next if idx.nil?
-      @edit[:new][members][idx][0] = "(S) " + @edit[:new][members][idx][0].slice(4..-1) # Change prefix to (S)
-      @edit[:new][members][idx][1] = true # Set synch to true
-    end
-  end
 
-  def handle_selection_buttons_async(members,
-                        members_chosen = :members_chosen,
-                        choices = :choices,
-                        choices_chosen = :choices_chosen)
-    if params[members_chosen].nil?
-      add_flash(_("No %{member} selected to set to Asynchronous") %
-        {:member => members.to_s.split("_").first.titleize}, :error)
-    else
-      if params[:button].starts_with?("true")
-        @true_selected = params[members_chosen][0].to_i
-      else
-        @false_selected = params[members_chosen][0].to_i
-      end
-      params[members_chosen].each do |mc|
-        idx = nil
-        # Find the index in the new members array
-        @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
-        next if idx.nil?
-        @edit[:new][members][idx][0] = "(A) " + @edit[:new][members][idx][0].slice(4..-1) # Change prefix to (A)
-
-        @edit[:new][members][idx][1] = false # Set synch to false
-      end
+      letter = sync ? 'S' : 'A'
+      @edit[:new][members][idx][0] = "(#{letter}) " + @edit[:new][members][idx][0].slice(4..-1) # Change prefix to (A)
+      @edit[:new][members][idx][1] = sync # true for sync
     end
   end
 
@@ -923,9 +903,9 @@ class MiqPolicyController < ApplicationController
     elsif params[:button].ends_with?("_down")
       handle_selection_buttons_up_down(members, members_chosen, choices, choices_chosen, false)
     elsif params[:button].ends_with?("_sync")
-      handle_selection_buttons_sync(members, members_chosen, choices, choices_chosen)
+      handle_selection_buttons_sync_async(members, members_chosen, choices, choices_chosen, true)
     elsif params[:button].ends_with?("_async")
-      handle_selection_buttons_async(members, members_chosen, choices, choices_chosen)
+      handle_selection_buttons_sync_async(members, members_chosen, choices, choices_chosen, false)
     end
   end
 
