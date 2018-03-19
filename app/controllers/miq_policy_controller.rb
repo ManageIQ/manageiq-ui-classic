@@ -824,6 +824,14 @@ class MiqPolicyController < ApplicationController
     @edit[:new][members].clear
   end
 
+  def handle_selection_buttons_sortout_selected(members_chosen)
+    if params[:button].starts_with?("true")
+      @true_selected = params[members_chosen][0].to_i
+    else
+      @false_selected = params[members_chosen][0].to_i
+    end
+  end
+
   def handle_selection_buttons_up_down(members,
                           members_chosen = :members_chosen,
                           choices = :choices,
@@ -837,11 +845,7 @@ class MiqPolicyController < ApplicationController
       return
     end
 
-    if params[:button].starts_with?("true")
-      @true_selected = params[members_chosen][0].to_i
-    else
-      @false_selected = params[members_chosen][0].to_i
-    end
+    handle_selection_buttons_sortout_selected(members_chosen)
     idx = nil
     mc = params[members_chosen][0]
     # Find item index in new members array
@@ -868,11 +872,7 @@ class MiqPolicyController < ApplicationController
       return
     end
 
-    if params[:button].starts_with?("true")
-      @true_selected = params[members_chosen][0].to_i
-    else
-      @false_selected = params[members_chosen][0].to_i
-    end
+    handle_selection_buttons_sortout_selected(members_chosen)
 
     params[members_chosen].each do |mc|
       idx = nil
