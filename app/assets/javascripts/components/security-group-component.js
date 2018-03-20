@@ -35,7 +35,7 @@ function securityGroupFormController(miqService, API) {
     } else {
       miqService.sparkleOn();
 
-      $q.all([getSecurityGroup(vm.securityId), getSecurityGroups()])
+      $q.all([getSecurityGroup(vm.securityGroupFormId), getSecurityGroups()])
           .then(function() {
             vm.afterGet = true;
             vm.modelCopy = _.cloneDeep(vm.securityGroupModel);
@@ -85,9 +85,9 @@ function securityGroupFormController(miqService, API) {
   vm.cancelClicked = function() {
     if (vm.newRecord) {
       var url = '/security_group/create/new?button=cancel';
-    } else {
-      var url = '/security_group/update/' + vm.securityGroupFormId + '?button=cancel';
-    }
+    } //else {
+      //var url = '/security_group/update/' + vm.securityGroupFormId + '?button=cancel';
+    //}
     miqService.miqAjaxButton(url);
   };
 
@@ -118,5 +118,5 @@ function securityGroupFormController(miqService, API) {
     vm.available_tenants = data.resources;
   });
 
-  vm.$onInit=init;
+  vm.$onInit = init;
 }
