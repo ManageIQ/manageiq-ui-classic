@@ -19,15 +19,6 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             :confirm => N_("Refresh relationships and power states for all items related to the selected Physical Servers?"),
             :options => {:feature => :refresh}
           ),
-          button(
-            :physical_server_delete,
-            'pficon pficon-delete fa-lg',
-            N_('Remove selected Physical Servers from Inventory'),
-            N_('Remove Physical Servers from Inventory'),
-            :url_parms    => "main_div",
-            :send_checked => true,
-            :confirm      => N_("Warning: The selected Physical Servers and ALL of their components will be permanently removed!"),
-          )
         ]
       ),
     ]
