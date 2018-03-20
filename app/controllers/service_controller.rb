@@ -304,6 +304,9 @@ class ServiceController < ApplicationController
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
 
+    # Reset session to same values as first time in
+    session[:adv_search]["Service"] = session[:edit] = nil if session[:adv_search] && params[:action] != 'x_search_by_name'
+
     case TreeBuilder.get_model_for_prefix(@nodetype)
     when "Service"
       show_record(id)
