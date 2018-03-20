@@ -86,7 +86,7 @@ function repositoryFormController(miqService, API) {
     if (vm.newRecord) {
       var url = '/security_group/create/new?button=cancel';
     } else {
-        var url = '/security_group/update/' + vm.securityId + '?button=cancel';
+      var url = '/security_group/update/' + vm.securityId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };
@@ -107,8 +107,8 @@ function repositoryFormController(miqService, API) {
     vm.securityGroupModel = _.cloneDeep(vm.modelCopy);
     for (var index = 0, len = vm.securityGroupModel.firewall_rules.length; index < len; index++) {
       if (vm.securityGroupModel.firewall_rules[index] === undefined || vm.securityGroupModel.firewall_rules[index].deleted === true) {
-          vm.securityGroupModel.firewall_rules.splice(index, 1);
-        }
+        vm.securityGroupModel.firewall_rules.splice(index, 1);
+      }
     }
     angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
@@ -118,5 +118,5 @@ function repositoryFormController(miqService, API) {
     vm.available_tenants = data.resources;
   });
 
-   vm.$onInit=init;
+  vm.$onInit=init;
 }
