@@ -34,7 +34,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   };
 
   vm.cancelClicked = function() {
-    if (networkRouterFormId == 'new') {
+    if (vm.networkRouterId == 'new') {
       var url = '/network_router/create/new' + '?button=cancel';
     } else {
       var url = '/network_router/update/' + networkRouterFormId + '?button=cancel';
@@ -108,4 +108,6 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     vm.available_subnets = data.available_subnets;
     miqService.sparkleOff();
   }
+
+  vm.$onInit = init;
 }]);
