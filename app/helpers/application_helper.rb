@@ -201,6 +201,28 @@ module ApplicationHelper
     false
   end
 
+  # Returns whether the records support an action or not.
+  #
+  # Params:
+  #   records - an array or single instance of a record
+  #   action  - action sent to the SupportsFeatureMixin
+  #           - the actions should be present in
+  #             SupportsFeatureMixin::QUERYABLE_FEATURES
+  # Returns:
+  #   boolean - true if all records support the action
+  #           - false in case record (or one of many records) does not support
+  #             the action
+  def records_support_action?(records, action)
+    unsupported_record = Array.wrap(records).find do |record|
+      if record.respond_to?("supports_#{action}?")
+        !record.supports?(action.to_sym)
+      else # TODO: remove with deleting AvailabilityMixin module
+        !record.is_available?(action.to_sym)
+      end
+    end
+    unsupported_record.nil?
+  end
+
   def url_for_record(record, action = "show") # Default action is show
     @id = record.id
     db  = if controller.kind_of?(VmOrTemplateController)

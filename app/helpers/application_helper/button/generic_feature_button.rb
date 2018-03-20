@@ -1,4 +1,6 @@
 class ApplicationHelper::Button::GenericFeatureButton < ApplicationHelper::Button::Basic
+  include ApplicationHelper
+
   needs :@record
 
   def initialize(view_context, view_binding, instance_data, props)
@@ -7,12 +9,6 @@ class ApplicationHelper::Button::GenericFeatureButton < ApplicationHelper::Butto
   end
 
   def visible?
-    method = "supports_#{@feature}?"
-
-    if @record.respond_to?(method)
-      @record.send(method)
-    else # TODO: remove with deleting AvailabilityMixin module
-      @record.is_available?(@feature)
-    end
+    records_support_action?(@record, @feature)
   end
 end

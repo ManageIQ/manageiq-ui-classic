@@ -736,24 +736,15 @@ module ApplicationController::CiProcessing
   #   options     - other parameters
   def generic_button_operation(task, action_name, action, options={})
     records = find_records_with_rbac(get_rec_cls, checked_or_params)
-    record_unsupported = records.find do |record|
-      # FIXME: this block comes from app/helpers/application_helper/button/generic_feature_button.rb
-      #        -> could be extracted into method somewhere else
-      if record.respond_to?("supports_#{task}?")
-        !record.supports?(task.to_sym)
-      else # TODO: remove with deleting AvailabilityMixin module
-        !record.is_available?(task.to_sym)
-      end
-    end
-    if record_unsupported.present?
+    if records_support_action?(records, task)
+      action.call(records.map(&:id), task, action_name)
+      @single_delete = task == 'destroy' && !flash_errors?
+    else
       javascript_flash(
         :text => _("#{action_name} action does not apply to selected items"),
         :severity => :error,
         :scroll_top => true)
-    else
-      action.call(records.map(&:id), task, action_name)
     end
-    @single_delete = task == 'destroy' && !flash_errors?
     # explorer or non-explorer redirection
     # TODO: this should be generalized
     if @lastaction == "show_list"
