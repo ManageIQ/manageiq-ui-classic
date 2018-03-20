@@ -1,9 +1,27 @@
+%vm-cloud-evacuate-form{}
 
-%vm-cloud-evacuate-form
-:javascript
-ManageIQ.angular.app.value('repositoryId', '#{@id}');
-miq_bootstrap('vm-cloud-evacuate-form')
+- message = n_("1 Instance to be Evacuated", "%{amount} Instances to be Evacuated", @evacuate_items.length) % {:amount => @evacuate_items.length}
+- if @evacuate_items
+  - @embedded = true
+  - @quadicon_no_url = true
+  = render :partial => "layouts/gtl"
 
+- unless @explorer
+  %table{:width => '100%'}
+    %tr
+      %td{:align => 'right'}
+        #buttons_on
+          = button_tag(t = _('Submit'),
+            :class   => "btn btn-primary",
+            :alt     => t,
+            :title   => t,
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :button => "submit")}');")
+          = button_tag(t = _('Cancel'),
+            :class   => "btn btn-default",
+            :alt     => t,
+            :title   => t,
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :button => "cancel")}');")
 :javascript
   ManageIQ.angular.app.value('vmCloudEvacuateFormId', "#{@evacuate_items.length == 1 ? @evacuate_items[0].id : ''}");
+  ManageIQ.angular.app.value('message', "#{message}");
   miq_bootstrap('vm-cloud-evacuate-form');

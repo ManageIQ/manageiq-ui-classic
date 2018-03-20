@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$scope', 'vmCloudEvacuateFormId', 'miqService', function($http, $scope, vmCloudEvacuateFormId, miqService) {
+ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$scope','vmCloudEvacuateFormId', 'miqService', 'message', function($http, $scope,vmCloudEvacuateFormId, miqService, message) {
   var vm = this;
   vm.vmCloudModel = {
     auto_select_host:    true,
@@ -8,10 +8,12 @@ ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$sco
   };
   vm.hosts = [];
   vm.formId = vmCloudEvacuateFormId;
+  vm.message = message;
   vm.modelCopy = angular.copy(vm.vmCloudModel);
 
   ManageIQ.angular.scope = vm;
   $scope.saveable = miqService.saveable;
+
 
   if (vmCloudEvacuateFormId) {
     $http.get('/vm_cloud/evacuate_form_fields/' + vmCloudEvacuateFormId)

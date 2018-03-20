@@ -55,27 +55,5 @@
   %hr
   %div
     %h3
-      = n_("1 Instance to be Evacuated", "%{amount} Instances to be Evacuated", @evacuate_items.length) % {:amount => @evacuate_items.length}
-    - if @evacuate_items
-      - @embedded = true
-      - @quadicon_no_url = true
-      = render :partial => "layouts/gtl"
+      {{vm.message}}
 
-- unless @explorer
-  %table{:width => '100%'}
-    %tr
-      %td{:align => 'right'}
-        #buttons_on
-          = button_tag(t = _('Submit'),
-            :class   => "btn btn-primary",
-            :alt     => t,
-            :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :button => "submit")}');")
-          = button_tag(t = _('Cancel'),
-            :class   => "btn btn-default",
-            :alt     => t,
-            :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :button => "cancel")}');")
-
-:javascript
-  ManageIQ.angular.app.value('evacuate_items', #{@evacuate_items.to_json})
