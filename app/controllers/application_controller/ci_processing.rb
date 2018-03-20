@@ -222,28 +222,9 @@ module ApplicationController::CiProcessing
     ui_lookup(:models => self.class.model.name)
   end
 
-  def check_retire_requirements(selected_items)
-    # FIXME: should check model, not controller
-    return true if %w(orchestration_stack service).include?(controller_name)
-
-    if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
-      javascript_flash(:text => _("Retire does not apply to selected item"), :severity => :error, :scroll_top => true)
-      return false
-    end
-    true
-  end
-
   def check_scan_requirements(selected_items)
     unless VmOrTemplate.batch_operation_supported?('smartstate_analysis', selected_items)
       render_flash_not_applicable_to_model('Smartstate Analysis', ui_lookup(:tables => "vm_or_template"))
-      return false
-    end
-    true
-  end
-
-  def check_reset_requirements(selected_items)
-    if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_reset? }
-      javascript_flash(:text => _("Reset does not apply to at least one of the selected items"), :severity => :error, :scroll_top => true)
       return false
     end
     true
@@ -258,9 +239,7 @@ module ApplicationController::CiProcessing
   end
 
   def vm_button_operation_internal(items, task, display_name)
-    return false if task == 'retire_now' && !check_retire_requirements(items)
     return false if task == 'scan' && !check_scan_requirements(items)
-    return false if task == 'reset' && !check_reset_requirements(items)
     process_objects(items, task, display_name)
     true
   end
