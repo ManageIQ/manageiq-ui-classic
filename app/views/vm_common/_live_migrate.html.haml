@@ -1,9 +1,31 @@
 
-%vm_cloud-live-migrate-form
-:javascript
-ManageIQ.angular.app.value('repositoryId', '#{@id}');
-miq_bootstrap('vm_cloud_live_migrate_form')
+%vm-cloud-live-migrate-form
+
+- message = n_("1 Instance to be Live Migrated", "%{amount} Instances to be Live Migrated", @live_migrate_items.length) % {:amount => @live_migrate_items.length}
+
+
+- unless @explorer
+  %table{:width => '100%'}
+    %tr
+      %td{:align => 'right'}
+        #buttons_on
+          = button_tag(t = _('Submit'),
+            :class   => "btn btn-primary",
+            :alt     => t,
+            :title   => t,
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "live_migrate_vm", :button => "submit")}');")
+          = button_tag(t = _('Cancel'),
+            :class   => "btn btn-default",
+            :alt     => t,
+            :title   => t,
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "live_migrate_vm", :button => "cancel")}');")
+- if @live_migrate_items
+  - @embedded = true
+  - @quadicon_no_url = true
+  = render :partial => "layouts/gtl"
 
 :javascript
-ManageIQ.angular.app.value('vmCloudLiveMigrateFormId', "#{@live_migrate_items.length == 1 ? @live_migrate_items[0].id : ''}");
-miq_bootstrap('vm_cloud-live-migrate-form');
+  ManageIQ.angular.app.value('vmCloudLiveMigrateFormId', "#{@live_migrate_items.length == 1 ? @live_migrate_items[0].id : ''}");
+  ManageIQ.angular.app.value('live_migrate_items',#{@live_migrate_items.to_json});
+  ManageIQ.angular.app.value('message', "#{message}");
+  miq_bootstrap('vm-cloud-live-migrate-form');
