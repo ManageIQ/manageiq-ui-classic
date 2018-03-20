@@ -1,5 +1,5 @@
-MangageIQ.angular.app.component('securityGroupForm', {
+ManageIQ.angular.app.component('securityGroupForm', {
 controllerAs: 'vm',
 controller: 'securityGroupForm',
-templateUrl: 'app/views/static/security_group_form.new.html.haml'
+templateUrl: '/static/security_group_form_new.html.haml'
 });

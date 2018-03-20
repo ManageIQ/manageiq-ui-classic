@@ -4,7 +4,7 @@
    "model"         => "vm.securityGroupModel",
    "model-copy"    => "vm.modelCopy",
    "ng-cloak"      => "",
-   "ng-controller" => "securityGroupFormController as vm",
+   //"ng-controller" => "securityGroupFormController as vm",
    "ng-show"       => "vm.afterGet"}
 
   = render :partial => "layouts/flash_msg"
@@ -45,3 +45,4 @@
 :javascript
   ManageIQ.angular.app.value('securityGroupFormId', '#{@security_group.id}');
   miq_bootstrap('#form_div');
+  miq_bootstrap('security-group-form')

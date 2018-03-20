@@ -1,5 +1,5 @@
-	%form#form_div{:name           => "angularForm",
-	   "form-changed"  => true,
+%form#form_div{:name           => "angularForm",
+     "form-changed"  => true,
    "miq-form"      => true,
    "model"         => "vm.securityGroupModel",
    "model-copy"    => "vm.modelCopy",
@@ -24,28 +24,28 @@
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
 
-	%h3
-		= _('Security Group Information')
-	.form-horizontal
-		.form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
-			%label.col-md-2.control-label
-				= _('Security Group Name')
-			.col-md-8
-				%input.form-control{:type          => "text",
-														:name          => "name",
-														"ng-model"     => "vm.securityGroupModel.name",
-														"ng-maxlength" => 128,
-														"required"     => true}
-				%span.help-block{"ng-show" => "angularForm.name.$error.required"}
-					= _("Required")
-		.form-group
-			%label.col-md-2.control-label
-				= _('Security Group Description')
-			.col-md-8
-				%input.form-control{:type          => "text",
-														:name          => "description",
-														"ng-model"     => "vm.securityGroupModel.description",
-														"ng-maxlength" => 128}
+  %h3
+    = _('Security Group Information')
+  .form-horizontal
+    .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
+      %label.col-md-2.control-label
+    = _('Security Group Name')
+      .col-md-8
+      %input.form-control{:type          => "text",
+                            :name          => "name",
+                            "ng-model"     => "vm.securityGroupModel.name",
+                            "ng-maxlength" => 128,
+                            "required"     => true}
+      %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+        = _("Required")
+    .form-group
+      %label.col-md-2.control-label
+      = _('Security Group Description')
+  .col-md-8
+  %input.form-control{:type          => "text",
+                            :name          => "description",
+                            "ng-model"     => "vm.securityGroupModel.description",
+                            "ng-maxlength" => 128}
 
   .form-horizontal
     .form-group{"ng-if" => "vm.securityGroupModel.ems_id", "ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}

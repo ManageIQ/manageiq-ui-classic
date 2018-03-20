@@ -1,5 +1,6 @@
-
 %security-group-form
+
 :javascript
-  ManageIQ.angular.app.value('securityGroupFormId', '#{@id}');
+  ManageIQ.angular.app.value('securityGroupFormId', '#{@security_group.id || "new"}');
   miq_bootstrap('#form_div');
+  miq_bootstrap('security-group-form')
