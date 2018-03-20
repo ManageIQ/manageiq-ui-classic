@@ -1,4 +1,5 @@
 %cloud-volume-attach-form{'cloud-volume-form-id' => @volume.id, 'storage-manager-id' => @volume.ext_management_system.id}
 :javascript
   ManageIQ.angular.app.value('vmChoices', #{@vm_choices.sort.to_json});
+  ManageIQ.angular.app.value('extManagementSystem', '#{@volume.ext_management_system.type}');
   miq_bootstrap('cloud-volume-attach-form');

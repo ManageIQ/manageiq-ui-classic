@@ -4,7 +4,7 @@ ManageIQ.angular.app.component('cloudVolumeAttachForm', {
     storageManagerId: '@'
   },
   controllerAs: 'vm',
-  controller: ['miqService', 'API', 'vmChoices', function(miqService, API, vmChoices) {
+  controller: ['miqService', 'API', 'vmChoices', 'extManagementSystem', function(miqService, API, vmChoices, extManagementSystem) {
     var vm = this;
 
     this.$onInit = function() {
