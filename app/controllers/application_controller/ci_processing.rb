@@ -261,8 +261,6 @@ module ApplicationController::CiProcessing
     return false if task == 'retire_now' && !check_retire_requirements(items)
     return false if task == 'scan' && !check_scan_requirements(items)
     return false if task == 'reset' && !check_reset_requirements(items)
-    return false unless check_non_empty(items, display_name)
-
     process_objects(items, task, display_name)
     true
   end
