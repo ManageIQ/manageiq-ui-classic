@@ -558,7 +558,7 @@ module ApplicationController::CiProcessing
     assert_privileges(params[:pressed])
     action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'remove_all_snapshots', _('Delete All Snapshots'), action,
-                             :partial_after_single_selection => 'vm_common/config'
+                             :refresh_partial => 'vm_common/config' if !@explorer
   end
   alias_method :vm_snapshot_delete_all, :deleteallsnapsvms
 
@@ -567,7 +567,7 @@ module ApplicationController::CiProcessing
     assert_privileges(params[:pressed])
     action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'remove_snapshot', _('Delete Snapshot'), action,
-                             :partial_after_single_selection => 'vm_common/config'
+                             :refresh_partial => 'vm_common/config' if !@explorer
   end
   alias_method :vm_snapshot_delete, :deletesnapsvms
 
@@ -576,7 +576,7 @@ module ApplicationController::CiProcessing
     assert_privileges(params[:pressed])
     action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'revert_to_snapshot', _('Revert to a Snapshot'), action,
-                             :partial_after_single_selection => 'vm_common/config'
+                             :refresh_partial => 'vm_common/config' if !@explorer
   end
   alias_method :vm_snapshot_revert, :revertsnapsvms
 
@@ -708,17 +708,21 @@ module ApplicationController::CiProcessing
         :severity => :error,
         :scroll_top => true)
     end
-    # explorer or non-explorer redirection
-    # TODO: this should be generalized
+    screen_redirection(options)
+  end
+
+  # Explorer or non-explorer screen redirection.
+  #
+  # Params:
+  #   options - specific partial to render
+  def screen_redirection(options)
     if @lastaction == "show_list"
       show_list unless @explorer
       @refresh_partial = "layouts/gtl"
     end
-    # TODO: this should be generalized
-    #       now it only applies for snapshots delete/revert action
-    if options[:partial_after_single_selection].present? && !@explorer
+    if options[:refresh_partial].present?
       show
-      @refresh_partial = options[:partial_after_single_selection]
+      @refresh_partial = options[:refresh_partial]
     end
   end
 
