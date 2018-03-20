@@ -230,11 +230,6 @@ module ApplicationController::CiProcessing
     true
   end
 
-  def vm_button_operation_internal(items, task, display_name)
-    process_objects(items, task, display_name)
-    true
-  end
-
   def process_cloud_object_storage_buttons(pressed)
     assert_privileges(pressed)
 
@@ -389,7 +384,7 @@ module ApplicationController::CiProcessing
   # Delete all selected or single displayed VM(s)
   def deletevms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'destroy', _('Delete'), action
   end
   alias_method :image_delete, :deletevms
@@ -400,7 +395,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def syncvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'sync', _('Virtual Black Box synchronization'), action
   end
 
@@ -415,7 +410,7 @@ module ApplicationController::CiProcessing
       privilege = params[:pressed]
     end
     assert_privileges(privilege)
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'refresh_ems', _('Refresh Provider'), action
   end
   alias_method :image_refresh, :refreshvms
@@ -426,7 +421,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def scanvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'scan', _('Analysis'), action
   end
   alias_method :image_scan, :scanvms
@@ -437,7 +432,7 @@ module ApplicationController::CiProcessing
   # Immediately retire items
   def retirevms_now
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'retire_now', _('Retirement'), action
   end
   alias_method :instance_retire_now, :retirevms_now
@@ -446,7 +441,7 @@ module ApplicationController::CiProcessing
 
   def check_compliance_vms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'check_compliance_queue', _('Check Compliance'), action
   end
   alias_method :image_check_compliance, :check_compliance_vms
@@ -457,7 +452,7 @@ module ApplicationController::CiProcessing
   # Collect running processes for all selected or single displayed vm(s)
   def getprocessesvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'collect_running_processes', _('Collect Running Processes'), action
   end
   alias_method :instance_collect_running_processes, :getprocessesvms
@@ -466,7 +461,7 @@ module ApplicationController::CiProcessing
   # Start all selected or single displayed vm(s)
   def startvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'start', _('Start'), action
   end
   alias_method :instance_start, :startvms
@@ -475,7 +470,7 @@ module ApplicationController::CiProcessing
   # Suspend all selected or single displayed vm(s)
   def suspendvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'suspend', _('Suspend'), action
   end
   alias_method :instance_suspend, :suspendvms
@@ -484,7 +479,7 @@ module ApplicationController::CiProcessing
   # Pause all selected or single displayed vm(s)
   def pausevms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'pause', _('Pause'), action
   end
   alias_method :instance_pause, :pausevms
@@ -493,7 +488,7 @@ module ApplicationController::CiProcessing
   # Terminate all selected or single displayed vm(s)
   def terminatevms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'vm_destroy', _('Terminate'), action
   end
   alias_method :instance_terminate, :terminatevms
@@ -501,7 +496,7 @@ module ApplicationController::CiProcessing
   # Stop all selected or single displayed vm(s)
   def stopvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'stop', _('Stop'), action
   end
   alias_method :instance_stop, :stopvms
@@ -510,7 +505,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelvevms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'shelve', _('Shelve'), action
   end
   alias_method :instance_shelve, :shelvevms
@@ -519,7 +514,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelveoffloadvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'shelve_offload', _('Shelve Offload'), action
   end
   alias_method :instance_shelve_offload, :shelveoffloadvms
@@ -528,7 +523,7 @@ module ApplicationController::CiProcessing
   # Reset all selected or single displayed vm(s)
   def resetvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'reset', _('Reset'), action
   end
   alias_method :instance_reset, :resetvms
@@ -537,7 +532,7 @@ module ApplicationController::CiProcessing
   # Shutdown guests on all selected or single displayed vm(s)
   def guestshutdown
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'shutdown_guest', _('Shutdown Guest'), action
   end
   alias_method :vm_guest_shutdown, :guestshutdown
@@ -545,14 +540,14 @@ module ApplicationController::CiProcessing
   # Standby guests on all selected or single displayed vm(s)
   def gueststandby
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'standby_guest', _('Standby Guest'), action
   end
 
   # Restart guests on all selected or single displayed vm(s)
   def guestreboot
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'reboot_guest', _('Restart Guest'), action
   end
   alias_method :instance_guest_restart, :guestreboot
@@ -561,7 +556,7 @@ module ApplicationController::CiProcessing
   # Delete all snapshots for vm(s)
   def deleteallsnapsvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'remove_all_snapshots', _('Delete All Snapshots'), action,
                              :partial_after_single_selection => 'vm_common/config'
   end
@@ -570,7 +565,7 @@ module ApplicationController::CiProcessing
   # Delete selected snapshot for vm
   def deletesnapsvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'remove_snapshot', _('Delete Snapshot'), action,
                              :partial_after_single_selection => 'vm_common/config'
   end
@@ -579,7 +574,7 @@ module ApplicationController::CiProcessing
   # Delete selected snapshot for vm
   def revertsnapsvms
     assert_privileges(params[:pressed])
-    action = Proc.new { |ids, task, name| vm_button_operation_internal(ids, task, name) }
+    action = Proc.new { |ids, task, name| process_objects(ids, task, name) }
     generic_button_operation 'revert_to_snapshot', _('Revert to a Snapshot'), action,
                              :partial_after_single_selection => 'vm_common/config'
   end
