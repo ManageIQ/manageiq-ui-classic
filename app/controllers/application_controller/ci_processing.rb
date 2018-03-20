@@ -222,14 +222,6 @@ module ApplicationController::CiProcessing
     ui_lookup(:models => self.class.model.name)
   end
 
-  def check_scan_requirements(selected_items)
-    unless VmOrTemplate.batch_operation_supported?('smartstate_analysis', selected_items)
-      render_flash_not_applicable_to_model('Smartstate Analysis', ui_lookup(:tables => "vm_or_template"))
-      return false
-    end
-    true
-  end
-
   def check_non_empty(items, display_name)
     if items.blank?
       add_flash(_("No items were selected for %{task}") % {:task => display_name}, :error)
@@ -239,7 +231,6 @@ module ApplicationController::CiProcessing
   end
 
   def vm_button_operation_internal(items, task, display_name)
-    return false if task == 'scan' && !check_scan_requirements(items)
     process_objects(items, task, display_name)
     true
   end
