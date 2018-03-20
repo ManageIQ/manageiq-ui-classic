@@ -1445,6 +1445,7 @@ module ApplicationHelper
           generic_object_definition
           guest_device
           host
+          host_aggregate
           load_balancer
           middleware_deployment
           middleware_domain
