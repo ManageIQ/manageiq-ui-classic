@@ -1,5 +1,5 @@
 %form#form_div{:name           => "angularForm",
-               'ng-controller' => "cloudVolumeFormController as vm",
+               'ng-controller' => "cloudVolumeAttachFormController as vm",
                "ng-show"       => "vm.afterGet",
                "ng-cloak"      => "",
                "miq-form"      => true,
@@ -30,8 +30,7 @@
                             :name          => "device_path",
                             'ng-model'     => "vm.cloudVolumeModel.device_path",
                             'ng-maxlength' => 128,
-                            "ng-required"  => "vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'",
-                            :checkchange   => true}
+                            "ng-required"  => "vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
         %span.help-block{"ng-show" => "angularForm.device_path.$error.required"}
           = _("Required")
 
