@@ -10,14 +10,12 @@
       %label.col-md-2.control-label
         = _('Network Manager')
       .col-md-8
-        = select_tag("ems_id",
-                     options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
-                     "ng-model"                    => "vm.floatingIpModel.ems_id",
-                     "required"                    => "",
-                     :miqrequired                  => true,
-                     :checkchange                  => true,
-                     "ng-change"                   => "vm.filterNetworkManagerChanged(vm.floatingIpModel.ems_id)",
-                     "selectpicker-for-select-tag" => "")
+        %select{'pf-select' => '',
+                "ng-options"    => "choice[1] as choice[0] for choice in vm.emsChoices",
+                "ng-model"      => "vm.floatingIpModel.ems_id",
+                "required"      => "",
+                "ng-change"      => "vm.filterNetworkManagerChanged(vm.floatingIpModel.ems_id)",
+                "selectpicker-for-select-tag" => ""}
 
     .form-group{"ng-if" => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label
@@ -83,3 +81,6 @@
             = "<#{_('Choose')}>"
 
   = render :partial => "layouts/angular/generic_form_buttons"
+
+  :javascript
+    ManageIQ.angular.app.value('emsChoices', @ems_choices.sort.to_json);
