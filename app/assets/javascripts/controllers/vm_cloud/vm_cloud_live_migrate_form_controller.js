@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$scope', 'vmCloudLiveMigrateFormId', 'miqService', function($http, $scope, vmCloudLiveMigrateFormId, miqService) {
+ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$scope', 'miqService', function($http, $scope, miqService) {
   var vm = this;
 
   vm.vmCloudModel = {
@@ -11,13 +11,13 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
   vm.clusters = [];
   vm.hosts = [];
   vm.filtered_hosts = [];
-  vm.formId = vmCloudLiveMigrateFormId;
+  vm.formId = vm.vmCloudLiveMigrateFormId;
   vm.modelCopy = angular.copy(vm.vmCloudModel);
 
   ManageIQ.angular.scope = vm;
 
-  if (vmCloudLiveMigrateFormId) {
-    $http.get('/vm_cloud/live_migrate_form_fields/' + vmCloudLiveMigrateFormId)
+  if (vm.vmCloudLiveMigrateFormId) {
+    $http.get('/vm_cloud/live_migrate_form_fields/' + vm.vmCloudLiveMigrateFormId)
       .then(getLiveMigrateFormData)
       .catch(miqService.handleFailure);
   }
@@ -25,8 +25,8 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/live_migrate_vm/?button=cancel';
-    if (vmCloudLiveMigrateFormId) {
-      url = '/vm_cloud/live_migrate_vm/' + vmCloudLiveMigrateFormId + '?button=cancel';
+    if (vm.vmCloudLiveMigrateFormId) {
+      url = '/vm_cloud/live_migrate_vm/' + vm.vmCloudLiveMigrateFormId + '?button=cancel';
     }
 
     miqService.miqAjaxButton(url);
@@ -35,8 +35,8 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
   $scope.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/live_migrate_vm?button=submit';
-    if (vmCloudLiveMigrateFormId) {
-      url = '/vm_cloud/live_migrate_vm/' + vmCloudLiveMigrateFormId + '?button=submit';
+    if (vm.vmCloudLiveMigrateFormId) {
+      url = '/vm_cloud/live_migrate_vm/' + vm.vmCloudLiveMigrateFormId + '?button=submit';
     }
     miqService.miqAjaxButton(url, vm.vmCloudModel);
   };
