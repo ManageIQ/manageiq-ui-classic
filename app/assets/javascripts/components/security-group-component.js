@@ -24,7 +24,7 @@ function securityGroupFormController(miqService, API) {
     vm.networkProtocols = ["IPV4", "IPV6"];
     vm.directions = ["inbound", "outbound"];
 
-    vm.formId = vm.securityId;
+    vm.formId = vm.securityGroupFormId;
     vm.model = "securityGroupModel";
     vm.newRecord = securityGroupFormId === "new";
     vm.saveable = miqService.saveable;
@@ -46,7 +46,7 @@ function securityGroupFormController(miqService, API) {
   };
 
   function getSecurityGroup(id) {
-    return API.get("/api/security_groups/" + id + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules")
+    return API.get("/api/security_groups/" + vm.securityGroupFormId + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules")
         .then(function(data) {
           Object.assign(vm.securityGroupModel, data);
           vm.securityGroupModel.firewall_rules_delete = false;
@@ -69,7 +69,7 @@ function securityGroupFormController(miqService, API) {
     var index = vm.securityGroupModel.firewall_rules.length;
     vm.securityGroupModel.firewall_rules[index] = {
       id: null,
-      resource_id: vm.securityId,
+      resource_id: vm.securityGroupFormId,
       resource_type: "SecurityGroup",
       direction: "inbound",
       ems_ref: null,
@@ -85,9 +85,7 @@ function securityGroupFormController(miqService, API) {
   vm.cancelClicked = function() {
     if (vm.newRecord) {
       var url = '/security_group/create/new?button=cancel';
-    } //else {
-      //var url = '/security_group/update/' + vm.securityGroupFormId + '?button=cancel';
-    //}
+    }
     miqService.miqAjaxButton(url);
   };
 
@@ -99,7 +97,7 @@ function securityGroupFormController(miqService, API) {
   };
 
   vm.saveClicked = function() {
-    var url = '/security_group/update/' + vm.securityId + '?button=save';
+    var url = '/security_group/update/' + vm.securityGroupFormId + '?button=save';
     miqService.miqAjaxButton(url, vm.securityGroupModel, { complete: false });
   };
 
