@@ -1,0 +1,16 @@
+%form#form_div.form-horizontal{"name"          => "angularForm",
+                               "ng-show"       => "vm.afterGet",
+                               "miq-form"      => true,
+                               "model"         => "vm.ownershipModel",
+                               "model-copy"    => "vm.modelCopy"}
+  = render :partial => "layouts/flash_msg"
+
+  %h3
+    = _('Changes')
+  .form-horizontal
+    .form-group{"ng-class" => "{'has-error': angularForm.user.$invalid}"}
+      %label.col-md-2.control-label
+        = _('Select an Owner:')
+      .col-md-8
+
+
