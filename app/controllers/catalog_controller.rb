@@ -100,7 +100,15 @@ class CatalogController < ApplicationController
         add_flash(_("All changes have been reset"), :warning)
       end
       if !@record.id.nil? && need_prov_dialogs?(@record.prov_type)
-        prov_set_form_vars(MiqRequest.find(@record.service_resources[0].resource_id))      # Set vars from existing request
+        request = MiqRequest.find_by(:id => @record.service_resources[0].resource_id) if @record.service_resources[0]&.resource_id
+        if request
+          prov_set_form_vars(request) # Set vars from existing request
+        else
+          add_flash(_("Can not edit selected item, Request is missing"), :error)
+          @edit = @record = nil
+          replace_right_cell
+          return
+        end
       else
         # prov_set_form_vars
         @edit ||= {}                                    # Set default vars
@@ -1768,8 +1776,13 @@ class CatalogController < ApplicationController
   def get_node_info_handle_leaf_node(id)
     show_record(from_cid(id))
     if @record.atomic? && need_prov_dialogs?(@record.prov_type)
-      @miq_request = MiqRequest.find(@record.service_resources[0].resource_id)
-      prov_set_show_vars
+      @miq_request = MiqRequest.find_by(:id => @record.service_resources[0].resource_id) if @record.service_resources[0]&.resource_id
+      if @miq_request
+        prov_set_show_vars
+      else
+        @options   = nil
+        @no_wf_msg = _("Request is missing for selected item")
+      end
     end
     unless @record.prov_type == "generic_ansible_playbook"
       @sb[:dialog_label]       = _("No Dialog")
