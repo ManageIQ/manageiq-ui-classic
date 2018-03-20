@@ -86,7 +86,7 @@ function securityGroupFormController(miqService, API) {
     if (vm.newRecord) {
       var url = '/security_group/create/new?button=cancel';
     } else {
-      var url = '/security_group/update/' + vm.securityId + '?button=cancel';
+      var url = '/security_group/update/' + vm.securityGroupFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };
