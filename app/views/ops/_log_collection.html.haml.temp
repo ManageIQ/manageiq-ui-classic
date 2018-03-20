@@ -1,4 +1,9 @@
+- @angular_form = true
+
+%log-collection-form-component{'serverId' => @record.id}
+
 %form.form-horizontal#form_div{:name                                 => "angularForm",
+                               'ng-controller'                       => "logCollectionFormController as vm",
                                'ng-show'                             => "vm.afterGet",
                                'miq-form'                            => 'true',
                                'form-changed'                        => 'true',
@@ -11,17 +16,19 @@
   = render :partial => "layouts/flash_msg"
 
   %h3
-    :javascript
-      console.log(vm);
-    {{vm.message}}
-
+    = _("Editing Log Depot Settings for %{class}: %{display}") % {:class   => Dictionary.gettext(@record.class.name,
+                                                                                                   :type     => :model,
+                                                                                                   :notfound => :titleize),
+                                                                    :display => @record.display_name}
   .form-group
     %label.control-label.col-md-2
       = _("Type")
     .col-md-8
-      %select{"name" => "log_protocol",
-              "ng-model"                    => "vm.logCollectionModel.log_protocol",
-              "ng-change"                   => "vm.logProtocolChanged()"}
+      - default_option = [_("<No Depot>"), nil]
+      = select_tag('log_protocol', options_for_select([default_option] + @supported_depots_for_select),
+                   "ng-model"                    => "vm.logCollectionModel.log_protocol",
+                   "ng-change"                   => "vm.logProtocolChanged()",
+                   "selectpicker-for-select-tag" => "")
       :javascript
         miqInitSelectPicker();
 
@@ -46,3 +53,7 @@
                     'new-record'                     => 'vm.newRecord'}
 
   = render :partial => "layouts/angular/generic_form_buttons"
+
+:javascript
+  ManageIQ.angular.app.value('serverId', '#{@record.id || "new"}');
+  miq_bootstrap('log-collection-form-component');
