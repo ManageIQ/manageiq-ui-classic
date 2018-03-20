@@ -303,6 +303,7 @@ class ServiceController < ApplicationController
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
+    @edit = session[:adv_search]["Service"] if session[:adv_search].present? && @nodetype != "s"
 
     case TreeBuilder.get_model_for_prefix(@nodetype)
     when "Service"
