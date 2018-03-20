@@ -85,7 +85,8 @@
       = _("Type")
     .col-md-8
       - default_option = [_("<No Depot>"), nil]
-      = select_tag('log_protocol', options_for_select([default_option] + @database_backup_options_for_select),
+      = select_tag('log_protocol',
+                  "ng-options"                     => "choice[1] as choice[0] for choice in vm.database_backup_options_for_select",
                   "ng-model"                       => "vm.diagnosticsDatabaseModel.log_protocol",
                   "ng-change"                      => "vm.logProtocolChanged(vm.diagnosticsDatabaseModel)",
                   "ng-required"                    => "vm.logProtocolNotSelected(vm.diagnosticsDatabaseModel)",
