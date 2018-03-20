@@ -267,59 +267,6 @@ module ApplicationController::CiProcessing
     true
   end
 
-  # Common item button handler routines
-  def vm_button_operation(task, display_name, partial_after_single_selection = nil)
-    klass = get_rec_cls
-
-    # Either a list or coming from a different controller (e.g. from host screen, go to its vms)
-    if @lastaction == "show_list" ||
-       !%w(service vm_cloud vm_infra vm miq_template vm_or_template orchestration_stack).include?(controller_name)
-
-      # FIXME: retrieving vms from DB two times
-      items = find_checked_ids_with_rbac(klass, task)
-
-      vm_button_operation_internal(items, task, display_name) || return
-
-      if task == 'retire_now' && role_allows?(:feature => "miq_request_show_list", :any => true)
-        javascript_redirect(:controller => 'miq_request',
-                            :action     => 'show_list',
-                            :flash_msg  => @flash_array[0][:message])
-      end
-
-      # In non-explorer case, render the list (filling in @view).
-      if @lastaction == "show_list"
-        show_list unless @explorer
-        @refresh_partial = "layouts/gtl"
-      end
-
-    else # showing 1 item
-      items = [find_id_with_rbac_no_exception(klass, params[:id])].compact
-
-      unless check_non_empty(items, display_name)
-        show_list unless @explorer
-        @refresh_partial = "layouts/gtl"
-        return
-      end
-
-      vm_button_operation_internal(items, task, display_name)
-
-      if task == 'retire_now' && role_allows?(:feature => "miq_request_show_list", :any => true)
-        javascript_redirect(:controller => 'miq_request',
-                            :action     => 'show_list',
-                            :flash_msg  => @flash_array[0][:message])
-      end
-
-      # Tells callers to go back to show_list because this item may be gone.
-      @single_delete = task == 'destroy' && !flash_errors?
-
-      # For Snapshot Trees
-      if partial_after_single_selection && !@explorer
-        show
-        @refresh_partial = partial_after_single_selection
-      end
-    end
-  end
-
   def process_cloud_object_storage_buttons(pressed)
     assert_privileges(pressed)
 
