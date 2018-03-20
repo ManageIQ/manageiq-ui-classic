@@ -20,7 +20,7 @@ ManageIQ.angular.app.controller('cloudVolumeAttachFormController', ['miqService'
         .then(getCloudVolumeFormData)
         .catch(miqService.handleFailure);
   };
-  
+
   vm.attachClicked = function() {
     var url = '/cloud_volume/attach_volume/' + cloudVolumeFormId + '?button=attach';
     debugger;
