@@ -3,16 +3,16 @@ ManageIQ.angular.app.component('securityGroupComponent', {
   controllerAs: 'vm',
   templateUrl: '/static/security-group-form.html.haml',
   bindings: {
-	'securityId': '@',
-	},
- });
+    'securityGroupFormId': '@',
+  },
+});
 
-securityGroupController.$inject = ['miqService', 'API'];
+securityGroupFormController.$inject = ['miqService', 'API'];
 
 function repositoryFormController(miqService, API) {
   var vm = this;
 
-    var init = function() {
+  var init = function() {
       vm.afterGet = false;
       vm.securityGroupModel = {
         name: "",
@@ -53,19 +53,19 @@ function repositoryFormController(miqService, API) {
         });
     }
 
-    function getSecurityGroups() {
+  function getSecurityGroups() {
       return API.get("/api/security_groups/?expand=resources&attributes=ems_ref,id,name")
         .then(function(data) {
           vm.security_groups_list = data.resources;
         });
     }
 
-    vm.addClicked = function() {
+  vm.addClicked = function() {
       var url = 'create/new?button=add';
       miqService.miqAjaxButton(url, vm.securityGroupModel, { complete: false });
     };
 
-    vm.addFirewallRuleClicked = function() {
+  vm.addFirewallRuleClicked = function() {
       var index = vm.securityGroupModel.firewall_rules.length;
       vm.securityGroupModel.firewall_rules[index] = {
         id: null,
@@ -82,7 +82,7 @@ function repositoryFormController(miqService, API) {
       };
     };
 
-    vm.cancelClicked = function() {
+  vm.cancelClicked = function() {
       if (vm.newRecord) {
         var url = '/security_group/create/new?button=cancel';
       } else {
@@ -91,22 +91,22 @@ function repositoryFormController(miqService, API) {
       miqService.miqAjaxButton(url);
     };
 
-    vm.deleteFirewallRuleClicked = function(index) {
+  vm.deleteFirewallRuleClicked = function(index) {
       vm.securityGroupModel.firewall_rules[index].deleted = true;
       if (vm.securityGroupModel.firewall_rules[index].id != null) {
         vm.securityGroupModel.firewall_rules_delete = true;
       }
     };
 
-    vm.saveClicked = function() {
+  vm.saveClicked = function() {
       var url = '/security_group/update/' + vm.securityId + '?button=save';
       miqService.miqAjaxButton(url, vm.securityGroupModel, { complete: false });
     };
 
-    vm.resetClicked = function(angularForm) {
+  vm.resetClicked = function(angularForm) {
       vm.securityGroupModel = _.cloneDeep(vm.modelCopy);
       for (var index = 0, len = vm.securityGroupModel.firewall_rules.length; index < len; index++) {
-        if (vm.securityGroupModel.firewall_rules[index] == undefined || vm.securityGroupModel.firewall_rules[index].deleted === true) {
+        if (vm.securityGroupModel.firewall_rules[index] === undefined || vm.securityGroupModel.firewall_rules[index].deleted === true) {
           vm.securityGroupModel.firewall_rules.splice(index, 1);
         }
       }
@@ -114,9 +114,9 @@ function repositoryFormController(miqService, API) {
       miqService.miqFlash("warn", "All changes have been reset");
     };
 
-    vm.filterNetworkManagerChanged = miqService.getProviderTenants(function(data) {
+  vm.filterNetworkManagerChanged = miqService.getProviderTenants(function(data) {
       vm.available_tenants = data.resources;
     });
 
-    vm.$onInit=init;
+  vm.$onInit=init;
 }
