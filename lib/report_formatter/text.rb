@@ -73,6 +73,10 @@ module ReportFormatter
 
       return if mri.headers.empty?
       c = mri.headers.dup
+      # Remove headers of hidden columns
+      mri.col_order.each_with_index do |f, i|
+        c.delete_at(i) if mri.column_is_hidden?(f)
+      end
       c.each_with_index do |f, i|
         c[i] = f.to_s.center(@max_col_width[i])
       end
@@ -107,6 +111,8 @@ module ReportFormatter
         end
         mri.col_formats ||= []                 # Backward compat - create empty array for formats
         mri.col_order.each_with_index do |f, i|
+          next if mri.column_is_hidden?(f)
+
           unless ["<compare>", "<drift>"].include?(mri.db)
             data = mri.format(f,
                               r[f],
