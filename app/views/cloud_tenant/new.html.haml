@@ -1,6 +1,5 @@
 #main_div
-%cloud-tenant-form
-%repository-form-component{'cloudTenantFormId' => 'new'}
+%cloud-tenant-form{'cloudTenantFormId' => 'new'}
 :javascript
-  #ManageIQ.nagular.app.value('repositoryId', '#(@id)');
+  #ManageIQ.nagular.app.value('cloudTenantFormId', '#{@id}');
   miq_bootstrap('cloud-tenant-formt')

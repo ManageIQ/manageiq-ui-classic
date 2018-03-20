@@ -1,6 +1,5 @@
 #main_div
-%cloud-tenant-form
-%cloud-tenant-form{'repository-id' => @id }
+%cloud-tenant-form-component{'cloud-tenant-form-id' => @id }
 :javascript
-   #ManageIQ.angular.app.value('repositoryId', '#{@id}');
-   miq_bootstrap('cloud-tenant-form')
+   ManageIQ.angular.app.value('cloudTenantFormId', '#{@id}');
+   miq_bootstrap('cloud-tenant-form-component')
