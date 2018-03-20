@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$scope','vmCloudEvacuateFormId', 'miqService', 'message', function($http, $scope,vmCloudEvacuateFormId, miqService, message) {
+ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$scope', 'miqService', function($http, $scope, miqService) {
   var vm = this;
   vm.vmCloudModel = {
     auto_select_host:    true,
@@ -7,16 +7,14 @@ ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$sco
     admin_password:      null
   };
   vm.hosts = [];
-  vm.formId = vmCloudEvacuateFormId;
-  vm.message = message;
+  vm.formId = vm.vmCloudEvacuateFormId;
   vm.modelCopy = angular.copy(vm.vmCloudModel);
 
   ManageIQ.angular.scope = vm;
   $scope.saveable = miqService.saveable;
 
-
-  if (vmCloudEvacuateFormId) {
-    $http.get('/vm_cloud/evacuate_form_fields/' + vmCloudEvacuateFormId)
+  if (vm.vmCloudEvacuateFormId) {
+    $http.get('/vm_cloud/evacuate_form_fields/' + vm.vmCloudEvacuateFormId)
       .then(getEvacuateFormData)
       .catch(miqService.handleFailure);
   }
@@ -24,8 +22,8 @@ ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$sco
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/evacuate_vm?button=cancel';
-    if (vmCloudEvacuateFormId) {
-      url = '/vm_cloud/evacuate_vm/' + vmCloudEvacuateFormId + '?button=cancel';
+    if (vm.vmCloudEvacuateFormId) {
+      url = '/vm_cloud/evacuate_vm/' + vm.vmCloudEvacuateFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };
@@ -33,8 +31,8 @@ ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$sco
   $scope.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/evacuate_vm?button=submit';
-    if (vmCloudEvacuateFormId) {
-      url = '/vm_cloud/evacuate_vm/' + vmCloudEvacuateFormId + '?button=submit';
+    if (vm.vmCloudEvacuateFormId) {
+      url = '/vm_cloud/evacuate_vm/' + vm.vmCloudEvacuateFormId + '?button=submit';
     }
     miqService.miqAjaxButton(url, vm.vmCloudModel);
   };
