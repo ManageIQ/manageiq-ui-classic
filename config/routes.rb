@@ -253,6 +253,7 @@ Rails.application.routes.draw do
         add_host
         add_host_select
         button
+        listnav_search_selected
         create
         quick_search
         remove_host
@@ -265,7 +266,7 @@ Rails.application.routes.draw do
         tl_chooser
         update
         wait_for_task
-      ) + adv_search_post + compare_post + exp_post + perf_post
+      ) + adv_search_post + compare_post + exp_post + perf_post + save_post
     },
 
     :catalog                  => {
