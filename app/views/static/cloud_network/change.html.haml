@@ -8,6 +8,8 @@
 
   = render :partial => "layouts/flash_msg"
 
+  = render :partial => "layouts/angular/generic_form_buttons"
+ 
   %h3
     = _('Network Provider')
   .form-horizontal
@@ -129,5 +131,5 @@
                "id"          => "cloud_network_shared",
                "name"        => "shared",
                "ng-model"    => "vm.cloudNetworkModel.shared"}
-  = render :partial => "layouts/angular/generic_form_buttons"
+               
 
