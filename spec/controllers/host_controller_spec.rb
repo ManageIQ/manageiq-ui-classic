@@ -12,6 +12,45 @@ describe HostController do
       ApplicationController.handle_exceptions = true
     end
 
+    it "renders index" do
+      get :index
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'show_list')
+    end
+
+    it "renders show_list and does not include hidden column" do
+      allow(controller).to receive(:render)
+      report = FactoryGirl.create(:miq_report,
+                                  :name => 'Hosts',
+                                  :title => 'Hosts',
+                                  :cols => ['name', 'ipaddress', 'v_total_vms'],
+                                  :col_order => ['name', 'ipaddress', 'v_total_vms'],
+                                  :headers => ['Name', 'IP Address', 'VMs'],
+                                  :col_options => {"name" => {:hidden=>true}}
+      )
+      expect(controller).to receive(:get_db_view).and_return(report)
+      controller.send(:report_data)
+      view_hash = controller.send(:view_to_hash, assigns(:view))
+      expect(view_hash[:head]).not_to include({:text => "Name", :sort => "str", :col_idx => 0, :align => "left"})
+      expect(view_hash[:head]).to include({:text => "IP Address", :sort => "str", :col_idx => 1, :align => "left"})
+    end
+
+    it "renders show_list and includes all columns" do
+      allow(controller).to receive(:render)
+      report = FactoryGirl.create(:miq_report,
+                                  :name => 'Hosts',
+                                  :title => 'Hosts',
+                                  :cols => ['name', 'ipaddress', 'v_total_vms'],
+                                  :col_order => ['name', 'ipaddress', 'v_total_vms'],
+                                  :headers => ['Name', 'IP Address', 'VMs']
+      )
+      expect(controller).to receive(:get_db_view).and_return(report)
+      controller.send(:report_data)
+      view_hash = controller.send(:view_to_hash, assigns(:view))
+      expect(view_hash[:head]).to include({:text => "Name", :sort => "str", :col_idx => 0, :align => "left"})
+      expect(view_hash[:head]).to include({:text => "IP Address", :sort => "str", :col_idx => 1, :align => "left"})
+    end
+
     it 'edit renders GTL grid with selected Host records' do
       session[:host_items] = [h1.id, h2.id]
       session[:settings] = {:views     => {:host => 'grid'},
