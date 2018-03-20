@@ -750,6 +750,53 @@ module ApplicationController::CiProcessing
     clusters.count
   end
 
+  # The method calls task called from UI on the selected records.
+  # In case any record does not support an action, it won't be ran for
+  # any of selected records.
+  #
+  # Params:
+  #   task        - string of an action
+  #               - the actions should be present in
+  #                 SupportsFeatureMixin::QUERYABLE_FEATURES
+  #   action_name - a string of an action used for a flash message in case
+  #                 the task can not be applied
+  #   action      - a block with a operation, specific to the type of action
+  #                 on a record
+  #   options     - other parameters
+  def generic_button_operation(task, action_name, action, options={})
+    records = find_records_with_rbac(get_rec_cls, checked_or_params)
+    record_unsupported = records.find do |record|
+      # FIXME: this block comes from app/helpers/application_helper/button/generic_feature_button.rb
+      #        -> could be extracted into method somewhere else
+      if record.respond_to?("supports_#{task}?")
+        !record.supports?(task.to_sym)
+      else # TODO: remove with deleting AvailabilityMixin module
+        !record.is_available?(task.to_sym)
+      end
+    end
+    if record_unsupported.present?
+      javascript_flash(
+        :text => _("#{action_name} action does not apply to selected items"),
+        :severity => :error,
+        :scroll_top => true)
+    else
+      action.call(records.map(&:id), task, action_name)
+    end
+    @single_delete = task == 'destroy' && !flash_errors?
+    # explorer or non-explorer redirection
+    # TODO: this should be generalized
+    if @lastaction == "show_list"
+      show_list unless @explorer
+      @refresh_partial = "layouts/gtl"
+    end
+    # TODO: this should be generalized
+    #       now it only applies for snapshots delete/revert action
+    if options[:partial_after_single_selection].present? && !@explorer
+      show
+      @refresh_partial = options[:partial_after_single_selection]
+    end
+  end
+
   # Scan all selected or single displayed cluster(s)
   def scanclusters
     assert_privileges("ems_cluster_scan")
