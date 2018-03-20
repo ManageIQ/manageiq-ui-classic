@@ -1,14 +1,14 @@
 ManageIQ.angular.app.component('ownershipFormComponent', {
   bindings: {
-    objectIds: '@',
-
+    objectIds: '<'
   },
+
   controllerAs: 'vm',
   controller: [ '$http', 'miqService', function($http, miqService){
-    var vm = this;
+   var vm = this;
 
-    this.$onInit = function() {
-    console.log('pokus')
+  vm.$onInit = () => {
+  console.log("ownership");
     vm.ownershipModel = {
       user: '',
       group: ''
@@ -17,22 +17,26 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
     vm.newRecord = false;
     vm.modelCopy = angular.copy( vm.ownershipModel );
     vm.model     = "ownershipModel";
-    vm.objectIds = vm.objectIds;
     vm.saveable = miqService.saveable;
-
     ManageIQ.angular.scope = vm;
-
     miqService.sparkleOn();
-    $http.post('ownership_form_fields', {object_ids: objectIds})
+
+   console.log(vm.objectIds)
+   $http.post('ownership_form_fields', {object_ids: vm.objectIds})
       .then(getOwnershipFormData)
       .catch(miqService.handleFailure);
   };
 
 
-  vm.isBasicInfoValid = function() {
-    return ( $scope.angularForm.user && $scope.angularForm.user.$valid) &&
-          ($scope.angularForm.group && $scope.angularForm.group.$valid);
-  };
+    function getOwnershipFormData(response) {
+    var data = response.data;
+
+    vm.ownershipModel.user = data.user;
+    vm.ownershipModel.group = data.group;
+    vm.afterGet = true;
+    vm.modelCopy = angular.copy( vm.ownershipModel );
+    miqService.sparkleOff();
+
 
 
   var ownershipEditButtonClicked = function(buttonName, serializeFields) {
@@ -48,15 +52,22 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
       });
     }
   };
+  }
+
+  vm.isBasicInfoValid = function() {
+    return ( vm.angularForm.user && vm.angularForm.user.$valid) &&
+          (vm.angularForm.group && vm.angularForm.group.$valid);
+  };
+
 
   vm.cancelClicked = function() {
     ownershipEditButtonClicked('cancel');
-    $scope.angularForm.$setPristine(true);
+    vm.angularForm.$setPristine(true);
   };
 
   vm.resetClicked = function() {
     vm.ownershipModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
+    vm.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
@@ -65,7 +76,7 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
   };
 
   vm.addClicked = function() {
-    $scope.saveClicked();
+    vm.saveClicked();
   };
 
   function getOwnershipFormData(response) {
@@ -79,6 +90,6 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
   }
 
   }],
-  templateUrl: '/static/shared/_ownership.html.haml',
+  templateUrl: '/static/shared/ownership.html.haml',
 
 })
