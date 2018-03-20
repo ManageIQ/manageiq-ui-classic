@@ -9,7 +9,7 @@ ManageIQ.angular.app.component('securityGroupComponent', {
 
 securityGroupFormController.$inject = ['miqService', 'API'];
 
-function repositoryFormController(miqService, API) {
+function securityGroupFormController(miqService, API) {
   var vm = this;
 
   var init = function() {
