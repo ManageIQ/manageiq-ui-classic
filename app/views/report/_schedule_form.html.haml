@@ -31,7 +31,6 @@
   = render :partial => "schedule_form_filter"
   = render :partial => "schedule_form_timer", :locals => {:action_url => "schedule_form_field_changed", :record => @schedule}
   = render(:partial => "layouts/edit_email",
-           :locals  => {:box_title  => _("E-mail after Running"),
-                        :action_url => "schedule_form_field_changed",
+           :locals  => {:action_url => "schedule_form_field_changed",
                         :record     => @schedule})
   = render :partial => "schedule_email_options"
