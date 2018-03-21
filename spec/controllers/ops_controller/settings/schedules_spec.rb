@@ -159,6 +159,17 @@ describe OpsController do
       expect(schedule.filter.exp[key]["field"]).to eq("Vm-name")
       expect(schedule.sched_action).to eq(:method=>"check_compliance")
     end
+
+    it "sets start time correctly" do
+      params[:start_date] = "Mon Mar 12 2018 20:00:00 GMT-0400 (EDT)"
+      params[:start_hour] = "1"
+      params[:start_min]  = "5"
+      params[:time_zone]  = "UTC"
+
+      allow(controller).to receive(:params).and_return(params)
+      controller.send(:schedule_set_start_time_record_vars, schedule)
+      expect(schedule.run_at[:start_time]).to eq("2018-03-12 01:05:00 UTC")
+    end
   end
 
   context "#build_attrs_from_params" do
