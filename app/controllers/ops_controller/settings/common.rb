@@ -913,7 +913,7 @@ module OpsController::Settings::Common
       @edit[:current].config[:server][:locale] = "default" if @edit[:current].config[:server][:locale].blank?
       @edit[:current].config[:server][:remote_console_type] ||= "VNC"
       @edit[:current].config[:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current].config[:smtp][:enable_starttls_auto].nil?
-      @edit[:current].config[:smtp][:openssl_verify_mode] ||= nil
+      @edit[:current].config[:smtp][:openssl_verify_mode] ||= "none"
       @edit[:current].config[:ntp] ||= {}
       @edit[:current].config[:ntp][:server] ||= []
       @in_a_form = true
