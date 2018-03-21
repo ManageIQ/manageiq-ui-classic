@@ -1292,7 +1292,7 @@ module OpsController::OpsRbac
     @edit[:new][:name] = @record.name
     vmr = @record.settings.fetch_path(:restrictions, :vms) if @record.settings
     @edit[:new][:vm_restriction] = vmr || :none
-    @edit[:new][:features] = rbac_expand_features(@record.feature_identifiers).sort
+    @edit[:new][:features] = rbac_expand_features(@record.miq_product_features.collect(&:identifier)).sort
 
     @edit[:current] = copy_hash(@edit[:new])
 
