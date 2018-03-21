@@ -9,6 +9,7 @@ module ReportController::Reports::Editor
   DEFAULT_PDF_PAGE_SIZE = "US-Letter".freeze
 
   CHARGEBACK_ALLOWED_FIELD_SUFFIXES = %w(
+    _rate
     _cost
     -owner_name
     _metric
