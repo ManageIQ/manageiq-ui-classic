@@ -24,6 +24,7 @@ if (! window.ManageIQ) {
       provider: null, // name of charting provider for provider-specific code
     },
     controller: null, // stored controller, used to build URL
+    component: null, // Component API - app/javascript/miq-component
     editor: null, // instance of CodeMirror editor
     expEditor: {
       first: {
