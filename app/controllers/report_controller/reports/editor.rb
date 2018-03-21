@@ -21,6 +21,11 @@ module ReportController::Reports::Editor
     -vm_uid
   ).freeze
 
+  METERING_VM_ALLOWED_FIELD_SUFFIXES = %w(
+    -beginning_of_resource_existence_in_report_interval
+    -end_of_resource_existence_in_report_interval
+  ).freeze
+
   MAX_REPORT_COLUMNS = 100 # Default maximum number of columns in a report
   GRAPH_MAX_COUNT = 10
 
