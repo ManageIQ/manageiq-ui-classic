@@ -911,7 +911,9 @@ module ApplicationController::Compare
   def drift_add_section(view, section, records, fields)
     cell_text = section[:header]
     if records.nil? # Show records count if not nil
-      cell_text += " (#{fields.length})"
+
+      fields_length = drift_section_fields_total(view, section, fields)
+      cell_text += " (#{fields_length})"
     else                # Show fields count
       cell_text += " (#{records.length})"
     end
@@ -927,6 +929,12 @@ module ApplicationController::Compare
     row.merge!(drift_section_data_cols(view, section))
     @section_parent_id = @rows.length
     @rows << row
+  end
+
+  # Section fields counter (in brackets)
+  # Regarding to buttons "Attributes with same/different values"
+  def drift_section_fields_total(view, section, fields)
+    section_fields_total(view, section, fields, :drift)
   end
 
   def drift_section_data_cols(view, section)
@@ -1177,33 +1185,40 @@ module ApplicationController::Compare
   # Build a field row under a section row
   def drift_add_section_field(view, section, field)
     @same = true
+    row = {
+      :col0          => field[:header].to_s,
+      :id            => "id_#{@rows.length}",
+      :indent        => 1,
+      :parent        => @section_parent_id,
+      :section_field => true
+    }
+
     if @compressed  # Compressed
-      row = drift_add_section_field_compressed(view, section, field)
+      row.merge!(drift_add_section_field_compressed(view, section, field))
     else            # Expanded
-      row = drift_add_section_field_expanded(view, section, field)
+      row.merge!(drift_add_section_field_expanded(view, section, field))
     end
-    row.merge!(:id            => "id_#{@rows.length}",
-               :indent        => 1,
-               :parent        => @section_parent_id,
-               :section_field => true)
+
     @rows << row
   end
 
   def drift_add_section_field_compressed(view, section, field)
-    row = {:col0 => field[:header].to_s}
+    row = {}
     view.ids.each_with_index do |id, idx|
-      val = view.results[id][section[:name]][field[:name]][:_value_].to_s
-      if !view.results[id][section[:name]][field[:name]].nil? && idx == 0     # On base object
-        row.merge!(drift_add_same_image(idx, val))
-      elsif !view.results[id][section[:name]].nil? && !view.results[id][section[:name]][field[:name]].nil?
-        if view.results[id][section[:name]][field[:name]][:_match_]
-          row.merge!(drift_add_same_image(idx, val))
-        else
-          @same = false
-          row.merge!(drift_add_diff_image(idx, val))
-        end
-      else
+      fld = view.results.fetch_path(id, section[:name], field[:name])
+      val = fld[:_value_].to_s unless fld.nil?
+
+      if fld.nil?
         val = _("No Value Found")
+        row.merge!(drift_add_diff_image(idx, val))
+
+      elsif idx.zero? # On base object
+        row.merge!(drift_add_same_image(idx, val))
+
+      elsif fld[:_match_]
+        row.merge!(drift_add_same_image(idx, val))
+      else
+        unset_same_flag
         row.merge!(drift_add_diff_image(idx, val))
       end
     end
@@ -1213,22 +1228,19 @@ module ApplicationController::Compare
   def drift_add_section_field_expanded(view, section, field)
     row = {:col0 => field[:header]}
     view.ids.each_with_index do |id, idx|
-      if !view.results[id][section[:name]][field[:name]].nil? && idx == 0       # On base object
-        col = view.results[id][section[:name]][field[:name]][:_value_].to_s
+      fld = view.results.fetch_path(id, section[:name], field[:name])
+      next if fld.nil?
+      val = fld[:_value_].to_s
+
+      if idx.zero? # On base object
         img_bkg = "cell-stripe"
-        row.merge!(drift_add_txt_col(idx, col, img_bkg))
-      elsif !view.results[id][section[:name]].nil? && !view.results[id][section[:name]][field[:name]].nil?
-        if view.results[id][section[:name]][field[:name]][:_match_]
-          col = view.results[id][section[:name]][field[:name]][:_value_].to_s
-          img_bkg = "cell-bkg-plain-no-shade"
-          row.merge!(drift_add_txt_col(idx, col, img_bkg))
-        else
-          @same = false
-          col = view.results[id][section[:name]][field[:name]][:_value_].to_s
-          img_bkg = "cell-bkg-plain-mark-txt-no-shade"
-          row.merge!(drift_add_txt_col(idx, col, img_bkg))
-        end
+      elsif fld[:_match_]
+        img_bkg = "cell-bkg-plain-no-shade"
+      else
+        img_bkg = "cell-bkg-plain-mark-txt-no-shade"
+        unset_same_flag
       end
+      row.merge!(drift_add_txt_col(idx, val, img_bkg))
     end
     row
   end
@@ -1468,8 +1480,10 @@ module ApplicationController::Compare
   def comp_add_section(view, section, records, fields)
     cell_text = section[:header]
     if records.nil? # Show records count if not nil
-      cell_text += " (#{fields.length})"
-    else                # Show fields count
+
+      fields_length = comp_section_fields_total(view, section, fields)
+      cell_text += " (#{fields_length})"
+    else # Show fields count
       cell_text += " (#{records.length})"
     end
     row = {
@@ -1485,6 +1499,12 @@ module ApplicationController::Compare
 
     @section_parent_id = @rows.length
     @rows << row
+  end
+
+  # Section fields counter (in brackets)
+  # Regarding to buttons "Attributes with same/different values"
+  def comp_section_fields_total(view, section, fields)
+    section_fields_total(view, section, fields, :comp)
   end
 
   def compare_section_data_cols(view, section, records)
@@ -1933,5 +1953,36 @@ module ApplicationController::Compare
   def collapsed_state(id)
     s = session[:compare_state] || []
     !s.include?(id)
+  end
+
+  # Common evaluation of section fields total for comparation and drifts
+  # @param [Symbol] comp_or_drift - :comp | :drift
+  def section_fields_total(view, section, fields, comp_or_drift)
+    fields_length = 0
+    fields.each_with_index do |field, _fidx|
+      @same = true # reset for each field
+      base_val = view.results.fetch_path(view.ids[0], section[:name], field[:name], :_value_)
+
+      section_field_compare_values(view, section, field, base_val)
+
+      if (comp_or_drift == :comp && compare_delete_row) || (comp_or_drift == :drift && drift_delete_row)
+        fields_length += 1
+      end
+    end
+    @same = true # reset for further processing
+    fields_length
+  end
+
+  # Compares one field (row) across all results (columns)
+  # If different (according to base value (first column))
+  # - set @same = false
+  def section_field_compare_values(view, section, field, base_val)
+    view.ids.each_with_index do |id, idx|
+      next if idx.zero? # Not for base object
+
+      fld = view.results.fetch_path(id, section[:name], field[:name])
+
+      unset_same_flag unless fld.nil? || base_val == fld[:_value_]
+    end
   end
 end
