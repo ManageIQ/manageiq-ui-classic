@@ -65,8 +65,6 @@
             %select{"ng-model"         => "vm._#{prefix}_vault_credential",
                     "name"             => "#{prefix}_vault_credential_id",
                     'ng-options'       => 'vault_credential as vault_credential.name for vault_credential in vm.vault_credentials',
-                    "required"         => "",
-                    :miqrequired       => true,
                     "data-live-search" => "true",
                     'pf-select'        => true}
               %option{"value" => ""}
