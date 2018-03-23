@@ -21,7 +21,30 @@ namespace :update do
     end
   end
 
-  task :ui => ['update:clean', 'update:bower', 'update:yarn', 'webpack:compile']
+  task :debug_engines do
+    print "\n"
+    puts "JS plugins:"
+    asset_engines.each_pair do |k, v|
+      puts "  #{k}: #{v}"
+    end
+    print "\n"
+  end
+
+  task :actual_ui => ['update:clean', 'update:bower', 'update:yarn', 'webpack:compile', 'update:debug_engines']
+
+  task :ui do
+    # when running update:ui from ui-classic, asset_engines won't see the other engines
+    # the same goes for Rake::Task#invoke
+    if defined?(ENGINE_ROOT) && !ENV["TRAVIS"]
+      Dir.chdir Rails.root do
+        Bundler.with_clean_env do
+          system("bundle exec rake update:actual_ui")
+        end
+      end
+    else
+      Rake::Task['update:actual_ui'].invoke
+    end
+  end
 end
 
 namespace :webpack do
@@ -62,7 +85,7 @@ end
 # compile and clobber when running assets:* tasks
 if Rake::Task.task_defined?("assets:precompile")
   Rake::Task["assets:precompile"].enhance do
-    Rake::Task["webpack:compile"].invoke
+    Rake::Task["webpack:compile"].invoke unless ENV["TRAVIS"]
   end
 
   Rake::Task["assets:precompile"].actions.each do |action|
@@ -74,7 +97,7 @@ end
 
 if Rake::Task.task_defined?("assets:clobber")
   Rake::Task["assets:clobber"].enhance do
-    Rake::Task["webpack:clobber"].invoke
+    Rake::Task["webpack:clobber"].invoke unless ENV["TRAVIS"]
   end
 
   Rake::Task["assets:clobber"].actions.each do |action|
