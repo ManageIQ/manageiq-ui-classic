@@ -110,6 +110,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel = angular.copy(vm.modelCopy);
     playbookReusableCodeMixin.formOptions(vm);
     playbookReusableCodeMixin.cloudCredentialsList(vm, vm.aeMethodModel.provisioning_cloud_credential_id);
+    playbookReusableCodeMixin.checkFormDataRetrieval(vm);
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
