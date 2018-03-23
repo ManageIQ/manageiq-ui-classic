@@ -21,6 +21,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       provisioning_machine_credential_id: '',
       provisioning_network_credential_id: '',
       provisioning_cloud_credential_id: '',
+      provisioning_vault_credential_id: '',
       provisioning_key: '',
       provisioning_value: '',
       provisioning_type: 'string',
@@ -74,6 +75,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel.provisioning_playbook_id = configData.playbook_id;
     vm.aeMethodModel.provisioning_machine_credential_id = configData.credential_id;
     vm.aeMethodModel.provisioning_network_credential_id = configData.network_credential_id;
+    vm.aeMethodModel.provisioning_vault_credential_id = configData.vault_credential_id;
     vm.aeMethodModel.provisioning_cloud_credential_id = playbookReusableCodeMixin.setIfDefined(configData.cloud_credential_id);
     vm.aeMethodModel.provisioning_become_enabled = configData.become_enabled === true;
     vm.aeMethodModel.provisioning_key = '';
@@ -108,6 +110,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel = angular.copy(vm.modelCopy);
     playbookReusableCodeMixin.formOptions(vm);
     playbookReusableCodeMixin.cloudCredentialsList(vm, vm.aeMethodModel.provisioning_cloud_credential_id);
+    playbookReusableCodeMixin.checkFormDataRetrieval(vm);
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
@@ -143,6 +146,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       repository_id: configData.provisioning_repository_id,
       playbook_id: configData.provisioning_playbook_id,
       credential_id: configData.provisioning_machine_credential_id,
+      vault_credential_id: configData.provisioning_vault_credential_id,
       verbosity: configData.provisioning_verbosity,
       become_enabled: configData.provisioning_become_enabled,
       execution_ttl: configData.provisioning_execution_ttl,
@@ -259,14 +263,12 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
   };
 
   // watch for all the drop downs on screen
-  "provisioning_playbook provisioning_machine_credential provisioning_network_credential provisioning_cloud_credential".split(" ").forEach(idWatch);
+  "provisioning_playbook provisioning_machine_credential provisioning_vault_credential provisioning_network_credential provisioning_cloud_credential".split(" ").forEach(idWatch);
 
   function idWatch(name) {
     var fieldName = "vm._" + name;
     $scope.$watch(fieldName, function(value) {
-      if (value) {
-        vm.aeMethodModel[name + '_id'] = value.id;
-      }
+      vm.aeMethodModel[name + '_id'] = value ? value.id : '';
       playbookReusableCodeMixin.checkFormPristine(vm.aeMethodModel, vm.modelCopy, $scope.angularForm);
     });
   }
