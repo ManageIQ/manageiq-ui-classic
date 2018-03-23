@@ -267,9 +267,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
   function idWatch(name) {
     var fieldName = "vm._" + name;
     $scope.$watch(fieldName, function(value) {
-      if (value) {
-        vm.aeMethodModel[name + '_id'] = value.id;
-      }
+      vm.aeMethodModel[name + '_id'] = value ? value.id : '';
       playbookReusableCodeMixin.checkFormPristine(vm.aeMethodModel, vm.modelCopy, $scope.angularForm);
     });
   }
