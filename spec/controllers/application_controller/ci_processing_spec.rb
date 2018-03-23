@@ -5,15 +5,53 @@ describe ApplicationController do
     allow(controller).to receive(:role_allows?).and_return(true)
   end
 
+  describe "#generic_button_operation" do
+    let(:vm1) { FactoryGirl.create(:vm_redhat) }
+    let(:vm2) { FactoryGirl.create(:vm_microsoft) }
+    let(:vm3) { FactoryGirl.create(:vm_vmware) }
+    let(:controller_name) { VmOrTemplate }
+
+    context 'record does not support the action' do
+      it 'processes the operation' do
+        controller.instance_variable_set(
+          :@_params,
+          :miq_grid_checks => "#{vm1.id}, #{vm3.id}, #{vm2.id}")
+        # calling 'vm_button_action' creates a proc calling 'process_objects'
+        expect(controller).to receive(:javascript_flash).with({
+          :text => "Smartstate Analysis action does not apply to selected items",
+          :severity => :error,
+          :scroll_top => true
+        })
+        process_proc = controller.send(:vm_button_action)
+        controller.send(
+          :generic_button_operation,
+          'scan',
+          "Smartstate Analysis",
+          process_proc)
+      end
+    end
+  end
+
   context "Verify proper methods are called for snapshot" do
+    before(:each) do
+      allow(subject).to receive(:vm_button_action).and_return(subject.method(:process_objects))
+    end
+
     it "Delete All" do
-      expect(controller).to receive(:vm_button_operation)
-        .with('remove_all_snapshots', 'Delete All Snapshots', 'vm_common/config')
+      expect(controller).to receive(:generic_button_operation)
+        .with('remove_all_snapshots',
+              'Delete All Snapshots',
+              subject.send(:vm_button_action) ,
+              :refresh_partial => 'vm_common/config')
       controller.send(:vm_snapshot_delete_all)
     end
 
     it "Delete Selected" do
-      expect(controller).to receive(:vm_button_operation).with('remove_snapshot', 'Delete Snapshot', 'vm_common/config')
+      expect(controller).to receive(:generic_button_operation)
+        .with('remove_snapshot',
+              'Delete Snapshot',
+              subject.send(:vm_button_action),
+              :refresh_partial => 'vm_common/config')
       controller.send(:vm_snapshot_delete)
     end
   end
@@ -825,14 +863,23 @@ describe HostController do
     end
   end
 
-  context "#vm_button_operation" do
-    it "when the vm_or_template supports scan,  returns true" do
+  context "#generic_button_operation" do
+    before(:each) do
+      allow(subject).to receive(:vm_button_action).and_return(subject.method(:process_objects))
+      allow(controller).to receive(:render)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    it "when the vm_or_template supports scan,  returns false" do
       vm1 =  FactoryGirl.create(:vm_microsoft)
       vm2 =  FactoryGirl.create(:vm_vmware)
       controller.instance_variable_set(:@_params, :miq_grid_checks => "#{vm1.id}, #{vm2.id}")
-      controller.send(:vm_button_operation, 'scan', "Smartstate Analysis")
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include "Smartstate Analysis does not apply to at least one of the selected Virtual Machines"
+      controller.send(:generic_button_operation,
+                      'scan',
+                      "Smartstate Analysis",
+                      subject.send(:vm_button_action))
+      expect(assigns(:flash_array).first[:message]).to \
+        include("Smartstate Analysis action does not apply to selected items")
     end
 
     it "when the vm_or_template supports scan,  returns true" do
@@ -840,8 +887,12 @@ describe HostController do
                               :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
                               :storage               => FactoryGirl.create(:storage))
       controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
-      expect(controller).to receive(:process_objects)
-      controller.send(:vm_button_operation, 'scan', "Smartstate Analysis")
+      process_proc = controller.send(:vm_button_action)
+      expect(process_proc).to receive(:call)
+      controller.send(:generic_button_operation,
+                      'scan',
+                      "Smartstate Analysis",
+                      process_proc)
     end
   end
 end
@@ -868,7 +919,8 @@ describe ServiceController do
       service.reload
       controller.instance_variable_set(:@_params, :miq_grid_checks => service.id.to_s)
       expect(controller).to receive(:show_list)
-      controller.send(:vm_button_operation, 'retire_now', "Retirement")
+      process_proc = controller.send(:vm_button_action)
+      controller.send(:generic_button_operation, 'retire_now', "Retirement", process_proc)
       expect(response.status).to eq(200)
       expect(assigns(:flash_array).first[:message]).to \
         include("Retirement initiated for 1 Service from the %{product} Database" % {:product => Vmdb::Appliance.PRODUCT_NAME})
@@ -910,6 +962,7 @@ describe VmOrTemplateController do
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       allow(MiqServer).to receive(:my_zone).and_return("default")
       allow(MiqServer).to receive(:my_server) { FactoryGirl.create(:miq_server) }
+      allow(controller).to receive(:render)
       controller.instance_variable_set(:@lastaction, "show_list")
       login_as user
       allow(user).to receive(:role_allows?).and_return(true)
@@ -927,9 +980,16 @@ describe VmOrTemplateController do
         :storage               => FactoryGirl.create(:storage)
       )
       controller.instance_variable_set(:@_params, :miq_grid_checks => "#{vm.id}, #{template.id}")
-      expect(controller).to receive(:javascript_flash)
-      controller.send(:vm_button_operation, 'retire_now', "Retirement")
-      expect(response.status).to eq(200)
+      process_proc = controller.send(:vm_button_action)
+      redirect_details = {
+        :redirect => {
+          :controller => 'miq_request',
+          :action => 'show_list'
+        }
+      }
+      controller.send(:generic_button_operation, 'retire_now', "Retirement", process_proc, redirect_details)
+      expect(assigns(:flash_array).first[:message]).to \
+        include("Retirement action does not apply to selected items")
     end
 
     it "should continue to retire a vm" do
@@ -941,7 +1001,8 @@ describe VmOrTemplateController do
 
       controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
       expect(controller).to receive(:show_list)
-      controller.send(:vm_button_operation, 'retire_now', "Retirement")
+      process_proc = controller.send(:vm_button_action)
+      controller.send(:generic_button_operation, 'retire_now', "Retirement", process_proc)
       expect(response.status).to eq(200)
       expect(assigns(:flash_array).first[:message]).to \
         include("Retirement initiated for 1 VM and Instance from the %{product} Database" % {:product => Vmdb::Appliance.PRODUCT_NAME})
