@@ -22,7 +22,7 @@ ManageIQ.angular.app.directive('miqDatepicker', function() {
 
       ctrl.$parsers.push(function(value) {
         if (value) {
-          return moment.utc(value, 'MM/DD/YYYY').toDate();
+          return moment(value, 'MM/DD/YYYY').utc().toDate();
         }
       });
 
