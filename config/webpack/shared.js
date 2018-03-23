@@ -54,6 +54,11 @@ module.exports = {
       {} // a map of your routes
     ),
 
+    new webpack.ContextReplacementPlugin(
+      /graphql-language-service-interface[\\/]dist$/,
+      new RegExp(`^\\./.*\\.js$`)
+    ),
+
     new ManifestPlugin({
       publicPath: output.publicPath,
       writeToFileEmit: true,
