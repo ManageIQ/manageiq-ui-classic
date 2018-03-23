@@ -35,7 +35,7 @@ namespace :update do
   task :ui do
     # when running update:ui from ui-classic, asset_engines won't see the other engines
     # the same goes for Rake::Task#invoke
-    if defined?(ENGINE_ROOT)
+    if defined?(ENGINE_ROOT) && !ENV["TRAVIS"]
       Dir.chdir Rails.root do
         Bundler.with_clean_env do
           system("bundle exec rake update:actual_ui")
