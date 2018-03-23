@@ -59,6 +59,17 @@
                     'pf-select'        => true}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"
+        .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_vault_credential_id.$invalid}"}
+          %label.col-md-3.control-label{"for" => "#{prefix}_vault_credential_id"}
+            = _('Vault Credential')
+          .col-md-9
+            %select{"ng-model"         => "vm._#{prefix}_vault_credential",
+                    "name"             => "#{prefix}_vault_credential_id",
+                    'ng-options'       => 'vault_credential as vault_credential.name for vault_credential in vm.vault_credentials',
+                    "data-live-search" => "true",
+                    'pf-select'        => true}
+              %option{"value" => ""}
+                = "<#{_('Choose')}>"
         -#.form-group
         -#  %label.col-md-3.control-label{"for" => "vm.#{prefix}_network_credential_id"}
         -#    = _('Network Credential')

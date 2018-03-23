@@ -47,6 +47,8 @@
         .form-group
           = format_form_group(_('Machine Credential'), @playbook_details[:machine_credential])
         .form-group
+          = format_form_group(_('Vault Credential'), @playbook_details[:vault_credential])
+        .form-group
           = format_form_group(_('Cloud Credential'), @playbook_details[:cloud_credential])
         .form-group
           = format_form_group(_('Escalate Privilege'), @playbook_details[:become_enabled])
