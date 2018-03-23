@@ -78,7 +78,6 @@
           %hr
     - if @edit[:new][:location] == 'expression'
       .div
-        %h3= _("Expression (Choose an element of the expression to edit)")
         = render :partial => 'layouts/exp_editor'
 
     - if @edit[:new][:location]

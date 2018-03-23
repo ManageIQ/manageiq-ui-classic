@@ -20,67 +20,71 @@
     - unless MiqExpression.miq_adv_search_lists(exp_model, :exp_available_finds).length > 0
       - exptypes -= [[_(ExpAtomHelper::EXP_FIND_TYPE[0]), ExpAtomHelper::EXP_FIND_TYPE[1]]]
   #exp_atom_editor_div
-    %fieldset
-      - if @edit[@expkey][:exp_key] == "NOT"
-        %font{:color => "black"}
-          = _('NOT')
-      - else
-        - opts = ["<#{_('Choose')}>"]
-        - case exp_model
-        - when 'Vm'
-          - opts += exptypes + ExpAtomHelper::VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
-        - when 'AuditEvent'
-          - opts += [[_('Field'), 'field']]
-        - when '_display_filter_'
-          - unless @edit[@expkey][:exp_available_fields].empty?
-            - opts.push([_('Field'), 'field'])
-          - unless @edit[@expkey].tags_for_display_filters.empty?
-            - opts.push([_('Tag'), 'tag'])
-        - when 'MiqGroup'
-          - if @expkey == :filter_expression
-            - opts = [[_('Tag'), 'tags']]
-            - @edit[@expkey][:exp_typ] = 'tags'
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          =_('Edit Selected Element')
+      .panel-body
+        - if @edit[@expkey][:exp_key] == "NOT"
+          %font{:color => "black"}
+            = _('Not')
+        - else
+          - opts = ["<#{_('Choose')}>"]
+          - case exp_model
+          - when 'Vm'
+            - opts += exptypes + ExpAtomHelper::VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
+          - when 'AuditEvent'
+            - opts += [[_('Field'), 'field']]
+          - when '_display_filter_'
+            - unless @edit[@expkey][:exp_available_fields].empty?
+              - opts.push([_('Field'), 'field'])
+            - unless @edit[@expkey].tags_for_display_filters.empty?
+              - opts.push([_('Tag'), 'tag'])
+          - when 'MiqGroup'
+            - if @expkey == :filter_expression
+              - opts = [[_('Tag'), 'tags']]
+              - @edit[@expkey][:exp_typ] = 'tags'
+            - else
+              - opts += exptypes
           - else
             - opts += exptypes
-        - else
-          - opts += exptypes
 
-        - if @edit[@expkey][:exp_typ] == 'tags'
-          = _('Tag')
-        - else
-          = select_tag('chosen_typ', options_for_select(opts, @edit[@expkey][:exp_typ]),
-            :multiple              => false,
-            :class                 => 'selectpicker',
-            'data-miq_sparkle_on'  => true,
-            'data-miq_sparkle_off' => true,
-            'data-miq_observe'     => {:url => url}.to_json)
+          - if @edit[@expkey][:exp_typ] == 'tags'
+            = _('Tag')
+          - else
+            = select_tag('chosen_typ', options_for_select(opts, @edit[@expkey][:exp_typ]),
+              :multiple              => false,
+              :class                 => 'selectpicker',
+              'data-miq_sparkle_on'  => true,
+              'data-miq_sparkle_off' => true,
+              'data-miq_observe'     => {:url => url}.to_json)
 
-      %br
-      - if @edit[@expkey][:exp_typ]
-        = render :partial => "layouts/exp_atom/edit_#{@edit[@expkey][:exp_typ]}", :locals => {:exp_model => exp_model}
-      - if qs_show_user_input_checkbox?
-        = check_box_tag("user_input", "1", @edit[@expkey][:exp_value] == :user_input,
-          :style                      => "width: 20px",
-          "data-miq_sparkle_on"       => true,
-          "data-miq_sparkle_off"      => true,
-          "data-miq_observe_checkbox" => {:url => url}.to_json)
-        = _('User will input the value')
+        %br
+        - if @edit[@expkey][:exp_typ]
+          = render :partial => "layouts/exp_atom/edit_#{@edit[@expkey][:exp_typ]}", :locals => {:exp_model => exp_model}
+        - if qs_show_user_input_checkbox?
+          = check_box_tag("user_input", "1", @edit[@expkey][:exp_value] == :user_input,
+            :style                      => "width: 20px",
+            "data-miq_sparkle_on"       => true,
+            "data-miq_sparkle_off"      => true,
+            "data-miq_observe_checkbox" => {:url => url}.to_json)
+          = _('User will input the value')
 
-      .spacer
-      - t = _('Commit expression element changes')
-      %button.btn.btn-primary{"data-method" => :post,
-      "data-miq_sparkle_on" => true,
-      :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'commit')}');",
-      :remote               => true,
-      :title                => t}
-        = _("Commit")
-      - t = _("Discard expression element changes")
-      %button.btn.btn-default{"data-method" => :post,
-      "data-miq_sparkle_on" => true,
-      :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'discard')}');",
-      :remote               => true,
-      :title                => t}
-        = _("Discard")
+        .spacer
+        - t = _('Commit expression element changes')
+        %button.btn.btn-primary{"data-method" => :post,
+        "data-miq_sparkle_on" => true,
+        :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'commit')}');",
+        :remote               => true,
+        :title                => t}
+          = _("Commit")
+        - t = _("Discard expression element changes")
+        %button.btn.btn-default{"data-method" => :post,
+        "data-miq_sparkle_on" => true,
+        :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'discard')}');",
+        :remote               => true,
+        :title                => t}
+          = _("Discard")
 
   %script{:type => "text/javascript"}
     -# Set the expression value prefill images and hover text
