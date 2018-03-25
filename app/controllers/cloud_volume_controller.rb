@@ -122,8 +122,7 @@ class CloudVolumeController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show", :id => volume_id
   end
 
@@ -178,8 +177,7 @@ class CloudVolumeController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show", :id => volume_id
   end
 
@@ -258,8 +256,7 @@ class CloudVolumeController < ApplicationController
     end
 
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect previous_breadcrumb_url
   end
 
@@ -330,8 +327,7 @@ class CloudVolumeController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show", :id => volume_id
   end
 
@@ -368,7 +364,7 @@ class CloudVolumeController < ApplicationController
       @single_delete = true unless flash_errors?
     else
       drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_to(previous_breadcrumb_url)
     end
   end
@@ -428,7 +424,7 @@ class CloudVolumeController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect :action => "show", :id => @volume.id
   end
 
@@ -485,7 +481,7 @@ class CloudVolumeController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect :action => "show", :id => @volume.id
   end
 
@@ -540,7 +536,7 @@ class CloudVolumeController < ApplicationController
     end
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect :action => "show", :id => @volume.id
   end
 

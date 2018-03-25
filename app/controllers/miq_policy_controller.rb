@@ -141,12 +141,12 @@ class MiqPolicyController < ApplicationController
         redirect_options[:import_file_upload_id] = import_file_upload.id
       rescue => err
         add_flash(_("Error during 'Policy Import': %{messages}") % {:messages => err.message}, :error)
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         redirect_options[:action] = 'export'
       end
     else
       add_flash(_("Use the Choose file button to locate an Import file"), :error)
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_options[:action] = 'export'
     end
 
@@ -187,7 +187,7 @@ class MiqPolicyController < ApplicationController
       miq_policy_import_service.cancel_import(@import_file_upload_id)
 
       add_flash(_("Import cancelled by user"))
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       javascript_redirect(:action => 'export')
 
     # init import

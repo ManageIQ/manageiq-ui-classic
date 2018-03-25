@@ -12,7 +12,7 @@ module Mixins
     end
 
     def show_list
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_to(:action => 'explorer')
     end
 

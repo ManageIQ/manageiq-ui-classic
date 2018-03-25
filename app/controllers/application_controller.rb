@@ -823,7 +823,7 @@ class ApplicationController < ActionController::Base
 
   def report_edit_aborted(lastaction)
     add_flash(_("Edit aborted!  %{product} does not support the browser's back button or access from multiple tabs or windows of the same browser.  Please close any duplicate sessions before proceeding.") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :error)
-    session[:flash_msgs] = @flash_array.dup
+    flash_to_session
     if request.xml_http_request? # Is this an Ajax request?
       if lastaction == "configuration"
         edit

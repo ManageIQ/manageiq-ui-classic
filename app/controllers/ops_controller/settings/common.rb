@@ -485,7 +485,7 @@ module OpsController::Settings::Common
         if @sb[:active_tab] == "settings_server"
           replace_right_cell(:nodetype => @nodetype, :replace_trees => [:diagnostics, :settings])
         elsif @sb[:active_tab] == "settings_custom_logos"
-          session[:flash_msgs] = @flash_array.dup if @flash_array
+          flash_to_session
           javascript_redirect(:action => 'explorer', :escape => false) # redirect to build the server screen
           return
         else

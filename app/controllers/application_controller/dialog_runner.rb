@@ -16,7 +16,7 @@ module ApplicationController::DialogRunner
     if session[:edit][:explorer]
       dialog_replace_right_cell
     else
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       javascript_redirect(redirect_url)
     end
   end
@@ -52,12 +52,12 @@ module ApplicationController::DialogRunner
               if result[:request].nil?
                 dialog_replace_right_cell
               else
-                session[:flash_msgs] = @flash_array.dup if @flash_array
+                flash_to_session
                 javascript_redirect :controller => 'miq_request',
                                     :action     => 'show_list'
               end
             else
-              session[:flash_msgs] = @flash_array.dup if @flash_array
+              flash_to_session
               javascript_redirect(redirect_url)
             end
           else
@@ -72,7 +72,7 @@ module ApplicationController::DialogRunner
       if session[:edit][:explorer]
         replace_right_cell(:action => "dialog_provision")
       else
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         javascript_redirect(:action => 'dialog_load', :escape => false) # redirect to miq_request show_list screen
       end
     else

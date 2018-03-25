@@ -80,7 +80,7 @@ class EmsCloudController < ApplicationController
         ems.sync_users_queue(session[:userid], selected_admin_role, selected_member_role, password_digest)
 
         add_flash(_("Sync users queued."))
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         redirect_to(ems_cloud_path(params[:id]))
       end
     else

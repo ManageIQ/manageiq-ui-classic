@@ -188,7 +188,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
       redirect_options[:import_file_upload_id] = import_file_upload_id
     end
 
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     redirect_to redirect_options
   end
 
@@ -281,11 +281,11 @@ Namespaces updated/added: %{namespace_stats}
 Classes updated/added: %{class_stats}
 Instances updated/added: %{instance_stats}
 Methods updated/added: %{method_stats}") % stat_options)
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         redirect_to(:action => 'import_export')
       rescue => bang
         add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         redirect_to(:action => 'import_export')
       end
     else

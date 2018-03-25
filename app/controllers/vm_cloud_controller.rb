@@ -96,7 +96,7 @@ class VmCloudController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     @record = @sb[:action] = nil
     replace_right_cell
   end
@@ -151,7 +151,7 @@ class VmCloudController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     @record = @sb[:action] = nil
     replace_right_cell
   end

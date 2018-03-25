@@ -18,6 +18,10 @@ module ApplicationHelper
     "Host"       => :host
   }
 
+  def flash_to_session
+    session[:flash_msgs] = @flash_array.dup if @flash_array
+  end
+
   # Need to generate paths w/o hostname by default to make proxying work.
   #
   def url_for_only_path(args)

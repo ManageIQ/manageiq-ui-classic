@@ -31,7 +31,7 @@ module OpsController::Settings
       add_flash(_("Use the Choose file button to locate CSV file"), :error)
       @sb[:show_button] = true
     end
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     redirect_to(:action => 'explorer', :no_refresh => true)
   end
 

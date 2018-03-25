@@ -8,7 +8,7 @@ module Mixins
         if @explorer
           self.x_node = "root"
           add_flash(ex.message, :error, true)
-          session[:flash_msgs] = @flash_array.dup
+          flash_to_session
         end
       end
       record

@@ -128,7 +128,7 @@ module ReportController::Reports::Editor
                 MiqReport.new
         if @rpt.rpt_type == "Default"
           add_flash(_('Default reports can not be edited'), :error)
-          session[:flash_msgs] = @flash_array.dup
+          flash_to_session
           redirect_to(:action => "show", :id => @rpt.id)
           return
         end

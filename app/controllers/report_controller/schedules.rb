@@ -3,7 +3,7 @@ module ReportController::Schedules
 
   def show_schedule
     if @schedule.nil?
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_to(:action => 'schedules')
       return
     end

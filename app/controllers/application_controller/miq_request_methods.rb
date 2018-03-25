@@ -72,7 +72,7 @@ module ApplicationController::MiqRequestMethods
   def pre_prov
     if params[:button] == "cancel"
       add_flash(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
-      session[:flash_msgs] = @flash_array.dup unless session[:edit][:explorer]  # Put msg in session for next transaction to display
+      flash_to_session
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
       @edit = session[:edit] =  nil                                               # Clear out session[:edit]
       prov_request_cancel_submit_response
@@ -188,7 +188,7 @@ module ApplicationController::MiqRequestMethods
                 else
                   _("Provision %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]}
                 end)
-      session[:flash_msgs] = @flash_array.dup unless session[:edit][:explorer]  # Put msg in session for next transaction to display
+      flash_to_session
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
       @edit = session[:edit] =  nil                                               # Clear out session[:edit]
       @breadcrumbs.pop if @breadcrumbs
@@ -624,7 +624,7 @@ module ApplicationController::MiqRequestMethods
       add_flash(flash_message)
 
       if role_allows?(:feature => "miq_request_show_list", :any => true)
-        session[:flash_msgs] = @flash_array.dup
+        flash_to_session
         javascript_redirect :controller => 'miq_request',
                             :action     => 'show_list',
                             :typ        => org_controller

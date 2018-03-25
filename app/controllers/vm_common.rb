@@ -171,7 +171,7 @@ module VmCommon
         url = request.env['HTTP_REFERER'].split('/')
         add_flash(_("User '%{username}' is not authorized to access '%{controller_name}'") %
           {:username => current_userid, :controller_name => ui_lookup(:table => controller_name)}, :warning)
-        session[:flash_msgs] = @flash_array.dup
+        flash_to_session
         redirect_controller  = url[3]
         action               = url[4]
       end
@@ -429,7 +429,7 @@ module VmCommon
         @_params[:display] = "snapshot_info"
         show
       else
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         redirect_to(:action => @lastaction, :id => @record.id)
       end
     elsif params["create.x"] || params[:button] == "create"
@@ -466,7 +466,7 @@ module VmCommon
           @_params[:display] = "snapshot_info"
           show
         else
-          session[:flash_msgs] = @flash_array.dup if @flash_array
+          flash_to_session
           redirect_to(:action => @lastaction, :id => @record.id, :display => "snapshot_info")
         end
       end
@@ -611,7 +611,7 @@ module VmCommon
         @sb[:action] = nil
         replace_right_cell
       else
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         javascript_redirect(:action => 'show', :id => @record.id)
       end
     when "save"
@@ -623,7 +623,7 @@ module VmCommon
         @sb[:action] = nil
         replace_right_cell
       else
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         javascript_redirect(:action => 'show', :id => @record.id)
       end
     when "reset"
@@ -635,7 +635,7 @@ module VmCommon
         replace_right_cell
       else
         add_flash(_("All changes have been reset"), :warning)
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         javascript_redirect(:action => 'evm_relationship', :id => @record.id, :escape => true)
       end
     end
@@ -681,7 +681,7 @@ module VmCommon
       end
       add_flash(flash)
     end
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     redirect_to(:action => @lastaction, :id => @record.id)
   end
 
@@ -751,7 +751,7 @@ module VmCommon
         replace_right_cell
       else
         add_flash(_("Edit of VM and Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
-        session[:flash_msgs] = @flash_array.dup
+        flash_to_session
         javascript_redirect previous_breadcrumb_url
       end
     when "save"
@@ -795,14 +795,14 @@ module VmCommon
           @sb[:action] = nil
           replace_right_cell
         else
-          session[:flash_msgs] = @flash_array.dup
+          flash_to_session
           javascript_redirect previous_breadcrumb_url
         end
       end
     when "reset"
       edit
       add_flash(_("All changes have been reset"), :warning)
-      session[:flash_msgs] = @flash_array.dup
+      flash_to_session
       get_vm_child_selection if params["right.x"] || params["left.x"] || params["allright.x"]
       @changed = session[:changed] = false
       build_edit_screen
@@ -870,7 +870,7 @@ module VmCommon
     @scan_history = ScanHistory.find_by(:vm_or_template_id => @record.id)
     if @scan_history.nil?
       add_flash(_("Error: Record no longer exists in the database"), :error)
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_to(:action => "scan_history")
       return
     end

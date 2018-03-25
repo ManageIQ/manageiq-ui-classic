@@ -184,7 +184,7 @@ module ApplicationController::CiProcessing
     rescue => @bang
       self.x_node = "root" if @explorer
       add_flash(@bang.message, :error, true)
-      session[:flash_msgs] = @flash_array.dup
+      flash_to_session
     end
     record
   end

@@ -221,7 +221,7 @@ class EmsInfraController < ApplicationController
       begin
         stack.scale_up_queue(session[:userid], stack_parameters)
         add_flash(return_message)
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         redirect_to(ems_infra_path(provider_id))
       rescue => ex
         add_flash(_("Unable to initiate scale up: %{message}") % {:message => ex}, :error)
@@ -235,7 +235,7 @@ class EmsInfraController < ApplicationController
       begin
         stack.scale_down_queue(session[:userid], stack_parameters, hosts)
         add_flash(return_message)
-        session[:flash_msgs] = @flash_array.dup if @flash_array
+        flash_to_session
         redirect_to(ems_infra_path(provider_id))
       rescue => ex
         add_flash(_("Unable to initiate scale down: %{message}") % {:message => ex}, :error)

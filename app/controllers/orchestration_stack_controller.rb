@@ -223,7 +223,7 @@ class OrchestrationStackController < ApplicationController
         render_flash
       else
         add_flash(_("Orchestration Template \"%{name}\" was saved") % {:name => ot.name})
-        session[:flash_msgs] = @flash_array.dup
+        flash_to_session
         javascript_redirect :controller => 'catalog',
                             :action     => 'ot_show',
                             :id         => ot.id

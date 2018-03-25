@@ -29,7 +29,7 @@ module OpsController::Settings::Upload
     else
       add_flash(_("Use the Choose file button to locate .png image file"), :error)
     end
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     redirect_to(:action => 'explorer')
   end
 
@@ -86,6 +86,7 @@ module OpsController::Settings::Upload
       add_flash(_("Use the Choose file button to locate CSV file"), :error)
     end
     @sb[:show_button] = (@sb[:good] && @sb[:good] > 0)
+    flash_to_session
     session[:flash_msgs] = @flash_array.dup if @flash_array
     redirect_to(:action => 'explorer', :no_refresh => true)
   end

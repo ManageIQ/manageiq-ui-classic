@@ -23,7 +23,7 @@ module OpsController::Settings::AnalysisProfiles
     # identify_scanitemset
     if @selected_scan.nil?
       add_flash(_("Error: Record no longer exists in the database"), :error)
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_to(:action => 'show_list_set')
       return
     end
