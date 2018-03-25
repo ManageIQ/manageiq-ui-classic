@@ -51,9 +51,8 @@ class StorageController < ApplicationController
         action = "explorer"
       else
         url = request.env['HTTP_REFERER'].split('/')
-        add_flash(_("User '%{username}' is not authorized to access '%{controller_name}'") %
+        flash_to_session(_("User '%{username}' is not authorized to access '%{controller_name}'") %
                     {:username => current_userid, :controller_name => ui_lookup(:table => controller_name)}, :warning)
-        flash_to_session
         redirect_controller  = url[3]
         action               = url[4]
       end

@@ -205,13 +205,11 @@ class HostController < ApplicationController
       session[:edit] = nil  # clean out the saved info
       @breadcrumbs.pop if @breadcrumbs
       if !session[:host_items].nil?
-        add_flash(_("Edit of credentials for selected Hosts / Nodes was cancelled by the user"))
-        flash_to_session
+        flash_to_session(_("Edit of credentials for selected Hosts / Nodes was cancelled by the user"))
         javascript_redirect(:action => @lastaction, :display => session[:host_display])
       else
         @host = find_record_with_rbac(Host, params[:id])
-        add_flash(_("Edit of Host / Node \"%{name}\" was cancelled by the user") % {:name => @host.name})
-        flash_to_session
+        flash_to_session(_("Edit of Host / Node \"%{name}\" was cancelled by the user") % {:name => @host.name})
         javascript_redirect(:action => @lastaction, :id => @host.id, :display => session[:host_display])
       end
 
@@ -222,10 +220,9 @@ class HostController < ApplicationController
         valid_host = find_record_with_rbac(Host, params[:id])
         set_record_vars(valid_host, :validate)                      # Set the record variables, but don't save
         if valid_record? && set_record_vars(@host) && @host.save
-          add_flash(_("Host / Node \"%{name}\" was saved") % {:name => @host.name})
+          flash_to_session(_("Host / Node \"%{name}\" was saved") % {:name => @host.name})
           @breadcrumbs.pop if @breadcrumbs
           AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, false))
-          flash_to_session
           if @lastaction == 'show_list'
             javascript_redirect :action => "show_list"
           else
@@ -251,8 +248,7 @@ class HostController < ApplicationController
           @error = Host.batch_update_authentication(session[:host_items], creds)
         end
         if @error || @error.blank?
-          add_flash(_("Credentials/Settings saved successfully"))
-          flash_to_session
+          flash_to_session(_("Credentials/Settings saved successfully"))
           javascript_redirect(:action => 'show_list')
         else
           drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
@@ -262,9 +258,8 @@ class HostController < ApplicationController
       end
     when "reset"
       params[:edittype] = @edit[:edittype]    # remember the edit type
-      add_flash(_("All changes have been reset"), :warning)
+      flash_to_session(_("All changes have been reset"), :warning)
       @in_a_form = true
-      flash_to_session
       javascript_redirect :action => 'edit', :id => @host.id.to_s
     when "validate"
       verify_host = find_record_with_rbac(Host, params[:validate_id] ? params[:validate_id].to_i : params[:id])

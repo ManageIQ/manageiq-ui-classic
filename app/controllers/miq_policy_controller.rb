@@ -140,13 +140,11 @@ class MiqPolicyController < ApplicationController
         @sb[:hide] = true
         redirect_options[:import_file_upload_id] = import_file_upload.id
       rescue => err
-        add_flash(_("Error during 'Policy Import': %{messages}") % {:messages => err.message}, :error)
-        flash_to_session
+        flash_to_session(_("Error during 'Policy Import': %{messages}") % {:messages => err.message}, :error)
         redirect_options[:action] = 'export'
       end
     else
-      add_flash(_("Use the Choose file button to locate an Import file"), :error)
-      flash_to_session
+      flash_to_session(_("Use the Choose file button to locate an Import file"), :error)
       redirect_options[:action] = 'export'
     end
 
@@ -186,8 +184,7 @@ class MiqPolicyController < ApplicationController
     elsif params[:commit] == "cancel"
       miq_policy_import_service.cancel_import(@import_file_upload_id)
 
-      add_flash(_("Import cancelled by user"))
-      flash_to_session
+      flash_to_session(_("Import cancelled by user"))
       javascript_redirect(:action => 'export')
 
     # init import

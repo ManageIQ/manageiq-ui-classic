@@ -169,9 +169,8 @@ module VmCommon
         action = "explorer"
       else
         url = request.env['HTTP_REFERER'].split('/')
-        add_flash(_("User '%{username}' is not authorized to access '%{controller_name}'") %
+        flash_to_session(_("User '%{username}' is not authorized to access '%{controller_name}'") %
           {:username => current_userid, :controller_name => ui_lookup(:table => controller_name)}, :warning)
-        flash_to_session
         redirect_controller  = url[3]
         action               = url[4]
       end
@@ -634,8 +633,7 @@ module VmCommon
         add_flash(_("All changes have been reset"), :warning)
         replace_right_cell
       else
-        add_flash(_("All changes have been reset"), :warning)
-        flash_to_session
+        flash_to_session(_("All changes have been reset"), :warning)
         javascript_redirect(:action => 'evm_relationship', :id => @record.id, :escape => true)
       end
     end
@@ -750,8 +748,7 @@ module VmCommon
         @record = @sb[:action] = nil
         replace_right_cell
       else
-        add_flash(_("Edit of VM and Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
-        flash_to_session
+        flash_to_session(_("Edit of VM and Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
         javascript_redirect previous_breadcrumb_url
       end
     when "save"
@@ -801,8 +798,7 @@ module VmCommon
       end
     when "reset"
       edit
-      add_flash(_("All changes have been reset"), :warning)
-      flash_to_session
+      flash_to_session(_("All changes have been reset"), :warning)
       get_vm_child_selection if params["right.x"] || params["left.x"] || params["allright.x"]
       @changed = session[:changed] = false
       build_edit_screen
@@ -869,8 +865,7 @@ module VmCommon
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
     @scan_history = ScanHistory.find_by(:vm_or_template_id => @record.id)
     if @scan_history.nil?
-      add_flash(_("Error: Record no longer exists in the database"), :error)
-      flash_to_session
+      flash_to_session(_("Error: Record no longer exists in the database"), :error)
       redirect_to(:action => "scan_history")
       return
     end

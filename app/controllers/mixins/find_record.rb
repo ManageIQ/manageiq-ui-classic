@@ -7,8 +7,7 @@ module Mixins
       rescue ActiveRecord::RecordNotFound, StandardError => ex
         if @explorer
           self.x_node = "root"
-          add_flash(ex.message, :error, true)
-          flash_to_session
+          flash_to_session(ex.message, :error, true)
         end
       end
       record

@@ -127,8 +127,7 @@ module ReportController::Reports::Editor
         @rpt = params[:id] && params[:id] != "new" ? MiqReport.for_user(current_user).find(params[:id]) :
                 MiqReport.new
         if @rpt.rpt_type == "Default"
-          add_flash(_('Default reports can not be edited'), :error)
-          flash_to_session
+          flash_to_session(_('Default reports can not be edited'), :error)
           redirect_to(:action => "show", :id => @rpt.id)
           return
         end

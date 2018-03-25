@@ -22,8 +22,7 @@ module OpsController::Settings::AnalysisProfiles
   def ap_show
     # identify_scanitemset
     if @selected_scan.nil?
-      add_flash(_("Error: Record no longer exists in the database"), :error)
-      flash_to_session
+      flash_to_session(_("Error: Record no longer exists in the database"), :error)
       redirect_to(:action => 'show_list_set')
       return
     end

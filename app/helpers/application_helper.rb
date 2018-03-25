@@ -18,7 +18,8 @@ module ApplicationHelper
     "Host"       => :host
   }
 
-  def flash_to_session
+  def flash_to_session(*args)
+    add_flash(*args) unless args.empty?
     session[:flash_msgs] = @flash_array.dup if @flash_array
   end
 

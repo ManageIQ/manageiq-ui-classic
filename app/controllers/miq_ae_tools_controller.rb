@@ -276,16 +276,14 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
     if params[:upload] && !params[:upload][:datastore].blank?
       begin
         MiqAeDatastore.upload(params[:upload][:datastore])
-        add_flash(_("Datastore import was successful.
+        flash_to_session(_("Datastore import was successful.
 Namespaces updated/added: %{namespace_stats}
 Classes updated/added: %{class_stats}
 Instances updated/added: %{instance_stats}
 Methods updated/added: %{method_stats}") % stat_options)
-        flash_to_session
         redirect_to(:action => 'import_export')
       rescue => bang
-        add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
-        flash_to_session
+        flash_to_session(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
         redirect_to(:action => 'import_export')
       end
     else

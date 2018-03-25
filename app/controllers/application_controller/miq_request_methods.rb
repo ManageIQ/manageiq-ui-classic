@@ -71,8 +71,7 @@ module ApplicationController::MiqRequestMethods
   # Pre provisioning, select a template
   def pre_prov
     if params[:button] == "cancel"
-      add_flash(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
-      flash_to_session
+      flash_to_session(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
       @edit = session[:edit] =  nil                                               # Clear out session[:edit]
       prov_request_cancel_submit_response
@@ -182,13 +181,14 @@ module ApplicationController::MiqRequestMethods
   def prov_edit
     if params[:button] == "cancel"
       req = MiqRequest.find_by_id(session[:edit][:req_id]) if session[:edit] && session[:edit][:req_id]
-      add_flash(if req && req.id
-                  _("Edit of %{model} Request \"%{name}\" was cancelled by the user") %
-                    {:model => session[:edit][:prov_type], :name => req.description}
-                else
-                  _("Provision %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]}
-                end)
-      flash_to_session
+      flash_to_session(
+        if req && req.id
+          _("Edit of %{model} Request \"%{name}\" was cancelled by the user") %
+            {:model => session[:edit][:prov_type], :name => req.description}
+        else
+          _("Provision %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]}
+        end
+      )
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
       @edit = session[:edit] =  nil                                               # Clear out session[:edit]
       @breadcrumbs.pop if @breadcrumbs

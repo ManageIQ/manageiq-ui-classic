@@ -12,8 +12,7 @@ class RestfulRedirectController < ApplicationController
                    end
       redirect_to :controller => controller, :action => 'show', :id => params[:id]
     else
-      add_flash(_("Could not find %{model}[id=%{id}]") % {:model => params[:model], :id => params[:id]})
-      flash_to_session
+      flash_to_session(_("Could not find %{model}[id=%{id}]") % {:model => params[:model], :id => params[:id]})
       redirect_to(:controller => 'dashboard')
     end
   end
