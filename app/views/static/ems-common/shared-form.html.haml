@@ -1,0 +1,212 @@
+%ng-form.form-horizontal{'name'         => 'emsSharedForm',
+                         'ng-cloak'     => '',
+                         'ng-show'      => '$ctrl.afterGet',
+                         'form-changed' => true}
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.sharedFormName.$invalid}"}
+    %label.col-md-2.control-label{"for" => "sharedFormName"}
+      = _('Name')
+    .col-md-4
+      %input.form-control{"type"        => "text",
+                          "id"          => "sharedFormName",
+                          "name"        => "sharedFormName",
+                          "ng-model"    => "$ctrl.sharedFormModel.name",
+                          "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",
+                          "required"    => "",
+                          "auto-focus"  => ""}
+      %span.help-block{"ng-show" => "emsSharedForm.sharedFormName.$error.required"}
+        = _("Required")
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.sharedEmsType.$invalid}"}
+    %label.col-md-2.control-label{"for" => "sharedEmsType"}
+      = _('Type')
+    .col-md-8
+      %select{'pf-select'   => true,
+              'id'          => 'sharedEmsType',
+              'name'        => 'sharedEmsType',
+              'ng-if'       => '$ctrl.newRecord',
+              'required'    => '',
+              'ng-model'    => '$ctrl.sharedFormModel.emsType',
+              'ng-options'  => 'type[1] as type[0] for type in $ctrl.emsTypeOptions',}
+      %div{"ng-if" => "!newRecord"}
+        %label.form-control{"type"        => "text",
+                            "id"          => "sharedEmsType",
+                            "name"        => "sharedEmsType",
+                            "ng-if"       => "!$ctrl.newRecord",
+                            "readonly"    => true,
+                            "style"       => "color: black; font-weight: normal;"}
+          = @emstype_display
+
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.providerRegion.$invalid}",
+              "ng-if" => '$ctrl.showProviderRegion',}
+    %label.col-md-2.control-label{"for" => "providerRegion"}
+      = _('Region')
+    .col-md-8
+      %select{'pf-select'   => true,
+              'name'        => 'providerRegion',
+              'id'          => 'providerRegion',
+              'required'    => '',
+              'ng-model'    => '$ctrl.sharedFormModel.providerRegion',
+              'ng-options'  => 'region[1] as region[0] for region in $ctrl.providerRegionOptions'}
+    %label.form-control{"type"        => "text",
+                        "id"          => "provider_region",
+                        "name"        => "provider_region",
+                        "readonly"    => true,
+                        "style"       => "color: black; font-weight: normal;",
+                        "ng-if"       => "!$ctrl.newRecord"}
+      = @ems_region_display
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.emsProject.$invalid}", "ng-if" => "$ctrl.showEmsProject"}
+    %label.col-md-2.control-label{"for" => "emsProject"}
+      = _('Project ID')
+    .col-md-4
+      %input.form-control{"type"        => "text",
+                          "id"          => "emsProject",
+                          "name"        => "emsProject",
+                          "ng-model"    => "$ctrl.sharedFormModel.emsProject",
+                          "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",
+                          "required"    => ""}
+      %span.help-block{"ng-show" => "emsSharedForm.emsProject.$error.required"}
+        = _("Required")
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.azure_tenant_id.$invalid}", "ng-if" => "$ctrl.showEmsTenantId"}
+    %label.col-md-2.control-label{"for" => "ems_tenant_id"}
+      = _('Tenant ID')
+    .col-md-4
+      %input.form-control{"type"                    => "text",
+                          "id"                      => "emsTenantId",
+                          "name"                    => "azure_tenant_id",
+                          "ng-model"                => "$ctrl.sharedFormModel.azureTenantId",
+                          "required"                => "",
+                          "is-uuid"                 => 4,
+                          "prefix"                  => "default",
+                          "reset-validation-status" => "default_auth_status"}
+      %span.help-block{"ng-show" => "emsSharedForm.azure_tenant_id.$error.required"}
+        = _("Required")
+      %span.help-block{"ng-show" => "emsSharedForm.azure_tenant_id.$error.isUuid"}
+        = _("Invalid input format, please enter a GUID")
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.subscription.$invalid}", "ng-if" => "$ctrl.showSubscriptionId"}
+    %label.col-md-2.control-label{"for" => "ems_subscription"}
+      = _('Subscription ID')
+    .col-md-4
+      %input.form-control{"type"                    => "text",
+                          "id"                      => "subscription",
+                          "name"                    => "subscription",
+                          "ng-model"                => "$ctrl.sharedFormModel.subscription",
+                          "prefix"                  => "default",
+                          "is-uuid"                 => 4,
+                          "reset-validation-status" => "default_auth_status"}
+      %span.help-block{"ng-show" => "emsSharedForm.subscription.$error.isUuid"}
+        = _("Invalid input format, please enter a GUID")
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.apiVersion.$invalid}", "ng-if" => "$ctrl.showApiVersion"}
+    %label.col-md-2.control-label{"for" => "apiVersion"}
+      = _("API Version")
+    .col-md-8
+      %select{'pf-select'   => '',
+              'id'          => 'apiVersion',
+              'name'        => 'apiVersion',
+              'ng-model'    => '$ctrl.sharedFormModel.apiVersion',
+              'ng-options'  => 'version[1] as version[0] for version in $ctrl.apiVersionOptions'}
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.api_version.$invalid}",
+              "ng-if"    => "$ctrl.showProviderRegionInput"}
+    %label.col-md-2.control-label{"for" => "emsRegionInput"}
+      = _('Region')
+    .col-md-4
+      %input.form-control{"type"                    => "text",
+                          "id"                      => "emsRegionInput",
+                          "name"                    => "emsRegionInput",
+                          "ng-model"                => "$ctrl.sharedFormModel.providerRegion"}
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.keyStoneV3DomainId.$invalid}", "ng-if" => "$ctrl.showKeystoneDomain"}
+    %label.col-md-2.control-label{"for" => "keyStoneV3DomainId"}
+      = _('Keystone V3 Domain ID')
+    .col-md-4
+      %input.form-control{"type"        => "text",
+                          "id"          => "keyStoneV3DomainId",
+                          "name"        => "keyStoneV3DomainId",
+                          "ng-model"    => "$ctrl.sharedFormModel.keyStoneV3DomainId",
+                          "required"    => true}
+      %span.help-block{"ng-show" => "emsSharedForm.keyStoneV3DomainId.$error.required"}
+        = _("Required")
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.apiVersion.$invalid}", "ng-if" => "$ctrl.showNuageApiVersion"}
+    %label.col-md-2.control-label{"for" => "apiVersion"}
+      = _("API Version")
+    .col-md-8
+      %select{'pf-select'   => '',
+              'name'        => 'apiVersion',
+              'id'          => 'apiVersion',
+              'ng-model'    => '$ctrl.sharedFormModel.apiVersion',
+              'ng-options'  => 'version[1] as version[0] for version in $ctrl.nuageApiVersionOptions'}
+
+  .form-group{"ng-class" => "{'has-error': sharedFormModel.provider_id.$invalid}", "ng-if" => "$ctrl.showEmsInfraProviderId"}
+    %label.col-md-2.control-label{"for" => "ems_infra_provider_id"}
+      = _("Openstack Infra Provider")
+    .col-md-8
+      %select{'pf-select'   => '',
+              'name'        => 'emsInfraProviderId',
+              'id'          => 'emsInfraProviderId',
+              'ng-model'    => '$ctrl.sharedFormModel.providerId',
+              'ng-options'  => 'provider[1] as provider[0] for provider in $ctrl.emsInfraProviderIdOptions'}
+        %option{'value' => ""}
+          = "<#{_('blank')}>"
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.zone.$invalid}"}
+    %label.col-md-2.control-label{"for" => "emsZone"}
+      = _("Zone")
+    .col-md-4
+      %input.form-control{"type"        => "text",
+                          "ng-if"       => '$ctrl.emsZoneOptions.length <= 1',
+                          "id"          => "emsZone",
+                          "name"        => "emsZone",
+                          "ng-model"    => "$ctrl.sharedFormModel.zone",
+                          "maxlength"   => 15,
+                          "required"    => "",
+                          "readonly"    => true,
+                          "style"       => "color: black;"}
+      %span.help-block{"ng-if"    => '$ctrl.emsZoneOptions.length <= 1',
+                       "ng-show"  => "emsSharedForm.emsZone.$error.required"}
+        = _("Required")
+      %select{'pf-select'   => '',
+              'ng-if'       => '$ctrl.emsZoneOptions.length > 1',
+              'ng-model'    => '$ctrl.sharedFormModel.zone',
+              'ng-options'  => 'zone[1] as zone[0] for zone in $ctrl.emsZoneOptions',
+              'required'    => '',
+              'name'        => 'emsZone',
+              'id'          => 'emsZone'}
+
+  .form-group{"ng-if" => "$ctrl.showTenantMapping"}
+    %label.control-label.col-md-2{"for" => "emsTenantMappingEnabled"}
+      = _('Tenant Mapping Enabled')
+    .col-md-8
+      %input{"bs-switch"   => "",
+             :data         => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
+             "type"        => "checkbox",
+             "id"          => "emsTenantMappingEnabled",
+             "name"        => "emsTenantMappingEnabled",
+             "ng-model"    => "$ctrl.sharedFormModel.tenantMappingEnabled"}
+
+  .form-group{"ng-class"  => "{'has-error': emsSharedForm.host_default_vnc_port_start.$invalid}",
+              "ng-if"     => "$ctrl.showVncStartPort"}
+    %label.col-md-2.control-label{"for" => "ems_vnc_start_port"}
+      = _('Host Default VNC Start Port')
+    .col-md-4
+      %input.form-control{"type"        => "text",
+                          "id"          => "ems_vnc_start_port",
+                          "name"        => "host_default_vnc_port_start",
+                          "ng-model"    => "$ctrl.sharedFormModel.hostDefaultVncPortStart",
+                          "maxlength"   => 6}
+
+  .form-group{"ng-class" => "{'has-error': emsSharedForm.host_default_vnc_port_end.$invalid}",
+              "ng-if"    => "$ctrl.showVncStartPort"}
+    %label.col-md-2.control-label{"for" => "ems_vnc_end_port"}
+      = _('Host Default VNC End Port')
+    .col-md-4
+      %input.form-control{"type"        => "text",
+                          "id"          => "ems_vnc_end_port",
+                          "name"        => "host_default_vnc_port_end",
+                          "ng-model"    => "$ctrl.sharedFormModel.hostDefaultVncPortEnd",
+                          "maxlength"   => 6}
