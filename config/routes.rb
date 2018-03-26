@@ -3064,6 +3064,7 @@ Rails.application.routes.draw do
         filesystem_download
         retirement_info
         reconfigure_form_fields
+        launch_vmware_console
         launch_html5_console
         perf_chart_chooser
         protect
@@ -3090,6 +3091,7 @@ Rails.application.routes.draw do
         advanced_settings
         accordion_select
         button
+        console
         edit_vm
         resize_vm
         resize_field_changed
