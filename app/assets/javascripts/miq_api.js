@@ -49,8 +49,6 @@
   API.post = withData('POST');
   API.put = withData('PUT');
 
-  var base64encode = window.btoa; // browser api
-
   API.login = function(login, password) {
     API.logout();
 
