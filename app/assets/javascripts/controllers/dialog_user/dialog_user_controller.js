@@ -23,7 +23,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
 
   vm.submitButtonClicked = submitButtonClicked;
   vm.cancelClicked = cancelClicked;
-  vm.saveable = saveable;
+  vm.saveable = false;
 
   function refreshField(field) {
     var idList = {
@@ -37,6 +37,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   }
 
   function setDialogData(data) {
+    vm.saveable = data.validations.isValid;
     vm.dialogData = data.data;
   }
 
