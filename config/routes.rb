@@ -1321,6 +1321,7 @@ Rails.application.routes.draw do
         show_list
         show
         tagging_edit
+        console_file
       ) + compare_get,
 
       :post   =>  %w(
@@ -1338,6 +1339,7 @@ Rails.application.routes.draw do
         tl_chooser
         wait_for_task
         provision
+        console
       ) +
           adv_search_post +
           exp_post +
