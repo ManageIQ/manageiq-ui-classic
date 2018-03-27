@@ -1,6 +1,6 @@
 ManageIQ.angular.app.component('cloudSubnetForm', {
-  controller: 'cloudSubnetForm', 
+  controller: 'cloudSubnetFormController', 
   controllerAs: 'vm', 
-
-  templateURL: '/static/cloud_subnet_form.new.html.haml'	
-});
+  templateUrl: '/static/cloud_subnet_form.new.html.haml'
+  //template: 'sablona.html.haml'
+	});

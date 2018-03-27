@@ -7,20 +7,13 @@
    "ng-show"       => "vm.afterGet"}
   = render :partial => "layouts/flash_msg"
   %h3
-    = _('Network Provider')
+  = _('Network Provider')
   .form-horizontal
     .form-group{"ng-class" => "{'has-error': angularForm.ems_id.$invalid}"}
       %label.col-md-2.control-label
         = _('Network Manager')
       .col-md-8
-        = select_tag("ems_id",
-            options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
-            "ng-model"                    => "vm.cloudSubnetModel.ems_id",
-            "ng-change"                   => "vm.filterNetworkManagerChanged(vm.cloudSubnetModel.ems_id)",
-            "required"                    => "",
-            "selectpicker-for-select-tag" => "")
-        %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
-          = _("Required")
+
   %h3
     = _('Placement')
   .form-horizontal
@@ -109,6 +102,3 @@
                           "ng-maxlength" => 20}
   = render :partial => "layouts/angular/generic_form_buttons"
 
-:javascript
-  ManageIQ.angular.app.value('cloudSubnetFormId', '#{@subnet.id || "new"}');
-  miq_bootstrap('cloud-subnet-form')
