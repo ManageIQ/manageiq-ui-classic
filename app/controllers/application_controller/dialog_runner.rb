@@ -2,7 +2,8 @@ module ApplicationController::DialogRunner
   extend ActiveSupport::Concern
 
   def redirect_url
-    if restful_routed?(self.class.model)
+    model = self.class.model
+    if restful_routed?(model)
       polymorphic_path(model.find(session[:edit][:target_id]))
     else
       {:action => 'show', :id => session[:edit][:target_id]}
