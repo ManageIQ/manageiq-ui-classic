@@ -9,6 +9,8 @@ ManageIQ.angular.app.component('cloudVolumeAttachForm', {
 
     this.$onInit = function() {
       vm.afterGet = false;
+      vm.vmChoices = vmChoices;
+      vm.extManagementSystem = extManagementSystem;
 
       vm.cloudVolumeModel = {
         name: '',
