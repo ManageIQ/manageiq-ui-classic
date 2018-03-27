@@ -1,6 +1,7 @@
 ManageIQ.angular.app.component('ownershipFormComponent', {
   bindings: {
-    objectIds: '<'
+    objectIds: '<',
+    optsUser:  '<'
   },
 
   controllerAs: 'vm',
@@ -8,7 +9,8 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
    var vm = this;
 
   vm.$onInit = () => {
-  console.log("ownership");
+
+  console.log(vm.optsUser);
     vm.ownershipModel = {
       user: '',
       group: ''
@@ -27,18 +29,6 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
       .catch(miqService.handleFailure);
   };
 
-
-    function getOwnershipFormData(response) {
-    var data = response.data;
-
-    vm.ownershipModel.user = data.user;
-    vm.ownershipModel.group = data.group;
-    vm.afterGet = true;
-    vm.modelCopy = angular.copy( vm.ownershipModel );
-    miqService.sparkleOff();
-
-
-
   var ownershipEditButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
     var url = 'ownership_update/' + '?button=' + buttonName;
@@ -52,6 +42,18 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
       });
     }
   };
+
+
+    function getOwnershipFormData(response) {
+    var data = response.data;
+
+    vm.ownershipModel.user = data.user;
+    vm.ownershipModel.group = data.group;
+    vm.afterGet = true;
+    vm.modelCopy = angular.copy( vm.ownershipModel );
+    miqService.sparkleOff();
+
+
   }
 
   vm.isBasicInfoValid = function() {
