@@ -1,20 +1,6 @@
-%form#form_div{:name           => "angularForm",
-               "miq-form"      => true,
-               "model"         => "vm.floatingIpModel",
-               "model-copy"    => "vm.modelCopy"}
-  = render :partial => "layouts/flash_msg"
-
-  %h3
-    = _('Associate or disassociate a Port - Blank the field to disassociate')
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Port id')
-      .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "Network Port",
-                            "ng-model"     => "vm.floatingIpModel.network_port_ems_ref",
-                            "ng-maxlength" => 40,
-                            :checkchange   => true}
-
-  = render :partial => "layouts/angular/generic_form_buttons"
+#main_div
+  %floating-ip-form-component
+:javascript
+  ManageIQ.angular.app.value('floatingIpFormId', "#{@id}");//'#{"edit"}');
+  ManageIQ.angular.app.value('emsChoices', #{@ems_choices.sort.to_json});
+  miq_bootstrap('floating-ip-form-component')

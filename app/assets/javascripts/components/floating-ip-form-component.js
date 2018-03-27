@@ -6,4 +6,3 @@ ManageIQ.angular.app.component('floatingIpFormComponent', {
 		'repositoryId': '@',
 	 },
 });
-

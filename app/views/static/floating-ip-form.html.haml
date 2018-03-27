@@ -80,7 +80,17 @@
           %option{"value" => ""}
             = "<#{_('Choose')}>"
 
-  = render :partial => "layouts/angular/generic_form_buttons"
+  %h3
+    = _('Associate or disassociate a Port - Blank the field to disassociate')
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Port id')
+      .col-md-8
+        %input.form-control{:type          => "text",
+                            :name          => "Network Port",
+                            "ng-model"     => "vm.floatingIpModel.network_port_ems_ref",
+                            "ng-maxlength" => 40,
+                            :checkchange   => true}
 
-  :javascript
-    ManageIQ.angular.app.value('emsChoices', @ems_choices.sort.to_json);
+  = render :partial => "layouts/angular/generic_form_buttons"
