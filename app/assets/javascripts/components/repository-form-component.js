@@ -1,6 +1,15 @@
-/* global miqFlashLater */
+ManageIQ.angular.app.component('repositoryFormComponent', {
+  controller: repositoryFormController,
+  controllerAs: 'vm',
+  templateUrl: '/static/ansible-repository-form.html.haml',
+  bindings: {
+    'repositoryId': '@',
+  },
+});
 
-ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'miqService', 'API', function(repositoryId, miqService, API) {
+repositoryFormController.$inject = ['miqService', 'API'];
+
+function repositoryFormController(miqService, API) {
   var vm = this;
 
   var init = function() {
@@ -24,15 +33,15 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
     ManageIQ.angular.scope = vm;
 
     vm.saveable = miqService.saveable;
-    vm.newRecord = repositoryId === 'new';
+    vm.newRecord = vm.repositoryId === 'new';
 
     vm.scm_credentials = [{name: __('Select credentials'), value: null}];
     API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources&sort_by=name&sort_order=ascending')
       .then(getCredentials)
       .catch(miqService.handleFailure);
 
-    if (repositoryId !== 'new') {
-      API.get('/api/configuration_script_sources/' + repositoryId + '?attributes=' + vm.attributes.join(','))
+    if (vm.repositoryId !== 'new') {
+      API.get('/api/configuration_script_sources/' + vm.repositoryId + '?attributes=' + vm.attributes.join(','))
         .then(getRepositoryFormData)
         .catch(miqService.handleFailure);
     } else {
@@ -61,7 +70,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
 
   vm.saveClicked = function() {
     miqService.sparkleOn();
-    API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
+    API.put('/api/configuration_script_sources/' + vm.repositoryId, vm.repositoryModel)
       .then(vm.getBack)
       .catch(miqService.handleFailure);
   };
@@ -131,5 +140,6 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
     }
     setForm();
   };
-  init();
-}]);
+
+  vm.$onInit = init;
+}
