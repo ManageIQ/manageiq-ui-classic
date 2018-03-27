@@ -1,0 +1,73 @@
+%div{"ng-init" => "vm.initialize(#{ng_model}, formId)"}
+  %div{"ng-show" => {{ng_show}}}
+    .form-group{"ng-class" => "{'has-error': angularForm."+{{vm.prefix}}+"_userid.$error.required}"}
+      %label.col-md-2.control-label{"for" => {{vm.prefix}} + "_userid"}
+        = userid_label
+      .col-md-4
+        %input.form-control{"type"        => "text",
+                            "id"          => {{vm.prefix}} + "_userid",
+                            "ng-required" => {{ng_reqd_userid}},
+                            "ng-disabled" => userid_disabled,
+                            "name"        => {{vm.prefix}} + "_userid",
+                            "ng-model"    => "#{ng_model}." + {{vm.prefix}} + "_userid",
+                            "checkchange" => ""}
+        %span.help-block{"ng-show" => "angularForm." + {{vm.prefix}} + "_userid.$error.required"}
+          = _("Required")
+        .note
+          {{note}}
+
+  %div{"ng-show" => "#{ng_show}"}
+    .form-group{"ng-class" => "{'has-error': angularForm." + {{vm.prefix}} + "_password.$error.required}"}
+      %label.col-md-2.control-label{"for" => {{vm.prefix}} + "_password"}
+        %div{"ng-show" => "!vm.changeKey"}
+          = private_key_label
+        %div{"ng-show" => "vm.changeKey"}
+          = new_private_key_label
+      .col-md-4
+        %div{"ng-if" => "vm.inEditMode('" + {{vm.prefix}} + "_userid')"}
+          %input.form-control{"type"         => "file",
+                              "id"           => {{vm.prefix}} + "_password",
+                              "ng-required"  => {{ng_reqd_private_key}},
+                              "ng-disabled"  => "!vm.inEditMode('"+ {{vm.prefix}} + "_userid')" || private_key_disabled,
+                              "ng-model"     => "#{ng_model}." + {{vm.prefix}} + "_password",
+                              "prefix"       => {{vm.prefix}},
+                              "name"         => {{vm.prefix}} + "_password",
+                              "checkchange"  => "",
+                              "require-file" => ""}
+        %div{"ng-if" => "!vm.inEditMode('" + {{vm.prefix}} + "_userid')"}
+          %textarea.form-control{"id"           => {{vm.prefix}} + "_password",
+                                 "ng-required"  => {{ng_reqd_private_key}},
+                                 "ng-disabled"  => "!vm.inEditMode('" + {{vm.prefix}} + "_userid')" || private_key_disabled,
+                                 "ng-model"     => "#{ng_model}." + {{vm.prefix}} + "_password",
+                                 "prefix"       => {{vm.prefix}},
+                                 "name"         => {{vm.prefix}} + "_password",
+                                 "checkchange"  => "",
+                                 "require-file" => "",
+                                 "rows"         => 1}
+        %textarea{"id"          => {{vm.prefix}} + "_password",
+                  "name"        => {{vm.prefix}} + "_password",
+                  "style"       => "display: none !important",
+                  "ng-model"    => "#{ng_model}." + {{vm.prefix}} + "_password",
+                  "ng-disabled" => "!vm.inEditMode('" + {{vm.prefix}} + "_userid')" || private_key_disabled,
+                  "checkchange" => ""}
+        %span.help-block{"ng-show" => "angularForm." + {{vm.prefix}} + "_password.$error.required"}
+          = _("Required")
+      %div{"ng-if" => "vm.showChangePrivateKeyLinks('" + {{vm.prefix}} + "_userid')"}
+        %a{:href => "", "ng-hide" => "vm.changeKey", "ng-click" => "vm.changeStoredPrivateKey()"}
+          = change_stored_private_key
+        %a{:href => "", "ng-show" => "vm.changeKey", "ng-click" => "vm.cancelPrivateKeyChange()"}
+          = cancel_private_key_change
+
+    %div{"ng-show" => "vm.showValidate('" + {{vm.prefix}} + "')"}
+      .form-group
+        %label.col-md-2
+        .col-md-4
+          = render :partial => "layouts/angular/form_buttons_verify_angular",
+                                       :locals  => {:ng_show           => ng_show,
+                                                    :validate_url      => validate_url,
+                                                    :id                => id,
+                                                    :valtype           => prefix,
+                                                    :ng_model          => "#{ng_model}",
+                                                    :main_scope        => main_scope,
+                                                    :verify_title_off  => verify_title_off,
+                                                    :basic_info_needed => defined?(basic_info_needed) ? basic_info_needed : nil}
