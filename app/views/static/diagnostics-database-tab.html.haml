@@ -46,7 +46,7 @@
     = _("Run a Database Backup Now")
   -#- if @sb[:active_tab] == "diagnostics_database"
   %div{'ng-if' => 'vm.sb == "diagnostics_database"'}
-    -# jak se to resi: 
+    -# jak se to resi:
         -# manageIQ.angular.app.value('moje_jmeno', #{@sb[;active_tab]})
         ..controller ($scope, .. moje_jmeno) ... vm.moje = moje_jmeno;
         %div{'ng-if' => "vm.moje == 'diagnostics..."}
@@ -59,7 +59,7 @@
     %label.col-md-2.control-label
       = _("Fetch settings from a schedule")
     .col-md-8
-      
+
       -#- if @backup_schedules.length < 1
       %p.form-control-static{'ng-if' => 'vm.backup_schedules.length < 1'}
         = _("No Backup Schedules are defined")
@@ -136,7 +136,7 @@
           - caption = _("Run Database Garbage Collection Now")
           - submit = button_tag(_("Submit"), :class => "btn btn-primary", :alt => caption)
 
-          = link_to(submit, {:action => 'db_gc_collection'},
+          = link_to(submit, {:action => 'db_gc_collection', :controller => 'ops'},
             "data-miq_sparkle_on" => true,
             :confirm              => _("Are you sure you want to Run Database Garbage Collection Now?"),
             :remote               => true,
