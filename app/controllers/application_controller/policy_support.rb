@@ -3,6 +3,7 @@ module ApplicationController::PolicySupport
 
   # Assign/unassign policies to/from a set of objects
   def protect
+    @gtl_type  = "grid"
     @display   = nil
     @edit      = session[:edit]
     profile_id = params[:id].to_i
