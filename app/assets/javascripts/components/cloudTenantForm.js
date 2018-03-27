@@ -6,20 +6,20 @@ ManageIQ.angular.app.component('cloudTenantFormComponent', {
 	
 	
 	
-	controller: ['$http', 'miqService', function($http, cloudTenantFormId, miqService) {
+	controller: ['$http', 'miqService', function($http, miqService) {
   var vm = this;
 		
   
-
+vm.$onInit = function(){
   vm.cloudTenantModel = { name: '', ems_id: '' };
-  vm.formId = cloudTenantFormId;
+  vm.formId = vm.cloudTenantFormId;
   vm.afterGet = false;
   vm.modelCopy = angular.copy( vm.cloudTenantModel );
   vm.model = "cloudTenantModel";
-  vm.saveable = miqService.saveable;
+ vm.saveable = miqService.saveable;
   vm.newRecord = vm.cloudTenantFormId == 'new';
   
-  
+  ManageIQ.angular.scope = vm;
 
   if (vm.cloudTenantFormId == 'new') {
     vm.cloudTenantModel.name = "";
@@ -30,9 +30,9 @@ ManageIQ.angular.app.component('cloudTenantFormComponent', {
       .then(getCloudTenantFormDataComplete)
       .catch(miqService.handleFailure);
   }
-
+}
   function getCloudTenantFormDataComplete(response) {
-    var data = reponse.data;
+    var data = response.data;
 
     vm.afterGet = true;
     vm.cloudTenantModel.name = data.name;
