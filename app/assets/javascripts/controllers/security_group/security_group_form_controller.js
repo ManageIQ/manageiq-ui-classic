@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFormId', 'miqService', 'API', '$q', function(securityGroupFormId, miqService, API, $q) {
+ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFormId', 'miqService', 'API', '$q','networkProviderChoices', function(securityGroupFormId, miqService, API, $q, networkProviderChoices) {
   var vm = this;
 
   var init = function() {
@@ -8,7 +8,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
       description: "",
       firewall_rules: [],
     };
-
+    vm.networkProviderChoices = networkProviderChoices;
     vm.hostProtocols = ["", "TCP", "UDP", "ICMP"];
     vm.networkProtocols = ["IPV4", "IPV6"];
     vm.directions = ["inbound", "outbound"];

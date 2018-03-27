@@ -2,5 +2,5 @@
 
 :javascript
   ManageIQ.angular.app.value('securityGroupFormId', '#{@security_group.id || "new"}');
-  miq_bootstrap('#form_div');
+  ManageIQ.angular.app.value('networkProviderChoices', #{@ems_choices.sort.to_json});
   miq_bootstrap('security-group-form')
