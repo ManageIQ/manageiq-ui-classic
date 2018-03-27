@@ -864,6 +864,7 @@ module ApplicationHelper
        cloud_subnet
        cloud_tenant
        cloud_volume
+       cloud_volume_backup
        cloud_volume_snapshot
        configuration_job
        configuration_scripts
