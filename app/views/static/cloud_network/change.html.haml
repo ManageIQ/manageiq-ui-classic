@@ -8,8 +8,6 @@
 
   = render :partial => "layouts/flash_msg"
 
-  = render :partial => "layouts/angular/generic_form_buttons"
- 
   %h3
     = _('Network Provider')
   .form-horizontal
@@ -18,7 +16,8 @@
         = _('Network Manager')
       .col-md-8{"ng-class" => "{'has-error': angularForm.ems_id.$invalid}", "ng-if" => "vm.newRecord"}
         = select_tag("ems_id",
-          options_for_select([["<#{_('Choose')}>", nil]] + @network_ems_provider_choices.sort),
+                      nil,
+                      "ng-options"                  => "choice[1] as choice[0] for choice in vm.networkProviderChoices",
                       "ng-change"                   => "vm.filterNetworkManagerChanged(vm.cloudNetworkModel.ems_id)",
                       "ng-model"                    => "vm.cloudNetworkModel.ems_id",
                       "pf-select"                   => true,
@@ -133,3 +132,4 @@
                "ng-model"    => "vm.cloudNetworkModel.shared"}
                
 
+  = render :partial => "layouts/angular/generic_form_buttons"
