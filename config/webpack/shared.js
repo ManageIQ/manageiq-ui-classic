@@ -53,6 +53,11 @@ module.exports = {
       resolve(__dirname, '../../'), // location of your src
       {} // a map of your routes
     ),
+    // Workaround for graphql/graphql-language-service#128
+    new webpack.ContextReplacementPlugin(
+      /graphql-language-service-interface[\\\/]dist$/,
+      /\.js$/
+    ),
 
     new ManifestPlugin({
       publicPath: output.publicPath,
