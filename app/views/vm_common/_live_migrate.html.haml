@@ -2,7 +2,8 @@
 - live_migrate_items_length = @live_migrate_items.length == 1 ? @live_migrate_items[0].id : ''
 - live_migrate_items = @live_migrate_items.to_json
 
-%vm-cloud-live-migrate-form{'vm-cloud-live-migrate-form-id' => 'new','message' => message,
+%vm-cloud-live-migrate-form{'vm-cloud-live-migrate-form-id' => 'new',
+'message' => message,
 'live_migrate_items_length'=> live_migrate_items_length,
 'live_migrate_items'=> live_migrate_items,
 }
