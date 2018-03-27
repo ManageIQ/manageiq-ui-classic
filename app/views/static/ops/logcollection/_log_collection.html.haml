@@ -1,35 +1,35 @@
 - @angular_form = true
 
-#%form.form-horizontal#form_div{:name                                 => "angularForm",
-#                               'ng-show'                             => "vm.afterGet",
-#                               'miq-form'                            => 'true',
-#                               'form-changed'                        => 'true',
-#                               'model'                               => 'vm.logCollectionModel',
-#                               'model-copy'                          => 'vm.modelCopy',
-#                               'data-log-collection-form-fields-url' => "/#{controller_name}/log_collection_form_fields/",
-#                               'data-save-url'                       => "/#{controller_name}/log_depot_edit/",
-#                               'data-log-protocol-changed-url'       => "/#{controller_name}/log_protocol_changed/",
-#                               :novalidate                           => 1}
-#  = render :partial => "layouts/flash_msg"
+%form.form-horizontal#form_div{:name                                 => "angularForm",
+                               'ng-show'                             => "vm.afterGet",
+                               'miq-form'                            => 'true',
+                               'form-changed'                        => 'true',
+                               'model'                               => 'vm.logCollectionModel',
+                               'model-copy'                          => 'vm.modelCopy',
+                               'data-log-collection-form-fields-url' => "/#{controller_name}/log_collection_form_fields/",
+                               'data-save-url'                       => "/#{controller_name}/log_depot_edit/",
+                               'data-log-protocol-changed-url'       => "/#{controller_name}/log_protocol_changed/",
+                               :novalidate                           => 1}
+  = render :partial => "layouts/flash_msg"
 
-#  %h3
-#    :javascript
-#        ManageIQ.angular.app.value('message', (_("Editing Log Depot Settings for %{class}: %{display}") % {:class   => Dictionary.gettext(record.class.name, :type => :model, :notfound => :titleize),
-#                                                                  :display => @record.display_name}).to_json);
+  %h3
+    :javascript
+        ManageIQ.angular.app.value('message', (_("Editing Log Depot Settings for %{class}: %{display}") % {:class   => Dictionary.gettext(record.class.name, :type => :model, :notfound => :titleize),
+                                                                  :display => @record.display_name}).to_json);
 
-#        {{vm.message}}
+        {{vm.message}}
 
-#  .form-group
-#    %label.control-label.col-md-2
-#      = _("Type")
-#    .col-md-8
-#      - default_option = [_("<Noo Depot>"), nil]
-#      = select_tag('log_protocol', options_for_select([default_option] + @supported_depots_for_select),
-#                   "ng-model"                    => "vm.logCollectionModel.log_protocol",
-#                   "ng-change"                   => "vm.logProtocolChanged()",
-#                   "selectpicker-for-select-tag" => "")
-#      :javascript
-#        miqInitSelectPicker();
+  .form-group
+    %label.control-label.col-md-2
+      = _("Type")
+    .col-md-8
+      - default_option = [_("<Noo Depot>"), nil]
+      = select_tag('log_protocol', options_for_select([default_option] + @supported_depots_for_select),
+                  "ng-model"                    => "vm.logCollectionModel.log_protocol",
+                   "ng-change"                   => "vm.logProtocolChanged()",
+                   "selectpicker-for-select-tag" => "")
+      :javascript
+        miqInitSelectPicker();
 
   = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
                        :locals  => {:ng_show             => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel)",
