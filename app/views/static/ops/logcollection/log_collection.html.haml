@@ -12,7 +12,6 @@
 
   %h3
     :javascript
-      console.log(vm);
     {{vm.message}}
 
   .form-group
@@ -21,7 +20,9 @@
     .col-md-8
       %select{"name" => "log_protocol",
               "ng-model"                    => "vm.logCollectionModel.log_protocol",
-              "ng-change"                   => "vm.logProtocolChanged()"}
+              "ng-change"                   => "vm.logProtocolChanged()",
+              "ng-options"                  => "choice for choice in vm.selectOptions"}
+
       :javascript
         miqInitSelectPicker();
 

@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope',  '$attrs', 'miqService', 'miqDBBackupService', function($http, $scope, $attrs, miqService, miqDBBackupService) {
+/*ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope',  '$attrs', 'miqService', 'miqDBBackupService', function($http, $scope, $attrs, miqService, miqDBBackupService) {
   var vm = this;
   var init = function() {
     vm.logCollectionModel = {
@@ -120,3 +120,4 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
 
   vm.$onInit = init;
 }]);
+*/

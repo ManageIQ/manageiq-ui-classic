@@ -8,6 +8,7 @@ ManageIQ.angular.app.component('logCollectionFormComponent', {
 
   bindings: {
     'serverId': '@',
+    'selectOptions': '<'
 
   },
 
@@ -18,6 +19,7 @@ logCollectionFormController.$inject = ['$http', '$scope',  '$attrs', 'miqService
 function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBackupService) {
   var vm = this;
   var init = function() {
+
     vm.logCollectionModel = {
       depot_name: '',
       uri: '',
@@ -136,4 +138,4 @@ function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBac
   }
 
   vm.$onInit = init;
-};
+}

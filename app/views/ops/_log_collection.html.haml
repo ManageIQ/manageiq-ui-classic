@@ -1,6 +1,6 @@
-- @angular_form = true
 
-%log-collection-form-component{'serverId' => @record.id || "new"}
+%log-collection-form-component{'server-id' => "new",
+                                'select-options' => [[_("<No Depot>")]] + @supported_depots_for_select}
 
 :javascript
   miq_bootstrap('log-collection-form-component');
