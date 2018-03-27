@@ -1,5 +1,4 @@
 #main_div
-  %cloud-volume-backup-form-component{'cloud-volume-backup-form-id' => @id}
+  %cloud-volume-backup-form-component{'cloud-volume-backup-form-id' => @backup.id}
 :javascript
-  ManageIQ.angular.app.value('cloudVolumeBackupFormId', #{@backup.id});
   miq_bootstrap('cloud-volume-backup-form-component');
