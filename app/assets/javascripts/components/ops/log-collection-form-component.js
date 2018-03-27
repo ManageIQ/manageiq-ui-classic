@@ -8,17 +8,16 @@ ManageIQ.angular.app.component('logCollectionFormComponent', {
 
   bindings: {
     'serverId': '@',
-    'selectOptions': '<',
+    'selectOptions': '<'
+
   },
 
 });
-
 
 logCollectionFormController.$inject = ['$http', '$scope',  '$attrs', 'miqService', 'miqDBBackupService'];
 
 function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBackupService) {
   var vm = this;
-
   var init = function() {
 
     vm.logCollectionModel = {
@@ -62,11 +61,11 @@ function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBac
 
   vm.validateClicked = function() {
     miqService.validateWithAjax(vm.saveUrl + '?button=validate&type=' + vm.prefix);
-  };
+  }
 
   vm.logProtocolChanged = function() {
     miqService.sparkleOn();
-    if (miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) == -1 &&
+    if(miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) == -1 &&
        vm.logCollectionModel.log_protocol != '') {
       var url = vm.logProtocolChangedUrl;
       $http.get(url + vm.serverId + '?log_protocol=' + vm.logCollectionModel.log_protocol)
@@ -80,7 +79,7 @@ function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBac
 
   vm.isBasicInfoValid = function() {
     return $scope.angularForm.depot_name.$valid &&
-      $scope.angularForm.uri.$valid;
+      $scope.angularForm.uri.$valid
   };
 
   vm.saveClicked = function() {
@@ -106,9 +105,9 @@ function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBac
     miqService.miqAjaxButton(url, true);
   };
 
-  vm.canValidateBasicInfo = function() {
+  vm.canValidateBasicInfo = function () {
     return vm.isBasicInfoValid();
-  };
+  }
 
   function getLogCollectionFormData(response) {
     var data = response.data;
