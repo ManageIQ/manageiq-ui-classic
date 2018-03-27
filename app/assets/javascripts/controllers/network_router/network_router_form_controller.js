@@ -14,19 +14,22 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   ManageIQ.angular.scope = vm;
 
-  if (networkRouterFormId == 'new') {
-    vm.networkRouterModel.name = "";
-    vm.networkRouterModel.enable_snat = true;
-    vm.networkRouterModel.external_gateway = false;
-    vm.networkRouterModel.cloud_subnet_id = null;
-    vm.newRecord = true;
-  } else {
-    miqService.sparkleOn();
+  var init = function() {
+    if (vm.networkRouterId == 'new') {
+      vm.networkRouterModel.name = "";
+      vm.networkRouterModel.enable_snat = true;
+      vm.networkRouterModel.external_gateway = false;
+      vm.networkRouterModel.cloud_subnet_id = null;
+      vm.newRecord = true;
+    } else {
+      miqService.sparkleOn();
 
-    $http.get('/network_router/network_router_form_fields/' + networkRouterFormId)
-      .then(getNetworkRouterFormData)
-      .catch(miqService.handleFailure);
+      $http.get('/network_router/network_router_form_fields/' + vm.networkRouterId)
+        .then(getNetworkRouterFormData)
+        .catch(miqService.handleFailure);
+    }
   }
+
 
   vm.addClicked = function() {
     var url = 'create/new' + '?button=add';
