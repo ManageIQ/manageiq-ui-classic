@@ -74,7 +74,7 @@
                      "ng-options"                  => "choice[1] as choice[0] for choice in vm.backup_schedules",
                      "ng-model"                    => "vm.diagnosticsDatabaseModel.backup_schedule_type",
                      "ng-change"                   => "vm.backupScheduleTypeChanged()",
-                     "selectpicker-for-select-tag" => ""}
+                     "pf-select" => true}
 
 
   %hr
@@ -85,12 +85,12 @@
       = _("Type")
     .col-md-8
       - default_option = [_("<No Depot>"), nil]
-      = select_tag('log_protocol',
-                  "ng-options"                     => "choice[1] as choice[0] for choice in vm.database_backup_options_for_select",
+      = select_tag('log_protocol', nil,
+                  "ng-options"                     => "choice as choice for choice in vm.database_backup_options_for_select",
                   "ng-model"                       => "vm.diagnosticsDatabaseModel.log_protocol",
                   "ng-change"                      => "vm.logProtocolChanged(vm.diagnosticsDatabaseModel)",
                   "ng-required"                    => "vm.logProtocolNotSelected(vm.diagnosticsDatabaseModel)",
-                  "selectpicker-for-select-tag"    => "")
+                  "pf-select" => true)
   = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
                  :locals  => {:ng_show             => "vm.logProtocolSelected()",
                               :ng_reqd_depot_name  => true,

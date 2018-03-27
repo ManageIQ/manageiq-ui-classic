@@ -24,7 +24,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     vm.database_display_name = database_display_name;
     vm.database_details = database_details;
     vm.backup_schedules = backup_schedules;
-    vm.database_backup_options_for_select;
+    vm.database_backup_options_for_select = database_backup_options_for_select;
   };
 
   vm.validateClicked = function() {
