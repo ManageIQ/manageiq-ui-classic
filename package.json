@@ -25,7 +25,7 @@
     "base64-js": "~1.2.3",
     "core-js": "~2.4.1",
     "rxjs": "~5.3.0",
-    "text-encoder-lite": "~1.0.1",
+    "text-encoder-lite": "git://github.com/coolaj86/TextEncoderLite.git#e1e031b",
     "ui-select": "0.19.8",
     "zone.js": "~0.8.5"
   },
