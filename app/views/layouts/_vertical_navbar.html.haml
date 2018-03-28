@@ -19,7 +19,7 @@
                 - menu_section.items.each do |menu_item|
                   - if menu_item.visible? && menu_item.leaf?
                     %li.list-group-item{:class => item_nav_class(menu_item)}
-                      %a{:href => menu_item.url, :onclick => 'return miqCheckForChanges()'}
+                      %a{menu_item.link_params}
                         %span.list-group-item-value
                           = _(menu_item.name)
 
