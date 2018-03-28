@@ -29,7 +29,7 @@ describe ConfigurationJobController do
           opt
         end
 
-        url_for_options = url_for_db(quadicon_model_name(record), "show", record)
+        url_for_options = url_for_db(record.class.db_name, "show", record)
 
         expect(url_for_options[:controller]).to eq("configuration_job")
       end
