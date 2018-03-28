@@ -1312,6 +1312,26 @@ Rails.application.routes.draw do
                save_post
     },
 
+    :physical_switch    =>  {
+      :get  =>  %w(
+        download_data
+        download_summary_pdf
+        show_list
+        show
+      ) + compare_get,
+
+      :post   =>  %w(
+        button
+        listnav_search_selected
+        show_list
+        create
+        create_del
+        update
+        update_del
+        quick_search
+      ) + adv_search_post + save_post,
+    },
+
     :physical_server    =>  {
       :get  =>  %w(
         download_data

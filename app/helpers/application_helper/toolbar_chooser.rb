@@ -525,6 +525,7 @@ class ApplicationHelper::ToolbarChooser
             orchestration_stack
             physical_infra_topology
             physical_server
+            physical_switch
             resource_pool
             container_template
             ems_block_storage
