@@ -233,7 +233,7 @@ class ContainerDashboardService < DashboardService
   def daily_image_metrics
     daily_image_metrics = Hash.new(0)
     daily_metrics.each do |m|
-      day = m.timestamp.strftime("%Y-%m-%d")
+      day = m.timestamp.beginning_of_day.utc
       daily_image_metrics[day] +=
         m.stat_container_image_registration_rate if m.stat_container_image_registration_rate.present?
     end

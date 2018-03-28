@@ -10,7 +10,7 @@ module ContainerServiceMixin
     daily_pod_delete_trend = Hash.new(0)
 
     daily_metrics.each do |m|
-      date = m.timestamp.strftime("%Y-%m-%d")
+      date = m.timestamp.beginning_of_day.utc
       fill_pod_metrics(m, date, daily_pod_create_trend, daily_pod_delete_trend)
     end
 
@@ -122,7 +122,7 @@ module ContainerServiceMixin
   def daily_network_metrics
     daily_network_metrics = Hash.new(0)
     daily_metrics.each do |m|
-      day = m.timestamp.strftime("%Y-%m-%d")
+      day = m.timestamp.beginning_of_day.utc
       daily_network_metrics[day] += m.net_usage_rate_average if m.net_usage_rate_average.present?
     end
 
@@ -179,7 +179,7 @@ module ContainerServiceMixin
     total_mem = Hash.new(0)
 
     daily_metrics.each do |metric|
-      date = metric.timestamp.strftime("%Y-%m-%d")
+      date = metric.timestamp.beginning_of_day.utc
       fill_utilization(metric, date, used_cpu, used_mem, total_cpu, total_mem)
     end
 
