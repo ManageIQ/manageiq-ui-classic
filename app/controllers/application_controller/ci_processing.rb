@@ -461,7 +461,7 @@ module ApplicationController::CiProcessing
     add_flash(_("Error during '%{task}': %{message}") % {:task => task, :message => err.message}, :error)
   else
     add_flash(n_("%{task} initiated for %{count} provider",
-                 "%{task} initiated for %{count} providers)", manager_ids.length) %
+                 "%{task} initiated for %{count} providers", manager_ids.length) %
                 {:task  => task_name(task),
                  :count => manager_ids.length})
   end
