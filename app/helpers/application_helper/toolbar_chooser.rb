@@ -523,6 +523,7 @@ class ApplicationHelper::ToolbarChooser
               middleware_server_group
               orchestration_stack
               physical_infra_topology
+              physical_switch
               physical_server
               resource_pool
               container_template

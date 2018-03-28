@@ -99,6 +99,7 @@ class ApplicationController < ActionController::Base
       :ems_network        => true,
       :host               => true,
       :miq_template       => true,
+      :physical_switch    => true,
       :physical_server    => true,
       :storage            => true,
       :vm                 => true,
