@@ -1,6 +1,33 @@
 class PhysicalSwitchDecorator < MiqDecorator
   def self.fonticon
-    'pficon pficon-container-node'
+    'ff ff-network-switch'
+  end
+
+  def quadicon
+    {
+      :top_left     => {
+        :text    => hardware.physical_ports.try(:size).to_i,
+        :tooltip => _('Ports')
+      },
+      :top_right    => {
+        :tooltip => power_state.try(:downcase),
+      }.merge(QuadiconHelper.machine_state(power_state)),
+      :bottom_left  => {
+        :fonticon => fonticon,
+        :tooltip  => ui_lookup(:model => type),
+      },
+      :bottom_right => {
+        :fileicon => health_state_img,
+        :tooltip  => _(health_state),
+      }
+    }
+  end
+
+  def single_quad
+    {
+      :fonticon => fonticon,
+      :tooltip  => ui_lookup(:model => type),
+    }
   end
 
   private

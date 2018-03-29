@@ -1,0 +1,9 @@
+#main_div
+  - if %w(physical_switches).include?(@display)
+    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
+  - else
+    - case @showtype
+    - when "main"
+      = render :partial => 'layouts/textual_groups_generic'
+    - when "timeline"
+      = render :partial => "layouts/tl_show_async"

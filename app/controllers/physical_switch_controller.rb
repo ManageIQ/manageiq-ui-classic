@@ -1,5 +1,6 @@
 class PhysicalSwitchController < ApplicationController
   include Mixins::GenericListMixin
+  include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
   include Mixins::MoreShowActions
 
@@ -29,8 +30,13 @@ class PhysicalSwitchController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties relationships),
+      %i(properties management_networks relationships power_management),
+      %i(firmware_details ports),
     ]
   end
   helper_method(:textual_group_list)
+
+  def self.display_methods
+    %w(physical_switches)
+  end
 end

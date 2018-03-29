@@ -551,6 +551,7 @@ class ConfigurationController < ApplicationController
       @edit[:new][:quadicons][:host] = params[:quadicons_host] == "true" if params[:quadicons_host]
       @edit[:new][:quadicons][:vm] = params[:quadicons_vm] == "true" if params[:quadicons_vm]
       @edit[:new][:quadicons][:physical_server] = params[:quadicons_physical_server] == "true" if params[:quadicons_physical_server]
+      @edit[:new][:quadicons][:physical_switch] = params[:quadicons_physical_switch] == "true" if params[:quadicons_physical_switch]
       @edit[:new][:quadicons][:ems_physical_infra] = params[:quadicons_ems_physical_infra] == "true" if params[:quadicons_ems_physical_infra]
       @edit[:new][:quadicons][:ems_network] = params[:quadicons_ems_network] == "true" if params[:quadicons_ems_network]
       @edit[:new][:quadicons][:miq_template] = params[:quadicons_miq_template] == "true" if params[:quadicons_miq_template]

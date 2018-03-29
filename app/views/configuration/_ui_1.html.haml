@@ -21,6 +21,7 @@
              [role_allows?(:feature => "host_show_list"),               _("Host"),                    "host"],
              [role_allows?(:feature => "storage_show_list"),            _("Datastores"),              "storage"],
              [true,                                                     _("VM"),                      "vm"],
+             [role_allows?(:feature => "physical_switch_show_list"),    _("Physical Switch"),         "physical_switch"],
              [role_allows?(:feature => "physical_server_show_list"),    _("Physical Server"),         "physical_server"],
              [true,                                                     _("Template"),                "miq_template"]].each do |icons_checkbox|
             - if icons_checkbox[0]

@@ -51,6 +51,7 @@ module ApplicationHelper
            orchestration_stack
            persistent_volume
            physical_server
+           physical_switch
            resource_pool
            retired
            security_group
@@ -119,6 +120,7 @@ module ApplicationHelper
                orchestration_stack
                persistent_volume
                physical_server
+               physical_switch
                policy
                resource_pool
                scan_profile
