@@ -113,6 +113,40 @@ ManageIQ.angular.app.controller('emsCommonFormController', [
       hostDefaultVncPortEnd: ''
     }
 
+    $scope.crendetialsLabels = {
+      userIdLabel: __("Client ID"),
+      passwordLabel: __("Client Key"),
+      verifyLabel: __("Confirm Client Key"),
+      changeStoredPassword: __("Change stored client key"),
+      cancelPasswordChange: __("Cancel client key change"),
+    }
+
+    $scope.sharedValidateClicked = function() {
+      var url = '/ems_cloud';
+      $scope.authType = "default";
+      var $event = {target: ".validate_button:visible"};
+      miqService.validateWithREST($event, $scope.authType, $scope.actionUrl, true)
+        .then(function success(data) {
+          // check if data object is a JSON, otherwise (recieved JS or HTML) output a warning to the user.
+          if (data === Object(data)) {
+            $timeout(function() {
+              $scope.$apply(function() {
+                if(data.level == "error") {
+                  $scope.updateAuthStatus(false);
+                } else {
+                  $scope.updateAuthStatus(true);
+                }
+                miqService.miqFlash(data.level, data.message, data.options);
+                miqSparkleOff();
+              });
+            });
+          } else {
+            miqService.miqFlash("error", __('Something went wrong, please check the logs for more information.'));
+            miqSparkleOff();
+          }
+        });
+    }
+
     ManageIQ.angular.scope = $scope;
 
     if (emsCommonFormId == 'new') {

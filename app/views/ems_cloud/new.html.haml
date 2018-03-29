@@ -35,6 +35,22 @@
                    'show-vnc-start-port'            => "sharedFormModel.emsTypeVm"}
 
   %hr
+  %div{"ng-if" => "sharedFormModel.emsType === 'azure'"}
+    %h3
+      = _("Credentials")
+    %auth-credentials{'form-model'          => 'emsCommonModel',
+                      'model-copy'          => 'modelCopy',
+                      'prefix'              => "{{'default'}}",
+                      'user-required'       => true,
+                      'password-required'   => true,
+                      'new-record'          => true,
+                      'guid-regex'          => true,
+                      'enable-valid-button' => 'angularForm.$valid',
+                      'form-labels'         => 'crendetialsLabels',
+                      'hide-user'           => false,
+                      'hide-password'       => false,
+                      'validate'            => 'sharedValidateClicked'}
+
 
 :javascript
   ManageIQ.angular.app.value('emsCommonFormId', '#{@ems.id || "new"}');
