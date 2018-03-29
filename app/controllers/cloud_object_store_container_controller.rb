@@ -92,7 +92,7 @@ class CloudObjectStoreContainerController < ApplicationController
       }, :error)
     end
 
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect previous_breadcrumb_url
   end
 

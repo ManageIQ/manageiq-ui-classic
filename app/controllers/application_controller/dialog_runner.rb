@@ -1,23 +1,24 @@
 module ApplicationController::DialogRunner
   extend ActiveSupport::Concern
 
-  def redirect_url(flash)
+  def redirect_url
     model = self.class.model
     if restful_routed?(model)
-      polymorphic_path(model.find(session[:edit][:target_id]), :flash_msg => flash)
+      polymorphic_path(model.find(session[:edit][:target_id]))
     else
-      {:action => 'show', :id => session[:edit][:target_id], :flash_msg => flash}
+      {:action => 'show', :id => session[:edit][:target_id]}
     end
   end
 
   def dialog_cancel_form(flash = nil)
     @sb[:action] = @edit = nil
     @in_a_form = false
+    add_flash(flash) if flash.present?
     if session[:edit][:explorer]
-      add_flash(flash)
       dialog_replace_right_cell
     else
-      javascript_redirect redirect_url(flash)
+      flash_to_session
+      javascript_redirect(redirect_url)
     end
   end
 
@@ -41,40 +42,39 @@ module ApplicationController::DialogRunner
       else
         if result[:errors].present?
           # show validation errors
-          result[:errors].each do |err|
-            add_flash(err, :error)
-          end
+          result[:errors].each { |err| add_flash(err, :error) }
           javascript_flash(:spinner_off => true)
         else
-          flash = _("Order Request was Submitted")
+          add_flash(_("Order Request was Submitted"))
           if role_allows?(:feature => "miq_request_show_list", :any => true)
             @sb[:action] = @edit = nil
             @in_a_form = false
             if session[:edit][:explorer]
-              add_flash(flash)
               if result[:request].nil?
                 dialog_replace_right_cell
               else
+                flash_to_session
                 javascript_redirect :controller => 'miq_request',
-                                    :action     => 'show_list',
-                                    :flash_msg  => flash
+                                    :action     => 'show_list'
               end
             else
-              javascript_redirect redirect_url(flash)
+              flash_to_session
+              javascript_redirect(redirect_url)
             end
           else
-            dialog_cancel_form(flash)
+            dialog_cancel_form
           end
         end
       end
     when "reset"  # Reset
       dialog_reset_form
       flash = _("All changes have been reset")
+      add_flash(flash, :warning)
       if session[:edit][:explorer]
-        add_flash(flash, :warning)
         replace_right_cell(:action => "dialog_provision")
       else
-        javascript_redirect :action => 'dialog_load', :flash_msg => flash, :flash_warning => true, :escape => false # redirect to miq_request show_list screen
+        flash_to_session
+        javascript_redirect(:action => 'dialog_load', :escape => false) # redirect to miq_request show_list screen
       end
     else
       return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")

@@ -88,8 +88,7 @@ class FloatingIpController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show_list"
   end
 
@@ -116,7 +115,8 @@ class FloatingIpController < ApplicationController
       if @flash_array.nil?
         add_flash(_("The selected Floating IP was deleted"))
       else # or (if we deleted what we were showing) we redirect to the listing
-        javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+        flash_to_session
+        javascript_redirect(:action => 'show_list')
       end
     end
   end
@@ -223,8 +223,7 @@ class FloatingIpController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show", :id => floating_ip_id
   end
 

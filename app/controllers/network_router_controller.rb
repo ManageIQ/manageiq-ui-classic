@@ -152,8 +152,7 @@ class NetworkRouterController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show_list"
   end
 
@@ -192,7 +191,7 @@ class NetworkRouterController < ApplicationController
       add_flash(_("The selected Router was deleted")) if @flash_array.nil?
     else
       drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_to(previous_breadcrumb_url)
     end
   end
@@ -250,7 +249,7 @@ class NetworkRouterController < ApplicationController
     end
 
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect previous_breadcrumb_url
   end
 
@@ -344,8 +343,7 @@ class NetworkRouterController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show", :id => router_id
   end
 
@@ -439,8 +437,7 @@ class NetworkRouterController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show", :id => router_id
   end
 

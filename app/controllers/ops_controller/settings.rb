@@ -20,19 +20,19 @@ module OpsController::Settings
       begin
         session[:imports].apply
       rescue => bang
-        msg = _("Error during 'apply': %{error}") % {:error => bang}
-        err = true
+        add_flash(_("Error during 'apply': %{error}") % {:error => bang}, :error)
+        @sb[:show_button] = true
       else
-        msg = _("Records were successfully imported")
-        err = false
+        add_flash(_("Records were successfully imported"))
+        @sb[:show_button] = false
         session[:imports] = @sb[:imports] = nil
       end
     else
-      msg = _("Use the Choose file button to locate CSV file")
-      err = true
+      add_flash(_("Use the Choose file button to locate CSV file"), :error)
+      @sb[:show_button] = true
     end
-    @sb[:show_button] = err
-    redirect_to :action => 'explorer', :flash_msg => msg, :flash_error => err, :no_refresh => true
+    flash_to_session
+    redirect_to(:action => 'explorer', :no_refresh => true)
   end
 
   def forest_get_form_vars

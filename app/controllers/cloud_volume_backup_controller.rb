@@ -69,7 +69,7 @@ class CloudVolumeBackupController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect(:action => "show", :id => @backup.id)
   end
 

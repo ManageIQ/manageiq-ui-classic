@@ -482,9 +482,10 @@ describe EmsCloudController do
       allow(wf).to receive(:submit_request).and_return({})
       page = double('page')
       allow(page).to receive(:<<).with(any_args)
-      expect(page).to receive(:redirect_to).with("/ems_cloud/#{@ems.id}?flash_msg=Order+Request+was+Submitted")
+      expect(page).to receive(:redirect_to).with("/ems_cloud/#{@ems.id}")
       expect(controller).to receive(:render).with(:update).and_yield(page)
       controller.send(:dialog_form_button_pressed)
+      expect(session[:flash_msgs]).to match [a_hash_including(:message => "Order Request was Submitted", :level => :success)]
     end
   end
 
@@ -648,8 +649,7 @@ describe EmsCloudController do
       expect(controller).to receive(:find_record_with_rbac).and_return(ems)
       expect(ems).to receive(:sync_users_queue)
       post :sync_users, :params => {:id => ems.id, :sync => "", :admin_role => 1, :member_role => 2}
-      expect(controller.send(:flash_errors?)).to be_falsey
-      expect(response.body).to include("Sync+users+queued.")
+      expect(session[:flash_msgs]).to match [a_hash_including(:message => "Sync users queued.", :level => :success)]
       expect(response.body).to include("redirected")
       expect(response.body).to include("ems_cloud/#{ems.id}")
     end

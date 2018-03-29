@@ -188,8 +188,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
       redirect_options[:import_file_upload_id] = import_file_upload_id
     end
 
-    redirect_options[:message] = @flash_array.first.to_json
-
+    flash_to_session
     redirect_to redirect_options
   end
 
@@ -277,15 +276,15 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
     if params[:upload] && !params[:upload][:datastore].blank?
       begin
         MiqAeDatastore.upload(params[:upload][:datastore])
-        add_flash(_("Datastore import was successful.
+        flash_to_session(_("Datastore import was successful.
 Namespaces updated/added: %{namespace_stats}
 Classes updated/added: %{class_stats}
 Instances updated/added: %{instance_stats}
 Methods updated/added: %{method_stats}") % stat_options)
-        redirect_to :action => 'import_export', :flash_msg => @flash_array[0][:message]         # redirect to build the retire screen
+        redirect_to(:action => 'import_export')
       rescue => bang
-        add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
-        redirect_to :action => 'import_export', :flash_msg => @flash_array[0][:message], :flash_error => true         # redirect to build the retire screen
+        flash_to_session(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
+        redirect_to(:action => 'import_export')
       end
     else
       @in_a_form = true

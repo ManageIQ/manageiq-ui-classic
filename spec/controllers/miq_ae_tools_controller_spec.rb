@@ -473,10 +473,8 @@ Methods updated/added: 10
     shared_examples_for "MiqAeToolsController#upload_import_file that does not upload a file" do
       it "redirects with a warning message" do
         post :upload_import_file, :params => params, :xhr => true
-        expect(response).to redirect_to(
-          :action  => :review_import,
-          :message => {:message => "Use the Choose file button to locate an import file", :level => :warning}.to_json
-        )
+        expect(response).to redirect_to(:action => :review_import)
+        expect(session[:flash_msgs]).to match [a_hash_including(:message => "Use the Choose file button to locate an import file", :level => :warning)]
       end
     end
 
@@ -500,8 +498,8 @@ Methods updated/added: 10
         expect(response).to redirect_to(
           :action                => :review_import,
           :import_file_upload_id => 123,
-          :message               => {:message => "Import file was uploaded successfully", :level => :success}.to_json
         )
+        expect(session[:flash_msgs]).to match [a_hash_including(:message => "Import file was uploaded successfully", :level => :success)]
       end
     end
 

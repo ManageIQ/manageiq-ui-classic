@@ -87,7 +87,7 @@ class CloudNetworkController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect :action => "show_list"
   end
 
@@ -130,7 +130,7 @@ class CloudNetworkController < ApplicationController
       if @flash_array.nil?
         add_flash(_("The selected Cloud Network was deleted"))
       end
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
     end
   end
 
@@ -203,7 +203,7 @@ class CloudNetworkController < ApplicationController
     end
 
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect previous_breadcrumb_url
   end
 

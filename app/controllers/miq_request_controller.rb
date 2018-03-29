@@ -123,11 +123,10 @@ class MiqRequestController < ApplicationController
     assert_privileges("miq_request_approval")
     if params[:button] == "cancel"
       if (session[:edit] && session[:edit][:stamp_typ]) == "a"
-        add_flash(_("Request approval was cancelled by the user"))
+        flash_to_session(_("Request approval was cancelled by the user"))
       else
-        add_flash(_("Request denial was cancelled by the user"))
+        flash_to_session(_("Request denial was cancelled by the user"))
       end
-      session[:flash_msgs] = @flash_array.dup
       @edit = nil
       javascript_redirect :action => @lastaction, :id => session[:edit][:request].id
     elsif params[:button] == "submit"
@@ -138,8 +137,7 @@ class MiqRequestController < ApplicationController
       else
         stamp_request.deny(current_user, @edit[:reason])
       end
-      add_flash(_("Request \"%{name}\" was %{task}") % {:name => stamp_request.description, :task => (session[:edit] && session[:edit][:stamp_typ]) == "approve" ? "approved" : "denied"})
-      session[:flash_msgs] = @flash_array.dup                     # Put msg in session for next transaction to display
+      flash_to_session(_("Request \"%{name}\" was %{task}") % {:name => stamp_request.description, :task => (session[:edit] && session[:edit][:stamp_typ]) == "approve" ? "approved" : "denied"})
       @edit = nil
       javascript_redirect :action => "show_list"
     else # First time in, set up @edit hash
@@ -483,7 +481,7 @@ class MiqRequestController < ApplicationController
 
 
     if @flash_array.present?
-      session[:flash_msgs] = @flash_array.dup
+      flash_to_session
       javascript_redirect :action => 'show_list'
     else
       show_list

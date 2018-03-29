@@ -33,7 +33,8 @@ class StorageController < ApplicationController
   end
 
   def show_list
-    redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
+    flash_to_session
+    redirect_to(:action => 'explorer')
   end
 
   def init_show
@@ -50,9 +51,8 @@ class StorageController < ApplicationController
         action = "explorer"
       else
         url = request.env['HTTP_REFERER'].split('/')
-        add_flash(_("User '%{username}' is not authorized to access '%{controller_name}'") %
+        flash_to_session(_("User '%{username}' is not authorized to access '%{controller_name}'") %
                     {:username => current_userid, :controller_name => ui_lookup(:table => controller_name)}, :warning)
-        session[:flash_msgs] = @flash_array.dup
         redirect_controller  = url[3]
         action               = url[4]
       end
