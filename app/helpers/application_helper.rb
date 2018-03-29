@@ -1463,7 +1463,6 @@ module ApplicationHelper
           retired
           security_group
           service
-          storage
           templates
           vm).include?(@layout) && !@in_a_form
       "show_list"
