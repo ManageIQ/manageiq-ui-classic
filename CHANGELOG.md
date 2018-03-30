@@ -5,6 +5,56 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 82 ending 2018-03-26
+
+### Added
+- Add Keystone Domain to EmsInfra form [(#3632)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3632)
+- Do not use .scss.erb for loading assets as there's asset_url in SASS [(#3580)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3580)- Webpack - CommonsChunkPlugin - force for node_modules [(#3576)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3576)
+- Support for hidden columns in reports and views [(#3564)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3564)
+- Update Expression Editor Styling [(#3545)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3545)
+
+### Fixed
+- Allow Schedule to have also custom MiqReport in Filter [(#3675)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3675)
+- Fixed schedule editor to convert/save start time correctly [(#3671)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3671)
+- Correct positioning of dialog form buttons [(#3668)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3668)
+- Set `openssl_verify_mode` to "none" [(#3664)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3664)
+- Show message when trying to edit item with missing Provisioning request [(#3661)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3661)
+- Display filters in accordion in Host Aggregates page [(#3659)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3659)
+- Follow up for Restore delete server  [(#3650)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3650)
+- Fix untranslated entry when adding a new Schedule [(#3647)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3647)
+- Add a column title for the Disk size Unit [(#3637)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3637)
+- Use fileicon instead state_icon in container provider powerstate quad [(#3631)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3631)
+- Use keys for policySimulation when single quad is rendered [(#3630)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3630)
+- Fix storage_controller to show custom buttons [(#3629)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3629)
+- Support single quad for Network Provider quadicons [(#3628)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3628)
+- Display flash message after Cloud Network delete is initiated. [(#3626)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3626)
+- Respect RBAC rules for physical server quadicon settings [(#3625)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3625)
+- Support single quad for Physical Infrastructure Provider quadicons [(#3624)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3624)
+- Fix displaying 'CPU' and 'CPU Cores' when creating chargeback rate [(#3621)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3621)
+- Do not display GTL toolbars on non-GTL screens when navigating from the list [(#3617)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3617)
+- Define single_quad methods for each model decorator that has a quadicon [(#3616)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3616)
+- Replace miqrequired with required [(#3613)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3613)
+- Fix for Cloud image tagging from a list [(#3612)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3612)
+- Revert changes to description on VMRC configuration tab [(#3610)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3610)
+- Offer rate columns in chargeback report [(#3605)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3605)
+- Do not display policy shield on single quads in GTL view [(#3602)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3602)
+- Fix compare and drift field counters [(#3578)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3578)
+- Consume patternfly.js through rubygems instead of bower [(#3571)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3571)
+- Fixed CSP for webmks Console [(#3569)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3569)
+- Provisioning properties tab should reflect that tenant will be chosen automatically [(#3567)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3567)
+- networkRouterFormController - fix bad use/nonuse of $scope [(#3566)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3566)
+- Generic Object - fix extra vm.angularForm and nonused angularForm [(#3565)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3565)
+- Added Max Retries text field on Instance screen [(#3562)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3562)
+- Adds hypervisor_hostname to details and list view for OS Infra Host [(#3561)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3561)
+- Update description on VMRC configuration tab [(#3529)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3529)
+- Allow datetime (existence of Resource) fields in report definition of chargeback for VM/Container/... report  [(#3525)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3525)
+- Change column title from "Updated on" to "Last refresh" [(#3512)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3512)
+- Hide disabled tabs [(#3511)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3511)
+- Add Vault credentials to the UI for Embedded Ansible  [(#3468)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3468)
+- Use new dialog-user feature for custom buttons for more object types [(#3439)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3439)
+- Use correct role feature check for block|object storage summary page [(#3341)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3341)
+- Restore the Delete button for servers in a zone [(#2213)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2213)
+
 ## Unreleased as of Sprint 81 ending 2018-03-12
 
 ### Added
