@@ -119,13 +119,13 @@ module Mixins
       when 'ManageIQ::Providers::Openstack::CloudManager'
         [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)]
       when 'ManageIQ::Providers::Amazon::CloudManager'
-        [user, password, :EC2, params[:provider_region], nil, true]
+        [user, password, :EC2, params[:provider_region], ems.http_proxy_uri, true]
       when 'ManageIQ::Providers::Azure::CloudManager'
-        [user, password, params[:azure_tenant_id], params[:subscription], nil, params[:provider_region]]
+        [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region]]
       when 'ManageIQ::Providers::Vmware::CloudManager'
         [params[:default_hostname], params[:default_api_port], user, password, true]
       when 'ManageIQ::Providers::Google::CloudManager'
-        [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, nil, true]
+        [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, ems.http_proxy_uri, true]
       when 'ManageIQ::Providers::Microsoft::InfraManager'
         connect_opts = {
           :hostname          => params[:default_hostname],
