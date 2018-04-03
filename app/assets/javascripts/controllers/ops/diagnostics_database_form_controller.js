@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', 'sb', 'database_display_name', 'database_details', 'backup_schedules', 'database_backup_options_for_select', function($http, $scope, $attrs, miqService, miqDBBackupService, sb, database_display_name, database_details, backup_schedules, database_backup_options_for_select) {
+ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', 'submitUrl', 'dbBackupFormFieldChanged', 'sb', 'database_display_name', 'database_details', 'backup_schedules', 'database_backup_options_for_select', function($http, $scope, $attrs, miqService, miqDBBackupService, submitUrl, dbBackupFormFieldChanged, sb, database_display_name, database_details, backup_schedules, database_backup_options_for_select) {
   var vm = this;
   var init = function() {
     vm.diagnosticsDatabaseModel = {
@@ -13,8 +13,8 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     };
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.diagnosticsDatabaseModel );
-    vm.dbBackupFormFieldChangedUrl = $attrs.dbBackupFormFieldChangedUrl;
-    vm.submitUrl = $attrs.submitUrl;
+    vm.dbBackupFormFieldChangedUrl = dbBackupFormFieldChanged;
+    vm.submitUrl = submitUrl;
     vm.model = 'diagnosticsDatabaseModel';
     vm.saveable = miqService.saveable;
     vm.prefix = 'log';
@@ -59,7 +59,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     if (confirm(confirmMsg)) {
       miqService.sparkleOn();
       var url = vm.submitUrl;
-      miqService.miqAjaxButton(url, true);
+      miqService.miqAjaxButton(url, vm.diagnosticsDatabaseModel);
     }
   };
 
