@@ -1,14 +1,15 @@
 ManageIQ.angular.app.component('ownershipFormComponent', {
   bindings: {
     objectIds: '<',
-    optsUser:  '<'
+    optsUser:  '<',
+    optsGroup: '<',
   },
 
   controllerAs: 'vm',
   controller: [ '$http', 'miqService', function($http, miqService){
    var vm = this;
 
-  vm.$onInit = () => {
+  vm.$onInit = function () {
 
   console.log(vm.optsUser);
     vm.ownershipModel = {
@@ -22,8 +23,6 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
     vm.saveable = miqService.saveable;
     ManageIQ.angular.scope = vm;
     miqService.sparkleOn();
-
-   console.log(vm.objectIds)
    $http.post('ownership_form_fields', {object_ids: vm.objectIds})
       .then(getOwnershipFormData)
       .catch(miqService.handleFailure);
@@ -44,16 +43,13 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
   };
 
 
-    function getOwnershipFormData(response) {
+  function getOwnershipFormData(response) {
     var data = response.data;
-
     vm.ownershipModel.user = data.user;
     vm.ownershipModel.group = data.group;
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.ownershipModel );
     miqService.sparkleOff();
-
-
   }
 
   vm.isBasicInfoValid = function() {

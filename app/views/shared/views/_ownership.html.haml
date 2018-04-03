@@ -5,24 +5,25 @@
 - optsUser += ownership_user_options.sort
 
 - if @ownershipitems.length > 1
-  - opts = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No User Group')}>", '']] + @groups.sort
+  - optsGroup = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No User Group')}>", '']] + @groups.sort
 - else
   - user_group = MiqGroup.find_by(:id => @group).tenant_group? ? @group : ''
-  - opts =  [["<#{_('No User Group')}>", user_group]]
-- opts += @groups.sort
+  - optsGroup =  [["<#{_('No User Group')}>", user_group]]
+- optsGroup += @groups.sort
 
 - if @origin_ownership_items.count != @ownershipitems.count
   %strong
   = _('Note: Some items might be hidden due to the possibility of an ownership change')
+
+
+
+%ownership-form-component{'object-ids' => @ownershipitems.collect(&:id),'opts-user' => optsUser,'opts-group' => optsGroup}
 
 - if @ownershipitems
   - @embedded = true
   - @quadicon_no_url = true
   - @gtl_type = settings(:views, :tagging)
   = render :partial => "layouts/gtl"
-
-%ownership-form-component{'object-ids' => @ownershipitems.collect(&:id),'opts-user' => optsUser}
-
 
 :javascript
   miq_bootstrap('ownership-form-component')
