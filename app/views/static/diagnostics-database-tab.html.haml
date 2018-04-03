@@ -8,7 +8,6 @@
                               'model'                                 => 'vm.diagnosticsDatabaseModel',
                               'model-copy'                            => 'vm.modelCopy',
                               'form-changed'                          => true,}
-  -#- if @sb[:active_tab] == "diagnostics_database"
   %div{'ng-if' => 'vm.sb == "diagnostics_database"'}
     %h3
       = _("Basic Info")
@@ -18,38 +17,29 @@
     .col-md-8
       %p.form-control-static
         {{vm.database_display_name}}
-        -#= h(@database_display_name)
   .form-group
     %label.col-md-2.control-label
       = _("Hostname")
     .col-md-8
       %p.form-control-static
         {{vm.database_details.host}}
-        -#= h(@database_details["host"])
   .form-group
     %label.col-md-2.control-label
       = _("Database Name")
     .col-md-8
       %p.form-control-static
         {{vm.database_details.database}}
-        -#= h(@database_details["database"])
   .form-group
     %label.col-md-2.control-label
       = _("Username")
     .col-md-8
       %p.form-control-static
         {{vm.database_details.username}}
-        -#= h(@database_details["username"])
 
   %hr
   %h3
     = _("Run a Database Backup Now")
-  -#- if @sb[:active_tab] == "diagnostics_database"
   %div{'ng-if' => 'vm.sb == "diagnostics_database"'}
-    -# jak se to resi:
-        -# manageIQ.angular.app.value('moje_jmeno', #{@sb[;active_tab]})
-        ..controller ($scope, .. moje_jmeno) ... vm.moje = moje_jmeno;
-        %div{'ng-if' => "vm.moje == 'diagnostics..."}
     -# created div with different name so database validation flash message can be shown in it's own box
     = render :partial => "layouts/flash_msg"
   %hr
@@ -60,16 +50,9 @@
       = _("Fetch settings from a schedule")
     .col-md-8
 
-      -#- if @backup_schedules.length < 1
       %p.form-control-static{'ng-if' => 'vm.backup_schedules.length < 1'}
         = _("No Backup Schedules are defined")
       %div{'ng-if' => 'vm.backup_schedules.length >= 1'}
-        -#- else
-          - default_option = [_("<Choose>"), nil]
-          - schedules_ary = Array(@backup_schedules.invert)
-          - schedules_ary.sort_by! { |name, _id| name }
-          - options = options_for_select([default_option] + schedules_ary)
-
         %select{:name => 'backup_schedule_type',
                      "ng-options"                  => "choice[1] as choice[0] for choice in vm.backup_schedules",
                      "ng-model"                    => "vm.diagnosticsDatabaseModel.backup_schedule_type",
