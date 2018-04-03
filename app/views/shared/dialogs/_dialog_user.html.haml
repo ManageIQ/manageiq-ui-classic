@@ -9,7 +9,7 @@
       %miq-button{:name      => t = _("Submit"),
                   :title     => t,
                   :alt       => t,
-                  :enabled   => 'vm.saveable',
+                  :enabled   => 'vm.saveable()',
                   'on-click' => "vm.submitButtonClicked()",
                   :primary   => 'true'}
       %miq-button{:name      => t = _("Cancel"),

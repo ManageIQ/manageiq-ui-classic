@@ -23,7 +23,8 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
 
   vm.submitButtonClicked = submitButtonClicked;
   vm.cancelClicked = cancelClicked;
-  vm.saveable = false;
+  vm.saveable = saveable;
+  vm.isValid = false;
 
   function refreshField(field) {
     var idList = {
@@ -37,7 +38,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   }
 
   function setDialogData(data) {
-    vm.saveable = data.validations.isValid;
+    vm.isValid = data.validations.isValid;
     vm.dialogData = data.data;
   }
 
@@ -70,6 +71,6 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   }
 
   function saveable() {
-    return ! dialogFieldRefreshService.areFieldsBeingRefreshed;
+    return vm.isValid && ! dialogFieldRefreshService.areFieldsBeingRefreshed;
   }
 }]);
