@@ -8,7 +8,15 @@
     = javascript_include_tag 'jquery/dist/jquery.js', 'jquery-ui/jquery-ui.js', '/webmks/wmks.min.js', 'remote_console'
     :javascript
       $(function () {
-        var wmks = WMKS.createWMKS('remote-console', {}).register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function (event,data) {
+        var mksOpts = {};
+
+        // vCloud needs some additional settings and only supports uint8utf8 socket protocol.
+        if("#{@console[:is_vcloud]}" === 'true'){
+          mksOpts.VCDProxyHandshakeVmxPath = "#{@console[:vmx]}";
+          mksOpts.enableUint8Utf8 = true;
+        }
+
+        var wmks = WMKS.createWMKS('remote-console', mksOpts).register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function (event,data) {
           if(data.state == WMKS.CONST.ConnectionState.CONNECTED) {
             $('#connection-status').text('#{_('Connected')}');
             console.log("connection state change: connected");

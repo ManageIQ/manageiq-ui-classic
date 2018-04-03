@@ -23,7 +23,7 @@ describe ApplicationHelper::Button::VmWebmksConsole do
     end
     before(:each) { button.calculate_properties }
 
-    context 'when record.vendor == vmware' do
+    context 'when record.vendor == vmware (infra)' do
       let(:power_state) { 'on' }
       let(:api_version) { 6.5 }
       let(:host) { FactoryGirl.create(:host_vmware_esx, :vmm_version => api_version) }
@@ -50,6 +50,38 @@ describe ApplicationHelper::Button::VmWebmksConsole do
             let(:host) { nil }
             it_behaves_like 'a disabled button',
                             'The web-based WebMKS console is not available because the VM does not support the minimum required vSphere API version.'
+          end
+        end
+      end
+    end
+
+    context 'when record.vendor == vmware (cloud)' do
+      let(:power_state) { 'on' }
+      let(:api_version) { 5.5 }
+      let(:ems) { FactoryGirl.create(:ems_vmware_cloud, :api_version => api_version) }
+      let(:record) { FactoryGirl.create(:vm_vmware_cloud, :ext_management_system => ems) }
+
+      context 'and the power is on' do
+        it_behaves_like 'vm_console_with_power_state_on_off',
+                        "The web-based WebMKS console is not available because the VM is not powered on"
+      end
+
+      context 'and the api version' do
+        context 'is < 5.5' do
+          let(:api_version) { 5.1 }
+          it_behaves_like 'a disabled button',
+                          'The web-based WebMKS console is not available because the VM does not support the minimum required vCloud API version 5.5.'
+        end
+        [5.5, 9.0].each do |ver|
+          context "is #{ver}" do
+            let(:api_version) { ver }
+            it_behaves_like 'an enabled button'
+          end
+
+          context "#{ver} and ems is nil" do
+            let(:ems) { nil }
+            it_behaves_like 'a disabled button',
+                            'The web-based WebMKS console is not available because the VM does not support the minimum required vCloud API version 5.5.'
           end
         end
       end
