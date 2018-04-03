@@ -14,7 +14,10 @@ ManageIQ.angular.app.component('cloudVolumeAttachForm', {
 
       vm.cloudVolumeModel = {
         name: '',
-        storage_manager_id: this.storageManagerId,
+        aws_encryption: false,
+        incremental: false,
+        force: false,
+        storage_manager_id: vm.storageManagerId,
       };
 
       vm.formId = this.cloudVolumeFormId;
@@ -23,10 +26,10 @@ ManageIQ.angular.app.component('cloudVolumeAttachForm', {
       ManageIQ.angular.scope = vm;
       vm.saveable = miqService.saveable;
 
-        // Fetch cloud volume data before showing the form.
-        API.get('/api/cloud_volumes/' + this.cloudVolumeFormId + '?attributes=ext_management_system.type,availability_zone.ems_ref,base_snapshot.ems_ref')
-          .then(getCloudVolumeFormData)
-          .catch(miqService.handleFailure);
+      // Fetch cloud volume data before showing the form.
+      API.get('/api/cloud_volumes/' + this.cloudVolumeFormId + '?attributes=ext_management_system.type,availability_zone.ems_ref,base_snapshot.ems_ref')
+        .then(getCloudVolumeFormData)
+        .catch(miqService.handleFailure);
     };
 
     vm.attachClicked = function() {
