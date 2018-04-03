@@ -127,6 +127,8 @@ class DialogLocalService
     case obj.class.name.demodulize
     when /Template/
       "miq_template"
+    when /InfraManager/
+      "ext_management_system"
     else
       obj.class.name.demodulize.underscore
     end
