@@ -14,6 +14,7 @@ ManageIQ.angular.app.component('logCollectionFormComponent', {
 
 });
 
+
 logCollectionFormController.$inject = ['$http', '$scope',  '$attrs', 'miqService', 'miqDBBackupService'];
 
 function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBackupService) {
