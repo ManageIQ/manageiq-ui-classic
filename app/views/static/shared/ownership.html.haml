@@ -23,11 +23,13 @@
       %label.col-md-2.control-label
         = _('Select a Group:')
       .col-md-8
-
+        %select{"name"                         => "group",
+                "ng-model"                     => "vm.ownershipModel.group",
+                "id"                           => "group_name",
+                "ng-options"                   => "optsGroup[1] as optsGroup[0] for optsGroup in vm.optsGroup"}
   %hr
   %h3
     = _('Affected Items')
-
 
   %div_for_paging{'ng-controller'                  => "pagingDivButtonGroupController",
                 'paging_div_buttons_state_enabled' => true,
