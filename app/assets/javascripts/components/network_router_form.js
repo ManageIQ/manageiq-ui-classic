@@ -12,7 +12,7 @@ networkRouterFormController.$inject = [ '$http', '$scope', 'miqService'];
 
 function networkRouterFormController($http, $scope, miqService) {
   var vm = this;
-
+  var init = function() {
   vm.networkRouterModel = {
     name: '',
     cloud_subnet_id: '',
@@ -26,8 +26,6 @@ function networkRouterFormController($http, $scope, miqService) {
 
   ManageIQ.angular.scope = vm;
 
-  var init = function() {
-    debugger;
     if (vm.networkRouterId == 'new') {
       vm.networkRouterModel.name = "";
       vm.networkRouterModel.enable_snat = true;

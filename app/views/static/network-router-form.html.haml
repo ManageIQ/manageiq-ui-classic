@@ -13,13 +13,11 @@
         %label.col-md-2.control-label
           = _('Network Manager')
         .col-md-8
-          %select{"pf-select"                   => "",
-                  "name"                        => "ems_id",
-                  "ng-options",                 => "[]",
-                  "ng-model"                    => "vm.networkRouterModel.ems_id",
-                  "required"                    => "",
-                  "ng-change"                   => "vm.filterNetworkManagerChanged()",
-                  "selectpicker-for-select-tag" => ""}
+          %select{"pf-select" => true,
+                  "ng-model" => "vm.networkRouterModel.ems_id",
+                  "required" => "",
+                  "ng-options" => "option[1] as option[0] for option in vm.networkProviderChoices",
+                  "ng-change" => "vm.filterNetworkManagerChanged()"}
           %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
             = _('Required')
 
