@@ -25,8 +25,7 @@ module SecurityGroupHelper::TextualSummary
         rule.network_protocol,
         rule.host_protocol,
         rule.direction,
-        rule.port.to_i,
-        rule.end_port.to_i,
+        port_range_helper(rule),
         (rule.source_ip_range || rule.source_security_group.try(:name) || "<None>")
       ]
     end.sort
@@ -34,7 +33,7 @@ module SecurityGroupHelper::TextualSummary
     TextualTable.new(
       _("Firewall Rules"),
       items,
-      [_("Network Protocol"), _("Host Protocol"), _("Direction"), _("Port"), _("End Port"), _("Source")]
+      [_("Network Protocol"), _("Host Protocol"), _("Direction"), _("Port Range"), _("Source")]
     )
   end
 
@@ -69,5 +68,17 @@ module SecurityGroupHelper::TextualSummary
 
   def textual_network_ports
     @record.network_ports
+  end
+
+  def port_range_helper(rule)
+    if rule.host_protocol.to_s.upcase.include?("ICMP")
+      _("N/A")
+    elsif rule.port.nil? && rule.end_port.nil?
+      _("All")
+    elsif rule.port == rule.end_port
+      rule.port.to_s
+    else
+      rule.port_range.to_s(:dash)
+    end
   end
 end
