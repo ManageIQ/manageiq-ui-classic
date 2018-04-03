@@ -6,9 +6,7 @@ ManageIQ.angular.app.component('vmCloudLiveMigrateForm', {
   templateUrl: '/static/live_migrate.html.haml',
   bindings: {
     'vmCloudLiveMigrateFormId': '@',
-    'message': '@',
-    'live_migrate_items_length': '@',
-    'live_migrate_items': '@',
+    'message': '@'
   },
 });
 
