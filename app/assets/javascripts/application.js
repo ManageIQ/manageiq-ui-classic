@@ -83,3 +83,5 @@
 //= require manageiq-ui-components/dist/js/ui-components
 //= require rx-angular/dist/rx.angular
 //= require patternfly-timeline/dist/timeline
+//= require base64-js/base64js.min
+//= require text-encoder-lite

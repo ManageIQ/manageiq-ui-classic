@@ -16,6 +16,16 @@
  * the API token is persisted into sessionStorage
  */
 
+// utf8-capable window.btoa
+function base64encode(str, encoding) {
+  if (! encoding) {
+    encoding = 'utf-8';
+  }
+
+  var bytes = new (window.TextEncoder || window.TextEncoderLite)(encoding).encode(str);
+  return base64js.fromByteArray(bytes);
+}
+
 (function() {
   function API() {
   }
@@ -64,8 +74,6 @@
     }, process_options(options)))
     .then(process_response);
   };
-
-  var base64encode = window.btoa; // browser api
 
   API.login = function(login, password) {
     API.logout();
