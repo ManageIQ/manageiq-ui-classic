@@ -6,7 +6,7 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
   },
 
   controllerAs: 'vm',
-  controller: [ '$http', 'miqService', function($http, miqService){
+  controller: ['$http', 'miqService','$scope',  function($http, miqService,$scope){
    var vm = this;
 
   vm.$onInit = function () {
@@ -53,19 +53,19 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
   }
 
   vm.isBasicInfoValid = function() {
-    return ( vm.angularForm.user && vm.angularForm.user.$valid) &&
-          (vm.angularForm.group && vm.angularForm.group.$valid);
+    return ( $scope.angularForm.user && $scope.angularForm.user.$valid) &&
+          ($scope.angularForm.group && $scope.angularForm.group.$valid);
   };
 
 
   vm.cancelClicked = function() {
     ownershipEditButtonClicked('cancel');
-    vm.angularForm.$setPristine(true);
+    $scope.angularForm.$setPristine(true);
   };
 
   vm.resetClicked = function() {
     vm.ownershipModel = angular.copy( vm.modelCopy );
-    vm.angularForm.$setPristine(true);
+    $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
