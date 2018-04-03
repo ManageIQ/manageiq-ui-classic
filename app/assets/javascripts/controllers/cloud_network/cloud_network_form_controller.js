@@ -18,6 +18,7 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkForm
     vm.newRecord = cloudNetworkFormId === "new";
     ManageIQ.angular.scope = vm;
     vm.saveable = miqService.saveable;
+    vm.networkProviderChoices = networkProviderChoices;
 
     if (vm.newRecord) {
       vm.cloudNetworkModel.enabled = true;
