@@ -18,6 +18,21 @@ describe AnsibleRepositoryController do
     end
   end
 
+  describe "#show_output" do
+    let(:repository) { FactoryGirl.create(:embedded_ansible_configuration_script_source) }
+
+    subject { get :show, :params => {'id' => repository.id, 'display' => 'output'} }
+    render_views
+
+    it "return correct http response code" do
+      is_expected.to have_http_status 200
+    end
+
+    it "show repository last refresh output" do
+      is_expected.to render_template(:partial => "ansible_repository/_output")
+    end
+  end
+
   describe "#show_list" do
     let(:repository) { FactoryGirl.create(:embedded_ansible_configuration_script_source) }
     subject { get :show_list, :params => {} }
