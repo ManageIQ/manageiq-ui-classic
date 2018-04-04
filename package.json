@@ -40,7 +40,7 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "redux-devtools-extension": "^2.13.2",
-    "rxjs": "~5.3.0",
+    "rxjs": "~5.6.0-forward-compat.2",
     "text-encoder-lite": "git://github.com/coolaj86/TextEncoderLite.git#e1e031b",
     "ui-select": "0.19.8",
     "zone.js": "~0.8.5"

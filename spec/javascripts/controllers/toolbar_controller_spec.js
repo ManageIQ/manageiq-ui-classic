@@ -83,7 +83,7 @@ describe('toolbarController', function () {
      })
 
      it('should call update toolbar', function() {
-       ManageIQ.angular.rxSubject.onNext({update: 'someButton', type: 'hidden', value: true})
+       sendDataWithRx({update: 'someButton', type: 'hidden', value: true});
        expect($controller.onUpdateItem).toHaveBeenCalled();
      })
    });

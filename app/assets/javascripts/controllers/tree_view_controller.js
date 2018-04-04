@@ -9,7 +9,7 @@
     vm.selectedNodes = {};
     vm.data = {};
 
-    ManageIQ.angular.rxSubject.subscribe(function(payload) {
+    listenToRx(function(payload) {
       if (payload.reloadTrees && _.isObject(payload.reloadTrees) && Object.keys(payload.reloadTrees).length > 0) {
         _.forEach(payload.reloadTrees, function(value, key) {
           vm.data[key] = value;

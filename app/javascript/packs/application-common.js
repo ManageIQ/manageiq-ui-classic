@@ -15,6 +15,8 @@ import * as newRegistry from '../miq-component/registry';
 import reactBlueprint from '../miq-component/react-blueprint';
 import * as helpers from '../miq-component/helpers';
 
+import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
+
 ManageIQ.react = {
   mount,
   componentRegistry,
@@ -25,3 +27,7 @@ ManageIQ.component = {
   reactBlueprint,
   ...helpers,
 };
+
+ManageIQ.angular.rxSubject = rxSubject;
+window.sendDataWithRx = sendDataWithRx;
+window.listenToRx = listenToRx;
