@@ -5,5 +5,5 @@ function sendDataWithRx(data) {
 }
 
 function listenToRx(callback) {
-  listenToRx(callback);
+  ManageIQ.angular.rxSubject.subscribe(callback);
 }
