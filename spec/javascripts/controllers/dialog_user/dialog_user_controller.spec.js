@@ -78,7 +78,7 @@ describe('dialogUserController', function() {
     it('sets the data attribute of the data passed in to dialogData', function() {
       expect($controller.dialogData).toEqual(undefined);
 
-      $controller.setDialogData({data: 'newData'});
+      $controller.setDialogData({data: 'newData', validations: { isValid : true}});
 
       expect($controller.dialogData).toEqual('newData');
     });
@@ -86,7 +86,7 @@ describe('dialogUserController', function() {
 
   describe('submitButtonClicked', function() {
     beforeEach(function() {
-      $controller.setDialogData({data: {field1: 'field1'}});
+      $controller.setDialogData({data: {field1: 'field1'}, validations: { isValid : true}});
     });
 
     context('when the submit endpoint deals with generic objects', function() {
@@ -103,9 +103,10 @@ describe('dialogUserController', function() {
           resourceActionId: '789',
           targetId: '987',
           targetType: 'targettype',
+          saveable: true,
         });
 
-        $controller.setDialogData({data: {field1: 'field1'}});
+        $controller.setDialogData({data: {field1: 'field1'}, validations: { isValid : true}});
 
         spyOn(API, 'post').and.returnValue(Promise.resolve('awesome'));
       }));
@@ -206,6 +207,7 @@ describe('dialogUserController', function() {
     context('when fields are being refreshed', function() {
       beforeEach(function() {
         dialogFieldRefreshService.areFieldsBeingRefreshed = true;
+        $controller.isValid = true;
       });
 
       it('returns false', function() {
@@ -213,9 +215,10 @@ describe('dialogUserController', function() {
       });
     });
 
-    context('when fields are not being refrshed', function() {
+    context('when fields are not being refreshed', function() {
       beforeEach(function() {
         dialogFieldRefreshService.areFieldsBeingRefreshed = false;
+        $controller.isValid = true;
       });
 
       it('returns true', function() {
