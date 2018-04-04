@@ -12,7 +12,7 @@ describe('subscriptionService', function() {
     $timeout = _$timeout_;
 
     spyOn(test, 'callback');
-    spyOn(ManageIQ.angular.rxSubject, 'subscribe').and.callFake(function(callback) {
+    spyOn(window, 'listenToRx').and.callFake(function(callback) {
       loadedReactionFunction = callback;
     });
   }));
