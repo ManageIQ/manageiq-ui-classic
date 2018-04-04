@@ -17,7 +17,7 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
     ManageIQ.angular.genericObjectDefinitionSubsription.dispose();
   }
 
-  ManageIQ.angular.genericObjectDefinitionSubsription = ManageIQ.angular.rxSubject.subscribe(function(event) {
+  ManageIQ.angular.genericObjectDefinitionSubsription = listenToRx(function(event) {
     toolbar.action = event.type;
     toolbar.entity = event.entity;
 

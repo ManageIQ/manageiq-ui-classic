@@ -27,7 +27,7 @@ describe('subscriptionService', function() {
     });
 
     it('subscribes', function() {
-      expect(ManageIQ.angular.rxSubject.subscribe).toHaveBeenCalledWith(loadedReactionFunction);
+      expect(listenToRx).toHaveBeenCalledWith(loadedReactionFunction);
     });
 
     describe('#subscribeToEventType reaction function', function() {
