@@ -3,7 +3,7 @@ import TagView from '../components/tagView';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-const assignedTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'planet', tagValue: 'Earth' }];
+const assignedTags = [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }];
 function onDelete(x) {
   return x;
 }

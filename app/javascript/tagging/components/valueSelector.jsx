@@ -8,9 +8,9 @@ class ValueSelector extends React.Component {
     this.props.onTagValueChange({ description: selectedOption.label, id: selectedOption.value });
   }
 
-  selector = () => {
-    console.log('mluti val',this.props.multiValue);
-    (this.props.multiValue && <Select
+  selector = (value, label, tagValues) => {
+    console.log('mluti val', this.props.multiValue);
+    return (this.props.multiValue && <Select
       name="form-field-name"
       value={value}
       label={label}
@@ -25,7 +25,7 @@ class ValueSelector extends React.Component {
         onChange={this.handleChange}
         options={tagValues}
         clearable={false}
-      />
+      />;
   }
 
   render() {
@@ -34,16 +34,7 @@ class ValueSelector extends React.Component {
     const label = this.props.selectedOption.description;
     const tagValues = this.props.tagValues.map(tag => ({ value: tag.id, label: tag.description }));
 
-    return (
-      <Select
-        name="form-field-name"
-        value={value}
-        label={label}
-        onChange={this.handleChange}
-        options={tagValues}
-        clearable={false}
-      />
-    );
+    return this.selector(value, label, tagValues);
   }
 }
 
@@ -54,8 +45,8 @@ ValueSelector.propTypes = {
   multiValue: PropTypes.bool.isRequired,
 };
 
-ValueSelector.defaultProps = {
-  multiValue: false,
-}
 
+ValueSelector.defaultProps = {
+  multiValue: true,
+};
 export default ValueSelector;

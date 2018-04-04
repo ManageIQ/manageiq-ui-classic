@@ -5,10 +5,10 @@ import TaggingWithButtons from '../components/taggingWithButtons';
 
 // container compo
 const mapStateToProps = state => ({
-  tags: state.appState.tags,
-  selectedTagCategory: state.appState.selected.tagCategory,
-  selectedTagValue: state.appState.selected.tagValue,
-  assignedTags: state.appState.assignedTags,
+  tags: state.tagging.appState.tags,
+  selectedTagCategory: state.tagging.appState.selected.tagCategory,
+  selectedTagValue: state.tagging.appState.selected.tagValue,
+  assignedTags: state.tagging.appState.assignedTags,
 });
 
 
@@ -31,8 +31,8 @@ const mapDispatchToProps = dispatch => ({
 
   onLoadState: (state) => {
     console.log('ON LOAD STATE');
-    dispatch(loadState(state))
-  }
+    dispatch(loadState(state));
+  },
 });
 
 const TaggingConnected = connect(

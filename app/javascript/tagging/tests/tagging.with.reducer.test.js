@@ -1,5 +1,5 @@
 import React from 'react';
-import TaggingConnected from '../containers/tagging';
+import { TaggingConnected } from '../containers/tagging';
 import Tagging from '../components/tagging';
 import renderer from 'react-test-renderer';
 import { shallow, mount } from 'enzyme';
@@ -7,10 +7,22 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
 
-const tags = { animal: ['duck', 'pig'], food: ['steak', 'salad'] };
-const assignedTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'food', tagValue: 'steak' }];
+const tags = [
+  { description: 'Name', id: 1, values: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }] },
+  { description: 'Number', id: 2, values: [{ description: '1', id: 21 }, { description: '2', id: 22 }] },
+  { description: 'Animal', id: 3, values: [{ description: 'Duck', id: 31 }, { description: 'Cat', id: 32 }, { description: 'Dog', id: 33 }] },
+  { description: 'Food', id: 4, values: [{ description: 'Steak', id: 41 }, { description: 'Duck', id: 42 }, { description: 'Salad', id: 43 }] },
+  {
+    description: 'Something',
+    id: 5,
+    values: [{ description: 'Knedlik', id: 51 },
+      { description: 'Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons', id: 52 }],
+  },
+];
 
-const initialState = { tags, selected: { tagCategory: 'animal', tagValue: 'pig' }, assignedTags };
+const assignedTags = [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }];
+
+const initialState = {appState: { tags: tags, assignedTags: assignedTags }};
 const mockStore = configureStore();
 let store,
   wrapper;
@@ -18,17 +30,10 @@ let store,
 describe('Test connected Tagging component', () => {
   beforeEach(() => {
     store = mockStore(initialState);
-    wrapper = mount(<Provider store={store}><TaggingConnected /></Provider>);
+    wrapper = shallow(<Provider store={store}><TaggingConnected /></Provider>);
   });
 
   it('+++ render the connected(SMART) component', () => {
     expect(wrapper.find(TaggingConnected).length).toEqual(1);
-  });
-
-  it('+++ check Prop matches with initialState', () => {
-    expect(wrapper.find(Tagging).prop('tags')).toEqual(initialState.tags);
-    expect(wrapper.find(Tagging).prop('selectedTagCategory')).toEqual(initialState.selected.tagCategory);
-    expect(wrapper.find(Tagging).prop('selectedTagValue')).toEqual(initialState.selected.tagValue);
-    expect(wrapper.find(Tagging).prop('assignedTags')).toEqual(initialState.assignedTags);
   });
 });

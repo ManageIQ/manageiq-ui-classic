@@ -1,77 +1,75 @@
 import { modifyassignedTags, toggle } from '../reducers/reducers';
-import * as actions from '../actions'
+import * as actions from '../actions';
 
 describe('modifyassignedTags reducer', () => {
   it('should return the initial state', () => {
-    expect(modifyassignedTags(undefined, {})).toEqual([])
-  })
+    expect(modifyassignedTags(undefined, {})).toEqual([]);
+  });
 
   it('simple delete set tag', () => {
-    expect(modifyassignedTags([{tagCategory: 'cat', tagValue: 'val'}],
-        actions.deleteAssignedTag({tagCategory: 'cat', tagValue: 'val'}))
-      ).toEqual([])
-  })
+    expect(modifyassignedTags(
+      [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }],
+      actions.deleteAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+    )).toEqual([]);
+  });
 
-  it('should delete set tag based on category, not value', () => {
-    expect(modifyassignedTags([{tagCategory: 'cat', tagValue: 'val'}, {tagCategory: 'cat2', tagValue: 'val'}],
-        actions.deleteAssignedTag({tagCategory: 'cat', tagValue: 'val2'}))
-      ).toEqual([{tagCategory: 'cat2', tagValue: 'val'}])
-  })
+  it('should delete only one tag value if multiple present', () => {
+    expect(modifyassignedTags(
+      [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }] }],
+      actions.deleteAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+    )).toEqual([{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Franta', id: 12 }] }]);
+  });
 
-  it('delete not set tag does nothing', () => {
-    expect(modifyassignedTags([{tagCategory: 'cat', tagValue: 'val'}],
-        actions.deleteAssignedTag({tagCategory: 'cat2', tagValue: 'val'}))
-      ).toEqual([{tagCategory: 'cat', tagValue: 'val'}])
-  })
+  it('delete not assigned tag does nothing', () => {
+    expect(modifyassignedTags(
+      [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Franta', id: 12 }] }],
+      actions.deleteAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+    )).toEqual([{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Franta', id: 12 }] }]);
+  });
 
-  it('simple add set tag', () => {
-    expect(modifyassignedTags([{tagCategory: 'cat', tagValue: 'val'}],
-        actions.changeAssignedTag({tagCategory: 'cat2', tagValue: 'val'}))
-      ).toEqual([{tagCategory: 'cat', tagValue: 'val'}, {tagCategory: 'cat2', tagValue: 'val'}])
-  })
+  it('simple add new tag', () => {
+    expect(modifyassignedTags(
+      [],
+      actions.addAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+    )).toEqual([{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }]);
+  });
 
-  it('add existing set tag', () => {
-    expect(modifyassignedTags([{tagCategory: 'cat', tagValue: 'val'}],
-        actions.changeAssignedTag({tagCategory: 'cat', tagValue: 'val2'}))
-      ).toEqual([{tagCategory: 'cat', tagValue: 'val2'}])
-  })
-})
+  it('add to existing tag', () => {
+    expect(modifyassignedTags(
+      [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Franta', id: 12 }] }],
+      actions.addAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+    )).toEqual([{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Franta', id: 12 }, { description: 'Pepa', id: 11 }] }]);
+  });
+});
 
 describe('toggle reducer', () => {
   it('should return the initial state', () => {
-    expect(toggle(undefined, {})).toEqual({tagCategory: '', tagValue: ''})
-  })
+    expect(toggle(undefined, {})).toEqual({ tagCategory: {}, tagValue: {} });
+  });
 
   it('select tag category', () => {
-    expect(toggle({tagCategory: '', tagValue: ''}, actions.toggleTagCategoryChange('cat'))
-    ).toEqual({ tagCategory: 'cat', tagValue: '' })
-  })
+    expect(toggle({ tagCategory: {}, tagValue: {} }, actions.toggleTagCategoryChange({ description: 'Name', id: 1 }))).toEqual({ tagCategory: { description: 'Name', id: 1 }, tagValue: {} });
+  });
 
   it('select tag category and clear tag value', () => {
-    expect(toggle({tagCategory: 'abc', tagValue: 'xaxa'}, actions.toggleTagCategoryChange('cat'))
-    ).toEqual({ tagCategory: 'cat', tagValue: '' })
-  })
+    expect(toggle({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }, actions.toggleTagCategoryChange({ description: 'Name', id: 1 }))).toEqual({ tagCategory: { description: 'Name', id: 1 }, tagValue: {} });
+  });
 
   it('clear tag category', () => {
-    expect(toggle({tagCategory: 'abc', tagValue: 'xaxa'}, actions.toggleTagCategoryChange(''))
-    ).toEqual({ tagCategory: '', tagValue: '' })
-  })
+    expect(toggle({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }, actions.toggleTagCategoryChange({}))).toEqual({ tagCategory: {}, tagValue: {} });
+  });
 
   it('select tag value', () => {
-    expect(toggle({tagCategory: 'cat', tagValue: 'xaxa'},
-      actions.toggleTagValueChange({tagCategory: 'cat', tagValue: 'val'}))
-    ).toEqual({ tagCategory: 'cat', tagValue: 'val' })
-  })
-
-  it('select tag value with different category does not change selected category', () => {
-    expect(toggle({tagCategory: 'cat', tagValue: 'xaxa'},
-      actions.toggleTagValueChange({tagCategory: 'cat2', tagValue: 'val2'}))
-    ).toEqual({ tagCategory: 'cat', tagValue: 'val2' })
-  })
+    expect(toggle(
+      { tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Franta', id: 12 } },
+      actions.toggleTagValueChange({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+    )).toEqual({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } });
+  });
 
   it('clear tag value', () => {
-    expect(toggle({tagCategory: 'cat', tagValue: 'xaxa'},
-      actions.toggleTagValueChange({tagCategory: 'cat', tagValue: ''}))
-    ).toEqual({ tagCategory: 'cat', tagValue: '' })
-  })
-})
+    expect(toggle(
+      { tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Franta', id: 12 } },
+      actions.toggleTagValueChange({ tagCategory: { description: 'Name', id: 1 }, tagValue: {} }),
+    )).toEqual({ tagCategory: { description: 'Name', id: 1 }, tagValue: {} });
+  });
+});

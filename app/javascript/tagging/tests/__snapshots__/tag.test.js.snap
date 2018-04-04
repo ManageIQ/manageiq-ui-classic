@@ -3,12 +3,11 @@
 exports[`Tag Component match snapshot 1`] = `
 <li>
   <span
-    className="label label-info"
+    className="label label-primary"
   >
-    animal
-    : 
     duck
     <a
+      className="pf-remove-button"
       href="#"
       onClick={[Function]}
     >

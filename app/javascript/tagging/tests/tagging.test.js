@@ -3,10 +3,24 @@ import Tagging from '../components/tagging';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-const tags = { animal: ['duck', 'pig'], food: ['steak', 'salad'] };
-const assignedTags = [{ tagCategory: 'animal', tagValue: 'pig' }, { tagCategory: 'food', tagValue: 'steak' }];
-const selectedTagCategory = 'animal';
-const selectedTagValue = 'pig';
+
+const tags = [
+  { description: 'Name', id: 1, values: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }] },
+  { description: 'Number', id: 2, values: [{ description: '1', id: 21 }, { description: '2', id: 22 }] },
+  { description: 'Animal', id: 3, values: [{ description: 'Duck', id: 31 }, { description: 'Cat', id: 32 }, { description: 'Dog', id: 33 }] },
+  { description: 'Food', id: 4, values: [{ description: 'Steak', id: 41 }, { description: 'Duck', id: 42 }, { description: 'Salad', id: 43 }] },
+  {
+    description: 'Something',
+    id: 5,
+    values: [{ description: 'Knedlik', id: 51 },
+      { description: 'Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons', id: 52 }],
+  },
+];
+
+const selectedTagCategory = { description: 'animal', id: 1};
+const selectedTagValue = { description: 'duck', id: 1};
+const assignedTags = [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }];
+
 function onChange(x) {
   return x;
 }
@@ -34,7 +48,7 @@ describe('Tagging component without redux mapping', () => {
     const onTagCategoryChange = jest.fn();
     const onTagValueChange = jest.fn();
     const onTagDeleteClick = jest.fn();
-    const wrapper  = shallow(<Tagging
+    const wrapper = shallow(<Tagging
       tags={tags}
       assignedTags={assignedTags}
       onTagValueChange={onTagValueChange}
@@ -49,5 +63,5 @@ describe('Tagging component without redux mapping', () => {
     expect(onTagCategoryChange.mock.calls.length).toEqual(1);
     wrapper.instance().onTagDeleteClick('wowo');
     expect(onTagCategoryChange.mock.calls.length).toEqual(1);
-  })
-})
+  });
+});

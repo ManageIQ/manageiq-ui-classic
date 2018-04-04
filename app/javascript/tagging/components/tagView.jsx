@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'patternfly-react';
+import { Row, Col, Form } from 'patternfly-react';
 import TagCategory from './tagCategory';
 
 class TagView extends React.Component {
@@ -16,12 +16,14 @@ class TagView extends React.Component {
     console.log('TAG VIEW', this.props);
     return (
       <React.Fragment>
-        <Row><Col lg={12}><h1>{this.props.header}</h1></Col></Row>
+        <Row><Col lg={12}><h2>{this.props.header}</h2></Col></Row>
         <Row>
-          <ul className="list">
+        <Col lg={12}>
+          <ul className="list-inline">
             {this.props.assignedTags.map(this.generateTagCategories)}
           </ul>
-        </Row>
+        </Col>
+      </Row>
       </React.Fragment>
     );
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, Col, ButtonGroup, Button } from 'patternfly-react';
+import { Grid, Row, Col } from 'patternfly-react';
 import TagModifier from './tagModifier';
 import TagView from './tagView';
 
@@ -10,11 +10,10 @@ class Tagging extends React.Component {
   }
 
   onTagValueChange = (selectedTagValue) => {
-    if (this.props.multiValue) {
-      this.props.onTagMultiValueChange({ tagCategory: this.props.selectedTagCategory, tagValue: selectedTagValue })
-    }
-    else {
-      this.props.onTagValueChange({ tagCategory: this.props.selectedTagCategory, tagValue: selectedTagValue })
+    if (this.props.tags.find(tag => (tag.id === this.props.selectedTagCategory.id)).singleValue) {
+      this.props.onTagValueChange({ tagCategory: this.props.selectedTagCategory, tagValue: selectedTagValue });
+    } else {
+      this.props.onTagMultiValueChange({ tagCategory: this.props.selectedTagCategory, tagValue: selectedTagValue });
     }
   }
 
@@ -34,13 +33,18 @@ class Tagging extends React.Component {
               onTagCategoryChange={this.onTagCategoryChange}
               selectedTagCategory={this.props.selectedTagCategory}
               selectedTagValue={this.props.selectedTagValue}
-              multiValue={this.props.multiValue}
+              multiValue={(this.props.tags.find(tag => (tag.id === this.props.selectedTagCategory.id)) &&
+                this.props.tags.find(tag => (tag.id === this.props.selectedTagCategory.id)).singleValue) == true}
             />
           </Col>
           <Col xs={12} md={4} lg={6}>
             <TagView assignedTags={this.props.assignedTags} onTagDeleteClick={this.onTagDeleteClick} />
           </Col>
-
+        </Row>
+        <Row>
+          <Col md={12}>
+            <div>* Only a single value can be assigned from these categories</div>
+          </Col>
         </Row>
       </Grid>
     );
@@ -55,15 +59,11 @@ Tagging.propTypes = {
   onTagDeleteClick: PropTypes.func.isRequired,
   onTagCategoryChange: PropTypes.func.isRequired,
   onTagValueChange: PropTypes.func.isRequired,
-  showButtons: PropTypes.bool.isRequired,
-  hideReset: PropTypes.bool.isRequired,
-  multiValue: PropTypes.bool.isRequired,
+  onTagMultiValueChange: PropTypes.func,
 };
 
 Tagging.defaultProps = {
-  showButtons: true,
-  hideReset: false,
-  multiValue: false,
+  onTagMultiValueChange: () => {},
 };
 
 export default Tagging;

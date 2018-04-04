@@ -5,17 +5,22 @@ export const modifyassignedTags = (state = [], action) => {
   switch (action.type) {
     case actionsConstants.DELETE_ASSIGNED_TAG:
       return [...state.filter(tag => (tag.tagCategory.id !== action.tag.tagCategory.id)),
-        { tagCategory: action.tag.tagCategory, tagValues: ([...state].find(tag => (tag.tagCategory.id === action.tag.tagCategory.id))
-          .tagValues.filter(value => (value.id !== action.tag.tagValue.id)))}].filter(tag => (tag.tagValues.length != 0));
+        {
+          tagCategory: action.tag.tagCategory,
+          tagValues: ([...state].find(tag => (tag.tagCategory.id === action.tag.tagCategory.id))
+            .tagValues.filter(value => (value.id !== action.tag.tagValue.id))),
+        }].filter(tag => (tag.tagValues.length !== 0));
     case actionsConstants.CHANGE_ASSIGNED_TAG:
       return [...state.filter(tag => (tag.tagCategory.id !== action.tag.tagCategory.id)),
         { tagCategory: action.tag.tagCategory, tagValues: [action.tag.tagValue] }];
     case actionsConstants.ADD_ASSIGNED_TAG:
       return [...state.filter(tag => (tag.tagCategory.id !== action.tag.tagCategory.id)),
-        {tagCategory: { description: action.tag.tagCategory.description, id: action.tag.tagCategory.id},
-          tagValues: ([...state].find(tag => (tag.tagCategory.id === action.tag.tagCategory.id)) || {tagValues: []})
-          .tagValues.filter(tagValue => (tagValue.id !== action.tag.tagValue.id)).concat([action.tag.tagValue])}];
-          // sort((a, b) => (a.description > b.description))
+        {
+          tagCategory: { description: action.tag.tagCategory.description, id: action.tag.tagCategory.id },
+          tagValues: ([...state].find(tag => (tag.tagCategory.id === action.tag.tagCategory.id)) || { tagValues: [] })
+            .tagValues.filter(tagValue => (tagValue.id !== action.tag.tagValue.id)).concat([action.tag.tagValue]),
+        }];
+      // sort((a, b) => (a.description > b.description))
     default:
       return state;
   }
@@ -26,7 +31,7 @@ export const toggle = (state = { tagCategory: {}, tagValue: {} }, action) => {
   console.log('REDUCER TOGGLE', action, state);
   switch (action.type) {
     case actionsConstants.TOGGLE_TAG_CATEGORY_CHANGE:
-      return { tagCategory: action.tagCategory, tagValue: {}};
+      return { tagCategory: action.tagCategory, tagValue: {} };
     case actionsConstants.TOGGLE_TAG_VALUE_CHANGE:
       return { tagCategory: state.tagCategory, tagValue: action.tag.tagValue };
     default:
@@ -39,12 +44,14 @@ export const tags = (state = []) => state;
 export const initialize = (state = {}, action) => {
   switch (action.type) {
     case actionsConstants.LOAD_STATE:
-      console.log('LOAD STATE:',state, action);
-      return Object.assign({ initialState: action.initialState }, {appState: action.initialState});
+      console.log('LOAD STATE:', state, action);
+      return Object.assign(
+        { initialState: action.initialState },
+        { appState: { tags: action.initialState.tags, assignedTags: action.initialState.assignedTags } },
+      );
     case actionsConstants.RESET_STATE:
       return { ...state, appState: state.initialState };
     default:
       return { ...state };
   }
-
 };

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tagging modifier Some dummy test 1`] = `
+exports[`Tagging modifier match snapshot 1`] = `
 <div
   className="Select has-value is-clearable is-searchable Select--single"
   style={undefined}
@@ -9,7 +9,7 @@ exports[`Tagging modifier Some dummy test 1`] = `
     disabled={false}
     name="form-field-name"
     type="hidden"
-    value="hello"
+    value="1"
   />
   <div
     className="Select-control"
@@ -35,7 +35,7 @@ exports[`Tagging modifier Some dummy test 1`] = `
           id="react-select-2--value-item"
           role="option"
         >
-          hello
+          Name
         </span>
       </div>
       <div

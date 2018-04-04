@@ -3,8 +3,11 @@ import TagSelector from '../components/tagSelector';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-const tagCategories = ['hello', 'this', 'is', 'Sparta!'];
-const selectedTagValue = 'hello';
+const tagCategories = [
+  { description: 'Name', id: 1 },
+  { description: 'Number', id: 2 },
+];
+const selectedTagValue = { description: 'Homer', id: 1};
 const onTagCategoryChange = jest.fn();
 
 describe('Tagging modifier', () => {
