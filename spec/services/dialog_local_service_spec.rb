@@ -167,8 +167,8 @@ describe DialogLocalService do
       end
     end
 
-    context "when the object is an MiqTemplate" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::MiqTemplate, :id => 123) }
+    context "when the object is a Template" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Template, :id => 123) }
 
       it "returns a hash" do
         expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
