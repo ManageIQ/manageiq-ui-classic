@@ -11,6 +11,8 @@
       - nodes = x_node.split('-')
       - if (nodes.length == 1 && @sb[:rpt_menu].blank?) || (nodes.length == 2 && @sb[:rpt_menu][nodes[1].to_i][1].blank?) || (nodes.length == 4 && @sb[:rpt_menu][nodes[1].to_i].present? && @sb[:rpt_menu][nodes[1].to_i][1][nodes[3].to_i][1].blank?)
         = render :partial => 'layouts/info_msg', :locals => {:message => _("No Reports available.")}
+        - if @flash_array.present?
+          = render :partial => "layouts/flash_msg"
       - else
         = render :partial => "layouts/flash_msg"
         %table.table.table-striped.table-bordered.table-hover
