@@ -37,7 +37,7 @@ function MwServerGroupController($scope, miqService, $timeout, $document) {
 function MwServerControllerFactory($scope, miqService, isGroupDeployment, $timeout, $document) {
   ManageIQ.angular.scope = $scope;
 
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
+  listenToRx(function(event) {
     var eventType = event.type;
     var operation = event.operation;
     var timeout = event.timeout;
@@ -154,7 +154,7 @@ function MwServerGroupOpsController(miqService, serverGroupOpsService) {
 
 function MwServerOpsControllerFactory(miqService, serverOpsService) {
 
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
+  listenToRx(function(event) {
     if (event.type === 'mwSeverOpsEvent') {
       miqService.sparkleOn();
 

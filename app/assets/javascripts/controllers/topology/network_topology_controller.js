@@ -13,7 +13,7 @@ function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyServic
 
   topologyService.mixinContextMenu(this, vm);
 
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
+  listenToRx(function(event) {
     if (event.name === 'refreshTopology') {
       vm.refresh();
     }
