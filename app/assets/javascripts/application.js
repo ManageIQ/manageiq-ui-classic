@@ -23,7 +23,7 @@
 //= require bower_components/numeral/numeral
 //= require ./cable
 //= require ./miq_api
-//= require bower_components/rxjs/dist/rx.all
+//= require rxjs/rx.global
 //= require ./miq_angular_application
 //= require ./miq_observable
 //= require_tree ./angular_modules/
