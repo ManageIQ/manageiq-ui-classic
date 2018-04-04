@@ -12,26 +12,29 @@ genericObjectDefinitionToolbarController.$inject = ['API', 'miqService', '$windo
 
 function genericObjectDefinitionToolbarController(API, miqService, $window) {
   var toolbar = this;
+  var subscription = null;
 
-  if (ManageIQ.angular.genericObjectDefinitionSubsription) {
-    ManageIQ.angular.genericObjectDefinitionSubsription.unsubscribe();
-  }
+  toolbar.$onInit = function() {
+    subscription = listenToRx(function(event) {
+      toolbar.action = event.type;
+      toolbar.entity = event.entity;
 
-  ManageIQ.angular.genericObjectDefinitionSubsription = listenToRx(function(event) {
-    toolbar.action = event.type;
-    toolbar.entity = event.entity;
-
-    if (toolbar.action) {
-      if (toolbar.recordId) {
-        toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [toolbar.recordId]);
-      } else if (ManageIQ.record.recordId) {
-        toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [ManageIQ.record.recordId]);
-      } else {
-        toolbar.genericObjectDefinitions = ManageIQ.gridChecks;
+      if (toolbar.action) {
+        if (toolbar.recordId) {
+          toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [toolbar.recordId]);
+        } else if (ManageIQ.record.recordId) {
+          toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [ManageIQ.record.recordId]);
+        } else {
+          toolbar.genericObjectDefinitions = ManageIQ.gridChecks;
+        }
+        postGenericObjectDefinitionAction();
       }
-      postGenericObjectDefinitionAction();
-    }
-  });
+    });
+  };
+
+  toolbar.$onDestroy = function() {
+    subscription.unsubscribe();
+  };
 
   // private functions
   function postGenericObjectDefinitionAction() {
