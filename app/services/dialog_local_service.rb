@@ -7,9 +7,9 @@ class DialogLocalService
     GenericObject
     Host
     InfraManager
-    MiqTemplate
     Service
     Storage
+    Template
     Vm
   ).freeze
 
@@ -39,7 +39,7 @@ class DialogLocalService
     dialog_locals.merge!(
       :resource_action_id     => resource_action.id,
       :target_id              => obj.id,
-      :target_type            => obj.class.name.demodulize.underscore,
+      :target_type            => determine_target_type(obj),
       :dialog_id              => resource_action.dialog_id,
       :force_old_dialog_use   => false,
       :api_submit_endpoint    => submit_endpoint,
@@ -80,15 +80,15 @@ class DialogLocalService
     when /InfraManager/
       api_collection_name = "providers"
       cancel_endpoint = "/ems_infra"
-    when /MiqTemplate/
-      api_collection_name = "templates"
-      cancel_endpoint = "/vm_or_template/explorer"
     when /Service/
       api_collection_name = "services"
       cancel_endpoint = "/service/explorer"
     when /Storage/
       api_collection_name = "datastores"
       cancel_endpoint = "/storage/explorer"
+    when /Template/
+      api_collection_name = "templates"
+      cancel_endpoint = "/vm_or_template/explorer"
     when /Vm/
       api_collection_name = "vms"
       cancel_endpoint = display_options[:cancel_endpoint] || "/vm_infra/explorer"
@@ -97,5 +97,14 @@ class DialogLocalService
     submit_endpoint = "/api/#{api_collection_name}/#{obj.id}"
 
     return submit_endpoint, cancel_endpoint
+  end
+
+  def determine_target_type(obj)
+    case obj.class.name.demodulize
+    when /Template/
+      "miq_template"
+    else
+      obj.class.name.demodulize.underscore
+    end
   end
 end

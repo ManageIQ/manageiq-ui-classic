@@ -1325,7 +1325,7 @@ module VmCommon
         # these subviews use angular, so they need to use a special partial
         # so the form buttons on the outer frame can be updated.
         if @sb[:action] == 'dialog_provision'
-          if %w(vm_transform vm_transform_mass).include?(params[:pressed]) || Settings.product.old_dialog_user_ui
+          if show_old_dialog_submit_and_cancel_buttons?(params)
             presenter.update(:form_buttons_div, r[
               :partial => 'layouts/x_dialog_buttons',
               :locals  => {
@@ -1375,6 +1375,10 @@ module VmCommon
     presenter[:lock_sidebar] = @in_a_form && @edit
 
     render :json => presenter.for_render
+  end
+
+  def show_old_dialog_submit_and_cancel_buttons?(params)
+    %w(vm_transform vm_transform_mass).include?(params[:pressed]) || Settings.product.old_dialog_user_ui
   end
 
   # get the host that this vm belongs to
