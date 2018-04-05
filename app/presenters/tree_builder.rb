@@ -262,7 +262,10 @@ class TreeBuilder
                       object[:load_children]
                     end
 
-    node[:expand] = Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) || !!options[:open_all] || node[:expand]
+    node[:expand] = Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) ||
+                    !!options[:open_all]                                               ||
+                    node[:expand]                                                      ||
+                    @tree_state.x_tree(@name)[:active_node] == node[:key]
     if ancestry_kids ||
        load_children ||
        node[:expand] ||
