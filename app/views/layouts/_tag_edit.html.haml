@@ -22,12 +22,8 @@
             "class"                => "selectpicker")
           :javascript
             miqInitSelectPicker();
-<<<<<<< HEAD
             miqSelectPickerEvent("tag_cat", "#{url}", {beforeSend: true});
-=======
-            miqSelectPickerEvent("tag_cat", "#{url}", {beforeSend: true, complete: true});
             mountTagging(#{@tags}, #{@button_urls});
->>>>>>> Add tagging component
         %th
           = render :partial => "layouts/tag_edit_cat_tags"
   = render :partial => 'layouts/tag_edit_assignments', :locals => {:entry => nil}

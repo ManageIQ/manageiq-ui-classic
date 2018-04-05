@@ -41,28 +41,6 @@ module ApplicationController::Tags
   alias_method :storage_tag, :tagging_edit
   alias_method :infra_networking_tag, :tagging_edit
 
-  # Handle tag edit field changes
-  def tag_edit_form_field_changed
-    id = params[:id]
-    return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", "replace_cell__explorer")
-    tag_set_vars_from_params
-    tag_edit_build_entries_pulldown
-    render :update do |page|
-      page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      if changed != session[:changed]
-        session[:changed] = changed
-        page << javascript_for_miq_button_visibility(changed)
-      end
-      page.replace("cat_tags_div", :partial => "layouts/tag_edit_cat_tags")
-      page.replace("assignments_div", :partial => "layouts/tag_edit_assignments") unless params[:tag_cat]
-      if params[:tag_add]
-        page << jquery_pulsate_element("#{j_str(params[:tag_add])}_tr")
-      end
-      page << set_spinner_off if params[:tag_cat] || params[:tag_add]
-    end
-  end
-
   private ############################
 
   def tag_set_vars_from_params
@@ -201,18 +179,10 @@ module ApplicationController::Tags
     @showlinks = true
 
     cats = Classification.categories.select(&:show).sort_by { |t| t.description.try(:downcase) } # Get the categories, sort by description
-    @categories = {} # Classifications array for first chooser
-    cats.delete_if { |c| c.read_only? || c.entries.empty? } # Remove categories that are read only or have no entries
-    cats.each do |c|
-      if c.single_value?
-        @categories[c.description + " *"] = c.id
-      else
-        @categories[c.description] = c.id
-      end
-    end
-
-    if %w(User MiqGroup Tenant).include?(@tagging)
-      session[:assigned_filters] = [] # No view filters used for user/groups/tenants, set as empty for later methods
+    @categories = {}    # Classifications array for first chooser
+    cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
+    if ["User", "MiqGroup", "Tenant"].include?(@tagging)
+      session[:assigned_filters] = []  # No view filters used for user/groups/tenants, set as empty for later methods
     else
       cats.each do |cat_key| # not needed for user/group tags since they are not filtered for viewing
         if session[:assigned_filters].include?(cat_key.name.downcase)
@@ -221,30 +191,12 @@ module ApplicationController::Tags
       end
     end
 
-    # Set to first category, if not already set
-    @edit[:cat] ||= cats.first
-
-    if @object_ids.present?
-      @tagitems = @tagging.constantize.where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }
-    end
+    @tagitems = @tagging.constantize.where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }
 
     @view = get_db_view(@tagging, :clickable => false) # Instantiate the MIQ Report view object
     @view.table = ReportFormatter::Converter.records2table(@tagitems, @view.cols + ['id'])
 
-    # Start with the first items assignments
-    @edit[:new][:assignments] =
-      Classification.find_assigned_entries(@tagitems[0]).collect { |e| e.id unless e.parent.read_only? }
-    @tagitems.each do |item|
-      itemassign = Classification.find_assigned_entries(item).collect(&:id) # Get each items assignments
-      @edit[:new][:assignments].delete_if { |a| !itemassign.include?(a) }   # Remove any assignments that are not in the new items assignments
-      break if @edit[:new][:assignments].empty?                             # Stop looking if no assignments are left
-    end
-    @edit[:new][:assignments].sort!
-    @assignments = Classification.find(@edit.fetch_path(:new, :assignments))
-    tag_edit_build_entries_pulldown
-    # ||             ||
-    # \/ new tagging \/
-    # binding.pry
+    @edit[:new][:assignments] = @assignments = @tagitems.map { |tagitem| Classification.find_assigned_entries(tagitem).collect { |e| e unless e.parent.read_only? } }.reduce(:&)
     @tags = cats.map do |cat| {:id => cat.id, :description => cat.description, :single_value => cat.single_value, :values =>  cat.entries.map {|entry|
       {:id => entry.id, :description => entry.description}}.sort_by {|e| e[:description.downcase]}}
     end
@@ -258,22 +210,6 @@ module ApplicationController::Tags
       :save_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "save"),
       :cancel_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "cancel") }
     )
-
-  end
-
-  # Build the second pulldown containing the entries for the selected category
-  def tag_edit_build_entries_pulldown
-    @entries = {}                         # Create new entries hash (2nd pulldown)
-    @edit[:cat].entries.each do |e|       # Get all of the entries for the current category
-      @entries[e.description] = e.id      # Add it to the hash
-    end
-
-    assignments = Classification.find(@edit.fetch_path(:new, :assignments))
-    assignments.each do |a|                               # Look thru the assignments
-      if a.parent.description == @edit[:cat].description  # If they match the category
-        @entries.delete(a.description)                    # Remove them from the selection list
-      end
-    end
   end
 
   # Tag selected db records
