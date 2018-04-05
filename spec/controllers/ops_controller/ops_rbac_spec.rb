@@ -556,6 +556,36 @@ describe OpsController do
     end
   end
 
+  context "rbac_role_set_form_vars" do
+    before do
+      MiqUserRole.seed
+      MiqGroup.seed
+      MiqRegion.seed
+      stub_user(:features => :all)
+      @vm_role = FactoryGirl.create(:miq_user_role, :features => %w(embedded_automation_manager))
+    end
+
+    it "the feature list to edit should contain the children roles" do
+      EvmSpecHelper.seed_specific_product_features(%w(everything embedded_automation_manager embedded_configuration_script_source_view))
+      sb_hash = {:trees => {:active_tree => :rbac_tree, :typ => 'new'}}
+      controller.instance_variable_set(:@sb, sb_hash)
+      record = MiqUserRole.new
+      record.miq_product_features = [MiqProductFeature.find_by(:identifier => MiqProductFeature.feature_root)]
+      controller.instance_variable_set(:@record, record)
+      allow(controller).to receive(:replace_right_cell)
+      allow(controller).to receive(:build_rbac_feature_tree)
+      controller.instance_variable_set(:@_params, :button => "add")
+
+      new = {:features => ["everything"], :name => "foo"}
+      edit = {:key     => "rbac_role_edit__new",
+              :new     => new,
+              :current => new}
+      session[:edit] = edit
+      controller.send(:rbac_role_set_form_vars)
+      expect(controller.instance_variable_get(:@edit)[:new][:features]).to include('embedded_configuration_script_source_view')
+    end
+  end
+
   render_views
 
   context "::MiqRegion" do
