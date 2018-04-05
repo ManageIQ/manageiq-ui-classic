@@ -3,10 +3,7 @@ ManageIQ.angular.app.component('emsCloudEventsTab', {
     formModel: '<',
     showNone: '<?',
     showCeilometer: '<?',
-    eventChanged: '&'
+    eventChanged: '&',
   },
   templateUrl: '/static/ems-common/tabs/events-tab.html.haml',
-  controller: function() {
-
-  }
-})
+});

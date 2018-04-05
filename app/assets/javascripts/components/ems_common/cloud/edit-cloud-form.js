@@ -12,7 +12,7 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
     emsZoneOptions: '<',
     providerRegionsOptions: '<',
     openstackSecurityProtocols: '<',
-    ampqSecurityProtocols: '<'
+    ampqSecurityProtocols: '<',
   },
   templateUrl: '/static/ems-common/edit-cloud-form.html.haml',
   controllerAs: 'vm',
@@ -35,15 +35,15 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
           verifyLabel: __("Confirm Secret Access Key"),
           changeStoredPassword: __("Change stored secret access key"),
           cancelPasswordChange: __("Cancel secret access key change"),
-        }
-      }
+        },
+      };
       vm.sharedFormModel = {
         name: null,
         emstype: null,
         provider_region: null,
         project: null,
-        azure_tenant_id: null, // TODO: replace in postValidationModel replace with shared form model
-        subscription: null, // TODO: replace in postValidationModel replace with shared form model
+        azure_tenant_id: null,
+        subscription: null,
         api_version: null,
         zone: null,
         ems_type: false,
@@ -58,7 +58,7 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
         default_security_protocol: null,
         default_hostname: null,
         event_stream_selection: 'ceilometer',
-      }
+      };
 
       vm.activeTab = 'default';
       vm.tabs = [{
@@ -68,13 +68,13 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
       }, {
         name: 'ampq',
         id: 'ampq_tab',
-        title: __("Events")
-      }]
+        title: __("Events"),
+      }];
 
       vm.authenticationRequired = true;
       vm.actionUrl = vm.newRecord ? vm.createCloudUrl : vm.updateUrl;
 
-      if(vm.newRecord) {
+      if (vm.newRecord) {
         miqService.sparkleOn();
         vm.formId = 'new';
         $http.get(vm.cloudFieldsUrl + vm.formId)
@@ -87,7 +87,7 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
           .then(vm.getEmsFormIdDataComplete)
           .catch(miqService.handleFailure);
       }
-    }
+    };
 
     vm.getNewEmsFormDataComplete = function(response) {
       var data = response.data;
@@ -106,11 +106,11 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
       vm.sharedFormModel.default_security_protocol = data.default_security_protocol;
       vm.sharedFormModel.default_hostname = data.default_hostname;
       vm.sharedFormModel.openstack_infra_providers_exist = data.openstack_infra_providers_exist;
+      vm.sharedFormModel.default_api_port = '';
       miqService.sparkleOff();
       vm.modelCopy = angular.copy( vm.sharedFormModel );
       vm.afterGet  = true;
-      vm.sharedFormModel.default_api_port = '';
-    }
+    };
 
     vm.getEmsFormIdDataComplete = function(response) {
       var data = response.data;
@@ -124,7 +124,7 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
       vm.sharedFormModel.api_version = data.api_version;
       vm.sharedFormModel.keystone_v3_domain_id = data.keystone_v3_domain_id;
       vm.sharedFormModel.provider_id = data.provider_id !== undefined ? data.provider_id.toString() : "";
-      vm.sharedFormModel.zone = zone;
+      vm.sharedFormModel.zone = data.zone;
       vm.sharedFormModel.tenant_mapping_enabled = data.tenant_mapping_enabled;
       vm.sharedFormModel.host_default_vnc_port_start = data.host_default_vnc_port_start;
       vm.sharedFormModel.host_default_vnc_port_end = data.host_default_vnc_port_end;
@@ -134,17 +134,17 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
       vm.sharedFormModel.default_hostname = data.default_hostname;
       vm.sharedFormModel.default_api_port = data.default_api_port !== undefined && data.default_api_port !== '' ? data.default_api_port.toString() : vm.getDefaultApiPort(vm.sharedFormModel.emstype);
       vm.sharedFormModel.event_stream_selection = data.event_stream_selection;
-      miqService.sparkleOff()
+      miqService.sparkleOff();
       vm.modelCopy = angular.copy( vm.sharedFormModel );
       vm.afterGet  = true;
-    }
+    };
 
     vm.validateClicked = function() {
       vm.sharedFormModel.button = 'validate';
       var options = {
         done: function(response) {
           if (response === Object(response)) {
-            data = JSON.parse(response.responseText);
+            var data = JSON.parse(response.responseText);
             $timeout(function() {
               vm.authenticationRequired = data.level === "error";
               miqService.miqFlash(data.level, data.message, data.options);
@@ -154,10 +154,10 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
             miqService.miqFlash("error", __('Something went wrong, please check the logs for more information.'));
             miqService.sparkleOff();
           }
-        }
-      }
+        },
+      };
       miqAjaxButton(vm.actionUrl, vm.sharedFormModel, options);
-    }
+    };
 
     vm.postValidationModelRegistry = function(prefix) {
       if (vm.postValidationModel === undefined) {
@@ -169,53 +169,53 @@ ManageIQ.angular.app.component('emsEditCloudForm', {
           ssh_keypair: {},
           prometheus_alerts: {},
           kubevirt: {},
-        }
+        };
       }
       if (prefix === "default") {
-        var default_password = vm.sharedFormModel.default_password;
+        var defaultPassword = vm.sharedFormModel.default_password;
         if (! vm.newRecord) {
-          default_password = vm.sharedFormModel.default_password === "" ? "" : miqService.storedPasswordPlaceholder;
+          defaultPassword = vm.sharedFormModel.default_password === "" ? "" : miqService.storedPasswordPlaceholder;
         }
         vm.postValidationModel.default = {
           default_userid: vm.sharedFormModel.default_userid,
-          default_password: default_password,
+          default_password: defaultPassword,
           azure_tenant_id: vm.sharedFormModel.azure_tenant_id,
           subscription: vm.sharedFormModel.subscription,
-          provider_region: vm.sharedFormModel.provider_region
+          provider_region: vm.sharedFormModel.provider_region,
         };
       }
-    }
+    };
 
     vm.setActiveTab = function(tab) {
       vm.activeTab = tab;
-    }
+    };
 
     vm.getDefaultApiPort = function(emstype) {
-      if( emstype=='openstack' || emstype === 'openstack_infra') {
+      if (emstype === 'openstack' || emstype === 'openstack_infra') {
         return '5000';
       }
-      return ''
+      return '';
     };
 
     vm.emsTypeChange = function(type) {
-      if(type === 'openstack') {
-        vm.sharedFormModel.event_stream_selection = 'ceilometer'
+      if (type === 'openstack') {
+        vm.sharedFormModel.event_stream_selection = 'ceilometer';
       }
-      if(type === 'vmware_cloud') {
-        vm.sharedFormModel.event_stream_selection = 'none'
+      if (type === 'vmware_cloud') {
+        vm.sharedFormModel.event_stream_selection = 'none';
       }
-    }
+    };
 
-    vm.cancelClicked = function(event) {
-      miqService.sparkleOn()
+    vm.cancelClicked = function() {
+      miqService.sparkleOn();
       var url = vm.newRecord ? this.createCloudUrl : 'blaa';
       url = url + '?button=cancel';
       miqService.miqAjaxButton(url);
-    }
+    };
 
-    vm.addClicked = function(event, formSubmit) {
+    vm.addClicked = function() {
       var url = vm.createCloudUrl + '?button=add';
       miqService.miqAjaxButton(url, vm.sharedFormModel);
-    }
-  }]
+    };
+  }],
 });

@@ -20,9 +20,7 @@ ManageIQ.angular.app.component('emsSharedForm', {
     showTenantMapping: '<',
     showProviderRegionInput: '<',
     showVncStartPort: '<',
-    emsTypeChange: '&'
+    emsTypeChange: '&',
   },
   templateUrl: '/static/ems-common/shared-form.html.haml',
-  controller: ['$scope', function($scope) {
-  }]
-})
+});

@@ -9,9 +9,7 @@ ManageIQ.angular.app.component('emsCloudDefaultTab', {
     validateClicked: '<',
     authenticationRequired: '<',
     postValidationModel: '<',
-    postValidationModelRegistry: '<'
+    postValidationModelRegistry: '<',
   },
   templateUrl: '/static/ems-common/tabs/default-tab.html.haml',
-  controller: function() {
-  }
-})
+});
