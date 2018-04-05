@@ -25,6 +25,25 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     $scope.validateClicked = miqService.validateWithAjax;
     $scope.modelCopy = angular.copy( $scope.scheduleModel );
     $scope.model = "scheduleModel";
+    // NOTE: values for timer_typ select
+    $scope.timerTypeOptions = [
+      {
+        name: __('Once'),
+        key: 'Once'
+      }, {
+        name: __('Hourly'),
+        key: 'Hourly'
+      }, {
+        name: __('Daily'),
+        key: 'Daily'
+      }, {
+        name: __('Weekly'),
+        key: 'Weekly'
+      }, {
+        name: __('Monthly'),
+        key: 'Monthly'
+      }
+    ];
 
     ManageIQ.angular.scope = $scope;
 
@@ -149,11 +168,13 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     if (serializeFields === undefined) {
       miqService.miqAjaxButton(url);
     } else {
-      if ($scope.scheduleModel.action_typ === 'automation_request') {
+      var startDate = serializeFields.start_date;
+      serializeFields.start_date = moment(startDate).format("MM/DD/YYYY");
+      if (serializeFields.action_typ === 'automation_request') {
         // should ignore list of targets as this list can be really long no need to send that up to server
-        var moreUrlParams = $.param(miqService.serializeModelWithIgnoredFields($scope.scheduleModel, ["targets", "time_zone"]));
+        var moreUrlParams = $.param(miqService.serializeModelWithIgnoredFields(serializeFields, ["targets", "time_zone"]));
         if (moreUrlParams) {
-          url += '&' + decodeURIComponent(moreUrlParams) + '&' + encodeURIComponent($scope.scheduleModel.time_zone);
+          url += '&' + decodeURIComponent(moreUrlParams) + '&' + encodeURIComponent(serializeFields.time_zone);
         }
       }
       miqService.miqAjaxButton(url, serializeFields);
@@ -294,9 +315,11 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   $scope.filterValueChanged = function() {
   };
 
-  $scope.scheduleTimerTypeChanged = function() {
+  $scope.scheduleTimerTypeChanged = function(type) {
+    if (type) {
+      $scope.scheduleModel.timer_typ = type;
+    }
     $scope.setTimerType();
-
     $scope.timer_items = timerOptionService.getOptions($scope.scheduleModel.timer_typ);
 
     if ($scope.timerNotOnce()) {
@@ -343,7 +366,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.saveClicked = function() {
-    scheduleEditButtonClicked('save', $scope.scheduleModel);
+    scheduleEditButtonClicked('save', angular.copy($scope.scheduleModel));
   };
 
   $scope.addClicked = function() {
@@ -394,6 +417,26 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
         $scope.angularForm.uri.$dirty ||
         $scope.angularForm.log_userid.$dirty ||
         $scope.angularForm.log_password.$dirty);
+  };
+
+  $scope.setTimerValue = function(value) {
+    $scope.scheduleModel.timer_value = value;
+  };
+
+  $scope.setTimeZone = function(zone) {
+    $scope.scheduleModel.time_zone = zone;
+  };
+
+  $scope.setStartDate = function(date) {
+    $scope.scheduleModel.start_date = date;
+  };
+
+  $scope.setStartHour = function(hour) {
+    $scope.scheduleModel.start_hour = hour;
+  };
+
+  $scope.setStartMinute = function(min) {
+    $scope.scheduleModel.start_min = min;
   };
 
   init();

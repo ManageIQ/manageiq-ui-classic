@@ -55,7 +55,22 @@
                          "selectpicker-for-select-tag" => "")
 
     = render :partial => "schedule_form_filter"
-    = render :partial => "schedule_form_timer"
+    %schedule-form-timer{ 'ng-show'                      => true,
+                          'timer-typ'                    => 'scheduleModel.timer_typ',
+                          'schedule-timer-type-changed'  => 'scheduleTimerTypeChanged(type)',
+                          'timer-value'                  => 'scheduleModel.timer_value',
+                          'timer-items'                  => 'timer_items',
+                          'timer-type-once'              => 'timerTypeOnce',
+                          'timer-type-options'           => 'timerTypeOptions',
+                          'timer-value-change'           => 'setTimerValue(value)',
+                          'time-zone'                    => 'scheduleModel.time_zone',
+                          'time-zone-change'             => 'setTimeZone(zone)',
+                          'start-date'                   => 'scheduleModel.start_date',
+                          'date-change'                  => 'setStartDate(date)',
+                          'start-hour'                   => 'scheduleModel.start_hour',
+                          'start-min'                    => 'scheduleModel.start_min',
+                          'start-hour-change'            => 'setStartHour(hour)',
+                          'start-min-change'             => 'setStartMinute(min)'}
     = render :partial => "layouts/angular/x_edit_buttons_angular"
 
 :javascript
