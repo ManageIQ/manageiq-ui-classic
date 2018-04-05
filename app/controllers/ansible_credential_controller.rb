@@ -11,7 +11,6 @@ class AnsibleCredentialController < ApplicationController
   include Mixins::EmbeddedAnsibleRefreshMixin
 
   menu_section :ansible_credentials
-  toolbar :ansible_credential
 
   def self.display_methods
     %w(repositories)
@@ -35,6 +34,8 @@ class AnsibleCredentialController < ApplicationController
       delete_credentials
     when 'ansible_credential_tag'
       tag(self.class.model)
+    when "ansible_repository_tag" # repositories from nested list
+      tag(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
     end
   end
 
