@@ -25,8 +25,9 @@
               'name'        => 'sharedEmsType',
               'ng-if'       => '$ctrl.newRecord',
               'required'    => '',
-              'ng-model'    => '$ctrl.sharedFormModel.emsType',
-              'ng-options'  => 'type[1] as type[0] for type in $ctrl.emsTypeOptions',}
+              'ng-model'    => '$ctrl.sharedFormModel.emstype',
+              'ng-options'  => 'type[1] as type[0] for type in $ctrl.emsTypeOptions',
+              'ng-change'   => '$ctrl.emsTypeChange({type: $ctrl.sharedFormModel.emstype})'}
       %div{"ng-if" => "!newRecord"}
         %label.form-control{"type"        => "text",
                             "id"          => "sharedEmsType",
@@ -46,7 +47,7 @@
               'name'        => 'providerRegion',
               'id'          => 'providerRegion',
               'required'    => '',
-              'ng-model'    => '$ctrl.sharedFormModel.providerRegion',
+              'ng-model'    => '$ctrl.sharedFormModel.provider_region',
               'ng-options'  => 'region[1] as region[0] for region in $ctrl.providerRegionOptions'}
     %label.form-control{"type"        => "text",
                         "id"          => "provider_region",
@@ -63,7 +64,7 @@
       %input.form-control{"type"        => "text",
                           "id"          => "emsProject",
                           "name"        => "emsProject",
-                          "ng-model"    => "$ctrl.sharedFormModel.emsProject",
+                          "ng-model"    => "$ctrl.sharedFormModel.project",
                           "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",
                           "required"    => ""}
       %span.help-block{"ng-show" => "emsSharedForm.emsProject.$error.required"}
@@ -76,7 +77,7 @@
       %input.form-control{"type"                    => "text",
                           "id"                      => "emsTenantId",
                           "name"                    => "azure_tenant_id",
-                          "ng-model"                => "$ctrl.sharedFormModel.azureTenantId",
+                          "ng-model"                => "$ctrl.sharedFormModel.azure_tenant_id",
                           "required"                => "",
                           "is-uuid"                 => 4,
                           "prefix"                  => "default",
@@ -107,7 +108,7 @@
       %select{'pf-select'   => '',
               'id'          => 'apiVersion',
               'name'        => 'apiVersion',
-              'ng-model'    => '$ctrl.sharedFormModel.apiVersion',
+              'ng-model'    => '$ctrl.sharedFormModel.api_version',
               'ng-options'  => 'version[1] as version[0] for version in $ctrl.apiVersionOptions'}
 
   .form-group{"ng-class" => "{'has-error': emsSharedForm.api_version.$invalid}",
@@ -118,7 +119,7 @@
       %input.form-control{"type"                    => "text",
                           "id"                      => "emsRegionInput",
                           "name"                    => "emsRegionInput",
-                          "ng-model"                => "$ctrl.sharedFormModel.providerRegion"}
+                          "ng-model"                => "$ctrl.sharedFormModel.provider_region"}
 
   .form-group{"ng-class" => "{'has-error': emsSharedForm.keyStoneV3DomainId.$invalid}", "ng-if" => "$ctrl.showKeystoneDomain"}
     %label.col-md-2.control-label{"for" => "keyStoneV3DomainId"}
@@ -127,7 +128,7 @@
       %input.form-control{"type"        => "text",
                           "id"          => "keyStoneV3DomainId",
                           "name"        => "keyStoneV3DomainId",
-                          "ng-model"    => "$ctrl.sharedFormModel.keyStoneV3DomainId",
+                          "ng-model"    => "$ctrl.sharedFormModel.keystone_v3_domain_id",
                           "required"    => true}
       %span.help-block{"ng-show" => "emsSharedForm.keyStoneV3DomainId.$error.required"}
         = _("Required")
@@ -139,7 +140,7 @@
       %select{'pf-select'   => '',
               'name'        => 'apiVersion',
               'id'          => 'apiVersion',
-              'ng-model'    => '$ctrl.sharedFormModel.apiVersion',
+              'ng-model'    => '$ctrl.sharedFormModel.api_version',
               'ng-options'  => 'version[1] as version[0] for version in $ctrl.nuageApiVersionOptions'}
 
   .form-group{"ng-class" => "{'has-error': sharedFormModel.provider_id.$invalid}", "ng-if" => "$ctrl.showEmsInfraProviderId"}
@@ -149,7 +150,7 @@
       %select{'pf-select'   => '',
               'name'        => 'emsInfraProviderId',
               'id'          => 'emsInfraProviderId',
-              'ng-model'    => '$ctrl.sharedFormModel.providerId',
+              'ng-model'    => '$ctrl.sharedFormModel.provider_id',
               'ng-options'  => 'provider[1] as provider[0] for provider in $ctrl.emsInfraProviderIdOptions'}
         %option{'value' => ""}
           = "<#{_('blank')}>"
@@ -187,7 +188,7 @@
              "type"        => "checkbox",
              "id"          => "emsTenantMappingEnabled",
              "name"        => "emsTenantMappingEnabled",
-             "ng-model"    => "$ctrl.sharedFormModel.tenantMappingEnabled"}
+             "ng-model"    => "$ctrl.sharedFormModel.tenant_mapping_enabled"}
 
   .form-group{"ng-class"  => "{'has-error': emsSharedForm.host_default_vnc_port_start.$invalid}",
               "ng-if"     => "$ctrl.showVncStartPort"}
@@ -197,7 +198,7 @@
       %input.form-control{"type"        => "text",
                           "id"          => "ems_vnc_start_port",
                           "name"        => "host_default_vnc_port_start",
-                          "ng-model"    => "$ctrl.sharedFormModel.hostDefaultVncPortStart",
+                          "ng-model"    => "$ctrl.sharedFormModel.host_default_vnc_port_start",
                           "maxlength"   => 6}
 
   .form-group{"ng-class" => "{'has-error': emsSharedForm.host_default_vnc_port_end.$invalid}",
@@ -208,5 +209,5 @@
       %input.form-control{"type"        => "text",
                           "id"          => "ems_vnc_end_port",
                           "name"        => "host_default_vnc_port_end",
-                          "ng-model"    => "$ctrl.sharedFormModel.hostDefaultVncPortEnd",
+                          "ng-model"    => "$ctrl.sharedFormModel.host_default_vnc_port_end",
                           "maxlength"   => 6}
