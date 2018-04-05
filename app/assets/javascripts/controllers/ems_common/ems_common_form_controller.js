@@ -1,13 +1,4 @@
-ManageIQ.angular.app.controller('emsCommonFormController', [
-  '$http',
-  '$scope',
-  '$attrs',
-  'emsCommonFormId',
-  'miqService',
-  '$timeout',
-  'API',
-  'providerRegionOptions',
-  function($http, $scope, $attrs, emsCommonFormId, miqService, $timeout, API, providerRegionOptions) {
+ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '$attrs', 'emsCommonFormId', 'miqService', '$timeout', 'API', function($http, $scope, $attrs, emsCommonFormId, miqService, $timeout, API) {
   var init = function() {
     $scope.emsCommonModel = {
       name: '',
@@ -84,7 +75,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', [
       kubevirt_password_exists: false,
     };
 
-    $scope.providerRegionOptions = providerRegionOptions;
     $scope.emsOptionsModel = {
       provider_options: {},
       provider_options_original_values: {},
@@ -99,53 +89,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', [
     $scope.checkAuthentication = true;
 
     $scope.model = 'emsCommonModel';
-    $scope.sharedFormModel = {
-      name: null,
-      emsType: null,
-      providerRegion: null,
-      emsProject: null,
-      azureTenantId: null, // TODO: replace in postValidationModel replace with shared form model
-      subscription: null, // TODO: replace in postValidationModel replace with shared form model
-      apiVersion: null,
-      zone: null,
-      emsTypeVm: false,
-      hostDefaultVncPortStart: '',
-      hostDefaultVncPortEnd: ''
-    }
-
-    $scope.crendetialsLabels = {
-      userIdLabel: __("Client ID"),
-      passwordLabel: __("Client Key"),
-      verifyLabel: __("Confirm Client Key"),
-      changeStoredPassword: __("Change stored client key"),
-      cancelPasswordChange: __("Cancel client key change"),
-    }
-
-    $scope.sharedValidateClicked = function() {
-      var url = '/ems_cloud';
-      $scope.authType = "default";
-      var $event = {target: ".validate_button:visible"};
-      miqService.validateWithREST($event, $scope.authType, $scope.actionUrl, true)
-        .then(function success(data) {
-          // check if data object is a JSON, otherwise (recieved JS or HTML) output a warning to the user.
-          if (data === Object(data)) {
-            $timeout(function() {
-              $scope.$apply(function() {
-                if(data.level == "error") {
-                  $scope.updateAuthStatus(false);
-                } else {
-                  $scope.updateAuthStatus(true);
-                }
-                miqService.miqFlash(data.level, data.message, data.options);
-                miqSparkleOff();
-              });
-            });
-          } else {
-            miqService.miqFlash("error", __('Something went wrong, please check the logs for more information.'));
-            miqSparkleOff();
-          }
-        });
-    }
 
     ManageIQ.angular.scope = $scope;
 
@@ -169,20 +112,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', [
 
     function getEmsFormIdDataComplete(response) {
       var data = response.data;
-
-      $scope.sharedFormModel.name = data.name;
-      $scope.sharedFormModel.emsType = data.emstype;
-      $scope.sharedFormModel.providerRegion = data.provider_region;
-      $scope.sharedFormModel.emsProject = data.project;
-      $scope.sharedFormModel.azureTenantId = data.azure_tenant_id;
-      $scope.sharedFormModel.subscription = data.subscription;
-      $scope.sharedFormModel.api_version = data.api_version;
-      $scope.sharedFormModel.keyStoneV3DomainId = data.keystone_v3_domain_id;
-      $scope.sharedFormModel.providerId = data.provider_id !== undefined ? data.provider_id.toString() : "";
-      $scope.sharedFormModel.zone = zone;
-      $scope.sharedFormModel.tenantMappingEnabled = data.tenant_mapping_enabled;
-      $scope.sharedFormModel.hostDefaultVncPortStart = data.host_default_vnc_port_start;
-      $scope.sharedFormModel.hostDefaultVncPortEnd = data.host_default_vnc_port_end;
 
       $scope.emsCommonModel.name                            = data.name;
       $scope.emsCommonModel.emstype                         = data.emstype;
@@ -299,18 +228,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', [
 
     function getNewEmsFormDataComplete(response) {
       var data = response.data;
-
-      $scope.sharedFormModel.name = '';
-      $scope.sharedFormModel.emsType = '';
-      $scope.sharedFormModel.providerRegion = '';
-      $scope.sharedFormModel.project = '';
-      $scope.sharedFormModel.azureTenantId = '';
-      $scope.sharedFormModel.subscription = '';
-      $scope.sharedFormModel.apiVersion = 'v2';
-      $scope.sharedFormModel.keyStoneV3DomainId = '';
-      $scope.sharedFormModel.zone = data.zone;
-      $scope.sharedFormModel.tenantMappingEnabled = data.tenant_mapping_enabled;
-      $scope.sharedFormModel.emsTypeVm = data.emstype_vm;
 
       $scope.emsCommonModel.emstype                         = '';
       $scope.emsCommonModel.zone                            = data.zone;
