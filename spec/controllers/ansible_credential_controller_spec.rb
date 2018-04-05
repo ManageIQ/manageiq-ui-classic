@@ -70,5 +70,18 @@ describe AnsibleCredentialController do
         controller.send(:button)
       end
     end
+
+    context 'tagging one or more ansible repositories from nested list' do
+      let(:params) { {:pressed => "ansible_repository_tag"} }
+
+      before do
+        controller.instance_variable_set(:@display, "repositories")
+      end
+
+      it 'calls tag method' do
+        expect(controller).to receive(:tag).with(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+        controller.send(:button)
+      end
+    end
   end
 end
