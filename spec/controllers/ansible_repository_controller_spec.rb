@@ -121,5 +121,18 @@ describe AnsibleRepositoryController do
         controller.send(:button)
       end
     end
+
+    context 'tagging one or more playbooks from nested list' do
+      let(:params) { {:pressed => "embedded_configuration_script_payload_tag"} }
+
+      before do
+        controller.instance_variable_set(:@display, "playbooks")
+      end
+
+      it 'calls tag method' do
+        expect(controller).to receive(:tag).with(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
+        controller.send(:button)
+      end
+    end
   end
 end
