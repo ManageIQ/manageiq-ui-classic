@@ -460,8 +460,8 @@ class ApplicationHelper::ToolbarChooser
         return "#{@layout}_center_tb"
       elsif to_display.include?(@display)
         return "#{@display}_center_tb"
-     elsif to_display_ansible.include?(@display) # toolbars for nested list screens of Ansible Playbooks/Repositories/Credentials
-        return "ansible_#{@display}_center"     
+      elsif to_display_ansible.include?(@display) # toolbars for nested list screens of Ansible Playbooks/Repositories/Credentials
+        return "ansible_#{@display}_center"
       elsif to_display_center.include?(@display)
         return "#{@display}_center"
       elsif @layout == 'ems_container'
