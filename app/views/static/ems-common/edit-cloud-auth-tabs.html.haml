@@ -4,8 +4,8 @@
   %ul.nav.nav-tabs
     %li{'ng-repeat' => '(key, tab) in $ctrl.tabs',
         'id'        => 'tab.id',
-        'ng-click'  => "$ctrl.changeAuthTab(tab.name)",
-        "ng-class"  => "{'active': $ctrl.activeTab === tab.name}"}
-      %a{:href => "#"}
-        %i{"error-on-tab" => "default", :style => "color:#cc0000"}
+        'ng-click'  => '$ctrl.changeAuthTab(tab.name)',
+        'ng-class'  => "{'active': $ctrl.activeTab === tab.name}"}
+      %a{:href => '#'}
+        %i{'error-on-tab' => '{{tab.name}}', :style => 'color:#cc0000'}
         {{tab.title}}
