@@ -11,7 +11,6 @@ class AnsibleRepositoryController < ApplicationController
   include Mixins::EmbeddedAnsibleRefreshMixin
 
   menu_section :ansible_repositories
-  toolbar :ansible_repository
 
   def self.display_methods
     %w(playbooks)
@@ -49,6 +48,8 @@ class AnsibleRepositoryController < ApplicationController
       end
     when "ansible_repository_tag"
       tag(self.class.model)
+    when "embedded_configuration_script_payload_tag" # playbooks from nested list
+      tag(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
     end
   end
 
