@@ -306,7 +306,7 @@ module ReportController::Dashboards
 
   def db_save_members
     widget_ids = %i(col1 col2 col3).collect { |key| @db.set_data[key] }.flatten
-    widgets = Array(MiqWidget.find_by(:id => widget_ids))
+    widgets = Array(MiqWidget.where(:id => widget_ids))
 
     @db.replace_children(widgets)
     @db.members.each { |w| w.create_initial_content_for_user(session[:userid]) } # Generate content if not there
