@@ -13,7 +13,6 @@ class TagView extends React.Component {
     />);
 
   render() {
-    console.log('TAG VIEW', this.props);
     return (
       <React.Fragment>
         <Row><Col lg={12}><h2>{this.props.header}</h2></Col></Row>

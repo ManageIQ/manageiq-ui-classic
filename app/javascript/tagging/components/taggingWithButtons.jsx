@@ -21,7 +21,6 @@ class TaggingWithButtons extends React.Component {
   }
 
   render() {
-    console.log('TAGGING WITH BUTTONS', this.props);
     return (
       <Grid>
         <Tagging

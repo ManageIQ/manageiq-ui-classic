@@ -30,7 +30,6 @@ const mapDispatchToProps = dispatch => ({
   },
 
   onLoadState: (state) => {
-    console.log('ON LOAD STATE');
     dispatch(loadState(state));
   },
 });

@@ -1,7 +1,6 @@
 import * as actionsConstants from '../actions/actions';
 // state = state.assignedTags
 export const modifyassignedTags = (state = [], action) => {
-  console.log('REDUCER ASSIGNED:', action, state);
   switch (action.type) {
     case actionsConstants.DELETE_ASSIGNED_TAG:
       return [...state.filter(tag => (tag.tagCategory.id !== action.tag.tagCategory.id)),
@@ -28,7 +27,6 @@ export const modifyassignedTags = (state = [], action) => {
 
 // state = state.selected
 export const toggle = (state = { tagCategory: {}, tagValue: {} }, action) => {
-  console.log('REDUCER TOGGLE', action, state);
   switch (action.type) {
     case actionsConstants.TOGGLE_TAG_CATEGORY_CHANGE:
       return { tagCategory: action.tagCategory, tagValue: {} };
@@ -44,7 +42,6 @@ export const tags = (state = []) => state;
 export const initialize = (state = {}, action) => {
   switch (action.type) {
     case actionsConstants.LOAD_STATE:
-      console.log('LOAD STATE:', state, action);
       return Object.assign(
         { initialState: action.initialState },
         { appState: { tags: action.initialState.tags, assignedTags: action.initialState.assignedTags } },

@@ -9,7 +9,6 @@ class ValueSelector extends React.Component {
   }
 
   selector = (value, label, tagValues) => {
-    console.log('mluti val', this.props.multiValue);
     return (this.props.multiValue && <Select
       name="form-field-name"
       value={value}
@@ -29,7 +28,6 @@ class ValueSelector extends React.Component {
   }
 
   render() {
-    console.log('VALUE SELECTOR:', this.props);
     const value = this.props.selectedOption.id;
     const label = this.props.selectedOption.description;
     const tagValues = this.props.tagValues.map(tag => ({ value: tag.id, label: tag.description }));

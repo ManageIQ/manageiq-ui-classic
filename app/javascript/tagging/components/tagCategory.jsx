@@ -14,7 +14,6 @@ class TagCategory extends React.Component {
     />);
 
   render() {
-    console.log('TAG CATEGORY', this.props);
     return (
       <React.Fragment>
           <ul className="tag-category list-inline">

@@ -11,7 +11,6 @@ class TagSelector extends React.Component {
   render() {
     const value = this.props.selectedOption.id;
     const label = this.props.selectedOption.description;
-    console.log('SELECTOR', this.props.tagCategories);
     const tagCategories = this.props.tagCategories.map(category => ({ value: category.id, label: (category.description + (category.singleValue ? '*' : '') )}));
     return (
       <Select

@@ -7,7 +7,6 @@ import ValueSelector from './valueSelector';
 const TagModifier = ({
   tags, selectedTagCategory, selectedTagValue, onTagCategoryChange, onTagValueChange, header, categoryLabel, valueLabel, multiValue,
 }) => {
-  console.log('MODIFIER:', tags);
   const tagValues = (tags.find(tag => (tag.id === selectedTagCategory.id)) && tags.find(tag => (tag.id === selectedTagCategory.id)).values) || [];
   const tagCategories = tags.map(tag => ({ description: tag.description, id: tag.id, singleValue: tag.singleValue })) || [];
   return (
