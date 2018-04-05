@@ -442,7 +442,9 @@ class ApplicationHelper::ToolbarChooser
                     security_groups storages middleware_deployments
                     middleware_servers)
     to_display_center = %w(stack_orchestration_template topology cloud_object_store_objects generic_objects physical_servers guest_devices)
+    to_display_ansible = %w(playbooks repositories credentials)
     performance_layouts = %w(vm host ems_container)
+
     if @lastaction == 'show' && (@view || @display != 'main') && !@layout.starts_with?("miq_request")
       if @display == "vms" || @display == "all_vms"
         return "vm_infras_center_tb"
@@ -458,6 +460,8 @@ class ApplicationHelper::ToolbarChooser
         return "#{@layout}_center_tb"
       elsif to_display.include?(@display)
         return "#{@display}_center_tb"
+     elsif to_display_ansible.include?(@display) # toolbars for nested list screens of Ansible Playbooks/Repositories/Credentials
+        return "ansible_#{@display}_center"     
       elsif to_display_center.include?(@display)
         return "#{@display}_center"
       elsif @layout == 'ems_container'
@@ -547,9 +551,25 @@ class ApplicationHelper::ToolbarChooser
         return @lastaction == 'show_list' ? 'miq_requests_center_tb' : 'miq_request_center_tb'
       elsif %w(my_tasks all_tasks).include?(@layout)
         return "tasks_center_tb"
+      elsif @layout.to_s.starts_with?("manageiq") # toolbars for list/summary screens of Ansible Playbooks/Repositories/Credentials
+        return "#{center_toolbar_filename_embedded_ansible}_center"
       end
     end
     nil
+  end
+
+  def center_toolbar_filename_embedded_ansible
+    case @layout
+    when "manageiq/providers/embedded_ansible/automation_manager/playbook"
+      toolbar_filename = "ansible_playbook"
+    when "manageiq/providers/embedded_automation_manager/configuration_script_source"
+      toolbar_filename = "ansible_repository"
+    when "manageiq/providers/embedded_automation_manager/authentication"
+      toolbar_filename = "ansible_credential"
+    else
+      return
+    end
+    %w(show_list).include?(@lastaction) ? toolbar_filename.pluralize : toolbar_filename
   end
 
   def center_toolbar_filename_configuration_manager_providers
