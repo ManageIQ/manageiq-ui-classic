@@ -10,7 +10,6 @@ class AnsiblePlaybookController < ApplicationController
   include Mixins::GenericShowMixin
 
   menu_section :ansible_playbooks
-  toolbar :ansible_playbook
 
   def self.model
     ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook
