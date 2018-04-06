@@ -660,9 +660,9 @@ class MiqAeClassController < ApplicationController
     @edit[:inherits_from] = MiqAeClass.all.collect { |c| [c.fqname, c.fqname] }
     @edit[:current] = @edit[:new].dup
     @right_cell_text = if @edit[:rec_id].nil?
-                         _("Adding a new Class")
+                         _("Adding a new Automate Class")
                        else
-                         _("Editing Class \"%{name}\"") % {:name => @ae_class.name}
+                         _("Editing Automate Class \"%{name}\"") % {:name => @ae_class.name}
                        end
     session[:edit] = @edit
     @in_a_form = true
