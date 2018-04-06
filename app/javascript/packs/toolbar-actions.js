@@ -9,9 +9,9 @@ export function showMessage(messages, success) {
     Object.keys(messages).forEach((msgStatus) => {
       const statusKey = msgStatus === 'true';
       if (statusKey && messages[statusKey] > 0) {
-        add_flash(__(`Deleting of ${messages[statusKey]} items queued.`), 'success');
+        add_flash(sprintf(__('Deleting of %s items queued.'), messages[statusKey]), 'success');
       } else if (messages[statusKey] > 0) {
-        add_flash(__(`Failed to delete ${messages[statusKey]} items.`), 'error');
+        add_flash(sprintf(__('Failed to delete %s items.'), messages[statusKey]), 'error');
       }
     });
   }
