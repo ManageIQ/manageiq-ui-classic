@@ -51,7 +51,7 @@
 //= require bower_components/bootstrap-hover-dropdown/bootstrap-hover-dropdown
 //= require bower_components/bootstrap-switch/dist/js/bootstrap-switch
 //= require bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin
-//= require bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch
+//= require angular-bootstrap-switch/dist/angular-bootstrap-switch
 //= require bower_components/angular-ui-codemirror/ui-codemirror
 //= require bower_components/patternfly-bootstrap-treeview/dist/bootstrap-treeview
 //= require bower_components/jquery.observe_field/jquery.observe_field
