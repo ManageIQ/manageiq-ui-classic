@@ -24,6 +24,7 @@ class ApplicationController
     :gtl_type,
     :supported_features_filter,
     :clickable,
+    :no_checkboxes,
   ) do
     def self.from_options(options)
       additional_options = new
@@ -69,6 +70,10 @@ class ApplicationController
 
     def with_model(curr_model)
       self.model = curr_model.kind_of?(String) ? curr_model : curr_model.name
+    end
+
+    def with_no_checkboxes(no_checkboxes)
+      self.no_checkboxes = no_checkboxes
     end
   end
 end
