@@ -110,7 +110,7 @@
           = _("Available Groups")
       .col-md-2
         - groups = @record.present? && @record.miq_groups.present? ? @record.miq_groups.order(:description) : []
-        - if groups.present? && @edit.blank?
+        - if @edit.blank?
           - if role_allows?(:feature => "rbac_group_show")
             - groups.each do |group|
               - params = {:class => "pointer",
