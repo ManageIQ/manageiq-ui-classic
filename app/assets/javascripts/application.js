@@ -49,7 +49,7 @@
 //= require bower_components/bootstrap-filestyle/src/bootstrap-filestyle
 //= require bower_components/bootstrap-select/js/bootstrap-select
 //= require bower_components/bootstrap-hover-dropdown/bootstrap-hover-dropdown
-//= require bower_components/bootstrap-switch/dist/js/bootstrap-switch
+//= require bootstrap-switch/dist/js/bootstrap-switch
 //= require bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin
 //= require angular-bootstrap-switch/dist/angular-bootstrap-switch
 //= require bower_components/angular-ui-codemirror/ui-codemirror

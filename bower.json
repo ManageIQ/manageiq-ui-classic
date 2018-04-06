@@ -26,7 +26,6 @@
     "array-includes": "~1.0.0",
     "bootstrap-filestyle": "~1.2.1",
     "bootstrap-hover-dropdown": "~2.2.1",
-    "bootstrap-switch": "~3.3.2",
     "codemirror": "~5.19.0",
     "es6-shim": "~0.35.1",
     "fetch": "~1.0.0",
@@ -52,7 +51,6 @@
   "resolutions": {
     "d3": "~3.5.0",
     "jquery": "~2.2.4",
-    "bootstrap-switch": "~3.3.4",
     "moment": ">=2.10.5",
     "bootstrap-select": "~1.12.2",
     "font-awesome-sass": "~4.7.0",
