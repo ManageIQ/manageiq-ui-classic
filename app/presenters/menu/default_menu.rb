@@ -273,6 +273,7 @@ module Menu
                          {:feature => key.to_s},
                          help_menu_field(key, :href, value[:href]),
                          help_menu_field(key, :type, value[:type]),
+                         nil,
                          value)
         end
 
