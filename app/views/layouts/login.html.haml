@@ -10,12 +10,7 @@
     - if Rails.env.development?
       = javascript_include_tag 'miq_debug'
       = stylesheet_link_tag 'miq_debug'
-
-    = javascript_pack_tag 'vendor'
-    -# FIXME: the conditional below is a temporary fix for a webpacker issue, remove when it's resolved
-    - unless Rails.env.test?
-      - Webpacker::Manifest.instance.data.keys.each do |pack|
-        = javascript_pack_tag pack if pack.ends_with? '-common.js'
+    = javascript_common_packs
 
     = render :partial => 'layouts/i18n_js'
 

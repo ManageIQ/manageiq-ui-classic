@@ -12,6 +12,7 @@ module ApplicationHelper
   include PlanningHelper
   include Title
   include ReactjsHelper
+  include Webpack
 
   VALID_PERF_PARENTS = {
     "EmsCluster" => :ems_cluster,
