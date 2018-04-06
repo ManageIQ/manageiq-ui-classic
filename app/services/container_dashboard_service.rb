@@ -216,7 +216,7 @@ class ContainerDashboardService
     total_mem = Hash.new(0)
 
     daily_provider_metrics.each do |metric|
-      date = metric.timestamp.strftime("%Y-%m-%d")
+      date = metric.timestamp.beginning_of_day.utc
       fill_ems_utilization(metric, date, used_cpu, used_mem, total_cpu, total_mem)
     end
 
@@ -282,7 +282,7 @@ class ContainerDashboardService
   def daily_network_metrics
     daily_network_metrics = Hash.new(0)
     daily_provider_metrics.each do |m|
-      day = m.timestamp.strftime("%Y-%m-%d")
+      day = m.timestamp.beginning_of_day.utc
       daily_network_metrics[day] += m.net_usage_rate_average if m.net_usage_rate_average.present?
     end
 
@@ -322,7 +322,7 @@ class ContainerDashboardService
     daily_pod_delete_trend = Hash.new(0)
 
     daily_provider_metrics.each do |m|
-      date = m.timestamp.strftime("%Y-%m-%d")
+      date = m.timestamp.beginning_of_day.utc
       fill_pod_metrics(m, date, daily_pod_create_trend, daily_pod_delete_trend)
     end
 
@@ -366,7 +366,7 @@ class ContainerDashboardService
   def daily_image_metrics
     daily_image_metrics = Hash.new(0)
     daily_provider_metrics.each do |m|
-      day = m.timestamp.strftime("%Y-%m-%d")
+      day = m.timestamp.beginning_of_day.utc
       daily_image_metrics[day] +=
         m.stat_container_image_registration_rate if m.stat_container_image_registration_rate.present?
     end

@@ -28,7 +28,7 @@ describe ContainerDashboardService do
       ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
       ems_kubernetes = FactoryGirl.create(:ems_kubernetes, :zone => @zone)
 
-      current_date = 7.days.ago
+      current_date = 7.days.ago.beginning_of_day.utc
       old_date = 35.days.ago
 
       current_metric_openshift = FactoryGirl.create(
@@ -77,13 +77,13 @@ describe ContainerDashboardService do
         :cpu => {
           :used  => 2,
           :total => 2,
-          :xData => [current_date.strftime("%Y-%m-%d")],
+          :xData => [current_date],
           :yData => [2]
         },
         :mem => {
           :used  => 1,
           :total => 2,
-          :xData => [current_date.strftime("%Y-%m-%d")],
+          :xData => [current_date],
           :yData => [1]
         }
       )
@@ -92,13 +92,13 @@ describe ContainerDashboardService do
         :cpu => {
           :used  => 3,
           :total => 3,
-          :xData => [current_date.strftime("%Y-%m-%d")],
+          :xData => [current_date],
           :yData => [3]
         },
         :mem => {
           :used  => 2,
           :total => 3,
-          :xData => [current_date.strftime("%Y-%m-%d")],
+          :xData => [current_date],
           :yData => [2]
         }
       )
@@ -316,8 +316,8 @@ describe ContainerDashboardService do
       ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
       ems_kubernetes = FactoryGirl.create(:ems_kubernetes, :zone => @zone)
 
-      previous_date = 8.days.ago
-      current_date = 7.days.ago
+      previous_date = 8.days.ago.beginning_of_day.utc
+      current_date = 7.days.ago.beginning_of_day.utc
       old_date = 35.days.ago
 
       previous_metric_openshift = FactoryGirl.create(
@@ -355,12 +355,12 @@ describe ContainerDashboardService do
       daily_network_trends_single_provider = described_class.new(ems_openshift.id, controller).network_metrics[:xy_data]
 
       expect(daily_network_trends_single_provider).to eq(
-        :xData => [previous_date.strftime("%Y-%m-%d"), current_date.strftime("%Y-%m-%d")],
+        :xData => [previous_date, current_date],
         :yData => [2000, 1000]
       )
 
       expect(daily_network_trends).to eq(
-        :xData => [previous_date.strftime("%Y-%m-%d"), current_date.strftime("%Y-%m-%d")],
+        :xData => [previous_date, current_date],
         :yData => [2000, 2500]
       )
     end
