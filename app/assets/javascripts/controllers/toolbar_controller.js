@@ -12,7 +12,7 @@
   * For success functuon @see ToolbarController#onRowSelect()
   */
   function subscribeToSubject() {
-    ManageIQ.angular.rxSubject.subscribe(function(event) {
+    listenToRx(function(event) {
       if (event.eventType === 'updateToolbarCount') {
         this.MiQToolbarSettingsService.setCount(event.countSelected);
       } else if (event.rowSelect) {

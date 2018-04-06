@@ -75,7 +75,7 @@
   * @returns {undefined}
   */
   function subscribeToSubject() {
-    this.subscription = ManageIQ.angular.rxSubject.subscribe(function(event) {
+    this.subscription = listenToRx(function(event) {
       if (event.initController && event.initController.name === CONTROLLER_NAME) {
         this.initController(event.initController.data);
       } else if (event.unsubscribe && event.unsubscribe === CONTROLLER_NAME) {
@@ -157,7 +157,7 @@
   };
 
   ReportDataController.prototype.onUnsubscribe = function() {
-    this.subscription.dispose();
+    this.subscription.unsubscribe();
   };
 
   /**
