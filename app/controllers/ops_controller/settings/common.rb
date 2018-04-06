@@ -176,7 +176,7 @@ module OpsController::Settings::Common
   end
 
   def pglogical_subscriptions_form_fields
-    replication_type = MiqRegion.replication_type
+    replication_type = valid_replication_type || MiqRegion.replication_type
     subscriptions = replication_type == :global ? PglogicalSubscription.all : []
     subscriptions = get_subscriptions_array(subscriptions) unless subscriptions.empty?
     exclusion_list = replication_type == :remote ? MiqPglogical.new.active_excludes : MiqPglogical.default_excludes
