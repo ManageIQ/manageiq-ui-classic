@@ -606,6 +606,10 @@ table.table.table-summary-screen tbody td img {
 
 /// begin table view styling
 
+table.non-breakable td:not(.table-view-pf-select) {
+  word-break: unset !important;
+}
+
 table.table td:not(.table-view-pf-select) {
   //Force word break but prevent bs-switch from wrapping
   word-break: break-all;
