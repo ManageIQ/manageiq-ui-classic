@@ -181,7 +181,7 @@
       .form-group
         %label.col-md-2.control-label
           = _('Timezone')
-        .col-md-8
+        .col-md-8.dropup
           = select_tag('profile_tz',
                        options_for_select([["<#{_('Determine at Run Time')}>", nil]] + ViewHelper::ALL_TIMEZONES),
                        "ng-model"                    => "vm.timeProfileModel.profile_tz",
