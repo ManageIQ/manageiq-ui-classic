@@ -1,6 +1,7 @@
 - flash_div_id ||= 'flash_msg_div'
 
-%div{:id => flash_div_id, :style => ("display: none" unless @flash_array)}
+- flash_style ||= @flash_array ? "" : "display_none"
+%div{:id => flash_div_id, :style => flash_style}
   - if @flash_array
     .flash_text_div
       - @flash_array.each do |fl|
