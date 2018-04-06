@@ -13,7 +13,7 @@
 //= require bower_components/angular-bootstrap/ui-bootstrap
 //= require bower_components/angular-bootstrap/ui-bootstrap-tpls
 //= require angular-sanitize
-//= require bower_components/angular.validators/angular.validators
+//= require angular.validators/angular.validators
 //= require ng-redux/dist/ng-redux
 //= require bower_components/moment/moment
 //= require bower_components/moment-strftime/lib/moment-strftime
