@@ -46,6 +46,20 @@
           = _("Resize Disks")
         .col-md-8
           = h(@options[:disk_resize].size)
+    - if @options[:network_adapter_add]
+      .form-group
+        %label.control-label.col-md-2
+          = _("Add Network Adapters")
+        .col-md-8
+          = h(@options[:network_adapter_add].size)
+          &nbsp;
+    - if @options[:network_adapter_remove]
+      .form-group
+        %label.control-label.col-md-2
+          = _("Remove Network Adapters")
+        .col-md-8
+          = h(@options[:network_adapter_remove].size)
+          &nbsp;
     - if @options[:instance_type]
       .form-group
         %label.control-label.col-md-2

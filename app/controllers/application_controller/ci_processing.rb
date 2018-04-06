@@ -15,6 +15,7 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Reconfigure
     helper_method(:supports_reconfigure_disks?)
     helper_method(:supports_reconfigure_disksize?)
+    helper_method(:supports_reconfigure_network_adapters?)
     include Mixins::Actions::VmActions::PolicySimulation
     include Mixins::Actions::VmActions::Transform
 
