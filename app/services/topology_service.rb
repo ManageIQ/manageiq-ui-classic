@@ -33,6 +33,11 @@ class TopologyService
     end
   end
 
+  # If needed, implemented this on its subclasses
+  def add_to_graph?(_entity, _links_index, _links, _parent_id)
+    true
+  end
+
   def build_base_entity_data(entity)
     {
       :name   => entity_name(entity),
@@ -89,7 +94,7 @@ class TopologyService
   def map_to_graph(providers, graph)
     topo_items = {}
     links = []
-
+    links_index = {}
     stack = providers.map do |entity|
       [entity, graph, nil]
     end
@@ -103,7 +108,11 @@ class TopologyService
       # Build a node from the current item
       topo_items[id] = build_entity_data(entity)
       # Create an edge if the node has a parent
-      links << build_link(parent, id) if parent
+      if parent
+        links << build_link(parent, id)
+        # Keep the index of a child in links
+        links_index[id] = links.length - 1
+      end
       # Skip if there are no more items in the generator graph
       next if relations.nil?
 
@@ -114,8 +123,10 @@ class TopologyService
         next if children.nil?
         # Push the child/children to the stack with the chunked generator graph
         if children.respond_to?(:each)
-          children.each { |child| stack.push([child, tail, id]) }
-        else
+          children.each do |child|
+            stack.push([child, tail, id]) if add_to_graph?(child, links_index, links, id)
+          end
+        elsif add_to_graph?(children, links_index, links, id)
           stack.push([children, tail, id])
         end
       end
