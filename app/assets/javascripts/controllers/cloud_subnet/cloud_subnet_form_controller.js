@@ -9,6 +9,7 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['cloudSubnetFormId
       cloud_tenant_id: "",
       network_id: "",
     };
+    vm.ems = [];
 
     vm.networkProtocols = ["ipv4", "ipv6"];
     vm.formId = cloudSubnetFormId;
@@ -22,6 +23,12 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['cloudSubnetFormId
       vm.cloudSubnetModel.network_protocol = "ipv4";
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.cloudSubnetModel );
+
+      API.get('/api/providers?collection_class=ManageIQ::Providers::NetworkManager&attributes=id,name&expand=resources')
+        .then(function(response) {
+          vm.ems = response.resources;
+        })
+        .catch(miqService.handleFailure);
     } else {
       miqService.sparkleOn();
       API.get("/api/cloud_subnets/" + cloudSubnetFormId + "?expand=resources&attributes=ext_management_system.name,cloud_tenant.name,cloud_network.name").then(function(data) {
