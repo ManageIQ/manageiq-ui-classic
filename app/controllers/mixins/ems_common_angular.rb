@@ -123,7 +123,7 @@ module Mixins
       when 'ManageIQ::Providers::Azure::CloudManager'
         [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region]]
       when 'ManageIQ::Providers::Vmware::CloudManager'
-        [params[:default_hostname], params[:default_api_port], user, password, true]
+        [params[:default_hostname], params[:default_api_port], user, password, params[:api_version], true]
       when 'ManageIQ::Providers::Google::CloudManager'
         [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, ems.http_proxy_uri, true]
       when 'ManageIQ::Providers::Microsoft::InfraManager'
