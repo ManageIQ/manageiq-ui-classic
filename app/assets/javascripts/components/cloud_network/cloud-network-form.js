@@ -25,7 +25,7 @@ function cloudNetworkFormController(API, miqService) {
       "VXLAN": "vxlan",
     };
 
-    vm.available_ems = [];
+    vm.ems = [];
     vm.network_types_for_segmentation = /vlan|vxlan|gre/;
     vm.formId = vm.cloudNetworkFormId;
     vm.model = "cloudNetworkModel";
@@ -40,12 +40,14 @@ function cloudNetworkFormController(API, miqService) {
       vm.cloudNetworkModel.external_facing = false;
       vm.cloudNetworkModel.shared = false;
       vm.cloudNetworkModel.vlan_transparent = false;
-      API.get("/api/providers?expand=resources&attributes=name&filter[]=type='*NetworkManager'").then(function(data) {
-        vm.available_ems = data.resources;
-        vm.afterGet = true;
-        vm.modelCopy = angular.copy( vm.cloudNetworkModel );
-        miqService.sparkleOff();
-      }).catch(miqService.handleFailure);
+      miqService.networkProviders()
+        .then(function(providers) {
+          vm.ems = providers;
+
+          vm.afterGet = true;
+          vm.modelCopy = angular.copy( vm.cloudNetworkModel );
+          miqService.sparkleOff();
+        });
     } else {
       API.get("/api/cloud_networks/" + vm.cloudNetworkFormId + "?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name").then(function(data) {
         Object.assign(vm.cloudNetworkModel, data);
