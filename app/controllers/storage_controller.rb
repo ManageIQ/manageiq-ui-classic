@@ -413,7 +413,7 @@ class StorageController < ApplicationController
     current_nodetype = search_text_type(@sb[:storage_search_text][:current_node])
 
     @sb[:storage_search_text]["#{previous_nodetype}_search_text"] = @search_text
-    @search_text = @sb[:storage_search_text]["#{current_nodetype}_search_text"]
+    @search_text = @sb[:storage_search_text]["#{current_nodetype}_search_text"] || @sb[:search_text]
     @sb[:storage_search_text]["#{x_active_accord}_search_text"] = @search_text
   end
 
