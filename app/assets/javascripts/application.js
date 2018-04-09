@@ -13,7 +13,7 @@
 //= require bower_components/angular-bootstrap/ui-bootstrap
 //= require bower_components/angular-bootstrap/ui-bootstrap-tpls
 //= require angular-sanitize
-//= require bower_components/angular.validators/angular.validators
+//= require angular.validators/angular.validators
 //= require ng-redux/dist/ng-redux
 //= require bower_components/moment/moment
 //= require bower_components/moment-strftime/lib/moment-strftime
@@ -49,9 +49,9 @@
 //= require bower_components/bootstrap-filestyle/src/bootstrap-filestyle
 //= require bower_components/bootstrap-select/js/bootstrap-select
 //= require bower_components/bootstrap-hover-dropdown/bootstrap-hover-dropdown
-//= require bower_components/bootstrap-switch/dist/js/bootstrap-switch
+//= require bootstrap-switch/dist/js/bootstrap-switch
 //= require bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin
-//= require bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch
+//= require angular-bootstrap-switch/dist/angular-bootstrap-switch
 //= require bower_components/angular-ui-codemirror/ui-codemirror
 //= require bower_components/patternfly-bootstrap-treeview/dist/bootstrap-treeview
 //= require bower_components/jquery.observe_field/jquery.observe_field
