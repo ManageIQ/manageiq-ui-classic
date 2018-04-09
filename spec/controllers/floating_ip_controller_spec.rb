@@ -146,7 +146,7 @@ describe FloatingIpController do
       it "queues the update action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :update, :params => { :button => "save", :format => :js, :id => @floating_ip.id,
-                                   :network_port_ems_ref => "" }
+                                   :network_port => {:ems_ref => ""}}
       end
     end
   end
