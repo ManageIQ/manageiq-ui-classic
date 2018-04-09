@@ -36,6 +36,16 @@
   opacity: 0.6;
 }
 /* stylelint-disable at-rule-no-unknown */
+
+.pf-blue-info {
+    color: #0088ce; //pf-blue-400
+}
+
+.popover{
+  max-width: none;
+}
+
+
 .compare-same {
   @extend .fa, .fa-lg, .fa-check;
 
