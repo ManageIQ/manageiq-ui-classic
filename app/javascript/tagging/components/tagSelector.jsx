@@ -4,21 +4,26 @@ import PropTypes from 'prop-types';
 
 class TagSelector extends React.Component {
   handleChange = (selectedOption) => {
-    this.props.onTagCategoryChange({ id: selectedOption.value,
-      description: this.props.tagCategories.find( category => (category.id === selectedOption.value)).description });
+    this.props.onTagCategoryChange({
+      id: selectedOption.value,
+      description: this.props.tagCategories.find(category => (category.id === selectedOption.value)).description,
+    });
   }
 
+
+  tagCategories = this.props.tagCategories.map(category =>
+    ({ value: category.id, label: (category.description + (category.singleValue ? '*' : '')) }));
+
   render() {
-    const value = this.props.selectedOption.id;
     const label = this.props.selectedOption.description;
-    const tagCategories = this.props.tagCategories.map(category => ({ value: category.id, label: (category.description + (category.singleValue ? '*' : '') )}));
+    const value = this.props.selectedOption.id;
     return (
       <Select
         name="form-field-name"
         value={value}
         label={label}
         onChange={this.handleChange}
-        options={tagCategories}
+        options={this.tagCategories}
         resetValue={{ label: '', value: '' }}
       />
     );

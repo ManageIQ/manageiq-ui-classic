@@ -2,13 +2,18 @@
 
 exports[`TagCategory Component match snapshot 1`] = `
 <ul
-  className="list-inline tagCategory"
+  className="tag-category list-inline"
 >
   animal
   :
   <li>
     <span
       className="label label-primary"
+      style={
+        Object {
+          "color": "defaultColor",
+        }
+      }
     >
       duck
       <a
@@ -31,6 +36,11 @@ exports[`TagCategory Component match snapshot 1`] = `
   <li>
     <span
       className="label label-primary"
+      style={
+        Object {
+          "color": "defaultColor",
+        }
+      }
     >
       lion
       <a

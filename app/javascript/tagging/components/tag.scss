@@ -1,4 +1,7 @@
+@import '~patternfly/dist/sass/patternfly/variables';
+:export { defaultColor: $color-pf-white; }
+
 .remove-button {
-  color: white;
+  color: $color-pf-black;
   margin-left: 5px;
 }

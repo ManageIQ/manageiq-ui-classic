@@ -1,24 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, ButtonGroup, Button, Col } from 'patternfly-react';
+import { Grid, Row, ButtonGroup, Button } from 'patternfly-react';
 import Tagging from './tagging';
 
 class TaggingWithButtons extends React.Component {
-  onTagCategoryChange = (selectedTagCategory) => {
-    this.props.onTagCategoryChange(selectedTagCategory);
-  }
+  onTagCategoryChange = selectedTagCategory => this.props.onTagCategoryChange(selectedTagCategory);
 
-  onTagValueChange = (selectedTagValue) => {
-    if (this.props.multiValue) {
-      this.props.onTagMultiValueChange({ tagCategory: this.props.selectedTagCategory, tagValue: selectedTagValue });
-    } else {
-      this.props.onTagValueChange({ tagCategory: this.props.selectedTagCategory, tagValue: selectedTagValue });
-    }
-  }
-
-  onTagDeleteClick = (tagCategory, tagValue) => {
-    this.props.onTagDeleteClick({ tagCategory, tagValue });
-  }
+  onTagDeleteClick = (tagCategory, tagValue) => this.props.onTagDeleteClick({ tagCategory, tagValue });
 
   render() {
     return (
@@ -33,7 +21,7 @@ class TaggingWithButtons extends React.Component {
           selectedTagCategory={this.props.selectedTagCategory}
           selectedTagValue={this.props.selectedTagValue}
         />
-        <Row className={'pull-right'}>
+        <Row className="pull-right">
           <ButtonGroup>
             <Button
               onClick={this.props.cancelButton.onClick}

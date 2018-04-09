@@ -1,12 +1,14 @@
+@import '~patternfly/dist/sass/patternfly/variables';
+
 ul.tag-category.list-inline {
   display: inline-block;
-  background-color: #00659c;
+  background-color: $color-pf-blue-500;
   padding: 5px 5px 5px 5px !important;
-  color: white;
+  color: $color-pf-white;
   margin-left: 5px;
   margin-right: 10px;
   margin-bottom: 5px;
   li a span {
-    color: white;
+    color: $color-pf-white;
   }
 }

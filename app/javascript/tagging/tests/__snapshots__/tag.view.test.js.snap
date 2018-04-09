@@ -23,13 +23,18 @@ Array [
         className="list-inline"
       >
         <ul
-          className="list-inline tagCategory"
+          className="tag-category list-inline"
         >
           Name
           :
           <li>
             <span
               className="label label-primary"
+              style={
+                Object {
+                  "color": "defaultColor",
+                }
+              }
             >
               Pepa
               <a

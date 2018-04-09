@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, ControlLabel } from 'patternfly-react';
 import Tag from './tag';
-import './tagCategory.scss'
+import './tagCategory.scss';
 
 class TagCategory extends React.Component {
   generateTag = tagValue =>
     (<Tag
-      key={`${tagValue.id}`}
+      key={tagValue.id}
       tagCategory={this.props.tagCategory}
       tagValue={tagValue}
       onTagDeleteClick={this.props.onTagDeleteClick}
@@ -15,12 +14,10 @@ class TagCategory extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-          <ul className="tag-category list-inline">
-            {this.props.tagCategory.description}:
-            {this.props.tagValues.map(this.generateTag)}
-          </ul>
-      </React.Fragment>
+      <ul className="tag-category list-inline">
+        {this.props.tagCategory.description}:
+        {this.props.tagValues.map(tagValue => this.generateTag(tagValue))}
+      </ul>
     );
   }
 }

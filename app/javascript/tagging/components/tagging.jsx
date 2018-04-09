@@ -3,38 +3,55 @@ import PropTypes from 'prop-types';
 import { Grid, Row, Col } from 'patternfly-react';
 import TagModifier from './tagModifier';
 import TagView from './tagView';
+import CategoryModifier from './categoryModifier';
+import ValueModifier from './valueModifier';
 
 class Tagging extends React.Component {
-  onTagCategoryChange = (selectedTagCategory) => {
-    this.props.onTagCategoryChange(selectedTagCategory);
-  }
-
   onTagValueChange = (selectedTagValue) => {
-    if (this.props.tags.find(tag => (tag.id === this.props.selectedTagCategory.id)).singleValue) {
-      this.props.onTagValueChange({ tagCategory: this.props.selectedTagCategory, tagValue: selectedTagValue });
+    const action = { tagCategory: this.props.selectedTagCategory, tagValue: selectedTagValue };
+    if (this.findSelectedCat(this.props.selectedTagCategory).singleValue) {
+      this.props.onTagValueChange(action);
     } else {
-      this.props.onTagMultiValueChange({ tagCategory: this.props.selectedTagCategory, tagValue: selectedTagValue });
+      this.props.onTagMultiValueChange(action);
     }
   }
+
+  onTagCategoryChange = selectedTagCategory => this.props.onTagCategoryChange(selectedTagCategory);
 
   onTagDeleteClick = (tagCategory, tagValue) => {
     this.props.onTagDeleteClick({ tagCategory, tagValue });
   }
+
+  getTagValues = () => (this.findSelectedCat(this.props.selectedTagCategory) && this.findSelectedCat(this.props.selectedTagCategory).values) || [];
+
+  findSelectedCat = (selectedTagCategory = { id: undefined }) => this.props.tags.find(tag => (tag.id === selectedTagCategory.id));
+
+
+  isSelectedCategoryMultiValue = (selectedTagCategory) => {
+    (this.findSelectedCat(selectedTagCategory.id) &&
+      this.findSelectedCat(selectedTagCategory.id).singleValue) === true;
+  }
+
+  tagCategories = this.props.tags.map(tag => ({ description: tag.description, id: tag.id, singleValue: tag.singleValue })) || [];
 
   render() {
     return (
       <Grid>
         <Row>
           <Col xs={12} md={8} lg={6}>
-            <TagModifier
-              tags={this.props.tags}
-              onTagValueChange={this.onTagValueChange}
-              onTagCategoryChange={this.onTagCategoryChange}
-              selectedTagCategory={this.props.selectedTagCategory}
-              selectedTagValue={this.props.selectedTagValue}
-              multiValue={(this.props.tags.find(tag => (tag.id === this.props.selectedTagCategory.id)) &&
-                this.props.tags.find(tag => (tag.id === this.props.selectedTagCategory.id)).singleValue) == true}
-            />
+            <TagModifier>
+              <CategoryModifier
+                selectedTagCategory={this.props.selectedTagCategory}
+                onTagCategoryChange={this.props.onTagCategoryChange}
+                tagCategories={this.tagCategories}
+              />
+              <ValueModifier
+                onTagValueChange={this.onTagValueChange}
+                selectedTagValue={this.props.selectedTagValue}
+                multiValue={this.isSelectedCategoryMultiValue(this.props.selectedTagCategory)}
+                tagValues={this.getTagValues()}
+              />
+            </TagModifier>
           </Col>
           <Col xs={12} md={4} lg={6}>
             <TagView assignedTags={this.props.assignedTags} onTagDeleteClick={this.onTagDeleteClick} />

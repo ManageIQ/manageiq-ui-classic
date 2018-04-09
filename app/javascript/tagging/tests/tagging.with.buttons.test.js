@@ -52,15 +52,13 @@ describe('Test connected Tagging component', () => {
     expect(wrapper.find(TaggingWithButtonsConnected).length).toEqual(1);
   });
 
-  it('', () => {
+  it('calls right function', () => {
     const onTagMultiValueChange = jest.fn();
-    const onTagValueChange = jest.fn();
+    const onTagCategoryChange = jest.fn();
 
-    const wrapper = shallow(<TaggingWithButtons {...initialProps} multiValue={true} selectedTagCategory={{ description: 'Name', id: 1 }} onTagValueChange={onTagValueChange} onTagMultiValueChange={onTagMultiValueChange}/>);
-    wrapper.instance().onTagValueChange({});
-    expect(onTagMultiValueChange).toBeCalledWith({"tagCategory": {"description": "Name", "id": 1}, "tagValue": {}});
-    wrapper.setProps({multiValue: false});
-    wrapper.instance().onTagValueChange({});
-    expect(onTagValueChange).toBeCalledWith({"tagCategory": {"description": "Name", "id": 1}, "tagValue": {}});
+    const wrapper = shallow(<TaggingWithButtons {...initialProps} multiValue={true} selectedTagCategory={{ description: 'Name', id: 1 }} onTagCategoryChange={onTagCategoryChange} />);
+    wrapper.instance().onTagCategoryChange({ "description": "Number", "id": 2 });
+    expect(onTagCategoryChange).toBeCalledWith({ "description": "Number", "id": 2 });
+
   })
 });

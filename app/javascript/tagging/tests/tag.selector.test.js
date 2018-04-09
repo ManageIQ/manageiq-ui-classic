@@ -20,7 +20,7 @@ describe('Tagging modifier', () => {
   it('should call methods', () => {
     const onTagCategoryChange = jest.fn();
     const wrapper = shallow(<TagSelector tagCategories={tagCategories} onTagCategoryChange={onTagCategoryChange} selectedOption={selectedTagValue} />);
-    wrapper.instance().handleChange('Knedlik');
+    wrapper.instance().handleChange({ label: 'Name', value: 1 });
     expect(onTagCategoryChange.mock.calls.length).toEqual(1);
   });
 });

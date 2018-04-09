@@ -283,13 +283,18 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
             className="list-inline"
           >
             <ul
-              className="list-inline tagCategory"
+              className="tag-category list-inline"
             >
               Name
               :
               <li>
                 <span
                   className="label label-primary"
+                  style={
+                    Object {
+                      "color": "defaultColor",
+                    }
+                  }
                 >
                   Pepa
                   <a
@@ -312,6 +317,17 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
             </ul>
           </ul>
         </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-12"
+    >
+      <div>
+        * Only a single value can be assigned from these categories
       </div>
     </div>
   </div>

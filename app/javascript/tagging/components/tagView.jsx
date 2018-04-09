@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Form } from 'patternfly-react';
+import { Row, Col } from 'patternfly-react';
 import TagCategory from './tagCategory';
 
 class TagView extends React.Component {
   generateTagCategories = tag =>
     (<TagCategory
-      key={`${tag.tagCategory.id}`}
+      key={tag.tagCategory.id}
       tagCategory={tag.tagCategory}
       tagValues={tag.tagValues}
       onTagDeleteClick={this.props.onTagDeleteClick}
@@ -17,12 +17,12 @@ class TagView extends React.Component {
       <React.Fragment>
         <Row><Col lg={12}><h2>{this.props.header}</h2></Col></Row>
         <Row>
-        <Col lg={12}>
-          <ul className="list-inline">
-            {this.props.assignedTags.map(this.generateTagCategories)}
-          </ul>
-        </Col>
-      </Row>
+          <Col lg={12}>
+            <ul className="list-inline">
+              {this.props.assignedTags.map(this.generateTagCategories)}
+            </ul>
+          </Col>
+        </Row>
       </React.Fragment>
     );
   }

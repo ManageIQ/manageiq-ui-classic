@@ -4,6 +4,11 @@ exports[`Tag Component match snapshot 1`] = `
 <li>
   <span
     className="label label-primary"
+    style={
+      Object {
+        "color": "defaultColor",
+      }
+    }
   >
     duck
     <a

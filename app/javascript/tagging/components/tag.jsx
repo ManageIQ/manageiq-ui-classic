@@ -1,17 +1,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Label } from 'patternfly-react';
-import './tag.scss';
+import styles from './tag.scss';
+
 
 const Tag = ({
   onTagDeleteClick, tagCategory, tagValue,
 }) => (
-  <li key={`${tagValue.id}`}>
+  <li key={tagValue.id}>
     <Label
       key={tagValue.id}
-      bsStyle='primary'
-      onRemoveClick={() => { onTagDeleteClick(tagCategory, tagValue); }}
-      style={{color: 'white'}}
+      bsStyle="primary"
+      onRemoveClick={() => onTagDeleteClick(tagCategory, tagValue)}
+      style={{ color: styles.defaultColor }}
     >
       {tagValue.description}
     </Label>
