@@ -1,10 +1,11 @@
-ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 'floatingIpFormId', 'miqService', function($http, $scope, floatingIpFormId, miqService) {
+ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 'floatingIpFormId', 'miqService', 'API', function($http, $scope, floatingIpFormId, miqService, API) {
   var vm = this;
   vm.floatingIpModel = { floating_ip_address: '' };
   vm.formId = floatingIpFormId;
   vm.afterGet = false;
   vm.modelCopy = angular.copy( vm.floatingIpModel );
   vm.model = "floatingIpModel";
+  vm.ems = [];
 
   ManageIQ.angular.scope = vm;
   vm.saveable = miqService.saveable;
@@ -13,6 +14,12 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
     vm.floatingIpModel.floating_ip_address = "";
     vm.floatingIpModel.description = "";
     vm.newRecord = true;
+
+    API.get('/api/providers?collection_class=ManageIQ::Providers::NetworkManager&attributes=id,name&expand=resources')
+      .then(function(response) {
+        vm.ems = response.resources;
+      })
+      .catch(miqService.handleFailure);
   } else {
     miqService.sparkleOn();
 
