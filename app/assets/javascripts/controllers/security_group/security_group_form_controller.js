@@ -8,6 +8,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
       description: "",
       firewall_rules: [],
     };
+    vm.ems = [];
 
     vm.hostProtocols = ["", "TCP", "UDP", "ICMP"];
     vm.networkProtocols = ["IPV4", "IPV6"];
@@ -21,6 +22,12 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     if (vm.newRecord) {
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.securityGroupModel );
+
+      API.get('/api/providers?collection_class=ManageIQ::Providers::NetworkManager&attributes=id,name&expand=resources')
+        .then(function(response) {
+          vm.ems = response.resources;
+        })
+        .catch(miqService.handleFailure);
     } else {
       miqService.sparkleOn();
 
