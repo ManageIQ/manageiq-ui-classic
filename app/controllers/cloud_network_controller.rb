@@ -137,7 +137,6 @@ class CloudNetworkController < ApplicationController
   def edit
     params[:id] = checked_item_id unless params[:id].present?
     assert_privileges("cloud_network_edit")
-    @network_ems_provider_choices = {}
     @network = find_record_with_rbac(CloudNetwork, params[:id])
     @in_a_form = true
     drop_breadcrumb(
@@ -154,10 +153,6 @@ class CloudNetworkController < ApplicationController
 
     @network = CloudNetwork.new
     @in_a_form = true
-    @network_ems_provider_choices = {}
-    network_managers.each do |network_manager|
-      @network_ems_provider_choices[network_manager.name] = network_manager.id
-    end
 
     drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
     render :action => 'change'

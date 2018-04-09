@@ -165,10 +165,6 @@ class FloatingIpController < ApplicationController
     assert_privileges("floating_ip_new")
     @floating_ip = FloatingIp.new
     @in_a_form = true
-    @ems_choices = {}
-    network_managers.each do |network_manager|
-      @ems_choices[network_manager.name] = network_manager.id
-    end
     drop_breadcrumb(
       :name => _("Add New Floating IP"),
       :url  => "/floating_ip/new"
