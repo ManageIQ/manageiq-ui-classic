@@ -9,6 +9,7 @@ module ApplicationHelper::PageLayouts
       container_dashboard
       container_topology
       ems_infra_dashboard
+      ems_physical_infra_dashboard
       infra_topology
       network_topology
       cloud_topology
@@ -71,7 +72,7 @@ module ApplicationHelper::PageLayouts
        (@layout == 'vm' && controller.action_name == 'edit') ||
        (@layout == "report" && ["new", "create", "edit", "copy", "update", "explorer"].include?(controller.action_name))
       return false
-    elsif %w(container_dashboard dashboard ems_infra_dashboard).include?(@layout) ||
+    elsif %w(container_dashboard dashboard ems_infra_dashboard ems_physical_infra_dashboard).include?(@layout) ||
           (%w(dashboard).include?(@showtype) && @lastaction.to_s.ends_with?("_dashboard")) ||
           %w(topology).include?(@showtype)
       # Dashboard tabs are located in taskbar because they are otherwise hidden behind the taskbar regardless of z-index
