@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope', 'networkRouterFormId', 'miqService', function($http, $scope, networkRouterFormId, miqService) {
+ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope', 'networkRouterFormId', 'miqService', 'API', function($http, $scope, networkRouterFormId, miqService, API) {
   var vm = this;
 
   vm.networkRouterModel = {
@@ -9,6 +9,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   vm.afterGet = false;
   vm.modelCopy = angular.copy( vm.networkRouterModel );
   vm.model = "networkRouterModel";
+  vm.ems = [];
 
   vm.saveable = miqService.saveable;
 
@@ -20,6 +21,12 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     vm.networkRouterModel.external_gateway = false;
     vm.networkRouterModel.cloud_subnet_id = null;
     vm.newRecord = true;
+
+    API.get('/api/providers?collection_class=ManageIQ::Providers::NetworkManager&attributes=id,name&expand=resources')
+      .then(function(response) {
+        vm.ems = response.resources;
+      })
+      .catch(miqService.handleFailure);
   } else {
     miqService.sparkleOn();
 
