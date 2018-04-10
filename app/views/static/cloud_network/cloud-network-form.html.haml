@@ -27,7 +27,7 @@
       .col-md-8{'ng-if' => "!vm.newRecord"}
         %input.form-control{'type'         => "text",
                             'name'         => "ems_name",
-                            'ng-maxlength' => 128,
+                            'maxlength'    => 128,
                             'ng-model'     => "vm.cloudNetworkModel.ext_management_system.name",
                             'ng-disabled'  => true}
     %h3
@@ -51,7 +51,7 @@
       .col-md-8{'ng-if' => "!vm.newRecord"}
         %input.form-control{'type'         => "text",
                             'name'         => "cloud_tenant_name",
-                            'ng-maxlength' => 128,
+                            'maxlength'    => 128,
                             'ng-model'     => "vm.cloudNetworkModel.cloud_tenant.name",
                             'ng-disabled'  => true}
   .form-horizontal{'ng-if' => "vm.cloudNetworkModel.cloud_tenant.id"}
@@ -73,18 +73,18 @@
       .col-md-8
         %input.form-control{'type'         => "text",
                             'name'         => "provider_physical_network",
-                            'ng-disabled'   => "!vm.newRecord",
+                            'ng-disabled'  => "!vm.newRecord",
                             'ng-model'     => "vm.cloudNetworkModel.provider_physical_network",
-                            'ng-maxlength' => 128}
+                            'maxlength'    => 128}
     .form-group{'ng-if' => "vm.network_types_for_segmentation.test(vm.cloudNetworkModel.provider_network_type)"}
       %label.control-label.col-md-2
         = _('Segmentation ID')
       .col-md-8
         %input.form-control{'type'         => "text",
                             'name'         => "provider_segmentation_id",
-                            'ng-disabled'   => "!vm.newRecord",
+                            'ng-disabled'  => "!vm.newRecord",
                             'ng-model'     => "vm.cloudNetworkModel.provider_segmentation_id",
-                            'ng-maxlength' => 128}
+                            'maxlength'    => 128}
   %h3
     = _('Network Information')
   .form-horizontal
@@ -95,7 +95,7 @@
         %input.form-control{'type'         => "text",
                             'name'         => "name",
                             'ng-model'     => "vm.cloudNetworkModel.name",
-                            'ng-maxlength' => 128,
+                            'maxlength'    => 128,
                             'required'     => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
