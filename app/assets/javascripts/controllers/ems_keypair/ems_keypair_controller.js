@@ -1,6 +1,18 @@
 (function() {
-  var EmsKeypairController = function($scope) {
+  var EmsKeypairController = function($scope, ng_show, validate_url, prefix, main_scope, verify_title_off, userid_disabled, private_key_disabled, userid_label, private_key_label, new_private_key_label, change_stored_private_key, cancel_private_key_change) {
     var vm = this;
+    vm.ng_show = ng_show;
+    vm.validate_url = validate_url;
+    vm.prefix = prefix;
+    vm.main_scope = main_scope;
+    vm.verify_title_off = verify_title_off;
+    vm.userid_disabled = userid_disabled;
+    vm.private_key_disabled = private_key_disabled;
+    vm.userid_label = userid_label;
+    vm.private_key_label = private_key_label;
+    vm.new_private_key_label = new_private_key_label;
+    vm.change_stored_private_key = change_stored_private_key;
+    vm.cancel_private_key_change = cancel_private_key_change;
     $scope.$on('resetClicked', function() {
       vm.resetClicked();
     });
@@ -66,6 +78,6 @@
     return !(this.model.emstype == 'openstack_infra' && this.newRecord && tab == 'ssh_keypair')
   };
 
-  EmsKeypairController.$inject = ["$scope"];
+  EmsKeypairController.$inject = ["$scope", "ng_show", "validate_url", "prefix", "main_scope", "verify_title_off", "userid_disabled", "private_key_disabled", "userid_label", "private_key_label", "new_private_key_label", "change_stored_private_key", "cancel_private_key_change"];
   ManageIQ.angular.app.controller('emsKeypairController', EmsKeypairController);
 })();
