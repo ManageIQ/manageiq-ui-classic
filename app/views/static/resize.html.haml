@@ -20,11 +20,9 @@
                 'ng-options' => 'flavor.id as flavor.name for flavor in vm.flavors track by flavor.id',
                 :miqrequired => true,
                 :checkchange => true}
-
   %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
                   'paging_div_buttons_id'            => "angular_paging_div_buttons",
                   'paging_div_buttons_type'          => "Submit"}
-
   - unless @explorer
     %table{:width => '100%'}
       %tr
@@ -37,4 +35,5 @@
           = button_tag(_("Cancel"),
                         :class     => "btn btn-default",
                         "ng-click" => "cancelClicked()")
+
 
