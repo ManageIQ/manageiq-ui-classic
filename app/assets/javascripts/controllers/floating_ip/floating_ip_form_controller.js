@@ -1,10 +1,11 @@
-ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 'floatingIpFormId', 'miqService', function($http, $scope, floatingIpFormId, miqService) {
+ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 'floatingIpFormId', 'miqService', 'emsChoices', function($http, $scope, floatingIpFormId, miqService, emsChoices) {
   var vm = this;
   vm.floatingIpModel = { floating_ip_address: '' };
   vm.formId = floatingIpFormId;
   vm.afterGet = false;
   vm.modelCopy = angular.copy( vm.floatingIpModel );
   vm.model = "floatingIpModel";
+  vm.emsChoices = emsChoices;
 
   ManageIQ.angular.scope = vm;
   vm.saveable = miqService.saveable;
