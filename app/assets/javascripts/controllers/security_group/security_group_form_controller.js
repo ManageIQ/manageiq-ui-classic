@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFormId', 'miqService', 'API', '$q','networkProviderChoices', function(securityGroupFormId, miqService, API, $q, networkProviderChoices) {
+ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFormId', 'miqService', 'API', '$q', 'networkProviderChoices', function(securityGroupFormId, miqService, API, $q, networkProviderChoices) {
   var vm = this;
 
   var init = function() {
@@ -14,9 +14,9 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     vm.directions = ["inbound", "outbound"];
 
     vm.formId = securityGroupFormId;
-	    vm.model = "securityGroupModel";
-	    vm.newRecord = securityGroupFormId === "new";
-	    vm.saveable = miqService.saveable;
+    vm.model = "securityGroupModel";
+    vm.newRecord = securityGroupFormId === "new";
+    vm.saveable = miqService.saveable;
 
     if (vm.newRecord) {
       vm.afterGet = true;
