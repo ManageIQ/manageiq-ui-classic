@@ -36,12 +36,12 @@ describe EmsPhysicalInfraController do
       it { is_expected.to have_http_status 200 }
     end
 
-    context "render listnav partial" do
+    context "render show dashboard partial" do
       render_views
 
       it do
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_ems_physical_infra")
+        is_expected.to render_template(:partial => "ems_physical_infra/_show_dashboard")
       end
     end
 
@@ -93,14 +93,11 @@ describe EmsPhysicalInfraController do
       EvmSpecHelper.create_guid_miq_server_zone
     end
     context "when previous breadcrumbs path contained 'Cloud Providers'" do
-      it "shows 'Physical Infrastructure Providers -> (Summary)' breadcrumb path" do
+      it "shows 'Physical Infrastructure Providers -> (Dashboard)' breadcrumb path" do
         ems = FactoryGirl.create(:ems_physical_infra)
         get :show, :params => { :id => ems.id }
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-        expect(breadcrumbs).to eq([{:name => "Physical Infrastructure Providers",
-                                    :url  => "/ems_physical_infra/show_list?page=&refresh=y"},
-                                   {:name => "#{ems.name} (Summary)",
-                                    :url  => "/ems_physical_infra/#{ems.id}"}])
+        expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url => "/ems_physical_infra/#{ems.id}"}])
       end
     end
   end

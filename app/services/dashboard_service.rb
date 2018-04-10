@@ -1,4 +1,6 @@
 class DashboardService
+  include Mixins::CheckedIdMixin
+
   def display_precision
     0
   end

@@ -1388,6 +1388,7 @@ Rails.application.routes.draw do
       :get => %w(
         show
         data
+        recent_servers_data
       )
     },
 
