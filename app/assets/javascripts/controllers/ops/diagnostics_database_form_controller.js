@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', 'submitUrl', 'dbBackupFormFieldChanged', 'sb', 'databaseDisplayName', 'databaseDetails', 'backupSchedules', 'databaseBackupOptionsForSelect', function($http, $scope, $attrs, miqService, miqDBBackupService, submitUrl, dbBackupFormFieldChanged, sb, databaseDisplayName, databaseDetails, backupSchedules, databaseBackupOptionsForSelect) {
+ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', 'miqService', 'miqDBBackupService', 'submitUrl', 'dbBackupFormFieldChanged', 'sb', 'databaseDisplayName', 'databaseDetails', 'backupSchedules', 'databaseBackupOptionsForSelect', function($http, $scope, miqService, miqDBBackupService, submitUrl, dbBackupFormFieldChanged, sb, databaseDisplayName, databaseDetails, backupSchedules, databaseBackupOptionsForSelect) {
   var vm = this;
   var init = function() {
     vm.diagnosticsDatabaseModel = {
