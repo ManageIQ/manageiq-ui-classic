@@ -1,11 +1,11 @@
-ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope', 'networkRouterFormId', 'miqService', function($http, $scope, networkRouterFormId, miqService) {
+ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope', 'miqService', function($http, $scope, miqService) {
   var vm = this;
 
   vm.networkRouterModel = {
     name: '',
     cloud_subnet_id: '',
   };
-  vm.formId = networkRouterFormId;
+  vm.formId = vm.networkRouterId;
   vm.afterGet = false;
   vm.modelCopy = angular.copy( vm.networkRouterModel );
   vm.model = "networkRouterModel";
