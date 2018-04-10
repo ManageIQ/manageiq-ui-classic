@@ -713,7 +713,7 @@ class DashboardController < ApplicationController
 
   # Gather information for the report accordians
   def build_timeline_listnav
-    populate_reports_menu("timeline", "menu")
+    populate_reports_menu(true)
     build_timeline_tree(@sb[:rpt_menu], "timeline")
   end
 
