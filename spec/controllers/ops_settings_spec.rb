@@ -165,7 +165,7 @@ describe OpsController do
         controller.send(:zone_edit)
 
         expect(controller.send(:flash_errors?)).to be_truthy
-        expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
+        expect(assigns(:flash_array).first[:message]).to match(/Name is not unique within region/)
       end
     end
 
