@@ -1,4 +1,5 @@
 #main_div
-      %security-group-form-component{'security-group-fomr-id' => @id}
+      %security-group-form-component{'security-group-form-id' => 'new',}
 :javascript
-      miq_bootstrap('security-group-component')
+      ManageIQ.angular.app.value('emsChoices', #{@ems_choices.sort.to_json});
+      miq_bootstrap('security-group-form-component')

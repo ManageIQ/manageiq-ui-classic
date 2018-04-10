@@ -7,9 +7,9 @@ ManageIQ.angular.app.component('securityGroupFormComponent', {
   },
 });
 
-securityGroupFormController.$inject = ['miqService', 'API'];
+securityGroupFormController.$inject = ['miqService', 'API', '$q','emsChoices'];
 
-function securityGroupFormController(miqService, API) {
+function securityGroupFormController(miqService, API,$q,emsChoices) {
   var vm = this;
 
   var init = function() {
@@ -19,14 +19,14 @@ function securityGroupFormController(miqService, API) {
       description: "",
       firewall_rules: [],
     };
-
+    vm.emsChoices=emsChoices;
     vm.hostProtocols = ["", "TCP", "UDP", "ICMP"];
     vm.networkProtocols = ["IPV4", "IPV6"];
     vm.directions = ["inbound", "outbound"];
 
     vm.formId = vm.securityGroupFormId;
     vm.model = "securityGroupModel";
-    vm.newRecord = securityGroupFormId === "new";
+    vm.newRecord = vm.securityGroupFormId === "new";
     vm.saveable = miqService.saveable;
 
     if (vm.newRecord) {
