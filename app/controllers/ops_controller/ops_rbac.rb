@@ -962,7 +962,7 @@ module OpsController::OpsRbac
   def rbac_role_get_details(id)
     @edit = nil
     @record = @role = MiqUserRole.find_by_id(from_cid(id))
-    @role_features = @role.feature_identifiers.sort
+    @role_features = rbac_expand_features(@role.feature_identifiers).sort
     @features_tree = rbac_build_features_tree
   end
 

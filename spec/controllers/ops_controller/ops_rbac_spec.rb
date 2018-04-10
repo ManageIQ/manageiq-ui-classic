@@ -430,6 +430,23 @@ describe OpsController do
     end
   end
 
+  context "rbac_role_get_details" do
+    before do
+      MiqUserRole.seed
+      MiqGroup.seed
+      MiqRegion.seed
+      stub_user(:features => :all)
+      @vm_role = FactoryGirl.create(:miq_user_role, :features => %w(embedded_automation_manager))
+    end
+
+    it "EVMRole_vm_user feature tree should contain the embedded_ansible_automation children role" do
+      EvmSpecHelper.seed_specific_product_features(%w(everything embedded_automation_manager embedded_configuration_script_source_view))
+      allow(controller).to receive(:rbac_build_features_tree)
+      controller.send(:rbac_role_get_details, controller.to_cid(@vm_role.id))
+      expect(controller.instance_variable_get(:@role_features)).to include('embedded_configuration_script_source_view')
+    end
+  end
+
   render_views
 
   context "::MiqRegion" do
