@@ -1,0 +1,80 @@
+%ng-form{'name'         => 'aeResolveOptionsForm',
+         'form-changed'  => true}
+  = _('Object Details')
+  .form-group
+    %label.col-md-2.control-label{'for' => 'instance_name'}
+      = _('System/Process')
+    .col-md-8
+      %select#instance_name{'ng-model'   => '$ctrl.instanceName',
+                            'name'       => 'instance_name',
+                            'ng-options' => 'instance for instance in $ctrl.instanceOptions',
+                            'ng-change'  => '$ctrl.instanceNameChange({instanceName: $ctrl.instanceName})',
+                            'pf-select'  => true}
+
+  .form-group{'ng-class' => '{"has-error": aeResolveOptionsForm.object_message.$invalid}'}
+    %label.col-md-2.control-label{'for' => 'object_message'}
+      = _('Message')
+    .col-md-2
+      %input.form-control{'type'        => 'text',
+                          'id'          => 'object_message',
+                          'name'        => 'object_message',
+                          'ng-model'    => '$ctrl.objectMessage',
+                          'ng-change'   => '$ctrl.objectMessageChange({objectMessage: $ctrl.objectMessage})',
+                          'required'    => ''}
+      %span.help-block{'ng-show' => 'aeResolveOptionsForm.object_message.$invalid'}
+        = _('Required')
+
+  .form-group{'ng-class' => '{"has-error": aeResolveOptionsForm.object_request.$invalid}'}
+    %label.col-md-2.control-label{'for' => 'object_request'}
+      = _('Request')
+    .col-md-8
+      %input.form-control{'type'        => 'text',
+                          'id'          => 'object_request',
+                          'name'        => 'object_request',
+                          'ng-model'    => '$ctrl.objectRequest',
+                          'ng-change'   => '$ctrl.objectRequestChange({objectRequest: $ctrl.objectRequest})',
+                          'required'    => ''}
+      %span.help-block{'ng-show' => 'aeResolveOptionsForm.object_request.$invalid'}
+        = _('Required')
+
+  %div
+    = _('Object Attribute')
+    .form-group
+      %label.col-md-2.control-label{'for' => 'target_class'}
+        = _('Type')
+      .col-md-8
+        %select#target_class{'ng-model'     => '$ctrl.targetClass',
+                             'name'         => 'target_class',
+                             'ng-options'   => 'target_class[1] as target_class[0]  for target_class in $ctrl.targetClassOptions',
+                             'ng-change'    => '$ctrl.targetClassChange({targetClass: $ctrl.targetClass})',
+                             'pf-select'    => true}
+          %option{'value' => ''}
+            = "<#{_('Choose')}>"
+    .form-group{'ng-class' => "{'has-error': aeResolveOptionsForm.target_id.$invalid}",
+                'ng-show' => '$ctrl.targetClass'}
+      %label.col-md-2.control-label{'for' => 'target_id'}
+        = _('Selection')
+      .col-md-8
+        %select#target_id{'ng-model'    => '$ctrl.targetId',
+                          'name'        => 'target_id',
+                          'ng-options'  => 'target[1] as target[0] for target in $ctrl.targetIdOptions',
+                          'ng-required' => '$ctrl.targetClass',
+                          'ng-change'   => '$ctrl.targetIdChange({targetId: $ctrl.targetId})',
+                          'pf-select'   => true}
+          %option{'disabled' => '', 'value' => ''} &lt;Choose&gt;
+        %span.help-block{'ng-show' => 'aeResolveOptionsForm.target_id.$error.miqrequired'}
+          = _('Required')
+
+  %div
+    = _("Attribute/Value Pairs")
+    .form-group{"ng-repeat" => "key_val in $ctrl.uiAttrs track by $index"}
+      %label.col-md-2.control-label{"for" => "key_val"}
+        {{$index+1}}
+      .col-md-2
+        %input.form-control{"type"        => "text",
+                            "name"        => "attrs",
+                            "ng-model"    => "$ctrl.uiAttrs[$index][0]"}
+      .col-md-2
+        %input.form-control{"type"        => "text",
+                            "name"        => "attrs",
+                            "ng-model"    => "$ctrl.uiAttrs[$index][1]"}

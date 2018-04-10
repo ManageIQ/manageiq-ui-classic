@@ -82,9 +82,23 @@
                                  "ng-required"                => "!automateRequest() && filterValueRequired(scheduleModel.filter_value)",
                                  "checkchange"                => ""}
               %option{"disabled" => "", "value" => ""} &lt;Choose&gt;
+        
+        %ae-resolve-options{"ng-if"                 => "automateRequest()",
+                            "instance-name"         => "scheduleModel.instance_name",
+                            "instance-options"      => "scheduleModel.instance_names",
+                            "instance-name-change"  => "setInstanceName(instanceName)",
+                            "object-message"        => "scheduleModel.object_message",
+                            "object-message-change" => "setObjectMessage(objectMessage)",
+                            "object-request"        => "scheduleModel.object_request",
+                            "object-request-change" => "setObjectRequest(objectRequest)",
+                            "target-class"          => "scheduleModel.target_class",
+                            "target-class-options"  => "scheduleModel.target_classes",
+                            "target-class-change"   => "targetClassChanged(targetClass)",
+                            "target-id"             => "scheduleModel.target_id",
+                            "target-id-options"     => "scheduleModel.targets",
+                            "target-id-change"      => "setTargetId(targetId)",
+                            "ui-attrs"              => "scheduleModel.ui_attrs"}
 
-        = render :partial => "layouts/angular-bootstrap/ae_resolve_options",
-                 :locals  => {:ng_show => "automateRequest()"}
         = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
                  :locals  => {:ng_show             => "dbBackup()",
                               :ng_reqd_depot_name  => "dbRequired(scheduleModel.depot_name)",
