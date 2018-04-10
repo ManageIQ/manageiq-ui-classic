@@ -78,7 +78,7 @@ function cloudNetworkFormController(API, miqService) {
   vm.resetClicked = function(angularForm) {
     vm.cloudNetworkModel = angular.copy( vm.modelCopy );
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", "All changes have been reset");
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.filterNetworkManagerChanged = function(id) {
