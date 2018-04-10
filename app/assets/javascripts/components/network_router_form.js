@@ -1,6 +1,18 @@
-ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope', 'miqService', function($http, $scope, miqService) {
-  var vm = this;
+ManageIQ.angular.app.component('networkRouterForm',{
+  controller: 'networkRouterFormController',
+  controllerAs: 'vm',
+  templateUrl: '/static/network-router-form.html.haml',
+  bindings: {
+    'networkRouterId': '@',
+    'networkProviderChoices' : '<'
+  },
+});
 
+networkRouterFormController.$inject = [ '$http', '$scope', 'miqService'];
+
+function networkRouterFormController($http, $scope, miqService) {
+  var vm = this;
+  var init = function() {
   vm.networkRouterModel = {
     name: '',
     cloud_subnet_id: '',
@@ -14,7 +26,6 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   ManageIQ.angular.scope = vm;
 
-  var init = function() {
     if (vm.networkRouterId == 'new') {
       vm.networkRouterModel.name = "";
       vm.networkRouterModel.enable_snat = true;
@@ -40,25 +51,25 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     if (vm.networkRouterId == 'new') {
       var url = '/network_router/create/new' + '?button=cancel';
     } else {
-      var url = '/network_router/update/' + networkRouterFormId + '?button=cancel';
+      var url = '/network_router/update/' + vm.networkRouterId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };
 
   vm.saveClicked = function() {
-    var url = '/network_router/update/' + networkRouterFormId + '?button=save';
+    var url = '/network_router/update/' + vm.networkRouterId + '?button=save';
     miqService.miqAjaxButton(url, vm.networkRouterModel, { complete: false });
   };
 
   vm.addInterfaceClicked = function() {
     miqService.sparkleOn();
-    var url = '/network_router/add_interface/' + networkRouterFormId + '?button=add';
+    var url = '/network_router/add_interface/' + vm.networkRouterId + '?button=add';
     miqService.miqAjaxButton(url, vm.networkRouterModel, { complete: false });
   };
 
   vm.removeInterfaceClicked = function() {
     miqService.sparkleOn();
-    var url = '/network_router/remove_interface/' + networkRouterFormId + '?button=remove';
+    var url = '/network_router/remove_interface/' + vm.networkRouterId + '?button=remove';
     miqService.miqAjaxButton(url, vm.networkRouterModel, { complete: false });
   };
 
@@ -113,4 +124,4 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   }
 
   vm.$onInit = init;
-}]);
+}

@@ -1,1 +1,5 @@
-= render :partial => "common_new_edit"
+#main_div
+  %network-router-form{'network-router-id' => @id,
+                      'network-provider-choices' => @network_provider_choices.sort}
+:javascript
+  miq_bootstrap('network-router-form');

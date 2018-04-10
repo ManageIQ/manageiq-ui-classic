@@ -1,12 +1,10 @@
 %form#form_div{:name           => "angularForm",
-               'ng-controller' => "networkRouterFormController as vm",
                'ng-cloak'      => '',
                "miq-form"      => true,
                'form-changed'  => true,
                "model"         => "vm.networkRouterModel",
                "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
-
   %div{"ng-if" => "vm.newRecord"}
     %h3
       = _('Network Provider')
@@ -15,12 +13,11 @@
         %label.col-md-2.control-label
           = _('Network Manager')
         .col-md-8
-          = select_tag("ems_id",
-                        options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
-                        "ng-model"                    => "vm.networkRouterModel.ems_id",
-                        "required"                    => "",
-                        "ng-change"                   => "vm.filterNetworkManagerChanged()",
-                        "selectpicker-for-select-tag" => "")
+          %select{"pf-select" => true,
+                  "ng-model" => "vm.networkRouterModel.ems_id",
+                  "required" => "",
+                  "ng-options" => "option[1] as option[0] for option in vm.networkProviderChoices",
+                  "ng-change" => "vm.filterNetworkManagerChanged()"}
           %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
             = _('Required')
 
@@ -115,7 +112,3 @@
             = _("Required")
 
   = render :partial => "layouts/angular/generic_form_buttons"
-
-:javascript
-  ManageIQ.angular.app.value('networkRouterFormId', '#{@router.id || "new"}');
-  miq_bootstrap('#form_div');
