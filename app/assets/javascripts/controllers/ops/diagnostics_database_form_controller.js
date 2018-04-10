@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', 'submitUrl', 'dbBackupFormFieldChanged', 'sb', 'database_display_name', 'database_details', 'backup_schedules', 'database_backup_options_for_select', function($http, $scope, $attrs, miqService, miqDBBackupService, submitUrl, dbBackupFormFieldChanged, sb, database_display_name, database_details, backup_schedules, database_backup_options_for_select) {
+ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '$scope', '$attrs', 'miqService', 'miqDBBackupService', 'submitUrl', 'dbBackupFormFieldChanged', 'sb', 'databaseDisplayName', 'databaseDetails', 'backupSchedules', 'databaseBackupOptionsForSelect', function($http, $scope, $attrs, miqService, miqDBBackupService, submitUrl, dbBackupFormFieldChanged, sb, databaseDisplayName, databaseDetails, backupSchedules, databaseBackupOptionsForSelect) {
   var vm = this;
   var init = function() {
     vm.diagnosticsDatabaseModel = {
@@ -21,10 +21,10 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     vm.validateUrl = '/ops/log_depot_validate?button=validate&type=' + vm.prefix;
     ManageIQ.angular.scope = vm;
     vm.sb = sb;
-    vm.database_display_name = database_display_name;
-    vm.database_details = database_details;
-    vm.backup_schedules = backup_schedules;
-    vm.database_backup_options_for_select = database_backup_options_for_select;
+    vm.databaseDisplayName = databaseDisplayName;
+    vm.databaseDetails = databaseDetails;
+    vm.backupSchedules = backupSchedules;
+    vm.databaseBackupOptionsForSelect = databaseBackupOptionsForSelect;
   };
 
   vm.validateClicked = function() {

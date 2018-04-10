@@ -16,25 +16,25 @@
       = _("Type")
     .col-md-8
       %p.form-control-static
-        {{vm.database_display_name}}
+        {{vm.databaseDisplayName}}
   .form-group
     %label.col-md-2.control-label
       = _("Hostname")
     .col-md-8
       %p.form-control-static
-        {{vm.database_details.host}}
+        {{vm.databaseDetails.host}}
   .form-group
     %label.col-md-2.control-label
       = _("Database Name")
     .col-md-8
       %p.form-control-static
-        {{vm.database_details.database}}
+        {{vm.databaseDetails.database}}
   .form-group
     %label.col-md-2.control-label
       = _("Username")
     .col-md-8
       %p.form-control-static
-        {{vm.database_details.username}}
+        {{vm.databaseDetails.username}}
 
   %hr
   %h3
@@ -50,11 +50,11 @@
       = _("Fetch settings from a schedule")
     .col-md-8
 
-      %p.form-control-static{'ng-if' => 'vm.backup_schedules.length < 1'}
+      %p.form-control-static{'ng-if' => 'vm.backupSchedules.length < 1'}
         = _("No Backup Schedules are defined")
-      %div{'ng-if' => 'vm.backup_schedules.length >= 1'}
+      %div{'ng-if' => 'vm.backupSchedules.length >= 1'}
         %select{:name => 'backup_schedule_type',
-                     "ng-options"                  => "choice[1] as choice[0] for choice in vm.backup_schedules",
+                     "ng-options"                  => "choice[1] as choice[0] for choice in vm.backupSchedules",
                      "ng-model"                    => "vm.diagnosticsDatabaseModel.backup_schedule_type",
                      "ng-change"                   => "vm.backupScheduleTypeChanged()",
                      "pf-select" => true}
@@ -69,7 +69,7 @@
     .col-md-8
       - default_option = [_("<No Depot>"), nil]
       = select_tag('log_protocol', nil,
-                  "ng-options"                     => "choice as choice for choice in vm.database_backup_options_for_select",
+                  "ng-options"                     => "choice as choice for choice in vm.databaseBackupOptionsForSelect",
                   "ng-model"                       => "vm.diagnosticsDatabaseModel.log_protocol",
                   "ng-change"                      => "vm.logProtocolChanged(vm.diagnosticsDatabaseModel)",
                   "ng-required"                    => "vm.logProtocolNotSelected(vm.diagnosticsDatabaseModel)",

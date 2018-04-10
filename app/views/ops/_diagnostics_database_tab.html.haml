@@ -5,9 +5,9 @@
 
    ManageIQ.angular.app.value('diagnosticsDatabaseId', '#{@id}');
    ManageIQ.angular.app.value('sb', #{@sb[:active_tab].to_json});
-   ManageIQ.angular.app.value('database_display_name', '#{@database_display_name}');
-   ManageIQ.angular.app.value('database_details', #{@database_details.to_json});
-   ManageIQ.angular.app.value('backup_schedules', #{@backup_schedules.invert.sort_by { |name, _id| name }.to_json});
-   ManageIQ.angular.app.value('database_backup_options_for_select', #{@database_backup_options_for_select.to_json});
+   ManageIQ.angular.app.value('databaseDisplayName', '#{@database_display_name}');
+   ManageIQ.angular.app.value('databaseDetails', #{@database_details.to_json});
+   ManageIQ.angular.app.value('backupSchedules', #{@backup_schedules.invert.sort_by { |name, _id| name }.to_json});
+   ManageIQ.angular.app.value('databaseBackupOptionsForSelect', #{@database_backup_options_for_select.to_json});
    miq_bootstrap('diagnostics-database-form-component')
 
