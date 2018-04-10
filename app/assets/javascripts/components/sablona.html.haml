@@ -1,0 +1,24 @@
+%h1= content_for :title, DocumentRequest.model_name.human
+
+.fieldset
+  = simple_form_for @document_request, :validation => true do |f|
+    = f.input :ExternalDocument
+    = f.input :project_code,          disabled: true
+    = f.input :company_name,          disabled: true
+    = f.input :comercial_entity_name, disabled: true
+    = f.input :Requested,             as: :boolean
+    = f.input :Performed,             as: :boolean
+    = f.input :RequestDate,           as: :date
+    = f.input :PerformeDate,          as: :date
+    = f.input :PrevisionalDate,       as: :date
+    = f.input :Local
+    = f.input :City
+    = f.input :PostalCode
+    = f.input :Fax
+    = f.input :Phone
+    = f.input :Email
+    = f.input :Notes,                 as: :text
+
+    %p
+      = f.button :submit
+      = link_to 'Cancel', :back
