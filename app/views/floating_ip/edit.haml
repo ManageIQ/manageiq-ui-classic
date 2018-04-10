@@ -1,6 +1,6 @@
 #main_div
   %floating-ip-form-component
 :javascript
-  ManageIQ.angular.app.value('floatingIpFormId', "#{@id}");//'#{"edit"}');
-  ManageIQ.angular.app.value('emsChoices', #{@ems_choices.sort.to_json});
+  ManageIQ.angular.app.value('floatingIpFormId', '#{@floating_ip.id}');
+  ManageIQ.angular.app.value('emsChoices', null);
   miq_bootstrap('floating-ip-form-component')

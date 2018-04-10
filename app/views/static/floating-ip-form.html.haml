@@ -9,18 +9,24 @@
     .form-group
       %label.col-md-2.control-label
         = _('Network Manager')
-      .col-md-8
+      .col-md-8{'ng-if' => "vm.newRecord"}
         %select{'pf-select' => '',
                 "ng-options"    => "choice[1] as choice[0] for choice in vm.emsChoices",
                 "ng-model"      => "vm.floatingIpModel.ems_id",
                 "required"      => "",
                 "ng-change"      => "vm.filterNetworkManagerChanged(vm.floatingIpModel.ems_id)",
                 "selectpicker-for-select-tag" => ""}
+      .col-md-8{'ng-if' => "!vm.newRecord"}
+        %input.form-control{"type"         => "text",
+                            'name'         => "ems_name",
+                            'ng-disabled'  => true,
+                            'ng-maxlength' => 128,
+                            'ng-model'     => "vm.floatingIpModel.ext_management_system.name"}
 
     .form-group{"ng-if" => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label
         = _('External Network')
-      .col-md-8
+      .col-md-8{'ng-if' => "vm.newRecord"}
         %select{"name"                        => "cloud_network_id",
                 "ng-model"                    => "vm.floatingIpModel.cloud_network_id",
                 "required"                    => "",
@@ -31,27 +37,39 @@
                 "selectpicker-for-select-tag" => ""}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
-
+      .col-md-8{'ng-if' => "!vm.newRecord"}
+        %input.form-control{"type"         => "text",
+                            'name'         => "cloud_network_name",
+                            'ng-disabled'  => true,
+                            'ng-maxlength' => 128,
+                            'ng-model'     => "vm.floatingIpModel.cloud_network.name"}
   %h3
     = _('Association Information')
   .form-horizontal
     .form-group
       %label.col-md-2.control-label
-        = _('Associated Port (optional)')
+        = _('Associated Port ID (blank to disassociate)')
       .col-md-8
         %input.form-control{:type          => "text",
-                            :name          => "description",
+                            :name          => "network_port_ems_ref",
                             'ng-model'     => "vm.floatingIpModel.network_port_ems_ref",
                             'ng-maxlength' => 40,
                             :checkchange   => true}
     .form-group
       %label.col-md-2.control-label
         = _('Floating IP Address (optional)')
-      .col-md-8
+      .col-md-8{'ng-if' => "vm.newRecord"}
         %input.form-control{:type          => "text",
                             :name          => "floating_ip_address",
                             'ng-model'     => "vm.floatingIpModel.floating_ip_address",
                             'ng-maxlength' => 40,
+                            :checkchange   => true}
+      .col-md-8{'ng-if' => "!vm.newRecord"}
+        %input.form-control{:type          => "text",
+                            :name          => "floating_ip_address",
+                            'ng-model'     => "vm.floatingIpModel.floating_ip_address",
+                            'ng-maxlength' => 40,
+                            'ng-disabled'  => true,
                             :checkchange   => true}
     .form-group
       %label.col-md-2.control-label
@@ -68,7 +86,7 @@
     .form-group{"ng-if" => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label
         = _('Cloud Tenant')
-      .col-md-8
+      .col-md-8{'ng-if' => "vm.newRecord"}
         %select{"name"                        => "cloud_tenant_id",
                 "ng-model"                    => "vm.floatingIpModel.cloud_tenant_id",
                 "required"                    => "",
@@ -79,18 +97,11 @@
                 "selectpicker-for-select-tag" => ""}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
-
-  %h3
-    = _('Associate or disassociate a Port - Blank the field to disassociate')
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Port id')
-      .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "Network Port",
-                            "ng-model"     => "vm.floatingIpModel.network_port_ems_ref",
-                            "ng-maxlength" => 40,
-                            :checkchange   => true}
+      .col-md-8{'ng-if' => "!vm.newRecord"}
+        %input.form-control{"type"         => "text",
+                            'name'         => "cloud_tenant_name",
+                            'ng-disabled'  => true,
+                            'ng-maxlength' => 128,
+                            'ng-model'     => "vm.floatingIpModel.cloud_tenant.name"}
 
   = render :partial => "layouts/angular/generic_form_buttons"
