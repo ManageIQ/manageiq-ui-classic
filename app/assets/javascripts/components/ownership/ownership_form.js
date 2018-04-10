@@ -77,16 +77,6 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
     vm.saveClicked();
   };
 
-  function getOwnershipFormData(response) {
-    var data = response.data;
-
-    vm.ownershipModel.user = data.user;
-    vm.ownershipModel.group = data.group;
-    vm.afterGet = true;
-    vm.modelCopy = angular.copy( vm.ownershipModel );
-    miqService.sparkleOff();
-  }
-
   }],
   templateUrl: '/static/shared/ownership.html.haml',
 
