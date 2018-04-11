@@ -27,9 +27,11 @@ describe('Toolbar actions', () => {
 
   describe('showMessage', () => {
     let addFlash;
+
     beforeEach(() => {
       addFlash = jasmine.createSpy('add_flash');
       window.add_flash = addFlash;
+      window.sprintf = jasmine.createSpy('sprintf').and.callFake(window.sprintf);
     });
 
     it('calls show message with string message', () => {
@@ -41,6 +43,7 @@ describe('Toolbar actions', () => {
 
     it('calls show message with object', () => {
       toolbarActions.showMessage({ false: 1, true: 4 });
+      expect(window.sprintf).toHaveBeenCalled();
       expect(addFlash).toHaveBeenCalledWith('Deleting of 4 items queued.', 'success');
       expect(addFlash).toHaveBeenCalledWith('Failed to delete 1 items.', 'error');
     });
