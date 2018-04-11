@@ -24,11 +24,10 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['cloudSubnetFormId
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.cloudSubnetModel );
 
-      API.get('/api/providers?collection_class=ManageIQ::Providers::NetworkManager&attributes=id,name&expand=resources')
-        .then(function(response) {
-          vm.ems = response.resources;
-        })
-        .catch(miqService.handleFailure);
+      miqService.networkProviders()
+        .then(function(providers) {
+          vm.ems = providers;
+        });
     } else {
       miqService.sparkleOn();
       API.get("/api/cloud_subnets/" + cloudSubnetFormId + "?expand=resources&attributes=ext_management_system.name,cloud_tenant.name,cloud_network.name").then(function(data) {

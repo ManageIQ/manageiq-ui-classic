@@ -15,11 +15,10 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
     vm.floatingIpModel.description = "";
     vm.newRecord = true;
 
-    API.get('/api/providers?collection_class=ManageIQ::Providers::NetworkManager&attributes=id,name&expand=resources')
-      .then(function(response) {
-        vm.ems = response.resources;
-      })
-      .catch(miqService.handleFailure);
+    miqService.networkProviders()
+      .then(function(providers) {
+        vm.ems = providers;
+      });
   } else {
     miqService.sparkleOn();
 

@@ -22,11 +22,10 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     vm.networkRouterModel.cloud_subnet_id = null;
     vm.newRecord = true;
 
-    API.get('/api/providers?collection_class=ManageIQ::Providers::NetworkManager&attributes=id,name&expand=resources')
-      .then(function(response) {
-        vm.ems = response.resources;
-      })
-      .catch(miqService.handleFailure);
+    miqService.networkProviders()
+      .then(function(providers) {
+        vm.ems = providers;
+      });
   } else {
     miqService.sparkleOn();
 

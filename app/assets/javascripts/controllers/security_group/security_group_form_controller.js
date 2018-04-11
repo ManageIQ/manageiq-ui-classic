@@ -23,11 +23,10 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.securityGroupModel );
 
-      API.get('/api/providers?collection_class=ManageIQ::Providers::NetworkManager&attributes=id,name&expand=resources')
-        .then(function(response) {
-          vm.ems = response.resources;
-        })
-        .catch(miqService.handleFailure);
+      miqService.networkProviders()
+        .then(function(providers) {
+          vm.ems = providers;
+        });
     } else {
       miqService.sparkleOn();
 
