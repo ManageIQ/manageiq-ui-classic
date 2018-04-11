@@ -18,19 +18,21 @@
             = render :partial => 'layouts/exp_editor'
           - else
             = render :partial => 'report/form_expression_buttons',
-                                 :locals => {:create_label => _('Create Record Filter'),
-                                             :display_label => _('Edit Record Filter')}
-    %hr
-    .form-horizontal
-      - unless @edit[:display_filter][:exp_available_fields].empty? && @edit[:display_filter][:exp_available_tags].empty?
-        -# Expression editor for the display filter
-        %h3= _('Secondary (Display) Filter - Filters the rows based on child table fields')
-        .form-group
-          %label.control-label.col-md-2
-          .col-md-8
-            - if @expkey == :display_filter
-              = render :partial => 'layouts/exp_editor'
-            - else
-              = render :partial => 'report/form_expression_buttons',
-                       :locals => {:create_label => _('Create Display Filter'),
-                                   :display_label => _('Edit Display Filter')}
+                                 :locals => {:create_label  => _('Create Record Filter'),
+                                             :display_label => _('Edit Record Filter'),
+                                             :exp_key       => 'record_filter'}
+  %hr
+  .form-horizontal
+    - unless @edit[:display_filter][:exp_available_fields].empty? && @edit[:display_filter][:exp_available_tags].empty?
+      -# Expression editor for the display filter
+      %h3= _('Secondary (Display) Filter - Filters the rows based on child table fields')
+      .form-group
+        %label.control-label.col-md-2
+        .col-md-8
+          - if @expkey == :display_filter
+            = render :partial => 'layouts/exp_editor'
+          - else
+            = render :partial => 'report/form_expression_buttons',
+                     :locals => {:create_label  => _('Create Display Filter'),
+                                 :display_label => _('Edit Display Filter'),
+                                 :exp_key       => 'display_filter'}
