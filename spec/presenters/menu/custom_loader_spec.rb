@@ -8,9 +8,9 @@ describe Menu::CustomLoader do
     it 'loads custom menu items' do
       # create custom section with 2 custom items
       described_class.register(
-        Menu::Section.new(:spike, N_('Plugin'), 'fa fa-map-pin', [
-          Menu::Item.new('plug1', N_('Test'), 'miq_report', {:feature => 'miq_report', :any => true}, '/plug'),
-          Menu::Item.new('plug2', N_('Demo'), 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
+        Menu::Section.new(:spike, 'Plugin', 'fa fa-map-pin', [
+          Menu::Item.new('plug1', 'Test', 'miq_report', {:feature => 'miq_report', :any => true}, '/plug'),
+          Menu::Item.new('plug2', 'Demo', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
         ])
       )
 
@@ -21,7 +21,7 @@ describe Menu::CustomLoader do
     it 'loads a custom menu item under an existing section' do
       # create custom item placed in an existing section 'vi' (Cloud Intel)
       described_class.register(
-        Menu::Item.new('plug3', N_('Plug Item'), 'miq_report', {:feature => 'miq_report', :any => true}, '/demo', :default, :vi)
+        Menu::Item.new('plug3', 'Plug Item', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo', :default, :vi)
       )
 
       item = Menu::Manager.item('plug3')
@@ -32,8 +32,8 @@ describe Menu::CustomLoader do
     it 'loads a custom menu section and places it before an existing section' do
       # create custom section and place it before existing section 'compute' (Compute)
       described_class.register(
-        Menu::Section.new(:spike3, N_('Plugin 2'), 'fa fa-map-pin', [
-          Menu::Item.new('plug4', N_('Demo'), 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
+        Menu::Section.new(:spike3, 'Plugin 2', 'fa fa-map-pin', [
+          Menu::Item.new('plug4', 'Demo', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
         ], :default, :compute)
       )
 
@@ -49,8 +49,8 @@ describe Menu::CustomLoader do
     it 'loads a custom menu section and places it at a given position in inside an existing section' do
       # create custom section and place it inside an existing section 'compute' (Compute), before existing subsection 'clo' (Cloud)
       described_class.register(
-        Menu::Section.new(:spike3, N_('Nested section after'), 'fa fa-map-pin', [
-          Menu::Item.new('plug5', N_('Test item'), 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
+        Menu::Section.new(:spike3, 'Nested section after', 'fa fa-map-pin', [
+          Menu::Item.new('plug5', 'Test item', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
         ], :default, :clo, :default, nil, :compute)
       )
 

@@ -25,9 +25,9 @@ describe GenericObjectHelper::TextualSummary do
       @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id, :flag => true)
 
       expected = TextualMultilabel.new(
-        _("Attributes"),
+        "Attributes",
         :additional_table_class => "table-fixed",
-        :labels                 => [_("Name"), _("Value")],
+        :labels                 => ["Name", "Value"],
         :values                 => {"flag" => true}
       )
 
@@ -37,7 +37,7 @@ describe GenericObjectHelper::TextualSummary do
     it "displays 'No Attributes defined' when Attributes do not exist" do
       @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id)
 
-      expected = TextualGroup.new(_("Attributes"), %i(attributes_none))
+      expected = TextualGroup.new("Attributes", %i(attributes_none))
 
       expect(textual_group_attribute_details_list).to eq(expected)
     end
@@ -51,7 +51,7 @@ describe GenericObjectHelper::TextualSummary do
                                    :cp                           => [ems],
                                    :vms                          => [vm1, vm2])
 
-      expected = TextualGroup.new(_("Associations"), %i(cp vms))
+      expected = TextualGroup.new("Associations", %i(cp vms))
 
       expect(textual_group_associations).to eq(expected)
     end
@@ -59,7 +59,7 @@ describe GenericObjectHelper::TextualSummary do
     it "displays 'No Associations defined' when do not Associations exist" do
       @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn_with_no_properties.id)
 
-      expected = TextualGroup.new(_("Associations"), %i(associations_none))
+      expected = TextualGroup.new("Associations", %i(associations_none))
 
       expect(textual_group_associations).to eq(expected)
     end
@@ -67,7 +67,7 @@ describe GenericObjectHelper::TextualSummary do
     it "displays the GO Methods when Methods exist" do
       @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id)
 
-      expected = TextualGroup.new(_("Methods"), %i(some_method))
+      expected = TextualGroup.new("Methods", %i(some_method))
 
       expect(textual_group_methods).to eq(expected)
     end
@@ -75,7 +75,7 @@ describe GenericObjectHelper::TextualSummary do
     it "displays 'No Methods defined' when do not Methods exist" do
       @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn_with_no_properties.id)
 
-      expected = TextualGroup.new(_("Methods"), %i(methods_none))
+      expected = TextualGroup.new("Methods", %i(methods_none))
 
       expect(textual_group_methods).to eq(expected)
     end
