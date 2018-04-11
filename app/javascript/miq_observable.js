@@ -30,6 +30,4 @@ export const CUSTOM_TOOLBAR_ACTIONS = {
   BLINK_LOC_LED_EVENT: 'blink_loc_led',
   TURN_ON_LOC_LED_EVENT: 'turn_on_loc_led',
   TURN_OFF_LOC_LED_EVENT: 'turn_off_loc_led',
-  POWER_OFF_EVENT: 'power_off',
-}
-
+};

@@ -7,18 +7,20 @@ function transformResource(resource) {
   return ({ id: resource });
 }
 
-function eventNamesToCustomAction(eventNames) {
-  return eventNames.reduce((acc, eventName) => {
-    acc[eventName] = (data) => onCustomAction(eventName, data, getGridChecks());
-    return acc;
-  }, {});
-}
-
-export function getGridChecks() {
+export default function getGridChecks() {
   if (ManageIQ.gridChecks.length === 0) {
     return [ManageIQ.record.recordId].map(transformResource);
   }
   return ManageIQ.gridChecks.map(transformResource);
+}
+
+function eventNamesToCustomAction(eventNames) {
+  return eventNames.reduce((acc, eventName) => {
+    acc[eventName] = data => {
+      return onCustomAction(eventName, data, getGridChecks())
+    };
+    return acc;
+  }, {});
 }
 
 /**
@@ -32,7 +34,10 @@ export function getGridChecks() {
  */
 const eventMapper = {
   [DELETE_EVENT]: data => onDelete(data, getGridChecks()),
-  ...eventNamesToCustomAction(Object.values(CUSTOM_TOOLBAR_ACTIONS)),
+  ...eventNamesToCustomAction(
+    Object.keys(CUSTOM_TOOLBAR_ACTIONS)
+      .map(oneKey => CUSTOM_TOOLBAR_ACTIONS[oneKey])
+  ),
 };
 
 subscribeToRx(eventMapper, 'toolbarActions');
