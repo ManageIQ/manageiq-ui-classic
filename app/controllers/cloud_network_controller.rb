@@ -51,7 +51,6 @@ class CloudNetworkController < ApplicationController
                           :flash_msg => _("Add of new Cloud Network was cancelled by the user")
 
     when "add"
-      @network = CloudNetwork.new
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
       if CloudNetwork.class_by_ems(ems).supports_create?
@@ -137,14 +136,12 @@ class CloudNetworkController < ApplicationController
   def edit
     params[:id] = checked_item_id unless params[:id].present?
     assert_privileges("cloud_network_edit")
-    @network_ems_provider_choices = {}
     @network = find_record_with_rbac(CloudNetwork, params[:id])
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Edit Cloud Network \"%{name}\"") % {:name => @network.name},
       :url  => "/cloud_network/edit/#{@network.id}"
     )
-    render :action => 'change'
   end
 
   def new
@@ -154,13 +151,7 @@ class CloudNetworkController < ApplicationController
 
     @network = CloudNetwork.new
     @in_a_form = true
-    @network_ems_provider_choices = {}
-    network_managers.each do |network_manager|
-      @network_ems_provider_choices[network_manager.name] = network_manager.id
-    end
-
     drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
-    render :action => 'change'
   end
 
   def update
@@ -254,7 +245,8 @@ class CloudNetworkController < ApplicationController
     end
     options[:provider_physical_network] = params[:provider_physical_network] if params[:provider_physical_network]
     options[:provider_segmentation_id] = params[:provider_segmentation_id] if params[:provider_segmentation_id]
-    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
+    cloud_tenant = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params[:cloud_tenant][:id]
+    options[:tenant_id] = cloud_tenant.ems_ref
     options
   end
 
