@@ -5,7 +5,7 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$scope', 'floating
     vm.afterGet = false;
 
     vm.floatingIpModel = { address: null };
-    vm.available_ems = null;
+    vm.ems = [];
 
     vm.formId = floatingIpFormId;
     vm.model = "floatingIpModel";
@@ -24,12 +24,14 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$scope', 'floating
 
     miqService.sparkleOn();
     if (vm.newRecord) {
-      API.get("/api/providers?expand=resources&attributes=name&filter[]=type='*NetworkManager'").then(function(data) {
-        vm.available_ems = data.resources;
-        vm.afterGet = true;
-        vm.modelCopy = angular.copy(vm.floatingIpModel);
-        miqService.sparkleOff();
-      }).catch(miqService.handleFailure);
+      miqService.networkProviders()
+        .then(function(providers) {
+          vm.ems = providers;
+
+          vm.afterGet = true;
+          vm.modelCopy = angular.copy(vm.floatingIpModel);
+          miqService.sparkleOff();
+        });
     } else {
       API.get("/api/floating_ips/" +  floatingIpFormId + "?attributes=cloud_network,cloud_tenant,ext_management_system,network_port").then(function(data) {
         Object.assign(vm.floatingIpModel, data);
