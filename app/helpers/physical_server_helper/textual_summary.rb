@@ -20,9 +20,9 @@ module PhysicalServerHelper::TextualSummary
     TextualGroup.new(_("Management Networks"), %i(mac ipv4 ipv6))
   end
 
-  def textual_group_assets
+  def textual_group_asset_details
     TextualGroup.new(
-      _("Assets"),
+      _("Asset Details"),
       %i(support_contact description location room_id rack_name lowest_rack_unit)
     )
   end
