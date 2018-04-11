@@ -109,7 +109,7 @@ module PhysicalServerHelper::TextualSummary
     # It is possible for guest devices not to have network data (or a network
     # hash). As a result, we need to exclude guest devices that don't have
     # network data to prevent a nil class error from occurring.
-    {:label =>  _("IPv4 Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device.network.ipaddress }.join(", ") }
+    {:label =>  _("IPv4 Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| create_https_url(device.network.ipaddress) }.join(", ") }
   end
 
   def textual_ipv6
@@ -162,5 +162,17 @@ module PhysicalServerHelper::TextualSummary
 
   def firmware_details
     @record.hardware.firmwares.collect { |fw| [fw.name, fw.version] }
+  end
+
+  private
+
+  def create_https_url(ip)
+    url = ""
+
+    unless ip.nil?
+      url = link_to(ip, "https://#{ip}")
+    end
+
+    url
   end
 end
