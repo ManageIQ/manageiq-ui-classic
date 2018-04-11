@@ -1,10 +1,17 @@
-import { subscribeToRx, DELETE_EVENT, REFRESH_EVENT, RESTART_EVENT } from '../miq_observable';
+import { subscribeToRx, DELETE_EVENT, CUSTOM_TOOLBAR_ACTIONS } from '../miq_observable';
+
 import { onDelete } from '../toolbar-actions/delete';
-import { onRefresh } from '../toolbar-actions/refresh';
-import { onRestart } from '../toolbar-actions/restart';
+import { onCustomAction } from '../toolbar-actions/custom-action';
 
 function transformResource(resource) {
   return ({ id: resource });
+}
+
+function eventNamesToCustomAction(eventNames) {
+  return eventNames.reduce((acc, eventName) => {
+    acc[eventName] = (data) => onCustomAction(eventName, data, getGridChecks());
+    return acc;
+  }, {});
 }
 
 export function getGridChecks() {
@@ -25,8 +32,7 @@ export function getGridChecks() {
  */
 const eventMapper = {
   [DELETE_EVENT]: data => onDelete(data, getGridChecks()),
-  [REFRESH_EVENT]: data => onRefresh(data, getGridChecks()),
-  [RESTART_EVENT]: data => onRestart(data, getGridChecks()),
+  ...eventNamesToCustomAction(Object.values(CUSTOM_TOOLBAR_ACTIONS)),
 };
 
 subscribeToRx(eventMapper, 'toolbarActions');

@@ -18,7 +18,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Power On'),
               :icon    => "pficon pficon-on fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "power_on", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "power_on", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Power on the server?"),
               :options => {:feature => :power_on}
             ),
@@ -29,7 +29,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Power Off'),
               :icon    => "pficon pficon-off fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "power_off", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "power_off", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Power off the server?"),
               :options => {:feature => :power_off}
             ),
@@ -40,7 +40,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Power Off Immediately'),
               :icon    => "pficon pficon-off fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "power_off_now", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "power_off_now", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Power off the server immediately?"),
               :options => {:feature => :power_off_now}
             ),
@@ -51,7 +51,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Restart'),
               :icon    => "pficon pficon-restart fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "restart", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "restart", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Restart the server?"),
               :options => {:feature => :restart}
             ),
@@ -62,7 +62,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Restart Immediately'),
               :icon    => "pficon pficon-restart fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "restart_now", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "restart_now", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Restart the server immediately?"),
               :options => {:feature => :restart_now}
             ),
@@ -73,7 +73,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Restart to System Setup'),
               :icon    => "pficon pficon-restart fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "restart_to_sys_setup", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "restart_to_sys_setup", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Restart the server to UEFI settings?"),
               :options => {:feature => :restart_to_sys_setup}
             ),
@@ -84,7 +84,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Restart Management Controller'),
               :icon    => "pficon pficon-restart fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "restart_mgmt_controller", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "restart_mgmt_controller", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Restart management controller?"),
               :options => {:feature => :restart_mgmt_controller}
             )
@@ -103,7 +103,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Blink LED'),
               :icon    => "pficon pficon-connected fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "blink_loc_led", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "blink_loc_led", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Blink the Identify LED?"),
               :options => {:feature => :blink_loc_led}
             ),
@@ -114,7 +114,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Turn On LED'),
               :icon    => "pficon pficon-on fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "turn_on_loc_led", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "turn_on_loc_led", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Turn on the Identify LED?"),
               :options => {:feature => :turn_on_loc_led}
             ),
@@ -125,7 +125,7 @@ module ApplicationHelper::Toolbar::PhysicalInfrastructure::OperationsButtonGroup
               N_('Turn Off LED'),
               :icon    => "pficon pficon-off fa-lg",
               :data    => {'function'      => 'sendDataWithRx',
-                           'function-data' => '{"type": "turn_off_loc_led", "controller": "physicalServerToolbarController"}'},
+                           'function-data' => '{"type": "turn_off_loc_led", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
               :confirm => N_("Turn off the Identify LED?"),
               :options => {:feature => :turn_off_loc_led}
             ),
