@@ -1,5 +1,5 @@
 - url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
-- if @edit[:new][:model] == "ChargebackVm" || @edit[:new][:model] == "MeteringVm"
+- if %w(MeteringVm ChargebackVm).include?(@edit[:new][:model])
   %h3
     = _('Chargeback Resources')
   .form-horizontal
