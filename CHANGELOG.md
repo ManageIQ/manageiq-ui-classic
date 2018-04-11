@@ -5,6 +5,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 83 ending 2018-04-09
+
+### Added
+- Add vault credential display for the playbook retirement tab  [(#3684)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3684)
+- Enable WebMKS console access for VMware vCloud's VMs [(#3679)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3679)
+- Add a physical rack to the topology [(#3369)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3369)
+- Reconfigure VM: Add / Remove Network Adapters [(#3121)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3121)
+- Update menu icons [(#2917)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2917)
+
+### Fixed
+- Reset button flash message in Group Tag Expression editor [(#3731)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3731)
+- Physical server details now has two columns [(#3730)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3730)
+- Restrict the Help->Documentation screen based on RBAC rules only [(#3728)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3728)
+- Add back Menu::Item defaults attribute as it is required by help_menu [(#3726)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3726)
+- Fix query to fetch more widgets [(#3723)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3723)
+- Fix displaying user detail page [(#3720)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3720)
+- Add missing gettext to ReportController [(#3717)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3717)
+- Render flash partial even for an empty report list [(#3716)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3716)
+- Get all user form data before validating for errors per field [(#3714)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3714)
+- Fix for 400 error when using a custom button from an infra provider. [(#3713)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3713)
+- Fix for Template Custom Button Dialog Not Displaying Submit or Cancel Buttons [(#3712)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3712)
+- Fix SecurityGroup -> FirewallRules table port range display [(#3710)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3710)
+- Add Oracle images. [(#3707)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3707)
+- Time profile form: make timezone select drop up (instead of drop down) [(#3703)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3703)
+- Add translatable labels to time profile form [(#3702)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3702)
+- Include api_version when calling raw_connect for vCloud [(#3701)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3701)
+- Fixed id of currentTab [(#3698)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3698)
+- Container dashboard charts: send datapoints as full timestamps [(#3696)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3696)
+- Allow scm_url to take ssh with ssh protocol [(#3694)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3694)
+- Validation of new provider with http_proxy settings [(#3693)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3693)
+- AeResolveOptions - use ng-if instead of ng-show [(#3689)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3689)
+- Fix TextEncoderLite in old browsers [(#3687)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3687)
+- Check dialog-user for info on valid inputs [(#3686)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3686)
+- AeResolveOptions - use ng-if instead of ng-show [(#3689)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3689)
+- Fix TextEncoderLite in old browsers [(#3687)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3687)
+- Check dialog-user for info on valid inputs [(#3686)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3686)
+- vertical_navbar - a element to use exisitng param href [(#3683)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3683)
+- Improve VM Chargeback Preview Report table formatting [(#3681)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3681)
+- Fail with an error on /ping immediately if DB is not accessible [(#3680)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3680)
+- Fix saving changes after editing Satellite Provider [(#3676)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3676)
+- Fix editing of Default Container Image Rate [(#3673)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3673)
+- Fix mismatching categories with values when assigning tags [(#3644)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3644)
+- Fix for the feature tree role selection in the Add User Role form [(#3635)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3635)
+- Do not display checkboxes if they should not be visible in GTL [(#3558)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3558)
+- Make filters saved in Workloads displayed in accordion [(#3435)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3435)
+- Improve per provider settings ui [(#2978)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2978)
+
 ## Unreleased as of Sprint 82 ending 2018-03-26
 
 ### Added
