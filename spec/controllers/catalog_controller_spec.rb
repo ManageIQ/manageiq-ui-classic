@@ -885,7 +885,7 @@ describe CatalogController do
       let(:tree) { :svccat_tree }
 
       it 'sets options for rendering proper type of view' do
-        expect(controller).to receive(:process_show_list).with(:gtl_dbname => :catalog, :named_scope => {})
+        expect(controller).to receive(:process_show_list).with(hash_including(:gtl_dbname => :catalog))
         controller.send(:service_template_list, {})
       end
     end
