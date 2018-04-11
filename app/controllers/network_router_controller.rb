@@ -103,10 +103,6 @@ class NetworkRouterController < ApplicationController
     assert_privileges("cloud_tenant_show_list")
 
     @in_a_form = true
-    @network_provider_choices = {}
-    network_managers.each do |network_manager|
-      @network_provider_choices[network_manager.name] = network_manager.id
-    end
     drop_breadcrumb(
       :name => _("Add New Network Router"),
       :url  => "/network_router/new"
@@ -202,7 +198,6 @@ class NetworkRouterController < ApplicationController
     @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
     # needs to be initializes for haml
-    @network_provider_choices = {}
     drop_breadcrumb(
       :name => _("Edit Router \"%{name}\"") % {:name => @router.name},
       :url  => "/network_router/edit/#{@router.id}"

@@ -151,6 +151,7 @@ class CloudNetworkController < ApplicationController
 
     @network = CloudNetwork.new
     @in_a_form = true
+
     drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
   end
 

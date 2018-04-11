@@ -16,12 +16,15 @@
       %label.col-md-2.control-label
         = _('Network Manager')
       .col-md-8
-        = select_tag("ems_id",
-                     options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
-                     "ng-model"   => "vm.securityGroupModel.ems_id",
-                     "ng-change"  => "vm.filterNetworkManagerChanged(vm.securityGroupModel.ems_id)",
-                     "pf-select"  => true,
-                     "required"   => "")
+        %select{'id'         => 'ems_id',
+                'name'       => 'ems_id',
+                'ng-change'  => "vm.filterNetworkManagerChanged(vm.securityGroupModel.ems_id)",
+                'ng-model'   => "vm.securityGroupModel.ems_id",
+                'ng-options' => 'ems.id as ems.name for ems in vm.ems',
+                'pf-select'  => true,
+                'required'   => ''}
+          %option{:value => ""}
+            = "<#{_('Choose')}>"
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
 

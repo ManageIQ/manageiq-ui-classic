@@ -13,13 +13,13 @@
       %label.col-md-2.control-label
         = _('Network Manager')
       .col-md-8{'ng-class' => "{'has-error': angularForm.ems_id.$invalid}", 'ng-if' => "vm.newRecord"}
-        %select{'name'                        => "ems_id",
-                'ng-model'                    => "vm.cloudNetworkModel.ems_id",
+        %select{'id'                          => 'ems_id',
+                'name'                        => 'ems_id',
                 'ng-change'                   => "vm.filterNetworkManagerChanged(vm.cloudNetworkModel.ems_id)",
-                'ng-options'                  => 'ems.id as ems.name for ems in vm.available_ems',
+                'ng-model'                    => "vm.cloudNetworkModel.ems_id",
+                'ng-options'                  => 'ems.id as ems.name for ems in vm.ems',
                 'pf-select'                   => true,
-                'required'                    => "",
-                'selectpicker-for-select-tag' => ""}
+                'required'                    => ""}
           %option{'value' => ""}
             = "<#{_('Choose')}>"
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}

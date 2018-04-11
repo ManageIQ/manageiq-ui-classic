@@ -11,14 +11,18 @@
       %label.col-md-2.control-label
         = _('Network Manager')
       .col-md-8
-        = select_tag("ems_id",
-                     options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
-                     "ng-model"                    => "vm.floatingIpModel.ems_id",
-                     "required"                    => "",
-                     :miqrequired                  => true,
-                     :checkchange                  => true,
-                     "ng-change"                   => "vm.filterNetworkManagerChanged(vm.floatingIpModel.ems_id)",
-                     "selectpicker-for-select-tag" => "")
+        %select{'id'          => 'ems_id',
+                'name'        => 'ems_id',
+                'ng-change'   => "vm.filterNetworkManagerChanged(vm.floatingIpModel.ems_id)",
+                'ng-model'    => "vm.floatingIpModel.ems_id",
+                'ng-options'  => 'ems.id as ems.name for ems in vm.ems',
+                'pf-select'   => true,
+                'checkchange' => true,
+                'required'    => ''}
+          %option{:value => ""}
+            = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
+          = _('Required')
 
     .form-group{"ng-if" => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label

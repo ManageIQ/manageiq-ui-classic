@@ -81,6 +81,24 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
   };
 
+  this.networkProviders = function(options) {
+    options = Object.assign(options || {}, {
+      attributes: ['id', 'name'],
+      handleFailure: miqService.handleFailure,
+    });
+    var url = '/api/providers?collection_class=ManageIQ::Providers::NetworkManager&expand=resources';
+
+    if (options.attributes) {
+      url += '&attributes=' + options.attributes.map(encodeURIComponent).join(',');
+    }
+
+    return API.get(url)
+      .then(function(response) {
+        return response.resources || [];
+      })
+      .catch(options.handleFailure);
+  };
+
   this.validateWithAjax = function(url) {
     miqSparkleOn();
     miqAjaxButton(url, true);
