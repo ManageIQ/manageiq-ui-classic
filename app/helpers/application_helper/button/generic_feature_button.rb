@@ -9,6 +9,6 @@ class ApplicationHelper::Button::GenericFeatureButton < ApplicationHelper::Butto
   end
 
   def visible?
-    records_support_action?(@record, @feature)
+    records_support_feature?(@record, @feature)
   end
 end

@@ -667,24 +667,26 @@ module ApplicationController::CiProcessing
     clusters.count
   end
 
-  # The method calls task called from UI on the selected records.
-  # In case any record does not support an action, it won't be ran for
+  # The method takes care of task processing initiated from UI on the
+  # selected records.
+  #
+  # In case a record does not support the feature, it won't be ran for
   # any of selected records.
   #
   # Params:
-  #   task        - string of an action
-  #               - the actions should be present in
-  #                 SupportsFeatureMixin::QUERYABLE_FEATURES
+  #   feature     - a feature implemented by using AvailabilityMixin or
+  #                 SupportsFeatureMixin
+  #               - SupportsFeatureMixin::QUERYABLE_FEATURES
   #   action_name - a string of an action used for a flash message in case
   #                 the task can not be applied
   #   action      - a block with a operation, specific to the type of action
   #                 on a record
   #   options     - other parameters
-  def generic_button_operation(task, action_name, action, options={})
+  def generic_button_operation(feature, action_name, action, options={})
     records = find_records_with_rbac(get_rec_cls, checked_or_params)
-    if records_support_action?(records, task)
-      action.call(records.map(&:id), task, action_name)
-      @single_delete = task == 'destroy' && !flash_errors?
+    if records_support_feature?(records, feature)
+      action.call(records.map(&:id), feature, action_name)
+      @single_delete = feature == 'destroy' && !flash_errors?
     else
       javascript_flash(
         :text => _("#{action_name} action does not apply to selected items"),
