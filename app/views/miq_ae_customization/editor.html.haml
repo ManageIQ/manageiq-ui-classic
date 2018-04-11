@@ -19,12 +19,12 @@
               {{ vm.dialog.content[0].description }}
     %dialog-editor{'tree-selector-data' => 'vm.treeSelectorData', 'tree-selector-lazy-load' => 'vm.lazyLoad'}
     .pull-right
-      %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
-                              :type => "button"}= _("Cancel")
       %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()",
                               "ng-disabled" => "!vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content)",
                               "ng-attr-title" => "{{vm.DialogValidation.invalid.message}}",
                               :type => "button"}= _("Save")
+      %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
+                              :type => "button"}= _("Cancel")
 
 :javascript
   ManageIQ.angular.app.value('dialogIdAction', '#{ dialog_id_action.to_json }');
