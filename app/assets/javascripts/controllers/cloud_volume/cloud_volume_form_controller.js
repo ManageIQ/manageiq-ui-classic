@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'storageManagerId', function(miqService, API, cloudVolumeFormId, storageManagerId) {
+ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'storageManagerId', '$timeout', function(miqService, API, cloudVolumeFormId, storageManagerId, $timeout) {
   var vm = this;
 
   var init = function() {
@@ -167,6 +167,22 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     return vm.newRecord ||
       (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs' &&
         vm.cloudVolumeModel.aws_volume_type !== 'standard');
+  };
+
+  vm.awsBaseSnapshotChanged = function(baseSnapshotId) {
+    vm.encryptionDisabled = false;
+    $timeout(function() {
+      if (baseSnapshotId) {
+        for (var i = 0; i < vm.baseSnapshotChoices.length; i++) {
+          if (vm.baseSnapshotChoices[i].ems_ref === baseSnapshotId) {
+            vm.cloudVolumeModel.aws_encryption = vm.baseSnapshotChoices[i].encrypted === true;
+            vm.encryptionDisabled = true;
+          }
+        }
+      } else {
+        vm.cloudVolumeModel.aws_encryption = false;
+      }
+    }, 0);
   };
 
   function setForm() {

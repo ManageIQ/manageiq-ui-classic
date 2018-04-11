@@ -116,6 +116,7 @@
   .col-md-8
     %select{"name"             => "aws_base_snapshot_id",
             "ng-model"         => "vm.cloudVolumeModel.aws_base_snapshot_id",
+            "ng-change"        => "vm.awsBaseSnapshotChanged(vm.cloudVolumeModel.aws_base_snapshot_id)",
             "ng-options"       => "vs.ems_ref as vs.name for vs in vm.baseSnapshotChoices",
             "ng-disabled"      => "!vm.newRecord",
             :checkchange       => true,
@@ -133,8 +134,8 @@
                         :type             => "checkbox",
                         :name             => "aws_encryption",
                         'ng-model'        => "vm.cloudVolumeModel.aws_encryption",
-                        'switch-readonly' => "!vm.newRecord",
-                        'ng-disabled'     => "!vm.newRecord",
+                        'switch-readonly' => "{{!vm.newRecord || vm.encryptionDisabled}}",
+                        'ng-disabled'     => "!vm.newRecord || vm.encryptionDisabled",
                         :checkchange      => ""}
 
 = render :partial => "layouts/angular/generic_form_buttons"
