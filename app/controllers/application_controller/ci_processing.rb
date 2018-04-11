@@ -686,13 +686,13 @@ module ApplicationController::CiProcessing
     records = find_records_with_rbac(get_rec_cls, checked_or_params)
     if records_support_feature?(records, feature)
       action.call(records.map(&:id), feature, action_name)
-      @single_delete = feature == 'destroy' && !flash_errors?
     else
       javascript_flash(
         :text => _("#{action_name} action does not apply to selected items"),
         :severity => :error,
         :scroll_top => true)
     end
+    @single_delete = feature == 'destroy' && !flash_errors?
     screen_redirection(options)
   end
 
