@@ -8,6 +8,24 @@ describe OpsController do
       stub_user(:features => :all)
     end
 
+    describe "rbac_edit_tags_reset" do
+      let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+      let(:another_tenant) { FactoryGirl.create(:tenant) }
+
+      before do
+        allow(controller).to receive(:checked_or_params).and_return(Tenant.all.ids)
+        login_as admin_user
+        allow(User).to receive(:current_user).and_return(admin_user)
+      end
+
+      it "processes selected record" do
+        allow(controller).to receive(:x_tags_set_form_vars)
+        controller.instance_variable_set(:@sb, :pre_edit_node=> '')
+        allow(controller).to receive(:replace_right_cell)
+        expect(controller).to receive(:find_records_with_rbac).with(Tenant, Tenant.all.ids).and_return(Tenant.all)
+        controller.send(:rbac_edit_tags_reset, "Tenant")
+      end
+    end
     let(:four_terabytes) { 4096 * 1024 * 1024 * 1024 }
 
     context "#tree_select" do
