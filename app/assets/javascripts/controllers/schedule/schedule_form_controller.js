@@ -411,5 +411,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     $scope.scheduleModel.target_id = targetId;
   };
 
+  $scope.validateClicked = function() {
+    miqService.miqAjaxButton($scope.validationUrl, $scope.scheduleModel, true);
+  };
+
   init();
 }]);
