@@ -50,6 +50,8 @@ module Mixins
     # Returns:
     #   array of records. If user does not have rigts for it,
     #   raises exception
+
+    #################
     def find_checked_records_with_rbac(klass, ids = nil)
       ids ||= find_checked_items
       filtered = Rbac.filtered(klass.where(:id => ids))
