@@ -63,8 +63,7 @@ class PhysicalServerController < ApplicationController
   end
 
   def provision
-    provisioning_ids = find_checked_ids_with_rbac(PhysicalServer)
-    provisioning_ids.push(find_id_with_rbac(PhysicalServer, params[:id])) if provisioning_ids.empty?
+    provisioning_ids = find_records_with_rbac(PhysicalServer, checked_or_params).ids
 
     javascript_redirect(:controller     => "miq_request",
                         :action         => "prov_edit",
