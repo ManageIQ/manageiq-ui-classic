@@ -134,7 +134,7 @@ module Mixins
 
         def load_user_group_items(ownership_ids, klass)
           @ownershipitems ||= filter_ownership_items(klass, ownership_ids)
-          if ownership_ids.length > 1
+          if @ownershipitems.length > 1
             @user = @group = 'dont-change'
           else
             record = @ownershipitems.first
