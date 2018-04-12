@@ -34,6 +34,7 @@ class CloudVolumeSnapshotController < ApplicationController
   end
 
   def delete_cloud_volume_snapshots
+    binding.pry  
     assert_privileges("cloud_volume_snapshot_delete")
 
     snapshots = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_volume_snapshot")
