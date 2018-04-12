@@ -93,7 +93,8 @@ class CloudNetworkController < ApplicationController
 
   def delete_networks
     assert_privileges("cloud_network_delete")
-
+    
+    binding.pry
     networks = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_network") || @lastaction.nil?
                  find_checked_ids_with_rbac(CloudNetwork)
                else
