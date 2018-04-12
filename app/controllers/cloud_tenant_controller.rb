@@ -183,10 +183,11 @@ class CloudTenantController < ApplicationController
   end
 
   def delete_cloud_tenants
+    binding.pry
     assert_privileges("cloud_tenant_delete")
 
     tenants = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_tenant")
-                find_checked_records_with_rbac(CloudTenant)
+                find_records_with_rbac(CloudTenant, find_checked_items)
               else
                 [find_record_with_rbac(CloudTenant, params[:id])]
               end
