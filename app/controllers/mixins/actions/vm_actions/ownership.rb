@@ -27,8 +27,7 @@ module Mixins
           if recs.empty?
             add_flash(_("One or more %{model} must be selected to Set Ownership") % {
               :model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
-            @refresh_div = "flash_msg_div"
-            @refresh_partial = "layouts/flash_msg"
+            set_refresh_partial
             return
           end
 
@@ -37,8 +36,13 @@ module Mixins
 
           if @ownershipitems.nil? || @ownershipitems.empty?
             add_flash(_('None of the selected items allow ownership changes'), :error)
-            @refresh_div = "flash_msg_div"
-            @refresh_partial = "layouts/flash_msg"
+            set_refresh_partial
+            return
+          end
+
+          unless @origin_ownership_items.count == @ownershipitems.count
+            add_flash(_('Some of the selected items don\'t allow ownership changes'), :error)
+            set_refresh_partial
             return
           end
 
@@ -131,6 +135,11 @@ module Mixins
         end
 
         private
+
+        def set_refresh_partial
+          @refresh_div = "flash_msg_div"
+          @refresh_partial = "layouts/flash_msg"
+        end
 
         def load_user_group_items(ownership_ids, klass)
           @ownershipitems ||= filter_ownership_items(klass, ownership_ids)
