@@ -31,12 +31,11 @@
                       = _(menu_item.name)
 
       = render :partial => "layouts/user_options"
-
-  = render :partial => "layouts/spinner"
-  = render :partial => "layouts/lightbox_panel"
   = render :partial => "layouts/notifications_drawer"
   = render :partial => "layouts/toast_list"
 
+= render :partial => "layouts/spinner"
+= render :partial => "layouts/lightbox_panel"
 :javascript
   miq_bootstrap('#notification-app', 'miq.notifications');
 

@@ -1,14 +1,13 @@
-%div{:id => "w_#{presenter.widget.id}"}
-  - last_run_on = presenter.widget.last_run_on_for_user(current_user)
-  - next_run_on = presenter.widget.next_run_on
+%div{:id => "ww_#{presenter.widget.id}"}
+  - last_run, next_run = last_next_run(presenter.widget)
   - widget_blank = presenter.widget.content_type == 'menu' ? false : presenter.widget.contents_for_user(current_user).blank?
   %widget-wrapper{"widget-id"       => presenter.widget.id,
                   "widget-type"     => presenter.widget.content_type,
                   "widget-buttons"  => presenter.widget_buttons,
                   "widget-blank"    => widget_blank,
-                  "widget-last-run" => last_run_on ? format_timezone(last_run_on, session[:user_tz], "widget_footer") : _('Never'),
-                  "widget-next-run" => next_run_on ? format_timezone(next_run_on, session[:user_tz], "widget_footer") :  _('Unknown'),
+                  "widget-last-run" => last_run,
+                  "widget-next-run" => next_run,
                   "widget-title"    => presenter.widget.title}
 
 :javascript
-  miq_bootstrap("#w_#{presenter.widget.id}");
+  miq_bootstrap("#ww_#{presenter.widget.id}");
