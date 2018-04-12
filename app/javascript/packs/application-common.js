@@ -25,3 +25,9 @@ ManageIQ.component = {
   reactBlueprint,
   ...helpers,
 };
+
+require('../ems-common/shared-form');
+require('../ems-common/cloud/edit-cloud-form');
+require('../ems-common/cloud/edit-cloud-auth-tabs');
+require('../ems-common/cloud/cloud-default-tab');
+require('../ems-common/cloud/cloud-events-tab');

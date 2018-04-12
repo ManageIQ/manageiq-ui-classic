@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('emsEditCloudForm', {
+ManageIQ.angular.app.component('emsEditCloudFormBak', {
   bindings: {
     newRecord: '<',
     cloudFieldsUrl: '@',

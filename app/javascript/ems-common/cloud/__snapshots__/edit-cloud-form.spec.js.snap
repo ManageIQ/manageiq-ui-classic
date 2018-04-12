@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ems edit cloud component should display name 1`] = `
+Object {
+  "0": <ems-edit-cloud-form
+    class="ng-scope"
+    test="test"
+  />,
+  "length": 1,
+}
+`;

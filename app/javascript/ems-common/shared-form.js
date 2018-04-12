@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('emsSharedFormBak', {
+ManageIQ.angular.app.component('emsSharedForm', {
   bindings: {
     afterGet: '<',
     sharedFormModel: '<',

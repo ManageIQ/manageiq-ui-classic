@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('emsCloudDefaultTabBak', {
+ManageIQ.angular.app.component('emsCloudDefaultTab', {
   bindings: {
     showSecurityProtocol: '<?',
     openstackSecurityProtocols: '<',

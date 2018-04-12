@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('emsCloudEventsTabBak', {
+ManageIQ.angular.app.component('emsCloudEventsTab', {
   bindings: {
     formModel: '<',
     showNone: '<?',

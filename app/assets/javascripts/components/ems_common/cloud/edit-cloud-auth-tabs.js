@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('emsEditCloudAuthTabs', {
+ManageIQ.angular.app.component('emsEditCloudAuthTabsBak', {
   bindings: {
     tabs: '<',
     activeTab: '@?',
