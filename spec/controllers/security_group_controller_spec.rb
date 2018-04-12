@@ -50,6 +50,33 @@ describe SecurityGroupController do
     end
   end
 
+  describe "#delete_security_groups" do
+    let(:host) { FactoryGirl.create(:host) }
+    let(:security_group) { FactoryGirl.create(:security_group) }
+    let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as admin_user
+      allow(User).to receive(:current_user).and_return(admin_user)
+      allow(controller).to receive(:assert_privileges)
+      controller.instance_variable_set(:@_params, :id => host.id, :pressed => "host_OWN")
+      controller.instance_variable_set(:@_security_group, security_group)
+      controller.instance_variable_set(:@lastaction, "show")
+
+      allow(controller).to receive(:checked_or_params).and_return(SecurityGroup.all.ids)
+      allow(controller).to receive(:find_checked_items).and_return(SecurityGroup.all.ids)
+    end
+    subject do
+      get :delete_security_groups, :params => {:id =>@security_group.id}
+    end
+
+    it "testing" do
+      controller.send(:delete_security_groups)
+      expect(controller).to receive(:process_security_groups).with(security_grous_to_delete, "destroy")
+    end
+  end
+
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
