@@ -87,7 +87,8 @@ function recalculateChartYAxisLabels(id) {
 
   var o = validatePrecision(minShowed, maxShowed, format, minMax[0], minMax[1]);
   if (o.changed) {
-    this.config.axis_y_tick_format = o.format;
+    this.config.axis_y_tick_format = o.function;
+    format = o.format;
     this.api.flush();
   }
 }
@@ -99,7 +100,8 @@ function validatePrecision(minShowed, maxShowed, format, min, max) {
   var recalculated = recalculatePrecision(minShowed, maxShowed, format, min, max);
   return {
     'changed': recalculated.changed,
-    'format': ManageIQ.charts.formatters[recalculated.format.function].c3(recalculated.format.options),
+    'function': ManageIQ.charts.formatters[recalculated.format.function].c3(recalculated.format.options),
+    'format': recalculated.format,
   };
 }
 
