@@ -40,6 +40,12 @@ module Mixins
             return
           end
 
+          unless @origin_ownership_items.count == @ownershipitems.count
+            add_flash(_('Some of the selected items don\'t allow ownership changes'), :error)
+            set_refresh_partial
+            return
+          end
+
           if @explorer
             @sb[:explorer] = true
             ownership(@origin_ownership_items)
