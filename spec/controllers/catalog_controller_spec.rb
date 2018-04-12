@@ -18,6 +18,30 @@ describe CatalogController do
     allow_any_instance_of(ApplicationController).to receive(:fetch_path)
   end
 
+  it "checks method st_delete" do
+    login_as admin_user
+    allow(User).to receive(:current_user).and_return(admin_user)
+    allow(controller).to receive(:checked_or_params).and_return(ServiceTemplate.all.ids)
+    controller.instance_variable_set(:@_params, {}) # affects params in controller
+    allow(controller).to receive(:find_checked_items).and_return(ServiceTemplate.all.ids)
+    allow(controller).to receive(:replace_right_cell)
+    expect(controller).to receive(:process_sts).with(ServiceTemplate.all.ids, "destroy")
+    controller.send(:st_delete)
+  end
+
+  it "checks method x_edit_tags_reset" do
+    login_as admin_user
+    allow(User).to receive(:current_user).and_return(admin_user)
+    allow(controller).to receive(:checked_or_params).and_return(ServiceTemplate.all.ids)
+    controller.instance_variable_set(:@sb, :action => nil)
+    allow(controller).to receive(:checked_or_params).and_return(ServiceTemplate.all.ids)
+    allow(controller).to receive(:find_checked_items).and_return(ServiceTemplate.all.ids)
+    allow(controller).to receive(:tag_edit_build_entries_pulldown).and_return(nil)
+    allow(controller).to receive(:replace_right_cell).with(:action => nil)
+    expect(controller).to receive(:x_tags_set_form_vars)
+    controller.send(:x_edit_tags_reset, "ServiceTemplate")
+  end
+
   context 'get_view' do
     it "returns all catalog items related to current tenant and root tenant when non-self service user is logged" do
       login_as child_tenant_user

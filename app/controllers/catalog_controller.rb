@@ -281,7 +281,7 @@ class CatalogController < ApplicationController
         self.x_node = "root"
       end
     else # showing 1 element, delete it
-      elements = find_checked_ids_with_rbac(ServiceTemplate)
+      elements = find_records_with_rbac(ServiceTemplate, find_checked_items).ids
       if elements.empty?
         add_flash(_("No Service Catalog Items were selected for deletion"), :error)
       end
@@ -2177,7 +2177,7 @@ class CatalogController < ApplicationController
 
   def x_edit_tags_reset(db)
     @tagging = session[:tag_db] = db
-    @object_ids = find_checked_ids_with_rbac(db)
+    @object_ids = find_records_with_rbac(db.safe_constantize, find_checked_items).ids
     if params[:button] == 'reset'
       id = params[:id] if params[:id]
       return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", 'replace_cell__explorer')
