@@ -21,6 +21,8 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
   vm.newRecord = networkRouterFormId === "new";
   vm.saveable = miqService.saveable;
 
+  vm.saveUrl = vm.newRecord ? '/network_router/create/new' : '/network_router/update/' + networkRouterFormId;
+
   if (vm.newRecord) {
     vm.networkRouterModel.name = "";
     vm.networkRouterModel.enable_snat = true;
@@ -88,21 +90,17 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
   };
 
   vm.addClicked = function() {
-    var url = 'create/new' + '?button=add';
+    var url = vm.saveUrl + '?button=add';
     miqService.miqAjaxButton(url, vm.networkRouterModel, { complete: false });
   };
 
   vm.cancelClicked = function() {
-    if (networkRouterFormId == 'new') {
-      var url = '/network_router/create/new' + '?button=cancel';
-    } else {
-      var url = '/network_router/update/' + networkRouterFormId + '?button=cancel';
-    }
+    var url = vm.saveUrl + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
   vm.saveClicked = function() {
-    var url = '/network_router/update/' + networkRouterFormId + '?button=save';
+    var url = vm.saveUrl + '?button=save';
     miqService.miqAjaxButton(url, vm.networkRouterModel, { complete: false });
   };
 
