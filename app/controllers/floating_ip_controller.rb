@@ -93,9 +93,10 @@ class FloatingIpController < ApplicationController
   end
 
   def delete_floating_ips
+    binding.pry
     assert_privileges("floating_ip_delete")
     floating_ips = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "floating_ip")
-                     find_checked_records_with_rbac(FloatingIp)
+                     find_records_with_rbac(FloatingIp)
                    else
                      [find_record_with_rbac(FloatingIp, params[:id])]
                    end
