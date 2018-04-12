@@ -1,0 +1,29 @@
+.tab-content
+  %ng-form.form-horizontal{'name' => 'emsEventsTabForm'}
+    .form-group
+      .col-md-12
+        %label.radio-inline.control-label{"for" => "none_radio", "ng-if" => "$ctrl.showNone"}
+          %input{:type         => "radio",
+                 :name         => "event_stream_selection",
+                 :id           => "none_radio",
+                 "ng-checked"  => "$ctrl.formModel.event_stream_selection == none",
+                 :value        => "none",
+                 "ng-model"    => "$ctrl.formModel.event_stream_selection",
+                 "ng-change"   => "$ctrl.eventChanged({event: 'none'})"}
+            = _("None")
+        %label.radio-inline.control-label{"for" => "ceilometer_radio", 'ng-if' => '$ctrl.showCeilometer'}
+          %input{:type         => "radio",
+                 :name         => "event_stream_selection",
+                 :id           => "ceilometer_radio",
+                 "ng-checked"  => "$ctrl.formModel.event_stream_selection == ceilometer",
+                 :value        => "ceilometer",
+                 "ng-model"    => "$ctrl.formModel.event_stream_selection",
+                 "ng-change"   => "$ctrl.eventChanged({event: 'ceilometer'})"} Ceilometer
+        %label.radio-inline.control-label{"for" => "amqp_radio"}
+          %input{:type         => "radio",
+                 :name         => "event_stream_selection",
+                 :id           => "amqp_radio",
+                 "ng-checked"  => "$ctrl.formModel.event_stream_selection == amqp",
+                 :value        => "amqp",
+                 "ng-change"   => "$ctrl.eventChanged({event: 'ampq'})",
+                 'ng-model'    => "$ctrl.formModel.event_stream_selection"} AMQP

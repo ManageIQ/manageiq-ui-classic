@@ -1,0 +1,70 @@
+.tab-content
+  %ng-form.form-horizontal{'name' => 'emsDefaultTabForm'}
+    .form-group{'ng-class'  => "{'has-error': emsDefaultTabForm.security_protocol.$invalid}",
+                'ng-if'     => '$ctrl.showSecurityProtocol'}                                  |
+      %label.col-md-2.control-label{"for" => "default_security_protocol"}
+        = _('Security Protocol')
+      .col-md-8
+        %select{'pf-select'   => true,
+                'id'          => 'default_security_protocol',
+                'name'        => 'default_security_protocol',
+                'required'    => '',
+                'ng-model'    => '$ctrl.formModel.default_security_protocol',
+                'ng-options'  => 'protocol[1] as protocol[0] for protocol in $ctrl.openstackSecurityProtocols'}
+
+    .form-group{"ng-class" => "{'has-error': emsDefaultTabForm.default_hostname.$invalid}"}
+      %label.col-md-2.control-label{'for' => 'default_hostname'}
+        = _('Hostname (or IPv4 or IPv6 address)')
+      .col-md-4
+        %input.form-control{'type'                    => 'text',
+                            'id'                      => 'default_hostname',
+                            'name'                    => 'default_hostname',
+                            'ng-model'                => '$ctrl.formModel.default_hostname',
+                            'ng-readonly'             => '!$ctrl.newRecord',
+                            'maxlength'               => ViewHelper::MAX_NAME_LEN.to_s,
+                            'ng-required'             => true,
+                            'ng-trim'                 => false,
+                            'detect-spaces'           => '',
+                            'hostname-validation'     => '',
+                            'reset-validation-status' => 'default_auth_status'}
+        %span.help-block{"ng-show" => "emsDefaultTabForm.default_hostname.$error.required"}
+          = _("Required")
+        %span.help-block{"ng-show" => "emsDefaultTabForm.default_hostname.$error.detectedSpaces"}
+          = _("Spaces are prohibited")
+        %span.help-block{"ng-show" => "emsDefaultTabForm.default_hostname.$error.hostnameValidation"}
+          = _("Wrong hostname format")
+    .form-group{"ng-class" => "{'has-error': emsDefaultTabForm.default_api_port.$invalid}"}        |
+      %label.col-md-2.control-label{"for" => "default_api_port"}
+        = _('API Port')
+      .col-md-2
+        %input.form-control{"type"                        => "text",
+                            "id"                          => "default_api_port",
+                            "name"                        => "default_api_port",
+                            "ng-model"                    => "$ctrl.formModel.default_api_port",
+                            "maxlength"                   => 15,
+                            "ng-required"                 => true,
+                            "ng-readonly"                 => '!$ctrl.newRecord',
+                            "ng-trim"                     => false,
+                            "detect-spaces"               => "",
+                            "reset-validation-status"     => "default_auth_status",
+                            "pattern"                     => "^[1-9]\\d*$"}
+        %span.help-block{"ng-show" => "emsDefaultTabForm.default_api_port.$error.pattern"}
+          = _("Must be a number (greater than 0)")
+        %span.help-block{"ng-show" => "emsDefaultTabForm.default_api_port.$error.required"}
+          = _("Required")
+        %span.help-block{"ng-show" => "emsDefaultTabForm.default_api_port.$error.detectedSpaces"}
+          = _("Spaces are prohibited")
+
+  %auth-credentials{'form-model'                      => '$ctrl.formModel',
+                    'model-copy'                      => '$ctrl.modelCopy',
+                    'prefix'                          => "{{$ctrl.prefix}}",
+                    'user-required'                   => true,
+                    'password-required'               => true,
+                    'new-record'                      => '$ctrl.newRecord',
+                    'enable-valid-button'             => 'emsDefaultTabForm.$valid',
+                    'hide-user'                       => false,
+                    'hide-password'                   => false,
+                    'validate'                        => '$ctrl.validateClicked',
+                    'check-authentication'            => '$ctrl.authenticationRequired',
+                    'post-validation-model'           => '$ctrl.postValidationModel',
+                    'post-validation-model-registry'  => '$ctrl.postValidationModelRegistry'}

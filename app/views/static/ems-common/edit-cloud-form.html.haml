@@ -1,0 +1,117 @@
+%form.form-horizontal{'name'          => 'angularForm',
+                      'form-changed'  => true,
+                      'miq-form'      => true}
+  %ems-shared-form{'after-get'                      => 'vm.afterGet',
+                   'shared-form-model'              => "vm.sharedFormModel",
+                   'ems-type-options'               => "vm.emsTypeOptions",
+                   'new-record'                     => "vm.newRecord",
+                   'show-provider-region'           => "vm.providerRegions.includes(vm.sharedFormModel.emstype)",
+                   'provider-region-options'        => "vm.providerRegionsOptions[vm.sharedFormModel.emstype]",
+                   'show-ems-project'               => "vm.sharedFormModel.emstype === 'gce'",
+                   'show-ems-tenant-id'             => "vm.sharedFormModel.emstype === 'azure'",
+                   'show-subscription-id'           => "vm.sharedFormModel.emstype === 'azure'",
+                   'show-api-version'               => "vm.sharedFormModel.emstype === 'openstack' || vm.sharedFormModel.emstype === 'openstack_infra'",
+                   'api-version-options'            => "vm.apiVersionOptions",
+                   'show-keystone-domain'           => "vm.sharedFormModel.api_version === 'v3' && (vm.sharedFormModel.emstype === 'openstack' || vm.sharedFormModel.emstype === 'openstack_infra')",
+                   'show-nuage-api-version'         => "vm.sharedFormModel.emstype === 'nuage_network'",
+                   'nuage-api-version-options'      => "vm.nuageApiVersionOptions",
+                   'show-ems-infra-provider-id'     => "vm.sharedFormModel.emstype === 'openstack' && vm.sharedFormModel.openstack_infra_providers_exist",
+                   'ems-infra-provider-id-options'  => "vm.emsInfraProviderIdOptions",
+                   'ems-zone-options'               => "vm.emsZoneOptions",
+                   'show-tenant-mapping'            => "vm.sharedFormModel.emstype === 'openstack'",
+                   'show-provider-region-input'     => "vm.sharedFormModel.emstype === 'openstack' || vm.sharedFormModel.emstype === 'openstack_infra'",
+                   'show-vnc-start-port'            => "vm.sharedFormModel.emstype_vm",
+                   'ems-type-change'                => "vm.emsTypeChange(type)"}
+
+  %hr
+  %div{"ng-if" => "vm.sharedFormModel.emstype === 'azure' || vm.sharedFormModel.emstype === 'ec2'"}
+    %h3
+      = _("Credentials")
+    %auth-credentials{'form-model'                      => 'vm.sharedFormModel',
+                      'model-copy'                      => 'vm.modelCopy',
+                      'prefix'                          => "{{vm.prefix}}",
+                      'user-required'                   => true,
+                      'password-required'               => true,
+                      'new-record'                      => true,
+                      'guid-regex'                      => "vm.sharedFormModel.emstype === 'azure'",
+                      'enable-valid-button'             => 'angularForm.emsSharedForm.$valid',
+                      'form-labels'                     => 'vm.crendetialsLabels[vm.sharedFormModel.emstype]',
+                      'hide-user'                       => false,
+                      'hide-password'                   => false,
+                      'validate'                        => 'vm.validateClicked',
+                      'check-authentication'            => 'vm.authenticationRequired',
+                      'post-validation-model'           => 'vm.postValidationModel',
+                      'post-validation-model-registry'  => 'vm.postValidationModelRegistry'}
+
+  %div{"ng-if" => "vm.sharedFormModel.emstype === 'gce'"}
+    %h3
+      = _('Endpoints')
+    .form-group{"ng-class" => "{'has-error': angularForm.service_account.$invalid}"}
+      %label.col-md-2.control-label{"for" => "service_account"}
+        = _("Service Account JSON")
+      .col-md-4
+        %textarea.form-control{"id"                      => "service_account",
+                               "name"                    => "service_account",
+                               "required"                => true,
+                               "ng-model"                => "vm.sharedFormModel.service_account",
+                               "prefix"                  => "service_account",
+                               "ng-trim"                 => false,
+                               "reset-validation-status" => "service_account_auth_status"}
+        %span.help-block{"ng-show" => "angularForm.service_account.$error.required"}
+          = _("Required")
+    .form-group
+      %label.col-md-2
+      .col-md-4
+        %miq-button.validate_button{:name            => _('Validate'),
+                                    'on-click'       => "vm.validateClicked()",
+                                    :enabled         => "angularForm.emsSharedForm.$valid && angularForm.service_account.$valid",
+                                    :xs              => 'true',
+                                    :primary         => 'true'}
+        %span.help-block{"ng-if" => "vm.authenticationRequired", :style => "color: #cc0000"}
+          = _("Validation Required")
+    .form-group
+      .col-md-12
+        %span{:style => "color:black"}
+          = _("Copy and paste the contents of your Service Account JSON file above.")
+    .form-grou
+      .col-md-12
+        %span{:style => "color:black"}
+          = _("Used to authenticate as a service account against your provider.")
+      .col-md-12
+        %span{:style => "color:black"}
+          = _("Required. Should have privileged access, such as root or administrator.")
+  %div{'ng-if' => 'vm.sharedFormModel.emstype === "openstack" || vm.sharedFormModel.emstype === "vmware_cloud"'}
+    %ems-edit-cloud-auth-tabs{'tabs'        => 'vm.tabs',
+                              'active-tab'  => '{{"default"}}',
+                              'change-active-tab' => 'vm.setActiveTab(tab)'}
+
+    %ems-cloud-default-tab{'ng-show'                        => 'vm.activeTab === "default"',
+                           'show-security-protocol'         => 'vm.sharedFormModel.emstype === "openstack"',
+                           'openstack-security-protocols'   => 'vm.openstackSecurityProtocols',
+                           'form-model'                     => 'vm.sharedFormModel',
+                           'new-record'                     => 'vm.newRecord',
+                           'model-copy'                     => 'vm.modelCopy',
+                           'prefix'                         => '{{vm.prefix}}',
+                           'validate-clicked'               => 'vm.validateClicked',
+                           'authentication-required'        => true,
+                           'post-validation-model'          => 'vm.postValidationModel',
+                           'post-validation-model-registry' => 'vm.postValidationModelRegistry'}
+    %ems-cloud-events-tab{'ng-show'         => 'vm.activeTab === "ampq"',
+                          'form-model'      => 'vm.sharedFormModel',
+                          'show-none'       => 'vm.sharedFormModel.emstype === "vmware_cloud"',
+                          'show-ceilometer' => 'vm.sharedFormModel.emstype === "openstack"',
+                          'event-changed'   => 'vm.setEvent(event)'}
+  .clear-fix
+    .pull-right.button-group
+      %miq-button{'enabled'   => 'angularForm.$valid',
+                  'primary'   => true,
+                  'name'      => _("Add"),
+                  'title'     => _("Add"),
+                  'alt'       => _("Add"),
+                  'on-click'  => "vm.addClicked()"}
+
+      %miq-button{'name'      => _("Cancel"),
+                  'title'     => _("Cancel"),
+                  'alt'       => _("Cancel"),
+                  'enabled'   => true,
+                  'on-click'  => "vm.cancelClicked()"}
