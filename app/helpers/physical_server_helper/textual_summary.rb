@@ -109,7 +109,18 @@ module PhysicalServerHelper::TextualSummary
     # It is possible for guest devices not to have network data (or a network
     # hash). As a result, we need to exclude guest devices that don't have
     # network data to prevent a nil class error from occurring.
-    {:label =>  _("IPv4 Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| create_https_url(device.network.ipaddress) }.join(", ") }
+    devices_with_networks = @record.hardware.guest_devices.reject { |device| device.network.nil? }
+    ip_addresses = devices_with_networks.collect { |device| device.network.ipaddress }
+
+    # It is possible that each network entry can have multiple IP addresses, separated
+    # by commas, so first convert the array into a string, separating each array element
+    # with a comma. Then split this string back into an array using a comma, possibly
+    # followed by whitespace as the delimiter. Finally, iterate through the array
+    # and convert each element into a URL containing an IP address.
+    ip_addresses = ip_addresses.join(",").split(/,\s*/)
+    ip_address_urls = ip_addresses.collect { |ip_address| create_https_url(ip_address) }
+
+    {:label => _("IPv4 Address"), :value => ip_address_urls.join(", ").html_safe }
   end
 
   def textual_ipv6
@@ -170,7 +181,9 @@ module PhysicalServerHelper::TextualSummary
     url = ""
 
     unless ip.nil?
-      url = link_to(ip, "https://#{ip}")
+      # A target argument with a value of "_blank" is passed so that the
+      # page loads in a new tab when the link is clicked.
+      url = link_to(ip, "https://#{ip}", :target => "_blank")
     end
 
     url
