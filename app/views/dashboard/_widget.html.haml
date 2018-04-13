@@ -1,25 +1,13 @@
--# Parameters:
--# widget MiqWidget object
-%div{:id => "w_#{presenter.widget.id}"}
-  .card-pf.card-pf-view
-    .card-pf-body
-      .card-pf-heading-kebab
-        %dropdown-menu{"widget-id" => presenter.widget.id, "buttons-data" => presenter.widget_buttons}
-        %h2.card-pf-title.sortable-handle{:style => "cursor:move"}
-          = h(presenter.widget.title)
-
-    - if presenter.widget.content_type == "menu"
-      %widget-menu{:id => presenter.widget.id, "widget-id" => presenter.widget.id}
-    - elsif presenter.widget.contents_for_user(current_user).blank?
-      = render :partial => 'widget_blank', :locals => {:widget => presenter.widget}
-    - elsif presenter.widget.content_type == "report"
-      %widget-report{:id => presenter.widget.id, "widget-id" => presenter.widget.id}
-    - elsif presenter.widget.content_type == "chart"
-      %widget-chart{:id => presenter.widget.id, "widget-id" => presenter.widget.id}
-    - elsif presenter.widget.content_type == "rss"
-      %widget-rss{:id => presenter.widget.id, "widget-id" => presenter.widget.id}
-    - unless presenter.widget.content_type == "menu"
-      = render :partial => 'widget_footer', :locals => {:widget => presenter.widget}
+%div{:id => "ww_#{presenter.widget.id}"}
+  - last_run, next_run = last_next_run(presenter.widget)
+  - widget_blank = presenter.widget.content_type == 'menu' ? false : presenter.widget.contents_for_user(current_user).blank?
+  %widget-wrapper{"widget-id"       => presenter.widget.id,
+                  "widget-type"     => presenter.widget.content_type,
+                  "widget-buttons"  => presenter.widget_buttons,
+                  "widget-blank"    => widget_blank,
+                  "widget-last-run" => last_run,
+                  "widget-next-run" => next_run,
+                  "widget-title"    => presenter.widget.title}
 
 :javascript
-  miq_bootstrap("#w_#{presenter.widget.id}");
+  miq_bootstrap("#ww_#{presenter.widget.id}");

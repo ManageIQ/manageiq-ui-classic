@@ -1,39 +1,30 @@
 ManageIQ.angular.app.component('widgetMenu', {
   bindings: {
     widgetId: '@',
+    widgetModel: '<',
   },
   controllerAs: 'vm',
-  controller: ['$http', 'miqService', function($http, miqService) {
+  controller: function() {
     var vm = this;
-    vm.widgetMenuModel = {shortcuts: []};
 
     vm.shortcutsMissing = function() {
-      return vm.widgetMenuModel.shortcuts.length === 0;
+      return vm.widgetModel.shortcuts.length === 0;
     };
-
-    this.$onInit = function() {
-      $http.get('/dashboard/widget_menu_data/' + vm.widgetId)
-        .then(function(response) { vm.widgetMenuModel = response.data; })
-        .catch(miqService.handleFailure);
-      vm.div_id = 'dd_w' + vm.widgetId + '_box';
-    };
-  }],
+  },
   template: [
-    '<div class="mc" id="{{vm.div_id}}" ng-class="{ hidden: vm.widgetMenuModel.minimized }">',
-    '  <table class="table table-hover">',
-    '    <tbody>',
-    '      <div ng-if="vm.shortcutsMissing()">',
+    '<table class="table table-hover">',
+    '  <tbody>',
+    '    <div ng-if="vm.shortcutsMissing()">',
     __('No shortcuts are authorized for this user, contact your Administrator'),
-    '      </div>',
-    '      <tr ng-if="!vm.shortcutsMissing()" ng-repeat="shortcut in vm.widgetMenuModel.shortcuts">',
-    '        <td>',
-    '          <a title="' + __("Click to go this location") + '" href="{{shortcut.href}}">',
+    '    </div>',
+    '    <tr ng-repeat="shortcut in vm.widgetModel.shortcuts">',
+    '      <td>',
+    '        <a title="' + __("Click to go this location") + '" ng-href="{{shortcut.href}}">',
     '{{shortcut.description}}',
-    '          </a>',
-    '        </td>',
-    '      </tr>',
-    '    </tbody>',
-    '  </table>',
-    '</div>',
+    '        </a>',
+    '      </td>',
+    '    </tr>',
+    '  </tbody>',
+    '</table>',
   ].join("\n"),
 });
