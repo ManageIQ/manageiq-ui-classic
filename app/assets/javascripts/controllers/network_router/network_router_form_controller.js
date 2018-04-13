@@ -34,11 +34,9 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
         miqService.sparkleOff();
       });
     } else {
-      API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,ems_id,admin_state_up,cloud_network_id,extra_attributes,cloud_tenant,ext_management_system,cloud_subnets").then(function(data) {
+      API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,ems_id,admin_state_up,cloud_network_id,extra_attributes,cloud_tenant,cloud_subnets").then(function(data) {
         vm.networkRouterModel.name = data.name;
         vm.networkRouterModel.cloud_network_id = data.cloud_network_id;
-        vm.networkRouterModel.ems_id = data.ext_management_system.id;
-        vm.networkRouterModel.ems_name = data.ext_management_system.name;
         vm.networkRouterModel.cloud_tenant_name = data.cloud_tenant.name;
         vm.networkRouterModel.extra_attributes = data.extra_attributes;
         if (data.extra_attributes.external_gateway_info && data.networkRouterModel.extra_attributes.external_gateway_info !== {}) {
