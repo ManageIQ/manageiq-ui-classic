@@ -8,7 +8,8 @@ class TreeBuilderRolesByServer < TreeBuilderDiagnostics
   end
 
   def override(node, _object, _pid, _options)
-    if @sb[:diag_selected_id] && node[:key] == "svr-#{@sb[:diag_selected_id]}"
+    prefix = TreeBuilder.get_prefix_for_model('MiqServer')
+    if @sb[:diag_selected_id] && node[:key] == "#{prefix}-#{to_cid(@sb[:diag_selected_id])}"
       node[:highlighted] = true
     end
   end
