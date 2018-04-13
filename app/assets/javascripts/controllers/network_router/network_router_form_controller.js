@@ -5,15 +5,15 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
     vm.afterGet = false;
 
     vm.networkRouterModel = {
-      cloud_tenant_name: null
+      cloud_tenant_name: null,
       external_fixed_ips: [],
-      extra_attributes: null
+      extra_attributes: null,
     };
     vm.ems = [];
 
     vm.formId = networkRouterFormId;
-    vm.model = "networkRouterModel";
-    vm.newRecord = networkRouterFormId === "new";
+    vm.model = 'networkRouterModel';
+    vm.newRecord = networkRouterFormId === 'new';
     vm.saveable = miqService.saveable;
 
     vm.saveUrl = vm.newRecord ? '/network_router/create/new' : '/network_router/update/' + networkRouterFormId;
@@ -24,7 +24,8 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
       .then(function(providers) {
         vm.ems = providers;
 
-        vm.networkRouterModel.name = "";
+        vm.networkRouterModel.name = '';
+        vm.networkRouterModel.admin_state_up = true;
         vm.networkRouterModel.enable_snat = true;
         vm.networkRouterModel.external_gateway = false;
         vm.networkRouterModel.cloud_subnet_id = null;
@@ -34,20 +35,19 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
         miqService.sparkleOff();
       });
     } else {
-      API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,ems_id,admin_state_up,cloud_network_id,extra_attributes,cloud_tenant,cloud_subnets").then(function(data) {
+      API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,ems_id,admin_state_up,cloud_network_id,cloud_tenant,extra_attributes").then(function(data) {
         vm.networkRouterModel.name = data.name;
+        vm.networkRouterModel.admin_state_up = data.admin_state_up;
         vm.networkRouterModel.cloud_network_id = data.cloud_network_id;
         vm.networkRouterModel.cloud_tenant_name = data.cloud_tenant.name;
         vm.networkRouterModel.extra_attributes = data.extra_attributes;
+
         if (data.extra_attributes.external_gateway_info && data.networkRouterModel.extra_attributes.external_gateway_info !== {}) {
           vm.networkRouterModel.external_gateway = true;
           vm.networkRouterModel.enable_snat = vm.networkRouterModel.extra_attributes.external_gateway_info.enable_snat;
           vm.networkRouterModel.external_fixed_ips = vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips;
-        }
-      }).then(function() {
-        if (vm.networkRouterModel.external_gateway) {
           var ref = vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id;
-          return getSubnetByRef(ref);
+          getSubnetByRef(ref);
         }
       }).then(function() {
         return getCloudNetworksByEms(vm.networkRouterModel.ems_id);

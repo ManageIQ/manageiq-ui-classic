@@ -72,12 +72,22 @@
                             "required"     => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
+    .form-group
+      %label.col-md-2.control-label
+        = _('Admin State Up')
+      .col-md-8
+        %input{"bs-switch"   => "",
+               :data         => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+               "type"        => "checkbox",
+               "id"          => "network_router_admin_state_up",
+               "name"        => "admin_state_up",
+               "ng-model"    => "vm.networkRouterModel.admin_state_up"}
   %h4
     = _('External Gateway')
   .form-horizontal
     .form-group
       %label.col-md-2.control-label{"for" => "network_router_enable_snat"}
-        = _('Enabled')
+        = _('Enable external gateway')
       .col-md-8
         %input{"bs-switch"   => "",
                :data         => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},

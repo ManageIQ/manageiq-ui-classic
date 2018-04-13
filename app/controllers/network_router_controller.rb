@@ -400,7 +400,7 @@ class NetworkRouterController < ApplicationController
   end
 
   def form_params(params)
-    options = %i(name ems_id cloud_group_id cloud_subnet_id
+    options = %i(name admin_state_up ems_id cloud_group_id cloud_subnet_id
                  cloud_network_id).each_with_object({}) do |param, opt|
       opt[param] = params[param] if params[param]
     end
