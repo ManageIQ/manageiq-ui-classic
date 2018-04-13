@@ -1,4 +1,4 @@
-/* global add_flash */
+/* global add_flash camelizeQuadicon */
 (function() {
   var CONTROLLER_NAME = 'reportDataController';
   var MAIN_CONTETN_ID = 'main-content';
@@ -467,6 +467,12 @@
         if (this.settings.sort_col === -1) {
           this.settings.sort_col = 0;
         }
+
+        // Camelize the quadicon data received from the server
+        _.each(gtlData.rows, function(row, key) {
+          row.quad = camelizeQuadicon(row.quad);
+        });
+
         this.gtlData = gtlData;
         this.perPage.text = this.settings.perpage;
         this.perPage.value = this.settings.perpage;

@@ -8,7 +8,7 @@ class HostDecorator < MiqDecorator
   end
 
   def quadicon
-    {
+    icon = {
       :top_left     => {:text => vms.size},
       :top_right    => {:fileicon => "svg/currentstate-#{ERB::Util.h(normalized_state.downcase)}.svg"},
       :bottom_left  => {
@@ -16,10 +16,12 @@ class HostDecorator < MiqDecorator
         :tooltip  => type
       },
       :bottom_right => {
-        :fileicon => QuadiconHelper::Decorator.status_img(authentication_status),
+        :fileicon => QuadiconHelper.status_img(authentication_status),
         :tooltip  => authentication_status
       }
     }
+    icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
+    icon
   end
 
   def single_quad

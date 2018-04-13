@@ -1738,3 +1738,11 @@ function redirectLogin(msg) {
   add_flash(msg, 'warning');
   window.document.location.href = '/dashboard/login?timeout=true';
 }
+
+function camelizeQuadicon(quad) {
+  return _.reduce(quad, function(result, current, key) {
+    var item = {};
+    item[_.camelCase(key)] = current;
+    return Object.assign(result, item);
+  }, {})
+}

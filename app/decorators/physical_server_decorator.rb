@@ -8,7 +8,7 @@ class PhysicalServerDecorator < MiqDecorator
   end
 
   def quadicon
-    {
+    icon = {
       :top_left     => {:text => (host ? 1 : 0)},
       :top_right    => {
         :fileicon => "svg/currentstate-#{ERB::Util.h(power_state.try(:downcase))}.svg",
@@ -23,6 +23,8 @@ class PhysicalServerDecorator < MiqDecorator
         :tooltip  => health_state
       }
     }
+    icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
+    icon
   end
 
   def single_quad

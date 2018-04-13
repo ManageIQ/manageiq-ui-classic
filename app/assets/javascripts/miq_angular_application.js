@@ -12,6 +12,8 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miqStaticAssets.dialogUser',
   'miqStaticAssets.treeSelector',
   'miqStaticAssets.treeView',
+  'miqStaticAssets.quadicon',
+  'miqStaticAssets.common',
   'ngSanitize',
   'patternfly',
   'patternfly.charts',
