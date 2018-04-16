@@ -1,90 +1,87 @@
-ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
-  $scope.automationManagerModel = {
-    name: '',
-    url: '',
-    zone: '',
-    verify_ssl: '',
-    log_userid: '',
-    log_password: '',
-    log_verify: '',
-  };
-  $scope.formId = automationManagerFormId;
-  $scope.afterGet = false;
-  $scope.validateClicked = miqService.validateWithAjax;
-  $scope.modelCopy = angular.copy( $scope.automationManagerModel );
-  $scope.model = 'automationManagerModel';
+ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', 'configurationManagerService', function($http, $scope, automationManagerFormId, miqService, configurationManagerService) {
+  var vm = this;
 
-  ManageIQ.angular.scope = $scope;
+  vm.automationManagerModel = angular.copy(configurationManagerService.managerModel);
 
+  vm.postValidationModel = {};
+
+  vm.formId = automationManagerFormId;
+  vm.afterGet = false;
+  vm.saveable = miqService.saveable;
+  vm.validateClicked = configurationManagerService.validateClicked;
+  vm.modelCopy = angular.copy(vm.automationManagerModel);
+  vm.model = 'automationManagerModel';
+  vm.checkAuthentication = true;
+
+  ManageIQ.angular.scope = vm;
+
+  miqService.sparkleOn();
   if (automationManagerFormId === 'new') {
-    $scope.newRecord = true;
+    vm.newRecord = true;
 
-    $scope.automationManagerModel.name = '';
-    $scope.automationManagerModel.url = '';
-    $scope.automationManagerModel.verify_ssl = false;
-    $scope.automationManagerModel.log_userid = '';
-    $scope.automationManagerModel.log_password = '';
-    $scope.automationManagerModel.log_verify = '';
+    vm.automationManagerModel.name = '';
+    vm.automationManagerModel.url = '';
+    vm.automationManagerModel.verify_ssl = false;
+    vm.automationManagerModel.default_userid = '';
+    vm.automationManagerModel.default_password = '';
+    vm.automationManagerModel.default_verify = '';
 
     $http.get('/automation_manager/form_fields/' + automationManagerFormId)
       .then(getAutomationManagerNewFormDataComplete)
-      .catch(miqService.handleFailure);
+      .
+      catch (miqService.handleFailure);
   } else {
-    $scope.newRecord = false;
-    miqService.sparkleOn();
+    vm.newRecord = false;
 
     $http.get('/automation_manager/form_fields/' + automationManagerFormId)
       .then(getAutomationManagerFormDataComplete)
-      .catch(miqService.handleFailure);
-
-    miqService.sparkleOff();
+      .
+      catch (miqService.handleFailure);
   }
 
   function getAutomationManagerNewFormDataComplete(response) {
     var data = response.data;
-    $scope.afterGet = true;
-    $scope.automationManagerModel.zone = data.zone;
-    $scope.modelCopy = angular.copy($scope.automationManagerModel);
+
+    vm.automationManagerModel.zone = data.zone;
+
+    vm.modelCopy = angular.copy(vm.automationManagerModel);
+    vm.afterGet = true;
+    miqService.sparkleOff();
   }
 
   function getAutomationManagerFormDataComplete(response) {
     var data = response.data;
-    $scope.afterGet = true;
 
-    $scope.automationManagerModel.name            = data.name;
-    $scope.automationManagerModel.zone            = data.zone;
-    $scope.automationManagerModel.url             = data.url;
-    $scope.automationManagerModel.verify_ssl      = data.verify_ssl == "1";
+    vm.automationManagerModel.name = data.name;
+    vm.automationManagerModel.zone = data.zone;
+    vm.automationManagerModel.url = data.url;
+    vm.automationManagerModel.verify_ssl = data.verify_ssl == "1";
+    vm.automationManagerModel.default_userid = data.default_userid;
+    vm.automationManagerModel.default_auth_status = data.default_auth_status;
 
-    $scope.automationManagerModel.log_userid   = data.log_userid;
-
-    if($scope.automationManagerModel.log_userid != '') {
-      $scope.automationManagerModel.log_password = $scope.automationManagerModel.log_verify = miqService.storedPasswordPlaceholder;
+    if (vm.automationManagerModel.default_userid !== '') {
+      vm.automationManagerModel.default_password = vm.automationManagerModel.default_verify = miqService.storedPasswordPlaceholder;
     }
-    $scope.modelCopy = angular.copy( $scope.automationManagerModel );
+
+    vm.modelCopy = angular.copy(vm.automationManagerModel);
+    vm.afterGet = true;
+    miqService.sparkleOff();
   }
 
-  $scope.canValidateBasicInfo = function() {
-    if ($scope.isBasicInfoValid()) {
-      return true;
-    }
-    else {
-      return false;
-    }
+  vm.canValidateBasicInfo = function() {
+    return vm.isBasicInfoValid();
   };
 
-  $scope.isBasicInfoValid = function() {
-    if($scope.angularForm.url.$valid &&
-       $scope.angularForm.log_userid.$valid &&
-       $scope.angularForm.log_password.$valid &&
-       $scope.angularForm.log_verify.$valid)
-      return true;
-    else
-      return false;
+  vm.isBasicInfoValid = function() {
+    return $scope.angularForm.url.$valid
+      && $scope.angularForm.default_userid.$valid
+      && $scope.angularForm.default_password.$valid
+      && $scope.angularForm.default_verify.$valid;
   };
 
   var automationManagerEditButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
+
     var url = '/automation_manager/edit/' + automationManagerFormId + '?button=' + buttonName;
     if (serializeFields === undefined) {
       miqService.miqAjaxButton(url);
@@ -93,24 +90,28 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     }
   };
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     automationManagerEditButtonClicked('cancel');
     $scope.angularForm.$setPristine(true);
   };
 
-  $scope.resetClicked = function() {
+  vm.resetClicked = function() {
     $scope.$broadcast('resetClicked');
-    $scope.automationManagerModel = angular.copy( $scope.modelCopy );
+    vm.automationManagerModel = angular.copy(vm.modelCopy);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
     automationManagerEditButtonClicked('save', true);
     $scope.angularForm.$setPristine(true);
   };
 
-  $scope.addClicked = function() {
-    $scope.saveClicked();
+  vm.addClicked = function() {
+    vm.saveClicked();
+  };
+
+  vm.postValidationModelRegistry = function(prefix) {
+    configurationManagerService.postValidationModelRegistry(prefix, vm.newRecord, vm.postValidationModel, vm.automationManagerModel);
   };
 }]);
