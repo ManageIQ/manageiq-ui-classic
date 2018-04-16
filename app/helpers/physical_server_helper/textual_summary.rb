@@ -178,14 +178,8 @@ module PhysicalServerHelper::TextualSummary
   private
 
   def create_https_url(ip)
-    url = ""
-
-    unless ip.nil?
-      # A target argument with a value of "_blank" is passed so that the
-      # page loads in a new tab when the link is clicked.
-      url = link_to(ip, "https://#{ip}", :target => "_blank")
-    end
-
-    url
+    # A target argument with a value of "_blank" is passed so that the
+    # page loads in a new tab when the link is clicked.
+    ip.present? ? link_to(ip, URI::HTTPS.build(:host => ip).to_s, :target => "_blank") : ''
   end
 end
