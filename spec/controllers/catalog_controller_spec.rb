@@ -162,6 +162,30 @@ describe CatalogController do
     end
   end
 
+  context "#x_button catalogitem_edit" do
+    before do
+      vm = FactoryGirl.create(:vm_vmware,
+                              :ext_management_system => FactoryGirl.create(:ems_vmware),
+                              :storage               => FactoryGirl.create(:storage))
+      @miq_request = FactoryGirl.create(:miq_provision_request, :requester => admin_user, :src_vm_id => vm.id)
+      service_template_with_root_tenant.update_attributes(:prov_type => 'vmware')
+      service_template_with_root_tenant.add_resource(@miq_request)
+      service_template_with_root_tenant.save
+    end
+
+    it "shows flash message for missing Request" do
+      @miq_request.destroy
+      post :x_button, :params => {:id => service_template_with_root_tenant.id, :pressed => "catalogitem_edit", :format => :js}
+      expect(assigns(:flash_array).first[:message]).to include("Can not edit selected item, Request is missing")
+      expect(assigns(:edit)).to be_nil
+    end
+
+    it "continues with setting edit screen when Request is present" do
+      post :x_button, :params => {:id => service_template_with_root_tenant.id, :pressed => "catalogitem_edit", :format => :js}
+      expect(assigns(:edit)).not_to be_nil
+    end
+  end
+
   context "#st_edit" do
     it "@record is cleared out after Service Template is added" do
       controller.instance_variable_set(:@sb, {})

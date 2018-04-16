@@ -178,7 +178,7 @@
     - else
       - if !@record.prov_type || (@record.prov_type && need_prov_dialogs?(@record.prov_type))
         = miq_tab_content('request') do
-          - if @options[:wf]
+          - if @options && @options[:wf]
             %h3
               = _('Request Info')
               = render :partial => "miq_request/prov_wf",
