@@ -7,7 +7,7 @@ describe ReportController do
       login_as user
     end
 
-    context "#db_edit" do
+    describe "#db_edit" do
       it "dashboard owner remains unchanged" do
         allow(controller).to receive(:db_fields_validation)
         allow(controller).to receive(:replace_right_cell)
