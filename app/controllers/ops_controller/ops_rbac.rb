@@ -1023,13 +1023,13 @@ module OpsController::OpsRbac
 
   # Get variables from user edit form
   def rbac_user_get_form_vars
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:userid] = params[:userid].strip if params[:userid]
-    @edit[:new][:email] = params[:email].strip if params[:email]
+    @edit[:new][:name] = params[:name].presence if params[:name]
+    @edit[:new][:userid] = params[:userid].strip.presence if params[:userid]
+    @edit[:new][:email] = params[:email].strip.presence if params[:email]
     @edit[:new][:group] = params[:chosen_group] if params[:chosen_group]
 
-    @edit[:new][:password] = params[:password] if params[:password]
-    @edit[:new][:verify] = params[:verify] if params[:verify]
+    @edit[:new][:password] = params[:password].presence if params[:password]
+    @edit[:new][:verify] = params[:verify].presence if params[:verify] # Confirm Password form
   end
 
   # Set user record variables to new values
