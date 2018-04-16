@@ -722,7 +722,7 @@ module OpsController::OpsRbac
     when :user
       record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
       validated = rbac_user_validate?
-      rbac_user_set_record_vars(record) if @edit[:user_id].blank?
+      rbac_user_set_record_vars(record)
     when :group then
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
@@ -734,6 +734,7 @@ module OpsController::OpsRbac
     end
 
     if record.valid? && validated && record.save!
+      record.miq_groups = Rbac.filtered(MiqGroup.find(rbac_user_get_group_ids)) if key == :user # only set miq_groups if everything is valid
       populate_role_features(record) if what == "role"
       self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, add_pressed))
@@ -1036,7 +1037,6 @@ module OpsController::OpsRbac
     user.name       = @edit[:new][:name]
     user.userid     = @edit[:new][:userid]
     user.email      = @edit[:new][:email]
-    user.miq_groups = Rbac.filtered(MiqGroup.find(rbac_user_get_group_ids))
     user.password   = @edit[:new][:password] if @edit[:new][:password]
   end
 
