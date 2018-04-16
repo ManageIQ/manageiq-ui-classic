@@ -1,6 +1,6 @@
 describe ReportController do
   context "::Dashboards" do
-    before :each do
+    before do
       login_as user
       @db = FactoryGirl.create(:miq_widget_set,
                                :owner    => user.current_group,
