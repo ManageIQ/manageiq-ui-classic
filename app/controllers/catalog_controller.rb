@@ -136,8 +136,6 @@ class CatalogController < ApplicationController
     return unless load_edit("prov_edit__#{id}", "replace_cell__explorer")
     get_form_vars
     changed = (@edit[:new] != @edit[:current])
-    # Build Catalog Items tree unless @edit[:ae_tree_select]
-    build_ae_tree(:catalog, :automate_tree) if params[:display] || params[:template_id] || params[:manager_id]
     if params[:st_prov_type] # build request screen for selected item type
       @_params[:org_controller] = "service_template"
       if ansible_playbook?
@@ -369,7 +367,6 @@ class CatalogController < ApplicationController
     default_entry_point("generic", "composite") if params[:display]
     st_get_form_vars
     changed = (@edit[:new] != @edit[:current])
-    build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree
     render :update do |page|
       page << javascript_prologue
       page.replace("basic_info_div", :partial => "form_basic_info") if params[:resource_id] || params[:display]
@@ -441,7 +438,6 @@ class CatalogController < ApplicationController
 
     # if resource has been deleted from group, rearrange groups incase group is now empty.
     rearrange_groups_array
-    build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree
     changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
@@ -480,56 +476,10 @@ class CatalogController < ApplicationController
     end
   end
 
-  def get_ae_tree_edit_key(type)
-    case type
-    when 'provision'   then :fqname
-    when 'retire'      then :retire_fqname
-    when 'reconfigure' then :reconfigure_fqname
-    end
-  end
-  private :get_ae_tree_edit_key
-
   def need_prov_dialogs?(type)
     !type.starts_with?('generic')
   end
   helper_method :need_prov_dialogs?
-
-  def ae_tree_select_toggle
-    @edit = session[:edit]
-    self.x_active_tree = :sandt_tree
-    at_tree_select_toggle(get_ae_tree_edit_key(@edit[:ae_field_typ]))
-    x_node_set(@edit[:active_id], :automate_tree) if params[:button] == 'submit'
-    session[:edit] = @edit
-  end
-
-  def ae_tree_select_discard
-    ae_tree_key = get_ae_tree_edit_key(params[:typ])
-    @edit = session[:edit]
-    @edit[:new][params[:typ]] = nil
-    @edit[:new][ae_tree_key] = ''
-    # build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree unless @edit[:ae_tree_select]
-    render :update do |page|
-      page << javascript_prologue
-      @changed = (@edit[:new] != @edit[:current])
-      x_node_set(@edit[:active_id], :automate_tree)
-      page << javascript_hide("ae_tree_select_div")
-      page << javascript_hide("blocker_div")
-      page << javascript_hide("#{ae_tree_key}_div")
-      page << "$('##{ae_tree_key}').val('#{@edit[:new][ae_tree_key]}');"
-      page << "$('##{ae_tree_key}').prop('title', '#{@edit[:new][ae_tree_key]}');"
-      @edit[:ae_tree_select] = false
-      page << javascript_for_miq_button_visibility(@changed)
-      page << "miqTreeActivateNodeSilently('automate_tree', 'root');"
-      page << "miqSparkle(false);"
-    end
-    session[:edit] = @edit
-  end
-
-  def ae_tree_select
-    @edit = session[:edit]
-    at_tree_select(get_ae_tree_edit_key(@edit[:ae_field_typ]))
-    session[:edit] = @edit
-  end
 
   def svc_catalog_provision
     assert_privileges("svc_catalog_provision")
@@ -1343,7 +1293,6 @@ class CatalogController < ApplicationController
     else
       @right_cell_text = _("Editing Service Catalog Item \"%{name}\"") % {:name => @record.name}
     end
-    build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree
   end
 
   def st_set_form_vars
@@ -1457,6 +1406,8 @@ class CatalogController < ApplicationController
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
     @edit[:st_prov_type] = @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
+
+    copy_params_if_set(@edit[:new], params, %i(fqname reconfigure_fqname retire_fqname))
 
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w(generic_ansible_tower generic_container_template).include?(@edit[:new][:st_prov_type])
