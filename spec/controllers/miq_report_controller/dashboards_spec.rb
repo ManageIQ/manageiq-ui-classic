@@ -1,13 +1,14 @@
 describe ReportController do
   context "::Dashboards" do
+    before :each do
+      login_as user
+      @db = FactoryGirl.create(:miq_widget_set,
+                               :owner    => user.current_group,
+                               :set_data => {:col1 => [], :col2 => [], :col3 => []})
+    end
+
     context "#db_edit" do
       let(:user) { FactoryGirl.create(:user, :features => "db_edit") }
-      before :each do
-        login_as user
-        @db = FactoryGirl.create(:miq_widget_set,
-                                 :owner    => user.current_group,
-                                 :set_data => {:col1 => [], :col2 => [], :col3 => []})
-      end
 
       it "dashboard owner remains unchanged" do
         allow(controller).to receive(:db_fields_validation)
