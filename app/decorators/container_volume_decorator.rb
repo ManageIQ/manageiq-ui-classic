@@ -5,7 +5,7 @@ class ContainerVolumeDecorator < MiqDecorator
 
   def single_quad
     {
-      :fileicon => '100/container_volume.png'
+      :fonticon => fonticon
     }
   end
 end

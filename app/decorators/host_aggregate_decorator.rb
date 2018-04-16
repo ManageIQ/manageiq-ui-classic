@@ -1,11 +1,11 @@
 class HostAggregateDecorator < MiqDecorator
   def self.fonticon
-    'pficon pficon-screen'
+    'pficon pficon-container-node'
   end
 
   def single_quad
     {
-      :fileicon => '100/host_aggregate.png'
+      :fonticon => fonticon
     }
   end
 end

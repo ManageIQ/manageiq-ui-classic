@@ -6,4 +6,10 @@ class PersistentVolumeDecorator < MiqDecorator
   def self.fileicon
     '100/persistent_volume.png'
   end
+
+  def single_quad
+    {
+      :fonticon => fonticon
+    }
+  end
 end

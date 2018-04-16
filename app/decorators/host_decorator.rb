@@ -1,6 +1,6 @@
 class HostDecorator < MiqDecorator
   def self.fonticon
-    'pficon pficon-screen'
+    'pficon pficon-container-node'
   end
 
   def fileicon
@@ -26,7 +26,7 @@ class HostDecorator < MiqDecorator
 
   def single_quad
     {
-      :fileicon => fileicon
+      :fonticon => fonticon
     }
   end
 end

@@ -9,7 +9,7 @@ class CloudNetworkDecorator < MiqDecorator
 
   def single_quad
     {
-      :fileicon => fileicon
+      :fonticon => fonticon
     }
   end
 end

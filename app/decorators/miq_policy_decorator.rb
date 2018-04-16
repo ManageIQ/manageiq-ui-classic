@@ -2,7 +2,7 @@ class MiqPolicyDecorator < MiqDecorator
   def fonticon
     icon = case towhat
            when 'Host'
-             'pficon pficon-screen'
+             'pficon pficon-container-node'
            when 'Vm'
              'pficon pficon-virtual-machine'
            when 'ContainerReplicator'

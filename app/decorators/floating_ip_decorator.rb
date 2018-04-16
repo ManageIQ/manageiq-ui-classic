@@ -9,7 +9,7 @@ class FloatingIpDecorator < MiqDecorator
 
   def single_quad
     {
-      :fileicon => fileicon
+      :fonticon => fonticon
     }
   end
 end

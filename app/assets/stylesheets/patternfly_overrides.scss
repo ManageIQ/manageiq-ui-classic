@@ -367,6 +367,12 @@ table.table.table-summary-screen tbody td img {
 /// begin quadicon styling
 /// ===================================================================
 
+miq-quadicon > .single-wrapper {
+  .fonticon > i {
+    color: #0099cc;
+  }
+}
+
 /// ===================================================================
 /// end quadicon styling
 /// ===================================================================
