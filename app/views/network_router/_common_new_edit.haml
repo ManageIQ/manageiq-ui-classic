@@ -10,12 +10,13 @@
   = render :partial => 'layouts/flash_msg'
 
   %h3
-    = _('Network Provider')
+    = _('Network Management Provider')
+
   .form-horizontal
     .form-group
       %label.col-md-2.control-label
         = _('Network Manager')
-      .col-md-8
+      .col-md-8{'ng-if' => 'vm.newRecord'}
         %select{'id'         => 'ems_id',
                 'name'       => 'ems_id',
                 'ng-change'  => 'vm.filterNetworkManagerChanged(vm.networkRouterModel.ems_id)',
@@ -28,22 +29,19 @@
         %span.help-block{'ng-show' => 'angularForm.ems_id.$error.required'}
           = _('Required')
       .col-md-8{'ng-if' => '!vm.newRecord'}
-        %input.form-control{'type'         => 'text',
-                            'name'         => 'ems_name',
-                            'maxlength'    => 128,
-                            'ng-model'     => 'vm.networkRouterModel.ems_name',
-                            'ng-disabled'  => true}
-    %h3
-  .form-horizontal{'ng-if' => "vm.networkRouterModel.ems_id"}
-    %h3
-      = _('Placement')
-    .form-group
+        %input.form-control{'type'        => 'text',
+                            'name'        => 'ems_name',
+                            'maxlength'   => 128,
+                            'ng-model'    => 'vm.networkRouterModel.ext_management_system.name',
+                            'disabled'    => true}
+
+    .form-group{'ng-class' => '{"has-error": angularForm.cloud_tenant_id.$invalid}',
+                'ng-if'    => 'vm.networkRouterModel.ext_management_system.id'}
       %label.col-md-2.control-label
-        = _('Cloud Tenant')
-      .col-md-8{'ng-class' => "{'has-error': angularForm.cloud_tenant_id.$invalid}", 'ng-if' => 'vm.newRecord'}
+        = _('Cloud Tenant Placement')
+      .col-md-8{'ng-if' => 'vm.newRecord'}
         %select{'name'                        => 'cloud_tenant_id',
-                'ng-disabled'                 => '!vm.newRecord',
-                'ng-model'                    => 'vm.networkRouterModel.cloud_tenant_id',
+                'ng-model'                    => 'vm.networkRouterModel.cloud_tenant.id',
                 'ng-options'                  => 'tenant.id as tenant.name for tenant in vm.available_tenants',
                 'pf-select'                   => true,
                 'required'                    => '',
@@ -53,11 +51,11 @@
         %span.help-block{'ng-show' => 'angularForm.cloud_tenant_id.$error.required'}
           = _('Required')
       .col-md-8{'ng-if' => '!vm.newRecord'}
-        %input.form-control{'type'         => 'text',
-                            'name'         => 'cloud_tenant_name',
-                            'maxlength'    => 128,
-                            'ng-model'     => 'vm.networkRouterModel.cloud_tenant_name',
-                            'ng-disabled'  => true}
+        %input.form-control{'type'      => 'text',
+                            'name'      => 'cloud_tenant_name',
+                            'disabled'  => true,
+                            'maxlength' => 128,
+                            'ng-model'  => 'vm.networkRouterModel.cloud_tenant.name'}
   %h3
     = _('Router Information')
   .form-horizontal
@@ -65,48 +63,47 @@
       %label.col-md-2.control-label
         = _('Router Name')
       .col-md-8
-        %input.form-control{'type'         => 'text',
-                            'name'         => 'name',
-                            'ng-model'     => 'vm.networkRouterModel.name',
-                            'maxlength'    => 128,
-                            'required'     => ''}
+        %input.form-control{'type'      => 'text',
+                            'name'      => 'name',
+                            'ng-model'  => 'vm.networkRouterModel.name',
+                            'maxlength' => 128,
+                            'required'  => ''}
         %span.help-block{'ng-show' => 'angularForm.name.$error.required'}
           = _('Required')
     .form-group
       %label.col-md-2.control-label
         = _('Admin State Up')
       .col-md-8
-        %input{'bs-switch'   => '',
-               'data'        => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
-               'type'        => 'checkbox',
-               'id'          => '_admin_state_up',
-               'name'        => 'admin_state_up',
-               'ng-model'    => 'vm.networkRouterModel.admin_state_up'}
+        %input{'bs-switch' => '',
+               'data'      => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+               'type'      => 'checkbox',
+               'id'        => 'admin_state_up',
+               'name'      => 'admin_state_up',
+               'ng-model'  => 'vm.networkRouterModel.admin_state_up'}
   %h4
     = _('External Gateway')
   .form-horizontal
     .form-group
-      %label.col-md-2.control-label{'for' => 'network_router_enable_snat'}
+      %label.col-md-2.control-label{'for' => 'external_gateway'}
         = _('Enable')
       .col-md-8
-        %input{'bs-switch'   => '',
-               'data'        => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
-               'type'        => 'checkbox',
-               'id'          => 'external_gateway',
-               'name'        => 'external_gateway',
-               'ng-model'    => 'vm.networkRouterModel.external_gateway'}
+        %input{'bs-switch' => '',
+               'data'      => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+               'type'      => 'checkbox',
+               'id'        => 'external_gateway',
+               'name'      => 'external_gateway',
+               'ng-model'  => 'vm.networkRouterModel.external_gateway'}
   .form-horizontal{'ng-if' => 'vm.networkRouterModel.external_gateway'}
-    .form-group{'ng-if' => 'vm.networkRouterModel.ems_id'}
-      %label.col-md-2.control-label{'for' => 'network_router_enable_snat'}
+    .form-group
+      %label.col-md-2.control-label{'for' => 'enable_snat'}
         = _('Source NAT')
       .col-md-8
-        %input{'bs-switch'   => '',
-               'data'        => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
-               'type'        => 'checkbox',
-               'id'          => 'enable_snat',
-               'name'        => 'enable_snat',
-               'ng-model'    => 'vm.networkRouterModel.enable_snat'}
-
+        %input{'bs-switch' => '',
+               'data'      => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+               'type'      => 'checkbox',
+               'id'        => 'enable_snat',
+               'name'      => 'enable_snat',
+               'ng-model'  => 'vm.networkRouterModel.extra_attributes.external_gateway_info.enable_snat'}
     .form-group{'ng-class' => "{'has-error': angularForm.cloud_network_id.$invalid}"}
       %label.col-md-2.control-label
         = _('Network')
