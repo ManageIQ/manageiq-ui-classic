@@ -39,7 +39,7 @@
       %span.help-block{"ng-show" => "angularForm.network_protocol.$error.required"}
         = _("Required")
 
-  .form-group
+  .form-group{"ng-class" => "{'has-error': angularForm.cidr.$invalid}"}
     %label.col-md-2.control-label
       = _('Subnet CIDR')
     .col-md-8
@@ -47,4 +47,7 @@
                           "name"         => "cidr",
                           "ng-disabled"  => "!vm.newRecord",
                           "ng-model"     => "vm.cloudSubnetModel.cidr",
-                          "ng-maxlength" => 20}
+                          "ng-maxlength" => 20,
+                          "required"     => ""}
+      %span.help-block{"ng-show" => "angularForm.cidr.$error.required"}
+        = _("Required")
