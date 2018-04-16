@@ -38,21 +38,15 @@ describe 'routes for MiqRequestController' do
     end
   end
 
-  describe '#prov_button' do
+  describe '#filter' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/prov_button")).to route_to("#{controller_name}#prov_button")
+      expect(post("/#{controller_name}/filter")).to route_to("#{controller_name}#filter")
     end
   end
 
   describe '#prov_copy' do
     it 'routes with GET' do
       expect(get("/#{controller_name}/prov_copy")).to route_to("#{controller_name}#prov_copy")
-    end
-  end
-
-  describe '#prov_change_options' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/prov_change_options")).to route_to("#{controller_name}#prov_change_options")
     end
   end
 

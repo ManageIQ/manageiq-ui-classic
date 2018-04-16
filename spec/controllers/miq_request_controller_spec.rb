@@ -297,6 +297,77 @@ describe MiqRequestController do
     end
   end
 
+  context '#filter' do
+    before { stub_user(:features => :all) }
+
+    it 'returns a scope for the GTL' do
+      post :filter, :params => {:reasonText => 'foobar', :selectedPeriod => 7}
+      expect(response.status).to eq(200)
+      scope = JSON.parse(response.body)['data']['scope']
+      expect(scope).to match(array_including(['created_recently', 7], %w(with_reason_like foobar)))
+    end
+  end
+
+  context '#miq_request_initial_options' do
+    before { stub_user(:features => :all) }
+    subject { controller.send(:miq_request_initial_options) }
+
+    it 'has values for states, users, types and time periods' do
+      expect(subject).to match(
+        hash_including(
+          :states         => array_including(hash_including(:label => 'Pending Approval', :checked => true, :value => 'pending_approval')),
+          :users          => array_including(hash_including(:label => 'All', :value => 'all')),
+          :selectedUser   => 'all',
+          :types          => array_including(hash_including(:label => 'All', :value => 'all')),
+          :selectedType   => 'all',
+          :timePeriods    => array_including(hash_including(:label => 'Last 24 Hours', :value => 1)),
+          :selectedPeriod => 7,
+          :reasonText     => nil,
+        )
+      )
+    end
+  end
+
+  context '#miq_request_initial_options user choice' do
+    before(:each) do
+      EvmSpecHelper.local_miq_server
+      stub_server_configuration(:server => {}, :session => {})
+
+      # Create users
+      @admin = FactoryGirl.create(:user, :role => "super_administrator")
+      allow(@admin).to receive(:role_allows?).with(:identifier => 'miq_request_approval').and_return(true)
+      @vm_user = FactoryGirl.create(:user, :role => "vm_user")
+      @desktop = FactoryGirl.create(:user, :role => "desktop")
+      @approver = FactoryGirl.create(:user, :role => "approver")
+      allow(@approver).to receive(:role_allows?).with(:identifier => 'miq_request_approval').and_return(true)
+      @users = [@admin, @vm_user, @desktop, @approver]
+
+      # Create requests
+      FactoryGirl.create(:vm_migrate_request, :requester => @admin)
+      FactoryGirl.create(:vm_migrate_request, :requester => @vm_user)
+      FactoryGirl.create(:vm_migrate_request, :requester => @desktop)
+      FactoryGirl.create(:vm_migrate_request, :requester => @approver)
+    end
+
+    subject { controller.send(:miq_request_initial_options) }
+
+    it 'multiple users are present for admin' do
+      login_as(@admin)
+      expect(subject[:users].length).to be > 1
+    end
+
+    it 'multiple users are present for approver' do
+      login_as(@approver)
+      expect(subject[:users].length).to be > 1
+    end
+
+    it 'just the vm_user is present for vm_user' do
+      login_as(@vm_user)
+      expect(subject[:users].length).to eq(1)
+      expect(subject[:selectedUser]).to eq(@vm_user.id)
+    end
+  end
+
   private
 
   def create_user_in_other_region(userid)
