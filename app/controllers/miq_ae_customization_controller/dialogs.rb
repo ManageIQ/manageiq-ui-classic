@@ -913,6 +913,7 @@ module MiqAeCustomizationController::Dialogs
 
       if @edit[:field_typ] != params[:field_typ]
         @edit[:field_dynamic] = key[:dynamic] = false
+        @edit[:new][:selected] = @edit[:new]["field_entry_point"] = @edit[:field_entry_point] = key[:field_entry_point] = nil
         @edit[:field_read_only] = key[:read_only] = false
 
         if %w(DialogFieldTextBox DialogFieldTextAreaBox).include?(params[:field_typ])
