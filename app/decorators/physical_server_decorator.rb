@@ -11,9 +11,8 @@ class PhysicalServerDecorator < MiqDecorator
     icon = {
       :top_left     => {:text => (host ? 1 : 0)},
       :top_right    => {
-        :fileicon => "svg/currentstate-#{ERB::Util.h(power_state.try(:downcase))}.svg",
-        :tooltip  => power_state.try(:downcase)
-      },
+        :tooltip => power_state.try(:downcase)
+      }.merge(QuadiconHelper.machine_state(power_state)),
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => type
