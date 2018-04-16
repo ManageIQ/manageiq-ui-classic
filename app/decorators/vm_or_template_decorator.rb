@@ -18,9 +18,8 @@ class VmOrTemplateDecorator < MiqDecorator
         :tooltip  => os_image_name.humanize.downcase
       },
       :top_right    => {
-        :fileicon   => "svg/currentstate-#{ERB::Util.h(normalized_state.downcase)}.svg",
-        :tooltip    => normalized_state
-      },
+        :tooltip => normalized_state
+      }.merge(QuadiconHelper.machine_state(normalized_state)),
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => type
