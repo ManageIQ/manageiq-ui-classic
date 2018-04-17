@@ -1,7 +1,5 @@
-
-
 ManageIQ.angular.app.component('vmCloudEvacuateForm', {
-	controller: vmCloudEvacuateFormController,
+  controller: vmCloudEvacuateFormController,
   controllerAs: 'vm',
   templateUrl: '/static/evacuate-form.html.haml',
   bindings: {
@@ -11,14 +9,14 @@ ManageIQ.angular.app.component('vmCloudEvacuateForm', {
 });
 
 vmCloudEvacuateFormController.$inject = ['$http', '$scope', 'miqService'];
-function vmCloudEvacuateFormController ($http, $scope, miqService) {
+function vmCloudEvacuateFormController($http, $scope, miqService) {
   var vm = this;
 
   vm.vmCloudModel = {
     auto_select_host:    true,
     destination_host:    null,
     on_shared_storage:   true,
-    admin_password:      null
+    admin_password:      null,
   };
   vm.hosts = [];
   vm.formId = vm.vmCloudEvacuateFormId;
@@ -57,4 +55,4 @@ function vmCloudEvacuateFormController ($http, $scope, miqService) {
     vm.modelCopy = angular.copy(vm.vmCloudModel);
     miqService.sparkleOff();
   }
-};
+}
