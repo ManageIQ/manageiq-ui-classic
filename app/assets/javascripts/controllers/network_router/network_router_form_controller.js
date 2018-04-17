@@ -42,11 +42,12 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
     } else {
       API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,admin_state_up,cloud_network_id,cloud_tenant.name,ext_management_system.id,ext_management_system.name,extra_attributes").then(function(data) {
         Object.assign(vm.networkRouterModel, data);
+        vm.networkRouterModel.admin_state_up = vm.networkRouterModel.admin_state_up == 't' ? true : false;
         if (vm.networkRouterModel.extra_attributes.external_gateway_info && vm.networkRouterModel.extra_attributes.external_gateway_info != {}) {
           vm.networkRouterModel.external_gateway = true;
           if (vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips) {
             var ref = vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id;
-            getSubnetByRef(ref);
+            return getSubnetByRef(ref);
           }
         }
       }).then(function() {
@@ -62,7 +63,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
 
     var getSubnetByRef = function(ref) {
       if (ref) {
-        API.get("/api/cloud_subnets?expand=resources&attributes=name&filter[]=ems_ref=" + ref).then(function(data) {
+        return API.get("/api/cloud_subnets?expand=resources&attributes=name&filter[]=ems_ref=" + ref).then(function(data) {
           vm.networkRouterModel.cloud_subnet_id = data.resources[0].id;
         }).catch(miqService.handleFailure);
       }
@@ -71,7 +72,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
 
   vm.getCloudNetworksByEms = function(id) {
     if (id) {
-      API.get("/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=" + id).then(function(data) {
+      return API.get("/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=" + id).then(function(data) {
         vm.available_networks = data.resources;
       }).catch(miqService.handleFailure);
     }
@@ -79,7 +80,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
 
   vm.getCloudSubnetsByNetworkID = function(id) {
     if (id) {
-      API.get("/api/cloud_subnets?expand=resources&attributes=name,ems_ref&filter[]=cloud_network_id=" + id).then(function(data) {
+      return API.get("/api/cloud_subnets?expand=resources&attributes=name,ems_ref&filter[]=cloud_network_id=" + id).then(function(data) {
         vm.available_subnets = data.resources;
       }).catch(miqService.handleFailure);
     }
