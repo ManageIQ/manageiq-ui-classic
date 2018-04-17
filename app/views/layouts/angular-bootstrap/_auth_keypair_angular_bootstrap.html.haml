@@ -14,10 +14,9 @@
 - vm_scope                  ||= false
 - main_scope                  = vm_scope ? "$parent.vm" : "$parent"
 
-%ems-keypair-component
+%ems-keypair-component{'prefix' => prefix, 'ng_reqd_userid' => ng_reqd_userid.to_json}
+
 :javascript
-  ManageIQ.angular.app.value('prefix', prefix.to_json);
-  ManageIQ.angular.app.value('ng_reqd_userid', ng_reqd_userid.to_json);
   ManageIQ.angular.app.value('ng_reqd_private_key', ng_reqd_private_key.to_json);
   ManageIQ.angular.app.value('ng_show', ng_show.to_json);
   ManageIQ.angular.app.value('validate_url', validate_url.to_json);
