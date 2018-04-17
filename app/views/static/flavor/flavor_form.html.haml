@@ -1,0 +1,140 @@
+%br
+.form-horizontal
+  %form#form_div{:name           => "angularForm",
+                 'ng-show'       => "vm.afterGet",
+                 'ng-cloak'      => '',
+                 "miq-form"      => true,
+                 "model"         => "vm.flavorModel",
+                 "model-copy"    => 'vm.modelCopy',
+                 'form-changed'  => true,
+                 :novalidate     => true}
+    = render :partial => "layouts/flash_msg"
+
+    .form-group
+      %label.col-md-2.control-label
+        = _('Provider')
+      .col-md-8
+        = select_tag('ems_id',               '',
+                'ng-model'                   => 'vm.flavorModel.ems',
+                'ng-options'                 => 'ems.name for ems in vm.ems_list',
+                :id                          => 'ems_id',
+                :required                    => '',
+                'pf-select'                  => true)
+        :javascript
+          miqInitSelectPicker();
+    .form-group
+      %label.col-md-2.control-label
+        = _('Name')
+      .col-md-8
+        %input.form-control{:type        => "text",
+                            :name        => "name",
+                            "id"         => "name",
+                            'ng-model'   => "vm.flavorModel.name",
+                            :maxlength   => ViewHelper::MAX_NAME_LEN,
+                            :required    => ""}
+        %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.ram.$error.isInt || angularForm.ram.$error.greaterThanZero}"}
+      %label.col-md-2.control-label
+        = _('Ram size in MB')
+      .col-md-8
+        %input.form-control{:type               => "text",
+                            :name               => "ram",
+                            "id"                => "ram",
+                            'ng-model'          => "vm.flavorModel.ram",
+                            :required           => "",
+                            "is-int"        => true,
+                            "greater-than-zero" => true}
+        %span.help-block{"ng-show" => "angularForm.ram.$error.required"}
+          = _("Required")
+        %span.help-block{"ng-show" => "angularForm.ram.$error.isInt"}
+          = _("Ram must be integer")
+        %span.help-block{"ng-show" => "angularForm.ram.$error.greaterThanZero"}
+          = _("Ram must be greater than 0")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.vcpus.$error.isInt || angularForm.vcpus.$error.greaterThanZero}"}
+      %label.col-md-2.control-label
+        = _('VCPUs')
+      .col-md-8
+        %input.form-control{:type                       => "text",
+                            :name                       => "vcpus",
+                            "id"                        => "vcpus",
+                            'ng-model'                  => "vm.flavorModel.vcpus",
+                            :required                   => "",
+                            "is-int"                => true,
+                            "greater-than-zero" => true}
+        %span.help-block{"ng-show" => "angularForm.vcpus.$error.required"}
+          = _("Required")
+        %span.help-block{"ng-show" => "angularForm.vcpus.$error.isInt"}
+          = _("VCPUs must be integer")
+        %span.help-block{"ng-show" => "angularForm.vcpus.$error.greaterThanZero"}
+          = _("VCPUs must be greater than 0")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.disk.$error.isInt || angularForm.disk.$error.greaterThanZero}"}
+      %label.col-md-2.control-label
+        = _('Disk size in GB')
+      .col-md-8
+        %input.form-control{:type               => "text",
+                            :name               => "disk",
+                            "id"                => "disk",
+                            'ng-model'          => "vm.flavorModel.disk",
+                            :required           => "",
+                            "is-int"        => true,
+                            "greater-than-zero" => true}
+        %span.help-block{"ng-show" => "angularForm.disk.$error.required"}
+          = _("Required")
+        %span.help-block{"ng-show" => "angularForm.disk.$error.isInt"}
+          = _("Disk size must be integer")
+        %span.help-block{"ng-show" => "angularForm.disk.$error.greaterThanZero"}
+          = _("Disk size must be greater than 0")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.swap.$error.intGreaterOrZero || angularForm.swap.$error.greaterOrZero}"}
+      %label.col-md-2.control-label
+        = _('Swap size in MB')
+      .col-md-8
+        %input.form-control{:type             => "text",
+                            :name             => "swap",
+                            "id"              => "swap",
+                            'ng-model'        => "vm.flavorModel.swap",
+                            :required         => "",
+                            "is-int"      => true,
+                            "greater-or-zero" => true}
+        %span.help-block{"ng-show" => "angularForm.swap.$error.required"}
+          = _("Required")
+        %span.help-block{"ng-show" => "angularForm.swap.$error.isInt"}
+          = _("Swap size must be integer")
+        %span.help-block{"ng-show" => "angularForm.swap.$error.greaterOrZero"}
+          = _("Swap size must be greater or equal to 0")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.rxtx_factor.$error.isFloat || angularForm.rxtx_factor.$error.greaterOrZero}"}
+      %label.col-md-2.control-label
+        = _('RXTX factor')
+      .col-md-8
+        %input.form-control{:type             => "text",
+                            :name             => "rxtx_factor",
+                            "id"              => "rxtx_factor",
+                            'ng-model'        => "vm.flavorModel.rxtx_factor",
+                            :required         => "",
+                            "is-float"        => true,
+                            "greater-or-zero" => true}
+        %span.help-block{"ng-show" => "angularForm.rxtx_factor.$error.required"}
+          = _("Required")
+        %span.help-block{"ng-show" => "angularForm.rxtx_factor.$error.isFloat"}
+          = _("RXTX factor must be a number")
+        %span.help-block{"ng-show" => "angularForm.rxtx_factor.$error.greaterOrZero"}
+          = _("RXTX factor must be greater than or equal to 0")
+    .form-group
+      %label.col-md-2.control-label
+        = _('Public?')
+      .col-md-8
+        %input.form-control{"bs-switch"   => "",
+                            :data         => {:on_text => _('True'), :off_text => _('False'), :size => 'mini'},
+                            :type         => "checkbox",
+                            :name         => "is_public",
+                            'ng-model'    => "vm.flavorModel.is_public",
+                            :checkchange  => true}
+
+    = render :partial => 'layouts/angular/generic_form_buttons'
+
+
