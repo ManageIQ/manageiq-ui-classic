@@ -262,6 +262,25 @@ describe MiqPolicyController do
     end
   end
 
+  describe '#set_search_text' do
+    context 'clearing search text' do
+      let(:search) { "some_text" }
+      let(:tree) { :any_tree }
+
+      before do
+        controller.instance_variable_set(:@_params, :action => 'adv_search_text_clear')
+        controller.instance_variable_set(:@sb, :active_tree => tree, :pol_search_text => {tree => search})
+        controller.instance_variable_set(:@search_text, search)
+      end
+
+      it 'clears search text from the Search form' do
+        controller.send(:set_search_text)
+        expect(controller.instance_variable_get(:@sb)[:pol_search_text][tree]).to be(nil)
+        expect(controller.instance_variable_get(:@search_text)).to be(nil)
+      end
+    end
+  end
+
   describe 'x_button' do
     before do
       ApplicationController.handle_exceptions = true
