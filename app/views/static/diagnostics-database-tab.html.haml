@@ -1,0 +1,127 @@
+- @angular_form = true
+
+%form#form_div.form-horizontal{:name                                  => "angularForm",
+                              'ng-show'                               => "vm.afterGet",
+                              'data-db-backup-form-field-changed-url' => "/#{controller_name}/db_backup_form_field_changed/",
+                              'data-submit-url'                       => "/#{controller_name}/db_backup/",
+                              'miq-form'                              => true,
+                              'model'                                 => 'vm.diagnosticsDatabaseModel',
+                              'model-copy'                            => 'vm.modelCopy',
+                              'form-changed'                          => true,}
+  %div{'ng-if' => 'vm.sb == "diagnostics_database"'}
+    %h3
+      = _("Basic Info")
+  .form-group
+    %label.col-md-2.control-label
+      = _("Type")
+    .col-md-8
+      %p.form-control-static
+        {{vm.databaseDisplayName}}
+  .form-group
+    %label.col-md-2.control-label
+      = _("Hostname")
+    .col-md-8
+      %p.form-control-static
+        {{vm.databaseDetails.host}}
+  .form-group
+    %label.col-md-2.control-label
+      = _("Database Name")
+    .col-md-8
+      %p.form-control-static
+        {{vm.databaseDetails.database}}
+  .form-group
+    %label.col-md-2.control-label
+      = _("Username")
+    .col-md-8
+      %p.form-control-static
+        {{vm.databaseDetails.username}}
+
+  %hr
+  %h3
+    = _("Run a Database Backup Now")
+  %div{'ng-if' => 'vm.sb == "diagnostics_database"'}
+    -# created div with different name so database validation flash message can be shown in it's own box
+    = render :partial => "layouts/flash_msg"
+  %hr
+  %h3
+    = _("Backup Schedules")
+  .form-group
+    %label.col-md-2.control-label
+      = _("Fetch settings from a schedule")
+    .col-md-8
+
+      %p.form-control-static{'ng-if' => 'vm.backupSchedules.length < 1'}
+        = _("No Backup Schedules are defined")
+      %div{'ng-if' => 'vm.backupSchedules.length >= 1'}
+        %select{:name => 'backup_schedule_type',
+                     "ng-options"                  => "choice[1] as choice[0] for choice in vm.backupSchedules",
+                     "ng-model"                    => "vm.diagnosticsDatabaseModel.backup_schedule_type",
+                     "ng-change"                   => "vm.backupScheduleTypeChanged()",
+                     "pf-select" => true}
+
+
+  %hr
+  %h3
+    = _("Database Backup Settings")
+  .form-group
+    %label.col-md-2.control-label
+      = _("Type")
+    .col-md-8
+      - default_option = [_("<No Depot>"), nil]
+      = select_tag('log_protocol', nil,
+                  "ng-options"                     => "choice as choice for choice in vm.databaseBackupOptionsForSelect",
+                  "ng-model"                       => "vm.diagnosticsDatabaseModel.log_protocol",
+                  "ng-change"                      => "vm.logProtocolChanged(vm.diagnosticsDatabaseModel)",
+                  "ng-required"                    => "vm.logProtocolNotSelected(vm.diagnosticsDatabaseModel)",
+                  "pf-select" => true)
+  = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
+                 :locals  => {:ng_show             => "vm.logProtocolSelected()",
+                              :ng_reqd_depot_name  => true,
+                              :ng_model_depot_name => "vm.diagnosticsDatabaseModel.depot_name",
+                              :ng_reqd_uri         => true,
+                              :ng_model_uri        => "vm.diagnosticsDatabaseModel.uri",
+                              :ng_model_uri_prefix => "vm.diagnosticsDatabaseModel.uri_prefix",
+                              :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
+
+  %auth-credentials{'ng-if'                => 'vm.sambaBackup()',
+                    'form-model'           => 'vm.diagnosticsDatabaseModel',
+                    'model-copy'           => 'vm.modelCopy',
+                    'prefix'               => '{{vm.prefix}}',
+                    'user-required'        => 'vm.sambaRequired(vm.diagnosticsDatabaseModel.log_userid)',
+                    'password-required'    => 'vm.sambaRequired(vm.diagnosticsDatabaseModel.log_password)',
+                    'enable-valid-button'  => 'vm.canValidateBasicInfo()',
+                    'validate'             => 'vm.validateClicked',
+                    'new-record'           => true}
+
+  %input{:type => "hidden", :value => "db_backup", :name => "action_typ"}
+
+  %table{:width => "100%"}
+    %tr
+      %td{:align => "right"}
+        %miq-button{:name            => _("Submit"),
+                    "disabled-title" => _("Username and matching password fields are needed to run a database backup"),
+                    "enabled-title"  => _("Run a Database backup now"),
+                    :enabled         => "vm.saveable(angularForm)",
+                    'on-click'       => "vm.submitButtonClicked('#{_("Are you sure you want to Run a Database Backup Now?")}')",
+                    :primary         => 'true'}
+
+
+  %hr
+  %h3
+    = _("Run Database Garbage Collection Now")
+  .form-group
+    .col-md-8
+      = _("Press submit to start the Database Vacuum process")
+  %table{:width => "100%"}
+    %tr
+      %td{:align => "right"}
+        #gc_submit_on
+          - caption = _("Run Database Garbage Collection Now")
+          - submit = button_tag(_("Submit"), :class => "btn btn-primary", :alt => caption)
+
+          = link_to(submit, {:action => 'db_gc_collection', :controller => 'ops'},
+            "data-miq_sparkle_on" => true,
+            :confirm              => _("Are you sure you want to Run Database Garbage Collection Now?"),
+            :remote               => true,
+            'data-method'         => :post,
+            :title                => caption)
