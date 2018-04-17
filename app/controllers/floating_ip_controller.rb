@@ -146,6 +146,7 @@ class FloatingIpController < ApplicationController
       :cloud_network_name   => floating_ip.cloud_network.try(:name),
       :network_port_ems_ref => network_port_ems_ref,
       :cloud_tenant_name    => floating_ip.cloud_tenant.try(:name),
+      :ems_id               => floating_ip.ems_id
     }
   end
 
