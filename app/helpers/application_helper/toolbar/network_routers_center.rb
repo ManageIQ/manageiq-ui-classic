@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::NetworkRoutersCenter < ApplicationHelper::Tool
             :enabled      => false,
             :onwhen       => "1+",
             :data         => {'function'      => 'sendDataWithRx',
-                              'function-data' => '{"type": "delete", "payload": {"entity": "network_routers"}}'},
+                              'function-data' => '{"type": "delete", "controller": "toolbarActions", "payload": {"entity": "network_routers"}}'},
           )
         ]
       )

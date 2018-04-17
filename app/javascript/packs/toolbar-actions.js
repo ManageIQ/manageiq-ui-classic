@@ -1,4 +1,4 @@
-import { subscribeToRx, DELETE_EVENT } from '../helpers/rxConnector';
+import { subscribeToRx, DELETE_EVENT } from '../miq_observable';
 import { onDelete } from '../toolbar-actions/delete';
 
 function transformResource(resource) {
@@ -25,4 +25,4 @@ const eventMapper = {
   [DELETE_EVENT]: data => onDelete(data, getGridChecks()),
 };
 
-subscribeToRx(eventMapper);
+subscribeToRx(eventMapper, 'toolbarActions');

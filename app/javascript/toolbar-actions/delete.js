@@ -1,4 +1,4 @@
-import { DELETE_EVENT } from '../helpers/rxConnector';
+import { DELETE_EVENT } from '../miq_observable';
 
 const API = angular.injector(['ng', 'miq.api']).get('API');
 const API_ENDPOINT = 'api';
