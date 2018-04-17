@@ -222,7 +222,7 @@ class ServiceController < ApplicationController
     if @item && @item.kind_of?(GenericObject)
       [%i(go_properties attribute_details_list methods)]
     elsif @record.type == "ServiceAnsiblePlaybook"
-      [%i(properties), %i(lifecycle tags generic_objects)]
+      [%i(properties miq_custom_attributes), %i(lifecycle tags generic_objects)]
     else
       [%i(properties lifecycle relationships generic_objects miq_custom_attributes), %i(vm_totals tags)]
     end
