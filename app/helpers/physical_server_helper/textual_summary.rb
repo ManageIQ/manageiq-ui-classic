@@ -109,7 +109,7 @@ module PhysicalServerHelper::TextualSummary
     # It is possible for guest devices not to have network data (or a network
     # hash). As a result, we need to exclude guest devices that don't have
     # network data to prevent a nil class error from occurring.
-    devices_with_networks = @record.hardware.guest_devices.reject { |device| device.network.nil? }
+    devices_with_networks = @record.computer_system.hardware.guest_devices.reject { |device| device.network.nil? }
     ip_addresses = devices_with_networks.collect { |device| device.network.ipaddress }
 
     # It is possible that each network entry can have multiple IP addresses, separated
