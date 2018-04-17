@@ -18,6 +18,61 @@ module QuadiconHelper
     end
   end
 
+  def self.machine_state(state_str)
+    case state_str.try(:downcase)
+    when 'archived'
+      {:text => 'A', :background => '#336699'}
+    when 'orphaned'
+      {:text => 'O', :background => '#336699'}
+    when 'retired'
+      {:text => 'R', :background => '#336699'}
+    when 'unknown'
+      {:fonticon => 'pficon pficon-unknown', :background => '#336699'}
+    when 'preparing_for_maintenance'
+      {:fonticon => 'pficon pficon-maintenance', :background => '#336699'}
+    when 'maintenance'
+      {:fonticon => 'pficon pficon-maintenance', :background => '#336699'}
+    when 'disconnected'
+      {:fonticon => 'pficon pficon-unplugged', :background => '#336699'}
+    when 'non_operational'
+      {:fonticon => 'fa fa-exclamation', :background => '#336699'}
+    when 'not_responding'
+      {:fonticon => 'fa fa-exclamation', :background => '#336699'}
+    when 'install_failed'
+      {:fonticon => 'fa fa-exclamation', :background => '#336699'}
+    when 'suspended'
+      {:fonticon => 'pficon pficon-asleep', :background => '#FF9900'}
+    when 'standby'
+      {:fonticon => 'pficon pficon-asleep', :background => '#FF9900'}
+    when 'paused'
+      {:fonticon => 'pficon pficon-asleep', :background => '#FF9900'}
+    when 'disconnecting'
+      {:fonticon => 'pficon pficon-unplugged', :background => '#FF9900'}
+    when 'image_locked'
+      {:fonticon => 'pficon pficon-locked', :background => '#FF9900'}
+    when 'migrating'
+      {:fonticon => 'pficon pficon-migration', :background => '#FF9900'}
+    when 'shelved'
+      {:fonticon => 'pficon pficon-pending', :background => '#FF9900'}
+    when 'shelved_offloaded'
+      {:fonticon => 'pficon pficon-pending', :background => '#FF9900'}
+    when 'reboot_in_progress'
+      {:fonticon => 'pficon pficon-on', :background => '#FF9900'}
+    when 'wait_for_launch'
+      {:fonticon => 'pficon pficon-asleep', :background => '#FF9900'}
+    when 'on'
+      {:fonticon => 'pficon pficon-on', :background => '#3F9C35'}
+    when 'never'
+      {:fonticon => 'pficon pficon-off', :background => '#CC0000'}
+    when 'terminated'
+      {:fonticon => 'pficon pficon-off', :background => '#CC0000'}
+    when 'off'
+      {:fonticon => 'pficon pficon-off', :background => '#CC0000'}
+    else
+      {}
+    end
+  end
+
   def self.quadicon_output(quadicon)
     if (quadicon.keys & QUADRANTS).any?
       QUADRANTS.each do |part|
