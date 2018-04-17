@@ -32,6 +32,7 @@ class NetworkRouterController < ApplicationController
       javascript_redirect(:action => "add_interface_select", :id => checked_item_id)
     when "network_router_delete"
       delete_network_routers
+      javascript_redirect(previous_breadcrumb_url)
     when "network_router_edit"
       javascript_redirect(:action => "edit", :id => checked_item_id)
     when "network_router_new"
@@ -185,6 +186,7 @@ class NetworkRouterController < ApplicationController
     elsif @lastaction == "show" && @layout == "network_router"
       @single_delete = true unless flash_errors?
       add_flash(_("The selected Router was deleted")) if @flash_array.nil?
+      flash_to_session
     else
       drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
       flash_to_session

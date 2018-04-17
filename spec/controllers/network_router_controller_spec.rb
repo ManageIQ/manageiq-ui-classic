@@ -211,7 +211,19 @@ describe NetworkRouterController do
 
       it "queues the delete action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :button, :params => { :id => @router.id, :pressed => "network_router_delete", :format => :js }
+        controller.instance_variable_set(:@_params,
+                                         :pressed => "network_router_delete",
+                                         :id      => @router.id)
+        controller.instance_variable_set(:@lastaction, "show")
+        controller.instance_variable_set(:@layout, "network_router")
+        allow(controller).to receive(:find_checked_ids_with_rbac).and_return([@router])
+        allow(controller).to receive(:find_id_with_rbac).and_return([@router])
+        controller.instance_variable_set(:@breadcrumbs, [{:name => "foo", :url => "network_router/show_list"}, {:name => "bar", :url => "network_router/show"}])
+        expect(controller).to receive(:render)
+        controller.send(:button)
+        flash_messages = assigns(:flash_array)
+        expect(flash_messages.first).to eq(:message => "Delete initiated for 1 Network Router.",
+                                           :level   => :success)
       end
     end
   end
