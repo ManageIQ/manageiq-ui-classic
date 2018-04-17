@@ -1,5 +1,4 @@
-%cloud-subnet-form
+#main_div
+  %cloud-subnet-form{'cloudSubnetFormId' => @subnet.id || "new"};
 :javascript
-  ManageIQ.angular.app.value('cloudSubnetFormId', '#{@subnet.id || "new"}');
-  ManageIQ.angular.app.value('networkProviderChoices', '#{@network_provider_choices.sort.to_json}' );
   miq_bootstrap('cloud-subnet-form')
