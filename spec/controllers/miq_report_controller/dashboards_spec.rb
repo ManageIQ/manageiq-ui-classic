@@ -22,5 +22,28 @@ describe ReportController do
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
     end
+
+    describe "#db_save_members" do
+      let(:set_data) do
+        Array.new(3) { |n| ["col#{(n + 1)}".to_sym, Array.new(2, FactoryGirl.create(:miq_widget))] }.to_h
+      end
+
+      before do
+        miq_widget_set.update_attributes!(:set_data => set_data)
+
+        login_as user
+
+        EvmSpecHelper.local_miq_server
+      end
+
+      it 'establishes relations between MiqWidgetSet and MiqWidgets thru Relationship table' do
+        controller.instance_variable_set(:@db, miq_widget_set)
+
+        controller.send(:db_save_members)
+
+        miq_widget_set.reload
+        expect(miq_widget_set.members).to match_array(MiqWidget.all)
+      end
+    end
   end
 end
