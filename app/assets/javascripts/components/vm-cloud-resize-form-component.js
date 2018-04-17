@@ -1,18 +1,21 @@
-ManageIQ.angular.app.component('vmCloudResizeFormComponent',{
+ManageIQ.angular.app.component('vmCloudResizeForm',{
 	controller: vmCloudResizeFormController,
 	controllerAs: 'vm',
 	templateUrl: '/static/resize.html.haml',
 	bindings: {
-		'repositoryId': '@',
+		'id': '@',
 	}
 });
 
-vmCloudResizeFormController.$inject = ['miqService', 'API'];
+vmCloudResizeFormController.$inject = ['miqService', 'API', 'explorer', 'recordFlavorName'];
 
-function vmCloudResizeFormController(miqService, API) {
+function vmCloudResizeFormController(miqService, API, explorer, recordFlavorName) {
   var vm = this;
+  
 
   var init = function() {
+    vm.explorer = explorer;
+    vm.recordFlavorName = recordFlavorName;
     vm.vmCloudModel = {
       flavor_id: null,
     };

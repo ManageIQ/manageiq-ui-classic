@@ -1,5 +1,5 @@
-%vm-cloud-resize-form{'repository-id' => 'new'}
+%vm-cloud-resize-form{'id' => 'new'}
 
 :javascript
   ManageIQ.angular.app.value('vmCloudResizeFormId', '#{@record.id}');
-  miq_bootstrap('#form_div');
+  miq_bootstrap('vm-cloud-resize-form');

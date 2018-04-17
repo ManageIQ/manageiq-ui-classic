@@ -10,7 +10,7 @@
       %label.col-md-2.control-label
         = _('Current Flavor')
       .col-md-8
-        = @record.flavor.name_with_details if @record.flavor
+        {{vm.recordFlavorName}}
     .form-group
       %label.col-md-2.control-label
         = _('Choose Flavor')
@@ -23,8 +23,7 @@
   %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
                   'paging_div_buttons_id'            => "angular_paging_div_buttons",
                   'paging_div_buttons_type'          => "Submit"}
-  - unless @explorer
-    %table{:width => '100%'}
+    %table{:width => '100%', 'ng-if' => '!vm.explorer'}
       %tr
         %td{:align => 'right'}
           = button_tag(_("Submit"),

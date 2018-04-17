@@ -1,3 +1,7 @@
-%vm-cloud-resize-form-component
+%vm-cloud-resize-form{'id' => 'new'}
+
 :javascript
-miq_bootstrap('vm-cloud-resize-form-component')
+  ManageIQ.angular.app.value('recordFlavorName', '#{@record.flavor.present? ? @record.flavor.name_with_details : nil}');
+  ManageIQ.angular.app.value('explorer', #{@explorer.to_json});
+  ManageIQ.angular.app.value('vmCloudResizeFormId', '#{@record.id}');
+  miq_bootstrap('vm-cloud-resize-form');
