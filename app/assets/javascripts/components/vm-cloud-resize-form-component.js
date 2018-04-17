@@ -19,7 +19,7 @@ function vmCloudResizeFormController(miqService, API, explorer, recordFlavorName
     vm.recordFlavorName = recordFlavorName;
     vm.vmCloudModel = {
       flavor_id: null,
-    };debugger;
+    };
     vm.flavors = [];
     vm.formId = vm.id;
     vm.modelCopy = angular.copy(vm.vmCloudModel);
