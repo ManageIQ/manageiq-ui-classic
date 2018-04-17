@@ -4,6 +4,7 @@ describe('retirementFormController', function() {
   beforeEach(module('ManageIQ'));
 
   beforeEach(inject(function($rootScope, _$controller_, _$httpBackend_, _miqService_) {
+    ManageIQ.controller = 'service';
     miqService = _miqService_;
     spyOn(miqService, 'miqFlash');
     spyOn(miqService, 'miqAjaxButton');
@@ -24,11 +25,12 @@ describe('retirementFormController', function() {
       retirement_date: '12/31/2015',
       retirement_warning: '0'
     };
-    $httpBackend.whenGET('retirement_info/1000000000001').respond(retirementFormResponse);
+    $httpBackend.whenGET('/service/retirement_info/1000000000001').respond(retirementFormResponse);
     $httpBackend.flush();
   }));
 
   afterEach(function() {
+    ManageIQ.controller = null;
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
@@ -60,7 +62,7 @@ describe('retirementFormController', function() {
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('retire?button=cancel');
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/service/retire?button=cancel');
     });
   });
 
@@ -85,7 +87,7 @@ describe('retirementFormController', function() {
         retire_date: $scope.vm.retirementInfo.retirementDate,
         retire_warn: $scope.vm.retirementInfo.retirementWarning
       };
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('retire?button=save', saveContent);
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/service/retire?button=save', saveContent);
     });
   });
 });
