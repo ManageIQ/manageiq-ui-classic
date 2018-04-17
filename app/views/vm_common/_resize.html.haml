@@ -1,4 +1,4 @@
-%vm-cloud-resize-form{'id' => 'new'}
+%vm-cloud-resize-form{'id' => @record.id}
 
 :javascript
   ManageIQ.angular.app.value('recordFlavorName', '#{@record.flavor.present? ? @record.flavor.name_with_details : nil}');
