@@ -11,8 +11,9 @@ describe 'report/_form_filter.html.haml' do
 
   it 'renders form expression buttons for other report and Edit Display Filter button' do
     render :partial => 'report/form_expression_buttons',
-           :locals  => {:create_label  => _('Create Display Filter'),
-                        :display_label => _('Edit Display Filter')}
+           :locals  => {:create_label  => 'Create Display Filter',
+                        :display_label => 'Edit Display Filter',
+                        :exp_key       => "record_filter"}
     expect(rendered).to match(/Edit Display Filter/)
   end
 
@@ -22,8 +23,9 @@ describe 'report/_form_filter.html.haml' do
 
     it 'renders form expression buttons for other report and Create Display Filter button' do
       render :partial => 'report/form_expression_buttons',
-             :locals  => {:create_label  => _('Create Display Filter'),
-                          :display_label => _('Edit Display Filter')}
+             :locals  => {:create_label  => 'Create Display Filter',
+                          :display_label => 'Edit Display Filter',
+                          :exp_key       => "display_filter"}
       expect(rendered).to match(/Create Display Filter/)
     end
   end

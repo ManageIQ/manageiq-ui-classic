@@ -2,14 +2,7 @@
   - host_title = title_for_host_record(@record)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
-      -# Calculate the quadicon div height based on # of lines of text
-      - if @record.product_name != "" && @record.service_pack != ""
-        - height = 100
-      - elsif @record.product_name != "" || @record.service_pack != ""
-        - height = 90
-      - else
-        - height = 78
-      = render_quadicon(@record, :mode => :icon, :size => 72, :height => height, :typ => :listnav)
+      = render :partial => 'shared/quadicon', :locals => {:record => @record}
 
       %div{:style => "text-align:center"}
         - unless @record.vmm_product.nil?

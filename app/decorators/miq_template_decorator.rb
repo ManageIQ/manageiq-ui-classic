@@ -8,14 +8,14 @@ class MiqTemplateDecorator < MiqDecorator
   end
 
   def quadicon
-    {
+    icon = {
       :top_left     => {
         :fileicon => os_image,
         :tooltip  => os_image_name.humanize.downcase
       },
       :top_right    => {
-        :fileicon   => "svg/currentstate-#{ERB::Util.h(normalized_state.downcase)}.svg",
-        :tooltip    => normalized_state
+        :fileicon => "svg/currentstate-#{ERB::Util.h(normalized_state.downcase)}.svg",
+        :tooltip  => normalized_state
       },
       :bottom_left  => {
         :fileicon => fileicon,
@@ -25,6 +25,8 @@ class MiqTemplateDecorator < MiqDecorator
         :text => ERB::Util.h(v_total_snapshots)
       }
     }
+    icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
+    icon
   end
 
   def single_quad

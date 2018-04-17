@@ -33,7 +33,8 @@ class StorageController < ApplicationController
   end
 
   def show_list
-    redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
+    flash_to_session
+    redirect_to(:action => 'explorer')
   end
 
   def init_show
@@ -50,9 +51,8 @@ class StorageController < ApplicationController
         action = "explorer"
       else
         url = request.env['HTTP_REFERER'].split('/')
-        add_flash(_("User '%{username}' is not authorized to access '%{controller_name}'") %
+        flash_to_session(_("User '%{username}' is not authorized to access '%{controller_name}'") %
                     {:username => current_userid, :controller_name => ui_lookup(:table => controller_name)}, :warning)
-        session[:flash_msgs] = @flash_array.dup
         redirect_controller  = url[3]
         action               = url[4]
       end
@@ -413,7 +413,7 @@ class StorageController < ApplicationController
     current_nodetype = search_text_type(@sb[:storage_search_text][:current_node])
 
     @sb[:storage_search_text]["#{previous_nodetype}_search_text"] = @search_text
-    @search_text = @sb[:storage_search_text]["#{current_nodetype}_search_text"]
+    @search_text = @sb[:storage_search_text]["#{current_nodetype}_search_text"] || @sb[:search_text]
     @sb[:storage_search_text]["#{x_active_accord}_search_text"] = @search_text
   end
 

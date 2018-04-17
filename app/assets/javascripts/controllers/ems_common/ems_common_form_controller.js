@@ -353,7 +353,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     } else if (($scope.emsCommonModel.ems_controller === "ems_container") &&
       ($scope.emsCommonModel.emstype) &&
       ($scope.emsCommonModel.default_password !== '' && $scope.angularForm.default_password.$valid) &&
-      (($scope.currentTab === "metrics" &&
+      (($scope.currentTab === "container_metrics" &&
         $scope.emsCommonModel.metrics_hostname !== '' &&
         $scope.emsCommonModel.metrics_api_port) ||
        ($scope.currentTab === "alerts" &&

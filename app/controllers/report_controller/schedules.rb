@@ -3,7 +3,8 @@ module ReportController::Schedules
 
   def show_schedule
     if @schedule.nil?
-      redirect_to :action => "schedules", :flash_msg => _("Error: Record no longer exists in the database"), :flash_error => true
+      flash_to_session
+      redirect_to(:action => 'schedules')
       return
     end
 

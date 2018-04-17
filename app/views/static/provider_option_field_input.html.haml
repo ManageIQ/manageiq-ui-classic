@@ -1,6 +1,10 @@
 .form-group{"ng-class" => "{{ \"{'has_error': angularForm.\"  + $ctrl.elemID + \".$invalid}\" }}"}
   %label.col-md-2.control-label{"for" => "{{ $ctrl.elemID }}"}
     {{ $ctrl.option.label }}
+    %span.pf-blue-info.pficon.pficon-info{:tabindex            => 0,
+                                          :"popover-trigger"   => "focus",
+                                          :"popover-placement" => "top-right",
+                                          :"uib-popover-html"  => "$ctrl.option.help_text | translate"}
   .col-md-4
     %input.form-control{"type"          => "text",
                         "id"            => "{{ $ctrl.elemID }}",

@@ -7,7 +7,7 @@ describe VmwareConsoleHelper do
       let(:webmks) { false }
 
       it 'webmks is not included in the array' do
-        is_expected.not_to include([_("VMware WebMKS"), "WebMKS"])
+        is_expected.not_to include(["VMware WebMKS", "WebMKS"])
       end
     end
 
@@ -15,7 +15,7 @@ describe VmwareConsoleHelper do
       let(:webmks) { true }
 
       it 'webmks is included in the array' do
-        is_expected.to include([_("VMware WebMKS"), "WebMKS"])
+        is_expected.to include(["VMware WebMKS", "WebMKS"])
       end
     end
   end

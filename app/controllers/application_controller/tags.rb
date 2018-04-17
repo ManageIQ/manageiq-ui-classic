@@ -159,7 +159,7 @@ module ApplicationController::Tags
       replace_right_cell
     else
       @edit = nil
-      session[:flash_msgs] = @flash_array.dup   # Put msg in session for next transaction to display
+      flash_to_session
       javascript_redirect previous_breadcrumb_url
     end
   end
@@ -193,7 +193,7 @@ module ApplicationController::Tags
   def tag_edit_build_screen
     @showlinks = true
 
-    cats = Classification.categories.select(&:show).sort_by(&:description) # Get the categories, sort by description
+    cats = Classification.categories.select(&:show).sort_by { |t| t.description.try(:downcase) } # Get the categories, sort by description
     @categories = {}    # Classifications array for first chooser
     cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
     cats.each do |c|
@@ -215,7 +215,7 @@ module ApplicationController::Tags
     end
 
     # Set to first category, if not already set
-    @edit[:cat] ||= cats.min_by(&:description)
+    @edit[:cat] ||= cats.first
 
     unless @object_ids.blank?
       @tagitems = @tagging.constantize.where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }

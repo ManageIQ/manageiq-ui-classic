@@ -74,7 +74,7 @@ module ReportController::Reports
       render_flash(_("Report cannot be deleted if it's being used by one or more Widgets"), :error)
     else
       begin
-        raise StandardError, "Default Report \"%{name}\" cannot be deleted" % {:name => rpt.name} if rpt.rpt_type == "Default"
+        raise StandardError, _("Default Report \"%{name}\" cannot be deleted") % {:name => rpt.name} if rpt.rpt_type == "Default"
         rpt_name = rpt.name
         audit = {:event => "report_record_delete", :message => "[#{rpt_name}] Record deleted", :target_id => rpt.id, :target_class => "MiqReport", :userid => session[:userid]}
         rpt.destroy

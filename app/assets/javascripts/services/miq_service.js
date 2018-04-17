@@ -81,6 +81,24 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
   };
 
+  this.networkProviders = function(options) {
+    options = Object.assign(options || {}, {
+      attributes: ['id', 'name'],
+      handleFailure: miqService.handleFailure,
+    });
+    var url = '/api/providers?collection_class=ManageIQ::Providers::NetworkManager&expand=resources';
+
+    if (options.attributes) {
+      url += '&attributes=' + options.attributes.map(encodeURIComponent).join(',');
+    }
+
+    return API.get(url)
+      .then(function(response) {
+        return response.resources || [];
+      })
+      .catch(options.handleFailure);
+  };
+
   this.validateWithAjax = function(url) {
     miqSparkleOn();
     miqAjaxButton(url, true);
@@ -153,6 +171,25 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     miqService.miqFlash('error', message);
 
     return $q.reject(e);
+  };
+
+  this.getCloudNetworksByEms = function(callback) {
+    return function(id) {
+      if (! id) {
+        callback([]);
+        return;
+      }
+      miqService.sparkleOn();
+
+      API.get("/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=" + id)
+        .then(getCloudNetworksByEmsData)
+        .catch(miqService.handleFailure);
+    };
+
+    function getCloudNetworksByEmsData(data) {
+      callback(data);
+      miqService.sparkleOff();
+    }
   };
 
   this.getProviderTenants = function(callback) {

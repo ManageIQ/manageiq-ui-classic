@@ -22,10 +22,9 @@ module Mixins
     def update_ems_button_cancel
       update_ems = find_record_with_rbac(model, params[:id])
       model_name = model.to_s
-      add_flash(
+      flash_to_session(
         _("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => model_name), :name => update_ems.name}
       )
-      session[:flash_msgs] = @flash_array.dup
       js_args = {:action    => @lastaction == 'show_dashboard' ? 'show' : @lastaction,
                  :id        => update_ems.id,
                  :display   => session[:ems_display],
@@ -45,8 +44,7 @@ module Mixins
         AuditEvent.success(build_saved_audit(update_ems, @edit))
         update_ems.authentication_check_types_queue(update_ems.authentication_for_summary.pluck(:authtype),
                                                     :save => true)
-
-        session[:flash_msgs] = @flash_array.dup
+        flash_to_session
         javascript_redirect(@lastaction == 'show_list' ? ems_path('show_list') : ems_path(update_ems))
       else
         update_ems.errors.each do |field, msg|
@@ -119,13 +117,13 @@ module Mixins
       when 'ManageIQ::Providers::Openstack::CloudManager'
         [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)]
       when 'ManageIQ::Providers::Amazon::CloudManager'
-        [user, password, :EC2, params[:provider_region], nil, true]
+        [user, password, :EC2, params[:provider_region], ems.http_proxy_uri, true]
       when 'ManageIQ::Providers::Azure::CloudManager'
-        [user, password, params[:azure_tenant_id], params[:subscription], nil, params[:provider_region]]
+        [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region]]
       when 'ManageIQ::Providers::Vmware::CloudManager'
-        [params[:default_hostname], params[:default_api_port], user, password, true]
+        [params[:default_hostname], params[:default_api_port], user, password, params[:api_version], true]
       when 'ManageIQ::Providers::Google::CloudManager'
-        [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, nil, true]
+        [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, ems.http_proxy_uri, true]
       when 'ManageIQ::Providers::Microsoft::InfraManager'
         connect_opts = {
           :hostname          => params[:default_hostname],
@@ -178,8 +176,7 @@ module Mixins
       if ems.valid? && ems.save
         construct_edit_for_audit(ems)
         AuditEvent.success(build_created_audit(ems, @edit))
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => table_name), :name => ems.name})
-        session[:flash_msgs] = @flash_array.dup
+        flash_to_session(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => table_name), :name => ems.name})
         javascript_redirect(:action => 'show_list')
       else
         @in_a_form = true
@@ -195,8 +192,7 @@ module Mixins
 
     def create_ems_button_cancel
       model_name = model.to_s
-      add_flash(_("Add of %{model} was cancelled by the user") % {:model => ui_lookup(:model => model_name)})
-      session[:flash_msgs] = @flash_array.dup
+      flash_to_session(_("Add of %{model} was cancelled by the user") % {:model => ui_lookup(:model => model_name)})
       javascript_redirect(:action  => @lastaction,
                           :display => session[:ems_display])
     end

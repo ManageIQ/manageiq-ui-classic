@@ -435,7 +435,6 @@ module OpsController::Settings::Common
         add_flash(_("Configuration changes saved"))
         @changed = false
       end
-      #     redirect_to :action => 'explorer', :flash_msg=>msg, :flash_error=>err, :no_refresh=>true
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype)
       return
@@ -486,7 +485,8 @@ module OpsController::Settings::Common
         if @sb[:active_tab] == "settings_server"
           replace_right_cell(:nodetype => @nodetype, :replace_trees => [:diagnostics, :settings])
         elsif @sb[:active_tab] == "settings_custom_logos"
-          javascript_redirect :action => 'explorer', :flash_msg => @flash_array[0][:message], :flash_error => @flash_array[0][:level] == :error, :escape => false # redirect to build the server screen
+          flash_to_session
+          javascript_redirect(:action => 'explorer', :escape => false) # redirect to build the server screen
           return
         else
           replace_right_cell(:nodetype => @nodetype)

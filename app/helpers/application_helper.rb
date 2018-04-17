@@ -12,11 +12,17 @@ module ApplicationHelper
   include PlanningHelper
   include Title
   include ReactjsHelper
+  include Webpack
 
   VALID_PERF_PARENTS = {
     "EmsCluster" => :ems_cluster,
     "Host"       => :host
   }
+
+  def flash_to_session(*args)
+    add_flash(*args) unless args.empty?
+    session[:flash_msgs] = @flash_array.dup if @flash_array
+  end
 
   # Need to generate paths w/o hostname by default to make proxying work.
   #
@@ -864,6 +870,8 @@ module ApplicationHelper
        cloud_subnet
        cloud_tenant
        cloud_volume
+       cloud_volume_backup
+       cloud_volume_snapshot
        configuration_job
        configuration_scripts
        container
@@ -1463,7 +1471,6 @@ module ApplicationHelper
           retired
           security_group
           service
-          storage
           templates
           vm).include?(@layout) && !@in_a_form
       "show_list"
@@ -1644,6 +1651,7 @@ module ApplicationHelper
     @report_data_additional_options.with_menu_click(params[:menu_click]) if params[:menu_click]
     @report_data_additional_options.with_sb_controller(params[:sb_controller]) if params[:sb_controller]
     @report_data_additional_options.with_model(curr_model) if curr_model
+    @report_data_additional_options.with_no_checkboxes(@no_checkboxes) if @no_checkboxes
     # FIXME: we would like to freeze here, but the @gtl_type is calculated no sooner than in view templates.
     # So until that if fixed we cannot freeze.
     # @report_data_additional_options.freeze
@@ -1660,6 +1668,7 @@ module ApplicationHelper
     end
 
     @row_button = additional_options[:row_button]
+    @no_checkboxes = additional_options[:no_checkboxes]
 
     additional_options
   end

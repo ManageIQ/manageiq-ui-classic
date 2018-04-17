@@ -51,14 +51,6 @@ class MiqRequestController < ApplicationController
     handle_request_edit_copy_redirect
   end
 
-  def page_display_options
-    if @sb[:prov_options] && @sb[:prov_options].key?(request_tab_type.to_sym)
-      {:named_scope => prov_scope(@sb[:def_prov_options][request_tab_type.to_sym])}
-    else
-      {}
-    end
-  end
-
   # Show the main Requests list view
   def show_list
     @breadcrumbs = []
@@ -81,15 +73,8 @@ class MiqRequestController < ApplicationController
     @sortdir = session[:request_sortdir].nil? ? "ASC" : session[:request_sortdir]
     @listicon = "miq_request"
     @no_checkboxes = true # Don't show checkboxes, read_only
-    resource_type = request_tab_type # storing resource type in local variable so dont have to call method everytime
     kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
-    gv_options = page_display_options
-    @view, @pages = get_view(kls, gv_options)
-    @sb[:prov_options] ||= {}
-    @sb[:def_prov_options] ||= {}
-    @sb[:prov_options][:resource_type] = resource_type.to_sym # storing current resource type
-
-    prov_set_default_options if !@sb[:prov_options] || (@sb[:prov_options] && !@sb[:prov_options].key?(resource_type.to_sym)) # reset default options if requests sub tab has changed
+    @view, @pages = get_view(kls, :named_scope => prov_scope(prov_set_default_options))
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:request_sortcol] = @sortcol
@@ -123,11 +108,10 @@ class MiqRequestController < ApplicationController
     assert_privileges("miq_request_approval")
     if params[:button] == "cancel"
       if (session[:edit] && session[:edit][:stamp_typ]) == "a"
-        add_flash(_("Request approval was cancelled by the user"))
+        flash_to_session(_("Request approval was cancelled by the user"))
       else
-        add_flash(_("Request denial was cancelled by the user"))
+        flash_to_session(_("Request denial was cancelled by the user"))
       end
-      session[:flash_msgs] = @flash_array.dup
       @edit = nil
       javascript_redirect :action => @lastaction, :id => session[:edit][:request].id
     elsif params[:button] == "submit"
@@ -138,8 +122,7 @@ class MiqRequestController < ApplicationController
       else
         stamp_request.deny(current_user, @edit[:reason])
       end
-      add_flash(_("Request \"%{name}\" was %{task}") % {:name => stamp_request.description, :task => (session[:edit] && session[:edit][:stamp_typ]) == "approve" ? "approved" : "denied"})
-      session[:flash_msgs] = @flash_array.dup                     # Put msg in session for next transaction to display
+      flash_to_session(_("Request \"%{name}\" was %{task}") % {:name => stamp_request.description, :task => (session[:edit] && session[:edit][:stamp_typ]) == "approve" ? "approved" : "denied"})
       @edit = nil
       javascript_redirect :action => "show_list"
     else # First time in, set up @edit hash
@@ -274,55 +257,22 @@ class MiqRequestController < ApplicationController
     end
   end
 
-  # Gather any changed options
-  def prov_change_options
-    resource_type = request_tab_type.to_sym
-    @sb[:def_prov_options][resource_type][:user_choice] = params[:user_choice] if params[:user_choice]
-    @sb[:def_prov_options][resource_type][:type_choice] = params[:type_choice] if params[:type_choice]
-    @sb[:def_prov_options][resource_type][:time_period] = params[:time_period].to_i if params[:time_period]
-    @sb[:def_prov_options][resource_type][:reason_text] = params[:reason_text] if params[:reason_text] # && params[:reason][:text] != ""
-    res_type = @sb[:prov_options][resource_type]
-    res_type[:states].sort.each do |(state, _display_name)|
-      if params["state_choice__#{state}"] == "1"
-        @sb[:def_prov_options][resource_type][:applied_states].push(state) unless @sb[:def_prov_options][resource_type][:applied_states].include?(state)
-      elsif params["state_choice__#{state}"] == "null"
-        @sb[:def_prov_options][resource_type][:applied_states].delete(state)
-      end
-    end
-
-    applied_states_blank = @sb[:def_prov_options][resource_type][:applied_states].blank?
-    add_flash(_("At least one status must be selected"), :warning) if applied_states_blank
-
-    render :update do |page|
-      page << javascript_prologue
-      if applied_states_blank
-        # Disable buttons due to no filters being selected
-        page << javascript_for_miq_button_visibility(false)
-      else
-        # Options have changed?
-        page << javascript_for_miq_button_visibility(res_type != @sb[:def_prov_options][resource_type])
-      end
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-    end
+  def filter_choice_not_all(key)
+    choice = params[key]
+    return nil if choice == 'all'
+    choice
   end
 
-  # Refresh the display with the chosen filters
-  def prov_button
-    @edit = session[:edit]
-    if params[:button] == "apply"
-      @sb[:prov_options][@sb[:prov_options][:resource_type]] = copy_hash(@sb[:def_prov_options][@sb[:prov_options][:resource_type]])  # Copy the latest changed options
-    elsif params[:button] == "reset"
-      @sb[:def_prov_options][@sb[:prov_options][:resource_type]] = copy_hash(@sb[:prov_options][@sb[:prov_options][:resource_type]])  # Reset to the saved options
-    elsif params[:button] == "default"
-      prov_set_default_options
-    end
-    show_list
-
-    options = {"additionalOptions" => page_display_options}
-    render :update do |js|
-      js << javascript_prologue
-      js << "sendDataWithRx({refreshData: {name: \"reportDataController\"}, data: #{options.to_json}});"
-    end
+  def filter
+    assert_privileges("miq_request_show_list")
+    scope = prov_scope(
+      :reason_text    => params[:reasonText],
+      :time_period    => params[:selectedPeriod],
+      :type_choice    => filter_choice_not_all(:selectedType),
+      :user_choice    => filter_choice_not_all(:selectedUser),
+      :applied_states => Array(params[:states]).find_all { |s| s[:checked] }.map { |s| s[:value] }
+    )
+    render :json => {:data => {:scope => scope}}
   end
 
   def post_install_callback
@@ -379,15 +329,6 @@ class MiqRequestController < ApplicationController
     end
   end
 
-  def request_tab_type
-    case @layout
-    when "miq_request_ae"                        then "AutomateRequest"
-    when "miq_request_configured_system"         then "MiqProvisionConfiguredSystemRequest"
-    when "miq_request_host"                      then "MiqHostProvisionRequest"
-    when "miq_request_vm"                        then "MiqProvisionRequest"
-    end
-  end
-
   # Create a condition from the passed in options
   def prov_scope(opts)
     scope = []
@@ -413,42 +354,96 @@ class MiqRequestController < ApplicationController
     end
   end
 
-  def request_types_for_dropdown
+  def request_types_hash
     MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].values.reduce({}) do |hash, item|
       hash.merge(item) { |_key, val| _(val) }
     end
   end
 
-  # Set all task options to default
-  def prov_set_default_options
-    resource_type = request_tab_type
-    opts = @sb[:prov_options][resource_type.to_sym] = {}
-    opts[:states] = PROV_STATES.map { |k, v| [k, _(v)] }.to_h
-    opts[:reason_text] = nil
-    opts[:types] = request_types_for_dropdown
+  def requester_label(request)
+    if request.requester.nil?
+      (_("%{name} (no longer exists)") % {:name => r.requester_name})
+    else
+      request.requester_name
+    end
+  end
 
-    opts[:users] = Rbac::Filterer.filtered(MiqRequest.where(
+  def requesters_in_30_days
+    Rbac::Filterer.filtered(MiqRequest.where(
       :type       => MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].keys,
       :created_on => (30.days.ago.utc)..(Time.now.utc)
     )).each_with_object({}) do |r, h|
-      h[r.requester_id] = if r.requester.nil?
-                            (_("%{name} (no longer exists)") % {:name => r.requester_name})
-                          else
-                            r.requester_name
-                          end
+      h[r.requester_id] = requester_label(r)
     end
-
-    unless is_approver
-      username = current_user.name
-      opts[:users] = opts[:users].value?(username) ? {opts[:users].key(username) => username} : {}
-    end
-    opts[:applied_states] = opts[:states].collect { |s| s[0] }
-    opts[:type_choice] = "all"
-    opts[:user_choice] ||= "all"
-    opts[:time_period] ||= 7
-    @sb[:def_prov_options][resource_type.to_sym] = {}
-    @sb[:prov_options][resource_type.to_sym] = @sb[:def_prov_options][resource_type.to_sym] = copy_hash(opts)
   end
+
+  def opts_users
+    requesters = requesters_in_30_days
+
+    if is_approver
+      # list all requesters
+      [label_value_hash_with_all(requesters), 'all']
+    elsif requesters.value?(current_user.name)
+      # list just the current user
+      [[{:value => current_user.id, :label => current_user.name}], current_user.id]
+    else
+      # nothing to list
+      [[], current_user.id]
+    end
+  end
+
+  def states_for_checkboxes_i18n
+    PROV_STATES.map do |key, value|
+      {
+        :label   => _(value),
+        :checked => true,
+        :value   => key,
+      }
+    end
+  end
+
+  # FIXME: this has a big overlap with miq_request_initial_options.
+  # It is needed because the firts load of the GTL is done throught a different
+  # mechanism than the subsequent reloads.
+  def prov_set_default_options
+    {
+      :reason_text    => nil,
+      :applied_states => PROV_STATES.keys,
+      :type_choice    => 'all',
+      :user_choice    => is_approver ? 'all' : current_user.id,
+      :time_period    => 7,
+    }
+  end
+  PROV_TIME_PERIODS = {
+    1  => N_("Last 24 Hours"),
+    7  => N_("Last 7 Days"),
+    30 => N_("Last 30 Days")
+  }.freeze
+
+  def time_periods_for_select_i18n
+    PROV_TIME_PERIODS.map { |k, v| {:label => _(v), :value => k} }
+  end
+
+  def label_value_hash_with_all(array)
+    array.each_with_object([{:label => _('All'), :value => 'all'}]) do |(value, label), a|
+      a << {:label => label, :value => value }
+    end
+  end
+
+  def miq_request_initial_options
+    users, selected_user = opts_users
+    {
+      :states         => states_for_checkboxes_i18n,
+      :users          => users,
+      :selectedUser   => selected_user,
+      :types          => label_value_hash_with_all(request_types_hash),
+      :selectedType   => 'all',
+      :timePeriods    => time_periods_for_select_i18n,
+      :selectedPeriod => 7,
+      :reasonText     => nil,
+    }
+  end
+  helper_method :miq_request_initial_options
 
   # Find the request that was chosen
   def identify_request
@@ -483,7 +478,7 @@ class MiqRequestController < ApplicationController
 
 
     if @flash_array.present?
-      session[:flash_msgs] = @flash_array.dup
+      flash_to_session
       javascript_redirect :action => 'show_list'
     else
       show_list
@@ -528,16 +523,14 @@ class MiqRequestController < ApplicationController
 
   def get_session_data
     super
-    @title        = _("Requests")
-    @request_tab  = session[:request_tab] if session[:request_tab]
-    @layout       = layout_from_tab_name(@request_tab)
-    @options      = session[:prov_options]
+    @title       = _("Requests")
+    @request_tab = session[:request_tab] if session[:request_tab]
+    @layout      = layout_from_tab_name(@request_tab)
   end
 
   def set_session_data
     super
-    session[:edit]                 = @edit unless @edit.nil?
-    session[:request_tab]          = @request_tab unless @request_tab.nil?
-    session[:prov_options]         = @options if @options
+    session[:edit]        = @edit unless @edit.nil?
+    session[:request_tab] = @request_tab unless @request_tab.nil?
   end
 end

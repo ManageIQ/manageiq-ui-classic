@@ -152,10 +152,10 @@ describe CatalogController do
       page = double('page')
       allow(page).to receive(:<<).with(any_args)
       expect(page).to receive(:redirect_to).with(:controller => "miq_request",
-                                                 :action     => "show_list",
-                                                 :flash_msg  => "Order Request was Submitted")
+                                                 :action     => "show_list")
       expect(controller).to receive(:render).with(:update).and_yield(page)
       controller.send(:dialog_form_button_pressed)
+      expect(session[:flash_msgs]).to match [a_hash_including(:message => "Order Request was Submitted", :level => :success)]
     end
 
     it "stay on the current model page after the dialog is submitted if a request is not created" do

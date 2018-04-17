@@ -18,7 +18,7 @@ function HeaderCtrl($scope, eventNotifications, $timeout) {
     eventNotifications.setDrawerShown(vm.notificationsDrawerShown);
   };
 
-  ManageIQ.angular.rxSubject.subscribe(function (data) {
+  listenToRx(function (data) {
     if (data.controller !== 'HeaderCtrl') {
       return;
     }

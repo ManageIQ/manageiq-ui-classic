@@ -103,10 +103,6 @@ class NetworkRouterController < ApplicationController
     assert_privileges("cloud_tenant_show_list")
 
     @in_a_form = true
-    @network_provider_choices = {}
-    network_managers.each do |network_manager|
-      @network_provider_choices[network_manager.name] = network_manager.id
-    end
     drop_breadcrumb(
       :name => _("Add New Network Router"),
       :url  => "/network_router/new"
@@ -152,8 +148,7 @@ class NetworkRouterController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show_list"
   end
 
@@ -192,7 +187,7 @@ class NetworkRouterController < ApplicationController
       add_flash(_("The selected Router was deleted")) if @flash_array.nil?
     else
       drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_to(previous_breadcrumb_url)
     end
   end
@@ -203,7 +198,6 @@ class NetworkRouterController < ApplicationController
     @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
     # needs to be initializes for haml
-    @network_provider_choices = {}
     drop_breadcrumb(
       :name => _("Edit Router \"%{name}\"") % {:name => @router.name},
       :url  => "/network_router/edit/#{@router.id}"
@@ -250,7 +244,7 @@ class NetworkRouterController < ApplicationController
     end
 
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect previous_breadcrumb_url
   end
 
@@ -344,8 +338,7 @@ class NetworkRouterController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show", :id => router_id
   end
 
@@ -439,8 +432,7 @@ class NetworkRouterController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show", :id => router_id
   end
 

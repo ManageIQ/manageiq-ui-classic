@@ -226,7 +226,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     $scope.resetSearch = resetEvent;
 
     // listen for search & reset events
-    ManageIQ.angular.rxSubject.subscribe(function(event) {
+    listenToRx(function(event) {
       if (event.service !== 'topologyService') {
         return;
       }
@@ -295,7 +295,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
         .catch(miqService.handleFailure);
     };
 
-    ManageIQ.angular.rxSubject.subscribe(function(event) {
+    listenToRx(function(event) {
       if (event.name === 'refreshTopology') {
         controller.refresh();
       }

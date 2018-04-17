@@ -9,4 +9,4 @@
 %br
 %br
 .quadicon_grid
-  = render_quadicon(@sb[:compare_db].constantize.find(vm_id), :mode => "icon", :db => @sb[:compare_db])
+  = render :partial => 'shared/quadicon', :locals => {:record => @sb[:compare_db].constantize.find(vm_id)}

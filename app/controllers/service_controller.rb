@@ -80,7 +80,8 @@ class ServiceController < ApplicationController
   end
 
   def show_list
-    redirect_to :action => 'explorer', :flash_msg => @flash_array.try(:fetch_path, 0, :message)
+    flash_to_session
+    redirect_to(:action => 'explorer')
   end
 
   def explorer
@@ -184,7 +185,7 @@ class ServiceController < ApplicationController
     return unless init_show_variables
 
     @lastaction = 'generic_object'
-    @item = @record.generic_objects.find(params[:generic_object_id]).first
+    @item = @record.generic_objects.find { |e| e[:id] == params[:generic_object_id].to_i }
     drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name}, :url => show_link(@record, :display => 'generic_objects'))
     drop_breadcrumb(:name => @item.name, :url => show_link(@record, :display => 'generic_objects', :generic_object_id => params[:generic_object_id]))
     @view = get_db_view(GenericObject)
@@ -327,7 +328,7 @@ class ServiceController < ApplicationController
       process_show_list
       @right_cell_text = _("All Services")
     end
-    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present?
+    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && @nodetype != 's'
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history

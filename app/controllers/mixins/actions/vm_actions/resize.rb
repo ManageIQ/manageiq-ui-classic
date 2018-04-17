@@ -78,7 +78,7 @@ module Mixins
           if @sb[:explorer]
             replace_right_cell
           else
-            session[:flash_msgs] = @flash_array.dup
+            flash_to_session
             javascript_redirect previous_breadcrumb_url
           end
           return

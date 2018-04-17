@@ -31,6 +31,7 @@ var adjustValidationStatus = function(value, scope, ctrl, attrs, rootScope) {
     }
 
     if (scope[scope.model][attrs.resetValidationDependsOn] === '' ||
+      (value === '' && ! attrs.required) ||
         (value === scope.postValidationModel[attrs.prefix][ctrl.$name] && _.isMatch(modelObject, modelPostValidationObject))) {
       scope[scope.model][attrs.resetValidationStatus] = true;
       rootScope.$broadcast('clearErrorOnTab', {tab: attrs.prefix});

@@ -352,9 +352,8 @@ class ConfigurationController < ApplicationController
       @timeprofile = TimeProfile.new
     end
     if params[:button] == "cancel"
-      add_flash(_("Edit of Time Profile \"%{name}\" was cancelled by the user") % {:name => @timeprofile.description})
       params[:id] = @timeprofile.id.to_s
-      session[:flash_msgs] = @flash_array.dup                 # Put msgs in session for next transaction
+      flash_to_session(_("Edit of Time Profile \"%{name}\" was cancelled by the user") % {:name => @timeprofile.description})
       javascript_redirect :action => 'change_tab', :typ => "timeprofiles", :tab => 4, :id => @timeprofile.id.to_s
     elsif params[:button] == "save"
       if params[:all_days] == 'true'
@@ -389,8 +388,7 @@ class ConfigurationController < ApplicationController
       else
         construct_edit_for_audit(@timeprofile)
         AuditEvent.success(build_created_audit(@timeprofile, @edit))
-        add_flash(_("Time Profile \"%{name}\" was saved") % {:name => @timeprofile.description})
-        session[:flash_msgs] = @flash_array.dup                 # Put msgs in session for next transaction
+        flash_to_session(_("Time Profile \"%{name}\" was saved") % {:name => @timeprofile.description})
         javascript_redirect :action => 'change_tab', :typ => "timeprofiles", :tab => 4, :id => @timeprofile.id.to_s
       end
     end

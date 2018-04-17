@@ -1321,6 +1321,7 @@ Rails.application.routes.draw do
         show_list
         show
         tagging_edit
+        console_file
       ) + compare_get,
 
       :post   =>  %w(
@@ -1338,6 +1339,7 @@ Rails.application.routes.draw do
         tl_chooser
         wait_for_task
         provision
+        console
       ) +
           adv_search_post +
           exp_post +
@@ -2357,10 +2359,9 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
+        filter
         post_install_callback
         pre_prov
-        prov_button
-        prov_change_options
         prov_continue
         prov_edit
         prov_field_changed
@@ -3065,6 +3066,7 @@ Rails.application.routes.draw do
         filesystem_download
         retirement_info
         reconfigure_form_fields
+        launch_vmware_console
         launch_html5_console
         perf_chart_chooser
         protect
@@ -3091,6 +3093,7 @@ Rails.application.routes.draw do
         advanced_settings
         accordion_select
         button
+        console
         edit_vm
         resize_vm
         resize_field_changed

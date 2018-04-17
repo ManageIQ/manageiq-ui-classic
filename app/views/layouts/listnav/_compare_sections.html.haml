@@ -15,7 +15,7 @@
       %div{:style => "position: relative; width: 152px; height: #{height}; z-index: 0; margin: 0px auto;"}
         - if %w(MiqTemplate VmOrTemplate Vm).include?(@sb[:compare_db])
           - if settings(:quadicons, :vm)
-            = render_quadicon(@drift_obj, :mode => :icon, :size => 72, :height => height, :typ => :listnav)
+            = render :partial => 'shared/quadicon', :locals => {:record => @drift_obj}
           - else
             .flobj
               %img{:src => image_path("layout/base-single.png")}
@@ -47,7 +47,7 @@
           .flobj
             %img{:src => image_path("layout/reflection.png")}
         - elsif @sb[:compare_db] == "EmsCluster"
-          = render_quadicon(@drift_obj, :mode => :icon, :typ => :listnav)
+          = render :partial => 'shared/quadicon', :locals => {:record => @drift_obj}
       - if @sb[:compare_db] != "EmsCluster"
         %div{:style => "margin-top: -25px;"}
           %center{:style => "color:#000;"}

@@ -7,7 +7,7 @@
   = javascript_tag("ManageIQ.expEditor.second.title = '#{@edit[@expkey][:val2][:title]}';")
 
 #exp_editor_div
-  = render :partial => 'layouts/flash_msg', :locals => {:flash_div_id => 'exp_editor_flash'}
+  = render :partial => 'layouts/flash_msg', :locals => {:flash_div_id => 'exp_editor_flash', :flash_style => "display:none"}
   .panel.panel-default
     .panel-heading
       %h3.panel-title

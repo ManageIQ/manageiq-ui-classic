@@ -53,7 +53,8 @@
                                 'ng-model'    => "vm.timeProfileModel.all_days",
                                 'ng-disabled' => "vm.timeProfileModel.restricted_time_profile",
                                 "ng-change"   => "vm.allDaysClicked()",
-                                "bs-switch"   => ""}
+                                "bs-switch"   => "",
+                                "data"        => {:on_text => _('On'), :off_text => _('Off')}}
       .form-group{"ng-class" => "{'has-error': angularForm.some_days_checked.$error.someDaysCheck}"}
         %label.col-md-2.control-label
         %div
@@ -66,6 +67,7 @@
                                   'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
                                   'ng-change'      => "vm.dayValuesChanged()",
                                   "bs-switch"      => "",
+                                  "data"           => {:on_text => _('On'), :off_text => _('Off')},
                                   'time-type'      => "day",
                                   'all-time-check' => "{{$index}}",
                                   "min-time-check" => "{{$index}}",
@@ -95,7 +97,8 @@
                                 'ng-model'    => "vm.timeProfileModel.all_hours",
                                 'ng-disabled' => "vm.timeProfileModel.restricted_time_profile",
                                 "ng-change"   => "vm.allHoursClicked()",
-                                "bs-switch"   => ""}
+                                "bs-switch"   => "",
+                                "data"           => {:on_text => _('On'), :off_text => _('Off')}}
       .form-group
         %label.col-md-2.control-label
           = _('AM')
@@ -109,6 +112,7 @@
                                   'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
                                   'ng-change'      => "vm.hourValuesChanged()",
                                   "bs-switch"      => "",
+                                  "data"           => {:on_text => _('On'), :off_text => _('Off')},
                                   'time-type'      => "hour",
                                   'all-time-check' => "{{$index}}",
                                   'min-time-check' => "{{$index}}"}
@@ -124,6 +128,7 @@
                                   'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
                                   'ng-change'      => "vm.hourValuesChanged()",
                                   "bs-switch"      => "",
+                                  "data"           => {:on_text => _('On'), :off_text => _('Off')},
                                   'time-type'      => "hour",
                                   'all-time-check' => "{{$index}}",
                                   'min-time-check' => "{{$index}}"}
@@ -140,6 +145,7 @@
                                   'ng-change'      => "vm.hourValuesChanged()",
                                   'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
                                   "bs-switch"      => "",
+                                  "data"           => {:on_text => _('On'), :off_text => _('Off')},
                                   'time-type'      => "hour",
                                   'all-time-check' => "{{$index}}",
                                   'min-time-check' => "{{$index}}"}
@@ -155,6 +161,7 @@
                                   'ng-change'      => "vm.hourValuesChanged()",
                                   'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
                                   "bs-switch"      => "",
+                                  "data"           => {:on_text => _('On'), :off_text => _('Off')},
                                   'time-type'      => "hour",
                                   'all-time-check' => "{{$index}}",
                                   'min-time-check' => "{{$index}}"}
@@ -174,7 +181,7 @@
       .form-group
         %label.col-md-2.control-label
           = _('Timezone')
-        .col-md-8
+        .col-md-8.dropup
           = select_tag('profile_tz',
                        options_for_select([["<#{_('Determine at Run Time')}>", nil]] + ViewHelper::ALL_TIMEZONES),
                        "ng-model"                    => "vm.timeProfileModel.profile_tz",
@@ -190,6 +197,7 @@
                             :name             => "rollup_daily",
                             'ng-model'        => "vm.timeProfileModel.rollup_daily",
                             "bs-switch"       => "",
+                            "data"            => {:on_text => _('On'), :off_text => _('Off')},
                             "switch-readonly" => "vm.timeProfileModel.restricted_time_profile || vm.timeProfileModel.miq_reports_count > 0"}
         %div{"ng-if" => "vm.timeProfileModel.miq_reports_count > 0"}
           {{note}}

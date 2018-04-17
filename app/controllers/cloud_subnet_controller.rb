@@ -49,10 +49,6 @@ class CloudSubnetController < ApplicationController
 
     @subnet = CloudSubnet.new
     @in_a_form = true
-    @network_provider_choices = {}
-    Rbac::Filterer.filtered(ExtManagementSystem.where(:type => ['ManageIQ::Providers::Openstack::NetworkManager', 'ManageIQ::Providers::Redhat::NetworkManager'])).find_each do |ems|
-      @network_provider_choices[ems.name] = ems.id
-    end
     drop_breadcrumb(
       :name => _("Add New Subnet"),
       :url  => "/cloud_subnet/new"
@@ -105,7 +101,7 @@ class CloudSubnetController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect :action => "show_list"
   end
 
@@ -134,10 +130,11 @@ class CloudSubnetController < ApplicationController
       if @flash_array.nil?
         add_flash(_("The selected Cloud Subnet was deleted"))
       end
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+      flash_to_session
+      javascript_redirect(:action => 'show_list')
     else
       drop_breadcrumb(:name => 'dummy', :url  => " ") # missing a bc to get correctly back so here's a dummy
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_to(previous_breadcrumb_url)
     end
   end
@@ -196,7 +193,7 @@ class CloudSubnetController < ApplicationController
     end
 
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
+    flash_to_session
     javascript_redirect previous_breadcrumb_url
   end
 

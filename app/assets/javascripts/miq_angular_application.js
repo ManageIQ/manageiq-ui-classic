@@ -12,6 +12,8 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miqStaticAssets.dialogUser',
   'miqStaticAssets.treeSelector',
   'miqStaticAssets.treeView',
+  'miqStaticAssets.quadicon',
+  'miqStaticAssets.common',
   'ngSanitize',
   'patternfly',
   'patternfly.charts',
@@ -20,8 +22,6 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'ui.select',
 ]);
 miqHttpInject(ManageIQ.angular.app);
-
-ManageIQ.angular.rxSubject = new Rx.Subject();
 
 ManageIQ.constants = {
   reportData: 'report_data',
@@ -68,8 +68,4 @@ function miqCallAngular(data) {
   ManageIQ.angular.scope.$apply(function() {
     ManageIQ.angular.scope[data.name].apply(ManageIQ.angular.scope, data.args);
   });
-}
-
-function sendDataWithRx(data) {
-  ManageIQ.angular.rxSubject.onNext(data);
 }

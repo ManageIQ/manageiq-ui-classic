@@ -1,7 +1,7 @@
 - if @record.try(:key)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.key, :length => truncate_length), true, "icon") do
-      = render_quadicon(@record, :mode => :icon, :size => 72, :typ => :listnav)
+      = render :partial => 'shared/quadicon', :locals => {:record => @record}
 
     = miq_accordion_panel(_("Properties"), false, "cloud_object_store_object_prop") do
       %ul.nav.nav-pills.nav-stacked

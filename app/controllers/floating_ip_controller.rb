@@ -48,9 +48,9 @@ class FloatingIpController < ApplicationController
       javascript_redirect :action    => 'show_list',
                           :flash_msg => _("Add of new Floating IP was cancelled by the user")
     when "add"
-      @floating_ip = FloatingIp.new
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
+
       if FloatingIp.class_by_ems(ems).supports_create?
         options.delete(:ems_id)
         task_id = ems.create_floating_ip_queue(session[:userid], options)
@@ -76,7 +76,7 @@ class FloatingIpController < ApplicationController
 
   def create_finished
     task_id = session[:async][:params][:task_id]
-    floating_ip_address = session[:async][:params][:floating_ip_address]
+    floating_ip_address = session[:async][:params][:address]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Floating IP \"%{address}\" created") % { :address => floating_ip_address })
@@ -88,8 +88,7 @@ class FloatingIpController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show_list"
   end
 
@@ -116,7 +115,8 @@ class FloatingIpController < ApplicationController
       if @flash_array.nil?
         add_flash(_("The selected Floating IP was deleted"))
       else # or (if we deleted what we were showing) we redirect to the listing
-        javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+        flash_to_session
+        javascript_redirect(:action => 'show_list')
       end
     end
   end
@@ -130,49 +130,11 @@ class FloatingIpController < ApplicationController
       :url  => "/floating_ip/edit/#{@floating_ip.id}")
   end
 
-  def floating_ip_form_fields
-    assert_privileges("floating_ip_edit")
-    floating_ip = find_record_with_rbac(FloatingIp, params[:id])
-    network_port_ems_ref = if floating_ip.network_port
-                             floating_ip.network_port.ems_ref
-                           else
-                             ""
-                           end
-    # TODO: router field is missing!
-    # :router_id            => floating_ip.router.id,
-    render :json => {
-      :fixed_ip_address     => floating_ip.fixed_ip_address,
-      :floating_ip_address  => floating_ip.address,
-      :cloud_network_name   => floating_ip.cloud_network.try(:name),
-      :network_port_ems_ref => network_port_ems_ref,
-      :cloud_tenant_name    => floating_ip.cloud_tenant.try(:name),
-    }
-  end
-
-  def networks_by_ems
-    assert_privileges("floating_ip_new")
-    networks = []
-    available_networks = Rbac::Filterer.filtered(CloudNetwork.where(:ems_id => params[:id], :external_facing => true))
-    available_networks.each do |network|
-      networks << { 'name' => network.name, 'id' => network.id }
-    end
-    render :json => {
-      :available_networks => networks
-    }
-  end
-
   def new
     assert_privileges("floating_ip_new")
     @floating_ip = FloatingIp.new
     @in_a_form = true
-    @ems_choices = {}
-    network_managers.each do |network_manager|
-      @ems_choices[network_manager.name] = network_manager.id
-    end
-    drop_breadcrumb(
-      :name => _("Add New Floating IP"),
-      :url  => "/floating_ip/new"
-    )
+    drop_breadcrumb(:name => _("Add New Floating IP"), :url => "/floating_ip/new")
   end
 
   def update
@@ -223,8 +185,7 @@ class FloatingIpController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show", :id => floating_ip_id
   end
 
@@ -238,11 +199,12 @@ class FloatingIpController < ApplicationController
   def form_params
     options = {}
     options[:ems_id] = params[:ems_id] if params[:ems_id] && params[:ems_id] != 'new'
-    options[:floating_ip_address] = params[:floating_ip_address] if params[:floating_ip_address]
+    options[:address] = params[:address] if params[:address]
     options[:cloud_network_id] = params[:cloud_network_id] if params[:cloud_network_id]
-    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
-    options[:network_port_ems_ref] = params[:network_port_ems_ref] if params[:network_port_ems_ref]
-    options[:router_id] = params[:router_id] if params[:router_id]
+    options[:cloud_tenant_id] = params[:cloud_tenant_id] if params[:cloud_tenant_id]
+    if params[:network_port] && params[:network_port][:ems_ref]
+      options[:network_port_ems_ref] = params[:network_port][:ems_ref]
+    end
     options
   end
 

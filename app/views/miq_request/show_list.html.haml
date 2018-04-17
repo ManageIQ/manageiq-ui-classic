@@ -1,3 +1,7 @@
 #main_div
-  = render :partial => 'prov_options'
+  %miq-request-options{:options => miq_request_initial_options.to_json}
+
   = render :partial => 'layouts/gtl', :locals => {:no_flash_div => true}
+
+:javascript
+  miq_bootstrap('miq-request-options')

@@ -11,7 +11,7 @@ physicalServerToolbarController.$inject = ['API', 'miqService'];
 function physicalServerToolbarController(API, miqService) {
   var toolbar = this;
 
-  ManageIQ.angular.rxSubject.subscribe(function(event) {
+  listenToRx(function(event) {
     if (event.controller !== 'physicalServerToolbarController') {
       return;
     }

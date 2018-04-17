@@ -191,7 +191,7 @@ module Menu
       end
 
       def automation_menu_section
-        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle', [
+        Menu::Section.new(:aut, N_("Automation"), 'pficon pficon-automation', [
           ansible_menu_section,
           automation_manager_menu_section,
           automate_menu_section
@@ -206,7 +206,7 @@ module Menu
       end
 
       def ansible_menu_section
-        Menu::Section.new(:ansible, N_("Ansible"), 'fa fa-recycle', [
+        Menu::Section.new(:ansible, N_("Ansible"), 'pficon pficon-automation', [
           Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload', :any => true}, '/ansible_playbook'),
           Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source', :any => true}, '/ansible_repository'),
           Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential'),
@@ -214,7 +214,7 @@ module Menu
       end
 
       def automate_menu_section
-        Menu::Section.new(:automate, N_("Automate"), 'fa fa-recycle', [
+        Menu::Section.new(:automate, N_("Automate"), 'pficon pficon-automation', [
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
           Menu::Item.new('miq_ae_tools',         N_('Simulation'),      'miq_ae_class_simulation',       {:feature => 'miq_ae_class_simulation'},       '/miq_ae_tools/resolve'),
           Menu::Item.new('miq_ae_customization', N_('Customization'),   'miq_ae_customization_explorer', {:feature => 'miq_ae_customization_explorer'}, '/miq_ae_customization/explorer'),
@@ -226,7 +226,7 @@ module Menu
       end
 
       def optimize_menu_section
-        Menu::Section.new(:opt, N_("Optimize"), 'fa fa-lightbulb-o', [
+        Menu::Section.new(:opt, N_("Optimize"), 'pficon pficon-optimize', [
           Menu::Item.new('miq_capacity_utilization', N_('Utilization'), 'utilization', {:feature => 'utilization'}, '/utilization'),
           Menu::Item.new('miq_capacity_planning',    N_('Planning'),    'planning',    {:feature => 'planning'},    '/planning'),
           Menu::Item.new('miq_capacity_bottlenecks', N_('Bottlenecks'), 'bottlenecks', {:feature => 'bottlenecks'}, '/bottlenecks')
@@ -273,6 +273,7 @@ module Menu
                          {:feature => key.to_s},
                          help_menu_field(key, :href, value[:href]),
                          help_menu_field(key, :type, value[:type]),
+                         nil,
                          value)
         end
 

@@ -101,8 +101,7 @@ class SecurityGroupController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     javascript_redirect :action => "show_list"
   end
 
@@ -143,7 +142,8 @@ class SecurityGroupController < ApplicationController
       if @flash_array.nil?
         add_flash(_("The selected Security Group was deleted"))
       else # or (if we deleted what we were showing) we redirect to the listing
-        javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+        flash_to_session
+        javascript_redirect(:action => 'show_list')
       end
     end
   end
@@ -161,11 +161,6 @@ class SecurityGroupController < ApplicationController
     assert_privileges("security_group_new")
     @security_group = SecurityGroup.new
     @in_a_form = true
-    @ems_choices = {}
-    network_managers.each do |network_manager|
-      @ems_choices[network_manager.name] = network_manager.id
-    end
-
     drop_breadcrumb(:name => _("Add New Security Group"), :url => "/security_group/new")
   end
 
@@ -234,8 +229,7 @@ class SecurityGroupController < ApplicationController
       }, :error)
     end
 
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
+    flash_to_session
     if !session[:security_group][:tasks].empty?
       task = session[:security_group][:tasks].shift
       session[:security_group][:task] = task

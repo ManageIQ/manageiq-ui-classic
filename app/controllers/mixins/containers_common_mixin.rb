@@ -77,7 +77,7 @@ module ContainersCommonMixin
     add_flash(_("Creation of a new Service Dialog was cancelled by the user"))
     @in_a_form = false
     @edit = @record = nil
-    session[:flash_msgs] = @flash_array.dup # Put msg in session for next transaction to display
+    flash_to_session
     javascript_redirect previous_breadcrumb_url
   end
 
@@ -97,7 +97,7 @@ module ContainersCommonMixin
                   {:name => @edit[:new][:dialog_name]}, :success)
       @in_a_form = false
       @edit = @record = nil
-      session[:flash_msgs] = @flash_array.dup # Put msg in session for next transaction to display
+      flash_to_session
       javascript_redirect previous_breadcrumb_url
     end
   end

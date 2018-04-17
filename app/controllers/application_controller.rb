@@ -61,7 +61,6 @@ class ApplicationController < ActionController::Base
   include_concern 'Explorer'
   include_concern 'Filter'
   include_concern 'MiqRequestMethods'
-  include_concern 'Network'
   include_concern 'Performance'
   include_concern 'PolicySupport'
   include_concern 'ReportDownloads'
@@ -823,8 +822,7 @@ class ApplicationController < ActionController::Base
   end
 
   def report_edit_aborted(lastaction)
-    add_flash(_("Edit aborted!  %{product} does not support the browser's back button or access from multiple tabs or windows of the same browser.  Please close any duplicate sessions before proceeding.") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :error)
-    session[:flash_msgs] = @flash_array.dup
+    flash_to_session(_("Edit aborted!  %{product} does not support the browser's back button or access from multiple tabs or windows of the same browser.  Please close any duplicate sessions before proceeding.") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :error)
     if request.xml_http_request? # Is this an Ajax request?
       if lastaction == "configuration"
         edit
@@ -987,15 +985,17 @@ class ApplicationController < ActionController::Base
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
-      if fetch_data && defined?(@gtl_type) && @gtl_type != "list"
-        quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
+      if fetch_data && defined?(@gtl_type) && @gtl_type != "list" && !target.nil? && type_has_quadicon(target.class.name)
+        quadicon = view_context.quadicon_hash(target)
       end
+
       new_row = {
-        :id       => list_row_id(row),
-        :long_id  => row['id'].to_s,
-        :cells    => [],
-        :quadicon => quadicon
+        :id      => list_row_id(row),
+        :long_id => row['id'].to_s,
+        :cells   => [],
+        :quad    => quadicon
       }
+
       if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
         new_row[:parent_id] = "xx-#{row.data['miq_report_id']}" if row.data['miq_report_id']
       end

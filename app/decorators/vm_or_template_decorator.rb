@@ -12,7 +12,7 @@ class VmOrTemplateDecorator < MiqDecorator
   end
 
   def quadicon
-    {
+    icon = {
       :top_left     => {
         :fileicon => os_image,
         :tooltip  => os_image_name.humanize.downcase
@@ -29,6 +29,8 @@ class VmOrTemplateDecorator < MiqDecorator
         :text => ERB::Util.h(v_total_snapshots)
       }
     }
+    icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
+    icon
   end
 
   def single_quad

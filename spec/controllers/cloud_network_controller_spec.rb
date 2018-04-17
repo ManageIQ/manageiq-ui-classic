@@ -115,6 +115,11 @@ describe CloudNetworkController do
           :userid => controller.current_user.userid
         }
       end
+
+      let(:cloud_tenant) do
+        FactoryGirl.create(:cloud_tenant)
+      end
+
       let(:queue_options) do
         {
           :class_name  => @ems.class.name,
@@ -123,7 +128,14 @@ describe CloudNetworkController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name => "test", :admin_state_up => false, :shared => false, :external_facing => false}]
+          :args        => [{
+            :admin_state_up        => true,
+            :external_facing       => false,
+            :name                  => 'test',
+            :provider_network_type => 'vxlan',
+            :shared                => false,
+            :tenant_id             => cloud_tenant.ems_ref,
+          }]
         }
       end
 
@@ -134,8 +146,19 @@ describe CloudNetworkController do
 
       it "queues the create action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :create, :params => { :button => "add", :format => :js, :name => 'test',
-                                   :tenant_id => 'id', :ems_id => @ems.id }
+        post :create, :params => {
+          :button                => 'add',
+          :controller            => 'cloud_network',
+          :format                => :js,
+          :cloud_tenant          => {:id => cloud_tenant.id},
+          :ems_id                => @ems.id,
+          :enabled               => true,
+          :external_facing       => false,
+          :id                    => 'new',
+          :name                  => 'test',
+          :provider_network_type => 'vxlan',
+          :shared                => false
+        }
       end
     end
   end
@@ -155,6 +178,7 @@ describe CloudNetworkController do
           :userid => controller.current_user.userid
         }
       end
+
       let(:queue_options) do
         {
           :class_name  => @network.class.name,

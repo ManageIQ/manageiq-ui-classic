@@ -73,7 +73,7 @@ module Mixins
           if @sb[:explorer]
             replace_right_cell
           else
-            session[:flash_msgs] = @flash_array.dup
+            flash_to_session
             render :update do |page|
               page << javascript_prologue
               page.redirect_to previous_breadcrumb_url
@@ -109,7 +109,7 @@ module Mixins
           if @sb[:explorer]
             replace_right_cell
           else
-            session[:flash_msgs] = @flash_array.dup
+            flash_to_session
             render :update do |page|
               page << javascript_prologue
               page.redirect_to previous_breadcrumb_url

@@ -16,7 +16,7 @@ module ChargebackPreview
                   {:status => miq_task.status, :message => miq_task.message}, :error)
       else
         rr = miq_task.miq_report_result
-        @html = report_build_html_table(rr.report_results, rr.html_rows.join)
+        @html = report_build_html_table(rr.report_results, rr.html_rows.join, false)
         @refresh_partial = 'vm_common/chargeback'
         miq_task.destroy
       end

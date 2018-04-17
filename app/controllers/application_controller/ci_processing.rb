@@ -15,6 +15,7 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Reconfigure
     helper_method(:supports_reconfigure_disks?)
     helper_method(:supports_reconfigure_disksize?)
+    helper_method(:supports_reconfigure_network_adapters?)
     include Mixins::Actions::VmActions::PolicySimulation
     include Mixins::Actions::VmActions::Transform
 
@@ -183,8 +184,7 @@ module ApplicationController::CiProcessing
       record = find_record_with_rbac(klass, id)
     rescue => @bang
       self.x_node = "root" if @explorer
-      add_flash(@bang.message, :error, true)
-      session[:flash_msgs] = @flash_array.dup
+      flash_to_session(@bang.message, :error, true)
     end
     record
   end
@@ -461,7 +461,7 @@ module ApplicationController::CiProcessing
     add_flash(_("Error during '%{task}': %{message}") % {:task => task, :message => err.message}, :error)
   else
     add_flash(n_("%{task} initiated for %{count} provider",
-                 "%{task} initiated for %{count} providers)", manager_ids.length) %
+                 "%{task} initiated for %{count} providers", manager_ids.length) %
                 {:task  => task_name(task),
                  :count => manager_ids.length})
   end

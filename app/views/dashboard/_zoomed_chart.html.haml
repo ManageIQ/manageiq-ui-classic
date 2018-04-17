@@ -1,6 +1,7 @@
 -#
   Parameters:
     widget -- MiqWidget object
+- last_run, next_run = last_next_run(widget)
 #zoomed_chart_div
   .card-pf
     .card-pf-heading
@@ -11,4 +12,6 @@
           %i.fa.fa-close.pull-right
     .card-pf-body
       = chart_remote('dashboard', :id => 'my_chart', :zoomed => true)
-    = render :partial => 'widget_footer', :locals => {:widget => widget}
+    %widget-footer{:id => "zoomed_chart_footer_#{widget.id}", 'widget-last-run' => last_run, 'widget-next-run' => next_run}
+:javascript
+  miq_bootstrap("#zoomed_chart_footer_#{widget.id}");

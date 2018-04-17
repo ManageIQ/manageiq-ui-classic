@@ -1,4 +1,4 @@
-/* global add_flash */
+/* global add_flash camelizeQuadicon */
 (function() {
   var CONTROLLER_NAME = 'reportDataController';
   var MAIN_CONTETN_ID = 'main-content';
@@ -75,7 +75,7 @@
   * @returns {undefined}
   */
   function subscribeToSubject() {
-    this.subscription = ManageIQ.angular.rxSubject.subscribe(function(event) {
+    this.subscription = listenToRx(function(event) {
       if (event.initController && event.initController.name === CONTROLLER_NAME) {
         this.initController(event.initController.data);
       } else if (event.unsubscribe && event.unsubscribe === CONTROLLER_NAME) {
@@ -86,6 +86,8 @@
         this.setExtraClasses(this.initObject.gtlType);
       } else if (event.refreshData && event.refreshData.name === CONTROLLER_NAME) {
         this.refreshData(event.data);
+      } else if (event.setScope && event.setScope.name === CONTROLLER_NAME) {
+        this.setScope(event.data);
       }
 
       if (event.controller === CONTROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
@@ -147,6 +149,11 @@
     this.initController(_.merge(this.initObject, data));
   };
 
+  ReportDataController.prototype.setScope = function(scope) {
+    this.initObject.additionalOptions.named_scope = [];
+    this.refreshData({additionalOptions: {named_scope: scope}});
+  };
+
   ReportDataController.prototype.setSort = function(headerId, isAscending) {
     if (this.gtlData.cols[headerId]) {
       this.settings.sortBy = {
@@ -157,7 +164,7 @@
   };
 
   ReportDataController.prototype.onUnsubscribe = function() {
-    this.subscription.dispose();
+    this.subscription.unsubscribe();
   };
 
   /**
@@ -467,6 +474,12 @@
         if (this.settings.sort_col === -1) {
           this.settings.sort_col = 0;
         }
+
+        // Camelize the quadicon data received from the server
+        _.each(gtlData.rows, function(row, key) {
+          row.quad = camelizeQuadicon(row.quad);
+        });
+
         this.gtlData = gtlData;
         this.perPage.text = this.settings.perpage;
         this.perPage.value = this.settings.perpage;

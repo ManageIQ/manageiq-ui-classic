@@ -17,26 +17,20 @@ module OpsController::Settings::Upload
     fld = typ == 'custom' ? params[:upload] : params[:login]
     if fld && fld[:logo] && fld[:logo].respond_to?(:read)
       if fld[:logo].original_filename.split(".").last.downcase != "png"
-        msg = if typ == "custom"
-                _("Custom logo image must be a .png file")
-              else
-                _("Custom login image must be a .png file")
-              end
-        err = true
+        add_flash(
+          typ == "custom" ? _("Custom logo image must be a .png file") : _("Custom login image must be a .png file"),
+          :error
+        )
       else
         File.open(typ == "custom" ? @@logo_file : @@login_logo_file, "wb") { |f| f.write(fld[:logo].read) }
-        msg = if typ == "custom"
-                _('Custom Logo file "%{name}" uploaded') % {:name => fld[:logo].original_filename}
-              else
-                _('Custom login file "%{name}" uploaded') % {:name => fld[:logo].original_filename}
-              end
-        err = false
+        msg = typ == "custom" ? _('Custom logo file "%{name}" uploaded') : _('Custom login file "%{name}" uploaded')
+        add_flash(msg % {:name => fld[:logo].original_filename})
       end
     else
-      msg = _("Use the Choose file button to locate .png image file")
-      err = true
+      add_flash(_("Use the Choose file button to locate .png image file"), :error)
     end
-    redirect_to :action => 'explorer', :flash_msg => msg, :flash_error => err, :no_refresh => true
+    flash_to_session
+    redirect_to(:action => 'explorer')
   end
 
   def upload_form_field_changed
@@ -57,7 +51,6 @@ module OpsController::Settings::Upload
 
   def upload_csv
     return unless load_edit("#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
-    err = false
     @flash_array = []
     if params[:upload] && params[:upload][:file] && params[:upload][:file].respond_to?(:read)
       begin
@@ -74,32 +67,27 @@ module OpsController::Settings::Upload
           end
         end
       rescue => bang
-        msg = _("Error during 'upload': %{message}") % {:message => bang.message}
-        err = true
+        add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
       else
-        imp.errors.each do |_field, msg|
-          msg = msg
-          err = true
-        end
+        imp.errors.each_value { |msg| add_flash(msg, :error) }
         add_flash(_("Import validation complete: %{good_record}, %{bad_record}") % {
           :good_record => n_("%{num} good record", "%{num} good records", imp.stats[:good]) % {:num => imp.stats[:good]},
           :bad_record  => n_("%{num} bad record", "%{num} bad records", imp.stats[:bad]) % {:num => imp.stats[:bad]}
         }, :warning)
         if imp.stats[:good] == 0
-          msg = _("No valid import records were found, please upload another file")
-          err = true
+          add_flash(_("No valid import records were found, please upload another file"), :error)
         else
-          msg = _("Press the Apply button to import the good records into the %{product} database") % {:product => Vmdb::Appliance.PRODUCT_NAME}
-          err = false
+          add_flash(_("Press the Apply button to import the good records into the %{product} database") % {:product => Vmdb::Appliance.PRODUCT_NAME})
           @sb[:good] = imp.stats[:good]
           @sb[:imports] = imp
         end
       end
     else
-      msg = _("Use the Choose file button to locate CSV file")
-      err = true
+      add_flash(_("Use the Choose file button to locate CSV file"), :error)
     end
     @sb[:show_button] = (@sb[:good] && @sb[:good] > 0)
-    redirect_to :action => 'explorer', :flash_msg => msg, :flash_error => err, :no_refresh => true
+    flash_to_session
+    session[:flash_msgs] = @flash_array.dup if @flash_array
+    redirect_to(:action => 'explorer', :no_refresh => true)
   end
 end

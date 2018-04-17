@@ -110,9 +110,6 @@ class ChargebackController < ApplicationController
       if @edit[:new][:description].nil? || @edit[:new][:description] == ""
         render_flash(_("Description is required"), :error)
         return
-      elsif @rate.description == "Default Container Image Rate" && @edit[:new][:description] != @rate.description
-        render_flash(_("Can not change description of 'Default Container Image Rate'"), :error)
-        return
       end
       @rate.description = @edit[:new][:description]
       @rate.rate_type   = @edit[:new][:rate_type] if @edit[:new][:rate_type]
@@ -193,7 +190,8 @@ class ChargebackController < ApplicationController
   def cb_rate_show
     @display = "main"
     if @record.nil?
-      redirect_to :action => "cb_rates_list", :flash_msg => _("Error: Record no longer exists in the database"), :flash_error => true
+      flash_to_session(_('Error: Record no longer exists in the database'), :error)
+      redirect_to(:action => 'cb_rates_list')
       return
     end
   end
