@@ -16,8 +16,7 @@ cols:
 - power_state
 - location_led_state
 - hostname
-- product_name
-- manufacturer
+- asset_detail
 
 
 include:
@@ -36,8 +35,8 @@ col_order:
 - power_state
 - location_led_state
 - hostname
-- product_name
-- manufacturer
+- asset_detail.product_name
+- asset_detail.manufacturer
 
 col_formats:
 -
