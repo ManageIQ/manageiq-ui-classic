@@ -1,9 +1,7 @@
-- @angular_form = true
-
 %form#form_div.form-horizontal{:name                                  => "angularForm",
                               'ng-show'                               => "vm.afterGet",
-                              'data-db-backup-form-field-changed-url' => "/#{controller_name}/db_backup_form_field_changed/",
-                              'data-submit-url'                       => "/#{controller_name}/db_backup/",
+                              'data-db-backup-form-field-changed-url' => "{{vm.dbBackupFormFieldChangedUrl}}",
+                              'data-submit-url'                       => "{{vm.submitUrl}}",
                               'miq-form'                              => true,
                               'model'                                 => 'vm.diagnosticsDatabaseModel',
                               'model-copy'                            => 'vm.modelCopy',
