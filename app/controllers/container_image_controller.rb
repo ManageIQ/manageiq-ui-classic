@@ -30,8 +30,16 @@ class ContainerImageController < ApplicationController
 
   def openscap_html
     @record = identify_record(params[:id])
+    send_data(@record.openscap_result.html, :filename => openscap_filename(@record))
+  end
 
-    send_data(@record.openscap_result.html, :filename => "openscap_result.html")
+  def openscap_filename(image)
+    result = ''
+    result << "#{image.container_image_registry.full_name}_" unless image.container_image_registry.nil?
+    result << image.name.to_s
+    result << ":#{image.tag}" unless image.tag.nil?
+    result = 'openscap_report' if result.empty?
+    result << '.html'
   end
 
   menu_section :cnt
