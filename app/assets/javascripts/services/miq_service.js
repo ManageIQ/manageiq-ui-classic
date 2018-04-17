@@ -81,9 +81,9 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
   };
 
-  this.validateWithAjax = function(url) {
+  this.validateWithAjax = function(url, data) {
     miqSparkleOn();
-    miqAjaxButton(url, true);
+    miqAjaxButton(url, data || true);
   };
 
   this.validateWithREST = function($event, credType, url, formSubmit) {

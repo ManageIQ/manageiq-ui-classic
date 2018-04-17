@@ -39,7 +39,7 @@ function diagnosticsDatabaseFormController($http, $scope, miqService, miqDBBacku
   };
 
   vm.validateClicked = function() {
-    miqService.validateWithAjax(vm.validateUrl);
+    miqService.validateWithAjax(vm.validateUrl, vm.diagnosticsDatabaseModel);
   }
 
   vm.backupScheduleTypeChanged = function() {
