@@ -70,7 +70,10 @@ function diagnosticsDatabaseFormController($http, $scope, miqService, miqDBBacku
     if (confirm(confirmMsg)) {
       miqService.sparkleOn();
       var url = vm.submitUrl;
-      miqService.miqAjaxButton(url, vm.diagnosticsDatabaseModel);
+      miqService.miqAjaxButton(url, vm.diagnosticsDatabaseModel, { complete: function() {
+        // FIXME reset the form
+        vm.diagnosticsDatabaseModel.log_protocol = null;
+      }});
     }
   };
 

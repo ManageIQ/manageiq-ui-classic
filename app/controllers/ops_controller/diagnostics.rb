@@ -306,18 +306,12 @@ module OpsController::Diagnostics
       @schedule.run_adhoc_db_backup
       add_flash(_("Database Backup successfully initiated"))
       diagnostics_set_form_vars
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page.replace_html("diagnostics_database", :partial => "diagnostics_database_tab")
-        page << "miqSparkle(false);"
-      end
     else
       @schedule.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
-      javascript_flash(:spinner_off => true)
     end
+    javascript_flash(:spinner_off => true)
   end
 
   def log_collection_form_fields
