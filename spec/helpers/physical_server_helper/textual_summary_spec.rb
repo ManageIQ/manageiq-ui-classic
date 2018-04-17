@@ -19,7 +19,7 @@ describe PhysicalServerHelper::TextualSummary do
     result = helper.textual_ipv4
     expect(result[:label]).to eq("IPv4 Address")
     expect(result[:value]).to eq("<a target=\"_blank\" href=\"https://192.168.1.1\">192.168.1.1</a>, <a target=\"_blank\" href=\"https://192.168.1.2\">192.168.1.2</a>")
-  
+
     network.ipaddress = ""
     result = helper.textual_ipv4
     expect(result[:label]).to eq("IPv4 Address")
