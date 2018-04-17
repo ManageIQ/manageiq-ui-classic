@@ -1,13 +1,11 @@
-%diagnostics-database-form-component
+%diagnostics-database-form-component{'diagnostics-database-id'             => @id,
+                                     'submit-url'                          => "/#{controller_name}/db_backup/",
+                                     'db-backup-form-field-changed-url'    => "/#{controller_name}/db_backup_form_field_changed/",
+                                     'sb'                                  => @sb[:active_tab].to_json,
+                                     'database-display-name'               => @database_display_name,
+                                     'database-details'                    => @database_details.to_json,
+                                     'backup-schedules'                    => @backup_schedules.invert.sort_by { |name, _id| name }.to_json,
+                                     'database-backup-options-for-select'  => @database_backup_options_for_select.to_json}
 :javascript
-   ManageIQ.angular.app.value('submitUrl', "/#{controller_name}/db_backup/");
-   ManageIQ.angular.app.value('dbBackupFormFieldChanged', "/#{controller_name}/db_backup_form_field_changed/");
-
-   ManageIQ.angular.app.value('diagnosticsDatabaseId', '#{@id}');
-   ManageIQ.angular.app.value('sb', #{@sb[:active_tab].to_json});
-   ManageIQ.angular.app.value('databaseDisplayName', '#{@database_display_name}');
-   ManageIQ.angular.app.value('databaseDetails', #{@database_details.to_json});
-   ManageIQ.angular.app.value('backupSchedules', #{@backup_schedules.invert.sort_by { |name, _id| name }.to_json});
-   ManageIQ.angular.app.value('databaseBackupOptionsForSelect', #{@database_backup_options_for_select.to_json});
    miq_bootstrap('diagnostics-database-form-component')
 

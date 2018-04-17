@@ -4,12 +4,19 @@ ManageIQ.angular.app.component('diagnosticsDatabaseFormComponent', {
   templateUrl: '/static/diagnostics-database-tab.html.haml',
   bindings: {
     'diagnosticsDatabaseId': '@',
+    'submitUrl': '@',
+    'dbBackupFormFieldChangedUrl': '@',
+    'sb': '<',
+    'databaseDisplayName': '@',
+    'databaseDetails': '<',
+    'backupSchedules': '<',
+    'databaseBackupOptionsForSelect': '<',
   },
 });
 
-diagnosticsDatabaseFormController.$inject = ['$http', '$scope', 'miqService', 'miqDBBackupService', 'submitUrl', 'dbBackupFormFieldChanged', 'sb', 'databaseDisplayName', 'databaseDetails', 'backupSchedules', 'databaseBackupOptionsForSelect'];
+diagnosticsDatabaseFormController.$inject = ['$http', '$scope', 'miqService', 'miqDBBackupService'];
 
-function diagnosticsDatabaseFormController($http, $scope, miqService, miqDBBackupService, submitUrl, dbBackupFormFieldChanged, sb, databaseDisplayName, databaseDetails, backupSchedules, databaseBackupOptionsForSelect){
+function diagnosticsDatabaseFormController($http, $scope, miqService, miqDBBackupService){
   var vm = this;
   var init = function() {
     vm.diagnosticsDatabaseModel = {
@@ -24,18 +31,11 @@ function diagnosticsDatabaseFormController($http, $scope, miqService, miqDBBacku
     };
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.diagnosticsDatabaseModel );
-    vm.dbBackupFormFieldChangedUrl = dbBackupFormFieldChanged;
-    vm.submitUrl = submitUrl;
     vm.model = 'diagnosticsDatabaseModel';
     vm.saveable = miqService.saveable;
     vm.prefix = 'log';
     vm.validateUrl = '/ops/log_depot_validate?button=validate&type=' + vm.prefix;
     ManageIQ.angular.scope = vm;
-    vm.sb = sb;
-    vm.databaseDisplayName = databaseDisplayName;
-    vm.databaseDetails = databaseDetails;
-    vm.backupSchedules = backupSchedules;
-    vm.databaseBackupOptionsForSelect = databaseBackupOptionsForSelect;
   };
 
   vm.validateClicked = function() {
