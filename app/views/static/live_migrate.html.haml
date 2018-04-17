@@ -45,8 +45,8 @@
         %label.col-md-2.control-label
           = _('Destination Host')
         .col-md-8
-          %select{:name      => 'destination_host_id',
-                  'ng-model' => 'vm.vmCloudModel.host',
+          %select{:name        => 'destination_host_id',
+                  'ng-model'   => 'vm.vmCloudModel.host',
                   'ng-options' => 'host.name as host.name for host in vm.hosts track by host.id'}
 
   %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",

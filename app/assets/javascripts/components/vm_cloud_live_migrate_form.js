@@ -1,12 +1,10 @@
-
-
 ManageIQ.angular.app.component('vmCloudLiveMigrateForm', {
   controller: vmCloudLiveMigrateFormController,
   controllerAs: 'vm',
   templateUrl: '/static/live_migrate.html.haml',
   bindings: {
     'vmCloudLiveMigrateFormId': '@',
-    'message': '@'
+    'message': '@',
   },
 });
 
@@ -20,7 +18,7 @@ function vmCloudLiveMigrateFormController($http, $scope, miqService) {
     cluster_id:          null,
     destination_host_id: null,
     block_migration:     false,
-    disk_over_commit:    false
+    disk_over_commit:    false,
   };
   vm.clusters = [];
   vm.hosts = [];
@@ -61,5 +59,5 @@ function vmCloudLiveMigrateFormController($http, $scope, miqService) {
     vm.modelCopy = angular.copy(vm.vmCloudModel);
     miqService.sparkleOff();
   }
-};
+}
 
