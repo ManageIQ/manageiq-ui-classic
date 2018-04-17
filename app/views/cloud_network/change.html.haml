@@ -1,5 +1,4 @@
-%cloud-network-form
+%cloud-network-form{'network-provider-choices' => @network_ems_provider_choices.sort.to_json,
+                    'cloud-network-form-id'    => @network.id || "new"}
 :javascript
-  ManageIQ.angular.app.value('networkProviderChoices', #{@network_ems_provider_choices.sort.to_json});
-  ManageIQ.angular.app.value('cloudNetworkFormId', '#{@network.id || "new"}');
   miq_bootstrap('cloud-network-form');
