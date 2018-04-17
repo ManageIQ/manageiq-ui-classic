@@ -9,19 +9,19 @@ ManageIQ.angular.app.controller('retirementFormController', ['$http', '$scope', 
   $scope.model = 'retirementInfo';
 
   if (objectIds.length == 1) {
-    $http.get('retirement_info/' + objectIds[0])
+    $http.get('/' + ManageIQ.controller + '/retirement_info/' + objectIds[0])
       .then(getRetirementInfoFormData)
       .catch(miqService.handleFailure);
   }
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
-    miqService.miqAjaxButton('retire?button=cancel');
+    miqService.miqAjaxButton('/' + ManageIQ.controller + '/retire?button=cancel');
   };
 
   $scope.saveClicked = function() {
     miqService.sparkleOn();
-    miqService.miqAjaxButton('retire?button=save',
+    miqService.miqAjaxButton('/' + ManageIQ.controller + '/retire?button=save',
                              {'retire_date': $scope.retirementInfo.retirementDate,
                               'retire_warn': $scope.retirementInfo.retirementWarning});
   };
