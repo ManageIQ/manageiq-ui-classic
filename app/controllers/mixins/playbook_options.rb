@@ -56,6 +56,7 @@ module Mixins
       @edit[:new][:service_template_id] = nil
       @edit[:new][:inventory_type] = 'localhost'
       @edit[:new][:hosts] = ''
+      @edit[:new][:object_request] = nil
     end
 
     def initialize_playbook_variables
