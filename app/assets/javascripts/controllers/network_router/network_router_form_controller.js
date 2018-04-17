@@ -12,7 +12,9 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
       external_fixed_ips: [],
       external_gateway: false,
       extra_attributes: {
-        external_gateway_info: {}
+        external_gateway_info: {
+          enable_snat: true,
+        },
       },
     };
     vm.ems = [];
@@ -32,7 +34,6 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
 
         vm.networkRouterModel.name = '';
         vm.networkRouterModel.admin_state_up = true;
-//        vm.networkRouterModel.extra_attributes.external_gateway_info.enable_snat = true;
         vm.networkRouterModel.cloud_subnet_id = null;
 
         vm.afterGet = true;
@@ -40,7 +41,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
         miqService.sparkleOff();
       });
     } else {
-      API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,admin_state_up,cloud_network_id,cloud_tenant.name,ext_management_system.id,ext_management_system.name,extra_attributes").then(function(data) {
+      return API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,admin_state_up,cloud_network_id,cloud_tenant.name,ext_management_system.id,ext_management_system.name,extra_attributes").then(function(data) {
         Object.assign(vm.networkRouterModel, data);
         vm.networkRouterModel.admin_state_up = vm.networkRouterModel.admin_state_up == 't' ? true : false;
         if (vm.networkRouterModel.extra_attributes.external_gateway_info && vm.networkRouterModel.extra_attributes.external_gateway_info != {}) {
