@@ -3,10 +3,6 @@ class LoadBalancerDecorator < MiqDecorator
     'ff ff-load-balancer'
   end
 
-  def self.fileicon
-    '100/load_balancer.png'
-  end
-
   def single_quad
     {
       :fonticon => fonticon
