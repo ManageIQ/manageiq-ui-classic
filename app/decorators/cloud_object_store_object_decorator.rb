@@ -9,7 +9,7 @@ class CloudObjectStoreObjectDecorator < MiqDecorator
 
   def single_quad
     {
-      :fileicon => fileicon
+      :fonticon => fonticon
     }
   end
 end

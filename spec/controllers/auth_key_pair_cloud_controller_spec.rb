@@ -113,7 +113,7 @@ describe AuthKeyPairCloudController do
         results = assert_report_data_response
         expect(results['data']['rows'].length).to eq(1)
         expect(results['data']['rows'][0]['long_id']).to eq(kp.id.to_s)
-        expect(results['data']['rows'][0]['quad']).to have_key('fileicon')
+        expect(results['data']['rows'][0]['quad']).to have_key('fonticon')
       end
     end
   end
