@@ -120,7 +120,7 @@ module PhysicalServerHelper::TextualSummary
     ip_addresses = ip_addresses.join(",").split(/,\s*/)
     ip_address_urls = ip_addresses.collect { |ip_address| create_https_url(ip_address) }
 
-    {:label => _("IPv4 Address"), :value => ip_address_urls.join(", ").html_safe }
+    {:label => _("IPv4 Address"), :value => sanitize(ip_address_urls.join(", "), :attributes => %w(href target)) }
   end
 
   def textual_ipv6
