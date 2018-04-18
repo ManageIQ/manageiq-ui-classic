@@ -853,10 +853,15 @@ end
 
 describe ServiceController do
   context "#vm_button_operation" do
+    let(:user) { FactoryGirl.create(:user_admin) }
+
     before do
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       allow(MiqServer).to receive(:my_zone).and_return("default")
+      allow(MiqServer).to receive(:my_server) { FactoryGirl.create(:miq_server) }
       controller.instance_variable_set(:@lastaction, "show_list")
+      login_as user
+      allow(user).to receive(:role_allows?).and_return(true)
     end
 
     it "should continue to retire a service and does not render flash message 'xxx does not apply xxx' " do
@@ -905,10 +910,15 @@ end
 
 describe VmOrTemplateController do
   context "#vm_button_operation" do
+    let(:user) { FactoryGirl.create(:user_admin) }
+
     before do
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       allow(MiqServer).to receive(:my_zone).and_return("default")
+      allow(MiqServer).to receive(:my_server) { FactoryGirl.create(:miq_server) }
       controller.instance_variable_set(:@lastaction, "show_list")
+      login_as user
+      allow(user).to receive(:role_allows?).and_return(true)
     end
 
     it "should render flash message when trying to retire a template" do
