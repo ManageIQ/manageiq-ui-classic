@@ -12,6 +12,7 @@ class DialogLocalService
     InfraManager
     MiqGroup
     Service
+    ServiceAnsiblePlaybook
     Storage
     Template
     Tenant

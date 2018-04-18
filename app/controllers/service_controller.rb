@@ -433,26 +433,20 @@ class ServiceController < ApplicationController
         r[:partial => "layouts/x_gtl"]
       end
     )
-    if %w(dialog_provision ownership tag service_tag).include?(action)
+    if %w(ownership tag service_tag).include?(action)
       presenter.show(:form_buttons_div).remove_paging.hide(:toolbar).show(:paging_div)
-      if action == "dialog_provision" && params[:pressed] == "service_reconfigure"
-        presenter.update(:form_buttons_div, r[:partial => "layouts/x_dialog_buttons",
-                                              :locals  => {:action_url => action_url,
-                                                           :record_id  => @edit[:rec_id]}])
+      if %w(tag service_tag).include?(action)
+        locals = {:action_url => action_url}
+        locals[:multi_record] = true  # need save/cancel buttons on edit screen even tho @record.id is not there
+        locals[:record_id]    = @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]
+      elsif action == "ownership"
+        locals = {:action_url => action_url}
+        locals[:multi_record] = true
+        presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
       else
-        if %w(tag service_tag).include?(action)
-          locals = {:action_url => action_url}
-          locals[:multi_record] = true  # need save/cancel buttons on edit screen even tho @record.id is not there
-          locals[:record_id]    = @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]
-        elsif action == "ownership"
-          locals = {:action_url => action_url}
-          locals[:multi_record] = true
-          presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
-        else
-          locals = {:record_id => @edit[:rec_id], :action_url => action_url}
-        end
-        presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals]) unless action == "ownership"
+        locals = {:record_id => @edit[:rec_id], :action_url => action_url}
       end
+      presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals]) unless action == "ownership"
     elsif (action != "retire") && (record_showing ||
         (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0)))
       # Added so buttons can be turned off even tho div is not being displayed it still pops up Abandon changes box
