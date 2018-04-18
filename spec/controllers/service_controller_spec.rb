@@ -114,6 +114,19 @@ describe ServiceController do
       expect(response.body).to include('Smart Management')
     end
 
+    it 'displays the associated custom attributes for the ansible service template' do
+      EvmSpecHelper.local_miq_server
+      record = FactoryGirl.create(:service_ansible_playbook)
+      record.custom_attributes << FactoryGirl.build(:miq_custom_attribute,
+                                                    :resource_type => "ServiceAnsiblePlaybook",
+                                                    :resource_id   => record.id,
+                                                    :name          => "custom_attribute_1",
+                                                    :value         => 'value1')
+      get :explorer, :params => { :id => "s-#{record.id}" }
+      expect(response.status).to eq(200)
+      expect(response.body).to include('Custom Attributes')
+    end
+
     it 'displays generic objects as a nested list' do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
