@@ -8,6 +8,7 @@ class DialogLocalService
     Host
     InfraManager
     Service
+    ServiceAnsiblePlaybook
     Storage
     Template
     Vm
@@ -103,6 +104,8 @@ class DialogLocalService
     case obj.class.name.demodulize
     when /Template/
       "miq_template"
+    when /ServiceAnsiblePlaybook/
+      "service"
     else
       obj.class.name.demodulize.underscore
     end

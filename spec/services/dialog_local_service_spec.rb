@@ -203,6 +203,24 @@ describe DialogLocalService do
       end
     end
 
+    context "when the object is a ServiceAnsiblePlaybook" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceAnsiblePlaybook, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'service',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/services/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/service/explorer",
+          :cancel_endpoint        => "/service/explorer"
+        )
+      end
+    end
+
     context "when the object is a Storage" do
       let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Storage, :id => 123) }
 
