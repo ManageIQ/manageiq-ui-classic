@@ -286,7 +286,7 @@ class ProviderForemanController < ApplicationController
       @no_checkboxes = true
       case @record.type
       when "ManageIQ::Providers::Foreman::ConfigurationManager"
-        options = {:model => "ConfigurationProfile", :match_via_descendants => 'ConfiguredSystem', :named_scope => [[:with_manager, provider.id]]}
+        options = {:model => "ConfigurationProfile", :named_scope => [[:with_manager, provider.id]]}
         @show_list ? process_show_list(options) : options.merge!(update_options)
         unassigned_profiles = add_unassigned_configuration_profile_record(provider.id)
         options.merge!(unassigned_profiles) unless unassigned_profiles.nil?

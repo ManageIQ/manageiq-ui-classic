@@ -36,7 +36,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
     assigned_configuration_profile_objs =
       count_only_or_objects_filtered(count_only,
                                      ConfigurationProfile.where(:manager_id => object[:id]),
-                                     "name", :match_via_descendants => ConfiguredSystem)
+                                     "name")
     unassigned_configuration_profile_objs =
       fetch_unassigned_configuration_profile_objects(count_only, object[:id])
 
