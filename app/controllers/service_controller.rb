@@ -283,7 +283,7 @@ class ServiceController < ApplicationController
       partial = "service_form"
       header = _("Editing Service \"%{name}\"") % {:name => @service.name}
       action = "service_edit"
-    when "tag"
+    when "tag", 'service_tag'
       partial = "layouts/tagging"
       header = _("Edit Tags for Service")
       action = "service_tag"
@@ -300,7 +300,7 @@ class ServiceController < ApplicationController
     partial, action_url, @right_cell_text = set_right_cell_vars(action) if action # Set partial name, action and cell header
     get_node_info(x_node) if !@edit && !@in_a_form && !params[:display]
     replace_trees = @replace_trees if @replace_trees  # get_node_info might set this
-    type, = parse_nodetype_and_id(x_node)
+    type, _ = parse_nodetype_and_id(x_node)
     record_showing = type && ["Service"].include?(TreeBuilder.get_model_for_prefix(type))
     if x_active_tree == :svcs_tree && !@in_a_form && !@sb[:action]
       if record_showing && @sb[:action].nil?
@@ -324,8 +324,9 @@ class ServiceController < ApplicationController
     end
 
     # Replace right cell divs
-    presenter.update(:main_div,
-      if ["dialog_provision", "ownership", "retire", "service_edit", "tag"].include?(action)
+    presenter.update(
+      :main_div,
+      if %w(dialog_provision ownership retire service_edit tag service_tag).include?(action)
         r[:partial => partial]
       elsif params[:display]
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]
@@ -336,14 +337,14 @@ class ServiceController < ApplicationController
         r[:partial => "layouts/x_gtl"]
       end
     )
-    if %w(dialog_provision ownership tag).include?(action)
+    if %w(dialog_provision ownership tag service_tag).include?(action)
       presenter.show(:form_buttons_div).hide(:pc_div_1, :toolbar).show(:paging_div)
       if action == "dialog_provision"
         presenter.update(:form_buttons_div, r[:partial => "layouts/x_dialog_buttons",
                                               :locals  => {:action_url => action_url,
                                                            :record_id  => @edit[:rec_id]}])
       else
-        if action == "tag"
+        if %w(tag service_tag).include?(action)
           locals = {:action_url => action_url}
           locals[:multi_record] = true    # need save/cancel buttons on edit screen even tho @record.id is not there
           locals[:record_id]    = @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]
