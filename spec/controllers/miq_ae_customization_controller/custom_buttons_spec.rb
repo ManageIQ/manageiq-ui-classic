@@ -98,6 +98,31 @@ describe MiqAeCustomizationController do
       expect(assigns(:sb)[:active_tab]).to eq("ab_advanced_tab")
     end
 
+    it "the request field is cleared when the button type is changed from Playbook to Default" do
+      @sb = {:active_tree => :ab_tree,
+             :trees       => {:ab_tree => {:tree => :ab_tree}},
+             :params      => {:instance_name => 'MiqEvent'}}
+      controller.instance_variable_set(:@sb, @sb)
+      controller.instance_variable_set(:@breadcrumbs, [])
+
+      edit = {:new               => {:button_images  => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
+                                     :instance_name  => 'MiqEvent',
+                                     :attrs          => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                                     :disabled_text  => 'a_disabled_text',
+                                     :object_request => CustomButton::PLAYBOOK_METHOD,
+                                     :button_type    => 'ansible_playbook'},
+              :instance_names    => %w(CustomButton_1 CustomButton_2),
+              :visibility_types  => %w(Type1 Type2),
+              :ansible_playbooks => [],
+              :current           => {}}
+      controller.instance_variable_set(:@edit, edit)
+      session[:edit] = edit
+      session[:resolve] = {}
+      post :automate_button_field_changed, :params => {:id => 'new', :button_type => "default"}
+      @edit = controller.instance_variable_get(:@edit)
+      expect(@edit[:new][:object_request]).to be_nil
+    end
+
     it "uses available expression fields when editing the custom buttons expressions" do
       allow(MiqAeClass).to receive_messages(:find_distinct_instances_across_domains => [double(:name => "foo")])
 
