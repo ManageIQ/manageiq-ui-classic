@@ -195,7 +195,6 @@ module ApplicationController::Filter
     @edit = session[:edit]
     @edit[:selected] = true # Set a flag, this is checked whether to load initial default or clear was clicked
     if id.to_i.zero?
-      @edit[:selected] = false
       clear_selected_search
     else
       load_selected_search(id)
