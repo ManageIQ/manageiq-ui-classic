@@ -205,19 +205,22 @@ function playbookReusableCodeMixin(API, $q, miqService) {
   };
 
   var getRemoveResourcesTypes = function(vm) {
+    var defaultValue = 0;
     if (vm[vm.model].retirement_repository_id === undefined || vm[vm.model].retirement_repository_id === '') {
-      vm[vm.model].retirement_remove_resources = 'yes_without_playbook';
+      defaultValue = 1;
       vm.remove_resources_types = {
         'No': 'no_without_playbook',
         'Yes': 'yes_without_playbook',
       };
     } else {
-      vm[vm.model].retirement_remove_resources = 'no_with_playbook';
       vm.remove_resources_types = {
         'No': 'no_with_playbook',
         'Before Playbook runs': 'pre_with_playbook',
         'After Playbook runs': 'post_with_playbook',
       };
+    }
+    if ( _.includes(_.values(vm.remove_resources_types), vm[vm.model].retirement_remove_resources) === false) {
+      vm[vm.model].retirement_remove_resources = _.values(vm.remove_resources_types)[defaultValue];
     }
   };
 
