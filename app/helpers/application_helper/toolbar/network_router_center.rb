@@ -13,7 +13,9 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
             'pficon pficon-edit fa-lg',
             t = N_('Edit this Router'),
             t,
-            :url_parms => 'main_div'
+            :url_parms => 'main_div',
+            :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options   => {:feature => :update}
           ),
           button(
             :network_router_add_interface,
@@ -39,6 +41,8 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
             t = N_('Delete this Router'),
             t,
             :url_parms => 'main_div',
+            :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options   => {:feature => :delete},
             :confirm   => N_('Warning: This Router and ALL of its components will be removed!'),
           )
         ]
