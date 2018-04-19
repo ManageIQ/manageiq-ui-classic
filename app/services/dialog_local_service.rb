@@ -12,6 +12,7 @@ class DialogLocalService
     InfraManager
     MiqGroup
     Service
+    ServiceAnsiblePlaybook
     Storage
     Template
     Tenant
@@ -129,6 +130,8 @@ class DialogLocalService
       "miq_template"
     when /InfraManager/
       "ext_management_system"
+    when /ServiceAnsiblePlaybook/
+      "service"
     else
       obj.class.name.demodulize.underscore
     end
