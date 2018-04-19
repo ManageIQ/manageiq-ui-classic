@@ -270,7 +270,7 @@ module OpsController::Settings::AnalysisProfiles
             else
               AuditEvent.success(ap_build_created_audit_set(scanitemset))
             end
-            add_flash(_("Analysis Profile \"%{name}\" was saved") % {:name => @edit[:new][:name]})
+            add_flash(_("Analysis Profile \"%{name}\" was saved") % {:name => get_record_display_name(scanitemset)})
             aps_list
             @scan = @edit[:scan_id] = nil
             @edit = session[:edit] = nil  # clean out the saved info
