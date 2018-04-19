@@ -37,15 +37,7 @@ class CloudVolumeSnapshotController < ApplicationController
     binding.pry  
     assert_privileges("cloud_volume_snapshot_delete")
 
-    snapshots = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_volume_snapshot")
-                  find_checked_ids_with_rbac(CloudVolumeSnapshot)
-                else
-                  [find_id_with_rbac(CloudVolumeSnapshot, params[:id])]
-                end
-
-    if snapshots.empty?
-      add_flash(_("No Cloud Volume Snapshots were selected for deletion."), :error)
-    end
+    snapshots = find_records_with_rbac(CloudVolumeSnapshot,checked_or_params)
 
     snapshots_to_delete = []
     snapshots.each do |snapshot_id|
