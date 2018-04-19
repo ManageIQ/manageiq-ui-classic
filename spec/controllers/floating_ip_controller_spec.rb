@@ -32,7 +32,7 @@ describe FloatingIpController do
 
     describe "#delete_floating_ips" do
       let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
-      let(:host)       { FactoryGirl.create(:host) }
+      let(:floating_ips) { FactoryGirl.create(:floating_ip) }
         before do
           EvmSpecHelper.create_guid_miq_server_zone
             login_as admin_user
@@ -42,10 +42,10 @@ describe FloatingIpController do
             controller.instance_variable_set(:@_params, {:id=> host.id, :pressed => 'host_NECO'})
             end
 
-          it "testing " do
-            controller.send(:delete_floating_ips)
+          it "delete floating ips" do
             expected_host_id = controller.instance_variable_get(:@prov_id)
             expect(expected_host_id).to eq(host.id)
+            controller.send(:delete_floating_ips)
           end
     end
 
