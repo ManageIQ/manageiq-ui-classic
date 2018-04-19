@@ -202,24 +202,25 @@ describe CloudTenantController do
     end
 
     describe "#delete_cloud_tentants" do
-          let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
-          let(:host)       { FactoryGirl.create(:host) }
-          before do
-              EvmSpecHelper.create_guid_miq_server_zone
+      let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+      let(:host)       { FactoryGirl.create(:host) }
+      before do
+        EvmSpecHelper.create_guid_miq_server_zone
+          login_as admin_user
+          allow(User).to receive(:current_user).and_return(admin_user)
+          allow(controller).to receive(:assert_privileges)
+          allow(controller).to receive(:performed?)
+          controller.instance_variable_set(:@_params, {:id=> host.id, :pressed => 'host_NECO'})
+        end
 
-              login_as admin_user
-              allow(User).to receive(:current_user).and_return(admin_user)
-              allow(controller).to receive(:assert_privileges)
-              allow(controller).to receive(:performed?)
-              controller.instance_variable_set(:@_params, {:id=> host.id, :pressed => 'host_NECO'})
-            end
-
-          it "testing_delete_cloud_tentants" do
-            controller.instance_variable_set(:@lastaction, "show_list")
-            controller.send(:delete_cloud_tenants)
-            expected_host_id = controller.instance_variable_get(:@prov_id)
-            expect(expected_host_id).to eq(host.id)
-          end
+        it "delete_cloud_tentants" do
+          ems = FactoryGirl.create(:ems_openstack)
+          ct = FactoryGirl.create(:cloud_tenant, :ext_management_system => ems)
+          controller.instance_variable_set(:@_params, {:id => ct.id})
+          controller.send(:delete_cloud_tenants)
+          expected_host_id = controller.instance_variable_get(:@prov_id)
+          expect(expected_host_id).to eq(ct.id)
+        end
       end
 
   end

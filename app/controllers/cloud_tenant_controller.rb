@@ -183,18 +183,10 @@ class CloudTenantController < ApplicationController
   end
 
   def delete_cloud_tenants
-    binding.pry
+    #binding.pry
     assert_privileges("cloud_tenant_delete")
 
-    tenants = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_tenant")
-                find_records_with_rbac(CloudTenant, find_checked_items)
-              else
-                [find_record_with_rbac(CloudTenant, params[:id])]
-              end
-
-    if tenants.empty?
-      add_flash(_("No Cloud Tenants were selected for deletion."), :error)
-    end
+    tenants = find_records_with_rbac(CloudTenant, checked_or_params)
 
     tenants_to_delete = []
     tenants.each do |tenant|
@@ -258,6 +250,8 @@ class CloudTenantController < ApplicationController
           :userid       => session[:userid]
         }
         AuditEvent.success(audit)
+        #binding.pry
+
         tenant.delete_cloud_tenant_queue(session[:userid])
       end
       add_flash(n_("Delete initiated for %{number} Cloud Tenant.",
