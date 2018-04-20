@@ -208,16 +208,16 @@ describe OrchestrationStackController do
       it "retires the orchestration stack now" do
         record = FactoryGirl.create(:orchestration_stack_cloud)
         session[:orchestration_stack_lastaction] = 'show_list'
+        expect(controller).to receive(:render).at_least(:once)
         post :button, :params => {:miq_grid_checks => record.id, :pressed => "orchestration_stack_retire_now"}
-        expect(response.status).to eq(200)
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
 
       it "retires the orchestration stack now when called from the summary page" do
         record = FactoryGirl.create(:orchestration_stack_cloud)
         session[:orchestration_stack_lastaction] = 'show'
+        expect(controller).to receive(:render).at_least(:once)
         post :button, :params => {:id => record.id, :pressed => "orchestration_stack_retire_now"}
-        expect(response.status).to eq(200)
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
     end
