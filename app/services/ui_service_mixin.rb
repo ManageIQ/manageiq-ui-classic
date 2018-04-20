@@ -23,6 +23,7 @@ module UiServiceMixin
       :MiddlewareServerGroup   => {:type => "glyph", :class => 'pficon pficon-server-group'},
       :NetworkRouter           => {:type => "glyph", :class => 'pficon pficon-route'},
       :PhysicalRack            => {:type => "glyph", :class => 'pficon pficon-enterprise'},
+      :PhysicalSwitch          => {:type => "glyph", :class => 'pficon pficon-container-node'},
       :PhysicalServer          => {:type => "glyph", :class => 'pficon pficon-server-group'},
       :SecurityGroup           => {:type => "glyph", :class => 'pficon pficon-cloud-security'},
       :Tag                     => {:type => "glyph", :class => 'fa fa-tag'},

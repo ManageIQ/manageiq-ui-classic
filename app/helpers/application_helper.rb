@@ -1371,6 +1371,7 @@ module ApplicationHelper
                         offline
                         orchestration_stack
                         physical_infra_topology
+                        physical_switch
                         physical_server
                         persistent_volume
                         policy
@@ -1464,6 +1465,7 @@ module ApplicationHelper
           network_router
           offline
           orchestration_stack
+          physical_switch
           physical_server
           persistent_volume
           physical_server
