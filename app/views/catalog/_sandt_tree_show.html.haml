@@ -46,13 +46,13 @@
             %label.col-md-3.control-label
               = _('Item Type')
             .col-md-9
-              = h(ServiceTemplate::CATALOG_ITEM_TYPES[@record.prov_type])
+              = h(_(ServiceTemplate::CATALOG_ITEM_TYPES[@record.prov_type]))
         - if @record.prov_type == "generic"
           .form-group
             %label.col-md-3.control-label
               = _('Subtype')
             .col-md-9
-              = h(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@record[:generic_subtype]] || "Custom")
+              = h(_(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@record[:generic_subtype]]) || "Custom")
         - if @record.prov_type == "generic_orchestration"
           .form-group
             %label.col-md-3.control-label
