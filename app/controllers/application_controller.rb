@@ -1035,8 +1035,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_generic_rbac
-    pass = check_generic_rbac
+  def handle_generic_rbac(result = nil)
+    pass = result ? result : check_generic_rbac
     unless pass
       if request.xml_http_request?
         javascript_redirect :controller => 'dashboard', :action => 'auth_error'
