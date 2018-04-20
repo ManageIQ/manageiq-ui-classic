@@ -1599,6 +1599,7 @@ function chartData(type, data, data2) {
   // set formating function for tooltip and y tick labels
   if (validateChartAxis(data.axis)) {
     var format = data.axis.y.tick.format;
+    var titleFormat = _.cloneDeep(format);
     var max = _.max(getChartColumnDataValues(data.data.columns));
     var min = _.min(getChartColumnDataValues(data.data.columns));
     var maxShowed = getChartFormatedValue(format, max);
@@ -1619,7 +1620,6 @@ function chartData(type, data, data2) {
       onclick: recalculateChartYAxisLabels,
     };
 
-    var titleFormat = _.cloneDeep(format);
     data.tooltip.format.value = function(value, _ratio, _id) {
       var formatFunction = ManageIQ.charts.formatters[titleFormat.function].c3(titleFormat.options);
       return formatFunction(value);
