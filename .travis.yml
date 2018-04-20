@@ -1,7 +1,7 @@
 language: ruby
 rvm:
-- '2.3.1'
-- '2.4.2'
+- 2.3.6
+- 2.4.2
 sudo: false
 cache:
   bundler: true
@@ -18,13 +18,13 @@ env:
   - TEST_SUITE=spec:jest
 matrix:
   exclude:
-  - rvm: '2.4.2'
+  - rvm: 2.4.2
     env: TEST_SUITE=spec:javascript
-  - rvm: '2.4.2'
+  - rvm: 2.4.2
     env: TEST_SUITE=spec:compile
-  - rvm: '2.4.2'
+  - rvm: 2.4.2
     env: TEST_SUITE=spec:jest
-bundler_args: --no-deployment
+bundler_args: "--no-deployment"
 before_install: source tools/ci/before_install.sh
 before_script: bundle exec rake $TEST_SUITE:setup
 script: bundle exec rake $TEST_SUITE
