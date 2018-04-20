@@ -36,4 +36,24 @@ describe "shared/views/ems_common/show" do
       end
     end
   end
+
+  context "when display is 'cloud_volumes'" do
+    before do
+      allow(controller).to receive(:controller_name).and_return("ems_storage")
+      assign(:record, ems)
+      assign(:ems, ems)
+      assign(:display, display)
+      assign(:showtype, showtype)
+      allow(view).to receive(:render_gtl_outer)
+    end
+
+    let(:showtype) { "main" }
+    let(:display) {'cloud_volumes'}
+    let(:ems) { FactoryGirl.create(:ems_storage, :hostname => '1.1.1.1') }
+
+    it "should show render gtl for list of cloud_volumes" do
+      render
+      expect(view).to render_template(:partial => 'layouts/gtl', :locals => {:action_url => "show/#{ems.id}"})
+    end
+  end
 end
