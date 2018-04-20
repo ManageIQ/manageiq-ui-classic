@@ -47,7 +47,7 @@ class EmsStorageController < ApplicationController
   end
 
   def init_show(model_class = self.class.model)
-    @record = identify_record(params[:id], model_class)
+    @ems = @record = identify_record(params[:id], model_class)
 
     return true unless type_feature_role_check
 
