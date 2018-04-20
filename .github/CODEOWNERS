@@ -31,3 +31,6 @@ app/helpers/application_helper/toolbar/basic.rb   @martinpovolny
 app/presenters/tree_builder.rb                    @martinpovolny
 app/presenters/menu/                              @martinpovolny
 app/helpers/textual_*rb                           @martinpovolny
+
+# decorators
+app/decorators/                                   @skateman
