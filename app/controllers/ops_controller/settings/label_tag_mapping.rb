@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OpsController::Settings::LabelTagMapping
   extend ActiveSupport::Concern
 
@@ -13,6 +15,7 @@ module OpsController::Settings::LabelTagMapping
   MAPPABLE_ENTITIES = {
     nil                   => nil, # map all entities
     "Vm"                  => "Amazon",
+    "VmAzure"             => "Azure",
     "Image"               => "Amazon",
     "ContainerProject"    => "Kubernetes",
     "ContainerRoute"      => "Kubernetes",
@@ -79,7 +82,7 @@ module OpsController::Settings::LabelTagMapping
     if entity
       provider = MAPPABLE_ENTITIES[entity]
       model = case entity
-              when 'Vm'
+              when 'Vm', 'VmAzure'
                 "ManageIQ::Providers::#{provider}::CloudManager::Vm"
               when 'Image'
                 "ManageIQ::Providers::#{provider}::CloudManager::Template"
@@ -172,8 +175,8 @@ module OpsController::Settings::LabelTagMapping
       provider = ALL_PREFIX
       entity_str = ''
     else
-      provider = MAPPABLE_ENTITIES[entity].downcase
-      entity_str = entity.underscore
+      provider = MAPPABLE_ENTITIES[entity].downcase.inquiry
+      entity_str = (provider.azure? && entity.sub(/Azure$/, '') || entity).underscore
     end
 
     cat_name = "#{provider}:#{entity_str}:" + Classification.sanitize_name(label_name.tr("/", ":"))
@@ -192,8 +195,9 @@ module OpsController::Settings::LabelTagMapping
                                                    :description  => cat_description,
                                                    :single_value => true,
                                                    :read_only    => true)
-        ContainerLabelTagMapping.create!(:labeled_resource_type => entity, :label_name => label_name,
-                                         :tag => category.tag)
+        ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
+                                         :label_name            => label_name,
+                                         :tag                   => category.tag)
       end
     rescue StandardError => bang
       add_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
