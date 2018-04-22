@@ -111,7 +111,7 @@
         %select{'name'                        => 'cloud_network_id',
                 'ng-model'                    => 'vm.networkRouterModel.cloud_network_id',
                 'ng-options'                  => 'network.id as network.name for network in vm.available_networks',
-                'ng-change'                   => 'vm.filterCloudNetworkChanged(vm.networkRouterModel.cloud_network_id)',
+                'ng-change'                   => 'vm.getCloudSubnetsByNetworkID(vm.networkRouterModel.cloud_network_id)',
                 'pf-select'                   => true,
                 'ng-selected'                 => 'vm.networkRouterModel.cloud_network_id',
                 'selectpicker-for-select-tag' => ''}
