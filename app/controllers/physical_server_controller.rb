@@ -44,7 +44,7 @@ class PhysicalServerController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties networks relationships),
+      %i(properties management_networks relationships),
       %i(power_management firmware_compliance firmware_details asset_details smart_management),
     ]
   end
