@@ -7,3 +7,8 @@
       = render :partial => 'layouts/textual_groups_generic'
     - when "timeline"
       = render :partial => "layouts/tl_show_async"
+
+  %physical-switch-toolbar#physical_switch_show_form{'physical_switch-id' => @record.id}
+
+:javascript
+  miq_bootstrap('#physical_switch_show_form');
