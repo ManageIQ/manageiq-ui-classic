@@ -978,7 +978,7 @@ img.tiny {
   width: 180px;
 }
 
-.sidebar-disabled {
+.sidebar-disabled, .treeview.disabled {
   pointer-events: none;
   opacity: 0.4;
 }
@@ -1000,7 +1000,6 @@ img.tiny {
 #exp_editor_div .form-group{
   margin-left: 0
 }
- 
 
 /// ===================================================================
 /// end misc styling
