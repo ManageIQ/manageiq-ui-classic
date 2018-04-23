@@ -1615,6 +1615,7 @@ function chartData(type, data, data2) {
       format = recalculated.format;
     }
     data.axis.y.tick.format = ManageIQ.charts.formatters[format.function].c3(format.options);
+    data.miq.format = format;
     data.legend.item = {
       onclick: recalculateChartYAxisLabels,
     };
