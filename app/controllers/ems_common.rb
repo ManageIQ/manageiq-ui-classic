@@ -166,12 +166,7 @@ module EmsCommon
   end
 
   def timeline_pressed
-    @showtype = "timeline"
     @record = find_record_with_rbac(model, params[:id])
-    @timeline = @timeline_filter = true
-    @lastaction = "show_timeline"
-    tl_build_timeline                       # Create the timeline report
-    drop_breadcrumb(:name => _("Timelines"), :url => show_link(@record, :refresh => "n", :display => "timeline"))
     session[:tl_record_id] = @record.id
     javascript_redirect polymorphic_path(@record, :display => 'timeline')
   end
