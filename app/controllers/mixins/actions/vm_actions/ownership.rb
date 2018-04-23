@@ -97,7 +97,7 @@ module Mixins
 
           @groups = {} # Create new entries hash (2nd pulldown)
           Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
-          @edit[:object_ids] = ownership_ids
+          @edit[:object_ids] = @ownershipitems
           @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
           @view.table = ReportFormatter::Converter.records2table(@ownershipitems, @view.cols + ['id'])
           session[:edit] = @edit
@@ -134,7 +134,7 @@ module Mixins
 
         def load_user_group_items(ownership_ids, klass)
           @ownershipitems ||= filter_ownership_items(klass, ownership_ids)
-          if ownership_ids.length > 1
+          if @ownershipitems.length > 1
             @user = @group = 'dont-change'
           else
             record = @ownershipitems.first

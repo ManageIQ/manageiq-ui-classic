@@ -3,6 +3,15 @@ describe VmCloudController do
     FactoryGirl.create(:vm_openstack,
                        :ext_management_system => FactoryGirl.create(:ems_openstack))
   end
+  let(:vm_openstack_tmd) do
+    FactoryGirl.create(:vm_openstack,
+                       :ext_management_system => FactoryGirl.create(:ems_openstack, :tenant_mapping_enabled => false))
+  end
+  let(:vm_openstack_tme) do
+    FactoryGirl.create(:vm_openstack,
+                       :ext_management_system => FactoryGirl.create(:ems_openstack, :tenant_mapping_enabled => true))
+  end
+
   before(:each) do
     stub_user(:features => :all)
     session[:settings] = {:views => {:treesize => 20}}
@@ -148,6 +157,21 @@ describe VmCloudController do
       post :x_button, :params => { :pressed => 'instance_ownership', "check_#{vm_openstack.id}" => "1"}
       expect(response.status).to eq(200)
       expect(response).to render_template(:partial => 'shared/views/_ownership')
+    end
+
+    it 'renders instance ownership gtl correctly' do
+      post :explorer
+      expect(response.status).to eq(200)
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name                     => 'ManageIQ::Providers::CloudManager::Vm',
+        :selected_records               => [vm_openstack_tmd.id],
+        :report_data_additional_options => {
+          :model      => 'ManageIQ::Providers::CloudManager::Vm',
+          :lastaction => 'show_list',
+        }
+      )
+      post :x_button, :params => {:pressed => 'instance_ownership', "check_#{vm_openstack_tmd.id}" => "1", "check_#{vm_openstack_tme.id}" => "1"}
+      expect(response.status).to eq(200)
     end
 
     context "skip or drop breadcrumb" do

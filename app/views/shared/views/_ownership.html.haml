@@ -32,7 +32,8 @@
         = _('Select a Group:')
       .col-md-8
         - if @ownershipitems.length > 1
-          - opts = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No User Group')}>", '']] + @groups.sort
+          - opts = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No User Group')}>", '']]
+          - user_group = ''
         - else
           - user_group = MiqGroup.find_by(:id => @group).tenant_group? ? @group : ''
           - opts =  [["<#{_('No User Group')}>", user_group]]
