@@ -22,3 +22,8 @@ else
   puts "  Clone it from GitHub or symlink it from local source."
   exit 1
 end
+
+# Fixes scrutinizer issues caused by a too new rubocop version
+if ENV['SCRUTINIZER']
+  gem "rubocop", "~>0.52.1"
+end
