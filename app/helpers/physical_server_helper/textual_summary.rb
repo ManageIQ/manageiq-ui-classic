@@ -63,19 +63,19 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_product_name
-    {:label => _("Product Name"), :value => @record.product_name }
+    {:label => _("Product Name"), :value => @record.asset_detail['product_name'] }
   end
 
   def textual_manufacturer
-    {:label => _("Manufacturer"), :value => @record.manufacturer }
+    {:label => _("Manufacturer"), :value => @record.asset_detail['manufacturer'] }
   end
 
   def textual_machine_type
-    {:label => _("Machine Type"), :value => @record.machine_type }
+    {:label => _("Machine Type"), :value => @record.asset_detail['machine_type'] }
   end
 
   def textual_serial_number
-    {:label => _("Serial Number"), :value => @record.serial_number }
+    {:label => _("Serial Number"), :value => @record.asset_detail['serial_number'] }
   end
 
   def textual_ems_ref
@@ -83,7 +83,7 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_model
-    {:label => _("Model"), :value => @record.model}
+    {:label => _("Model"), :value => @record.asset_detail['model']}
   end
 
   def textual_capacity
