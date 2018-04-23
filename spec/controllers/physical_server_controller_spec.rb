@@ -62,9 +62,18 @@ describe PhysicalServerController do
       end
     end
 
-    context "display=guest_devices" do
+    context "display=network_devices" do
       it do
-        post :show, :params => {:id => @physical_server.id, :display => "guest_devices"}
+        post :show, :params => {:id => @physical_server.id, :display => "network_devices"}
+        expect(response.status).to eq 200
+        is_expected.to render_template(:partial => "layouts/_gtl")
+        expect(controller.send(:flash_errors?)).to be_falsey
+      end
+    end
+
+    context "display=storage_devices" do
+      it do
+        post :show, :params => {:id => @physical_server.id, :display => "storage_devices"}
         expect(response.status).to eq 200
         is_expected.to render_template(:partial => "layouts/_gtl")
         expect(controller.send(:flash_errors?)).to be_falsey
