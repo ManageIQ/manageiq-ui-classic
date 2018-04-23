@@ -223,5 +223,5 @@
             %td= r.title
 
 :javascript
-  ManageIQ.angular.app.value('timeProfileFormId', '#{@timeprofile.id || "new"}');
+  ManageIQ.angular.app.value('timeProfileFormId', '#{params[:id] || "new"}');
   miq_bootstrap('#form_div');
