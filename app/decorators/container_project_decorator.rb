@@ -3,10 +3,6 @@ class ContainerProjectDecorator < MiqDecorator
     'pficon pficon-project'
   end
 
-  def self.fileicon
-    '100/container_project.png'
-  end
-
   def single_quad
     {
       :fonticon => fonticon

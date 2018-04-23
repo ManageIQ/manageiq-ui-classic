@@ -3,9 +3,5 @@ module ManageIQ::Providers
     def self.fonticon
       "pficon pficon-repository"
     end
-
-    def self.fileicon
-      nil
-    end
   end
 end

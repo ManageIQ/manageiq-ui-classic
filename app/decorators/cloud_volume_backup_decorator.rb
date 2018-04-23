@@ -3,10 +3,6 @@ class CloudVolumeBackupDecorator < MiqDecorator
     'pficon pficon-volume'
   end
 
-  def self.fileicon
-    '100/cloud_volume.png'
-  end
-
   def single_quad
     {
       :fonticon => fonticon

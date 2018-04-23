@@ -3,10 +3,6 @@ class CloudNetworkDecorator < MiqDecorator
     'ff ff-cloud-network'
   end
 
-  def self.fileicon
-    '100/cloud_network.png'
-  end
-
   def single_quad
     {
       :fonticon => fonticon
