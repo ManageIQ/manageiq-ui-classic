@@ -169,8 +169,6 @@ module TextualSummaryHelper
 
     if icon || image
       {:icon => icon, :image => image}
-    elsif klass <= AdvancedSetting
-      {:image => "100/advancedsetting.png"}
     elsif klass <= MiqTemplate
       {:image => "100/vm.png"}
     else
