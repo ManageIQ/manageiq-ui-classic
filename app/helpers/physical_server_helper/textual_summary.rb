@@ -13,7 +13,7 @@ module PhysicalServerHelper::TextualSummary
     )
   end
 
-  def textual_group_networks
+  def textual_group_management_networks
     TextualGroup.new(_("Management Networks"), %i(mac ipv4 ipv6))
   end
 
