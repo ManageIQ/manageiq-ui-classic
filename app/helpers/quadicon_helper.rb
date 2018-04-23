@@ -68,6 +68,8 @@ module QuadiconHelper
       {:fonticon => 'pficon pficon-off', :background => '#CC0000'}
     when 'off'
       {:fonticon => 'pficon pficon-off', :background => '#CC0000'}
+    when 'template'
+      {:fonticon => 'ff ff-template', :background => '#336699'}
     else
       {}
     end

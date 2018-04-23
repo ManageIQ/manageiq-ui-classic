@@ -14,10 +14,8 @@ class MiqTemplateDecorator < MiqDecorator
         :tooltip  => os_image_name.humanize.downcase
       },
       :top_right    => {
-        :fonticon   => fonticon,
-        :background => '#336699',
-        :tooltip    => normalized_state
-      },
+        :tooltip => normalized_state
+      }.merge(QuadiconHelper.machine_state(normalized_state)),
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => type
