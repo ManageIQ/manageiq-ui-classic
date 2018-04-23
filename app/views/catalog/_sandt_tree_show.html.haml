@@ -52,7 +52,7 @@
             %label.col-md-3.control-label
               = _('Subtype')
             .col-md-9
-              = h(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@record[:generic_subtype]])
+              = h(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@record[:generic_subtype]] || "Custom")
         - if @record.prov_type == "generic_orchestration"
           .form-group
             %label.col-md-3.control-label
