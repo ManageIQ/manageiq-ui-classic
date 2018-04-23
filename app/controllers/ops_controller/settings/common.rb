@@ -1109,8 +1109,9 @@ module OpsController::Settings::Common
     nodes = nodetype.downcase.split("-")
     case nodes[0]
     when "root"
-      @right_cell_text = _("Settings Region \"%{name}\"") %
-                         {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]"}
+      @right_cell_text = _("%{product} Region \"%{name}\"") %
+                         {:name    => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
+                          :product => Vmdb::Appliance.PRODUCT_NAME}
       case @sb[:active_tab]
       when "settings_details"
         settings_set_view_vars

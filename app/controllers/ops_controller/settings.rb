@@ -135,8 +135,9 @@ module OpsController::Settings
 
   def region_edit
     settings_set_view_vars
-    @right_cell_text = _("Settings Region \"%{name}\"") %
-                       {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]"}
+    @right_cell_text = _("%{product} Region \"%{name}\"") %
+                       {:name    => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
+                        :product => Vmdb::Appliance.PRODUCT_NAME}
     case params[:button]
     when "cancel"
       session[:edit] = @edit = nil
