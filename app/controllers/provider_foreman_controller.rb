@@ -226,11 +226,11 @@ class ProviderForemanController < ApplicationController
   end
 
   def build_configuration_manager_providers_tree(_type)
-    TreeBuilderConfigurationManager.new(:configuration_manager_providers, :configuration_manager_providers_tree, @sb)
+    TreeBuilderConfigurationManager.new(:configuration_manager_providers_tree, :configuration_manager_providers, @sb)
   end
 
   def build_configuration_manager_cs_filter_tree(_type)
-    TreeBuilderConfigurationManagerConfiguredSystems.new(:configuration_manager_cs_filter, :configuration_manager_cs_filter_tree, @sb)
+    TreeBuilderConfigurationManagerConfiguredSystems.new(:configuration_manager_cs_filter_tree, :configuration_manager_cs_filter, @sb)
   end
 
   def get_node_info(treenodeid, show_list = true)
