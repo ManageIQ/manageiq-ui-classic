@@ -534,7 +534,7 @@ class ApplicationHelper::ToolbarChooser
             guest_device
             generic_object_definition).include?(@layout)
 
-        return 'show_list' == @lastaction ? "#{@layout.pluralize}_center_tb" : "#{@layout}_center_tb"
+        return @lastaction == 'show_list' ? "#{@layout.pluralize}_center_tb" : "#{@layout}_center_tb"
 
       elsif @layout == "configuration" && @tabform == "ui_4"
         return "time_profiles_center_tb"
@@ -543,11 +543,7 @@ class ApplicationHelper::ToolbarChooser
       elsif @layout == "miq_policy_logs" || @layout == "miq_ae_logs"
         return "logs_center_tb"
       elsif @layout.to_s.starts_with?("miq_request_")
-        if ["show_list"].include?(@lastaction)
-          return "miq_requests_center_tb"
-        else
-          return "miq_request_center_tb"
-        end
+        return @lastaction == 'show_list' ? 'miq_requests_center_tb' : 'miq_request_center_tb'
       elsif %w(my_tasks all_tasks).include?(@layout)
         return "tasks_center_tb"
       end
