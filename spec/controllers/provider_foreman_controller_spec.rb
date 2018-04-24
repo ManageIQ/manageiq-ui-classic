@@ -14,6 +14,9 @@ describe ProviderForemanController do
     @config_profile2 = ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile.create(:name        => "testprofile2",
                                                                                                        :description => "testprofile2",
                                                                                                        :manager_id  => @config_mgr.id)
+    @config_profile3 = ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile.create(:name        => "testprofile_empty",
+                                                                                                       :description => "testprofile_empty",
+                                                                                                       :manager_id  => @config_mgr.id)
     @configured_system = ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem.create(:hostname                 => "test_configured_system",
                                                                                                      :configuration_profile_id => @config_profile.id,
                                                                                                      :manager_id               => @config_mgr.id)
@@ -423,6 +426,20 @@ describe ProviderForemanController do
       expect(view.table.data[0].data).to include('hostname' => "configured_system_unprovisioned2")
     end
 
+    it "renders tree_select for a ConfigurationManagerForeman node that contains an profile with no configured systems" do
+      ems_id = ems_key_for_provider(@provider)
+      controller.instance_variable_set(:@in_report_data, true)
+      controller.instance_variable_set(:@_params, :id => ems_id)
+      controller.send(:tree_select)
+      view = controller.instance_variable_get(:@view)
+      gtl_init_data = controller.init_report_data('reportDataController')
+      expect(gtl_init_data[:data][:model_name]).to eq("manageiq/providers/configuration_managers")
+      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
+      expect(gtl_init_data[:data][:parentId]).to eq(ems_id)
+      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
+      expect(view.table.data[2].data).to include('description' => "testprofile_empty")
+    end
+
     it "calls get_view with the associated dbname for the Configuration Management Providers accordion" do
       stub_user(:features => :all)
       allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_providers_tree)
@@ -524,7 +541,7 @@ describe ProviderForemanController do
       login_as user_with_feature %w(provider_foreman_refresh_provider provider_foreman_edit_provider provider_foreman_delete_provider)
 
       allow(controller).to receive(:check_privileges)
-      allow(controller).to receive(:process_show_list)
+      #allow(controller).to receive(:process_show_list)
       allow(controller).to receive(:add_unassigned_configuration_profile_record)
       allow(controller).to receive(:replace_explorer_trees)
       allow(controller).to receive(:build_listnav_search_list)
@@ -538,6 +555,15 @@ describe ProviderForemanController do
       post :tree_select, :params => { :id => key }
       expect(response.status).to eq(200)
       expect(response.body).not_to include('<div class=\"hidden btn-group dropdown\"><button data-explorer=\"true\" title=\"Configuration\"')
+    end
+
+    it "renders tree_select for a ConfigurationManagerForeman node that contains an profile with no configured systems" do
+      controller.send(:build_configuration_manager_providers_tree, :providers)
+      id = ems_id_for_provider(@provider)
+      key = ems_key_for_provider(@provider)
+      post :tree_select, :params => { :id => key }
+      expect(response.status).to eq(200)
+      expect(response.body).to include('testprofile_empty')
     end
   end
 
