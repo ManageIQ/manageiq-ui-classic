@@ -1373,9 +1373,25 @@ class ApplicationController < ActionController::Base
 
       return (
         if ::Settings.server.case_sensitive_name_search
-          ["#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt]
+          if @search_text =~ /^\d+$/
+            [
+              "#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`' OR #{view.db_class.table_name}.id = ?",
+              stxt,
+              @search_text
+            ]
+          else
+            ["#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt]
+          end
         else
-          ["lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase]
+          if @search_text =~ /^\d+$/
+            [
+              "lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`' OR #{view.db_class.table_name}.id = ?",
+              stxt.downcase,
+              @search_text
+            ]
+          else
+            ["lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase]
+          end
         end
       )
     end

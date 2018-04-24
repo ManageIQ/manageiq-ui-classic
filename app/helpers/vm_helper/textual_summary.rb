@@ -19,12 +19,11 @@ module VmHelper::TextualSummary
   #
   # Groups
   #
-
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
       %i(
-        name region server description hostname ipaddress mac_address custom_1 container host_platform
+        id name region server description hostname ipaddress mac_address custom_1 container host_platform
         tools_status load_balancer_health_check_state osinfo devices cpu_affinity snapshots
         advanced_settings resources guid storage_profile
       )
@@ -101,6 +100,10 @@ module VmHelper::TextualSummary
   #
   # Items
   #
+  def textual_id
+    { :label => _("ID"), :value => @record.id }
+  end
+
   def textual_hostname
     hostnames = @record.hostnames
     {:label => n_("Hostname", "Hostnames", hostnames.size), :value => hostnames.join(", ")}
