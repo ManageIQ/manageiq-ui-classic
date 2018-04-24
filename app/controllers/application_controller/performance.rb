@@ -867,6 +867,7 @@ module ApplicationController::Performance
                   end
 
     chart_layout = perf_get_chart_layout(layout_name, @perf_options[:model])
+    perf_filter_charts(chart_layout, rpt)
 
     if @perf_options[:index]
       chart_index = @perf_options[:index].to_i
@@ -1295,6 +1296,7 @@ module ApplicationController::Performance
     case perf_options[:typ]
     when "Hourly"
       chart_layout = perf_get_chart_layout("hourly_perf_charts", model_title)
+      perf_filter_charts(chart_layout, rpt)
       if perf_options[:index]
         chart = chart_layout[perf_options[:index].to_i]
         perf_remove_chart_cols(chart)
@@ -1324,6 +1326,7 @@ module ApplicationController::Performance
       end
     when "realtime"
       chart_layout = perf_get_chart_layout("realtime_perf_charts", model_title)
+      perf_filter_charts(chart_layout, rpt)
       if perf_options[:index]
         chart = chart_layout[perf_options[:index].to_i]
         perf_remove_chart_cols(chart)
@@ -1352,6 +1355,7 @@ module ApplicationController::Performance
       end
     when "Daily"
       chart_layout = perf_get_chart_layout("daily_perf_charts", model_title)
+      perf_filter_charts(chart_layout, rpt)
       if perf_options[:index]
         chart = chart_layout[perf_options[:index].to_i]
         if chart
@@ -1565,6 +1569,19 @@ module ApplicationController::Performance
       end
     end
     new_rpt
+  end
+
+  # Deletes memory chart from chart_layout, if it is a chart for Amazon Availability Zone
+  # rpt.where_clause[0] should be query string
+  # rpt.where_clause[1] should be model name string
+  # rpt.where_clause[2] should be id
+  def perf_filter_charts(chart_layout, rpt)
+    return unless rpt&.where_clause
+    model = rpt.where_clause[1].constantize
+    id = rpt.where_clause[2]
+    if model.find(id).type == "ManageIQ::Providers::Amazon::CloudManager::AvailabilityZone"
+      chart_layout.reject! { |chart| chart[:title].include?("Memory") }
+    end
   end
 
   def process_chart_trends(chart, rpt, options)
