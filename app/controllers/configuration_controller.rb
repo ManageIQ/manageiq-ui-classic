@@ -321,17 +321,7 @@ class ConfigurationController < ApplicationController
     assert_privileges("tp_copy")
     session[:set_copy] = "copy"
     @in_a_form = true
-    timeprofile = TimeProfile.find(params[:id])
-    @timeprofile = TimeProfile.new
-    @timeprofile.description = _("Copy of %{description}") % {:description => timeprofile.description}
-    @timeprofile.profile_type = "user"
-    @timeprofile.profile_key = timeprofile.profile_key
-    unless timeprofile.profile.nil?
-      @timeprofile.profile ||= {}
-      @timeprofile.profile[:days] = timeprofile.profile[:days] if timeprofile.profile[:days]
-      @timeprofile.profile[:hours] = timeprofile.profile[:hours] if timeprofile.profile[:hours]
-      @timeprofile.profile[:tz] = timeprofile.profile[:tz] if timeprofile.profile[:tz]
-    end
+    @timeprofile = TimeProfile.find(params[:id])
     set_form_vars
     session[:changed] = false
     drop_breadcrumb(:name => _("Adding copy of '%{description}'") % {:description => @timeprofile.description},
