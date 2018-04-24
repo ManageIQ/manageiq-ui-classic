@@ -59,9 +59,9 @@
         .col-md-4
           %p.form-control-static
             - if @record.try(:id)
-              = h(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@edit[:new][:generic_subtype]])
+              = h(_(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@edit[:new][:generic_subtype]]))
             - else
-              - available_subtypes = ServiceTemplate::GENERIC_ITEM_SUBTYPES.invert.to_a.sort_by { |a| a.first.downcase }
+              - available_subtypes = ServiceTemplate::GENERIC_ITEM_SUBTYPES.map { |k, v| [_(v), k]} .sort_by { |a| a.first.downcase }
               = select_tag('generic_subtype',
                             options_for_select(available_subtypes, @edit[:new][:generic_subtype]),
                             "data-miq_sparkle_on" => true,
