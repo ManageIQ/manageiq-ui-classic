@@ -24,14 +24,17 @@ module Mixins
       flash_to_session(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
         {:model => ui_lookup(:model => model.to_s), :name => update_ems.name}
       )
-      url_args = {:action    => @lastaction == 'show_dashboard' ? 'show' : @lastaction,
-                 :id        => update_ems.id,
-                 :display   => session[:ems_display],
-                 :record    => update_ems}
+      url_args = {
+        :action  => @lastaction == 'show_dashboard' ? 'show' : @lastaction,
+        :id      => update_ems.id,
+        :display => session[:ems_display],
+        :record  => update_ems
+      }
 
-      begin # if the target URL does not exist, redirect to 'show'
+      begin
         javascript_redirect(javascript_process_redirect_args(url_args))
       rescue ActionController::UrlGenerationError
+        # if the target URL does not exist, redirect to 'show'
         url_args[:action] = 'show'
         javascript_redirect(javascript_process_redirect_args(url_args))
       end

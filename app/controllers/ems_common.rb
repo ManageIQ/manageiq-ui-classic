@@ -168,7 +168,7 @@ module EmsCommon
   def timeline_pressed
     @record = find_record_with_rbac(model, params[:id])
     session[:tl_record_id] = @record.id
-    javascript_redirect polymorphic_path(@record, :display => 'timeline')
+    javascript_redirect(polymorphic_path(@record, :display => 'timeline'))
   end
 
   def performance_pressed
@@ -177,14 +177,14 @@ module EmsCommon
     drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
                     :url  => show_link(@record, :refresh => "n", :display => "performance"))
     perf_gen_init_options # Intialize options, charts are generated async
-    javascript_redirect polymorphic_path(@record, :display => "performance")
+    javascript_redirect(polymorphic_path(@record, :display => "performance"))
   end
 
   def ad_hoc_metrics_pressed
     @showtype = "ad_hoc_metrics"
     @record = find_record_with_rbac(model, params[:id])
     drop_breadcrumb(:name => @record.name + _(" (Ad hoc Metrics)"), :url => show_link(@record))
-    javascript_redirect polymorphic_path(@record, :display => "ad_hoc_metrics")
+    javascript_redirect(polymorphic_path(@record, :display => "ad_hoc_metrics"))
   end
 
   # handle buttons pressed on the button bar
