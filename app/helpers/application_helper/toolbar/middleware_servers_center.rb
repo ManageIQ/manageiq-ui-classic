@@ -54,7 +54,7 @@ class ApplicationHelper::Toolbar::MiddlewareServersCenter < ApplicationHelper::T
           nil,
           N_('Reload these Middleware Servers'),
           N_('Reload Server'),
-          :image        => 'guest_restart',
+          :icon         => "pficon pficon-restart fa-lg",
           :url_parms    => 'main_div',
           :send_checked => true,
           :confirm      => N_('Do you want to reload selected servers?'),

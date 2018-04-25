@@ -93,14 +93,14 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
       :items => [
         button(
           :restart_server,
-          'pficon pficon-restart',
+          'pficon pficon-restart fa-lg',
           t = N_('Restart server'),
           t,
           :confirm => N_("Warning: Server will be restarted, do you want to continue?"),
           :klass   => ApplicationHelper::Button::DiagnosticsSummary),
         button(
           :restart_workers,
-          'pficon pficon-restart',
+          'pficon pficon-restart fa-lg',
           N_('Select a worker to restart'),
           N_('Restart selected worker'),
           :confirm      => N_("Warning: Selected node will be restarted, do you want to continue?"),
