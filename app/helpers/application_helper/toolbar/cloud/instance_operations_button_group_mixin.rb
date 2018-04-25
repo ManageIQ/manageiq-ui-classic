@@ -12,7 +12,7 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
             nil,
             N_('Stop this Instance'),
             N_('Stop'),
-            :icon   => "fa fa-stop fa-lg",
+            :icon    => "fa fa-stop fa-lg",
             :confirm => N_("Stop this Instance?"),
             :klass   => ApplicationHelper::Button::GenericFeatureButton,
             :options => {:feature => :stop}),

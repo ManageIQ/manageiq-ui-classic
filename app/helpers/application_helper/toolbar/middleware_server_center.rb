@@ -24,7 +24,7 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
       t = N_('Policy'),
       t,
       :enabled => "false",
-      :items => [
+      :items   => [
         button(
           :middleware_server_protect,
           'pficon pficon-edit fa-lg',
@@ -79,17 +79,19 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :icon    => "fa fa-stop fa-lg",
           :confirm => N_('Do you want to stop this server?'),
           :klass   => ApplicationHelper::Button::MiddlewareStandaloneServerAction),
-        button(
-          :middleware_server_suspend,
-          nil,
-          N_('Suspend this server'),
-          N_('Suspend Server'),
-          :icon                      => "fa fa-pause fa-lg",
-          :data  => {'toggle'        => 'modal',
-                     'target'        => '#modal_param_div',
-                     'function'      => 'sendDataWithRx',
-                     'function-data' => '{"type": "mwServerOps", "operation": "suspend", "timeout": 10}'},
-          :klass => ApplicationHelper::Button::MiddlewareDomainServerAction),
+         button(
+           :middleware_server_suspend,
+           nil,
+           N_('Suspend this server'),
+           N_('Suspend Server'),
+           :icon  => "fa fa-pause fa-lg",
+           :data  => {'toggle'        => 'modal',
+                      'target'        => '#modal_param_div',
+                      'function'      => 'sendDataWithRx',
+                      'function-data' => '{"type": "mwServerOps",
+                                          "operation": "suspend", "timeout": 10}'},
+           :klass => ApplicationHelper::Button::MiddlewareDomainServerAction
+         ),
         button(
           :middleware_server_resume,
           nil,
@@ -111,7 +113,7 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           nil,
           N_('Start this server'),
           N_('Start Server'),
-          :icon   => 'fa fa-play fa-lg',
+          :icon    => 'fa fa-play fa-lg',
           :confirm => N_('Do you want to trigger a start of this server?'),
           :klass   => ApplicationHelper::Button::MiddlewareDomainServerAction),
         button(
