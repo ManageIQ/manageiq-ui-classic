@@ -1118,7 +1118,8 @@ module VmCommon
     refresh_breadcrumbs = true unless options.key?(:refresh_breadcrumbs)
 
     @explorer = true
-    @sb[:action] = action unless action.nil?
+    @sb[:action] = action if action || (@sb[:action] == 'chargeback' && params[:action] == 'accordion_select')
+
     if @sb[:action] || params[:display]
       partial, action, @right_cell_text, options_from_right_cell = set_right_cell_vars(options) # Set partial name, action and cell header
     end
