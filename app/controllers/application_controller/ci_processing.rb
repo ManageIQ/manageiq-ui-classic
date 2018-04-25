@@ -432,7 +432,11 @@ module ApplicationController::CiProcessing
   # Immediately retire items
   def retirevms_now
     assert_privileges(params[:pressed])
-    generic_button_operation 'retire_now', _('Retirement'), vm_button_action
+    generic_button_operation 'retire_now', _('Retirement'), vm_button_action,
+     :redirect => {
+      :controller => 'miq_request',
+      :action => 'show_list'
+    } if role_allows?(:feature => "miq_request_show_list")
   end
   alias_method :instance_retire_now, :retirevms_now
   alias_method :vm_retire_now, :retirevms_now
@@ -716,6 +720,12 @@ module ApplicationController::CiProcessing
   # Params:
   #   options - specific partial to render
   def screen_redirection(options)
+    if options[:redirect].present?
+      javascript_redirect(:controller => options[:redirect][:controller],
+                          :action     => options[:redirect][:action],
+                          :flash_msg  => @flash_array[0][:message])
+      return
+    end
     if @lastaction == "show_list"
       show_list unless @explorer
       @refresh_partial = "layouts/gtl"
