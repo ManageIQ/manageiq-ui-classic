@@ -1872,6 +1872,9 @@ class ApplicationController < ActionController::Base
 
     url = URI.parse(request.url).path
 
+    # Do not include console popup windows urls. Only urls from the main UI are supported.
+    return if %w(launch_vmware_console launch_html5_console).any? { |i| url.include?(i) }
+
     section.parent_path.each do |sid|
       session[:tab_url][sid] = url
     end
