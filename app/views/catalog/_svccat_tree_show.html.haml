@@ -33,7 +33,7 @@
       .col-md-1{:align => "center"}
         #buttons
           = button_tag(_("Order"),
-                       :class   => "btn btn-default",
+                       :class   => "btn btn-primary",
                        :alt     => t = _("Order this Service"),
                        :title   => t,
                        :onclick => "miqAjaxButton('#{url_for_only_path(:action => "svc_catalog_provision",
