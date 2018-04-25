@@ -2,4 +2,5 @@
   - if @view && !@view.table.data.empty?
     = render :partial => 'layouts/x_gtl'
   - else
+    = render :partial => "layouts/flash_msg"
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Saved Reports available.")}
