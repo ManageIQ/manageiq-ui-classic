@@ -674,26 +674,41 @@ module ApplicationController::CiProcessing
   # any of selected records.
   #
   # Params:
-  #   feature     - a feature implemented by using AvailabilityMixin or
-  #                 SupportsFeatureMixin
-  #               - SupportsFeatureMixin::QUERYABLE_FEATURES
+  #   action      - a string indicating the operation user wants to execute
   #   action_name - a string of an action used for a flash message in case
   #                 the task can not be applied
-  #   action      - a block with a operation, specific to the type of action
+  #   operation   - a block with a operation, specific to the type of action
   #                 on a record
-  #   options     - other parameters
-  def generic_button_operation(feature, action_name, action, options={})
+  #   options     - other optional parameters
+  def generic_button_operation(action, action_name, operation, options={})
     records = find_records_with_rbac(get_rec_cls, checked_or_params)
-    if records_support_feature?(records, feature)
-      action.call(records.map(&:id), feature, action_name)
+    if records_support_feature?(records, action_to_feature(action))
+      operation.call(records.map(&:id), action, action_name)
     else
       javascript_flash(
-        :text => _("#{action_name} action does not apply to selected items"),
+        :text => _("%{action_name} action does not apply to selected items") %
+          {:action_name => action_name},
         :severity => :error,
         :scroll_top => true)
     end
-    @single_delete = feature == 'destroy' && !flash_errors?
+    @single_delete = action == 'destroy' && !flash_errors?
     screen_redirection(options)
+  end
+
+  # Maps UI actions to queryable feature in case it is not possible
+  # to use the action itself in supports query.
+  #
+  # Params:
+  #   action      - a string indicating the operation user wants to execute
+  # Returns:
+  #   symbol      - a feature implemented by using AvailabilityMixin or
+  #                 SupportsFeatureMixin
+  #               - SupportsFeatureMixin::QUERYABLE_FEATURES
+  def action_to_feature(action)
+    feature_aliases = {
+      "scan" => :smartstate_analysis,
+      "retire_now" => :retire }
+    feature_aliases[action] || action.to_sym
   end
 
   # Explorer or non-explorer screen redirection.
