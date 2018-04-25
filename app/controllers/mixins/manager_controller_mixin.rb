@@ -55,7 +55,7 @@ module Mixins
         else
           add_flash(_("%{model} \"%{name}\" was updated") % {:model => model, :name => @provider.name})
         end
-        replace_right_cell
+        replace_right_cell(:replace_trees => [x_active_accord])
       else
         @provider.errors.each do |field, msg|
           @sb[:action] = nil
