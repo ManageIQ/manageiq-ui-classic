@@ -5,7 +5,7 @@ describe ApplicationHelper::Button::PolicyCopy do
         view_context,
         {},
         {'record' => @record},
-        {:options   => {:feature => 'policy_copy'}}
+        {:options => {:feature => 'policy_copy'}}
       )
     end
 

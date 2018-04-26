@@ -705,7 +705,7 @@ describe AutomationManagerController do
   def find_treenode_for_provider(provider, tree_json)
     key = ems_key_for_provider(provider)
     tree = JSON.parse(tree_json)
-    tree[0]['nodes'].find { |c| c['key'] == key } unless tree[0]['nodes'].nil?
+    tree[0]['nodes']&.find { |c| c['key'] == key }
   end
 
   def ems_key_for_provider(provider)
@@ -714,7 +714,7 @@ describe AutomationManagerController do
   end
 
   def inventory_group_key(inv_group)
-    ig =  ManageIQ::Providers::AutomationManager::InventoryGroup.where(:id => inv_group.id).first
+    ig = ManageIQ::Providers::AutomationManager::InventoryGroup.where(:id => inv_group.id).first
     "f-#{ig.id}"
   end
 

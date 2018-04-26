@@ -2,7 +2,7 @@ require 'ostruct'
 
 describe TreeNode::Node do
   let(:parent) { nil }
-  let(:options) { Hash.new }
+  let(:options) { {} }
   subject { described_class.new(object, parent, options) }
 
   describe '#escape' do

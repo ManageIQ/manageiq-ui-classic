@@ -171,12 +171,12 @@ describe MiqAeToolsController do
 
         it "returns the flash message" do
           post :import_automate_datastore, :params => params, :xhr => true
-          expected_message = <<-MESSAGE
-Datastore import was successful.
-Namespaces updated/added: 4
-Classes updated/added: 6
-Instances updated/added: 0
-Methods updated/added: 10
+          expected_message = <<~MESSAGE
+            Datastore import was successful.
+            Namespaces updated/added: 4
+            Classes updated/added: 6
+            Instances updated/added: 0
+            Methods updated/added: 10
           MESSAGE
           expect(response.body).to eq([{:message => expected_message.chomp, :level => :success}].to_json)
         end
@@ -347,7 +347,7 @@ Methods updated/added: 10
               "gitusername",
               "gitpassword",
               "gitverifyssl"
-            ).and_return({:git_repo_id => git_repo.id, :new_git_repo? => false})
+            ).and_return(:git_repo_id => git_repo.id, :new_git_repo? => false)
             allow(GitBasedDomainImportService).to receive(:new).and_return(git_based_domain_import_service)
             allow(git_based_domain_import_service).to receive(:queue_refresh).with(123).and_return(321)
           end

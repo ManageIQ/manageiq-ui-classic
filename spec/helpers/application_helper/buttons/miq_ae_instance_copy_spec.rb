@@ -1,5 +1,5 @@
 describe ApplicationHelper::Button::MiqAeInstanceCopy do
-  let(:session) { Hash.new }
+  let(:session) { {} }
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:record) { FactoryGirl.create(:miq_ae_class, :of_domain, :domain => domain) }
   let(:domain) { FactoryGirl.create(:miq_ae_domain_disabled) }

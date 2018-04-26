@@ -7,7 +7,7 @@ describe ProviderForemanController do
     Tag.find_or_create_by(:name => tags.first)
 
     @provider = ManageIQ::Providers::Foreman::Provider.create(:name => "testForeman", :url => "10.8.96.102", :zone => @zone)
-    @config_mgr = ManageIQ::Providers::Foreman::ConfigurationManager.find_by_provider_id(@provider.id)
+    @config_mgr = ManageIQ::Providers::Foreman::ConfigurationManager.find_by(:provider_id => @provider.id)
     @config_profile = ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile.create(:name        => "testprofile",
                                                                                                       :description => "testprofile",
                                                                                                       :manager_id  => @config_mgr.id)
@@ -29,7 +29,7 @@ describe ProviderForemanController do
                                                                                   :manager_id               => @config_mgr.id)
 
     @provider2 = ManageIQ::Providers::Foreman::Provider.create(:name => "test2Foreman", :url => "10.8.96.103", :zone => @zone)
-    @config_mgr2 = ManageIQ::Providers::Foreman::ConfigurationManager.find_by_provider_id(@provider2.id)
+    @config_mgr2 = ManageIQ::Providers::Foreman::ConfigurationManager.find_by(:provider_id => @provider2.id)
     @configured_system_unprovisioned2 =
       ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem.create(:hostname                 => "configured_system_unprovisioned2",
                                                                                   :configuration_profile_id => nil,
@@ -742,7 +742,7 @@ describe ProviderForemanController do
   def find_treenode_for_foreman_provider(tree, provider)
     key = ems_key_for_provider(provider)
     tree_nodes = JSON.parse(tree.tree_nodes)
-    tree_nodes[0]['nodes'][0]['nodes'].find { |c| c['key'] == key } unless tree_nodes[0]['nodes'][0]['nodes'].nil?
+    tree_nodes[0]['nodes'][0]['nodes']&.find { |c| c['key'] == key }
   end
 
   def ems_key_for_provider(provider)

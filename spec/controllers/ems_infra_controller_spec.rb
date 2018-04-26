@@ -127,7 +127,8 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
-        "A value must be changed or provider stack will not be updated.")
+        "A value must be changed or provider stack will not be updated."
+      )
     end
 
     it "when values are changed, but exceed number of hosts available" do
@@ -136,7 +137,8 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
-        "Assigning #{@ems.hosts.count * 2} but only have #{@ems.hosts.count} hosts available.")
+        "Assigning #{@ems.hosts.count * 2} but only have #{@ems.hosts.count} hosts available."
+      )
     end
 
     it "when values are changed, values do not exceed number of hosts available" do
@@ -194,7 +196,8 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
-        "Not all hosts can be removed from the deployment.")
+        "Not all hosts can be removed from the deployment."
+      )
     end
 
     it "when values are changed, selected host is in correct state" do
@@ -666,8 +669,7 @@ describe EmsInfraController do
                                    "metrics_api_port"      => "5672",
                                    "metrics_userid"        => "metrics_foo",
                                    "metrics_password"      => "[FILTERED]",
-                                   "metrics_database_name" => "metrics_dwh_updated"
-        }
+                                   "metrics_database_name" => "metrics_dwh_updated"}
 
         expect do
           post :update, :params => { "id" => rhevm.id, :button => 'save' }.merge(updated_metrics_params)
@@ -683,7 +685,7 @@ describe EmsInfraController do
         expect_any_instance_of(ManageIQ::Providers::Redhat::InfraManager).to receive(:authentication_check)
           .with("metrics",
                 hash_including(:save => false, :database => creation_params["metrics_database_name"]))
-        post :update, creation_params.merge(:button => "validate", :cred_type => "metrics", :id => rhevm.id)
+        post :update, :params => creation_params.merge(:button => "validate", :cred_type => "metrics", :id => rhevm.id)
       end
     end
   end

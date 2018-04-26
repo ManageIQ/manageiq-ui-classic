@@ -34,4 +34,3 @@ shared_examples_for 'a smart state scan button' do
     end
   end
 end
-

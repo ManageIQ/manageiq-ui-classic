@@ -3,7 +3,6 @@ require "routing/shared_examples"
 describe MiqAeCustomizationController do
   let(:controller_name) { 'miq_ae_customization' }
 
-
   %w(
     explorer
     export_service_dialogs

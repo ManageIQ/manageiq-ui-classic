@@ -33,7 +33,7 @@ describe MiqPolicyController do
       end
 
       it "Test save button without selecting category" do
-        controller.instance_variable_set(:@_params, {:id => @ap.id, :button => "save"})
+        controller.instance_variable_set(:@_params, :id => @ap.id, :button => "save")
         controller.instance_variable_set(:@sb, :trees => {:alert_profile_tree => {:active_node => "xx-Vm_ap-#{@ap.id}"}}, :active_tree => :alert_profile_tree,
                                                 :assign => {:alert_profile => @ap, :new => {:assign_to => "Vm-tags", :objects => ["10000000000001"]}})
         controller.alert_profile_assign
@@ -42,7 +42,7 @@ describe MiqPolicyController do
       end
 
       it "Test save button with no errors" do
-        controller.instance_variable_set(:@_params, {:id => @ap.id, :button => "save"})
+        controller.instance_variable_set(:@_params, :id => @ap.id, :button => "save")
         controller.instance_variable_set(:@sb, :trees => {:alert_profile_tree => {:active_node => "xx-Vm_ap-#{@ap.id}"}}, :active_tree => :alert_profile_tree,
                                                 :assign => {:alert_profile => @ap, :new => {:assign_to => "Vm-tags", :cat => "10000000000001", :objects => ["10000000000001"]}})
         controller.alert_profile_assign
@@ -59,7 +59,7 @@ describe MiqPolicyController do
       end
 
       it 'Refuses to delete a non-existent profile' do
-        controller.instance_variable_set(:@_params, :id => @ap.id+1, :button => 'delete')
+        controller.instance_variable_set(:@_params, :id => @ap.id + 1, :button => 'delete')
         controller.alert_profile_delete
         expect(assigns(:flash_array).first[:message]).to include("Alert Profile no longer exists")
       end
@@ -76,7 +76,8 @@ describe MiqPolicyController do
       before :each do
         controller.instance_variable_set(:@sb,
                                          :trees       => {
-                                           :alert_profile_tree => {:active_node => "xx-Vm"}},
+                                           :alert_profile_tree => {:active_node => "xx-Vm"}
+                                         },
                                          :active_tree => :alert_profile_tree)
         allow(controller).to receive(:replace_right_cell)
         edit = {

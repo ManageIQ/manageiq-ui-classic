@@ -7,7 +7,7 @@ describe TreeBuilderReportSavedReports do
         EvmSpecHelper.local_miq_server
 
         MiqUserRole.seed
-        role = MiqUserRole.find_by_name("EvmRole-operator")
+        role = MiqUserRole.find_by(:name => "EvmRole-operator")
 
         # User1 with current group Group2
         @user1 = create_user_with_group('User1', "Group1", role)

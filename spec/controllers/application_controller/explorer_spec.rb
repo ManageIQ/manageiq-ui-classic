@@ -111,9 +111,7 @@ describe ReportController do
                                        :trees       => {:widgets_tree => {:active_node => "root",
                                                                           :klass_name  => "TreeBuilderReportWidgets",
                                                                           :open_nodes  => []}},
-                                       :active_tree => :widgets_tree
-
-                                      )
+                                       :active_tree => :widgets_tree)
       TreeBuilderReportWidgets.new('widgets_tree', 'widgets', {})
       nodes = controller.send(:tree_add_child_nodes, 'xx-r')
       expected = [{:key        => "xx-r_-#{widget.id}",

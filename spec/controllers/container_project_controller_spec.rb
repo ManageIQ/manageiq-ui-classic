@@ -30,7 +30,7 @@ describe ContainerProjectController do
       @project = FactoryGirl.create(:container_project)
     end
 
-    subject { get :show, :id => @project.id, :display => 'main' }
+    subject { get :show, :params => { :id => @project.id, :display => 'main' } }
 
     context "render" do
       render_views

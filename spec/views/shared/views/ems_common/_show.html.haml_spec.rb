@@ -48,7 +48,7 @@ describe "shared/views/ems_common/show" do
     end
 
     let(:showtype) { "main" }
-    let(:display) {'cloud_volumes'}
+    let(:display) { 'cloud_volumes' }
     let(:ems) { FactoryGirl.create(:ems_storage, :hostname => '1.1.1.1') }
 
     it "should show render gtl for list of cloud_volumes" do

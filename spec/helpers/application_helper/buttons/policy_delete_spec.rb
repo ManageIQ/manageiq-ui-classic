@@ -5,7 +5,7 @@ describe ApplicationHelper::Button::PolicyDelete do
         view_context,
         {},
         {'record' => @record},
-        {:options   => {:feature => 'policy_delete'}}
+        {:options => {:feature => 'policy_delete'}}
       )
     end
 

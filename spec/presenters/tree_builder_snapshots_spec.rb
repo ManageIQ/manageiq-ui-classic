@@ -1,7 +1,7 @@
 describe TreeBuilderSnapshots do
   context 'TreeBuilderSnaphots' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Snapshot Group")
       login_as FactoryGirl.create(:user, :userid => 'snapshot_wilma', :miq_groups => [@group])
       snapshot_kid = FactoryGirl.create(:snapshot,

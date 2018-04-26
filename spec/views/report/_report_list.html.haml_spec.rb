@@ -16,8 +16,7 @@ describe "report/_report_list.html.haml" do
                                   :active_tree   => :reports_tree,
                                   :rep_details   => rep_details,
                                   :rpt_menu      => rpt_menu,
-                                  :trees         => {:reports_tree => {:active_node => "xx-1_xx-1-0"}}
-          )
+                                  :trees         => {:reports_tree => {:active_node => "xx-1_xx-1-0"}})
   end
 
   it "Check links in the list view" do

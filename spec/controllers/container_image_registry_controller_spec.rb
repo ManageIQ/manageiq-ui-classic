@@ -31,7 +31,7 @@ describe ContainerImageRegistryController do
       @image_registry = FactoryGirl.create(:container_image_registry)
     end
 
-    subject { get :show, :id => @image_registry.id }
+    subject { get :show, :params => { :id => @image_registry.id } }
 
     context "render" do
       render_views

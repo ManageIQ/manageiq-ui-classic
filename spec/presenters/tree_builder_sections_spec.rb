@@ -1,7 +1,7 @@
 describe TreeBuilderSections do
   context 'TreeBuilderSections' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "All sections")
       login_as FactoryGirl.create(:user, :userid => 'all_sections_wilma', :miq_groups => [@group])
       @controller_name = 'controller_name'

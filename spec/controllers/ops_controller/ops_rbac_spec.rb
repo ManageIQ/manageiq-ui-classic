@@ -208,8 +208,7 @@ describe OpsController do
       it "saves name in record when use_config_attributes is true" do
         controller.instance_variable_set(:@_params,
                                          :divisible                 => true,
-                                         :use_config_for_attributes => "on"
-                                        )
+                                         :use_config_for_attributes => "on")
         controller.send(:tenant_set_record_vars, @tenant)
         stub_settings(:server => {:company => "Settings Company Name"})
         expect(@tenant.name).to eq "Settings Company Name"
@@ -218,8 +217,7 @@ describe OpsController do
       it "does not save name in record when use_config_for_attributes is true" do
         controller.instance_variable_set(:@_params,
                                          :name      => "Foo_Bar",
-                                         :divisible => true
-                                        )
+                                         :divisible => true)
         @tenant.update_attributes(:use_config_for_attributes => false)
         @tenant.reload
         controller.send(:tenant_set_record_vars, @tenant)
@@ -237,8 +235,7 @@ describe OpsController do
         controller.instance_variable_set(:@_params,
                                          :name      => "Foo_Bar",
                                          :divisible => "False",
-                                         :parent    => "some_parent"
-                                        )
+                                         :parent    => "some_parent")
       end
 
       it "does not change value of parent & divisible fields for existing record" do
@@ -328,20 +325,17 @@ describe OpsController do
                                      :subdomain => "test")
         sb_hash = { :trees       => {:rbac_tree => {:active_node => "tn-#{@tenant.id}"}},
                     :active_tree => :rbac_tree,
-                    :active_tab  => "rbac_details"
-                  }
+                    :active_tab  => "rbac_details"}
         controller.instance_variable_set(:@sb, sb_hash)
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
         allow(@tenant).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
         classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
         @tag1 = FactoryGirl.create(:classification_tag,
                                    :name   => "tag1",
-                                   :parent => classification
-                                  )
+                                   :parent => classification)
         @tag2 = FactoryGirl.create(:classification_tag,
                                    :name   => "tag2",
-                                   :parent => classification
-                                  )
+                                   :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).with(@tenant).and_return([@tag1, @tag2])
         controller.instance_variable_set(:@sb,
                                          :trees       => {:rbac_tree => {:active_node => "root"}},
@@ -353,8 +347,7 @@ describe OpsController do
                  :tagging    => "Tenant",
                  :object_ids => [@tenant.id],
                  :current    => {:assignments => []},
-                 :new        => {:assignments => [@tag1.id, @tag2.id]}
-               }
+                 :new        => {:assignments => [@tag1.id, @tag2.id]}}
         session[:edit] = edit
       end
 
@@ -511,7 +504,7 @@ describe OpsController do
 
       post :tree_select, :params => { :id => 'root', :format => :js }
       expect(MiqExpression).to receive(:tag_details)
-      post :rbac_group_field_changed, :params => { :id => 'new',  :use_filter_expression => "true"}
+      post :rbac_group_field_changed, :params => { :id => 'new', :use_filter_expression => "true"}
     end
 
     it "initializes the group record and tag tree when switching tabs" do
@@ -546,8 +539,7 @@ describe OpsController do
       new = {:features => ["everything"], :name => "foo"}
       edit = {:key     => "rbac_role_edit__new",
               :new     => new,
-              :current => new
-      }
+              :current => new}
       session[:edit] = edit
       controller.send(:rbac_role_edit)
       flash_messages = assigns(:flash_array)
@@ -595,7 +587,7 @@ describe OpsController do
       MiqUserRole.seed
       MiqGroup.seed
       MiqRegion.seed
-      role = MiqUserRole.find_by_name("EvmRole-SuperAdministrator")
+      role = MiqUserRole.find_by(:name => "EvmRole-SuperAdministrator")
       @t1 = FactoryGirl.create(:tenant, :name => "ten1", :parent => root_tenant)
       @g1 = FactoryGirl.create(:miq_group, :description => 'group1', :tenant => @t1, :miq_user_role => role)
       @u1 = FactoryGirl.create(:user, :miq_groups => [@g1])

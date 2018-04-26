@@ -17,8 +17,7 @@ describe TreeBuilderAutomateSimulationResults do
                    :image      => "100/q.png",
                    :tooltip    => "ManageIQ/SYSTEM / PROCESS / Automation",
                    :elements   => [],
-                   :selectable => false
-                  }
+                   :selectable => false}
       expect(nodes).to include(tree_data)
     end
   end

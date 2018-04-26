@@ -9,7 +9,7 @@ describe TreeNode do
     klass.new
   end
   let(:parent_id) { dup }
-  let(:options) { Hash.new }
+  let(:options) { {} }
   subject { TreeNode.new(object, parent_id, options) }
 
   describe '.new' do
@@ -23,7 +23,7 @@ describe TreeNode do
 
     TreeNode.constants.each do |type|
       # We never instantiate MiqAeNode and Node in our codebase
-      next if [:MiqAeNode, :Node, :Menu].include?(type)
+      next if %i(MiqAeNode Node Menu).include?(type)
 
       describe(type) do
         let(:klass) { type.to_s.constantize }
@@ -66,7 +66,7 @@ describe TreeNode do
     end
 
     context 'object is a hash' do
-      let(:object) { Hash.new }
+      let(:object) { {} }
       it { is_expected.to be_truthy }
     end
 

@@ -25,8 +25,7 @@ describe AnsibleTowerJobTemplateDialogService do
 
       allow(template).to receive(:variables).and_return('some_extra_var'  => 'blah',
                                                         'other_extra_var' => {'name' => 'some_value'},
-                                                        'array_extra_var' => [{'name' => 'some_value'}]
-                                                       )
+                                                        'array_extra_var' => [{'name' => 'some_value'}])
       dialog = subject.create_dialog(template)
 
       expect(dialog).to have_attributes(:label => template.name, :buttons => "submit,cancel")

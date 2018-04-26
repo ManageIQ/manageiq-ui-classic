@@ -999,8 +999,7 @@ describe ApplicationHelper do
                                            :tree => :vms_instances_filter_tree,
                                            :type => :vms_instances_filter
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.tree_with_advanced_search?
       expect(result).to be_truthy
     end
@@ -1013,8 +1012,7 @@ describe ApplicationHelper do
                                            :tree => :configuration_scripts_tree,
                                            :type => :configuration_scripts
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.tree_with_advanced_search?
       expect(result).to be_truthy
     end
@@ -1040,8 +1038,7 @@ describe ApplicationHelper do
                                            :tree => :reports_tree,
                                            :type => :reports
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.tree_with_advanced_search?
       expect(result).to be_falsey
     end
@@ -1064,8 +1061,7 @@ describe ApplicationHelper do
                                            :tree => :vms_instances_filter_tree,
                                            :type => :vms_instances_filter
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.show_adv_search?
       expect(result).to be_truthy
     end
@@ -1080,8 +1076,7 @@ describe ApplicationHelper do
                                            :tree => :vms_instances_filter_tree,
                                            :type => :vms_instances_filter
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.show_advanced_search?
       expect(result).to be_truthy
     end
@@ -1094,8 +1089,7 @@ describe ApplicationHelper do
                                            :tree => :reports_tree,
                                            :type => :reports
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.show_advanced_search?
       expect(result).to be_falsey
     end
@@ -1108,8 +1102,7 @@ describe ApplicationHelper do
                                            :tree => :reports_tree,
                                            :type => :reports
                                          }
-                                       }
-                                      )
+                                       })
       controller.instance_variable_set(:@show_adv_search, true)
       result = helper.show_advanced_search?
       expect(result).to be_truthy
@@ -1313,7 +1306,9 @@ describe ApplicationHelper do
         include ApplicationHelper
         attr_accessor :display, :params, :report_data_additional_options
 
-        def controller; HostController.new; end
+        def controller
+          HostController.new
+        end
       end
     end
 

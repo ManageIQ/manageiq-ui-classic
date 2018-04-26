@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::Condition do
   describe "#role_allows_feature?" do
-    let(:session) { Hash.new }
+    let(:session) { {} }
     before do
       sandbox = {:active_tree => :condition_tree}
       @view_context = setup_view_context_with_sandbox(sandbox)

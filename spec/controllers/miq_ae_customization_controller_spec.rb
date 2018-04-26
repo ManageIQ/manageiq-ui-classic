@@ -189,7 +189,7 @@ describe MiqAeCustomizationController do
     it "assigns the sandbox active node on ab tree to root" do
       login_as FactoryGirl.create(:user, :features => "dialog_accord")
       get :explorer
-      expect(expect(controller.x_node).to eq("root"))
+      expect(expect(controller.x_node).to(eq("root")))
     end
 
     it "builds the ab tree" do
@@ -202,7 +202,7 @@ describe MiqAeCustomizationController do
     it "assigns the sandbox active node on import/export tree to root" do
       login_as FactoryGirl.create(:user, :features => "miq_ae_class_import_export")
       get :explorer
-      expect(expect(controller.x_node).to eq("root"))
+      expect(expect(controller.x_node).to(eq("root")))
     end
 
     it "builds the import/export tree" do
@@ -479,7 +479,7 @@ describe MiqAeCustomizationController do
     end
 
     context "when there are service dialogs" do
-      let(:service_dialogs) { %w(1, 2, 3) }
+      let(:service_dialogs) { %w(1 2 3) }
 
       before do
         allow(DialogYamlSerializer).to receive(:new).and_return(dialog_yaml_serializer)

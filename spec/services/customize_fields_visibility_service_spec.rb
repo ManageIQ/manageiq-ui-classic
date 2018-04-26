@@ -10,18 +10,18 @@ describe CustomizeFieldsVisibilityService do
       it "returns a list of pxe customization fields to edit" do
         expect(subject.determine_visibility(platform, supports_customization_template, customize_fields_list)).to eq(
           :hide => [],
-          :edit => [
-            :addr_mode,
-            :customization_template_id,
-            :customization_template_script,
-            :dns_servers,
-            :dns_suffixes,
-            :gateway,
-            :hostname,
-            :ip_addr,
-            :root_password,
-            :subnet_mask
-          ]
+          :edit => %i(
+            addr_mode
+            customization_template_id
+            customization_template_script
+            dns_servers
+            dns_suffixes
+            gateway
+            hostname
+            ip_addr
+            root_password
+            subnet_mask
+          )
         )
       end
     end
@@ -31,20 +31,20 @@ describe CustomizeFieldsVisibilityService do
 
       context "when the customize_fields_list contains only items from exclude list" do
         let(:customize_fields_list) do
-          [
-            :sysprep_spec_override,
-            :sysprep_custom_spec,
-            :sysprep_enabled,
-            :sysprep_upload_file,
-            :sysprep_upload_text,
-            :linux_host_name,
-            :sysprep_computer_name,
-            :ip_addr,
-            :subnet_mask,
-            :gateway,
-            :dns_servers,
-            :dns_suffixes
-          ]
+          %i(
+            sysprep_spec_override
+            sysprep_custom_spec
+            sysprep_enabled
+            sysprep_upload_file
+            sysprep_upload_text
+            linux_host_name
+            sysprep_computer_name
+            ip_addr
+            subnet_mask
+            gateway
+            dns_servers
+            dns_suffixes
+          )
         end
         let(:platform) { "linux" }
 
@@ -56,18 +56,19 @@ describe CustomizeFieldsVisibilityService do
       end
 
       context "when the customize_fields_list contains linux_domain_name" do
-        let(:customize_fields_list) { [:linux_domain_name, :potato] }
+        let(:customize_fields_list) { %i(linux_domain_name potato) }
 
         context "when the platform is linux" do
           let(:platform) { "linux" }
 
           it "returns the correct list of things to edit/hide" do
             expect(subject.determine_visibility(
-              platform,
-              supports_customization_template,
-              customize_fields_list)).to eq(
-                :hide => [:potato], :edit => [:linux_domain_name]
-              )
+                     platform,
+                     supports_customization_template,
+                     customize_fields_list
+            )).to eq(
+              :hide => [:potato], :edit => [:linux_domain_name]
+            )
           end
         end
 
@@ -76,11 +77,12 @@ describe CustomizeFieldsVisibilityService do
 
           it "returns an empty hide/edit hash" do
             expect(subject.determine_visibility(
-              platform,
-              supports_customization_template,
-              customize_fields_list)).to eq(
-                :hide => [], :edit => []
-              )
+                     platform,
+                     supports_customization_template,
+                     customize_fields_list
+            )).to eq(
+              :hide => [], :edit => []
+            )
           end
         end
       end

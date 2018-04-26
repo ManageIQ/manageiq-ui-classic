@@ -101,9 +101,9 @@ describe ApplicationHelper::Dialogs do
 
       it "returns a list of entries by name and description" do
         expect(helper.category_tags(123)).to eq([
-          {:name => "cat", :description => "Cat"},
-          {:name => "dog", :description => "Dog"}
-        ])
+                                                  {:name => "cat", :description => "Cat"},
+                                                  {:name => "dog", :description => "Dog"}
+                                                ])
       end
     end
 
@@ -587,12 +587,12 @@ describe ApplicationHelper::Dialogs do
 
     it "builds a list of auto refreshable fields and trigger fields with their indicies" do
       expect(helper.build_auto_refreshable_field_indicies(workflow)).to eq([
-        {:tab_index => 0, :group_index => 0, :field_index => 2, :auto_refresh => true},
-        {:tab_index => 0, :group_index => 1, :field_index => 0, :auto_refresh => false},
-        {:tab_index => 0, :group_index => 1, :field_index => 1, :auto_refresh => true},
-        {:tab_index => 1, :group_index => 0, :field_index => 0, :auto_refresh => false},
-        {:tab_index => 1, :group_index => 0, :field_index => 1, :auto_refresh => true}
-      ])
+                                                                             {:tab_index => 0, :group_index => 0, :field_index => 2, :auto_refresh => true},
+                                                                             {:tab_index => 0, :group_index => 1, :field_index => 0, :auto_refresh => false},
+                                                                             {:tab_index => 0, :group_index => 1, :field_index => 1, :auto_refresh => true},
+                                                                             {:tab_index => 1, :group_index => 0, :field_index => 0, :auto_refresh => false},
+                                                                             {:tab_index => 1, :group_index => 0, :field_index => 1, :auto_refresh => true}
+                                                                           ])
     end
   end
 

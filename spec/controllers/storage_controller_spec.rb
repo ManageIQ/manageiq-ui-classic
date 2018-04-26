@@ -74,8 +74,7 @@ describe StorageController do
      "host_reboot"   => "Restart",
      "host_start"    => "Power On",
      "host_stop"     => "Power Off",
-     "host_reset"    => "Reset"
-    }.each do |button, description|
+     "host_reset"    => "Reset"}.each do |button, description|
       it "when Host #{description} button is pressed" do
         login_as FactoryGirl.create(:user, :features => button)
 
@@ -145,12 +144,10 @@ describe StorageController do
         classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
         @tag1 = FactoryGirl.create(:classification_tag,
                                    :name   => "tag1",
-                                   :parent => classification
-                                  )
+                                   :parent => classification)
         @tag2 = FactoryGirl.create(:classification_tag,
                                    :name   => "tag2",
-                                   :parent => classification
-                                  )
+                                   :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).and_return([@tag1, @tag2])
         post :x_button, :params => {:miq_grid_checks => datastore.id, :pressed => "storage_tag", :format => :js}
         expect(response.status).to eq(200)
@@ -239,7 +236,7 @@ describe StorageController do
           }
         }
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(req)
-        get :show, :id => storage_with_miq_templates.id, :display => 'all_miq_templates'
+        get :show, :params => { :id => storage_with_miq_templates.id, :display => 'all_miq_templates' }
         expect(response.status).to eq(200)
       end
     end

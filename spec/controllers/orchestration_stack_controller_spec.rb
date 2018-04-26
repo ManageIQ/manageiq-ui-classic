@@ -101,7 +101,7 @@ describe OrchestrationStackController do
   describe "#stacks_ot_info" do
     it "returns all the orchestration template attributes" do
       stack = FactoryGirl.create(:orchestration_stack_cloud_with_template)
-      get :stacks_ot_info, :id => stack.id
+      get :stacks_ot_info, :params => { :id => stack.id }
       expect(response.status).to eq(200)
       ret = JSON.parse(response.body)
       expect(ret).to have_key('template_id')
@@ -130,7 +130,8 @@ describe OrchestrationStackController do
         :templateName        => "new name",
         :templateDescription => "new description",
         :templateDraft       => "true",
-        :templateContent     => "orchestration template test content"}
+        :templateContent     => "orchestration template test content"
+      }
       expect(response.status).to eq(200)
       expect(response.body).to include("window.location.href")
       expect(response.body).to include("/catalog/ot_show/")

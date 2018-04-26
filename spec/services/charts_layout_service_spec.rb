@@ -49,7 +49,7 @@ describe ChartsLayoutService do
     it "includes Memory (MB) chart for azure instance" do
       ems_azure = FactoryGirl.create(:ems_azure)
       host = FactoryGirl.create(:host, :ext_management_system => ems_azure)
-      vm_azure =  FactoryGirl.create(:vm_azure, :ext_management_system => ems_azure, :host => host)
+      vm_azure = FactoryGirl.create(:vm_azure, :ext_management_system => ems_azure, :host => host)
       chart = ChartsLayoutService.layout(vm_azure, ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'VmOrTemplate')
       expect(chart.count { |x| x[:title] == "Memory (MB)" }).to equal 1
     end

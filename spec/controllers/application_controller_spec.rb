@@ -243,7 +243,7 @@ describe ApplicationController do
       EvmSpecHelper.local_miq_server
       MiqUserRole.seed
 
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
 
       group1 = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Group1")
       @user1 = FactoryGirl.create(:user, :userid => "User1", :miq_groups => [group1], :email => "user1@test.com")

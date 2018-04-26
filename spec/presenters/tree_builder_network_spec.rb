@@ -1,7 +1,7 @@
 describe TreeBuilderNetwork do
   context 'TreeBuilderNetwork' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Network Group")
       login_as FactoryGirl.create(:user, :userid => 'network_wilma', :miq_groups => [@group])
       vm = FactoryGirl.create(:vm)

@@ -10,7 +10,7 @@ describe MiqAeClassController do
                                          :ae_tree => {:active_node => "aec-#{cls.id}"}
                                        },
                                        :active_tree => :ae_tree)
-      controller.instance_variable_set(:@edit, {:new => new})
+      controller.instance_variable_set(:@edit, :new => new)
       controller.send(:set_record_vars, cls)
       expect(cls.namespace_id).to eq(ns_id)
     end
@@ -231,8 +231,7 @@ describe MiqAeClassController do
              :ae_fields    => [],
              :ae_instances => [],
              :ae_methods   => [],
-             :domain       => miq_ae_domain2
-            )
+             :domain       => miq_ae_domain2)
     end
 
     let(:miq_ae_instance) do
@@ -244,8 +243,7 @@ describe MiqAeClassController do
              :created_on   => Time.now,
              :updated_on   => Time.current,
              :updated_by   => "some_user",
-             :domain       => miq_ae_domain
-            )
+             :domain       => miq_ae_domain)
     end
 
     let(:miq_ae_method) do
@@ -258,23 +256,20 @@ describe MiqAeClassController do
              :created_on   => Time.now,
              :updated_on   => Time.current,
              :updated_by   => "some_user",
-             :domain       => miq_ae_domain
-            )
+             :domain       => miq_ae_domain)
     end
 
     let(:override) do
       double("MiqAeClass",
              :fqname => "another_fqname/fqname",
              :id     => 1,
-             :domain => miq_ae_domain
-            )
+             :domain => miq_ae_domain)
     end
     let(:override2) do
       double("MiqAeClass",
              :fqname => "another_fqname2/fqname",
              :id     => 2,
-             :domain => miq_ae_domain2
-            )
+             :domain => miq_ae_domain2)
     end
 
     before do
@@ -469,7 +464,7 @@ describe MiqAeClassController do
     end
 
     it "Should not allow to accept schema field without type" do
-      field = {:name   => "name"}
+      field = {:name => "name"}
       controller.instance_variable_set(:@edit, session[:edit])
       session[:field_data] = field
       controller.instance_variable_set(:@_params, :button => "accept", :id => @cls.id)
@@ -697,8 +692,7 @@ describe MiqAeClassController do
     it "Should delete multiple selected items from list" do
       controller.instance_variable_set(:@_params,
                                        :miq_grid_checks => "aec-#{@ae_class.id},aen-#{@namespace.id}",
-                                       :id              => @namespace.id
-                                      )
+                                       :id              => @namespace.id)
       controller.send(:delete_namespaces_or_classes)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Namespace \"foo_namespace\": Delete successful")
@@ -707,8 +701,7 @@ describe MiqAeClassController do
 
     it "Should delete selected namespace in the tree" do
       controller.instance_variable_set(:@_params,
-                                       :id => @namespace.id
-                                      )
+                                       :id => @namespace.id)
 
       controller.send(:delete_namespaces_or_classes)
       flash_messages = assigns(:flash_array)
@@ -784,8 +777,7 @@ describe MiqAeClassController do
     it "Should delete selected class in the tree" do
       controller.x_node = "aec-#{@ae_class.id}"
       controller.instance_variable_set(:@_params,
-                                       :id => @namespace.id
-                                      )
+                                       :id => @namespace.id)
 
       controller.send(:deleteclasses)
       flash_messages = assigns(:flash_array)
@@ -888,7 +880,7 @@ describe MiqAeClassController do
       stub_user(:features => :all)
       @method = FactoryGirl.create(:miq_ae_method, :name => "method01", :scope => "class",
                                    :language => "ruby", :class_id => "someid", :data => "exit MIQ_OK", :location => "inline")
-      controller.instance_variable_set(:@sb, :trees       => {:ae_tree => {:active_node => "aec-someid"}},
+      controller.instance_variable_set(:@sb, :trees => {:ae_tree => {:active_node => "aec-someid"}},
                                        :active_tree => :ae_tree, :form_vars_set => true)
     end
 

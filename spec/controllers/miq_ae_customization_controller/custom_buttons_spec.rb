@@ -20,8 +20,7 @@ describe MiqAeCustomizationController do
       allow(MiqAeClass).to receive_messages(:find_distinct_instances_across_domains => [double(:name => "foo")])
       @sb = {:active_tree => :ab_tree,
              :trees       => {:ab_tree => {:tree => :ab_tree}},
-             :params      => {:instance_name => 'CustomButton_1'}
-      }
+             :params      => {:instance_name => 'CustomButton_1'}}
       controller.instance_variable_set(:@sb, @sb)
       controller.instance_variable_set(:@breadcrumbs, [])
 

@@ -90,8 +90,7 @@ describe ReportController do
                                                       :description => 'All the news',
                                                       :feed_type   => 'internal',
                                                       :row_count   => default_row_count_value,
-                                                      :rss_feed    => rss_feed.id,
-                                          )
+                                                      :rss_feed    => rss_feed.id,)
           controller.send(:widget_new)
           expect(MiqWidget.count).to eq(@previous_count_of_widgets + 1)
           expect(new_widget.errors.count).to eq(0)
@@ -126,8 +125,7 @@ describe ReportController do
                                                       :description => 'All the news',
                                                       :feed_type   => 'internal',
                                                       :rss_feed    => rss_feed.id,
-                                                      :row_count   => default_row_count_value,
-                                          )
+                                                      :row_count   => default_row_count_value,)
           controller.send(:widget_edit)
           expect(MiqWidget.count).to eq(@previous_count_of_widgets + 1)
           expect(new_widget.errors.count).to eq(0)

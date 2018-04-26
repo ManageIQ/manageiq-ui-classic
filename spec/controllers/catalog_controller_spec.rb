@@ -120,7 +120,7 @@ describe CatalogController do
       controller.instance_variable_set(:@sb, {})
       controller.instance_variable_set(:@_params, :button => "save")
       st = FactoryGirl.create(:service_template)
-      3.times.each_with_index do |i|
+      3.times.each do |i|
         ns = FactoryGirl.create(:miq_ae_namespace, :name => "ns#{i}")
         cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls#{i}")
         FactoryGirl.create(:miq_ae_instance, :class_id => cls.id, :name => "inst#{i}")
@@ -134,7 +134,8 @@ describe CatalogController do
           :description        => "New Description",
           :reconfigure_fqname => recon_fqname,
           :retire_fqname      => retire_fqname,
-          :fqname             => provision_fqname},
+          :fqname             => provision_fqname
+        },
         :key          => "prov_edit__new",
         :rec_id       => st.id,
         :st_prov_type => "generic"
@@ -144,7 +145,7 @@ describe CatalogController do
       allow(controller).to receive(:replace_right_cell)
       controller.send(:atomic_st_edit)
       {'Provision' => provision_fqname, 'Reconfigure' => recon_fqname, 'Retirement' => retire_fqname}.each do |k, v|
-        expect(st.resource_actions.find_by_action(k).fqname).to eq("/#{v}")
+        expect(st.resource_actions.find_by(:action => k).fqname).to eq("/#{v}")
       end
     end
 
@@ -162,7 +163,8 @@ describe CatalogController do
           :description        => 'New Description',
           :reconfigure_fqname => recon_fqname,
           :retire_fqname      => retire_fqname,
-          :fqname             => provision_fqname},
+          :fqname             => provision_fqname
+        },
         :key          => 'prov_edit__new',
         :rec_id       => st.id,
         :st_prov_type => 'generic'
@@ -217,8 +219,7 @@ describe CatalogController do
                     :description        => "New Description",
                     :selected_resources => [st.id],
                     :rsc_groups         => [[{:name => "Some name"}]],
-                    :fqname             => provision_fqname,
-                   },
+                    :fqname             => provision_fqname, },
         :key    => "st_edit__new",
         :rec_id => st.id,
       }
@@ -237,7 +238,7 @@ describe CatalogController do
       controller.instance_variable_set(:@sb, {})
       controller.instance_variable_set(:@_params, :button => "save")
       @st = FactoryGirl.create(:service_template)
-      3.times.each_with_index do |i|
+      3.times.each do |i|
         ns = FactoryGirl.create(:miq_ae_namespace, :name => "ns#{i}")
         cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls#{i}")
         FactoryGirl.create(:miq_ae_instance, :class_id => cls.id, :name => "inst#{i}")
@@ -251,7 +252,8 @@ describe CatalogController do
           :description        => "New Description",
           :reconfigure_fqname => recon_fqname,
           :retire_fqname      => retire_fqname,
-          :fqname             => provision_fqname},
+          :fqname             => provision_fqname
+        },
         :key          => "prov_edit__new",
         :rec_id       => @st.id,
         :st_prov_type => "generic"
@@ -288,7 +290,8 @@ describe CatalogController do
       session[:edit] = {
         :new => {
           :name        => @new_name,
-          :description => @new_description},
+          :description => @new_description
+        },
       }
     end
 
@@ -472,7 +475,7 @@ describe CatalogController do
       controller.send(:ot_remove_submit)
       expect(controller.send(:flash_errors?)).not_to be_truthy
       expect(assigns(:flash_array).first[:message]).to include("was deleted")
-      expect(OrchestrationTemplate.find_by_id(ot.id)).to be_nil
+      expect(OrchestrationTemplate.find_by(:id => ot.id)).to be_nil
     end
 
     it "Read-only Orchestration Template cannot deleted" do
@@ -481,7 +484,7 @@ describe CatalogController do
       controller.send(:ot_remove_submit)
       expect(controller.send(:flash_errors?)).to be_truthy
       expect(assigns(:flash_array).first[:message]).to include("read-only and cannot be deleted")
-      expect(OrchestrationTemplate.find_by_id(ot.id)).not_to be_nil
+      expect(OrchestrationTemplate.find_by(:id => ot.id)).not_to be_nil
     end
   end
 
@@ -497,7 +500,8 @@ describe CatalogController do
           :description => new_description,
           :content     => @new_content,
           :type        => new_type,
-          :draft       => false},
+          :draft       => false
+        },
         :key => "ot_add__new",
       }
       session[:edit] = edit
@@ -548,12 +552,10 @@ describe CatalogController do
       classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
       @tag1 = FactoryGirl.create(:classification_tag,
                                  :name   => "tag1",
-                                 :parent => classification
-                                )
+                                 :parent => classification)
       @tag2 = FactoryGirl.create(:classification_tag,
                                  :name   => "tag2",
-                                 :parent => classification
-                                )
+                                 :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ot).and_return([@tag1, @tag2])
       controller.instance_variable_set(:@sb,
                                        :trees       => {:ot_tree => {:active_node => "root"}},
@@ -657,7 +659,7 @@ describe CatalogController do
       expect(controller).to receive(:get_view_calculate_gtl_type).with(:orchestrationtemplate) do
         expect(controller.instance_variable_get(:@settings)).to include(:views => {:orchestrationtemplate => "tile"})
       end
-      controller.send(:get_view, "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate", {:gtl_dbname => :orchestrationtemplate})
+      controller.send(:get_view, "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate", :gtl_dbname => :orchestrationtemplate)
     end
 
     it "Renders list of orchestration templates using correct GTL type" do
@@ -684,8 +686,7 @@ describe CatalogController do
       dialog = FactoryGirl.create(:dialog,
                                   :label       => "Test Label",
                                   :description => "Test Description",
-                                  :buttons     => "submit,reset,cancel"
-                                 )
+                                  :buttons     => "submit,reset,cancel")
       retire_fqname    = 'ns0/cls0/inst0'
       provision_fqname = 'ns1/cls1/inst1'
       recon_fqname     = 'ns2/cls2/inst2'
@@ -696,7 +697,8 @@ describe CatalogController do
           :dialog_id          => dialog.id,
           :reconfigure_fqname => recon_fqname,
           :retire_fqname      => retire_fqname,
-          :fqname             => provision_fqname},
+          :fqname             => provision_fqname
+        },
       }
       controller.instance_variable_set(:@edit, edit)
     end
@@ -717,8 +719,7 @@ describe CatalogController do
       @st = FactoryGirl.create(:service_template)
       @catalog = FactoryGirl.create(:service_template_catalog,
                                     :name        => "foo",
-                                    :description => "FOO"
-                                   )
+                                    :description => "FOO")
       edit = {
         :new => {
           :name               => "New Name",
@@ -758,8 +759,7 @@ describe CatalogController do
         :new => {:name             => "",
                  :description      => "",
                  :fields           => [],
-                 :available_fields => [],
-        },
+                 :available_fields => [], },
         :key => "st_catalog_edit__new"
       }
       controller.instance_variable_set(:@edit, edit)
@@ -955,7 +955,7 @@ describe CatalogController do
             :dialog_id       => 2,
             :execution_ttl   => nil,
             :verbosity       => 4,
-            :log_output         => nil,
+            :log_output      => nil,
           },
           :retirement => {
             :new_dialog_name => 'test_dialog',
@@ -965,7 +965,7 @@ describe CatalogController do
             :playbook_id     => 2,
             :execution_ttl   => nil,
             :verbosity       => 0,
-            :log_output         => nil,
+            :log_output      => nil,
           }
         }
       }
@@ -999,11 +999,11 @@ describe CatalogController do
 
   context "#atomic_req_submit" do
     let(:ems) { FactoryGirl.create(:ems_openshift) }
-    let(:container_template) {
+    let(:container_template) do
       FactoryGirl.create(:container_template,
                          :ext_management_system => ems,
                          :name                  => "Test Template")
-    }
+    end
 
     let(:service_template_catalog) { FactoryGirl.create(:service_template_catalog) }
     let(:dialog) { FactoryGirl.create(:dialog) }
@@ -1041,11 +1041,11 @@ describe CatalogController do
 
   context "#fetch_ct_details" do
     let(:ems) { FactoryGirl.create(:ems_openshift) }
-    let(:container_template) {
+    let(:container_template) do
       FactoryGirl.create(:container_template,
                          :ext_management_system => ems,
                          :name                  => "Test Template")
-    }
+    end
 
     let(:service_template_catalog) { FactoryGirl.create(:service_template_catalog) }
     let(:dialog) { FactoryGirl.create(:dialog) }
@@ -1075,12 +1075,12 @@ describe CatalogController do
     end
 
     describe '#replace_right_cell' do
-      let(:dialog)           { FactoryGirl.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
+      let(:dialog) { FactoryGirl.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
       before do
         allow(controller).to receive(:params).and_return(:action => 'dialog_provision')
         controller.instance_variable_set(:@in_a_form, true)
         controller.instance_variable_set(:@record, dialog)
-        controller.instance_variable_set(:@edit, {:rec_id => '1'})
+        controller.instance_variable_set(:@edit, :rec_id => '1')
         controller.instance_variable_set(:@sb,
                                          :trees       => {:svccat_tree => {:open_nodes => [], :active_node => "root"}},
                                          :active_tree => :svccat_tree)
@@ -1090,7 +1090,7 @@ describe CatalogController do
 
       it 'should render and make form buttons visible when product setting is set to render old dialogs' do
         ::Settings.product.old_dialog_user_ui = true
-        controller.send(:replace_right_cell, {:action => "dialog_provision", :presenter => @presenter})
+        controller.send(:replace_right_cell, :action => "dialog_provision", :presenter => @presenter)
         expect(@presenter[:set_visible_elements]).to include(:form_buttons_div => true)
         expect(@presenter[:set_visible_elements]).to include(:buttons_on => true)
       end
@@ -1098,7 +1098,7 @@ describe CatalogController do
       it 'should not render and show form buttons when product setting is NOT set to render old dialogs' do
         ::Settings.product.old_dialog_user_ui = false
 
-        controller.send(:replace_right_cell, {:action => "dialog_provision", :presenter => @presenter})
+        controller.send(:replace_right_cell, :action => "dialog_provision", :presenter => @presenter)
         expect(@presenter[:set_visible_elements]).to include(:form_buttons_div => false)
       end
     end

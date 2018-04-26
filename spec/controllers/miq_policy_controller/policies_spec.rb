@@ -26,8 +26,8 @@ describe MiqPolicyController do
         session[:edit] = assigns(:edit)
         active_node = "xx-compliance_xx-compliance-containerGroup"
         allow(controller).to receive(:replace_right_cell)
-        controller.instance_variable_set(:@sb, {:trees       => {:policy_tree => {:active_node => active_node}},
-                                                :active_tree => :policy_tree})
+        controller.instance_variable_set(:@sb, :trees       => {:policy_tree => {:active_node => active_node}},
+                                               :active_tree => :policy_tree)
         controller.instance_variable_set(:@_params, :button => "add")
         controller.policy_edit
         sb = assigns(:sb)
@@ -42,7 +42,7 @@ describe MiqPolicyController do
                                                 :folder      => "compliance-containerGroup",
                                                 :nodeid      => "containerGroup"}}
         session[:edit] = {:new => {:mode => "compliance", :towhat => "ContainerGroup"}}
-        post :x_button, :pressed => "policy_new", :typ => "basic"
+        post :x_button, :params => { :pressed => "policy_new", :typ => "basic" }
         expect(response).to render_template("layouts/exp_atom/_editor")
         expect(response).to render_template("layouts/_exp_editor")
         expect(response).to render_template("miq_policy/_policy_details")

@@ -446,7 +446,7 @@ describe EmsCloudController do
       @ems = FactoryGirl.create(:ems_amazon)
     end
 
-    subject { get :show, :id => @ems.id }
+    subject { get :show, :params => { :id => @ems.id } }
 
     context "render listnav partial" do
       it do

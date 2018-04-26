@@ -34,7 +34,7 @@ describe ContainerReplicatorController do
       @replicator = FactoryGirl.create(:replicator_with_assoc)
     end
 
-    subject { get :show, :id => @replicator.id }
+    subject { get :show, :params => { :id => @replicator.id } }
 
     context "render" do
       render_views

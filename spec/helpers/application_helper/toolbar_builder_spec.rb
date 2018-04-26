@@ -260,8 +260,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       btn_num = "x_button_id_001"
       desc = 'the description for the button'
       @input = {:url       => "button",
-                :url_parms => "?id=#{@record.id}&button_id=#{btn_num}&cls=#{@record.class.name}&pressed=custom_button&desc=#{desc}"
-      }
+                :url_parms => "?id=#{@record.id}&button_id=#{btn_num}&cls=#{@record.class.name}&pressed=custom_button&desc=#{desc}"}
       @tb_buttons = {}
       @button = {:id => "custom_#{btn_num}"}
       @button = ApplicationHelper::Button::Basic.new(nil, nil, {}, {:id => "custom_#{btn_num}"})
@@ -340,8 +339,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       desc = 'the description for the button'
       @item = {:button    => "custom_#{btn_num}",
                :url       => "button",
-               :url_parms => "?id=#{@record.id}&button_id=#{btn_num}&cls=#{@record.class}&pressed=custom_button&desc=#{desc}"
-      }
+               :url_parms => "?id=#{@record.id}&button_id=#{btn_num}&cls=#{@record.class}&pressed=custom_button&desc=#{desc}"}
       @tb_buttons = {}
       @item_out = {}
     end

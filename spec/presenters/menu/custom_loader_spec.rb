@@ -9,9 +9,9 @@ describe Menu::CustomLoader do
       # create custom section with 2 custom items
       described_class.register(
         Menu::Section.new(:spike, 'Plugin', 'fa fa-map-pin', [
-          Menu::Item.new('plug1', 'Test', 'miq_report', {:feature => 'miq_report', :any => true}, '/plug'),
-          Menu::Item.new('plug2', 'Demo', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
-        ])
+                            Menu::Item.new('plug1', 'Test', 'miq_report', {:feature => 'miq_report', :any => true}, '/plug'),
+                            Menu::Item.new('plug2', 'Demo', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
+                          ])
       )
 
       expect(Menu::Manager.item('plug1')).to be
@@ -33,8 +33,8 @@ describe Menu::CustomLoader do
       # create custom section and place it before existing section 'compute' (Compute)
       described_class.register(
         Menu::Section.new(:spike3, 'Plugin 2', 'fa fa-map-pin', [
-          Menu::Item.new('plug4', 'Demo', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
-        ], :default, :compute)
+                            Menu::Item.new('plug4', 'Demo', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
+                          ], :default, :compute)
       )
 
       item = Menu::Manager.item('plug4')
@@ -50,8 +50,8 @@ describe Menu::CustomLoader do
       # create custom section and place it inside an existing section 'compute' (Compute), before existing subsection 'clo' (Cloud)
       described_class.register(
         Menu::Section.new(:spike3, 'Nested section after', 'fa fa-map-pin', [
-          Menu::Item.new('plug5', 'Test item', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
-        ], :default, :clo, :default, nil, :compute)
+                            Menu::Item.new('plug5', 'Test item', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo')
+                          ], :default, :clo, :default, nil, :compute)
       )
 
       item = Menu::Manager.item('plug5')

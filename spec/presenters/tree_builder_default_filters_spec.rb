@@ -1,7 +1,7 @@
 describe TreeBuilderDefaultFilters do
   context 'TreeBuilderDefaultFilters' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Default filters Group")
       login_as FactoryGirl.create(:user, :userid => 'default_filters__wilma', :miq_groups => [@group])
       @filters = [FactoryGirl.create(:miq_search,

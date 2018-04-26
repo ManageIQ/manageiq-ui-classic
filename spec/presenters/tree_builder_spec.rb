@@ -49,8 +49,7 @@ describe TreeBuilder do
                 'text'    => "Rates",
                 'tooltip' => "Rates",
                 'class'   => '',
-                'icon'    => 'pficon pficon-folder-close'
-              }]
+                'icon'    => 'pficon pficon-folder-close'}]
       tree.locals_for_render.key?(:bs_tree)
       expect(JSON.parse(tree.locals_for_render[:bs_tree])).to eq(nodes)
     end
@@ -135,7 +134,7 @@ describe TreeBuilder do
     it 'counts things in an Array' do
       expect(builder.count_only_or_objects(true, [])).to eq(0)
       expect(builder.count_only_or_objects(true, [:x])).to eq(1)
-      expect(builder.count_only_or_objects(true, [:x, :y, :z, :z, :y])).to eq(5)
+      expect(builder.count_only_or_objects(true, %i(x y z z y))).to eq(5)
     end
 
     it 'returns a collection when not counting' do
@@ -149,7 +148,7 @@ describe TreeBuilder do
 
       expect(builder.count_only_or_objects(false, [])).to eq([])
       expect(builder.count_only_or_objects(false, [:x])).to eq([:x])
-      expect(builder.count_only_or_objects(false, [:x, :y, :z, :z, :y])).to eq([:x, :y, :z, :z, :y])
+      expect(builder.count_only_or_objects(false, %i(x y z z y))).to eq(%i(x y z z y))
     end
 
     it 'sorts the collection' do
@@ -197,7 +196,7 @@ describe TreeBuilder do
 
   context "#hide_vms" do
     before(:each) do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "TreeBuilder")
       login_as FactoryGirl.create(:user, :userid => 'treebuilder_wilma', :miq_groups => [@group])
     end

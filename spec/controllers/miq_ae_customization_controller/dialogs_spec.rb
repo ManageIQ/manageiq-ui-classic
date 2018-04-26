@@ -153,8 +153,7 @@ describe MiqAeCustomizationController do
       it "flash message displays Dialog Label being deleted" do
         dialog = FactoryGirl.create(:dialog, :label       => "Test Label",
                                              :description => "Test Description",
-                                             :buttons     => "submit,reset,cancel"
-                                   )
+                                             :buttons     => "submit,reset,cancel")
 
         controller.instance_variable_set(:@sb,
                                          :trees       => {
@@ -192,8 +191,7 @@ describe MiqAeCustomizationController do
         login_as FactoryGirl.create(:user, :features => "dialog_edit")
         @dialog = FactoryGirl.create(:dialog,
                                      :label       => "Test Label",
-                                     :description => "Test Description"
-                                    )
+                                     :description => "Test Description")
         tree_hash = {
           :active_tree => :dialog_edit_tree,
           :trees       => {
@@ -334,8 +332,7 @@ describe MiqAeCustomizationController do
         login_as FactoryGirl.create(:user, :features => ["dialog_add_tab"])
         @dialog = FactoryGirl.create(:dialog,
                                      :label       => "Test Label",
-                                     :description => "Test Description"
-                                    )
+                                     :description => "Test Description")
         tree_hash = {
           :node_typ    => 'tab',
           :active_tree => :dialog_edit_tree,

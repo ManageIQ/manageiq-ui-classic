@@ -13,7 +13,7 @@ describe CloudTopologyService do
     end
 
     it "topology contains only the expected keys" do
-      expect(subject.keys).to match_array([:items, :kinds, :relations, :icons])
+      expect(subject.keys).to match_array(%i(items kinds relations icons))
     end
 
     it "provider has unknown status when no authentication exists" do
@@ -28,13 +28,13 @@ describe CloudTopologyService do
         .instance_variable_set(:@providers, ManageIQ::Providers::CloudManager.where(:id => ems.id))
 
       expect(subject[:items]).to eq(
-        "CloudManager" + ems.id.to_s =>   {:name         => ems.name,
-                                           :status       => "Unknown",
-                                           :kind         => "CloudManager",
-                                           :display_kind => "Openstack",
-                                           :miq_id       => ems.id,
-                                           :model        => ems.class.name,
-                                           :key          => "CloudManager" + ems.id.to_s}
+        "CloudManager" + ems.id.to_s => {:name         => ems.name,
+                                         :status       => "Unknown",
+                                         :kind         => "CloudManager",
+                                         :display_kind => "Openstack",
+                                         :miq_id       => ems.id,
+                                         :model        => ems.class.name,
+                                         :key          => "CloudManager" + ems.id.to_s}
       )
     end
 

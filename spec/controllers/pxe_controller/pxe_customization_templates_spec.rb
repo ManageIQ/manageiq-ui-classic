@@ -7,8 +7,7 @@ describe PxeController do
                                            :active_node => "xx-xx-#{customization_template.id}"
                                          }
                                        },
-                                             :active_tree => :customization_templates_tree
-                                      )
+                                             :active_tree => :customization_templates_tree)
       edit = {
         :new => {
           :name        => "New Name",
@@ -20,8 +19,7 @@ describe PxeController do
       controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit
       controller.instance_variable_set(:@_params,                                           :id     => customization_template.id,
-                                                                                            :button => "reset"
-                                      )
+                                                                                            :button => "reset")
       expect(controller).to receive(:customization_template_edit)
       controller.template_create_update
       expect(assigns(:flash_array).first[:message]).to include("reset")

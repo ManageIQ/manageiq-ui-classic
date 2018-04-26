@@ -1,7 +1,7 @@
 describe ContainerSummaryHelper do
   let(:container_project)     { FactoryGirl.create(:container_project) }
-  let(:rel_hash_with_link)    { [:label, :value, :link, :title] }
-  let(:rel_hash_without_link) { [:label, :value] }
+  let(:rel_hash_with_link)    { %i(label value link title) }
+  let(:rel_hash_without_link) { %i(label value) }
 
   before do
     self.class.send(:include, ApplicationHelper)

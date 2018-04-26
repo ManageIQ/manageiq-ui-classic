@@ -5,8 +5,7 @@ describe VmOrTemplateController do
       @vm = FactoryGirl.create(:vm_vmware)
       @snapshot = FactoryGirl.create(:snapshot, :vm_or_template_id => @vm.id,
                                                 :name              => 'EvmSnapshot',
-                                                :description       => "Some Description"
-                                    )
+                                                :description       => "Some Description")
       @vm.snapshots = [@snapshot]
       tree_hash = {
         :trees         => {
