@@ -1317,7 +1317,7 @@ module VmCommon
         elsif %w(attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
                  associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
-        elsif action != "retire" && action != "reconfigure_update"
+        elsif action != "retire" && action != "reconfigure_update" && action != "snap_vm"
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
         end
 
