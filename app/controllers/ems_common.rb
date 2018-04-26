@@ -165,6 +165,28 @@ module EmsCommon
                     :url  => "/#{controller_name}/#{@ems.id}/edit")
   end
 
+  def timeline_pressed
+    @record = find_record_with_rbac(model, params[:id])
+    session[:tl_record_id] = @record.id
+    javascript_redirect(polymorphic_path(@record, :display => 'timeline'))
+  end
+
+  def performance_pressed
+    @showtype = "performance"
+    @record = find_record_with_rbac(model, params[:id])
+    drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
+                    :url  => show_link(@record, :refresh => "n", :display => "performance"))
+    perf_gen_init_options # Intialize options, charts are generated async
+    javascript_redirect(polymorphic_path(@record, :display => "performance"))
+  end
+
+  def ad_hoc_metrics_pressed
+    @showtype = "ad_hoc_metrics"
+    @record = find_record_with_rbac(model, params[:id])
+    drop_breadcrumb(:name => @record.name + _(" (Ad hoc Metrics)"), :url => show_link(@record))
+    javascript_redirect(polymorphic_path(@record, :display => "ad_hoc_metrics"))
+  end
+
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit]                                  # Restore @edit for adv search box
@@ -292,36 +314,22 @@ module EmsCommon
       check_compliance(model) if params[:pressed] == "#{table_name}_check_compliance"
       edit_record if params[:pressed] == "#{table_name}_edit"
       if params[:pressed] == "#{table_name}_timeline"
-        @showtype = "timeline"
-        @record = find_record_with_rbac(model, params[:id])
-        @timeline = @timeline_filter = true
-        @lastaction = "show_timeline"
-        tl_build_timeline                       # Create the timeline report
-        drop_breadcrumb(:name => _("Timelines"), :url => show_link(@record, :refresh => "n", :display => "timeline"))
-        session[:tl_record_id] = @record.id
-        javascript_redirect polymorphic_path(@record, :display => 'timeline')
+        timeline_pressed
         return
       end
       if params[:pressed] == "#{table_name}_perf"
-        @showtype = "performance"
-        @record = find_record_with_rbac(model, params[:id])
-        drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
-                        :url  => show_link(@record, :refresh => "n", :display => "performance"))
-        perf_gen_init_options # Intialize options, charts are generated async
-        javascript_redirect polymorphic_path(@record, :display => "performance")
+        performance_pressed
         return
       end
       if params[:pressed] == "#{table_name}_ad_hoc_metrics"
-        @showtype = "ad_hoc_metrics"
-        @record = find_record_with_rbac(model, params[:id])
-        drop_breadcrumb(:name => @record.name + _(" (Ad hoc Metrics)"), :url => show_link(@record))
-        javascript_redirect polymorphic_path(@record, :display => "ad_hoc_metrics")
+        ad_hoc_metrics_pressed
         return
       end
       if params[:pressed] == "refresh_server_summary"
         javascript_redirect :back
         return
       end
+
       if params[:pressed] == "ems_cloud_recheck_auth_status"          ||
          params[:pressed] == "ems_infra_recheck_auth_status"          ||
          params[:pressed] == "ems_physical_infra_recheck_auth_status" ||

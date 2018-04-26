@@ -2,6 +2,7 @@ module Mixins
   module MoreShowActions
     def show_timeline
       @showtype = "timeline"
+      @layout = 'timeline'
       session[:tl_record_id] = params[:id] if params[:id]
       @lastaction = "show_timeline"
       @timeline = @timeline_filter = true
