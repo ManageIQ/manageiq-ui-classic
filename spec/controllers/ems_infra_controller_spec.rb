@@ -281,6 +281,11 @@ describe EmsInfraController do
     context "display=timeline" do
       let(:url_params) { {:display => 'timeline'} }
       it { is_expected.to have_http_status 200 }
+
+      it 'timeline toolbar is selected' do
+        expect(ApplicationHelper::Toolbar::TimelineCenter).to receive(:definition)
+        subject
+      end
     end
 
     context "render listnav partial" do
