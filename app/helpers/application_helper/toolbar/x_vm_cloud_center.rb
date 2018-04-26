@@ -45,6 +45,13 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           t = N_('Edit Management Engine Relationship'),
           t),
+        button(
+          :vm_reconfigure,
+          'pficon pficon-edit fa-lg',
+          N_('Reconfigure the Memory/CPU of this VM'),
+          N_('Reconfigure this VM'),
+          :klass => ApplicationHelper::Button::VmReconfigure
+        ),
       ]
     ),
   ])

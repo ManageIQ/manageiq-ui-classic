@@ -128,13 +128,13 @@
         %thead
           %th= _('Name')
           %th= _('Type')
-          %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Mode')
-          %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Controller Type')
+          %th{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}= _('Mode')
+          %th{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}= _('Controller Type')
           %th= _('Size')
           %th= _('Unit')
-          %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Dependent')
-          %th= _('Delete Backing')
-          %th{"ng-if" => @reconfigitems.first.vendor == 'redhat'}= _('Bootable')
+          %th{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}= _('Dependent')
+          %th{"ng-hide" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('CloudManager')"}= _('Delete Backing')
+          %th{"ng-if" => "vm.vm_vendor == 'redhat'"}= _('Bootable')
           - if supports_reconfigure_disksize?
             %th{:colspan => 2}= _('Actions')
           - else
@@ -144,14 +144,16 @@
               "ng-form"     => "rowForm"}
             %td
             %td
+              - options = @reconfigitems.first.try(:disk_types) || %w(thick thin)
+              - default_option = @reconfigitems.first.try(:disk_default_type) || 'thin'
               = select_tag('hdType',
-                           options_for_select(%w(thick thin)),
+                           options_for_select(options, :selected => default_option),
                            "ng-model"                    => "vm.reconfigureModel.hdType",
                            "ng-change"                   => "",
                            "data-width"                  => "auto",
                            "required"                    => "",
                            "selectpicker-for-select-tag" => "")
-            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
               = select_tag('hdMode',
                             options_for_select(%w(persistent nonpersistent)),
                             "ng-model"                    => "vm.reconfigureModel.hdMode",
@@ -160,7 +162,7 @@
                             "required"                    => "",
                             "selectpicker-for-select-tag" => "",
                             "width"                       => "10")
-            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
               - options = @reconfigitems.first.try(:scsi_controller_types) || {}
               = select_tag('Controller',
                            options_for_select(options),
@@ -187,13 +189,13 @@
                        "data-width"                  => "auto",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
-            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
               %input{"bs-switch" => "",
                      :data       => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
                      "type"      => "checkbox",
                      "name"      => "vm.cb_dependent",
                      "ng-model"  => "vm.reconfigureModel.cb_dependent"}
-            %td
+            %td{"ng-hide" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('CloudManager')"}
             %td{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
               %input{"bs-switch" => "",
                      :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
@@ -213,9 +215,9 @@
               {{disk.hdFilename}}
             %td
               {{disk.hdType}}
-            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
               {{disk.hdMode}}
-            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
               {{disk.new_controller_type}}
             %td{"ng-if" => "disk.add_remove != 'resizing'"}
               {{disk.hdSize}}
@@ -244,7 +246,7 @@
                        "data-width"                  => "auto",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
-            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
               %input{"bs-switch"     => "",
                      :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
                      "type"          => "checkbox",
@@ -253,7 +255,7 @@
                      "switch-active" => "{{disk.add_remove!='add'}}",
                      "ng-readonly"   => "disk.add_remove=='add'",
                      "ng-if"         => "disk.add_remove=='add'"}
-            %td
+            %td{"ng-hide" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('CloudManager')"}
               %input{"bs-switch"     => "",
                      :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
                      "type"          => "checkbox",

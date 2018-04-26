@@ -17,7 +17,10 @@ describe('reconfigureFormController', function() {
       socket_count:           '2',
       cores_per_socket_count: '3',
       disks:                 [{hdFilename: "test_disk.vmdk", hdType: "thick", hdMode: "persistent", new_controller_type: "VirtualLsiLogicController", hdSize: "0", hdUnit: "MB", add_remove: ""}],
-      network_adapters:      [{name: "Network adapter 1", vlan: "test_network", mac: "00:00:00:00:00:00", add_remove: ""}]};
+      network_adapters:      [{name: "Network adapter 1", vlan: "test_network", mac: "00:00:00:00:00:00", add_remove: ""}],
+      vm_vendor:              'vm-vendor',
+      vm_type:                'vm-type',
+      disk_default_type:      'disk-default-type'};
 
     $httpBackend = _$httpBackend_;
     $httpBackend.whenGET('reconfigure_form_fields/1000000000003,1000000000001,1000000000002').respond(reconfigureFormResponse);
@@ -59,6 +62,18 @@ describe('reconfigureFormController', function() {
     });
     it('sets the network adapter data to the network adapter data returned with the http request', function() {
       expect(vm.reconfigureModel.vmNetworkAdapters).toEqual([{name: "Network adapter 1", vlan: "test_network", mac: "00:00:00:00:00:00", add_remove: ""}]);
+    });
+
+    it('sets the vm vendor data to the data returned with the http request', function() {
+      expect(vm.vm_vendor).toEqual('vm-vendor');
+    });
+
+    it('sets the vm type data to the data returned with the http request', function() {
+      expect(vm.vm_type).toEqual('vm-type');
+    });
+
+    it('sets the vm disk_default_type to the data returned with the http request', function() {
+      expect(vm.disk_default_type).toEqual('disk-default-type');
     });
   });
 

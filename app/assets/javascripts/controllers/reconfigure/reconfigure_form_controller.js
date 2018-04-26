@@ -36,6 +36,9 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.validateClicked = miqService.validateWithAjax;
     vm.modelCopy = angular.copy( vm.reconfigureModel );
     vm.model = 'reconfigureModel';
+    vm.vm_vendor = '';
+    vm.vm_type = '';
+    vm.disk_default_type = '';
 
     ManageIQ.angular.scope = vm;
 
@@ -179,6 +182,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
         vm.reconfigureModel.vmAddDisks.push({disk_size_in_mb: diskSizeAdd,
           persistent: dmode,
           thin_provisioned: dtype,
+          type: disk.hdType,
           new_controller_type: disk.new_controller_type,
           dependent: disk.cb_dependent,
           bootable: disk.cb_bootable});
@@ -213,7 +217,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.resetAddValues = function() {
-    vm.reconfigureModel.hdType = 'thin';
+    vm.reconfigureModel.hdType = vm.disk_default_type;
     vm.reconfigureModel.hdMode = 'persistent';
     vm.reconfigureModel.hdSize = '';
     vm.reconfigureModel.hdUnit = 'MB';
@@ -285,6 +289,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.enableDiskAdd = function() {
+    vm.resetAddValues();
     vm.reconfigureModel.addEnabled = true;
   };
 
@@ -408,6 +413,9 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.cb_cpu                                  = data.cb_cpu;
     vm.reconfigureModel.vmdisks                = angular.copy(data.disks);
     vm.reconfigureModel.vmNetworkAdapters      = angular.copy(data.network_adapters);
+    vm.vm_vendor                               = data.vm_vendor;
+    vm.vm_type                                 = data.vm_type;
+    vm.disk_default_type                       = data.disk_default_type;
     vm.updateDisksAddRemove();
     vm.updateNetworkAdaptersAddRemove();
 
