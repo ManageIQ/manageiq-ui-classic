@@ -1016,7 +1016,6 @@ class ApplicationController < ActionController::Base
       if has_listicon
         item = listicon_item(view, row['id'])
         icon, icon2, image, picture = listicon_glyphicon(item)
-        image = "100/#{(@listicon || view.db).underscore}.png" if icon.nil? && image.nil? # TODO: we want to get rid of this
         # FIXME: adding exceptions here is a wrong approach
         icon = nil if params[:controller] == 'pxe'
         new_row[:cells] << {:title => _('View this item'),
