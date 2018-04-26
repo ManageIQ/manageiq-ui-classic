@@ -164,16 +164,8 @@ module TextualSummaryHelper
   end
 
   def textual_class_icon(klass)
-    icon = klass.decorate.try(:fonticon)
-    image = klass.decorate.try(:fileicon)
-
-    if icon || image
-      {:icon => icon, :image => image}
-    elsif klass <= MiqTemplate
-      {:image => "100/vm.png"}
-    else
-      {:image => "100/#{klass.name.underscore}.png"}
-    end
+    decorated = klass.decorate
+    {:icon => decorated.try(:fonticon), :image => decorated.try(:fileicon)}
   end
 
   def textual_authentications(authentications)
