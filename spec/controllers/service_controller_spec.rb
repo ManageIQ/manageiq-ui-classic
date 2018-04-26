@@ -103,7 +103,7 @@ describe ServiceController do
     end
   end
 
-  context "#show" do
+  describe "#show" do
     render_views
 
     it 'contains the associated tags for the ansible service template' do
@@ -182,7 +182,7 @@ describe ServiceController do
       expect(response).to redirect_to(:action => 'explorer', :id => "s-#{service.id}")
     end
 
-    context "#button" do
+    describe "#button" do
       render_views
 
       before(:each) do
@@ -211,7 +211,7 @@ describe ServiceController do
     end
   end
 
-  context "#sanitize_output" do
+  describe "#sanitize_output" do
     it "escapes characters in the output string" do
       output = controller.send(:sanitize_output, "I'm \"\\'Fred\\'\" {{Flintstone}}")
       expect(output).to eq("I\\'m \\\"\\'Fred\\'\\\" \\{\\{Flintstone\\}\\}")
@@ -374,6 +374,30 @@ describe ServiceController do
             expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Services (Names with \"#{search}\")")
           end
         end
+      end
+    end
+  end
+
+  context 'clicking on Active/Retired Services node in the tree, after applying a filter' do
+    describe '#get_node_info' do
+      let(:s) { {:adv_search => {"Service" => {:expression => {}}}, :edit => {:expression => {}}} }
+
+      before do
+        allow(controller).to receive(:session).and_return(s)
+        controller.instance_variable_set(:@_params, :action => 'tree_select')
+        controller.instance_variable_set(:@sb, {})
+      end
+
+      it 'resets session to same values as first time in, for Active Services' do
+        controller.send(:get_node_info, 'xx-asrv')
+        expect(controller.session[:edit]).to be_nil
+        expect(controller.session[:adv_search]["Service"]).to be_nil
+      end
+
+      it 'resets session to same values as first time in, for Retired Services' do
+        controller.send(:get_node_info, 'xx-rsrv')
+        expect(controller.session[:edit]).to be_nil
+        expect(controller.session[:adv_search]["Service"]).to be_nil
       end
     end
   end
