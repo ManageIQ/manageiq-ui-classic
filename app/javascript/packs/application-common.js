@@ -7,7 +7,6 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import 'proxy-polyfill';
-import React from 'react';
 
 import { mount } from '../react/mounter';
 import componentRegistry from '../react/componentRegistry';
@@ -18,7 +17,6 @@ import reactBlueprint from '../miq-component/react-blueprint';
 import * as helpers from '../miq-component/helpers';
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
-import { SnapshotForm } from '@manageiq/react-ui-components/dist/vm-snapshot-form';
 
 ManageIQ.react = {
   mount,
