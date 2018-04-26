@@ -28,6 +28,6 @@ ManageIQ.angular.app.service('DialogEditorHttp', ['$http', 'API', function($http
   this.loadCategories = function() {
     return API.get('/api/categories' +
                         '?expand=resources' +
-                        '&attributes=description,single_value,children');
+                        '&attributes=id,name,description,single_value,children');
   };
 }]);
