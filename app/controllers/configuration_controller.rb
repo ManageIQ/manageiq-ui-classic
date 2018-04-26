@@ -243,6 +243,7 @@ class ConfigurationController < ApplicationController
   def timeprofile_new
     assert_privileges("timeprofile_new")
     @timeprofile = TimeProfile.new
+    @timeprofile_action = "timeprofile_new"
     set_form_vars
     @in_a_form = true
     @breadcrumbs = []
@@ -253,6 +254,7 @@ class ConfigurationController < ApplicationController
   def timeprofile_edit
     assert_privileges("tp_edit")
     @timeprofile = TimeProfile.find(params[:id])
+    @timeprofile_action = "timeprofile_edit"
     set_form_vars
     @tp_restricted = true if @timeprofile.profile_type == "global" && !admin_user?
     title = (@timeprofile.profile_type == "global" && !admin_user?) ? _("Time Profile") : _("Edit")
@@ -322,6 +324,7 @@ class ConfigurationController < ApplicationController
     session[:set_copy] = "copy"
     @in_a_form = true
     @timeprofile = TimeProfile.find(params[:id])
+    @timeprofile_action = "timeprofile_copy"
     set_form_vars
     session[:changed] = false
     drop_breadcrumb(:name => _("Adding copy of '%{description}'") % {:description => @timeprofile.description},
