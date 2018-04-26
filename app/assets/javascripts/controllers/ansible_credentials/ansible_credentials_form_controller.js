@@ -145,7 +145,12 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
   }
 
   function setManagerResource(response) {
-    vm.credentialModel.manager_resource = { "href": response.resources[0].href };
+    if (response.resources.length > 0) {
+      vm.credentialModel.manager_resource = { "href": response.resources[0].href };
+    } else {
+      vm.credentialModel.manager_resource = null;
+      miqService.miqFlash('error', __('Embedded Ansible service is not available.'));
+    }
   }
 
   init();
