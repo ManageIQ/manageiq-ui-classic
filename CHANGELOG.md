@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 84 ending 2018-04-23
+
+### Added
+- Server summary page changes [(#3754)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3754)
+- Add button in toolbar for remotely accessing a physical server [(#3690)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3690)
+- Add delete button to network router list and detail screen [(#3436)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3436)
+- Add Compliance Information [(#3419)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3419)
+- Add redirect to request show_list page [(#3409)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3409)
+- Add wrapper for widget in Dashboard [(#3281)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3281)
+
+### Fixed
+- Fix title in Config Settings page to match the accordion [(#3819)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3819)
+- Fixes Service Catalog Item Custom subtype display [(#3809)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3809)
+- Added setting of `@ems` to fix the nilclass error. [(#3805)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3805)
+- Render new dialog runner for all service types. [(#3793)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3793)
+- Fix using old options for calculating [(#3788)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3788)
+- Clear the request field when switching the button type to 'Default' [(#3787)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3787)
+- Send the tree data for explorer trees as an object instead of JSON [(#3785)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3785)
+- Add custom attributes to playbook summary [(#3783)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3783)
+- save/render flash message after Network Router delete is initiated. [(#3775)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3775)
+- Fix enabling/disabling Add button when creating new user [(#3771)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3771)
+- Use fonticons with color in quadicons' powerstate quadrants [(#3770)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3770)
+- Mark CloudSubnet.cidr as required [(#3769)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3769)
+- Fix generic object show in services [(#3768)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3768)
+- Fix user edit [(#3767)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3767)
+- Fix bugs on set ownership screen [(#3759)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3759)
+- Meaningful openscap report filenames [(#3758)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3758)
+- Remove 'Include C&U metrics' option for Metering Reports [(#3751)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3751)
+- Swap the save/cancel buttons on the dialog editor to be consistent [(#3749)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3749)
+- Fixed Secondary filter to be added/edited correctly. [(#3747)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3747)
+- Fix Control explorer policies Search clear button [(#3745)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3745)
+- Fix clearing search after selecting filter in Datastores [(#3740)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3740)
+- Fix url for service / vm / instance / stack retirement [(#3737)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3737)
+- Networks > * forms - use the API to retrieve the list of network managers [(#3736)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3736)
+- Skip re-validation when non-required fields are cleared [(#3705)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3705)
+- Azure labeling and tagging support [(#3697)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3697)
+- Fix title in service details page when searching text [(#3656)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3656)
+- Fix the setting for the retirement_remove_resources flag [(#3510)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3510)
+- Regulate encryption when creating new volume from snapshot [(#1651)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1651)
+
 ## Unreleased as of Sprint 83 ending 2018-04-09
 
 ### Added
