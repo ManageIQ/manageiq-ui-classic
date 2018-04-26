@@ -1,5 +1,6 @@
-%miq-quadicon.center-block
+- uid = "quad-#{rand(36**8).to_s(36)}"
+%miq-quadicon.center-block{:id => uid}
 :javascript
   var data = camelizeQuadicon(#{quadicon_hash(record).to_json});
-  document.querySelector('miq-quadicon').setAttribute('data', JSON.stringify(data));
-  miq_bootstrap('miq-quadicon');
+  document.querySelector("miq-quadicon##{uid}").setAttribute('data', JSON.stringify(data));
+  miq_bootstrap("miq-quadicon##{uid}");
