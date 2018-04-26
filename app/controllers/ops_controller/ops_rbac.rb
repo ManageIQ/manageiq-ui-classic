@@ -893,16 +893,20 @@ module OpsController::OpsRbac
       end
     when "u"
       @right_cell_text = _("EVM User \"%{name}\"") % {:name => User.find(id).name}
+      rbac_list("user")
       rbac_user_get_details(id)
     when "g"
       @right_cell_text = _("EVM Group \"%{name}\"") % {:name => MiqGroup.find(id).description}
       @edit = nil
+      rbac_list("group")
       rbac_group_get_details(id)
     when "ur"
       @right_cell_text = _("Role \"%{name}\"") % {:name => MiqUserRole.find(id).name}
+      rbac_list("role")
       rbac_role_get_details(id)
     when "tn"
       rbac_tenant_get_details(id)
+      rbac_list("tenant")
       @right_cell_text = _("%{model} \"%{name}\"") % {:model => tenant_type_title_string(@tenant.divisible),
                                                       :name  => @tenant.name}
     else # Root node

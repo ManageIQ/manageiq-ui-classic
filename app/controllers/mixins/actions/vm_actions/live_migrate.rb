@@ -4,7 +4,11 @@ module Mixins
       module LiveMigrate
         def livemigratevms
           assert_privileges("instance_live_migrate")
-          session[:live_migrate_items] = checked_or_params
+          recs = checked_or_params
+          @edit = {}
+          @edit[:object_ids] = recs
+          session[:edit] = @edit
+          session[:live_migrate_items] = recs
           if @explorer
             live_migrate
             @refresh_partial = "vm_common/live_migrate"

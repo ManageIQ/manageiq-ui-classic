@@ -56,13 +56,6 @@
                   'paging_div_buttons_type'          => "Submit"}
 
   %hr
-  %div
-    %h3
-      = n_("1 Instance to be Live Migrated", "%{amount} Instances to be Live Migrated", @live_migrate_items.length) % {:amount => @live_migrate_items.length}
-    - if @live_migrate_items
-      - @embedded = true
-      - @quadicon_no_url = true
-      = render :partial => "layouts/gtl"
 
 - unless @explorer
   %table{:width => '100%'}
@@ -83,3 +76,10 @@
 :javascript
   ManageIQ.angular.app.value('vmCloudLiveMigrateFormId', "#{@live_migrate_items.length == 1 ? @live_migrate_items[0].id : ''}");
   miq_bootstrap('#form_div');
+%div
+  %h3
+    = n_("1 Instance to be Live Migrated", "%{amount} Instances to be Live Migrated", @live_migrate_items.length) % {:amount => @live_migrate_items.length}
+  - if @live_migrate_items
+    - @embedded = true
+    - @quadicon_no_url = true
+    = render :partial => "layouts/gtl"

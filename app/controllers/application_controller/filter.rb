@@ -220,7 +220,7 @@ module ApplicationController::Filter
     @edit[@expkey].history.reset(@edit[@expkey][:expression])
     @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the expression table
     @edit[@expkey][:selected] = {:id => 0}                                    # Save the last search loaded
-    @edit[:adv_search_name] = @edit[:new_search_name] = nil                   # Clear search name
+    @edit[:adv_search_name] = nil                                             # Clear search name
     @edit[:adv_search_report] = nil                                           # Clear the report name
     session[:adv_search] ||= {}                                               # Create/reuse the adv search hash
     session[:adv_search][@edit[@expkey][:exp_model]] = copy_hash(@edit)       # Save by model name in settings
