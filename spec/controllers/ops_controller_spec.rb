@@ -40,6 +40,7 @@ describe OpsController do
           EvmSpecHelper.seed_specific_product_features(%w(rbac_group_edit))
           allow(User).to receive(:current_user).and_return(user)
           allow(Rbac).to receive(:role_allows?).and_call_original
+          allow(controller).to receive(:current_user).and_return(user)
           login_as user
         end
 
