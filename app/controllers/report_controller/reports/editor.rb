@@ -169,7 +169,10 @@ module ReportController::Reports::Editor
     build_tabs
 
     get_time_profiles # Get time profiles list (global and user specific)
+
     cb_entities_by_provider if Chargeback.db_is_chargeback?(@edit[:new][:model])
+    refresh_chargeback_filter_tab if Chargeback.db_is_chargeback?(@edit[:new][:model])
+
     case @sb[:miq_tab].split("_")[1]
     when "1"  # Select columns
       @edit[:models] ||= reportable_models
@@ -1302,16 +1305,6 @@ module ReportController::Reports::Editor
       @edit[:new][:cb_end_interval_offset] = options[:end_interval_offset]
       @edit[:new][:cb_groupby] = options[:groupby]
       cb_entities_by_provider
-    end
-
-    # Only show chargeback users choice if an admin
-    if admin_user?
-      @edit[:cb_users] = User.all.each_with_object({}) { |u, h| h[u.userid] = u.name }
-      @edit[:cb_tenant] = Tenant.all.each_with_object({}) { |t, h| h[t.id] = t.name }
-    else
-      @edit[:new][:cb_show_typ] = "owner"
-      @edit[:new][:cb_owner_id] = session[:userid]
-      @edit[:cb_owner_name] = current_user.name
     end
 
     # Build trend limit cols array
