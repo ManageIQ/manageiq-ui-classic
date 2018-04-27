@@ -965,26 +965,6 @@ module ApplicationHelper
     end
   end
 
-  # Function returns a HTML fragment that represents an image with certain
-  # options or an image with link and different options in case of a condition
-  # has a true or a false value.
-  #
-  # args
-  #     :cond         --- bool    - the condition to be met
-  #     :image        --- string  - the URL of the image
-  #     :opts_true    --- hash    - HTML options for image_tag() if cond == true
-  #     :opts_false   --- hash    - HTML options for image_tag() if cond == false
-  #     :link         --- hash    - options for link_to()
-  #     :opts_link    --- hash    - HTML options for link_to()
-  #
-  def link_image_if(args)
-    if args[:cond]
-      image_tag(args[:image], args[:opts_true])
-    else
-      link_to(image_tag(args[:image], args[:opts_false]), args[:link], args[:opts_link])
-    end
-  end
-
   # FIXME: params[:type] is used in multiple contexts, we should rename it to
   # :gtl_type or remove it as we move to the Angular GTL component
   def pagination_or_gtl_request?
