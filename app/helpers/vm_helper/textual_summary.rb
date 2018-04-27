@@ -187,7 +187,7 @@ module VmHelper::TextualSummary
   end
 
   def textual_retirement_state
-    @record.retirement_state.to_s.capitalize
+    {:label => _("Retirement State"), :value => @record.retirement_state.to_s.capitalize}
   end
 
   def textual_provisioned
