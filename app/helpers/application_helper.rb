@@ -1334,6 +1334,7 @@ module ApplicationHelper
                         container_service
                         container_template
                         container_topology
+                        ems_block_storage
                         ems_cloud
                         ems_cluster
                         ems_container
