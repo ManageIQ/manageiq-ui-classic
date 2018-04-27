@@ -1,5 +1,5 @@
 class VmdbDatabaseSettingDecorator < MiqDecorator
   def self.fonticon
-    'fa fa-cog'
+    'pficon pficon-settings'
   end
 end
