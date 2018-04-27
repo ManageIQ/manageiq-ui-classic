@@ -1,5 +1,8 @@
 module ApplicationHelper
   include_concern 'ViewsShared'
+  include_concern 'Flash'
+  include_concern 'Listnav'
+  include_concern 'Navbar'
   include_concern 'PageLayouts'
   include_concern 'Tasks'
   include Sandbox
