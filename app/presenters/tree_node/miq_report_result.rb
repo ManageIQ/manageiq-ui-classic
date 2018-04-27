@@ -1,6 +1,5 @@
 module TreeNode
   class MiqReportResult < Node
-
     set_attributes(:text, :tooltip, :expand) do
       expand = nil
       if @object.last_run_on.nil? && %w(queued running).include?(@object.status.downcase)

@@ -4,7 +4,7 @@ module TreeNode
 
     set_attributes(:icon, :image) do
       # Having a "flat" case here makes the code more readable
-      # rubocop:disable LiteralInCondition
+      # rubocop:disable LiteralAsCondition
       case true
       when !@object.domain?
         icon = @object.decorate.fonticon
@@ -17,7 +17,7 @@ module TreeNode
       else
         image = "svg/vendor-#{@object.top_level_namespace.downcase}.svg"
       end
-      # rubocop:enable LiteralInCondition
+      # rubocop:enable LiteralAsCondition
       [icon, image]
     end
 

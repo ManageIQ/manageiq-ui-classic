@@ -62,7 +62,7 @@ module TreeNode
         base_class = "ManageIQ::Providers::AnsibleTower::AutomationManager" if @object.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager)
         prefix = TreeBuilder.get_prefix_for_model(base_class)
         cid = @object.id
-        "#{@options[:full_ids] && !@parent_id.blank? ? "#{@parent_id}_" : ''}#{prefix}-#{cid}"
+        "#{@options[:full_ids] && @parent_id.present? ? "#{@parent_id}_" : ''}#{prefix}-#{cid}"
       end
     end
 
