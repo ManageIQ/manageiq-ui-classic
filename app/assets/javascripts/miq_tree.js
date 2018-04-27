@@ -223,11 +223,13 @@ function miqOnClickHostNet(id) {
   }
 }
 
-// OnClick handler for Report Menu Tree
+// OnClick handler for Timeline Tree
 function miqOnClickTimelineSelection(id) {
-  if (id.split('__')[0] != 'p') {
-    var rep_id = id.split('__');
-    miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + rep_id[0], {beforeSend: true, complete: true});
+  var allIds = id.split('rep-');
+  // Valid id should be something like xx-first_xx-second_rep-1r215, so it should return two 'ids' if split by rep- identifier
+  if (allIds.length === 2) {
+    var rep_id = allIds[allIds.length - 1];
+    miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + rep_id, {beforeSend: true, complete: true});
   }
 }
 
