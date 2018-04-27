@@ -686,15 +686,15 @@ module ApplicationController::CiProcessing
   #   options     - other optional parameters
   def generic_button_operation(action, action_name, operation, options={})
     records = find_records_with_rbac(get_rec_cls, checked_or_params)
-    if records_support_feature?(records, action_to_feature(action))
-      operation.call(records.map(&:id), action, action_name)
-    else
+    unless records_support_feature?(records, action_to_feature(action))
       javascript_flash(
         :text => _("%{action_name} action does not apply to selected items") %
           {:action_name => action_name},
         :severity => :error,
         :scroll_top => true)
+      return
     end
+    operation.call(records.map(&:id), action, action_name)
     @single_delete = action == 'destroy' && !flash_errors?
     screen_redirection(options)
   end
