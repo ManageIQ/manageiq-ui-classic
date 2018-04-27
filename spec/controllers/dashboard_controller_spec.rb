@@ -115,7 +115,7 @@ describe DashboardController do
       auth_token     = "aabbccddeeff"
       validation_url = "/user_validation_url"
 
-      request.env["HTTP_X_REMOTE_USER"] = user.userid
+      request.env["HTTP_X_REMOTE_USER"] = user.userid.capitalize
       skip_data_checks(validation_url)
 
       allow(User).to receive(:authenticate).and_return(user)

@@ -563,7 +563,7 @@ class DashboardController < ApplicationController
 
   def generate_ui_api_token(userid)
     @api_user_token_service ||= Api::UserTokenService.new
-    @api_user_token_service.generate_token(userid, "ui")
+    @api_user_token_service.generate_token(userid.downcase, "ui")
   end
 
   def timeline
