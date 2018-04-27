@@ -22,11 +22,6 @@ module ApplicationHelper
     "Host"       => :host
   }
 
-  def flash_to_session(*args)
-    add_flash(*args) unless args.empty?
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-  end
-
   # Need to generate paths w/o hostname by default to make proxying work.
   #
   def url_for_only_path(args)
@@ -1186,13 +1181,6 @@ module ApplicationHelper
       section.contains_item_id?(active.to_sym) ? 'active' : nil
   end
 
-  def render_flash_msg?
-    # Don't render flash message in gtl, partial is already being rendered on screen
-    return false if request.parameters[:controller] == "miq_request" && @lastaction == "show_list"
-    return false if request.parameters[:controller] == "service" && @lastaction == "show" && @view
-    true
-  end
-
   # FIXME: params[:type] is used in multiple contexts, we should rename it to
   # :gtl_type or remove it as we move to the Angular GTL component
   def pagination_or_gtl_request?
@@ -1242,21 +1230,6 @@ module ApplicationHelper
     args.delete(:record)
     args.delete(:id)
     polymorphic_path(record, args)
-  end
-
-  def javascript_flash(**args)
-    add_flash(args[:text], args[:severity]) if args[:text].present?
-
-    flash_div_id = args.key?(:flash_div_id) ? args[:flash_div_id] : 'flash_msg_div'
-    ex = ExplorerPresenter.flash.replace(flash_div_id,
-                                         render_to_string(:partial => "layouts/flash_msg",
-                                                          :locals => {:flash_div_id => flash_div_id}))
-    ex.scroll_top if args[:scroll_top]
-    ex.spinner_off if args[:spinner_off]
-    ex.focus(args[:focus]) if args[:focus]
-    ex.activate_tree_node(args[:activate_node]) if args[:activate_node]
-
-    render :json => ex.for_render
   end
 
   def javascript_open_window(url)
