@@ -32,6 +32,46 @@ describe ApplicationController do
     end
   end
 
+  describe "action_to_feature" do
+    let(:record) { FactoryGirl.create(:vm_redhat) }
+
+    context 'the UI action is also a queryable feature' do
+      before do
+        controller.instance_variable_set(:@_params, :id => record.id)
+        allow(controller).to receive(:render)
+      end
+
+      it 'uses the "reset" action to ask for records support for it' do
+        expect(controller).to receive(:records_support_feature?)
+          .with([record], :reset)
+        process_proc = controller.send(:vm_button_action)
+        controller.send(
+          :generic_button_operation,
+          'reset',
+          "Reset",
+          process_proc)
+      end
+    end
+
+    context 'the UI action is not a queryable feature' do
+      before do
+        controller.instance_variable_set(:@_params, :id => record.id)
+        allow(controller).to receive(:render)
+      end
+
+      it 'uses the "retire" feature to ask for records support for it' do
+        expect(controller).to receive(:records_support_feature?)
+          .with([record], :retire)
+        process_proc = controller.send(:vm_button_action)
+        controller.send(
+          :generic_button_operation,
+          'retire_now',
+          "Retirement",
+          process_proc)
+      end
+    end
+  end
+
   context "Verify proper methods are called for snapshot" do
     before(:each) do
       allow(subject).to receive(:vm_button_action).and_return(subject.method(:process_objects))
