@@ -6,13 +6,13 @@ class DashboardController < ApplicationController
 
   @@items_per_page = 8
 
-  before_action :check_privileges, :except => [:csp_report, :authenticate,
-                                               :external_authenticate, :kerberos_authenticate,
-                                               :logout, :login, :login_retry, :wait_for_task,
-                                               :saml_login, :initiate_saml_login]
-  before_action :get_session_data, :except => [:csp_report, :authenticate,
-                                               :external_authenticate, :kerberos_authenticate, :saml_login]
-  after_action :cleanup_action,    :except => [:csp_report]
+  before_action :check_privileges, :except => %i(csp_report authenticate
+                                               external_authenticate kerberos_authenticate
+                                               logout login login_retry wait_for_task
+                                               saml_login initiate_saml_login)
+  before_action :get_session_data, :except => %i(csp_report authenticate
+                                               external_authenticate kerberos_authenticate saml_login)
+  after_action :cleanup_action,    :except => %i(csp_report)
 
   def index
     redirect_to :action => 'show'
@@ -46,7 +46,7 @@ class DashboardController < ApplicationController
     end
 
     url.fragment = "access_token=#{generate_ui_api_token(current_user[:userid])}"
-    redirect_to url.to_s
+    redirect_to(url.to_s)
   end
 
   def saml_protected_page
@@ -76,7 +76,7 @@ class DashboardController < ApplicationController
   end
 
   def resize_layout
-    if params[:sidebar] && params[:context] && !params[:context].blank?
+    if params[:sidebar] && params[:context] && params[:context].present?
       session[:sidebar] ||= {}
       session[:sidebar][params[:context]] ||= 2
       sidebar = params[:sidebar].to_i
@@ -113,7 +113,7 @@ class DashboardController < ApplicationController
   end
 
   def start_url
-    redirect_to start_url_for_user(nil)
+    redirect_to(start_url_for_user(nil))
   end
 
   def widget_chart_data
@@ -193,7 +193,7 @@ class DashboardController < ApplicationController
       # get user dashboard version
       ws = MiqWidgetSet.where_unique_on(db.name, current_user).first
       # update user's copy if group dashboard has been updated by admin
-      if ws && ws.set_data && (!ws.set_data[:last_group_db_updated] ||
+      if ws&.set_data && (!ws.set_data[:last_group_db_updated] ||
          (ws.set_data[:last_group_db_updated] && db.updated_on > ws.set_data[:last_group_db_updated]))
         # if group dashboard was locked earlier but now it is unlocked,
         # reset everything  OR if admin makes changes to a locked db do a reset on user's copies
@@ -247,25 +247,24 @@ class DashboardController < ApplicationController
     @available_widgets = []
     MiqWidget.available_for_user(current_user).sort_by { |a| a.content_type + a.title.downcase }.each do |w|
       @available_widgets.push(w.id) # Keep track of widgets available to this user
-      if !col_widgets.include?(w.id) && w.enabled
-        image, tip = case w.content_type
-                     when "menu"   then ["fa fa-share-square-o fa-lg", _("Add this Menu Widget")]
-                     when "rss"    then ["fa fa-rss fa-lg",            _("Add this RSS Feed Widget")]
-                     when "chart"  then ["fa fa-pie-chart fa-lg",      _("Add this Chart Widget")]
-                     when "report" then ["fa fa-file-text-o fa-lg",    _("Add this Report Widget")]
-                     end
-        if prev_type && prev_type != w.content_type
-          widget_list << {:id => w.content_type, :type => :separator}
-        end
-        prev_type = w.content_type
-        widget_list << {
-          :id    => w.id,
-          :type  => :button,
-          :text  => w.title,
-          :image => image.to_s,
-          :title => tip
-        }
+      next if col_widgets.include?(w.id) || !w.enabled
+      image, tip = case w.content_type
+                   when "menu"   then ["fa fa-share-square-o fa-lg", _("Add this Menu Widget")]
+                   when "rss"    then ["fa fa-rss fa-lg",            _("Add this RSS Feed Widget")]
+                   when "chart"  then ["fa fa-pie-chart fa-lg",      _("Add this Chart Widget")]
+                   when "report" then ["fa fa-file-text-o fa-lg",    _("Add this Report Widget")]
+                   end
+      if prev_type && prev_type != w.content_type
+        widget_list << {:id => w.content_type, :type => :separator}
       end
+      prev_type = w.content_type
+      widget_list << {
+        :id    => w.id,
+        :type  => :button,
+        :text  => w.title,
+        :image => image.to_s,
+        :title => tip
+      }
     end
 
     can_add   = role_allows?(:feature => "dashboard_add")
@@ -291,10 +290,10 @@ class DashboardController < ApplicationController
   def reset_widgets
     assert_privileges("dashboard_reset")
     ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
-    ws.destroy unless ws.nil?
+    ws&.destroy
     create_user_dashboard(@sb[:active_db_id])
     @sb[:dashboards] = nil # Reset dashboards hash so it gets recreated
-    javascript_redirect :action => 'show'
+    javascript_redirect(:action => 'show')
   end
 
   # Toggle dashboard item size
@@ -375,7 +374,7 @@ class DashboardController < ApplicationController
       w = MiqWidget.find_by(:id => w)
       ws.remove_member(w) if w
       save_user_dashboards
-      javascript_redirect :action => 'show'
+      javascript_redirect(:action => 'show')
     else
       head :ok
     end
@@ -399,7 +398,7 @@ class DashboardController < ApplicationController
       if ws.add_member(w).present?
         save_user_dashboards
         w.create_initial_content_for_user(session[:userid])
-        javascript_redirect :action => 'show'
+        javascript_redirect(:action => 'show')
       else
         render_flash(_("The widget \"%{widget_name}\" is already part of the edited dashboard") %
          {:widget_name => w.name}, :error)
@@ -446,13 +445,13 @@ class DashboardController < ApplicationController
         page << "setTimeout(\"#{remote_function(:url => {:action => 'login_retry'})}\", 10000);"
       end
     else
-      javascript_redirect :action => 'login'
+      javascript_redirect(:action => 'login')
     end
   end
 
   # Initiate a SAML Login from the main login page
   def initiate_saml_login
-    javascript_redirect saml_protected_page
+    javascript_redirect(saml_protected_page)
   end
 
   # Login support for SAML - GET /saml_login
@@ -460,7 +459,7 @@ class DashboardController < ApplicationController
     if @user_name.blank? && request.env.key?("HTTP_X_REMOTE_USER").present?
       @user_name = params[:user_name] = request.env["HTTP_X_REMOTE_USER"].split("@").first
     else
-      redirect_to :action => 'logout'
+      redirect_to(:action => 'logout')
       return
     end
 
@@ -476,7 +475,7 @@ class DashboardController < ApplicationController
       return
     when :fail
       session[:user_validation_error] = validation.flash_msg || "User validation failed"
-      redirect_to :action => 'logout'
+      redirect_to(:action => 'logout')
       return
     end
   end
@@ -533,7 +532,7 @@ class DashboardController < ApplicationController
        ::Settings.authentication.sso_enabled &&
        params[:action] == "authenticate"
 
-      javascript_redirect root_path
+      javascript_redirect(root_path)
       return
     end
 
@@ -545,7 +544,7 @@ class DashboardController < ApplicationController
       miq_api_token = require_api_token ? generate_ui_api_token(user[:name]) : nil
       render :update do |page|
         page << javascript_prologue
-        page << "localStorage.miq_token = '#{j_str miq_api_token}';" if miq_api_token
+        page << "localStorage.miq_token = '#{j_str(miq_api_token)}';" if miq_api_token
         page.redirect_to(validation.url)
       end
     when :fail
@@ -581,7 +580,8 @@ class DashboardController < ApplicationController
     build_timeline_listnav
   end
 
-  def tree_select # timeline tree
+  # timeline tree
+  def tree_select
     @breadcrumbs = []
     @layout      = "timeline"
     if params[:id]
@@ -650,11 +650,10 @@ class DashboardController < ApplicationController
 
     # For SAML, let's do the SAML logout to clear mod_auth_mellon IdP cookies and such
     if ext_auth?(:saml_enabled)
-      redirect_to "/saml2/logout?ReturnTo=/"
+      redirect_to("/saml2/logout?ReturnTo=/")
     else
-      redirect_to :action => 'login'
+      redirect_to(:action => 'login')
     end
-    return
   end
 
   # User request to change to a different eligible group
@@ -668,7 +667,7 @@ class DashboardController < ApplicationController
     session_init(db_user)
     session[:group_changed] = true
     url = start_url_for_user(nil) || url_for_only_path(:controller => params[:controller], :action => 'show')
-    javascript_redirect url
+    javascript_redirect(url)
   end
 
   # Put out error msg if user's role is not authorized for an action
@@ -679,7 +678,7 @@ class DashboardController < ApplicationController
 
   def session_reset
     # save some fields to recover back into session hash after session is cleared
-    keys_to_restore = [:browser, :user_TZO]
+    keys_to_restore = %i(browser user_TZO)
     data_to_restore = keys_to_restore.each_with_object({}) { |k, v| v[k] = session[k] }
 
     session.clear
