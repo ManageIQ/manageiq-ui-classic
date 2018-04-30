@@ -7,7 +7,7 @@
 - opts = ["<#{_('Choose')}>"]
 - opts += MiqExpression.tag_details(nil, {})
 
-%br
+.spacer
 
 = select_tag('chosen_tag', options_for_select(opts, @edit[@expkey][:exp_tag]),
   :multiple              => false,
@@ -17,10 +17,10 @@
   'data-miq_sparkle_off' => true)
 
 - if @edit[@expkey][:exp_tag]
-  %br
+  .spacer
   %font{:color => "black"}
     = h(@edit[@expkey][:exp_key])
-  %br
+  .spacer
   - if @edit[@expkey][:exp_value] == :user_input
     = "<#{_('user input')}>"
   - else

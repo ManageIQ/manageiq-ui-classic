@@ -14,6 +14,10 @@ module ApplicationController::Filter
     when "not"
       exp_add_not(@edit[@expkey][:expression], @edit[@expkey][:exp_token])
     when "and", "or"
+      if @edit[@expkey][:exp_typ] == 'tags'
+        @edit[@expkey][:exp_tag] = nil
+        @edit[@expkey][:exp_key] = 'CONTAINS'
+      end
       exp_add_joiner(@edit[@expkey][:expression], @edit[@expkey][:exp_token], params[:pressed])
     when "commit"
       exp_commit(@edit[@expkey][:exp_token])
@@ -39,7 +43,7 @@ module ApplicationController::Filter
         @edit[@expkey].history.push(@edit[:new][@expkey])
       end
       unless %w(and or).include?(params[:pressed]) # Unless adding an AND or OR token
-        @edit[@expkey][:exp_token] = nil                        #   clear the current selected token
+        @edit[@expkey][:exp_token] = nil           # clear the current selected token
       end
       changed = (@edit[:new] != @edit[:current])
       @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])
