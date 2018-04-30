@@ -7,7 +7,7 @@ import styles from './tag.scss';
 const Tag = ({
   onTagDeleteClick, tagCategory, tagValue,
 }) => (
-  <li key={tagValue.id}>
+  <li key={tagValue.id} className="tag">
     <Label
       key={tagValue.id}
       bsStyle="primary"

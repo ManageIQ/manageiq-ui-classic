@@ -57,11 +57,6 @@ class Tagging extends React.Component {
             <TagView assignedTags={this.props.assignedTags} onTagDeleteClick={this.onTagDeleteClick} />
           </Col>
         </Row>
-        <Row>
-          <Col md={12}>
-            <div>{this.props.infoText}</div>
-          </Col>
-        </Row>
       </Grid>
     );
   }
@@ -76,12 +71,10 @@ Tagging.propTypes = {
   onTagCategoryChange: PropTypes.func.isRequired,
   onTagValueChange: PropTypes.func.isRequired,
   onTagMultiValueChange: PropTypes.func,
-  infoText: PropTypes.string,
 };
 
 Tagging.defaultProps = {
   onTagMultiValueChange: () => {},
-  infoText: '* Only a single value can be assigned from these categories',
 };
 
 export default Tagging;

@@ -1,7 +1,16 @@
 @import '~patternfly/dist/sass/patternfly/variables';
 :export { defaultColor: $color-pf-white; }
 
-.remove-button {
-  color: $color-pf-black;
-  margin-left: 5px;
+.pf-remove-button {
+  color: $color-pf-white;
+  vertical-align: middle;
+}
+
+.tag {
+  font-size: 0.8em;
+  display: table-cell !important;
+  vertical-align:middle;
+  span {
+    background-color: $color-pf-blue-400;
+  }
 }

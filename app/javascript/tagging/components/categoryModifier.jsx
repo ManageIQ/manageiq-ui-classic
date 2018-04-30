@@ -24,7 +24,7 @@ CategoryModifier.propTypes = {
 };
 
 CategoryModifier.defaultProps = {
-  categoryLabel: 'Category:',
+  categoryLabel: 'Category',
 };
 
 export default CategoryModifier;

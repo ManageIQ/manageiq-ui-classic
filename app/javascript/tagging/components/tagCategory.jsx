@@ -15,7 +15,7 @@ class TagCategory extends React.Component {
   render() {
     return (
       <ul className="tag-category list-inline">
-        {this.props.tagCategory.description}:
+        <div className="category-label">{this.props.tagCategory.description}</div>
         {this.props.tagValues.map(tagValue => this.generateTag(tagValue))}
       </ul>
     );

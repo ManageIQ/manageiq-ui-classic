@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
+import './tagSelector.scss';
 
 class TagSelector extends React.Component {
   handleChange = (selectedOption) => {
@@ -11,21 +12,38 @@ class TagSelector extends React.Component {
   }
 
 
-  tagCategories = this.props.tagCategories.map(category =>
-    ({ value: category.id, label: (category.description + (category.singleValue ? '*' : '')) }));
+  tagCategories = this.props.tagCategories.map(category => ((category.singleValue &&
+        {
+          value: category.id,
+          label:
+  <div>
+    <span>
+      {category.description}
+    </span>
+    <span
+      className="pull-right pficon pficon-info tag-icon"
+      aria-hidden="true"
+      title={this.props.infoText}
+    />
+    <span className="sr-only">{this.props.infoText}</span>
+  </div>,
+        }) ||
+        { value: category.id, label: category.description }));
 
   render() {
     const label = this.props.selectedOption.description;
     const value = this.props.selectedOption.id;
     return (
       <Select
+        className="selected-option"
         name="form-field-name"
         value={value}
         label={label}
         onChange={this.handleChange}
         options={this.tagCategories}
-        resetValue={{ label: '', value: '' }}
+        clearable={false}
       />
+
     );
   }
 }
@@ -33,6 +51,11 @@ TagSelector.propTypes = {
   tagCategories: PropTypes.arrayOf(PropTypes.object),
   selectedOption: PropTypes.object.isRequired,
   onTagCategoryChange: PropTypes.func.isRequired,
+  infoText: PropTypes.string,
+};
+
+TagSelector.defaultProps = {
+  infoText: 'Only a single value can be assigned from these categories',
 };
 
 export default TagSelector;

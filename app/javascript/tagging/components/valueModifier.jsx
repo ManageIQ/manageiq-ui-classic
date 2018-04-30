@@ -6,7 +6,6 @@ import ValueSelector from './valueSelector';
 const ValueModifier = ({
   tagValues, onTagValueChange, selectedTagValue, multiValue, valueLabel,
 }) => {
-  console.log('val mod:', tagValues, onTagValueChange, selectedTagValue, multiValue, valueLabel);
   return (
     <FormGroup>
       <Col xs={12} md={4} lg={6}>
@@ -28,7 +27,7 @@ ValueModifier.propTypes = {
 };
 
 ValueModifier.defaultProps = {
-  valueLabel: 'Assigned Value:',
+  valueLabel: 'Value',
   multiValue: true,
 };
 

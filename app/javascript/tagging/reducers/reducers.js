@@ -35,7 +35,6 @@ function addAssignedTag(state, actionTag) {
 }
 
 export const modifyassignedTags = (state = [], action) => {
-  console.log(state, action);
   switch (action.type) {
     case actionsConstants.DELETE_ASSIGNED_TAG:
       return deleteAssignedTag(state, action.tag);

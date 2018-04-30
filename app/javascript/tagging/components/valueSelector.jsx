@@ -11,7 +11,6 @@ class ValueSelector extends React.Component {
   }
 
   selector = (value, label, tagValues) => {
-    console.log('val selector', tagValues);
     return (<Select
       name="form-field-name"
       value={value}

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Row, ButtonGroup, Button } from 'patternfly-react';
+import { ButtonToolbar } from 'react-bootstrap';
 import Tagging from './tagging';
 
 class TaggingWithButtons extends React.Component {
@@ -22,33 +23,39 @@ class TaggingWithButtons extends React.Component {
           selectedTagValue={this.props.selectedTagValue}
         />
         <Row className="pull-right">
-          <ButtonGroup>
-            <Button
-              onClick={this.props.cancelButton.onClick}
-              href={this.props.cancelButton.href}
-              disabled={this.props.cancelButton.disabled}
-              type={this.props.cancelButton.type}
-            >
-              {this.props.cancelButton.description}
-            </Button>
-            {this.props.showReset &&
+          <ButtonToolbar>
+            <ButtonGroup>
               <Button
-                onClick={this.props.resetButton.onClick}
-                href={this.props.resetButton.href}
-                disabled={this.props.resetButton.disabled}
-                type={this.props.resetButton.type}
+                onClick={this.props.saveButton.onClick}
+                href={this.props.saveButton.href}
+                disabled={this.props.saveButton.disabled}
+                type={this.props.saveButton.type}
               >
-                {this.props.resetButton.description}
-              </Button>}
-            <Button
-              onClick={this.props.saveButton.onClick}
-              href={this.props.saveButton.href}
-              disabled={this.props.saveButton.disabled}
-              type={this.props.saveButton.type}
-            >
-              {this.props.saveButton.description}
-            </Button>
-          </ButtonGroup>
+                {this.props.saveButton.description}
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              {this.props.showReset &&
+                <Button
+                  onClick={this.props.resetButton.onClick}
+                  href={this.props.resetButton.href}
+                  disabled={this.props.resetButton.disabled}
+                  type={this.props.resetButton.type}
+                >
+                  {this.props.resetButton.description}
+                </Button>}
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button
+                onClick={this.props.cancelButton.onClick}
+                href={this.props.cancelButton.href}
+                disabled={this.props.cancelButton.disabled}
+                type={this.props.cancelButton.type}
+              >
+                {this.props.cancelButton.description}
+              </Button>
+            </ButtonGroup>
+          </ButtonToolbar>
         </Row>
       </Grid>
     );
