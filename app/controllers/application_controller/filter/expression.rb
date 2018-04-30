@@ -173,7 +173,8 @@ module ApplicationController::Filter
               self.exp_field = nil
               self.exp_key = nil
             else
-              if exp_model != '_display_filter_' && MiqExpression::Field.parse(exp_field).plural?
+              # for date time fields we should show After/Before etc. options
+              if exp_model != '_display_filter_' && MiqExpression::Field.parse(exp_field).plural? && ![:date, :datetime].include?(self[:val1][:type])
                 self.exp_key = 'CONTAINS' # CONTAINS is valid only for plural tables
               else
                 self.exp_key = nil unless MiqExpression.get_col_operators(exp_field).include?(exp_key)
