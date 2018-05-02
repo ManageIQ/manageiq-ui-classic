@@ -3357,6 +3357,13 @@ Rails.application.routes.draw do
     },
   }
 
+  if Rails.env.development?
+    controller_routes[:graphql_explorer] = {
+      :get  => %w(index),
+      :post => %w()
+    }
+  end
+
   root :to => 'dashboard#login'
 
   # Let's serve pictures directly from the DB

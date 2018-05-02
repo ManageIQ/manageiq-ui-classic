@@ -28,6 +28,7 @@
     "angular.validators": "~4.4.2",
     "base64-js": "~1.2.3",
     "bootstrap-switch": "~3.3.4",
+    "graphiql": "^0.11.11",
     "jquery": "~2.2.4",
     "lodash": "^4.17.4",
     "ng-redux": "^3.5.2",
