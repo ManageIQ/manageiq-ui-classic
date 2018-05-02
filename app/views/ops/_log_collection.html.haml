@@ -1,5 +1,5 @@
 %log-collection-form-component{'server-id' => @record.id || "new",
-                               'select-options' => [_("")] + @supported_depots_for_select,
+                               'select-options' => ([_("")] + @supported_depots_for_select).to_json,
                                'data-log-collection-form-fields-url' => "/#{controller_name}/log_collection_form_fields/",
                                'log-collection-form-fields-url' => "/#{controller_name}/log_collection_form_fields/",
                                'data-save-url'                       => "/#{controller_name}/log_depot_edit/",
