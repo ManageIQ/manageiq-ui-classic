@@ -27,7 +27,7 @@ class SupportController < ApplicationController
   private ############################
 
   def check_support_rbac
-    handle_generic_rbac(role_allows?(:feature => 'support', :any => true))
+    handle_generic_rbac(role_allows?(:feature => 'documentation', :any => true))
   end
 
   def get_layout
