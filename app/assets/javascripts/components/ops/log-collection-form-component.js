@@ -1,11 +1,7 @@
 ManageIQ.angular.app.component('logCollectionFormComponent', {
-
   controllerAs: 'vm',
-
   controller: logCollectionFormController,
-
   templateUrl: "/static/ops/logcollection/log_collection.html.haml",
-
   bindings: {
     'serverId': '@',
     'selectOptions': '<',
@@ -13,14 +9,10 @@ ManageIQ.angular.app.component('logCollectionFormComponent', {
 
 });
 
-
 logCollectionFormController.$inject = ['$http', '$scope',  '$attrs', 'miqService', 'miqDBBackupService'];
-
 function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBackupService) {
   var vm = this;
-
   var init = function() {
-
     vm.logCollectionModel = {
       depot_name: '',
       uri: '',
