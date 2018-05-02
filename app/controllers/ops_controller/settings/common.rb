@@ -175,16 +175,21 @@ module OpsController::Settings::Common
     javascript_miq_button_visibility(@edit[:new] != @edit[:current])
   end
 
-  def pglogical_subscriptions_form_fields
+  def pglogical_get_replication_data
     replication_type = MiqRegion.replication_type
     subscriptions = replication_type == :global ? PglogicalSubscription.all : []
     subscriptions = get_subscriptions_array(subscriptions) unless subscriptions.empty?
     exclusion_list = replication_type == :remote ? MiqPglogical.new.active_excludes : MiqPglogical.default_excludes
+    return {:replication_type => replication_type, :subscriptions => subscriptions, :exclusion_list => exclusion_list}
+  end
+
+  def pglogical_subscriptions_form_fields
+    data = pglogical_get_replication_data
 
     render :json => {
-      :replication_type => replication_type,
-      :subscriptions    => subscriptions,
-      :exclusion_list   => exclusion_list.to_yaml
+      :replication_type => data[:replication_type],
+      :subscriptions    => data[:subscriptions],
+      :exclusion_list   => data[:exclusion_list].to_yaml
     }
   end
 

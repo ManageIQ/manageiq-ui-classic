@@ -7,6 +7,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       updateEnabled: false,
       exclusion_list: null,
     };
+
+    $scope.pglogicalReplicationModel.subscriptions_changed = [];
+
     $scope.formId = pglogicalReplicationFormId;
     $scope.afterGet = false;
     $scope.modelCopy = angular.copy( $scope.pglogicalReplicationModel );
@@ -25,6 +28,14 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     miqService.sparkleOn();
     var url = '/ops/pglogical_save_subscriptions/' + pglogicalReplicationFormId + '?button=' + buttonName;
     miqService.miqAjaxButton(url, serializeFields);
+    pglogicalDataReload();
+  };
+
+
+  var pglogicalDataReload = function() {
+    $http.get('/ops/pglogical_subscriptions_form_fields/' + pglogicalReplicationFormId)
+      .then(getPgLogicalFormData)
+      .catch(miqService.handleFailure);
   };
 
   $scope.resetClicked = function() {
@@ -36,18 +47,15 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   $scope.saveClicked = function() {
     // remove existing subscriptions that have not changed before sending them up for save
-    $scope.pglogicalReplicationModel.subscriptions.forEach(function(subscription, index, object) {
-      if (typeof subscription.id !== 'undefined' && subscription["remove"] !== true &&  !subscriptionChanged(subscription, $scope.modelCopy.subscriptions[index])) {
-        object.splice(index, 1);
-      }
-    });
+    updateSubscriptionLists();
     var updated_exclusion_list = "";
+
     if ($scope.pglogicalReplicationModel.replication_type == "remote" && !angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list) ) {
       updated_exclusion_list = angular.copy($scope.pglogicalReplicationModel.exclusion_list);
     }
     pglogicalManageSubscriptionsButtonClicked('save', {
       'replication_type': $scope.pglogicalReplicationModel.replication_type,
-      'subscriptions' : $scope.pglogicalReplicationModel.subscriptions,
+      'subscriptions' : $scope.pglogicalReplicationModel.subscriptions_changed,
       'exclusion_list' : updated_exclusion_list
     });
   };
@@ -63,6 +71,17 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     else
       return true;
   }
+
+  var updateSubscriptionLists = function () {
+    $scope.pglogicalReplicationModel.subscriptions.forEach(function(subscription, index, object) {
+      if (subscription["remove"] === true ) {
+        object.splice(index, 1);
+      }
+      if (typeof subscription.id === 'undefined' || subscription["remove"] === true || subscriptionChanged(subscription, $scope.modelCopy.subscriptions[index])) {
+        $scope.pglogicalReplicationModel.subscriptions_changed.push(subscription);
+      }
+    });
+  };
 
   // replication type changed, show appropriate flash message
   $scope.replicationTypeChanged = function() {
@@ -89,6 +108,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     if (new_value == "global" && original_value == "global") {
       $scope.pglogicalReplicationModel.subscriptions = angular.copy($scope.modelCopy.subscriptions);
     };
+    updateSubscriptionLists();
   };
 
   // add new subscription button pressed
@@ -113,7 +133,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       $scope.pglogicalReplicationModel.user          = subscription.user;
       $scope.pglogicalReplicationModel.password      = subscription.password;
       $scope.pglogicalReplicationModel.port          = subscription.port;
-    } else if (confirm(__("An updated subscription must point to the same database with which it was originally created. Failure to do so will result in undefined behavior. Do you want to continue?"))) {
+    } else if (confirm("An updated subscription must point to the same database with which it was originally created. Failure to do so will result in undefined behavior. Do you want to continue?")) {
       $scope.pglogicalReplicationModel.s_index       = idx;
       $scope.pglogicalReplicationModel.updateEnabled = true;
       $scope.pglogicalReplicationModel.dbname        = subscription.dbname;
@@ -126,6 +146,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   // add new subscription
   $scope.addSubscription = function(idx) {
+
     if (typeof idx == 'undefined') {
       $scope.pglogicalReplicationModel.subscriptions.push({
         dbname: $scope.pglogicalReplicationModel.dbname,
@@ -141,6 +162,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       subscription.host     = $scope.pglogicalReplicationModel.host;
       subscription.user     = $scope.pglogicalReplicationModel.user;
       subscription.port     = $scope.pglogicalReplicationModel.port;
+
     }
     $scope.pglogicalReplicationModel.addEnabled = false;
     $scope.pglogicalReplicationModel.updateEnabled = false;
@@ -153,8 +175,10 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       $scope.pglogicalReplicationModel.subscriptions.splice(idx, 1);
       if (angular.equals($scope.pglogicalReplicationModel.subscriptions, $scope.modelCopy.subscriptions))
         $scope.angularForm.$setPristine(true);
-    } else if (confirm(__("Deleting a subscription will remove all replicated data which originated in the selected region. Do you want to continue?")))
+    } else if (confirm("Deleting a subscription will remove all replicated data which originated in the selected region. Do you want to continue?")) {
       subscription.remove = true;
+      $scope.pglogicalReplicationModel.subscriptions_changed.push(subscription);
+    }
   };
 
   // discard new subscription add
@@ -195,9 +219,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     if ($scope.pglogicalReplicationModel.replication_type != "remote") {
        saveable = form.$dirty && form.$valid && !$scope.pglogicalReplicationModel.addEnabled && !$scope.pglogicalReplicationModel.updateEnabled;
       // also need to enable save button when an existing subscriptions was deleted
-      var subscriptions_changed = angular.equals($scope.pglogicalReplicationModel.subscriptions, $scope.modelCopy.subscriptions);
+      var subscriptions_changes = angular.equals($scope.pglogicalReplicationModel.subscriptions, $scope.modelCopy.subscriptions);
 
-      if ((saveable || !subscriptions_changed) &&
+      if ((saveable || !subscriptions_changes) &&
         $scope.pglogicalReplicationModel.replication_type === "global" &&
         $scope.pglogicalReplicationModel.subscriptions.length >= 1) {
         return true;
@@ -307,8 +331,8 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     if ($scope.pglogicalReplicationModel.replication_type === 'none') {
       miqService.miqFlash('warn', __("No replication role has been set"));
     }
-
     $scope.afterGet = true;
+    $scope.pglogicalReplicationModel.subscriptions_changed = [];
     $scope.modelCopy = angular.copy( $scope.pglogicalReplicationModel );
     miqService.sparkleOff();
   }
