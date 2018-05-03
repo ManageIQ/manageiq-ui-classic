@@ -201,11 +201,14 @@ describe CloudNetworkController do
   end
 
   describe "#delete" do
+    
+    let(:host)     { FactoryGirl.create(:host) }	  
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       @ems = FactoryGirl.create(:ems_openstack).network_manager
       @network = FactoryGirl.create(:cloud_network_openstack, :ext_management_system => @ems)
+      allow(controller).to receive(:find_checked_items).and_return([host.id])
       session[:cloud_network_lastaction] = 'show'
     end
 
@@ -266,5 +269,27 @@ describe CloudNetworkController do
         controller.send(:button)
       end
     end
-  end
+  end 
+ 
+  describe "#delete_networks" do
+    let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+    let(:network)       { FactoryGirl.create(:cloud_network) }
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+
+      login_as admin_user
+      allow(User).to receive(:current_user).and_return(admin_user)
+      allow(controller).to receive(:assert_privileges)
+      allow(controller).to receive(:flash_to_session)
+      controller.instance_variable_set(:@_params, {:id=> network.id, :pressed => 'host_NECO'})
+    end
+
+    it "testing " do
+      allow(controller).to receive(:process_cloud_networks).with([network], "destroy")
+      controller.send(:delete_networks)
+    end
+end
+
+
+
 end
