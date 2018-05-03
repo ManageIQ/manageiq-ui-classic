@@ -43,7 +43,6 @@ describe FloatingIpController do
             end
 
           it "delete floating ips" do
-            #expected_host_id = controller.instance_variable_get(:@prov_id)
             expect(controller).to receive(:process_floating_ips).with([floating_ip], "destroy")
             controller.send(:delete_floating_ips)
           end

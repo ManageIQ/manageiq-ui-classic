@@ -94,7 +94,7 @@ class FloatingIpController < ApplicationController
 
   def delete_floating_ips
     assert_privileges("floating_ip_delete")
-    floating_ips = find_record_with_rbac(FloatingIp, checked_or_params)
+    floating_ips = find_records_with_rbac(FloatingIp, checked_or_params)
     process_floating_ips(floating_ips, "destroy")
 
     # refresh the list if applicable
