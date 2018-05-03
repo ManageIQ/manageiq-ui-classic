@@ -12,8 +12,7 @@ describe ReportController do
       allow(controller).to receive(:assert_privileges)
       allow(controller).to receive(:checked_or_params).and_return(MiqSchedule.all.ids)
       controller.instance_variable_set(:@_params, {:button => "reset"})
-      # this part doesn`t work yet, the code crashes at replace_right cell in schedules.rb:253
-      controller.instance_variable_set(:@options, {:menu_edit_action => "reset"})
+      allow(controller).to receive(:replace_right_cell).and_return(true)
     end
     it "testing" do
       controller.send(:schedule_edit)
