@@ -49,7 +49,6 @@ module ApplicationHelper
            network_router
            offline
            orchestration_stack
-           physical_server
            persistent_volume
            physical_server
            resource_pool
