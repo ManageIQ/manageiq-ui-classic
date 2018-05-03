@@ -11,11 +11,11 @@ describe ReportController do
       
       allow(controller).to receive(:assert_privileges)
       allow(controller).to receive(:checked_or_params).and_return(MiqSchedule.all.ids)
-      controller.instance_variable_set(:@_params, {:button => "reset"})
       allow(controller).to receive(:replace_right_cell).and_return(true)
     end
-    it "testing" do
+    it "reset rbac testing" do
       controller.send(:schedule_edit)
+      controller.instance_variable_set(:@_params, {:button => "reset"})
       expected_id = controller.instance_variable_get(:@schedule).id
       expect(expected_id).to eq((MiqSchedule.find_by! name: "tester1").id)
     end
