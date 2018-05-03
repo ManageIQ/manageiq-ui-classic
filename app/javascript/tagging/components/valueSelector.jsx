@@ -10,16 +10,14 @@ class ValueSelector extends React.Component {
     this.props.onTagValueChange({ description: selectedOption.label, id: selectedOption.value });
   }
 
-  selector = (value, label, tagValues) => {
-    return (<Select
-      name="form-field-name"
-      value={value}
-      label={label}
-      onChange={this.handleChange}
-      options={tagValues}
-      clearable={false}
-    />);
-  }
+  selector = (value, label, tagValues) => (<Select
+    name="form-field-name"
+    value={value}
+    label={label}
+    onChange={this.handleChange}
+    options={tagValues}
+    clearable={false}
+  />)
 
 
   render() {
