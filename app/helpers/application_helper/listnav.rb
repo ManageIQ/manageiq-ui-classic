@@ -131,55 +131,54 @@ module ApplicationHelper
     end
 
     def single_relationship_link(record, table_name, property_name = nil)
-      out = ''
       property_name ||= table_name
       ent = record.send(property_name)
       name = ui_lookup(:table => table_name.to_s)
-      if role_allows?(:feature => "#{table_name}_show") && !ent.nil?
-        out = content_tag(:li) do
-          link_params = if restful_routed?(ent)
-                          polymorphic_path(ent)
-                        else
-                          {:controller => table_name, :action => 'show', :id => ent.id.to_s}
-                        end
-          link_to("#{name}: #{ent.name}",
-                  link_params,
-                  :title => _("Show this %{entity_name}'s parent %{linked_entity_name}") %
-                            {:entity_name        => record.class.name.demodulize.titleize,
-                            :linked_entity_name => name})
-        end
+
+      return unless role_allows?(:feature => "#{table_name}_show")
+      return if ent.nil?
+
+      content_tag(:li) do
+        link_params = if restful_routed?(ent)
+                        polymorphic_path(ent)
+                      else
+                        {:controller => table_name, :action => 'show', :id => ent.id.to_s}
+                      end
+        link_to("#{name}: #{ent.name}",
+                link_params,
+                :title => _("Show this %{entity_name}'s parent %{linked_entity_name}") %
+                          {:entity_name        => record.class.name.demodulize.titleize,
+                          :linked_entity_name => name})
       end
-      out
     end
 
     def multiple_relationship_link(record, table_name)
-      out = ''
-      if role_allows?(:feature => "#{table_name}_show_list") &&
-        (table_name != 'container_route' || record.respond_to?(:container_routes))
-        plural = ui_lookup(:tables => table_name.to_s)
-        count = record.number_of(table_name.to_s.pluralize)
-        if count.zero?
-          out = content_tag(:li, :class => "disabled") do
-            link_to("#{plural} (0)", "#")
-          end
-        else
-          out = content_tag(:li) do
-            if restful_routed?(record)
-              link_to("#{plural} (#{count})",
-                      polymorphic_path(record, :display => table_name.to_s.pluralize),
-                      :title => _("Show %{plural_linked_name}") % {:plural_linked_name => plural})
-            else
-              link_to("#{plural} (#{count})",
-                      {:controller => controller_name,
-                      :action     => 'show',
-                      :id         => record.id,
-                      :display    => table_name.to_s.pluralize},
-                      {:title => _("Show %{plural_linked_name}") % {:plural_linked_name => plural}})
-            end
+      return unless role_allows?(:feature => "#{table_name}_show_list")
+      return if table_name == 'container_route' && !record.respond_to?(:container_routes)
+
+      plural = ui_lookup(:tables => table_name.to_s)
+      count = record.number_of(table_name.to_s.pluralize)
+
+      if count.zero?
+        content_tag(:li, :class => "disabled") do
+          link_to("#{plural} (0)", "#")
+        end
+      else
+        content_tag(:li) do
+          if restful_routed?(record)
+            link_to("#{plural} (#{count})",
+                    polymorphic_path(record, :display => table_name.to_s.pluralize),
+                    :title => _("Show %{plural_linked_name}") % {:plural_linked_name => plural})
+          else
+            link_to("#{plural} (#{count})",
+                    {:controller => controller_name,
+                    :action     => 'show',
+                    :id         => record.id,
+                    :display    => table_name.to_s.pluralize},
+                    {:title => _("Show %{plural_linked_name}") % {:plural_linked_name => plural}})
           end
         end
       end
-      out
     end
 
     # Function returns a HTML fragment that represents a link to related entity
