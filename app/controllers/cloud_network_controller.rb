@@ -93,22 +93,19 @@ class CloudNetworkController < ApplicationController
 
   def delete_networks
     assert_privileges("cloud_network_delete")
-    
     binding.pry
-    networks = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_network") || @lastaction.nil?
-                 find_checked_ids_with_rbac(CloudNetwork)
-               else
-                 [find_id_with_rbac(CloudNetwork, params[:id])]
-               end
-    if networks.empty?
-      add_flash(_("No Cloud Network were selected for deletion."), :error)
-    else
+	    networks = find_records_with_rbac(CloudNetwork, checked_or_params)
+		    #if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_network") || @lastaction.nil?
+                # find_checked_ids_with_rbac(CloudNetwork)
+                #  find_records_with_rbac(CloudNetwork, checked_or_params)
+		#   else
+                # [find_id_with_rbac(CloudNetwork, params[:id])]
+             #  end
+      
       networks_to_delete = []
-      networks.each do |s|
-        network = CloudNetwork.find_by_id(s)
-        if network.nil?
-          add_flash(_("Cloud Network no longer exists."), :error)
-        elsif network.supports_delete?
+      networks.each do |network|
+
+        if network.supports_delete?
           networks_to_delete.push(network)
         else
           add_flash(_("Couldn't initiate deletion of Network \"%{name}\": %{details}") % {
@@ -120,7 +117,6 @@ class CloudNetworkController < ApplicationController
       unless networks_to_delete.empty?
         process_cloud_networks(networks_to_delete, "destroy")
       end
-    end
 
     # refresh the list if applicable
     if @lastaction == "show_list"
@@ -260,8 +256,11 @@ class CloudNetworkController < ApplicationController
   end
 
   # dispatches operations to multiple networks
+  
+
   def process_cloud_networks(networks, operation)
-    return if networks.empty?
+
+	  return if networks.empty?
 
     if operation == "destroy"
       networks.each do |network|
