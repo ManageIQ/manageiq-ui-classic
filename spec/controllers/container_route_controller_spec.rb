@@ -30,7 +30,7 @@ describe ContainerRouteController do
       @route = FactoryGirl.create(:container_route)
     end
 
-    subject { get :show, :id => @route.id }
+    subject { get :show, :params => { :id => @route.id } }
 
     context "render" do
       render_views

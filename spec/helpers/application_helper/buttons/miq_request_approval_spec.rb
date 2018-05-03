@@ -5,7 +5,7 @@ describe ApplicationHelper::Button::MiqRequestApproval do
         view_context,
         {},
         {'record' => @record, 'showtype' => @showtype},
-        {:options   => {:feature => 'miq_request_approve'}}
+        {:options => {:feature => 'miq_request_approve'}}
       )
     end
 
@@ -52,7 +52,7 @@ describe ApplicationHelper::Button::MiqRequestApproval do
           view_context,
           {},
           {'record' => @record, 'showtype' => @showtype},
-          {:options   => {:feature => 'miq_request_deny'}}
+          {:options => {:feature => 'miq_request_deny'}}
         )
       end
 

@@ -45,13 +45,13 @@ describe AutomateImportService do
       allow(MiqAeImport).to receive(:new).with("carrot", import_options).and_return(miq_ae_import)
       allow(miq_ae_import).to receive(:remove_unrelated_entries)
       allow(miq_ae_import).to receive(:all_namespace_files).and_return([
-        removable_entry,
-        double(:name => "something_else/carrot"),
-      ])
+                                                                         removable_entry,
+                                                                         double(:name => "something_else/carrot"),
+                                                                       ])
       allow(miq_ae_import).to receive(:all_class_files).and_return([
-        removable_class_entry,
-        double(:name => "something_else/carrot.class/class.yaml")
-      ])
+                                                                     removable_class_entry,
+                                                                     double(:name => "something_else/carrot.class/class.yaml")
+                                                                   ])
       allow(miq_ae_import).to receive(:remove_entry)
       allow(miq_ae_import).to receive(:update_sorted_entries)
       allow(miq_ae_import).to receive(:import).and_return(true)

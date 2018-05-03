@@ -44,7 +44,7 @@ describe OpsController do
       let(:cluster) do
         FactoryGirl.create(
           :ems_cluster,
-          :name                => "clustertest"
+          :name => "clustertest"
         )
       end
       let(:filter_type) { "cluster" }
@@ -89,8 +89,7 @@ describe OpsController do
       settings = {:username   => "userid",
                   :password   => "password2",
                   :uri        => "smb://samba_uri",
-                  :uri_prefix => "smb"
-                 }
+                  :uri_prefix => "smb"}
       expect(controller.send(:build_uri_settings, :mocked_filedepot)).to include(settings)
     end
 
@@ -104,8 +103,7 @@ describe OpsController do
       settings = {:username   => "userid",
                   :password   => "password",
                   :uri        => "smb://samba_uri",
-                  :uri_prefix => "smb"
-                 }
+                  :uri_prefix => "smb"}
       expect(controller.send(:build_uri_settings, mocked_filedepot)).to include(settings)
     end
   end

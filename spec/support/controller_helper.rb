@@ -14,7 +14,7 @@ module Spec
       end
 
       shared_context "valid session" do
-        let(:privilege_checker_service) { double("PrivilegeCheckerService", :valid_session?  => true) }
+        let(:privilege_checker_service) { double("PrivilegeCheckerService", :valid_session? => true) }
 
         before do
           allow(controller).to receive(:set_user_time_zone)
@@ -40,7 +40,7 @@ module Spec
       end
 
       def assert_nested_list(parent, children, relation, label, child_path: nil, gtl_types: nil)
-        gtl_types    ||= [:list, :tile, :grid]
+        gtl_types    ||= %i(list tile grid)
         child_path   ||= relation.singularize
         parent_route = controller.restful? ? controller.class.table_name : "#{controller.class.table_name}/show"
         child_route  = "#{child_path}/show"
@@ -64,7 +64,7 @@ module Spec
         # expect(response.body).to include('title="List View" id="view_list" data-url="/show/" data-url_parms="?type=list"')
 
         # The table renders all children objects
-        children.each do |child_object|
+        children.each do |_child_object|
           # expect(response.body).to include("modelName: '#{relation}'")
           expect(response.body).to include("activeTree: ''")
           expect(response.body).to include("gtlType: '#{gtl_types.first}'")
@@ -75,7 +75,6 @@ module Spec
         # display needs to be saved to session for GTL pagination and such
         expect(session["#{controller.class.table_name}_display".to_sym]).to eq(relation)
       end
-
 
       # Formats POST data for /report_data request
       #
@@ -95,12 +94,12 @@ module Spec
       def report_data_request_data(options)
         explorer = options.key?(:explorer) ? options[:explorer] : true
         {
-          'model_name'  => options[:model],
-          'model'       => options[:model],
-          'active_tree' => options[:active_tree],
-          'parent_id'   => options[:parent_id],
-          'model_id'    => options[:parent_id],
-          'explorer'    => explorer,
+          'model_name'         => options[:model],
+          'model'              => options[:model],
+          'active_tree'        => options[:active_tree],
+          'parent_id'          => options[:parent_id],
+          'model_id'           => options[:parent_id],
+          'explorer'           => explorer,
           'additional_options' => {
             'named_scope'           => options[:named_scope],
             'gtl_dbname'            => options[:gtl_dbname],
@@ -119,7 +118,7 @@ module Spec
       #
       def report_data_request(options)
         request.headers['Content-Type'] = 'application/json'
-        post :report_data, report_data_request_data(options)
+        post :report_data, :params => report_data_request_data(options)
       end
 
       # Assert a valid /report_data response, parse the response.

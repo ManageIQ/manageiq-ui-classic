@@ -36,7 +36,8 @@ describe ContainerDashboardService do
         :derived_vm_numvcpus      => 2,
         :derived_memory_available => 2048,
         :cpu_usage_rate_average   => 100,
-        :time_profile             => time_profile)
+        :time_profile             => time_profile
+      )
 
       current_metric_kubernetes = FactoryGirl.create(
         :metric_rollup_cm_daily,
@@ -45,7 +46,8 @@ describe ContainerDashboardService do
         :derived_vm_numvcpus      => 1,
         :derived_memory_available => 1024,
         :cpu_usage_rate_average   => 100,
-        :time_profile             => time_profile)
+        :time_profile             => time_profile
+      )
 
       old_metric = FactoryGirl.create(
         :metric_rollup_cm_daily,
@@ -54,12 +56,14 @@ describe ContainerDashboardService do
         :derived_vm_numvcpus      => 2,
         :derived_memory_available => 2048,
         :cpu_usage_rate_average   => 100,
-        :time_profile             => time_profile)
+        :time_profile             => time_profile
+      )
 
       nil_fielded_metric = FactoryGirl.create(
         :metric_rollup_cm_daily,
         :timestamp    => old_date,
-        :time_profile => time_profile)
+        :time_profile => time_profile
+      )
 
       ems_openshift.metric_rollups << current_metric_openshift
       ems_openshift.metric_rollups << old_metric
@@ -72,7 +76,7 @@ describe ContainerDashboardService do
       node_utilization_single_provider = described_class.new(ems_openshift.id, controller).ems_utilization[:xy_data]
 
       expect(node_utilization_single_provider).to eq(
-        :cpu => {
+        :cpu    => {
           :used  => 2,
           :total => 2,
           :xData => [current_date],
@@ -87,7 +91,7 @@ describe ContainerDashboardService do
       )
 
       expect(node_utilization_all_providers).to eq(
-        :cpu => {
+        :cpu    => {
           :used  => 3,
           :total => 3,
           :xData => [current_date],
@@ -133,7 +137,8 @@ describe ContainerDashboardService do
             :derived_vm_numvcpus        => 4,
             :net_usage_rate_average     => 90,
             :derived_memory_available   => 8192,
-            :derived_memory_used        => 4096)
+            :derived_memory_used        => 4096
+          )
         end
       end
 
@@ -169,7 +174,8 @@ describe ContainerDashboardService do
             :provider => "kubernetes",
             :total    => 4,
             :percent  => 0.9
-          }],
+          }
+        ],
         :nodeMemoryUsage => [
           {
             :id       => @node1.id,
@@ -198,7 +204,8 @@ describe ContainerDashboardService do
             :provider => "kubernetes",
             :total    => 8192,
             :percent  => 0.9
-          }]
+          }
+        ]
       )
 
       expect(heatmaps_single_provider).to eq(
@@ -329,19 +336,22 @@ describe ContainerDashboardService do
         :metric_rollup_cm_daily,
         :timestamp              => current_date,
         :net_usage_rate_average => 1000,
-        :time_profile           => time_profile)
+        :time_profile           => time_profile
+      )
 
       current_metric_kubernetes = FactoryGirl.create(
         :metric_rollup_cm_daily,
         :timestamp              => current_date,
         :net_usage_rate_average => 1500,
-        :time_profile           => time_profile)
+        :time_profile           => time_profile
+      )
 
       old_metric = FactoryGirl.create(
         :metric_rollup_cm_daily,
         :timestamp              => old_date,
         :net_usage_rate_average => 1500,
-        :time_profile           => time_profile)
+        :time_profile           => time_profile
+      )
 
       ems_openshift.metric_rollups << previous_metric_openshift
       ems_openshift.metric_rollups << current_metric_openshift
@@ -382,24 +392,28 @@ describe ContainerDashboardService do
         :metric_rollup_cm_hr,
         :timestamp              => current_date,
         :net_usage_rate_average => 1000,
-        :time_profile           => time_profile)
+        :time_profile           => time_profile
+      )
 
       current_metric_kubernetes = FactoryGirl.create(
         :metric_rollup_cm_hr,
         :timestamp              => current_date,
         :net_usage_rate_average => 1500,
-        :time_profile           => time_profile)
+        :time_profile           => time_profile
+      )
 
       old_metric = FactoryGirl.create(
         :metric_rollup_cm_hr,
         :timestamp              => old_date,
         :net_usage_rate_average => 1500,
-        :time_profile           => time_profile)
+        :time_profile           => time_profile
+      )
 
       nil_fields_metric = FactoryGirl.create(
         :metric_rollup_cm_hr,
         :timestamp    => old_date,
-        :time_profile => time_profile)
+        :time_profile => time_profile
+      )
 
       ems_openshift.metric_rollups << previous_metric_openshift
       ems_openshift.metric_rollups << current_metric_openshift

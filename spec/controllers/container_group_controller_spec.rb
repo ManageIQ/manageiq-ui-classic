@@ -44,7 +44,7 @@ describe ContainerGroupController do
       login_as FactoryGirl.create(:user)
     end
 
-    subject { get :show, :id => @container_group.id }
+    subject { get :show, :params => { :id => @container_group.id } }
 
     context "render" do
       render_views

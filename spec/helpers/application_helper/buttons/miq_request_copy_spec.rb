@@ -5,7 +5,7 @@ describe ApplicationHelper::Button::MiqRequestCopy do
         view_context,
         {},
         {'record' => @record, 'showtype' => @showtype},
-        {:options   => {:feature => 'miq_request_copy'}}
+        {:options => {:feature => 'miq_request_copy'}}
       )
     end
 

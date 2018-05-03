@@ -36,7 +36,7 @@ describe VmCloudController do
         prefixes = ["image", "instance"]
         prefixes.each do |prefix|
           actual_action = "#{prefix}_#{action_name}"
-          actual_method = [:s1, :s2].include?(method) ? actual_action : method.to_s
+          actual_method = %i(s1 s2).include?(method) ? actual_action : method.to_s
 
           it "calls the appropriate method: '#{actual_method}' for action '#{actual_action}'" do
             expect(controller).to receive(actual_method)

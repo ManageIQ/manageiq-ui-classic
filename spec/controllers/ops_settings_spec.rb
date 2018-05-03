@@ -146,8 +146,7 @@ describe OpsController do
 
         @params = {:id     => 'new',
                    :action => "zone_edit",
-                   :button => "add"
-        }
+                   :button => "add"}
         edit = {:new => {:name        => @zone.name,
                          :description => "description02",
                          :ntp         => {}}}

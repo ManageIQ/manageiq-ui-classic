@@ -31,7 +31,7 @@ describe ContainerNodeController do
       @node = FactoryGirl.create(:container_node)
     end
 
-    subject { get :show, :id => @node.id }
+    subject { get :show, :params => { :id => @node.id } }
 
     context "render" do
       render_views
@@ -54,7 +54,7 @@ describe ContainerNodeController do
       end
 
       it 'displays a flash message' do
-        post :button, :pressed => 'container_node_check_compliance', :id => node.id
+        post :button, :params => { :pressed => 'container_node_check_compliance', :id => node.id }
         expect(JSON.parse(response.body)['replacePartials']).to have_key('flash_msg_div')
       end
     end

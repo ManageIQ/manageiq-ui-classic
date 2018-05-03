@@ -16,7 +16,7 @@ describe ReportController do
 
     shared_examples "Report Widget @menu" do
       before do
-        controller.instance_variable_set(:@sb, {:nodes => ['?', 'r']})
+        controller.instance_variable_set(:@sb, :nodes => ['?', 'r'])
       end
 
       it "contains custom reports" do

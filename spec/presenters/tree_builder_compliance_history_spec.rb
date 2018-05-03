@@ -1,7 +1,7 @@
 describe TreeBuilderComplianceHistory do
   context 'TreeBuilderComplianceHistory' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Compliance History Group")
       login_as FactoryGirl.create(:user, :userid => 'comliance_history__wilma', :miq_groups => [@group])
       compliance_detail_one = FactoryGirl.create(:compliance_detail,

@@ -188,8 +188,7 @@ describe ApplicationController do
                                        :trees       => {
                                          :ab_tree => {:active_node => "-ub-Vm_cb-10r51"}
                                        },
-                                       :active_tree => :ab_tree
-                                      )
+                                       :active_tree => :ab_tree)
       controller.send(:button_set_form_vars)
       expect(assigns(:edit)[:new][:target_class]).to eq("VM and Instance")
       expect(assigns(:edit)[:new][:display]).to eq(false)
@@ -200,8 +199,7 @@ describe ApplicationController do
                                        :trees       => {
                                          :ab_tree => {:active_node => "xx-ab_Vm_cbg-10r96_cb-10r7"}
                                        },
-                                       :active_tree => :ab_tree
-                                      )
+                                       :active_tree => :ab_tree)
       controller.send(:button_set_form_vars)
       expect(assigns(:edit)[:new][:target_class]).to eq("VM and Instance")
     end

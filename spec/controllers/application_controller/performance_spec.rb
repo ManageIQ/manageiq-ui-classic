@@ -48,14 +48,12 @@ describe ApplicationController do
           controller.instance_variable_set(:@perf_record, FactoryGirl.create(:host))
           controller.instance_variable_set(
             :@perf_options,
-            {
-              :typ          => type,
-              :daily_date   => '12/12/2017',
-              :hourly_date  => '12/12/2017',
-              :tz           => TimeProfile.rollup_daily_metrics.all_timezones.first,
-              :cat          => 'foobar',
-              :time_profile => 'bar'
-            }
+            :typ          => type,
+            :daily_date   => '12/12/2017',
+            :hourly_date  => '12/12/2017',
+            :tz           => TimeProfile.rollup_daily_metrics.all_timezones.first,
+            :cat          => 'foobar',
+            :time_profile => 'bar'
           )
           expect(controller).to receive(:initiate_wait_for_task)
           controller.send(:perf_gen_tag_data_before_wait)
@@ -79,11 +77,9 @@ describe ApplicationController do
         controller.instance_variable_set(:@perf_record, FactoryGirl.create(:host))
         controller.instance_variable_set(
           :@perf_options,
-          {
-            :typ   => 'Hourly',
-            :cat   => 'cat',
-            :model => 'Host',
-          }
+          :typ   => 'Hourly',
+          :cat   => 'cat',
+          :model => 'Host',
         )
         expect(controller).to receive(:prepare_perf_tag_chart).at_least(:once)
         expect(controller).to receive(:gen_perf_chart).at_least(:once)

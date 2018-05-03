@@ -81,7 +81,7 @@ describe ServiceHelper::TextualSummary do
       cloud_credential = FactoryGirl.create(:embedded_ansible_amazon_credential)
       allow(@job).to receive(:authentications).and_return([cloud_credential, machine_credential])
       allow(self).to receive(:url_for_only_path).and_return('link')
-      expect(textual_cloud_credential).to eq({:label=>"Cloud", :value=>nil, :title=>"Credential (Amazon)", :link=>"link"})
+      expect(textual_cloud_credential).to eq(:label => "Cloud", :value => nil, :title => "Credential (Amazon)", :link => "link")
     end
   end
 

@@ -111,8 +111,8 @@ describe MiqPolicyController do
             it "redirects to export with an error message" do
               post :upload, :params => params
               expect(response).to redirect_to(
-                :action      => "export",
-                :dbtype      => "dbtype",
+                :action => "export",
+                :dbtype => "dbtype",
               )
               expect(session[:flash_msgs]).to match [a_hash_including(:message => "Error during 'Policy Import': message", :level => :error)]
             end
@@ -223,7 +223,7 @@ describe MiqPolicyController do
       presenter = ExplorerPresenter.new(:active_tree => :alert_profile_tree)
       controller.send(:get_node_info, 'ap_xx-Storage')
       presenter[:right_cell_text] = 'foo'
-      controller.send(:replace_right_cell, {:nodetype => 'xx', :replace_trees => [:alert_profile], :presenter => presenter})
+      controller.send(:replace_right_cell, :nodetype => 'xx', :replace_trees => [:alert_profile], :presenter => presenter)
 
       expect(presenter[:right_cell_text]).not_to equal('foo')
       expect(presenter[:right_cell_text]).to_not be_nil

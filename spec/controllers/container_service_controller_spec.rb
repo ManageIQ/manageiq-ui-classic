@@ -30,7 +30,7 @@ describe ContainerServiceController do
       @service = FactoryGirl.create(:container_service)
     end
 
-    subject { get :show, :id => @service.id }
+    subject { get :show, :params => { :id => @service.id } }
 
     context "render" do
       render_views

@@ -351,17 +351,16 @@ describe ApplicationController do
       allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(true)
       controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
       expect(assigns(:flash_array).first[:message]).to include(
-                                                         "Delete initiated for 1 Cloud Object Store Object from the ManageIQ Database"
-                                                       )
-
+        "Delete initiated for 1 Cloud Object Store Object from the ManageIQ Database"
+      )
     end
 
     it "flash - task not supported" do
       allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
       controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
       expect(assigns(:flash_array).first[:message]).to include(
-                                                         "Delete does not apply to this item"
-                                                       )
+        "Delete does not apply to this item"
+      )
     end
   end
 
@@ -545,7 +544,7 @@ describe ApplicationController do
   it "Certain actions should not be allowed for a MiqTemplate record" do
     template = FactoryGirl.create(:template_vmware)
     controller.instance_variable_set(:@_params, :id => template.id)
-    actions = [:vm_right_size, :vm_reconfigure]
+    actions = %i(vm_right_size vm_reconfigure)
     actions.each do |action|
       expect(controller).to receive(:render)
       controller.send(action)
@@ -559,7 +558,7 @@ describe ApplicationController do
     login_as FactoryGirl.create(:user, :features => feature)
     vm = FactoryGirl.create(:vm_vmware)
     controller.instance_variable_set(:@_params, :id => vm.id)
-    actions = [:vm_right_size, :vm_reconfigure]
+    actions = %i(vm_right_size vm_reconfigure)
     actions.each do |action|
       expect(controller).to receive(:render)
       controller.send(action)
@@ -638,8 +637,7 @@ describe ApplicationController do
                                        :from_fourth                  => "1",
                                        :to_fourth                    => "0",
                                        "discover_type_virtualcenter" => "1",
-                                       "start"                       => "45"
-                                      )
+                                       "start"                       => "45")
       allow(controller).to receive(:drop_breadcrumb)
       expect(controller).to receive(:render)
       controller.send(:discover)
@@ -653,8 +651,7 @@ describe ApplicationController do
     it "displays options to select Azure or Amazon cloud" do
       session[:type] = "ems"
       controller.instance_variable_set(:@_params,
-                                       :controller             => "ems_cloud"
-                                      )
+                                       :controller => "ems_cloud")
       allow(controller).to receive(:drop_breadcrumb)
       cloud_manager_stub = double('CloudManager',
                                   :supports_discovery? => true,
@@ -765,8 +762,7 @@ describe HostController do
       expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (Packages)",
                                             :url  => "/host/guest_applications/#{@host.id}?page="},
                                            {:name => "foo",
-                                            :url  => "/host/guest_applications/#{@host.id}?show=#{@guest_application.id}"}
-                                          ])
+                                            :url  => "/host/guest_applications/#{@host.id}?show=#{@guest_application.id}"}])
     end
 
     it "shows associated datastores" do
@@ -842,8 +838,7 @@ describe HostController do
     it "when the vm_or_template supports scan,  returns true" do
       vm = FactoryGirl.create(:vm_vmware,
                               :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                              :storage               => FactoryGirl.create(:storage)
-                             )
+                              :storage               => FactoryGirl.create(:storage))
       controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
       expect(controller).to receive(:process_objects)
       controller.send(:vm_button_operation, 'scan', "Smartstate Analysis")
@@ -868,8 +863,7 @@ describe ServiceController do
       service = FactoryGirl.create(:service)
       template = FactoryGirl.create(:template,
                                     :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                                    :storage               => FactoryGirl.create(:storage)
-                                   )
+                                    :storage               => FactoryGirl.create(:storage))
       service.update_attribute(:id, template.id)
       service.reload
       controller.instance_variable_set(:@_params, :miq_grid_checks => service.id.to_s)

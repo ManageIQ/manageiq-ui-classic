@@ -1,7 +1,7 @@
 describe TreeBuilderDatastores do
   context 'TreeBuilderDatastores' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Datastores Group")
       login_as FactoryGirl.create(:user, :userid => 'datastores_wilma', :miq_groups => [@group])
       @host = FactoryGirl.create(:host, :name => 'Host Name')

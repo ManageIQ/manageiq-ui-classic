@@ -8,7 +8,7 @@ describe ApplicationHelper::Button::ServerDemote do
       it "will not be skipped for this record" do
         view_context = setup_view_context_with_sandbox({})
         button = described_class.new(view_context, {}, {'record' => @record}, {})
-        button.instance_variable_set(:@sb, {:active_tab => "diagnostics_roles_servers"})
+        button.instance_variable_set(:@sb, :active_tab => "diagnostics_roles_servers")
         allow(view_context).to receive(:x_active_tree).and_return(:diagnostics_tree)
         expect(button.visible?).to be_truthy
       end
@@ -22,7 +22,7 @@ describe ApplicationHelper::Button::ServerDemote do
       it "will be skipped for this record" do
         view_context = setup_view_context_with_sandbox({})
         button = described_class.new(view_context, {}, {'record' => @record}, {})
-        button.instance_variable_set(:@sb, {:active_tab => "diagnostics_roles_servers"})
+        button.instance_variable_set(:@sb, :active_tab => "diagnostics_roles_servers")
         allow(view_context).to receive(:x_active_tree).and_return(:diagnostics_tree)
         expect(button.visible?).to be_falsey
       end

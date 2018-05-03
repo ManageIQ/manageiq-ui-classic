@@ -1,7 +1,7 @@
 describe TreeBuilderPolicySimulation do
   context 'TreeBuilderPolicySimulation' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Policy Simulation Group")
       login_as FactoryGirl.create(:user, :userid => 'policy_simulation_wilma', :miq_groups => [@group])
       @policy_options = {:out_of_scope => true, :passed => true, :failed => true}
@@ -116,7 +116,7 @@ describe TreeBuilderPolicySimulation do
   end
   context 'TreeBuilderPolicySimulation without data' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "No node Group")
       login_as FactoryGirl.create(:user, :userid => 'no_node_wilma', :miq_groups => [@group])
       @policy_options = {:out_of_scope => true, :passed => true, :failed => true}

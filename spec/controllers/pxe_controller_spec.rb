@@ -49,8 +49,7 @@ describe PxeController do
                                        :trees       => {
                                          :pxe_tree => {:active_node => "ps-#{pxe.id}"}
                                        },
-                                       :active_tree => :pxe_tree
-                                      )
+                                       :active_tree => :pxe_tree)
       allow(controller).to receive(:get_node_info)
       allow(controller).to receive(:replace_right_cell)
       controller.send(:pxe_server_refresh)

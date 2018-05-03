@@ -11,8 +11,7 @@ describe MiqPolicyController do
                                          :node_ids    => {
                                            :policy_tree => {"p" => @policy.id}
                                          },
-                                         :active_tree => :policy_tree
-                                        )
+                                         :active_tree => :policy_tree)
         allow(controller).to receive(:replace_right_cell)
       end
 

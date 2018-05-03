@@ -9,7 +9,7 @@ describe DialogLocalService do
 
     it "returns a hash" do
       expect(service.determine_dialog_locals_for_svc_catalog_provision(
-        resource_action, target, finish_submit_endpoint
+               resource_action, target, finish_submit_endpoint
       )).to eq(
         :resource_action_id     => 456,
         :target_id              => 321,

@@ -31,8 +31,7 @@ describe ServiceController do
                                        :trees       => {
                                          :svcs_tree => {:active_node => svc.id.to_s}
                                        },
-                                       :active_tree => :svcs_tree
-                                      )
+                                       :active_tree => :svcs_tree)
 
       allow(controller).to receive(:replace_right_cell)
 
@@ -287,7 +286,7 @@ describe ServiceController do
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
           :model_name                     => 'Service',
           :report_data_additional_options => {
-            :named_scope => [:retired, :displayed]
+            :named_scope => %i(retired displayed)
           }
         )
         post :tree_select, :params => {:id => 'xx-rsrv'}

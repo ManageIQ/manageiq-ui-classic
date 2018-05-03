@@ -91,7 +91,7 @@ describe EmsContainerController do
       # set kubeclient to return a mock route.
       allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
       expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
-        .and_return(hawkular_route)
+                                                .and_return(hawkular_route)
 
       ret = JSON.parse(controller.send(:update_ems_button_detect))
 
@@ -110,7 +110,7 @@ describe EmsContainerController do
       # set kubeclient to return a mock route.
       allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
       expect(mock_client).to receive(:get_route).with('prometheus', 'openshift-metrics')
-        .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-metrics.example.com"}))
+                                                .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-metrics.example.com"}))
 
       ret = JSON.parse(controller.send(:update_ems_button_detect))
 
@@ -129,7 +129,7 @@ describe EmsContainerController do
       # set kubeclient to return a mock route.
       allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
       expect(mock_client).to receive(:get_route).with('alerts', 'openshift-metrics')
-        .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-alerts.example.com"}))
+                                                .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-alerts.example.com"}))
 
       ret = JSON.parse(controller.send(:update_ems_button_detect))
 
@@ -148,7 +148,7 @@ describe EmsContainerController do
       # set kubeclient to return a mock route.
       allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
       expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
-        .and_raise(StandardError, "message")
+                                                .and_raise(StandardError, "message")
 
       controller.send(:update_ems_button_detect)
 

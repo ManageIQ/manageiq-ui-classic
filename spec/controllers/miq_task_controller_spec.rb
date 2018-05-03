@@ -238,8 +238,7 @@ describe MiqTaskController do
                 'miq_tasks.updated_on>=? AND '\
                 'miq_tasks.updated_on<=?'
         expected = [query, user.userid, "Waiting_to_start", "Queued", "Finished", "Ok",
-                    "Finished", "Error", "Finished", "Warn", "Finished", "Waiting_to_start", "Queued"
-                   ]
+                    "Finished", "Error", "Finished", "Warn", "Finished", "Waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period])
         expect(subject).to eq(expected)
       end
@@ -467,8 +466,7 @@ describe MiqTaskController do
                 "miq_tasks.updated_on>=? AND "\
                 "miq_tasks.updated_on<=?"
         expected = [query, "Waiting_to_start", "Queued", "Finished", "Ok", "Finished", "Error",
-                    "Finished", "Warn", "Finished", "Waiting_to_start", "Queued"
-                   ]
+                    "Finished", "Warn", "Finished", "Waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period])
         expect(subject).to eq(expected)
       end

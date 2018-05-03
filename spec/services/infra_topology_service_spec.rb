@@ -12,7 +12,7 @@ describe InfraTopologyService do
     end
 
     it "topology contains only the expected keys" do
-      expect(subject.keys).to match_array([:items, :kinds, :relations, :icons])
+      expect(subject.keys).to match_array(%i(items kinds relations icons))
     end
 
     it "provider has unknown status when no authentication exists" do
@@ -32,7 +32,8 @@ describe InfraTopologyService do
                                          :display_kind => "Openstack",
                                          :miq_id       => ems.id,
                                          :model        => ems.class.name,
-                                         :key          => "InfraManager" + ems.id.to_s})
+                                         :key          => "InfraManager" + ems.id.to_s}
+      )
     end
 
     it "topology contains the expected structure and content" do
@@ -68,7 +69,8 @@ describe InfraTopologyService do
       expect(subject[:relations].size).to eq(2)
       expect(subject[:relations]).to include(
         {:source => "InfraManager" + ems.id.to_s, :target => "EmsCluster" + @cluster.id.to_s},
-        {:source => "EmsCluster" + @cluster.id.to_s, :target => "Host" + @host.id.to_s},)
+        {:source => "EmsCluster" + @cluster.id.to_s, :target => "Host" + @host.id.to_s},
+      )
     end
   end
 end

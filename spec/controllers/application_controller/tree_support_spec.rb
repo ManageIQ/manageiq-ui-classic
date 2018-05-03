@@ -6,8 +6,7 @@ describe ApplicationController do
         expect(controller).to receive(:render)
         controller.instance_variable_set(:@sb,
                                          :trees       => {:foo_tree => {:active_node => "root"}},
-                                         :active_tree => :foo_tree
-                                        )
+                                         :active_tree => :foo_tree)
       end
 
       it "reloads from session" do

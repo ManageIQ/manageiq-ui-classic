@@ -223,9 +223,9 @@ describe DashboardController do
       allow(MiqServer).to receive(:my_zone).and_return('default')
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
-      post :widget_add, :widget => wi.id
+      post :widget_add, :params => { :widget => wi.id }
       expect(controller.send(:flash_errors?)).not_to be_truthy
-      post :widget_add, :widget => wi.id
+      post :widget_add, :params => { :widget => wi.id }
       expect(controller.send(:flash_errors?)).to be_truthy
       expect(assigns(:flash_array).first[:message]).to include("is already part of the edited dashboard")
     end

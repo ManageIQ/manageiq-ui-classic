@@ -11,7 +11,7 @@ describe OrchestrationStackHelper::TextualSummary do
     end
 
     it "with :retires_on returns date in %x %R %Z format" do
-      @record.retires_on = Date.new(2015, 11, 01).in_time_zone('UTC')
+      @record.retires_on = Date.new(2015, 11, 0o1).in_time_zone('UTC')
       expect(textual_retirement_date[:value]).to eq("11/01/15 00:00 UTC")
     end
   end

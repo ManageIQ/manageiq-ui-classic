@@ -121,15 +121,14 @@ describe ReportFormatter::TimelineMessage do
 
     before do
       @report = FactoryGirl.create(:miq_report,
-                                  :db        => "EventStream",
-                                  :col_order => %w(id name event_type timestamp),
-                                  :headers   => %w(id name event_type timestamp),
-                                  :timeline  => {:field => "EmsEvent-timestamp", :position => "Last"})
+                                   :db        => "EventStream",
+                                   :col_order => %w(id name event_type timestamp),
+                                   :headers   => %w(id name event_type timestamp),
+                                   :timeline  => {:field => "EmsEvent-timestamp", :position => "Last"})
       @report.rpt_options = {:categories => {:power    => {:display_name => "Power Activity",
-                                                          :event_groups => %w(VmPoweredOffEvent VmPoweredOnEvent)},
-                                            :snapshot => {:display_name => "Snapshot Activity",
-                                                          :event_groups => %w(AlarmCreatedEvent AlarmRemovedEvent)}}
-      }
+                                                           :event_groups => %w(VmPoweredOffEvent VmPoweredOnEvent)},
+                                             :snapshot => {:display_name => "Snapshot Activity",
+                                                           :event_groups => %w(AlarmCreatedEvent AlarmRemovedEvent)}}}
 
       data = []
       30.times do
@@ -191,16 +190,13 @@ describe '#set data for headers that exist in col headers' do
     @report.rpt_options = {:categories => {:power    => {:display_name => "Power Activity",
                                                          :event_groups => %w(VmPoweredOffEvent VmPoweredOnEvent)},
                                            :snapshot => {:display_name => "Snapshot Activity",
-                                                         :event_groups => %w(AlarmCreatedEvent AlarmRemovedEvent)}}
-    }
+                                                         :event_groups => %w(AlarmCreatedEvent AlarmRemovedEvent)}}}
 
-    data = [Ruport::Data::Record.new("id"      => stub_ems_event("VmPoweredOffEvent").id,
+    data = [Ruport::Data::Record.new("id"          => stub_ems_event("VmPoweredOffEvent").id,
                                      "name"        => "Baz",
                                      "event_type"  => "VmPoweredOffEvent",
                                      "vm_location" => "foo",
-                                     "timestamp"   => Time.zone.now
-                                    )
-          ]
+                                     "timestamp"   => Time.zone.now)]
 
     @report.table = Ruport::Data::Table.new(
       :column_names => %w(id name event_type timestamp vm_location),

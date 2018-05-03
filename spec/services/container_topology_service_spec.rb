@@ -1,12 +1,11 @@
 describe ContainerTopologyService do
-
   let(:container_topology_service) { described_class.new(nil) }
 
   describe "#build_topology" do
     subject { container_topology_service.build_topology }
 
     it "topology contains only the expected keys" do
-      expect(subject.keys).to match_array([:items, :kinds, :relations, :icons])
+      expect(subject.keys).to match_array(%i(items kinds relations icons))
     end
 
     let(:container) { Container.create(:name => "ruby-example", :state => 'running') }
@@ -35,9 +34,9 @@ describe ContainerTopologyService do
       # vm and host test cross provider correlation to infra provider
       hardware = FactoryGirl.create(:hardware, :cpu_sockets => 2, :cpu_cores_per_socket => 4, :cpu_total_cores => 8)
       host = FactoryGirl.create(:host_redhat,
-                                :uid_ems => "abcd9a08-7b13-11e5-8546-129aa6621999",
+                                :uid_ems               => "abcd9a08-7b13-11e5-8546-129aa6621999",
                                 :ext_management_system => ems_rhev,
-                                :hardware => hardware)
+                                :hardware              => hardware)
       vm_rhev.update_attributes(:host => host, :raw_power_state => "up")
 
       allow(container_topology_service).to receive(:retrieve_providers).and_return([ems_kube])
@@ -63,7 +62,6 @@ describe ContainerTopologyService do
                                                                  :miq_id       => ems_kube.id,
                                                                  :model        => ems_kube.class.name,
                                                                  :key          => "ContainerManager" + ems_kube.id.to_s},
-
         "ContainerNode" + container_node.id.to_s             => {:name         => container_node.name,
                                                                  :status       => "Ready",
                                                                  :kind         => "ContainerNode",
@@ -71,7 +69,6 @@ describe ContainerTopologyService do
                                                                  :miq_id       => container_node.id,
                                                                  :model        => container_node.class.name,
                                                                  :key          => "ContainerNode" + container_node.id.to_s},
-
         "ContainerReplicator" + container_replicator.id.to_s => {:name         => container_replicator.name,
                                                                  :status       => "OK",
                                                                  :kind         => "ContainerReplicator",
@@ -79,7 +76,6 @@ describe ContainerTopologyService do
                                                                  :miq_id       => container_replicator.id,
                                                                  :model        => container_replicator.class.name,
                                                                  :key          => "ContainerReplicator" + container_replicator.id.to_s},
-
         "ContainerService" + container_service.id.to_s       => {:name         => container_service.name,
                                                                  :status       => "Unknown",
                                                                  :kind         => "ContainerService",
@@ -87,7 +83,6 @@ describe ContainerTopologyService do
                                                                  :miq_id       => container_service.id,
                                                                  :model        => container_service.class.name,
                                                                  :key          => "ContainerService" + container_service.id.to_s},
-
         "ContainerGroup" + container_group.id.to_s           => {:name         => container_group.name,
                                                                  :status       => "Running",
                                                                  :kind         => "ContainerGroup",
@@ -95,7 +90,6 @@ describe ContainerTopologyService do
                                                                  :miq_id       => container_group.id,
                                                                  :model        => container_group.class.name,
                                                                  :key          => "ContainerGroup" + container_group.id.to_s},
-
         "ContainerRoute" + container_route.id.to_s           => {:name         => container_route.name,
                                                                  :status       => "Unknown",
                                                                  :kind         => "ContainerRoute",
@@ -103,7 +97,6 @@ describe ContainerTopologyService do
                                                                  :miq_id       => container_route.id,
                                                                  :model        => container_route.class.name,
                                                                  :key          => "ContainerRoute" + container_route.id.to_s},
-
         "Container" + container.id.to_s                      => {:name         => container.name,
                                                                  :status       => "Running",
                                                                  :kind         => "Container",
@@ -111,7 +104,6 @@ describe ContainerTopologyService do
                                                                  :miq_id       => container.id,
                                                                  :model        => container.class.name,
                                                                  :key          => "Container" + container.id.to_s},
-
         "Vm" + vm_rhev.id.to_s                               => {:name         => vm_rhev.name,
                                                                  :status       => "On",
                                                                  :kind         => "Vm",
@@ -120,7 +112,6 @@ describe ContainerTopologyService do
                                                                  :provider     => ems_rhev.name,
                                                                  :model        => vm_rhev.class.name,
                                                                  :key          => "Vm" + vm_rhev.id.to_s},
-
         "Host" + host.id.to_s                                => {:name         => host.name,
                                                                  :status       => "On",
                                                                  :kind         => "Host",
@@ -166,7 +157,6 @@ describe ContainerTopologyService do
                                                            :miq_id       => container_node.id,
                                                            :model        => container_node.class.name,
                                                            :key          => "ContainerNode" + container_node.id.to_s},
-
         "ContainerService" + container_service.id.to_s => {:name         => container_service.name,
                                                            :status       => "Unknown",
                                                            :kind         => "ContainerService",
@@ -174,7 +164,6 @@ describe ContainerTopologyService do
                                                            :miq_id       => container_service.id,
                                                            :model        => container_service.class.name,
                                                            :key          => "ContainerService" + container_service.id.to_s},
-
         "ContainerGroup" + container_group.id.to_s     => {:name         => container_group.name,
                                                            :status       => "Running",
                                                            :kind         => "ContainerGroup",
@@ -182,7 +171,6 @@ describe ContainerTopologyService do
                                                            :miq_id       => container_group.id,
                                                            :model        => container_group.class.name,
                                                            :key          => "ContainerGroup" + container_group.id.to_s},
-
         "Container" + container.id.to_s                => {:name         => container.name,
                                                            :status       => "Running",
                                                            :kind         => "Container",
@@ -190,7 +178,6 @@ describe ContainerTopologyService do
                                                            :miq_id       => container.id,
                                                            :model        => container.class.name,
                                                            :key          => "Container" + container.id.to_s},
-
         "Vm" + vm_rhev.id.to_s                         => {:name         => vm_rhev.name,
                                                            :status       => "Off",
                                                            :kind         => "Vm",
@@ -199,7 +186,6 @@ describe ContainerTopologyService do
                                                            :provider     => ems_rhev.name,
                                                            :model        => vm_rhev.class.name,
                                                            :key          => "Vm" + vm_rhev.id.to_s},
-
         "ContainerManager" + ems_kube.id.to_s          => {:name         => ems_kube.name,
                                                            :status       => "Error",
                                                            :kind         => "ContainerManager",

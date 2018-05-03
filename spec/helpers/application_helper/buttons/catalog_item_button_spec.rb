@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ApplicationHelper::Button::CatalogItemButton do
-  let (:session) { Hash.new }
+  let(:session) { {} }
   before do
     @view_context = setup_view_context_with_sandbox({})
     allow(@view_context).to receive(:current_user).and_return(FactoryGirl.create(:user))

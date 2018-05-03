@@ -55,7 +55,7 @@ describe ContainerImageController do
       @image = FactoryGirl.create(:container_image)
     end
 
-    subject { get :show, :id => @image.id }
+    subject { get :show, :params => { :id => @image.id } }
 
     context "render" do
       render_views

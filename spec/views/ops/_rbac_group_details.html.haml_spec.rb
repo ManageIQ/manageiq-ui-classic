@@ -6,8 +6,7 @@ describe 'ops/_rbac_group_details.html.haml' do
               :key                 => "settings_authentication_edit__#{miq_server.id}",
               :ldap_groups_by_user => [],
               :roles               => %w(fred wilma),
-              :projects_tenants    => [["projects", %w(foo bar)]]
-      }
+              :projects_tenants    => [["projects", %w(foo bar)]]}
       view.instance_variable_set(:@edit, edit)
       @group = FactoryGirl.create(:miq_group, :description => 'flintstones')
       allow(view).to receive(:current_tenant).and_return(Tenant.seed)

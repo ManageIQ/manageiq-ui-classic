@@ -108,7 +108,7 @@ describe TopologyService do
     end
 
     context 'input is an array of symbols' do
-      let(:input) { [:s1, :s2] }
+      let(:input) { %i(s1 s2) }
 
       it 'array values are matching capitalized hash keys with nil as values' do
         expect(output.keys).to eq(input.map(&:capitalize))

@@ -9,8 +9,7 @@ describe 'miq_request/_prov_vm_grid.html.haml' do
               :vm_sortcol => 'name',
               :vm_sortdir => 'ASC',
               :vm_columns => %w(name),
-              :vm_headers => {"name"=>"Name"}
-             }
+              :vm_headers => {"name"=>"Name"}}
       view.instance_variable_set(:@edit, edit)
       view.instance_variable_set(:@vms, @vms)
     end
@@ -45,8 +44,7 @@ describe 'miq_request/_prov_vm_grid.html.haml' do
               :vm_sortdir => 'ASC',
               :vm_columns => %w(name),
               :vm_headers => {:name          => 'Name',
-                              'cloud_tenant' => true}
-      }
+                              'cloud_tenant' => true}}
       view.instance_variable_set(:@edit, edit)
       view.instance_variable_set(:@vm, @vm)
       view.instance_variable_set(:@_param, :tab_id => 'service')

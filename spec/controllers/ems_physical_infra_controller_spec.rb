@@ -53,7 +53,7 @@ describe EmsPhysicalInfraController do
       expect(response.status).to eq(200)
       expect(response).to render_template('shared/views/ems_common/show')
       expect(assigns(:breadcrumbs)).to eq([{:name => "#{@ems.name} (All Datastores)",
-                                            :url => "/ems_physical_infra/#{@ems.id}?display=storages"}])
+                                            :url  => "/ems_physical_infra/#{@ems.id}?display=storages"}])
 
       # display needs to be saved to session for GTL pagination and such
       expect(session[:ems_physical_infra_display]).to eq('storages')
@@ -114,16 +114,16 @@ describe EmsPhysicalInfraController do
 
       it "uses the passwords from params for validation if they exist" do
         controller.instance_variable_set(:@_params,
-                                         :default_userid       => default_creds[:userid],
-                                         :default_password     => default_creds[:password])
-        expect(controller.send(:build_credentials, @ems, :validate)).to eq(:default     => default_creds.merge!(:save => false))
+                                         :default_userid   => default_creds[:userid],
+                                         :default_password => default_creds[:password])
+        expect(controller.send(:build_credentials, @ems, :validate)).to eq(:default => default_creds.merge!(:save => false))
       end
 
       it "uses the stored passwords for validation if passwords dont exist in params" do
         controller.instance_variable_set(:@_params,
-                                         :default_userid     => default_creds[:userid])
+                                         :default_userid => default_creds[:userid])
         expect(@ems).to receive(:authentication_password).and_return(default_creds[:password])
-        expect(controller.send(:build_credentials, @ems, :validate)).to eq(:default     => default_creds.merge!(:save => false))
+        expect(controller.send(:build_credentials, @ems, :validate)).to eq(:default => default_creds.merge!(:save => false))
       end
     end
   end
@@ -140,14 +140,14 @@ describe EmsPhysicalInfraController do
     it 'creates on post' do
       expect do
         post :create, :params => {
-          "button"                    => "add",
-          "name"                      => "foo",
-          "emstype"                   => "lenovo_ph_infra",
-          "zone"                      => zone.name,
-          "cred_type"                 => "default",
-          "default_hostname"          => "foo.com",
-          "default_userid"            => "foo",
-          "default_password"          => "[FILTERED]",
+          "button"           => "add",
+          "name"             => "foo",
+          "emstype"          => "lenovo_ph_infra",
+          "zone"             => zone.name,
+          "cred_type"        => "default",
+          "default_hostname" => "foo.com",
+          "default_userid"   => "foo",
+          "default_password" => "[FILTERED]",
         }
       end.to change { ManageIQ::Providers::PhysicalInfraManager.count }.by(1)
     end
@@ -155,14 +155,14 @@ describe EmsPhysicalInfraController do
     it 'creates and updates an authentication record on post' do
       expect do
         post :create, :params => {
-          "button"                    => "add",
-          "name"                      => "foo_lenovo_ph_infra",
-          "emstype"                   => "lenovo_ph_infra",
-          "zone"                      => zone.name,
-          "cred_type"                 => "default",
-          "default_hostname"          => "foo.com",
-          "default_userid"            => "foo",
-          "default_password"          => "[FILTERED]",
+          "button"           => "add",
+          "name"             => "foo_lenovo_ph_infra",
+          "emstype"          => "lenovo_ph_infra",
+          "zone"             => zone.name,
+          "cred_type"        => "default",
+          "default_hostname" => "foo.com",
+          "default_userid"   => "foo",
+          "default_password" => "[FILTERED]",
         }
       end.to change { Authentication.count }.by(1)
 

@@ -38,20 +38,20 @@ describe CloudObjectStoreObjectController do
     end
 
     it "builds tagging screen" do
-      post :button, :pressed => "cloud_object_store_object_tag", :format => :js, :id => @object.id
+      post :button, :params => { :pressed => "cloud_object_store_object_tag", :format => :js, :id => @object.id }
       expect(assigns(:flash_array)).to be_nil
     end
 
     it "cancels tags edit" do
       session[:breadcrumbs] = [{:url => "cloud_object_store_object/show/#{@object.id}"}, 'placeholder']
-      post :tagging_edit, :button => "cancel", :format => :js, :id => @object.id
+      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => @object.id }
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
     end
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "cloud_object_store_object/show/#{@object.id}"}, 'placeholder']
-      post :tagging_edit, :button => "save", :format => :js, :id => @object.id
+      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @object.id }
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
     end

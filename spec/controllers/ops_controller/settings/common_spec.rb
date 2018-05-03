@@ -148,7 +148,9 @@ describe OpsController do
             :customer_password => "password",
             :server_url        => "example.com",
             :repo_name         => "example_repo_name",
-            :use_proxy         => 0}}
+            :use_proxy         => 0
+          }
+        }
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
         controller.instance_variable_set(:@sb, :trees       =>
                                                                {:settings_tree => {:active_node => 'root'}},
@@ -166,26 +168,22 @@ describe OpsController do
         miq_server = FactoryGirl.create(:miq_server)
         current = VMDB::Config.new("vmdb")
         current.config[:authentication] = {:ldap_role => true,
-                                           :mode      => 'ldap'
-        }
+                                           :mode      => 'ldap'}
         edit = {:current => current,
                 :new     => copy_hash(current.config),
-                :key     => "settings_authentication_edit__#{miq_server.id}"
-        }
+                :key     => "settings_authentication_edit__#{miq_server.id}"}
         controller.instance_variable_set(:@edit, edit)
         session[:edit] = edit
         controller.instance_variable_set(:@sb,
                                          :selected_server_id => miq_server.id,
-                                         :active_tab         => 'settings_authentication'
-                                        )
+                                         :active_tab         => 'settings_authentication')
         controller.x_node = "svr-#{miq_server.id}"
       end
 
       it "sets ldap_role to false to make forest entries div hidden" do
         controller.instance_variable_set(:@_params,
                                          :id                  => 'authentication',
-                                         :authentication_mode => 'database'
-                                        )
+                                         :authentication_mode => 'database')
         controller.send(:settings_get_form_vars)
         expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(false)
       end
@@ -194,8 +192,7 @@ describe OpsController do
         session[:edit][:new][:authentication][:mode] = 'database'
         controller.instance_variable_set(:@_params,
                                          :id                  => 'authentication',
-                                         :authentication_mode => 'ldap'
-                                        )
+                                         :authentication_mode => 'ldap')
         controller.send(:settings_get_form_vars)
         expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(true)
       end

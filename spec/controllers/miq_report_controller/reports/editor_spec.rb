@@ -40,8 +40,7 @@ describe ReportController do
                            :db_options => {:options => {:owner => user.userid}},
                            :col_order  => ["name"],
                            :headers    => ["Name"],
-                           :tz         => nil
-                          )
+                           :tz         => nil)
       end
 
       let(:report_edit_options) do
@@ -186,14 +185,13 @@ describe ReportController do
           chargeback_report.db_options = {}
           chargeback_report.db_options[:options] = {}
 
-          case
-          when show_typ == "owner"
+          if show_typ == "owner"
             chargeback_report.db_options[:options] = {:owner => fake_id}
-          when show_typ == "tenant"
+          elsif show_typ == "tenant"
             chargeback_report.db_options[:options] = {:tenant_id => fake_id}
-          when show_typ == "tag"
+          elsif show_typ == "tag"
             chargeback_report.db_options[:options] = {:tag => "/managed/prov_max_cpu/1"}
-          when show_typ == "entity"
+          elsif show_typ == "entity"
             chargeback_report.db_options[:options] = {:provider_id => fake_id, :entity_id => fake_id}
           end
 
@@ -267,7 +265,7 @@ describe ReportController do
 
   tabs = {:formatting => 2, :filter => 3, :summary => 4, :charts => 5, :timeline => 6, :preview => 7,
           :consolidation => 8, :styling => 9}
-  chargeback_tabs = [:formatting, :filter, :preview]
+  chargeback_tabs = %i(formatting filter preview)
 
   describe '#build_edit_screen' do
     let(:default_tenant) { Tenant.seed }

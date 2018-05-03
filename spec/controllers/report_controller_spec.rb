@@ -666,7 +666,7 @@ describe ReportController do
           edit_new = assigns(:edit)[:new]
           edit_new[:field_order] = [['Vm-foobar']]
           controller.send(:gfv_key_group_calculations, 'foobar_0', 'total,avg')
-          expect(edit_new[:col_options]['foobar'][:grouping]).to eq([:avg, :total])
+          expect(edit_new[:col_options]['foobar'][:grouping]).to eq(%i(avg total))
         end
 
         it 'aggregs are stored under pivot_cols as a sorted array of symbols' do
@@ -675,7 +675,7 @@ describe ReportController do
           edit[:new][:fields] = [[name = 'Vm-foobar']]
           edit[:new][:headers] = {name => 'shoot me now!'}
           controller.send(:gfv_key_pivot_calculations, 'foobar_0', 'total,avg')
-          expect(edit[:pivot_cols][name]).to eq([:avg, :total])
+          expect(edit[:pivot_cols][name]).to eq(%i(avg total))
         end
       end
 
@@ -1097,8 +1097,7 @@ describe ReportController do
                                        :new => {
                                          :filter    => "Trending",
                                          :subfilter => "Hosts"
-                                       }
-                                      )
+                                       })
       report1 = double("MiqReport",
                        :name => 'Report 1',
                        :id   => 1,
@@ -1131,11 +1130,11 @@ describe ReportController do
       login_as FactoryGirl.create(:user_admin) # not sure why this needs to be an admin...
 
       controller.instance_variable_set(:@sb,
-                                       :trees => {'reports_tree'      => {:active_node => "root"},
-                                                  'savedreports_tree' => {:active_node => "root"},
-                                                  'widgets_tree'      => {:active_node => "root"},
-                                                  'db_tree'           => {:active_node => "root"},
-                                                  'schedules_tree'    => {:active_node => "root"}},
+                                       :trees       => {'reports_tree'      => {:active_node => "root"},
+                                                        'savedreports_tree' => {:active_node => "root"},
+                                                        'widgets_tree'      => {:active_node => "root"},
+                                                        'db_tree'           => {:active_node => "root"},
+                                                        'schedules_tree'    => {:active_node => "root"}},
                                        :active_tree => :reports_tree)
 
       allow(controller).to receive(:x_node) { 'root' }
@@ -1285,7 +1284,7 @@ describe ReportController do
         EvmSpecHelper.local_miq_server
 
         MiqUserRole.seed
-        role = MiqUserRole.find_by_name("EvmRole-operator")
+        role = MiqUserRole.find_by(:name => "EvmRole-operator")
 
         # User1 with 2 groups(Group1,Group2), current group for User2 is Group2
         create_user_with_group('User2', "Group1", role)
