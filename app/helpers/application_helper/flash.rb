@@ -17,8 +17,8 @@ module ApplicationHelper
 
       flash_div_id = args.key?(:flash_div_id) ? args[:flash_div_id] : 'flash_msg_div'
       ex = ExplorerPresenter.flash.replace(flash_div_id,
-                                          render_to_string(:partial => "layouts/flash_msg",
-                                                            :locals => {:flash_div_id => flash_div_id}))
+                                           render_to_string(:partial => "layouts/flash_msg",
+                                                            :locals  => {:flash_div_id => flash_div_id}))
       ex.scroll_top if args[:scroll_top]
       ex.spinner_off if args[:spinner_off]
       ex.focus(args[:focus]) if args[:focus]

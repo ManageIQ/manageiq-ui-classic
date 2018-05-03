@@ -8,9 +8,8 @@ module ApplicationHelper
     def item_nav_class(item)
       active = controller.menu_section_id(controller.params) || @layout.to_sym
 
-      # FIXME remove @layout condition when every controller sets menu_section properly
-      item.id.to_sym == active ||
-        item.id.to_sym == @layout.to_sym ? 'active' : nil
+      # FIXME: remove @layout condition when every controller sets menu_section properly
+      item.id.to_sym == active || item.id.to_sym == @layout.to_sym ? 'active' : nil
     end
 
     # special handling for custom menu sections and items
@@ -38,9 +37,9 @@ module ApplicationHelper
 
       return 'active' if section.id.to_sym == active
 
-      # FIXME remove to_s, to_sym once all items use symbol ids
-      section.contains_item_id?(active.to_s) ||
-        section.contains_item_id?(active.to_sym) ? 'active' : nil
+      # FIXME: remove to_s, to_sym once all items use symbol ids
+      return 'active' if section.contains_item_id?(active.to_s)
+      return 'active' if section.contains_item_id?(active.to_sym)
     end
   end
 end
