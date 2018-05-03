@@ -17,4 +17,3 @@ addReact('TableListViewWrapper', TableListViewWrapper);
 addReact('GenericGroup', GenericGroup);
 addReact('GenericGroupWrapper', GenericGroupWrapper);
 addReact('TextualSummaryWrapper', TextualSummaryWrapper);
-

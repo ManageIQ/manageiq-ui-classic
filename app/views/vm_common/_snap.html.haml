@@ -1,5 +1,6 @@
-#snap-form{"data-create-url"      => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "create" : nil),
-           "data-cancel-url"      => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "cancel" : nil),
-           "data-vendor"          => @record.vendor,
-          }
-= javascript_pack_tag 'manageiq-ui-classic/vm-snapshot-form'
+#snap-form{"data-create-url" => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "create" : nil),
+           "data-cancel-url" => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "cancel" : nil),
+           "data-vendor"  => @record.vendor}
+
+:javascript
+  ManageIQ.component.componentFactory('VmSnapshotForm', 'snap-form');
