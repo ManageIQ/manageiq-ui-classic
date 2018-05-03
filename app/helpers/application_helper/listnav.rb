@@ -148,7 +148,7 @@ module ApplicationHelper
                 link_params,
                 :title => _("Show this %{entity_name}'s parent %{linked_entity_name}") %
                           {:entity_name        => record.class.name.demodulize.titleize,
-                          :linked_entity_name => name})
+                           :linked_entity_name => name})
       end
     end
 
@@ -172,9 +172,9 @@ module ApplicationHelper
           else
             link_to("#{plural} (#{count})",
                     {:controller => controller_name,
-                    :action     => 'show',
-                    :id         => record.id,
-                    :display    => table_name.to_s.pluralize},
+                     :action     => 'show',
+                     :id         => record.id,
+                     :display    => table_name.to_s.pluralize},
                     {:title => _("Show %{plural_linked_name}") % {:plural_linked_name => plural}})
           end
         end
