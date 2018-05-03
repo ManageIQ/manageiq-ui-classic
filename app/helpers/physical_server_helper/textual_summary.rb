@@ -2,7 +2,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name model product_name manufacturer machine_type serial_number ems_ref capacity memory cores network_devices health_state loc_led_state)
+      %i(name model product_name manufacturer machine_type serial_number ems_ref capacity memory cores network_devices storage_devices health_state loc_led_state)
     )
   end
 
@@ -170,7 +170,16 @@ module PhysicalServerHelper::TextualSummary
     hardware_nics_count = @record.hardware.nics.count
     device = {:label => _("Network Devices"), :value => hardware_nics_count, :icon => "ff ff-network-card"}
     if hardware_nics_count.positive?
-      device[:link] = "/physical_server/show/#{@record.id}?display=guest_devices"
+      device[:link] = "/physical_server/show/#{@record.id}?display=network_devices"
+    end
+    device
+  end
+
+  def textual_storage_devices
+    storage_devices_count = @record.hardware.storage_adapters.count
+    device = {:label => _("Storage Devices"), :value => storage_devices_count, :icon => "ff ff-network-card"}
+    if storage_devices_count.positive?
+      device[:link] = "/physical_server/show/#{@record.id}?display=storage_devices"
     end
     device
   end

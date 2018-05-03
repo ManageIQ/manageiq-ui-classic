@@ -10,11 +10,15 @@ class PhysicalServerController < ApplicationController
   after_action :set_session_data
 
   def self.display_methods
-    %w(guest_devices)
+    %w(network_devices storage_devices)
   end
 
-  def display_guest_devices
-    nested_list(GuestDevice, :named_scope => :with_ethernet_type)
+  def display_network_devices
+    nested_list(GuestDevice, :named_scope => :with_ethernet_type, :breadcrumb_title => _("Network Devices"))
+  end
+
+  def display_storage_devices
+    nested_list(GuestDevice, :named_scope => :with_storage_type, :breadcrumb_title => _("Storage Devices"))
   end
 
   def self.table_name
