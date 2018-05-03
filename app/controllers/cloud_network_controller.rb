@@ -92,32 +92,20 @@ class CloudNetworkController < ApplicationController
 
   def delete_networks
     assert_privileges("cloud_network_delete")
-
-    networks = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_network") || @lastaction.nil?
-                 find_checked_ids_with_rbac(CloudNetwork)
-               else
-                 [find_id_with_rbac(CloudNetwork, params[:id])]
-               end
-    if networks.empty?
-      add_flash(_("No Cloud Network were selected for deletion."), :error)
-    else
-      networks_to_delete = []
-      networks.each do |s|
-        network = CloudNetwork.find_by_id(s)
-        if network.nil?
-          add_flash(_("Cloud Network no longer exists."), :error)
-        elsif network.supports_delete?
-          networks_to_delete.push(network)
-        else
-          add_flash(_("Couldn't initiate deletion of Network \"%{name}\": %{details}") % {
-            :name    => network.name,
-            :details => network.unsupported_reason(:delete)
-          }, :error)
-        end
+	  networks = find_records_with_rbac(CloudNetwork, checked_or_params)
+    networks_to_delete = []
+    networks.each do |network|
+      if network.supports_delete?
+        networks_to_delete.push(network)
+      else
+        add_flash(_("Couldn't initiate deletion of Network \"%{name}\": %{details}") % {
+          :name    => network.name,
+          :details => network.unsupported_reason(:delete)
+        }, :error)
       end
-      unless networks_to_delete.empty?
-        process_cloud_networks(networks_to_delete, "destroy")
-      end
+    end
+    unless networks_to_delete.empty?
+      process_cloud_networks(networks_to_delete, "destroy")
     end
 
     # refresh the list if applicable
@@ -253,7 +241,7 @@ class CloudNetworkController < ApplicationController
 
   # dispatches operations to multiple networks
   def process_cloud_networks(networks, operation)
-    return if networks.empty?
+	  return if networks.empty?
 
     if operation == "destroy"
       networks.each do |network|
