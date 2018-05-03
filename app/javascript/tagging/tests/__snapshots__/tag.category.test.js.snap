@@ -4,9 +4,14 @@ exports[`TagCategory Component match snapshot 1`] = `
 <ul
   className="tag-category list-inline"
 >
-  animal
-  :
-  <li>
+  <div
+    className="category-label"
+  >
+    animal
+  </div>
+  <li
+    className="tag"
+  >
     <span
       className="label label-primary"
       style={
@@ -33,7 +38,9 @@ exports[`TagCategory Component match snapshot 1`] = `
       </a>
     </span>
   </li>
-  <li>
+  <li
+    className="tag"
+  >
     <span
       className="label label-primary"
       style={

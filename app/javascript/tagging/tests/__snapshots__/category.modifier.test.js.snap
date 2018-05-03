@@ -11,14 +11,14 @@ exports[`TagCategory Component match snapshot 1`] = `
       className="control-label"
       htmlFor={undefined}
     >
-      Category:
+      Category
     </label>
   </div>
   <div
     className="col-lg-6 col-md-8 col-xs-12"
   >
     <div
-      className="Select has-value is-clearable is-searchable Select--single"
+      className="Select selected-option has-value is-searchable Select--single"
       style={undefined}
     >
       <input
@@ -102,24 +102,6 @@ exports[`TagCategory Component match snapshot 1`] = `
               
             </div>
           </div>
-        </span>
-        <span
-          aria-label="Clear value"
-          className="Select-clear-zone"
-          onMouseDown={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
-          title="Clear value"
-        >
-          <span
-            className="Select-clear"
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "&times;",
-              }
-            }
-          />
         </span>
         <span
           className="Select-arrow-zone"

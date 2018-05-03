@@ -34,14 +34,14 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
               className="control-label"
               htmlFor={undefined}
             >
-              Category:
+              Category
             </label>
           </div>
           <div
             className="col-lg-6 col-md-8 col-xs-12"
           >
             <div
-              className="Select has-value is-clearable is-searchable Select--single"
+              className="Select selected-option has-value is-searchable Select--single"
               style={undefined}
             >
               <input
@@ -127,24 +127,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                   </div>
                 </span>
                 <span
-                  aria-label="Clear value"
-                  className="Select-clear-zone"
-                  onMouseDown={[Function]}
-                  onTouchEnd={[Function]}
-                  onTouchMove={[Function]}
-                  onTouchStart={[Function]}
-                  title="Clear value"
-                >
-                  <span
-                    className="Select-clear"
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "&times;",
-                      }
-                    }
-                  />
-                </span>
-                <span
                   className="Select-arrow-zone"
                   onMouseDown={[Function]}
                 >
@@ -167,7 +149,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
               className="control-label"
               htmlFor={undefined}
             >
-              Assigned Value:
+              Value
             </label>
           </div>
           <div
@@ -285,9 +267,14 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
             <ul
               className="tag-category list-inline"
             >
-              Name
-              :
-              <li>
+              <div
+                className="category-label"
+              >
+                Name
+              </div>
+              <li
+                className="tag"
+              >
                 <span
                   className="label label-primary"
                   style={
@@ -317,17 +304,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
             </ul>
           </ul>
         </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="row"
-  >
-    <div
-      className="col-md-12"
-    >
-      <div>
-        * Only a single value can be assigned from these categories
       </div>
     </div>
   </div>

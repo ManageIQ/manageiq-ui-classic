@@ -25,9 +25,14 @@ Array [
         <ul
           className="tag-category list-inline"
         >
-          Name
-          :
-          <li>
+          <div
+            className="category-label"
+          >
+            Name
+          </div>
+          <li
+            className="tag"
+          >
             <span
               className="label label-primary"
               style={

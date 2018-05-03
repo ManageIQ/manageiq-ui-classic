@@ -11,7 +11,7 @@ exports[`TagCategory Component match snapshot 1`] = `
       className="control-label"
       htmlFor={undefined}
     >
-      Assigned Value:
+      Value
     </label>
   </div>
   <div
