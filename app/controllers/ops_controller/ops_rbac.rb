@@ -733,7 +733,7 @@ module OpsController::OpsRbac
       rbac_role_set_record_vars(record)
     end
 
-    if record.valid? && validated && record.save!
+    if validated && record.valid? && record.save!
       populate_role_features(record) if what == "role"
       self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, add_pressed))
@@ -1060,7 +1060,7 @@ module OpsController::OpsRbac
       valid = false
     end
 
-    new_group_ids = rbac_user_get_group_ids
+    new_group_ids = rbac_user_get_group_ids.map(&:to_i)
     new_groups = new_group_ids.present? && MiqGroup.find(new_group_ids).present? ? MiqGroup.find(new_group_ids) : []
 
     if new_group_ids.blank?
