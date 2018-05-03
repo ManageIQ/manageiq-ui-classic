@@ -6,7 +6,7 @@ describe ReportController do
       login_as admin_user
       allow(User).to receive(:current_user).and_return(admin_user)
       FactoryGirl.create(:miq_schedule, :name => "tester1")
-      FactoryGirl.create(:miq_schedule, :name => "tester2") 
+      FactoryGirl.create(:miq_schedule, :name => "tester2")
       allow(controller).to receive(:assert_privileges)
       allow(controller).to receive(:checked_or_params).and_return(MiqSchedule.all.ids)
       allow(controller).to receive(:replace_right_cell).and_return(true)
