@@ -242,7 +242,7 @@ module ReportController::Schedules
       if x_active_tree != :reports_tree
         # dont set these if new schedule is being added from a report show screen
         obj = find_records_with_rbac(MiqSchedule, checked_or_params)
-	obj[0] = params[:id] if obj.blank? && params[:id]
+        obj[0] = params[:id] if obj.blank? && params[:id]
         @schedule = obj[0] && params[:id] != "new" ? MiqSchedule.find(obj[0]) :
             MiqSchedule.new(:userid => session[:userid])  # Get existing or new record
         session[:changed] = false
