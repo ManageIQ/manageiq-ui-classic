@@ -448,7 +448,7 @@ module VmCommon
                            :userid      => session[:userid],
                            :name        => params[:name],
                            :description => params[:description],
-                           :memory      => params[:snap_memory] == "1")
+                           :memory      => params[:snap_memory] == "true")
         rescue => bang
           puts bang.backtrace.join("\n")
           flash = _("Error during 'Create Snapshot': %{message}") % {:message => bang.message}
