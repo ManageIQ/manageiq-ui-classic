@@ -304,6 +304,7 @@ class StorageController < ApplicationController
     end
 
     build_accordions_and_trees
+    get_tagdata(@record) if @record
     @lastaction = "explorer" # restore the explorer layout, which was changed by process_show_list() to "show_list"
 
     render :layout => "application"
