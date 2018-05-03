@@ -1,5 +1,8 @@
 module ApplicationHelper
   include_concern 'ViewsShared'
+  include_concern 'Flash'
+  include_concern 'Listnav'
+  include_concern 'Navbar'
   include_concern 'PageLayouts'
   include_concern 'Tasks'
   include Sandbox
@@ -18,11 +21,6 @@ module ApplicationHelper
     "EmsCluster" => :ems_cluster,
     "Host"       => :host
   }
-
-  def flash_to_session(*args)
-    add_flash(*args) unless args.empty?
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-  end
 
   # Need to generate paths w/o hostname by default to make proxying work.
   #
@@ -58,82 +56,6 @@ module ApplicationHelper
              request.env['HTTP_HOST']
            end
     "#{proto}://#{host}"
-  end
-
-  def valid_html_id(id)
-    id = id.to_s.gsub("::", "__")
-    raise "HTML ID is not valid" if id =~ /[^\w]/
-    id
-  end
-
-  # Create a collapsed panel based on a condition
-  def miq_accordion_panel(title, condition, id, &block)
-    id = valid_html_id(id)
-    content_tag(:div, :class => "panel panel-default") do
-      out = content_tag(:div, :class => "panel-heading") do
-        content_tag(:h4, :class => "panel-title") do
-          link_to(title, "##{id}",
-                  'data-parent' => '#accordion',
-                  'data-toggle' => 'collapse',
-                  :class        => condition ? '' : 'collapsed')
-        end
-      end
-      out << content_tag(:div, :id => id, :class => "panel-collapse collapse #{condition ? 'in' : ''}") do
-        content_tag(:div, :class => "panel-body", &block)
-      end
-    end
-  end
-
-  def single_relationship_link(record, table_name, property_name = nil)
-    out = ''
-    property_name ||= table_name
-    ent = record.send(property_name)
-    name = ui_lookup(:table => table_name.to_s)
-    if role_allows?(:feature => "#{table_name}_show") && !ent.nil?
-      out = content_tag(:li) do
-        link_params = if restful_routed?(ent)
-                        polymorphic_path(ent)
-                      else
-                        {:controller => table_name, :action => 'show', :id => ent.id.to_s}
-                      end
-        link_to("#{name}: #{ent.name}",
-                link_params,
-                :title => _("Show this %{entity_name}'s parent %{linked_entity_name}") %
-                          {:entity_name        => record.class.name.demodulize.titleize,
-                           :linked_entity_name => name})
-      end
-    end
-    out
-  end
-
-  def multiple_relationship_link(record, table_name)
-    out = ''
-    if role_allows?(:feature => "#{table_name}_show_list") &&
-       (table_name != 'container_route' || record.respond_to?(:container_routes))
-      plural = ui_lookup(:tables => table_name.to_s)
-      count = record.number_of(table_name.to_s.pluralize)
-      if count == 0
-        out = content_tag(:li, :class => "disabled") do
-          link_to("#{plural} (0)", "#")
-        end
-      else
-        out = content_tag(:li) do
-          if restful_routed?(record)
-            link_to("#{plural} (#{count})",
-                    polymorphic_path(record, :display => table_name.to_s.pluralize),
-                    :title => _("Show %{plural_linked_name}") % {:plural_linked_name => plural})
-          else
-            link_to("#{plural} (#{count})",
-                    {:controller => controller_name,
-                     :action     => 'show',
-                     :id         => record.id,
-                     :display    => table_name.to_s.pluralize},
-                    {:title => _("Show %{plural_linked_name}") % {:plural_linked_name => plural}})
-          end
-        end
-      end
-    end
-    out
   end
 
   # Create a hidden div area based on a condition (using for hiding nav panes)
@@ -1043,153 +965,6 @@ module ApplicationHelper
     end
   end
 
-  # Function returns a HTML fragment that represents a link to related entity
-  # or list of related entities of certain type in case of a condition being
-  # met or information about non-existence of such entity if condition is not
-  # met.
-  #
-  # args
-  #     :if           --- bool    - the condition to be met
-  #                                 if no condition is passed, it's considered true
-  #     :table/tables --- string  - name of entity
-  #                               - determines singular/plural case
-  #     :link_text    --- string  - to override calculated link text
-  #     :display      --- string  - type of display (timeline/performance/main/....)
-  #     :[count]      --- fixnum  - number of entities, must be set if :tables
-  #                                 is used
-  #   args to construct URL
-  #     :[controller] --- controller name
-  #     :[action]     --- controller action
-  #     :record_id    --- id of record
-  #
-  def li_link(args)
-    args[:if] = (args[:count] != 0) if args[:count]
-    args[:if] = true unless args.key?(:if)
-
-    link_text, title = build_link_text(args)
-
-    if args[:if]
-      link_params = {
-        :action  => args[:action].present? ? args[:action] : 'show',
-        :display => args[:display],
-        :id      => args[:record].present? ? args[:record].id : args[:record_id].to_s
-      }
-      link_params[:controller] = args[:controller] if args.key?(:controller)
-
-      tag_attrs = {:title => title}
-      check_changes ||= args[:check_changes]
-      tag_attrs[:onclick] = 'return miqCheckForChanges()' if check_changes
-      content_tag(:li) do
-        link_args = {:display => args[:display], :vat => args[:vat]}.compact
-        if args[:record] && restful_routed?(args[:record])
-          link_to(link_text, polymorphic_path(args[:record], link_args), tag_attrs)
-        else
-          link_to(link_text, link_params, tag_attrs)
-        end
-      end
-    else
-      tag_attrs_disabled = {:title => args[:disabled_title]}
-      content_tag(:li, :class => "disabled") do
-        link_to(link_text, "#", tag_attrs_disabled)
-      end
-    end
-  end
-
-  def build_link_text(args)
-    if args.key?(:tables)
-      entity_name = ui_lookup(:tables => args[:tables])
-      link_text   = args.key?(:link_text) ? "#{args[:link_text]} (#{args[:count]})" : "#{entity_name} (#{args[:count]})"
-      title       = _("Show all %{names}") % {:names => entity_name}
-    elsif args.key?(:text)
-      count     = args[:count] ? "(#{args[:count]})" : ""
-      link_text = "#{args[:text]} #{count}"
-    elsif args.key?(:table)
-      entity_name = ui_lookup(:table => args[:table])
-      link_text   = args.key?(:link_text) ? args[:link_text] : entity_name
-      link_text   = "#{link_text} (#{args[:count]})" if args.key?(:count)
-      title       = _("Show %{name}") % {:name => entity_name}
-    end
-    title = args[:title] if args.key?(:title)
-    return link_text, title
-  end
-
-  # Function returns a HTML fragment that represents an image with certain
-  # options or an image with link and different options in case of a condition
-  # has a true or a false value.
-  #
-  # args
-  #     :cond         --- bool    - the condition to be met
-  #     :image        --- string  - the URL of the image
-  #     :opts_true    --- hash    - HTML options for image_tag() if cond == true
-  #     :opts_false   --- hash    - HTML options for image_tag() if cond == false
-  #     :link         --- hash    - options for link_to()
-  #     :opts_link    --- hash    - HTML options for link_to()
-  #
-  def link_image_if(args)
-    if args[:cond]
-      image_tag(args[:image], args[:opts_true])
-    else
-      link_to(image_tag(args[:image], args[:opts_false]), args[:link], args[:opts_link])
-    end
-  end
-
-  def link_to_with_icon(link_text, link_params, tag_args, _image_path = nil)
-    tag_args ||= {}
-    default_tag_args = {:onclick => "return miqCheckForChanges()"}
-    tag_args = default_tag_args.merge(tag_args)
-    link_to(link_text, link_params, tag_args)
-  end
-
-  # FIXME: The 'active' below is an active section not an item. That is wrong.
-  # What works is the "legacy" part that compares @layout to item.id.
-  # This assumes that these matches -- @layout and item.id. Moving forward we
-  # need to remove that assumption. However to do that we need figure some way
-  # to identify the active menu item here.
-  def item_nav_class(item)
-    active = controller.menu_section_id(controller.params) || @layout.to_sym
-
-    # FIXME remove @layout condition when every controller sets menu_section properly
-    item.id.to_sym == active ||
-      item.id.to_sym == @layout.to_sym ? 'active' : nil
-  end
-
-  # special handling for custom menu sections and items
-  def section_nav_class_iframe(section)
-    if params[:sid].present?
-      section.id.to_s == params[:sid] ? 'active' : nil
-    elsif params[:id].present?
-      section.contains_item_id?(params[:id]) ? 'active' : nil
-    end
-  end
-
-  def section_nav_class(section)
-    return section_nav_class_iframe(section) if params[:action] == 'iframe'
-
-    active = controller.menu_section_id(controller.params) || @layout.to_sym
-
-    if section.parent.nil?
-      # first-level, fallback to old logic for now
-      # FIXME: exception behavior to remove
-      active = 'my_tasks' if %w(my_tasks all_tasks).include?(@layout)
-      active = 'cloud_volume' if @layout == 'cloud_volume_snapshot' || @layout == 'cloud_volume_backup'
-      active = 'cloud_object_store_container' if @layout == 'cloud_object_store_object'
-      active = active.to_sym
-    end
-
-    return 'active' if section.id.to_sym == active
-
-    # FIXME remove to_s, to_sym once all items use symbol ids
-    section.contains_item_id?(active.to_s) ||
-      section.contains_item_id?(active.to_sym) ? 'active' : nil
-  end
-
-  def render_flash_msg?
-    # Don't render flash message in gtl, partial is already being rendered on screen
-    return false if request.parameters[:controller] == "miq_request" && @lastaction == "show_list"
-    return false if request.parameters[:controller] == "service" && @lastaction == "show" && @view
-    true
-  end
-
   # FIXME: params[:type] is used in multiple contexts, we should rename it to
   # :gtl_type or remove it as we move to the Angular GTL component
   def pagination_or_gtl_request?
@@ -1239,21 +1014,6 @@ module ApplicationHelper
     args.delete(:record)
     args.delete(:id)
     polymorphic_path(record, args)
-  end
-
-  def javascript_flash(**args)
-    add_flash(args[:text], args[:severity]) if args[:text].present?
-
-    flash_div_id = args.key?(:flash_div_id) ? args[:flash_div_id] : 'flash_msg_div'
-    ex = ExplorerPresenter.flash.replace(flash_div_id,
-                                         render_to_string(:partial => "layouts/flash_msg",
-                                                          :locals => {:flash_div_id => flash_div_id}))
-    ex.scroll_top if args[:scroll_top]
-    ex.spinner_off if args[:spinner_off]
-    ex.focus(args[:focus]) if args[:focus]
-    ex.activate_tree_node(args[:activate_node]) if args[:activate_node]
-
-    render :json => ex.for_render
   end
 
   def javascript_open_window(url)
@@ -1413,136 +1173,6 @@ module ApplicationHelper
 
   def placeholder_if_present(password)
     password.present? ? "\u25cf" * 8 : ''
-  end
-
-  def render_listnav_filename
-    return controller.listnav_filename if controller.respond_to?(:listnav_filename, true)
-    if @lastaction == "show_list" && !session[:menu_click] &&
-       %w(auth_key_pair_cloud
-          availability_zone
-          cloud_network
-          cloud_object_store_container
-          cloud_object_store_object
-          cloud_subnet
-          cloud_tenant
-          cloud_volume
-          cloud_volume_backup
-          cloud_volume_snapshot
-          configuration_job
-          container
-          container_build
-          container_group
-          container_image
-          container_image_registry
-          container_node
-          container_project
-          container_replicator
-          container_route
-          container_service
-          container_template
-          ems_cloud
-          ems_cluster
-          ems_container
-          ems_infra
-          ems_middleware
-          ems_network
-          ems_physical_infra
-          ems_storage
-          flavor
-          floating_ip
-          generic_object_definition
-          guest_device
-          host
-          host_aggregate
-          load_balancer
-          middleware_deployment
-          middleware_domain
-          middleware_server
-          middleware_server_group
-          miq_template
-          network_port
-          network_router
-          offline
-          orchestration_stack
-          physical_server
-          persistent_volume
-          physical_server
-          resource_pool
-          retired
-          security_group
-          service
-          templates
-          vm).include?(@layout) && !@in_a_form
-      "show_list"
-    elsif @compare
-      "compare_sections"
-    elsif @explorer
-      "explorer"
-    elsif %w(offline
-             retired
-             templates
-             vm
-             vm_cloud
-             vm_or_template).include?(@layout)
-      "vm"
-    elsif %w(action
-             auth_key_pair_cloud
-             availability_zone
-             cloud_network
-             cloud_object_store_container
-             cloud_object_store_object
-             cloud_subnet
-             cloud_tenant
-             cloud_volume
-             cloud_volume_backup
-             cloud_volume_snapshot
-             condition
-             configuration_job
-             container
-             container_build
-             container_group
-             container_image
-             container_image_registry
-             container_node
-             container_project
-             container_replicator
-             container_route
-             container_service
-             container_template
-             ems_cloud
-             ems_cluster
-             ems_container
-             ems_infra
-             ems_middleware
-             ems_network
-             ems_physical_infra
-             ems_storage
-             flavor
-             floating_ip
-             generic_object_definition
-             guest_device
-             host
-             host_aggregate
-             load_balancer
-             middleware_deployment
-             middleware_domain
-             middleware_server
-             middleware_server_group
-             miq_schedule
-             miq_template
-             network_port
-             network_router
-             orchestration_stack
-             persistent_volume
-             physical_server
-             policy
-             resource_pool
-             scan_profile
-             security_group
-             service
-             timeline).include?(@layout)
-      @layout
-    end
   end
 
   def title_for_host_record(record)
