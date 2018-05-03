@@ -95,7 +95,7 @@ describe StorageController do
   context 'render_views' do
     render_views
 
-    context '#explorer' do
+    describe '#explorer' do
       before do
         session[:settings] = {:views => {}, :perpage => {:list => 5}}
         EvmSpecHelper.create_guid_miq_server_zone
@@ -216,6 +216,22 @@ describe StorageController do
         expect(response.status).to eq(200)
         expect(response.body).to_not be_empty
         expect(response).to render_template('shared/summary/_textual')
+      end
+
+      context 'getting the right tags of a datastore' do
+        let(:datastore) { FactoryGirl.create(:storage, :name => 'storage_name') }
+
+        before do
+          allow(controller).to receive(:render).and_return(true)
+
+          controller.instance_variable_set(:@record, datastore)
+          controller.instance_variable_set(:@sb, :active_tree => :storage_tree)
+        end
+
+        it 'calls get_tagdata to update tags of a datastore' do
+          expect(controller).to receive(:get_tagdata).with(datastore)
+          controller.send(:explorer)
+        end
       end
     end
 
