@@ -5,7 +5,7 @@ class ContainerDashboardService < DashboardService
 
   def initialize(provider_id, controller)
     @provider_id = provider_id
-    @ems = ManageIQ::Providers::ContainerManager.find(@provider_id) unless @provider_id.blank?
+    @ems = find_record_with_rbac(ManageIQ::Providers::ContainerManager, @provider_id) unless @provider_id.blank?
     @resource = @ems || ManageIQ::Providers::ContainerManager.all
     @controller = controller
   end

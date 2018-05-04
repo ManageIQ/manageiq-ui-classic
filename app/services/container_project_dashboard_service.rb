@@ -4,7 +4,7 @@ class ContainerProjectDashboardService < DashboardService
 
   def initialize(project_id, controller)
     @project_id = project_id
-    @project = ContainerProject.find(@project_id)
+    @project = find_record_with_rbac(ContainerProject, @project_id)
     @resource = @project
     @controller = controller
   end

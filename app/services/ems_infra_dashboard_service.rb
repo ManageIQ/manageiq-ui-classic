@@ -4,7 +4,7 @@ class EmsInfraDashboardService < DashboardService
 
   def initialize(ems_id, controller)
     @ems_id = ems_id
-    @ems = EmsInfra.find(@ems_id) unless @ems_id.blank?
+    @ems = find_record_with_rbac(EmsInfra, @ems_id) unless @ems_id.blank?
     @controller = controller
   end
 
