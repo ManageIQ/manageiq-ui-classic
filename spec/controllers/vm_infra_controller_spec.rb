@@ -5,8 +5,6 @@ describe VmInfraController do
   before do
     stub_user(:features => :all)
 
-    session[:settings] = {:views => {:treesize => 20}}
-
     allow(controller).to receive(:protect_build_tree).and_return(nil)
     controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
 

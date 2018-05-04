@@ -14,7 +14,6 @@ describe VmCloudController do
 
   before(:each) do
     stub_user(:features => :all)
-    session[:settings] = {:views => {:treesize => 20}}
     EvmSpecHelper.create_guid_miq_server_zone
   end
 

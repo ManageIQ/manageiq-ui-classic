@@ -181,7 +181,6 @@ class ApplicationController < ActionController::Base
       :serverbuild                                                            => "list",
       :storage                                                                => "grid",
       :tagging                                                                => "grid",
-      :treesize                                                               => "20",
       :vm                                                                     => "grid",
       :vmortemplate                                                           => "grid",
       :vmcompare                                                              => "compressed"
@@ -2052,9 +2051,9 @@ class ApplicationController < ActionController::Base
 
     # Clearing out session objects that are no longer needed
     session[:hac_tree] = session[:vat_tree] = nil if controller_name != "ops"
-    session[:ch_tree] = nil if !["compliance_history"].include?(params[:display]) && params[:action] != "treesize" && params[:action] != "squash_toggle"
-    session[:vm_tree] = nil if !["vmtree_info"].include?(params[:display]) && params[:action] != "treesize"
-    session[:policy_tree] = nil if params[:action] != "policies" && params[:pressed] != "vm_protect" && params[:action] != "treesize"
+    session[:ch_tree] = nil if !["compliance_history"].include?(params[:display]) && params[:action] != "squash_toggle"
+    session[:vm_tree] = nil if !["vmtree_info"].include?(params[:display])
+    session[:policy_tree] = nil if params[:action] != "policies" && params[:pressed] != "vm_protect"
     session[:resolve] = session[:resolve_object] = nil unless ["catalog", "miq_ae_customization", "miq_ae_tools"].include?(request.parameters[:controller])
     session[:report_menu] = session[:report_folders] = session[:menu_roles_tree] = nil if controller_name != "report"
     if session.class != Hash
