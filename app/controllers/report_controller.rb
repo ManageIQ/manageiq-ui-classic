@@ -740,7 +740,7 @@ class ReportController < ApplicationController
           img_title_commit  = _("Commit Accordion management changes")
           img_title_discard = _("Discard Accordion management changes")
         else
-          fieldset_title    = _("Manage Folders")
+          fieldset_title    = _("Manage Folders in %{location}") % {:location => "\"#{session[:node_selected].split('__')[1]}\""}
           img_title_top     = _("Move selected folder to top")
           img_title_up      = _("Move selected folder up")
           img_title_down    = _("Move selected folder down")
