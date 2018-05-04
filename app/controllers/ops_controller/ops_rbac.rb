@@ -717,12 +717,13 @@ module OpsController::OpsRbac
     add_pressed = params[:button] == "add"
 
     return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
-
+    record_saved = false
     case key
     when :user
       record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
       validated = rbac_user_validate?
-      rbac_user_set_record_vars(record) if validated
+      record_saved = rbac_user_set_record_vars(record) if validated
+      self.current_user = record if record_saved && @edit[:current][:userid] == current_userid
     when :group then
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
@@ -731,11 +732,11 @@ module OpsController::OpsRbac
       record = @edit[:role_id] ? MiqUserRole.find_by(:id => @edit[:role_id]) : MiqUserRole.new
       validated = rbac_role_validate?
       rbac_role_set_record_vars(record)
+      record_saved = validated && record.valid? && record.save!
+      populate_role_features(record) if record_saved
     end
 
-    if validated && record.valid? && record.save!
-      populate_role_features(record) if what == "role"
-      self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
+    if record_saved
       AuditEvent.success(build_saved_audit(record, add_pressed))
       subkey = key == :group ? :description : :name
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => what.titleize, :name => @edit[:new][subkey]})
@@ -1033,11 +1034,12 @@ module OpsController::OpsRbac
 
   # Set user record variables to new values
   def rbac_user_set_record_vars(user)
-    user.name       = @edit[:new][:name]
-    user.userid     = @edit[:new][:userid]
-    user.email      = @edit[:new][:email]
-    user.miq_groups = Rbac.filtered(MiqGroup.find(rbac_user_get_group_ids))
-    user.password   = @edit[:new][:password] if @edit[:new][:password]
+    new_attributes = {:name   => @edit[:new][:name],
+                      :userid => @edit[:new][:userid],
+                      :email  => @edit[:new][:email]}
+    new_attributes[:password] = @edit[:new][:password] if @edit[:new][:password]
+    new_attributes[:miq_groups] = Rbac.filtered(MiqGroup.where(:id => rbac_user_get_group_ids))
+    user.update_attributes(new_attributes)
   end
 
   # Get array of group ids
