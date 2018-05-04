@@ -1,11 +1,13 @@
 class ContainerDashboardService < DashboardService
   include UiServiceMixin
   include ContainerServiceMixin
+  include Mixins::CheckedIdMixin
+
   CPU_USAGE_PRECISION = 2 # 2 decimal points
 
   def initialize(provider_id, controller)
     @provider_id = provider_id
-    @ems = find_record_with_rbac(ManageIQ::Providers::ContainerManager, @provider_id) unless @provider_id.blank?
+    @ems = find_record_with_rbac(ManageIQ::Providers::ContainerManager, @provider_id) if @provider_id.present?
     @resource = @ems || ManageIQ::Providers::ContainerManager.all
     @controller = controller
   end

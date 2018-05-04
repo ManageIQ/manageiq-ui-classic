@@ -1,10 +1,12 @@
 class EmsInfraDashboardService < DashboardService
   include UiServiceMixin
+  include Mixins::CheckedIdMixin
+
   CPU_USAGE_PRECISION = 2 # 2 decimal points
 
   def initialize(ems_id, controller)
     @ems_id = ems_id
-    @ems = find_record_with_rbac(EmsInfra, @ems_id) unless @ems_id.blank?
+    @ems = find_record_with_rbac(EmsInfra, @ems_id) if @ems_id.present?
     @controller = controller
   end
 

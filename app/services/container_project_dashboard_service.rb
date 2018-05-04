@@ -1,6 +1,7 @@
 class ContainerProjectDashboardService < DashboardService
   include UiServiceMixin
   include ContainerServiceMixin
+  include Mixins::CheckedIdMixin
 
   def initialize(project_id, controller)
     @project_id = project_id
