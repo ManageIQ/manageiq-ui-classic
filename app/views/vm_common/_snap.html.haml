@@ -1,7 +1,9 @@
 = render :partial => "layouts/flash_msg"
+%h3
+  = _('Snapshot information')
 #snap-form{"data-create-url" => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "create" : nil),
            "data-cancel-url" => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "cancel" : nil),
-           "data-name-required" => !!@record.try(:snapshot_name_optional?)}
+           "data-name-optional" => @record.try(:snapshot_name_optional?)}
 
 :javascript
-  ManageIQ.component.componentFactory('VmSnapshotForm', 'snap-form');
+  ManageIQ.component.componentFactory('VmSnapshotForm', '#snap-form');

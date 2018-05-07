@@ -4,7 +4,7 @@ import { VmSnapshotForm } from '@manageiq/react-ui-components/dist/vm-snapshot-f
 
 const VmSnapshotFormComponent = (props) => {
   const {
-    nameRequired,
+    nameOptional,
     createUrl,
     cancelUrl,
     ...rest
@@ -24,9 +24,9 @@ const VmSnapshotFormComponent = (props) => {
     <VmSnapshotForm
       errorMessages={errorMessages}
       labels={labels}
-      hideName={!nameRequired}
+      hideName={nameOptional}
       nameRequired
-      descriptionRequired={!nameRequired}
+      descriptionRequired={nameOptional}
       onSubmit={values => window.miqAjaxButton(createUrl, values)}
       onCancel={() => window.miqAjaxButton(cancelUrl)}
       {...rest}
@@ -35,13 +35,13 @@ const VmSnapshotFormComponent = (props) => {
 };
 
 VmSnapshotFormComponent.propTypes = {
-  nameRequired: PropTypes.bool,
+  nameOptional: PropTypes.bool,
   createUrl: PropTypes.string.isRequired,
   cancelUrl: PropTypes.string.isRequired,
 };
 
 VmSnapshotFormComponent.defaultProps = {
-  nameRequired: true,
+  nameOptional: false,
 };
 
 export default VmSnapshotFormComponent;
