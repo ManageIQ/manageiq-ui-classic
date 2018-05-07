@@ -231,8 +231,8 @@ class CloudVolumeController < ApplicationController
       @volume = CloudVolume.new
       options = form_params_create
       ext_management_system = options.delete(:ems)
-      valid_action, action_details = CloudVolume.validate_create_volume(ext_management_system)
-      if valid_action
+      validate_results = CloudVolume.validate_create_volume(ext_management_system)
+      if validate_results[:available]
         task_id = CloudVolume.create_volume_queue(session[:userid], ext_management_system, options)
 
         if task_id.kind_of?(Integer)
@@ -243,7 +243,7 @@ class CloudVolumeController < ApplicationController
         end
       else
         @in_a_form = true
-        add_flash(_(action_details), :error) unless action_details.nil?
+        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
         drop_breadcrumb(
           :name => _("Add New Cloud Volume"),
           :url  => "/cloud_volume/new"
@@ -255,11 +255,11 @@ class CloudVolumeController < ApplicationController
       @in_a_form = true
       options = form_params
       cloud_tenant = find_record_with_rbac(CloudTenant, options[:cloud_tenant_id])
-      valid_action, action_details = CloudVolume.validate_create_volume(cloud_tenant.ext_management_system)
-      if valid_action
+      validate_results = CloudVolume.validate_create_volume(cloud_tenant.ext_management_system)
+      if validate_results[:available]
         add_flash(_("Validation successful"))
       else
-        add_flash(_(action_details), :error) unless details.nil?
+        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
       end
       javascript_flash
     end
@@ -307,8 +307,8 @@ class CloudVolumeController < ApplicationController
 
     when "save"
       options = form_params
-      valid_update, update_details = @volume.validate_update_volume
-      if valid_update
+      validate_results = @volume.validate_update_volume
+      if validate_results[:available]
         task_id = @volume.update_volume_queue(session[:userid], options)
 
         if task_id.kind_of?(Integer)
@@ -318,19 +318,17 @@ class CloudVolumeController < ApplicationController
           javascript_flash(:spinner_off => true)
         end
       else
-        add_flash(_(update_details), :error)
+        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
         javascript_flash
       end
 
     when "validate"
       @in_a_form = true
-      options = form_params
-      cloud_tenant = find_record_with_rbac(CloudTenant, options[:cloud_tenant_id])
-      valid_action, action_details = CloudVolume.validate_create_volume(cloud_tenant.ext_management_system)
-      if valid_action
+      validate_results = @volume.validate_update_volume
+      if validate_results[:available]
         add_flash(_("Validation successful"))
       else
-        add_flash(_(action_details), :error) unless details.nil?
+        add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
       end
     end
   end
@@ -595,7 +593,7 @@ class CloudVolumeController < ApplicationController
 
     # Depending on the storage manager type, collect required form params.
     case params[:emstype]
-    when "ManageIQ::Providers::StorageManager::CinderManager"
+    when "ManageIQ::Providers::StorageManager::CinderManager", "ManageIQ::Providers::Openstack::StorageManager::CinderManager"
       options.merge!(cinder_manager_options)
     when "ManageIQ::Providers::Amazon::StorageManager::Ebs"
       options.merge!(aws_ebs_options)
