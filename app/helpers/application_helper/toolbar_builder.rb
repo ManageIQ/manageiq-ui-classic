@@ -441,7 +441,6 @@ class ApplicationHelper::ToolbarBuilder
     return true if id.starts_with?("view_") && id.ends_with?("textual")  # Summary view buttons
     return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if @ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type)  # GHT view buttons on report show
-    return true if id.starts_with?("tree_") && id.ends_with?(settings(:views, :treesize).to_i == 32 ? "large" : "small")
     return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare))
     return true if id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift))
     return true if id == "compare_all"

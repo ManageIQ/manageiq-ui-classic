@@ -200,7 +200,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :drift        => 'compressed',
           :compare_mode => 'exists',
           :drift_mode   => 'exists',
-          :treesize     => '32'
         }
       }
     end
@@ -211,16 +210,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         @gtl_type = g
         expect(toolbar_builder.twostate_button_selected("view_#{g}")).to be_truthy
       end
-    end
-
-    it "when with tree_large" do
-      @settings[:views][:treesize] = 32
-      expect(toolbar_builder.twostate_button_selected("tree_large")).to be_truthy
-    end
-
-    it "when with tree_small" do
-      @settings[:views][:treesize] = 16
-      expect(toolbar_builder.twostate_button_selected("tree_small")).to be_truthy
     end
 
     context "when with 'compare_compressed'" do
