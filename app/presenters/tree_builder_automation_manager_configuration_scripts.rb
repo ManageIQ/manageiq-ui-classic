@@ -30,9 +30,9 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
     end
 
     objects.push(:id         => "global",
-                 :text       => _("Global Filters"),
+                 :text       => _("Default Filters"),
                  :icon       => "pficon pficon-folder-close",
-                 :tip        => _("Global Shared Filters"),
+                 :tip        => _("Default Shared Filters"),
                  :selectable => false)
     objects.push(:id         => "my",
                  :text       => _("My Filters"),

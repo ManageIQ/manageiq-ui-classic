@@ -41,7 +41,7 @@ class TreeBuilderServices < TreeBuilder
     objects = [
       services_root('asrv', _('Active Services'),  _('Active Services')),
       services_root('rsrv', _('Retired Services'), _('Retired Services')),
-      filter_root('global', _('Global Filters'),   _('Global Shared Filters')),
+      filter_root('global', _('Default Filters'),   _('Default Shared Filters')),
       filter_root('my',     _('My Filters'),       _('My Personal Filters'))
     ]
     count_only_or_objects(count_only, objects)
@@ -50,7 +50,7 @@ class TreeBuilderServices < TreeBuilder
   def x_get_tree_custom_kids(object, count_only, options)
     case object[:id]
     when 'my', 'global'
-      # Get My Filters and Global Filters
+      # Get My Filters and Default Filters
       count_only_or_objects(count_only, x_get_search_results(object, options[:leaf]))
     when 'asrv', 'rsrv'
       retired = object[:id] != 'asrv'
@@ -64,7 +64,7 @@ class TreeBuilderServices < TreeBuilder
 
   def x_get_search_results(object, leaf)
     case object[:id]
-    when "global" # Global filters
+    when "global" # Default filters
       x_get_global_filter_search_results(leaf)
     when "my"     # My filters
       x_get_my_filter_search_results(leaf)

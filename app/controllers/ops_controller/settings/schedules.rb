@@ -603,7 +603,7 @@ module OpsController::Settings::Schedules
       [_("All VMs for Host"), "host"],
       [_("A single VM"), "vm"]
     ] +
-                             (@vm_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +
+                             (@vm_global_filters.empty? ? [] : [[_("Default Filters"), "global"]]) +
                              (@vm_my_filters.empty? ? [] : [[_("My Filters"), "my"]])
 
     @template_options_for_select = [
@@ -613,7 +613,7 @@ module OpsController::Settings::Schedules
       [_("All Templates for Host"), "host"],
       [_("A single Template"), "miq_template"]
     ] +
-                                   (@miq_template_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +
+                                   (@miq_template_global_filters.empty? ? [] : [[_("Default Filters"), "global"]]) +
                                    (@miq_template_my_filters.empty? ? [] : [[_("My Filters"), "my"]])
 
     @host_options_for_select = [
@@ -622,7 +622,7 @@ module OpsController::Settings::Schedules
       [_("All Hosts for Clusters / Deployment Roles"), "cluster"],
       [_("A single Host"), "host"]
     ] +
-                               (@host_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +
+                               (@host_global_filters.empty? ? [] : [[_("Default Filters"), "global"]]) +
                                (@host_my_filters.empty? ? [] : [[_("My Filters"), "my"]])
 
     # to do, add scheduling by project
@@ -637,7 +637,7 @@ module OpsController::Settings::Schedules
       [_("All Clusters for Infrastructure Provider"), "ems"],
       [_("A single Cluster"), "cluster"]
     ] +
-                                  (@cluster_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +
+                                  (@cluster_global_filters.empty? ? [] : [[_("Default Filters"), "global"]]) +
                                   (@cluster_my_filters.empty? ? [] : [[_("My Filters"), "my"]])
 
     @storage_options_for_select = [
@@ -646,7 +646,7 @@ module OpsController::Settings::Schedules
       [_("All Datastores for Infrastructure Provider"), "ems"],
       [_("A single Datastore"), "storage"]
     ] +
-                                  (@storage_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +
+                                  (@storage_global_filters.empty? ? [] : [[_("Default Filters"), "global"]]) +
                                   (@storage_my_filters.empty? ? [] : [[_("My Filters"), "my"]])
 
     build_db_options_for_select

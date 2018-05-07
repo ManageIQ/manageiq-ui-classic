@@ -14,7 +14,7 @@ class TreeBuilderConfiguredSystems < TreeBuilder
 
   def x_get_search_results(object, leaf)
     case object[:id]
-    when "global" # Global filters
+    when "global" # Default filters
       x_get_global_filter_search_results(leaf)
     when "my"     # My filters
       x_get_my_filter_search_results(leaf)
@@ -35,9 +35,9 @@ class TreeBuilderConfiguredSystems < TreeBuilder
     objects = []
     objects.push(configured_systems)
     objects.push(:id         => "global",
-                 :text       => _("Global Filters"),
+                 :text       => _("Default Filters"),
                  :icon       => "pficon pficon-folder-close",
-                 :tip        => _("Global Shared Filters"),
+                 :tip        => _("Default Shared Filters"),
                  :selectable => false)
     objects.push(:id         => "my",
                  :text       => _("My Filters"),
