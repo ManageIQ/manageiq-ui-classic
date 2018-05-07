@@ -14,7 +14,7 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_group_management_networks
-    TextualGroup.new(_("Management Networks"), %i(mac ipv4 ipv6))
+    TextualTable.new(_('Management Networks'), management_network_details, [_('IP'), _('Default Gateway'), _('Subnet Mask')])
   end
 
   def textual_group_asset_details
@@ -186,6 +186,10 @@ module PhysicalServerHelper::TextualSummary
 
   def firmware_details
     @record.hardware.firmwares.collect { |fw| [fw.name, fw.version] }
+  end
+
+  def management_network_details
+    @record.hardware.networks.collect { |network| [network.ipaddress || network.ipv6address, network.default_gateway, network.subnet_mask] }
   end
 
   def textual_compliance_name
