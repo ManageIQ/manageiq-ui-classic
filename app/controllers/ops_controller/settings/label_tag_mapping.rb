@@ -10,22 +10,34 @@ module OpsController::Settings::LabelTagMapping
   # all that matters is these strings match what refresh passes to `map_labels`.
   #
   # In any case, this requires different providers use disjoint sets of strings.
-  # This const is arranged as a hash type => [category prefix, model used for translation].
+  MappableEntity = Struct.new(:prefix, :model)
+
   MAPPABLE_ENTITIES = {
     # TODO: support per-provider "All Amazon" etc?
     # Currently we have only global "All".
     # Global "All" categories are named "kubernetes::..." for backward compatibility.
-    nil                   => ["kubernetes::",                     nil],
-    "Vm"                  => ["amazon:vm:",                       "ManageIQ::Providers::Amazon::CloudManager::Vm"],
-    "VmAzure"             => ["azure:vm:",                        "ManageIQ::Providers::Azure::CloudManager::Vm"],
-    "Image"               => ["amazon:image:",                    "ManageIQ::Providers::Amazon::CloudManager::Template"],
-    "ContainerProject"    => ["kubernetes:container_project:",    "ContainerProject"],
-    "ContainerRoute"      => ["kubernetes:container_route:",      "ContainerRoute"],
-    "ContainerNode"       => ["kubernetes:container_node:",       "ContainerNode"],
-    "ContainerReplicator" => ["kubernetes:container_replicator:", "ContainerReplicator"],
-    "ContainerService"    => ["kubernetes:container_service:",    "ContainerService"],
-    "ContainerGroup"      => ["kubernetes:container_group:",      "ContainerGroup"],
-    "ContainerBuild"      => ["kubernetes:container_build:",      "ContainerBuild"],
+    nil                   => MappableEntity.new("kubernetes::",
+                                                nil),
+    "Vm"                  => MappableEntity.new("amazon:vm:",
+                                                "ManageIQ::Providers::Amazon::CloudManager::Vm"),
+    "VmAzure"             => MappableEntity.new("azure:vm:",
+                                                "ManageIQ::Providers::Azure::CloudManager::Vm"),
+    "Image"               => MappableEntity.new("amazon:image:",
+                                                "ManageIQ::Providers::Amazon::CloudManager::Template"),
+    "ContainerProject"    => MappableEntity.new("kubernetes:container_project:",
+                                                "ContainerProject"),
+    "ContainerRoute"      => MappableEntity.new("kubernetes:container_route:",
+                                                "ContainerRoute"),
+    "ContainerNode"       => MappableEntity.new("kubernetes:container_node:",
+                                                "ContainerNode"),
+    "ContainerReplicator" => MappableEntity.new("kubernetes:container_replicator:",
+                                                "ContainerReplicator"),
+    "ContainerService"    => MappableEntity.new("kubernetes:container_service:",
+                                                "ContainerService"),
+    "ContainerGroup"      => MappableEntity.new("kubernetes:container_group:",
+                                                "ContainerGroup"),
+    "ContainerBuild"      => MappableEntity.new("kubernetes:container_build:",
+                                                "ContainerBuild"),
   }.freeze
 
   def label_tag_mapping_edit
@@ -77,7 +89,7 @@ module OpsController::Settings::LabelTagMapping
 
   def entity_ui_name_or_all(entity)
     if entity
-      model = MAPPABLE_ENTITIES[entity].second
+      model = MAPPABLE_ENTITIES[entity].model
       ui_lookup(:model => model)
     else
       _("<All>")
@@ -159,7 +171,7 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_add(entity, label_name, cat_description)
-    cat_prefix = MAPPABLE_ENTITIES[entity].first
+    cat_prefix = MAPPABLE_ENTITIES[entity].prefix
     cat_name = cat_prefix + Classification.sanitize_name(label_name.tr("/", ":"))
 
     # UI currently can't allow 2 mappings for same (entity, label).
