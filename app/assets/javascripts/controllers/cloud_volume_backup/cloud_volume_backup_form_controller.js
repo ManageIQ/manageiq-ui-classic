@@ -12,7 +12,9 @@ ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService'
     vm.model = "cloudVolumeBackupModel";
 
     ManageIQ.angular.scope = vm;
-    vm.saveable = miqService.saveable;
+    vm.saveable = function(form) {
+      return form.$valid;
+    };
 
     vm.newRecord = false;
 
