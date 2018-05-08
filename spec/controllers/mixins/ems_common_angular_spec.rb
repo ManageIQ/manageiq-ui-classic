@@ -143,6 +143,50 @@ describe Mixins::EmsCommonAngular do
       end
     end
 
+    context 'openstack infra' do
+      before do
+        @ems_infra_controller = EmsInfraController.new
+        @params = {
+          :default_security_protocol => "ssl",
+          :default_hostname          => "host_default",
+          :default_api_port          => "13000",
+          :default_userid            => "abc",
+          :default_password          => "abc",
+          :amqp_security_protocol    => "non_ssl",
+          :amqp_hostname             => "host_amqp",
+          :amqp_api_port             => "5462",
+          :amqp_userid               => "xyz",
+          :amqp_password             => "xyz"
+        }
+      end
+
+      it "returns connect options for openstack infra default tab" do
+        @params[:cred_type] = "default"
+        @ems_infra_controller.instance_variable_set(:@_params, @params)
+
+        expected_connect_options =  ["v2:{XpADRTTI7f11hNT7AuDaKg==}",
+                                     {:default_security_protocol => "ssl",
+                                      :default_hostname          => "host_default",
+                                      :default_api_port          => "13000",
+                                      :default_userid            => "abc"
+                                     }]
+        expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::InfraManager')).to eq(expected_connect_options)
+      end
+
+      it "returns connect options for openstack infra AMQP tab" do
+        @params[:cred_type] = "amqp"
+        @ems_infra_controller.instance_variable_set(:@_params, @params)
+
+        expected_connect_options =  ["v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
+                                     {:amqp_security_protocol => "non_ssl",
+                                      :amqp_hostname          => "host_amqp",
+                                      :amqp_api_port          => "5462",
+                                      :amqp_userid            => "xyz"
+                                     }]
+        expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::InfraManager')).to eq(expected_connect_options)
+      end
+    end
+
     context 'vmware infra' do
       before do
         @ems_infra_controller = EmsInfraController.new
