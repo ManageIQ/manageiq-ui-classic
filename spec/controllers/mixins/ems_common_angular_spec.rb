@@ -87,12 +87,11 @@ describe Mixins::EmsCommonAngular do
         @params[:cred_type] = "default"
         @ems_cloud_controller.instance_variable_set(:@_params, @params)
 
-        expected_connect_options =  ["v2:{XpADRTTI7f11hNT7AuDaKg==}",
-                                      {:default_security_protocol => "ssl",
-                                       :default_hostname          => "host_default",
-                                       :default_api_port          => "13000",
-                                       :default_userid            => "abc"
-                                      }]
+        expected_connect_options = ["v2:{XpADRTTI7f11hNT7AuDaKg==}",
+                                    {:default_security_protocol => "ssl",
+                                     :default_hostname          => "host_default",
+                                     :default_api_port          => "13000",
+                                     :default_userid            => "abc"}]
         expect(@ems_cloud_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::CloudManager')).to eq(expected_connect_options)
       end
 
@@ -100,12 +99,11 @@ describe Mixins::EmsCommonAngular do
         @params[:cred_type] = "amqp"
         @ems_cloud_controller.instance_variable_set(:@_params, @params)
 
-        expected_connect_options =  ["v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
-                                     {:amqp_security_protocol => "non_ssl",
-                                      :amqp_hostname          => "host_amqp",
-                                      :amqp_api_port          => "5462",
-                                      :amqp_userid            => "xyz"
-                                     }]
+        expected_connect_options = ["v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
+                                    {:amqp_security_protocol => "non_ssl",
+                                     :amqp_hostname          => "host_amqp",
+                                     :amqp_api_port          => "5462",
+                                     :amqp_userid            => "xyz"}]
         expect(@ems_cloud_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::CloudManager')).to eq(expected_connect_options)
       end
     end
@@ -114,15 +112,15 @@ describe Mixins::EmsCommonAngular do
       before do
         @ems_cloud_controller = EmsCloudController.new
         @params = {
-          :default_hostname          => "host_default",
-          :default_api_port          => "443",
-          :default_userid            => "abc",
-          :default_password          => "abc",
-          :amqp_security_protocol    => "non_ssl",
-          :amqp_hostname             => "host_amqp",
-          :amqp_api_port             => "5472",
-          :amqp_userid               => "xyz",
-          :amqp_password             => "xyz"
+          :default_hostname       => "host_default",
+          :default_api_port       => "443",
+          :default_userid         => "abc",
+          :default_password       => "abc",
+          :amqp_security_protocol => "non_ssl",
+          :amqp_hostname          => "host_amqp",
+          :amqp_api_port          => "5472",
+          :amqp_userid            => "xyz",
+          :amqp_password          => "xyz"
         }
       end
 
@@ -130,7 +128,7 @@ describe Mixins::EmsCommonAngular do
         @params[:cred_type] = "default"
         @ems_cloud_controller.instance_variable_set(:@_params, @params)
 
-        expected_connect_options =  ["host_default", "443", "abc", "v2:{XpADRTTI7f11hNT7AuDaKg==}", nil, true]
+        expected_connect_options = ["host_default", "443", "abc", "v2:{XpADRTTI7f11hNT7AuDaKg==}", nil, true]
         expect(@ems_cloud_controller.send(:get_task_args, 'ManageIQ::Providers::Vmware::CloudManager')).to eq(expected_connect_options)
       end
 
@@ -164,12 +162,11 @@ describe Mixins::EmsCommonAngular do
         @params[:cred_type] = "default"
         @ems_infra_controller.instance_variable_set(:@_params, @params)
 
-        expected_connect_options =  ["v2:{XpADRTTI7f11hNT7AuDaKg==}",
-                                     {:default_security_protocol => "ssl",
-                                      :default_hostname          => "host_default",
-                                      :default_api_port          => "13000",
-                                      :default_userid            => "abc"
-                                     }]
+        expected_connect_options = ["v2:{XpADRTTI7f11hNT7AuDaKg==}",
+                                    {:default_security_protocol => "ssl",
+                                     :default_hostname          => "host_default",
+                                     :default_api_port          => "13000",
+                                     :default_userid            => "abc"}]
         expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::InfraManager')).to eq(expected_connect_options)
       end
 
@@ -177,12 +174,11 @@ describe Mixins::EmsCommonAngular do
         @params[:cred_type] = "amqp"
         @ems_infra_controller.instance_variable_set(:@_params, @params)
 
-        expected_connect_options =  ["v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
-                                     {:amqp_security_protocol => "non_ssl",
-                                      :amqp_hostname          => "host_amqp",
-                                      :amqp_api_port          => "5462",
-                                      :amqp_userid            => "xyz"
-                                     }]
+        expected_connect_options = ["v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
+                                    {:amqp_security_protocol => "non_ssl",
+                                     :amqp_hostname          => "host_amqp",
+                                     :amqp_api_port          => "5462",
+                                     :amqp_userid            => "xyz"}]
         expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::InfraManager')).to eq(expected_connect_options)
       end
     end
@@ -203,10 +199,10 @@ describe Mixins::EmsCommonAngular do
         @params[:cred_type] = "default"
         @ems_infra_controller.instance_variable_set(:@_params, @params)
 
-        expected_connect_options =  [{:pass       => "v2:{XpADRTTI7f11hNT7AuDaKg==}",
-                                      :user       => "abc",
-                                      :ip         => "host_default",
-                                      :use_broker => false}]
+        expected_connect_options = [{:pass       => "v2:{XpADRTTI7f11hNT7AuDaKg==}",
+                                     :user       => "abc",
+                                     :ip         => "host_default",
+                                     :use_broker => false}]
         expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Vmware::InfraManager')).to eq(expected_connect_options)
       end
 
@@ -214,10 +210,10 @@ describe Mixins::EmsCommonAngular do
         @params[:cred_type] = "console"
         @ems_infra_controller.instance_variable_set(:@_params, @params)
 
-        expected_connect_options =  [{:pass       => "v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
-                                      :user       => "xyz",
-                                      :ip         => "host_default",
-                                      :use_broker => false}]
+        expected_connect_options = [{:pass       => "v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
+                                     :user       => "xyz",
+                                     :ip         => "host_default",
+                                     :use_broker => false}]
         expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Vmware::InfraManager')).to eq(expected_connect_options)
       end
     end

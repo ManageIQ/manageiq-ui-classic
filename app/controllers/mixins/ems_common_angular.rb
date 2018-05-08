@@ -4,8 +4,8 @@ module Mixins
   module EmsCommonAngular
     extend ActiveSupport::Concern
 
-    OPENSTACK_PARAMS = [:name, :provider_region, :api_version, :default_security_protocol, :keystone_v3_domain_id, :default_hostname, :default_api_port, :default_userid, :event_stream_selection].freeze
-    OPENSTACK_AMQP_PARAMS = [:name, :provider_region, :api_version, :amqp_security_protocol, :keystone_v3_domain_id, :amqp_hostname, :amqp_api_port, :amqp_userid, :event_stream_selection].freeze
+    OPENSTACK_PARAMS = %i(name provider_region api_version default_security_protocol keystone_v3_domain_id default_hostname default_api_port default_userid event_stream_selection).freeze
+    OPENSTACK_AMQP_PARAMS = %i(name provider_region api_version amqp_security_protocol keystone_v3_domain_id amqp_hostname amqp_api_port amqp_userid event_stream_selection).freeze
 
     included do
       include Mixins::GenericFormMixin
