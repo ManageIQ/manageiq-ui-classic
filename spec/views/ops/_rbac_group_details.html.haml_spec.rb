@@ -57,18 +57,25 @@ describe 'ops/_rbac_group_details.html.haml' do
       expect(rendered).to include('Look up LDAPS Groups')
     end
 
-    it 'should show "Look up groups" checkbox and label for auth mode amazon' do
+    it 'should not show "Look up groups" checkbox and label for auth mode amazon' do
       stub_settings(:authentication => { :mode => 'amazon' }, :server => {})
       render :partial => 'ops/rbac_group_details'
-      expect(rendered).to have_selector('input#lookup')
-      expect(rendered).to include('Look up Amazon Groups')
+      expect(rendered).not_to have_selector('input#lookup')
+      expect(rendered).not_to include('Look up Amazon Groups')
     end
 
     it 'should show "Look up groups" checkbox and label for auth mode httpd' do
-      stub_settings(:authentication => { :mode => 'httpd' }, :server => {})
+      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false}, :server => {})
       render :partial => 'ops/rbac_group_details'
       expect(rendered).to have_selector('input#lookup')
       expect(rendered).to include('Look up External Authentication Groups')
+    end
+
+    it 'should not show "Look up groups" checkbox and label for auth mode httpd with SAML enabled' do
+      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => true}, :server => {})
+      render :partial => 'ops/rbac_group_details'
+      expect(rendered).not_to have_selector('input#lookup')
+      expect(rendered).not_to include('Look up External Authentication Groups')
     end
 
     it 'should not show "Look up groups" checkbox and label for auth mode database' do
