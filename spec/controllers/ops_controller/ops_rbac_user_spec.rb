@@ -118,4 +118,25 @@ describe OpsController do
       expect(user.miq_groups.pluck(:id).sort).to eq(old_groups)
     end
   end
+
+  context '#3767 - update record fields when editing' do
+    let(:user) { FactoryGirl.create(:user_with_group) }
+
+    it "updates record even for existing users" do
+      existing_user_edit(user, {
+        :name => "changed",
+      })
+
+      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.send(:rbac_edit_save_or_add, 'user')
+
+      # make sure it returned success
+      messages = controller.instance_variable_get(:@flash_array).pluck(:message)
+      expect(messages).to include(match(/was saved/i))
+
+      # make sure the name did get changed
+      user.reload
+      expect(user.name).to eq('changed')
+    end
+  end
 end
