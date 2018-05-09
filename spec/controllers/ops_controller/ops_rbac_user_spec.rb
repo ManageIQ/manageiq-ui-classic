@@ -20,6 +20,16 @@ describe OpsController do
     controller.instance_variable_set(:@edit, edit)
   end
 
+  def existing_user_edit(user, data)
+    controller.instance_variable_set(:@_params, :typ => nil, :button => nil, :id => user.id)
+    controller.rbac_user_edit  # set up @edit for the user
+
+    edit = controller.instance_variable_get(:@edit)
+    edit[:new] ||= {}
+    edit[:new].merge!(data)
+    controller.instance_variable_set(:@edit, edit)
+  end
+
   context 'bz#1562828 - set record data before calling record.valid?' do
     let(:group) { FactoryGirl.create(:miq_group) }
 
@@ -67,4 +77,45 @@ describe OpsController do
     end
   end
 
+  context 'bz#1537601 - don\'t change groups on cancel' do
+    let(:user) { FactoryGirl.create(:user_with_group) }
+    let(:group) { FactoryGirl.create(:miq_group) }
+
+    it "should not unset groups on cancel" do
+      old_groups = user.miq_groups.pluck(:id).sort
+      existing_user_edit(user, {
+        :group => "",
+      })
+
+      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.send(:rbac_edit_save_or_add, 'user')
+
+      # make sure it complains about the unset group in the first place
+      messages = controller.instance_variable_get(:@flash_array).pluck(:message)
+      expect(messages).to include(match(/group/i))
+
+      # make sure the group didn't get changed
+      user.reload
+      expect(user.miq_groups.pluck(:id).sort).to eq(old_groups)
+    end
+
+    it "should not change groups when rails validation fails" do
+      old_groups = user.miq_groups.pluck(:id).sort
+      existing_user_edit(user, {
+        :group => group.id.to_s,
+        :name => "",  # fails record.valid?
+      })
+
+      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.send(:rbac_edit_save_or_add, 'user')
+
+      # make sure it complains about the name
+      messages = controller.instance_variable_get(:@flash_array).pluck(:message)
+      expect(messages).to include(match(/name/i))
+
+      # make sure the group didn't get changed
+      user.reload
+      expect(user.miq_groups.pluck(:id).sort).to eq(old_groups)
+    end
+  end
 end
