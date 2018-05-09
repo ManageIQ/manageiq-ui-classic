@@ -92,12 +92,12 @@ describe CloudVolumeSnapshotController do
       login_as admin_user
       allow(User).to receive(:current_user).and_return(admin_user)
       allow(controller).to receive(:assert_privileges)
-      allow(controller).to receive (:render_flash)
-      controller.instance_variable_set(:@_params, {:id=> snapshot.id, :pressed => 'host_NECO'})
+      allow(controller).to receive(:render_flash)
+      controller.instance_variable_set(:@_params, :id => snapshot.id, :pressed => 'host_NECO')
     end
 
     it "testing " do
-      expect(controller).to receive(:process_cloud_volume_snapshots).with([snapshot],"destroy")
+      expect(controller).to receive(:process_cloud_volume_snapshots).with([snapshot], "destroy")
       controller.send(:delete_cloud_volume_snapshots)
     end
   end

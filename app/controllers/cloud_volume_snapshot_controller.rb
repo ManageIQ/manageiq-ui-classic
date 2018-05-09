@@ -36,7 +36,7 @@ class CloudVolumeSnapshotController < ApplicationController
   def delete_cloud_volume_snapshots
     assert_privileges("cloud_volume_snapshot_delete")
 
-    snapshots = find_records_with_rbac(CloudVolumeSnapshot,checked_or_params)
+    snapshots = find_records_with_rbac(CloudVolumeSnapshot, checked_or_params)
 
     snapshots_to_delete = []
     snapshots.each do |snapshot_id|
