@@ -55,7 +55,7 @@ describe ApplicationController do
         controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
         expect(controller).to receive(:process_objects).with(
           [container1.id, container2.id],
-          'delete_cloud_object_store_container',
+          'cloud_object_store_container_delete',
           'Delete'
         )
         controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'delete')
@@ -64,10 +64,10 @@ describe ApplicationController do
       it "invokes process_tasks on container class" do
         expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
           :ids    => [container1.id, container2.id],
-          :task   => 'delete_cloud_object_store_container',
+          :task   => 'cloud_object_store_container_delete',
           :userid => anything
         )
-        controller.send(:process_objects, [container1.id, container2.id], 'delete_cloud_object_store_container',
+        controller.send(:process_objects, [container1.id, container2.id], 'cloud_object_store_container_delete',
                         'delete')
       end
 
@@ -75,7 +75,7 @@ describe ApplicationController do
         controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
         expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
           :ids    => [container1.id, container2.id],
-          :task   => 'delete_cloud_object_store_container',
+          :task   => 'cloud_object_store_container_delete',
           :userid => anything
         )
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
@@ -132,7 +132,7 @@ describe ApplicationController do
         controller.params[:id] = container.id
         expect(controller).to receive(:process_objects).with(
           [container.id],
-          'delete_cloud_object_store_container',
+          'cloud_object_store_container_delete',
           'Delete'
         )
         controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'delete')
@@ -141,17 +141,17 @@ describe ApplicationController do
       it "invokes process_tasks on container class" do
         expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
           :ids    => [container.id],
-          :task   => 'delete_cloud_object_store_container',
+          :task   => 'cloud_object_store_container_delete',
           :userid => anything
         )
-        controller.send(:process_objects, [container.id], 'delete_cloud_object_store_container', 'delete')
+        controller.send(:process_objects, [container.id], 'cloud_object_store_container_delete', 'delete')
       end
 
       it "invokes process_tasks overall" do
         controller.params[:id] = container.id
         expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
           :ids    => [container.id],
-          :task   => 'delete_cloud_object_store_container',
+          :task   => 'cloud_object_store_container_delete',
           :userid => anything
         )
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
