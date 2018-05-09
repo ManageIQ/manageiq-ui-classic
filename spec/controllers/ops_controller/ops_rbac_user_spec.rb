@@ -139,4 +139,47 @@ describe OpsController do
       expect(user.name).to eq('changed')
     end
   end
+
+  context 'bz#1574634 - set current_group' do
+    let(:user) { FactoryGirl.create(:user_with_group) }
+    let(:group) { FactoryGirl.create(:miq_group) }
+
+    pending "should set current_group for new item" do
+      new_user_edit(
+        :name => 'Full name',
+        :userid => 'username',
+        :group => group.id.to_s,
+        :password => "foo",
+        :verify => "foo",
+      )
+
+      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.send(:rbac_edit_save_or_add, 'user')
+
+      # make sure it returned success
+      messages = controller.instance_variable_get(:@flash_array).pluck(:message)
+      expect(messages).to include(match(/was saved/i))
+
+      # make sure current_group is set and saved
+      user.reload
+      expect(user.current_group.id).to eq(group.id)
+    end
+
+    pending "should set current_group when editing" do
+      existing_user_edit(user, {
+        :group => group.id.to_s,
+      })
+
+      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.send(:rbac_edit_save_or_add, 'user')
+
+      # make sure it returned success
+      messages = controller.instance_variable_get(:@flash_array).pluck(:message)
+      expect(messages).to include(match(/was saved/i))
+
+      # make sure current_group is set and saved
+      user.reload
+      expect(user.current_group.id).to eq(group.id)
+    end
+  end
 end
