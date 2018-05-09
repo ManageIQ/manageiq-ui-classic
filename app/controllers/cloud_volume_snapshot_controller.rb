@@ -41,7 +41,7 @@ class CloudVolumeSnapshotController < ApplicationController
     snapshots_to_delete = []
     snapshots.each do |snapshot|
       if !snapshot.supports?(:delete)
-        add_flash(_(snapshot.unsupported_reason(:delete))), :error)
+        add_flash(_(snapshot.unsupported_reason(:delete)), :error)
       else
         snapshots_to_delete.push(snapshot)
       end
