@@ -26,6 +26,7 @@ cols:
 - total_vms
 - total_miq_templates
 - region_description
+- authentication_status
 # Included tables (joined, has_one, has_many) and columns
 include:
   zone:
@@ -47,6 +48,7 @@ col_order:
 - total_vms
 - total_miq_templates
 - region_description
+- authentication_status
 # Column titles, in order
 headers:
 - Name
@@ -59,6 +61,7 @@ headers:
 - VMs
 - Templates
 - Region
+- Authentication Status
 # Condition(s) string for the SQL query
 conditions:
 # Order string for the SQL query
