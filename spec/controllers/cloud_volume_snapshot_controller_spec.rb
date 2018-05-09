@@ -96,8 +96,8 @@ describe CloudVolumeSnapshotController do
       controller.instance_variable_set(:@_params, :id => snapshot.id, :pressed => 'host_NECO')
     end
 
-    it "snapshots destroy" do
-      expect(controller).to receive(:process_cloud_volume_snapshots).with([snapshot], "destroy")
+    it "call cloud volume snapshots" do
+      expect(controller).to receive(:process_cloud_volume_snapshots).with([CloudVolumeSnapshot], "destroy")
       controller.send(:delete_cloud_volume_snapshots)
     end
   end
