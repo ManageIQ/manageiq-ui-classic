@@ -39,10 +39,9 @@ class CloudVolumeSnapshotController < ApplicationController
     snapshots = find_records_with_rbac(CloudVolumeSnapshot, checked_or_params)
 
     snapshots_to_delete = []
-    snapshots.each do |snapshot_id|
-      snapshot = CloudVolumeSnapshot.find_by_id(snapshot_id)
-      if snapshot.nil?
-        add_flash(_("Cloud Volume Snapshot no longer exists."), :error)
+    snapshots.each do |snapshot|
+      if !snapshot.supports?(:delete)
+        add_flash(_(snapshot.unsupported_reason(:delete))), :error)
       else
         snapshots_to_delete.push(snapshot)
       end
