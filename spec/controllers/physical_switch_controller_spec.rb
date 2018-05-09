@@ -23,15 +23,41 @@ describe PhysicalSwitchController do
   end
 
   describe "#show_list" do
-    before do
-      FactoryGirl.create(:physical_switch)
-    end
-
     subject { get :show_list }
 
-    it "renders a GTL page" do
-      is_expected.to have_http_status 200
-      is_expected.to render_template(:partial => "layouts/_gtl")
+    context '#GTL' do
+      it "renders a GTL page" do
+        is_expected.to have_http_status 200
+        is_expected.to render_template(:partial => "layouts/_gtl")
+      end
+
+      it 'renders GTL with PhysicalSwitch model' do
+        physical_switch
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name      => physical_switch.class.to_s,
+          :gtl_type_string => "list",
+        )
+        post :show_list
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context '#report_data' do
+      it 'calls "page_display_options" and returns the MiqRequest data' do
+        physical_switch
+        report_data_request(
+          :model => physical_switch.class.to_s,
+        )
+        results = assert_report_data_response
+        expect(results['data']['rows'].length).to eq(1)
+      end
+    end
+
+    context "physical switch toolbar is available" do
+      it 'physical switch toolbar is available' do
+        expect(ApplicationHelper::Toolbar::PhysicalSwitchesCenter).to receive(:definition)
+        subject
+      end
     end
   end
 
@@ -53,6 +79,15 @@ describe PhysicalSwitchController do
 
         flash_messages = assigns(:flash_array)
         expect(flash_messages.first[:message]).to include("Can't access selected records")
+      end
+    end
+
+    context "toolbar buttons" do
+      subject { get(:show, :params => {:id => physical_switch.id}) }
+
+      it 'physical switch toolbar is available' do
+        expect(ApplicationHelper::Toolbar::PhysicalSwitchCenter).to receive(:definition)
+        subject
       end
     end
   end
