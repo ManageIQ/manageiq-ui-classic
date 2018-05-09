@@ -34,7 +34,6 @@ class CloudVolumeSnapshotController < ApplicationController
   end
 
   def delete_cloud_volume_snapshots
-    binding.pry  
     assert_privileges("cloud_volume_snapshot_delete")
 
     snapshots = find_records_with_rbac(CloudVolumeSnapshot,checked_or_params)
