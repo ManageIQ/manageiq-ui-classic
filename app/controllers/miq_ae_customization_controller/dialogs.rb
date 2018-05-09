@@ -334,7 +334,7 @@ module MiqAeCustomizationController::Dialogs
     return unless load_edit("dialog_edit__#{id}", "replace_cell__explorer")
     @record = @edit[:dialog]
     nodes = x_node.split('_')
-    if nodes.length == 1 || params[:typ] == "tab"  # Remove tab was pressed
+    if nodes.length == 1 || params[:typ] == "tab" # Remove tab was pressed
       # need to delete tab and it's groups/fields
       idx = nil
       @edit[:new][:tabs].each_with_index do |tab, i|
@@ -480,7 +480,11 @@ module MiqAeCustomizationController::Dialogs
     nodes = x_node.split('_')
     fields = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups][nodes[2].split('-').last.to_i][:fields]
     # if field is being added then use last array element of fields as index
-    id = nodes.length == 4 ? nodes[3].split('-').last.to_i : (fields.empty? ? 0 : fields.length - 1) # set id to 0 if nothing has been added yet to array
+    id = if nodes.length == 4
+           nodes[3].split('-').last.to_i
+         else
+           fields.empty? ? 0 : fields.length - 1 # set id to 0 if nothing has been added yet to array
+         end
     # one of the fields is being edited
     key = fields[id]
 
@@ -547,7 +551,11 @@ module MiqAeCustomizationController::Dialogs
     nodes = x_node.split('_')
     fields = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups][nodes[2].split('-').last.to_i][:fields]
     # if field is being added then use last array element of fields as index
-    id = nodes.length == 4 ? nodes[3].split('-').last.to_i : (fields.empty? ? 0 : fields.length - 1) # set id to 0 if nothing has been added yet to array
+    id = if nodes.length == 4
+           nodes[3].split('-').last.to_i
+         else
+           fields.empty? ? 0 : fields.length - 1 # set id to 0 if nothing has been added yet to array
+         end
     # one of the fields is being edited
     key = fields[id]
 
@@ -597,7 +605,11 @@ module MiqAeCustomizationController::Dialogs
       # FIXME: extract method from the following 4 lines
       nodes = x_node.split('_')
       fields = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups][nodes[2].split('-').last.to_i][:fields]
-      id = nodes.length == 4 ? nodes[3].split('-').last.to_i : (fields.empty? ? 0 : fields.length - 1)
+      id = if nodes.length == 4
+             nodes[3].split('-').last.to_i
+           else
+             fields.empty? ? 0 : fields.length - 1
+           end
       key = fields[id]
       key[:entry_point]         = @edit[:new][:field_entry_point]
       @edit[:field_entry_point] = @edit[:new][:field_entry_point]
@@ -644,8 +656,8 @@ module MiqAeCustomizationController::Dialogs
       # last/first item cannot be moved down/up
       if params['button'] == 'down'
         @idx = nil if @idx == @values.count - 1
-      else
-        @idx = nil if @idx.zero?
+      elsif @idx.zero?
+        @idx = nil
       end
     end
   end
@@ -842,8 +854,8 @@ module MiqAeCustomizationController::Dialogs
 
         if val == '1'
           @edit[:new][:buttons].push(button).sort! unless @edit[:new][:buttons].include?(button)
-        else
-          @edit[:new][:buttons].delete(button) if @edit[:new][:buttons].include?(button)
+        elsif @edit[:new][:buttons].include?(button)
+          @edit[:new][:buttons].delete(button)
         end
       end
 
@@ -851,7 +863,11 @@ module MiqAeCustomizationController::Dialogs
     elsif (nodes.length == 2 && @sb[:node_typ] != "box") || (nodes.length == 1 && @sb[:node_typ] == "tab")
       tabs = @edit[:new][:tabs]
       # if tab is being added then use last array element of tabs as index
-      id = nodes.length == 2 ? nodes[1].split('-').last.to_i : (tabs.empty? ? 0 : tabs.length - 1) # set id to 0 if nothing has been added yet to array
+      id = if nodes.length == 2
+             nodes[1].split('-').last.to_i
+           else
+             tabs.empty? ? 0 : tabs.length - 1 # set id to 0 if nothing has been added yet to array
+           end
       # one of the tabs is being edited
       key = tabs[id]
       @edit[:tab_label]       = key[:label]       = params[:tab_label]       if params[:tab_label]
@@ -861,7 +877,11 @@ module MiqAeCustomizationController::Dialogs
     elsif (nodes.length == 3 && @sb[:node_typ] != "element") || (nodes.length == 2 && @sb[:node_typ] == "box")
       groups = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups]
       # if group is being added then use last array element of groups as index
-      id = nodes.length == 3 ? nodes[2].split('-').last.to_i : (groups.empty? ? 0 : groups.length - 1) # set id to 0 if nothing has been added yet to array
+      id = if nodes.length == 3
+             nodes[2].split('-').last.to_i
+           else
+             groups.empty? ? 0 : groups.length - 1 # set id to 0 if nothing has been added yet to array
+           end
       # one of the groups is being edited
       key = groups[id]
       @edit[:group_label]       = key[:label]       = params[:group_label]       if params[:group_label]
@@ -880,7 +900,11 @@ module MiqAeCustomizationController::Dialogs
     # if field is being added then use last array element of fields as index
     fields = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups][nodes[2].split('-').last.to_i][:fields]
     # set id to 0 if nothing has been added yet to array
-    id = nodes.length == 4 ? nodes[3].split('-').last.to_i : (fields.empty? ? 0 : fields.length - 1)
+    id = if nodes.length == 4
+           nodes[3].split('-').last.to_i
+         else
+           fields.empty? ? 0 : fields.length - 1
+         end
     # one of the fields is being edited
     key = fields[id]
 
@@ -1133,6 +1157,8 @@ module MiqAeCustomizationController::Dialogs
   end
 
   def get_field_types
+    date_fields = %w(DialogFieldDateControl DialogFieldDateTimeControl)
+
     @edit[:field_types] = copy_hash(DialogField.dialog_field_types)
     @edit[:new][:tabs].each do |tab|
       next unless tab[:groups]
@@ -1142,13 +1168,13 @@ module MiqAeCustomizationController::Dialogs
           # if field being edited/displayed is date/time no need to delete it from array
           # incase user wants to change the type
           # don't remove from array if field being added in Date/time field
-          if !["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(@edit[:field_typ]) &&
-             ["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(field[:typ]) &&
-             !["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(params[:field_typ])
-            @edit[:field_types].delete("DialogFieldDateControl")
-            @edit[:field_types].delete("DialogFieldDateTimeControl")
-            break
-          end
+          next if date_fields.include?(@edit[:field_typ]) ||
+                  !date_fields.include?(field[:typ]) ||
+                  date_fields.include?(params[:field_typ])
+
+          @edit[:field_types].delete("DialogFieldDateControl")
+          @edit[:field_types].delete("DialogFieldDateTimeControl")
+          break
         end
       end
     end
