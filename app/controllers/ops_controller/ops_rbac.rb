@@ -734,7 +734,7 @@ module OpsController::OpsRbac
     end
 
     if record.valid? && validated && record.save!
-      record.miq_groups = Rbac.filtered(MiqGroup.find(rbac_user_get_group_ids)) if key == :user # only set miq_groups if everything is valid
+      record.update_attributes!(:miq_groups => Rbac.filtered(MiqGroup.where(:id => rbac_user_get_group_ids))) if key == :user # only set miq_groups if everything is valid
       populate_role_features(record) if what == "role"
       self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, add_pressed))
