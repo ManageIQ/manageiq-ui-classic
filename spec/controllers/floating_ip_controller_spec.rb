@@ -31,8 +31,8 @@ describe FloatingIpController do
     end
 
     describe "#delete_floating_ips" do
-      let(:admin_user) {FactoryGirl.create(:user, :role => "super_administrator")}
-      let!(:floating_ip) {FactoryGirl.create(:floating_ip)}
+      let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+      let!(:floating_ip) { FactoryGirl.create(:floating_ip) }
       before do
         EvmSpecHelper.create_guid_miq_server_zone
         login_as admin_user
