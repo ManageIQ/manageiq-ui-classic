@@ -241,10 +241,11 @@ module ReportController::Schedules
       add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
       if x_active_tree != :reports_tree
         # dont set these if new schedule is being added from a report show screen
-        obj = find_records_with_rbac(MiqSchedule, checked_or_params)
-        obj[0] = params[:id] if obj.blank? && params[:id]
-        @schedule = obj[0] && params[:id] != "new" ? MiqSchedule.find(obj[0]) :
-            MiqSchedule.new(:userid => session[:userid])  # Get existing or new record
+        if params[:id] == "new"
+          @schedule = MiqSchedule.new(:userid => session[:userid])
+        else
+          @schedule = find_record_with_rbac(MiqSchedule, checked_or_params)
+        end
         session[:changed] = false
       end
       schedule_set_form_vars
