@@ -4,7 +4,8 @@ module Mixins
   module EmsCommonAngular
     extend ActiveSupport::Concern
 
-    OPENSTACK_PARAMS = [:name, :provider_region, :api_version, :default_security_protocol, :keystone_v3_domain_id, :default_hostname, :default_api_port, :default_userid, :event_stream_selection].freeze
+    OPENSTACK_PARAMS = %i(name provider_region api_version default_security_protocol keystone_v3_domain_id default_hostname default_api_port default_userid event_stream_selection).freeze
+    OPENSTACK_AMQP_PARAMS = %i(name provider_region api_version amqp_security_protocol keystone_v3_domain_id amqp_hostname amqp_api_port amqp_userid event_stream_selection).freeze
 
     included do
       include Mixins::GenericFormMixin
@@ -122,14 +123,18 @@ module Mixins
     def get_task_args(ems)
       user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
       case ems.to_s
-      when 'ManageIQ::Providers::Openstack::CloudManager'
-        [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)]
+      when 'ManageIQ::Providers::Openstack::CloudManager', 'ManageIQ::Providers::Openstack::InfraManager'
+        connect_opts = [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)] if params[:cred_type] == "default"
+        connect_opts = [MiqPassword.encrypt(params[:amqp_password]), params.to_hash.symbolize_keys.slice(*OPENSTACK_AMQP_PARAMS)] if params[:cred_type] == "amqp"
+        connect_opts
       when 'ManageIQ::Providers::Amazon::CloudManager'
         [user, password, :EC2, params[:provider_region], ems.http_proxy_uri, true]
       when 'ManageIQ::Providers::Azure::CloudManager'
         [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region]]
       when 'ManageIQ::Providers::Vmware::CloudManager'
-        [params[:default_hostname], params[:default_api_port], user, password, params[:api_version], true]
+        connect_opts = [params[:default_hostname], params[:default_api_port], user, password, params[:api_version], true] if params[:cred_type] == "default"
+        connect_opts = [params[:amqp_hostname], params[:amqp_api_port], params[:amqp_userid], MiqPassword.encrypt(params[:amqp_password]), params[:api_version], true] if params[:cred_type] == "amqp"
+        connect_opts
       when 'ManageIQ::Providers::Google::CloudManager'
         [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, ems.http_proxy_uri, true]
       when 'ManageIQ::Providers::Microsoft::InfraManager'
@@ -143,8 +148,6 @@ module Mixins
         }
 
         [ems.build_connect_params(connect_opts), true]
-      when 'ManageIQ::Providers::Openstack::InfraManager'
-        [password, params.to_hash.symbolize_keys.slice(*(OPENSTACK_PARAMS))]
       when 'ManageIQ::Providers::Redhat::InfraManager'
         metrics_user, metrics_password = params[:metrics_userid], MiqPassword.encrypt(params[:metrics_password])
         [{
@@ -169,7 +172,9 @@ module Mixins
           :ca_certs   => params[:kubevirt_tls_ca_certs],
         }]
       when 'ManageIQ::Providers::Vmware::InfraManager'
-        [{:pass => password, :user => user, :ip => params[:default_hostname], :use_broker => false}]
+        connect_opts = [{:pass => password, :user => user, :ip => params[:default_hostname], :use_broker => false}] if params[:cred_type] == "default"
+        connect_opts = [{:pass => MiqPassword.encrypt(params[:console_password]), :user => params[:console_userid], :ip => params[:default_hostname], :use_broker => false}] if params[:cred_type] == "console"
+        connect_opts
       when 'ManageIQ::Providers::Nuage::NetworkManager'
         endpoint_opts = {:protocol => params[:default_security_protocol], :hostname => params[:default_hostname], :api_port => params[:default_api_port], :api_version => params[:api_version]}
         [user, params[:default_password], endpoint_opts]
