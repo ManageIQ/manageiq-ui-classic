@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProfileFormId', 'miqService', function($http, timeProfileFormId, miqService) {
+ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProfileFormId', 'timeProfileFormAction', 'miqService', function($http, timeProfileFormId, timeProfileFormAction, miqService) {
   var vm = this;
 
   var init = function() {
@@ -24,7 +24,6 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
     vm.dayNames = [__("Sunday"), __("Monday"), __("Tuesday"), __("Wednesday"), __("Thursday"), __("Friday"), __("Saturday")];
     vm.hourNamesFirstHalf = [__("12-1"), __("1-2"), __("2-3"), __("3-4"), __("4-5"), __("5-6")];
     vm.hourNamesSecondHalf = [__("6-7"), __("7-8"), __("8-9"), __("9-10"), __("10-11"), __("11-12")];
-    vm.formId = timeProfileFormId;
     vm.afterGet = false;
     vm.modelCopy = angular.copy( vm.timeProfileModel );
     vm.model = 'timeProfileModel';
@@ -38,10 +37,12 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
       .then(getTimeProfileFormData)
       .catch(miqService.handleFailure);
 
-    if (timeProfileFormId == 'new') {
-      vm.newRecord = true;
-    } else {
+    if (timeProfileFormAction === 'timeprofile_edit') {
       vm.newRecord = false;
+      vm.formId = timeProfileFormId;
+    } else {
+      vm.newRecord = true;
+      vm.formId = "new";
     }
   };
 
@@ -167,7 +168,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
 
   var timeProfileEditButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
-    var url = '/configuration/timeprofile_update/' + timeProfileFormId + '?button=' + buttonName;
+    var url = '/configuration/timeprofile_update/' + vm.formId + '?button=' + buttonName;
     var timeProfileModelObj = angular.copy(vm.timeProfileModel);
     miqService.miqAjaxButton(url, timeProfileModelObj);
   };

@@ -43,6 +43,7 @@ describe('timeProfileFormController', function() {
     $controller = _$controller_('timeProfileFormController as vm', {
       $scope: $scope,
       timeProfileFormId: 'new',
+      timeProfileFormAction: 'timeprofile_create',
       miqService: miqService
     });
   }));
@@ -57,7 +58,7 @@ describe('timeProfileFormController', function() {
       $httpBackend.flush();
     });
     describe('when the timeProfileFormId is new', function() {
-      it('sets the name to blank', function () {
+      it('sets the description to blank', function () {
         expect($scope.vm.timeProfileModel.description).toEqual('');
       });
       it('sets the admin_user to false', function () {
@@ -81,7 +82,7 @@ describe('timeProfileFormController', function() {
     });
   });
 
-  describe('when the timeProfileFormId is an id', function() {
+  describe('when the timeProfileFormId is an id and action is timeprofile_edit', function() {
     var timeProfileFormResponse = {
       description: 'TimeProfileTest',
       admin_user: true,
@@ -101,30 +102,86 @@ describe('timeProfileFormController', function() {
         {
           $scope: $scope,
           timeProfileFormId: '12345',
+          timeProfileFormAction: 'timeprofile_edit',
           miqService: miqService
         });
       $httpBackend.flush();
     }));
 
-    it('sets the name to blank', function () {
+    it('sets formId to timeProfileFormId', function () {
+      expect($scope.vm.formId).toEqual('12345');
+    });
+    it('sets the description to correct value', function () {
       expect($scope.vm.timeProfileModel.description).toEqual('TimeProfileTest');
     });
-    it('sets the admin_user to false', function () {
+    it('sets the admin_user to true', function () {
       expect($scope.vm.timeProfileModel.admin_user).toBeTruthy();
     });
     it('sets the restricted_time_profile to false', function () {
       expect($scope.vm.timeProfileModel.restricted_time_profile).toBeFalsy();
     });
-    it('sets the profile_type to blank', function () {
+    it('sets the profile_type to correct value', function () {
       expect($scope.vm.timeProfileModel.profile_type).toEqual('user');
     });
-    it('sets the profile_tz to blank', function () {
+    it('sets the profile_tz to correct value', function () {
       expect($scope.vm.timeProfileModel.profile_tz).toEqual('Alaska');
     });
-    it('sets the all_days to false', function () {
+    it('sets the all_days to true', function () {
       expect($scope.vm.timeProfileModel.all_days).toBeTruthy();
     });
-    it('sets the all_hours to blank', function () {
+    it('sets the all_hours to true', function () {
+      expect($scope.vm.timeProfileModel.all_hours).toBeTruthy();
+    });
+  });
+
+  describe('when the timeProfileFormId is an id and action is timeprofile_copy', function() {
+    var timeProfileFormResponse = {
+      description: 'TimeProfileTest',
+      admin_user: true,
+      restricted_time_profile: false,
+      profile_type: 'user',
+      profile_tz: 'Alaska',
+      rollup_daily: true,
+      all_days: true,
+      all_hours: true,
+      days: [0, 1, 2, 3, 4, 5, 6],
+      hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+    };
+
+    beforeEach(inject(function(_$controller_) {
+      $httpBackend.whenGET('/configuration/time_profile_form_fields/12345').respond(timeProfileFormResponse);
+      $controller = _$controller_('timeProfileFormController as vm',
+        {
+          $scope: $scope,
+          timeProfileFormId: '12345',
+          timeProfileFormAction: 'timeprofile_copy',
+          miqService: miqService
+        });
+      $httpBackend.flush();
+    }));
+
+    it('sets formId to new', function () {
+      expect($scope.vm.formId).toEqual('new');
+    });
+    it('sets the description to correct value', function () {
+      expect($scope.vm.timeProfileModel.description).toEqual('TimeProfileTest');
+    });
+    it('sets the admin_user to true', function () {
+      expect($scope.vm.timeProfileModel.admin_user).toBeTruthy();
+    });
+    it('sets the restricted_time_profile to false', function () {
+      expect($scope.vm.timeProfileModel.restricted_time_profile).toBeFalsy();
+    });
+    it('sets the profile_type to correct value', function () {
+      expect($scope.vm.timeProfileModel.profile_type).toEqual('user');
+    });
+    it('sets the profile_tz to correct value', function () {
+      expect($scope.vm.timeProfileModel.profile_tz).toEqual('Alaska');
+    });
+    it('sets the all_days to true', function () {
+      expect($scope.vm.timeProfileModel.all_days).toBeTruthy();
+    });
+    it('sets the all_hours to true', function () {
       expect($scope.vm.timeProfileModel.all_hours).toBeTruthy();
     });
   });
