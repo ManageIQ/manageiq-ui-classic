@@ -103,7 +103,7 @@ class DialogLocalService
       api_collection_name = "services"
       cancel_endpoint = "/service/explorer"
     when /Storage/
-      api_collection_name = "datastores"
+      api_collection_name = "data_stores"
       cancel_endpoint = "/storage/explorer"
     when /Template/
       api_collection_name = "templates"

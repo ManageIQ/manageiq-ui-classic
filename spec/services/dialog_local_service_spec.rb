@@ -231,7 +231,7 @@ describe DialogLocalService do
           :target_type            => 'storage',
           :dialog_id              => 654,
           :force_old_dialog_use   => false,
-          :api_submit_endpoint    => "/api/datastores/123",
+          :api_submit_endpoint    => "/api/data_stores/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/storage/explorer",
           :cancel_endpoint        => "/storage/explorer"
