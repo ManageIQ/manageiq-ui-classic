@@ -39,44 +39,12 @@
       });
 
   - else
-    - url = url_for_only_path(:action => 'form_ns_field_changed', :id => (@ae_ns.id || 'new'))
-    #form_ns_div
-      %h3
-        = _('Info')
-      .form-horizontal
-        - unless @ae_ns.domain?
-          .form-group
-            %label.col-md-2.control-label
-              = _('Fully Qualified Name')
-            .col-md-8
-              = h(@sb[:namespace_path])
-        .form-group
-          %label.col-md-2.control-label
-            = _('Name')
-          .col-md-8
-            = text_field_tag("ns_name",
-                              @edit[:new][:ns_name],
-                              :maxlength         => ViewHelper::MAX_NAME_LEN,
-                              :readonly => @ae_ns.domain? && !@ae_ns.editable_property?(:name)  ? true : false,
-                              :class => "form-control",
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-            = javascript_tag(javascript_focus('ns_name'))
-        .form-group
-          %label.col-md-2.control-label
-            = _('Description')
-          .col-md-8
-            = text_field_tag("ns_description",
-                              @edit[:new][:ns_description],
-                              :maxlength         => ViewHelper::MAX_NAME_LEN,
-                              :readonly => @ae_ns.domain? && !@ae_ns.editable_property?(:description) ? true : false,
-                              :class => "form-control",
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-        - if @ae_ns.domain?
-          .form-group
-            %label.col-md-2.control-label
-              = _('Enabled')
-            .col-md-8
-              = check_box_tag("ns_enabled",
-                              "1",
-                              @edit[:new][:enabled],
-                              "data-miq_observe_checkbox" => {:url => url}.to_json)
+    - name_readonly = @ae_ns.domain? && !@ae_ns.editable_property?(:name)
+    - description_readonly = @ae_ns.domain? && !@ae_ns.editable_property?(:description)
+    %namespace-form{:ae_ns_domain => @ae_ns.domain?,
+                    :namespace_path => @sb[:namespace_path],
+                    :namespace_id => @ae_ns.id || 'new',
+                    :name_readonly => name_readonly,
+                    :description_readonly => description_readonly}
+:javascript
+  miq_bootstrap('namespace-form')
