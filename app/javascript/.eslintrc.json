@@ -1,0 +1,31 @@
+{
+  "env": {
+    "jest/globals": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "globalReturn": false,
+      "impliedStrict": true,
+      "jsx": true
+    }
+  },
+
+  "plugins": ["jest", "react"],
+  "extends": ["airbnb", "plugin:jest/recommended", "../../.eslintrc.json"],
+
+  "rules": {
+    "arrow-parens": 0,
+    "import/newline-after-import": 1,
+    "import/prefer-default-export": 1,
+    "max-len": 0,
+    "no-multi-spaces": [ "warn", { "ignoreEOLComments": true } ],
+    "prefer-arrow-callback": 1,
+    "prefer-destructuring": 1,
+    "prefer-promise-reject-errors": 0,
+    "prefer-template": 1,
+    "quote-props": 1,
+    "react/jsx-filename-extension": 0
+  }
+}
