@@ -202,27 +202,22 @@ describe CloudTenantController do
     end
 
     describe "#delete_cloud_tentants" do
-      let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
-      let(:host)       { FactoryGirl.create(:host) }
+      let(:tenant) { FactoryGirl.create(:cloud_tenant, :name => "tenant-01")}
       before do
-        EvmSpecHelper.create_guid_miq_server_zone
-          login_as admin_user
-          allow(User).to receive(:current_user).and_return(admin_user)
-          allow(controller).to receive(:assert_privileges)
-          allow(controller).to receive(:performed?)
-          controller.instance_variable_set(:@_params, {:id=> host.id, :pressed => 'host_NECO'})
-        end
+        controller.instance_variable_set(:@_params, :id => tenant.id)
+        controller.instance_variable_set(:@lastaction, "show")
+        controller.instance_variable_set(:@layout, "cloud_tenant")
 
-        it "delete_cloud_tentants" do
-          ems = FactoryGirl.create(:ems_openstack)
-          ct = FactoryGirl.create(:cloud_tenant, :ext_management_system => ems)
-          controller.instance_variable_set(:@_params, {:id => ct.id})
-          controller.send(:delete_cloud_tenants)
-          expected_host_id = controller.instance_variable_get(:@prov_id)
-          expect(expected_host_id).to eq(ct.id)
-        end
+        allow(controller).to receive(:find_records_with_rbac).and_return([tenant])
+        allow(tenant).to receive(:supports_delete?).and_return(true)
+        allow(tenant).to receive(:delete_cloud_tenant_queue).and_return(true)
       end
 
+      it "it calls process_cloud_tentants function" do
+        expect(controller).to receive(:process_cloud_tenants).with([CloudTenant], "destroy")
+        controller.send(:delete_cloud_tenants)
+      end
+    end
   end
 
   include_examples '#download_summary_pdf', :cloud_tenant

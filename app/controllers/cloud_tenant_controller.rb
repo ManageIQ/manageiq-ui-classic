@@ -183,7 +183,6 @@ class CloudTenantController < ApplicationController
   end
 
   def delete_cloud_tenants
-    #binding.pry
     assert_privileges("cloud_tenant_delete")
 
     tenants = find_records_with_rbac(CloudTenant, checked_or_params)
