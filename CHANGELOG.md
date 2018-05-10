@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 85 ending 2018-05-07
+
+### Added
+- Update physical server toolbar buttons [(#3876)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3876)
+- Add support for displaying storage device details [(#3830)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3830)
+- Update toolbar icons [(#2925)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2925)
+
+### Changed
+- Change @edit[:new][:timer_typ] to @edit[:new][:timer].typ [(#3870)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3870)
+- Change fa-cog to pficon-settings in VmdbDatabaseSettingDecorator [(#3863)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3863)
+
+### Fixed
+- Validate Help->Documentation screen against the documentation feature [(#3882)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3882)
+- Do not force exp_key to be limited to "CONTAINS" for date type fields. [(#3879)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3879)
+- cloud volume create fixes [(#3878)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3878)
+- Fixes display of VM Retirement State label [(#3877)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3877)
+- Add missing single_quad definitions for models displayed under Services [(#3875)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3875)
+- Clear tag expression field when editing group tag expression [(#3866)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3866)
+- Fix for certain tag categories being unable to be saved as dialog field elements [(#3865)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3865)
+- Add a unique random DOM ID for each quadicon and use it in miq_bootstrap [(#3858)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3858)
+- Change Service 'Order' button to blue color to look active [(#3843)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3843)
+- Do not store console popups in session [(#3842)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3842)
+- Disable credential / repository form when embedded ansible is unavailable [(#3840)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3840)
+- Rebuild provider foreman tree after editing a provider [(#3834)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3834)
+- Timeline menu [(#3827)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3827)
+- Fixed disabled report editor treeview styling regression [(#3823)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3823)
+- Apply gettext on catalog types & subtypes [(#3814)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3814)
+- Enable Compilance button for list of VMs [(#3810)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3810)
+- Fix displaying correct tags of Datastore of a provider [(#3407)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3407)
+
+### Removed
+- Remove unnecessary code around the quadicon rendering on drift screens [(#3859)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3859)
+- Remove Search from Switch summary page [(#3838)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3838)
+- Remove memory chart for Amazon Availability Zones [(#3836)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3836)
+
 ## Unreleased as of Sprint 84 ending 2018-04-23
 
 ### Added
