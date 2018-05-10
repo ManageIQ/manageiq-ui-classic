@@ -189,8 +189,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
         :physical_server_policy_choice,
         'fa fa-shield fa-lg',
         N_('Policy'),
-        :enabled => false,
-        :onwhen  => "1+",
+        :enabled => true,
         :items   => [
           button(
             :physical_server_protect,
