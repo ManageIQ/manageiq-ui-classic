@@ -1,4 +1,15 @@
-ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService', 'cloudVolumeBackupFormId', '$http', function(miqService, cloudVolumeBackupFormId, $http) {
+ManageIQ.angular.app.component('cloudVolumeBackupFormComponent', {
+  templateUrl: '/static/cloud_volume_backup/volume_select.html.haml',
+  controller: cloudVolumeBackupFormController,
+  controllerAs: 'vm',
+  bindings: {
+    'cloudVolumeBackupFormId': '@',
+  },
+});
+
+cloudVolumeBackupFormController.$inject = ['miqService', '$http'];
+
+function cloudVolumeBackupFormController(miqService, $http) {
   var vm = this;
 
   var init = function() {
@@ -8,7 +19,7 @@ ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService'
       volume_id: '',
     };
 
-    vm.formId = cloudVolumeBackupFormId;
+    vm.formId = vm.cloudVolumeBackupFormId;
     vm.model = "cloudVolumeBackupModel";
 
     ManageIQ.angular.scope = vm;
@@ -24,13 +35,13 @@ ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService'
   vm.saveClicked = function() {
     var restoreUrl = '/cloud_volume_backup/backup_restore/';
     var buttonUrl = '?button=restore';
-    miqService.miqAjaxButton(restoreUrl + cloudVolumeBackupFormId + buttonUrl, vm.cloudVolumeBackupModel, { complete: false });
+    miqService.miqAjaxButton(restoreUrl + vm.cloudVolumeBackupFormId + buttonUrl, vm.cloudVolumeBackupModel, { complete: false });
   };
 
   vm.cancelClicked = function() {
     var cancelUrl = '/cloud_volume_backup/backup_restore/';
     var buttonUrl = '?button=cancel';
-    miqService.miqAjaxButton(cancelUrl + cloudVolumeBackupFormId + buttonUrl);
+    miqService.miqAjaxButton(cancelUrl + vm.cloudVolumeBackupFormId + buttonUrl);
   };
 
   vm.resetClicked = function(angularForm) {
@@ -54,5 +65,5 @@ ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService'
     return vm.volume_choices.length > 0;
   }
 
-  init();
-}]);
+  vm.$onInit = init;
+}
