@@ -6,18 +6,18 @@ module GuestDeviceHelper::TextualSummary
     )
   end
 
-  def textual_group_ports
-    ports = {:labels => [_("Name"), _("MAC Address")]}
-    ports[:values] = @record.child_devices.collect do |port|
+  def textual_group_physical_network_ports
+    physical_network_ports = {:labels => [_("Name"), _("MAC Address")]}
+    physical_network_ports[:values] = @record.physical_network_ports.collect do |port|
       [
-        port.name,
-        port.address
+        port.port_name,
+        port.mac_address
       ]
     end
 
     TextualMultilabel.new(
       _("Ports"),
-      ports
+      physical_network_ports
     )
   end
 
