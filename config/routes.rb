@@ -1284,6 +1284,7 @@ Rails.application.routes.draw do
         protect
         show_list
         tagging_edit
+        change_password
       ) +
                compare_get,
       :post => %w(
