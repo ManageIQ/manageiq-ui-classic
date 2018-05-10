@@ -887,6 +887,27 @@ class CatalogController < ApplicationController
     if @edit[:new][:st_prov_type] == 'generic' && @edit[:new][:generic_subtype].blank?
       add_flash(_('Subtype is required.'), :error)
     end
+
+    # for Ansible Tower items, check for Provider first
+    if @edit[:new][:st_prov_type] == 'generic_ansible_tower'
+      if @edit[:new][:manager_id].blank?
+        add_flash(_("Provider is required, please select one from the list"), :error)
+      else
+        # ensure Job Template is selected as well, required field
+        add_flash(_("Job Template is required, please select one from the list"), :error) if @edit[:new][:template_id].blank?
+      end
+    end
+
+    # For Orchestration catalog item, reverse edit flow and check Template selection first
+    if @edit[:new][:st_prov_type] == 'generic_orchestration'
+      if @edit[:new][:template_id].blank?
+        add_flash(_("Orchestration Template is required, please select one from the list"), :error)
+      else
+        # ensure Provider is selectied, required field
+        add_flash(_("Provider is required, please select one from the list"), :error) if @edit[:new][:manager_id].blank?
+      end
+    end
+
     add_flash(_("Provisioning Entry Point is required"), :error) if @edit[:new][:fqname].blank?
 
     # Check for a Dialog if Display in Catalog is selected
