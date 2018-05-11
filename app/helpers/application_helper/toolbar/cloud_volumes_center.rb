@@ -15,6 +15,26 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                      ),
                      separator,
                      button(
+                       :cloud_volume_backup_create,
+                       'pficon pficon-volume fa-lg',
+                       t = N_('Create a Backup of selected Cloud Volume'),
+                       t,
+                       :url_parms    => 'main_div',
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => '1'
+                     ),
+                     button(
+                       :cloud_volume_backup_restore,
+                       'pficon pficon-volume fa-lg',
+                       t = N_('Restore from a Backup of selected Cloud Volume'),
+                       t,
+                       :url_parms    => 'main_div',
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => '1'
+                     ),
+                     button(
                        :cloud_volume_snapshot_create,
                        'pficon pficon-volume fa-lg',
                        t = N_('Create a Snapshot of selected Cloud Volume'),
