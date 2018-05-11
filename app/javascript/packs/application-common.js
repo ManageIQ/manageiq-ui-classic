@@ -10,7 +10,7 @@ import 'proxy-polyfill';
 
 import { mount } from '../react/mounter';
 import componentRegistry from '../react/componentRegistry';
-import API from '../http_api';
+import { API, http } from '../http_api';
 
 import * as newRegistry from '../miq-component/registry';
 import reactBlueprint from '../miq-component/react-blueprint';
@@ -35,3 +35,4 @@ window.listenToRx = listenToRx;
 
 // compatibility, will finish the rename in a separate PR, renaming vanillaJsAPI & API to API & $API
 window.vanillaJsAPI = window.API;
+window.http = http;
