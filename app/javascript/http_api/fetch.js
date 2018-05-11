@@ -31,6 +31,11 @@ function processOptions(options) {
     o.headers['X-Auth-Token'] = localStorage.miq_token;
   }
 
+  if (o.csrf) {
+    o.headers['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+    delete o.csrf;
+  }
+
   if (Object.keys(o.headers).length) {
     o.headers = new Headers(o.headers);
   }
