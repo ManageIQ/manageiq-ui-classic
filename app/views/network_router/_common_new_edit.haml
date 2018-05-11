@@ -92,6 +92,7 @@
                'type'      => 'checkbox',
                'id'        => 'external_gateway',
                'name'      => 'external_gateway',
+               'ng-change' => 'vm.networkRouterModel.extra_attributes.external_gateway_info.enable_snat = true',
                'ng-model'  => 'vm.networkRouterModel.external_gateway'}
   .form-horizontal{'ng-if' => 'vm.networkRouterModel.external_gateway'}
     .form-group
