@@ -19,6 +19,7 @@ function processOptions(options) {
   delete o.skipErrors;
   delete o.type;
   delete o.url;
+  delete o.transformResponse;
 
   o.headers = o.headers || {};
 
@@ -76,12 +77,17 @@ function processResponse(response) {
 
 function responseAndError(options = {}) {
   return function(response) {
-    const ret = processResponse(response);
+    let ret = processResponse(response);
 
     if ((response.status === 401) && ! options.skipLoginRedirect) {
       // Unauthorized - always redirect to dashboard#login
       redirectLogin(sprintf(__('%s logged out, redirecting to the login page'), options.backendName));
       return ret;
+    }
+
+    // apply a custom transformation
+    if (options.transformResponse) {
+      ret = ret.then(options.transformResponse);
     }
 
     // true means skip all of them - no error modal at all
