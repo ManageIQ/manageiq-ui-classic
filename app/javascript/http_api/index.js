@@ -1,3 +1,5 @@
+import { base64encode } from './compat';
+
 export default API;
 
 /* global miqDeferred, add_flash */
