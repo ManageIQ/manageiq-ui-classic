@@ -8,16 +8,11 @@ module Mixins
           session[:type] = params[:discover_type] if params[:discover_type]
           title = set_discover_title(session[:type], request.parameters[:controller])
           if params["cancel"]
-            redirect_to :action    => 'show_list',
-                        :flash_msg => _("%{title} Discovery was cancelled by the user") % {:title => title}
+            flash_to_session(_("%{title} Discovery was cancelled by the user") % {:title => title})
+            redirect_to(:action => 'show_list')
+            return
           end
-          @userid = ""
-          @password = ""
-          @verify = ""
-          @client_id = ""
-          @client_key = ""
-          @azure_tenant_id = ""
-          @subscription = ""
+          @userid = @password = @verify = @client_id = @client_key = @azure_tenant_id = @subscription = ''
           if session[:type] == "hosts"
             @discover_type = Host.host_discovery_types
           elsif session[:type] == "ems"
@@ -26,13 +21,13 @@ module Mixins
             @discover_type = ExtManagementSystem.ems_infra_discovery_types
           end
           discover_type = []
-          @discover_type_checked = []        # to keep track of checked items when start button is pressed
+          @discover_type_checked = [] # to keep track of checked items when start button is pressed
           @discover_type_selected = nil
           if params["start"]
             audit = {:event => "ms_and_host_discovery", :target_class => "Host", :userid => session[:userid]}
             if request.parameters[:controller] != "ems_cloud"
               from_ip = params[:from_first].to_s + "." + params[:from_second].to_s + "." + params[:from_third].to_s + "." + params[:from_fourth]
-              to_ip = params[:from_first].to_s + "." + params[:from_second].to_s + "." + params[:from_third].to_s + "." + params[:to_fourth]
+              to_ip   = params[:from_first].to_s + "." + params[:from_second].to_s + "." + params[:from_third].to_s + "." + params[:to_fourth]
 
               i = 0
               while i < @discover_type.length
@@ -43,16 +38,8 @@ module Mixins
                 i += 1
               end
 
-              @from = {}
-              @from[:first] = params[:from_first]
-              @from[:second] = params[:from_second]
-              @from[:third] = params[:from_third]
-              @from[:fourth] = params[:from_fourth]
-              @to = {}
-              @to[:first] = params[:from_first]
-              @to[:second] = params[:from_second]
-              @to[:third] = params[:from_third]
-              @to[:fourth] = params[:to_fourth]
+              @from = {:first => params[:from_first], :second => params[:from_second], :third => params[:from_third], :fourth => params[:from_fourth]}
+              @to   = {:first => params[:from_first], :second => params[:from_second], :third => params[:from_third], :fourth => params[:to_fourth]}
             end
             @in_a_form = true
             drop_breadcrumb(:name => _("%{title} Discovery") % {:title => title}, :url => "/host/discover")
@@ -108,11 +95,11 @@ module Mixins
                     end
                   end
                 elsif request.parameters[:controller] != "ems_cloud"
-                  if params[:discover_type_ipmi].to_s == "1"
-                    options = {:discover_types => discover_type, :credentials => {:ipmi => {:userid => @userid, :password => @password}}}
-                  else
-                    options = {:discover_types => discover_type}
-                  end
+                  options = if params[:discover_type_ipmi].to_s == "1"
+                              {:discover_types => discover_type, :credentials => {:ipmi => {:userid => @userid, :password => @password}}}
+                            else
+                              {:discover_types => discover_type}
+                            end
                   Host.discoverByIpRange(from_ip, to_ip, options)
                 else
                   cloud_manager = ManageIQ::Providers::CloudManager.subclasses.detect do |ems|
@@ -125,15 +112,13 @@ module Mixins
                   end
                 end
               rescue => err
-                #       @flash_msg = "'Host Discovery' returned: " + err.message; @flash_error = true
-                add_flash(_("%{title} Discovery returned: %{error_message}") %
-                  {:title => title, :error_message => err.message}, :error)
+                add_flash(_("%{title} Discovery returned: %{error_message}") % {:title => title, :error_message => err.message}, :error)
                 render :action => 'discover'
                 return
               else
                 AuditEvent.success(audit.merge(:message => "#{title} discovery initiated (from_ip:[#{from_ip}], to_ip:[#{to_ip}])"))
-                redirect_to :action    => 'show_list',
-                            :flash_msg => _("%{model}: Discovery successfully initiated") % {:model => title}
+                flash_to_session(_("%{model}: Discovery successfully initiated") % {:model => title})
+                redirect_to(:action => 'show_list')
               end
             end
           end
@@ -146,9 +131,9 @@ module Mixins
 
         def set_discover_title(type, controller)
           if type == "hosts"
-            return _("Hosts / Nodes")
+            _("Hosts / Nodes")
           else
-            return ui_lookup(:tables => controller)
+            ui_lookup(:tables => controller)
           end
         end
 
