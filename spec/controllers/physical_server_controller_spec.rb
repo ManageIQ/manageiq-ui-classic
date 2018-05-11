@@ -18,6 +18,14 @@ describe PhysicalServerController do
                                           :id              => 1)
   end
 
+  describe "#provision" do
+    it 'sets id and redirect to prov_edit' do
+      allow(controller).to receive(:find_checked_items).and_return([@physical_server.id])
+      expect(controller).to receive(:javascript_redirect).with(:controller => "miq_request", :action => "prov_edit", :prov_id => [@physical_server.id], :org_controller => "physical_server", :escape => false)
+      controller.send(:provision)
+    end
+  end
+
   describe "#show_list" do
     before(:each) do
       FactoryGirl.create(:physical_server)
