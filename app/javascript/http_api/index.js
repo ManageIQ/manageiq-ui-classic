@@ -1,3 +1,4 @@
+import { miqFetch } from './fetch';
 import { base64encode } from './compat';
 const miqDeferred = window.miqDeferred;
 
@@ -28,20 +29,23 @@ export default API;
 
 function urlOnly(method) {
   return function(url, options) {
-    return fetch(url, _.extend({
-      method: method,
-    }, process_options(options)))
-      .then(responseAndError(options));
+    return miqFetch({
+      ...options,
+      method,
+      url,
+      backendName: __('API'),
+    }, null);
   };
 }
 
 function withData(method) {
   return function(url, data, options) {
-    return fetch(url, _.extend({
-      method: method,
-      body: process_data(data),
-    }, process_options(options)))
-      .then(responseAndError(options));
+    return miqFetch({
+      ...options,
+      method,
+      url,
+      backendName: __('API'),
+    }, data);
   };
 }
 
@@ -127,117 +131,3 @@ API.wait_for_task = function(taskId) {
   return deferred.promise
     .then(failOnBadStatus);
 };
-
-
-function process_options(o) {
-  o = Object.assign({}, o || {});
-  delete o.type;
-  delete o.method;
-  delete o.url;
-  delete o.data;
-  delete o.body;
-  delete o.skipErrors;
-
-  if (o.skipTokenRenewal) {
-    o.headers = o.headers || {};
-    o.headers['X-Auth-Skip-Token-Renewal'] = 'true';
-  }
-
-  if (localStorage.miq_token) {
-    o.headers = o.headers || {};
-    o.headers['X-Auth-Token'] = localStorage.miq_token;
-  }
-
-  if (o.headers) {
-    o.headers = new Headers(o.headers);
-  }
-
-  return o;
-}
-
-function process_data(o) {
-  if (!o || _.isString(o))
-    return o;
-
-  if (_.isPlainObject(o))
-    return JSON.stringify(o);
-
-  // fetch supports more types but we aren't using any of those yet..
-  console.warning('Unknown type for request data - please provide a plain object or a string', o);
-  return null;
-}
-
-function process_response(response) {
-  if (response.status === 204) {
-    // No content
-    return Promise.resolve(null);
-  }
-
-  if (response.status >= 300) {
-    // Not 1** or 2**
-    // clone() because otherwise if json() fails, you can't call text()
-    return response.clone().json()
-      .catch(tryHtmlError(response))
-      .then(rejectWithData(response));
-  }
-
-  return response.json();
-}
-
-function responseAndError(options) {
-  options = options || {};
-
-  return function(response) {
-    var ret = process_response(response);
-
-    if ((response.status === 401) && !options.skipLoginRedirect) {
-      // Unauthorized - always redirect to dashboard#login
-      redirectLogin(__('API logged out, redirecting to the login page'));
-      return ret;
-    }
-
-    // true means skip all of them - no error modal at all
-    if (options.skipErrors === true) {
-      return ret;
-    }
-
-    return ret.catch(function(err) {
-      // no skipping by default
-      errorModal(err, options.skipErrors || []);
-
-      return Promise.reject(err);
-    });
-  };
-}
-
-function tryHtmlError(response) {
-  return function() {
-    // non-JSON error message, assuming html
-    return response.text();
-  };
-}
-
-function rejectWithData(response) {
-  return function(obj) {
-    return Promise.reject({
-      data: obj,
-      headers: response.headers,
-      status: response.status,
-      statusText: response.statusText,
-      url: response.url,
-    });
-  };
-}
-
-function errorModal(err, skipErrors) {
-  // only show error modal unless the status code is in the list
-  if (! skipErrors.includes(err.status)) {
-    sendDataWithRx({
-      serverError: err,
-      source: 'fetch',
-      backendName: __('API'),
-    });
-
-    console.error('API: Server returned a non-200 response:', err.status, err.statusText, err);
-  }
-}
