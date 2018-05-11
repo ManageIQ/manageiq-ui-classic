@@ -5,8 +5,9 @@ export default {
   post,
 };
 
-function get(url) {
+function get(url, options = {}) {
   return miqFetch({
+    ...options,
     url,
     method: 'GET',
     csrf: true,
@@ -14,8 +15,9 @@ function get(url) {
   });
 }
 
-function post(url, data) {
+function post(url, data, options = {}) {
   return miqFetch({
+    ...options,
     url,
     method: 'POST',
     csrf: true,
