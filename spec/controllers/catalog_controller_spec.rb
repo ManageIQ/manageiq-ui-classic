@@ -471,7 +471,7 @@ describe CatalogController do
     it "Orchestration Template is deleted" do
       ot = FactoryGirl.create(:orchestration_template)
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-      controller.params[:id] = ot.id
+      controller.instance_variable_set(:@_params, {:id => ot.id})
       controller.send(:ot_remove_submit)
       expect(controller.send(:flash_errors?)).not_to be_truthy
       expect(assigns(:flash_array).first[:message]).to include("was deleted")
