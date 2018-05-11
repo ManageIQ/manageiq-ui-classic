@@ -2,13 +2,12 @@ module MiqAeCustomizationController::Dialogs
   extend ActiveSupport::Concern
 
   def dialog_sort_values
-    if @edit[:field_data_typ] == "integer"
-      val = @edit[:field_values].sort_by { |d| @edit[:field_sort_by] == "value" ? d.first.to_i : d.last.to_i }
-      val = val.reverse if @edit[:field_sort_order] == "descending"
-    else
-      val = @edit[:field_values].sort_by { |d| @edit[:field_sort_by] == "value" ? d.first : d.last }
-      val = val.reverse if @edit[:field_sort_order] == "descending"
-    end
+    val = if @edit[:field_data_typ] == "integer"
+            @edit[:field_values].sort_by { |d| @edit[:field_sort_by] == "value" ? d.first.to_i : d.last.to_i }
+          else
+            @edit[:field_values].sort_by { |d| @edit[:field_sort_by] == "value" ? d.first : d.last }
+          end
+    val = val.reverse if @edit[:field_sort_order] == "descending"
 
     @edit[:field_values] = copy_array(val)
   end
@@ -121,12 +120,12 @@ module MiqAeCustomizationController::Dialogs
 
   # Add new dialog
   def dialog_new
-   assert_privileges("dialog_new")
-   @record = Dialog.new
-   dialog_set_form_vars
-   @in_a_form = true
-   @sb[:node_typ] = nil
-   replace_right_cell(:nodetype => x_node)
+    assert_privileges("dialog_new")
+    @record = Dialog.new
+    dialog_set_form_vars
+    @in_a_form = true
+    @sb[:node_typ] = nil
+    replace_right_cell(:nodetype => x_node)
   end
 
   # Add new dialog
@@ -221,8 +220,8 @@ module MiqAeCustomizationController::Dialogs
       @record = @edit[:dialog]
 
       # Get new or existing record
-      dialog = @record.id.blank? ? Dialog.new : Dialog.find_by_id(@record.id)
-      valid = dialog_validate
+      dialog = @record.id.blank? ? Dialog.new : Dialog.find(@record.id)
+      dialog_validate
 
       if @flash_array
         render_flash
@@ -248,7 +247,7 @@ module MiqAeCustomizationController::Dialogs
         self.x_active_tree = :dialogs_tree
 
         if params[:button] == "add"
-          d = Dialog.find_by_label(dialog.label)
+          d = Dialog.find_by(:label => dialog.label)
           self.x_node = "dg-#{d.id}"
         end
 
@@ -256,7 +255,7 @@ module MiqAeCustomizationController::Dialogs
         replace_right_cell(:nodetype => x_node, :replace_trees => [:dialogs])
       end
 
-    when 'reset', nil      # first time in or resettting
+    when 'reset', nil # first time in or resettting
       unless params[:id]
         obj = find_checked_items
         @_params[:id] = obj[0] unless obj.empty?
@@ -335,7 +334,7 @@ module MiqAeCustomizationController::Dialogs
     return unless load_edit("dialog_edit__#{id}", "replace_cell__explorer")
     @record = @edit[:dialog]
     nodes = x_node.split('_')
-    if nodes.length == 1 || params[:typ] == "tab"     # Remove tab was pressed
+    if nodes.length == 1 || params[:typ] == "tab" # Remove tab was pressed
       # need to delete tab and it's groups/fields
       idx = nil
       @edit[:new][:tabs].each_with_index do |tab, i|
@@ -346,7 +345,7 @@ module MiqAeCustomizationController::Dialogs
       # saving in sandbox before deleting, to be used if discard button is pressed
       @sb[:tabs] = copy_array(@edit[:new][:tabs])
       @edit[:new][:tabs].delete_at(idx) if idx
-    elsif nodes.length == 2 || params[:typ] == "box"    # Remove group was pressed
+    elsif nodes.length == 2 || params[:typ] == "box" # Remove group was pressed
       # need to delete group and it's fields
       idx = nil
       groups = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups]
@@ -358,7 +357,7 @@ module MiqAeCustomizationController::Dialogs
       # saving in sandbox before deleting, to be used if discard button is pressed
       @sb[:groups] = groups
       groups.delete_at(idx) if idx
-    elsif nodes.length == 3 || params[:typ] == "element"    # Remove field was pressed
+    elsif nodes.length == 3 || params[:typ] == "element" # Remove field was pressed
       # need to delete field
       idx = nil
       fields = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups][nodes[2].split('-').last.to_i][:fields]
@@ -481,7 +480,11 @@ module MiqAeCustomizationController::Dialogs
     nodes = x_node.split('_')
     fields = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups][nodes[2].split('-').last.to_i][:fields]
     # if field is being added then use last array element of fields as index
-    id = nodes.length == 4 ? nodes[3].split('-').last.to_i : (fields.length == 0 ? 0 : fields.length - 1) # set id to 0 if nothing has been added yet to array
+    id = if nodes.length == 4
+           nodes[3].split('-').last.to_i
+         else
+           fields.empty? ? 0 : fields.length - 1 # set id to 0 if nothing has been added yet to array
+         end
     # one of the fields is being edited
     key = fields[id]
 
@@ -511,12 +514,10 @@ module MiqAeCustomizationController::Dialogs
 
           javascript_flash(:focus => 'entry_value')
           return
-        else
-          if i == params["entry"]["id"].to_i
-            entry[0] = params["entry"]["value"]
-            entry[1] = params["entry"]["description"]
-            @edit[:field_values][i] = [params["entry"]["value"], params["entry"]["description"]]
-          end
+        elsif i == params["entry"]["id"].to_i
+          entry[0] = params["entry"]["value"]
+          entry[1] = params["entry"]["description"]
+          @edit[:field_values][i] = [params["entry"]["value"], params["entry"]["description"]]
         end
       end
 
@@ -532,7 +533,7 @@ module MiqAeCustomizationController::Dialogs
 
       # replace select tag of default values
       url = url_for_only_path(:action => 'dialog_form_field_changed', :id => (@record.id || "new").to_s)
-      none =  [['<None>', nil]]
+      none = [['<None>', nil]]
       values = key[:values].empty? ? none : none + key[:values].collect(&:reverse)
       selected = @edit[:field_default_value]
       page << "$('#field_default_value').selectpicker('destroy');"
@@ -550,7 +551,11 @@ module MiqAeCustomizationController::Dialogs
     nodes = x_node.split('_')
     fields = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups][nodes[2].split('-').last.to_i][:fields]
     # if field is being added then use last array element of fields as index
-    id = nodes.length == 4 ? nodes[3].split('-').last.to_i : (fields.length == 0 ? 0 : fields.length - 1) # set id to 0 if nothing has been added yet to array
+    id = if nodes.length == 4
+           nodes[3].split('-').last.to_i
+         else
+           fields.empty? ? 0 : fields.length - 1 # set id to 0 if nothing has been added yet to array
+         end
     # one of the fields is being edited
     key = fields[id]
 
@@ -573,7 +578,7 @@ module MiqAeCustomizationController::Dialogs
 
       # replace select tag of default values
       url = url_for_only_path(:action => 'dialog_form_field_changed', :id => (@record.id || "new").to_s)
-      none =  [['<None>', nil]]
+      none = [['<None>', nil]]
       values = key[:values].empty? ? none : none + key[:values].collect(&:reverse)
       selected = @edit[:field_default_value]
       page << "$('#field_default_value').selectpicker('destroy');"
@@ -600,7 +605,11 @@ module MiqAeCustomizationController::Dialogs
       # FIXME: extract method from the following 4 lines
       nodes = x_node.split('_')
       fields = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups][nodes[2].split('-').last.to_i][:fields]
-      id = nodes.length == 4 ? nodes[3].split('-').last.to_i : (fields.length == 0 ? 0 : fields.length - 1)
+      id = if nodes.length == 4
+             nodes[3].split('-').last.to_i
+           else
+             fields.empty? ? 0 : fields.length - 1
+           end
       key = fields[id]
       key[:entry_point]         = @edit[:new][:field_entry_point]
       @edit[:field_entry_point] = @edit[:new][:field_entry_point]
@@ -616,8 +625,8 @@ module MiqAeCustomizationController::Dialogs
     session[:edit] = @edit
   end
 
-  private     ############
-  
+  private
+
   def field_value_get_form_vars
     @edit = session[:edit]
   end
@@ -647,8 +656,8 @@ module MiqAeCustomizationController::Dialogs
       # last/first item cannot be moved down/up
       if params['button'] == 'down'
         @idx = nil if @idx == @values.count - 1
-      else
-        @idx = nil if @idx == 0
+      elsif @idx.zero?
+        @idx = nil
       end
     end
   end
@@ -681,17 +690,17 @@ module MiqAeCustomizationController::Dialogs
         add_flash(_("Dialog Label is required"), :error)
         res = false
       end
-    elsif (nodes.length == 2 && @sb[:node_typ] != "box") || (nodes.length == 1 && @sb[:node_typ] == "tab")  # tab is being added or edited
+    elsif (nodes.length == 2 && @sb[:node_typ] != "box") || (nodes.length == 1 && @sb[:node_typ] == "tab") # tab is being added or edited
       if @edit[:tab_label].nil? || @edit[:tab_label].strip == ""
         add_flash(_("Tab Label is required"), :error)
         res = false
       end
-    elsif (nodes.length == 3 && @sb[:node_typ] != "element") || (nodes.length == 2 && @sb[:node_typ] == "box")         # #group is being added or edited
+    elsif (nodes.length == 3 && @sb[:node_typ] != "element") || (nodes.length == 2 && @sb[:node_typ] == "box") # #group is being added or edited
       if @edit[:group_label].nil? || @edit[:group_label].strip == ""
         add_flash(_("Box Label is required"), :error)
         res = false
       end
-    elsif @sb[:node_typ] == "element"         # #field is being added or edited
+    elsif @sb[:node_typ] == "element" # #field is being added or edited
       if @edit[:field_label].nil? || @edit[:field_label].strip == ""
         add_flash(_("Element Label is required"), :error)
         res = false
@@ -704,7 +713,7 @@ module MiqAeCustomizationController::Dialogs
         add_flash(_("Element Name must be alphanumeric characters and underscores without spaces"), :error)
         res = false
       end
-      if ["action", "controller"].include?(@edit[:field_name].to_s)
+      if %w(action controller).include?(@edit[:field_name].to_s)
         add_flash(_("Element Name must not be 'action' or 'controller'"), :error)
         res = false
       end
@@ -764,7 +773,7 @@ module MiqAeCustomizationController::Dialogs
 
       # building group nodes under a dialog/tab
       group_nodes = []
-      unless tab[:groups].blank?
+      if tab[:groups].present?
         tab[:groups].each_with_index do |group, j|
           group_node = generic_tree_node(
             "#{tab_node[:key]}_#{group[:id]}-#{j}",
@@ -777,14 +786,14 @@ module MiqAeCustomizationController::Dialogs
 
           # building field nodes under a dialog/tab/group
           field_nodes = []
-          unless group[:fields].blank?
+          if group[:fields].present?
             get_field_types
             group[:fields].each_with_index do |field, k|
-              if field[:description].nil?
-                field_tooltip = "#{@edit[:field_types][field[:typ]]}: #{field[:label]}"
-              else
-                field_tooltip = "#{@edit[:field_types][field[:typ]]}: #{field[:description]}"
-              end
+              field_tooltip = if field[:description].nil?
+                                "#{@edit[:field_types][field[:typ]]}: #{field[:label]}"
+                              else
+                                "#{@edit[:field_types][field[:typ]]}: #{field[:description]}"
+                              end
               field_node = generic_tree_node(
                 "#{group_node[:key]}_#{field[:id]}-#{k}",
                 field[:label] || _('[New Element]'),
@@ -800,7 +809,7 @@ module MiqAeCustomizationController::Dialogs
           group_nodes.push(group_node)
         end
       end
-      tab_node[:children] = group_nodes unless group_nodes.blank?
+      tab_node[:children] = group_nodes if group_nodes.present?
       tab_nodes.push(tab_node)
     end
 
@@ -824,7 +833,7 @@ module MiqAeCustomizationController::Dialogs
     @record = @edit[:dialog]
     nodes = x_node.split('_')
 
-    if ["up", "down"].include?(params[:button])
+    if %w(up down).include?(params[:button])
       move_field_value_up   if params[:button] == "up"
       move_field_value_down if params[:button] == "down"
       # update values for selected field in @edit[:new]
@@ -841,12 +850,12 @@ module MiqAeCustomizationController::Dialogs
 
       params.each do |var, val|
         prefix, button = var.split('_', 2)
-        if prefix == 'chkbx'
-          if val == '1'
-            @edit[:new][:buttons].push(button).sort! unless @edit[:new][:buttons].include?(button)
-          else
-            @edit[:new][:buttons].delete(button) if @edit[:new][:buttons].include?(button)
-          end
+        next if prefix != 'chkbx'
+
+        if val == '1'
+          @edit[:new][:buttons].push(button).sort! unless @edit[:new][:buttons].include?(button)
+        elsif @edit[:new][:buttons].include?(button)
+          @edit[:new][:buttons].delete(button)
         end
       end
 
@@ -854,7 +863,11 @@ module MiqAeCustomizationController::Dialogs
     elsif (nodes.length == 2 && @sb[:node_typ] != "box") || (nodes.length == 1 && @sb[:node_typ] == "tab")
       tabs = @edit[:new][:tabs]
       # if tab is being added then use last array element of tabs as index
-      id = nodes.length == 2 ? nodes[1].split('-').last.to_i : (tabs.length == 0 ? 0 : tabs.length - 1) # set id to 0 if nothing has been added yet to array
+      id = if nodes.length == 2
+             nodes[1].split('-').last.to_i
+           else
+             tabs.empty? ? 0 : tabs.length - 1 # set id to 0 if nothing has been added yet to array
+           end
       # one of the tabs is being edited
       key = tabs[id]
       @edit[:tab_label]       = key[:label]       = params[:tab_label]       if params[:tab_label]
@@ -864,7 +877,11 @@ module MiqAeCustomizationController::Dialogs
     elsif (nodes.length == 3 && @sb[:node_typ] != "element") || (nodes.length == 2 && @sb[:node_typ] == "box")
       groups = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups]
       # if group is being added then use last array element of groups as index
-      id = nodes.length == 3 ? nodes[2].split('-').last.to_i : (groups.length == 0 ? 0 : groups.length - 1) # set id to 0 if nothing has been added yet to array
+      id = if nodes.length == 3
+             nodes[2].split('-').last.to_i
+           else
+             groups.empty? ? 0 : groups.length - 1 # set id to 0 if nothing has been added yet to array
+           end
       # one of the groups is being edited
       key = groups[id]
       @edit[:group_label]       = key[:label]       = params[:group_label]       if params[:group_label]
@@ -883,7 +900,11 @@ module MiqAeCustomizationController::Dialogs
     # if field is being added then use last array element of fields as index
     fields = @edit[:new][:tabs][nodes[1].split('-').last.to_i][:groups][nodes[2].split('-').last.to_i][:fields]
     # set id to 0 if nothing has been added yet to array
-    id = nodes.length == 4 ? nodes[3].split('-').last.to_i : (fields.length == 0 ? 0 : fields.length - 1)
+    id = if nodes.length == 4
+           nodes[3].split('-').last.to_i
+         else
+           fields.empty? ? 0 : fields.length - 1
+         end
     # one of the fields is being edited
     key = fields[id]
 
@@ -892,7 +913,7 @@ module MiqAeCustomizationController::Dialogs
       @edit[field_key] = key[param_key] = params[field_key] if params[field_key]
     end
 
-    [:label, :name, :description].each { |key| copy_field_param.call(key) }
+    %i(label name description).each { |sym| copy_field_param.call(sym) }
 
     # new dropdown/radio is being added set default options OR if existing field type has been changed to dropdown/radio
     if params[:field_typ] =~ /Drop|Radio/ && (@sb[:edit_typ] == 'add' ||
@@ -921,7 +942,7 @@ module MiqAeCustomizationController::Dialogs
       @edit[field_key] = key[param_key] = params[field_key].to_s == '1' if params[field_key].present?
     end
 
-    [:data_typ, :required, :sort_by, :sort_by, :sort_order].each { |key| copy_field_param.call(key) }
+    %i(data_typ required sort_by sort_by sort_order).each { |sym| copy_field_param.call(sym) }
 
     # set default value - element type was added/changed
     if params[:field_typ]
@@ -951,17 +972,17 @@ module MiqAeCustomizationController::Dialogs
         end
         if params[:field_typ] =~ /Text/
           @edit[:field_default_value] = key[:default_value] = ''
-          @edit[:field_required]      = key[:required]  = false
+          @edit[:field_required]      = key[:required] = false
         elsif params[:field_typ] =~ /Drop|Radio/
           @edit[:field_default_value] = key[:default_value] = nil
-          @edit[:field_multi_value]   = key[:multi_value]   = false
+          @edit[:field_multi_value]   = key[:multi_value] = false
         else
           @edit[:field_default_value] = key[:default_value] = false
         end
       end
 
     # element type was NOT changed and is present
-    elsif !@edit[:field_typ].blank?
+    elsif @edit[:field_typ].present?
       @edit[:field_visible] = key[:visible]
 
       if params[:field_required]
@@ -999,7 +1020,7 @@ module MiqAeCustomizationController::Dialogs
           @edit[:field_protected] ||= false
           key[:protected] ||= false
         end
-        [:validator_type, :validator_rule].each do |name|
+        %i(validator_type validator_rule).each do |name|
           field_name = "field_#{name}".to_sym
           @edit[field_name] = key[name] = params[field_name] if params[field_name]
         end
@@ -1136,24 +1157,24 @@ module MiqAeCustomizationController::Dialogs
   end
 
   def get_field_types
+    date_fields = %w(DialogFieldDateControl DialogFieldDateTimeControl)
+
     @edit[:field_types] = copy_hash(DialogField.dialog_field_types)
     @edit[:new][:tabs].each do |tab|
-      if tab[:groups]
-        tab[:groups].each do |group|
-          if group[:fields]
-            group[:fields].each do |field|
-              # if field being edited/displayed is date/time no need to delete it from array
-              # incase user wants to change the type
-              # don't remove from array if field being added in Date/time field
-              if !["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(@edit[:field_typ]) &&
-                 ["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(field[:typ]) &&
-                 !["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(params[:field_typ])
-                @edit[:field_types].delete("DialogFieldDateControl")
-                @edit[:field_types].delete("DialogFieldDateTimeControl")
-                break
-              end
-            end
-          end
+      next unless tab[:groups]
+      tab[:groups].each do |group|
+        next unless group[:fields]
+        group[:fields].each do |field|
+          # if field being edited/displayed is date/time no need to delete it from array
+          # incase user wants to change the type
+          # don't remove from array if field being added in Date/time field
+          next if date_fields.include?(@edit[:field_typ]) ||
+                  !date_fields.include?(field[:typ]) ||
+                  date_fields.include?(params[:field_typ])
+
+          @edit[:field_types].delete("DialogFieldDateControl")
+          @edit[:field_types].delete("DialogFieldDateTimeControl")
+          break
         end
       end
     end
@@ -1246,7 +1267,7 @@ module MiqAeCustomizationController::Dialogs
               fld[:required]             = f.required
               fld[:default_value]        = f.default_value.nil? ? "" : f.default_value
 
-            elsif ["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(f.type)
+            elsif %w(DialogFieldDateControl DialogFieldDateTimeControl).include?(f.type)
               fld[:past_dates] = f.show_past_dates.nil? ? false : f.show_past_dates
 
             elsif %w(DialogFieldDropDownList).include?(f.type)
@@ -1278,7 +1299,7 @@ module MiqAeCustomizationController::Dialogs
 
     @edit[:current] = copy_hash(@edit[:new])
     build_dialog_edit_tree
-    x_node_set("root", :dialog_edit_tree)     # always set it to root for edit tree
+    x_node_set("root", :dialog_edit_tree) # always set it to root for edit tree
 
     session[:edit] = @edit
   end
@@ -1352,10 +1373,10 @@ module MiqAeCustomizationController::Dialogs
                       fld[:validator_rule] = field[:validator_rule]
                       fld[:data_type]      = field[:data_typ]
                     end
-                    fld[:required]             = field[:required]  if field[:typ].include?('Text')
-                    fld[:default_value]        = field[:default_value].to_s
+                    fld[:required]      = field[:required] if field[:typ].include?('Text')
+                    fld[:default_value] = field[:default_value].to_s
 
-                  elsif ["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(field[:typ])
+                  elsif %w(DialogFieldDateControl DialogFieldDateTimeControl).include?(field[:typ])
                     fld[:show_past_dates] = field[:past_dates]
 
                   elsif field[:typ].include?("TagControl")
@@ -1405,22 +1426,20 @@ module MiqAeCustomizationController::Dialogs
       end
       get_node_info
       replace_right_cell(:nodetype => x_node, :replace_trees => [:dialogs])
-    else # showing 1 dialog
-      if params[:id].nil? || Dialog.find_by_id(params[:id]).nil?
-        add_flash(_("Dialog no longer exists"), :error)
-        dialog_list
-        @refresh_partial = "layouts/gtl"
-      else
-        dialogs.push(params[:id])
-        process_dialogs(dialogs, method)  unless dialogs.empty?
-        # TODO: tells callers to go back to show_list because this record may be gone
-        # Should be refactored into calling show_list right here
-        if method == 'destroy'
-          self.x_node = "root"
-        end
-        get_node_info
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:dialogs])
+    elsif params[:id].nil? || !Dialog.exists?(:id => params[:id])
+      add_flash(_("Dialog no longer exists"), :error)
+      dialog_list
+      @refresh_partial = "layouts/gtl"
+    else
+      dialogs.push(params[:id])
+      process_dialogs(dialogs, method) unless dialogs.empty?
+      # TODO: tells callers to go back to show_list because this record may be gone
+      # Should be refactored into calling show_list right here
+      if method == 'destroy'
+        self.x_node = "root"
       end
+      get_node_info
+      replace_right_cell(:nodetype => x_node, :replace_trees => [:dialogs])
     end
     dialogs.count
   end
@@ -1430,10 +1449,10 @@ module MiqAeCustomizationController::Dialogs
       dialog_list
       @right_cell_text = _("All Dialogs")
     else
-      @sb[:active_tab] = "sample_tab" unless params[:tab_id]     # reset active tab if not coming in from change_tab
-      @record = Dialog.find_by_id(treenodeid.split('-').last)
+      @sb[:active_tab] = "sample_tab" unless params[:tab_id] # reset active tab if not coming in from change_tab
+      @record = Dialog.find(treenodeid.split('-').last)
       if @record.nil?
-        @replace_tree = true      # refresh tree and go back to root node if previously selected dialog record is deleted outside UI from vmdb
+        @replace_tree = true # refresh tree and go back to root node if previously selected dialog record is deleted outside UI from vmdb
         self.x_node = "root"
         dialog_get_node_info(x_node)
       else
