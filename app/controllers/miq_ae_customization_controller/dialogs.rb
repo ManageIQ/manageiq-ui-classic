@@ -1086,6 +1086,7 @@ module MiqAeCustomizationController::Dialogs
           :field_entry_point         => field[:entry_point],
           :field_auto_refresh        => field[:auto_refresh]
         )
+        @edit[:new][:selected] = @edit[:new]["field_entry_point"] = @edit[:field_entry_point] = field[:entry_point]
       end
 
       if %w(DialogFieldTagControl DialogFieldDropDownList DialogFieldRadioButton).include?(field[:typ])
