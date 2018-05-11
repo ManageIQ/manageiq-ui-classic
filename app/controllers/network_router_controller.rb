@@ -156,25 +156,14 @@ class NetworkRouterController < ApplicationController
   def delete_network_routers
     assert_privileges("network_router_delete")
 
-    routers = if @lastaction == "show_list" ||
-                 (@lastaction == "show" && @layout != "network_router") ||
-                 @lastaction.nil?
-                find_checked_ids_with_rbac(NetworkRouter)
-              else
-                [find_id_with_rbac(NetworkRouter, params[:id])]
-              end
-
-    add_flash(_("No routers were selected for deletion."), :error) if routers.empty?
+    routers = find_records_with_rbac(NetworkRouter, checked_or_params)
 
     routers_to_delete = []
-    routers.each do |s|
-      router = NetworkRouter.find_by(:id => s)
-      if router.nil?
-        add_flash(_("Router no longer exists."), :error)
-      elsif !router.supports?(:delete)
-        add_flash(_(router.unsupported_reason(:delete)), :error)
-      else
+    routers.each do |router|
+      if router.supports?(:delete)
         routers_to_delete.push(router)
+      else
+        add_flash(_(router.unsupported_reason(:delete)), :error)
       end
     end
     process_network_routers(routers_to_delete, "destroy") unless routers_to_delete.empty?

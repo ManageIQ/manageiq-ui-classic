@@ -180,6 +180,21 @@ describe NetworkRouterController do
     end
   end
 
+  describe "#delete_network_routers" do
+    let(:ems) { FactoryGirl.create(:ems_openstack).network_manager }
+    let(:router) { FactoryGirl.create(:network_router_openstack, :name => "router-01", :ext_management_system => ems) }
+    before do
+      controller.instance_variable_set(:@_params, :id => router.id)
+      controller.instance_variable_set(:@lastaction, "show")
+      controller.instance_variable_set(:@layout, "network_router")
+    end
+    it "it calls process_network_routers function" do
+      expect(controller).to receive(:process_network_routers).with([NetworkRouter], "destroy")
+
+      controller.send(:delete_network_routers)
+    end
+  end
+
   describe "#delete" do
     before do
       stub_user(:features => :all)
