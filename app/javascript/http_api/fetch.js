@@ -1,4 +1,4 @@
-const sendDataWithRx = window.sendDataWithRx;
+import { sendDataWithRx } from '../miq_observable';
 const redirectLogin = window.redirectLogin;
 
 export function miqFetch(options, data = null) {
