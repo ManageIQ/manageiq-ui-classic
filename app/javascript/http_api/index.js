@@ -1,11 +1,7 @@
 import { base64encode } from './compat';
+const miqDeferred = window.miqDeferred;
 
-export default API;
-
-/* global miqDeferred, add_flash */
-
-/* functions to use the API from our JS/Angular:
- *
+/*
  * API.get(url, options) - use API.get('/api'), returns a Promise
  * API.delete - (the same)
  * API.post(url, data, options) - returns Promise
@@ -16,41 +12,39 @@ export default API;
  * API.logout() - clears login info, no return
  * API.autorenew() - registers a 60second interval to query /api, returns a function to clear the interval
  *
- * the API token is persisted into sessionStorage
- *
- * the angular service is called API, and lives in the miq.api module
- * the pure-JS version used to be called API as well, but given the confusion this caused in angular code, we're calling it vanillaJsAPI now
- *
+ * the API token is persisted into localStorage
  */
 
-function API() {
-}
+const API = {
+  delete: urlOnly('DELETE'),
+  get: urlOnly('GET'),
+  options: urlOnly('OPTIONS'),
+  patch: withData('PATCH'),
+  post: withData('POST'),
+  put: withData('PUT'),
+};
 
-var urlOnly = function(method) {
+export default API;
+
+function urlOnly(method) {
   return function(url, options) {
     return fetch(url, _.extend({
       method: method,
     }, process_options(options)))
-    .then(responseAndError(options));
+      .then(responseAndError(options));
   };
-};
+}
 
-var withData = function(method) {
+function withData(method) {
   return function(url, data, options) {
     return fetch(url, _.extend({
       method: method,
       body: process_data(data),
     }, process_options(options)))
-    .then(responseAndError(options));
+      .then(responseAndError(options));
   };
-};
+}
 
-API.delete = urlOnly('DELETE');
-API.get = urlOnly('GET');
-API.options = urlOnly('OPTIONS');
-API.patch = withData('PATCH');
-API.post = withData('POST');
-API.put = withData('PUT');
 
 API.login = function(login, password) {
   API.logout();
@@ -62,13 +56,13 @@ API.login = function(login, password) {
     skipErrors: [401],
     skipLoginRedirect: true,
   })
-  .then(function(response) {
-    localStorage.miq_token = response.auth_token;
-  });
+    .then(function(response) {
+      localStorage.miq_token = response.auth_token;
+    });
 };
 
 API.ws_destroy = function() {
-  document.cookie = 'ws_token=; path=/ws/notifications; Max-Age=0;'
+  document.cookie = 'ws_token=; path=/ws/notifications; Max-Age=0;';
 };
 
 API.logout = function() {
@@ -84,12 +78,12 @@ API.logout = function() {
 };
 
 API.autorenew = function() {
-  var id = setInterval(function() {
+  const id = setInterval(function() {
     API.get('/api')
-    .then(null, function() {
-      console.warn('API autorenew fail', arguments);
-      clearInterval(id);
-    });
+      .then(null, function(...args) {
+        console.warn('API autorenew fail', args);
+        clearInterval(id);
+      });
   }, 60 * 1000);
 
   return function() {
@@ -105,9 +99,9 @@ API.ws_init = function() {
 };
 
 API.wait_for_task = function(taskId) {
-  var deferred = miqDeferred();
+  const deferred = miqDeferred();
 
-  var retry = function() {
+  const retry = function() {
     API.get('/api/tasks/' + taskId + '?attributes=task_results')
       .then(function(result) {
         if (result.state === 'Finished') {  // MiqTask::STATE_FINISHED
@@ -121,7 +115,7 @@ API.wait_for_task = function(taskId) {
       });
   };
 
-  var failOnBadStatus = function(result) {
+  const failOnBadStatus = function(result) {
     if (result.status !== 'Ok') {
       return Promise.reject(result);
     }
@@ -133,8 +127,6 @@ API.wait_for_task = function(taskId) {
   return deferred.promise
     .then(failOnBadStatus);
 };
-
-window.vanillaJsAPI = API;
 
 
 function process_options(o) {
