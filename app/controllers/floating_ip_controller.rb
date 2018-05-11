@@ -94,17 +94,8 @@ class FloatingIpController < ApplicationController
 
   def delete_floating_ips
     assert_privileges("floating_ip_delete")
-    floating_ips = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "floating_ip")
-                     find_checked_records_with_rbac(FloatingIp)
-                   else
-                     [find_record_with_rbac(FloatingIp, params[:id])]
-                   end
-
-    if floating_ips.empty?
-      add_flash(_("No Floating IPs were selected for deletion."), :error)
-    else
-      process_floating_ips(floating_ips, "destroy")
-    end
+    floating_ips = find_records_with_rbac(FloatingIp, checked_or_params)
+    process_floating_ips(floating_ips, "destroy")
 
     # refresh the list if applicable
     if @lastaction == "show_list"

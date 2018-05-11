@@ -30,6 +30,24 @@ describe FloatingIpController do
       expect(response.status).to eq(200)
     end
 
+    describe "#delete_floating_ips" do
+      let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+      let!(:floating_ip) { FactoryGirl.create(:floating_ip) }
+      before do
+        EvmSpecHelper.create_guid_miq_server_zone
+        login_as admin_user
+        allow(User).to receive(:current_user).and_return(admin_user)
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:performed?)
+        controller.instance_variable_set(:@_params, :id => floating_ip.id, :pressed => 'host_NECO')
+      end
+
+      it "delete floating ips" do
+        expect(controller).to receive(:process_floating_ips).with([floating_ip], "destroy")
+        controller.send(:delete_floating_ips)
+      end
+    end
+
     it "builds tagging screen" do
       post :button, :params => { :pressed => "floating_ip_tag", :format => :js, :id => @ct.id }
       expect(assigns(:flash_array)).to be_nil
