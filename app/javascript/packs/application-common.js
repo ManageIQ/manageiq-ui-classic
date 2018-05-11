@@ -33,6 +33,8 @@ ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
 
-// compatibility, will finish the rename in a separate PR, renaming vanillaJsAPI & API to API & $API
-window.vanillaJsAPI = window.API;
+// compatibility: vanillaJsAPI should be considered deprecated
+// the new convention is: API is for vanilla/react, $API is for angular
+window.API = API;
+window.vanillaJsAPI = API;
 window.http = http;
