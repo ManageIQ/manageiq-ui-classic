@@ -239,7 +239,8 @@
     if (! skipErrors.includes(err.status)) {
       sendDataWithRx({
         serverError: err,
-        source: 'API',
+        source: 'fetch',
+        backendName: __('API'),
       });
 
       console.error('API: Server returned a non-200 response:', err.status, err.statusText, err);
