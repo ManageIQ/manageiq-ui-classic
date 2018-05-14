@@ -43,11 +43,11 @@ module GenericObjectHelper::TextualSummary
   end
 
   def textual_group_associations
-    if @record.property_associations.count > 0
+    #if @record.property_associations.count > 0
       TextualGroup.new(_("Associations"), associations)
-    else
-      TextualGroup.new(_("Associations"), %i(associations_none))
-    end
+   # else
+   #   TextualGroup.new(_("Associations"), %i(associations_none))
+   # end
   end
 
   def associations
