@@ -22,7 +22,7 @@ class VmOrTemplateDecorator < MiqDecorator
       }.merge(QuadiconHelper.machine_state(normalized_state)),
       :bottom_left  => {
         :fileicon => fileicon,
-        :tooltip  => type
+        :tooltip  => ui_lookup(:model => type)
       },
       :bottom_right => {
         :text => ERB::Util.h(v_total_snapshots)

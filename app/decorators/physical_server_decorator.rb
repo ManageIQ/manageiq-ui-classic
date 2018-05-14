@@ -15,7 +15,7 @@ class PhysicalServerDecorator < MiqDecorator
       }.merge(QuadiconHelper.machine_state(power_state)),
       :bottom_left  => {
         :fileicon => fileicon,
-        :tooltip  => type
+        :tooltip  => ui_lookup(:model => type)
       },
       :bottom_right => {
         :fileicon => health_state_img,
