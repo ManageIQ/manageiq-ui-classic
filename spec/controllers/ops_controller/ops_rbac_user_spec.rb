@@ -12,17 +12,19 @@ describe OpsController do
     allow(controller).to receive(:get_node_info)
   end
 
-  def new_user_edit(data)
-    controller.rbac_user_add  # set up @edit for new user
+  def new_user_edit(data = {})
+    controller.rbac_user_add # set up @edit for new user
 
     edit = controller.instance_variable_get(:@edit)
     edit[:new] = data
     controller.instance_variable_set(:@edit, edit)
   end
 
-  def existing_user_edit(user, data)
-    controller.instance_variable_set(:@_params, :typ => nil, :button => nil, :id => user.id)
-    controller.rbac_user_edit  # set up @edit for the user
+  def existing_user_edit(user, data = {})
+    controller.instance_variable_set(:@_params, :typ    => nil,
+                                                :button => nil,
+                                                :id     => user.id)
+    controller.rbac_user_edit # set up @edit for the user
 
     edit = controller.instance_variable_get(:@edit)
     edit[:new] ||= {}
@@ -35,11 +37,11 @@ describe OpsController do
 
     it "calls both record.valid? and rbac_user_set_record_vars or neither" do
       new_user_edit(
-        :name => 'Full name',
-        :userid => 'username',
-        :group => group.id.to_s,
+        :name     => 'Full name',
+        :userid   => 'username',
+        :group    => group.id.to_s,
         :password => "foo",
-        :verify => "bar",
+        :verify   => "bar",
       )
 
       user = User.new
@@ -62,11 +64,11 @@ describe OpsController do
 
     it "displays both validation failures from rails and from rbac_user_validate? at the same time" do
       new_user_edit(
-        :name => '',  # fails user.valid?
-        :userid => 'username',
-        :group => group.id.to_s,
+        :name     => '', # fails user.valid?
+        :userid   => 'username',
+        :group    => group.id.to_s,
         :password => "foo", # fails rbac_user_validate
-        :verify => "bar",
+        :verify   => "bar",
       )
 
       controller.send(:rbac_edit_save_or_add, 'user')
@@ -83,11 +85,11 @@ describe OpsController do
 
     it "should not unset groups on cancel" do
       old_groups = user.miq_groups.pluck(:id).sort
-      existing_user_edit(user, {
-        :group => "",
-      })
+      existing_user_edit(user, :group => "")
 
-      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.instance_variable_set(:@_params, :typ    => nil,
+                                                  :button => 'save', # attempt to save
+                                                  :id     => user.id)
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it complains about the unset group in the first place
@@ -101,12 +103,12 @@ describe OpsController do
 
     it "should not change groups when rails validation fails" do
       old_groups = user.miq_groups.pluck(:id).sort
-      existing_user_edit(user, {
-        :group => group.id.to_s,
-        :name => "",  # fails record.valid?
-      })
+      existing_user_edit(user, :group => group.id.to_s,
+                               :name  => "") # fails record.valid?
 
-      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.instance_variable_set(:@_params, :typ    => nil,
+                                                  :button => 'save',
+                                                  :id     => user.id)
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it complains about the name
@@ -123,11 +125,12 @@ describe OpsController do
     let(:user) { FactoryGirl.create(:user_with_group) }
 
     it "updates record even for existing users" do
-      existing_user_edit(user, {
-        :name => "changed",
-      })
+      existing_user_edit(user, :name => "changed")
 
-      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.instance_variable_set(:@_params, :typ    => nil,
+                                                  :button => 'save',
+                                                  :id     => user.id)
+
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it returned success
@@ -146,14 +149,16 @@ describe OpsController do
 
     pending "should set current_group for new item" do
       new_user_edit(
-        :name => 'Full name',
-        :userid => 'username',
-        :group => group.id.to_s,
+        :name     => 'Full name',
+        :userid   => 'username',
+        :group    => group.id.to_s,
         :password => "foo",
-        :verify => "foo",
+        :verify   => "foo",
       )
 
-      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.instance_variable_set(:@_params, :typ    => nil,
+                                                  :button => 'add',
+                                                  :id     => user.id)
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it returned success
@@ -166,11 +171,11 @@ describe OpsController do
     end
 
     pending "should set current_group when editing" do
-      existing_user_edit(user, {
-        :group => group.id.to_s,
-      })
+      existing_user_edit(user, :group => group.id.to_s)
 
-      controller.instance_variable_set(:@_params, :typ => nil, :button => 'save', :id => user.id)
+      controller.instance_variable_set(:@_params, :typ    => nil,
+                                                  :button => 'save',
+                                                  :id     => user.id)
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it returned success
