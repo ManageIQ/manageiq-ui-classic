@@ -5,7 +5,7 @@ shared_examples_for 'a generic feature button' do
     subject { button.visible? }
     before do
       allow(record).to receive("respond_to?").with("supports_#{feature}?").and_return(true)
-      # hack to mock Array.wrap method for Double
+      # HACK: to mock Array.wrap method for Double
       allow(record).to receive("respond_to?").with(:to_ary).and_return(false)
       allow(record).to receive("supports?").with(feature.to_sym).and_return(supports_feature)
     end

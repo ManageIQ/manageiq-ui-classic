@@ -388,7 +388,7 @@ module ApplicationController::CiProcessing
   # Delete all selected or single displayed VM(s)
   def deletevms
     assert_privileges(params[:pressed])
-    generic_button_operation 'destroy', _('Delete'), vm_button_action
+    generic_button_operation('destroy', _('Delete'), vm_button_action)
   end
   alias_method :image_delete, :deletevms
   alias_method :instance_delete, :deletevms
@@ -398,7 +398,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def syncvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'sync', _('Virtual Black Box synchronization'), vm_button_action
+    generic_button_operation('sync', _('Virtual Black Box synchronization'), vm_button_action)
   end
 
   DEFAULT_PRIVILEGE = Object.new # :nodoc:
@@ -412,7 +412,7 @@ module ApplicationController::CiProcessing
       privilege = params[:pressed]
     end
     assert_privileges(privilege)
-    generic_button_operation 'refresh_ems', _('Refresh Provider'), vm_button_action
+    generic_button_operation('refresh_ems', _('Refresh Provider'), vm_button_action)
   end
   alias_method :image_refresh, :refreshvms
   alias_method :instance_refresh, :refreshvms
@@ -422,7 +422,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def scanvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'scan', _('Analysis'), vm_button_action
+    generic_button_operation('scan', _('Analysis'), vm_button_action)
   end
   alias_method :image_scan, :scanvms
   alias_method :instance_scan, :scanvms
@@ -432,11 +432,14 @@ module ApplicationController::CiProcessing
   # Immediately retire items
   def retirevms_now
     assert_privileges(params[:pressed])
-    generic_button_operation 'retire_now', _('Retirement'), vm_button_action,
-     :redirect => {
-      :controller => 'miq_request',
-      :action => 'show_list'
-    } if role_allows?(:feature => "miq_request_show_list")
+    redirect = {
+      :redirect => {
+        :controller => 'miq_request',
+        :action => 'show_list'
+      }
+    }
+    generic_button_operation('retire_now', _('Retirement'), vm_button_action,
+      role_allows?(:feature => "miq_request_show_list") ? redirect : nil)
   end
   alias_method :instance_retire_now, :retirevms_now
   alias_method :vm_retire_now, :retirevms_now
@@ -444,7 +447,7 @@ module ApplicationController::CiProcessing
 
   def check_compliance_vms
     assert_privileges(params[:pressed])
-    generic_button_operation 'check_compliance_queue', _('Check Compliance'), vm_button_action
+    generic_button_operation('check_compliance_queue', _('Check Compliance'), vm_button_action)
   end
   alias_method :image_check_compliance, :check_compliance_vms
   alias_method :instance_check_compliance, :check_compliance_vms
@@ -454,7 +457,7 @@ module ApplicationController::CiProcessing
   # Collect running processes for all selected or single displayed vm(s)
   def getprocessesvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'collect_running_processes', _('Collect Running Processes'), vm_button_action
+    generic_button_operation('collect_running_processes', _('Collect Running Processes'), vm_button_action)
   end
   alias_method :instance_collect_running_processes, :getprocessesvms
   alias_method :vm_collect_running_processes, :getprocessesvms
@@ -462,7 +465,7 @@ module ApplicationController::CiProcessing
   # Start all selected or single displayed vm(s)
   def startvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'start', _('Start'), vm_button_action
+    generic_button_operation('start', _('Start'), vm_button_action)
   end
   alias_method :instance_start, :startvms
   alias_method :vm_start, :startvms
@@ -470,7 +473,7 @@ module ApplicationController::CiProcessing
   # Suspend all selected or single displayed vm(s)
   def suspendvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'suspend', _('Suspend'), vm_button_action
+    generic_button_operation('suspend', _('Suspend'), vm_button_action)
   end
   alias_method :instance_suspend, :suspendvms
   alias_method :vm_suspend, :suspendvms
@@ -478,7 +481,7 @@ module ApplicationController::CiProcessing
   # Pause all selected or single displayed vm(s)
   def pausevms
     assert_privileges(params[:pressed])
-    generic_button_operation 'pause', _('Pause'), vm_button_action
+    generic_button_operation('pause', _('Pause'), vm_button_action)
   end
   alias_method :instance_pause, :pausevms
   alias_method :vm_pause, :pausevms
@@ -486,14 +489,14 @@ module ApplicationController::CiProcessing
   # Terminate all selected or single displayed vm(s)
   def terminatevms
     assert_privileges(params[:pressed])
-    generic_button_operation 'vm_destroy', _('Terminate'), vm_button_action
+    generic_button_operation('vm_destroy', _('Terminate'), vm_button_action)
   end
   alias_method :instance_terminate, :terminatevms
 
   # Stop all selected or single displayed vm(s)
   def stopvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'stop', _('Stop'), vm_button_action
+    generic_button_operation('stop', _('Stop'), vm_button_action)
   end
   alias_method :instance_stop, :stopvms
   alias_method :vm_stop, :stopvms
@@ -501,7 +504,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelvevms
     assert_privileges(params[:pressed])
-    generic_button_operation 'shelve', _('Shelve'), vm_button_action
+    generic_button_operation('shelve', _('Shelve'), vm_button_action)
   end
   alias_method :instance_shelve, :shelvevms
   alias_method :vm_shelve, :shelvevms
@@ -509,7 +512,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelveoffloadvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'shelve_offload', _('Shelve Offload'), vm_button_action
+    generic_button_operation('shelve_offload', _('Shelve Offload'), vm_button_action)
   end
   alias_method :instance_shelve_offload, :shelveoffloadvms
   alias_method :vm_shelve_offload, :shelveoffloadvms
@@ -517,7 +520,7 @@ module ApplicationController::CiProcessing
   # Reset all selected or single displayed vm(s)
   def resetvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'reset', _('Reset'), vm_button_action
+    generic_button_operation('reset', _('Reset'), vm_button_action)
   end
   alias_method :instance_reset, :resetvms
   alias_method :vm_reset, :resetvms
@@ -525,20 +528,20 @@ module ApplicationController::CiProcessing
   # Shutdown guests on all selected or single displayed vm(s)
   def guestshutdown
     assert_privileges(params[:pressed])
-    generic_button_operation 'shutdown_guest', _('Shutdown Guest'), vm_button_action
+    generic_button_operation('shutdown_guest', _('Shutdown Guest'), vm_button_action)
   end
   alias_method :vm_guest_shutdown, :guestshutdown
 
   # Standby guests on all selected or single displayed vm(s)
   def gueststandby
     assert_privileges(params[:pressed])
-    generic_button_operation 'standby_guest', _('Standby Guest'), vm_button_action
+    generic_button_operation('standby_guest', _('Standby Guest'), vm_button_action)
   end
 
   # Restart guests on all selected or single displayed vm(s)
   def guestreboot
     assert_privileges(params[:pressed])
-    generic_button_operation 'reboot_guest', _('Restart Guest'), vm_button_action
+    generic_button_operation('reboot_guest', _('Restart Guest'), vm_button_action)
   end
   alias_method :instance_guest_restart, :guestreboot
   alias_method :vm_guest_restart, :guestreboot
@@ -546,24 +549,24 @@ module ApplicationController::CiProcessing
   # Delete all snapshots for vm(s)
   def deleteallsnapsvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'remove_all_snapshots', _('Delete All Snapshots'), vm_button_action,
-                             :refresh_partial => 'vm_common/config' unless @explorer
+    generic_button_operation('remove_all_snapshots', _('Delete All Snapshots'), vm_button_action,
+                             @explorer ? nil : {:refresh_partial => 'vm_common/config'})
   end
   alias_method :vm_snapshot_delete_all, :deleteallsnapsvms
 
   # Delete selected snapshot for vm
   def deletesnapsvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'remove_snapshot', _('Delete Snapshot'), vm_button_action,
-                             :refresh_partial => 'vm_common/config' unless @explorer
+    generic_button_operation('remove_snapshot', _('Delete Snapshot'), vm_button_action,
+                             @explorer ? nil : {:refresh_partial => 'vm_common/config'})
   end
   alias_method :vm_snapshot_delete, :deletesnapsvms
 
   # Delete selected snapshot for vm
   def revertsnapsvms
     assert_privileges(params[:pressed])
-    generic_button_operation 'revert_to_snapshot', _('Revert to a Snapshot'), vm_button_action,
-                             :refresh_partial => 'vm_common/config' unless @explorer
+    generic_button_operation('revert_to_snapshot', _('Revert to a Snapshot'), vm_button_action,
+                             @explorer ? nil : {:refresh_partial => 'vm_common/config'})
   end
   alias_method :vm_snapshot_revert, :revertsnapsvms
 
@@ -684,7 +687,7 @@ module ApplicationController::CiProcessing
   #   operation   - a block with a operation, specific to the type of action
   #                 on a record
   #   options     - other optional parameters
-  def generic_button_operation(action, action_name, operation, options={})
+  def generic_button_operation(action, action_name, operation, options = {})
     records = find_records_with_rbac(get_rec_cls, checked_or_params)
     if testable_action(action) && !records_support_feature?(records, action_to_feature(action))
       javascript_flash(
@@ -698,7 +701,6 @@ module ApplicationController::CiProcessing
     @single_delete = action == 'destroy' && !flash_errors?
     screen_redirection(options)
   end
-
 
   # In case a record does not support the feature, it won't be ran for
   # any of selected records.
