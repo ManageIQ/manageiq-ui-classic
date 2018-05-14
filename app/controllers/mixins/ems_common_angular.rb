@@ -128,7 +128,8 @@ module Mixins
         connect_opts = [MiqPassword.encrypt(params[:amqp_password]), params.to_hash.symbolize_keys.slice(*OPENSTACK_AMQP_PARAMS)] if params[:cred_type] == "amqp"
         connect_opts
       when 'ManageIQ::Providers::Amazon::CloudManager'
-        [user, password, :EC2, params[:provider_region], ems.http_proxy_uri, true]
+        uri = URI.parse(params[:default_url])
+        [user, password, :EC2, params[:provider_region], ems.http_proxy_uri, true, uri]
       when 'ManageIQ::Providers::Azure::CloudManager'
         [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region]]
       when 'ManageIQ::Providers::Vmware::CloudManager'
@@ -385,7 +386,8 @@ module Mixins
                        :amqp_auth_status                => amqp_auth_status,
                        :service_account_auth_status     => service_account_auth_status,
                        :amqp_fallback_hostname1         => amqp_fallback_hostname1 ? amqp_fallback_hostname1 : "",
-                       :amqp_fallback_hostname2         => amqp_fallback_hostname2 ? amqp_fallback_hostname2 : ""
+                       :amqp_fallback_hostname2         => amqp_fallback_hostname2 ? amqp_fallback_hostname2 : "",
+                       :default_url                     => @ems.endpoints.first.url
       } if controller_name == "ems_cloud" || controller_name == "ems_network"
 
       render :json => { :name                          => @ems.name,
@@ -646,6 +648,11 @@ module Mixins
 
       if ems.kind_of?(ManageIQ::Providers::Lenovo::PhysicalInfraManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
+      end
+
+      if ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager)
+        uri = URI.parse(params[:default_url])
+        default_endpoint = {:role => :default, :hostname => uri.host, :port => uri.port, :path => uri.path, :url => params[:default_url]}
       end
 
       new_options = {}
