@@ -533,7 +533,7 @@ module MiqAeCustomizationController::Dialogs
 
       # replace select tag of default values
       url = url_for_only_path(:action => 'dialog_form_field_changed', :id => (@record.id || "new").to_s)
-      none = [['<None>', nil]]
+      none = [["<#{_('None')}>", nil]]
       values = key[:values].empty? ? none : none + key[:values].collect(&:reverse)
       selected = @edit[:field_default_value]
       page << "$('#field_default_value').selectpicker('destroy');"
@@ -578,7 +578,7 @@ module MiqAeCustomizationController::Dialogs
 
       # replace select tag of default values
       url = url_for_only_path(:action => 'dialog_form_field_changed', :id => (@record.id || "new").to_s)
-      none = [['<None>', nil]]
+      none = [["<#{_('None')}>", nil]]
       values = key[:values].empty? ? none : none + key[:values].collect(&:reverse)
       selected = @edit[:field_default_value]
       page << "$('#field_default_value').selectpicker('destroy');"
