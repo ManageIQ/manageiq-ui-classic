@@ -261,12 +261,12 @@
                       %span{:class => "pficon pficon-delete"}
 
     - if prefix == "provisioning"
-      .form-group{"ng-if" =>"#{ng_model}.#{prefix}_dialog_existing!==undefined"}
+      .form-group
         %label.col-md-3.control-label
           = _("Dialog")
         .col-md-3
           %label.radio-inline
-            %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "existing", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'existing')", "ng-checked" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
+            %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "existing", "ng-value" => "existing", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'existing')", "ng-checked" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
             = _("Use Existing")
         .col-md-6{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_id.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
           %select{"ng-model"         => "vm._#{prefix}_dialog",
@@ -281,11 +281,11 @@
             %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_id.$error.$invalid"}
               = _("Required")
 
-      .form-group{"ng-if" =>"#{ng_model}.#{prefix}_dialog_existing!==undefined"}
+      .form-group
         %label.col-md-3.control-label
         .col-md-3
           %label.radio-inline
-            %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "create", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'create')", "ng-checked" => ("#{ng_model}.#{prefix}_dialog_existing == 'create'")}
+            %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "create", :ng-value => "create", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'create')", "ng-checked" => ("#{ng_model}.#{prefix}_dialog_existing == 'create'")}
             = _("Create New")
         .col-md-6{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_name.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'create'"}
           %input.form-control{:type         => "text",
