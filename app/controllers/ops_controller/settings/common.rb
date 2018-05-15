@@ -686,6 +686,15 @@ module OpsController::Settings::Common
       if params[:register_to] || params[:action] == "repo_default_name"
         new[:repo_name] = reset_repo_name_from_default
       end
+      if params[:register_to]
+        if params[:register_to] == 'rhn_satellite6' &&
+           @edit[:new][:server_url] == MiqDatabase.registration_default_values[:registration_server]
+          @edit[:new][:server_url] = nil
+        end
+        if params[:register_to] == 'sm_hosted' && @edit[:new][:server_url].blank?
+          @edit[:new][:server_url] = MiqDatabase.registration_default_values[:registration_server]
+        end
+      end
       @changed = (new != @edit[:current])
     when "settings_server"                                                # Server Settings tab
       if !params[:smtp_test_to].nil? && params[:smtp_test_to] != ""
