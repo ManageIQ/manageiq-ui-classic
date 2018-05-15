@@ -26,7 +26,7 @@ describe OpsController do
         :verify   => "bar",
       )
 
-      user = User.new
+      user = FactoryGirl.build(:user)
       allow(User).to receive(:new).and_return(user)
 
       done_valid = false
