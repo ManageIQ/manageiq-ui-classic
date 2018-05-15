@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency "lodash-rails", "~>3.10.0"
   s.add_dependency "more_core_extensions", "~>3.2"
   s.add_dependency "novnc-rails", "~>0.2"
-  s.add_dependency "patternfly-sass", "~> 3.38.0"
+  s.add_dependency "patternfly-sass", "~> 3.46.0"
   s.add_dependency "sass-rails"
   s.add_dependency "uglifier", "~>3.0.0"
   s.add_dependency "webpacker", "~>2.0.0"
