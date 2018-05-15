@@ -1412,4 +1412,8 @@ module ApplicationHelper
   def accessible_select_event_types
     ApplicationController::Timelines::SELECT_EVENT_TYPE.map {|key, value| [_(key), value]}
   end
+
+  def unique_html_id(prefix = 'unknown')
+    "#{prefix}-#{rand(36**8).to_s(36)}"
+  end
 end
