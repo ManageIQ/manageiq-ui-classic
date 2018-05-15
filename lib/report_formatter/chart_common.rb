@@ -345,7 +345,7 @@ module ReportFormatter
       # Pie charts put categories in legend, else in axis labels
       add_axis_category_text(categories)
 
-      add_series(mri.chart_header_column, series)
+      add_series(chart_is_2d? ? mri.chart_header_column : nil, series)
     end
 
     def build_numeric_chart_grouped
@@ -376,7 +376,7 @@ module ReportFormatter
       # Pie charts put categories in legend, else in axis labels
       add_axis_category_text(categories)
 
-      add_series(mri.chart_header_column, series)
+      add_series(chart_is_2d? ? mri.chart_header_column : nil, series)
     end
 
     def build_numeric_chart_grouped_2dim
@@ -476,7 +476,7 @@ module ReportFormatter
 
       # Pie charts put categories in legend, else in axis labels
       add_axis_category_text(categories)
-      add_series(mri.chart_header_column, series)
+      add_series(chart_is_2d? ? mri.chart_header_column : nil, series)
     end
 
     # C&U performance charts (Cluster, Host, VM based)
