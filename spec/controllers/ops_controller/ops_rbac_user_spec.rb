@@ -32,7 +32,7 @@ describe OpsController do
     controller.instance_variable_set(:@edit, edit)
   end
 
-  context 'bz#1562828 - set record data before calling record.valid?' do
+  context 'set record data before calling record.valid?' do
     let(:group) { FactoryGirl.create(:miq_group) }
 
     it "calls both record.valid? and rbac_user_set_record_vars or neither" do
@@ -79,7 +79,7 @@ describe OpsController do
     end
   end
 
-  context 'bz#1537601 - don\'t change groups on cancel' do
+  context 'don\'t change groups on cancel' do
     let(:user) { FactoryGirl.create(:user_with_group) }
     let(:group) { FactoryGirl.create(:miq_group) }
 
@@ -121,7 +121,7 @@ describe OpsController do
     end
   end
 
-  context '#3767 - update record fields when editing' do
+  context 'update record fields when editing' do
     let(:user) { FactoryGirl.create(:user_with_group) }
 
     it "updates record even for existing users" do
@@ -143,7 +143,7 @@ describe OpsController do
     end
   end
 
-  context 'bz#1574634 - set current_group' do
+  context 'set current_group' do
     let(:user) { FactoryGirl.create(:user_with_group) }
     let(:group) { FactoryGirl.create(:miq_group) }
 
