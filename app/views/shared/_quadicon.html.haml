@@ -1,4 +1,4 @@
-- uid = "quad-#{rand(36**8).to_s(36)}"
+- uid = unique_html_id("quad")
 %miq-quadicon.center-block{:id => uid}
 :javascript
   var data = camelizeQuadicon(#{quadicon_hash(record).to_json});
