@@ -14,7 +14,7 @@ class TreeBuilderTimelines < TreeBuilder
     @rep = MiqReport.all.sort_by { |r| [r.rpt_type, r.filename.to_s, r.name] }
     @rep.reject! { |r| r.timeline.nil? }
     @rep.each_with_object({}) do |report, reports|
-      next if report.template_type != "report" && !report.template_type.blank?
+      next if report.template_type != "report" && report.template_type.present?
       first, second = if report.rpt_group == 'Custom'
                         [@title, 'Custom']
                       else

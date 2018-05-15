@@ -31,13 +31,13 @@ class TreeBuilderIsoDatastores < TreeBuilder
       iso_images.size
     else
       objects = []
-      if iso_images.size > 0
+      unless iso_images.empty?
         @tree_state.x_tree(@name)[:open_nodes].push("isd_xx-#{object.id}")
         objects.push(
-          :id    => "isd_xx-#{object.id}",
-          :text  => _("ISO Images"),
-          :icon  => "pficon pficon-folder-close",
-          :tip   => _("ISO Images")
+          :id   => "isd_xx-#{object.id}",
+          :text => _("ISO Images"),
+          :icon => "pficon pficon-folder-close",
+          :tip  => _("ISO Images")
         )
       end
       objects
@@ -46,7 +46,7 @@ class TreeBuilderIsoDatastores < TreeBuilder
 
   def x_get_tree_custom_kids(object, count_only, _options)
     nodes = (object[:full_id] || object[:id]).split('_')
-    isd = IsoDatastore.find_by_id(nodes.last.split('-').last)
+    isd = IsoDatastore.find_by(:id => nodes.last.split('-').last)
     # Iso Datastore node was clicked OR folder nodes was clicked
     objects = isd.iso_images if nodes[0].end_with?("isd")
     count_only_or_objects(count_only, objects, "name")

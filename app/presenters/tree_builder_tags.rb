@@ -29,7 +29,7 @@ class TreeBuilderTags < TreeBuilder
   def selected_entry_value(category, entry)
     return false unless @edit || @filters
     path = "#{category.name}-#{entry.name}"
-    (@edit && @edit.fetch_path(:new, :filters, path)) || (@filters && @filters.key?(path))
+    (@edit&.fetch_path(:new, :filters, path)) || (@filters&.key?(path))
   end
 
   def set_locals_for_render

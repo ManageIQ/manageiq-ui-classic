@@ -1,6 +1,6 @@
 class TreeBuilderAeClass < TreeBuilder
-  has_kids_for MiqAeClass, [:x_get_tree_class_kids, :type]
-  has_kids_for MiqAeNamespace, [:x_get_tree_ns_kids, :type]
+  has_kids_for MiqAeClass, %i(x_get_tree_class_kids type)
+  has_kids_for MiqAeNamespace, %i(x_get_tree_ns_kids type)
 
   private
 
@@ -23,7 +23,7 @@ class TreeBuilderAeClass < TreeBuilder
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
     objects = if MiqAeClassController::MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
-                [MiqAeDomain.find_by_id(@sb[:domain_id])] # GIT support can't use where
+                [MiqAeDomain.find_by(:id => @sb[:domain_id])] # GIT support can't use where
               else
                 filter_ae_objects(User.current_tenant.visible_domains)
               end
@@ -31,10 +31,10 @@ class TreeBuilderAeClass < TreeBuilder
   end
 
   def x_get_tree_class_kids(object, count_only, type)
-    instances = count_only_or_objects(count_only, object.ae_instances, [:display_name, :name])
+    instances = count_only_or_objects(count_only, object.ae_instances, %i(display_name name))
     # show methods in automate explorer tree
     if type == :ae # FIXME: is this ever false?
-      methods = count_only_or_objects(count_only, object.ae_methods, [:display_name, :name])
+      methods = count_only_or_objects(count_only, object.ae_methods, %i(display_name name))
       instances + methods
     else
       instances
@@ -56,9 +56,9 @@ class TreeBuilderAeClass < TreeBuilder
     objects = filter_ae_objects(object.ae_namespaces)
     unless MiqAeClassController::MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
       ns_classes = filter_ae_objects(object.ae_classes)
-      objects += ns_classes unless ns_classes.blank?
+      objects += ns_classes if ns_classes.present?
     end
-    count_only_or_objects(count_only, objects, [:display_name, :name])
+    count_only_or_objects(count_only, objects, %i(display_name name))
   end
 
   def filter_ae_objects(objects)

@@ -46,13 +46,13 @@ class TreeBuilderSections < TreeBuilder
     end
     nodes.each do |node|
       checked = node[:nodes].count { |kid| @data.include[kid[:name]][:checked] } # number of checked kids
-      if checked == 0
-        node[:select] = false
-      elsif checked < node[:nodes].size
-        node[:select] = 'undefined'
-      else
-        node[:select] = true
-      end
+      node[:select] = if checked.zero?
+                        false
+                      elsif checked < node[:nodes].size
+                        'undefined'
+                      else
+                        true
+                      end
     end
     count_only_or_objects(count_only, nodes)
   end
@@ -65,8 +65,7 @@ class TreeBuilderSections < TreeBuilder
        :image      => false,
        :select     => @data.include[kid[:name]][:checked],
        :selectable => false,
-       :nodes      => []
-      }
+       :nodes      => []}
     end
     count_only_or_objects(count_only, nodes)
   end

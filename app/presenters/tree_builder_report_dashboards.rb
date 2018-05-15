@@ -3,7 +3,7 @@ class TreeBuilderReportDashboards < TreeBuilder
 
   private
 
-  def tree_init_options(tree_name)
+  def tree_init_options(_tree_name)
     {
       :leaf     => 'Dashboards',
       :full_ids => true

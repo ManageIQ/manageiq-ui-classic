@@ -14,8 +14,9 @@ class TreeBuilderCatalogsClass < TreeBuilder
         objects + 1
       else
         objects.unshift(ServiceTemplateCatalog.new(
-          :name        => 'Unassigned',
-          :description => 'Unassigned Catalogs'))
+                          :name        => 'Unassigned',
+                          :description => 'Unassigned Catalogs'
+        ))
       end
     end
   end

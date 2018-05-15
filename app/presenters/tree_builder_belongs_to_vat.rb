@@ -1,6 +1,6 @@
 class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
   def blue?(object)
-    return false unless object.parent.present?
+    return false if object.parent.blank?
     object.parent.name == 'vm' &&
       object.parent.parent.present? &&
       object.parent.parent.kind_of?(Datacenter) ||

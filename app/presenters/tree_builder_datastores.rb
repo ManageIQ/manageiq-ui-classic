@@ -3,7 +3,7 @@ class TreeBuilderDatastores < TreeBuilder
 
   def initialize(name, type, sandbox, build = true, root = nil)
     @root = root
-    @data = Storage.all.inject({}) { |h, st| h[st.id] = st; h }
+    @data = Storage.all.each_with_object({}) { |st, h| h[st.id] = st; }
     super(name, type, sandbox, build)
   end
 
@@ -38,9 +38,9 @@ class TreeBuilderDatastores < TreeBuilder
 
       text = ViewHelper.capture do
         ViewHelper.concat_tag(:strong, node[:name])
-        ViewHelper.concat ' ['
-        ViewHelper.concat node[:location]
-        ViewHelper.concat ']'
+        ViewHelper.concat(' [')
+        ViewHelper.concat(node[:location])
+        ViewHelper.concat(']')
       end
 
       { :id         => node[:id].to_s,

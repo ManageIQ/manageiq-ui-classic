@@ -34,19 +34,19 @@ class TreeBuilderPxeServers < TreeBuilder
       pxe_images.size + win_images.size
     else
       objects = []
-      if pxe_images.size > 0
+      unless pxe_images.empty?
         open_nodes.push("pxe_xx-#{object.id}") unless open_nodes.include?("pxe_xx-#{object.id}")
-        objects.push(:id    => "pxe_xx-#{object.id}",
-                     :text  => _("PXE Images"),
-                     :icon  => "pficon pficon-folder-close",
-                     :tip   => _("PXE Images"))
+        objects.push(:id   => "pxe_xx-#{object.id}",
+                     :text => _("PXE Images"),
+                     :icon => "pficon pficon-folder-close",
+                     :tip  => _("PXE Images"))
       end
-      if win_images.size > 0
+      unless win_images.empty?
         open_nodes.push("win_xx-#{object.id}") unless open_nodes.include?("win_xx-#{object.id}")
-        objects.push(:id    => "win_xx-#{object.id}",
-                     :text  => _("Windows Images"),
-                     :icon  => "pficon pficon-folder-close",
-                     :tip   => _("Windows Images"))
+        objects.push(:id   => "win_xx-#{object.id}",
+                     :text => _("Windows Images"),
+                     :icon => "pficon pficon-folder-close",
+                     :tip  => _("Windows Images"))
       end
       objects
     end
@@ -54,7 +54,7 @@ class TreeBuilderPxeServers < TreeBuilder
 
   def x_get_tree_custom_kids(object, count_only, _options)
     nodes = (object[:full_id] || object[:id]).split('_')
-    ps = PxeServer.find_by_id(nodes.last.split('-').last)
+    ps = PxeServer.find_by(:id => nodes.last.split('-').last)
     objects = if nodes[0].end_with?("pxe")
                 ps.pxe_images
               elsif nodes[0].end_with?("win")

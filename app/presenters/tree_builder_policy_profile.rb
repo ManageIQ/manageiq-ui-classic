@@ -1,7 +1,7 @@
 class TreeBuilderPolicyProfile < TreeBuilder
   has_kids_for MiqPolicySet, [:x_get_tree_pp_kids]
   has_kids_for MiqPolicy, [:x_get_tree_po_kids]
-  has_kids_for MiqEventDefinition, [:x_get_tree_ev_kids, :parents]
+  has_kids_for MiqEventDefinition, %i(x_get_tree_ev_kids parents)
 
   private
 

@@ -1,7 +1,7 @@
 class TreeBuilderDatacenter < TreeBuilder
   has_kids_for Host, [:x_get_tree_host_kids]
-  has_kids_for Datacenter, [:x_get_tree_datacenter_kids, :type]
-  has_kids_for EmsFolder, [:x_get_tree_folder_kids, :type]
+  has_kids_for Datacenter, %i(x_get_tree_datacenter_kids type)
+  has_kids_for EmsFolder, %i(x_get_tree_folder_kids type)
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
   has_kids_for ResourcePool, [:x_get_resource_pool_kids]
 
@@ -94,7 +94,7 @@ class TreeBuilderDatacenter < TreeBuilder
     if parent.authorized_for_user?(@user_id)
       count_only_or_many_objects(count_only,
                                  parent.resource_pools,
-                                 -> { parent.default_resource_pool.try!(:vms) || [] }, "name")
+                                 -> { parent.default_resource_pool&.vms || [] }, "name")
     else
       count_only ? 0 : []
     end
