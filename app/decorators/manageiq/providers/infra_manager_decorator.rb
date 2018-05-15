@@ -17,7 +17,7 @@ class ManageIQ::Providers::InfraManagerDecorator < ExtManagementSystemDecorator
       :top_right    => {:text => total_vms},
       :bottom_left  => {
         :fileicon => fileicon,
-        :tooltip  => type
+        :tooltip  => ui_lookup(:model => type)
       },
       :bottom_right => {
         :fileicon => QuadiconHelper.status_img(authentication_status),
