@@ -141,9 +141,9 @@ describe CloudSubnetController do
           :args        => [{
             :name         => 'test',
             :ip_version   => 4,
-            :enable_dhcp  => true,
             :cloud_tenant => cloud_tenant,
-            :network_id   => cloud_network.ems_ref
+            :network_id   => cloud_network.ems_ref,
+            :enable_dhcp  => "true"
           }]
         }
       end
@@ -157,12 +157,14 @@ describe CloudSubnetController do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :create, :params => {
           :button           => 'add',
+          :controller       => 'cloud_subnet',
           :format           => :js,
-          :name             => 'test',
           :cloud_tenant     => {:id => cloud_tenant.id},
-          :ems_id           => @ems.id,
           :dhcp_enabled     => true,
-          :network_protocol => 4,
+          :ems_id           => @ems.id,
+          :id               => 'new',
+          :name             => 'test',
+          :network_protocol => 'ipv4',
           :network_id       => cloud_network.ems_ref
         }
       end
@@ -193,7 +195,7 @@ describe CloudSubnetController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name => "foo2", :enable_dhcp => false}]
+          :args        => [{:name => 'test2', :enable_dhcp => false}]
         }
       end
 
@@ -205,10 +207,10 @@ describe CloudSubnetController do
       it "queues the update action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :update, :params => {
-          :button => "save",
+          :button => 'save',
           :format => :js,
           :id     => @cloud_subnet.id,
-          :name   => "foo2"
+          :name   => 'test2'
         }
       end
     end

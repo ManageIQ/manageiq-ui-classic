@@ -28,7 +28,7 @@ describe('cloud-subnet-form', function() {
 
     it('adds a Cloud Subnet record', function () {
       vm.cloudSubnetModel.name = 'newSubnet';
-      vm.cloudSubnetModel.ip_version = 4;
+      vm.cloudSubnetModel.ip_version = 'ipv4';
       vm.cloudSubnetModel.ems_id = 1;
       vm.addClicked();
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('create/new?button=add', vm.cloudSubnetModel, { complete: false });
@@ -68,7 +68,7 @@ describe('cloud-subnet-form', function() {
     });
 
     it('calls API.get with the appropriate URL', function () {
-      expect(API.get).toHaveBeenCalledWith('/api/cloud_subnets/1111?expand=resources&attributes=ext_management_system,cloud_tenant,cloud_network');
+      expect(API.get).toHaveBeenCalledWith('/api/cloud_subnets/1111?expand=resources&attributes=ext_management_system.name,cloud_tenant,cloud_network');
     });
 
     it('sets vm.cloudSubnetModel.name', function () {
