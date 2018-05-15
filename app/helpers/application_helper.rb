@@ -1414,6 +1414,6 @@ module ApplicationHelper
   end
 
   def unique_html_id(prefix = 'unknown')
-    "#{prefix}-#{rand(36 ** 8).to_s(36)}"
+    "#{prefix}-#{rand(36**8).to_s(36)}"
   end
 end
