@@ -14,13 +14,13 @@ import {
 // should fix the problem
 
 export default (
-  reactElementCreator: (props: ComponentProps) => any /* ReactElement */,
+  ReactElement: (props: ComponentProps) => any,
   mapPropsToInteract: (props: ComponentProps) => any = () => undefined
 ): ComponentBlueprint => {
   function render(props: ComponentProps, container: HTMLElement) {
     ReactDOM.render(
       <Provider store={ManageIQ.redux.store}>
-        {reactElementCreator(props)}
+        <ReactElement {...props} />
       </Provider>,
       container
     );
