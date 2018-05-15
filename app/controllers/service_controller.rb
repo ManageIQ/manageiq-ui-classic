@@ -220,7 +220,7 @@ class ServiceController < ApplicationController
 
   def textual_group_list
     if @item && @item.kind_of?(GenericObject)
-      [%i(go_properties attribute_details_list associations methods)]
+      [%i(go_properties attribute_details_list go_associations methods)]
     elsif @record.type == "ServiceAnsiblePlaybook"
       [%i(properties miq_custom_attributes), %i(lifecycle tags generic_objects)]
     else

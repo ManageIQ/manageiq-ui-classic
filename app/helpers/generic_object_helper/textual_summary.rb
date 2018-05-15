@@ -43,14 +43,38 @@ module GenericObjectHelper::TextualSummary
   end
 
   def textual_group_associations
-    #if @record.property_associations.count > 0
+    if @record.property_associations.count > 0
       TextualGroup.new(_("Associations"), associations)
-   # else
-   #   TextualGroup.new(_("Associations"), %i(associations_none))
-   # end
+    else
+      TextualGroup.new(_("Associations"), %i(associations_none))
+    end
+  end
+
+  def textual_group_go_associations
+    if @record.property_associations.count > 0
+      TextualGroup.new(_("Associations"), go_associations)
+    else
+      TextualGroup.new(_("Associations"), %i(associations_none))
+    end
   end
 
   def associations
+    associations = %i()
+    @record.property_associations.each do |key, _value|
+      associations.push(key.to_sym)
+      define_singleton_method("textual_#{key}") do
+        num = @record.send(key).count
+        h = {:label => _("%{label}") % {:label => key}, :value => num}
+        if role_allows?(:feature => "generic_object_view") && num > 0
+          h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => key),
+                   :title => _('Show all %{associated_models}') % {:associated_models => key})
+        end
+      end
+    end
+    associations
+  end
+
+  def go_associations
     associations = %i()
     @record.property_associations.each do |key, _value|
       associations.push(key.to_sym)
