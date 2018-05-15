@@ -1,4 +1,6 @@
 describe OpsController do
+  include Spec::Support::OpsUserHelper
+
   before(:each) do
     EvmSpecHelper.local_miq_server
     MiqRegion.seed
@@ -10,26 +12,6 @@ describe OpsController do
     allow(controller).to receive(:load_edit).and_return(true)
     allow(controller).to receive(:render_flash)
     allow(controller).to receive(:get_node_info)
-  end
-
-  def new_user_edit(data = {})
-    controller.rbac_user_add # set up @edit for new user
-
-    edit = controller.instance_variable_get(:@edit)
-    edit[:new] = data
-    controller.instance_variable_set(:@edit, edit)
-  end
-
-  def existing_user_edit(user, data = {})
-    controller.instance_variable_set(:@_params, :typ    => nil,
-                                                :button => nil,
-                                                :id     => user.id)
-    controller.rbac_user_edit # set up @edit for the user
-
-    edit = controller.instance_variable_get(:@edit)
-    edit[:new] ||= {}
-    edit[:new].merge!(data)
-    controller.instance_variable_set(:@edit, edit)
   end
 
   context 'set record data before calling record.valid?' do
