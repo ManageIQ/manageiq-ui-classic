@@ -37,7 +37,7 @@ module EmsNetworkHelper::TextualSummary
   # Items
   #
   def textual_provider_region
-    return nil if @record.provider_region.nil?
+    return nil if @record.provider_region.nil? || @record.try(:description).nil?
     {:label => _("Region"), :value => @record.description}
   end
 
