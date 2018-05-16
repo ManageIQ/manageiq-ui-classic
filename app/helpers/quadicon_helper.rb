@@ -446,8 +446,18 @@ module QuadiconHelper
   end
 
   def flobj_p_simple(cls, text, test_style = nil)
+    new_text = number_to_human(text, :format => '%n%u', :precision => 2, :units => { :thousand => 'K', :million => 'M', :billion => 'B' })
+    length = new_text.length
+    test_style = if length < 3
+                   nil
+                 elsif length > 2 && length < 4
+                   'font-size: 15px;'
+                 else
+                   'font-size: 14px;'
+                 end
+
     content_tag(:div, :class => "flobj #{cls}") do
-      content_tag(:p, text, :style => test_style)
+      content_tag(:p, new_text, :style => test_style)
     end
   end
 
