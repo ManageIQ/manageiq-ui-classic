@@ -18,8 +18,9 @@
   "extends": [],
 
   "globals": {
-    "sendDataWithRx": false,
-    "vanillaJsAPI": false, // local: miq_api.js
+    "sendDataWithRx": false, // local: miq_observable.js
+    "vanillaJsAPI": false, // local: http_api/api.js - deprecated
+    "API": false, // local: http_api/api.js
     "ManageIQ": false, // local: mig_global.js
     "Promise": false, // bower: es6-shim
     "_": false, // bower: lodash
@@ -27,6 +28,7 @@
     "angular": false, // bower: angular
     "c3": false, // bower: c3
     "d3": false, // bower: d3
+    "http": false, // local: http_api/http.js
     "i18n": false, // gem: gettext_i18n_rails_js
     "moment": false, // bower: moment
     "numeral": false, // bower: numeral

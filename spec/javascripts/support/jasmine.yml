@@ -19,7 +19,6 @@ src_files:
 - __spec__/helpers/fixtures-fix.js
 - packs/vendor.js
 - packs/manageiq-ui-classic/application-common.js
-- packs/manageiq-ui-classic/compat-common.js
 - packs/manageiq-ui-classic/miq-redux-common.js
 
 # stylesheets

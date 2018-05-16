@@ -8,7 +8,7 @@ function ErrorModalController($timeout) {
   listenToRx(function(event) {
     if ('serverError' in event) {
       $timeout(function() {
-        $ctrl.show(event.serverError, event.source);
+        $ctrl.show(event.serverError, event.source, event.backendName);
       });
     }
   });
@@ -30,12 +30,12 @@ function ErrorModalController($timeout) {
     return data;
   }
 
-  $ctrl.show = function(err, source) {
+  $ctrl.show = function(err, source, backendName) {
     if (!err || !_.isObject(err)) {
       return;
     }
 
-    if (source === 'API') {
+    if (source === 'fetch') {
       $ctrl.contentType = err.headers.get("content-type");
       $ctrl.url = err.url;
     } else if (source === '$http') {
@@ -45,6 +45,7 @@ function ErrorModalController($timeout) {
 
     $ctrl.error = err;
     $ctrl.source = source;
+    $ctrl.backendName = backendName;
     $ctrl.data = err.data;
     $ctrl.isHtml = ($ctrl.contentType || "").match('text/html');
 
@@ -77,7 +78,7 @@ angular.module('miq.error', [])
       '            </span>',
       '          </button>',
       '          <h4 class="modal-title">',
-      '            Server Error {{$ctrl.source && "(" + $ctrl.source + ")"}}',
+      '            Server Error {{$ctrl.backendName && "(" + $ctrl.backendName + ")"}}',
       '          </h4>',
       '        </div>',
       '        <div class="modal-body">',

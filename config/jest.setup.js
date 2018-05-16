@@ -12,3 +12,6 @@ require('../app/assets/javascripts/miq_angular_application');
 
 let sprintf = require('../vendor/assets/bower/bower_components/sprintf/src/sprintf.js');
 window.sprintf = sprintf.sprintf;
+
+import { API } from '../app/javascript/http_api';
+window.vanillaJsAPI = API;

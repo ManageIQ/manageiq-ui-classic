@@ -10,6 +10,7 @@ import 'proxy-polyfill';
 
 import { mount } from '../react/mounter';
 import componentRegistry from '../react/componentRegistry';
+import { API, http } from '../http_api';
 
 import * as newRegistry from '../miq-component/registry';
 import reactBlueprint from '../miq-component/react-blueprint';
@@ -31,3 +32,9 @@ ManageIQ.component = {
 ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
+
+// compatibility: vanillaJsAPI should be considered deprecated
+// the new convention is: API is for vanilla/react, $API is for angular
+window.API = API;
+window.vanillaJsAPI = API;
+window.http = http;
