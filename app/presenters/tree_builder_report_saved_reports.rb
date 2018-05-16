@@ -1,7 +1,7 @@
 class TreeBuilderReportSavedReports < TreeBuilderReportReportsClass
   private
 
-  def tree_init_options(tree_name)
+  def tree_init_options(_tree_name)
     {
       :full_ids => true,
       :leaf     => 'MiqReportResult'

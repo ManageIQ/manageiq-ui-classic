@@ -5,7 +5,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf     => "ManageIQ::Providers::ConfigurationManager"}
+    {:leaf => "ManageIQ::Providers::ConfigurationManager"}
   end
 
   def set_locals_for_render

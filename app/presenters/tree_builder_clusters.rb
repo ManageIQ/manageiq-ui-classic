@@ -47,8 +47,7 @@ class TreeBuilderClusters < TreeBuilder
         :tip        => node[:name],
         :select     => node[:capture],
         :nodes      => @data[node[:id]][:ho_enabled] + @data[node[:id]][:ho_disabled],
-        :selectable => false
-      }
+        :selectable => false}
     end
     if @root[:non_cl_hosts].present?
       node = {:id         => "NonCluster",
@@ -57,8 +56,7 @@ class TreeBuilderClusters < TreeBuilder
               :tip        => _("Non-clustered Hosts"),
               :select     => non_cluster_selected,
               :nodes      => @root[:non_cl_hosts],
-              :selectable => false
-      }
+              :selectable => false}
       nodes.push(node)
     end
     count_only_or_objects(count_only, nodes)
@@ -68,7 +66,7 @@ class TreeBuilderClusters < TreeBuilder
     hosts = parent[:nodes]
     nodes = hosts.map do |node|
       if @data[parent[:id].to_i]
-        value = @data[parent[:id].to_i][:ho_disabled].include? node
+        value = @data[parent[:id].to_i][:ho_disabled].include?(node)
       end
       {:id         => "#{parent[:id]}_#{node[:id]}",
        :text       => node[:name],

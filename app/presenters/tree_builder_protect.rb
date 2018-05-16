@@ -32,8 +32,7 @@ class TreeBuilderProtect < TreeBuilder
         :tip        => profile.description,
         :select     => @data[:new][profile.id] == @data[:pol_items].length,
         :nodes      => profile.members,
-        :selectable => false
-      }
+        :selectable => false}
     end
     count_only_or_objects(count_only, nodes)
   end

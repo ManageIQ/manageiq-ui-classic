@@ -16,10 +16,10 @@ class TreeBuilderProvisioningDialogs < TreeBuilderAeCustomization
   def x_get_tree_roots(count_only, _options)
     objects = MiqDialog::DIALOG_TYPES.sort.collect do |typ|
       {
-        :id    => "MiqDialog_#{typ[1]}",
-        :text  => typ[0],
-        :icon  => "pficon pficon-folder-close",
-        :tip   => typ[0]
+        :id   => "MiqDialog_#{typ[1]}",
+        :text => typ[0],
+        :icon => "pficon pficon-folder-close",
+        :tip  => typ[0]
       }
     end
     count_only_or_objects(count_only, objects)

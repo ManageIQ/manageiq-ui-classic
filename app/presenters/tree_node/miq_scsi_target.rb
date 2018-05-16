@@ -1,6 +1,5 @@
 module TreeNode
   class MiqScsiTarget < Node
-
     set_attributes(:text, :tooltip) do
       text = if @object.iscsi_name.blank?
                _("SCSI Target %{target}") % {:target => @object.target}

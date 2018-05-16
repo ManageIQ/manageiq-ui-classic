@@ -114,15 +114,15 @@ class TreeBuilderMenuRoles < TreeBuilder
   end
 
   def present_and_empty?(item)
-    item && item.empty?
+    item&.empty?
   end
 
   def present_not_empty_but_first_empty?(item)
-    item && !item.empty? && item[0].empty?
+    item.present? && item[0].empty?
   end
 
   # Check the second level menu for "Custom"
   def present_not_empty_and_not_custom?(item)
-    item && !item.empty? && !item[0].empty? && item[0][0] != "Custom"
+    item.present? && !item[0].empty? && item[0][0] != "Custom"
   end
 end

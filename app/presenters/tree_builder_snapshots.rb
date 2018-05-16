@@ -55,7 +55,7 @@ class TreeBuilderSnapshots < TreeBuilder
   end
 
   def x_get_tree_snapshot_kids(parent, count_only)
-    kids = parent.children.present? ? parent.children : []
+    kids = parent.children.presence || []
     if kids.present?
       id = id(kids.first.id)
       open_node(id)

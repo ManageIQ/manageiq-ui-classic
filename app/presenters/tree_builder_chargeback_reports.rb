@@ -29,10 +29,10 @@ class TreeBuilderChargebackReports < TreeBuilder
       objects = []
       items.each_with_index do |item, idx|
         objects.push(
-          :id    => "#{item.miq_report_id}-#{idx}",
-          :text  => item.miq_report.name,
-          :icon  => "fa fa-file-text-o",
-          :tip   => item.name
+          :id   => "#{item.miq_report_id}-#{idx}",
+          :text => item.miq_report.name,
+          :icon => "fa fa-file-text-o",
+          :tip  => item.name
         )
       end
       objects

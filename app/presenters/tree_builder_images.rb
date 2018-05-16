@@ -12,9 +12,9 @@ class TreeBuilderImages < TreeBuilder
   def set_locals_for_render
     locals = super
     locals.merge!(
-      :tree_id   => "images_treebox",
-      :tree_name => "images_tree",
-      :autoload  => true,
+      :tree_id        => "images_treebox",
+      :tree_name      => "images_tree",
+      :autoload       => true,
       :allow_reselect => TreeBuilder.hide_vms
     )
   end

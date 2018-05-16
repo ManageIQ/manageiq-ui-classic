@@ -34,7 +34,7 @@ class TreeBuilderVmsAndTemplates < FullTreeBuilder
     end
   end
 
-  def hidden_child_folder?(object, children)
+  def hidden_child_folder?(_object, children)
     return false unless children.length == 1
     child = children.keys.first
     child.kind_of?(EmsFolder) && child.hidden?
@@ -90,7 +90,7 @@ class TreeBuilderVmsAndTemplates < FullTreeBuilder
   end
 
   # Datacenters will sort before normal folders via the sort_tree method
-  SORT_CLASSES = [ExtManagementSystem, EmsFolder, VmOrTemplate]
+  SORT_CLASSES = [ExtManagementSystem, EmsFolder, VmOrTemplate].freeze
 
   def sort_tree(tree)
     tree.keys.each do |object|

@@ -10,8 +10,7 @@ class TreeBuilderDiagnostics < TreeBuilder
     {:add_root => false,
      :expand   => true,
      :lazy     => false,
-     :open_all => true
-    }
+     :open_all => true}
   end
 
   def set_locals_for_render

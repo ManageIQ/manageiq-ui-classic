@@ -1,14 +1,15 @@
 class TreeBuilderReportReports < TreeBuilderReportReportsClass
   REPORTS_IN_TREE = true
+
   private
 
-  def initialize(name, type, sandbox, build = true)
+  def initialize(name, type, sandbox, _build = true)
     @rpt_menu  = sandbox[:rpt_menu]
     @grp_title = sandbox[:grp_title]
     super(name, type, sandbox, build = true)
   end
 
-  def tree_init_options(tree_name)
+  def tree_init_options(_tree_name)
     {
       :leaf     => 'full_ids',
       :full_ids => true

@@ -1,7 +1,7 @@
 class TreeBuilderUtilization < TreeBuilderRegion
   has_kids_for ExtManagementSystem, [:x_get_tree_ems_kids]
-  has_kids_for Datacenter, [:x_get_tree_datacenter_kids, :type]
-  has_kids_for EmsFolder, [:x_get_tree_folder_kids, :type]
+  has_kids_for Datacenter, %i(x_get_tree_datacenter_kids type)
+  has_kids_for EmsFolder, %i(x_get_tree_folder_kids type)
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
 
   def initialize(name, type, sandbox, build = true, **params)
@@ -23,12 +23,12 @@ class TreeBuilderUtilization < TreeBuilderRegion
   def root_options
     if MiqEnterprise.my_enterprise.is_enterprise?
       text = _("Enterprise")
-      icon  = 'pficon pficon-enterprise'
+      icon = 'pficon pficon-enterprise'
     else
       text = _("%{product} Region: %{region_description} [%{region}]") % {:region_description => MiqRegion.my_region.description,
                                                                           :region             => MiqRegion.my_region.region,
                                                                           :product            => Vmdb::Appliance.PRODUCT_NAME}
-      icon  = 'pficon pficon-regions'
+      icon = 'pficon pficon-regions'
     end
     {
       :text    => text,
@@ -48,10 +48,10 @@ class TreeBuilderUtilization < TreeBuilderRegion
 
     [
       {
-        :id    => "folder_c_xx-#{object.id}",
-        :text  => _("Cluster / Deployment Role"),
-        :icon  => "pficon pficon-folder-close",
-        :tip   => _("Cluster / Deployment Role (Click to open)")
+        :id   => "folder_c_xx-#{object.id}",
+        :text => _("Cluster / Deployment Role"),
+        :icon => "pficon pficon-folder-close",
+        :tip  => _("Cluster / Deployment Role (Click to open)")
       }
     ]
   end
@@ -111,7 +111,7 @@ class TreeBuilderUtilization < TreeBuilderRegion
   def x_get_tree_cluster_kids(object, count_only)
     objects = rbac_filtered_sorted_objects(object.hosts, "name")
     # FIXME: is the condition below ever false?
-    unless [:bottlenecks, :utilization].include?(@type)
+    unless %i(bottlenecks utilization).include?(@type)
       objects += rbac_filtered_sorted_objects(object.resource_pools, "name")
       objects += rbac_filtered_sorted_objects(object.vms, "name")
     end

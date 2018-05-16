@@ -9,7 +9,7 @@ class TreeBuilderReportWidgets < TreeBuilder
 
   private
 
-  def tree_init_options(tree_name)
+  def tree_init_options(_tree_name)
     {:leaf => 'Widgets', :full_ids => true}
   end
 

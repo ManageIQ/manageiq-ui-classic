@@ -61,7 +61,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
         :image   => obj ? obj.image : nil
       }
     else
-      text = !el.text.blank? ? el.text : el.name
+      text = el.text.presence || el.name
       {
         :text => text,
         :tip  => text,
@@ -82,16 +82,14 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
 
   def x_get_tree_hash_kids(parent, count_only)
     kids = []
-    if parent[:attributes]
-      parent[:attributes].each_with_index do |k, idx|
-        object = {
-          :id         => "a_#{idx}",
-          :icon       => "ff ff-attribute",
-          :selectable => false,
-          :text       => "#{k.first} = #{k.last}"
-        }
-        kids.push(object)
-      end
+    parent[:attributes]&.each_with_index do |k, idx|
+      object = {
+        :id         => "a_#{idx}",
+        :icon       => "ff ff-attribute",
+        :selectable => false,
+        :text       => "#{k.first} = #{k.last}"
+      }
+      kids.push(object)
     end
     Array(parent[:elements]).each_with_index do |el, i|
       kids.push(get_root_elements(el, i))

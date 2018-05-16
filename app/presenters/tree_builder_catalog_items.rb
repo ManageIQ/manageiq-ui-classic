@@ -1,6 +1,6 @@
 class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
   has_kids_for ServiceTemplateCatalog, [:x_get_tree_stc_kids]
-  has_kids_for ServiceTemplate, [:x_get_tree_st_kids, :type]
+  has_kids_for ServiceTemplate, %i(x_get_tree_st_kids type)
 
   private
 
@@ -37,7 +37,7 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
     CustomButton.button_classes.each { |db| @resolve[:target_classes][db] = ui_lookup(:model => db) }
     @sb[:target_classes] = @resolve[:target_classes].invert
     @resolve[:target_classes] = Array(@resolve[:target_classes].invert).sort
-    st = ServiceTemplate.find_by_id(object[:id])
+    st = ServiceTemplate.find_by(:id => object[:id])
     items = st.custom_button_sets + st.custom_buttons
     objects = []
     if st.options && st.options[:button_order]

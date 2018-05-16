@@ -14,11 +14,11 @@ class TreeBuilder
     @sb = sandbox # FIXME: some subclasses still access @sb
 
     @locals_for_render  = {}
-    @name               = name.to_sym                     # includes _tree
+    @name               = name.to_sym # includes _tree
     @options            = tree_init_options(name.to_sym)
     @tree_nodes         = {}.to_json
     # FIXME: remove @name or @tree, unify
-    @type               = type.to_sym                     # *usually* same as @name but w/o _tree
+    @type               = type.to_sym # *usually* same as @name but w/o _tree
 
     add_to_sandbox
     build_tree if build
@@ -29,7 +29,7 @@ class TreeBuilder
 
     if model == "Hash"
       {:type => prefix, :id => rec_id, :full_id => id}
-    elsif model.nil? && [:sandt, :svccat, :stcat].include?(@type)
+    elsif model.nil? && %i(sandt svccat stcat).include?(@type)
       # Creating empty record to show items under unassigned catalog node
       ServiceTemplateCatalog.new
     elsif model.nil? && [:configuration_manager_providers_tree].include?(@name)
@@ -55,7 +55,7 @@ class TreeBuilder
   end
 
   def tree_init_options(_tree_name)
-    $log.warn "MIQ(#{self.class.name}) - TreeBuilder descendants should have their own tree_init_options"
+    $log.warn("MIQ(#{self.class.name}) - TreeBuilder descendants should have their own tree_init_options")
     {}
   end
 
@@ -182,7 +182,7 @@ class TreeBuilder
   end
 
   def group_id
-    (@group.present? && @group.id.present?) ? @group.id : 'new'
+    @group.present? && @group.id.present? ? @group.id : 'new'
   end
 
   def set_locals_for_render
@@ -310,7 +310,7 @@ class TreeBuilder
     sort_by = collections.pop
 
     if count_only
-      collections.detect { |objects| resolve_object_lambdas(count_only, objects).size > 0 } ? 1 : 0
+      collections.detect { |objects| !resolve_object_lambdas(count_only, objects).empty? } ? 1 : 0
     else
       collections.map! { |objects| resolve_object_lambdas(count_only, objects) }
       collections.flat_map { |objects| count_only_or_objects(count_only, objects, sort_by) }
@@ -345,15 +345,15 @@ class TreeBuilder
   def prefixed_title(prefix, title)
     ViewHelper.capture do
       ViewHelper.concat_tag(:strong, "#{prefix}:")
-      ViewHelper.concat ' '
-      ViewHelper.concat title
+      ViewHelper.concat(' ')
+      ViewHelper.concat(title)
     end
   end
 
   def resolve_object_lambdas(count_only, objects)
     if objects.respond_to?(:call)
       # works with a no-param lambda OR a lambda that requests the count_only
-      (objects.arity == 1) ? objects.call(count_only) : objects.call
+      objects.arity == 1 ? objects.call(count_only) : objects.call
     else
       objects
     end
@@ -519,89 +519,89 @@ class TreeBuilder
 
   # Tree node prefixes for generic explorers
   X_TREE_NODE_PREFIXES = {
-    "a"   => "MiqAction",
-    "aec" => "MiqAeClass",
-    "aei" => "MiqAeInstance",
-    "aem" => "MiqAeMethod",
-    "aen" => "MiqAeNamespace",
-    "al"  => "MiqAlert",
-    "ap"  => "MiqAlertSet",
-    "asr" => "AssignedServerRole",
-    "az"  => "AvailabilityZone",
-    "azu" => "ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate",
-    "at"  => "ManageIQ::Providers::AnsibleTower::AutomationManager",
-    "cl"  => "Classification",
-    "cf"  => "ConfigurationScript",
-    "cfp" => "ConfigurationScriptPayload",
-    "cnt" => "Container",
-    "co"  => "Condition",
-    "cbg" => "CustomButtonSet",
-    "cb"  => "CustomButton",
-    "cfn" => "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate",
-    "cm"  => "Compliance",
-    "cd"  => "ComplianceDetail",
-    "cp"  => "ConfigurationProfile",
-    "cr"  => "ChargebackRate",
-    "cs"  => "ConfiguredSystem",
-    "ct"  => "CustomizationTemplate",
-    "dc"  => "Datacenter",
-    "dg"  => "Dialog",
-    "ds"  => "Storage",
-    "dsc" => "StorageCluster",
-    "e"   => "ExtManagementSystem",
-    "ev"  => "MiqEventDefinition",
-    "c"   => "EmsCluster",
-    "csf" => "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem",
-    "csa" => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
-    "f"   => "EmsFolder",
-    "fr"  => "ManageIQ::Providers::Foreman::ConfigurationManager",
-    "g"   => "MiqGroup",
-    "gd"  => "GuestDevice",
-    "god" => "GenericObjectDefinition",
-    "h"   => "Host",
-    "hot" => "ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate",
-    "isd" => "IsoDatastore",
-    "isi" => "IsoImage",
-    "l"   => "Lan",
-    "me"  => "MiqEnterprise",
-    "mr"  => "MiqRegion",
-    "msc" => "MiqSchedule",
-    "ms"  => "MiqSearch",
-    "odg" => "MiqDialog",
-    "ot"  => "OrchestrationTemplate",
-    "pi"  => "PxeImage",
-    "pit" => "PxeImageType",
-    "ps"  => "PxeServer",
-    "pp"  => "MiqPolicySet",
-    "p"   => "MiqPolicy",
-    "rep" => "MiqReport",
-    "rr"  => "MiqReportResult",
-    "svr" => "MiqServer",
-    "ur"  => "MiqUserRole",
-    "r"   => "ResourcePool",
-    "s"   => "Service",
-    "sa"  => "StorageAdapter",
-    'sn'  => 'Snapshot',
-    "sl"  => "MiqScsiLun",
-    "sg"  => "MiqScsiTarget",
-    "sis" => "ScanItemSet",
+    "a"    => "MiqAction",
+    "aec"  => "MiqAeClass",
+    "aei"  => "MiqAeInstance",
+    "aem"  => "MiqAeMethod",
+    "aen"  => "MiqAeNamespace",
+    "al"   => "MiqAlert",
+    "ap"   => "MiqAlertSet",
+    "asr"  => "AssignedServerRole",
+    "az"   => "AvailabilityZone",
+    "azu"  => "ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate",
+    "at"   => "ManageIQ::Providers::AnsibleTower::AutomationManager",
+    "cl"   => "Classification",
+    "cf"   => "ConfigurationScript",
+    "cfp"  => "ConfigurationScriptPayload",
+    "cnt"  => "Container",
+    "co"   => "Condition",
+    "cbg"  => "CustomButtonSet",
+    "cb"   => "CustomButton",
+    "cfn"  => "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate",
+    "cm"   => "Compliance",
+    "cd"   => "ComplianceDetail",
+    "cp"   => "ConfigurationProfile",
+    "cr"   => "ChargebackRate",
+    "cs"   => "ConfiguredSystem",
+    "ct"   => "CustomizationTemplate",
+    "dc"   => "Datacenter",
+    "dg"   => "Dialog",
+    "ds"   => "Storage",
+    "dsc"  => "StorageCluster",
+    "e"    => "ExtManagementSystem",
+    "ev"   => "MiqEventDefinition",
+    "c"    => "EmsCluster",
+    "csf"  => "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem",
+    "csa"  => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
+    "f"    => "EmsFolder",
+    "fr"   => "ManageIQ::Providers::Foreman::ConfigurationManager",
+    "g"    => "MiqGroup",
+    "gd"   => "GuestDevice",
+    "god"  => "GenericObjectDefinition",
+    "h"    => "Host",
+    "hot"  => "ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate",
+    "isd"  => "IsoDatastore",
+    "isi"  => "IsoImage",
+    "l"    => "Lan",
+    "me"   => "MiqEnterprise",
+    "mr"   => "MiqRegion",
+    "msc"  => "MiqSchedule",
+    "ms"   => "MiqSearch",
+    "odg"  => "MiqDialog",
+    "ot"   => "OrchestrationTemplate",
+    "pi"   => "PxeImage",
+    "pit"  => "PxeImageType",
+    "ps"   => "PxeServer",
+    "pp"   => "MiqPolicySet",
+    "p"    => "MiqPolicy",
+    "rep"  => "MiqReport",
+    "rr"   => "MiqReportResult",
+    "svr"  => "MiqServer",
+    "ur"   => "MiqUserRole",
+    "r"    => "ResourcePool",
+    "s"    => "Service",
+    "sa"   => "StorageAdapter",
+    'sn'   => 'Snapshot',
+    "sl"   => "MiqScsiLun",
+    "sg"   => "MiqScsiTarget",
+    "sis"  => "ScanItemSet",
     "role" => "ServerRole",
-    "st"  => "ServiceTemplate",
-    "stc" => "ServiceTemplateCatalog",
-    "sr"  => "ServiceResource",
-    "sw"  => "Switch",
-    "t"   => "MiqTemplate",
-    "tb"  => "VmdbTable",
-    "ti"  => "VmdbIndex",
-    "tn"  => "Tenant",
-    "u"   => "User",
-    "v"   => "Vm",
-    "vap" => "ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate",
-    "vnf" => "ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate",
-    "wi"  => "WindowsImage",
-    "xx"  => "Hash",  # For custom (non-CI) nodes, specific to each tree
-    "z"   => "Zone"
-  }
+    "st"   => "ServiceTemplate",
+    "stc"  => "ServiceTemplateCatalog",
+    "sr"   => "ServiceResource",
+    "sw"   => "Switch",
+    "t"    => "MiqTemplate",
+    "tb"   => "VmdbTable",
+    "ti"   => "VmdbIndex",
+    "tn"   => "Tenant",
+    "u"    => "User",
+    "v"    => "Vm",
+    "vap"  => "ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate",
+    "vnf"  => "ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate",
+    "wi"   => "WindowsImage",
+    "xx"   => "Hash", # For custom (non-CI) nodes, specific to each tree
+    "z"    => "Zone"
+  }.freeze
 
   X_TREE_NODE_PREFIXES_INVERTED = X_TREE_NODE_PREFIXES.invert
 end

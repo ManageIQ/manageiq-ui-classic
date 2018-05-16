@@ -1,6 +1,6 @@
 class TreeBuilderVat < TreeBuilderDatacenter
-  has_kids_for Datacenter, [:x_get_tree_datacenter_kids, :type]
-  has_kids_for EmsFolder, [:x_get_tree_folder_kids, :type]
+  has_kids_for Datacenter, %i(x_get_tree_datacenter_kids type)
+  has_kids_for EmsFolder, %i(x_get_tree_folder_kids type)
 
   def initialize(name, type, sandbox, build = true, root = nil, vat = nil)
     sandbox[:vat] = vat unless vat.nil?
