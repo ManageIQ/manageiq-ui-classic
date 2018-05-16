@@ -70,6 +70,8 @@ module QuadiconHelper
       when "ems_physical_infra", "ems_cloud", "ems_network", "ems_container"
         layout.to_sym
       end
+    elsif klass.base_model.name != klass.name.demodulize
+      klass.name.demodulize.underscore.to_sym
     else
       klass.base_model.name.underscore.to_sym
     end
