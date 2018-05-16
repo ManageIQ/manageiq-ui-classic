@@ -1341,13 +1341,11 @@ module ApplicationController::Compare
     @rows << row
   end
 
-  def compare_add_txt_col(idx, txt, tooltip = "", img_bkg = "cell-stripe", style = "")
-    txt_tooltip = tooltip.empty? ? txt : tooltip
-    txt_tooltip = "<abbr title='#{txt_tooltip}'>#{txt}</abbr>"
+  def compare_add_txt_col(idx, txt, img_bkg = "cell-stripe", style = "")
     html_text = if style.empty?
-                  "<div class='#{img_bkg} cell-text-wrap'>#{txt_tooltip}</div>"
+                  "<div class='#{img_bkg} cell-text-wrap'>#{txt}</div>"
                 else
-                  "<div class='#{img_bkg} cell-text-wrap' style='#{style}'>#{txt_tooltip}</div>"
+                  "<div class='#{img_bkg} cell-text-wrap' style='#{style}'>#{txt}</div>"
                 end
     {"col#{idx + 1}".to_sym => html_text}
   end
