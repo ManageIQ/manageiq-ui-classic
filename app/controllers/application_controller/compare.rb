@@ -1381,7 +1381,7 @@ module ApplicationController::Compare
     }
     view.ids.each_with_index do |_id, idx|
       if idx == 0
-        row.merge!(compare_add_txt_col(idx, @compressed ? "%:" : _("% Matched:"), _("% Matched")))
+        row.merge!(compare_add_txt_col(idx, @compressed ? "%:" : _("% Matched:")))
       else
         key = @exists_mode ? :_match_exists_ : :_match_
         pct_match = view.results[view.ids[idx]][key]
@@ -1426,7 +1426,7 @@ module ApplicationController::Compare
     row = {}
     view.ids.each_with_index do |id, idx|
       if idx == 0
-        row.merge!(compare_add_txt_col(idx, @compressed ? "%:" : _("% Matched:"), _("% Matched")))
+        row.merge!(compare_add_txt_col(idx, @compressed ? "%:" : _("% Matched:")))
       else
         key = @exists_mode && !records.nil? ? :_match_exists_ : :_match_
         pct_match = view.results[id][section[:name]][key]
@@ -1505,7 +1505,7 @@ module ApplicationController::Compare
 
   def comp_record_data_nonexistsmode(idx, match, val, basval)
     if idx.zero?
-      compare_add_txt_col(idx, "%:", _("% Matched"))
+      compare_add_txt_col(idx, "%:")
     elsif val == "Found" # This object has the record
       if basval == "Found" # Base has the record
         img_src = calculate_match_img(match)
@@ -1678,7 +1678,7 @@ module ApplicationController::Compare
       compare_add_txt_col(idx, val)
     else
       style = "color:#{base_val == val ? passed_text_color : failed_text_color};"
-      compare_add_txt_col(idx, size_formatting(field[:name], val), "", "", style)
+      compare_add_txt_col(idx, size_formatting(field[:name], val), "", style)
     end
   end
 
@@ -1695,7 +1695,7 @@ module ApplicationController::Compare
       compare_add_txt_col(idx, _("(missing)"))
     else
       style = "color:#{base_fld.nil? ? passed_text_color : failed_text_color};"
-      compare_add_txt_col(idx, _("(missing)"), "", "", style)
+      compare_add_txt_col(idx, _("(missing)"), "", style)
     end
   end
 
@@ -1758,14 +1758,14 @@ module ApplicationController::Compare
         row.merge!(compare_add_txt_col(idx, val))
       else
         if base_val == val
-          style = "color:#403990;font-weight:bold;"
+          style = "color:#403990;"
           img_bkg = "cell-stripe"
         else
-          style = "color:#21a0ec;font-weight:bold;"
+          style = "color:#21a0ec;"
           img_bkg = ""
           unset_same_flag
         end
-        row.merge!(compare_add_txt_col(idx, val, "", img_bkg, style))
+        row.merge!(compare_add_txt_col(idx, val, img_bkg, style))
       end
     end
     row
