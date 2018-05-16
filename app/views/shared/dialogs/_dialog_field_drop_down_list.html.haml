@@ -37,5 +37,8 @@
       });
 
 - else
+  - select_values = field.values.collect(&:reverse)
+  - selected ||= wf.value(field.name)
+
   = h(field.value.nil? ? "<None>" : dialog_dropdown_selected_value(field))
 
