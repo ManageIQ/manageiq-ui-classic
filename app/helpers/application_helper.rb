@@ -1094,6 +1094,7 @@ module ApplicationHelper
                         container_service
                         container_template
                         container_topology
+                        ems_block_storage
                         ems_cloud
                         ems_cluster
                         ems_container
@@ -1101,6 +1102,7 @@ module ApplicationHelper
                         ems_infra_dashboard
                         ems_middleware
                         ems_network
+                        ems_object_storage
                         ems_physical_infra
                         ems_storage
                         infra_topology
