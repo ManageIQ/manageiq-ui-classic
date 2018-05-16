@@ -5,31 +5,40 @@ module OpsController::Settings::LabelTagMapping
 
   # TODO: Multi-provider support is hacky:
   # --------------------------------------
-  # Currently we store in labeled_resource_type just the model name, without provider.
-  # It's not even always a model name, sometimes fake string like "Vm" -
+  # Currently we store in labeled_resource_type an arbitrary string that
+  # sometimes looks like a model name, sometimes fake string like "Vm" -
   # all that matters is these strings match what refresh passes to `map_labels`.
   #
   # In any case, this requires different providers use disjoint sets of strings.
-  # This const is arranged as a model => provider hash so we can figure the provider
-  # when editing an existing mapping.
-  MAPPABLE_ENTITIES = {
-    nil                   => nil, # map all entities
-    "Vm"                  => "Amazon",
-    "VmAzure"             => "Azure",
-    "Image"               => "Amazon",
-    "ContainerProject"    => "Kubernetes",
-    "ContainerRoute"      => "Kubernetes",
-    "ContainerNode"       => "Kubernetes",
-    "ContainerReplicator" => "Kubernetes",
-    "ContainerService"    => "Kubernetes",
-    "ContainerGroup"      => "Kubernetes",
-    "ContainerBuild"      => "Kubernetes"
-  }.freeze
+  MappableEntity = Struct.new(:prefix, :model)
 
-  # TODO: support per-provider "All Amazon" etc?
-  # Currently we have only global "All".  For backward compatibility the categories
-  # are named "kubernetes::..."
-  ALL_PREFIX = 'kubernetes'.freeze
+  MAPPABLE_ENTITIES = {
+    # TODO: support per-provider "All Amazon" etc?
+    # Currently we have only global "All".
+    # Global "All" categories are named "kubernetes::..." for backward compatibility.
+    nil                   => MappableEntity.new("kubernetes::",
+                                                nil),
+    "Vm"                  => MappableEntity.new("amazon:vm:",
+                                                "ManageIQ::Providers::Amazon::CloudManager::Vm"),
+    "VmAzure"             => MappableEntity.new("azure:vm:",
+                                                "ManageIQ::Providers::Azure::CloudManager::Vm"),
+    "Image"               => MappableEntity.new("amazon:image:",
+                                                "ManageIQ::Providers::Amazon::CloudManager::Template"),
+    "ContainerProject"    => MappableEntity.new("kubernetes:container_project:",
+                                                "ContainerProject"),
+    "ContainerRoute"      => MappableEntity.new("kubernetes:container_route:",
+                                                "ContainerRoute"),
+    "ContainerNode"       => MappableEntity.new("kubernetes:container_node:",
+                                                "ContainerNode"),
+    "ContainerReplicator" => MappableEntity.new("kubernetes:container_replicator:",
+                                                "ContainerReplicator"),
+    "ContainerService"    => MappableEntity.new("kubernetes:container_service:",
+                                                "ContainerService"),
+    "ContainerGroup"      => MappableEntity.new("kubernetes:container_group:",
+                                                "ContainerGroup"),
+    "ContainerBuild"      => MappableEntity.new("kubernetes:container_build:",
+                                                "ContainerBuild"),
+  }.freeze
 
   def label_tag_mapping_edit
     case params[:button]
@@ -80,16 +89,7 @@ module OpsController::Settings::LabelTagMapping
 
   def entity_ui_name_or_all(entity)
     if entity
-      provider = MAPPABLE_ENTITIES[entity]
-      model = case entity
-              when 'Vm', 'VmAzure'
-                "ManageIQ::Providers::#{provider}::CloudManager::Vm"
-              when 'Image'
-                "ManageIQ::Providers::#{provider}::CloudManager::Template"
-              else
-                entity
-              end
-
+      model = MAPPABLE_ENTITIES[entity].model
       ui_lookup(:model => model)
     else
       _("<All>")
@@ -171,15 +171,8 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_add(entity, label_name, cat_description)
-    if entity.nil?
-      provider = ALL_PREFIX
-      entity_str = ''
-    else
-      provider = MAPPABLE_ENTITIES[entity].downcase.inquiry
-      entity_str = (provider.azure? && entity.sub(/Azure$/, '') || entity).underscore
-    end
-
-    cat_name = "#{provider}:#{entity_str}:" + Classification.sanitize_name(label_name.tr("/", ":"))
+    cat_prefix = MAPPABLE_ENTITIES[entity].prefix
+    cat_name = cat_prefix + Classification.sanitize_name(label_name.tr("/", ":"))
 
     # UI currently can't allow 2 mappings for same (entity, label).
     if Classification.find_by_name(cat_name)
