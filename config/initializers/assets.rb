@@ -14,4 +14,6 @@ Rails.application.config.assets.precompile += %w(
   jquery_overrides.js
   remote_consoles/*.js
   remote_console.js
+
+  pdf_summary.scss
 )
