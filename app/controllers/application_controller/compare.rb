@@ -1153,10 +1153,11 @@ module ApplicationController::Compare
       elsif fld[:_match_]
         img_bkg = "cell-bkg-plain-no-shade"
       else
+        style = "color: #21a0ec;" if fld[:_match_] == false
         img_bkg = "cell-bkg-plain-mark-txt-no-shade"
         unset_same_flag
       end
-      row.merge!(drift_add_txt_col(idx, val, img_bkg))
+      row.merge!(drift_add_txt_col(idx, val, img_bkg, style))
     end
     row
   end
@@ -1180,8 +1181,12 @@ module ApplicationController::Compare
     {"col#{idx + 1}".to_sym => html}
   end
 
-  def drift_add_txt_col(idx, col, img_bkg)
-    html_text = "<div class='#{img_bkg}'>#{col}</div>"
+  def drift_add_txt_col(idx, col, img_bkg, style = nil)
+    html_text = if style
+                  "<div class='#{img_bkg}' style='#{style}'>#{col}</div>"
+                else
+                  "<div class='#{img_bkg}'>#{col}</div>"
+                end
     {"col#{idx + 1}".to_sym => html_text}
   end
 
