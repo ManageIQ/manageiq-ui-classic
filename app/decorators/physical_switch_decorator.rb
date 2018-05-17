@@ -6,7 +6,7 @@ class PhysicalSwitchDecorator < MiqDecorator
   def quadicon
     {
       :top_left     => {
-        :text    => hardware.physical_ports.try(:size).to_i,
+        :text    => physical_network_ports.try(:size).to_i,
         :tooltip => _('Ports')
       },
       :top_right    => {

@@ -29,7 +29,7 @@ module PhysicalSwitchHelper::TextualSummary
   end
 
   def textual_group_ports
-    TextualTable.new(_("Ports"), port_details, [_("Device Name"), _("Device Type"), _("Peer Mac Address")])
+    TextualTable.new(_("Ports"), port_details, [_("Name"), _("Type"), _("Peer MAC Address")])
   end
 
   def textual_ext_management_system
@@ -81,6 +81,6 @@ module PhysicalSwitchHelper::TextualSummary
   end
 
   def port_details
-    @record.hardware.guest_devices.collect { |port| [port.device_name, port.device_type, port.peer_mac_address] }
+    @record.physical_network_ports.collect { |port| [port.port_name, port.port_type, port.peer_mac_address] }
   end
 end
