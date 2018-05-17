@@ -34,6 +34,6 @@ class TreeBuilderAutomationManagerProviders < TreeBuilder
   def x_get_tree_igf_kids(object, count_only)
     count_only_or_objects_filtered(count_only,
                                    ConfiguredSystem.where(:inventory_root_group_id=> object[:id]),
-                                   "hostname", :match_via_descendants => ConfiguredSystem)
+                                   "hostname")
   end
 end

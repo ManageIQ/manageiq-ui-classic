@@ -306,7 +306,7 @@ class ProviderForemanController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      options = {:model => "ConfiguredSystem", :match_via_descendants => 'ConfiguredSystem'}
+      options = {:model => "ConfiguredSystem"}
       if empty_configuration_profile_record?(@configuration_profile_record)
         options[:named_scope] = [[:with_manager, id], [:without_configuration_profile_id]]
       else
