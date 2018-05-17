@@ -1,0 +1,40 @@
+%form#form_div{"name"          => "angularForm",
+               "miq-form"      => true,
+               "model"         => "vm.vmCloudModel",
+               "model-copy"    => "vm.modelCopy"}
+  = render :partial => "layouts/flash_msg"
+  %h3
+    = _('Reconfigure Instance')
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Current Flavor')
+      .col-md-8
+        = @record.flavor.name_with_details if @record.flavor
+    .form-group
+      %label.col-md-2.control-label
+        = _('Choose Flavor')
+      .col-md-8
+        %select{:name        => 'flavor_id',
+                'ng-model'   => 'vm.vmCloudModel.flavor_id',
+                'ng-options' => 'flavor.id as flavor.name for flavor in vm.flavors track by flavor.id',
+                :miqrequired => true,
+                :checkchange => true}
+
+  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
+                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
+                  'paging_div_buttons_type'          => "Submit"}
+
+  - unless @explorer
+    %table{:width => '100%'}
+      %tr
+        %td{:align => 'right'}
+          = button_tag(_("Submit"),
+                       :class        => "btn btn-primary",
+                       "ng-click"    => "submitClicked()",
+                       "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
+                       "ng-class"    => "{'btn-disabled': angularForm.$pristine || angularForm.$invalid}")
+          = button_tag(_("Cancel"),
+                        :class     => "btn btn-default",
+                        "ng-click" => "cancelClicked()")
+
