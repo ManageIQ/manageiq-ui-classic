@@ -272,6 +272,10 @@ module Mixins
           @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_network_adapters?
         end
 
+        def supports_reconfigure_cdroms?
+          @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_cdroms?
+        end
+
         private
 
         # 'true' => true

@@ -382,6 +382,70 @@
 
   %hr
 
+  - if supports_reconfigure_cdroms?
+    %hr
+    %div
+      %h3
+        = _('CD/DVD Adapters')
+        %table{:width => "100%", :align => "bottom"}
+          %tr
+            %td#buttons_on_cds{:align => "right"}
+              %button.btn.btn-primary{:type      => "button",
+                                      "ng-click" => "vm.enableAddCD()",
+                                      :align     => "left",
+                                      "ng-show"  => "!vm.reconfigureModel.cdsEnabled",
+                                      "ng-disabled" => "!vm.reconfigureModel.enableAddCDButton"}= _('Add CD/DVD')
+              %button.btn.btn-default.btn-sm{:type      => "button",
+                                             "ng-click" => "vm.hideAddCD()",
+                                             "ng-show"  => "vm.reconfigureModel.cdsEnabled"}= _('Cancel Add')
+      %table.table.table-striped.table-condensed.table-bordered
+        %thead
+          %th= _('Name')
+          %th= _('ISO')
+          %th{:colspan => 2}= _('Actions')
+        %tr{"ng-repeat" => "cd in vm.reconfigureModel.vmCDs",
+            "ng-class"  => "{'danger': cd.add_remove == 'remove', 'active': cd.add_remove == 'add'}"}
+          %td
+            {{cdAdapter.name}}
+          %td.narrow
+            {{cdAdapter.iso}}
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type         => "button",
+                                                     :style        => "visibility:hidden"}= _('Intentionally left empty')
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-if"    => "cdAdapter.add_remove == ''",
+                                                              "ng-click" => "vm.removeExistingCdAdapter(cdAdapter)"}= _('Delete')
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-if"    => "cdAdapter.add_remove == 'remove'",
+                                                              "ng-disabled" => "!vm.reconfigureModel.enableAddCdAdapterButton",
+                                                              "ng-click" => "vm.cancelAddRemoveCdAdapter(cdAdapter)"}= _('Cancel Delete')
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-if"    => "cdAdapter.add_remove == 'add'",
+                                                              "ng-click" => "vm.cancelAddRemoveCdAdapter(cdAdapter)"}= _('Cancel Add')
+        %tr{"ng-if"       => "vm.reconfigureModel.showDropDownCds",
+            "ng-form"     => "rowForm"}
+          %td
+          %td
+            = select_tag('cds',
+                       options_for_select([["<#{_('Choose')}>", '']] + @cd_options, :disabled => ["<#{_('Choose')}>", nil]),
+                       "ng-model"                    => "vm.reconfigureModel.cd_requested",
+                       "ng-change"                   => "",
+                       "data-width"                  => "auto",
+                       "required"                    => "",
+                       "selectpicker-for-select-tag" => "")
+          %td
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                       "ng-click" => "vm.processAddSelectedCd();rowForm.cd.selectionpicker('refresh')",
+                       "ng-disabled" => "rowForm.cd.$invalid || !vm.reconfigureModel.vmCdAdapters.length >= 4"}= _('Confirm Add')
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-click" => "vm.hideAddCdAdapter()"}= _('Cancel Add')
+
+  %hr
+
+
   %table{:width => "100%", :align => "bottom"}
     %tr
       %td#buttons_on{:align => "right"}
