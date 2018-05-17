@@ -169,7 +169,8 @@ module ApplicationHelper
     "OsProcess"        => "processes",
     "scan_histories"   => "scan_histories",
     "based_volumes"    => "based_volumes",
-    "PersistentVolume" => "persistent_volumes"
+    "PersistentVolume" => "persistent_volumes",
+    "PhysicalSwitch"   => "physical_switches"
   }.freeze
 
   def model_to_report_data

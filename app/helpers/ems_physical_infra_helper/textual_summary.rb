@@ -58,7 +58,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_physical_switches
-    textual_link(@record.physical_switches)
+    textual_link(@record.physical_switches, :as => PhysicalSwitch)
   end
 
   def textual_physical_servers
