@@ -93,7 +93,8 @@ describe('emsCommonFormController', function() {
       provider_id: 111,
       openstack_infra_providers_exist: false,
       provider_region: "ap-southeast-2",
-      default_userid: "default_user"
+      default_userid: "default_user",
+      default_url: "http://host.test/abc"
     };
 
     beforeEach(inject(function(_$controller_) {
@@ -145,6 +146,10 @@ describe('emsCommonFormController', function() {
 
     it('sets the default_password', function() {
       expect($scope.emsCommonModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
+    });
+
+    it('sets the default_url', function() {
+      expect($scope.emsCommonModel.default_url).toEqual("http://host.test/abc");
     });
 
     it('initializes $scope.postValidationModel with credential objects for only those providers that support validation', function () {
