@@ -36,6 +36,7 @@ module.exports = {
 
   output: {
     filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
     path: output.path,
     publicPath: output.publicPath
   },
@@ -69,6 +70,12 @@ module.exports = {
       name: 'vendor',
       minChunks: module => /node_modules/.test(module.resource),
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['miq_v2v_ui/migration'],
+      children: true,
+      async: 'migration-common',
+      minChunks: 2
+    })
   ],
 
   resolve: {
