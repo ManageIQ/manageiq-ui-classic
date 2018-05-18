@@ -26,7 +26,11 @@
       .col-md-8
         = select_tag("currency",
           options_for_select(currency, @edit[:new][:currency]),
-          "data-miq_observe" => {:url => url}.to_json)
+          "data-live-search" => "true",
+          "class"            => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent("currency", "#{url}");
 
   %h3
     = _('Rate Details')
