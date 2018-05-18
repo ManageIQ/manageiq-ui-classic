@@ -34,6 +34,11 @@ describe AnsiblePlaybookController do
     it "renders correct template" do
       is_expected.to render_template(:partial => "layouts/_gtl")
     end
+
+    it 'renders the correct toolbar' do
+      expect(ApplicationHelper::Toolbar::AnsiblePlaybooksCenter).to receive(:definition)
+      post :show_list
+    end
   end
 
   describe "#button" do
