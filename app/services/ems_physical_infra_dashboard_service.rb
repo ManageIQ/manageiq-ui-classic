@@ -1,5 +1,6 @@
 class EmsPhysicalInfraDashboardService < DashboardService
   include UiServiceMixin
+  include Mixins::CheckedIdMixin
 
   def initialize(ems_id, controller)
     @ems_id = ems_id
@@ -7,10 +8,65 @@ class EmsPhysicalInfraDashboardService < DashboardService
     @controller = controller
   end
 
+  def aggregate_status_data
+    {
+      :aggStatus => aggregate_status
+    }.compact
+  end
+
   def recent_servers_data
     {
       :recentServers => recent_servers
     }.compact
+  end
+
+  def aggregate_status
+    {
+      :status   => status_data,
+      :attrData => attributes_data
+    }
+  end
+
+  def attributes_data
+    attributes = %i(physical_servers physical_racks)
+
+    attr_icon = {
+      :physical_servers => 'pficon pficon-cluster',
+      :physical_racks   => 'pficon pficon-enterprise',
+    }
+
+    attr_url = {
+      :physical_servers => 'physical_servers',
+      :physical_racks   => 'physical_racks',
+    }
+
+    attr_hsh = {
+      :physical_servers => 'Servers',
+      :physical_racks   => 'Racks',
+    }
+
+    attr_data = []
+    attributes.each do |attr|
+      attr_data.push(
+        :id           => attr_hsh[attr] + '_' + @ems_id,
+        :iconClass    => attr_icon[attr],
+        :title        => attr_hsh[attr],
+        :count        => @ems.send(attr).length,
+        :href         => get_url(@ems_id, attr_url[attr]),
+        :notification => {
+          :iconClass => 'pficon pficon-error-circle-o',
+          :count     => 0,
+        },
+      )
+    end
+    attr_data
+  end
+
+  def status_data
+    {
+      :iconImage => get_icon(@ems),
+      :largeIcon => true,
+    }
   end
 
   def recent_servers

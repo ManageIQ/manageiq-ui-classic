@@ -1,6 +1,4 @@
 class DashboardService
-  include Mixins::CheckedIdMixin
-
   def display_precision
     0
   end
@@ -40,5 +38,13 @@ class DashboardService
 
   def mem_num(val)
     ((val || 0) / 1024.0)
+  end
+
+  def get_url(ems_id, attr_url)
+    ems_id + '?display=' + attr_url
+  end
+
+  def get_icon(ems)
+    ActionController::Base.helpers.image_path(ems.decorate.fileicon)
   end
 end

@@ -12,11 +12,19 @@ class EmsPhysicalInfraDashboardController < ApplicationController
     end
   end
 
+  def aggregate_status_data
+    render :json => {:data => aggregate_status(params[:id])}
+  end
+
   def recent_servers_data
     render :json => {:data => recent_servers(params[:id])}
   end
 
   private
+
+  def aggregate_status(ems_id)
+    EmsPhysicalInfraDashboardService.new(ems_id, self).aggregate_status_data
+  end
 
   def recent_servers(ems_id)
     EmsPhysicalInfraDashboardService.new(ems_id, self).recent_servers_data

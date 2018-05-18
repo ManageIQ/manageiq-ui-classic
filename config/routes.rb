@@ -1389,6 +1389,7 @@ Rails.application.routes.draw do
         show
         data
         recent_servers_data
+        aggregate_status_data
       )
     },
 
