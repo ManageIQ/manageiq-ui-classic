@@ -34,8 +34,9 @@ describe EmsBlockStorageController do
   describe '#show_list' do
     render_views
 
-    it 'renders the Block Storage Managers Toolbar' do
-      expect(ApplicationHelper::Toolbar::GtlView).to receive(:definition)
+    it 'renders the view and the Block Storage Managers toolbar' do
+      expect(ApplicationHelper::Toolbar::GtlView).to receive(:definition).and_call_original
+      expect(ApplicationHelper::Toolbar::EmsBlockStoragesCenter).to receive(:definition).and_call_original
       post :show_list
     end
   end
