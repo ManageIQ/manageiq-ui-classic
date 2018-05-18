@@ -44,7 +44,7 @@ class AuthKeyPairCloudController < ApplicationController
     assert_privileges("auth_key_pair_cloud_download")
     disable_client_cache
     @key_pair = find_record_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, params[:id])
-    filename = @key_pair.fingerprint.gsub(/:/, '')
+    filename = @key_pair.fingerprint.delete(':', '')
     send_data(@key_pair.auth_key, :filename => "#{filename}.key")
   end
 

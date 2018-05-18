@@ -2,7 +2,7 @@ class ApplicationHelper::Button::AuthKeyPairCloudDownload < ApplicationHelper::B
   needs :@record
 
   def disabled?
-    if !@record.auth_key.blank?
+    if @record.auth_key.present?
       return false
     end
     @error_message = _('Private key download is unavailable for this keypair.')
