@@ -142,6 +142,7 @@
     delete o.data;
     delete o.body;
     delete o.skipErrors;
+    delete o.transformResponse;
 
     if (o.skipTokenRenewal) {
       o.headers = o.headers || {};
@@ -203,6 +204,11 @@
         return ret;
       }
 
+      // apply a custom transformation
+      if (options.transformResponse) {
+        ret = ret.then(options.transformResponse);
+      }
+
       // true means skip all of them - no error modal at all
       if (options.skipErrors === true) {
         return ret;
@@ -249,6 +255,9 @@
   }
 })(window);
 
+
+// v2v
+window.API = window.vanillaJsAPI;
 
 angular.module('miq.api', [])
 .factory('API', ['$q', function($q) {
