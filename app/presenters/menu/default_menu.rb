@@ -2,6 +2,15 @@
 module Menu
   class DefaultMenu
     class << self
+      def admin_menu_section
+        return nil unless Rails.env.development?
+        Menu::Section.new(
+          :admin_explorer,
+          N_("Admin"),
+          'fa fa-lightbulb-o',
+          [Menu::Item.new('admin_explorer', N_('Admin'), 'something', {:feature => 'something'}, '/ops/explorer')]
+        )
+      end
       def graphql_menu_section
         return nil unless Rails.env.development?
         Menu::Section.new(
@@ -292,7 +301,7 @@ module Menu
       end
 
       def default_menu
-        [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
+        [admin_menu_section, cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, storage_menu_section, control_menu_section, automation_menu_section,
          optimize_menu_section, monitor_menu_section, settings_menu_section, graphql_menu_section, help_menu_section].compact
       end
