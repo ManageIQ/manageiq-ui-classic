@@ -1,7 +1,7 @@
 describe ApplicationHelper::Title do
   context "#title_from_layout" do
     let(:title) { I18n.t('product.name') }
-    subject { helper.title_from_layout(@layout) }
+    subject { helper.productized_title(helper.title_from_layout(@layout)) }
 
     it "when layout is blank" do
       @layout = ""
