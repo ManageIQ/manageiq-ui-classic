@@ -7,7 +7,7 @@ describe ReportController do
     before do
       user = FactoryGirl.create(:user_with_group)
       allow(user).to receive(:get_timezone).and_return(Time.zone)
-      allow(user).to receive(:admin_user?).and_return(true)
+      allow(user).to receive(:report_admin_user?).and_return(true)
       login_as user
       allow(controller).to receive(:current_user).and_return(user)
 
