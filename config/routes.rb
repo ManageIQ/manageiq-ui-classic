@@ -146,6 +146,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         ems_form_choices
+        download_private_key
       ) + compare_get,
       :post => %w(
         button

@@ -13,6 +13,13 @@ class ApplicationHelper::Toolbar::AuthKeyPairCloudCenter < ApplicationHelper::To
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: The selected Key Pair and ALL of its components will be permanently removed!")),
+        button(
+          :auth_key_pair_cloud_download,
+          'pficon pficon-save fa-lg',
+          t = N_('Download private key'),
+          t,
+          :url => "/download_private_key",
+          :klass => ApplicationHelper::Button::AuthKeyPairCloudDownload),
       ]
     ),
   ])
