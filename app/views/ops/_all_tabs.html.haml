@@ -26,8 +26,8 @@
         - if cur_svr_id == my_server.id
           = miq_tab_header("settings_custom_logos", @sb[:active_tab]) do
             = _("Custom Logos")
-          = miq_tab_header("settings_advanced", @sb[:active_tab]) do
-            = _("Advanced")
+        = miq_tab_header("settings_advanced", @sb[:active_tab]) do
+          = _("Advanced")
       .tab-content
         = miq_tab_content("settings_server", @sb[:active_tab]) do
           = render :partial => "settings_server_tab"
@@ -38,8 +38,8 @@
         - if cur_svr_id == my_server.id
           = miq_tab_content("settings_custom_logos", @sb[:active_tab]) do
             = render :partial => "settings_custom_logos_tab"
-          = miq_tab_content("settings_advanced", @sb[:active_tab]) do
-            = render :partial => "settings_advanced_tab"
+        = miq_tab_content("settings_advanced", @sb[:active_tab]) do
+          = render :partial => "settings_advanced_tab"
     - else
       - if selected_settings_tree?(x_node)
         .tab-content

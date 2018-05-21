@@ -251,6 +251,29 @@ module OpsController::Settings::Common
 
   PASSWORD_MASK = '●●●●●●●●'.freeze
 
+  def fetch_advanced_settings(resource)
+    @edit = {}
+    @edit[:current] = {:file_data => VMDB::Config.get_file(resource)}
+    @edit[:new] = copy_hash(@edit[:current])
+    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    @in_a_form = true
+  end
+
+  def save_advanced_settings(resource)
+    result = VMDB::Config.save_file(@edit[:new][:file_data], resource) # Save the config file
+    if result != true # Result contains errors?
+      result.each do |field, msg|
+        add_flash("#{field.to_s.titleize}: #{msg}", :error)
+      end
+      @changed = (@edit[:new] != @edit[:current])
+    else
+      add_flash(_("Configuration changes saved"))
+      @changed = false
+    end
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype)
+  end
+
   def find_or_new_subscription(id = nil)
     id.nil? ? PglogicalSubscription.new : PglogicalSubscription.find(id)
   end
@@ -424,19 +447,8 @@ module OpsController::Settings::Common
     when "settings_custom_logos"                                      # Custom Logo tab
       @changed = (@edit[:new] != @edit[:current].config)
       @update = VMDB::Config.new("vmdb")                    # Get the settings object to update it
-    when "settings_advanced"                                          # Advanced manual yaml editor tab
-      result = VMDB::Config.save_file(@edit[:new][:file_data])  # Save the config file
-      if result != true                                         # Result contains errors?
-        result.each do |field, msg|
-          add_flash("#{field.to_s.titleize}: #{msg}", :error)
-        end
-        @changed = (@edit[:new] != @edit[:current])
-      else
-        add_flash(_("Configuration changes saved"))
-        @changed = false
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
+    when "settings_advanced" # Advanced manual yaml editor tab
+      save_advanced_settings(MiqServer.find(@sb[:selected_server_id]))
       return
     end
     if !%w(settings_advanced settings_rhn_edit settings_workers).include?(@sb[:active_tab]) &&
@@ -1079,12 +1091,8 @@ module OpsController::Settings::Common
       @logo_file = @@logo_file
       @login_logo_file = @@login_logo_file
       @in_a_form = true
-    when "settings_advanced"                                  # Advanced yaml editor
-      @edit = {}
-      @edit[:current] = {:file_data => VMDB::Config.get_file}
-      @edit[:new] = copy_hash(@edit[:current])
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      @in_a_form = true
+    when "settings_advanced" # Advanced yaml editor
+      fetch_advanced_settings(MiqServer.find(@sb[:selected_server_id]))
     end
     if %w(settings_server settings_authentication settings_custom_logos).include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"

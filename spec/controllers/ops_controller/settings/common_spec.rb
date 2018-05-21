@@ -1,5 +1,11 @@
 describe OpsController do
   context "OpsController::Settings::Common" do
+    before do
+      MiqDatabase.seed
+      MiqRegion.seed
+      EvmSpecHelper.local_miq_server(:zone => Zone.seed)
+    end
+
     context "SmartProxy Affinity" do
       before do
         @zone = FactoryGirl.create(:zone, :name => 'zone1')
@@ -133,12 +139,6 @@ describe OpsController do
     end
 
     context "#settings_update" do
-      before do
-        MiqDatabase.seed
-        MiqRegion.seed
-        EvmSpecHelper.local_miq_server(:zone => Zone.seed)
-      end
-
       it "won't render form buttons after rhn settings submission" do
         session[:edit] = {
           :key => "settings_rhn_edit__rhn_edit",
@@ -156,6 +156,7 @@ describe OpsController do
                                                                {:settings_tree => {:active_node => 'root'}},
                                                :active_tree => :settings_tree,
                                                :active_tab  => 'settings_rhn_edit')
+        allow(controller).to receive(:x_node).and_return("root")
         controller.instance_variable_set(:@_params, :id => 'rhn_edit', :button => "save")
         controller.send(:settings_update)
         expect(response).to render_template('ops/_settings_rhn_tab')
@@ -237,6 +238,61 @@ describe OpsController do
           controller.send(:zone_save_ntp_server_settings, zone)
           controller.send(:settings_get_info, "z-#{zone.id}")
           expect(assigns(:ntp_servers)).to eq("1.example.com, 2.example.com")
+        end
+      end
+
+      context 'get advanced config settings' do
+        it 'for selected server' do
+          miq_server = FactoryGirl.create(:miq_server)
+          enc_pass = MiqPassword.encrypt('pa$$word')
+          Vmdb::Settings.save!(
+            miq_server,
+            :http_proxy => {
+              :default => {
+                :host     => "proxy.example.com",
+                :user     => "user",
+                :password => enc_pass,
+                :port     => 80
+              }
+            }
+          )
+          miq_server.reload
+          allow(controller).to receive(:x_node).and_return("svr-#{miq_server.id}")
+          controller.instance_variable_set(:@sb, :active_tab => 'settings_advanced')
+          controller.send(:settings_get_info, "svr-#{miq_server.id}")
+          config = assigns(:edit)[:current][:file_data]
+          expect(config).to include(":host: proxy.example.com")
+          expect(config).to include(":user: user")
+          expect(config).to include(":password: #{enc_pass}")
+          expect(config).to include(":port: 80")
+        end
+      end
+    end
+
+    describe '#settings_update_save' do
+      context "save config settings" do
+        it 'for selected server' do
+          miq_server = FactoryGirl.create(:miq_server)
+          allow(controller).to receive(:x_node).and_return("svr-#{miq_server.id}")
+          controller.instance_variable_set(:@sb,
+                                           :active_tab         => 'settings_advanced',
+                                           :selected_server_id => miq_server.id)
+          controller.instance_variable_set(:@_params,
+                                           :id => 'advanced')
+          data = {}
+          data.store_path(:api, :token_ttl, "1.day")
+          data = data.to_yaml
+          controller.instance_variable_set(:@edit,
+                                           :new     => {:file_data => data},
+                                           :current => {:file_data => data},
+                                           :key     => "settings_advanced_edit__#{miq_server.id}")
+          session[:edit] = assigns(:edit)
+          expect(controller).to receive(:render)
+          expect(Vmdb::Settings).to receive(:reload!)
+
+          controller.send(:settings_update_save)
+          controller.send(:fetch_advanced_settings, miq_server)
+          expect(SettingsChange.first).to have_attributes(:key => '/api/token_ttl', :value => "1.day")
         end
       end
     end
