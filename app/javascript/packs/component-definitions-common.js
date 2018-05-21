@@ -18,4 +18,4 @@ addReact('TableListViewWrapper', TableListViewWrapper);
 addReact('GenericGroup', GenericGroup);
 addReact('GenericGroupWrapper', GenericGroupWrapper);
 addReact('TextualSummaryWrapper', TextualSummaryWrapper);
-addReact('VmSnapshotForm', props => <VmSnapshotFormComponent {...props} />);
+addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
