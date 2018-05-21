@@ -276,7 +276,6 @@ class AutomationManagerController < ApplicationController
 
   def cs_provider_node(provider)
     options = {:model                 => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
-               :match_via_descendants => 'ConfigurationScript',
                :named_scope           => [[:with_manager, provider.id]],
                :gtl_dbname            => "automation_manager_configuration_scripts"}
     @show_adv_search = true
@@ -293,7 +292,6 @@ class AutomationManagerController < ApplicationController
     else
       @show_adv_search = false
       options = {:model                 => "ConfiguredSystem",
-                 :match_via_descendants => 'ConfiguredSystem',
                  :named_scope           => [[:with_inventory_root_group, @inventory_group_record.id]],
                  :gtl_dbname            => "automation_manager_configured_systems"}
       process_show_list(options)
