@@ -25,6 +25,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       vLan_requested: '',
       adapterNetwork: '',
       availableAdapterNetworks: [],
+      cdRom: '',
+      vmCDRoms: [],
     };
     vm.cb_disks = false;
     vm.cb_networkAdapters = false;
@@ -41,6 +43,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.vm_vendor = '';
     vm.vm_type = '';
     vm.disk_default_type = '';
+    vm.availableIsoFiles = [];
 
     ManageIQ.angular.scope = vm;
 
