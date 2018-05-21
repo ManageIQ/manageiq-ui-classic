@@ -25,6 +25,25 @@ module OpsHelper
     tree_node.split('-').first == key
   end
 
+  def selected_node_title
+    if selected?(x_node, "z")
+      "Zone"
+    elsif selected?(x_node, "svr")
+      "Server"
+    else
+      "Region"
+    end
+  end
+
+  def selected_node_parent_title
+    return nil if selected?(x_node, "root")
+    if selected?(x_node, "z")
+      "Region"
+    elsif selected?(x_node, "svr")
+      "Zone"
+    end
+  end
+
   def auth_mode_name
     case ::Settings.authentication.mode.downcase
     when 'ldap'

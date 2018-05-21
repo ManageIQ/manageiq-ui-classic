@@ -253,23 +253,23 @@ module OpsController::Settings::Common
 
   def fetch_advanced_settings(resource)
     @edit = {}
-    @edit[:current] = {:file_data => VMDB::Config.get_file(resource)}
+    @edit[:current] = {:file_data => resource.settings_for_resource_yaml}
     @edit[:new] = copy_hash(@edit[:current])
     @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
     @in_a_form = true
   end
 
   def save_advanced_settings(resource)
-    result = VMDB::Config.save_file(@edit[:new][:file_data], resource) # Save the config file
-    if result != true # Result contains errors?
-      result.each do |field, msg|
-        add_flash("#{field.to_s.titleize}: #{msg}", :error)
-      end
-      @changed = (@edit[:new] != @edit[:current])
-    else
-      add_flash(_("Configuration changes saved"))
-      @changed = false
+    resource.add_settings_for_resource_yaml(@edit[:new][:file_data])
+  rescue Vmdb::Settings::ConfigurationInvalid => err
+    err.errors.each do |field, msg|
+      add_flash("#{field.to_s.titleize}: #{msg}", :error)
     end
+    @changed = (@edit[:new] != @edit[:current])
+    javascript_flash
+  else
+    add_flash(_("Configuration changes saved"))
+    @changed = false
     get_node_info(x_node)
     replace_right_cell(:nodetype => @nodetype)
   end
@@ -448,7 +448,15 @@ module OpsController::Settings::Common
       @changed = (@edit[:new] != @edit[:current].config)
       @update = VMDB::Config.new("vmdb")                    # Get the settings object to update it
     when "settings_advanced" # Advanced manual yaml editor tab
-      save_advanced_settings(MiqServer.find(@sb[:selected_server_id]))
+      nodes = x_node.downcase.split("-")
+      resource = if selected?(x_node, "z")
+                   Zone.find(nodes.last)
+                 elsif selected?(x_node, "svr")
+                   MiqServer.find(@sb[:selected_server_id])
+                 else
+                   MiqRegion.my_region
+                 end
+      save_advanced_settings(resource)
       return
     end
     if !%w(settings_advanced settings_rhn_edit settings_workers).include?(@sb[:active_tab]) &&
@@ -904,7 +912,7 @@ module OpsController::Settings::Common
 
   # Load the @edit object from session based on which config screen we are on
   def settings_load_edit
-    if x_node.split("-").first == "z"
+    if selected?(x_node, "z") && @sb[:active_tab] != "settings_advanced"
       # if zone node is selected
       return unless load_edit("#{@sb[:active_tab]}_edit__#{@sb[:selected_zone_id]}", "replace_cell__explorer")
       @prev_selected_svr = session[:edit][:new][:selected_server]
@@ -1173,6 +1181,8 @@ module OpsController::Settings::Common
         @edit[:current] = copy_hash(@edit[:new])
         session[:edit] = @edit
         session[:changed] = false
+      when "settings_advanced"
+        fetch_advanced_settings(MiqRegion.my_region)
       end
     when "xx"
       case nodes[1]
@@ -1216,6 +1226,7 @@ module OpsController::Settings::Common
         end
       end
       smartproxy_affinity_set_form_vars if @sb[:active_tab] == "settings_smartproxy_affinity"
+      fetch_advanced_settings(@record) if @sb[:active_tab] == "settings_advanced"
     end
   end
 

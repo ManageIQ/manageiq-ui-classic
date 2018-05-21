@@ -266,6 +266,31 @@ describe OpsController do
           expect(config).to include(":password: #{enc_pass}")
           expect(config).to include(":port: 80")
         end
+
+        it 'for selected zone' do
+          zone = FactoryGirl.create(:zone)
+          enc_pass = MiqPassword.encrypt('pa$$word')
+          Vmdb::Settings.save!(
+            zone,
+            :http_proxy => {
+              :default => {
+                :host     => "proxy.example.com",
+                :user     => "user",
+                :password => enc_pass,
+                :port     => 80
+              }
+            }
+          )
+          zone.reload
+          allow(controller).to receive(:x_node).and_return("svr-#{zone.id}")
+          controller.instance_variable_set(:@sb, :active_tab => 'settings_advanced')
+          controller.send(:settings_get_info, "z-#{zone.id}")
+          config = assigns(:edit)[:current][:file_data]
+          expect(config).to include(":host: proxy.example.com")
+          expect(config).to include(":user: user")
+          expect(config).to include(":password: #{enc_pass}")
+          expect(config).to include(":port: 80")
+        end
       end
     end
 
@@ -279,9 +304,7 @@ describe OpsController do
                                            :selected_server_id => miq_server.id)
           controller.instance_variable_set(:@_params,
                                            :id => 'advanced')
-          data = {}
-          data.store_path(:api, :token_ttl, "1.day")
-          data = data.to_yaml
+          data = {:api => {:token_ttl => "1.day"}}.to_yaml
           controller.instance_variable_set(:@edit,
                                            :new     => {:file_data => data},
                                            :current => {:file_data => data},
@@ -292,6 +315,28 @@ describe OpsController do
 
           controller.send(:settings_update_save)
           controller.send(:fetch_advanced_settings, miq_server)
+          expect(SettingsChange.first).to have_attributes(:key => '/api/token_ttl', :value => "1.day")
+        end
+
+        it 'for selected zone' do
+          zone = FactoryGirl.create(:zone)
+          allow(controller).to receive(:x_node).and_return("z-#{zone.id}")
+          controller.instance_variable_set(:@sb,
+                                           :active_tab         => 'settings_advanced',
+                                           :selected_server_id => zone.id)
+          controller.instance_variable_set(:@_params,
+                                           :id => 'advanced')
+          data = {:api => {:token_ttl => "1.day"}}.to_yaml
+          controller.instance_variable_set(:@edit,
+                                           :new     => {:file_data => data},
+                                           :current => {:file_data => data},
+                                           :key     => "settings_advanced_edit__#{zone.id}")
+          session[:edit] = assigns(:edit)
+          expect(controller).to receive(:render)
+          expect(Vmdb::Settings).to receive(:reload!)
+
+          controller.send(:settings_update_save)
+          controller.send(:fetch_advanced_settings, zone)
           expect(SettingsChange.first).to have_attributes(:key => '/api/token_ttl', :value => "1.day")
         end
       end
