@@ -188,7 +188,7 @@ class ConfigurationController < ApplicationController
   # Show the users list
   def show_timeprofiles
     build_tabs if params[:action] == "change_tab" || ["cancel", "add", "save"].include?(params[:button])
-    if admin_user?
+    if report_admin_user?
       @timeprofiles = TimeProfile.in_my_region.ordered_by_desc
     else
       @timeprofiles = TimeProfile.in_my_region.for_user(session[:userid]).ordered_by_desc
@@ -254,8 +254,8 @@ class ConfigurationController < ApplicationController
     @timeprofile = TimeProfile.find(params[:id])
     set_form_vars
     @tp_restricted = true if @timeprofile.profile_type == "global" && !admin_user?
-    title = (@timeprofile.profile_type == "global" && !admin_user?) ? _("Time Profile") : _("Edit")
-    add_flash(_("Global Time Profile cannot be edited")) if @timeprofile.profile_type == "global" && !admin_user?
+    title = (@timeprofile.profile_type == "global" && !report_admin_user?) ? _("Time Profile") : _("Edit")
+    add_flash(_("Global Time Profile cannot be edited")) if @timeprofile.profile_type == "global" && !report_admin_user?
     session[:changed] = false
     @in_a_form = true
     drop_breadcrumb(:name => _("%{title} '%{description}'") % {:title       => title,
@@ -277,7 +277,7 @@ class ConfigurationController < ApplicationController
           if tp.description == "UTC"
             timeprofiles.delete(tp.id.to_s)
             add_flash(_("Default Time Profile \"%{name}\" cannot be deleted") % {:name => tp.description}, :error)
-          elsif tp.profile_type == "global" && !admin_user?
+          elsif tp.profile_type == "global" && !report_admin_user?
             timeprofiles.delete(tp.id.to_s)
             add_flash(_("\"%{name}\": Global Time Profiles cannot be deleted") % {:name => tp.description}, :error)
           elsif !tp.miq_reports.empty?
@@ -302,7 +302,7 @@ class ConfigurationController < ApplicationController
       page.replace('timeprofile_days_hours_div',
                    :partial => "timeprofile_days_hours",
                    :locals  => {:disabled => false}) if @redraw
-      if params.key?(:profile_tz) && admin_user?
+      if params.key?(:profile_tz) && report_admin_user?
         if params[:profile_tz].blank?
           page << javascript_hide("rollup_daily_tr")
         else
@@ -424,7 +424,7 @@ class ConfigurationController < ApplicationController
 
     render :json => {:description             => @timeprofile.description,
                      :admin_user              => admin_user?,
-                     :restricted_time_profile => @timeprofile.profile_type == "global" && !admin_user?,
+                     :restricted_time_profile => @timeprofile.profile_type == "global" && !report_admin_user?,
                      :profile_type            => @timeprofile.profile_type || "user",
                      :profile_tz              => @timeprofile.tz.nil? ? "" : @timeprofile.tz,
                      :rollup_daily            => !@timeprofile.rollup_daily_metrics.nil?,

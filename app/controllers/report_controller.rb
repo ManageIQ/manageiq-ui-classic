@@ -546,7 +546,7 @@ class ReportController < ApplicationController
     @export_reports = {}
     user = current_user
     MiqReport.all.each do |rep|
-      if rep.rpt_type == "Custom" && (user.admin_user? || (rep.miq_group && rep.miq_group.id == user.current_group.id))
+      if rep.rpt_type == "Custom" && (user.report_admin_user? || (rep.miq_group && rep.miq_group.id == user.current_group.id))
         @export_reports[rep.name] = rep.id
       end
     end
