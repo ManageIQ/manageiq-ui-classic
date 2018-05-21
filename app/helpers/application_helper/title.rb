@@ -18,7 +18,8 @@ module ApplicationHelper
 
     # Derive the browser title text based on the layout value
     def title_from_layout(layout)
-      return nil if layout.blank?  # no layout, leave title alone
+      # no layout, leave title alone
+      return nil if layout.blank?
 
       case layout
       when "automation_manager"
