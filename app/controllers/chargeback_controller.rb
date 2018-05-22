@@ -101,7 +101,7 @@ class ChargebackController < ApplicationController
         _("Add of new Chargeback Rate was cancelled by the user"))
       get_node_info(x_node)
       @edit = session[:edit] = nil  # clean out the saved info
-      session[:changed] =  false
+      session[:changed] = false
       replace_right_cell
     when "save", "add"
       id = params[:button] == "save" ? params[:id] : "new"
@@ -134,7 +134,7 @@ class ChargebackController < ApplicationController
           add_flash(_("Chargeback Rate \"%{name}\" was saved") % {:name => @rate.description})
         end
         @edit = session[:edit] = nil  # clean out the saved info
-        session[:changed] =  @changed = false
+        session[:changed] = @changed = false
         get_node_info(x_node)
         replace_right_cell(:replace_trees => [:cb_rates])
       else
@@ -554,6 +554,7 @@ class ChargebackController < ApplicationController
   def cb_rate_get_form_vars
     @edit[:new][:description] = params[:description] if params[:description]
     if params[:currency]
+      @edit[:new][:currency] = params[:currency].to_i
       @edit[:new][:code_currency] = ChargebackRateDetailCurrency.find(params[:currency]).code
     end
     @edit[:new][:details].each_with_index do |detail, detail_index|
@@ -562,7 +563,7 @@ class ChargebackController < ApplicationController
         detail[measure] = params[key] if params[key]
       end
       # Add currencies to chargeback_controller.rb
-      detail[:currency] = params[:currency] if params[:currency]
+      detail[:currency] = params[:currency].to_i if params[:currency]
 
       # Save tiers into @edit
       (0..@edit[:new][:num_tiers][detail_index].to_i - 1).each do |tier_index|
