@@ -274,8 +274,18 @@ table.table.table-summary-screen tbody td img {
     width: 26px;
   }
 
+  table.table-expanded thead tr th {
+    height: 150px;
+    position: relative;
+  }
+
   table.table-expanded thead tr th div.quadicon_grid {
-    padding-left: 40px;
+    bottom: 0;
+    height: 80px;
+    left: 0; 
+    margin-left: auto;
+    position: absolute;
+    right: 0; 
   }
 
   table.table-compressed thead th,
