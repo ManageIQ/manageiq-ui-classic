@@ -104,12 +104,12 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_get_all
     # Current UI only supports any-value -> category mappings
-    mapping = ContainerLabelTagMapping.in_my_region.where(:label_value => nil)
+    mappings = ContainerLabelTagMapping.in_my_region.where(:label_value => nil)
 
     # This renders into label_tag_mapping_form view, fields are different from other
     # functions here, notably `:entity` is the translated ui name.
     @lt_mapping = []
-    mapping.each do |m|
+    mappings.each do |m|
       lt_map = {}
       lt_map[:id] = m.id
       lt_map[:entity] = entity_ui_name_or_all(m.labeled_resource_type)
