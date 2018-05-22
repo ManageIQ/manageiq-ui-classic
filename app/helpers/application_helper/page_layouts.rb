@@ -205,4 +205,11 @@ module ApplicationHelper::PageLayouts
     (@lastaction == "show_list" && !session[:menu_click] && show_search.include?(@layout) && !@in_a_form) ||
       (@explorer && x_tree && tree_with_advanced_search? && !@record)
   end
+
+  attr_reader :big_iframe
+
+  # a layout which gives full control over the center, but always provides the navbars and menus - to be overriden per-controller, used by v2v
+  def layout_full_center
+    nil
+  end
 end

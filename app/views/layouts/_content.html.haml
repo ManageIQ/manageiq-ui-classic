@@ -64,6 +64,9 @@
             = render :partial => "layouts/listnav"
           = yield :left
         #custom_left_cell
+- elsif layout_full_center
+  = render :partial => "layouts/vertical_navbar"
+  = render :partial => layout_full_center
 - else
   #center_div{:style => "height: 100%;"}
     = render :partial => center_div_partial
