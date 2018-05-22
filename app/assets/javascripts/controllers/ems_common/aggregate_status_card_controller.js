@@ -1,6 +1,6 @@
 /* global miqHttpInject */
 
-angular.module( 'patternfly.card' ).controller('physicalInfraStatusCardController', ['$scope', '$http', 'miqService', function($scope, $http, miqService) {
+angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', ['$scope', '$http', 'miqService', function($scope, $http, miqService) {
   var vm = this;
 
   var init = function() {
@@ -16,7 +16,7 @@ angular.module( 'patternfly.card' ).controller('physicalInfraStatusCardControlle
   };
 
   init();
-}]).directive('physicalInfraStatusCard', function() {
+}]).directive('aggregateStatusCard', function() {
   return {
     restrict: 'E',
     scope: {

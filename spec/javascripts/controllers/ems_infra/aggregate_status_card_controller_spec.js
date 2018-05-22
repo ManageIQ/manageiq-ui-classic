@@ -66,8 +66,7 @@ describe('aggregateStatusCardController gets data and', function() {
       $controller('aggregateStatusCardController as vm', {
         $scope: $scope,
         miqService: miqService,
-        providerId: 1000000000001,
-        API: API
+        $http: $httpBackend,
       });
     });
     it('in object statuses', function() {

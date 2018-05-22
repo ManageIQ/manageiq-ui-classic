@@ -1,7 +1,7 @@
 = render :partial => "layouts/flash_msg"
 .container-fluid.container-tiles-pf.ems-infra-dashboard
   .row.row-tile-pf
-    = render :partial => "aggregate-status-card"
+    %aggregate-status-card{:provider_id => @record.id, :provider_type => 'ems_infra'}
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
       = render :partial => "utilization-trend-chart"

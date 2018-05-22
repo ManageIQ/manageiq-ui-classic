@@ -1273,6 +1273,7 @@ Rails.application.routes.draw do
         ems_utilization_data
         recent_hosts_data
         recent_vms_data
+        aggregate_status_data
       )
     },
 

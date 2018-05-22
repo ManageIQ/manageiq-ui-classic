@@ -34,6 +34,70 @@ class EmsInfraDashboardService < DashboardService
     }.compact
   end
 
+  def aggregate_status_data
+    {
+      :aggStatus => aggregate_status
+    }.compact
+  end
+
+  def aggregate_status
+    {
+      :status   => status_data,
+      :attrData => attributes_data,
+    }
+  end
+
+  def attributes_data
+    attributes = %i(ems_clusters hosts storages vms miq_templates)
+
+    attr_icon = {
+      :ems_clusters  => 'pficon pficon-cluster',
+      :hosts         => 'pficon pficon-screen',
+      :storages      => 'fa fa-database',
+      :vms           => 'pficon pficon-virtual-machine',
+      :miq_templates => 'pficon pficon-virtual-machine',
+    }
+
+    attr_url = {
+      :ems_clusters  => 'ems_clusters',
+      :hosts         => 'hosts',
+      :storages      => 'storages',
+      :vms           => 'vms',
+      :miq_templates => 'miq_templates',
+    }
+
+    attr_hsh = {
+      :ems_clusters  => @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ? 'Deployment Roles' : 'Clusters',
+      :hosts         => @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ? 'Nodes' : 'Hosts',
+      :storages      => 'Datastores',
+      :vms           => 'VMs',
+      :miq_templates => 'Templates',
+    }
+
+    attr_data = []
+    attributes.each do |attr|
+      attr_data.push(
+        :id           => attr_hsh[attr] + '_' + @ems_id,
+        :iconClass    => attr_icon[attr],
+        :title        => attr_hsh[attr],
+        :count        => @ems.send(attr).length,
+        :href         => get_url(@ems_id, attr_url[attr]),
+        :notification => {
+          :iconClass => 'pficon pficon-error-circle-o',
+          :count     => 0,
+        },
+      )
+    end
+    attr_data
+  end
+
+  def status_data
+    {
+      :iconImage => get_icon(@ems),
+      :largeIcon => true,
+    }
+  end
+
   def heatmaps
     # Get latest hourly rollup for each node.
     cluster_ids = @ems.ems_clusters if @ems.present?

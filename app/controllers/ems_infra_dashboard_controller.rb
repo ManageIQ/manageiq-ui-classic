@@ -32,6 +32,10 @@ class EmsInfraDashboardController < ApplicationController
     render :json => {:data => ems_data(params[:id])}
   end
 
+  def aggregate_status_data
+    render :json => {:data => aggregate_status(params[:id])}
+  end
+
   private
 
   def collect_data(ems_id)
@@ -52,6 +56,10 @@ class EmsInfraDashboardController < ApplicationController
 
   def ems_data(ems_id)
     EmsInfraDashboardService.new(ems_id, self).ems_utilization_data
+  end
+
+  def aggregate_status(ems_id)
+    EmsInfraDashboardService.new(ems_id, self).aggregate_status_data
   end
 
   def get_session_data
