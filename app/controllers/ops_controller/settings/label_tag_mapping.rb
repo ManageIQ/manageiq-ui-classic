@@ -114,7 +114,7 @@ module OpsController::Settings::LabelTagMapping
       lt_map[:id] = m.id
       lt_map[:entity] = entity_ui_name_or_all(m.labeled_resource_type)
       lt_map[:label_name] = m.label_name
-      lt_map[:category] = m.tag.category.description
+      lt_map[:category] = m.tag.classification.description
       @lt_mapping.push(lt_map)
     end
   end
@@ -127,7 +127,7 @@ module OpsController::Settings::LabelTagMapping
     @edit[:key] = "label_tag_mapping_edit__#{@lt_map.id || "new"}"
     @edit[:new][:entity] = @lt_map.labeled_resource_type
     @edit[:new][:label_name] = @lt_map.label_name
-    @edit[:new][:category] = @lt_map.tag.category.description
+    @edit[:new][:category] = @lt_map.tag.classification.description
     @edit[:current] = copy_hash(@edit[:new])
     @edit[:new][:options] = entity_options
     session[:edit] = @edit
@@ -222,7 +222,7 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_delete
     mapping = ContainerLabelTagMapping.find(params[:id])
-    category = mapping.tag.category
+    category = mapping.tag.classification
     label_name = mapping.label_name
 
     deleted = false
