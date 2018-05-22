@@ -202,4 +202,6 @@ module ApplicationHelper::PageLayouts
     (@lastaction == "show_list" && !session[:menu_click] && show_search.include?(@layout) && !@in_a_form) ||
       (@explorer && x_tree && tree_with_advanced_search? && !@record)
   end
+
+  attr_reader :big_iframe
 end
