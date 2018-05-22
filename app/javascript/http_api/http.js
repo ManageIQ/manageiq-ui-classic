@@ -12,6 +12,7 @@ function get(url, options = {}) {
     method: 'GET',
     csrf: true,
     backendName: __('http'),
+    credentials: 'include',
   });
 }
 
@@ -22,5 +23,6 @@ function post(url, data, options = {}) {
     method: 'POST',
     csrf: true,
     backendName: __('http'),
+    credentials: 'include',
   }, data);
 }
