@@ -720,7 +720,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#update_ns" do
+  context "#update_namespace" do
     before do
       stub_user(:features => :all)
       domain = FactoryGirl.create(:miq_ae_domain, :tenant => Tenant.seed)
@@ -752,11 +752,13 @@ describe MiqAeClassController do
       allow(controller).to receive(:find_records_with_rbac).and_return([@namespace])
     end
 
-    it "Should use description in flash message when editing a domain" do
+    it "Should use description in flash message when editing a namespace" do
       controller.instance_variable_set(:@_params,
-                                       :button => "save",
-                                       :id     => @namespace.id)
-      controller.send(:update_ns)
+                                       :button      => "save",
+                                       :name        => 'name',
+                                       :description => 'desc',
+                                       :id          => @namespace.id)
+      controller.send(:update_namespace)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Namespace \"desc\" was saved")
     end

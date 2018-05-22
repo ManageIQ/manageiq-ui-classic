@@ -2045,7 +2045,6 @@ Rails.application.routes.draw do
         form_field_changed
         form_instance_field_changed
         form_method_field_changed
-        form_ns_field_changed
         priority_form_field_changed
         refresh_git_domain
         reload

@@ -28,11 +28,11 @@ ManageIQ.angular.app.component('namespaceForm', {
       }
 
       vm.afterGet = false;
-      if (vm.namespaceId == 'new'){
+      if (vm.namespaceId === 'new') {
         vm.afterGet = true;
         miqService.sparkleOff();
         vm.modelCopy = angular.copy( vm.namespaceModel );
-      } else{
+      } else {
         $http.get('/miq_ae_class/namespace/' + vm.namespaceId)
           .then(getNamespace)
           .catch(miqService.handleFailure);

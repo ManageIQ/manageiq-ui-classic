@@ -23,9 +23,9 @@ describe MiqAeClassController do
     end
   end
 
-  describe "#create_ns" do
+  describe "#create_namespace" do
     it "routes with POST" do
-      expect(post("/miq_ae_class/create_ns")).to route_to("miq_ae_class#create_ns")
+      expect(post("/miq_ae_class/create_namespace")).to route_to("miq_ae_class#create_namespace")
     end
   end
 
@@ -117,12 +117,6 @@ describe MiqAeClassController do
     end
   end
 
-  describe "#form_ns_field_changed" do
-    it "routes with POST" do
-      expect(post("/miq_ae_class/form_ns_field_changed")).to route_to("miq_ae_class#form_ns_field_changed")
-    end
-  end
-
   describe "#reload" do
     it "routes with POST" do
       expect(post("/miq_ae_class/reload")).to route_to("miq_ae_class#reload")
@@ -165,9 +159,9 @@ describe MiqAeClassController do
     end
   end
 
-  describe "#update_ns" do
+  describe "#update_namespace" do
     it "routes with POST" do
-      expect(post("/miq_ae_class/update_ns")).to route_to("miq_ae_class#update_ns")
+      expect(post("/miq_ae_class/update_namespace")).to route_to("miq_ae_class#update_namespace")
     end
   end
 
