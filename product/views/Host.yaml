@@ -42,6 +42,9 @@ include_for_find:
   :compliances: {}
   :tags: {}
 
+# Skip using .references to avoid LEFT JOIN bomb (not needed)
+skip_references: true
+
 # Order of columns (from all tables)
 col_order:
 - name
