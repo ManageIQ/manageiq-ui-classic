@@ -5,7 +5,7 @@ export default function textualSummaryGenericClick(item, event) {
 
   if (item.explorer) {
     $.ajax({
-      data: 'authenticity_token=' + encodeURIComponent($('meta[name=csrf-token]').attr('content')),
+      data: `authenticity_token=${encodeURIComponent($('meta[name=csrf-token]').attr('content'))}`,
       dataType: 'script',
       type: 'post',
       url: item.link,

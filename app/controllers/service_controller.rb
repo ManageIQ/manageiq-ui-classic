@@ -44,7 +44,7 @@ class ServiceController < ApplicationController
 
   # Service show selected, redirect to proper controller
   def show
-    @record = Service.find(params[:id])
+    @record = Service.find(params[:id].to_i)
     @lastaction = "show"
 
     @gtl_url = "/show"
