@@ -291,7 +291,7 @@ module VmHelper::TextualSummary
 
   def textual_vm_template
     vm_template = @record.genealogy_parent
-    h = {:label => _('VM Template'), :icon => "ff ff-template", :value => (vm_template.nil? ? _("None") : vm_template.name)}
+    h = {:label => _('VM Template'), :icon => "pficon pficon-template", :value => (vm_template.nil? ? _("None") : vm_template.name)}
     if vm_template && role_allows?(:feature => "miq_template_show")
       h[:title] = _("Show this VM's Template")
       h[:link]  = url_for_only_path(:controller => 'miq_template', :action => 'show', :id => vm_template)

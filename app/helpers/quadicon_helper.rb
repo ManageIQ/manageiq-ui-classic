@@ -26,7 +26,7 @@ module QuadiconHelper
     'never'                     => {:fonticon => 'pficon pficon-off', :background => '#CC0000'},
     'terminated'                => {:fonticon => 'pficon pficon-off', :background => '#CC0000'},
     'off'                       => {:fonticon => 'pficon pficon-off', :background => '#CC0000'},
-    'template'                  => {:fonticon => 'ff ff-template', :background => '#336699'},
+    'template'                  => {:fonticon => 'pficon pficon-template', :background => '#336699'},
   }.freeze
 
   def self.status_img(status)

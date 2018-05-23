@@ -1,6 +1,6 @@
 class OrchestrationTemplateDecorator < MiqDecorator
   def self.fonticon
-    'ff ff-template'
+    'pficon pficon-template'
   end
 
   def single_quad

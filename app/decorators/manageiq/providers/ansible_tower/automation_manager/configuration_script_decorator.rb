@@ -1,7 +1,7 @@
 module ManageIQ::Providers::AnsibleTower
   class AutomationManager::ConfigurationScriptDecorator < MiqDecorator
     def self.fonticon
-      'ff ff-template'
+      'pficon pficon-template'
     end
 
     def self.fileicon
