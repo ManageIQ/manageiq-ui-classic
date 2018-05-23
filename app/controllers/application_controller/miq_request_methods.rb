@@ -152,7 +152,7 @@ module ApplicationController::MiqRequestMethods
     @edit[:vm_sortdir] ||= "ASC"
     @edit[:vm_sortcol] ||= "name"
     @edit[:prov_type] = "VM Provision"
-    @edit[:hide_deprecated_templates] = true
+    @edit[:hide_deprecated_templates] = true if request.parameters[:controller] == "vm_cloud"
     unless %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
       @edit[:template_kls] = get_template_kls
       templates = Rbac.filtered(@edit[:template_kls].eligible_for_provisioning).sort_by { |a| a.name.downcase }
@@ -404,10 +404,11 @@ module ApplicationController::MiqRequestMethods
       "cpu_total_cores"               => _("CPUs"),
       "mem_cpu"                       => _("Memory"),
       "allocated_disk_storage"        => _("Disk Size"),
-      "deprecated"                    => _("Deprecated"),
       "ext_management_system.name"    => _("Provider"),
       "v_total_snapshots"             => _("Snapshots"),
     }
+
+    headers["deprecated"] = _("Deprecated") if request.parameters[:controller] == "vm_cloud"
 
     # add tenant column header to cloud workflows only
     headers["cloud_tenant"] = _("Tenant") if vms.any? { |vm| vm.respond_to?(:cloud_tenant) }
