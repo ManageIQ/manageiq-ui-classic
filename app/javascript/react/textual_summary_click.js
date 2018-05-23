@@ -1,7 +1,9 @@
 export default function textualSummaryGenericClick(item, event) {
   event.preventDefault();
 
-  if (!item.link) return;
+  if (!item.link) {
+    return;
+  }
 
   if (item.explorer) {
     $.ajax({

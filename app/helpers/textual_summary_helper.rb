@@ -98,11 +98,11 @@ module TextualSummaryHelper
       h[:value] = _("No %{label} have been assigned") % {:label => label}
     else
       h[:value] = tags.sort_by { |category, _assigned| category.downcase }
-                  .collect do |category, assigned|
-                    {:icon  => "fa fa-tag",
-                     :label => category,
-                     :value => assigned}
-                  end
+                      .collect do |category, assigned|
+                        {:icon  => "fa fa-tag",
+                         :label => category,
+                         :value => assigned}
+                      end
     end
     h
   end

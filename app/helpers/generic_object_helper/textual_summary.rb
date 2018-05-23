@@ -44,7 +44,7 @@ module GenericObjectHelper::TextualSummary
       define_singleton_method("textual_#{key}") do
         num = @record.send(key).count
         h = {:label => _("%{label}") % {:label => key}, :value => num}
-        if role_allows?(:feature => "generic_object_view") && num > 0
+        if role_allows?(:feature => "generic_object_view") && num.positive?
           h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => key),
                    :title => _('Show all %{associated_models}') % {:associated_models => key})
         end
