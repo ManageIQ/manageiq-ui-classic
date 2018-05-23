@@ -173,4 +173,38 @@ describe ApplicationHelper, "ToolbarChooser" do
       end
     end
   end
+
+  describe '#center_toolbar_filename_classic' do
+    subject { chooser.send(:center_toolbar_filename_classic) }
+
+    {
+      "manageiq/providers/embedded_ansible/automation_manager/playbook"            => "playbook",
+      "manageiq/providers/embedded_automation_manager/configuration_script_source" => "repository",
+      "manageiq/providers/embedded_automation_manager/authentication"              => "credential"
+    }.each do |layout, screen|
+      context "toolbar for summary screen of Ansible #{screen}" do
+        let(:chooser) { ApplicationHelper::ToolbarChooser.new(nil, nil, :display => "main", :lastaction => "show", :layout => layout) }
+
+        it 'returns proper toolbar filename for the screen' do
+          expect(subject).to eq("ansible_#{screen}_center")
+        end
+      end
+
+      context "toolbars for list screens of Ansible #{screen.pluralize}" do
+        let(:chooser) { ApplicationHelper::ToolbarChooser.new(nil, nil, :lastaction => "show_list", :layout => layout) }
+
+        it 'returns proper toolbar filename for the screen' do
+          expect(subject).to eq("ansible_#{screen.pluralize}_center")
+        end
+      end
+
+      context "toolbars for nested list screens of Ansible #{screen.pluralize}" do
+        let(:chooser) { ApplicationHelper::ToolbarChooser.new(nil, nil, :display => screen.pluralize, :lastaction => "show", :layout => layout) }
+
+        it 'returns proper toolbar filename for the screen' do
+          expect(subject).to eq("ansible_#{screen.pluralize}_center")
+        end
+      end
+    end
+  end
 end
