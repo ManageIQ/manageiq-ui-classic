@@ -49,14 +49,14 @@ ManageIQ.angular.app.directive('datetimepicker', function() {
       // formatter
       ctrl.$formatters.push(function(value) {
         if (value) {
-          return moment(value).utc().format(attr.datetimeFormat);
+          return moment(value).format(attr.datetimeFormat);
         }
       });
 
       // parser
       ctrl.$parsers.push(function(value) {
         if (value) {
-          return moment.utc(value, attr.datetimeFormat).toDate();
+          return moment(value, attr.datetimeFormat).toDate();
         }
 
         return null;
