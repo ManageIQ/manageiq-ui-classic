@@ -5,14 +5,19 @@
         = _('Available Fields:')
       %td
     %tr
-      %td{:align => "right", :valign => "top"}
+      %td{:align => "left", :valign => "top"}
         - af = @edit[:new][:model] ? cashed_reporting_available_fields - @edit[:new][:fields] : []
         = select_tag('available_fields[]',
           options_for_select(af),
-          :multiple => true,
-          :style    => "width: 850px;",
-          :size     => 10,
-          :id       => "available_fields")
+          :multiple          => true,
+          "data-width"       => "850px",
+          "data-live-search" => "true",
+          :class             => 'selectpicker',
+          :style             => "overflow-x: scroll;",
+          :id                => "available_fields",
+          :title             => "&lt;#{_('Choose one or more Fields')}&gt;")
+        :javascript
+          miqInitSelectPicker();
       %td
     %tr
       %td.text-center{:style => "padding-top: 15px;"}
