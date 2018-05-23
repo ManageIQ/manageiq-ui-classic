@@ -41,22 +41,20 @@ class EmsPhysicalInfraDashboardService < DashboardService
     }
 
     attr_hsh = {
-      :physical_servers => 'Servers',
-      :physical_racks   => 'Racks',
+      :physical_servers => _('Servers'),
+      :physical_racks   => _('Racks'),
     }
 
     attr_data = []
     attributes.each do |attr|
+      ems_attr = @ems.send(attr)
       attr_data.push(
         :id           => attr_hsh[attr] + '_' + @ems_id,
         :iconClass    => attr_icon[attr],
         :title        => attr_hsh[attr],
-        :count        => @ems.send(attr).length,
+        :count        => ems_attr.length,
         :href         => get_url(@ems_id, attr_url[attr]),
-        :notification => {
-          :iconClass => 'pficon pficon-error-circle-o',
-          :count     => 0,
-        },
+        :notification => notification_data(ems_attr)
       )
     end
     attr_data
@@ -85,6 +83,41 @@ class EmsPhysicalInfraDashboardService < DashboardService
     }
   end
 
+  def notification_data(attrs)
+    valid = 0
+    warning = 0
+    critical = 0
+    attrs.each do |attr|
+      next unless attr.respond_to?(:health_state)
+      case attr.health_state&.downcase
+      when 'critical'
+        critical += 1
+      when 'warning'
+        warning += 1
+      when 'valid'
+        valid += 1
+      end
+    end
+    if critical.positive?
+      icon_class = 'pficon pficon-error-circle-o'
+      count = critical
+    elsif warning.positive?
+      icon_class = 'pficon pficon-warning-circle-o'
+      count = warning
+    elsif valid.positive?
+      icon_class = 'pficon pficon-ok'
+      count = valid
+    else
+      icon_class = 'pficon pficon-error-circle-o'
+      count = 0
+    end
+
+    {
+      :iconClass => icon_class,
+      :count     => count,
+    }
+  end
+
   def recent_records(model)
     all_records = Hash.new(0)
     records = model.where('created_at > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
@@ -94,5 +127,9 @@ class EmsPhysicalInfraDashboardService < DashboardService
       all_records[date] += model.where('created_at = ?', r.created_at).count
     end
     all_records
+  end
+
+  def get_url(ems_id, attr_url)
+    "/ems_physical_infra/#{ems_id}?display=#{attr_url}"
   end
 end

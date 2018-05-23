@@ -1,5 +1,5 @@
 describe('aggregateStatusCardController gets data and', function() {
-  var $scope, vm, $httpBackend, API, miqService;
+  var $scope, vm, $httpBackend, API, miqService, $http;
   var provider = {
     name: 'Provider',
     type: 'provider::vm::vmware',
@@ -8,6 +8,18 @@ describe('aggregateStatusCardController gets data and', function() {
     hosts: 3,
     storages: 4,
     miq_templates: 2,
+  };
+  var aggStatus = {
+    aggStatus: {
+      attrData: {
+        count: 6,
+        href: '16?display=physical_servers',
+        iconClass: 'pficon pficon-cluster',
+        id: 'Servers_16',
+        notification: {iconClass: 'pficon pficon-error-circle-o', count: 0},
+        title: 'Servers',
+      },
+    },
   };
 
   beforeEach(module('ManageIQ'));
@@ -20,13 +32,14 @@ describe('aggregateStatusCardController gets data and', function() {
     });
   });
 
-  beforeEach(inject(function($rootScope, _$controller_, _$httpBackend_, _API_, _miqService_) {
+  beforeEach(inject(function($rootScope, _$controller_, _$httpBackend_, _API_, _miqService_, _$http_) {
     miqService = _miqService_;
     var dummyDocument = document.createElement('div');
     spyOn(document, 'getElementById').and.returnValue(dummyDocument);
     $scope = $rootScope.$new();
     $controller = _$controller_;
     $httpBackend = _$httpBackend_;
+    $http = _$http_;
 
     API = _API_;
     spyOn(API, 'get').and.callFake(function(url){
@@ -54,6 +67,13 @@ describe('aggregateStatusCardController gets data and', function() {
       var response = {success: false, message: 'Fred'};
       return Promise.resolve(response);
     });
+    spyOn($http, 'get').and.callFake(function(url) {
+      var response = { data: { data: {} }};
+      if (url.startsWith('/ems_physical_infra_dashboard/aggregate_status_data/')) {
+        response.data.data = aggStatus;
+      }
+      return Promise.resolve(response);
+    });
   }));
 
   afterEach(function() {
@@ -62,19 +82,22 @@ describe('aggregateStatusCardController gets data and', function() {
   });
 
   describe('data loads successfully', function() {
-    beforeEach(function () {
+    beforeEach(function() {
+      $scope.providerId = 10000001;
+      $scope.providerType = 'ems_physical_infra';
       $controller('aggregateStatusCardController as vm', {
         $scope: $scope,
         miqService: miqService,
-        $http: $httpBackend,
+        $http: $http,
       });
     });
     it('in object statuses', function() {
-      setTimeout(function() {
-        for (var entity in $scope.vm.AggStatus) {
-          expect(vm.AggStatus[entity].count).toBeGreaterThan(0);
-        };
-      });
+      var aggStatusData = $scope.vm.AggStatus;
+      for (var entity in aggStatusData) {
+        if (aggStatusData.hasOwnProperty(entity)) {
+          expect($scope.vm.AggStatus[entity].count).toBeGreaterThan(0);
+        }
+      }
     });
   });
 });

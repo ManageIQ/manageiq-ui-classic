@@ -67,11 +67,11 @@ class EmsInfraDashboardService < DashboardService
     }
 
     attr_hsh = {
-      :ems_clusters  => @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ? 'Deployment Roles' : 'Clusters',
-      :hosts         => @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ? 'Nodes' : 'Hosts',
-      :storages      => 'Datastores',
-      :vms           => 'VMs',
-      :miq_templates => 'Templates',
+      :ems_clusters  => @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ? _('Deployment Roles') : _('Clusters'),
+      :hosts         => @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ? _('Nodes') : _('Hosts'),
+      :storages      => _('Datastores'),
+      :vms           => _('VMs'),
+      :miq_templates => _('Templates'),
     }
 
     attr_data = []
@@ -211,5 +211,9 @@ class EmsInfraDashboardService < DashboardService
 
   def openstack?
     @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
+  end
+
+  def get_url(ems_id, attr_url)
+    "/ems_infra/#{ems_id}?display=#{attr_url}"
   end
 end
