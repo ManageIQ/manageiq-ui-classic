@@ -496,6 +496,7 @@ module OpsController::Diagnostics
   # Collect the current logs from the selected zone or server
   def logs_collect(options = {})
     options[:support_case] = params[:support_case] if params[:support_case]
+    options[:include_automate_models_and_dialogs] = ::Settings.log.collection.include_automate_models_and_dialogs
     obj, id  = x_node.split("-")
     assert_privileges("#{obj == "z" ? "zone_" : ""}collect_logs")
     klass    = obj == "svr" ? MiqServer : Zone
