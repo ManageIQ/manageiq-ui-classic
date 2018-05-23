@@ -4,7 +4,7 @@ describe AnsibleRepositoryController do
     login_as FactoryGirl.create(:user_admin)
   end
 
-  context "show" do
+  describe "#show" do
     let(:repository) { FactoryGirl.create(:embedded_ansible_configuration_script_source) }
     subject { get :show, :params => {:id => repository.id} }
     render_views
@@ -18,7 +18,7 @@ describe AnsibleRepositoryController do
     end
   end
 
-  context "showList" do
+  describe "#show_list" do
     let(:repository) { FactoryGirl.create(:embedded_ansible_configuration_script_source) }
     subject { get :show_list, :params => {} }
     render_views
@@ -29,6 +29,11 @@ describe AnsibleRepositoryController do
 
     it "render view for list of repositories" do
       is_expected.to render_template(:partial => "layouts/_gtl")
+    end
+
+    it 'renders the correct toolbar' do
+      expect(ApplicationHelper::Toolbar::AnsibleRepositoriesCenter).to receive(:definition)
+      post :show_list
     end
   end
 
@@ -118,6 +123,19 @@ describe AnsibleRepositoryController do
 
       it 'calls tag method' do
         expect(controller).to receive(:tag).with(controller.class.model)
+        controller.send(:button)
+      end
+    end
+
+    context 'tagging one or more playbooks from nested list' do
+      let(:params) { {:pressed => "embedded_configuration_script_payload_tag"} }
+
+      before do
+        controller.instance_variable_set(:@display, "playbooks")
+      end
+
+      it 'calls tag method' do
+        expect(controller).to receive(:tag).with(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
         controller.send(:button)
       end
     end

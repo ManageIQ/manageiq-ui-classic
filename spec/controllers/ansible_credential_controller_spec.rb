@@ -28,6 +28,11 @@ describe AnsibleCredentialController do
     it "renders correct template" do
       is_expected.to render_template(:partial => "layouts/_gtl")
     end
+
+    it 'renders the correct toolbar' do
+      expect(ApplicationHelper::Toolbar::AnsibleCredentialsCenter).to receive(:definition)
+      post :show_list
+    end
   end
 
   describe '#button' do
@@ -67,6 +72,19 @@ describe AnsibleCredentialController do
 
       it 'calls tag method' do
         expect(controller).to receive(:tag).with(controller.class.model)
+        controller.send(:button)
+      end
+    end
+
+    context 'tagging one or more ansible repositories from nested list' do
+      let(:params) { {:pressed => "ansible_repository_tag"} }
+
+      before do
+        controller.instance_variable_set(:@display, "repositories")
+      end
+
+      it 'calls tag method' do
+        expect(controller).to receive(:tag).with(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
         controller.send(:button)
       end
     end
