@@ -129,7 +129,7 @@ describe OpsController do
     let(:user) { FactoryGirl.create(:user_with_group) }
     let(:group) { FactoryGirl.create(:miq_group) }
 
-    pending "should set current_group for new item" do
+    it "should set current_group for new item" do
       new_user_edit(
         :name     => 'Full name',
         :userid   => 'username',
@@ -139,8 +139,7 @@ describe OpsController do
       )
 
       controller.instance_variable_set(:@_params, :typ    => nil,
-                                                  :button => 'add',
-                                                  :id     => user.id)
+                                                  :button => 'add')
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it returned success
@@ -148,11 +147,11 @@ describe OpsController do
       expect(messages).to include(match(/was saved/i))
 
       # make sure current_group is set and saved
-      user.reload
-      expect(user.current_group.id).to eq(group.id)
+      new_user = User.where(:userid => 'username').first
+      expect(new_user.current_group.id).to eq(group.id)
     end
 
-    pending "should set current_group when editing" do
+    it "should set current_group when editing" do
       existing_user_edit(user, :group => group.id.to_s)
 
       controller.instance_variable_set(:@_params, :typ    => nil,
