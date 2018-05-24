@@ -1,4 +1,5 @@
 require 'openssl'
+require 'webrick/httputils'
 
 module Mixins
   module EmsCommonAngular
@@ -128,7 +129,7 @@ module Mixins
         connect_opts = [MiqPassword.encrypt(params[:amqp_password]), params.to_hash.symbolize_keys.slice(*OPENSTACK_AMQP_PARAMS)] if params[:cred_type] == "amqp"
         connect_opts
       when 'ManageIQ::Providers::Amazon::CloudManager'
-        uri = URI.parse(params[:default_url])
+        uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
         [user, password, :EC2, params[:provider_region], ems.http_proxy_uri, true, uri]
       when 'ManageIQ::Providers::Azure::CloudManager'
         [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region]]
@@ -651,7 +652,7 @@ module Mixins
       end
 
       if ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager)
-        uri = URI.parse(params[:default_url])
+        uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
         default_endpoint = {:role => :default, :hostname => uri.host, :port => uri.port, :path => uri.path, :url => params[:default_url]}
       end
 
