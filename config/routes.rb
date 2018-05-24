@@ -1368,6 +1368,24 @@ Rails.application.routes.draw do
           save_post
     },
 
+    :physical_rack    =>  {
+      :get  =>  %w(
+        download_data
+        perf_top_chart
+        protect
+        show_list
+        show
+      ),
+
+      :post   =>  %w(
+        button
+        show_list
+        quick_search
+        create
+        update
+      )
+    },
+
     :guest_device    =>  {
       :get  =>  %w(
         show_list

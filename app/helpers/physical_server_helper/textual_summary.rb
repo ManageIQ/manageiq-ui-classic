@@ -9,7 +9,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(host ext_management_system)
+      %i(host ext_management_system physical_rack)
     )
   end
 
@@ -56,6 +56,12 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_ext_management_system
     textual_link(ExtManagementSystem.find(@record.ems_id))
+  end
+
+  def textual_physical_rack
+    rack_id = @record.physical_rack_id
+    return nil if rack_id.nil?
+    textual_link(PhysicalRack.find(rack_id))
   end
 
   def textual_name

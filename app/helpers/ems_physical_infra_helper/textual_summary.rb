@@ -14,7 +14,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(physical_switches physical_servers datastores vms physical_servers_with_host)
+      %i(physical_racks physical_switches physical_servers datastores vms physical_servers_with_host)
     )
   end
 
@@ -51,6 +51,10 @@ module EmsPhysicalInfraHelper::TextualSummary
 
   def textual_port
     @record.supports_port? ? {:label => _("API Port"), :value => @record.port} : nil
+  end
+
+  def textual_physical_racks
+    textual_link(@record.physical_racks)
   end
 
   def textual_physical_switches
