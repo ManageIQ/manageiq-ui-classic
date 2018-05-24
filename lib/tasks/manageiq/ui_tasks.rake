@@ -53,6 +53,18 @@ namespace :ui do
     require Rails.root.join("lib", "vmdb", "inflections.rb")
     Vmdb::Inflections.load_inflections
   end
+
+  # Does not require :environment task, see webpack:compile
+  task :load_asset_engine_inflectors do
+    asset_engines.each do |(_, path)|
+      # Load any inflectors the asset_engine might provide.  Assumes
+      # standardized location for them to live.
+      inflector_file = File.expand_path(File.join("config", "initializers", "inflections.rb"), path)
+      if File.exist?(inflector_file)
+        load inflector_file
+      end
+    end
+  end
 end
 
 namespace :webpack do
@@ -71,6 +83,7 @@ namespace :webpack do
       EvmRakeHelper.with_dummy_database_url_configuration do
         Dir.chdir ManageIQ::UI::Classic::Engine.root do
           Rake::Task["ui:load_app_inflectors"].invoke
+          Rake::Task["ui:load_asset_engine_inflectors"].invoke
           Rake::Task["webpack:paths"].invoke
           Rake::Task["webpacker:#{webpacker_task}"].invoke
         end
