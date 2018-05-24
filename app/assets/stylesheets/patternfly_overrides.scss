@@ -755,6 +755,10 @@ td.action > .btn.btn-default {
   }
 }
 
+#errorModal .modal.show {
+  z-index: 2000;
+}
+
 /// force word-break for long text strings in modals
 
 .modal-body p {
