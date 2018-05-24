@@ -1156,6 +1156,7 @@ module ApplicationHelper
                         orchestration_stack
                         physical_infra_topology
                         physical_rack
+                        physical_chassis
                         physical_switch
                         physical_server
                         persistent_volume
