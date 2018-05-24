@@ -3,5 +3,5 @@ describe TreeNode::ServiceResource do
   let(:object) { FactoryGirl.create(:service_resource) }
 
   include_examples 'TreeNode::Node#key prefix', 'sr-'
-  include_examples 'TreeNode::Node#icon', 'ff ff-template'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-template'
 end

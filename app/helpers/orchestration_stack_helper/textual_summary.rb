@@ -78,7 +78,7 @@ module OrchestrationStackHelper::TextualSummary
   def textual_orchestration_template
     template = @record.try(:orchestration_template)
     return nil if template.nil?
-    h = {:label => _('Orchestration Template'), :icon => "ff ff-template", :value => template.name}
+    h = {:label => _('Orchestration Template'), :icon => "pficon pficon-template", :value => template.name}
     if role_allows?(:feature => "orchestration_templates_view")
       h[:title] = _("Show this Orchestration Template")
       h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'stack_orchestration_template')

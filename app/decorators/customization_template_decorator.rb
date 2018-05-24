@@ -1,5 +1,5 @@
 class CustomizationTemplateDecorator < MiqDecorator
   def self.fonticon
-    'ff ff-template'
+    'pficon pficon-template'
   end
 end

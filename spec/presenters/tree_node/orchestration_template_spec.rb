@@ -12,7 +12,7 @@ describe TreeNode::OrchestrationTemplate do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'ot-'
-      include_examples 'TreeNode::Node#icon', "ff ff-template"
+      include_examples 'TreeNode::Node#icon', "pficon pficon-template"
     end
   end
 end
