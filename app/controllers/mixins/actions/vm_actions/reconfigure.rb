@@ -217,7 +217,7 @@ module Mixins
 
           # if only one vm that supports disk reconfiguration is selected, get the disks information
           vmdisks = []
-          @reconfigureitems.first.hardware.disks.each do |disk|
+          @reconfigureitems.first.hardware.disks.sort_by(&:filename).each do |disk|
             next if disk.device_type != 'disk'
             dsize, dunit = reconfigure_calculations(disk.size / (1024 * 1024))
             vmdisks << {:hdFilename  => disk.filename,
@@ -246,7 +246,10 @@ module Mixins
            :socket_count           => socket_count.to_s,
            :cores_per_socket_count => cores_per_socket.to_s,
            :disks                  => vmdisks,
-           :network_adapters       => network_adapters}
+           :network_adapters       => network_adapters,
+           :vm_vendor              => @reconfigureitems.first.vendor,
+           :vm_type                => @reconfigureitems.first.class.name,
+           :disk_default_type      => @reconfigureitems.first.try(:disk_default_type) || 'thin'}
         end
 
         def supports_reconfigure_disks?
@@ -352,11 +355,6 @@ module Mixins
           else
             url = previous_breadcrumb_url.split('/')
             javascript_redirect(:controller => url[1], :action => url[2])
-          end
-
-          if @flash_array
-            javascript_flash
-            return
           end
         end
       end
