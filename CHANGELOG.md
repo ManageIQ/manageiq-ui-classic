@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 86 ending 2018-05-21
+
+### Added
+- page_title - don't require leading ": " in @page_title [(#3965)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3965)
+- Component registry - support both pure function component and class components [(#3941)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3941)
+- Change text color to blue for different columns when displaying Drift for VM [(#3938)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3938)
+- Wrap type-based tooltips in quadicons with ui_lookup [(#3935)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3935)
+- Added React component factory. [(#3931)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3931)
+- Made "Advanced" tab visible for all Server nodes. [(#3925)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3925)
+- Adapting the Network Devices page to the new ports relationship [(#3744)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3744)
+- http helpers for react API to new js [(#3662)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3662)
+- Implementing change password view [(#3294)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3294)
+- Showing authentication status in Physical Provider list [(#3199)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3199)
+
+### Fixed
+- Allow downloading of AuthKeyPair private keys if they are available [(#3957)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3957)
+- Remove :match_via_decendants for ConfiguredSystem::ConfiguredSystem [(#3952)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3952)
+- Update switch ports relationship [(#3949)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3949)
+- React helper [(#3943)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3943)
+- Render the correct toolbar for the infra networking switches [(#3933)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3933)
+- Add backup create/restore to volume list actions [(#3927)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3927)
+- Selection of a dialog is required for a playbook catalog item  [(#3926)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3926)
+- Consistency on toolbar buttons for physical server list page [(#3923)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3923)
+- Add missing gettext into MiqAeCustomizationController [(#3914)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3914)
+- Pass correct credential parameters depending on the credential type [(#3913)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3913)
+- Don't require form changes in order to submit backup restore [(#3911)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3911)
+- No need to find tooltip column for charts where tooltip label not used. [(#3908)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3908)
+- Dashboard services - add missing rbac [(#3901)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3901)
+- Display what is being edited in the report menu editor [(#3900)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3900)
+- Fix Ansible Tower Service Catalog new item creation [(#3896)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3896)
+- Fix Dialog's API call for Datastore [(#3893)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3893)
+- Disable Look up Group for Amazon Database and External with SAML [(#3881)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3881)
+- Add view selector to Block/Object Storage Managers [(#3871)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3871)
+- Add quad into report data API [(#3853)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3853)
+- Timeprofile copy fix [(#3835)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3835)
+- Chart tooltips should match table [(#3813)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3813)
+- Fix inconstancy of flash messages for Analysis Profiles and Schedules [(#3800)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3800)
+- Fix selecting ALL filter and changing it to default on Physical Infra [(#3797)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3797)
+- Generalized case statement so it responds to the method change in the core [(#3607)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3607)
+
 ## Unreleased as of Sprint 85 ending 2018-05-07
 
 ### Added
