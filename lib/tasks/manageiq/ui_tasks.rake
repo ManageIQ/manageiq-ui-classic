@@ -47,6 +47,14 @@ namespace :update do
   end
 end
 
+namespace :ui do
+  # Does not require :environment task, see webpack:compile
+  task :load_app_inflectors do
+    require Rails.root.join("lib", "vmdb", "inflections.rb")
+    Vmdb::Inflections.load_inflections
+  end
+end
+
 namespace :webpack do
   task :server do
     root = ManageIQ::UI::Classic::Engine.root
@@ -62,6 +70,7 @@ namespace :webpack do
       # 'webpacker:compile') to function.
       EvmRakeHelper.with_dummy_database_url_configuration do
         Dir.chdir ManageIQ::UI::Classic::Engine.root do
+          Rake::Task["ui:load_app_inflectors"].invoke
           Rake::Task["webpack:paths"].invoke
           Rake::Task["webpacker:#{webpacker_task}"].invoke
         end
@@ -124,14 +133,6 @@ unless Rake::Task.task_defined?("webpacker")
   load 'tasks/webpacker/check_node.rake'             # needed by verify_install
   load 'tasks/webpacker/check_yarn.rake'             # needed by verify_install
   load 'tasks/webpacker/check_webpack_binstubs.rake' # needed by verify_install
-end
-
-# This is normally handled by the lib/vmdb/inflectors.rb of manageiq, but might
-# not be loaded if this is called from this repo.  Doesn't hurt (much) to have
-# this here, and shouldn't create duplicates (won't be in place in the booted
-# application).
-ActiveSupport::Inflector.inflections do |inflect|
-  inflect.acronym "ManageIQ"
 end
 
 def asset_engines
