@@ -550,7 +550,7 @@ module ApplicationController::CiProcessing
   def deleteallsnapsvms
     assert_privileges(params[:pressed])
     generic_button_operation('remove_all_snapshots', _('Delete All Snapshots'), vm_button_action,
-                             @explorer ? nil : {:refresh_partial => 'vm_common/config'})
+                             @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
   alias_method :vm_snapshot_delete_all, :deleteallsnapsvms
 
@@ -558,7 +558,7 @@ module ApplicationController::CiProcessing
   def deletesnapsvms
     assert_privileges(params[:pressed])
     generic_button_operation('remove_snapshot', _('Delete Snapshot'), vm_button_action,
-                             @explorer ? nil : {:refresh_partial => 'vm_common/config'})
+                             @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
   alias_method :vm_snapshot_delete, :deletesnapsvms
 
@@ -566,7 +566,7 @@ module ApplicationController::CiProcessing
   def revertsnapsvms
     assert_privileges(params[:pressed])
     generic_button_operation('revert_to_snapshot', _('Revert to a Snapshot'), vm_button_action,
-                             @explorer ? nil : {:refresh_partial => 'vm_common/config'})
+                             @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
   alias_method :vm_snapshot_revert, :revertsnapsvms
 
