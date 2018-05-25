@@ -6,7 +6,7 @@
         = render :partial => "template_form"
       - else
         = render :partial => "layouts/flash_msg"
-        = react 'GenericGroup', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_template_basicinfo), @record)
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_template_basicinfo), @record)
         %hr
         %h3= _('Script')
         = text_area("script1", "data",

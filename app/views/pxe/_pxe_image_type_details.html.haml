@@ -5,4 +5,4 @@
       = render :partial => "pxe_image_type_form"
 
     - else
-      = react 'GenericGroup', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_sysimg_type_basicinfo), @record)
+      = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_sysimg_type_basicinfo), @record)
