@@ -449,33 +449,32 @@ module ReportFormatter
       counter    = 0
       categories = []                      # Store categories and series counts in an array of arrays
       mri.table.data.each_with_index do |r, d_idx|
-        if d_idx > 0 && save_key != r[mri.sortby[0]]
-          save_key = nonblank_or_default(save_key)
+        category_changed = save_key != r[mri.sortby[0]]
+        not_first_iteration = d_idx > 0
+        if not_first_iteration && category_changed
           categories.push([save_key, counter])    # Push current category and count onto the array
           counter = 0
         end
         save_key = r[mri.sortby[0]]
         counter += 1
       end
-      # add the last key/value to the categories and series arrays
-      save_key = nonblank_or_default(save_key)
       categories.push([save_key, counter])        # Push last category and count onto the array
 
-      categories.sort! { |a, b| b.last <=> a.last }
       (keep, show_other) = keep_and_show_other
-      if keep < categories.length                      # keep the cathegories w/ highest counts
-        other = categories.slice!(keep..-1)
-        ocount = other.reduce(0) { |a, e| a + e.last } # sum up and add the other counts
-        categories.push(["Other", ocount]) if show_other
-      end
+      kept_categories = categories
+      kept_categories.reject! { |a| a.first.nil? }
+      kept_categories = kept_categories.sort_by(&:first).take(keep)
+      kept_categories.reverse! if mri.order == "Descending"
+      kept_categories.push(["Other", (categories - kept_categories).reduce(0) { |a, e| a + e.last }]) if show_other
+      kept_categories.map { |cat| [nonblank_or_default(cat.first), cat.last] }
 
-      series = categories.each_with_object(
+      series = kept_categories.each_with_object(
         series_class.new(pie_type? ? :pie : :flat)) do |cat, a|
         a.push(:value => cat.last, :tooltip => "#{cat.first}: #{cat.last}")
       end
 
       # Pie charts put categories in legend, else in axis labels
-      add_axis_category_text(categories)
+      add_axis_category_text(kept_categories)
       add_series(chart_is_2d? ? mri.chart_header_column : nil, series)
     end
 
