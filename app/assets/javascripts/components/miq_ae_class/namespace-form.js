@@ -48,7 +48,8 @@ ManageIQ.angular.app.component('namespaceForm', {
 
     vm.cancelClicked = function() {
       miqService.sparkleOn();
-      var message = vm.newRecord ? __('Add of Namespace cancelled by user.') : sprintf(__('Edit of Namespace \"%s\" cancelled by user.'), vm.namespaceModel.name);
+      var type = vm.aeNsDomain ? __("Domain") : __("Namespace");
+      var message = vm.newRecord ? sprintf(__('Add of %s \"%s\" cancelled by user.'), type, vm.namespaceModel.name) : sprintf(__('Edit of %s \"%s\" cancelled by user.'), type, vm.namespaceModel.name);
       var url = '/miq_ae_class/explorer';
       miqFlashLater({
         message: message,
