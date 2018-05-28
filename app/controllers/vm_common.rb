@@ -186,14 +186,13 @@ module VmCommon
       rec_cls = "vm"
     end
     @gtl_url = "/show"
-    if %w(main summary_only).include?(@display)
+    if %w(main).include?(@display)
       get_tagdata(@record)
       drop_breadcrumb({:name => _("Virtual Machines"),
                        :url  => "/#{rec_cls}/show_list?page=#{@current_page}&refresh=y"}, true)
       drop_breadcrumb(:name => @record.name + _(" (Summary)"), :url => "/#{rec_cls}/show/#{@record.id}")
       @showtype = "main"
       @button_group = rec_cls
-      set_summary_pdf_data if @display == "summary_only"
     elsif @display == "networks"
       drop_breadcrumb(:name => @record.name + _(" (Networks)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")

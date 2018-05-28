@@ -7,8 +7,6 @@ module Mixins
 
       case @display
       # these methods are defined right in GenericShowMixin
-      when "summary_only"
-        show_download
       when "main"
         show_main
 
@@ -62,11 +60,6 @@ module Mixins
 
     def custom_display_call(display)
       public_send(custom_display_method_name(display))
-    end
-
-    def show_download
-      show_main
-      set_summary_pdf_data
     end
 
     def show_main
