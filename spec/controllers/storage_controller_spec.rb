@@ -213,7 +213,7 @@ describe StorageController do
         get :explorer
         expect(response.status).to eq(200)
         expect(response.body).to_not be_empty
-        expect(response).to render_template('shared/summary/_textual')
+        expect(response).to render_template('layouts/_textual_groups_generic')
       end
 
       it " can render storage's miq templates" do

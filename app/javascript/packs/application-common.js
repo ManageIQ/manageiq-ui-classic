@@ -29,6 +29,7 @@ ManageIQ.component = {
   ...helpers,
 };
 
+
 ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;

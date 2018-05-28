@@ -1,9 +1,5 @@
 TextualMultilink = Struct.new(:title, :options) do
-  def template
-    'shared/summary/textual_multilink'
-  end
-
   def locals
-    options.merge(:title => title)
+    {:title => title, :items => options[:items], :component => 'MultilinkTable'}
   end
 end

@@ -32,7 +32,9 @@
       =  @record.updated_at
   .form-group
     .col-md-10
-      = render textual_group_render_options(:smart_management)
+      #tag_group
+      :javascript
+         ManageIQ.component.componentFactory('TagGroup', '#tag_group', #{textual_tags_render_data(@record).to_json});
 
 %hr
 #form_div

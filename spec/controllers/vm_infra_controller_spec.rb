@@ -45,7 +45,7 @@ describe VmInfraController do
 
     post :explorer
 
-    expect(response).to render_template('shared/summary/_textual_tags')
+    expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
     expect(response.body).to match(/VM and Instance &quot;#{vm_vmware.name}&quot;/)
 
     expect(response.status).to eq(200)

@@ -49,7 +49,7 @@ describe ContainerController do
       it do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => "layouts/listnav/_container")
-        is_expected.to render_template('shared/summary/_textual_multilabel')
+        is_expected.to render_template('layouts/_textual_groups_generic')
       end
     end
   end

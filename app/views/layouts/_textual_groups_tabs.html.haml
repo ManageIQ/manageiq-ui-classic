@@ -1,2 +1,3 @@
--# each tab can have different set of boxes
-= render :partial => "layouts/textual_groups_raw", :locals => {:textual_group_list => textual_group_list}
+#textual_summary
+:javascript
+  ManageIQ.component.componentFactory('TextualSummaryWrapper', '#textual_summary', {summary: #{process_textual_info(textual_group_list, @record).to_json}});
