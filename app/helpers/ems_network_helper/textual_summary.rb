@@ -12,7 +12,7 @@ module EmsNetworkHelper::TextualSummary
     TextualGroup.new(
       _("Relationships"),
       %i(
-        parent_ems_cloud cloud_networks cloud_subnets network_routers security_groups floating_ips
+        parent_ems_cloud cloud_tenants cloud_networks cloud_subnets network_routers security_groups floating_ips
         network_ports load_balancers
       )
     )
@@ -103,5 +103,13 @@ module EmsNetworkHelper::TextualSummary
 
   def textual_zone
     {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.try(:name)}
+  end
+
+  def textual_cloud_tenants
+    textual_link(
+      @record.try(:cloud_tenants),
+      :label => _('Cloud Tenants'),
+      :link  => url_for_only_path(:display => 'cloud_tenants')
+    )
   end
 end
