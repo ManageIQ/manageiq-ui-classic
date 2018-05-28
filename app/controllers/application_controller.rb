@@ -371,21 +371,6 @@ class ApplicationController < ActionController::Base
       @explorer = params[:explorer].to_s == "true"
     end
 
-    # if params[:active_tree] && defined? get_node_info
-    #   node_info = get_node_info(x_node, false)
-    #   options.merge!(node_info) if node_info.kind_of?(Hash)
-    # end
-
-    # handle exceptions
-    if params[:model_name]
-      options = case params[:model_name]
-                when 'miq_tasks'
-                  jobs_info
-                else
-                  options
-                end
-    end
-
     if params[:parent_id]
       parent_id = params[:parent_id]
       unless parent_id.nil?
