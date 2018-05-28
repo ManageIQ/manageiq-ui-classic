@@ -47,12 +47,7 @@ class EmsPhysicalInfraController < ApplicationController
   end
 
   def display_physical_servers_with_host
-    nested_list(PhysicalServer, generate_options)
-  end
-
-  def generate_options
-    {:named_scope      => :with_hosts,
-     :breadcrumb_title => _("Physical Servers with Host")}
+    nested_list(PhysicalServer, :named_scope => :with_hosts, :breadcrumb_title => _("Physical Servers with Host"))
   end
 
   def launch_console

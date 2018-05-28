@@ -381,8 +381,6 @@ class ApplicationController < ActionController::Base
       options = case params[:model_name]
                 when 'miq_tasks'
                   jobs_info
-                when 'physical_servers_with_host'
-                  options.merge!(generate_options)
                 else
                   options
                 end
