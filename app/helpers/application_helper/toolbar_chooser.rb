@@ -50,7 +50,7 @@ class ApplicationHelper::ToolbarChooser
     elsif !%w(all_tasks timeline diagnostics my_tasks miq_server usage).include?(@layout) &&
           (!@layout.starts_with?("miq_request")) && @display == "main" &&
           @showtype == "main" && !@in_a_form
-      controller_restful? ? "summary_view_restful_tb" : "summary_view_tb"
+      'summary_view_tb'
     else
       nil
     end
