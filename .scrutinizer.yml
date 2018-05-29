@@ -1,9 +1,6 @@
 build:
   dependencies:
     before:
-    - sudo apt-get -y install cmake;
-    - git clone https://github.com/manageiq/manageiq.git spec/manageiq;
-  tests:
-    override:
       -
-        command: true
+        command: source tools/ci/scrutinizer_before_install.sh
+        idle_timeout: 600
