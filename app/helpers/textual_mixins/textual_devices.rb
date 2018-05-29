@@ -86,6 +86,14 @@ module TextualMixins::TextualDevices
     disks.compact
   end
 
+  def network_name(port)
+    network = ''
+    if port.lan&.switch
+      network = _("Network:") + port.lan.name
+    end
+    network
+  end
+
   def network_attributes
     networks = []
     return networks if @record.hardware.ports.empty?
@@ -95,13 +103,13 @@ module TextualMixins::TextualDevices
       address = port.address
       filename = port.filename
       autodetect = port.auto_detect ? "" : _("Default Adapter")
-      network = ''
-      if port.lan&.switch
-        network = _("Network:") + port.lan.name
-      end
-      desc = [location, address, filename, autodetect, network].compact.join(', ')
+      desc = [location, address, filename, autodetect, network_name(port)].compact.join(', ')
       Device.new(name, desc, nil, port.device_type)
     end
+  end
+
+  def lan_prefix(nic)
+    nic.lan&.switch&.shared? ? _("Distributed ") : ''
   end
 
   def lan_attributes
@@ -109,9 +117,8 @@ module TextualMixins::TextualDevices
     return lan_devices if @record.hardware&.nics&.all? { |nic| nic.lan.nil? }
     @record.hardware.nics.map do |nic|
       next unless nic.lan&.switch
-      prefix = nic.lan&.switch&.shared? ? _("Distributed ") : ''
-      name = prefix + 'Port Group'
-      switch = prefix + _("Switch: ") + nic.lan.switch.name
+      name = lan_prefix(nic) + 'Port Group'
+      switch = lan_prefix(nic) + _("Switch: ") + nic.lan.switch.name
       desc = [switch].compact.join(', ')
       Device.new(name, desc, nil, nic.device_type)
     end
