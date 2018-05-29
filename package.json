@@ -58,8 +58,6 @@
     "resolve-url-loader": "^2.0.2",
     "sass-loader": "~6.0.3",
     "style-loader": "~0.16.1",
-    "ts-loader": "~2.0.3",
-    "typescript": "~2.2.2",
     "webpack": "~3.2.0",
     "webpack-dev-server": "~2.4.2",
     "webpack-manifest-plugin": "~1.1.0",
