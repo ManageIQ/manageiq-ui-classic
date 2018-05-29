@@ -773,7 +773,7 @@ module Mixins
           creds[:prometheus_alerts] = {:auth_key => default_key, :save => (mode != :validate)}
         end
         if params[:virtualization_selection] == 'kubevirt'
-          kubevirt_key = params[:kubevirt_password] ? params[:kubevirt_password] : default_key
+          kubevirt_key = params[:kubevirt_password] ? params[:kubevirt_password] : ems.authentication_key(:kubevirt)
           creds[:kubevirt] = { :auth_key => kubevirt_key, :save => (mode != :validate) }
         end
         creds[:bearer] = {:auth_key => default_key, :save => (mode != :validate)}
