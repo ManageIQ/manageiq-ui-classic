@@ -92,4 +92,27 @@ describe TextualMixins::TextualDevices do
       it { is_expected.not_to be_empty }
     end
   end
+
+  describe "#lan_attributes" do
+    subject { helper.lan_attributes }
+
+    context "without vswitch and portgroup" do
+      let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic)]) }
+      it { is_expected.to be_empty }
+    end
+
+    context "with vswitch and portgroup" do
+      let(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'false') }
+      let(:lan) { FactoryGirl.create(:lan, :name => "VM NFS Network", :switch => switch) }
+      let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic, :lan => lan)]) }
+      it { is_expected.to eq([Device.new("Port Group", "Switch: test_switch1", nil, "ethernet")]) }
+    end
+
+    context "with dvswitch and dvportgroup" do
+      let(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'true') }
+      let(:lan) { FactoryGirl.create(:lan, :name => "VM NFS Network", :switch => switch) }
+      let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic, :lan => lan)]) }
+      it { is_expected.to eq([Device.new("Distributed Port Group", "Distributed Switch: test_switch1", nil, "ethernet")]) }
+    end
+  end
 end
