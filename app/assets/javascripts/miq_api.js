@@ -22,9 +22,15 @@
 (function() {
   function API() {
   }
+  function http() {
+  }
 
-  var urlOnly = function(method) {
+  var urlOnly = function(method, extra) {
     return function(url, options) {
+      if (extra) {
+        options = Object.assign({}, extra, options || {});
+      }
+
       return fetch(url, _.extend({
         method: method,
       }, process_options(options)))
@@ -32,8 +38,12 @@
     };
   };
 
-  var withData = function(method) {
+  var withData = function(method, extra) {
     return function(url, data, options) {
+      if (extra) {
+        options = Object.assign({}, extra, options || {});
+      }
+
       return fetch(url, _.extend({
         method: method,
         body: process_data(data),
@@ -48,6 +58,9 @@
   API.patch = withData('PATCH');
   API.post = withData('POST');
   API.put = withData('PUT');
+
+  http.get = urlOnly('GET', { credentials: 'include', token: false, csrf: true });
+  http.post = withData('POST', { credentials: 'include', token: false, csrf: true });
 
   API.login = function(login, password) {
     API.logout();
@@ -132,6 +145,7 @@
   };
 
   window.vanillaJsAPI = API;
+  window.http = http;
 
 
   function process_options(o) {
@@ -149,10 +163,17 @@
       o.headers['X-Auth-Skip-Token-Renewal'] = 'true';
     }
 
-    if (localStorage.miq_token) {
+    if (localStorage.miq_token && (o.token !== false)) {
       o.headers = o.headers || {};
       o.headers['X-Auth-Token'] = localStorage.miq_token;
     }
+    delete o.token;
+
+    if (o.csrf) {
+      o.headers = o.headers || {};
+      o.headers['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+    }
+    delete o.csrf;
 
     if (o.headers) {
       o.headers = new Headers(o.headers);
