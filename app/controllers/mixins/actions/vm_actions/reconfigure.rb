@@ -20,6 +20,7 @@ module Mixins
           if @reconfigitems.size == 1
             vm = Vm.find(@reconfigitems)
             @vlan_options = get_vlan_options(vm.host_id)
+            @avail_adapter_names = vm.try(:available_adapter_names) || []
           end
 
           unless @explorer
@@ -238,6 +239,10 @@ module Mixins
               lan = Lan.find_by(:id => guest_device.lan_id)
               network_adapters << {:name => guest_device.device_name, :vlan => lan.name, :mac => guest_device.address, :add_remove => ''} unless lan.nil?
             end
+
+            vm.network_ports.order(:name).each do |port|
+              network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+            end
           end
 
           {:objectIds              => reconfigure_ids,
@@ -249,6 +254,7 @@ module Mixins
            :network_adapters       => network_adapters,
            :vm_vendor              => @reconfigureitems.first.vendor,
            :vm_type                => @reconfigureitems.first.class.name,
+           :orchestration_stack_id => @reconfigureitems.first.try(:orchestration_stack_id),
            :disk_default_type      => @reconfigureitems.first.try(:disk_default_type) || 'thin'}
         end
 
