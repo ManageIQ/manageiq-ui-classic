@@ -133,7 +133,7 @@
           %th= _('Size')
           %th= _('Unit')
           %th{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}= _('Dependent')
-          %th{"ng-hide" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('CloudManager')"}= _('Delete Backing')
+          %th{"ng-hide" => "vm.isVmwareCloud()"}= _('Delete Backing')
           %th{"ng-if" => "vm.vm_vendor == 'redhat'"}= _('Bootable')
           - if supports_reconfigure_disksize?
             %th{:colspan => 2}= _('Actions')
@@ -195,7 +195,7 @@
                      "type"      => "checkbox",
                      "name"      => "vm.cb_dependent",
                      "ng-model"  => "vm.reconfigureModel.cb_dependent"}
-            %td{"ng-hide" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('CloudManager')"}
+            %td{"ng-hide" => "vm.isVmwareCloud()"}
             %td{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
               %input{"bs-switch" => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
@@ -255,7 +255,7 @@
                      "switch-active" => "{{disk.add_remove!='add'}}",
                      "ng-readonly"   => "disk.add_remove=='add'",
                      "ng-if"         => "disk.add_remove=='add'"}
-            %td{"ng-hide" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('CloudManager')"}
+            %td{"ng-hide" => "vm.isVmwareCloud()"}
               %input{"bs-switch"     => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"          => "checkbox",
@@ -316,15 +316,18 @@
       %table.table.table-striped.table-condensed.table-bordered
         %thead
           %th= _('Name')
-          %th= _('vLan')
+          %th{"ng-if" => "!vm.isVmwareCloud()"}= _('vLan')
+          %th{"ng-if" => "vm.isVmwareCloud()"}= _('Network')
           %th= _('MAC Address')
           %th{:colspan => 2}= _('Actions')
         %tr{"ng-repeat" => "networkAdapter in vm.reconfigureModel.vmNetworkAdapters",
             "ng-class"  => "{'danger': networkAdapter.add_remove == 'remove', 'active': networkAdapter.add_remove == 'add'}"}
           %td
             {{networkAdapter.name}}
-          %td
+          %td{"ng-if" => "!vm.isVmwareCloud()"}
             {{networkAdapter.vlan}}
+          %td{"ng-if" => "vm.isVmwareCloud()"}
+            {{networkAdapter.network || "#{_('None')}"}}
           %td.narrow
             {{networkAdapter.mac}}
           %td.action-cell
@@ -343,8 +346,24 @@
                                                               "ng-click" => "vm.cancelAddRemoveNetworkAdapter(networkAdapter)"}= _('Cancel Add')
         %tr{"ng-if"       => "vm.reconfigureModel.showDropDownNetwork",
             "ng-form"     => "rowForm"}
-          %td
-          %td
+          %td{"ng-if" => "!vm.isVmwareCloud()"}
+          %td{"ng-if" => "vm.isVmwareCloud()"}
+            = select_tag('adapterIdx',
+                       options_for_select([["<#{_('Choose')}>", '']] + @avail_adapter_names, :disabled => ["<#{_('Choose')}>", nil]),
+                       "ng-model"                    => "vm.reconfigureModel.name",
+                       "ng-change"                   => "",
+                       "data-width"                  => "auto",
+                       "required"                    => "true",
+                       "selectpicker-for-select-tag" => "")
+          %td{"ng-if" => "vm.isVmwareCloud()"}
+            %select{'name'                    => 'adapterNetwork',
+                'ng-model'                    => 'vm.reconfigureModel.adapterNetwork',
+                'ng-options'                  => 'network for network in vm.reconfigureModel.availableAdapterNetworks',
+                'pf-select'                   => true,
+                'selectpicker-for-select-tag' => ''}
+              %option{"value" => ""}
+                = "<#{_('Choose')}>"
+          %td{"ng-hide" => "vm.isVmwareCloud()"}
             = select_tag('vLan',
                        options_for_select([["<#{_('Choose')}>", '']] + @vlan_options, :disabled => ["<#{_('Choose')}>", nil]),
                        "ng-model"                    => "vm.reconfigureModel.vLan_requested",
@@ -356,7 +375,7 @@
           %td.action-cell
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                        "ng-click" => "vm.processAddSelectedNetwork();rowForm.vLan.selectionpicker('refresh')",
-                       "ng-disabled" => "rowForm.vLan.$invalid || !vm.reconfigureModel.vmNetworkAdapters.length >= 4"}= _('Confirm Add')
+                       "ng-disabled" => "!vm.validateAddSelectedNetwork()"}= _('Confirm Add')
           %td.action-cell
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                                                               "ng-click" => "vm.hideAddNetworkAdapter()"}= _('Cancel Add')

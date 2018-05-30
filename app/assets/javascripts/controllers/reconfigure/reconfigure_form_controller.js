@@ -23,6 +23,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       vmRemoveDisks: [],
       vmResizeDisks: [],
       vLan_requested: '',
+      adapterNetwork: '',
+      availableAdapterNetworks: [],
     };
     vm.cb_disks = false;
     vm.cb_networkAdapters = false;
@@ -205,7 +207,13 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.reconfigureModel.vmRemoveNetworkAdapters = [];
     angular.forEach(vm.reconfigureModel.vmNetworkAdapters, function(networkAdapter) {
       if (networkAdapter.add_remove === 'add') {
-        vm.reconfigureModel.vmAddNetworkAdapters.push({network: networkAdapter.vlan});
+        vm.reconfigureModel.vmAddNetworkAdapters.push(
+          {
+            network: networkAdapter.vlan,
+            name: networkAdapter.name,
+            cloud_network: networkAdapter.network,
+          }
+        );
       }
       if (networkAdapter.add_remove === 'remove') {
         vm.reconfigureModel.vmRemoveNetworkAdapters.push({network: networkAdapter});
@@ -227,11 +235,23 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.reconfigureModel.cb_bootable = false;
   };
 
+  vm.validateAddSelectedNetwork = function() {
+    if (! vm.reconfigureModel.vLan_requested && ! vm.isVmwareCloud()) {
+      return false;
+    } else if (! vm.reconfigureModel.name && vm.isVmwareCloud()) {
+      return false;
+    } else if (vm.reconfigureModel.vmNetworkAdapters.length > 4) {
+      return false;
+    }
+    return true;
+  };
+
   vm.processAddSelectedNetwork = function() {
     vm.reconfigureModel.vmNetworkAdapters.push(
       {
-        name: __('to be determined'),
+        name: vm.reconfigureModel.name ? vm.reconfigureModel.name : __('to be determined'),
         vlan: vm.reconfigureModel.vLan_requested,
+        network: vm.reconfigureModel.adapterNetwork,
         mac: __('not available yet'),
         add_remove: 'add',
       });
@@ -261,6 +281,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.reconfigureModel.showDropDownNetwork = false;
     vm.setEnableAddNetworkAdapterButton();
     vm.reconfigureModel.vLan_requested = '';
+    vm.reconfigureModel.name = '';
+    vm.reconfigureModel.adapterNetwork = '';
   };
 
   vm.cancelAddRemoveNetworkAdapter = function(vmNetworkAdapter) {
@@ -403,6 +425,16 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.submitClicked();
   };
 
+  vm.isVmwareCloud = function() {
+    return vm.vm_vendor === 'vmware' && vm.vm_type.includes('CloudManager');
+  };
+
+  vm.fetchAvailableAdapterNetworks = function(orchestrationStackId) {
+    API.get("/api/cloud_networks?expand=resources&attributes=name&filter[]=orchestration_stack_id=" + orchestrationStackId).then(function(data) {
+      vm.reconfigureModel.availableAdapterNetworks = data.resources.map(function(network) { return network.name; });
+    }).catch(miqService.handleFailure);
+  };
+
   function getReconfigureFormData(response) {
     var data = response.data;
     vm.reconfigureModel.memory                 = data.memory;
@@ -432,6 +464,11 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     if (data.socket_count && data.cores_per_socket_count) {
       vm.reconfigureModel.total_cpus = (parseInt(vm.reconfigureModel.socket_count, 10) * parseInt(vm.reconfigureModel.cores_per_socket_count, 10)).toString();
     }
+
+    if (vm.isVmwareCloud()) {
+      vm.fetchAvailableAdapterNetworks(data.orchestration_stack_id);
+    }
+
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.reconfigureModel );
     vm.cb_memoryCopy = vm.cb_memory;
