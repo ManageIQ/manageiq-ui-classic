@@ -1,4 +1,10 @@
 #main_div
+  - if @record.kind_of?(ExtManagementSystem) && !@record.try(:enabled)
+    .alert.alert-warning
+      %span.pficon-layered
+        %span.pficon.pficon-warning-triangle-o
+      %strong
+        = _("Warning: This provider is paused, no data is currently collected from it.")
   - arr = (controller_name.camelize + "Controller").constantize.display_methods
   - if arr.include?(@display) && @showtype != "compare"
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@ems.id}"}
