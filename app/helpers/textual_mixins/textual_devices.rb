@@ -86,6 +86,14 @@ module TextualMixins::TextualDevices
     disks.compact
   end
 
+  def network_name(port)
+    network = nil
+    if port.lan&.switch
+      network = _("Network:") + port.lan.name + lan_attribute(port)
+    end
+    network
+  end
+
   def network_attributes
     networks = []
     return networks if @record.hardware.ports.empty?
@@ -95,9 +103,17 @@ module TextualMixins::TextualDevices
       address = port.address
       filename = port.filename
       autodetect = port.auto_detect ? "" : _("Default Adapter")
-      desc = [location, address, filename, autodetect].compact.join(', ')
+      desc = [location, address, filename, autodetect, network_name(port)].compact.join(', ')
       Device.new(name, desc, nil, port.device_type)
     end
+  end
+
+  def lan_prefix(nic)
+    nic.lan&.switch&.shared? ? _("Distributed ") : ''
+  end
+
+  def lan_attribute(nic)
+    nic.lan&.switch&.name ? "(" + lan_prefix(nic) + _("Switch: ") + nic.lan.switch.name + ")" : ''
   end
 
   def devices_details
