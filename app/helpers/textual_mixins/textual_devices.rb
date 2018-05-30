@@ -87,9 +87,9 @@ module TextualMixins::TextualDevices
   end
 
   def network_name(port)
-    network = ''
+    network = nil
     if port.lan&.switch
-      network = _("Network:") + port.lan.name
+      network = _("Network:") + port.lan.name + lan_attribute(port)
     end
     network
   end
@@ -112,16 +112,8 @@ module TextualMixins::TextualDevices
     nic.lan&.switch&.shared? ? _("Distributed ") : ''
   end
 
-  def lan_attributes
-    lan_devices = []
-    return lan_devices if @record.hardware&.nics&.all? { |nic| nic.lan.nil? }
-    @record.hardware.nics.map do |nic|
-      next unless nic.lan&.switch
-      name = lan_prefix(nic) + 'Port Group'
-      switch = lan_prefix(nic) + _("Switch: ") + nic.lan.switch.name
-      desc = [switch].compact.join(', ')
-      Device.new(name, desc, nil, nic.device_type)
-    end
+  def lan_attribute(nic)
+    nic.lan&.switch&.name ? "(" + lan_prefix(nic) + _("Switch: ") + nic.lan.switch.name + ")" : ''
   end
 
   def devices_details
@@ -131,7 +123,6 @@ module TextualMixins::TextualDevices
     devices += cpu_attributes
     devices += disks_attributes
     devices += network_attributes
-    devices += lan_attributes
     devices
   end
 end
