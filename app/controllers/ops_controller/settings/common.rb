@@ -944,8 +944,6 @@ module OpsController::Settings::Common
     @sb[:new_to] = nil
     @sb[:newrole] = false
 
-    session[:server_zones] = Zone.in_my_region.pluck(:name)
-
     @edit[:current].config[:server][:role] = @edit[:current].config[:server][:role] ? @edit[:current].config[:server][:role].split(",").sort.join(",") : ""
     @edit[:current].config[:server][:timezone] = "UTC" if @edit[:current].config[:server][:timezone].blank?
     @edit[:current].config[:server][:locale] = "default" if @edit[:current].config[:server][:locale].blank?

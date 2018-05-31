@@ -59,4 +59,8 @@ module OpsHelper
     end
     items
   end
+
+  def server_zones
+    @server_zones ||= Zone.in_my_region.pluck(:name)
+  end
 end
