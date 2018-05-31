@@ -116,6 +116,7 @@ module ApplicationController::CiProcessing
     Rbac.filtered(klass.where(:id => elements).order(order_by)).each do |record|
       name = record.send(order_field.to_sym)
       if task == 'destroy'
+        name = record.send(:description) if klass.name == 'MiqPolicy'
         process_element_destroy(record, klass, name)
       else
         begin
