@@ -1,4 +1,7 @@
 module.exports = {
-  test: /\.js$/,
-  loader: 'babel-loader'
+  test: /\.(js|jsx)$/,
+  loader: 'babel-loader',
+  query: {
+    presets: ['react'],
+  },
 }
