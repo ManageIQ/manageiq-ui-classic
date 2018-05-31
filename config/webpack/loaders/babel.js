@@ -1,4 +1,4 @@
 module.exports = {
-  test: /\.js(\.erb)?$/,
+  test: /\.js$/,
   loader: 'babel-loader'
 }
