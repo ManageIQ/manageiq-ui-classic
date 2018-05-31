@@ -6,9 +6,10 @@
         %span.pficon.pficon-error-octagon
         %span.pficon.pficon-error-exclamation
       %strong
-        - warning_msg = _("Caution: Manual changes to configuration files can disable the #{selected_node_title}!")
         - if selected_node_parent_title
-          - warning_msg << _(" Changes made to any individual settings will overwrite settings inherited from the #{selected_node_parent_title}.")
+          - warning_msg = _("Caution: Manual changes to configuration files can disable the %{title}! Changes made to any individual settings will overwrite settings inherited from the %{parent}.") % {:title => selected_node_title, :parent => selected_node_parent_title}
+        - else
+          - warning_msg = _("Caution: Manual changes to configuration files can disable the %{title}!") % {:title => selected_node_title}
         = warning_msg
 
     = text_area_tag("file_data", @edit[:new][:file_data], :style => "display:none;")
