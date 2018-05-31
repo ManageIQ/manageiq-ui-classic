@@ -124,17 +124,6 @@ module OpsController::OpsRbac
     rbac_tenant_edit_reset
   end
 
-  def tenant_set_record_vars(tenant)
-    # there is no params[:name] when use_config_attributes is checked
-    tenant.name        = params[:name] if params[:name]
-    tenant.description = params[:description]
-    tenant.use_config_for_attributes = tenant.root? && (params[:use_config_for_attributes] == "on")
-    unless tenant.id # only set for new records
-      tenant.parent    = Tenant.find(x_node.split('-').last)
-      tenant.divisible = params[:divisible] == "true"
-    end
-  end
-
   def rbac_tenant_manage_quotas_cancel
     @tenant = Tenant.find(params[:id])
     add_flash(_("Manage quotas for %{model}\ \"%{name}\" was cancelled by the user") %
