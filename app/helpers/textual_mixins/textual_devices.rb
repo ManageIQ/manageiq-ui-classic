@@ -102,8 +102,9 @@ module TextualMixins::TextualDevices
       location = port.location
       address = port.address
       filename = port.filename
+      model = port.model
       autodetect = port.auto_detect ? "" : _("Default Adapter")
-      desc = [location, address, filename, autodetect, network_name(port)].compact.join(', ')
+      desc = [location, address, filename, model, autodetect, network_name(port)].compact.join(', ')
       Device.new(name, desc, nil, port.device_type)
     end
   end
