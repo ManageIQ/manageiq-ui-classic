@@ -197,19 +197,20 @@ module ApplicationController::Tags
     @view.table = ReportFormatter::Converter.records2table(@tagitems, @view.cols + ['id'])
 
     @edit[:new][:assignments] = @assignments = @tagitems.map { |tagitem| Classification.find_assigned_entries(tagitem).collect { |e| e unless e.parent.read_only? } }.reduce(:&)
-    @tags = cats.map do |cat| {:id => cat.id, :description => cat.description, :single_value => cat.single_value, :values =>  cat.entries.map {|entry|
+    @tags = cats.map do |cat| {:id => cat.id, :description => cat.description, :singleValue => cat.single_value, :values =>  cat.entries.map {|entry|
       {:id => entry.id, :description => entry.description}}.sort_by {|e| e[:description.downcase]}}
     end
     assignedTags = @assignments.map do |a|
-      {:tagCategory => {:description => a.parent.description, :id => a.parent.id},
-      :tagValues => [{:description => a.description, :id => a.id}]}
+      { :description => a.parent.description,
+        :id => a.parent.id,
+        :values => [{:description => a.description, :id => a.id}] }
     end
     @tags = {:tags => @tags, :assignedTags => assignedTags, :affectedItems => @tagitems.map { |item| item.id }}
-    @tags = JSON.generate(@tags)
-    @button_urls =  JSON.generate({
+    # @tags = JSON.generate(@tags)
+    @button_urls = {
       :save_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "save"),
-      :cancel_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "cancel") }
-    )
+      :cancel_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "cancel")
+    }
   end
 
   # Tag selected db records

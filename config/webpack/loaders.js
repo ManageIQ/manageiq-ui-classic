@@ -55,11 +55,12 @@ module.exports = [
         options: {
           minimize: env.NODE_ENV === 'production',
         },
-      },
-      {
-        loader: 'postcss-loader',
-        options: {
-          sourceMap: true,
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true,
+            plugins: () => [require('autoprefixer')]
+          }
         },
       },
       'resolve-url-loader',

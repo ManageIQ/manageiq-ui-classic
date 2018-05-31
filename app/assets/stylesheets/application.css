@@ -24,5 +24,7 @@
  *= require ./remote_console
  *= require graphiql/graphiql.css
  *= require piecharts
- *= require @manageiq/react-ui-components/dist/textual_summary
+  *= require @manageiq/react-ui-components/dist/textual_summary
+ *= require @manageiq/react-ui-components/dist/tagging.css
+ *= require @manageiq/react-ui-components/node_modules/react-select/dist/react-select.css
 */

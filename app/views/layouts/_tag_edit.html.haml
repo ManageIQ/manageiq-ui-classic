@@ -6,26 +6,8 @@
       = _("Tag Assignment (Tags common to all selected items)")
     - else
       = _("Tag Assignment")
-  %table.table.table-bordered{:style => "margin-bottom: 0;"}
-    %thead
-      %tr
-        %th
-          = _("Select a customer tag to assign:")
-        %th
-          - @categories.each do |cat_key, _|
-            - if session[:assigned_filters].include?(cat_key.downcase)
-              - @categories.delete(cat_key)
-          = select_tag("tag_cat",
-            options_for_select(@categories, @edit[:cat].name),
-            "data-live-search"     => "true",
-            "data-container"       => "body",
-            "class"                => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent("tag_cat", "#{url}", {beforeSend: true});
-            mountTagging(#{@tags}, #{@button_urls});
-        %th
-          = render :partial => "layouts/tag_edit_cat_tags"
-  = render :partial => 'layouts/tag_edit_assignments', :locals => {:entry => nil}
-  %br
-  = _("* Only a single value can be assigned from these categories")
+  = react 'TaggingWrapper', { :tags => @tags, :urls => @button_urls }
+  #demo-app
+    :javascript
+      miqInitSelectPicker();
+      miqSelectPickerEvent("tag_cat", "#{url}", {beforeSend: true, complete: true});
