@@ -116,35 +116,6 @@ module OpsController::OpsRbac
     replace_right_cell(:nodetype => x_node)
   end
 
-  def rbac_tenant_edit_save_add
-    tenant = params[:id] != "new" ? Tenant.find(params[:id]) : Tenant.new
-
-    # This should be changed to something like tenant.changed? and tenant.changes
-    # when we have a version of Rails that supports detecting changes on serialized
-    # fields
-    old_tenant_attributes = tenant.attributes.clone
-    tenant_set_record_vars(tenant)
-
-    begin
-      tenant.save!
-    rescue => bang
-      add_flash(_("Error when adding a new tenant: %{message}") % {:message => bang.message}, :error)
-      javascript_flash
-      return
-    end
-
-    AuditEvent.success(build_saved_audit_hash_angular(old_tenant_attributes, tenant, params[:button] == "add"))
-    add_flash(_("%{model} \"%{name}\" was saved") %
-                {:model => tenant_type_title_string(params[:divisible] == "true"), :name => tenant.name})
-    if params[:button] == "add"
-      rbac_tenants_list
-      rbac_get_info
-    else
-      get_node_info(x_node)
-    end
-    replace_right_cell(:nodetype => "root", :replace_trees => [:rbac])
-  end
-
   def rbac_tenant_edit_reset
     obj = find_checked_items
     obj[0] = params[:id] if obj.blank? && params[:id]
