@@ -157,22 +157,13 @@ module OpsController::OpsRbac
     session[:edit] = {:key => "tenant_edit__#{@tenant.id || 'new'}"}
 
     session[:changed] = false
-    if params[:button] == "reset"
-      add_flash(_("All changes have been reset"), :warning)
-    end
+
     replace_right_cell(:nodetype => "tenant_edit")
   end
 
   def rbac_tenant_edit
     assert_privileges("rbac_tenant_edit")
-    case params[:button]
-    when "cancel"
-      rbac_tenant_edit_cancel
-    when "save", "add"
-      rbac_tenant_edit_save_add
-    when "reset", nil # Reset or first time in
-      rbac_tenant_edit_reset
-    end
+    rbac_tenant_edit_reset
   end
 
   def tenant_form_fields
