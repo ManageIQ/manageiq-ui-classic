@@ -79,7 +79,7 @@ function eventNotifications($timeout, API) {
       .then(function (data) {
         data.resources.forEach(function(resource) {
           var msg = miqFormatNotification(resource.details.text, resource.details.bindings);
-          events.notifications.splice(0, 0, {
+          events.notifications.push({
             id: resource.id,
             notificationType: _this.EVENT_NOTIFICATION,
             unread: !resource.seen,
