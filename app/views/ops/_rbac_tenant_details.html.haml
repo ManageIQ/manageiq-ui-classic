@@ -68,7 +68,7 @@
               %td= tenant.name
   .row
     .col-md-12.col-lg-10
-      = react 'TableListView', textual_tenant_quota_allocations
+      = react 'TableListViewWrapper', TextualListview.data(textual_tenant_quota_allocations)
       %p
         = _("Note: Total quota can be restricted by quotas defined at upper levels")
       %hr
