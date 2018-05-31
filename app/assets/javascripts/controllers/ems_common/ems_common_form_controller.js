@@ -73,6 +73,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       kubevirt_tls_ca_certs: '',
       kubevirt_password: '',
       kubevirt_password_exists: false,
+      has_events_tab: false,
     };
 
     $scope.emsOptionsModel = {
@@ -186,6 +187,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.kubevirt_security_protocol      = data.kubevirt_security_protocol;
       $scope.emsCommonModel.kubevirt_tls_ca_certs           = data.kubevirt_tls_ca_certs;
       $scope.emsCommonModel.kubevirt_password_exists        = data.kubevirt_password_exists;
+      $scope.emsCommonModel.has_events_tab                  = data.has_events_tab;
 
       if ($scope.emsCommonModel.default_userid !== '') {
         $scope.emsCommonModel.default_password = miqService.storedPasswordPlaceholder;
