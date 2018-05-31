@@ -103,48 +103,6 @@ module OpsController::OpsRbac
   end
   alias_method :rbac_project_add, :rbac_tenant_add
 
-  def rbac_tenant_edit_cancel
-    @tenant = Tenant.find_by(:id => params[:id])
-    if @tenant.try(:id).nil?
-      add_flash(_("Add of new %{model} was cancelled by the user") %
-                  {:model => tenant_type_title_string(params[:divisible] == "true")})
-    else
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-                  {:model => tenant_type_title_string(params[:divisible] == "true"), :name => @tenant.name})
-    end
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => x_node)
-  end
-
-  def rbac_tenant_edit_save_add
-    tenant = params[:id] != "new" ? Tenant.find(params[:id]) : Tenant.new
-
-    # This should be changed to something like tenant.changed? and tenant.changes
-    # when we have a version of Rails that supports detecting changes on serialized
-    # fields
-    old_tenant_attributes = tenant.attributes.clone
-    tenant_set_record_vars(tenant)
-
-    begin
-      tenant.save!
-    rescue => bang
-      add_flash(_("Error when adding a new tenant: %{message}") % {:message => bang.message}, :error)
-      javascript_flash
-      return
-    end
-
-    AuditEvent.success(build_saved_audit_hash_angular(old_tenant_attributes, tenant, params[:button] == "add"))
-    add_flash(_("%{model} \"%{name}\" was saved") %
-                {:model => tenant_type_title_string(params[:divisible] == "true"), :name => tenant.name})
-    if params[:button] == "add"
-      rbac_tenants_list
-      rbac_get_info
-    else
-      get_node_info(x_node)
-    end
-    replace_right_cell(:nodetype => "root", :replace_trees => [:rbac])
-  end
-
   def rbac_tenant_edit_reset
     obj = find_checked_items
     obj[0] = params[:id] if obj.blank? && params[:id]
@@ -157,45 +115,13 @@ module OpsController::OpsRbac
     session[:edit] = {:key => "tenant_edit__#{@tenant.id || 'new'}"}
 
     session[:changed] = false
-    if params[:button] == "reset"
-      add_flash(_("All changes have been reset"), :warning)
-    end
+
     replace_right_cell(:nodetype => "tenant_edit")
   end
 
   def rbac_tenant_edit
     assert_privileges("rbac_tenant_edit")
-    case params[:button]
-    when "cancel"
-      rbac_tenant_edit_cancel
-    when "save", "add"
-      rbac_tenant_edit_save_add
-    when "reset", nil # Reset or first time in
-      rbac_tenant_edit_reset
-    end
-  end
-
-  def tenant_form_fields
-    tenant = Tenant.find(params[:id])
-
-    render :json => {
-      :name                      => tenant.name,
-      :description               => tenant.description,
-      :default                   => tenant.root?,
-      :divisible                 => tenant.divisible,
-      :use_config_for_attributes => tenant.use_config_for_attributes
-    }
-  end
-
-  def tenant_set_record_vars(tenant)
-    # there is no params[:name] when use_config_attributes is checked
-    tenant.name        = params[:name] if params[:name]
-    tenant.description = params[:description]
-    tenant.use_config_for_attributes = tenant.root? && (params[:use_config_for_attributes] == "on")
-    unless tenant.id # only set for new records
-      tenant.parent    = Tenant.find(x_node.split('-').last)
-      tenant.divisible = params[:divisible] == "true"
-    end
+    rbac_tenant_edit_reset
   end
 
   def rbac_tenant_manage_quotas_cancel
