@@ -13,7 +13,7 @@
     = _('Network Management Provider')
 
   .form-horizontal
-    .form-group
+    .form-group{'ng-class' => '{"has-error": angularForm.ems_id.$invalid}'}
       %label.col-md-2.control-label
         = _('Network Manager')
       .col-md-8{'ng-if' => 'vm.newRecord'}
