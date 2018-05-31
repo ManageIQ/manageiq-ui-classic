@@ -103,19 +103,6 @@ module OpsController::OpsRbac
   end
   alias_method :rbac_project_add, :rbac_tenant_add
 
-  def rbac_tenant_edit_cancel
-    @tenant = Tenant.find_by(:id => params[:id])
-    if @tenant.try(:id).nil?
-      add_flash(_("Add of new %{model} was cancelled by the user") %
-                  {:model => tenant_type_title_string(params[:divisible] == "true")})
-    else
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-                  {:model => tenant_type_title_string(params[:divisible] == "true"), :name => @tenant.name})
-    end
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => x_node)
-  end
-
   def rbac_tenant_edit_reset
     obj = find_checked_items
     obj[0] = params[:id] if obj.blank? && params[:id]
