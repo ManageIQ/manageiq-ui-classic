@@ -3,16 +3,21 @@
   - case x_active_tree
   - when :settings_tree
     - if selected?(x_node, "z")
+      = render :partial => "layouts/flash_msg"
       %ul.nav.nav-tabs
         = miq_tab_header("settings_evm_servers", @sb[:active_tab]) do
           = _("Zone")
         = miq_tab_header("settings_smartproxy_affinity", @sb[:active_tab]) do
           = _("SmartProxy Affinity")
+        = miq_tab_header("settings_advanced", @sb[:active_tab]) do
+          = _("Advanced")
       .tab-content
         = miq_tab_content("settings_smartproxy_affinity", @sb[:active_tab]) do
           = render :partial => "settings_smartproxy_affinity_tab"
         = miq_tab_content("settings_evm_servers", @sb[:active_tab]) do
           = render :partial => "settings_evm_servers_tab"
+        = miq_tab_content("settings_advanced", @sb[:active_tab]) do
+          = render :partial => "settings_advanced_tab"
     - elsif selected?(x_node, "svr")
       = render :partial => "layouts/flash_msg"
       - cur_svr_id = x_node.split("-").last.to_i
@@ -60,6 +65,8 @@
             = _("Replication")
           = miq_tab_header("settings_help_menu", @sb[:active_tab]) do
             = _("Help Menu")
+          = miq_tab_header("settings_advanced", @sb[:active_tab]) do
+            = _("Advanced")
         .tab-content
           = miq_tab_content("settings_details", @sb[:active_tab]) do
             = render :partial => "settings_details_tab"
@@ -99,6 +106,8 @@
             = render :partial => "settings_replication_tab"
           = miq_tab_content("settings_help_menu", @sb[:active_tab]) do
             = render :partial => "settings_help_menu_tab"
+          = miq_tab_content("settings_advanced", @sb[:active_tab]) do
+            = render :partial => "settings_advanced_tab"
     -# Diagnostics
   - when :diagnostics_tree
     - if x_node.split("-")[0] == "z"
