@@ -124,18 +124,6 @@ module OpsController::OpsRbac
     rbac_tenant_edit_reset
   end
 
-  def tenant_form_fields
-    tenant = Tenant.find(params[:id])
-
-    render :json => {
-      :name                      => tenant.name,
-      :description               => tenant.description,
-      :default                   => tenant.root?,
-      :divisible                 => tenant.divisible,
-      :use_config_for_attributes => tenant.use_config_for_attributes
-    }
-  end
-
   def tenant_set_record_vars(tenant)
     # there is no params[:name] when use_config_attributes is checked
     tenant.name        = params[:name] if params[:name]
