@@ -92,6 +92,11 @@ describe TextualMixins::TextualDevices do
       it { is_expected.not_to be_empty }
     end
 
+    context "with model type parsed" do
+      let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic, :model => 'Vmxnet3')]) }
+      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Vmxnet3", "Default Adapter"].compact.join(', '), nil, "ethernet")]) }
+    end
+
     context "without vswitch and portgroup" do
       let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic)]) }
       it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter"].compact.join(', '), nil, "ethernet")]) }
