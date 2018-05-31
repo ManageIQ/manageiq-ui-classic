@@ -936,17 +936,16 @@ module OpsController::Settings::Common
   end
 
   def settings_set_form_vars_server
-    @edit = {}
-    @edit[:new] = {}
-    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
-    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    @edit = {
+      :new     => {},
+      :current => MiqServer.find(@sb[:selected_server_id]).get_config("vmdb"),
+      :key     => "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}",
+    }
     @sb[:new_to] = nil
     @sb[:newrole] = false
-    session[:server_zones] = []
-    zones = Zone.in_my_region
-    zones.each do |zone|
-      session[:server_zones].push(zone.name)
-    end
+
+    session[:server_zones] = Zone.in_my_region.pluck(:name)
+
     @edit[:current].config[:server][:role] = @edit[:current].config[:server][:role] ? @edit[:current].config[:server][:role].split(",").sort.join(",") : ""
     @edit[:current].config[:server][:timezone] = "UTC" if @edit[:current].config[:server][:timezone].blank?
     @edit[:current].config[:server][:locale] = "default" if @edit[:current].config[:server][:locale].blank?
@@ -954,6 +953,7 @@ module OpsController::Settings::Common
     @edit[:current].config[:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current].config[:smtp][:enable_starttls_auto].nil?
     @edit[:current].config[:smtp][:openssl_verify_mode] ||= "none"
     @edit[:current].config[:ntp] ||= {}
+
     @in_a_form = true
   end
 
