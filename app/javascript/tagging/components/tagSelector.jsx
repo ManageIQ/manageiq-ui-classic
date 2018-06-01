@@ -1,7 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
-import './tagSelector.scss';
 
 class TagSelector extends React.Component {
   handleChange = (selectedOption) => {

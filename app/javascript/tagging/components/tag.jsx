@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Label } from 'patternfly-react';
-import styles from './tag.scss';
 
 
 const Tag = ({
@@ -12,7 +11,7 @@ const Tag = ({
       key={tagValue.id}
       bsStyle="primary"
       onRemoveClick={() => onTagDeleteClick(tagCategory, tagValue)}
-      style={{ color: styles.defaultColor }}
+      className="tagColor"
     >
       {tagValue.description}
     </Label>

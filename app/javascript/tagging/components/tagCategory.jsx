@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tag from './tag';
-import './tagCategory.scss';
 
 class TagCategory extends React.Component {
   generateTag = tagValue =>

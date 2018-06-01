@@ -4,11 +4,11 @@ import Tagging from '../components/tagging';
 import TaggingWithButtons from '../components/taggingWithButtons';
 
 // container compo
-const mapStateToProps = state => ({
-  tags: state.tagging.appState.tags,
-  selectedTagCategory: state.tagging.appState.selected.tagCategory,
-  selectedTagValue: state.tagging.appState.selected.tagValue,
-  assignedTags: state.tagging.appState.assignedTags,
+const mapStateToProps = ({ tagging }) => ({
+  tags: tagging.appState.tags,
+  selectedTagCategory: tagging.appState.selected.tagCategory,
+  selectedTagValue: tagging.appState.selected.tagValue,
+  assignedTags: tagging.appState.assignedTags,
 });
 
 

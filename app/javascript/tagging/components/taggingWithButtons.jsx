@@ -10,6 +10,7 @@ class TaggingWithButtons extends React.Component {
   onTagDeleteClick = (tagCategory, tagValue) => this.props.onTagDeleteClick({ tagCategory, tagValue });
 
   render() {
+    console.log('render with buttons');
     return (
       <Grid>
         <Tagging
@@ -26,7 +27,7 @@ class TaggingWithButtons extends React.Component {
           <ButtonToolbar>
             <ButtonGroup>
               <Button
-                onClick={this.props.saveButton.onClick}
+                onClick={() => this.props.saveButton.onClick(this.props.assignedTags)}
                 href={this.props.saveButton.href}
                 disabled={this.props.saveButton.disabled}
                 type={this.props.saveButton.type}
