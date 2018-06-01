@@ -21,7 +21,7 @@ class ManageIQ::Providers::ContainerManagerDecorator < MiqDecorator
       },
       :bottom_right => {
         :tooltip  => authentication_status
-      }.merge(QuadiconHelper.provider_status(authentication_status))
+      }.merge(QuadiconHelper.provider_status(authentication_status, enabled?))
     }
     icon[:middle] = QuadiconHelper::POLICY_SHIELD if get_policies.present?
     icon

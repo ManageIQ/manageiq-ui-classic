@@ -35,6 +35,9 @@ module QuadiconHelper
   }.freeze
 
   def self.provider_status(status, enabled = true)
+    # If the provider is suspended, we don't care about the status itself
+    return { :fonticon => 'pficon pficon-asleep' } unless enabled
+
     case status
     when "Invalid"
       {:fileicon => '100/x.png'}
