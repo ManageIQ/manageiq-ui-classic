@@ -261,7 +261,7 @@ describe ApplicationController do
     end
 
     it "finds users with groups which belongs to current user's groups" do
-      user_ids = User.with_current_user_groups.collect(&:userid)
+      user_ids = User.with_groups(@current_user.miq_groups.pluck(:id)).collect(&:userid)
       expect(user_ids).to include(@current_user.userid)
       expect(user_ids).to include(@user1.userid)
     end

@@ -761,7 +761,7 @@ class ApplicationController < ActionController::Base
   def build_user_emails_for_edit
     @edit[:user_emails] = {}
     to_email = @edit[:new][:email][:to] || []
-    users_in_current_groups = User.with_current_user_groups.distinct.sort_by { |u| u.name.downcase }
+    users_in_current_groups = User.with_groups(User.current_user.miq_groups).distinct.sort_by { |u| u.name.downcase }
     users_in_current_groups.each do |u|
       next if u.email.blank?
       next if to_email.include?(u.email)
