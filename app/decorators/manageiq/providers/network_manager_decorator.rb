@@ -26,9 +26,8 @@ class ManageIQ::Providers::NetworkManagerDecorator < MiqDecorator
         :tooltip  => ui_lookup(:model => type)
       },
       :bottom_right => {
-        :fileicon => QuadiconHelper.status_img(authentication_status),
         :tooltip  => authentication_status
-      }
+      }.merge(QuadiconHelper.provider_status(authentication_status))
     }
     icon[:middle] = QuadiconHelper::POLICY_SHIELD if get_policies.present?
     icon

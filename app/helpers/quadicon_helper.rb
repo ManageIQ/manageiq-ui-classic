@@ -34,12 +34,16 @@ module QuadiconHelper
     'template'                  => {:fonticon => 'pficon pficon-template', :background => '#336699'},
   }.freeze
 
-  def self.status_img(status)
+  def self.provider_status(status, enabled = true)
     case status
-    when "Invalid" then "100/x.png"
-    when "Valid"   then "100/checkmark.png"
-    when "None"    then "100/unknown.png"
-    else                "100/exclamationpoint.png"
+    when "Invalid"
+      {:fileicon => '100/x.png'}
+    when "Valid"
+      {:fileicon => '100/checkmark.png'}
+    when "None"
+      {:fileicon => '100/unknown.png'}
+    else
+      {:fileicon => '100/exclamationpoint.png'}
     end
   end
 
