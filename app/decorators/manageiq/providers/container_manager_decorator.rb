@@ -22,9 +22,6 @@ class ManageIQ::Providers::ContainerManagerDecorator < MiqDecorator
       :bottom_right => {
         :fileicon => QuadiconHelper.status_img(authentication_status),
         :tooltip  => authentication_status
-      },
-      :middle       => {
-        :fileicon => '100/shield.png'
       }
     }
     icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
