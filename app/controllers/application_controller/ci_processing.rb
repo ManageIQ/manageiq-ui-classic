@@ -702,7 +702,10 @@ module ApplicationController::CiProcessing
     screen_redirection(options)
   end
 
-  # In case a record does not support the feature, it won't be ran for
+  # Some of the tasks are not testable by SupportsFeatureMixin
+  # nor AvailabilityMixin.
+  #
+  # In case a record does not support the feature, the test won't be ran for
   # any of selected records.
   #
   # Params:
@@ -713,11 +716,13 @@ module ApplicationController::CiProcessing
   #           - false otherwise
   def testable_action(action)
     controller = params[:controller]
-    vm_infra_actions = %w(
-      reboot_guest stop start check_compliance_queue
+    vm_infra_untestable_actions = %w(
+      reboot_guest stop start check_compliance_queue destroy
       refresh_ems vm_miq_request_new suspend reset shutdown_guest
     )
-    return vm_infra_actions.exclude?(action) if controller == "vm_infra"
+    if controller == "vm_infra"
+      return vm_infra_untestable_actions.exclude?(action)
+    end
     true
   end
 
