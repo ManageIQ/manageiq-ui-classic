@@ -570,6 +570,12 @@ describe('dialogFieldRefresh', function() {
         expect($.fn.selectpicker).toHaveBeenCalledWith('val', 'selectedTest');
       });
 
+      it('sets the value in the select picker first and then is refreshed', function() {
+        expect($.fn.selectpicker.calls.count()).toEqual(2);
+        expect($.fn.selectpicker.calls.all()[0].args).toEqual(['val', 'selectedTest']);
+        expect($.fn.selectpicker.calls.all()[1].args).toEqual(['refresh']);
+      });
+
       it('uses the correct selector', function() {
         expect($.fn.selectpicker.calls.mostRecent().object.selector).toEqual('#abc');
       });
