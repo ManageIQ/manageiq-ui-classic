@@ -425,10 +425,6 @@ describe VmInfraController do
   end
 
   it 'can Reset VM' do
-    expect(vm_vmware).to receive(:supports_control?).and_return(true)
-    expect(vm_vmware).to receive(:current_state).and_return("on")
-    expect(VmOrTemplate).to receive(:find).with([vm_vmware.id.to_s]).and_return([vm_vmware])
-
     post :x_button, :params => {:pressed => 'vm_reset', :id => vm_vmware.id}
     expect(response.status).to eq(200)
 

@@ -106,6 +106,10 @@ module ApplicationController::CiProcessing
 
   private
 
+  def vm_button_action
+    method(:process_objects)
+  end
+
   def process_elements(elements, klass, task, display_name = nil, order_field = nil)
     order_field ||= %w(name description title).find do |field|
                       klass.column_names.include?(field)
@@ -222,102 +226,12 @@ module ApplicationController::CiProcessing
     ui_lookup(:models => self.class.model.name)
   end
 
-  def check_retire_requirements(selected_items)
-    # FIXME: should check model, not controller
-    return true if %w(orchestration_stack service).include?(controller_name)
-
-    if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
-      javascript_flash(:text => _("Retire does not apply to selected item"), :severity => :error, :scroll_top => true)
-      return false
-    end
-    true
-  end
-
-  def check_scan_requirements(selected_items)
-    unless VmOrTemplate.batch_operation_supported?('smartstate_analysis', selected_items)
-      render_flash_not_applicable_to_model('Smartstate Analysis', ui_lookup(:tables => "vm_or_template"))
-      return false
-    end
-    true
-  end
-
-  def check_reset_requirements(selected_items)
-    if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_reset? }
-      javascript_flash(:text => _("Reset does not apply to at least one of the selected items"), :severity => :error, :scroll_top => true)
-      return false
-    end
-    true
-  end
-
   def check_non_empty(items, display_name)
     if items.blank?
       add_flash(_("No items were selected for %{task}") % {:task => display_name}, :error)
       return false
     end
     true
-  end
-
-  def vm_button_operation_internal(items, task, display_name)
-    return false if task == 'retire_now' && !check_retire_requirements(items)
-    return false if task == 'scan' && !check_scan_requirements(items)
-    return false if task == 'reset' && !check_reset_requirements(items)
-    return false unless check_non_empty(items, display_name)
-
-    process_objects(items, task, display_name)
-    true
-  end
-
-  # Common item button handler routines
-  def vm_button_operation(task, display_name, partial_after_single_selection = nil)
-    klass = get_rec_cls
-
-    # Either a list or coming from a different controller (e.g. from host screen, go to its vms)
-    if @lastaction == "show_list" ||
-       !%w(service vm_cloud vm_infra vm miq_template vm_or_template orchestration_stack).include?(controller_name)
-
-      # FIXME: retrieving vms from DB two times
-      items = find_checked_ids_with_rbac(klass, task)
-
-      vm_button_operation_internal(items, task, display_name) || return
-
-      if task == 'retire_now' && role_allows?(:feature => "miq_request_show_list", :any => true)
-        javascript_redirect(:controller => 'miq_request',
-                            :action     => 'show_list',
-                            :flash_msg  => @flash_array[0][:message])
-      end
-
-      # In non-explorer case, render the list (filling in @view).
-      if @lastaction == "show_list"
-        show_list unless @explorer
-        @refresh_partial = "layouts/gtl"
-      end
-
-    else # showing 1 item
-      items = [find_id_with_rbac_no_exception(klass, params[:id])].compact
-
-      unless check_non_empty(items, display_name)
-        show_list unless @explorer
-        @refresh_partial = "layouts/gtl"
-        return
-      end
-
-      vm_button_operation_internal(items, task, display_name)
-
-      if task == 'retire_now' && role_allows?(:feature => "miq_request_show_list", :any => true)
-        javascript_redirect(:controller => 'miq_request',
-                            :action     => 'show_list',
-                            :flash_msg  => @flash_array[0][:message])
-      end
-
-      # Tells callers to go back to show_list because this item may be gone.
-      @single_delete = task == 'destroy' && !flash_errors?
-
-      # For Snapshot Trees
-      if partial_after_single_selection && !@explorer
-        show
-        @refresh_partial = partial_after_single_selection
-      end
-    end
   end
 
   def process_cloud_object_storage_buttons(pressed)
@@ -474,7 +388,7 @@ module ApplicationController::CiProcessing
   # Delete all selected or single displayed VM(s)
   def deletevms
     assert_privileges(params[:pressed])
-    vm_button_operation('destroy', _('Delete'))
+    generic_button_operation('destroy', _('Delete'), vm_button_action)
   end
   alias_method :image_delete, :deletevms
   alias_method :instance_delete, :deletevms
@@ -484,7 +398,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def syncvms
     assert_privileges(params[:pressed])
-    vm_button_operation('sync', _('Virtual Black Box synchronization'))
+    generic_button_operation('sync', _('Virtual Black Box synchronization'), vm_button_action)
   end
 
   DEFAULT_PRIVILEGE = Object.new # :nodoc:
@@ -498,7 +412,7 @@ module ApplicationController::CiProcessing
       privilege = params[:pressed]
     end
     assert_privileges(privilege)
-    vm_button_operation('refresh_ems', _('Refresh Provider'))
+    generic_button_operation('refresh_ems', _('Refresh Provider'), vm_button_action)
   end
   alias_method :image_refresh, :refreshvms
   alias_method :instance_refresh, :refreshvms
@@ -508,7 +422,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def scanvms
     assert_privileges(params[:pressed])
-    vm_button_operation('scan', _('Analysis'))
+    generic_button_operation('scan', _('Analysis'), vm_button_action)
   end
   alias_method :image_scan, :scanvms
   alias_method :instance_scan, :scanvms
@@ -518,7 +432,14 @@ module ApplicationController::CiProcessing
   # Immediately retire items
   def retirevms_now
     assert_privileges(params[:pressed])
-    vm_button_operation('retire_now', _('Retirement'))
+    redirect = {
+      :redirect => {
+        :controller => 'miq_request',
+        :action => 'show_list'
+      }
+    }
+    generic_button_operation('retire_now', _('Retirement'), vm_button_action,
+      role_allows?(:feature => "miq_request_show_list") ? redirect : nil)
   end
   alias_method :instance_retire_now, :retirevms_now
   alias_method :vm_retire_now, :retirevms_now
@@ -526,7 +447,7 @@ module ApplicationController::CiProcessing
 
   def check_compliance_vms
     assert_privileges(params[:pressed])
-    vm_button_operation('check_compliance_queue', _('Check Compliance'))
+    generic_button_operation('check_compliance_queue', _('Check Compliance'), vm_button_action)
   end
   alias_method :image_check_compliance, :check_compliance_vms
   alias_method :instance_check_compliance, :check_compliance_vms
@@ -536,7 +457,7 @@ module ApplicationController::CiProcessing
   # Collect running processes for all selected or single displayed vm(s)
   def getprocessesvms
     assert_privileges(params[:pressed])
-    vm_button_operation('collect_running_processes', _('Collect Running Processes'))
+    generic_button_operation('collect_running_processes', _('Collect Running Processes'), vm_button_action)
   end
   alias_method :instance_collect_running_processes, :getprocessesvms
   alias_method :vm_collect_running_processes, :getprocessesvms
@@ -544,7 +465,7 @@ module ApplicationController::CiProcessing
   # Start all selected or single displayed vm(s)
   def startvms
     assert_privileges(params[:pressed])
-    vm_button_operation('start', _('Start'))
+    generic_button_operation('start', _('Start'), vm_button_action)
   end
   alias_method :instance_start, :startvms
   alias_method :vm_start, :startvms
@@ -552,7 +473,7 @@ module ApplicationController::CiProcessing
   # Suspend all selected or single displayed vm(s)
   def suspendvms
     assert_privileges(params[:pressed])
-    vm_button_operation('suspend', _('Suspend'))
+    generic_button_operation('suspend', _('Suspend'), vm_button_action)
   end
   alias_method :instance_suspend, :suspendvms
   alias_method :vm_suspend, :suspendvms
@@ -560,7 +481,7 @@ module ApplicationController::CiProcessing
   # Pause all selected or single displayed vm(s)
   def pausevms
     assert_privileges(params[:pressed])
-    vm_button_operation('pause', _('Pause'))
+    generic_button_operation('pause', _('Pause'), vm_button_action)
   end
   alias_method :instance_pause, :pausevms
   alias_method :vm_pause, :pausevms
@@ -568,14 +489,14 @@ module ApplicationController::CiProcessing
   # Terminate all selected or single displayed vm(s)
   def terminatevms
     assert_privileges(params[:pressed])
-    vm_button_operation('vm_destroy', _('Terminate'))
+    generic_button_operation('vm_destroy', _('Terminate'), vm_button_action)
   end
   alias_method :instance_terminate, :terminatevms
 
   # Stop all selected or single displayed vm(s)
   def stopvms
     assert_privileges(params[:pressed])
-    vm_button_operation('stop', _('Stop'))
+    generic_button_operation('stop', _('Stop'), vm_button_action)
   end
   alias_method :instance_stop, :stopvms
   alias_method :vm_stop, :stopvms
@@ -583,7 +504,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelvevms
     assert_privileges(params[:pressed])
-    vm_button_operation('shelve', _('Shelve'))
+    generic_button_operation('shelve', _('Shelve'), vm_button_action)
   end
   alias_method :instance_shelve, :shelvevms
   alias_method :vm_shelve, :shelvevms
@@ -591,7 +512,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelveoffloadvms
     assert_privileges(params[:pressed])
-    vm_button_operation('shelve_offload', _('Shelve Offload'))
+    generic_button_operation('shelve_offload', _('Shelve Offload'), vm_button_action)
   end
   alias_method :instance_shelve_offload, :shelveoffloadvms
   alias_method :vm_shelve_offload, :shelveoffloadvms
@@ -599,7 +520,7 @@ module ApplicationController::CiProcessing
   # Reset all selected or single displayed vm(s)
   def resetvms
     assert_privileges(params[:pressed])
-    vm_button_operation('reset', _('Reset'))
+    generic_button_operation('reset', _('Reset'), vm_button_action)
   end
   alias_method :instance_reset, :resetvms
   alias_method :vm_reset, :resetvms
@@ -607,20 +528,20 @@ module ApplicationController::CiProcessing
   # Shutdown guests on all selected or single displayed vm(s)
   def guestshutdown
     assert_privileges(params[:pressed])
-    vm_button_operation('shutdown_guest', _('Shutdown Guest'))
+    generic_button_operation('shutdown_guest', _('Shutdown Guest'), vm_button_action)
   end
   alias_method :vm_guest_shutdown, :guestshutdown
 
   # Standby guests on all selected or single displayed vm(s)
   def gueststandby
     assert_privileges(params[:pressed])
-    vm_button_operation('standby_guest', _('Standby Guest'))
+    generic_button_operation('standby_guest', _('Standby Guest'), vm_button_action)
   end
 
   # Restart guests on all selected or single displayed vm(s)
   def guestreboot
     assert_privileges(params[:pressed])
-    vm_button_operation('reboot_guest', _('Restart Guest'))
+    generic_button_operation('reboot_guest', _('Restart Guest'), vm_button_action)
   end
   alias_method :instance_guest_restart, :guestreboot
   alias_method :vm_guest_restart, :guestreboot
@@ -628,21 +549,24 @@ module ApplicationController::CiProcessing
   # Delete all snapshots for vm(s)
   def deleteallsnapsvms
     assert_privileges(params[:pressed])
-    vm_button_operation('remove_all_snapshots', _('Delete All Snapshots'), 'vm_common/config')
+    generic_button_operation('remove_all_snapshots', _('Delete All Snapshots'), vm_button_action,
+                             @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
   alias_method :vm_snapshot_delete_all, :deleteallsnapsvms
 
   # Delete selected snapshot for vm
   def deletesnapsvms
     assert_privileges(params[:pressed])
-    vm_button_operation('remove_snapshot', _('Delete Snapshot'), 'vm_common/config')
+    generic_button_operation('remove_snapshot', _('Delete Snapshot'), vm_button_action,
+                             @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
   alias_method :vm_snapshot_delete, :deletesnapsvms
 
   # Delete selected snapshot for vm
   def revertsnapsvms
     assert_privileges(params[:pressed])
-    vm_button_operation('revert_to_snapshot', _('Revert to a Snapshot'), 'vm_common/config')
+    generic_button_operation('revert_to_snapshot', _('Revert to a Snapshot'), vm_button_action,
+                             @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
   alias_method :vm_snapshot_revert, :revertsnapsvms
 
@@ -748,6 +672,95 @@ module ApplicationController::CiProcessing
     end
 
     clusters.count
+  end
+
+  # The method takes care of task processing initiated from UI on the
+  # selected records.
+  #
+  # In case a record does not support the feature, it won't be ran for
+  # any of selected records.
+  #
+  # Params:
+  #   action      - a string indicating the operation user wants to execute
+  #   action_name - a string of an action used for a flash message in case
+  #                 the task can not be applied
+  #   operation   - a block with a operation, specific to the type of action
+  #                 on a record
+  #   options     - other optional parameters
+  def generic_button_operation(action, action_name, operation, options = {})
+    records = find_records_with_rbac(get_rec_cls, checked_or_params)
+    if testable_action(action) && !records_support_feature?(records, action_to_feature(action))
+      javascript_flash(
+        :text => _("%{action_name} action does not apply to selected items") %
+          {:action_name => action_name},
+        :severity => :error,
+        :scroll_top => true)
+      return
+    end
+    operation.call(records.map(&:id), action, action_name)
+    @single_delete = action == 'destroy' && !flash_errors?
+    screen_redirection(options)
+  end
+
+  # Some of the tasks are not testable by SupportsFeatureMixin
+  # nor AvailabilityMixin.
+  #
+  # In case a record does not support the feature, the test won't be ran for
+  # any of selected records.
+  #
+  # Params:
+  #   action  - a string indicating the operation user wants to execute
+  # Returns:
+  #   boolean - true, if the action should not skip the test for records
+  #             support for the action
+  #           - false otherwise
+  def testable_action(action)
+    controller = params[:controller]
+    vm_infra_untestable_actions = %w(
+      reboot_guest stop start check_compliance_queue destroy
+      refresh_ems vm_miq_request_new suspend reset shutdown_guest
+    )
+    if controller == "vm_infra"
+      return vm_infra_untestable_actions.exclude?(action)
+    end
+    true
+  end
+
+  # Maps UI actions to queryable feature in case it is not possible
+  # to use the action itself in supports query.
+  #
+  # Params:
+  #   action      - a string indicating the operation user wants to execute
+  # Returns:
+  #   symbol      - a feature implemented by using AvailabilityMixin or
+  #                 SupportsFeatureMixin
+  #               - SupportsFeatureMixin::QUERYABLE_FEATURES
+  def action_to_feature(action)
+    feature_aliases = {
+      "scan" => :smartstate_analysis,
+      "retire_now" => :retire }
+    feature_aliases[action] || action.to_sym
+  end
+
+  # Explorer or non-explorer screen redirection.
+  #
+  # Params:
+  #   options - specific partial to render
+  def screen_redirection(options)
+    if options[:redirect].present?
+      javascript_redirect(:controller => options[:redirect][:controller],
+                          :action     => options[:redirect][:action],
+                          :flash_msg  => @flash_array[0][:message])
+      return
+    end
+    if @lastaction == "show_list"
+      show_list unless @explorer
+      @refresh_partial = "layouts/gtl"
+    end
+    if options[:refresh_partial].present?
+      show
+      @refresh_partial = options[:refresh_partial]
+    end
   end
 
   # Scan all selected or single displayed cluster(s)
