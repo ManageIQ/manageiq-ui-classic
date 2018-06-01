@@ -1,4 +1,4 @@
-class ManageIQ::Providers::PhysicalInfraManagerDecorator < ExtManagementSystemDecorator
+class ManageIQ::Providers::PhysicalInfraManagerDecorator < MiqDecorator
   def self.fonticon
     'pficon pficon-server'
   end
