@@ -61,16 +61,22 @@ export const toggle = (state = { tagCategory: {}, tagValue: {} }, action) => {
 };
 
 export const tags = (state = []) => state;
+export const affectedItems = (state = []) => state;
 
 export const initialize = (state = {}, action) => {
   switch (action.type) {
     case actionsConstants.LOAD_STATE:
-      return Object.assign(
-        { initialState: action.initialState },
-        { appState: { tags: action.initialState.tags, assignedTags: action.initialState.assignedTags } },
-      );
+      return {
+        ...state,
+        initialState: action.initialState,
+        appState: {
+          tags: action.initialState.tags,
+          assignedTags: action.initialState.assignedTags,
+          affectedItems: action.initialState.affectedItems,
+        },
+      };
     case actionsConstants.RESET_STATE:
-      return { ...state, appState: state.initialState };
+      return { ...state, appState: { ...state.initialState } };
     default:
       return { ...state };
   }
