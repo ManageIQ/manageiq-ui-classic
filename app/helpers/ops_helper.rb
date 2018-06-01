@@ -25,22 +25,15 @@ module OpsHelper
     tree_node.split('-').first == key
   end
 
-  def selected_node_title
+  def advanced_tab_warning
     if selected?(x_node, "z")
-      "Zone"
+      _('Caution: Manual changes to configuration files can disable the Zone!') + ' ' +
+        _('Changes made to any individual settings will overwrite settings inherited from the Region.')
     elsif selected?(x_node, "svr")
-      "Server"
+      _('Caution: Manual changes to configuration files can disable the Server!') + ' ' +
+        _('Changes made to any individual settings will overwrite settings inherited from the Zone.')
     else
-      "Region"
-    end
-  end
-
-  def selected_node_parent_title
-    return nil if selected?(x_node, "root")
-    if selected?(x_node, "z")
-      "Region"
-    elsif selected?(x_node, "svr")
-      "Zone"
+      _('Caution: Manual changes to configuration files can disable the Region!')
     end
   end
 
