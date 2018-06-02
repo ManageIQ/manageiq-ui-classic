@@ -8,10 +8,17 @@ class StorageDecorator < MiqDecorator
       :top_left     => {
         :tooltip  => store_type.to_s
       }.merge(store_type_icon),
-      :top_right    => {:text => v_total_vms},
-      :bottom_left  => {:text => v_total_hosts},
+      :top_right    => {
+        :text    => t = v_total_vms,
+        :tooltip => n_("%{number} Virtual Machine", "%{number} Virtual Machines", t) % {:number => t}
+      },
+      :bottom_left  => {
+        :text    => t = v_total_hosts,
+        :tooltip => n_("%{number} Host", "%{number} Hosts", t) % {:number => t}
+      },
       :bottom_right => {
-        :piechart => percent
+        :piechart => percent,
+        :tooltip  => _("%{number}\% Free Space") % {:number => v_free_space_percent_of_total}
       }
     }
   end

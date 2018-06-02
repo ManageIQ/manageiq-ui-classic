@@ -13,8 +13,14 @@ class ManageIQ::Providers::ContainerManagerDecorator < MiqDecorator
 
   def quadicon
     icon = {
-      :top_left     => {:text => container_nodes.size},
-      :top_right    => {:text => containers.size},
+      :top_left     => {
+        :text    => t = container_nodes.size,
+        :tooltip => n_("%{number} Container Node", "%{number} Container Nodes", t) % {:number => t}
+      },
+      :top_right    => {
+        :text    => t = containers.size,
+        :tooltip => n_("%{number} Container", "%{number} Containers", t) % {:number => t}
+      },
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => ui_lookup(:model => type)

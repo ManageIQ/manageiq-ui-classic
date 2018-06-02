@@ -24,7 +24,8 @@ class VmDecorator < MiqDecorator
         :tooltip  => ui_lookup(:model => type)
       },
       :bottom_right => {
-        :text => ERB::Util.h(v_total_snapshots)
+        :text    => t = v_total_snapshots.to_i,
+        :tooltip => n_("%{number} Snapshot", "%{number} Snapshots", t) % {:number => t}
       }
     }
     icon[:middle] = QuadiconHelper::POLICY_SHIELD if get_policies.present?

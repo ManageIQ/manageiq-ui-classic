@@ -9,8 +9,13 @@ class HostDecorator < MiqDecorator
 
   def quadicon
     icon = {
-      :top_left     => {:text => vms.size},
-      :top_right    => QuadiconHelper.machine_state(normalized_state),
+      :top_left     => {
+        :text    => t = vms.size,
+        :tooltip => n_("%{number} Virtual Machine", "%{number} Virtual Machines", t) % {:number => t}
+      },
+      :top_right    => {
+        :tooltip => normalized_state,
+      }.merge(QuadiconHelper.machine_state(normalized_state)),
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => ui_lookup(:model => type)

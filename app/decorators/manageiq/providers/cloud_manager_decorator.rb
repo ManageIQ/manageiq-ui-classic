@@ -13,8 +13,14 @@ class ManageIQ::Providers::CloudManagerDecorator < MiqDecorator
 
   def quadicon
     icon = {
-      :top_left     => {:text => total_vms},
-      :top_right    => {:text => total_miq_templates},
+      :top_left     => {
+        :text    => t = total_vms,
+        :tooltip => n_("%{number} Instance", "%{number} Instances", t) % {:number => t}
+      },
+      :top_right    => {
+        :text    => t = total_miq_templates,
+        :tooltip => n_("%{number} Template", "%{number} Templates", t) % {:number => t}
+      },
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => ui_lookup(:model => type)

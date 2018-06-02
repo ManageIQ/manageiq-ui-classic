@@ -13,8 +13,14 @@ class ManageIQ::Providers::InfraManagerDecorator < MiqDecorator
 
   def quadicon
     icon = {
-      :top_left     => {:text => hosts.size},
-      :top_right    => {:text => total_vms},
+      :top_left     => {
+        :text    => t = hosts.size,
+        :tooltip => n_("%{number} Host", "%{number} Hosts", t) % {:number => t}
+      },
+      :top_right    => {
+        :text    => t = total_vms,
+        :tooltip => n_("%{number} Virtual Machine", "%{number} Virtual Machines", t) % {:number => t}
+      },
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => ui_lookup(:model => type)
