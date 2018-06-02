@@ -1,4 +1,4 @@
-class VmOrTemplateDecorator < MiqDecorator
+class VmDecorator < MiqDecorator
   def self.fonticon
     'pficon pficon-virtual-machine'
   end
