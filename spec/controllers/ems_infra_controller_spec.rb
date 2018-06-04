@@ -662,7 +662,7 @@ describe EmsInfraController do
         create
         expect(response.status).to eq(200)
         rhevm = ManageIQ::Providers::Redhat::InfraManager.where(:name => "foo_rhevm").first
-        expect(rhevm.endpoints.size).to eq(2)
+        expect(rhevm.endpoints.size).to eq(3)
       end
 
       it 'updates metrics endpoint records on post when button is "save"' do

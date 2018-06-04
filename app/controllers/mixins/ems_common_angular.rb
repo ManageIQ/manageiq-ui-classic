@@ -561,7 +561,9 @@ module Mixins
         end
       end
 
-      ssh_keypair_endpoint = {:role => :ssh_keypair} if ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
+      if ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) || ems.kind_of?(ManageIQ::Providers::Redhat::InfraManager)
+        ssh_keypair_endpoint = {:role => :ssh_keypair}
+      end
 
       if ems.kind_of?(ManageIQ::Providers::Redhat::InfraManager)
         default_endpoint = {
@@ -742,6 +744,11 @@ module Mixins
         creds[:smartstate_docker] = {:userid => params[:smartstate_docker_userid], :password => smartstate_docker_password, :save => true}
       end
       if ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) &&
+         ems.supports_authentication?(:ssh_keypair) && params[:ssh_keypair_userid]
+        ssh_keypair_password = params[:ssh_keypair_password] ? params[:ssh_keypair_password].gsub(/\r\n/, "\n") : ems.authentication_key(:ssh_keypair)
+        creds[:ssh_keypair] = {:userid => params[:ssh_keypair_userid], :auth_key => ssh_keypair_password, :save => (mode != :validate)}
+      end
+      if ems.kind_of?(ManageIQ::Providers::Redhat::InfraManager) &&
          ems.supports_authentication?(:ssh_keypair) && params[:ssh_keypair_userid]
         ssh_keypair_password = params[:ssh_keypair_password] ? params[:ssh_keypair_password].gsub(/\r\n/, "\n") : ems.authentication_key(:ssh_keypair)
         creds[:ssh_keypair] = {:userid => params[:ssh_keypair_userid], :auth_key => ssh_keypair_password, :save => (mode != :validate)}
