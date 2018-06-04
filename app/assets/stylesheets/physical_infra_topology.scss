@@ -1,0 +1,14 @@
+$topology-colors: (
+  PhysicalServer: #00659c,
+  PhysicalRack:   #2d7623,
+);
+
+@each $component, $color in $topology-colors {
+  .legend kubernetes-topology-icon[kind="#{$component}"] i{
+    color: $color;
+  }
+
+  .topology g.#{$component} text.glyph{
+    fill: $color !important;
+  }
+}
