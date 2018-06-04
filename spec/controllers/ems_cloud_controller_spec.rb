@@ -24,20 +24,15 @@ describe EmsCloudController do
     it 'creates on post' do
       expect do
         post :create, :params => {
-          "button"               => "add",
-          "name"                 => "foo",
-          "emstype"              => "ec2",
-          "provider_region"      => "ap-southeast-1",
-          "port"                 => "",
-          "zone"                 => zone.name,
-          "default_userid"       => "foo",
-          "default_password"     => "[FILTERED]",
-          "metrics_userid"       => "",
-          "metrics_password"     => "[FILTERED]",
-          "amqp_userid"          => "",
-          "amqp_password"        => "[FILTERED]",
-          "ssh_keypair_userid"   => "",
-          "ssh_keypair_password" => "[FILTERED]"
+          "button"           => "add",
+          "name"             => "foo",
+          "emstype"          => "ec2",
+          "provider_region"  => "ap-southeast-1",
+          "port"             => "",
+          "zone"             => zone.name,
+          "default_userid"   => "foo",
+          "default_password" => "[FILTERED]",
+          "default_url"      => "http://abc.test/path"
         }
       end.to change { ManageIQ::Providers::Amazon::CloudManager.count }.by(1)
     end
@@ -93,6 +88,7 @@ describe EmsCloudController do
         "zone"             => "default",
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
+        "default_url"      => ""
       }
 
       expect(response.status).to eq(200)
@@ -310,6 +306,7 @@ describe EmsCloudController do
     context "with a cloud manager" do
       let(:mocked_class) { ManageIQ::Providers::Amazon::CloudManager }
       let(:mocked_class_controller) { "ems_cloud" }
+      let(:mocked_params) { {:controller => mocked_class_controller, :cred_type => "default", :default_url => ""} }
 
       it "queues the authentication type if it is a cloud provider" do
         expect(mocked_class).to receive(:validate_credentials_task)

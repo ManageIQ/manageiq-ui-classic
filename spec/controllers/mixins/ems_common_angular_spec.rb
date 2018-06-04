@@ -217,5 +217,26 @@ describe Mixins::EmsCommonAngular do
         expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Vmware::InfraManager')).to eq(expected_connect_options)
       end
     end
+
+    context 'aws cloud' do
+      before do
+        @ems_cloud_controller = EmsCloudController.new
+        @params = {
+          :default_userid   => "abc",
+          :default_password => "abc",
+          :default_url      => "http://abc.test/mypath"
+        }
+        @ems = FactoryGirl.create(:ems_amazon)
+        allow(@ems).to receive(:to_s).and_return('ManageIQ::Providers::Amazon::CloudManager')
+      end
+
+      it "returns connect options for aws cloud" do
+        @params[:cred_type] = "default"
+        @ems_cloud_controller.instance_variable_set(:@_params, @params)
+
+        expected_connect_options = ["abc", "v2:{XpADRTTI7f11hNT7AuDaKg==}", :EC2, nil, nil, true, URI.parse("http://abc.test/mypath")]
+        expect(@ems_cloud_controller.send(:get_task_args, @ems)).to eq(expected_connect_options)
+      end
+    end
   end
 end
