@@ -55,7 +55,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     } else {
       apiData = vm.dialogData;
     }
-    API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
+    return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
       miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
     }).catch(function(err) {
       return Promise.reject(dialogUserSubmitErrorHandlerService.handleError(err));
