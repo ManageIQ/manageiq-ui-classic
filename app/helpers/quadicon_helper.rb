@@ -46,6 +46,10 @@ module QuadiconHelper
     end
   end
 
+  def self.os_icon(name)
+    name == "unknown" ? { :fonticon => 'pficon pficon-unknown' } : {:fileicon => "svg/os-#{ERB::Util.h(name)}.svg" }
+  end
+
   def self.machine_state(state_str)
     MACHINE_STATE_QUADRANT[state_str.try(:downcase)] || {}
   end

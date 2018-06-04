@@ -10,9 +10,8 @@ class MiqTemplateDecorator < MiqDecorator
   def quadicon
     icon = {
       :top_left     => {
-        :fileicon => os_image,
-        :tooltip  => os_image_name.humanize.downcase
-      },
+        :tooltip => os_image_name.humanize.downcase
+      }.merge(QuadiconHelper.os_icon(os_image_name.downcase)),
       :top_right    => {
         :tooltip => normalized_state
       }.merge(QuadiconHelper.machine_state(normalized_state)),
@@ -32,11 +31,5 @@ class MiqTemplateDecorator < MiqDecorator
     {
       :fileicon => fileicon
     }
-  end
-
-  private
-
-  def os_image
-    "svg/os-#{ERB::Util.h(os_image_name.downcase)}.svg"
   end
 end
