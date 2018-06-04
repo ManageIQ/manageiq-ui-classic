@@ -935,6 +935,168 @@ module OpsController::Settings::Common
     end
   end
 
+  def settings_set_form_vars_server
+    @edit = {
+      :new     => {},
+      :current => MiqServer.find(@sb[:selected_server_id]).get_config("vmdb"),
+      :key     => "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}",
+    }
+    @sb[:new_to] = nil
+    @sb[:newrole] = false
+
+    @edit[:current].config[:server][:role] = @edit[:current].config[:server][:role] ? @edit[:current].config[:server][:role].split(",").sort.join(",") : ""
+    @edit[:current].config[:server][:timezone] = "UTC" if @edit[:current].config[:server][:timezone].blank?
+    @edit[:current].config[:server][:locale] = "default" if @edit[:current].config[:server][:locale].blank?
+    @edit[:current].config[:server][:remote_console_type] ||= "VNC"
+    @edit[:current].config[:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current].config[:smtp][:enable_starttls_auto].nil?
+    @edit[:current].config[:smtp][:openssl_verify_mode] ||= "none"
+    @edit[:current].config[:ntp] ||= {}
+
+    @in_a_form = true
+  end
+
+  def settings_set_form_vars_authentication
+    @edit = {}
+    @edit[:new] = {}
+    @edit[:current] = {}
+    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
+    # Avoid thinking roles change when not yet set
+    @edit[:current].config[:authentication][:ldap_role] ||= false
+    @edit[:current].config[:authentication][:amazon_role] ||= false
+    @edit[:current].config[:authentication][:httpd_role] ||= false
+    @sb[:form_vars] = {}
+    @sb[:form_vars][:session_timeout_hours] = @edit[:current].config[:session][:timeout] / 3600
+    @sb[:form_vars][:session_timeout_mins] = (@edit[:current].config[:session][:timeout] % 3600) / 60
+    @edit[:current].config[:authentication][:ldaphost] = @edit[:current].config[:authentication][:ldaphost].to_miq_a
+    @edit[:current].config[:authentication][:user_proxies] ||= [{}]
+    @edit[:current].config[:authentication][:follow_referrals] ||= false
+    @edit[:current].config[:authentication][:sso_enabled] ||= false
+    @edit[:current].config[:authentication][:saml_enabled] ||= false
+    @edit[:current].config[:authentication][:local_login_disabled] ||= false
+    @sb[:newrole] = @edit[:current].config[:authentication][:ldap_role]
+    @sb[:new_amazon_role] = @edit[:current].config[:authentication][:amazon_role]
+    @sb[:new_httpd_role] = @edit[:current].config[:authentication][:httpd_role]
+    @in_a_form = true
+  end
+
+  def settings_set_form_vars_workers
+    # getting value in "1.megabytes" bytes from backend, converting it into "1 MB" to display in UI, and then later convert it into "1.megabytes" to before saving it back into config.
+    # need to create two copies of config new/current set_worker_setting! is a instance method, need @edit[:new] to be config class to set count/memory_threshold, can't run method against hash
+    @edit = {}
+    @edit[:new] = {}
+    @edit[:current] = {}
+    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config
+    @edit[:new] = MiqServer.find(@sb[:selected_server_id]).get_config
+    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    @sb[:threshold] = []
+    (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }
+    (600.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) } # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it puts 1000MB instead of 1GB in pulldown
+    (1.gigabytes...1.5.gigabytes).step(100.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) } # adding values in 100 MB increments from 1gb to 1.5 gb
+
+    cwb = @edit[:current].config[:workers][:worker_base] ||= {}
+    qwb = (cwb[:queue_worker_base] ||= {})
+    w = (qwb[:generic_worker] ||= {})
+    w[:count] = @edit[:current].get_raw_worker_setting(:MiqGenericWorker, :count) || 2
+    w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqGenericWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
+    @sb[:generic_threshold] = []
+    @sb[:generic_threshold] = copy_array(@sb[:threshold])
+
+    w = (qwb[:priority_worker] ||= {})
+    w[:count] = @edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :count) || 2
+    w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :memory_threshold)) || rails_method_to_human_size(200.megabytes)
+    @sb[:priority_threshold] = []
+    @sb[:priority_threshold] = copy_array(@sb[:threshold])
+
+    qwb[:ems_metrics_collector_worker] ||= {}
+    qwb[:ems_metrics_collector_worker][:defaults] ||= {}
+    w = qwb[:ems_metrics_collector_worker][:defaults]
+    raw = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsCollectorWorker)
+    w[:count] = raw[:defaults][:count] || 2
+    w[:memory_threshold] = rails_method_to_human_size(raw[:defaults][:memory_threshold] || 400.megabytes)
+    @sb[:ems_metrics_collector_threshold] = []
+    @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
+
+    w = (qwb[:ems_metrics_processor_worker] ||= {})
+    w[:count] = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :count) || 2
+    w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :memory_threshold)) || rails_method_to_human_size(200.megabytes)
+    @sb[:ems_metrics_processor_threshold] = []
+    @sb[:ems_metrics_processor_threshold] = copy_array(@sb[:threshold])
+
+    w = (qwb[:smart_proxy_worker] ||= {})
+    w[:count] = @edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :count) || 3
+    w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
+    @sb[:smart_proxy_threshold] = []
+    @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
+
+    qwb[:ems_refresh_worker] ||= {}
+    qwb[:ems_refresh_worker][:defaults] ||= {}
+    w = qwb[:ems_refresh_worker][:defaults]
+    w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEmsRefreshWorker, %i(defaults memory_threshold))) || rails_method_to_human_size(400.megabytes)
+    @sb[:ems_refresh_threshold] = []
+    (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
+    (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
+    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
+
+    wb = @edit[:current].config[:workers][:worker_base]
+    w = (wb[:event_catcher] ||= {})
+    w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEventCatcher, :memory_threshold)) || rails_method_to_human_size(1.gigabytes)
+    @sb[:event_catcher_threshold] = []
+    (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
+    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
+
+    w = (wb[:vim_broker_worker] ||= {})
+    w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqVimBrokerWorker, :memory_threshold)) || rails_method_to_human_size(1.gigabytes)
+    @sb[:vim_broker_threshold] = []
+    (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
+    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
+
+    w = (wb[:ui_worker] ||= {})
+    w[:count] = @edit[:current].get_raw_worker_setting(:MiqUiWorker, :count) || 2
+
+    w = (qwb[:reporting_worker] ||= {})
+    w[:count] = @edit[:current].get_raw_worker_setting(:MiqReportingWorker, :count) || 2
+    w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqReportingWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
+    @sb[:reporting_threshold] = []
+    @sb[:reporting_threshold] = copy_array(@sb[:threshold])
+
+    w = (wb[:web_service_worker] ||= {})
+    w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :count) || 2
+    w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
+    @sb[:web_service_threshold] = []
+    @sb[:web_service_threshold] = copy_array(@sb[:threshold])
+
+    w = (wb[:websocket_worker] ||= {})
+    w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebsocketWorker, :count) || 2
+
+    @edit[:new].config = copy_hash(@edit[:current].config)
+    session[:log_depot_default_verify_status] = true
+    @in_a_form = true
+  end
+
+  def settings_set_form_vars_logos
+    @edit = {}
+    @edit[:new] = {}
+    @edit[:current] = {}
+    @edit[:current] = VMDB::Config.new("vmdb") # Get the vmdb configuration settings
+    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    if @edit[:current].config[:server][:custom_logo].nil?
+      @edit[:current].config[:server][:custom_logo] = false # Set default custom_logo flag
+    end
+    if @edit[:current].config[:server][:custom_login_logo].nil?
+      @edit[:current].config[:server][:custom_login_logo] = false # Set default custom_logo flag
+    end
+    if @edit[:current].config[:server][:use_custom_login_text].nil?
+      @edit[:current].config[:server][:use_custom_login_text] = false # Set default custom_logo flag
+    end
+    @logo_file = @@logo_file
+    @login_logo_file = @@login_logo_file
+    @in_a_form = true
+  end
+
   def settings_set_form_vars
     if x_node.split("-").first == "z"
       @right_cell_text = my_zone_name == @selected_zone.name ?
@@ -950,164 +1112,16 @@ module OpsController::Settings::Common
                                               :model => ui_lookup(:model => @selected_server.class.to_s)}
     end
     case @sb[:active_tab]
-    when "settings_server"                                  # Server Settings tab
-      @edit = {}
-      @edit[:new] = {}
-      @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      @sb[:new_to] = nil
-      @sb[:newrole] = false
-      session[:server_zones] = []
-      zones = Zone.in_my_region
-      zones.each do |zone|
-        session[:server_zones].push(zone.name)
-      end
-      @edit[:current].config[:server][:role] = @edit[:current].config[:server][:role] ? @edit[:current].config[:server][:role].split(",").sort.join(",") : ""
-      @edit[:current].config[:server][:timezone] = "UTC" if @edit[:current].config[:server][:timezone].blank?
-      @edit[:current].config[:server][:locale] = "default" if @edit[:current].config[:server][:locale].blank?
-      @edit[:current].config[:server][:remote_console_type] ||= "VNC"
-      @edit[:current].config[:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current].config[:smtp][:enable_starttls_auto].nil?
-      @edit[:current].config[:smtp][:openssl_verify_mode] ||= "none"
-      @edit[:current].config[:ntp] ||= {}
-      @in_a_form = true
-    when "settings_authentication"        # Authentication tab
-      @edit = {}
-      @edit[:new] = {}
-      @edit[:current] = {}
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
-      # Avoid thinking roles change when not yet set
-      @edit[:current].config[:authentication][:ldap_role] ||= false
-      @edit[:current].config[:authentication][:amazon_role] ||= false
-      @edit[:current].config[:authentication][:httpd_role] ||= false
-      @sb[:form_vars] = {}
-      @sb[:form_vars][:session_timeout_hours] = @edit[:current].config[:session][:timeout] / 3600
-      @sb[:form_vars][:session_timeout_mins] = (@edit[:current].config[:session][:timeout] % 3600) / 60
-      @edit[:current].config[:authentication][:ldaphost] = @edit[:current].config[:authentication][:ldaphost].to_miq_a
-      @edit[:current].config[:authentication][:user_proxies] ||= [{}]
-      @edit[:current].config[:authentication][:follow_referrals] ||= false
-      @edit[:current].config[:authentication][:sso_enabled] ||= false
-      @edit[:current].config[:authentication][:saml_enabled] ||= false
-      @edit[:current].config[:authentication][:local_login_disabled] ||= false
-      @sb[:newrole] = @edit[:current].config[:authentication][:ldap_role]
-      @sb[:new_amazon_role] = @edit[:current].config[:authentication][:amazon_role]
-      @sb[:new_httpd_role] = @edit[:current].config[:authentication][:httpd_role]
-      @in_a_form = true
-    when "settings_smartproxy_affinity"                     # SmartProxy Affinity tab
+    when 'settings_server' # Server Settings tab
+      settings_set_form_vars_server
+    when 'settings_authentication' # Authentication tab
+      settings_set_form_vars_authentication
+    when 'settings_smartproxy_affinity' # SmartProxy Affinity tab
       smartproxy_affinity_set_form_vars
-    when "settings_workers"                                 # Worker Settings tab
-      # getting value in "1.megabytes" bytes from backend, converting it into "1 MB" to display in UI, and then later convert it into "1.megabytes" to before saving it back into config.
-      # need to create two copies of config new/current set_worker_setting! is a instance method, need @edit[:new] to be config class to set count/memory_threshold, can't run method against hash
-      @edit = {}
-      @edit[:new] = {}
-      @edit[:current] = {}
-      @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config
-      @edit[:new] = MiqServer.find(@sb[:selected_server_id]).get_config
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      @sb[:threshold] = []
-      (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }
-      (600.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }    # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it puts 1000MB instead of 1GB in pulldown
-      (1.gigabytes...1.5.gigabytes).step(100.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }   # adding values in 100 MB increments from 1gb to 1.5 gb
-
-      cwb = @edit[:current].config[:workers][:worker_base] ||= {}
-      qwb = (cwb[:queue_worker_base] ||= {})
-      w = (qwb[:generic_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqGenericWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqGenericWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
-      @sb[:generic_threshold] = []
-      @sb[:generic_threshold] = copy_array(@sb[:threshold])
-
-      w = (qwb[:priority_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :count) || 2
-      w[:memory_threshold] =  rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :memory_threshold)) || rails_method_to_human_size(200.megabytes)
-      @sb[:priority_threshold] = []
-      @sb[:priority_threshold] = copy_array(@sb[:threshold])
-
-      qwb[:ems_metrics_collector_worker] ||= {}
-      qwb[:ems_metrics_collector_worker][:defaults] ||= {}
-      w = qwb[:ems_metrics_collector_worker][:defaults]
-      raw = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsCollectorWorker)
-      w[:count] = raw[:defaults][:count] || 2
-      w[:memory_threshold] = rails_method_to_human_size(raw[:defaults][:memory_threshold] || 400.megabytes)
-      @sb[:ems_metrics_collector_threshold] = []
-      @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
-
-      w = (qwb[:ems_metrics_processor_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :memory_threshold)) || rails_method_to_human_size(200.megabytes)
-      @sb[:ems_metrics_processor_threshold] = []
-      @sb[:ems_metrics_processor_threshold] = copy_array(@sb[:threshold])
-
-      w = (qwb[:smart_proxy_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :count) || 3
-      w[:memory_threshold] =  rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
-      @sb[:smart_proxy_threshold] = []
-      @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
-
-      qwb[:ems_refresh_worker] ||= {}
-      qwb[:ems_refresh_worker][:defaults] ||= {}
-      w = qwb[:ems_refresh_worker][:defaults]
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEmsRefreshWorker, [:defaults, :memory_threshold])) || rails_method_to_human_size(400.megabytes)
-      @sb[:ems_refresh_threshold] = []
-      (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-      (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-      (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-      (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-
-      wb = @edit[:current].config[:workers][:worker_base]
-      w = (wb[:event_catcher] ||= {})
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEventCatcher, :memory_threshold)) || rails_method_to_human_size(1.gigabytes)
-      @sb[:event_catcher_threshold] = []
-      (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
-      (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
-      (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
-
-      w = (wb[:vim_broker_worker] ||= {})
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqVimBrokerWorker, :memory_threshold)) || rails_method_to_human_size(1.gigabytes)
-      @sb[:vim_broker_threshold] = []
-      (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
-      (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
-      (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
-
-      w = (wb[:ui_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqUiWorker, :count) || 2
-
-      w = (qwb[:reporting_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqReportingWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqReportingWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
-      @sb[:reporting_threshold] = []
-      @sb[:reporting_threshold] = copy_array(@sb[:threshold])
-
-      w = (wb[:web_service_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
-      @sb[:web_service_threshold] = []
-      @sb[:web_service_threshold] = copy_array(@sb[:threshold])
-
-      w = (wb[:websocket_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebsocketWorker, :count) || 2
-
-      @edit[:new].config = copy_hash(@edit[:current].config)
-      session[:log_depot_default_verify_status] = true
-      @in_a_form = true
-    when "settings_custom_logos"                                  # Custom Logo tab
-      @edit = {}
-      @edit[:new] = {}
-      @edit[:current] = {}
-      @edit[:current] = VMDB::Config.new("vmdb")                # Get the vmdb configuration settings
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      if @edit[:current].config[:server][:custom_logo].nil?
-        @edit[:current].config[:server][:custom_logo] = false # Set default custom_logo flag
-      end
-      if @edit[:current].config[:server][:custom_login_logo].nil?
-        @edit[:current].config[:server][:custom_login_logo] = false # Set default custom_logo flag
-      end
-      if @edit[:current].config[:server][:use_custom_login_text].nil?
-        @edit[:current].config[:server][:use_custom_login_text] = false # Set default custom_logo flag
-      end
-      @logo_file = @@logo_file
-      @login_logo_file = @@login_logo_file
-      @in_a_form = true
+    when 'settings_workers' # Worker Settings tab
+      settings_set_form_vars_workers
+    when 'settings_custom_logos' # Custom Logo tab
+      settings_set_form_vars_logos
     when "settings_advanced" # Advanced yaml editor
       fetch_advanced_settings(MiqServer.find(@sb[:selected_server_id]))
     end
@@ -1118,7 +1132,7 @@ module OpsController::Settings::Common
       end
       if @sb[:active_tab] == "settings_server"
         session[:selected_roles] = @edit[:new][:server][:role].split(",") if !@edit[:new][:server].nil? && !@edit[:new][:server][:role].nil?
-        server_roles = MiqServer.licensed_roles           # Get the roles this server is licensed for
+        server_roles = MiqServer.licensed_roles # Get the roles this server is licensed for
         server_roles.delete_if { |r| r.name == "database_owner" }
         session[:server_roles] = {}
         server_roles.each do |sr|

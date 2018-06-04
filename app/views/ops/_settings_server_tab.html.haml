@@ -49,7 +49,7 @@
       %label.col-md-2.control-label
         = _("Zone*")
       .col-md-8
-        - if session[:server_zones].length == 1
+        - if server_zones.length == 1
           = text_field_tag("server_zone",
                             @edit[:new][:server][:zone],
                             :maxlength => 15,
@@ -58,7 +58,7 @@
                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
         - else
           = select_tag('server_zone',
-                        options_for_select(session[:server_zones].sort, @edit[:new][:server][:zone]),
+                        options_for_select(server_zones.sort, @edit[:new][:server][:zone]),
                         :class    => "selectpicker")
     :javascript
       miqInitSelectPicker();
