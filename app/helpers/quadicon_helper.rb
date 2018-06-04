@@ -59,23 +59,6 @@ module QuadiconHelper
     MACHINE_STATE_QUADRANT[state_str.try(:downcase)] || {}
   end
 
-  def self.settings_key(klass, layout)
-    if klass.base_model.to_s.underscore == "ext_management_system"
-      case layout
-      when "ems_infra"
-        :ems
-      when "ems_block_storage", "ems_object_storage", "ems_storage"
-        :ems_storage
-      when "ems_physical_infra", "ems_cloud", "ems_network", "ems_container"
-        layout.to_sym
-      end
-    elsif klass.name.demodulize.starts_with?("Physical") && klass.base_model.name != klass.name.demodulize
-      klass.name.demodulize.underscore.to_sym
-    else
-      klass.base_model.name.underscore.to_sym
-    end
-  end
-
   # Change the bottom-right quadrant of the quadicon with the policy simulation result
   def policy_sim(quad, result)
     if quad.try(:[], :bottom_right)
@@ -115,8 +98,9 @@ module QuadiconHelper
   end
 
   def quadicon_hash(item)
+    settings_key = item.class.try(:decorate).try(:to_s).try(:chomp, 'Decorator').try(:demodulize).try(:underscore).try(:to_sym)
     # Quadicons should be displayed when explicitly set or when the user is on the policy simulation screen
-    quad_method = if settings(:quadicons, QuadiconHelper.settings_key(item.class, @layout)) || !!@policy_sim
+    quad_method = if settings(:quadicons, settings_key) || !!@policy_sim
                     :quadicon
                   else
                     :single_quad
