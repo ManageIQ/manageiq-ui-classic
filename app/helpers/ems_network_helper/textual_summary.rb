@@ -63,7 +63,7 @@ module EmsNetworkHelper::TextualSummary
   end
 
   def textual_parent_ems_cloud
-    {:label => _("Parent Cloud Provider"), :value => @record.try(:parent_manager)}
+    textual_link(@record.try(:parent_manager), :label => _("Parent Cloud Provider"))
   end
 
   def textual_security_groups
