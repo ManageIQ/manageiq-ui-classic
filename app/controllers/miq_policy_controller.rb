@@ -941,8 +941,11 @@ class MiqPolicyController < ApplicationController
 
   # Build the audit object when a profile is saved
   def build_saved_audit(record, add = false)
-    name = record.respond_to?(:name) ? record.name : record.description
-    name = record.description if record.kind_of?(MiqPolicy)
+    name = if record.kind_of?(MiqPolicy)
+             record.description 
+           else
+             record.respond_to?(:name) ? record.name : record.description
+           end
 
     msg = if add
             _("[%{name}] Record added (") % {:name => name}
