@@ -6,12 +6,4 @@ class ConfigurationProfileDecorator < MiqDecorator
       'fa fa-list-ul'
     end
   end
-
-  def fileicon
-    if id.nil?
-      "100/folder.png"
-    else
-      "100/#{image_name.downcase}.png"
-    end
-  end
 end
