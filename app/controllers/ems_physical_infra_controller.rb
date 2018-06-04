@@ -18,6 +18,11 @@ class EmsPhysicalInfraController < ApplicationController
     @table_name ||= "ems_physical_infra"
   end
 
+  def show_list
+    @without_listnav = true
+    super
+  end
+
   def ems_path(*args)
     ems_physical_infra_path(*args)
   end

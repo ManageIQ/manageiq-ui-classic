@@ -1,6 +1,7 @@
 module ApplicationHelper::PageLayouts
   def layout_uses_listnav?
-    return false if @in_a_form
+    return false if @in_a_form || @without_listnav
+
     return false if %w(
       about
       all_tasks
