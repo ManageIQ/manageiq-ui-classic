@@ -481,7 +481,7 @@ describe OpsController do
       expect(@edit[:filter_expression][:exp_typ]).to eq('tags')
     end
 
-    it "calls MiqExpression.tag_details to get only the My Company type tag categories" do
+    it "calls MiqExpression.tag_details with :no_cache to get only the My Company type tag categories" do
       new = {:use_filter_expression => true,
              :name                  => 'Name',
              :description           => "Test",
@@ -510,7 +510,7 @@ describe OpsController do
       allow(controller).to receive(:replace_right_cell)
 
       post :tree_select, :params => { :id => 'root', :format => :js }
-      expect(MiqExpression).to receive(:tag_details)
+      expect(MiqExpression).to receive(:tag_details).with(nil, :no_cache => true)
       post :rbac_group_field_changed, :params => { :id => 'new',  :use_filter_expression => "true"}
     end
 
