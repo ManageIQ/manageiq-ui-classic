@@ -71,6 +71,8 @@ module QuadiconHelper
       case layout
       when "ems_infra"
         :ems
+      when "ems_block_storage", "ems_object_storage", "ems_storage"
+        :ems_storage
       when "ems_physical_infra", "ems_cloud", "ems_network", "ems_container"
         layout.to_sym
       end
