@@ -30,7 +30,7 @@ class MiqRequestController < ApplicationController
   end
 
   def request_edit
-    assert_privileges("miq_request_edit")
+    assert_privileges(requests_feature_id("miq_request_edit"))
     provision_request = MiqRequest.find(params[:id])
     if provision_request.workflow_class || provision_request.kind_of?(MiqProvisionConfiguredSystemRequest)
       request_edit_settings(provision_request)
@@ -44,7 +44,7 @@ class MiqRequestController < ApplicationController
   end
 
   def request_copy
-    assert_privileges("miq_request_copy")
+    assert_privileges(requests_feature_id("miq_request_copy"))
     provision_request = MiqRequest.find(params[:id])
     @refresh_partial = "prov_copy"
     request_settings_for_edit_or_copy(provision_request)
@@ -105,7 +105,7 @@ class MiqRequestController < ApplicationController
 
   # Stamp a request with approval or denial
   def stamp
-    assert_privileges("miq_request_approval")
+    assert_privileges(requests_feature_id("miq_request_approval"))
     if params[:button] == "cancel"
       if (session[:edit] && session[:edit][:stamp_typ]) == "a"
         flash_to_session(_("Request approval was cancelled by the user"))
@@ -264,7 +264,7 @@ class MiqRequestController < ApplicationController
   end
 
   def filter
-    assert_privileges("miq_request_show_list")
+    assert_privileges(requests_feature_id("miq_request_show_list"))
     scope = prov_scope(
       :reason_text    => params[:reasonText],
       :time_period    => params[:selectedPeriod],
@@ -456,9 +456,30 @@ class MiqRequestController < ApplicationController
     User.current_user.role_allows?(:identifier => 'miq_request_approval')
   end
 
+  def requests_feature_id(feature_id)
+    return feature_id unless %w(ae host).include?(session[:request_tab])
+    "#{session[:request_tab]}_#{feature_id}"
+  end
+
+  def check_generic_rbac
+    ident = requests_feature_id("#{controller_name}_#{action_name}")
+    if MiqProductFeature.feature_exists?(ident)
+      role_allows?(:feature => ident, :any => true)
+    else
+      true
+    end
+  end
+
+  def check_button_rbac
+    # buttons ids that share a common feature id
+    task = requests_feature_id(params[:pressed])
+    # Intentional single = so we can check auth later
+    rbac_free_for_custom_button?(task, params[:button_id]) || role_allows?(:feature => task)
+  end
+
   # Delete all selected or single displayed action(s)
   def deleterequests
-    assert_privileges("miq_request_delete")
+    assert_privileges(requests_feature_id("miq_request_delete"))
 
     miq_requests = find_records_with_rbac(MiqRequest, checked_or_params)
     if miq_requests.empty?

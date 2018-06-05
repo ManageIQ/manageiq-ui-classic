@@ -4,7 +4,7 @@ describe ApplicationHelper::Button::MiqRequestApproval do
       described_class.new(
         view_context,
         {},
-        {'record' => @record, 'showtype' => @showtype},
+        {'record' => @record, 'showtype' => @showtype, 'request_tab' => @request_tab},
         {:options => {:feature => 'miq_request_approve'}}
       )
     end
@@ -25,6 +25,7 @@ describe ApplicationHelper::Button::MiqRequestApproval do
           allow(button).to receive(:role_allows_feature?).and_return(true)
           allow(button).to receive(:current_user).and_return(user)
           button.instance_variable_set(:@showtype, "prase")
+          button.instance_variable_set(:@request_tab, "service")
         end
         context "resource_type = AutomationRequest" do
           let(:request) { "AutomationRequest" }
@@ -65,6 +66,7 @@ describe ApplicationHelper::Button::MiqRequestApproval do
           allow(button).to receive(:role_allows_feature?).and_return(true)
           allow(button).to receive(:current_user).and_return(user)
           button.instance_variable_set(:@showtype, "prase")
+          button.instance_variable_set(:@request_tab, "service")
         end
         context "resource_type = AutomationRequest" do
           let(:request) { "AutomationRequest" }

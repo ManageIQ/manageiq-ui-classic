@@ -1,5 +1,16 @@
 class ApplicationHelper::Button::MiqRequest < ApplicationHelper::Button::GenericFeatureButton
-  needs :@record
+  needs :@record, :@request_tab
+
+  def role_allows_feature?
+    prefix = case @request_tab
+             when 'ae', 'host'
+               "#{@request_tab}_"
+             else
+               ""
+             end
+    # check RBAC on separate button
+    role_allows?(:feature => "#{prefix}#{self[:id]}")
+  end
 
   def visible?
     return false if @record.resource_type == "AutomationRequest" &&

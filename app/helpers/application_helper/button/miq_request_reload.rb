@@ -1,4 +1,4 @@
-class ApplicationHelper::Button::MiqRequestApproval < ApplicationHelper::Button::MiqRequest
+class ApplicationHelper::Button::MiqRequestReload < ApplicationHelper::Button::MiqRequest
   needs :@showtype, :@record, :@request_tab
 
   def role_allows_feature?
@@ -9,12 +9,11 @@ class ApplicationHelper::Button::MiqRequestApproval < ApplicationHelper::Button:
                ""
              end
     # check RBAC on separate button
-    role_allows?(:feature => "#{prefix}miq_request_approval")
+    role_allows?(:feature => "#{prefix}miq_request_reload")
   end
 
   def visible?
     return false unless super
-    return false if %w(approved denied).include?(@record.approval_state) || @showtype == "miq_provisions"
     true
   end
 end

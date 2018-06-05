@@ -504,6 +504,7 @@ module ApplicationHelper
       :record           => @record,
       :report           => @report,
       :report_result_id => @report_result_id,
+      :request_tab      => @request_tab,
       :resolve          => @resolve,
       :sb               => @sb,
       :selected_zone    => @selected_zone,
