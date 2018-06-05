@@ -51,6 +51,15 @@ module QuadiconHelper
     end
   end
 
+  def self.health_state(status)
+    case status
+    when "Valid"    then {:fileicon => "svg/healthstate-normal.svg", :tooltip => _('Normal health state')}
+    when "Critical" then {:fileicon => "svg/healthstate-critical.svg", :tooltip => _('Critical health state')}
+    when "Warning"  then {:fileicon => "100/warning.png", :tooltip => _('Health state warning')}
+    else {:fileicon => "svg/healthstate-unknown.svg", :tooltip => _('Could not determine health state')}
+    end
+  end
+
   def self.os_icon(name)
     name == "unknown" ? { :fonticon => 'pficon pficon-unknown' } : {:fileicon => "svg/os-#{ERB::Util.h(name)}.svg" }
   end

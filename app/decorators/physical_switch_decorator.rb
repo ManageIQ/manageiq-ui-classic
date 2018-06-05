@@ -16,10 +16,7 @@ class PhysicalSwitchDecorator < MiqDecorator
         :fonticon => fonticon,
         :tooltip  => ui_lookup(:model => type),
       },
-      :bottom_right => {
-        :fileicon => health_state_img,
-        :tooltip  => _(health_state),
-      }
+      :bottom_right => QuadiconHelper.health_state(health_state)
     }
   end
 
@@ -28,16 +25,5 @@ class PhysicalSwitchDecorator < MiqDecorator
       :fonticon => fonticon,
       :tooltip  => ui_lookup(:model => type),
     }
-  end
-
-  private
-
-  def health_state_img
-    case health_state
-    when "Valid"    then "svg/healthstate-normal.svg"
-    when "Critical" then "svg/healthstate-critical.svg"
-    when "Warning"  then "100/warning.png"
-    else "svg/healthstate-unknown.svg"
-    end
   end
 end
