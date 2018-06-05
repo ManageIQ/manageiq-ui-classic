@@ -1,5 +1,10 @@
 module QuadiconHelper
   QUADRANTS = %i(top_left top_right bottom_left bottom_right middle).freeze
+  POLICY_SHIELD = {
+    :fonticon => 'fa fa-shield',
+    :color    => '#f5c12e',
+    :tooltip  => _('This object has policies assigned.')
+  }.freeze
 
   MACHINE_STATE_QUADRANT = {
     'archived'                  => {:text => 'A', :background => '#336699'},

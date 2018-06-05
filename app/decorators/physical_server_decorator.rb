@@ -22,7 +22,7 @@ class PhysicalServerDecorator < MiqDecorator
         :tooltip  => health_state
       }
     }
-    icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
+    icon[:middle] = QuadiconHelper::POLICY_SHIELD if get_policies.present?
     icon
   end
 
