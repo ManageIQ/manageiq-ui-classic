@@ -56,10 +56,9 @@ module.exports = {
 
   resolve: {
     extensions: settings.extensions,
-    modules: [
-      resolve(settings.source_path),
-      'node_modules'
-    ]
+    modules: [resolve(settings.source_path)].concat(
+      Object.keys(engines).map(key => engines[key]).map(engine => `${engine}/node_modules`)
+    ),
   },
 
   resolveLoader: {
