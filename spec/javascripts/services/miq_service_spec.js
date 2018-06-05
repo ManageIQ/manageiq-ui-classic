@@ -50,6 +50,18 @@ describe('miqService', function() {
     });
   });
 
+  describe('#refreshSelectpicker', function() {
+    beforeEach(function() {
+      spyOn($.fn, 'selectpicker');
+    });
+
+    it('refreshes all selects', function() {
+      testService.refreshSelectpicker();
+      expect($.fn.selectpicker.calls.mostRecent().object.selector).toEqual('select');
+      expect($.fn.selectpicker.calls.mostRecent().args[0]).toEqual('refresh');
+    });
+  });
+
   describe('#sparkleOn', function() {
     it('calls the global miq sparkle on', function() {
       testService.sparkleOn();
