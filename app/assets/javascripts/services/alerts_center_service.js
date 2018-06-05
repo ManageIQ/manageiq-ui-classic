@@ -1,8 +1,8 @@
 angular.module('alertsCenter').service('alertsCenterService', alertsCenterService);
 
-alertsCenterService.$inject = ['API', '$q', '$timeout', '$document', '$modal', '$http'];
+alertsCenterService.$inject = ['API', '$q', '$timeout', '$document', '$uibModal', '$http'];
 
-function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
+function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
   var _this = this;
   var providersURL = '/api/providers';
   var tagsURL = '/api/tags';
@@ -784,7 +784,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       }
     }
     _this.newComment = '';
-    var modalInstance = $modal.open(modalOptions);
+    var modalInstance = $uibModal.open(modalOptions);
     modalInstance.result.then(doneCallback);
 
     $timeout(function() {

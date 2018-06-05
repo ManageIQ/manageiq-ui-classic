@@ -11,9 +11,9 @@
     .wizard-miq-steps{"ng-transclude" => ""}
   .wizard-miq-btn-container.modal-footer
     %button.btn.btn-default{"ng-disabled" => "wizardDone", "miq-wiz-cancel" => ""}{{cancelTitle}}
-    .tooltip-wrapper{:tooltip => "{{prevTooltip}}", "tooltip-placement" => "left"}
+    .tooltip-wrapper{"uib-tooltip" => "{{prevTooltip}}", "tooltip-placement" => "left"}
       %button.btn.btn-default{"ng-disabled" => "!wizardReady || !stepsLoaded || wizardDone || !prevEnabled || firstStep", :callback => "backCallback", "miq-wiz-previous" => ""}
         {{backTitle}}
-    .tooltip-wrapper{:tooltip => "{{nextTooltip}}", "tooltip-placement" => "left"}
+    .tooltip-wrapper{"uib-tooltip" => "{{nextTooltip}}", "tooltip-placement" => "left"}
       %button.btn.btn-primary{"ng-disabled" => "!wizardReady || !stepsLoaded || !nextEnabled", :callback => "nextCallback", "miq-wiz-next" => ""}
         {{nextTitle}}
