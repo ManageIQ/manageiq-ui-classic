@@ -831,6 +831,7 @@ module Mixins
     end
 
     def default_auth_status
+      return true if @ems.kind_of?(ManageIQ::Providers::Kubevirt::InfraManager)
       @ems.authentication_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
     end
   end
