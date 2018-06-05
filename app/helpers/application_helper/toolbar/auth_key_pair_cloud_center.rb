@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::AuthKeyPairCloudCenter < ApplicationHelper::To
           t = N_('Remove this Key Pair from Inventory'),
           t,
           :url_parms => "&refresh=y",
+          :klass     => ApplicationHelper::Button::AuthKeyPairCloudDelete,
           :confirm   => N_("Warning: The selected Key Pair and ALL of its components will be permanently removed!")),
         button(
           :auth_key_pair_cloud_download,
