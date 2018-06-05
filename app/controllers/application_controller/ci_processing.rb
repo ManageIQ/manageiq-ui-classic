@@ -114,6 +114,10 @@ module ApplicationController::CiProcessing
     method(:process_clusters)
   end
 
+  def storage_button_action
+    method(:process_storage)
+  end
+
   def process_elements(elements, klass, task, display_name = nil, order_field = nil)
     order_field ||= %w(name description title).find do |field|
                       klass.column_names.include?(field)
@@ -312,6 +316,8 @@ module ApplicationController::CiProcessing
       params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
     when "ems_cluster"
       EmsCluster
+    when "storage"
+      Storage
     else
       VmOrTemplate
     end
@@ -780,7 +786,7 @@ module ApplicationController::CiProcessing
     end
   end
 
-  def process_storage(storages, task)
+  def process_storage(storages, task, _ = nil)
     storages, _storages_out_region = filter_ids_in_region(storages, _("Datastore"))
     return if storages.empty?
 
@@ -819,57 +825,18 @@ module ApplicationController::CiProcessing
     end
   end
 
-  def storage_button_operation(method, display_name)
-    storages = []
-    # Either a list or coming from a different controller (eg from host screen, go to its storages)
-    if params.key?(:miq_grid_checks)
-      storages = find_checked_ids_with_rbac(Storage)
-
-      if method == 'scan' && !Storage.batch_operation_supported?('smartstate_analysis', storages)
-        render_flash_not_applicable_to_model(_('Smartstate Analysis'), ui_lookup(:tables => "storage"))
-        return
-      end
-      if storages.empty?
-        add_flash(_("No Datastores were selected for %{task}") % {:task => display_name}, :error)
-      else
-        process_storage(storages, method)
-      end
-
-      if @lastaction == "show_list"
-        show_list unless @explorer
-        @refresh_partial = "layouts/gtl"
-      end
-
-    else # showing 1 storage
-      if params[:id].nil? || !Storage.exists?(params[:id])
-        add_flash(_("Datastore no longer exists"), :error)
-      else
-        storages.push(find_id_with_rbac(Storage, params[:id]))
-        process_storage(storages, method)  unless storages.empty?
-      end
-
-      params[:display] = @display
-      show
-      if ["vms", "hosts"].include?(@display)
-        @refresh_partial = "layouts/gtl"
-      else
-        @refresh_partial = "config"
-      end
-    end
-
-    storages.count
-  end
-
   # Refresh all selected or single displayed Datastore(s)
   def refreshstorage
     assert_privileges("storage_refresh")
-    storage_button_operation('refresh_ems', _('Refresh'))
+    generic_button_operation('refresh_ems', _('Refresh'), storage_button_action,
+                             :refresh_partial => %w(vm hosts).include?(@display) ? 'layouts/gtl' : 'config')
   end
 
   # Scan all selected or single displayed storage(s)
   def scanstorage
     assert_privileges("storage_scan")
-    storage_button_operation('scan', _('Analysis'))
+    generic_button_operation('scan', _('SmartState Analysis'), storage_button_action,
+                             :refresh_partial => %w(vm hosts).include?(@display) ? 'layouts/gtl' : 'config')
   end
 
   # Delete all selected or single displayed host(s)
