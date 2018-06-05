@@ -53,10 +53,11 @@ function cloudSubnetFormController(API, miqService) {
   };
 
   vm.cancelClicked = function() {
+    var url = '';
     if (vm.newRecord) {
-      var url = '/cloud_subnet/create/new?button=cancel';
+      url = '/cloud_subnet/create/new?button=cancel';
     } else {
-      var url = '/cloud_subnet/update/' + vm.cloudSubnetFormId + '?button=cancel';
+      url = '/cloud_subnet/update/' + vm.cloudSubnetFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };
