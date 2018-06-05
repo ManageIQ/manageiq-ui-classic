@@ -4,7 +4,7 @@ class PhysicalInfraTopologyService < TopologyService
   # Keep it in a 'topological order' e.g: racks, chassis, servers
   @included_relations = [
     :writable_classification_tags,
-    :physical_racks   => [
+    :physical_racks    => [
       :writable_classification_tags,
       :physical_servers => [
         :writable_classification_tags,
@@ -14,16 +14,19 @@ class PhysicalInfraTopologyService < TopologyService
         ]
       ]
     ],
-    :physical_servers => [
+    :physical_servers  => [
       :writable_classification_tags,
       :host => [
         :writable_classification_tags,
         :vms => :writable_classification_tags
       ]
     ],
+    :physical_switches => [
+      :writable_classification_tags
+    ],
   ]
 
-  @kinds = %i(PhysicalInfraManager PhysicalRack PhysicalServer Host Vm Tag)
+  @kinds = %i(PhysicalInfraManager PhysicalRack PhysicalServer Host Vm Tag PhysicalSwitch)
 
   def entity_type(entity)
     if entity.kind_of?(Host)
