@@ -1,11 +1,7 @@
 module ManageIQ::Providers
   class EmbeddedAutomationManager::AuthenticationDecorator < MiqDecorator
     def self.fonticon
-      'fa fa-lock'
-    end
-
-    def self.fileicon
-      '100/authentication.png'
+      'pficon pficon-locked'
     end
   end
 end
