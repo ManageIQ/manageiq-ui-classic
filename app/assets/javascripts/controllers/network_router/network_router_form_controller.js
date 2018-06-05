@@ -6,16 +6,12 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
 
     vm.networkRouterModel = {
       cloud_tenant: {
-        id: null,
-        name: null,
+        id: null
       },
       external_fixed_ips: [],
       external_gateway: false,
-      extra_attributes: {
-        external_gateway_info: {
-          enable_snat: true,
-        },
-      },
+      extra_attributes: null,
+      //extra_attributes: { external_gateway_info: { enable_snat: true, external_fixed_ips: [], network_id: null }}
     };
     vm.ems = [];
 

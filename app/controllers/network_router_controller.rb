@@ -70,7 +70,7 @@ class NetworkRouterController < ApplicationController
       options = form_params(params)
       options.merge!(form_external_gateway(params)) if switch_to_bool(params[:external_gateway])
 
-      ems = ExtManagementSystem.find(params[:ext_management_system][:id])
+      ems = ExtManagementSystem.find(params[:ems_id])
       task_id = ems.create_network_router_queue(session[:userid], options)
 
       add_flash(_("Network Router creation failed: Task start failed: ID [%{id}]") %

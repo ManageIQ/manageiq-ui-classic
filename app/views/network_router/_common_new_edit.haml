@@ -19,8 +19,8 @@
       .col-md-8{'ng-if' => 'vm.newRecord'}
         %select{'id'         => 'ems_id',
                 'name'       => 'ems_id',
-                'ng-change'  => 'vm.filterNetworkManagerChanged(vm.networkRouterModel.ext_management_system.id)',
-                'ng-model'   => 'vm.networkRouterModel.ext_management_system.id',
+                'ng-change'  => 'vm.filterNetworkManagerChanged(vm.networkRouterModel.ems_id)',
+                'ng-model'   => 'vm.networkRouterModel.ems_id',
                 'ng-options' => 'ems.id as ems.name for ems in vm.ems',
                 'pf-select'  => true,
                 'required'   => ''}
@@ -36,7 +36,7 @@
                             'disabled'    => true}
 
     .form-group{'ng-class' => '{"has-error": angularForm.cloud_tenant_id.$invalid}',
-                'ng-if'    => 'vm.networkRouterModel.ext_management_system.id'}
+                'ng-if'    => 'vm.networkRouterModel.ems_id'}
       %label.col-md-2.control-label
         = _('Cloud Tenant Placement')
       .col-md-8{'ng-if' => 'vm.newRecord'}

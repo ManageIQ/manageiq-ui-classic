@@ -108,6 +108,11 @@ describe NetworkRouterController do
           :userid => controller.current_user.userid
         }
       end
+
+      let(:cloud_tenant) do
+        FactoryGirl.create(:cloud_tenant)
+      end
+
       let(:queue_options) do
         {
           :class_name  => @ems.class.name,
@@ -116,7 +121,12 @@ describe NetworkRouterController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name => "test"}]
+          :args        => [{
+            :name            => 'test',
+            :admin_state_up  => 'true',
+            :ems_id          => @ems.id.to_s,
+            :cloud_subnet_id => ''
+          }]
         }
       end
 
@@ -127,8 +137,19 @@ describe NetworkRouterController do
 
       it "queues the create action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :create, :params => { :button => "add", :format => :js, :name => 'test',
-                                   :tenant_id => 'id', :ext_management_system => {:id => @ems.id }}
+        post :create, :params => {
+          :button           => 'add',
+          :controller       => 'network_router',
+          :format           => :js,
+          :name             => 'test',
+          :admin_state_up   => 'true',
+          :cloud_subnet_id  => '',
+          :cloud_tenant     => {:id => cloud_tenant.id},
+          :ems_id           => @ems.id,
+          :external_gateway => 'false',
+          :extra_attributes => '',
+          :id               => 'new'
+        }
       end
     end
   end
@@ -168,7 +189,12 @@ describe NetworkRouterController do
 
       it "queues the update action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :update, :params => { :button => "save", :format => :js, :id => @router.id, :name => "foo2" }
+        post :update, :params => {
+          :button => "save",
+          :format => :js,
+          :id     => @router.id,
+          :name   => "foo2"
+        }
       end
     end
   end
