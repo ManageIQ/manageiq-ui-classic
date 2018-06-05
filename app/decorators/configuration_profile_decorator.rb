@@ -6,4 +6,10 @@ class ConfigurationProfileDecorator < MiqDecorator
       'fa fa-list-ul'
     end
   end
+
+  def single_quad
+    {
+      :fonticon => fonticon
+    }
+  end
 end
