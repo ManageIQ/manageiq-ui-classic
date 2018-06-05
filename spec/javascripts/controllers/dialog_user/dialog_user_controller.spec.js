@@ -19,6 +19,7 @@ describe('dialogUserController', function() {
     spyOn(miqService, 'redirectBack');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
+    spyOn(miqService, 'refreshSelectpicker');
 
     $controller = _$controller_('dialogUserController', {
       API: API,
@@ -57,6 +58,13 @@ describe('dialogUserController', function() {
 
     it('sets dialogLoaded to true', function() {
       expect($controller.dialogLoaded).toEqual(true);
+    });
+
+    it('refreshes the selectpickers after resolving the api call', function(done) {
+      setTimeout(function() {
+        expect(miqService.refreshSelectpicker).toHaveBeenCalled();
+        done();
+      });
     });
   });
 
