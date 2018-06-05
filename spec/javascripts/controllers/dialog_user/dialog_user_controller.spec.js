@@ -168,30 +168,28 @@ describe('dialogUserController', function() {
       });
 
       it('turns off the sparkle', function(done) {
-        $controller.submitButtonClicked();
-        setTimeout(function() {
-          expect(miqService.sparkleOff).toHaveBeenCalled();
-          done();
-        });
+        $controller.submitButtonClicked()
+          .catch(function() {
+            expect(miqService.sparkleOff).toHaveBeenCalled();
+            done();
+          });
       });
 
       it('clears flash messages', function(done) {
-        $controller.submitButtonClicked();
-
-        setTimeout(function() {
-          expect(window.clearFlash).toHaveBeenCalled();
-          done();
-        });
+        $controller.submitButtonClicked()
+          .catch(function() {
+            expect(window.clearFlash).toHaveBeenCalled();
+            done();
+          });
       });
 
       it('adds flash messages for each message after the -', function(done) {
-        $controller.submitButtonClicked();
-
-        setTimeout(function() {
-          expect(window.add_flash).toHaveBeenCalledWith('One', 'error');
-          expect(window.add_flash).toHaveBeenCalledWith('Two', 'error');
-          done();
-        });
+        $controller.submitButtonClicked()
+          .catch(function() {
+            expect(window.add_flash).toHaveBeenCalledWith('One', 'error');
+            expect(window.add_flash).toHaveBeenCalledWith('Two', 'error');
+            done();
+          });
       });
     });
   });
