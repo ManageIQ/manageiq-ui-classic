@@ -10,10 +10,12 @@ const { sync } = require('glob')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const extname = require('path-complete-extname')
-const { env, settings, output, loadersDir, engines } = require('./configuration.js')
+const { env, settings, output, engines } = require('./configuration.js')
+const loaders = require('./loaders.js')
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*` // */
 const entryPath = join(settings.source_path, settings.source_entry_path)
+
 let packPaths = {}
 
 Object.keys(engines).forEach(function(k) {
@@ -39,7 +41,7 @@ module.exports = {
   },
 
   module: {
-    rules: sync(join(loadersDir, '*.js')).map(loader => require(loader))
+    rules: loaders,
   },
 
   plugins: [
@@ -56,8 +58,8 @@ module.exports = {
 
     new ManifestPlugin({
       publicPath: output.publicPath,
-      writeToFileEmit: true
-    })
+      writeToFileEmit: true,
+    }),
   ],
 
   resolve: {
