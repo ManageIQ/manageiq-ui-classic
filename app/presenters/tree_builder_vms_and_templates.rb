@@ -15,7 +15,7 @@ class TreeBuilderVmsAndTemplates < FullTreeBuilder
     #   so taking them from the relationship records can cut down on the huge
     #   VM query.
 
-    tree = root.subtree_arranged(TreeBuilder.hide_vms ? {:except_type => VmOrTemplate} : {})
+    tree = root.subtree_arranged(TreeBuilder.hide_vms ? {:except_type => "VmOrTemplate"} : {})
 
     prune_rbac(tree)
     prune_non_vandt_folders(tree)
