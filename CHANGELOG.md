@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 87 ending 2018-06-04
+
+### Added
+- Use pficon-unknown fonticon for unknown Operating Systems in quads [(#4002)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4002)
+- Display Cloud Tenants relation at Network Manager [(#3995)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3995)
+- Display port group for VM instances [(#3992)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3992)
+- Better inflector support for ui rake tasks and asset plugins [(#3986)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3986)
+- Replace ff-template with pficon-template [(#3985)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3985)
+- Network adapter reconfiguration for vCloud provider [(#3972)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3972)
+- Ability to see/save Config settings for Region and Zone records. [(#3967)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3967)
+- Add Search to Currencies' drop down when adding/editing Chargeback Rate [(#3962)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3962)
+- Add a new "Endpoint URL" field in AWS endpoints [(#3958)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3958)
+- Add ability to search through the available fields while editing report [(#3899)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3899)
+- Support VM Reconfigure for VMware vCloud provider [(#3854)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3854)
+
+### Fixed
+- Fix parent ems links in textual summaries. [(#4031)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4031)
+- Add a separate decorator for Network Providers [(#4025)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4025)
+- Fix wrongly displayed policy shield on container & cloud provider quads [(#4021)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4021)
+- Add the VMWare Virtual  Ethernet Card model type to the VM summary [(#4016)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4016)
+- Display number of containers on the top right quad of container prov [(#4015)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4015)
+- Render notifications fetched from the API in the correct order [(#4010)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4010)
+- Fix textual summary display in tenants. [(#4009)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4009)
+- Fix typo in earlier commit [(#4006)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4006)
+- Setting different colors for physical infra components on topology view [(#3999)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3999)
+- Remove compliances include from Host.yaml [(#3989)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3989)
+- Error modal - ensure visibility over other modals [(#3988)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3988)
+- Add support for ssh key pair credentials to rhv [(#3983)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3983)
+- Restrict quadicon class demodulization for Physical records only [(#3980)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3980)
+- http - send cookie [(#3978)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3978)
+- Reload classifications when adding or editing the tag expression for groups [(#3977)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3977)
+- Fix Save button which wasn't responding while editing Chargeback Rate [(#3974)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3974)
+- Do not override kubevirt token with default token [(#3971)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3971)
+- Add a new "full_center" layout [(#3970)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3970)
+- Fix Categories order for Reporting charts [(#3964)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3964)
+- Void serverl url input field when switching form to Sat6 [(#3942)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3942)
+- Display browser local time in retirement form [(#3826)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3826)
+- Fix opening incorrect tag page opened for Ansible Playbooks navigated through Repository summary page [(#3721)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3721)
+- Fix displaying services after applying a filter (2) [(#3654)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3654)
+- Hide "Hide Deprecated" checkbox and remove "Deprecated" column when provisioning infra VM [(#3615)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3615)
+- Create a rack list and rack page [(#3503)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3503)
+- Make view selector of All Generic Objects page work [(#3423)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3423)
+- TextualSummaries: part of client side rendering with React. [(#3420)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3420)
+
 ## Unreleased as of Sprint 86 ending 2018-05-21
 
 ### Added
