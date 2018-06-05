@@ -579,7 +579,7 @@ module ApplicationController::CiProcessing
   # End of common VM button handler routines
 
   # Common Cluster button handler routines
-  def process_clusters(clusters, task, _=nil)
+  def process_clusters(clusters, task, _ = nil)
     clusters, _clusters_out_region = filter_ids_in_region(clusters, _("Cluster"))
     return if clusters.empty?
 
