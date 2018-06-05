@@ -110,6 +110,10 @@ module ApplicationController::CiProcessing
     method(:process_objects)
   end
 
+  def cluster_button_action
+    method(:process_clusters)
+  end
+
   def process_elements(elements, klass, task, display_name = nil, order_field = nil)
     order_field ||= %w(name description title).find do |field|
                       klass.column_names.include?(field)
@@ -306,6 +310,8 @@ module ApplicationController::CiProcessing
       CloudObjectStoreObject
     when "ems_storage"
       params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
+    when "ems_cluster"
+      EmsCluster
     else
       VmOrTemplate
     end
@@ -573,7 +579,7 @@ module ApplicationController::CiProcessing
   # End of common VM button handler routines
 
   # Common Cluster button handler routines
-  def process_clusters(clusters, task)
+  def process_clusters(clusters, task, _ = nil)
     clusters, _clusters_out_region = filter_ids_in_region(clusters, _("Cluster"))
     return if clusters.empty?
 
@@ -632,48 +638,6 @@ module ApplicationController::CiProcessing
     end
   end
 
-  def cluster_button_operation(method, display_name)
-    clusters = []
-    # Either a list or coming from a different controller (eg from host screen, go to its clusters)
-    if @lastaction == "show_list" || @layout != "ems_cluster"
-      clusters = find_checked_ids_with_rbac(EmsCluster)
-      if clusters.empty?
-        add_flash(_("No Clusters / Deployment Roles were selected for %{task}") % {:task => display_name}, :error)
-      else
-        process_clusters(clusters, method)
-      end
-
-      if @lastaction == "show_list" # In cluster controller, refresh show_list, else let the other controller handle it
-        show_list
-        @refresh_partial = "layouts/gtl"
-      end
-
-    else # showing 1 cluster
-      if params[:id].nil? || !EmsCluster.exists?(params[:id])
-        add_flash(_("Cluster / Deployment Role no longer exists"), :error)
-      else
-        clusters.push(find_id_with_rbac(EmsCluster, params[:id]))
-        process_clusters(clusters, method)  unless clusters.empty?
-      end
-
-      params[:display] = @display
-      show
-
-      # TODO: tells callers to go back to show_list because this Host may be gone
-      # Should be refactored into calling show_list right here
-      if method == 'destroy'
-        @single_delete = true unless flash_errors?
-      end
-      if ["vms", "hosts"].include?(@display)
-        @refresh_partial = "layouts/gtl"
-      else
-        @refresh_partial = "config"
-      end
-    end
-
-    clusters.count
-  end
-
   # The method takes care of task processing initiated from UI on the
   # selected records.
   #
@@ -720,8 +684,12 @@ module ApplicationController::CiProcessing
       reboot_guest stop start check_compliance_queue destroy
       refresh_ems vm_miq_request_new suspend reset shutdown_guest
     )
+    ems_cluster_untestable_actions = %w(scan)
     if controller == "vm_infra"
       return vm_infra_untestable_actions.exclude?(action)
+    end
+    if controller == "ems_cluster"
+      return ems_cluster_untestable_actions.exclude?(action)
     end
     true
   end
@@ -756,17 +724,20 @@ module ApplicationController::CiProcessing
     if @lastaction == "show_list"
       show_list unless @explorer
       @refresh_partial = "layouts/gtl"
+      return
     end
     if options[:refresh_partial].present?
       show
       @refresh_partial = options[:refresh_partial]
+      return
     end
   end
 
   # Scan all selected or single displayed cluster(s)
   def scanclusters
     assert_privileges("ems_cluster_scan")
-    cluster_button_operation('scan', _('Analysis'))
+    generic_button_operation('scan', _('Analysis'), cluster_button_action,
+                             :refresh_partial => %w(vm hosts).include?(@display) ? 'layouts/gtl' : 'config')
   end
 
   # Common Stacks button handler routines
