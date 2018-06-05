@@ -20,7 +20,7 @@ class HostDecorator < MiqDecorator
         :tooltip  => authentication_status
       }
     }
-    icon[:middle] = { :fileicon => '100/shield.png' } if get_policies.present?
+    icon[:middle] = QuadiconHelper::POLICY_SHIELD if get_policies.present?
     icon
   end
 
