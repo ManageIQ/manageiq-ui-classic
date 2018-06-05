@@ -45,7 +45,7 @@ let store,
 describe('Test connected Tagging component', () => {
   beforeEach(() => {
     store = mockStore(initialState);
-    wrapper = mount(<Provider store={store}><TaggingWithButtonsConnected /></Provider>);
+    wrapper = shallow(<Provider store={store}><TaggingWithButtonsConnected /></Provider>);
   });
 
   it('+++ render the connected(SMART) component', () => {

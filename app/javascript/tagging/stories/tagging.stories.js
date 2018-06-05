@@ -34,8 +34,8 @@ const singleTags = [
   },
 ];
 const assignedTags = [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }];
-const selectedTagCategory = 'animal';
-const selectedTagValue = 'pig';
+const selectedTagCategory = {};
+const selectedTagValue = {};
 const defaultState = { tags, assignedTags };
 const defaultStateSingle = { singleTags, assignedTags };
 const store = createStore(taggingApp);
@@ -53,6 +53,8 @@ storiesOf('Tagging', module)
     selectedTagCategory={selectedTagCategory}
     selectedTagValue={selectedTagValue}
   />));
+
+
 storiesOf('Tagging', module)
   .add('Simple Tagging', () => <Provider store={store}><TaggingConnected /></Provider>);
 storiesOf('Tagging', module)

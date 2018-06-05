@@ -10,7 +10,6 @@ class TaggingWithButtons extends React.Component {
   onTagDeleteClick = (tagCategory, tagValue) => this.props.onTagDeleteClick({ tagCategory, tagValue });
 
   render() {
-    console.log('render with buttons');
     return (
       <Grid>
         <Tagging
