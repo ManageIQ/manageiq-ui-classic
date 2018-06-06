@@ -594,6 +594,30 @@ class ChargebackController < ApplicationController
       @edit[:new][:currency] = params[:currency].to_i
       @edit[:new][:code_currency] = ChargebackRateDetailCurrency.find(params[:currency]).code
     end
+
+    @edit[:new][:model] = params[:chosen_model] if params[:chosen_model]
+
+    # We need to keep the id of the rate without base model being edited/copied to keep the original rate details
+    record_id = @edit[:new][:base_id] || @edit[:rec_id]
+
+    # If Rate Base model was changed, we need to reset the Rate Details
+    if @edit[:new][:model] != @edit[:new][:model_hist]
+      if @edit[:new][:model] == 'Any'
+        rate_details = ChargebackRate.find(record_id).chargeback_rate_details
+      elsif @edit[:models].include?('Any')
+        # In this case, we want to keep the original values of appropriate columns
+        original_rate_details = ChargebackRate.find(record_id).chargeback_rate_details
+        relevant_rate_details = ChargebackRateDetail.default_rate_details_for(@edit[:new][:rate_type])
+        relevant_rate_details = ChargebackRate.relevant_details_for(@edit[:new][:model], relevant_rate_details)
+        rate_details = original_rate_details.where(:description => relevant_rate_details.map(&:description))
+      else
+        rate_details = ChargebackRateDetail.default_rate_details_for(@edit[:new][:rate_type])
+        rate_details = ChargebackRate.relevant_details_for(@edit[:new][:model], rate_details)
+      end
+      cb_rate_set_details(rate_details)
+      @edit[:new][:model_hist] = @edit[:new][:model] # Save the latest selected Rate base model
+    end
+
     @edit[:new][:details].each_with_index do |detail, detail_index|
       %i(per_time per_unit sub_metric).each do |measure|
         key = "#{measure}_#{detail_index}".to_sym
