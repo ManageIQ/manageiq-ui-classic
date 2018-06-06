@@ -10,10 +10,12 @@ const { sync } = require('glob')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const extname = require('path-complete-extname')
-const { env, settings, output, loadersDir, engines } = require('./configuration.js')
+const { env, settings, output, engines } = require('./configuration.js')
+const loaders = require('./loaders.js')
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*` // */
 const entryPath = join(settings.source_path, settings.source_entry_path)
+
 let packPaths = {}
 
 Object.keys(engines).forEach(function(k) {
@@ -39,33 +41,24 @@ module.exports = {
   },
 
   module: {
-    rules: sync(join(loadersDir, '*.js')).map(loader => require(loader))
+    rules: loaders,
   },
 
   plugins: [
     new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
     new ExtractTextPlugin(env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css'),
 
-    // Workaround for angular/angular#11580
-    new webpack.ContextReplacementPlugin(
-      // The (\\|\/) piece accounts for path separators in *nix and Windows
-      /angular(\\|\/)core(\\|\/)@angular/,
-      resolve(__dirname, '../../'), // location of your src
-      {} // a map of your routes
-    ),
-
     new ManifestPlugin({
       publicPath: output.publicPath,
-      writeToFileEmit: true
-    })
+      writeToFileEmit: true,
+    }),
   ],
 
   resolve: {
     extensions: settings.extensions,
-    modules: [
-      resolve(settings.source_path),
-      'node_modules'
-    ]
+    modules: [resolve(settings.source_path)].concat(
+      Object.keys(engines).map(key => engines[key]).map(engine => `${engine}/node_modules`)
+    ),
   },
 
   resolveLoader: {

@@ -6,8 +6,6 @@ default: &default
   public_output_path: packs
 
   extensions:
-  - .coffee
-  - .erb
   - .js
   - .jsx
   - .ts
