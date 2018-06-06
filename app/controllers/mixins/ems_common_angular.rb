@@ -182,6 +182,9 @@ module Mixins
         [user, params[:default_password], endpoint_opts]
       when 'ManageIQ::Providers::Lenovo::PhysicalInfraManager'
         [user, password, params[:default_hostname], params[:default_api_port], "token", false, true]
+      when 'ManageIQ::Providers::Redfish::PhysicalInfraManager'
+        [user, password, params[:default_hostname], params[:default_api_port],
+         params[:default_security_protocol]]
       end
     end
 
@@ -656,6 +659,15 @@ module Mixins
       if ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager)
         uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
         default_endpoint = {:role => :default, :hostname => uri.host, :port => uri.port, :path => uri.path, :url => params[:default_url]}
+      end
+
+      if ems.kind_of?(ManageIQ::Providers::Redfish::PhysicalInfraManager)
+        default_endpoint = {
+          :role              => :default,
+          :hostname          => hostname,
+          :port              => port,
+          :security_protocol => ems.security_protocol
+        }
       end
 
       new_options = {}

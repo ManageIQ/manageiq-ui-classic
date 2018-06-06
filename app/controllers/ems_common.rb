@@ -478,6 +478,7 @@ module EmsCommon
     end
     @nuage_api_versions = retrieve_nuage_api_versions
     @hawkular_security_protocols = retrieve_hawkular_security_protocols
+    @redfish_security_protocols = retrieve_security_protocols
   end
 
   def retrieve_provider_regions
