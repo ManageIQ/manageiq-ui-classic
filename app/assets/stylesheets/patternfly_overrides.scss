@@ -1015,6 +1015,14 @@ img.tiny {
   margin-left: 0
 }
 
+table.table-expanded tr td .piechart {
+  margin-left: 67px;
+}
+
+table.table-compressed tr td .piechart {
+  margin-left: 5px;
+}
+
 /// ===================================================================
 /// end misc styling
 /// ===================================================================

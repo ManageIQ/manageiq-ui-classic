@@ -1354,9 +1354,7 @@ module ApplicationController::Compare
     width = 55
     height = 25
     width = height = 24 if @compressed
-    img_src = "100/piecharts/compare/#{image}.png"
-    col = "<img src=\"#{ActionController::Base.helpers.image_path(img_src)}\" width=\"#{width}\" height=\"#{height}\"
-           border=\"0\" align=\"middle\" alt=\"#{val}\" title=\"#{val}\">"
+    col = "<div class=\"piechart invert fill-#{image}\" title=\"#{val}\"></div>"
     html_text = "<div class='#{img_bkg}'>#{col}</div>"
     {"col#{idx + 1}".to_sym => html_text}
   end
