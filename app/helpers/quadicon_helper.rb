@@ -39,7 +39,7 @@ module QuadiconHelper
     unless enabled
       return {
         :fonticon => 'pficon pficon-asleep',
-        :tooltip  => _('This provider is paused, no data is currently collected from it')
+        :tooltip  => _('Data collection for this provider is suspended.')
       }
     end
 
