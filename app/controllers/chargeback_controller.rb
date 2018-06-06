@@ -576,6 +576,7 @@ class ChargebackController < ApplicationController
     @edit[:new][:per_time_types] = ChargebackRateDetail::PER_TIME_TYPES
 
     if params[:pressed] == 'chargeback_rates_copy'
+      @edit[:new][:base_id] = @rate.id if @edit[:models].include?('Any')
       @rate.id = nil
       @edit[:new][:description] = "copy of #{@rate.description}"
     end
