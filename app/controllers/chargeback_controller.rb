@@ -113,8 +113,14 @@ class ChargebackController < ApplicationController
         render_flash(_("Description is required"), :error)
         return
       end
-      @rate.description = @edit[:new][:description]
-      @rate.rate_type   = @edit[:new][:rate_type] if @edit[:new][:rate_type]
+      if @edit[:new][:model] == 'Any' || !@edit[:new][:model]
+        render_flash(_("Base model is required"), :error)
+        return
+      end
+
+      @rate.description       = @edit[:new][:description]
+      @rate.rate_type         = @edit[:new][:rate_type] if @edit[:new][:rate_type]
+      @rate.report_base_model = @edit[:new][:model]
 
       cb_rate_set_record_vars
       # Detect errors saving tiers
