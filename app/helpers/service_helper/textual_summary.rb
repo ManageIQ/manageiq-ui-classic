@@ -146,7 +146,7 @@ module ServiceHelper::TextualSummary
     ost = @record.try(:orchestration_stack)
     if ost && !ost.id.present?
       {:label => _("Orchestration Stack"),
-       :image => "100/orchestration_stack.png",
+       :icon => 'ff ff-stack',
        :value => ost.name,
        :title => _("Invalid Stack")}
     elsif ost
