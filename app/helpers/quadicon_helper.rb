@@ -59,18 +59,6 @@ module QuadiconHelper
     MACHINE_STATE_QUADRANT[state_str.try(:downcase)] || {}
   end
 
-  def self.quadicon_output(quadicon)
-    if (quadicon.keys & QUADRANTS).any?
-      QUADRANTS.each do |part|
-        quadicon[part] = quadrant_output(quadicon[part])
-      end
-    else
-      quadicon = quadrant_output(quadicon)
-    end
-
-    quadicon
-  end
-
   def self.settings_key(klass, layout)
     if klass.base_model.to_s.underscore == "ext_management_system"
       case layout
@@ -89,7 +77,7 @@ module QuadiconHelper
   end
 
   # Change the bottom-right quadrant of the quadicon with the policy simulation result
-  def self.policy_sim(quad, result)
+  def policy_sim(quad, result)
     if quad.try(:[], :bottom_right)
       img = case result
             when true  then '100/check.png'
@@ -105,13 +93,25 @@ module QuadiconHelper
     quad
   end
 
-  def self.quadrant_output(quadrant)
+  def quadrant_output(quadrant)
     # Call asset_path on the fileicon value
     quadrant[:fileicon] = ActionController::Base.helpers.image_path(quadrant[:fileicon]) if quadrant.try(:[], :fileicon)
     # Convert all numbers to string
     quadrant[:text] = quadrant[:text].to_s if quadrant.try(:[], :text).kind_of?(Numeric)
 
     quadrant
+  end
+
+  def quadicon_output(quadicon)
+    if (quadicon.keys & QUADRANTS).any?
+      QUADRANTS.each do |part|
+        quadicon[part] = quadrant_output(quadicon[part])
+      end
+    else
+      quadicon = quadrant_output(quadicon)
+    end
+
+    quadicon
   end
 
   def quadicon_hash(item)
@@ -127,9 +127,9 @@ module QuadiconHelper
 
     # Alter the quadicon's bottom-right quadrant on the policy simulation screen
     if !!@policy_sim && session[:policies].present?
-      quad_icon = QuadiconHelper.policy_sim(quad_icon, item.passes_profiles?(session[:policies].keys))
+      quad_icon = policy_sim(quad_icon, item.passes_profiles?(session[:policies].keys))
     end
 
-    QuadiconHelper.quadicon_output(quad_icon) if quad_icon
+    quadicon_output(quad_icon) if quad_icon
   end
 end
