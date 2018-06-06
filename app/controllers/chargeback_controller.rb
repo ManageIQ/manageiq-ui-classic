@@ -502,24 +502,12 @@ class ChargebackController < ApplicationController
     process_elements(rates, ChargebackRate, task)
   end
 
-  # Set form variables for edit
-  def cb_rate_set_form_vars
-    @edit = {}
-    @edit[:new] = HashWithIndifferentAccess.new
-    @edit[:current] = HashWithIndifferentAccess.new
+  # Set Rate details for edit
+  def cb_rate_set_details(rate_details)
+    @edit[:new][:details] = []
     @edit[:new][:tiers] = []
     @edit[:new][:num_tiers] = []
-    @edit[:new][:description] = @rate.description
-    @edit[:new][:rate_type] = @rate.rate_type || x_node.split('-').last
-    @edit[:new][:details] = []
-
     tiers = []
-    rate_details = @rate.chargeback_rate_details
-    rate_details = ChargebackRateDetail.default_rate_details_for(@edit[:new][:rate_type]) if new_rate_edit?
-
-    # Select the currency of the first chargeback_rate_detail. All the chargeback_rate_details have the same currency
-    @edit[:new][:currency] = rate_details[0].detail_currency.id
-    @edit[:new][:code_currency] = rate_details[0].detail_currency.code
 
     rate_details.each_with_index do |detail, detail_index|
       temp = detail.slice(*ChargebackRateDetail::FORM_ATTRIBUTES)
@@ -554,6 +542,36 @@ class ChargebackController < ApplicationController
       @edit[:new][:num_tiers][detail_index] = tiers[detail_index].size
       @edit[:new][:details].push(temp)
     end
+  end
+
+  # Set form variables for edit
+  def cb_rate_set_form_vars
+    @edit = {}
+    @edit[:new] = HashWithIndifferentAccess.new
+    @edit[:current] = HashWithIndifferentAccess.new
+    @edit[:new][:description] = @rate.description
+    @edit[:new][:rate_type] = @rate.rate_type || x_node.split('-').last
+
+    rate_details = @rate.chargeback_rate_details
+    rate_details = ChargebackRateDetail.default_rate_details_for(@edit[:new][:rate_type]) if new_rate_edit?
+
+    # Select the currency of the first chargeback_rate_detail. All the chargeback_rate_details have the same currency
+    @edit[:new][:currency] = rate_details[0].detail_currency.id
+    @edit[:new][:code_currency] = rate_details[0].detail_currency.code
+
+    @edit[:models] = ChargebackRate.rate_models.map { |x| Chargeback.report_cb_model(x.to_s) }
+    @edit[:new][:model] = @rate.report_base_model
+
+    # If editing/copying an existing Chargeback Rate with no report_base_model
+    if (!new_rate_edit? || params[:button] == 'reset') && !@edit[:new][:model]
+      @edit[:models].push('Any')
+      @edit[:new][:model] = 'Any'
+    end
+
+    # Set the history of chosen Rate base model
+    @edit[:new][:model_hist] = @edit[:new][:model] if params[:pressed] || params[:button] == 'reset'
+
+    cb_rate_set_details(rate_details)
 
     @edit[:new][:per_time_types] = ChargebackRateDetail::PER_TIME_TYPES
 
