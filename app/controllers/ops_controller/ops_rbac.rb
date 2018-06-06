@@ -111,7 +111,7 @@ module OpsController::OpsRbac
                     {:model => tenant_type_title_string(params[:divisible] == "true")})
       else
         add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-                    {:model => tenant_type_title_string(params[:divisible] == "true"), :name => @tenant.name})
+                    {:model => tenant_type_title_string(@tenant[:divisible]), :name => @tenant.name})
       end
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
@@ -132,7 +132,7 @@ module OpsController::OpsRbac
       else
         AuditEvent.success(build_saved_audit_hash(old_tenant_attributes, tenant, params[:button] == "add"))
         add_flash(_("%{model} \"%{name}\" was saved") %
-                    {:model => tenant_type_title_string(params[:divisible] == "true"), :name => tenant.name})
+                    {:model => tenant_type_title_string(tenant[:divisible]), :name => tenant.name})
         if params[:button] == "add"
           rbac_tenants_list
           rbac_get_info
