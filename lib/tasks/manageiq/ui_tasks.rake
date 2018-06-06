@@ -14,20 +14,28 @@ namespace :update do
     end
   end
 
-  task :ui do
-    Rake::Task['update:bower'].invoke
-    Rake::Task['update:yarn'].invoke
+  task :debug_engines do
+    print "\n"
+    puts "JS plugins:"
+    asset_engines.each_pair do |k, v|
+      puts "  #{k}: #{v}"
+    end
+    print "\n"
+  end
 
-    # When available, run the `webpack:compile` tasks without a fully loaded
-    # environment, since when doing an appliance/docker build, a database isn't
-    # available for the :environment task (prerequisite for
-    # 'webpacker:compile') to function.
-    if defined?(EvmRakeHelper)
-      EvmRakeHelper.with_dummy_database_url_configuration do
-        Rake::Task['webpack:compile'].invoke
+  task :actual_ui => ['update:bower', 'update:yarn', 'webpack:compile', 'update:debug_engines']
+
+  task :ui do
+    # when running update:ui from ui-classic, asset_engines won't see the other engines
+    # the same goes for Rake::Task#invoke
+    if defined?(ENGINE_ROOT) && !ENV["TRAVIS"]
+      Dir.chdir Rails.root do
+        Bundler.with_clean_env do
+          system("bundle exec rake update:actual_ui")
+        end
       end
     else
-      Rake::Task['webpack:compile'].invoke
+      Rake::Task['update:actual_ui'].invoke
     end
   end
 end
@@ -41,9 +49,22 @@ namespace :webpack do
 
   [:compile, :clobber].each do |webpacker_task|
     task webpacker_task do
-      Dir.chdir ManageIQ::UI::Classic::Engine.root do
-        Rake::Task["webpack:paths"].invoke
-        Rake::Task["webpacker:#{webpacker_task}"].invoke
+      # Run the `webpack:compile` tasks without a fully loaded environment,
+      # since when doing an appliance/docker build, a database isn't
+      # available for the :environment task (prerequisite for
+      # 'webpacker:compile') to function.
+      if defined?(EvmRakeHelper)
+        EvmRakeHelper.with_dummy_database_url_configuration do
+          Dir.chdir ManageIQ::UI::Classic::Engine.root do
+            Rake::Task["webpack:paths"].invoke
+            Rake::Task["webpacker:#{webpacker_task}"].invoke
+          end
+        end
+      else
+        Dir.chdir ManageIQ::UI::Classic::Engine.root do
+          Rake::Task["webpack:paths"].invoke
+          Rake::Task["webpacker:#{webpacker_task}"].invoke
+        end
       end
     end
   end
@@ -64,7 +85,7 @@ end
 # compile and clobber when running assets:* tasks
 if Rake::Task.task_defined?("assets:precompile")
   Rake::Task["assets:precompile"].enhance do
-    Rake::Task["webpack:compile"].invoke
+    Rake::Task["webpack:compile"].invoke unless ENV["TRAVIS"]
   end
 
   Rake::Task["assets:precompile"].actions.each do |action|
@@ -76,7 +97,7 @@ end
 
 if Rake::Task.task_defined?("assets:clobber")
   Rake::Task["assets:clobber"].enhance do
-    Rake::Task["webpack:clobber"].invoke
+    Rake::Task["webpack:clobber"].invoke unless ENV["TRAVIS"]
   end
 
   Rake::Task["assets:clobber"].actions.each do |action|
