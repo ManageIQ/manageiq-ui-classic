@@ -191,6 +191,8 @@ class ChargebackController < ApplicationController
       changed = (@edit[:new] != @edit[:current])
       # Update the new column with the code of the currency selected by the user
       page.replace('chargeback_rate_currency', :partial => 'cb_rate_currency')
+      # Update the Rate Details table according to the selected base model
+      page.replace('rate_edit_details', :partial => 'cb_rate_edit_table') if @edit[:new][:model]
       page << javascript_for_miq_button_visibility(changed)
     end
   end
