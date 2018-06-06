@@ -16,8 +16,10 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       cb_dependent: true,
       nicsEnabled: false,
       addEnabled: false,
+      cdRomConnectEnabled: false,
       enableAddDiskButton: true,
       enableAddNetworkAdapterButton: true,
+      enableConnectCDRomButton: true,
       cb_bootable: false,
       vmAddDisks: [],
       vmRemoveDisks: [],
@@ -30,6 +32,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     };
     vm.cb_disks = false;
     vm.cb_networkAdapters = false;
+    vm.cb_cdRoms = false;
     vm.hdpattern = '^[1-9][0-9]*$';
     vm.reconfigureFormId = reconfigureFormId;
     vm.afterGet = false;
@@ -448,11 +451,13 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.cb_cpu                                  = data.cb_cpu;
     vm.reconfigureModel.vmdisks                = angular.copy(data.disks);
     vm.reconfigureModel.vmNetworkAdapters      = angular.copy(data.network_adapters);
+    vm.reconfigureModel.vmCDRoms               = angular.copy(data.cdroms);
     vm.vm_vendor                               = data.vm_vendor;
     vm.vm_type                                 = data.vm_type;
     vm.disk_default_type                       = data.disk_default_type;
     vm.updateDisksAddRemove();
     vm.updateNetworkAdaptersAddRemove();
+    vm.updateCDRomsConnectDisconnect();
 
     angular.forEach(vm.reconfigureModel.vmdisks, function(disk) {
       if (typeof disk !== 'undefined') {
@@ -476,6 +481,76 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.cb_memoryCopy = vm.cb_memory;
     vm.cb_cpuCopy = vm.cb_cpu;
     miqService.sparkleOff();
-  }
+  };
+
+  // -----------------------------------------------
+  // ???
+  vm.updateCDRomsConnectDisconnect = function() {
+    vm.reconfigureModel.vmConnectCDRoms = [];
+    vm.reconfigureModel.vmDisconnectCDRoms = [];
+    angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
+      if (cdRom.connect_disconnect === 'connect') {
+        vm.reconfigureModel.vmConnectCDRoms.push(
+          {
+            name: cdRom.name,
+            isoFileName: cdRom.isoFileName,
+          }
+        );
+      }
+      if (cdRom.connect_disconnect === 'disconnect') {
+        vm.reconfigureModel.vmDisconnectCDRoms.push({cdRom: cdRom});
+      }
+    });
+    // vm.setEnableConnectCDRomButton();
+    vm.cb_cdRoms = vm.reconfigureModel.vmConnectCDRoms.length > 0  ||
+      vm.reconfigureModel.vmDisconnectCDRoms.length > 0;
+  };
+
+  vm.processConnectSelectedCDRom = function() {
+    vm.reconfigureModel.vmCDRoms.push(
+      {
+        name: vm.reconfigureModel.name ? vm.reconfigureModel.name : __('to be determined'),
+        isoFileName: vm.reconfigureModel.isoFileName,
+        connect_disconnect: 'connect',
+      });
+    vm.resetAddNetworkAdapterValues();
+    vm.updateNetworkAdaptersAddRemove();
+  };
+
+  vm.disconnectCDRom = function(thisCDRom) {
+    thisCDRom.connect_disconnect = 'disconnect';
+    vm.updateCDRomsConnectDisconnect();
+  };
+
+  vm.enableConnectCDRom = function() {
+    vm.reconfigureModel.cdRomConnectEnabled = true;
+    vm.reconfigureModel.enableConnectCDRomButton = false;
+    vm.reconfigureModel.showDropDownISOs = true;
+  };
+
+  vm.hideConnectCDRom = function() {
+    vm.resetConnectCDRomValues();
+  };
+
+  vm.resetConnectCDRomValues = function() {
+    vm.reconfigureModel.cdRomsEnabled = false;
+    vm.reconfigureModel.connectCDRomEnabled = false;
+    vm.reconfigureModel.showDropDownISOs = false;
+    // vm.setEnableConnectCDRomButton();
+    vm.reconfigureModel.name = '';
+    vm.reconfigureModel.cdRom = '';
+  };
+
+  vm.cancelConnectCDRom = function(vmCDRom) {
+    if (vmCDRom.connect_disconnect === "disconnect") {
+      vmCDRom.connect_disconnect = "";
+    } else if (vmCDRom.connect_disconnect === "connect") {
+      var index = vm.reconfigureModel.vmCDRoms.indexOf(vmCDRom);
+      vm.reconfigureModel.vmCDRoms.splice(index, 1);
+    }
+    vm.updateCDRomsConnectDisconnect();
+  };
+  // -----------------------------------------------
+
   init();
 }]);

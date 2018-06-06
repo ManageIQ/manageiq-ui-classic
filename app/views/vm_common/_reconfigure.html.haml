@@ -393,11 +393,11 @@
               %button.btn.btn-primary{:type      => "button",
                                       "ng-click" => "vm.enableConnectCDRom()",
                                       :align     => "left",
-                                      "ng-show"  => "!vm.reconfigureModel.cdRomsConnected",
+                                      "ng-show"  => "!vm.reconfigureModel.cdRomConnectEnabled",
                                       "ng-disabled" => "!vm.reconfigureModel.enableConnectCDRomButton"}= _('Connect')
               %button.btn.btn-default.btn-sm{:type      => "button",
                                              "ng-click" => "vm.hideConnectCDRom()",
-                                             "ng-show"  => "vm.reconfigureModel.cdRomsConnected"}= _('Cancel Connect')
+                                             "ng-show"  => "vm.reconfigureModel.cdRomConnectEnabled"}= _('Cancel Connect')
       %table.table.table-striped.table-condensed.table-bordered
         %thead
           %th= _('Name')
@@ -426,12 +426,12 @@
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                                                               "ng-if"    => "networkAdapter.connect == 'connect'",
                                                               "ng-click" => "vm.cancelConnectDisconnectCDRom(networkAdapter)"}= _('Cancel Connect')
-        %tr{"ng-if"       => "vm.reconfigureModel.showISOs",
+        %tr{"ng-if"       => "vm.reconfigureModel.cdRomConnectEnabled",
             "ng-form"     => "rowForm"}
           %td
-            = select_tag('isoIdx',
-                       options_for_select([["<#{_('Choose')}>", '']] + @avail_iso_names, :disabled => ["<#{_('Choose')}>", nil]),
-                       "ng-model"                    => "vm.reconfigureModel.name",
+            = select_tag('cdRomIdx',
+                       options_for_select([["<#{_('Choose')}>", '']] + @avail_cdrom_names, :disabled => ["<#{_('Choose')}>", nil]),
+                       "ng-model"                    => "vm.reconfigureModel.cdrom_name",
                        "ng-change"                   => "",
                        "data-width"                  => "auto",
                        "required"                    => "true",
@@ -462,7 +462,7 @@
         %miq-button{:name      => t = _('Submit'),
                     :title     => t,
                     :alt       => t,
-                    :enabled   => "!((angularForm.$pristine && !vm.cb_disks && !vm.cb_networkAdapters) || angularForm.$invalid || (!vm.cb_memory && !vm.cb_cpu && !vm.cb_disks && !vm.cb_networkAdapters))",
+                    :enabled   => "!((angularForm.$pristine && !vm.cb_disks && !vm.cb_networkAdapters && !vm.cb_cdRoms) || angularForm.$invalid || (!vm.cb_memory && !vm.cb_cpu && !vm.cb_disks && !vm.cb_networkAdapters && !vm.cb_cdRoms))",
                     'on-click' => "vm.submitClicked()",
                     :primary   => 'true'}
         %miq-button{:name      => t = _('Reset'),

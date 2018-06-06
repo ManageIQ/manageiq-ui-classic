@@ -21,6 +21,8 @@ module Mixins
             vm = Vm.find(@reconfigitems)
             @vlan_options = get_vlan_options(vm.host_id)
             @avail_adapter_names = vm.try(:available_adapter_names) || []
+            @avail_cdrom_names = vm.try(:available_iso_names) || []
+            @vmCDRoms = vm.try(:hardware).cdroms || []
           end
 
           unless @explorer
