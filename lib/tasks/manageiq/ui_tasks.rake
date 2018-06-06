@@ -30,7 +30,14 @@ namespace :webpack do
       # since when doing an appliance/docker build, a database isn't
       # available for the :environment task (prerequisite for
       # 'webpacker:compile') to function.
-      EvmRakeHelper.with_dummy_database_url_configuration do
+      if defined?(EvmRakeHelper)
+        EvmRakeHelper.with_dummy_database_url_configuration do
+          Dir.chdir ManageIQ::UI::Classic::Engine.root do
+            Rake::Task["webpack:paths"].invoke
+            Rake::Task["webpacker:#{webpacker_task}"].invoke
+          end
+        end
+      else
         Dir.chdir ManageIQ::UI::Classic::Engine.root do
           Rake::Task["webpack:paths"].invoke
           Rake::Task["webpacker:#{webpacker_task}"].invoke
