@@ -1,6 +1,7 @@
 describe AnsibleCredentialController do
   before do
     EvmSpecHelper.create_guid_miq_server_zone
+    MiqRegion.seed
     login_as FactoryGirl.create(:user_admin)
   end
 
