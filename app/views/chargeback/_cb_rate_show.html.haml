@@ -10,6 +10,15 @@
     .col-md-8
       %p.form-control-static
         = h(@record.description)
+  .form-group
+    %label.col-md-2.control-label
+      = _('Based on')
+    .col-md-8
+      %p.form-control-static
+        - if @record.report_base_model
+          = h(@record.report_base_model)
+        - else
+          = _('Any')
 %hr
 %h3= _('Rate Details')
 %table.table.table-bordered
