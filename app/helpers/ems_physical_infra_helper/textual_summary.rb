@@ -7,7 +7,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(hostname ipaddress type port guid)
+      %i(hostname type port guid)
     )
   end
 
@@ -39,10 +39,6 @@ module EmsPhysicalInfraHelper::TextualSummary
 
   def textual_hostname
     @record.hostname
-  end
-
-  def textual_ipaddress
-    {:label => _("Discovered IP Address"), :value => @record.ipaddress}
   end
 
   def textual_type

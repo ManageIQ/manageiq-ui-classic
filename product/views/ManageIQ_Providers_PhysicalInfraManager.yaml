@@ -18,7 +18,6 @@ db: EmsPhysicalInfra
 cols:
 - name
 - hostname
-- ipaddress
 - emstype_description
 - port
 - total_physical_servers
@@ -40,7 +39,6 @@ include_for_find:
 col_order:
 - name
 - hostname
-- ipaddress
 - emstype_description
 - zone.name
 - total_physical_servers
@@ -53,7 +51,6 @@ col_order:
 headers:
 - Name
 - Hostname
-- Discovered IP Address
 - Type
 - EVM Zone
 - Physical Servers
