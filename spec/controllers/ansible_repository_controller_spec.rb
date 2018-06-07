@@ -1,7 +1,6 @@
 describe AnsibleRepositoryController do
   before do
-    EvmSpecHelper.create_guid_miq_server_zone
-    MiqRegion.seed
+    EvmSpecHelper.assign_embedded_ansible_role
     login_as FactoryGirl.create(:user_admin)
   end
 
@@ -33,7 +32,7 @@ describe AnsibleRepositoryController do
     end
 
     it 'renders the correct toolbar' do
-      expect(ApplicationHelper::Toolbar::AnsibleRepositoriesCenter).to receive(:definition)
+      expect(ApplicationHelper::Toolbar::AnsibleRepositoriesCenter).to receive(:definition).and_call_original
       post :show_list
     end
   end

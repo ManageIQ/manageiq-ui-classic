@@ -36,7 +36,7 @@ describe AnsiblePlaybookController do
     end
 
     it 'renders the correct toolbar' do
-      expect(ApplicationHelper::Toolbar::AnsiblePlaybooksCenter).to receive(:definition)
+      expect(ApplicationHelper::Toolbar::AnsiblePlaybooksCenter).to receive(:definition).and_call_original
       post :show_list
     end
   end
