@@ -12,12 +12,12 @@ describe ApplicationHelper::Toolbar::EmsNetworksCenter do
     end
 
     it 'visible when nuage provider enabled' do
-      allow(::Settings.product).to receive(:nuage).and_return(true)
+      allow(Vmdb::PermissionStores.instance).to receive(:supported_ems_type?).with('nuage_network').and_return(true)
       expect(button.visible?).to eq(true)
     end
 
     it 'hidden when nuage provider disabled' do
-      allow(::Settings.product).to receive(:nuage).and_return(false)
+      allow(Vmdb::PermissionStores.instance).to receive(:supported_ems_type?).with('nuage_network').and_return(false)
       expect(button.visible?).to eq(false)
     end
   end
