@@ -26,6 +26,13 @@
       = render :partial => "column_lists"
     %strong
       = _('* Caution: Changing these fields will clear all selected values below them!')
+    - unavailable_fields = MiqExpression.human_unavailable_fields_for(@edit[:new][:model])
+    - if unavailable_fields.present?
+      %br
+      %p{:style => "max-width: 850px;"}
+        %strong
+          = _("* Caution: %{unav_fields} are not supported for %{rep_base}.") % {:unav_fields => unavailable_fields, :rep_base => Dictionary.gettext(@edit[:new][:model], :type => :model, :notfound => :titleize, :plural => true)}
+
     %hr
       %h3
         = _('Report Creation Timeout')
