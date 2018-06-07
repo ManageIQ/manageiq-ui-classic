@@ -1,8 +1,9 @@
 describe OpsController do
+  let(:user) { FactoryGirl.create(:user, :role => "super_administrator") }
   before(:each) do
     EvmSpecHelper.create_guid_miq_server_zone
     MiqRegion.seed
-    stub_user(:features => :all)
+    login_as user
   end
 
   describe 'x_button' do
@@ -32,21 +33,16 @@ describe OpsController do
       end
 
       context 'with using real user' do
-        let(:feature) { MiqProductFeature.find_all_by_identifier(%w(rbac_group_edit)) }
-        let(:role)    { FactoryGirl.create(:miq_user_role, :miq_product_features => feature) }
-        let(:group)   { FactoryGirl.create(:miq_group, :miq_user_role => role) }
-        let(:user)    { FactoryGirl.create(:user, :miq_groups => [group], :role => "super_administrator") }
+        let(:feature) { %w(rbac_group_edit) }
+        let(:user)    { FactoryGirl.create(:user, :features => feature) }
 
         before do
           EvmSpecHelper.seed_specific_product_features(%w(rbac_group_edit))
-          allow(User).to receive(:current_user).and_return(user)
-          allow(Rbac).to receive(:role_allows?).and_call_original
-          login_as user
         end
 
         it 'rbac group edit' do
           allow(controller).to receive(:x_node).and_return('xx-g')
-          post :x_button, :params => {:pressed => 'rbac_group_edit', :id => group.id}
+          post :x_button, :params => {:pressed => 'rbac_group_edit', :id => user.current_group.id}
           expect(response.status).to eq(200)
         end
       end
@@ -82,16 +78,9 @@ describe OpsController do
   end
 
   describe 'rbac_user_edit' do
-    let(:group) { admin_user.miq_groups.first }
+    let(:group) { user.miq_groups.first }
     before do
       ApplicationController.handle_exceptions = true
-    end
-
-    let(:admin_user) { FactoryGirl.create(:user_with_group, :role => 'super_administrator') }
-
-    before do
-      allow(User).to receive(:current_user).and_return(admin_user)
-      login_as admin_user
     end
 
     it 'can add a user w/ group' do

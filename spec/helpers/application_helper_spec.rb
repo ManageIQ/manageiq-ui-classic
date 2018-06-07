@@ -1,6 +1,6 @@
 describe ApplicationHelper do
   before do
-    login_as FactoryGirl.create(:user)
+    login_as FactoryGirl.create(:user, :features => "none")
   end
 
   context "build_toolbar" do

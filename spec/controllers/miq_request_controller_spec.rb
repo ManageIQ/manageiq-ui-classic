@@ -61,7 +61,7 @@ describe MiqRequestController do
         it { is_expected.not_to include [:with_requester, user.id] }
       end
       context "logged without approval privileges" do
-        let(:user) { FactoryGirl.create(:user) }
+        let(:user) { FactoryGirl.create(:user, :features => "none") }
         it { is_expected.to include [:with_requester, user.id] }
       end
       context "selected 'another_user'" do

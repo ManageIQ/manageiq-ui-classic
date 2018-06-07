@@ -54,7 +54,7 @@ describe NetworkRouterController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       @router = FactoryGirl.create(:network_router)
-      login_as FactoryGirl.create(:user)
+      login_as FactoryGirl.create(:user, :features => %w(none))
     end
 
     subject do
@@ -71,28 +71,21 @@ describe NetworkRouterController do
   end
 
   describe "#new" do
-    let(:feature) { MiqProductFeature.find_all_by_identifier(%w(network_router_new)) }
-    let(:role)    { FactoryGirl.create(:miq_user_role, :miq_product_features => feature) }
-    let(:group)   { FactoryGirl.create(:miq_group, :miq_user_role => role) }
-    let(:user)    { FactoryGirl.create(:user, :miq_groups => [group]) }
+    let(:feature) { "network_router_new" }
+    let(:user)    { FactoryGirl.create(:user, :features => feature) }
 
     before do
       bypass_rescue
-
       EvmSpecHelper.create_guid_miq_server_zone
-      EvmSpecHelper.seed_specific_product_features(%w(network_router_new ems_network_show_list))
-
-      allow(User).to receive(:current_user).and_return(user)
-      allow(Rbac).to receive(:role_allows?).and_call_original
       login_as user
     end
 
-    it "raises exception wheh used have not privilege" do
+    it "raises exception when used have not privilege" do
       expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
     end
 
     context "user don't have privilege for cloud tenants" do
-      let(:feature) { MiqProductFeature.find_all_by_identifier(%w(network_router_new ems_network_show_list)) }
+      let(:feature) { %w(network_router_new ems_network_show_list) }
 
       it "raises exception" do
         expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
@@ -247,7 +240,6 @@ describe NetworkRouterController do
 
   describe "#add_interface" do
     before do
-      stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       @ems = FactoryGirl.create(:ems_openstack).network_manager
       @router = FactoryGirl.create(:network_router_openstack,
@@ -275,11 +267,13 @@ describe NetworkRouterController do
       end
 
       it "builds add interface screen" do
+        stub_user(:features => :all)
         post :button, :params => { :pressed => "network_router_add_interface", :format => :js, :id => @router.id }
         expect(assigns(:flash_array)).to be_nil
       end
 
       it 'list subnet choices' do
+        stub_user(:features => :all)
         allow(controller).to receive(:drop_breadcrumb)
         controller.instance_variable_set(:@router, @router)
         controller.instance_variable_set(:@_params, :id => @router.id)
@@ -292,9 +286,7 @@ describe NetworkRouterController do
 
       context 'with restricted user' do
         let!(:subnet_2) { FactoryGirl.create(:cloud_subnet, :ext_management_system => @ems) }
-        let(:role)    { FactoryGirl.create(:miq_user_role) }
-        let(:group)   { FactoryGirl.create(:miq_group, :miq_user_role => role) }
-        let(:user)    { FactoryGirl.create(:user, :miq_groups => [group]) }
+        let(:user)    { FactoryGirl.create(:user, :features => "network_router_add_interface") }
         let(:tag)     { "/managed/environment/prod" }
 
         before :each do
@@ -305,12 +297,12 @@ describe NetworkRouterController do
           @router.tag_with(tag, :ns => '')
           subnet_2.tag_with(tag, :ns => '')
 
-          group.entitlement = Entitlement.new
-          group.entitlement.set_managed_filters([["/managed/environment/prod"]])
-          group.save!
-
-          allow(User).to receive(:current_user).and_return(user)
+          user.current_group.entitlement.tap do |entitlement|
+            entitlement.set_managed_filters([[tag]])
+            entitlement.save!
+          end
           login_as user
+          allow(controller).to receive(:current_user).and_return(user)
         end
 
         it 'list subnet choices' do
@@ -325,6 +317,7 @@ describe NetworkRouterController do
       end
 
       it "queues the add interface action" do
+        stub_user(:features => :all)
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :add_interface, :params => {
           :button          => "add",

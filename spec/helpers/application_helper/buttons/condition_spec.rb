@@ -8,6 +8,7 @@ describe ApplicationHelper::Button::Condition do
     end
 
     it "will be skipped" do
+      login_as FactoryGirl.create(:user, :features => "none")
       expect(@button.role_allows_feature?).to be false
     end
 

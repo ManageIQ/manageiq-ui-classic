@@ -94,11 +94,11 @@ describe EmsInfraController do
 
   describe "#create" do
     before do
-      user = FactoryGirl.create(:user, :features => "ems_infra_new")
+      # USE: stub_user :features => %w(ems_infra_new ems_infra_edit)
+      user = FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
 
       allow(user).to receive(:server_timezone).and_return("UTC")
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
-      allow(controller).to receive(:check_privileges).and_return(true)
       login_as user
     end
 
@@ -273,7 +273,7 @@ describe EmsInfraController do
     render_views
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
+      login_as FactoryGirl.create(:user, :features => "none")
       @ems = FactoryGirl.create(:ems_vmware)
     end
 
@@ -417,9 +417,7 @@ describe EmsInfraController do
 
   describe "SCVMM - create, update, validate, cancel" do
     before do
-      allow(controller).to receive(:check_privileges).and_return(true)
-      allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryGirl.create(:user, :features => "ems_infra_new")
+      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
     end
 
     render_views
@@ -508,9 +506,7 @@ describe EmsInfraController do
 
   describe "Openstack - create, update" do
     before do
-      allow(controller).to receive(:check_privileges).and_return(true)
-      allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryGirl.create(:user, :features => "ems_infra_new")
+      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
     end
 
     render_views
@@ -591,10 +587,7 @@ describe EmsInfraController do
 
   describe "Redhat - create, update" do
     before do
-      allow(controller).to receive(:check_privileges).and_return(true)
-      allow(controller).to receive(:assert_privileges).and_return(true)
-      ems = FactoryGirl.create(:user, :features => "ems_infra_new")
-      login_as ems
+      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
       allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager)
         .to receive(:supported_api_versions).and_return([3, 4])
     end
@@ -697,9 +690,7 @@ describe EmsInfraController do
 
   describe "Kubevirt - update" do
     before do
-      allow(controller).to receive(:check_privileges).and_return(true)
-      allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryGirl.create(:user, :features => "ems_infra_new")
+      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
     end
 
     render_views
@@ -774,9 +765,7 @@ describe EmsInfraController do
 
   describe "VMWare - create, update" do
     before do
-      allow(controller).to receive(:check_privileges).and_return(true)
-      allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryGirl.create(:user, :features => "ems_infra_new")
+      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
     end
 
     render_views
