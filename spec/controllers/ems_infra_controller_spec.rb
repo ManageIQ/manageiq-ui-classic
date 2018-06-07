@@ -286,7 +286,7 @@ describe EmsInfraController do
       it { is_expected.to have_http_status 200 }
 
       it 'timeline toolbar is selected' do
-        expect(ApplicationHelper::Toolbar::TimelineCenter).to receive(:definition)
+        expect(ApplicationHelper::Toolbar::TimelineCenter).to receive(:definition).and_call_original
         subject
       end
     end
