@@ -1,11 +1,9 @@
 import React from 'react';
-import { TaggingWithButtonsConnected } from '../containers/tagging';
-import TaggingWithButtons from '../components/taggingWithButtons'
-import Tagging from '../components/tagging';
-import renderer from 'react-test-renderer';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { TaggingWithButtonsConnected } from '../containers/tagging';
+import TaggingWithButtons from '../components/taggingWithButtons';
 
 
 const tags = [
@@ -23,7 +21,11 @@ const tags = [
 
 const assignedTags = [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }];
 
-const initialState = {tagging: {appState: { tags: tags, assignedTags: assignedTags, selected: { tagCategory: { description: 'Name', id: 1 }, tagValue: {}} }}};
+const initialState = {
+  tagging: {
+    appState: { tags, assignedTags, selected: { tagCategory: { description: 'Name', id: 1 }, tagValue: {} } },
+  },
+};
 const initialProps = {
   selectedTagCategory: {},
   selectedTagValue: {},
@@ -31,7 +33,7 @@ const initialProps = {
   assignedTags: [],
   onTagDeleteClick: jest.fn(),
   onTagCategoryChange: jest.fn(),
-  onTagValueChange:jest.fn(),
+  onTagValueChange: jest.fn(),
   onTagMultiValueChange: jest.fn(),
   showReset: true,
   cancelButton: {},
@@ -39,8 +41,8 @@ const initialProps = {
   saveButton: {},
 };
 const mockStore = configureStore();
-let store,
-  wrapper;
+let store;
+let wrapper;
 
 describe('Test connected Tagging component', () => {
   beforeEach(() => {
@@ -53,12 +55,15 @@ describe('Test connected Tagging component', () => {
   });
 
   it('calls right function', () => {
-    const onTagMultiValueChange = jest.fn();
     const onTagCategoryChange = jest.fn();
 
-    const wrapper = shallow(<TaggingWithButtons {...initialProps} multiValue={true} selectedTagCategory={{ description: 'Name', id: 1 }} onTagCategoryChange={onTagCategoryChange} />);
-    wrapper.instance().onTagCategoryChange({ "description": "Number", "id": 2 });
-    expect(onTagCategoryChange).toBeCalledWith({ "description": "Number", "id": 2 });
-
-  })
+    wrapper = shallow(<TaggingWithButtons
+      {...initialProps}
+      multiValuedescription
+      selectedTagCategory={{ description: 'Name', id: 1 }}
+      onTagCategoryChange={onTagCategoryChange}
+    />);
+    wrapper.instance().onTagCategoryChange({ description: 'Number', id: 2 });
+    expect(onTagCategoryChange).toBeCalledWith({ description: 'Number', id: 2 });
+  });
 });

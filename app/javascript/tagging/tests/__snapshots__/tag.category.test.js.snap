@@ -1,61 +1,159 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TagCategory Component match snapshot 1`] = `
-<ul
-  className="tag-category list-inline"
+<TagCategory
+  onTagDeleteClick={[Function]}
+  tagCategory={
+    Object {
+      "description": "animal",
+      "id": 1,
+    }
+  }
+  tagValues={
+    Array [
+      Object {
+        "description": "duck",
+        "id": 1,
+      },
+      Object {
+        "description": "lion",
+        "id": 2,
+      },
+    ]
+  }
 >
-  <div
-    className="category-label"
+  <ul
+    className="tag-category list-inline"
   >
-    animal
-  </div>
-  <li
-    className="tag"
-  >
-    <span
-      className="tagColor label label-primary"
+    <div
+      className="category-label"
     >
-      duck
-      <a
-        className="pf-remove-button"
-        href="#"
-        onClick={[Function]}
-      >
-        <span
-          aria-hidden="true"
-          className="pficon pficon-close"
-        />
-        <span
-          className="sr-only"
-        >
-          Remove
-        </span>
-      </a>
-    </span>
-  </li>
-  <li
-    className="tag"
-  >
-    <span
-      className="tagColor label label-primary"
+      animal
+    </div>
+    <Tag
+      key="1"
+      onTagDeleteClick={[Function]}
+      tagCategory={
+        Object {
+          "description": "animal",
+          "id": 1,
+        }
+      }
+      tagValue={
+        Object {
+          "description": "duck",
+          "id": 1,
+        }
+      }
     >
-      lion
-      <a
-        className="pf-remove-button"
-        href="#"
-        onClick={[Function]}
+      <li
+        className="tag"
+        key="1"
       >
-        <span
-          aria-hidden="true"
-          className="pficon pficon-close"
-        />
-        <span
-          className="sr-only"
+        <Label
+          bsStyle="primary"
+          className="tagColor"
+          key="1"
+          onRemoveClick={[Function]}
+          type="default"
         >
-          Remove
-        </span>
-      </a>
-    </span>
-  </li>
-</ul>
+          <Label
+            bsClass="label"
+            bsStyle="primary"
+            className="tagColor"
+          >
+            <span
+              className="tagColor label label-primary"
+            >
+              duck
+              <RemoveButton
+                className=""
+                onRemoveClick={[Function]}
+                title="Remove"
+              >
+                <a
+                  className="pf-remove-button"
+                  href="#"
+                  onClick={[Function]}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="pficon pficon-close"
+                  />
+                  <span
+                    className="sr-only"
+                  >
+                    Remove
+                  </span>
+                </a>
+              </RemoveButton>
+            </span>
+          </Label>
+        </Label>
+      </li>
+    </Tag>
+    <Tag
+      key="2"
+      onTagDeleteClick={[Function]}
+      tagCategory={
+        Object {
+          "description": "animal",
+          "id": 1,
+        }
+      }
+      tagValue={
+        Object {
+          "description": "lion",
+          "id": 2,
+        }
+      }
+    >
+      <li
+        className="tag"
+        key="2"
+      >
+        <Label
+          bsStyle="primary"
+          className="tagColor"
+          key="2"
+          onRemoveClick={[Function]}
+          type="default"
+        >
+          <Label
+            bsClass="label"
+            bsStyle="primary"
+            className="tagColor"
+          >
+            <span
+              className="tagColor label label-primary"
+            >
+              lion
+              <RemoveButton
+                className=""
+                onRemoveClick={[Function]}
+                title="Remove"
+              >
+                <a
+                  className="pf-remove-button"
+                  href="#"
+                  onClick={[Function]}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="pficon pficon-close"
+                  />
+                  <span
+                    className="sr-only"
+                  >
+                    Remove
+                  </span>
+                </a>
+              </RemoveButton>
+            </span>
+          </Label>
+        </Label>
+      </li>
+    </Tag>
+  </ul>
+</TagCategory>
 `;

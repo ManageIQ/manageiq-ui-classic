@@ -1,32 +1,30 @@
 import React from 'react';
+import toJson from 'enzyme-to-json';
+import { mount } from 'enzyme';
 import TagModifier from '../components/tagModifier';
 import ValueModifier from '../components/valueModifier';
 import CategoryModifier from '../components/categoryModifier';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
 
 const tagCategories = [
   { description: 'Name', id: 1 },
   { description: 'Number', id: 2 },
   { description: 'Animal', id: 3 },
-  { description: 'Food', id: 4 }
+  { description: 'Food', id: 4 },
 ];
 const animalValues = [
   { description: 'Duck', id: 31 },
   { description: 'Cat', id: 32 },
-  { description: 'Dog', id: 33 }
+  { description: 'Dog', id: 33 },
 ];
 
 const selectedTagCategory = { description: 'animal', id: 1 };
 const selectedTagValue = { description: 'duck', id: 1 };
 
-function onChange(x) {
-  return x;
-}
+const onChange = x => x;
 
 describe('Tagging modifier', () => {
   it('match snapshot', () => {
-    const component = renderer.create(
+    const tree = mount(
       <TagModifier>
         <CategoryModifier
           selectedTagCategory={selectedTagCategory}
@@ -39,9 +37,7 @@ describe('Tagging modifier', () => {
           multiValue={false}
           tagValues={animalValues}
         />
-      </TagModifier>
-    );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+      </TagModifier>);
+    expect(toJson(tree)).toMatchSnapshot();
   });
 });

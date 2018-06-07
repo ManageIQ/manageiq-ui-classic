@@ -1,18 +1,15 @@
 import React from 'react';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import Tag from '../components/tag';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
 
-const tagCategory = { description: 'animal', id: 1};
-const tagValue = { description: 'duck', id: 1};
-function onDelete(x) {
-  return x;
-}
+const tagCategory = { description: 'animal', id: 1 };
+const tagValue = { description: 'duck', id: 1 };
+const onDelete = x => x;
 
 describe('Tag Component', () => {
   it('match snapshot', () => {
-    const component = renderer.create(<Tag tagCategory={tagCategory} tagValue={tagValue} onTagDeleteClick={onDelete} />);
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    const tree = mount(<Tag tagCategory={tagCategory} tagValue={tagValue} onTagDeleteClick={onDelete} />);
+    expect(toJson(tree)).toMatchSnapshot();
   });
 });

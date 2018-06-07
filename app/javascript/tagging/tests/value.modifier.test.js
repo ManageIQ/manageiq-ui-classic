@@ -1,9 +1,9 @@
 import React from 'react';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import ValueModifier from '../components/valueModifier';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
 
-const selectedTagValue = { description: 'Duck', id: 1};
+const selectedTagValue = { description: 'Duck', id: 1 };
 const onTagValueChange = jest.fn();
 const tagValues = [
   { description: 'Duck', id: 1 },
@@ -13,14 +13,13 @@ const tagValues = [
 
 describe('TagCategory Component', () => {
   it('match snapshot', () => {
-    const component = renderer.create(<ValueModifier
-        onTagValueChange={onTagValueChange}
-        selectedTagValue={selectedTagValue}
-        multiValue={false}
-        tagValues={tagValues}
-      />);
+    const tree = mount(<ValueModifier
+      onTagValueChange={onTagValueChange}
+      selectedTagValue={selectedTagValue}
+      multiValue={false}
+      tagValues={tagValues}
+    />);
 
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(toJson(tree)).toMatchSnapshot();
   });
 });

@@ -1,8 +1,7 @@
 import React from 'react';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import ValueSelector from '../components/valueSelector';
-import { handleChange } from '../components/valueSelector';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
 
 const tagValues = [
   { description: 'Asterix', id: 1 },
@@ -14,13 +13,11 @@ function onChange(x) {
 }
 
 test('match snapshot', () => {
-  const component = renderer.create(<ValueSelector tagValues={tagValues} onTagValueChange={onChange} selectedOption={selectedTagValue} />);
-  const tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+  const tree = mount(<ValueSelector tagValues={tagValues} onTagValueChange={onChange} selectedOption={selectedTagValue} />);
+  expect(toJson(tree)).toMatchSnapshot();
 });
 
 test('match snapshot without multiple values', () => {
-  const component = renderer.create(<ValueSelector tagValues={tagValues} onTagValueChange={onChange} selectedOption={selectedTagValue} multiValue={false}/>);
-  const tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+  const tree = mount(<ValueSelector tagValues={tagValues} onTagValueChange={onChange} selectedOption={selectedTagValue} multiValue={false} />);
+  expect(toJson(tree)).toMatchSnapshot();
 });

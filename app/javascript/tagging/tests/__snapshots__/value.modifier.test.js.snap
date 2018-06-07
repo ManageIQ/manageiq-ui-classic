@@ -1,119 +1,283 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TagCategory Component match snapshot 1`] = `
-<div
-  className="form-group"
+<ValueModifier
+  multiValue={false}
+  onTagValueChange={[MockFunction]}
+  selectedTagValue={
+    Object {
+      "description": "Duck",
+      "id": 1,
+    }
+  }
+  tagValues={
+    Array [
+      Object {
+        "description": "Duck",
+        "id": 1,
+      },
+      Object {
+        "description": "Cat",
+        "id": 2,
+      },
+      Object {
+        "description": "Dog",
+        "id": 3,
+      },
+    ]
+  }
+  valueLabel="Value"
 >
-  <div
-    className="col-lg-6 col-md-4 col-xs-12"
-  >
-    <label
-      className="control-label"
-      htmlFor={undefined}
-    >
-      Value
-    </label>
-  </div>
-  <div
-    className="col-lg-6 col-md-8 col-xs-12"
+  <FormGroup
+    bsClass="form-group"
   >
     <div
-      className="Select has-value is-searchable Select--single"
-      style={undefined}
+      className="form-group"
     >
-      <input
-        disabled={false}
-        name="form-field-name"
-        type="hidden"
-        value="1"
-      />
-      <div
-        className="Select-control"
-        onKeyDown={[Function]}
-        onMouseDown={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        style={undefined}
+      <Col
+        bsClass="col"
+        componentClass="div"
+        lg={6}
+        md={4}
+        xs={12}
       >
-        <span
-          className="Select-multi-value-wrapper"
-          id="react-select-2--value"
+        <div
+          className="col-lg-6 col-md-4 col-xs-12"
         >
-          <div
-            className="Select-value"
-            style={undefined}
-            title={undefined}
+          <ControlLabel
+            bsClass="control-label"
+            srOnly={false}
           >
-            <span
-              aria-selected="true"
-              className="Select-value-label"
-              id="react-select-2--value-item"
-              role="option"
+            <label
+              className="control-label"
             >
-              Duck
-            </span>
-          </div>
-          <div
-            className="Select-input"
-            style={
+              Value
+            </label>
+          </ControlLabel>
+        </div>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        lg={6}
+        md={8}
+        xs={12}
+      >
+        <div
+          className="col-lg-6 col-md-8 col-xs-12"
+        >
+          <ValueSelector
+            multiValue={false}
+            onTagValueChange={[MockFunction]}
+            selectedOption={
               Object {
-                "display": "inline-block",
+                "description": "Duck",
+                "id": 1,
               }
             }
+            tagValues={
+              Array [
+                Object {
+                  "description": "Duck",
+                  "id": 1,
+                },
+                Object {
+                  "description": "Cat",
+                  "id": 2,
+                },
+                Object {
+                  "description": "Dog",
+                  "id": 3,
+                },
+              ]
+            }
           >
-            <input
-              aria-activedescendant="react-select-2--value"
-              aria-describedby={undefined}
-              aria-expanded="false"
-              aria-haspopup="false"
-              aria-label={undefined}
-              aria-labelledby={undefined}
-              aria-owns=""
-              className={undefined}
-              id={undefined}
-              onBlur={[Function]}
+            <Select
+              arrowRenderer={[Function]}
+              autosize={true}
+              backspaceRemoves={true}
+              backspaceToRemoveMessage="Press backspace to remove {label}"
+              clearAllText="Clear all"
+              clearRenderer={[Function]}
+              clearValueText="Clear value"
+              clearable={false}
+              closeOnSelect={true}
+              deleteRemoves={true}
+              delimiter=","
+              disabled={false}
+              escapeClearsValue={true}
+              filterOptions={[Function]}
+              ignoreAccents={true}
+              ignoreCase={true}
+              inputProps={Object {}}
+              isLoading={false}
+              joinValues={false}
+              label="Duck"
+              labelKey="label"
+              matchPos="any"
+              matchProp="any"
+              menuBuffer={0}
+              menuRenderer={[Function]}
+              multi={false}
+              name="form-field-name"
+              noResultsText="No results found"
+              onBlurResetsInput={true}
               onChange={[Function]}
-              onFocus={[Function]}
+              onCloseResetsInput={true}
+              onSelectResetsInput={true}
+              openOnClick={true}
+              optionComponent={[Function]}
+              options={
+                Array [
+                  Object {
+                    "label": "Duck",
+                    "value": 1,
+                  },
+                  Object {
+                    "label": "Cat",
+                    "value": 2,
+                  },
+                  Object {
+                    "label": "Dog",
+                    "value": 3,
+                  },
+                ]
+              }
+              pageSize={5}
+              placeholder="Select..."
+              removeSelected={true}
               required={false}
-              role="combobox"
-              style={
-                Object {
-                  "boxSizing": "content-box",
-                  "width": "5px",
-                }
-              }
-              tabIndex={undefined}
-              value=""
-            />
-            <div
-              style={
-                Object {
-                  "height": 0,
-                  "left": 0,
-                  "overflow": "scroll",
-                  "position": "absolute",
-                  "top": 0,
-                  "visibility": "hidden",
-                  "whiteSpace": "pre",
-                }
-              }
+              rtl={false}
+              scrollMenuIntoView={true}
+              searchable={true}
+              simpleValue={false}
+              tabSelectsValue={true}
+              trimFilter={true}
+              value={1}
+              valueComponent={[Function]}
+              valueKey="value"
             >
-              
-            </div>
-          </div>
-        </span>
-        <span
-          className="Select-arrow-zone"
-          onMouseDown={[Function]}
-        >
-          <span
-            className="Select-arrow"
-            onMouseDown={[Function]}
-          />
-        </span>
-      </div>
+              <div
+                className="Select has-value is-searchable Select--single"
+              >
+                <input
+                  disabled={false}
+                  key="hidden.0"
+                  name="form-field-name"
+                  type="hidden"
+                  value="1"
+                />
+                <div
+                  className="Select-control"
+                  onKeyDown={[Function]}
+                  onMouseDown={[Function]}
+                  onTouchEnd={[Function]}
+                  onTouchMove={[Function]}
+                  onTouchStart={[Function]}
+                >
+                  <span
+                    className="Select-multi-value-wrapper"
+                    id="react-select-2--value"
+                  >
+                    <Value
+                      disabled={false}
+                      id="react-select-2--value-item"
+                      instancePrefix="react-select-2-"
+                      onClick={null}
+                      placeholder="Select..."
+                      value={
+                        Object {
+                          "label": "Duck",
+                          "value": 1,
+                        }
+                      }
+                    >
+                      <div
+                        className="Select-value"
+                      >
+                        <span
+                          aria-selected="true"
+                          className="Select-value-label"
+                          id="react-select-2--value-item"
+                          role="option"
+                        >
+                          Duck
+                        </span>
+                      </div>
+                    </Value>
+                    <AutosizeInput
+                      aria-activedescendant="react-select-2--value"
+                      aria-expanded="false"
+                      aria-haspopup="false"
+                      aria-owns=""
+                      className="Select-input"
+                      injectStyles={true}
+                      minWidth="5"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      required={false}
+                      role="combobox"
+                      value=""
+                    >
+                      <div
+                        className="Select-input"
+                        style={
+                          Object {
+                            "display": "inline-block",
+                          }
+                        }
+                      >
+                        <input
+                          aria-activedescendant="react-select-2--value"
+                          aria-expanded="false"
+                          aria-haspopup="false"
+                          aria-owns=""
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          required={false}
+                          role="combobox"
+                          style={
+                            Object {
+                              "boxSizing": "content-box",
+                              "width": "5px",
+                            }
+                          }
+                          value=""
+                        />
+                        <div
+                          style={
+                            Object {
+                              "height": 0,
+                              "left": 0,
+                              "overflow": "scroll",
+                              "position": "absolute",
+                              "top": 0,
+                              "visibility": "hidden",
+                              "whiteSpace": "pre",
+                            }
+                          }
+                        />
+                      </div>
+                    </AutosizeInput>
+                  </span>
+                  <span
+                    className="Select-arrow-zone"
+                    onMouseDown={[Function]}
+                  >
+                    <span
+                      className="Select-arrow"
+                      onMouseDown={[Function]}
+                    />
+                  </span>
+                </div>
+              </div>
+            </Select>
+          </ValueSelector>
+        </div>
+      </Col>
     </div>
-  </div>
-</div>
+  </FormGroup>
+</ValueModifier>
 `;

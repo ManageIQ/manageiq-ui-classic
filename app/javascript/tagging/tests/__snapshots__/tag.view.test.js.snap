@@ -1,62 +1,160 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tag view match snapshot 1`] = `
-Array [
-  <div
-    className="row"
+<TagView
+  assignedTags={
+    Array [
+      Object {
+        "tagCategory": Object {
+          "description": "Name",
+          "id": 1,
+        },
+        "tagValues": Array [
+          Object {
+            "description": "Pepa",
+            "id": 11,
+          },
+        ],
+      },
+    ]
+  }
+  header="Assigned tags"
+  onTagDeleteClick={[Function]}
+>
+  <Row
+    bsClass="row"
+    componentClass="div"
   >
     <div
-      className="col-lg-12"
+      className="row"
     >
-      <h2>
-        Assigned tags
-      </h2>
-    </div>
-  </div>,
-  <div
-    className="row"
-  >
-    <div
-      className="col-lg-12"
-    >
-      <ul
-        className="list-inline"
+      <Col
+        bsClass="col"
+        componentClass="div"
+        lg={12}
       >
-        <ul
-          className="tag-category list-inline"
+        <div
+          className="col-lg-12"
         >
-          <div
-            className="category-label"
-          >
-            Name
-          </div>
-          <li
-            className="tag"
-          >
-            <span
-              className="tagColor label label-primary"
-            >
-              Pepa
-              <a
-                className="pf-remove-button"
-                href="#"
-                onClick={[Function]}
-              >
-                <span
-                  aria-hidden="true"
-                  className="pficon pficon-close"
-                />
-                <span
-                  className="sr-only"
-                >
-                  Remove
-                </span>
-              </a>
-            </span>
-          </li>
-        </ul>
-      </ul>
+          <h2>
+            Assigned tags
+          </h2>
+        </div>
+      </Col>
     </div>
-  </div>,
-]
+  </Row>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <div
+      className="row"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        lg={12}
+      >
+        <div
+          className="col-lg-12"
+        >
+          <ul
+            className="list-inline"
+          >
+            <TagCategory
+              key="1"
+              onTagDeleteClick={[Function]}
+              tagCategory={
+                Object {
+                  "description": "Name",
+                  "id": 1,
+                }
+              }
+              tagValues={
+                Array [
+                  Object {
+                    "description": "Pepa",
+                    "id": 11,
+                  },
+                ]
+              }
+            >
+              <ul
+                className="tag-category list-inline"
+              >
+                <div
+                  className="category-label"
+                >
+                  Name
+                </div>
+                <Tag
+                  key="11"
+                  onTagDeleteClick={[Function]}
+                  tagCategory={
+                    Object {
+                      "description": "Name",
+                      "id": 1,
+                    }
+                  }
+                  tagValue={
+                    Object {
+                      "description": "Pepa",
+                      "id": 11,
+                    }
+                  }
+                >
+                  <li
+                    className="tag"
+                    key="11"
+                  >
+                    <Label
+                      bsStyle="primary"
+                      className="tagColor"
+                      key="11"
+                      onRemoveClick={[Function]}
+                      type="default"
+                    >
+                      <Label
+                        bsClass="label"
+                        bsStyle="primary"
+                        className="tagColor"
+                      >
+                        <span
+                          className="tagColor label label-primary"
+                        >
+                          Pepa
+                          <RemoveButton
+                            className=""
+                            onRemoveClick={[Function]}
+                            title="Remove"
+                          >
+                            <a
+                              className="pf-remove-button"
+                              href="#"
+                              onClick={[Function]}
+                            >
+                              <span
+                                aria-hidden="true"
+                                className="pficon pficon-close"
+                              />
+                              <span
+                                className="sr-only"
+                              >
+                                Remove
+                              </span>
+                            </a>
+                          </RemoveButton>
+                        </span>
+                      </Label>
+                    </Label>
+                  </li>
+                </Tag>
+              </ul>
+            </TagCategory>
+          </ul>
+        </div>
+      </Col>
+    </div>
+  </Row>
+</TagView>
 `;

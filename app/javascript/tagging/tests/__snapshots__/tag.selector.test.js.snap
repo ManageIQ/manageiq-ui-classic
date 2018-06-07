@@ -1,101 +1,206 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tagging modifier match snapshot 1`] = `
-<div
-  className="Select selected-option has-value is-searchable Select--single"
-  style={undefined}
+<TagSelector
+  infoText="Only a single value can be assigned from these categories"
+  onTagCategoryChange={[MockFunction]}
+  selectedOption={
+    Object {
+      "description": "Homer",
+      "id": 1,
+    }
+  }
+  tagCategories={
+    Array [
+      Object {
+        "description": "Name",
+        "id": 1,
+      },
+      Object {
+        "description": "Number",
+        "id": 2,
+      },
+    ]
+  }
 >
-  <input
+  <Select
+    arrowRenderer={[Function]}
+    autosize={true}
+    backspaceRemoves={true}
+    backspaceToRemoveMessage="Press backspace to remove {label}"
+    className="selected-option"
+    clearAllText="Clear all"
+    clearRenderer={[Function]}
+    clearValueText="Clear value"
+    clearable={false}
+    closeOnSelect={true}
+    deleteRemoves={true}
+    delimiter=","
     disabled={false}
+    escapeClearsValue={true}
+    filterOptions={[Function]}
+    ignoreAccents={true}
+    ignoreCase={true}
+    inputProps={Object {}}
+    isLoading={false}
+    joinValues={false}
+    label="Homer"
+    labelKey="label"
+    matchPos="any"
+    matchProp="any"
+    menuBuffer={0}
+    menuRenderer={[Function]}
+    multi={false}
     name="form-field-name"
-    type="hidden"
-    value="1"
-  />
-  <div
-    className="Select-control"
-    onKeyDown={[Function]}
-    onMouseDown={[Function]}
-    onTouchEnd={[Function]}
-    onTouchMove={[Function]}
-    onTouchStart={[Function]}
-    style={undefined}
+    noResultsText="No results found"
+    onBlurResetsInput={true}
+    onChange={[Function]}
+    onCloseResetsInput={true}
+    onSelectResetsInput={true}
+    openOnClick={true}
+    optionComponent={[Function]}
+    options={
+      Array [
+        Object {
+          "label": "Name",
+          "value": 1,
+        },
+        Object {
+          "label": "Number",
+          "value": 2,
+        },
+      ]
+    }
+    pageSize={5}
+    placeholder="Select..."
+    removeSelected={true}
+    required={false}
+    rtl={false}
+    scrollMenuIntoView={true}
+    searchable={true}
+    simpleValue={false}
+    tabSelectsValue={true}
+    trimFilter={true}
+    value={1}
+    valueComponent={[Function]}
+    valueKey="value"
   >
-    <span
-      className="Select-multi-value-wrapper"
-      id="react-select-2--value"
+    <div
+      className="Select selected-option has-value is-searchable Select--single"
     >
+      <input
+        disabled={false}
+        key="hidden.0"
+        name="form-field-name"
+        type="hidden"
+        value="1"
+      />
       <div
-        className="Select-value"
-        style={undefined}
-        title={undefined}
+        className="Select-control"
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
       >
         <span
-          aria-selected="true"
-          className="Select-value-label"
-          id="react-select-2--value-item"
-          role="option"
+          className="Select-multi-value-wrapper"
+          id="react-select-2--value"
         >
-          Name
+          <Value
+            disabled={false}
+            id="react-select-2--value-item"
+            instancePrefix="react-select-2-"
+            onClick={null}
+            placeholder="Select..."
+            value={
+              Object {
+                "label": "Name",
+                "value": 1,
+              }
+            }
+          >
+            <div
+              className="Select-value"
+            >
+              <span
+                aria-selected="true"
+                className="Select-value-label"
+                id="react-select-2--value-item"
+                role="option"
+              >
+                Name
+              </span>
+            </div>
+          </Value>
+          <AutosizeInput
+            aria-activedescendant="react-select-2--value"
+            aria-expanded="false"
+            aria-haspopup="false"
+            aria-owns=""
+            className="Select-input"
+            injectStyles={true}
+            minWidth="5"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            required={false}
+            role="combobox"
+            value=""
+          >
+            <div
+              className="Select-input"
+              style={
+                Object {
+                  "display": "inline-block",
+                }
+              }
+            >
+              <input
+                aria-activedescendant="react-select-2--value"
+                aria-expanded="false"
+                aria-haspopup="false"
+                aria-owns=""
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                role="combobox"
+                style={
+                  Object {
+                    "boxSizing": "content-box",
+                    "width": "5px",
+                  }
+                }
+                value=""
+              />
+              <div
+                style={
+                  Object {
+                    "height": 0,
+                    "left": 0,
+                    "overflow": "scroll",
+                    "position": "absolute",
+                    "top": 0,
+                    "visibility": "hidden",
+                    "whiteSpace": "pre",
+                  }
+                }
+              />
+            </div>
+          </AutosizeInput>
+        </span>
+        <span
+          className="Select-arrow-zone"
+          onMouseDown={[Function]}
+        >
+          <span
+            className="Select-arrow"
+            onMouseDown={[Function]}
+          />
         </span>
       </div>
-      <div
-        className="Select-input"
-        style={
-          Object {
-            "display": "inline-block",
-          }
-        }
-      >
-        <input
-          aria-activedescendant="react-select-2--value"
-          aria-describedby={undefined}
-          aria-expanded="false"
-          aria-haspopup="false"
-          aria-label={undefined}
-          aria-labelledby={undefined}
-          aria-owns=""
-          className={undefined}
-          id={undefined}
-          onBlur={[Function]}
-          onChange={[Function]}
-          onFocus={[Function]}
-          required={false}
-          role="combobox"
-          style={
-            Object {
-              "boxSizing": "content-box",
-              "width": "5px",
-            }
-          }
-          tabIndex={undefined}
-          value=""
-        />
-        <div
-          style={
-            Object {
-              "height": 0,
-              "left": 0,
-              "overflow": "scroll",
-              "position": "absolute",
-              "top": 0,
-              "visibility": "hidden",
-              "whiteSpace": "pre",
-            }
-          }
-        >
-          
-        </div>
-      </div>
-    </span>
-    <span
-      className="Select-arrow-zone"
-      onMouseDown={[Function]}
-    >
-      <span
-        className="Select-arrow"
-        onMouseDown={[Function]}
-      />
-    </span>
-  </div>
-</div>
+    </div>
+  </Select>
+</TagSelector>
 `;

@@ -1,28 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tag Component match snapshot 1`] = `
-<li
-  className="tag"
+<Tag
+  onTagDeleteClick={[Function]}
+  tagCategory={
+    Object {
+      "description": "animal",
+      "id": 1,
+    }
+  }
+  tagValue={
+    Object {
+      "description": "duck",
+      "id": 1,
+    }
+  }
 >
-  <span
-    className="tagColor label label-primary"
+  <li
+    className="tag"
+    key="1"
   >
-    duck
-    <a
-      className="pf-remove-button"
-      href="#"
-      onClick={[Function]}
+    <Label
+      bsStyle="primary"
+      className="tagColor"
+      key="1"
+      onRemoveClick={[Function]}
+      type="default"
     >
-      <span
-        aria-hidden="true"
-        className="pficon pficon-close"
-      />
-      <span
-        className="sr-only"
+      <Label
+        bsClass="label"
+        bsStyle="primary"
+        className="tagColor"
       >
-        Remove
-      </span>
-    </a>
-  </span>
-</li>
+        <span
+          className="tagColor label label-primary"
+        >
+          duck
+          <RemoveButton
+            className=""
+            onRemoveClick={[Function]}
+            title="Remove"
+          >
+            <a
+              className="pf-remove-button"
+              href="#"
+              onClick={[Function]}
+            >
+              <span
+                aria-hidden="true"
+                className="pficon pficon-close"
+              />
+              <span
+                className="sr-only"
+              >
+                Remove
+              </span>
+            </a>
+          </RemoveButton>
+        </span>
+      </Label>
+    </Label>
+  </li>
+</Tag>
 `;

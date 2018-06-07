@@ -1,9 +1,9 @@
 import React from 'react';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import CategoryModifier from '../components/categoryModifier';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
 
-const selectedTagCategory = { description: 'animal', id: 1};
+const selectedTagCategory = { description: 'animal', id: 1 };
 const onTagCategoryChange = jest.fn();
 const tagCategories = [
   { description: 'Name', id: 1 },
@@ -14,13 +14,11 @@ const tagCategories = [
 
 describe('TagCategory Component', () => {
   it('match snapshot', () => {
-    const component = renderer.create(<CategoryModifier
+    const tree = mount(<CategoryModifier
       selectedTagCategory={selectedTagCategory}
       onTagCategoryChange={onTagCategoryChange}
       tagCategories={tagCategories}
     />);
-
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(toJson(tree)).toMatchSnapshot();
   });
 });

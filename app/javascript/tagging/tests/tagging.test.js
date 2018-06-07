@@ -1,7 +1,7 @@
 import React from 'react';
+import { shallow, mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import Tagging from '../components/tagging';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
 
 
 const tags = [
@@ -17,21 +17,17 @@ const tags = [
   },
 ];
 
-const selectedTagCategory = { description: 'animal', id: 1};
-const selectedTagValue = { description: 'duck', id: 1};
+const selectedTagCategory = { description: 'animal', id: 1 };
+const selectedTagValue = { description: 'duck', id: 1 };
 const assignedTags = [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }];
 
-function onChange(x) {
-  return x;
-}
-function onDelete(x) {
-  return x;
-}
+const onChange = x => x;
+const onDelete = x => x;
 
 
 describe('Tagging component without redux mapping', () => {
   it('match snapshot', () => {
-    const component = renderer.create(<Tagging
+    const tree = mount(<Tagging
       tags={tags}
       assignedTags={assignedTags}
       onTagValueChange={onChange}
@@ -40,8 +36,7 @@ describe('Tagging component without redux mapping', () => {
       selectedTagCategory={selectedTagCategory}
       selectedTagValue={selectedTagValue}
     />);
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(toJson(tree)).toMatchSnapshot();
   });
 
   it('should call methods', () => {
