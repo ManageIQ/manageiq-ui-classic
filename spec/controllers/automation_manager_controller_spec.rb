@@ -685,12 +685,14 @@ describe AutomationManagerController do
     end
 
     it "cancels tags edit" do
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
       post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => @ans_configured_system.id}
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
     end
 
     it "save tags" do
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
       post :tagging_edit, :params => {:button => "save", :format => :js, :id => @ans_configured_system.id}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil

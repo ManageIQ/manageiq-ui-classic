@@ -103,7 +103,7 @@ describe EmsInfraController do
     end
 
     it "adds a new provider" do
-      controller.instance_variable_set(:@breadcrumbs, [])
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
       get :new
       expect(response.status).to eq(200)
     end
