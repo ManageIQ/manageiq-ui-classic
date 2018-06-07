@@ -409,29 +409,35 @@
           %td
             {{cdRom.name}}
           %td
-            {{cdRom.connected_state}}
+            %input{"bs-switch"     => "",
+                     :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+                     "type"          => "checkbox",
+                     "name"          => "cdrom_connected",
+                     "ng-model"      => "cdRom.connected",
+                     "switch-active" => "{{cdRom.connect_disconnect!=''}}",
+                     "ng-readonly"   => "cdRom.connect_disconnect==''"}
           %td.narrow
-            {{cdRom.host_file}}
+            {{cdRom.filename}}
           %td.action-cell
             %button.btn.btn-default.btn-block.btn-sm{:type         => "button",
                                                      :style        => "visibility:hidden"}= _('Intentionally left empty')
           %td.action-cell
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
-                                                              "ng-if"    => "cdRom.connect == ''",
+                                                              "ng-if"    => "cdRom.type == ''",
                                                               "ng-click" => "vm.disconnectCDRom(cdRom)"}= _('Disconnect')
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
-                                                              "ng-if"    => "cdRom.connect == 'disconnect'",
+                                                              "ng-if"    => "cdRom.type == 'cdrom_raw'",
                                                               "ng-disabled" => "!vm.reconfigureModel.enableConnectCDRomButton",
                                                               "ng-click" => "vm.cancelConnectDisconnectCDRom(cdRom)"}= _('Cancel Disconnect')
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
-                                                              "ng-if"    => "networkAdapter.connect == 'connect'",
-                                                              "ng-click" => "vm.cancelConnectDisconnectCDRom(networkAdapter)"}= _('Cancel Connect')
+                                                              "ng-if"    => "cdRom.type == 'cdrom_image'",
+                                                              "ng-click" => "vm.cancelConnectDisconnectCDRom(cdRom)"}= _('Cancel Connect')
         %tr{"ng-if"       => "vm.reconfigureModel.cdRomConnectEnabled",
             "ng-form"     => "rowForm"}
           %td
             = select_tag('cdRomIdx',
                        options_for_select([["<#{_('Choose')}>", '']] + @avail_cdrom_names, :disabled => ["<#{_('Choose')}>", nil]),
-                       "ng-model"                    => "vm.reconfigureModel.cdrom_name",
+                       "ng-model"                    => "vm.reconfigureModel.cdrom.name",
                        "ng-change"                   => "",
                        "data-width"                  => "auto",
                        "required"                    => "true",

@@ -492,8 +492,11 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       if (cdRom.connect_disconnect === 'connect') {
         vm.reconfigureModel.vmConnectCDRoms.push(
           {
+            id: cdRom.id,
             name: cdRom.name,
-            isoFileName: cdRom.isoFileName,
+            type: cdRom.type,
+            filename: cdRom.filename,
+            connected: cdRom.type === 'cdrom_image',
           }
         );
       }
@@ -509,8 +512,11 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   vm.processConnectSelectedCDRom = function() {
     vm.reconfigureModel.vmCDRoms.push(
       {
-        name: vm.reconfigureModel.name ? vm.reconfigureModel.name : __('to be determined'),
-        isoFileName: vm.reconfigureModel.isoFileName,
+        name: vm.reconfigureModel.cdrom.name ? vm.reconfigureModel.cdrom.name : __('to be determined'),
+        id: vm.reconfigureModel.cdrom.id,
+        name: vm.reconfigureModel.cdrom.name,
+        type: vm.reconfigureModel.cdrom.type,
+        filename: vm.reconfigureModel.cdrom.filename,
         connect_disconnect: 'connect',
       });
     vm.resetAddNetworkAdapterValues();

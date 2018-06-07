@@ -170,9 +170,11 @@ module Mixins
                           :cb_bootable    => disk.bootable,
                           :add_remove     => removing}
                 vmdisks << vmdisk
+                vmcdroms << reconfig_item.hardware.disks
               end
             end
             @reconfig_values[:disks] = vmdisks
+            @reconfig_values[:cdroms] = vmcdroms
           end
 
           @reconfig_values[:cb_memory] = !!(@req && @req.options[:vm_memory])       # default for checkbox is false for new request
@@ -234,7 +236,8 @@ module Mixins
 
           # reconfiguring network adapters is only supported when one vm was selected
           network_adapters = []
-          if @reconfigureitems.size == 1 && @reconfigureitems.first.supports_reconfigure_network_adapters?
+          vmcdroms = []
+          if @reconfigureitems.size == 1
             vm = @reconfigureitems.first
 
             vm.hardware.guest_devices.order(:device_name => 'asc').each do |guest_device|
@@ -247,6 +250,18 @@ module Mixins
                 network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
               end
             end
+
+            # CD-ROMS
+            cdroms = vm.hardware.cdroms
+            if cdroms.present?
+              cdroms.map do |cd|
+                id = cd.id,
+                name = cd.device_name
+                type = cd.device_type
+                filename = cd.filename
+                vmcdroms <<  {:id => id, :name => name, :filename => filename, :type => type}
+              end
+            end
           end
 
           {:objectIds              => reconfigure_ids,
@@ -256,6 +271,7 @@ module Mixins
            :cores_per_socket_count => cores_per_socket.to_s,
            :disks                  => vmdisks,
            :network_adapters       => network_adapters,
+           :cdroms                 => vmcdroms,
            :vm_vendor              => @reconfigureitems.first.vendor,
            :vm_type                => @reconfigureitems.first.class.name,
            :orchestration_stack_id => @reconfigureitems.first.try(:orchestration_stack_id),
