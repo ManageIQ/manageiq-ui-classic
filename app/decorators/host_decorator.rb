@@ -15,10 +15,7 @@ class HostDecorator < MiqDecorator
         :fileicon => fileicon,
         :tooltip  => ui_lookup(:model => type)
       },
-      :bottom_right => {
-        :fileicon => QuadiconHelper.status_img(authentication_status),
-        :tooltip  => authentication_status
-      }
+      :bottom_right => QuadiconHelper.provider_status(authentication_status)
     }
     icon[:middle] = QuadiconHelper::POLICY_SHIELD if get_policies.present?
     icon

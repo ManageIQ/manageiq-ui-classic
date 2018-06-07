@@ -34,12 +34,24 @@ module QuadiconHelper
     'template'                  => {:fonticon => 'pficon pficon-template', :background => '#336699'},
   }.freeze
 
-  def self.status_img(status)
+  def self.provider_status(status, enabled = true)
+    # If the provider is suspended, we don't care about the status itself
+    unless enabled
+      return {
+        :fonticon => 'pficon pficon-asleep',
+        :tooltip  => _('Data collection for this provider is suspended.')
+      }
+    end
+
     case status
-    when "Invalid" then "100/x.png"
-    when "Valid"   then "100/checkmark.png"
-    when "None"    then "100/unknown.png"
-    else                "100/exclamationpoint.png"
+    when "Invalid"
+      {:fileicon => '100/x.png', :tooltip => _('Invalid authentication credentials')}
+    when "Valid"
+      {:fileicon => '100/checkmark.png', :tooltip => _('Authentication credentials are valid')}
+    when "None"
+      {:fileicon => '100/unknown.png', :tooltip => _('Could not determine the authentication status')}
+    else
+      {:fileicon => '100/exclamationpoint.png', :tooltip => _('Authentication status is %{status}') % {:status => status} }
     end
   end
 
