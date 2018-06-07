@@ -101,6 +101,10 @@ module VmHelper::TextualSummary
   #
   # Items
   #
+  def textual_power_state
+    textual_power_state_whitelisted_with_template
+  end
+
   def textual_hostname
     hostnames = @record.hostnames
     {:label => n_("Hostname", "Hostnames", hostnames.size), :value => hostnames.join(", ")}
