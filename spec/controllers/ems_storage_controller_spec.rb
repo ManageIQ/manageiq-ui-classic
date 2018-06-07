@@ -14,9 +14,6 @@ describe EmsStorageController do
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
       EvmSpecHelper.seed_specific_product_features(%w(ems_block_storage_show ems_block_storage_show_list))
-
-      allow(User).to receive(:current_user).and_return(user)
-      allow(Rbac).to receive(:role_allows?).and_call_original
       login_as user
     end
 

@@ -36,7 +36,6 @@ describe FloatingIpController do
       before do
         EvmSpecHelper.create_guid_miq_server_zone
         login_as admin_user
-        allow(User).to receive(:current_user).and_return(admin_user)
         allow(controller).to receive(:assert_privileges)
         allow(controller).to receive(:performed?)
         controller.instance_variable_set(:@_params, :id => floating_ip.id, :pressed => 'host_NECO')
