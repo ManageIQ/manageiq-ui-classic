@@ -12,7 +12,7 @@ describe ApplicationHelper::Button::MiqRequestDelete do
       allow(record).to receive(:resource_type).and_return(resource_type)
     end
 
-    let(:current_user) { FactoryGirl.create(:user_admin) }
+    let(:current_user) { FactoryGirl.create(:user, :features => "everything") }
     let(:approval_state) { 'sorryjako' }
     let(:requester_name) { {:requester_name => current_user.name} }
     let(:resource_type) { 'knedlik' }

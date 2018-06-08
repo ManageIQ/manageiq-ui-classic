@@ -337,7 +337,7 @@ class ChargebackController < ApplicationController
       return
     end
     @right_cell_text ||= _("Saved Chargeback Report [%{name}]") % {:name => rr.name}
-    if !current_user.miq_group_ids.include?(rr.miq_group_id) && !admin_user?
+    if !current_user.miq_group_ids.include?(rr.miq_group_id) && !report_admin_user?
       add_flash(_("Report is not authorized for the logged in user"), :error)
       @saved_reports = cb_rpts_get_all_reps(id.split('-')[1])
       return
