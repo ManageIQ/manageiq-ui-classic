@@ -16,8 +16,8 @@
 }
 
 .pficon-registry-unknown {
+  @extend .pficon-registry;
   color: $color-warning;
-  content: '\e623';
 }
 
 .ff-condition::before {
