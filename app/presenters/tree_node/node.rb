@@ -92,8 +92,6 @@ module TreeNode
                        image
                      elsif image =~ %r{^[a-zA-Z0-9]+/}
                        ActionController::Base.helpers.image_path(image)
-                     else
-                       ActionController::Base.helpers.image_path("100/#{image}")
                      end
 
       node.delete_if { |_, v| v.nil? }
