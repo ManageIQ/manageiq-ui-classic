@@ -55,14 +55,6 @@ module QuadiconHelper
     end
   end
 
-  def self.compliance_img(status)
-    case status
-    when true  then '100/check.png'
-    when 'N/A' then '100/na.png'
-    else            '100/x.png'
-    end
-  end
-
   def self.health_state(status)
     case status
     when "Valid"    then {:fileicon => "svg/healthstate-normal.svg", :tooltip => _('Normal health state')}
