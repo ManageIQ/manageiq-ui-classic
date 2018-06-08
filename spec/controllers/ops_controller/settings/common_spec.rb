@@ -341,5 +341,26 @@ describe OpsController do
         end
       end
     end
+
+    describe '#settings_set_form_vars_server' do
+      context 'sets values correctly' do
+        it 'for server in non-current zone' do
+          zone = FactoryGirl.create(:zone, :name => 'Foo Zone')
+          server = FactoryGirl.create(:miq_server, :zone => zone)
+          controller.instance_variable_set(:@sb, :selected_server_id => server.id)
+          controller.send(:settings_set_form_vars_server)
+          edit_current = assigns(:edit)
+          expect(edit_current[:current].config[:server][:zone]).to eq(zone.name)
+        end
+
+        it 'for server in default zone' do
+          server = FactoryGirl.create(:miq_server, :zone => Zone.find_by(:name => "default"))
+          controller.instance_variable_set(:@sb, :selected_server_id => server.id)
+          controller.send(:settings_set_form_vars_server)
+          edit_current = assigns(:edit)
+          expect(edit_current[:current].config[:server][:zone]).to eq("default")
+        end
+      end
+    end
   end
 end
