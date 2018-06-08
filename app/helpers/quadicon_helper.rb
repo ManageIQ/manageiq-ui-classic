@@ -32,6 +32,7 @@ module QuadiconHelper
     'terminated'                => {:fonticon => 'pficon pficon-off', :background => '#CC0000'},
     'off'                       => {:fonticon => 'pficon pficon-off', :background => '#CC0000'},
     'template'                  => {:fonticon => 'pficon pficon-template', :background => '#336699'},
+    'powering_up'               => {:fonticon => 'pficon pficon-on', :background => '#FF9900'},
   }.freeze
 
   def self.provider_status(status, enabled = true)
