@@ -45,13 +45,13 @@ module QuadiconHelper
 
     case status
     when "Invalid"
-      {:fileicon => '100/x.png', :tooltip => _('Invalid authentication credentials')}
+      {:fileicon => 'pficon pficon-error-circle-o', :tooltip => _('Invalid authentication credentials')}
     when "Valid"
-      {:fileicon => '100/checkmark.png', :tooltip => _('Authentication credentials are valid')}
+      {:fonticon => 'pficon pficon-ok', :tooltip => _('Authentication credentials are valid')}
     when "None"
-      {:fileicon => '100/unknown.png', :tooltip => _('Could not determine the authentication status')}
+      {:fileicon => 'pficon pficon-unknown', :tooltip => _('Could not determine the authentication status')}
     else
-      {:fileicon => '100/exclamationpoint.png', :tooltip => _('Authentication status is %{status}') % {:status => status} }
+      {:fileicon => 'fa fa-exclamation', :tooltip => _('Authentication status is %{status}') % {:status => status} }
     end
   end
 
@@ -65,10 +65,14 @@ module QuadiconHelper
 
   def self.health_state(status)
     case status
-    when "Valid"    then {:fileicon => "svg/healthstate-normal.svg", :tooltip => _('Normal health state')}
-    when "Critical" then {:fileicon => "svg/healthstate-critical.svg", :tooltip => _('Critical health state')}
-    when "Warning"  then {:fileicon => "100/warning.png", :tooltip => _('Health state warning')}
-    else {:fileicon => "svg/healthstate-unknown.svg", :tooltip => _('Could not determine health state')}
+    when "Valid"
+      {:fonticon => "pficon pficon-ok", :tooltip => _('Normal health state')}
+    when "Critical"
+      {:fonticon => "fa fa-exclamation", :color => '#cc0000', :tooltip => _('Critical health state')}
+    when "Warning"
+      {:fileicon => "pficon pficon-warning-triangle-o", :tooltip => _('Health state warning')}
+    else
+      {:fonticon => "pficon-unknown", :tooltip => _('Could not determine health state')}
     end
   end
 
