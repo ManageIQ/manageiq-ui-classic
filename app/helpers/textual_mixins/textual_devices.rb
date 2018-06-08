@@ -23,13 +23,13 @@ module TextualMixins::TextualDevices
                     _("%{total_cores}") % {:total_cores => @record.cpu_total_cores}
                   end
 
-    Device.new(_("Processors"), description, nil, :processor)
+    Device.new(_("Processors"), description, nil, 'pficon pficon-cpu')
   end
 
   def cpu_attributes
-    [[_("CPU Type"), :cpu_type, nil, :processor],
-     [_("CPU Speed"), :cpu_speed, _("MHz"), :processor],
-     [_("Memory"), :memory_mb, _("MB"), :memory]].map do |attribute|
+    [[_("CPU Type"), :cpu_type, nil, 'pficon pficon-cpu'],
+     [_("CPU Speed"), :cpu_speed, _("MHz"), 'pficon pficon-cpu'],
+     [_("Memory"), :memory_mb, _("MB"), 'pficon pficon-memory']].map do |attribute|
        device = Device.new(*attribute)
        device.description_value(@record)
        device
@@ -57,7 +57,7 @@ module TextualMixins::TextualDevices
                                                                  :prov     => pct_prov,
                                                                  :filename => filename,
                                                                  :mode     => mode}
-      Device.new(device_name, description, nil, :disk)
+      Device.new(device_name, description, nil, disk.decorate.fonticon)
     end
 
     # Floppies
@@ -68,7 +68,7 @@ module TextualMixins::TextualDevices
         connection = _("Connected at Power On = %{connect}") % {:connect => floppy.start_connected.to_s}
         location = floppy.location
         device_name = _("Floppy %{name} %{location} %{connection}") % {:name => name, :connection => connection, :location => location}
-        Device.new(device_name, nil, nil, :floppy)
+        Device.new(device_name, nil, nil, floppy.decorate.fonticon)
       end
     end
 
@@ -80,7 +80,7 @@ module TextualMixins::TextualDevices
         connection = _("Connected at Power On = %{connect}") % {:connect => cd.start_connected.to_s}
         location = cd.location
         device_name = _("CD-ROM (%{name} %{location}), %{connection}") % {:name => name, :location => location, :connection => connection}
-        Device.new(device_name, nil, nil, :cdrom)
+        Device.new(device_name, nil, nil, cd.decorate.fonticon)
       end
     end
     disks.compact
@@ -105,7 +105,7 @@ module TextualMixins::TextualDevices
       model = port.model
       autodetect = port.auto_detect ? "" : _("Default Adapter")
       desc = [location, address, filename, model, autodetect, network_name(port)].compact.join(', ')
-      Device.new(name, desc, nil, port.device_type)
+      Device.new(name, desc, nil, port.decorate.fonticon) # TODO: look into this more if this can be SCSI, serial, parallel, usb, sound
     end
   end
 

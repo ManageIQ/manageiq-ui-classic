@@ -10,7 +10,7 @@
             = h(item[:name])
           .col-md-10
             %p.form-control-static
-              %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
+              %i.fa-2x.fa-fw{:class => item[:icon]}
               = h(item[:description])
 - when "os_info"
   - os_info = os_info_details

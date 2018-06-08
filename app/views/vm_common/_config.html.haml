@@ -13,7 +13,7 @@
             %td.label
               = h(item[:name])
             %td
-              %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
+              %i.fa-2x.fa-fw{:class => item[:icon]}
               = h(item[:description])
 - when "os_info"
   - os_info = os_info_details
@@ -79,7 +79,7 @@
               %td.label
                 = h(item[:name])
               %td
-                %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
+                %i.fa-2x.fa-fw{:class => item[:icon]}
                 = h(item[:description])
 
 - when "snapshot_info"
