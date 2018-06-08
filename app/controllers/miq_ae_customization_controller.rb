@@ -4,8 +4,6 @@ class MiqAeCustomizationController < ApplicationController
   include_concern 'OldDialogs'
   include_concern 'Dialogs'
 
-  include AutomateTreeHelper
-
   helper ApplicationHelper::ImportExportHelper
   include Mixins::GenericSessionMixin
 
@@ -16,16 +14,9 @@ class MiqAeCustomizationController < ApplicationController
 
   AE_CUSTOM_X_BUTTON_ALLOWED_ACTIONS = {
     'dialog_edit_editor'     => :dialog_edit_editor,
-    'dialog_edit'            => :dialog_edit,
     'dialog_copy_editor'     => :dialog_copy_editor,
     'dialog_delete'          => :dialog_delete,
-    'dialog_add_tab'         => :dialog_add_tab,
-    'dialog_add_box'         => :dialog_add_box,
-    'dialog_add_element'     => :dialog_add_element,
-    'dialog_res_discard'     => :dialog_res_discard,
-    'dialog_resource_remove' => :dialog_resource_remove,
     'dialog_new_editor'      => :dialog_new_editor,
-    'dialog_new'             => :dialog_new,
     'old_dialogs_new'        => :old_dialogs_new,
     'old_dialogs_edit'       => :old_dialogs_edit,
     'old_dialogs_copy'       => :old_dialogs_copy,
@@ -126,10 +117,6 @@ class MiqAeCustomizationController < ApplicationController
     @explorer = true
 
     build_resolve_screen
-
-    # service dialog edit abandoned
-    self.x_active_tree = :dialogs_tree if x_active_tree == :dialog_edit_tree
-
     build_accordions_and_trees
 
     @lastaction = "automate_button"
@@ -150,31 +137,14 @@ class MiqAeCustomizationController < ApplicationController
 
   def tree_select
     valid = true
-    if x_active_tree == :dialog_edit_tree
-      @sb[:current_node] = x_node
-      valid = dialog_validate
-      self.x_node = params[:id] if valid
-      @sb[:edit_typ] = nil unless @flash_array
-    else
-      self.x_node = params[:id]
-    end
-    if valid
-      self.x_node = params[:id]
-      get_node_info
-      if @replace_tree
+    self.x_node = params[:id]
+    get_node_info
+    if @replace_tree
 
-        # record being viewed and saved in @sb[:active_node] has been deleted outside UI from VMDB, need to refresh tree
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:dialogs])
-      else
-        replace_right_cell(:nodetype => x_node)
-      end
+      # record being viewed and saved in @sb[:active_node] has been deleted outside UI from VMDB, need to refresh tree
+      replace_right_cell(:nodetype => x_node, :replace_trees => [:dialogs])
     else
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page << "miqTreeActivateNodeSilently('#{x_active_tree}', '#{x_node}');"
-        page << "miqSparkle(false);"
-      end
+      replace_right_cell(:nodetype => x_node)
     end
   end
 
@@ -241,8 +211,7 @@ class MiqAeCustomizationController < ApplicationController
   def replace_right_cell(options = {})
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
     # fixme, don't call all the time
-    build_ae_tree(:automate, :automate_tree) # Build Catalog Items tree
-    trees = build_replaced_trees(replace_trees, %i(ab old_dialogs dialogs dialog_edit))
+    trees = build_replaced_trees(replace_trees, %i(ab old_dialogs dialogs))
 
     @explorer = true
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
@@ -250,9 +219,6 @@ class MiqAeCustomizationController < ApplicationController
     reload_trees_by_presenter(presenter, trees)
     presenter[:osf_node] = x_node unless @in_a_form
 
-    if ['dialog_edit', 'dialog_copy'].include?(params[:pressed])
-      presenter[:clear_tree_cookies] = "edit_treeOpenStatex"
-    end
     rebuild_toolbars(presenter)
 
     setup_presenter_based_on_active_tree(nodetype, presenter)
@@ -264,10 +230,6 @@ class MiqAeCustomizationController < ApplicationController
     render :json => presenter.for_render
   end
 
-  def dialog_edit_tree_active?
-    x_active_tree == :dialog_edit_tree
-  end
-
   def first_sub_node_is_a_folder?(node)
     sub_node = node.split("-").first
 
@@ -277,19 +239,17 @@ class MiqAeCustomizationController < ApplicationController
   def get_node_info(node = {}, show_list = true)
     @show_list = show_list
     node = x_node
-    node = valid_active_node(x_node) unless dialog_edit_tree_active? || first_sub_node_is_a_folder?(node)
+    node = valid_active_node(x_node) unless first_sub_node_is_a_folder?(node)
 
     node_info = get_specific_node_info(node)
 
-    x_history_add_item(:id => node, :text => @right_cell_text) unless x_active_tree == :dialog_edit_tree
+    x_history_add_item(:id => node, :text => @right_cell_text)
     node_info
   end
 
   def get_specific_node_info(node)
     if x_active_tree == :ab_tree
       ab_get_node_info(node)
-    elsif x_active_tree == :dialog_edit_tree
-      dialog_edit_set_form_vars
     elsif x_active_tree == :dialogs_tree
       dialog_get_node_info(node)
     elsif x_active_tree == :dialog_import_export_tree
@@ -308,7 +268,6 @@ class MiqAeCustomizationController < ApplicationController
       elsif @in_a_form && @sb[:action]
         action_url = case x_active_tree
                      when :old_dialogs_tree then 'old_dialogs_update'
-                     when :dialog_edit_tree then 'dialog_edit'
                      else
                        case @sb[:action]
                        when 'ab_group_new'     then 'group_create'
@@ -341,20 +300,6 @@ class MiqAeCustomizationController < ApplicationController
     if !@in_a_form
       c_tb = build_toolbar(center_toolbar_filename) if center_toolbar_filename
       h_tb = build_toolbar("x_history_tb") if x_active_tree != :dialogs_tree
-    else
-      if x_active_tree == :dialog_edit_tree && @in_a_form
-        nodes = x_node.split('_')
-        if nodes.length == 1 && @sb[:node_typ].blank?
-          @sb[:txt] = _("Dialog")
-        elsif (nodes.length == 2 && @sb[:node_typ] != "box") || (nodes.length == 1 && @sb[:node_typ] == "tab")
-          @sb[:txt] = _("Tab")
-        elsif (nodes.length == 3 && @sb[:node_typ] != "element") || (nodes.length == 2 && @sb[:node_typ] == "box")
-          @sb[:txt] = _("Box")
-        elsif nodes.length == 4 || (nodes.length == 3 && @sb[:node_typ] == "element")
-          @sb[:txt] = _("Element")
-        end
-        c_tb = build_toolbar(center_toolbar_filename)
-      end
     end
 
     presenter.set_visibility(h_tb.present? || c_tb.present?, :toolbar)
@@ -395,8 +340,6 @@ class MiqAeCustomizationController < ApplicationController
   def setup_presenter_based_on_active_tree(nodetype, presenter)
     if x_active_tree == :ab_tree
       setup_presenter_for_ab_tree(nodetype, presenter)
-    elsif x_active_tree == :dialog_edit_tree
-      setup_presenter_for_dialog_edit_tree(presenter)
     elsif x_active_tree == :dialogs_tree
       setup_presenter_for_dialogs_tree(nodetype, presenter)
     elsif x_active_tree == :old_dialogs_tree
@@ -431,25 +374,6 @@ class MiqAeCustomizationController < ApplicationController
     presenter[:lock_sidebar] = @edit
   end
 
-  def setup_presenter_for_dialog_edit_tree(presenter)
-    presenter.update(:main_div, render_proc[:partial => "dialog_form"])
-    presenter[:cell_a_view] = 'custom'
-
-    @right_cell_text = if @record.id.blank?
-                         _("Adding a new Dialog")
-                       else
-                         _("Editing Dialog \"%{name}\"") % {:name => @record.label.to_s}
-                       end
-    @right_cell_text << _(" [%{text} Information]") % {:text => @sb[:txt]}
-
-    # url to be used in url in miqDropComplete method
-    presenter[:miq_widget_dd_url] = 'miq_ae_customization/dialog_res_reorder'
-    presenter[:init_dashboard] = true
-    presenter[:init_accords] = true
-    presenter.update(:custom_left_cell, render_proc[:partial => "dialog_edit_tree"])
-    presenter.show(:custom_left_cell).hide(:default_left_cell)
-  end
-
   def setup_presenter_for_dialogs_tree(nodetype, presenter)
     nodes = nodetype.split("_")
     if nodetype == "root"
@@ -463,7 +387,6 @@ class MiqAeCustomizationController < ApplicationController
     # resetting ManageIQ.oneTransition.oneTrans when tab loads
     presenter.reset_one_trans
     presenter.one_trans_ie if %w(save reset).include?(params[:button]) && is_browser_ie?
-    presenter.hide(:custom_left_cell).show(:default_left_cell)
   end
 
   def setup_presenter_for_old_dialogs_tree(nodetype, presenter)

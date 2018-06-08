@@ -83,12 +83,6 @@ function miqOnClickSelectTreeNode(id) {
   miqJqueryRequest(url, {beforeSend: true});
 }
 
-function miqOnClickSelectDlgEditTreeNode(id) {
-  var rec_id = id.split('__');
-  var url = 'tree_select/?id=' + encodeURIComponent(rec_id[0]);
-  miqJqueryRequest(url, {beforeSend: true, complete: true});
-}
-
 // Activate and focus on a node within a tree given the node's key
 function miqTreeActivateNode(tree, key) {
   miqSparkle(true);
@@ -421,7 +415,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickDiagnostics',
     'miqOnClickGeneric',
     'miqOnClickHostNet',
-    'miqOnClickSelectDlgEditTreeNode',
     'miqOnClickSelectTreeNode',
     'miqOnClickSnapshots',
     'miqOnClickUtilization',

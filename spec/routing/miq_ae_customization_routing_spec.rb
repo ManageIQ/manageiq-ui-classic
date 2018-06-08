@@ -16,8 +16,6 @@ describe MiqAeCustomizationController do
 
   %w(
     ab_group_reorder
-    ae_tree_select
-    ae_tree_select_toggle
     accordion_select
     automate_button_field_changed
     button_create
@@ -25,14 +23,8 @@ describe MiqAeCustomizationController do
     cancel_import
     change_tab
     dialog_copy_editor
-    dialog_form_field_changed
     dialog_list
-    dialog_res_remove
-    dialog_res_reorder
     explorer
-    field_value_accept
-    field_value_delete
-    field_value_select
     group_create
     group_form_field_changed
     group_reorder_field_changed
