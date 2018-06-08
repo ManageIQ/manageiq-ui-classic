@@ -7,12 +7,12 @@ class DashboardController < ApplicationController
   @@items_per_page = 8
 
   before_action :check_privileges, :except => %i(csp_report authenticate
-                                               external_authenticate kerberos_authenticate
-                                               logout login login_retry wait_for_task
-                                               saml_login initiate_saml_login
-                                               oidc_login, initiate_oidc_login)
+                                                 external_authenticate kerberos_authenticate
+                                                 logout login login_retry wait_for_task
+                                                 saml_login initiate_saml_login
+                                                 oidc_login initiate_oidc_login)
   before_action :get_session_data, :except => %i(csp_report authenticate
-                                               external_authenticate kerberos_authenticate saml_login oidc_login)
+                                                 external_authenticate kerberos_authenticate saml_login oidc_login)
   after_action :cleanup_action,    :except => %i(csp_report)
 
   def index
