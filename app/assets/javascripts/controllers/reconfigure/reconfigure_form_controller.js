@@ -230,6 +230,28 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
                             vm.reconfigureModel.vmRemoveNetworkAdapters.length > 0;
   };
 
+  vm.updateCDRomsConnectDisconnect = function() {
+    vm.reconfigureModel.vmConnectCDRoms    = [];
+    vm.reconfigureModel.vmDisconnectCDRoms    = [];
+
+    angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
+      if (cdRom.connect_disconnect === 'disconnect') {
+        vm.reconfigureModel.vmDisconnectCDRoms.push({
+          name: cdRom.hdFilename
+        });
+      }
+      if (cdRom.connect_disconnect === 'connect') {
+        vm.reconfigureModel.vmConnectCDRoms.push({
+          name: cdRom.name,
+          filename: cdRom.filename
+        });
+      }
+    });
+    vm.cb_cdRoms = vm.reconfigureModel.vmConnectCDRoms.length > 0 ||
+                   vm.reconfigureModel.vmDisconnectCDRoms.length > 0;
+  };
+
+
   vm.resetAddValues = function() {
     vm.reconfigureModel.hdType = vm.disk_default_type;
     vm.reconfigureModel.hdMode = 'persistent';
@@ -472,6 +494,18 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       vm.reconfigureModel.total_cpus = (parseInt(vm.reconfigureModel.socket_count, 10) * parseInt(vm.reconfigureModel.cores_per_socket_count, 10)).toString();
     }
 
+    angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
+      if (typeof cdRom !== 'undefined') {
+        cdRom.orgFilename = cdRom.filename;
+        cdRom.connect_disconnect = '';
+        cdRom.connected = cdRom.device_type === 'cdrom_image';
+      }
+    });
+
+    if (data.socket_count && data.cores_per_socket_count) {
+      vm.reconfigureModel.total_cpus = (parseInt(vm.reconfigureModel.socket_count, 10) * parseInt(vm.reconfigureModel.cores_per_socket_count, 10)).toString();
+    }
+
     if (vm.isVmwareCloud()) {
       vm.fetchAvailableAdapterNetworks(data.orchestration_stack_id);
     }
@@ -496,7 +530,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
             name: cdRom.name,
             type: cdRom.type,
             filename: cdRom.filename,
-            connected: cdRom.type === 'cdrom_image',
+            connected: cdRom.device_type === 'cdrom_image',
           }
         );
       }
@@ -528,10 +562,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.updateCDRomsConnectDisconnect();
   };
 
-  vm.enableConnectCDRom = function() {
-    vm.reconfigureModel.cdRomConnectEnabled = true;
-    vm.reconfigureModel.enableConnectCDRomButton = false;
-    vm.reconfigureModel.showDropDownISOs = true;
+  vm.enableConnectCDRom = function(cdRom) {
+      cdRom = 'connecting';
   };
 
   vm.hideConnectCDRom = function() {

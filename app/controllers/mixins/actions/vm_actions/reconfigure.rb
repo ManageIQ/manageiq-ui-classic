@@ -21,8 +21,8 @@ module Mixins
             vm = Vm.find(@reconfigitems)
             @vlan_options = get_vlan_options(vm.host_id)
             @avail_adapter_names = vm.try(:available_adapter_names) || []
-            @avail_cdrom_names = vm.try(:available_iso_names) || []
             @vmCDRoms = vm.try(:hardware).cdroms || []
+            @iso_options = get_iso_options(vm)
           end
 
           unless @explorer
@@ -205,6 +205,18 @@ module Mixins
             vlan_options << lan.name
           end
           vlan_options
+        end
+
+        def get_iso_options(vm)
+          iso_options = []
+
+          datastore_ids = vm.storages.pluck(:id)
+          # determine available iso files for the datastaores
+          Rbac.filtered(StorageFile.where("storage_id IN (?) and ext_name = 'iso'", datastore_ids)).each do |h_id|
+            iso_options << h_id.name
+          end
+
+          iso_options
         end
 
         def get_reconfig_info(reconfigure_ids)
