@@ -11,6 +11,8 @@ module VmRemote
   def launch_cockpit
     vm = identify_record(params[:id], VmOrTemplate)
 
+    disable_client_cache
+
     if vm.supports_launch_cockpit?
       javascript_open_window(vm.cockpit_url.to_s)
     else
