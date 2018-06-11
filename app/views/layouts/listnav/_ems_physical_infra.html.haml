@@ -15,6 +15,10 @@
     = miq_accordion_panel(_("Relationships"), false, "ems_rel") do
       %ul.nav.nav-pills.nav-stacked
         %li
+          = li_link(:count => @record.number_of(:physical_switches),
+            :text          => _('Physical Switches'),
+            :record        => @record,
+            :display       => 'physical_switches')
           = li_link(:count => @record.number_of(:physical_servers),
             :tables        => 'physical_servers',
             :record        => @record,
