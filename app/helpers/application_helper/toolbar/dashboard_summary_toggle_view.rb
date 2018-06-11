@@ -29,11 +29,12 @@ class ApplicationHelper::Toolbar::DashboardSummaryToggleView < ApplicationHelper
   button_group('summary_download', [
     button(
       :download_view,
-      'fa fa-file-pdf-o fa-lg',
-      N_('Download summary in PDF format'),
+      'pficon pficon-print fa-lg',
+      N_('Print or export summary'),
       nil,
-      :klass => ApplicationHelper::Button::Pdf,
-      :url   => "/download_summary_pdf"
+      :klass => ApplicationHelper::Button::Basic,
+      :url   => "/download_summary_pdf",
+      :popup => true
     ),
   ])
 end
