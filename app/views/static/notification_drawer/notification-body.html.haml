@@ -9,7 +9,7 @@
   %span.drawer-pf-notification-message.notification-message{"ng-click"            => "customScope.markRead(notification, notificationGroup)",
                                                             "tooltip-popup-delay" => "500",
                                                             "tooltip-placement"   => "bottom",
-                                                            "tooltip"             => "{{notification.data.message}}"}
+                                                            "uib-tooltip"         => "{{notification.data.message}}"}
     {{notification.data.message}}
   .drawer-pf-notification-info{"ng-if"    => "!notification.data.inProgress",
                                "ng-click" => "customScope.markRead(notification, notificationGroup)"}
@@ -22,8 +22,8 @@
       {{notification.timeStamp | date:'h:mm:ss a'}}
     .mini-progress-area
       .progress
-        %span.progress-bar.progress-bar-info{"ng-style" => "{ width: notification.data.percentComplete + '%' }",
-                                             :tooltip   => "{{notification.data.percentComplete}} #{_("% Complete")}"}
+        %span.progress-bar.progress-bar-info{"ng-style"    => "{ width: notification.data.percentComplete + '%' }",
+                                             "uib-tooltip" => "{{notification.data.percentComplete}} #{_("% Complete")}"}
 
 .container-fluid.expanded-notification{"ng-if"    => "drawerExpanded",
                                        "ng-click" => "customScope.markNotificationRead(notification, notificationGroup)"}
@@ -35,7 +35,7 @@
                                                                 "tooltip-append-to-body" => "true",
                                                                 "tooltip-popup-delay"    => "500",
                                                                 "tooltip-placement"      => "bottom",
-                                                                "tooltip"                => "{{notification.data.message}}"}
+                                                                "uib-tooltip"            => "{{notification.data.message}}"}
         {{notification.data.message}}
     .col-md-4.col-sm-3{"ng-if" => "notificationGroup.notificationType == 'task'"}
       .drawer-pf-notification-info.expanded-info{"ng-click" => "customScope.markRead(notification, notificationGroup)"}
@@ -46,8 +46,8 @@
         %span.time
           {{notification.data.startTime | date:'h:mm:ss a'}}
       .progress{"ng-if" => "notification.data.inProgress"}
-        .progress-bar.progress-bar-info{"ng-style" => "{ width: notification.data.percentComplete + '%' }",
-                                        :tooltip   => "{{notification.data.percentComplete}} #{_("% Complete")}"}
+        .progress-bar.progress-bar-info{"ng-style"    => "{ width: notification.data.percentComplete + '%' }",
+                                        "uib-tooltip" => "{{notification.data.percentComplete}} #{_("% Complete")}"}
     .col-md-4.col-sm-3{"ng-if" => "notificationGroup.notificationType == 'task'"}
       .drawer-pf-notification-info{"ng-click" => "customScope.markRead(notification, notificationGroup)"}
         %span.info-title
