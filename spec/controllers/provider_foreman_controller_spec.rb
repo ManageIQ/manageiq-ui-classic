@@ -672,10 +672,6 @@ describe ProviderForemanController do
       session[:edit] = edit
     end
 
-    after(:each) do
-      expect(response.status).to eq(200)
-    end
-
     it "builds tagging screen" do
       post :tagging, :params => {:format => :js, :miq_grid_checks => [@configured_system.id]}
       expect(assigns(:flash_array)).to be_nil
@@ -683,15 +679,19 @@ describe ProviderForemanController do
     end
 
     it "cancels tags edit" do
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
       post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => @configured_system.id}
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
+      expect(response.status).to eq(200)
     end
 
     it "save tags" do
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
       post :tagging_edit, :params => {:button => "save", :format => :js, :id => @configured_system.id}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
+      expect(response.status).to eq(200)
     end
   end
 

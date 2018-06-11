@@ -55,7 +55,7 @@ describe PhysicalSwitchController do
 
     context "physical switch toolbar is available" do
       it 'physical switch toolbar is available' do
-        expect(ApplicationHelper::Toolbar::PhysicalSwitchesCenter).to receive(:definition)
+        expect(ApplicationHelper::Toolbar::PhysicalSwitchesCenter).to receive(:definition).and_call_original
         subject
       end
     end
@@ -86,7 +86,7 @@ describe PhysicalSwitchController do
       subject { get(:show, :params => {:id => physical_switch.id}) }
 
       it 'physical switch toolbar is available' do
-        expect(ApplicationHelper::Toolbar::PhysicalSwitchCenter).to receive(:definition)
+        expect(ApplicationHelper::Toolbar::PhysicalSwitchCenter).to receive(:definition).and_call_original
         subject
       end
     end

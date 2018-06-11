@@ -7,7 +7,6 @@ describe ReportController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as admin_user
-      allow(User).to receive(:current_user).and_return(admin_user)
 
       schedule
       FactoryGirl.create(:miq_schedule, :name => "tester2")

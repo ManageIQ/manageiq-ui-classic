@@ -1,7 +1,8 @@
 describe ReportController do
   render_views
+  let(:user) { FactoryGirl.create(:user, :features => "none") }
   before :each do
-    login_as FactoryGirl.create(:user_with_group)
+    login_as user
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
@@ -21,8 +22,6 @@ describe ReportController do
       end
 
       it 'renders show' do
-        user = FactoryGirl.create(:user_with_group)
-        login_as user
         controller.instance_variable_set(:@html, "<h1>Test</h1>")
         allow(controller).to receive(:report_first_page)
         report = FactoryGirl.create(:miq_report_with_results)
@@ -107,8 +106,6 @@ describe ReportController do
         ApplicationController.handle_exceptions = true
 
         MiqWidgetSet.seed
-        user = FactoryGirl.create(:user_with_group)
-        login_as user
         widget_set = FactoryGirl.create(:miq_widget_set, :group_id => user.current_group.id)
         post :tree_select, :params => { :id => "xx-g_g-#{user.current_group.id}_-#{widget_set.id}", :format => :js, :accord => 'db' }
         expect(response).to render_template('report/_db_show')
@@ -182,15 +179,12 @@ describe ReportController do
       end
 
       it 'renders list of Roles in Roles tree' do
-        login_as FactoryGirl.create(:user_with_group)
         post :tree_select, :params => { :id => 'root', :format => :js, :accord => 'roles' }
         expect(response).to render_template('report/_role_list')
       end
 
       it 'renders form to edit Role in Roles tree' do
         FactoryGirl.create(:miq_report, :name => "VM 1", :rpt_group => "Configuration Management - Folder Foo", :rpt_type => "Default")
-        user = FactoryGirl.create(:user_with_group)
-        login_as user
         post :tree_select, :params => { :id => "g-#{user.current_group.id}", :format => :js, :accord => 'roles' }
         expect(response).to render_template('report/_menu_form1')
       end

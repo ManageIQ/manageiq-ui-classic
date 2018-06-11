@@ -24,7 +24,7 @@ describe ApplicationHelper do
     context 'admin user' do
       it 'lists all users' do
         allow(User).to receive(:server_timezone).and_return('UTC')
-        allow(User).to receive(:current_user).and_return(admin_user)
+        login_as admin_user
         expect(subject.count).to eq(User.count)
       end
     end
@@ -32,7 +32,7 @@ describe ApplicationHelper do
     context 'a tenant user' do
       it 'lists users in his group' do
         allow(User).to receive(:server_timezone).and_return('UTC')
-        allow(User).to receive(:current_user).and_return(grand_child_user)
+        login_as grand_child_user
         ids = grand_child_user.miq_groups.collect(&:user_ids).flatten.uniq
         expect(subject.values(&:id).map(&:to_i)).to match_array(ids)
       end

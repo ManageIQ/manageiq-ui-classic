@@ -6,7 +6,7 @@ describe ApplicationController::Filter do
     let(:expression)     { ApplicationController::Filter::Expression.new.tap { |e| e.exp_model = 'Vm' } }
 
     before do
-      allow(User).to receive(:current_user).and_return(user)
+      login_as user
     end
 
     it 'returns user searches' do
