@@ -37,6 +37,10 @@ module VmCloudHelper::TextualSummary
   #
   # Items
   #
+  def textual_power_state
+    textual_power_state_whitelisted_with_template
+  end
+
   def textual_ipaddress
     return nil if @record.template?
     ips = @record.ipaddresses

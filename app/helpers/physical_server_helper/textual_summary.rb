@@ -1,4 +1,6 @@
 module PhysicalServerHelper::TextualSummary
+  include TextualMixins::TextualPowerState
+
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
@@ -105,7 +107,7 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_power_state
-    {:label => _("Power State"), :value => @record.power_state}
+    textual_power_state_whitelisted(@record.power_state)
   end
 
   def textual_mac
