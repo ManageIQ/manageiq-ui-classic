@@ -26,4 +26,5 @@
  *= require ui-select/dist/select
  *= require ./remote_console
  *= require graphiql/graphiql.css
+ *= require piecharts
 */
