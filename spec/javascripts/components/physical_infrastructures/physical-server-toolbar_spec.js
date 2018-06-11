@@ -5,14 +5,18 @@ describe('physical-server-toolbar', function() {
     beforeEach(function() {
       ManageIQ.record.recordId = 1;
       jasmine.spyOnFetch();
-      jasmine.sendToolbarAction('power_on', 'physical_servers');
+      jasmine.sendToolbarAPIAction('power_on', 'physical_servers');
     });
 
     it('calls API.post with the appropriate URL', function () {
       expect(window.fetch).toHaveBeenCalledWith(
         '/api/physical_servers',
-        { method: 'POST', body: '{"action":"power_on","resources":[{"id":1}]}' }
+        { method: 'POST', backendName: 'API', headers: {}, body: '{"action":"power_on","resources":[{"id":1}]}' }
       );
+    });
+
+    afterEach(function() {
+      ManageIQ.record.recordId = null;
     });
   });
 
@@ -21,14 +25,22 @@ describe('physical-server-toolbar', function() {
     beforeEach(function () {
       ManageIQ.gridChecks = [1,2];
       jasmine.spyOnFetch();
-      jasmine.sendToolbarAction('blink_loc_led', 'physical_servers');
+      jasmine.sendToolbarAPIAction('blink_loc_led', 'physical_servers');
     });
 
     it('calls API.post with the appropriate URL', function () {
       expect(window.fetch).toHaveBeenCalledWith(
         '/api/physical_servers',
-        { method: 'POST', body: '{"action":"blink_loc_led","resources":[{"id":1},{"id":2}]}' }
+        {
+          method: 'POST',
+          backendName: 'API',
+          headers: {},
+          body: '{"action":"blink_loc_led","resources":[{"id":1},{"id":2}]}' }
       );
+    });
+
+    afterEach(function() {
+      ManageIQ.gridChecks = null;
     });
   });
 });

@@ -84,7 +84,6 @@
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-standard": "~2.0.1",
     "extract-text-webpack-plugin": "~2.1.0",
-    "fetch-headers": "^2.0.0",
     "file-loader": "~0.11.1",
     "glob": "~7.1.1",
     "jest": "^22.0.6",

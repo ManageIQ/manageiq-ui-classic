@@ -8,14 +8,16 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
         t = N_('Configuration'),
         t,
         :items => [
-          button(
+          api_button(
             :physical_server_refresh,
             'fa fa-refresh fa-lg',
             N_('Refresh relationships and power states for all items related to the selected Physical Servers'),
             N_('Refresh Relationships and Power States'),
             :icon    => "fa fa-refresh fa-lg",
-            :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "refresh", "controller": "toolbarActions", "payload": {"entity": "physical_servers"}}'},
+            :api     => {
+              :action => 'refresh',
+              :entity => 'physical_servers'
+            },
             :confirm => N_("Refresh relationships and power states for all items related to the selected Physical Servers?"),
             :options => {:feature => :refresh}
           ),

@@ -8,12 +8,13 @@ jasmine.spyOnFetch = function() {
   });
 };
 
-jasmine.sendToolbarAction = function(action, entity) {
+jasmine.sendToolbarAPIAction = function(action, entity) {
   sendDataWithRx({
-    type: action,
+    type: 'generic',
     controller: 'toolbarActions',
     payload: {
-      entity: entity
+      entity: entity,
+      action: action
     },
   });
 }

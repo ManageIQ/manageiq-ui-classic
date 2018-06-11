@@ -1,5 +1,5 @@
-export function customActionFunction(actionType, payload, resources) {
-  throw new Error(`customAction ${actionType} not yet implemented!`, payload, resources);
+export function customActionFunction(payload, resources) {
+  throw new Error(`customAction ${payload.action} not yet implemented!`, payload, resources);
 }
 
 export function APIFunction(actionType, entity, resources) {
@@ -10,21 +10,20 @@ export function APIFunction(actionType, entity, resources) {
     action: actionType,
     resources,
   })
-    .then(data => {
+    .then((data) => {
       if (data.results && data.results.length > 1) {
-        add_flash(sprintf(__(`Requested ${actionType} of selected items.`)), 'success');
+        add_flash(sprintf(__('Requested %s of selected items.'), actionType), 'success');
       } else {
-        add_flash(sprintf(__(`Requested ${actionType} of selected item.`)), 'success');
+        add_flash(sprintf(__('Requested %s of selected item.'), actionType), 'success');
       }
       return data;
     })
     .catch(data => data);
 }
 
-export function onCustomAction(actionType, payload, resources) {
+export function onCustomAction(payload, resources) {
   if (payload.customAction) {
-    customActionFunction(actionType, payload, resources);
-  } else {
-    APIFunction(actionType, payload.entity, resources);
+    return customActionFunction(payload, resources);
   }
+  return APIFunction(payload.action, payload.entity, resources);
 }

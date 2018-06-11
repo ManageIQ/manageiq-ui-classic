@@ -1,7 +1,7 @@
 class ApplicationHelper::Toolbar::Basic
   include Singleton
   extend SingleForwardable
-  delegate %i(button select twostate separator definition button_group custom_content) => :instance
+  delegate %i(api_button button select twostate separator definition button_group custom_content) => :instance
 
   attr_reader :definition
 
@@ -11,6 +11,21 @@ class ApplicationHelper::Toolbar::Basic
 
   def button_group(name, buttons)
     @definition[name] = ApplicationHelper::Toolbar::Group.new(name, buttons)
+  end
+
+  def api_button(id, icon, title, text, keys = {})
+    keys[:data] = {
+      'function'      => 'sendDataWithRx',
+      'function-data' => {
+        'type'       => "generic",
+        'controller' => "toolbarActions",
+        'payload'    => {
+          'entity' => keys[:api][:entity].pluralize,
+          'action' => keys[:api][:action]
+        }
+      }.to_json
+    }
+    generic_button(:button, id, icon, title, text, keys)
   end
 
   def button(id, icon, title, text, keys = {})
