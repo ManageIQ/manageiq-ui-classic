@@ -4,7 +4,7 @@ module PhysicalSwitchHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name product_name manufacturer serial_number part_number health_state uid_ems description)
+      %i(name product_name manufacturer serial_number part_number ports health_state uid_ems description)
     )
   end
 
@@ -30,8 +30,13 @@ module PhysicalSwitchHelper::TextualSummary
     TextualTable.new(_("Firmwares"), firmware_details, [_("Name"), _("Version")])
   end
 
-  def textual_group_ports
-    TextualTable.new(_("Ports"), port_details, [_("Name"), _("Type"), _("Peer MAC Address")])
+  def textual_ports
+    ports_count = @record.physical_network_ports.count
+    ports = {:label => _("Ports"), :value => ports_count, :icon => "ff ff-network-port"}
+    if ports_count.positive?
+      ports[:link] = "/physical_switch/show/#{@record.id}?display=ports"
+    end
+    ports
   end
 
   def textual_ext_management_system
@@ -80,9 +85,5 @@ module PhysicalSwitchHelper::TextualSummary
 
   def firmware_details
     @record.hardware.firmwares.collect { |fw| [fw.name, fw.version] }
-  end
-
-  def port_details
-    @record.physical_network_ports.collect { |port| [port.port_name, port.port_type, port.peer_mac_address] }
   end
 end

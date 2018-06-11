@@ -28,6 +28,7 @@ module ApplicationHelper::PageLayouts
       my_tasks
       ops
       physical_infra_topology
+      physical_network_port
       pxe
       report
       rss

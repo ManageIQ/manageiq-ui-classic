@@ -30,13 +30,17 @@ class PhysicalSwitchController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties management_networks relationships power_management),
-      %i(firmware_details ports),
+      %i(properties management_networks relationships),
+      %i(power_management firmware_details),
     ]
   end
   helper_method(:textual_group_list)
 
   def self.display_methods
-    %w(physical_switches)
+    %w(physical_switches physical_network_ports)
+  end
+
+  def display_physical_network_ports
+    nested_list(PhysicalNetworkPort, :breadcrumb_title => _("Physical Ports"))
   end
 end
