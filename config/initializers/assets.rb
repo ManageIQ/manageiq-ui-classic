@@ -15,5 +15,5 @@ Rails.application.config.assets.precompile += %w(
   remote_consoles/*.js
   remote_console.js
 
-  pdf_summary.scss
+  print.scss
 )

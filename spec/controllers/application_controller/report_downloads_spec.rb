@@ -11,8 +11,8 @@ describe ApplicationController do
         allow(PdfGenerator).to receive(:pdf_from_string).and_return("")
       end
 
-      it "returns with show_pdf" do
-        expect(controller).to receive(:render).with(:template => '/layouts/show_pdf', :layout => false)
+      it "returns with print" do
+        expect(controller).to receive(:render).with(:layout => '/layouts/print', :template => '/layouts/print/textual_summary')
         controller.send(:set_summary_pdf_data)
       end
     end
