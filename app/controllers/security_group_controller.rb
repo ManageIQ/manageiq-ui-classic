@@ -114,9 +114,7 @@ class SecurityGroupController < ApplicationController
 
     security_groups_to_delete = []
     security_groups.each do |security_group|
-      if security_group.nil?
-        add_flash(_("Security Group no longer exists."), :error)
-      elsif security_group.supports_delete?
+      if security_group.supports_delete?
         security_groups_to_delete.push(security_group)
       else
         add_flash(_("Couldn't initiate deletion of Security Group \"%{name}\": %{details}") % {
