@@ -105,7 +105,6 @@ class StorageController < ApplicationController
       end
     else
       @refresh_div = "main_div" # Default div for button.rjs to refresh
-      refreshstorage if params[:pressed] == "storage_refresh"
       tag(Storage) if params[:pressed] == "storage_tag"
       scanstorage if params[:pressed] == "storage_scan"
       deletestorages if params[:pressed] == "storage_delete"

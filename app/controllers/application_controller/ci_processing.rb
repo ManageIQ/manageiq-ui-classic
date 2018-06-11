@@ -825,13 +825,6 @@ module ApplicationController::CiProcessing
     end
   end
 
-  # Refresh all selected or single displayed Datastore(s)
-  def refreshstorage
-    assert_privileges("storage_refresh")
-    generic_button_operation('refresh_ems', _('Refresh'), storage_button_action,
-                             :refresh_partial => %w(vm hosts).include?(@display) ? 'layouts/gtl' : 'config')
-  end
-
   # Scan all selected or single displayed storage(s)
   def scanstorage
     assert_privileges("storage_scan")
