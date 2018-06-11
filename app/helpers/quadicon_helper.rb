@@ -45,13 +45,13 @@ module QuadiconHelper
 
     case status
     when "Invalid"
-      {:fileicon => 'pficon pficon-error-circle-o', :tooltip => _('Invalid authentication credentials')}
+      {:fonticon => 'pficon pficon-error-circle-o', :tooltip => _('Invalid authentication credentials')}
     when "Valid"
       {:fonticon => 'pficon pficon-ok', :tooltip => _('Authentication credentials are valid')}
     when "None"
-      {:fileicon => 'pficon pficon-unknown', :tooltip => _('Could not determine the authentication status')}
+      {:fonticon => 'pficon pficon-unknown', :tooltip => _('Could not determine the authentication status')}
     else
-      {:fileicon => 'fa fa-exclamation', :tooltip => _('Authentication status is %{status}') % {:status => status} }
+      {:fonticon => 'fa fa-exclamation', :tooltip => _('Authentication status is %{status}') % {:status => status} }
     end
   end
 
