@@ -3,6 +3,7 @@ module VmCommon
   include ActionView::Helpers::JavaScriptHelper
   include ChargebackPreview
   include ProvisionCustomizeHelper
+  include HidePartialHelper
 
   def textual_group_list
     [
@@ -447,7 +448,7 @@ module VmCommon
                            :userid      => session[:userid],
                            :name        => params[:name],
                            :description => params[:description],
-                           :memory      => params[:snap_memory] == "1")
+                           :memory      => params[:snap_memory] == "true")
         rescue => bang
           puts bang.backtrace.join("\n")
           flash = _("Error during 'Create Snapshot': %{message}") % {:message => bang.message}
@@ -1317,14 +1318,14 @@ module VmCommon
         elsif %w(attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
                  associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
-        elsif action != "retire" && action != "reconfigure_update"
+        elsif action != "retire" && action != "reconfigure_update" && !hide_x_edit_buttons(action)
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
         end
 
         # Make sure the form_buttons_div is empty.
         # it would remain on the screen if prior to retire some action that uses the form_buttons_div was used
         # such as "edit tags" or "manage policies".
-        presenter.update(:form_buttons_div, '') if action == "retire"
+        presenter.update(:form_buttons_div, '') if action == "retire" || hide_x_edit_buttons(action)
 
         presenter.remove_paging.show(:form_buttons_div)
       end
