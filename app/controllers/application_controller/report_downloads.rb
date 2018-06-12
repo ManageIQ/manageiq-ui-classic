@@ -20,40 +20,33 @@ module ApplicationController::ReportDownloads
   end
 
   # Send the current report in pdf format
-  def render_pdf(report = nil)
-    report ||= report_for_rendering
-    if report
-      userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
-      rr = report.build_create_results(:userid => userid)
-    end
-
-    # Use rr frorm paging, if present
-    rr ||= MiqReportResult.for_user(current_user).find(@sb[:pages][:rr_id]) if @sb[:pages]
-    # Use report_result_id in session, if present
-    rr ||= MiqReportResult.for_user(current_user).find(session[:report_result_id]) if session[:report_result_id]
-
-    filename = filename_timestamp(rr.report.title)
-    disable_client_cache
-    send_data(rr.to_pdf, :filename => "#{filename}.pdf", :type => 'application/pdf')
-  end
-
-  # Show the current widget report in pdf format
-  def widget_to_pdf
-    @report = nil   # setting report to nil in case full screen mode was opened first, to make sure the one in report_result is used for download
-    session[:report_result_id] = params[:rr_id]
-    @report = report_for_rendering
+  def render_pdf(report)
+    @report = report
     userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
     @result = @report.build_create_results(:userid => userid)
+
+    # Use @result frorm paging, if present
+    @result ||= MiqReportResult.for_user(current_user).find(@sb[:pages][:rr_id]) if @sb[:pages]
+    # Use report_result_id in session, if present
+    @result ||= MiqReportResult.for_user(current_user).find(session[:report_result_id]) if session[:report_result_id]
+
+    disable_client_cache
+
     @options = {
       :page_layout => 'landscape',
       :page_size   => @report.page_size || 'a4',
       :run_date    => format_timezone(@report.report_run_time, @result.user_timezone, "gtl"),
-      :title       => "#{@report.class} \"#{@report.name}\"".html_safe,
+      :title       => "#{@report.class} \"#{@report.name}\"".html_safe
     }
 
-    disable_client_cache
-
     render :template => '/layouts/print/report', :layout => '/layouts/print'
+  end
+
+  # Show the current widget report in pdf format
+  def widget_to_pdf
+    session[:report_result_id] = params[:rr_id]
+    @report = report_for_rendering
+    render_pdf(@report)
   end
 
   # Render report in csv/txt/pdf format asynchronously
