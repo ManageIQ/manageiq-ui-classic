@@ -96,16 +96,14 @@ module QuadiconHelper
   # Change the bottom-right quadrant of the quadicon with the policy simulation result
   def policy_sim(quad, result)
     if quad.try(:[], :bottom_right)
-      img = case result
-            when true  then '100/check.png'
-            when 'N/A' then '100/na.png'
-            else            '100/x.png'
-            end
-
-      quad[:bottom_right] = {
-        :fileicon => img,
-        :tooltip  => result
-      }
+      quad[:bottom_right] = case result
+                            when true
+                              {:fonticon => 'pficon pficon-ok', :tooltip => _('Policy simulation successful.')}
+                            when 'N/A'
+                              {:fonticon => 'fa fa-ban', :tooltip => _('Policy simulation not applicable.')}
+                            else
+                              {:fonticon => 'pficon-error-circle-o', :tooltip => _('Policy simulation failed with: %{error}') % {:error => result}}
+                            end
     end
     quad
   end
