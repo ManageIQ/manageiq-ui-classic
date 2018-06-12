@@ -27,7 +27,7 @@
                 "data-method"          => :post,
                 :remote                => true)
               - if column_name == @edit[:vm_sortcol]
-                %img{:src => image_path("16/sort_#{@edit[:vm_sortdir] == 'ASC' ? 'up' : 'down'}.png")}
+                %i{:class => @edit[:vm_sortdir] == 'ASC' ? 'fa fa-angle-up' : 'fa fa-angle-down'}
     %tbody
       - @vms.each do |row|
         - if row.respond_to?(:volume_template?) || row.respond_to?(:volume_snapshot_template?)
