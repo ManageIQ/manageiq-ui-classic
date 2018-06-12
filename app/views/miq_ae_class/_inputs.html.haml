@@ -53,13 +53,13 @@
     - else
       %tr
         %td
-          = link_to(image_tag(image_path("16/na.png"), :alt => "Add this entry"),
-          {:action => "field_method_accept", :button => "accept"},
+          = link_to({:action => "field_method_accept", :button => "accept"},
           "data-miq_sparkle_on"  => true,
           "data-miq_sparkle_off" => true,
           'data-method'          => :post,
           :remote                => true,
-          :title                 => _("Add this entry"))
+          :title                 => _("Add this entry")) do
+            %i.pficon.pficon-save
         %td
           = text_field_tag("#{prefix}field_name",
             session[:field_data][:name],

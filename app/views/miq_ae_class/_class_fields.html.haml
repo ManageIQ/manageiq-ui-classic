@@ -107,13 +107,13 @@
           - else
             %tr
               %td
-                = link_to(image_tag(image_path("16/na.png"), :alt => (t = _("Add this entry"))),
-                  {:action => "field_accept", :button => "accept"},
+                = link_to({:action => "field_accept", :button => "accept"},
                   "data-miq_sparkle_on"  => true,
                   "data-miq_sparkle_off" => true,
                   :remote                => true,
                   "data-method"          => :post,
-                  :title                 => t)
+                  :title                 => _("Add this entry")) do
+                  %i.pficon.pficon-save.fa-2x
               - %w(name aetype datatype default_value display_name description substitute collect message on_entry on_exit on_error max_retries max_time).each do |fname|
                 %td
                   - if %w(aetype datatype).include?(fname)
