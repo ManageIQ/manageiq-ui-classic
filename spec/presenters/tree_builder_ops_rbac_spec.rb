@@ -17,6 +17,7 @@ describe TreeBuilderOpsRbac do
     end
 
     it "has :open_all set to false" do
+      login_as FactoryGirl.create(:user, :features => 'none')
       tree = TreeBuilderOpsRbac.new("rbac_tree", "rbac", {})
       expect(tree.send(:tree_init_options, :open_all)[:open_all]).to be_falsey
     end
@@ -44,7 +45,7 @@ describe TreeBuilderOpsRbac do
   end
 
   describe "#x_get_tree_custom_kids" do
-    let(:group) { FactoryGirl.create(:miq_group) }
+    let(:group) { FactoryGirl.create(:miq_group, :features => "none") }
     let(:user) { FactoryGirl.create(:user, :miq_groups => [group, other_group]) }
     let(:other_group) { FactoryGirl.create(:miq_group) }
     let(:other_user) { FactoryGirl.create(:user, :miq_groups => [other_group]) }

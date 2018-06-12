@@ -263,7 +263,6 @@ describe AutomationManagerController do
     automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)
     automation_manager3 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider3.id)
     user = login_as user_with_feature(%w(automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
-    allow(User).to receive(:current_user).and_return(user)
     TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, :automation_manager_providers, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerProviders.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
@@ -281,7 +280,6 @@ describe AutomationManagerController do
 
   it "builds ansible tower job templates tree" do
     user = login_as user_with_feature(%w(automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
-    allow(User).to receive(:current_user).and_return(user)
     TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, :configuration_scripts, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
@@ -291,7 +289,6 @@ describe AutomationManagerController do
 
   it "constructs the ansible tower job templates tree node" do
     user = login_as user_with_feature(%w(providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
-    allow(User).to receive(:current_user).and_return(user)
     TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, :configuration_scripts, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
     root_objects = tree_builder.send(:x_get_tree_roots, false, {})
@@ -685,12 +682,14 @@ describe AutomationManagerController do
     end
 
     it "cancels tags edit" do
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
       post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => @ans_configured_system.id}
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
     end
 
     it "save tags" do
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
       post :tagging_edit, :params => {:button => "save", :format => :js, :id => @ans_configured_system.id}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil

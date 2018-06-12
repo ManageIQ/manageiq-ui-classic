@@ -41,7 +41,7 @@
               %p.card-pf-aggregate-status-notifications
                 %span.card-pf-aggregate-status-notification{"ng-if" => "item.error.length > 0",
                                                             "ng-mouseover" => "vm.onHoverAlerts(item.error)",
-                                                            "tooltip-template" => "'/static/alert-overview-popover.html'",
+                                                            "uib-tooltip-template" => "'/static/alert-overview-popover.html'",
                                                             "tooltip-append-to-body" => "true",
                                                             "tooltip-class" => "miq-alerts-center",
                                                             "tooltip-popup-delay" => "1000"}
@@ -50,7 +50,7 @@
                     {{item.error.length}}
                 %span.card-pf-aggregate-status-notification{"ng-if" => "item.warning.length > 0",
                                                             "ng-mouseover" => "vm.onHoverAlerts(item.warning)",
-                                                            "tooltip-template" => "'/static/alert-overview-popover.html'",
+                                                            "uib-tooltip-template" => "'/static/alert-overview-popover.html'",
                                                             "tooltip-append-to-body" => "true",
                                                             "tooltip-class" => "miq-alerts-center",
                                                             "tooltip-popup-delay" => "1000"}
@@ -61,7 +61,7 @@
                                                             "ng-mouseover" => "vm.onHoverAlerts(item.info)",
                                                             "tooltip-append-to-body" => "true",
                                                             "tooltip-class" => "miq-alerts-center",
-                                                            "tooltip-template" => "'/static/alert-overview-popover.html'",
+                                                            "uib-tooltip-template" => "'/static/alert-overview-popover.html'",
                                                             "tooltip-popup-delay" => "1000"}
                   %a{"href" => "#", "ng-click" => "vm.showGroupAlerts(item, 'Information')"}
                     %span.pficon.pficon-info

@@ -6,7 +6,7 @@ describe GenericObjectDefinitionController do
     render_views
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
+      login_as FactoryGirl.create(:user, :features => "none")
     end
 
     it "should redirect to #show_list" do
@@ -78,7 +78,7 @@ describe GenericObjectDefinitionController do
   context "#process_root_node" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
+      login_as FactoryGirl.create(:user, :features => "none")
     end
 
     it "renders the toolbar for 'show_list'" do

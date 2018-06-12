@@ -155,6 +155,7 @@ module ApplicationController::ReportDownloads
       :page_size   => "us-letter",
       :run_date    => run_time.strftime("%m/%d/%y %l:%m %p %z"),
       :title       => "#{klass} \"#{@record.name}\"".html_safe,
+      :quadicon    => true
     }
 
     if @display == "download_pdf"
@@ -164,12 +165,7 @@ module ApplicationController::ReportDownloads
       end
 
       disable_client_cache
-      html_string = render_to_string(:template => "/layouts/show_pdf", :layout => false)
-      pdf_data = PdfGenerator.pdf_from_string(html_string, "pdf_summary.css")
-      send_data(pdf_data,
-                :type     => "application/pdf",
-                :filename => filename_timestamp("#{klass}_#{@record.name}_summary") + '.pdf'
-               )
+      render :template => '/layouts/print/textual_summary', :layout => '/layouts/print'
     end
   end
 end

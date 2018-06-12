@@ -133,20 +133,6 @@ module ApplicationHelper::Dialogs
     add_options_unless_read_only({}, tag_options, field)
   end
 
-  def default_value_form_options(field_values, field_default_value)
-    no_default_value = [["<#{_('None')}>", nil]]
-    if field_values.empty?
-      values = no_default_value
-    else
-      values = field_values.collect(&:reverse)
-      values = values.reject { |value| value[1].nil? }
-      values = no_default_value + values
-    end
-
-    selected = field_default_value || nil
-    options_for_select(values, selected)
-  end
-
   def build_auto_refreshable_field_indicies(workflow)
     auto_refreshable_field_indicies = []
 

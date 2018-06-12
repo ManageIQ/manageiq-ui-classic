@@ -3,15 +3,6 @@ describe MiqAeCustomizationController do
     stub_user(:features => :all)
   end
 
-  context "#get_node_info" do
-    it "Don't need to validate active node when editing Dialogs" do
-      controller.instance_variable_set(:@sb, :trees => {:dialog_edit_tree => {:active_node => "root"}}, :active_tree => :dialog_edit_tree)
-      expect(controller).not_to receive(:valid_active_node)
-      expect(controller).to receive(:dialog_edit_set_form_vars)
-      controller.send(:get_node_info)
-    end
-  end
-
   describe "group_reorder_field_changed" do
     before(:each) do
       allow(controller).to receive(:load_edit).and_return(true)
@@ -228,42 +219,6 @@ describe MiqAeCustomizationController do
       it "does not include the flash message from the sandbox" do
         get :explorer
         expect(assigns(:flash_array)).not_to include("the flash messages")
-      end
-    end
-
-    context "when in dialog edit state" do
-      render_views
-
-      before do
-        FactoryGirl.create(:miq_server, :guid => MiqServer.my_guid)
-        MiqServer.my_server_clear_cache
-
-        # It looks like edit state causes some of the features to be denied
-        # Why?
-        stub_user(:features => :none)
-      end
-
-      it "still renders the main_div" do
-        session[:sandboxes] = {
-          "miq_ae_customization" => {
-            :trees         => {:dialog_edit_tree => {:active_node => "root"},
-                               :dialogs_tree     => {:active_node => "root"}},
-            :active_tree   => :dialog_edit_tree,
-            :active_accord => :dialogs,
-          },
-        }
-        session[:edit] = {
-          :new     => {},
-          :current => {},
-        }
-
-        get :explorer
-
-        expect(assigns(:sb)[:active_tree]).to eq(:dialogs_tree)
-        expect(response).to render_template('miq_ae_customization/explorer')
-
-        # empty main_div
-        expect(response.body).not_to match(/<div id=['"]main_div['"]>\s*<\/div>/)
       end
     end
   end
@@ -567,9 +522,8 @@ describe MiqAeCustomizationController do
 
       # FIXME: this tree is an exceptional one, it's going to be removed when we replace the
       # dialog editor.
-      expect(controller).to receive(:build_dialog_edit_tree)
       expect(controller).to receive(:render)
-      controller.send(:replace_right_cell, :replace_trees => %i(ab old_dialogs dialogs dialog_edit))
+      controller.send(:replace_right_cell, :replace_trees => %i(ab old_dialogs dialogs))
     end
   end
 end

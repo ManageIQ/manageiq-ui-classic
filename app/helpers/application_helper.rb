@@ -169,7 +169,8 @@ module ApplicationHelper
     "OsProcess"        => "processes",
     "scan_histories"   => "scan_histories",
     "based_volumes"    => "based_volumes",
-    "PersistentVolume" => "persistent_volumes"
+    "PersistentVolume" => "persistent_volumes",
+    "PhysicalSwitch"   => "physical_switches"
   }.freeze
 
   def model_to_report_data
@@ -1080,7 +1081,7 @@ module ApplicationHelper
   end
 
   def pdf_page_size_style
-    "#{@options[:page_size] || "US-Legal"} #{@options[:page_layout]}"
+    "#{@options[:page_size].sub(/^US-/i, '') || "legal"} #{@options[:page_layout]}"
   end
 
   GTL_VIEW_LAYOUTS = %w(action

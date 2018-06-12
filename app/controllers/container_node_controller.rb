@@ -22,6 +22,8 @@ class ContainerNodeController < ApplicationController
   def launch_cockpit
     node = identify_record(params[:id], ContainerNode)
 
+    disable_client_cache
+
     if node.kubernetes_hostname
       javascript_open_window(node.cockpit_url.to_s)
     else

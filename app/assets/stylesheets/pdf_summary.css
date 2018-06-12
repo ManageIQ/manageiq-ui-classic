@@ -1,6 +1,0 @@
-/*
-* This sheet is used by PDFs generated from ApplicationController::ReportDownloads#set_summary_pdf_data
-*= require pdf/_summary
-*= require pdf/_fontawesome
-*= require pdf/_patternfly
-*/

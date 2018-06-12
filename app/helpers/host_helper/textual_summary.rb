@@ -2,6 +2,7 @@ module HostHelper::TextualSummary
   include TextualMixins::TextualDevices
   include TextualMixins::TextualOsInfo
   include TextualMixins::TextualVmmInfo
+  include TextualMixins::TextualPowerState
   # TODO: Determine if DoNav + url_for + :title is the right way to do links, or should it be link_to with :title
 
   #
@@ -163,9 +164,7 @@ module HostHelper::TextualSummary
   end
 
   def textual_power_state
-    state = @record.state.to_s.downcase
-    state = "unknown" if state.blank?
-    {:label => _("Power State"), :image => "svg/currentstate-#{state}.svg", :value => state}
+    textual_power_state_whitelisted(@record.state)
   end
 
   def textual_lockdown_mode

@@ -526,11 +526,13 @@ class MiqRequestController < ApplicationController
     @title       = _("Requests")
     @request_tab = session[:request_tab] if session[:request_tab]
     @layout      = layout_from_tab_name(@request_tab)
+    @options     = session[:prov_options] if session[:prov_options].present?
   end
 
   def set_session_data
     super
-    session[:edit]        = @edit unless @edit.nil?
-    session[:request_tab] = @request_tab unless @request_tab.nil?
+    session[:edit]         = @edit unless @edit.nil?
+    session[:request_tab]  = @request_tab unless @request_tab.nil?
+    session[:prov_options] = @options if @options
   end
 end

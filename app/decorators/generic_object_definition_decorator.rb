@@ -4,6 +4,6 @@ class GenericObjectDefinitionDecorator < MiqDecorator
   end
 
   def fileicon
-    try(:picture) ? "/pictures/#{picture.basename}" : "100/generic_object_definition.png"
+    try(:picture) ? "/pictures/#{picture.basename}" : nil
   end
 end

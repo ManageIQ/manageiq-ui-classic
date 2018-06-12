@@ -1,4 +1,4 @@
-- tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{vm.legendTooltip}}"}
+- tooltipOptions = {"tooltip-placement" => "bottom", "uib-tooltip" => "{{vm.legendTooltip}}"}
 .topology{'ng-controller' => "physicalInfraTopologyController as vm"}
   .legend
     %label#selected
@@ -11,6 +11,10 @@
         %label
           %i.pficon.pficon-server-group
           = _("Physical Servers")
+      %kubernetes-topology-icon{tooltipOptions, :kind => "PhysicalSwitch"}
+        %label
+          %i.ff.ff-network-switch
+          = _("Physical Switches")
       %kubernetes-topology-icon{tooltipOptions, :kind => "Host"}
         %label
           %i.pficon.pficon-screen

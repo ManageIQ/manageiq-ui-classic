@@ -73,7 +73,7 @@ describe CloudTenantController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       @tenant = FactoryGirl.create(:cloud_tenant)
-      login_as FactoryGirl.create(:user)
+      login_as FactoryGirl.create(:user, :features => "none")
     end
 
     subject do

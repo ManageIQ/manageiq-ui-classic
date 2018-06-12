@@ -1,9 +1,5 @@
 class RegistryItemDecorator < MiqDecorator
-  def self.fonticon
-    nil
-  end
-
-  def fileicon
-    "100/#{image_name.downcase}.png"
+  def fonticon
+    image_name == 'registry_string_items' ? 'ff ff-file-txt-o' : 'ff ff-file-bin-o'
   end
 end

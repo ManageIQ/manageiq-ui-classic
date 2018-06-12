@@ -21,7 +21,7 @@
                   :remote                => true,
                   "data-method"          => :post)
               - else
-                = link_to(tab[1], :action => 'change_tab', :tab => tab[0], :id => @tab_id)
+                = link_to(tab[1], :action => 'change_tab', 'uib-tab' => tab[0], :id => @tab_id)
             - else
               - if %w(report ops).include?(@layout)
                 - if @layout == "ops"
@@ -44,7 +44,7 @@
                     :remote                      => true,
                     "data-method"                => :post)
               - else
-                = link_to(tab[1], {:action => 'change_tab', :tab => tab[0], :id => @tab_id}, :onclick => "return miqCheckForChanges()")
+                = link_to(tab[1], {:action => 'change_tab', 'uib-tab' => tab[0], :id => @tab_id}, :onclick => "return miqCheckForChanges()")
   %br{:clear => "all"}/
 - if !@tabs && (@lastaction == "show_list" || !@edit && !session[:menu_click])
   - if @edit && @edit[:adv_search_applied] != nil && !session[:menu_click]

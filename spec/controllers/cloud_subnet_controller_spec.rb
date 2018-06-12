@@ -82,8 +82,6 @@ describe CloudSubnetController do
       EvmSpecHelper.create_guid_miq_server_zone
       EvmSpecHelper.seed_specific_product_features(%w(cloud_subnet_new ems_network_show_list cloud_network_show_list cloud_tenant_show_list))
 
-      allow(User).to receive(:current_user).and_return(user)
-      allow(Rbac).to receive(:role_allows?).and_call_original
       login_as user
     end
 

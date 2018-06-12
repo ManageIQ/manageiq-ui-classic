@@ -15,7 +15,6 @@ describe OpsController do
       before do
         allow(controller).to receive(:checked_or_params).and_return(Tenant.all.ids)
         login_as admin_user
-        allow(User).to receive(:current_user).and_return(admin_user)
       end
 
       it "processes selected record" do

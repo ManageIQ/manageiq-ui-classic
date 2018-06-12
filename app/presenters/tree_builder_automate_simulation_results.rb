@@ -41,7 +41,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
       {
         :text    => t = "#{el.attributes["namespace"]} / #{el.attributes["class"]} / #{el.attributes["instance"]}",
         :tooltip => t,
-        :image   => '100/q.png'
+        :image   => 'svg/vendor-redhat.svg'
       }
     elsif el.name == "MiqAeAttribute"
       {

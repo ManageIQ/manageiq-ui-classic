@@ -23,7 +23,7 @@ describe EmsPhysicalInfraController do
     render_views
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
+      login_as FactoryGirl.create(:user, :features => "none")
       @ems = FactoryGirl.create(:ems_physical_infra)
     end
 

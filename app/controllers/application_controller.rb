@@ -885,7 +885,7 @@ class ApplicationController < ActionController::Base
 
   def reports_group_title
     tenant_name = current_tenant.name
-    if current_user.admin_user?
+    if current_user.report_admin_user?
       _("%{tenant_name} (All Groups)") % {:tenant_name => tenant_name}
     else
       _("%{tenant_name} (Group): %{group_description}") %
@@ -910,7 +910,7 @@ class ApplicationController < ActionController::Base
       # TODO: move this into a named scope
       @sb[:grp_title] = reports_group_title
       custom = MiqReport.for_user(current_user).where(:template_type => "report", :rpt_type => 'Custom').order(:name).pluck(:name, :miq_group_id)
-      custom.select! { |item| item.second.to_i == current_group.try(:id) } unless current_user.admin_user?
+      custom.select! { |item| item.second.to_i == current_group.try(:id) } unless current_user.report_admin_user?
       reports.push([@sb[:grp_title], [[_("Custom"), custom.map(&:first)]]])
     end
     reports

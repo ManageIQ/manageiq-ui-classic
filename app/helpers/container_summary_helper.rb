@@ -154,7 +154,7 @@ module ContainerSummaryHelper
     if object.nil? && @record.respond_to?(:display_registry)
       {
         :label => _('Image Registry'),
-        :image => "100/container_image_registry_unknown.png",
+        :icon  => 'pficon pficon-registry-unknown',
         :value => @record.display_registry
       }
     else
