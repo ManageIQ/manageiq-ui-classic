@@ -187,7 +187,6 @@ module ReportController::Reports
     {"start"       => tl_time,
      "title"       => tl_text,
      "description" => tl_text,
-     "icon"        => ActionController::Base.helpers.image_path("16/blue-circle.png"),
      "color"       => tl_color
     }
   end
