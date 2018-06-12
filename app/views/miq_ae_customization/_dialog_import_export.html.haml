@@ -21,7 +21,7 @@
             %td
               = item[:name]
             %td
-              %img{:src => status_icon_image_path(item[:exists])}
+              %i{:class => item[:exists] ? 'fa fa-clone' : 'pficon pficon-ok'}
               &nbsp;
               = status_description(item[:exists])
     .pull-right
