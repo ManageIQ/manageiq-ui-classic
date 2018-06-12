@@ -14,14 +14,14 @@
       - unless @edit[:fields_to_delete].include?(flds["id"])
         %tr
           %td
-            = link_to(image_tag(image_path("16/notequal-red.png"), :alt => _("Click to delete this input field from method")),
-              {:action => "field_method_delete", :id => flds["id"].to_s, :arr_id => i},
+            = link_to({:action => "field_method_delete", :id => flds["id"].to_s, :arr_id => i},
               "data-miq_sparkle_on"  => true,
               "data-miq_sparkle_off" => true,
               'data-method'          => :post,
               :remote                => true,
               :confirm               => _('Are you sure you want to delete input field from method?'),
-              :title                 => _("Click to delete this input field from method"))
+              :title                 => _("Click to delete this input field from method")) do
+              %i.fa.fa-minus.fa-2x.red
           %td
             = text_field_tag("#{prefix}fields_name_#{i}",
               flds["name"],
