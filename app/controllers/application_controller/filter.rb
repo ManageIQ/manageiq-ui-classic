@@ -160,7 +160,6 @@ module ApplicationController::Filter
       page << "ManageIQ.explorer.clearSearchToggle(#{clear_search_status});"
       page.replace("adv_search_body", :partial => "layouts/adv_search_body")
       page.replace("adv_search_footer", :partial => "layouts/adv_search_footer")
-      page << "$('#adv_search_img').prop('src', '#{ActionController::Base.helpers.image_path('toolbars/squashed-false.png')}')"
       page << ENABLE_CALENDAR if @edit[@expkey].calendar_needed?
       @edit[@expkey].render_values_to(page)
       page << set_spinner_off
@@ -170,7 +169,6 @@ module ApplicationController::Filter
   def adv_search_toggle_off
     render :update do |page|
       page << javascript_prologue
-      page << "$('#adv_search_img').prop('src', '#{ActionController::Base.helpers.image_path('toolbars/squashed-true.png')}')"
       page << javascript_hide("advsearchModal")
       page << javascript_hide("blocker_div")
       page << set_spinner_off
