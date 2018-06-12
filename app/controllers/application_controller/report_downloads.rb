@@ -41,7 +41,19 @@ module ApplicationController::ReportDownloads
   def widget_to_pdf
     @report = nil   # setting report to nil in case full screen mode was opened first, to make sure the one in report_result is used for download
     session[:report_result_id] = params[:rr_id]
-    render_pdf
+    @report = report_for_rendering
+    userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
+    @result = @report.build_create_results(:userid => userid)
+    @options = {
+      :page_layout => 'landscape',
+      :page_size   => @report.page_size || 'a4',
+      :run_date    => format_timezone(@report.report_run_time, @result.user_timezone, "gtl"),
+      :title       => "#{@report.class} \"#{@report.name}\"".html_safe,
+    }
+
+    disable_client_cache
+
+    render :template => '/layouts/print/report', :layout => '/layouts/print'
   end
 
   # Render report in csv/txt/pdf format asynchronously
