@@ -402,18 +402,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       allow(helper).to receive(:x_active_tree).and_return(:ot_tree)
     end
 
-    it "Hides PDF button when PdfGenerator is not available" do
-      allow(PdfGenerator).to receive_messages(:available? => false)
-      buttons = helper.build_toolbar('gtl_view_tb').collect { |button| button[:items] if button[:id] == "download_choice" }.compact.flatten
-      expect(buttons).not_to include(@pdf_button)
-    end
-
-    it "Displays PDF button when PdfGenerator is available" do
-      allow(PdfGenerator).to receive_messages(:available? => true)
-      buttons = helper.build_toolbar('gtl_view_tb').collect { |button| button[:items] if button[:id] == "download_choice" }.compact.flatten
-      expect(buttons).to include(@pdf_button)
-    end
-
     it "Enables edit and remove buttons for read-write orchestration templates" do
       @record = FactoryGirl.create(:orchestration_template)
       buttons = helper.build_toolbar('orchestration_template_center_tb').first[:items]

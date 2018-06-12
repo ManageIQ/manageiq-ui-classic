@@ -20,8 +20,8 @@ module ApplicationController::ReportDownloads
   end
 
   # Send the current report in pdf format
-  def render_pdf(report)
-    @report = report
+  def render_pdf(report = nil)
+    @report = report || report_for_rendering
     userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
     @result = @report.build_create_results(:userid => userid)
 
@@ -45,8 +45,7 @@ module ApplicationController::ReportDownloads
   # Show the current widget report in pdf format
   def widget_to_pdf
     session[:report_result_id] = params[:rr_id]
-    @report = report_for_rendering
-    render_pdf(@report)
+    render_pdf
   end
 
   # Render report in csv/txt/pdf format asynchronously

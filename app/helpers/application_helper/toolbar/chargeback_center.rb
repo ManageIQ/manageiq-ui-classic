@@ -23,10 +23,11 @@ class ApplicationHelper::Toolbar::ChargebackCenter < ApplicationHelper::Toolbar:
           :url   => "/render_csv"),
         button(
           :chargeback_download_pdf,
-          'fa fa-file-pdf-o fa-lg',
-          N_('Download this report in PDF format'),
-          N_('Download as PDF'),
-          :klass => ApplicationHelper::Button::Pdf,
+          'pficon pficon-print fa-lg',
+          N_('Print or export this report in PDF format'),
+          N_('Print or export as PDF'),
+          :klass => ApplicationHelper::Button::Basic,
+          :popup => true,
           :url   => "/render_pdf"),
       ]
     ),

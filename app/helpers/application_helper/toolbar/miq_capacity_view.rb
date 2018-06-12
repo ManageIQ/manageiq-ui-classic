@@ -25,10 +25,11 @@ class ApplicationHelper::Toolbar::MiqCapacityView < ApplicationHelper::Toolbar::
           :klass     => ApplicationHelper::Button::MiqCapacity),
         button(
           :miq_capacity_download_pdf,
-          'fa fa-file-pdf-o fa-lg',
-          N_('Download this report in PDF format'),
-          N_('Download as PDF'),
-          :klass     => ApplicationHelper::Button::Pdf,
+          'pficon pficon-print fa-lg',
+          N_('Print or export this report in PDF format'),
+          N_('Print or export as PDF'),
+          :klass     => ApplicationHelper::Button::Basic,
+          :popup     => true,
           :url       => "/report_download",
           :url_parms => "?typ=pdf"),
       ]

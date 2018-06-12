@@ -48,10 +48,11 @@ class ApplicationHelper::Toolbar::XGtlView < ApplicationHelper::Toolbar::Basic
           :url_parms => "?download_type=csv"),
         button(
           :download_pdf,
-          'fa fa-file-pdf-o fa-lg',
-          N_('Download these items in PDF format'),
-          N_('Download as PDF'),
-          :klass     => ApplicationHelper::Button::Pdf,
+          'pficon pficon-print fa-lg',
+          N_('Print or export these items in PDF format'),
+          N_('Print or export as PDF'),
+          :klass     => ApplicationHelper::Button::Basic,
+          :popup     => true,
           :url       => "/download_data",
           :url_parms => "?download_type=pdf"),
       ]
