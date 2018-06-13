@@ -291,8 +291,7 @@ describe AutomationManagerController do
     user = login_as user_with_feature(%w(providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
     TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, :configuration_scripts, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
-    root_objects = tree_builder.send(:x_get_tree_roots, false, {})
-    objects = tree_builder.send(:x_get_tree_cmat_kids, root_objects[1], false)
+    objects = tree_builder.send(:x_get_tree_cmat_kids, @automation_manager1, false)
     expect(objects).to include(@ans_job_template1)
     expect(objects).to include(@ans_job_template3)
   end
