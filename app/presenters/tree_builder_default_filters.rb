@@ -14,7 +14,8 @@ class TreeBuilderDefaultFilters < TreeBuilder
     :"manageiq::providers::inframanager::template" => %w(Infrastructure Virtual\ Machines Templates),
     :"manageiq::providers::cloudmanager::vm"       => %w(Cloud Instances Instances),
     :"manageiq::providers::inframanager::vm"       => %w(Infrastructure Virtual\ Machines VMs),
-    :physicalserver                                => %w(Physical\ Infrastructure Servers)
+    :physicalserver                                => %w(Physical\ Infrastructure Servers),
+    :physicalswitch                                => %w(Physical\ Infrastructure Switches)
   }.freeze
 
   def prepare_data(data)
