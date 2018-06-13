@@ -1,35 +1,38 @@
 import * as actionsConstants from '../actions/actions';
 // state = state.assignedTags
 function deleteAssignedTag(state, actionTag) {
-  const filteredState = state.filter(tag => (tag.tagCategory.id !== actionTag.tagCategory.id));
-  const selectedItem = state.find(tag => (tag.tagCategory.id === actionTag.tagCategory.id));
+  const filteredState = state.filter(tag => (tag.id !== actionTag.tagCategory.id));
+  const selectedItem = state.find(tag => (tag.id === actionTag.tagCategory.id));
   const filteredTagValues = selectedItem.tagValues.filter(value => (value.id !== actionTag.tagValue.id));
   return [...filteredState,
     {
-      tagCategory: actionTag.tagCategory,
+      description: actionTag.tagCategory.description,
+      id: actionTag.tagCategory.id,
       tagValues: [...filteredTagValues],
     },
   ].filter(tag => (tag.tagValues.length !== 0));
 }
 
 function changeAssignedTag(state, actionTag) {
-  const filteredState = state.filter(tag => (tag.tagCategory.id !== actionTag.tagCategory.id));
+  const filteredState = state.filter(tag => (tag.id !== actionTag.tagCategory.id));
   return [
     ...filteredState,
     {
-      tagCategory: actionTag.tagCategory,
+      description: actionTag.tagCategory.description,
+      id: actionTag.tagCategory.id,
       tagValues: [actionTag.tagValue],
     },
   ];
 }
 
 function addAssignedTag(state, actionTag) {
-  const filteredState = state.filter(tag => (tag.tagCategory.id !== actionTag.tagCategory.id));
-  const selectedItem = state.find(tag => (tag.tagCategory.id === actionTag.tagCategory.id)) || { tagValues: [] };
+  const filteredState = state.filter(tag => (tag.id !== actionTag.tagCategory.id));
+  const selectedItem = state.find(tag => (tag.id === actionTag.tagCategory.id)) || { tagValues: [] };
   const oldValues = selectedItem.tagValues.filter(tagValue => (tagValue.id !== actionTag.tagValue.id));
   return [...filteredState,
     {
-      tagCategory: { description: actionTag.tagCategory.description, id: actionTag.tagCategory.id },
+      description: actionTag.tagCategory.description,
+      id: actionTag.tagCategory.id,
       tagValues: [...oldValues].concat([actionTag.tagValue]),
     }];
 }
