@@ -294,8 +294,7 @@ describe AutomationManagerController do
     allow(User).to receive(:current_user).and_return(user)
     controller.send(:build_automation_manager_tree, :configuration_scripts, :configuration_scripts_tree)
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
-    root_objects = tree_builder.send(:x_get_tree_roots, false, {})
-    objects = tree_builder.send(:x_get_tree_cmat_kids, root_objects[1], false)
+    objects = tree_builder.send(:x_get_tree_cmat_kids, @automation_manager1, false)
     expect(objects).to include(@ans_job_template1)
     expect(objects).to include(@ans_job_template3)
   end
