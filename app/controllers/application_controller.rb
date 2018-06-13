@@ -1566,7 +1566,7 @@ class ApplicationController < ActionController::Base
                               :prov_id    => @prov_id
         end
       else
-        javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id
+        javascript_redirect(:controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id, :template_klass => @template_klass_type)
       end
     elsif params[:pressed] == "ems_cloud_edit" && params[:id]
       javascript_redirect edit_ems_cloud_path(params[:id])
@@ -1757,6 +1757,7 @@ class ApplicationController < ActionController::Base
         end
       end
     else
+      @template_klass_type = template_types_for_controller
       @org_controller = "vm" # request originated from controller
       klass = VmOrTemplate
       @refresh_partial = typ ? "prov_edit" : "pre_prov"
@@ -1803,6 +1804,14 @@ class ApplicationController < ActionController::Base
   alias_method :instance_miq_request_new, :prov_redirect
   alias_method :vm_miq_request_new, :prov_redirect
   alias_method :miq_template_miq_request_new, :prov_redirect
+
+  def template_types_for_controller
+    if %w(ems_infra).include?(request.parameters[:controller])
+      'infra'
+    else
+      'cloud'
+    end
+  end
 
   def vm_clone
     prov_redirect("clone")
