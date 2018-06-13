@@ -22,6 +22,7 @@ exports[`TagCategory Component match snapshot 1`] = `
     ]
   }
 >
+<<<<<<< HEAD
   <ul
     className="tag-category list-inline"
   >
@@ -45,6 +46,28 @@ exports[`TagCategory Component match snapshot 1`] = `
           "id": 1,
         }
       }
+=======
+  <div
+    className="category-label"
+    onBlur={[Function]}
+    onClick={null}
+    onFocus={[Function]}
+    onMouseOut={[Function]}
+    onMouseOver={[Function]}
+  >
+    animal
+  </div>
+  <li
+    className="tag"
+  >
+    <span
+      className="tagColor label label-primary"
+      onBlur={[Function]}
+      onClick={null}
+      onFocus={[Function]}
+      onMouseOut={[Function]}
+      onMouseOver={[Function]}
+>>>>>>> Change tests
     >
       <li
         className="tag"
@@ -57,6 +80,7 @@ exports[`TagCategory Component match snapshot 1`] = `
           onRemoveClick={[Function]}
           type="default"
         >
+<<<<<<< HEAD
           <Label
             bsClass="label"
             bsStyle="primary"
@@ -107,6 +131,23 @@ exports[`TagCategory Component match snapshot 1`] = `
           "id": 2,
         }
       }
+=======
+          Remove
+        </span>
+      </a>
+    </span>
+  </li>
+  <li
+    className="tag"
+  >
+    <span
+      className="tagColor label label-primary"
+      onBlur={[Function]}
+      onClick={null}
+      onFocus={[Function]}
+      onMouseOut={[Function]}
+      onMouseOver={[Function]}
+>>>>>>> Change tests
     >
       <li
         className="tag"

@@ -16,6 +16,7 @@ exports[`Tag Component match snapshot 1`] = `
     }
   }
 >
+<<<<<<< HEAD
   <li
     className="tag"
     key="1"
@@ -26,6 +27,20 @@ exports[`Tag Component match snapshot 1`] = `
       key="1"
       onRemoveClick={[Function]}
       type="default"
+=======
+  <span
+    className="tagColor label label-primary"
+    onBlur={[Function]}
+    onClick={null}
+    onFocus={[Function]}
+    onMouseOut={[Function]}
+    onMouseOver={[Function]}
+  >
+    <a
+      className="pf-remove-button"
+      href="#"
+      onClick={[Function]}
+>>>>>>> Change tests
     >
       <Label
         bsClass="label"

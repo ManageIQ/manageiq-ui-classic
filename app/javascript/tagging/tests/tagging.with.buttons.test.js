@@ -1,5 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { TaggingWithButtonsConnected } from '../containers/tagging';
+import TaggingWithButtons from '../components/TaggingWithButtons/TaggingWithButtons'
+import Tagging from '../components/Tagging/Tagging';
+import renderer from 'react-test-renderer';
+import { shallow, mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { TaggingWithButtonsConnected } from '../containers/tagging';
@@ -19,7 +23,7 @@ const tags = [
   },
 ];
 
-const assignedTags = [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }];
+const assignedTags = [{ description: 'Name', id: 1, tagValues: [{ description: 'Pepa', id: 11 }] }];
 
 const initialState = {
   tagging: {

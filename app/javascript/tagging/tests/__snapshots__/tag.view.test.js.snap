@@ -58,6 +58,7 @@ exports[`Tag view match snapshot 1`] = `
         <div
           className="col-lg-12"
         >
+<<<<<<< HEAD
           <ul
             className="list-inline"
           >
@@ -78,6 +79,28 @@ exports[`Tag view match snapshot 1`] = `
                   },
                 ]
               }
+=======
+          <div
+            className="category-label"
+            onBlur={[Function]}
+            onClick={null}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            Name
+          </div>
+          <li
+            className="tag"
+          >
+            <span
+              className="tagColor label label-primary"
+              onBlur={[Function]}
+              onClick={null}
+              onFocus={[Function]}
+              onMouseOut={[Function]}
+              onMouseOver={[Function]}
+>>>>>>> Change tests
             >
               <ul
                 className="tag-category list-inline"

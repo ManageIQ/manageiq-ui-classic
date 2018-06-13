@@ -1,9 +1,8 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
-import { mount } from 'enzyme';
-import TagModifier from '../components/tagModifier';
-import ValueModifier from '../components/valueModifier';
-import CategoryModifier from '../components/categoryModifier';
+import TagModifier from '../components/InnerComponents/TagModifier';
+import CategoryModifier from '../components/InnerComponents/CategoryModifier';
+import ValueModifier from '../components/InnerComponents/ValueModifier';
+import renderer from 'react-test-renderer';
 
 const tagCategories = [
   { description: 'Name', id: 1 },
