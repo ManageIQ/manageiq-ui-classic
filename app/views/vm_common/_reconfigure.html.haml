@@ -390,46 +390,46 @@
       %table.table.table-striped.table-condensed.table-bordered
         %thead
           %th= _('Name')
-          %th= _('Connected')
           %th= _('Host File')
-          %th{:colspan => 2}= _('Actions')
+          %th{:colspan => 3}= _('Actions')
         %tr{"ng-repeat" => "cdRom in vm.reconfigureModel.vmCDRoms",
             "ng-class"  => "{'danger': cdRom.connected_status == 'disconnected', 'active': cdRom.connected_status == 'connected'}"}
           %td
             {{cdRom.name}}
-          %td
-            %input{"bs-switch"     => "",
-                     :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
-                     "type"          => "checkbox",
-                     "name"          => "cdrom_connected",
-                     "ng-model"      => "cdRom.connected",
-                     "switch-active" => "{{cdRom.connect_disconnect!=''}}",
-                     "ng-readonly"   => "cdRom.connect_disconnect==''"}
           %td{"ng-if" => "cdRom.connect_disconnect != 'connecting'"}
             {{cdRom.filename}}
           %td{"ng-if" => "cdRom.connect_disconnect == 'connecting'"}
             = select_tag('isoName',
                        options_for_select([["<#{_('Choose')}>", '']] + @iso_options, :disabled => ["<#{_('Choose')}>", nil]),
-                       "ng-model"                    => "vm.reconfigureModel.cdrom.filename",
+                       "ng-model"                    => "vm.selected_iso",
                        "ng-change"                   => "",
                        "data-width"                  => "auto",
                        "required"                    => "true",
                        "selectpicker-for-select-tag" => "")
           %td.action-cell
             %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
-                                                     "ng-if"    => "cdRom.connect_disconnect == ''",
+                                                     "ng-if"    => "cdRom.filename == '' && cdRom.orgFilename === ''",
                                                      "ng-click" => "vm.enableConnectCDRom(cdRom)"}= _('Connect')
+            %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
+                                                     "ng-if"    => "cdRom.filename == '' && cdRom.orgFilename !== ''",
+                                                     "ng-click" => "vm.enableConnectCDRom(cdRom)"}= _('Reconnect')
             %button.btn.btn-default.btn-block.btn-sm{:type  => "button",
                                                      "ng-if"    => "cdRom.connect_disconnect == 'connecting'",
                                                      "ng-disabled" => "cdRom.filename == cdRom.orgfilename",
-                                                     "ng-click" => "vm.ConnectCDRom(cdRom)"}= _('Confirm Connect')
+                                                     "ng-click" => "vm.connectCDRom(cdRom)"}= _('Confirm Connect')
+            %button.btn.btn-default.btn-block.btn-sm{:type  => "button",
+                                                     "ng-if"    => "cdRom.filename != ''",
+                                                     "ng-click" => "vm.disconnectCDRom(cdRom)"}= _('Disconnect')
           %td.action-cell
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
-                                                      "ng-if"    => "cdRom.connect_disconnect == 'connecting'",
-                                                      "ng-click" => "vm.cancelCDRomConnectDisconnect(cdRom)"} = _('Cancel Connect')
+                                                     "ng-if"    => "cdRom.connect_disconnect == 'connecting'",
+                                                     "ng-click" => "vm.cancelCDRomConnectDisconnect(cdRom)"}= _('Cancel Connect')
             %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
                                                      "ng-if"    => "cdRom.connect_disconnect == 'connect'",
-                                                     "ng-click" => "vm.cancelCDRomConnectDisconnect(cdRom)"} = _('Cancel Connect')
+                                                     "ng-click" => "vm.cancelCDRomConnectDisconnect(cdRom)"}= _('Cancel Connect')
+            %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
+                                                     "ng-if"    => "cdRom.connect_disconnect == 'disconnect'",
+                                                     "ng-click" => "vm.cancelCDRomConnectDisconnect(cdRom)"}= _('Cancel Disconnect')
 
   %hr
 

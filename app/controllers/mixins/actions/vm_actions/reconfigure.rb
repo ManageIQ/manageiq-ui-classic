@@ -131,6 +131,7 @@ module Mixins
             @reconfig_values[:disk_resize] = @req.options[:disk_resize]
             @reconfig_values[:disk_remove] = @req.options[:disk_remove]
             vmdisks = []
+            vmcdroms = []
             if @req.options[:disk_add]
               @req.options[:disk_add].each do |disk|
                 adsize, adunit = reconfigure_calculations(disk[:disk_size_in_mb])
@@ -170,8 +171,8 @@ module Mixins
                           :cb_bootable    => disk.bootable,
                           :add_remove     => removing}
                 vmdisks << vmdisk
-                vmcdroms << reconfig_item.hardware.disks
               end
+              vmcdroms << reconfig_item.first.hardware.cdroms
             end
             @reconfig_values[:disks] = vmdisks
             @reconfig_values[:cdroms] = vmcdroms
@@ -212,8 +213,8 @@ module Mixins
 
           datastore_ids = vm.storages.pluck(:id)
           # determine available iso files for the datastaores
-          Rbac.filtered(StorageFile.where("storage_id IN (?) and ext_name = 'iso'", datastore_ids)).each do |h_id|
-            iso_options << h_id.name
+          Rbac.filtered(StorageFile.where("storage_id IN (?) and ext_name = 'iso'", datastore_ids)).each do |sf|
+            iso_options << [sf.name, sf.name + ',' + sf.storage_id.to_s]
           end
 
           iso_options
@@ -257,21 +258,28 @@ module Mixins
               network_adapters << {:name => guest_device.device_name, :vlan => lan.name, :mac => guest_device.address, :add_remove => ''} unless lan.nil?
             end
 
+            if supports_reconfigure_network_adapters?
+              vm.network_ports.order(:name).each do |port|
+                network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+              end
             if vm.kind_of?(ManageIQ::Providers::Vmware::CloudManager::Vm)
               vm.network_ports.order(:name).each do |port|
                 network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
               end
             end
 
-            # CD-ROMS
-            cdroms = vm.hardware.cdroms
-            if cdroms.present?
-              cdroms.map do |cd|
-                id = cd.id,
-                name = cd.device_name
-                type = cd.device_type
-                filename = cd.filename
-                vmcdroms <<  {:id => id, :name => name, :filename => filename, :type => type}
+            if supports_reconfigure_cdroms?
+              # CD-ROMS
+              cdroms = vm.hardware.cdroms
+              if cdroms.present?
+                cdroms.map do |cd|
+                  id = cd.id,
+                  name = cd.device_name
+                  type = cd.device_type
+                  filename = cd.filename
+                  storage_id = cd.storage_id
+                  vmcdroms <<  {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id}
+                end
               end
             end
           end

@@ -47,6 +47,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.vm_type = '';
     vm.disk_default_type = '';
     vm.availableIsoFiles = [];
+    vm.selected_iso = ['', null];
 
     ManageIQ.angular.scope = vm;
 
@@ -237,13 +238,14 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
       if (cdRom.connect_disconnect === 'disconnect') {
         vm.reconfigureModel.vmDisconnectCDRoms.push({
-          name: cdRom.hdFilename
+          name: cdRom.hdFilename,
         });
       }
       if (cdRom.connect_disconnect === 'connect') {
         vm.reconfigureModel.vmConnectCDRoms.push({
           name: cdRom.name,
-          filename: cdRom.filename
+          filename: cdRom.filename,
+          storage_id: cdRom.storage_id,
         });
       }
     });
@@ -417,6 +419,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
         vmResizeDisks: vm.reconfigureModel.vmResizeDisks,
         vmAddNetworkAdapters: vm.reconfigureModel.vmAddNetworkAdapters,
         vmRemoveNetworkAdapters: vm.reconfigureModel.vmRemoveNetworkAdapters,
+        vmConnectCDRoms: vm.reconfigureModel.vmConnectCDRoms,
+        vmDisconnectCDRoms: vm.reconfigureModel.vmDisconnectCDRoms,
       });
     }
   };
@@ -517,7 +521,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     miqService.sparkleOff();
   };
 
-  // -----------------------------------------------
+
   // ???
   vm.updateCDRomsConnectDisconnect = function() {
     vm.reconfigureModel.vmConnectCDRoms = [];
@@ -543,52 +547,35 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       vm.reconfigureModel.vmDisconnectCDRoms.length > 0;
   };
 
-  vm.processConnectSelectedCDRom = function() {
-    vm.reconfigureModel.vmCDRoms.push(
-      {
-        name: vm.reconfigureModel.cdrom.name ? vm.reconfigureModel.cdrom.name : __('to be determined'),
-        id: vm.reconfigureModel.cdrom.id,
-        name: vm.reconfigureModel.cdrom.name,
-        type: vm.reconfigureModel.cdrom.type,
-        filename: vm.reconfigureModel.cdrom.filename,
-        connect_disconnect: 'connect',
-      });
-    vm.resetAddNetworkAdapterValues();
-    vm.updateNetworkAdaptersAddRemove();
+
+  vm.connectCDRom = function(cdRom) {
+    iso = vm.selected_iso.split(',');
+    cdRom.filename = iso[0];
+    cdRom.storage_id = iso[1];
+    cdRom.connect_disconnect = 'connect';
+    vm.updateCDRomsConnectDisconnect();
   };
 
-  vm.disconnectCDRom = function(thisCDRom) {
-    thisCDRom.connect_disconnect = 'disconnect';
+  vm.disconnectCDRom = function(cdRom) {
+    cdRom.connect_disconnect = 'disconnect';
+    cdRom.filename = '';
     vm.updateCDRomsConnectDisconnect();
   };
 
   vm.enableConnectCDRom = function(cdRom) {
-      cdRom = 'connecting';
+    cdRom.connect_disconnect = 'connecting';
   };
 
-  vm.hideConnectCDRom = function() {
-    vm.resetConnectCDRomValues();
-  };
 
-  vm.resetConnectCDRomValues = function() {
-    vm.reconfigureModel.cdRomsEnabled = false;
-    vm.reconfigureModel.connectCDRomEnabled = false;
-    vm.reconfigureModel.showDropDownISOs = false;
-    // vm.setEnableConnectCDRomButton();
-    vm.reconfigureModel.name = '';
-    vm.reconfigureModel.cdRom = '';
-  };
-
-  vm.cancelConnectCDRom = function(vmCDRom) {
+  vm.cancelCDRomConnectDisconnect = function(vmCDRom) {
+    var index = vm.reconfigureModel.vmCDRoms.indexOf(vmCDRom);
     if (vmCDRom.connect_disconnect === "disconnect") {
-      vmCDRom.connect_disconnect = "";
-    } else if (vmCDRom.connect_disconnect === "connect") {
-      var index = vm.reconfigureModel.vmCDRoms.indexOf(vmCDRom);
-      vm.reconfigureModel.vmCDRoms.splice(index, 1);
+      vmCDRom.filename = vmCDRom.orgFilename;
     }
+    vmCDRom.connect_disconnect = '';
+    vm.reconfigureModel.vmCDRoms[index].connect_disconnect = '';
     vm.updateCDRomsConnectDisconnect();
   };
-  // -----------------------------------------------
 
   init();
 }]);
