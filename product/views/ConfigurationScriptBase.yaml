@@ -9,13 +9,13 @@
 #
 
 # Report title
-title: Ansible Tower Job Templates
+title: Ansible Tower Templates
 
 # Menu name
-name: Job Templates
+name: Templates
 
 # Main DB table report is based on
-db: ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
+db: ConfigurationScriptBase
 
 # Columns to fetch from the main table
 cols:

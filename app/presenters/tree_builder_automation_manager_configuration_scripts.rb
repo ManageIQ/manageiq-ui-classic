@@ -5,7 +5,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript"}
+    {:leaf => "ConfigurationScriptBase"}
   end
 
   def set_locals_for_render
@@ -15,7 +15,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
 
   def root_options
     {
-      :text    => t = _("All Ansible Tower Job Templates"),
+      :text    => t = _("All Ansible Tower Templates"),
       :tooltip => t
     }
   end
@@ -43,7 +43,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
   end
 
   def x_get_tree_cmat_kids(object, count_only)
-    scripts = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.where(:manager_id => object.id)
+    scripts = ConfigurationScriptBase.where(:manager_id => object.id).where.not(:type => ConfigurationScriptBase::EXCLUDED_WORKFLOW_TYPES)
     count_only_or_objects_filtered(count_only, scripts, "name")
   end
 
