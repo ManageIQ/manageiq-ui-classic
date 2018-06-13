@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
-import Tagging from '../components/tagging';
-import TagView from '../components/tagView';
+import Tagging from '../components/Tagging/Tagging';
+import TagView from '../components/InnerComponents/TagView';
 import { TaggingConnected, TaggingWithButtonsConnected } from '../containers/tagging';
 import taggingApp from '../reducers/';
 import { loadState } from '../actions';
@@ -33,7 +33,7 @@ const singleTags = [
       { description: 'Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons', id: 52 }],
   },
 ];
-const assignedTags = [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }];
+const assignedTags = [{ description: 'Name', id: 1, tagValues: [{ description: 'Pepa', id: 11 }] }];
 const selectedTagCategory = {};
 const selectedTagValue = {};
 const defaultState = { tags, assignedTags };
