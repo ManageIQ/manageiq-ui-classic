@@ -63,18 +63,56 @@ class TaggingWithButtons extends React.Component {
 }
 
 TaggingWithButtons.propTypes = {
-  selectedTagCategory: PropTypes.object.isRequired,
-  selectedTagValue: PropTypes.object.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.object),
-  assignedTags: PropTypes.arrayOf(PropTypes.object),
+  selectedTagCategory: PropTypes.shape({
+    id: PropTypes.number,
+    description: PropTypes.string,
+  }).isRequired,
+  selectedTagValue: PropTypes.shape({
+    id: PropTypes.number,
+    description: PropTypes.string,
+  }).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    values: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+  })).isRequired,
+  assignedTags: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    tagValues: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+  })).isRequired,
   onTagDeleteClick: PropTypes.func.isRequired,
   onTagCategoryChange: PropTypes.func.isRequired,
   onTagValueChange: PropTypes.func.isRequired,
   onTagMultiValueChange: PropTypes.func,
   showReset: PropTypes.bool,
-  cancelButton: PropTypes.object,
-  resetButton: PropTypes.object,
-  saveButton: PropTypes.object,
+  cancelButton: PropTypes.shape({
+    onClick: PropTypes.func,
+    href: PropTypes.string,
+    type: PropTypes.string,
+    disabled: PropTypes.bool,
+    description: PropTypes.string,
+  }),
+  resetButton: PropTypes.shape({
+    onClick: PropTypes.func,
+    href: PropTypes.string,
+    type: PropTypes.string,
+    disabled: PropTypes.bool,
+    description: PropTypes.string,
+  }),
+  saveButton: PropTypes.shape({
+    onClick: PropTypes.func,
+    href: PropTypes.string,
+    type: PropTypes.string,
+    disabled: PropTypes.bool,
+    description: PropTypes.string,
+  }),
 };
 
 TaggingWithButtons.defaultProps = {
