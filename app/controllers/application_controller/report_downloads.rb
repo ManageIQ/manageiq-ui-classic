@@ -36,7 +36,7 @@ module ApplicationController::ReportDownloads
       :page_layout => 'landscape',
       :page_size   => @report.page_size || 'a4',
       :run_date    => format_timezone(@report.report_run_time, @result.user_timezone, "gtl"),
-      :title       => "#{@report.class} \"#{@report.name}\"".html_safe
+      :title       => @result.name
     }
 
     render :template => '/layouts/print/report', :layout => '/layouts/print'
