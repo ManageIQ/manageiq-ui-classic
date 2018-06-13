@@ -18,8 +18,8 @@ class ManageIQ::Providers::NetworkManagerDecorator < MiqDecorator
         :tooltip => n_("%{number} Cloud Network", "%{number} Cloud Networks", t) % {:number => t}
       },
       :top_right    => {
-        :text    => t = security_groups.size,
-        :tooltip => n_("%{number} Security Group", "%{number} Security Groups", t) % {:number => t}
+        :text    => t = cloud_subnets.size,
+        :tooltip => n_("%{number} Cloud Subnet", "%{number} Cloud Subnets", t) % {:number => t}
       },
       :bottom_left  => {
         :fileicon => fileicon,
