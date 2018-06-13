@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { changeAssignedTag, deleteAssignedTag, toggleTagCategoryChange, toggleTagValueChange, loadState, addAssignedTag } from '../actions';
-import Tagging from '../components/tagging';
-import TaggingWithButtons from '../components/taggingWithButtons';
+import Tagging from '../components/Tagging/Tagging';
+import TaggingWithButtons from '../components/TaggingWithButtons/TaggingWithButtons';
 
 // container compo
 const mapStateToProps = ({ tagging }) => ({
