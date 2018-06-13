@@ -36,24 +36,20 @@ class TagView extends React.Component {
   }
 }
 TagView.propTypes = {
-  assignedTags: PropTypes.arrayOf(
-    PropTypes.shape({
+  assignedTags: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    tagValues: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       description: PropTypes.string.isRequired,
-      tagValues: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.number.isRequired,
-          description: PropTypes.string.isRequired
-        }).isRequired
-      ).isRequired
-    })
-  ).isRequired,
+    }).isRequired).isRequired,
+  })).isRequired,
   onTagDeleteClick: PropTypes.func.isRequired,
-  header: PropTypes.string
+  header: PropTypes.string,
 };
 
 TagView.defaultProps = {
-  header: 'Assigned tags'
+  header: 'Assigned tags',
 };
 
 export default TagView;

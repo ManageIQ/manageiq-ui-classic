@@ -15,11 +15,11 @@ const TagModifier = ({ header, children }) => (
 
 TagModifier.propTypes = {
   header: PropTypes.string,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 TagModifier.defaultProps = {
-  header: 'Add/Modify tag'
+  header: 'Add/Modify tag',
 };
 
 export default TagModifier;

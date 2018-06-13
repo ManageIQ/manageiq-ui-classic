@@ -7,10 +7,10 @@ import CategoryModifier from '../InnerComponents/CategoryModifier';
 import ValueModifier from '../InnerComponents/ValueModifier';
 
 class Tagging extends React.Component {
-  onTagValueChange = selectedTagValue => {
+  onTagValueChange = (selectedTagValue) => {
     const action = {
       tagCategory: this.props.selectedTagCategory,
-      tagValue: selectedTagValue
+      tagValue: selectedTagValue,
     };
     if (this.findSelectedCat(this.props.selectedTagCategory).singleValue) {
       this.props.onTagValueChange(action);
@@ -41,7 +41,7 @@ class Tagging extends React.Component {
   tagCategories = this.props.tags.map(tag => ({
     description: tag.description,
     id: tag.id,
-    singleValue: tag.singleValue
+    singleValue: tag.singleValue,
   })) || [];
 
   render() {
@@ -58,9 +58,7 @@ class Tagging extends React.Component {
               <ValueModifier
                 onTagValueChange={this.onTagValueChange}
                 selectedTagValue={this.props.selectedTagValue}
-                multiValue={this.isSelectedCategoryMultiValue(
-                  this.props.selectedTagCategory
-                )}
+                multiValue={this.isSelectedCategoryMultiValue(this.props.selectedTagCategory)}
                 tagValues={this.getTagValues()}
               />
             </TagModifier>
@@ -80,40 +78,32 @@ class Tagging extends React.Component {
 Tagging.propTypes = {
   selectedTagCategory: PropTypes.shape({
     id: PropTypes.number,
-    description: PropTypes.string
+    description: PropTypes.string,
   }).isRequired,
   selectedTagValue: PropTypes.shape({
     id: PropTypes.number,
-    description: PropTypes.string
+    description: PropTypes.string,
   }).isRequired,
-  tags: PropTypes.arrayOf(
-    PropTypes.shape({
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    values: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       description: PropTypes.string.isRequired,
-      values: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.number.isRequired,
-          description: PropTypes.string.isRequired
-        }).isRequired
-      ).isRequired
-    })
-  ).isRequired,
-  assignedTags: PropTypes.arrayOf(
-    PropTypes.shape({
+    }).isRequired).isRequired,
+  })).isRequired,
+  assignedTags: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    tagValues: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       description: PropTypes.string.isRequired,
-      tagValues: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.number.isRequired,
-          description: PropTypes.string.isRequired
-        }).isRequired
-      ).isRequired
-    })
-  ).isRequired,
+    }).isRequired).isRequired,
+  })).isRequired,
   onTagDeleteClick: PropTypes.func.isRequired,
   onTagCategoryChange: PropTypes.func.isRequired,
   onTagValueChange: PropTypes.func.isRequired,
-  onTagMultiValueChange: PropTypes.func.isRequired
+  onTagMultiValueChange: PropTypes.func.isRequired,
 };
 
 export default Tagging;

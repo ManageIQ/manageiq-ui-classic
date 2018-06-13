@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'patternfly-react';
 
 class TagSelector extends React.Component {
-  handleChange = selectedOption => {
+  handleChange = (selectedOption) => {
     this.props.onTagCategoryChange({
       id: selectedOption.value,
-      description: this.props.tagCategories.find(
-        category => category.id === selectedOption.value
-      ).description
+      description: this.props.tagCategories.find(category => category.id === selectedOption.value).description,
     });
   };
 
@@ -33,7 +31,7 @@ class TagSelector extends React.Component {
     value: category.id,
     label: category.singleValue
       ? this.labelWithIcon(category.description, this.props.infoText)
-      : category.description
+      : category.description,
   }));
 
   render() {
@@ -54,23 +52,21 @@ class TagSelector extends React.Component {
   }
 }
 TagSelector.propTypes = {
-  tagCategories: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      description: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired,
+  tagCategories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    description: PropTypes.string.isRequired,
+  }).isRequired).isRequired,
   selectedOption: PropTypes.shape({
     id: PropTypes.number,
-    description: PropTypes.string
+    description: PropTypes.string,
   }),
   onTagCategoryChange: PropTypes.func.isRequired,
-  infoText: PropTypes.string
+  infoText: PropTypes.string,
 };
 
 TagSelector.defaultProps = {
   infoText: 'Only a single value can be assigned from these categories',
-  selectedOption: {}
+  selectedOption: {},
 };
 
 export default TagSelector;

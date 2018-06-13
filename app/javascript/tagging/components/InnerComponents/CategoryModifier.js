@@ -7,7 +7,7 @@ const CategoryModifier = ({
   tagCategories,
   onTagCategoryChange,
   selectedTagCategory,
-  categoryLabel
+  categoryLabel,
 }) => (
   <FormGroup>
     <Col xs={12} md={4} lg={6}>
@@ -24,23 +24,21 @@ const CategoryModifier = ({
 );
 
 CategoryModifier.propTypes = {
-  tagCategories: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      description: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired,
+  tagCategories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    description: PropTypes.string.isRequired,
+  }).isRequired).isRequired,
   selectedTagCategory: PropTypes.shape({
     id: PropTypes.number,
-    description: PropTypes.string
+    description: PropTypes.string,
   }),
   onTagCategoryChange: PropTypes.func.isRequired,
-  categoryLabel: PropTypes.string
+  categoryLabel: PropTypes.string,
 };
 
 CategoryModifier.defaultProps = {
   categoryLabel: 'Category',
-  selectedTagCategory: {}
+  selectedTagCategory: {},
 };
 
 export default CategoryModifier;

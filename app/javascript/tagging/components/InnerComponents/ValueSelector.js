@@ -6,10 +6,10 @@ class ValueSelector extends React.Component {
   getTagValues = tagValues =>
     tagValues.map(tag => ({ value: tag.id, label: tag.description }));
 
-  handleChange = selectedOption => {
+  handleChange = (selectedOption) => {
     this.props.onTagValueChange({
       description: selectedOption.label,
-      id: selectedOption.value
+      id: selectedOption.value,
     });
   };
 
@@ -29,7 +29,7 @@ class ValueSelector extends React.Component {
     return this.selector(
       this.props.selectedOption.id,
       this.props.selectedOption.description,
-      this.getTagValues(this.props.tagValues)
+      this.getTagValues(this.props.tagValues),
     );
   }
 }
@@ -37,19 +37,17 @@ class ValueSelector extends React.Component {
 ValueSelector.propTypes = {
   selectedOption: PropTypes.shape({
     id: PropTypes.number,
-    description: PropTypes.string
+    description: PropTypes.string,
   }),
-  tagValues: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired,
-  onTagValueChange: PropTypes.func.isRequired
+  tagValues: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired).isRequired,
+  onTagValueChange: PropTypes.func.isRequired,
 };
 
 ValueSelector.defaultProps = {
-  selectedOption: {}
+  selectedOption: {},
 };
 
 export default ValueSelector;

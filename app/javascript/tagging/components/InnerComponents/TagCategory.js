@@ -38,20 +38,18 @@ class TagCategory extends React.Component {
 TagCategory.propTypes = {
   onTagDeleteClick: PropTypes.func.isRequired,
   tagCategory: PropTypes.object.isRequired,
-  tagValues: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired,
+  tagValues: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired).isRequired,
   categoryTruncate: PropTypes.func,
-  valueTruncate: PropTypes.func
+  valueTruncate: PropTypes.func,
 };
 
 TagCategory.defaultProps = {
   categoryTruncate: str =>
-    str.length > 18 ? `${str.substring(0, 18)}...` : str,
-  valueTruncate: str => (str.length > 18 ? `${str.substring(0, 18)}...` : str)
+    (str.length > 18 ? `${str.substring(0, 18)}...` : str),
+  valueTruncate: str => (str.length > 18 ? `${str.substring(0, 18)}...` : str),
 };
 
 export default TagCategory;

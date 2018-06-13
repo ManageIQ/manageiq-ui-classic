@@ -8,7 +8,7 @@ const ValueModifier = ({
   onTagValueChange,
   selectedTagValue,
   multiValue,
-  valueLabel
+  valueLabel,
 }) => (
   <FormGroup>
     <Col xs={12} md={4} lg={6}>
@@ -28,22 +28,20 @@ const ValueModifier = ({
 ValueModifier.propTypes = {
   selectedTagValue: PropTypes.shape({
     id: PropTypes.number,
-    description: PropTypes.string
+    description: PropTypes.string,
   }).isRequired,
   onTagValueChange: PropTypes.func.isRequired,
   valueLabel: PropTypes.string,
   multiValue: PropTypes.bool,
-  tagValues: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired
+  tagValues: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired).isRequired,
 };
 
 ValueModifier.defaultProps = {
   valueLabel: 'Value',
-  multiValue: true
+  multiValue: true,
 };
 
 export default ValueModifier;
