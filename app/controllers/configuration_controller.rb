@@ -68,7 +68,7 @@ class ConfigurationController < ApplicationController
 
   # New tab was pressed
   def change_tab
-    @tabform = "ui_" + params[:tab] if params[:tab] != "5"
+    @tabform = "ui_" + params['uib-tab'] if params['uib-tab'] != "5"
     edit
     render :action => "show"
   end
@@ -350,7 +350,7 @@ class ConfigurationController < ApplicationController
     if params[:button] == "cancel"
       params[:id] = @timeprofile.id.to_s
       flash_to_session(_("Edit of Time Profile \"%{name}\" was cancelled by the user") % {:name => @timeprofile.description})
-      javascript_redirect :action => 'change_tab', :typ => "timeprofiles", :tab => 4, :id => @timeprofile.id.to_s
+      javascript_redirect :action => 'change_tab', :typ => "timeprofiles", 'uib-tab' => 4, :id => @timeprofile.id.to_s
     elsif params[:button] == "save"
       days = if params[:all_days] == 'true'
                (0..6).to_a
@@ -385,7 +385,7 @@ class ConfigurationController < ApplicationController
         construct_edit_for_audit(@timeprofile)
         AuditEvent.success(build_created_audit(@timeprofile, @edit))
         flash_to_session(_("Time Profile \"%{name}\" was saved") % {:name => @timeprofile.description})
-        javascript_redirect(:action => 'change_tab', :typ => "timeprofiles", :tab => 4, :id => @timeprofile.id.to_s)
+        javascript_redirect(:action => 'change_tab', :typ => "timeprofiles", 'uib-tab' => 4, :id => @timeprofile.id.to_s)
       end
     end
   end
