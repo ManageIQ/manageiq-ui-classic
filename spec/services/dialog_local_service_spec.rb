@@ -1,6 +1,25 @@
 describe DialogLocalService do
   let(:service) { described_class.new }
 
+  describe "#determine_dialog_locals_for_service_reconfiguration" do
+    let(:target) { instance_double("Service", :id => 123) }
+    let(:resource_action) { instance_double("ResourceAction", :id => 456, :dialog_id => 654) }
+
+    it "returns a hash" do
+      expect(service.determine_dialog_locals_for_service_reconfiguration(resource_action, target)).to eq(
+        :resource_action_id     => 456,
+        :target_id              => 123,
+        :target_type            => "service",
+        :dialog_id              => 654,
+        :force_old_dialog_use   => false,
+        :api_submit_endpoint    => "/api/services/123",
+        :api_action             => "reconfigure",
+        :finish_submit_endpoint => "/service/explorer",
+        :cancel_endpoint        => "/service/explorer"
+      )
+    end
+  end
+
   describe "#determine_dialog_locals_for_svc_catalog_provision" do
     let(:resource_action) { instance_double("ResourceAction", :id => 456, :dialog_id => 654) }
     let(:target) { instance_double("ServiceTemplate", :class => ServiceTemplate, :id => 321, :service_template_catalog_id => 123) }
