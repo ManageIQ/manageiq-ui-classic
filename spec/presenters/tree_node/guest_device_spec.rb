@@ -3,7 +3,7 @@ describe TreeNode::GuestDevice do
   let(:object) { FactoryGirl.create(:guest_device, :controller_type => 'foo') }
 
   include_examples 'TreeNode::Node#key prefix', 'gd-'
-  include_examples 'TreeNode::Node#icon', 'ff ff-network-card'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-unknown'
   include_examples 'TreeNode::Node#tooltip prefix', 'foo Storage Adapter'
 
   context 'ethernet' do

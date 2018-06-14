@@ -94,26 +94,26 @@ describe TextualMixins::TextualDevices do
 
     context "with model type parsed" do
       let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic, :model => 'Vmxnet3')]) }
-      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Vmxnet3", "Default Adapter"].compact.join(', '), nil, "ethernet")]) }
+      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Vmxnet3", "Default Adapter"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
 
     context "without vswitch and portgroup" do
       let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic)]) }
-      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter"].compact.join(', '), nil, "ethernet")]) }
+      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
 
     context "with vswitch and portgroup" do
       let(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'false') }
       let(:lan) { FactoryGirl.create(:lan, :name => "VM NFS Network", :switch => switch) }
       let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic, :lan => lan)]) }
-      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Switch: test_switch1)"].compact.join(', '), nil, "ethernet")]) }
+      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Switch: test_switch1)"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
 
     context "with dvswitch and dvportgroup" do
       let(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'true') }
       let(:lan) { FactoryGirl.create(:lan, :name => "VM NFS Network", :switch => switch) }
       let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic, :lan => lan)]) }
-      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Distributed Switch: test_switch1)"].compact.join(', '), nil, "ethernet")]) }
+      it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Distributed Switch: test_switch1)"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
   end
 end
