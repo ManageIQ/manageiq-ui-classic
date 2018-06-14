@@ -1159,7 +1159,7 @@ class ApplicationController < ActionController::Base
   def check_button_rbac
     # buttons ids that share a common feature id
     common_buttons = %w(rbac_project_add rbac_tenant_add)
-    task = common_buttons.include?(params[:pressed]) ? rbac_common_feature_for_buttons(params[:pressed]) : params[:pressed]
+    task = common_buttons.include?(params[:pressed]) ? rbac_common_feature_for_buttons(params[:pressed]) : rbac_feature_id(params[:pressed])
     # Intentional single = so we can check auth later
     rbac_free_for_custom_button?(task, params[:button_id]) || role_allows?(:feature => task)
   end
@@ -1173,8 +1173,12 @@ class ApplicationController < ActionController::Base
     pass
   end
 
+  def rbac_feature_id(feature_id)
+    feature_id
+  end
+
   def check_generic_rbac
-    ident = "#{controller_name}_#{action_name == 'report_data' ? 'show_list' : action_name}"
+    ident = rbac_feature_id("#{controller_name}_#{action_name == 'report_data' ? 'show_list' : action_name}")
     if MiqProductFeature.feature_exists?(ident)
       role_allows?(:feature => ident, :any => true)
     else
