@@ -159,11 +159,12 @@ class ServiceController < ApplicationController
     if ra && ra.dialog_id
       @right_cell_text = _("Reconfigure Service \"%{name}\"") % {:name => st.name}
       options = {
-        :header      => @right_cell_text,
-        :target_id   => s.id,
-        :target_kls  => s.class.name,
-        :dialog      => s.options[:dialog],
-        :dialog_mode => :reconfigure
+        :header        => @right_cell_text,
+        :target_id     => s.id,
+        :target_kls    => s.class.name,
+        :dialog        => s.options[:dialog],
+        :dialog_mode   => :reconfigure,
+        :dialog_locals => DialogLocalService.new.determine_dialog_locals_for_service_reconfiguration(ra, s)
       }
       dialog_initialize(ra, options)
     end

@@ -20,6 +20,20 @@ class DialogLocalService
     Vm
   ).freeze
 
+  def determine_dialog_locals_for_service_reconfiguration(resource_action, target)
+    {
+      :resource_action_id     => resource_action.id,
+      :target_id              => target.id,
+      :target_type            => "service",
+      :dialog_id              => resource_action.dialog_id,
+      :force_old_dialog_use   => false,
+      :api_submit_endpoint    => "/api/services/#{target.id}",
+      :api_action             => "reconfigure",
+      :finish_submit_endpoint => "/service/explorer",
+      :cancel_endpoint        => "/service/explorer"
+    }
+  end
+
   def determine_dialog_locals_for_svc_catalog_provision(resource_action, target, finish_submit_endpoint)
     api_submit_endpoint = "/api/service_catalogs/#{target.service_template_catalog_id}/service_templates/#{target.id}"
 

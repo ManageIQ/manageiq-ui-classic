@@ -50,6 +50,8 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     var apiData;
     if (apiSubmitEndpoint.match(/generic_objects/)) {
       apiData = {action: apiAction, parameters: _.omit(vm.dialogData, 'action')};
+    } else if (apiAction === 'reconfigure') {
+      apiData = {action: apiAction, resource: _.omit(vm.dialogData, 'action')};
     } else {
       apiData = vm.dialogData;
     }

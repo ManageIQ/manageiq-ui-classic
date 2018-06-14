@@ -104,7 +104,7 @@ describe('dialogUserController', function() {
           dialogFieldRefreshService: dialogFieldRefreshService,
           miqService: miqService,
           dialogId: '1234',
-          apiSubmitEndpoint: 'service/explorer',
+          apiSubmitEndpoint: 'generic_objects/explorer',
           apiAction: 'custom_action',
           cancelEndpoint: 'cancel endpoint',
           finishSubmitEndpoint: 'finish submit endpoint',
@@ -123,8 +123,41 @@ describe('dialogUserController', function() {
         $controller.submitButtonClicked();
 
         setTimeout(function() {
+          expect(API.post).toHaveBeenCalledWith('generic_objects/explorer', {
+            parameters: {field1: 'field1'}, action: 'custom_action'}, {skipErrors: [400]});
+          done();
+        });
+      });
+    });
+
+    context('when the api action is reconfigure', function() {
+      beforeEach(inject(function(_$controller_) {
+        $controller = _$controller_('dialogUserController', {
+          API: API,
+          dialogFieldRefreshService: dialogFieldRefreshService,
+          miqService: miqService,
+          dialogId: '1234',
+          apiSubmitEndpoint: 'service/explorer',
+          apiAction: 'reconfigure',
+          cancelEndpoint: 'cancel endpoint',
+          finishSubmitEndpoint: 'finish submit endpoint',
+          resourceActionId: '789',
+          targetId: '987',
+          targetType: 'targettype',
+          saveable: true,
+        });
+
+        $controller.setDialogData({data: {field1: 'field1'}, validations: { isValid : true}});
+
+        spyOn(API, 'post').and.returnValue(Promise.resolve('awesome'));
+      }));
+
+      it('posts to the API with the right data', function(done) {
+        $controller.submitButtonClicked();
+
+        setTimeout(function() {
           expect(API.post).toHaveBeenCalledWith('service/explorer', {
-            field1: 'field1', action: 'custom_action'}, {skipErrors: [400]});
+            resource: {field1: 'field1'}, action: 'reconfigure'}, {skipErrors: [400]});
           done();
         });
       });
