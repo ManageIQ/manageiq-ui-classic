@@ -23,17 +23,21 @@ describe ReportController do
       it 'renders show' do
         user = FactoryGirl.create(:user_with_group)
         login_as user
+        session[:settings] = {:perpage => {:reports => 20}}
         controller.instance_variable_set(:@html, "<h1>Test</h1>")
-        allow(controller).to receive(:report_first_page)
+
         report = FactoryGirl.create(:miq_report_with_results)
-        allow(report).to receive(:contains_records?).and_return(true)
         task = FactoryGirl.create(:miq_task)
         task.update_attributes(:state => "Finished")
         task.reload
-        report_result = FactoryGirl.create(:miq_report_result,
+
+        report_result = FactoryGirl.build(:miq_report_result,
                                            :miq_group_id => user.current_group.id,
-                                           :miq_task_id  => task.id)
-        allow_any_instance_of(MiqReportResult).to receive(:report_results).and_return(report)
+                                           :miq_task_id  => task.id,
+                                           :miq_report   => report)
+        report_result.report = report.to_hash.merge(:extras=> {:total_html_rows => 100})
+        report_result.save
+
         binary_blob = FactoryGirl.create(:binary_blob,
                                          :resource_type => "MiqReportResult",
                                          :resource_id   => report_result.id)
@@ -41,7 +45,7 @@ describe ReportController do
                            :data           => "--- Quota \xE2\x80\x93 Max CPUs\n...\n",
                            :binary_blob_id => binary_blob.id)
 
-        post :tree_select, :params => { :id => "rr-#{report_result.id}", :format => :js, :accord => 'savedreports' }
+        post :tree_select, :params => { :id => "rr-#{report_result.id}", :ppsetting => 20, :format => :js, :accord => 'savedreports' }
         expect(response).to render_template('shared/_report_chart_and_html')
       end
     end
