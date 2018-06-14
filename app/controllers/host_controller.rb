@@ -303,7 +303,6 @@ class HostController < ApplicationController
       process_vm_buttons(pfx)
 
       scanstorage if params[:pressed] == "storage_scan"
-      refreshstorage if params[:pressed] == "storage_refresh"
       tag(Storage) if params[:pressed] == "storage_tag"
 
       # Control transferred to another screen, so return

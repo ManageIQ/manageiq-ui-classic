@@ -241,7 +241,6 @@ module EmsCommon
       when "host_provide"                     then providehosts
       # Storages
       when "storage_delete"                   then deletestorages
-      when "storage_refresh"                  then refreshstorage
       when "storage_scan"                     then scanstorage
       when "storage_tag"                      then tag(Storage)
       # Edit Tags for Network Manager Relationship pages
