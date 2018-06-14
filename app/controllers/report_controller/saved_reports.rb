@@ -26,9 +26,8 @@ module ReportController::SavedReports
       @report_result_id = session[:report_result_id] = rr.id
       session[:report_result_runtime] = rr.last_run_on
       if rr.status.downcase == "complete"
-        @report = rr.report_results
         session[:rpt_task_id] = nil
-        if @report.blank?
+        unless rr.valid_report_column?
           add_flash(_("Saved Report \"%{time}\" not found, Schedule may have failed") %
                     {:time => format_timezone(rr.created_on, Time.zone, "gtl")},
                     :error)
@@ -48,7 +47,7 @@ module ReportController::SavedReports
           end
           return
         else
-          if @report.contains_records?
+          if rr.contains_records?
             @html = report_first_page(rr)             # Get the first page of the results
             if params[:type]
               @zgraph = nil

@@ -577,7 +577,8 @@ describe ChargebackController do
       miq_task.state_finished
       miq_report_result.report = chargeback_report.to_hash.merge(:extras=> {:total_html_rows => 100})
       miq_report_result.save
-      allow(controller).to receive(:report_first_page)
+      controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@settings, :perpage => { :reports => 20 })
     end
 
     it "fetch existing report" do
