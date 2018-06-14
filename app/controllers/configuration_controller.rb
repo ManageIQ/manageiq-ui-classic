@@ -541,21 +541,11 @@ class ConfigurationController < ApplicationController
     @edit = session[:edit]
     case @tabform
     when "ui_1" # Visual Settings tab
-      @edit[:new][:quadicons][:ems] = params[:quadicons_ems] == "true" if params[:quadicons_ems]
-      @edit[:new][:quadicons][:ems_cloud] = params[:quadicons_ems_cloud] == "true" if params[:quadicons_ems_cloud]
-      @edit[:new][:quadicons][:ems_container] = params[:quadicons_ems_container] == "true" if params[:quadicons_ems_container]
-      @edit[:new][:quadicons][:host] = params[:quadicons_host] == "true" if params[:quadicons_host]
-      @edit[:new][:quadicons][:vm] = params[:quadicons_vm] == "true" if params[:quadicons_vm]
-      @edit[:new][:quadicons][:physical_server] = params[:quadicons_physical_server] == "true" if params[:quadicons_physical_server]
-      @edit[:new][:quadicons][:physical_switch] = params[:quadicons_physical_switch] == "true" if params[:quadicons_physical_switch]
-      @edit[:new][:quadicons][:ems_physical_infra] = params[:quadicons_ems_physical_infra] == "true" if params[:quadicons_ems_physical_infra]
-      @edit[:new][:quadicons][:ems_network] = params[:quadicons_ems_network] == "true" if params[:quadicons_ems_network]
-      @edit[:new][:quadicons][:ems_storage] = params[:quadicons_ems_storage] == "true" if params[:quadicons_ems_storage]
-      @edit[:new][:quadicons][:miq_template] = params[:quadicons_miq_template] == "true" if params[:quadicons_miq_template]
-      if ::Settings.product.proto # Hide behind proto setting - Sprint 34
-        @edit[:new][:quadicons][:service] = params[:quadicons_service] == "true" if params[:quadicons_service]
+      view_context.allowed_quadicons.each_key do |key|
+        param = "quadicons_#{key}".to_sym
+        @edit[:new][:quadicons][key] = params[param] == "true" if params[param]
       end
-      @edit[:new][:quadicons][:storage] = params[:quadicons_storage] == "true" if params[:quadicons_storage]
+
       @edit[:new][:perpage][:grid] = params[:perpage_grid].to_i if params[:perpage_grid]
       @edit[:new][:perpage][:tile] = params[:perpage_tile].to_i if params[:perpage_tile]
       @edit[:new][:perpage][:list] = params[:perpage_list].to_i if params[:perpage_list]
