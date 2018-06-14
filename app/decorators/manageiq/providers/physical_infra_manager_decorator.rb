@@ -13,8 +13,11 @@ class ManageIQ::Providers::PhysicalInfraManagerDecorator < MiqDecorator
 
   def quadicon
     icon = {
-      :top_left     => {:text => physical_servers.size},
-      :top_right    => {:text => ""},
+      :top_left     => {
+        :text    => t = physical_servers.size,
+        :tooltip => n_("%{number} Physical Server", "%{number} Physical Servers", t) % {:number => t}
+      },
+      :top_right    => {},
       :bottom_left  => {
         :fileicon => fileicon,
         :tooltip  => ui_lookup(:model => type)
