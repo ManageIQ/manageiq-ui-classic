@@ -58,11 +58,21 @@ module.exports = {
       publicPath: output.publicPath,
       writeToFileEmit: true,
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: module => /node_modules/.test(module.resource),
-    }),
   ],
+
+  optimization: {
+    splitChunks: {
+      minChunks: 1,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /node_modules/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+  },
 
   resolve: {
     extensions: settings.extensions,
