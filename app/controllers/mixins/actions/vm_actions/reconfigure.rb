@@ -232,7 +232,7 @@ module Mixins
 
           # reconfiguring network adapters is only supported when one vm was selected
           network_adapters = []
-          if @reconfigureitems.size == 1
+          if @reconfigureitems.size == 1 && @reconfigureitems.first.supports_reconfigure_network_adapters?
             vm = @reconfigureitems.first
 
             vm.hardware.guest_devices.order(:device_name => 'asc').each do |guest_device|
@@ -240,8 +240,10 @@ module Mixins
               network_adapters << {:name => guest_device.device_name, :vlan => lan.name, :mac => guest_device.address, :add_remove => ''} unless lan.nil?
             end
 
-            vm.network_ports.order(:name).each do |port|
-              network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+            if vm.kind_of?(ManageIQ::Providers::Vmware::CloudManager::Vm)
+              vm.network_ports.order(:name).each do |port|
+                network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+              end
             end
           end
 
