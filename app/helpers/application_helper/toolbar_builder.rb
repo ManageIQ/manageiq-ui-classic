@@ -174,7 +174,7 @@ class ApplicationHelper::ToolbarBuilder
 
   # Build button with more states
   def build_twostate_button(bgi, index)
-    props = toolbar_button(bgi, :id => bgi[:id],:type => :buttonTwoState)
+    props = toolbar_button(bgi, :id => bgi[:id], :type => :buttonTwoState)
     return nil if props.nil?
 
     props[:selected] = twostate_button_selected(bgi[:id])
