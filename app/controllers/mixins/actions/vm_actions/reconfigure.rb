@@ -253,14 +253,16 @@ module Mixins
           if @reconfigureitems.size == 1
             vm = @reconfigureitems.first
 
-            vm.hardware.guest_devices.order(:device_name => 'asc').each do |guest_device|
-              lan = Lan.find_by(:id => guest_device.lan_id)
-              network_adapters << {:name => guest_device.device_name, :vlan => lan.name, :mac => guest_device.address, :add_remove => ''} unless lan.nil?
-            end
+            if vm.supports_reconfigure_network_adapters?
+              vm.hardware.guest_devices.order(:device_name => 'asc').each do |guest_device|
+                lan = Lan.find_by(:id => guest_device.lan_id)
+                network_adapters << {:name => guest_device.device_name, :vlan => lan.name, :mac => guest_device.address, :add_remove => ''} unless lan.nil?
+              end
 
-            if supports_reconfigure_network_adapters?
-              vm.network_ports.order(:name).each do |port|
-                network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+              if vm.kind_of?(ManageIQ::Providers::Vmware::CloudManager::Vm)
+                vm.network_ports.order(:name).each do |port|
+                  network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+                end
               end
             if vm.kind_of?(ManageIQ::Providers::Vmware::CloudManager::Vm)
               vm.network_ports.order(:name).each do |port|
@@ -268,7 +270,8 @@ module Mixins
               end
             end
 
-            if supports_reconfigure_cdroms?
+
+            if vm.supports_reconfigure_cdroms?
               # CD-ROMS
               cdroms = vm.hardware.cdroms
               if cdroms.present?
