@@ -13,20 +13,11 @@ module.exports = merge(sharedConfig, {
   devtool: 'source-map',
   stats: 'normal',
 
+  optimization: {
+    minimize: true,
+  },
+
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      sourceMap: true,
-
-      compress: {
-        warnings: false
-      },
-
-      output: {
-        comments: false
-      }
-    }),
-
     new CompressionPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
