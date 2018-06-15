@@ -240,8 +240,10 @@ module Mixins
               network_adapters << {:name => guest_device.device_name, :vlan => lan.name, :mac => guest_device.address, :add_remove => ''} unless lan.nil?
             end
 
-            vm.network_ports.order(:name).each do |port|
-              network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+            if vm.respond_to?(:network_ports)
+              vm.network_ports.order(:name).each do |port|
+                network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+              end
             end
           end
 
