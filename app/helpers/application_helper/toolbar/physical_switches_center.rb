@@ -13,7 +13,6 @@ class ApplicationHelper::Toolbar::PhysicalSwitchesCenter < ApplicationHelper::To
             'fa fa-refresh fa-lg',
             N_('Refresh relationships and power states for all items related to these Physical Switches'),
             N_('Refresh Relationships and Power States'),
-            :image   => "refresh",
             :data    => {'function'      => 'sendDataWithRx',
                          'function-data' => '{"type": "refresh", "controller": "physicalSwitchToolbarController"}'},
             :confirm => N_("Refresh relationships and power states for all items related to these Physical Switches?"),
