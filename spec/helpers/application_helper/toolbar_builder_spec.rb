@@ -154,43 +154,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
   end
 
-  describe "#get_image" do
-    subject { toolbar_builder.get_image(@img, @button_name) }
-
-    context "when with show_summary" do
-      before do
-        @button_name = "show_summary"
-        @img = "reload"
-      end
-
-      it "and layout is scan_profile" do
-        @layout = "scan_profile"
-        expect(subject).to eq("summary-green")
-      end
-
-      it "and layout is miq_schedule" do
-        @layout = "miq_schedule"
-        expect(subject).to eq("summary-green")
-      end
-
-      it "and layout is miq_proxy" do
-        @layout = "miq_schedule"
-        expect(subject).to eq("summary-green")
-      end
-
-      it "otherwise" do
-        @layout = "some_thing"
-        expect(subject).to eq(@img)
-      end
-    end
-
-    it "when not with show_summary" do
-      @button_name = "summary_reload"
-      @img = "reload"
-      expect(subject).to eq(@img)
-    end
-  end # get_image
-
   describe "#twostate_button_selected" do
     before do
       @gtl_type = 'list'
@@ -421,9 +384,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       @pdf_button = {:id           => "download_choice__download_pdf",
                      :child_id     => "download_pdf",
                      :type         => :button,
-                     :img          => "download_pdf.png",
-                     :imgdis       => "download_pdf.png",
-                     :img_url      => ActionController::Base.helpers.image_path("toolbars/download_pdf.png"),
                      :icon         => "fa fa-file-pdf-o fa-lg",
                      :color        => nil,
                      :text         => "Download as PDF",
@@ -495,9 +455,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         items_hash = {:child_id     => "generic_object_tag",
                       :id           => "generic_object_policy_choice__generic_object_tag",
                       :type         => :button,
-                      :img          => "generic_object_tag.png",
-                      :img_url      => "/images/toolbars/generic_object_tag.png",
-                      :imgdis       => "generic_object_tag.png",
                       :hidden       => false,
                       :icon         => "pficon pficon-edit fa-lg",
                       :name         => "generic_object_policy_choice__generic_object_tag",
