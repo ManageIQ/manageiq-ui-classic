@@ -1,17 +1,6 @@
-class ApplicationHelper::Button::MiqRequestDelete < ApplicationHelper::Button::Basic
+class ApplicationHelper::Button::MiqRequestDelete < ApplicationHelper::Button::MiqRequest
   needs :@record, :@request_tab
   delegate :current_user, :to => :@view_context
-
-  def role_allows_feature?
-    prefix = case @request_tab
-             when 'ae', 'host'
-               "#{@request_tab}_"
-             else
-               ""
-             end
-    # check RBAC on separate button
-    role_allows?(:feature => "#{prefix}#{self[:id]}")
-  end
 
   def disabled?
     requester = current_user

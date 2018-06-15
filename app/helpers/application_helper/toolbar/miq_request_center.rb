@@ -21,7 +21,8 @@ class ApplicationHelper::Toolbar::MiqRequestCenter < ApplicationHelper::Toolbar:
       nil,
       :url_parms => "&refresh=y",
       :confirm   => N_("Are you sure you want to delete this Request?"),
-      :klass     => ApplicationHelper::Button::MiqRequestDelete),
+      :klass     => ApplicationHelper::Button::MiqRequestDelete,
+      :options => {:feature => 'miq_request_delete'}),
     button(
       :miq_request_reload,
       'fa fa-refresh fa-lg',

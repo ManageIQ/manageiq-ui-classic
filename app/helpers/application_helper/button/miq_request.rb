@@ -9,7 +9,7 @@ class ApplicationHelper::Button::MiqRequest < ApplicationHelper::Button::Generic
                ""
              end
     # check RBAC on separate button
-    role_allows?(:feature => "#{prefix}#{self[:id]}")
+    role_allows?(:feature => "#{prefix}#{@feature}")
   end
 
   def visible?
