@@ -5,7 +5,7 @@ describe ApplicationHelper::Button::MiqRequestApproval do
         view_context,
         {},
         {'record' => @record, 'showtype' => @showtype, 'request_tab' => @request_tab},
-        {:options => {:feature => 'miq_request_approve'}}
+        {:options => {:feature => 'miq_request_approval'}}
       )
     end
 
@@ -16,7 +16,7 @@ describe ApplicationHelper::Button::MiqRequestApproval do
     let(:state) { "xx" }
     %w(MiqProvisionRequest MiqHostProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
        VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest).each do |cls|
-      context "id = miq_request_approve" do
+      context "id = miq_request_approval" do
         before do
           @record = cls.constantize.new
           allow(@record).to receive_messages(:resource_type  => request,
