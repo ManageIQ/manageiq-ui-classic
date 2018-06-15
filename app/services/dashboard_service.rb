@@ -39,4 +39,8 @@ class DashboardService
   def mem_num(val)
     ((val || 0) / 1024.0)
   end
+
+  def get_icon(ems)
+    ActionController::Base.helpers.image_path(ems.decorate.fileicon)
+  end
 end

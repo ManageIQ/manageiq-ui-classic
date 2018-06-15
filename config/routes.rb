@@ -1265,6 +1265,7 @@ Rails.application.routes.draw do
         ems_utilization_data
         recent_hosts_data
         recent_vms_data
+        aggregate_status_data
       )
     },
 
@@ -1396,6 +1397,8 @@ Rails.application.routes.draw do
       :get => %w(
         show
         data
+        recent_servers_data
+        aggregate_status_data
       )
     },
 

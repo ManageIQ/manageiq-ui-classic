@@ -94,6 +94,17 @@ angular.module('miq.util').factory('chartsMixin', ['$document', function($docume
       grid: {y: {show: false}},
       setAreaChart: true,
     },
+    recentServersConfig: {
+      chartId: 'recentServersChart',
+      tooltip: {
+        contents: dailyTimeTooltip,
+        position: lineChartTooltipPositionFactory('recentServersChart'),
+      },
+      point: {r: 1},
+      size: {height: 145},
+      grid: {y: {show: false}},
+      setAreaChart: true,
+    },
   };
 
   var processData = function(data, xDataLabel, yDataLabel) {
