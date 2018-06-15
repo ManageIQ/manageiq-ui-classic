@@ -4,7 +4,6 @@ describe EmsPhysicalInfraController do
   let(:controller_name) { "ems_infra" }
 
   it_behaves_like "A controller that has advanced search routes", true
-  it_behaves_like "A controller that has compare routes"
   it_behaves_like "A controller that has dialog runner routes"
   it_behaves_like "A controller that has discovery routes"
   it_behaves_like "A controller that has download_data routes"

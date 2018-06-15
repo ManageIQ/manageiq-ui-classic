@@ -3,7 +3,6 @@ require "routing/shared_examples"
 describe EmsStorageController do
   let(:controller_name) { "ems_storage" }
 
-  it_behaves_like "A controller that has compare routes"
   it_behaves_like "A controller that has dialog runner routes"
   it_behaves_like "A controller that has download_data routes"
   it_behaves_like "A controller that has policy protect routes"

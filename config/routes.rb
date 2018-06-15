@@ -147,7 +147,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         ems_form_choices
         download_private_key
-      ) + compare_get,
+      ),
       :post => %w(
         button
         create
@@ -160,7 +160,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         wait_for_task
-      ) + adv_search_post + compare_post + exp_post + save_post
+      ) + adv_search_post + exp_post + save_post
     },
 
     :automation_manager => {
@@ -217,8 +217,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-               compare_get,
+      ),
       :post => %w(
         button
         listnav_search_selected
@@ -231,7 +230,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         tl_chooser
         wait_for_task
-      ) + adv_search_post + compare_post + exp_post + perf_post + save_post + dialog_runner_post
+      ) + adv_search_post + exp_post + perf_post + save_post + dialog_runner_post
     },
 
     :host_aggregate           => {
@@ -248,8 +247,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-               compare_get,
+      ),
       :post => %w(
         add_host
         add_host_select
@@ -267,7 +265,7 @@ Rails.application.routes.draw do
         tl_chooser
         update
         wait_for_task
-      ) + adv_search_post + compare_post + exp_post + perf_post + save_post
+      ) + adv_search_post + exp_post + perf_post + save_post
     },
 
     :catalog                  => {
@@ -416,7 +414,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         new
-      ) + compare_get,
+      ),
       :post => %w(
         button
         dynamic_checkbox_refresh
@@ -429,7 +427,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         create
         wait_for_task
-      ) + compare_post + adv_search_post + exp_post + save_post + dialog_runner_post
+      ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :cloud_tenant             => {
@@ -445,8 +443,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-               compare_get,
+      ),
       :post => %w(
         button
         listnav_search_selected
@@ -460,8 +457,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         update
         wait_for_task
-      ) +
-               compare_post + adv_search_post + exp_post + save_post + dialog_runner_post
+      ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :cloud_object_store_object => {
@@ -475,7 +471,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) + compare_get,
+      ),
       :post => %w(
         button
         create
@@ -488,7 +484,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         update
-      ) + compare_post + adv_search_post + exp_post + save_post
+      ) + adv_search_post + exp_post + save_post
     },
 
     :cloud_volume             => {
@@ -510,7 +506,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) + compare_get,
+      ),
       :post => %w(
         attach_volume
         detach_volume
@@ -529,7 +525,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         update
         wait_for_task
-      ) + compare_post + adv_search_post + exp_post + save_post + dialog_runner_post
+      ) + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :cloud_volume_snapshot    => {
@@ -541,7 +537,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) + compare_get,
+      ),
       :post => %w(
         button
         dynamic_checkbox_refresh
@@ -552,7 +548,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) + compare_post + adv_search_post + exp_post + save_post
+      ) + adv_search_post + exp_post + save_post
     },
 
     :cloud_volume_backup    => {
@@ -567,7 +563,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) + compare_get,
+      ),
       :post => %w(
         backup_restore
         button
@@ -582,7 +578,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         update
         wait_for_task
-      ) + compare_post + adv_search_post + exp_post + save_post
+      ) + adv_search_post + exp_post + save_post
     },
 
     :configuration            => {
@@ -1144,8 +1140,7 @@ Rails.application.routes.draw do
         show_list
         sync_users
         tagging_edit
-      ) +
-               compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1170,7 +1165,6 @@ Rails.application.routes.draw do
         squash_toggle
       ) +
                adv_search_post +
-               compare_post +
                dialog_runner_post +
                discover_get_post +
                exp_post +
@@ -1230,8 +1224,7 @@ Rails.application.routes.draw do
         scaling
         show_list
         tagging_edit
-      ) +
-               compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1258,7 +1251,6 @@ Rails.application.routes.draw do
         open_admin_ui_done
       ) +
                adv_search_post +
-               compare_post +
                dialog_runner_post +
                discover_get_post +
                exp_post +
@@ -1286,8 +1278,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         change_password
-      ) +
-               compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1307,7 +1298,6 @@ Rails.application.routes.draw do
         launch_console
       ) +
                adv_search_post +
-               compare_post +
                dialog_runner_post +
                discover_get_post +
                exp_post +
@@ -1320,7 +1310,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         show_list
         show
-      ) + compare_get,
+      ),
 
       :post   =>  %w(
         button
@@ -1344,7 +1334,7 @@ Rails.application.routes.draw do
         show
         tagging_edit
         console_file
-      ) + compare_get,
+      ),
 
       :post   =>  %w(
         button
@@ -1391,7 +1381,7 @@ Rails.application.routes.draw do
         show_list
         show
         quick_search
-      ) + compare_get,
+      ),
 
       :post   =>  %w(
         button
@@ -1420,8 +1410,7 @@ Rails.application.routes.draw do
         tagging_edit
         ems_container_form_fields
         tag_edit_form_field_changed
-      ) +
-               compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1442,7 +1431,6 @@ Rails.application.routes.draw do
         launch_external_logging
       ) +
                adv_search_post +
-               compare_post +
                dialog_runner_post +
                exp_post +
                perf_post +
@@ -1642,8 +1630,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1665,7 +1652,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         dialog_runner_post +
         exp_post +
         save_post
@@ -1682,8 +1668,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1699,7 +1684,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         save_post +
         exp_post +
         dialog_runner_post
@@ -1717,8 +1701,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1733,7 +1716,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         save_post +
         exp_post
     },
@@ -1752,8 +1734,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1769,7 +1750,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         save_post +
         exp_post +
         dialog_runner_post
@@ -1786,8 +1766,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1803,7 +1782,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         save_post +
         exp_post +
         dialog_runner_post
@@ -1817,8 +1795,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         create
@@ -1834,7 +1811,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         save_post +
         exp_post
     },
@@ -1855,8 +1831,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-        compare_get,
+      ),
       :post => %w(
         add_interface
         add_interface_select
@@ -1876,7 +1851,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         save_post +
         exp_post +
         dialog_runner_post
@@ -1891,8 +1865,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         quick_search
@@ -1903,7 +1876,6 @@ Rails.application.routes.draw do
         tagging_edit
       ) +
         adv_search_post +
-        compare_post +
         save_post +
         exp_post +
         dialog_runner_post
@@ -1923,8 +1895,7 @@ Rails.application.routes.draw do
         new
         tagging_edit
         ems_list
-      ) +
-               compare_get,
+      ),
       :post => %w(
         button
         listnav_search_selected
@@ -1936,7 +1907,6 @@ Rails.application.routes.draw do
         tagging_edit
       ) +
                adv_search_post +
-               compare_post +
                exp_post +
                save_post
     },
@@ -2466,8 +2436,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         create
@@ -2491,7 +2460,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         dialog_runner_post +
         exp_post +
         save_post
@@ -2511,8 +2479,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         create
@@ -2535,7 +2502,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         dialog_runner_post +
         exp_post +
         save_post
@@ -2555,8 +2521,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ) +
-        compare_get,
+      ),
       :post => %w(
         button
         create
@@ -2579,7 +2544,6 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
-        compare_post +
         dialog_runner_post +
         exp_post +
         save_post
@@ -2896,8 +2860,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
-               compare_get,
+      ),
       :post => %w(
         button
         listnav_search_selected
@@ -2911,7 +2874,6 @@ Rails.application.routes.draw do
         quick_search
       ) +
                adv_search_post +
-               compare_post +
                exp_post +
                save_post
     },
@@ -2986,8 +2948,7 @@ Rails.application.routes.draw do
         vm_ram_files
         vm_misc_files
         x_show
-      ) +
-               compare_get,
+      ),
       :post => %w(
         accordion_select
         button
@@ -3020,7 +2981,6 @@ Rails.application.routes.draw do
         x_show
       ) +
                adv_search_post +
-               compare_post +
                dialog_runner_post +
                exp_post +
                save_post +
