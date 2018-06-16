@@ -129,7 +129,8 @@ module Mixins
 
             @reconfig_values[:disk_add] = @req.options[:disk_add]
             @reconfig_values[:disk_resize] = @req.options[:disk_resize]
-            @reconfig_values[:disk_remove] = @req.options[:disk_remove]
+            @reconfig_values[:cdrom_connect] = @req.options[:cdrom_connect]
+            @reconfig_values[:cdrom_disconnect] = @req.options[:cdrom_disconnect]
             vmdisks = []
             vmcdroms = []
             if @req.options[:disk_add]
@@ -172,7 +173,17 @@ module Mixins
                           :add_remove     => removing}
                 vmdisks << vmdisk
               end
-              vmcdroms << reconfig_item.first.hardware.cdroms
+              cdroms = reconfig_item.first.hardware.cdroms
+              if cdroms.present?
+                cdroms.map do |cd|
+                  id = cd.id,
+                    name = cd.device_name
+                  type = cd.device_type
+                  filename = cd.filename
+                  storage_id = cd.storage_id
+                  vmcdroms <<  {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id}
+                end
+              end
             end
             @reconfig_values[:disks] = vmdisks
             @reconfig_values[:cdroms] = vmcdroms
@@ -263,10 +274,6 @@ module Mixins
                 vm.network_ports.order(:name).each do |port|
                   network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
                 end
-              end
-            if vm.kind_of?(ManageIQ::Providers::Vmware::CloudManager::Vm)
-              vm.network_ports.order(:name).each do |port|
-                network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
               end
             end
 
@@ -393,6 +400,20 @@ module Mixins
               p.transform_values! { |v| eval_if_bool_string(v) }
             end
             options[:network_adapter_remove] = params[:vmRemoveNetworkAdapters].values
+          end
+
+          if params[:vmConnectCDRoms]
+            params[:vmConnectCDRoms].each_value do |p|
+              p.transform_values! { |v| eval_if_bool_string(v) }
+            end
+            options[:cdrom_connect] = params[:vmConnectCDRoms].values
+          end
+
+          if params[:vmDisconnectCDRoms]
+            params[:vmDisconnectCDRoms].each_value do |p|
+              p.transform_values! { |v| eval_if_bool_string(v) }
+            end
+            options[:cdrom_disconnect] = params[:vmDisconnectCDRoms].values
           end
 
           if params[:id] && params[:id] != 'new'

@@ -529,17 +529,15 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
       if (cdRom.connect_disconnect === 'connect') {
         vm.reconfigureModel.vmConnectCDRoms.push(
-          {
-            id: cdRom.id,
-            name: cdRom.name,
-            type: cdRom.type,
+          { name: cdRom.name,
             filename: cdRom.filename,
-            connected: cdRom.device_type === 'cdrom_image',
+            storage_id: cdRom.storage_id,
           }
         );
       }
       if (cdRom.connect_disconnect === 'disconnect') {
-        vm.reconfigureModel.vmDisconnectCDRoms.push({cdRom: cdRom});
+        vm.reconfigureModel.vmDisconnectCDRoms.push(
+          { name: cdRom.name });
       }
     });
     // vm.setEnableConnectCDRomButton();
