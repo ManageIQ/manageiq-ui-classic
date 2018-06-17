@@ -173,14 +173,24 @@ module Mixins
                 vmdisks << vmdisk
               end
               cdroms = reconfig_item.first.hardware.cdroms
+              connect_disconnect = ''
               if cdroms.present?
                 cdroms.map do |cd|
-                  id = cd.id,
+                  id = cd.id
                   name = cd.device_name
                   type = cd.device_type
                   filename = cd.filename
                   storage_id = cd.storage_id
-                  vmcdroms <<  {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id}
+                  if cd.filename && @req.options[:cdrom_disconnect]&.find { |d_cd| d_cd[:name] == cd.device_name }
+                    filename = ''
+                    connect_disconnect = 'disconnect'
+                  end
+                  conn_cd = @req.options[:cdrom_connect]&.find { |c_cd| c_cd[:name] == cd.device_name }
+                  if cd.filename && conn_cd
+                    filename = conn_cd[:filename]
+                    connect_disconnect = 'connect'
+                  end
+                  vmcdroms << {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id, :connect_disconnect => connect_disconnect}
                 end
               end
             end
@@ -278,7 +288,7 @@ module Mixins
 
             if vm.supports_reconfigure_cdroms?
               # CD-ROMS
-              cdroms = build_vmcdrom_list(vm, vmcdroms)
+              vmcdroms = build_vmcdrom_list(vm, vmcdroms)
             end
           end
 
@@ -301,7 +311,7 @@ module Mixins
         end
 
         def build_vmcdrom_list(vm, vmcdroms)
-          vm.hardware.cdroms
+          cdroms = vm.hardware.cdroms
           if cdroms.present?
             cdroms.map do |cd|
               id = cd.id
@@ -311,6 +321,7 @@ module Mixins
               storage_id = cd.storage_id
               vmcdroms <<  {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id}
             end
+            vmcdroms
           end
         end
 

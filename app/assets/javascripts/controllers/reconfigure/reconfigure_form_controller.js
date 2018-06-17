@@ -519,7 +519,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.cb_memoryCopy = vm.cb_memory;
     vm.cb_cpuCopy = vm.cb_cpu;
     miqService.sparkleOff();
-  };
+  }
 
 
   // ???
@@ -564,6 +564,10 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     cdRom.connect_disconnect = 'connecting';
   };
 
+  vm.enableDisconnectCDRom = function(cdRom) {
+    cdRom.filename = '';
+    cdRom.connect_disconnect = 'disconnecting';
+  };
 
   vm.cancelCDRomConnectDisconnect = function(vmCDRom) {
     var index = vm.reconfigureModel.vmCDRoms.indexOf(vmCDRom);
