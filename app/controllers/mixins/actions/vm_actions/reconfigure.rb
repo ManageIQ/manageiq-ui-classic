@@ -21,7 +21,6 @@ module Mixins
             vm = Vm.find(@reconfigitems)
             @vlan_options = get_vlan_options(vm.host_id)
             @avail_adapter_names = vm.try(:available_adapter_names) || []
-            @vmCDRoms = vm.try(:hardware).cdroms || []
             @iso_options = get_iso_options(vm)
           end
 
@@ -177,7 +176,7 @@ module Mixins
               if cdroms.present?
                 cdroms.map do |cd|
                   id = cd.id,
-                    name = cd.device_name
+                  name = cd.device_name
                   type = cd.device_type
                   filename = cd.filename
                   storage_id = cd.storage_id
@@ -277,20 +276,9 @@ module Mixins
               end
             end
 
-
             if vm.supports_reconfigure_cdroms?
               # CD-ROMS
-              cdroms = vm.hardware.cdroms
-              if cdroms.present?
-                cdroms.map do |cd|
-                  id = cd.id,
-                  name = cd.device_name
-                  type = cd.device_type
-                  filename = cd.filename
-                  storage_id = cd.storage_id
-                  vmcdroms <<  {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id}
-                end
-              end
+              cdroms = build_vmcdrom_list(vm, vmcdroms)
             end
           end
 
@@ -310,6 +298,20 @@ module Mixins
 
         def supports_reconfigure_disks?
           @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disks?
+        end
+
+        def build_vmcdrom_list(vm, vmcdroms)
+          vm.hardware.cdroms
+          if cdroms.present?
+            cdroms.map do |cd|
+              id = cd.id
+              name = cd.device_name
+              type = cd.device_type
+              filename = cd.filename
+              storage_id = cd.storage_id
+              vmcdroms <<  {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id}
+            end
+          end
         end
 
         def supports_reconfigure_disksize?

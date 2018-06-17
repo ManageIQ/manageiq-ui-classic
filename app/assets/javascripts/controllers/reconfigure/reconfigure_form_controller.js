@@ -547,7 +547,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
 
 
   vm.connectCDRom = function(cdRom) {
-    iso = vm.selected_iso.split(',');
+    var iso = vm.selected_iso.split(',');
     cdRom.filename = iso[0];
     cdRom.storage_id = iso[1];
     cdRom.connect_disconnect = 'connect';
