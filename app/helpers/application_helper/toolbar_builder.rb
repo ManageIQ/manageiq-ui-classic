@@ -84,13 +84,7 @@ class ApplicationHelper::ToolbarBuilder
   # Build select button and its child buttons
   def build_select_button(bgi, index)
     bs_children = false
-    props = toolbar_button(
-      bgi,
-      :id     => bgi[:id],
-      :type   => :buttonSelect,
-      :img    => img = img_value(bgi),
-      :imgdis => img,
-    )
+    props = toolbar_button(bgi, :id => bgi[:id], :type => :buttonSelect)
     return nil if props.nil?
 
     current_item = props
@@ -101,15 +95,7 @@ class ApplicationHelper::ToolbarBuilder
         props = ApplicationHelper::Button::Separator.new(:id => "sep_#{index}_#{bsi_idx}", :hidden => !any_visible)
       else
         bs_children = true
-        props = toolbar_button(
-          bsi,
-          :child_id => bsi[:id],
-          :id       => bgi[:id] + "__" + bsi[:id],
-          :type     => :button,
-          :img      => img = img_value(bsi),
-          :img_url  => ActionController::Base.helpers.image_path("toolbars/#{img}"),
-          :imgdis   => img,
-        )
+        props = toolbar_button(bsi, :child_id => bsi[:id], :id => bgi[:id] + "__" + bsi[:id], :type => :button)
         next if props.nil?
       end
       update_common_props(bsi, props) unless bsi.key?(:separator)
@@ -167,14 +153,7 @@ class ApplicationHelper::ToolbarBuilder
   # Build single button
   def build_normal_button(bgi, index)
     @sep_needed = true
-    props = toolbar_button(
-      bgi,
-      :id      => bgi[:id],
-      :type    => :button,
-      :img     => img = "#{get_image(bgi[:image], bgi[:id]) ? get_image(bgi[:image], bgi[:id]) : bgi[:id]}.png",
-      :img_url => ActionController::Base.helpers.image_path("toolbars/#{img}"),
-      :imgdis  => "#{bgi[:image] || bgi[:id]}.png",
-    )
+    props = toolbar_button(bgi, :id => bgi[:id], :type => :button)
     return nil if props.nil?
 
     props[:hidden] = false
@@ -193,19 +172,9 @@ class ApplicationHelper::ToolbarBuilder
     @sep_needed = true # Button was added, need separators from now on
   end
 
-  def img_value(button)
-    "#{button[:image] || button[:id]}.png"
-  end
-
   # Build button with more states
   def build_twostate_button(bgi, index)
-    props = toolbar_button(
-      bgi,
-      :id     => bgi[:id],
-      :type   => :buttonTwoState,
-      :img    => img = img_value(bgi),
-      :imgdis => img,
-    )
+    props = toolbar_button(bgi, :id => bgi[:id], :type => :buttonTwoState)
     return nil if props.nil?
 
     props[:selected] = twostate_button_selected(bgi[:id])
@@ -428,12 +397,6 @@ class ApplicationHelper::ToolbarBuilder
       end
       group
     end
-  end
-
-  def get_image(img, b_name)
-    # to change summary screen button to green image
-    return "summary-green" if b_name == "show_summary" && %w(miq_schedule miq_task scan_profile).include?(@layout)
-    img
   end
 
   # Determine if a button should be selected for buttonTwoState
