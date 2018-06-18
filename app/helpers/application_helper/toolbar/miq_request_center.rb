@@ -21,13 +21,16 @@ class ApplicationHelper::Toolbar::MiqRequestCenter < ApplicationHelper::Toolbar:
       nil,
       :url_parms => "&refresh=y",
       :confirm   => N_("Are you sure you want to delete this Request?"),
-      :klass     => ApplicationHelper::Button::MiqRequestDelete),
+      :klass     => ApplicationHelper::Button::MiqRequestDelete,
+      :options => {:feature => 'miq_request_delete'}),
     button(
       :miq_request_reload,
       'fa fa-refresh fa-lg',
       N_('Refresh this page'),
       N_('Refresh'),
-      :url_parms => "&display=miq_provisions"),
+      :url_parms => "&display=miq_provisions",
+      :klass   => ApplicationHelper::Button::MiqRequest,
+      :options => {:feature => 'miq_request_reload'}),
   ])
   button_group('miq_request_approve', [
     button(
@@ -36,7 +39,7 @@ class ApplicationHelper::Toolbar::MiqRequestCenter < ApplicationHelper::Toolbar:
       N_('Approve this Request'),
       nil,
       :klass     => ApplicationHelper::Button::MiqRequestApproval,
-      :options   => {:feature => 'miq_request_approve'},
+      :options   => {:feature => 'miq_request_approval'},
       :url       => "/stamp",
       :url_parms => "?typ=a"),
     button(

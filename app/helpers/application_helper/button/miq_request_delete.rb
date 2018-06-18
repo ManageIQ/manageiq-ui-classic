@@ -1,5 +1,5 @@
-class ApplicationHelper::Button::MiqRequestDelete < ApplicationHelper::Button::Basic
-  needs :@record
+class ApplicationHelper::Button::MiqRequestDelete < ApplicationHelper::Button::MiqRequest
+  needs :@record, :@request_tab
   delegate :current_user, :to => :@view_context
 
   def disabled?

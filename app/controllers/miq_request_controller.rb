@@ -30,7 +30,7 @@ class MiqRequestController < ApplicationController
   end
 
   def request_edit
-    assert_privileges("miq_request_edit")
+    assert_privileges(rbac_feature_id("miq_request_edit"))
     provision_request = MiqRequest.find(params[:id])
     if provision_request.workflow_class || provision_request.kind_of?(MiqProvisionConfiguredSystemRequest)
       request_edit_settings(provision_request)
@@ -44,7 +44,7 @@ class MiqRequestController < ApplicationController
   end
 
   def request_copy
-    assert_privileges("miq_request_copy")
+    assert_privileges(rbac_feature_id("miq_request_copy"))
     provision_request = MiqRequest.find(params[:id])
     @refresh_partial = "prov_copy"
     request_settings_for_edit_or_copy(provision_request)
@@ -105,7 +105,7 @@ class MiqRequestController < ApplicationController
 
   # Stamp a request with approval or denial
   def stamp
-    assert_privileges("miq_request_approval")
+    assert_privileges(rbac_feature_id("miq_request_approval"))
     if params[:button] == "cancel"
       if (session[:edit] && session[:edit][:stamp_typ]) == "a"
         flash_to_session(_("Request approval was cancelled by the user"))
@@ -264,7 +264,7 @@ class MiqRequestController < ApplicationController
   end
 
   def filter
-    assert_privileges("miq_request_show_list")
+    assert_privileges(rbac_feature_id("miq_request_show_list"))
     scope = prov_scope(
       :reason_text    => params[:reasonText],
       :time_period    => params[:selectedPeriod],
@@ -453,12 +453,17 @@ class MiqRequestController < ApplicationController
 
   def is_approver
     # TODO: this should be current_user
-    User.current_user.role_allows?(:identifier => 'miq_request_approval')
+    User.current_user.role_allows?(:identifier => rbac_feature_id('miq_request_approval'))
+  end
+
+  def rbac_feature_id(feature_id)
+    return feature_id unless %w(ae host).include?(session[:request_tab])
+    "#{session[:request_tab]}_#{feature_id}"
   end
 
   # Delete all selected or single displayed action(s)
   def deleterequests
-    assert_privileges("miq_request_delete")
+    assert_privileges(rbac_feature_id("miq_request_delete"))
 
     miq_requests = find_records_with_rbac(MiqRequest, checked_or_params)
     if miq_requests.empty?

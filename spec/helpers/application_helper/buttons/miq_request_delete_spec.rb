@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::MiqRequestDelete do
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:record) { FactoryGirl.create(:vm) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
+  let(:button) { described_class.new(view_context, {}, {'record' => record}, {:options => {:feature => 'miq_request_delete'}}) }
 
   describe '#disabled?' do
     subject { button[:title] }
