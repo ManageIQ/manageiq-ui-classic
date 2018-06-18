@@ -521,8 +521,6 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     miqService.sparkleOff();
   }
 
-
-  // ???
   vm.updateCDRomsConnectDisconnect = function() {
     vm.reconfigureModel.vmConnectCDRoms = [];
     vm.reconfigureModel.vmDisconnectCDRoms = [];
@@ -540,7 +538,6 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
           { name: cdRom.name });
       }
     });
-    // vm.setEnableConnectCDRomButton();
     vm.cb_cdRoms = vm.reconfigureModel.vmConnectCDRoms.length > 0  ||
       vm.reconfigureModel.vmDisconnectCDRoms.length > 0;
   };

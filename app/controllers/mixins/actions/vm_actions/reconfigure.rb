@@ -288,7 +288,7 @@ module Mixins
 
             if vm.supports_reconfigure_cdroms?
               # CD-ROMS
-              vmcdroms = build_vmcdrom_list(vm, vmcdroms)
+              vmcdroms = build_vmcdrom_list(vm)
             end
           end
 
@@ -310,7 +310,8 @@ module Mixins
           @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disks?
         end
 
-        def build_vmcdrom_list(vm, vmcdroms)
+        def build_vmcdrom_list(vm)
+          vmcdroms = []
           cdroms = vm.hardware.cdroms
           if cdroms.present?
             cdroms.map do |cd|
