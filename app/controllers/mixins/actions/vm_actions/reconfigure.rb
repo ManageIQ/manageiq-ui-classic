@@ -173,25 +173,8 @@ module Mixins
                 vmdisks << vmdisk
               end
               cdroms = reconfig_item.first.hardware.cdroms
-              connect_disconnect = ''
               if cdroms.present?
-                cdroms.map do |cd|
-                  id = cd.id
-                  name = cd.device_name
-                  type = cd.device_type
-                  filename = cd.filename
-                  storage_id = cd.storage_id
-                  if cd.filename && @req.options[:cdrom_disconnect]&.find { |d_cd| d_cd[:name] == cd.device_name }
-                    filename = ''
-                    connect_disconnect = 'disconnect'
-                  end
-                  conn_cd = @req.options[:cdrom_connect]&.find { |c_cd| c_cd[:name] == cd.device_name }
-                  if cd.filename && conn_cd
-                    filename = conn_cd[:filename]
-                    connect_disconnect = 'connect'
-                  end
-                  vmcdroms << {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id, :connect_disconnect => connect_disconnect}
-                end
+                vmcdroms = build_request_cdroms_list(cdroms)
               end
             end
             @reconfig_values[:disks] = vmdisks
@@ -201,6 +184,29 @@ module Mixins
           @reconfig_values[:cb_memory] = !!(@req && @req.options[:vm_memory])       # default for checkbox is false for new request
           @reconfig_values[:cb_cpu] =  !!(@req && ( @req.options[:number_of_sockets] || @req.options[:cores_per_socket]))     # default for checkbox is false for new request
           @reconfig_values
+        end
+
+        def build_request_cdroms_list(cdroms)
+          vmcdroms = []
+          connect_disconnect = ''
+          cdroms.map do |cd|
+            id = cd.id
+            name = cd.device_name
+            type = cd.device_type
+            filename = cd.filename
+            storage_id = cd.storage_id
+            if cd.filename && @req.options[:cdrom_disconnect]&.find { |d_cd| d_cd[:name] == cd.device_name }
+              filename = ''
+              connect_disconnect = 'disconnect'
+            end
+            conn_cd = @req.options[:cdrom_connect]&.find { |c_cd| c_cd[:name] == cd.device_name }
+            if cd.filename && conn_cd
+              filename = conn_cd[:filename]
+              connect_disconnect = 'connect'
+            end
+            vmcdroms << {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id, :connect_disconnect => connect_disconnect}
+          end
+          vmcdroms
         end
 
         def reconfigure_calculations(mbsize)
@@ -274,16 +280,7 @@ module Mixins
             vm = @reconfigureitems.first
 
             if vm.supports_reconfigure_network_adapters?
-              vm.hardware.guest_devices.order(:device_name => 'asc').each do |guest_device|
-                lan = Lan.find_by(:id => guest_device.lan_id)
-                network_adapters << {:name => guest_device.device_name, :vlan => lan.name, :mac => guest_device.address, :add_remove => ''} unless lan.nil?
-              end
-
-              if vm.kind_of?(ManageIQ::Providers::Vmware::CloudManager::Vm)
-                vm.network_ports.order(:name).each do |port|
-                  network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
-                end
-              end
+              network_adapters = build_network_adapters_list(vm)
             end
 
             if vm.supports_reconfigure_cdroms?
@@ -308,6 +305,21 @@ module Mixins
 
         def supports_reconfigure_disks?
           @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disks?
+        end
+
+        def build_network_adapters_list(vm)
+          network_adapters = []
+          vm.hardware.guest_devices.order(:device_name => 'asc').each do |guest_device|
+            lan = Lan.find_by(:id => guest_device.lan_id)
+            network_adapters << {:name => guest_device.device_name, :vlan => lan.name, :mac => guest_device.address, :add_remove => ''} unless lan.nil?
+          end
+
+          if vm.kind_of?(ManageIQ::Providers::Vmware::CloudManager::Vm)
+            vm.network_ports.order(:name).each do |port|
+              network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+            end
+          end
+          network_adapters
         end
 
         def build_vmcdrom_list(vm)
