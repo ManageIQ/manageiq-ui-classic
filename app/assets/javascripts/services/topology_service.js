@@ -270,7 +270,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
         return controller.dataUrl;
       }
 
-      var match = screenUrl.match(/(ems_container|show)\/([0-9]+)\?display=topology$/) ||
+      var match = screenUrl.match(/(ems_container|ems_physical_infra|show)\/([0-9]+)\?display=topology$/) ||
         screenUrl.match(/(_topology)\/show\/([0-9]+)\/?$/);
 
       if (match) {

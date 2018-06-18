@@ -30,7 +30,7 @@ describe EmsContainerController do
         get :show, :params => { :id => @container.id, :display => 'topology' }
         expect(response.status).to eq(200)
         expect(response.body).to_not be_empty
-        expect(response).to render_template('container_topology/show')
+        expect(response).to render_template(:partial => 'ems_container/_show_topology')
       end
 
       it "renders ad hoc view" do
