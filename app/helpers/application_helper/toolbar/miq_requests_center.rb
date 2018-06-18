@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::MiqRequestsCenter < ApplicationHelper::Toolbar
       N_('Refresh'),
       :url_parms    => "main_div",
       :send_checked => true,
-      :klass   => ApplicationHelper::Button::MiqRequestReload,
+      :klass   => ApplicationHelper::Button::MiqRequest,
       :options => {:feature => 'miq_request_reload'}),
   ])
 end

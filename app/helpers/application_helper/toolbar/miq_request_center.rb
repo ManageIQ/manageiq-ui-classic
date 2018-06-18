@@ -29,7 +29,7 @@ class ApplicationHelper::Toolbar::MiqRequestCenter < ApplicationHelper::Toolbar:
       N_('Refresh this page'),
       N_('Refresh'),
       :url_parms => "&display=miq_provisions",
-      :klass   => ApplicationHelper::Button::MiqRequestReload,
+      :klass   => ApplicationHelper::Button::MiqRequest,
       :options => {:feature => 'miq_request_reload'}),
   ])
   button_group('miq_request_approve', [
