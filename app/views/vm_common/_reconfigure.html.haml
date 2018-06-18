@@ -382,13 +382,63 @@
 
   %hr
 
+  - if supports_reconfigure_cdroms?
+    %hr
+    %div
+      %h3
+        = _('CD/DVD Drives')
+      %table.table.table-striped.table-condensed.table-bordered
+        %thead
+          %th= _('Name')
+          %th= _('Host File')
+          %th{:colspan => 3}= _('Actions')
+        %tr{"ng-repeat" => "cdRom in vm.reconfigureModel.vmCDRoms",
+            "ng-class"  => "{'danger': cdRom.connected_status == 'disconnected', 'active': cdRom.connected_status == 'connected'}"}
+          %td
+            {{cdRom.name}}
+          %td{"ng-if" => "cdRom.connect_disconnect != 'connecting'"}
+            {{cdRom.filename}}
+          %td{"ng-if" => "cdRom.connect_disconnect == 'connecting'"}
+            = select_tag('isoName',
+                       options_for_select([["<#{_('Choose')}>", '']] + @iso_options, :disabled => ["<#{_('Choose')}>", nil]),
+                       "ng-model"                    => "vm.selected_iso",
+                       "ng-change"                   => "",
+                       "data-width"                  => "auto",
+                       "required"                    => "true",
+                       "selectpicker-for-select-tag" => "")
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
+                                                     "ng-if"    => "cdRom.connect_disconnect != 'connecting' && cdRom.connect_disconnect != 'disconnecting'",
+                                                     "ng-click" => "vm.enableConnectCDRom(cdRom)"}= _('Connect')
+            %button.btn.btn-default.btn-block.btn-sm{:type  => "button",
+                                                     "ng-if"    => "cdRom.connect_disconnect == 'connecting'",
+                                                     "ng-disabled" => "cdRom.filename == cdRom.orgfilename",
+                                                     "ng-click" => "vm.connectCDRom(cdRom)"}= _('Confirm Connect')
+            %button.btn.btn-default.btn-block.btn-sm{:type  => "button",
+                                                     "ng-if"    => "cdRom.filename != ''",
+                                                     "ng-click" => "vm.enableDisconnectCDRom(cdRom)"}= _('Disconnect')
+            %button.btn.btn-default.btn-block.btn-sm{:type  => "button",
+                                                     "ng-if"    => "cdRom.connect_disconnect == 'disconnecting'",
+                                                     "ng-disabled" => "cdRom.connect_disconnect != 'disconnecting'",
+                                                     "ng-click" => "vm.disconnectCDRom(cdRom)"}= _('Confirm')
+          %td.action-cell
+            %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
+                                                     "ng-if"    => "cdRom.connect_disconnect == 'connect'",
+                                                     "ng-click" => "vm.cancelCDRomConnectDisconnect(cdRom)"}= _('Cancel Connect')
+            %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
+                                                     "ng-if"    => "cdRom.connect_disconnect == 'disconnect'",
+                                                     "ng-click" => "vm.cancelCDRomConnectDisconnect(cdRom)"}= _('Cancel Disconnect')
+
+  %hr
+
+
   %table{:width => "100%", :align => "bottom"}
     %tr
       %td#buttons_on{:align => "right"}
         %miq-button{:name      => t = _('Submit'),
                     :title     => t,
                     :alt       => t,
-                    :enabled   => "!((angularForm.$pristine && !vm.cb_disks && !vm.cb_networkAdapters) || angularForm.$invalid || (!vm.cb_memory && !vm.cb_cpu && !vm.cb_disks && !vm.cb_networkAdapters))",
+                    :enabled   => "!((angularForm.$pristine && !vm.cb_disks && !vm.cb_networkAdapters && !vm.cb_cdRoms) || angularForm.$invalid || (!vm.cb_memory && !vm.cb_cpu && !vm.cb_disks && !vm.cb_networkAdapters && !vm.cb_cdRoms))",
                     'on-click' => "vm.submitClicked()",
                     :primary   => 'true'}
         %miq-button{:name      => t = _('Reset'),

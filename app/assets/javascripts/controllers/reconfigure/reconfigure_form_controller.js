@@ -16,8 +16,10 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       cb_dependent: true,
       nicsEnabled: false,
       addEnabled: false,
+      cdRomConnectEnabled: false,
       enableAddDiskButton: true,
       enableAddNetworkAdapterButton: true,
+      enableConnectCDRomButton: true,
       cb_bootable: false,
       vmAddDisks: [],
       vmRemoveDisks: [],
@@ -25,9 +27,12 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       vLan_requested: '',
       adapterNetwork: '',
       availableAdapterNetworks: [],
+      cdRom: '',
+      vmCDRoms: [],
     };
     vm.cb_disks = false;
     vm.cb_networkAdapters = false;
+    vm.cb_cdRoms = false;
     vm.hdpattern = '^[1-9][0-9]*$';
     vm.reconfigureFormId = reconfigureFormId;
     vm.afterGet = false;
@@ -41,6 +46,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.vm_vendor = '';
     vm.vm_type = '';
     vm.disk_default_type = '';
+    vm.availableIsoFiles = [];
+    vm.selected_iso = ['', null];
 
     ManageIQ.angular.scope = vm;
 
@@ -224,6 +231,29 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
                             vm.reconfigureModel.vmRemoveNetworkAdapters.length > 0;
   };
 
+  vm.updateCDRomsConnectDisconnect = function() {
+    vm.reconfigureModel.vmConnectCDRoms    = [];
+    vm.reconfigureModel.vmDisconnectCDRoms    = [];
+
+    angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
+      if (cdRom.connect_disconnect === 'disconnect') {
+        vm.reconfigureModel.vmDisconnectCDRoms.push({
+          name: cdRom.hdFilename,
+        });
+      }
+      if (cdRom.connect_disconnect === 'connect') {
+        vm.reconfigureModel.vmConnectCDRoms.push({
+          name: cdRom.name,
+          filename: cdRom.filename,
+          storage_id: cdRom.storage_id,
+        });
+      }
+    });
+    vm.cb_cdRoms = vm.reconfigureModel.vmConnectCDRoms.length > 0 ||
+                   vm.reconfigureModel.vmDisconnectCDRoms.length > 0;
+  };
+
+
   vm.resetAddValues = function() {
     vm.reconfigureModel.hdType = vm.disk_default_type;
     vm.reconfigureModel.hdMode = 'persistent';
@@ -389,6 +419,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
         vmResizeDisks: vm.reconfigureModel.vmResizeDisks,
         vmAddNetworkAdapters: vm.reconfigureModel.vmAddNetworkAdapters,
         vmRemoveNetworkAdapters: vm.reconfigureModel.vmRemoveNetworkAdapters,
+        vmConnectCDRoms: vm.reconfigureModel.vmConnectCDRoms,
+        vmDisconnectCDRoms: vm.reconfigureModel.vmDisconnectCDRoms,
       });
     }
   };
@@ -445,11 +477,13 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.cb_cpu                                  = data.cb_cpu;
     vm.reconfigureModel.vmdisks                = angular.copy(data.disks);
     vm.reconfigureModel.vmNetworkAdapters      = angular.copy(data.network_adapters);
+    vm.reconfigureModel.vmCDRoms               = angular.copy(data.cdroms);
     vm.vm_vendor                               = data.vm_vendor;
     vm.vm_type                                 = data.vm_type;
     vm.disk_default_type                       = data.disk_default_type;
     vm.updateDisksAddRemove();
     vm.updateNetworkAdaptersAddRemove();
+    vm.updateCDRomsConnectDisconnect();
 
     angular.forEach(vm.reconfigureModel.vmdisks, function(disk) {
       if (typeof disk !== 'undefined') {
@@ -464,6 +498,18 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       vm.reconfigureModel.total_cpus = (parseInt(vm.reconfigureModel.socket_count, 10) * parseInt(vm.reconfigureModel.cores_per_socket_count, 10)).toString();
     }
 
+    angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
+      if (typeof cdRom !== 'undefined') {
+        cdRom.orgFilename = cdRom.filename;
+        cdRom.connect_disconnect = '';
+        cdRom.connected = cdRom.device_type === 'cdrom_image';
+      }
+    });
+
+    if (data.socket_count && data.cores_per_socket_count) {
+      vm.reconfigureModel.total_cpus = (parseInt(vm.reconfigureModel.socket_count, 10) * parseInt(vm.reconfigureModel.cores_per_socket_count, 10)).toString();
+    }
+
     if (vm.isVmwareCloud()) {
       vm.fetchAvailableAdapterNetworks(data.orchestration_stack_id);
     }
@@ -474,5 +520,61 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.cb_cpuCopy = vm.cb_cpu;
     miqService.sparkleOff();
   }
+
+  vm.updateCDRomsConnectDisconnect = function() {
+    vm.reconfigureModel.vmConnectCDRoms = [];
+    vm.reconfigureModel.vmDisconnectCDRoms = [];
+    angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
+      if (cdRom.connect_disconnect === 'connect') {
+        vm.reconfigureModel.vmConnectCDRoms.push(
+          { name: cdRom.name,
+            filename: cdRom.filename,
+            storage_id: cdRom.storage_id,
+          }
+        );
+      }
+      if (cdRom.connect_disconnect === 'disconnect') {
+        vm.reconfigureModel.vmDisconnectCDRoms.push(
+          { name: cdRom.name });
+      }
+    });
+    vm.cb_cdRoms = vm.reconfigureModel.vmConnectCDRoms.length > 0  ||
+      vm.reconfigureModel.vmDisconnectCDRoms.length > 0;
+  };
+
+
+  vm.connectCDRom = function(cdRom) {
+    var iso = vm.selected_iso.split(',');
+    cdRom.filename = iso[0];
+    cdRom.storage_id = iso[1];
+    cdRom.connect_disconnect = 'connect';
+    vm.updateCDRomsConnectDisconnect();
+  };
+
+  vm.disconnectCDRom = function(cdRom) {
+    cdRom.connect_disconnect = 'disconnect';
+    cdRom.filename = '';
+    vm.updateCDRomsConnectDisconnect();
+  };
+
+  vm.enableConnectCDRom = function(cdRom) {
+    cdRom.connect_disconnect = 'connecting';
+  };
+
+  vm.enableDisconnectCDRom = function(cdRom) {
+    cdRom.filename = '';
+    cdRom.connect_disconnect = 'disconnecting';
+  };
+
+  vm.cancelCDRomConnectDisconnect = function(vmCDRom) {
+    var index = vm.reconfigureModel.vmCDRoms.indexOf(vmCDRom);
+    if (vmCDRom.connect_disconnect === "disconnect") {
+      vmCDRom.filename = vmCDRom.orgFilename;
+    }
+    vmCDRom.connect_disconnect = '';
+    vm.reconfigureModel.vmCDRoms[index].connect_disconnect = '';
+    vm.updateCDRomsConnectDisconnect();
+  };
+
   init();
 }]);
