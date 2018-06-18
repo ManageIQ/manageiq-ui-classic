@@ -82,6 +82,7 @@ module.exports = {
   },
 
   resolveLoader: {
-    modules: ['node_modules']
-  }
+    // only read loaders from ui-classic
+    modules: [`${engines['manageiq-ui-classic']}/node_modules`],
+  },
 }
