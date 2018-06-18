@@ -18,7 +18,7 @@ class StorageDecorator < MiqDecorator
       },
       :bottom_right => {
         :piechart => percent,
-        :tooltip  => _("%{number}\% Free Space") % {:number => v_free_space_percent_of_total}
+        :tooltip  => _("%{number}") % {:number => v_free_space_percent_of_total} + _("% Free Space")
       }
     }
   end
