@@ -6,6 +6,7 @@ default: &default
   public_output_path: packs
 
   extensions:
+  - .mjs
   - .js
   - .jsx
   - .ts

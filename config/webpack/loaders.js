@@ -10,7 +10,7 @@ if (env.WEBPACK_EXCLUDE_NODE_MODULES) {
 
 module.exports = [
   merge(base, {
-    test: /\.(js|jsx)$/,
+    test: /\.(mjs|js|jsx)$/,
     loader: 'babel-loader',
     query: {
       presets: ['react'],
