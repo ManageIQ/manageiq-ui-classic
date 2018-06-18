@@ -11,6 +11,7 @@ const ManifestPlugin = require('webpack-manifest-plugin')
 const extname = require('path-complete-extname')
 const { env, settings, output, engines } = require('./configuration.js')
 const loaders = require('./loaders.js')
+const RailsEnginesPlugin = require('./RailsEnginesPlugin')
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*` // */
 const entryPath = join(settings.source_path, settings.source_entry_path)
@@ -76,9 +77,10 @@ module.exports = {
 
   resolve: {
     extensions: settings.extensions,
-    modules: [resolve(settings.source_path)].concat(
-      Object.keys(engines).map(key => engines[key]).map(engine => `${engine}/node_modules`)
-    ),
+    modules: [],
+    plugins: [
+      new RailsEnginesPlugin('module', 'resolve', engines),
+    ],
   },
 
   resolveLoader: {
