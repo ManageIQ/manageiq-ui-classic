@@ -95,6 +95,7 @@ class MiqEventDefinitionDecorator < MiqDecorator
       "host_compliance_passed"                      => "pficon pficon-screen",
       "host_connect"                                => "pficon pficon-screen",
       "host_disconnect"                             => "pficon pficon-screen",
+      "host_failure"                                => "pficon pficon-screen",
       "host_perf_complete"                          => "pficon pficon-screen",
       "host_provisioned"                            => "pficon pficon-screen",
       "host_remove_from_cluster"                    => "pficon pficon-screen",
