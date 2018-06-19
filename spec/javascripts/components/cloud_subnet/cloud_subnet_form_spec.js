@@ -68,7 +68,7 @@ describe('cloud-subnet-form', function() {
     });
 
     it('calls API.get with the appropriate URL', function () {
-      expect(API.get).toHaveBeenCalledWith('/api/cloud_subnets/1111?expand=resources&attributes=ext_management_system.name,cloud_tenant,cloud_network.name');
+      expect(API.get).toHaveBeenCalledWith('/api/cloud_subnets/1111?expand=resources&attributes=ext_management_system.name,cloud_tenant.name,cloud_network.name');
     });
 
     it('sets vm.cloudSubnetModel.name', function () {
