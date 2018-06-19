@@ -19,7 +19,7 @@ const entryPath = join(settings.source_path, settings.source_entry_path)
 let packPaths = {}
 
 Object.keys(engines).forEach(function(k) {
-  let root = engines[k]
+  let root = engines[k].root
   let glob = join(root, entryPath, extensionGlob)
   packPaths[k] = sync(glob)
 })
@@ -85,6 +85,6 @@ module.exports = {
 
   resolveLoader: {
     // only read loaders from ui-classic
-    modules: [`${engines['manageiq-ui-classic']}/node_modules`],
+    modules: [engines['manageiq-ui-classic'].node_modules],
   },
 }

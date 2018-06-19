@@ -14,9 +14,11 @@ module.exports = class RailsEnginesPlugin {
     const target = resolver.ensureHook(this.target);
 
     resolver.getHook(this.source).tapAsync("RailsEnginesPlugin", (request, resolveContext, callback) => {
-      const engine = Object.keys(this.engines).filter((engine) => request.path.startsWith(this.engines[engine]))[0];
-      const engineRoot = this.engines[engine];
-      const inNodeModules = request.path.includes('node_modules');
+      const identifyEngine = (engine) => request.path.startsWith(this.engines[engine].root) || request.path.startsWith(this.engines[engine].node_modules);
+
+      const engine = Object.keys(this.engines).filter(identifyEngine)[0];
+      const engineModules = this.engines[engine].node_modules;
+      const inNodeModules = request.path.startsWith(engineModules);
 
       if (! engine) {
         throw `RailsEnginesPlugin: no engine found for ${request.path} ${request.request}`;
@@ -25,7 +27,7 @@ module.exports = class RailsEnginesPlugin {
       if (! inNodeModules) {
         const obj = {
           ...request,
-          path: `${engineRoot}/node_modules`,
+          path: engineModules,
           request: `./${request.request}`,
         };
 
@@ -33,12 +35,15 @@ module.exports = class RailsEnginesPlugin {
         return;
       }
 
-      // only look in paths under the plugin
+      // only look in paths under the plugin's node_modules
       const paths = getPaths(request.path).paths;
-      const engineBoundary = paths.indexOf(engineRoot);
+      const engineBoundary = paths.indexOf(engineModules);
 
-      const cutPaths = paths.slice(0, engineBoundary + 1);  // including the engine root
-      const joinedPaths = cutPaths.map((p) => resolver.join(p, 'node_modules'));
+      const cutPaths = paths.slice(0, engineBoundary);
+      let joinedPaths = cutPaths.map((p) => resolver.join(p, 'node_modules'));
+
+      // include the engine modules dir itself
+      joinedPaths.push(engineModules);
 
       const packageName = request.request.split('/')[0];
 
