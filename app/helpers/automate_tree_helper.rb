@@ -31,6 +31,12 @@ module AutomateTreeHelper
       when 'submit'
         @edit[:new][@edit[:ae_field_typ]] = @edit[:active_id]
         page << set_element_visible("#{edit_key}_div", true)
+
+        if @edit[:include_domain_prefix] != true && MiqAeDatastore.path_includes_domain?(@edit[:automate_tree_selected_path])
+          selected_path = @edit[:automate_tree_selected_path]
+          @edit[:automate_tree_selected_path] = selected_path.slice(selected_path.index('/', 1), selected_path.length)
+        end
+
         @edit[:new][edit_key] = @edit[:automate_tree_selected_path]
         if @edit[:new][edit_key]
           page << "$('##{edit_key}').val('#{@edit[:new][edit_key]}');"
