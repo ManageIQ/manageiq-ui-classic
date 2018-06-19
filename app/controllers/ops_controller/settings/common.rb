@@ -976,21 +976,29 @@ module OpsController::Settings::Common
       @edit[:new] = MiqServer.find(@sb[:selected_server_id]).get_config
       @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
       @sb[:threshold] = []
-      (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }
-      (600.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }    # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it puts 1000MB instead of 1GB in pulldown
-      (1.gigabytes...1.5.gigabytes).step(100.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }   # adding values in 100 MB increments from 1gb to 1.5 gb
+      (200.megabytes...550.megabytes).step(50.megabytes) do |x|
+        @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
+      end
+      (600.megabytes...1000.megabytes).step(100.megabytes) do |x|
+        # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it p     uts 1000MB instead of 1GB in pulldown
+        @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
+      end
+      (1.gigabytes...1.5.gigabytes).step(100.megabytes) do |x|
+        # adding values in 100 MB increments from 1gb to 1.5 gb
+        @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
+      end
 
       cwb = @edit[:current].config[:workers][:worker_base] ||= {}
       qwb = (cwb[:queue_worker_base] ||= {})
       w = (qwb[:generic_worker] ||= {})
       w[:count] = @edit[:current].get_raw_worker_setting(:MiqGenericWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqGenericWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
+      w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqGenericWorker, :memory_threshold) || 400.megabytes
       @sb[:generic_threshold] = []
       @sb[:generic_threshold] = copy_array(@sb[:threshold])
 
       w = (qwb[:priority_worker] ||= {})
       w[:count] = @edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :count) || 2
-      w[:memory_threshold] =  rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :memory_threshold)) || rails_method_to_human_size(200.megabytes)
+      w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :memory_threshold) || 200.megabytes
       @sb[:priority_threshold] = []
       @sb[:priority_threshold] = copy_array(@sb[:threshold])
 
@@ -999,26 +1007,26 @@ module OpsController::Settings::Common
       w = qwb[:ems_metrics_collector_worker][:defaults]
       raw = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsCollectorWorker)
       w[:count] = raw[:defaults][:count] || 2
-      w[:memory_threshold] = rails_method_to_human_size(raw[:defaults][:memory_threshold] || 400.megabytes)
+      w[:memory_threshold] = raw[:defaults][:memory_threshold] || 400.megabytes
       @sb[:ems_metrics_collector_threshold] = []
       @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
 
       w = (qwb[:ems_metrics_processor_worker] ||= {})
       w[:count] = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :memory_threshold)) || rails_method_to_human_size(200.megabytes)
+      w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :memory_threshold) || 200.megabytes
       @sb[:ems_metrics_processor_threshold] = []
       @sb[:ems_metrics_processor_threshold] = copy_array(@sb[:threshold])
 
       w = (qwb[:smart_proxy_worker] ||= {})
       w[:count] = @edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :count) || 3
-      w[:memory_threshold] =  rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
+      w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :memory_threshold) || 400.megabytes
       @sb[:smart_proxy_threshold] = []
       @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
 
       qwb[:ems_refresh_worker] ||= {}
       qwb[:ems_refresh_worker][:defaults] ||= {}
       w = qwb[:ems_refresh_worker][:defaults]
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEmsRefreshWorker, [:defaults, :memory_threshold])) || rails_method_to_human_size(400.megabytes)
+      w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEmsRefreshWorker, %i(defaults memory_threshold)) || 400.megabytes
       @sb[:ems_refresh_threshold] = []
       (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
       (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
@@ -1027,14 +1035,14 @@ module OpsController::Settings::Common
 
       wb = @edit[:current].config[:workers][:worker_base]
       w = (wb[:event_catcher] ||= {})
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEventCatcher, :memory_threshold)) || rails_method_to_human_size(1.gigabytes)
+      w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEventCatcher, :memory_threshold) || 1.gigabytes
       @sb[:event_catcher_threshold] = []
       (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
       (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
       (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
 
       w = (wb[:vim_broker_worker] ||= {})
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqVimBrokerWorker, :memory_threshold)) || rails_method_to_human_size(1.gigabytes)
+      w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
       @sb[:vim_broker_threshold] = []
       (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
       (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
@@ -1045,13 +1053,13 @@ module OpsController::Settings::Common
 
       w = (qwb[:reporting_worker] ||= {})
       w[:count] = @edit[:current].get_raw_worker_setting(:MiqReportingWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqReportingWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
+      w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqReportingWorker, :memory_threshold) || 400.megabytes
       @sb[:reporting_threshold] = []
       @sb[:reporting_threshold] = copy_array(@sb[:threshold])
 
       w = (wb[:web_service_worker] ||= {})
       w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
+      w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :memory_threshold) || 400.megabytes
       @sb[:web_service_threshold] = []
       @sb[:web_service_threshold] = copy_array(@sb[:threshold])
 
