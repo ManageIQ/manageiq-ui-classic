@@ -34,24 +34,27 @@ class EmsPhysicalInfraDashboardService < DashboardService
   end
 
   def attributes_data
-    attributes = %i(physical_servers physical_switches physical_racks)
+    attributes = %i(physical_servers physical_switches physical_racks physical_storages)
 
     attr_icon = {
       :physical_servers  => 'pficon pficon-cluster',
       :physical_switches => 'pficon ff ff-network-switch',
       :physical_racks    => 'pficon pficon-enterprise',
+      :physical_storages => 'pficon pficon-container-node',
     }
 
     attr_url = {
       :physical_servers  => 'physical_servers',
       :physical_switches => 'physical_switches',
       :physical_racks    => 'physical_racks',
+      :physical_storages => 'physical_storages',
     }
 
     attr_hsh = {
       :physical_servers  => _('Servers'),
       :physical_switches => _('Switches'),
       :physical_racks    => _('Racks'),
+      :physical_storages => _('Storages'),
     }
 
     attr_data = []
@@ -117,7 +120,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
       icon_class = 'pficon pficon-error-circle-o'
       count = critical
     elsif warning.positive?
-      icon_class = 'pficon pficon-warning-circle-o'
+      icon_class = 'pficon pficon-warning-triangle-o'
       count = warning
     elsif valid.positive?
       icon_class = 'pficon pficon-ok'

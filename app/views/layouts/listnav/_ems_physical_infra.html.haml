@@ -15,17 +15,20 @@
     = miq_accordion_panel(_("Relationships"), false, "ems_rel") do
       %ul.nav.nav-pills.nav-stacked
         %li
-          = li_link(:count => @record.number_of(:physical_switches),
-            :text          => _('Physical Switches'),
-            :record        => @record,
-            :display       => 'physical_switches')
           = li_link(:count => @record.number_of(:physical_servers),
             :tables        => 'physical_servers',
             :record        => @record,
             :display       => 'physical_servers')
-
           - hosts = (@record.physical_servers.select { |server| !server.host.nil? }).length
           = li_link(:count => hosts,
             :text          => _('Physical Servers with Host'),
             :record        => @record,
             :display       => 'physical_servers_with_host')
+          = li_link(:count => @record.number_of(:physical_storages),
+            :text          => _('Physical Storages'),
+            :record        => @record,
+            :display       => 'physical_storages')
+          = li_link(:count => @record.number_of(:physical_switches),
+            :text          => _('Physical Switches'),
+            :record        => @record,
+            :display       => 'physical_switches')

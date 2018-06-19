@@ -1379,21 +1379,37 @@ Rails.application.routes.draw do
       )
     },
 
-    :physical_network_port    =>  {
-      :get  =>  %w(
+    :physical_network_port    => {
+      :get  => %w(
         download_data
         show_list
         show
       ),
 
-      :post   =>  %w(
+      :post  => %w(
         button
         show_list
       )
     },
 
-    :physical_chassis    =>  {
-      :get  =>  %w(
+    :physical_storage    => {
+      :get  => %w(
+        download_data
+        show_list
+        show
+      ),
+
+      :post  => %w(
+        button
+        show_list
+        create
+        update
+        quick_search
+      ) + adv_search_post + save_post,
+    },
+
+    :physical_chassis    => {
+      :get  => %w(
         download_data
         perf_top_chart
         protect
@@ -1401,7 +1417,7 @@ Rails.application.routes.draw do
         show
       ),
 
-      :post   =>  %w(
+      :post  => %w(
         button
         show_list
         quick_search
