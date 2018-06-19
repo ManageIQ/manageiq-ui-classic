@@ -180,42 +180,6 @@ describe NumberHelper do
     expect(helper.human_size_to_number('-1.1 TB')).to eq(-1.1.terabytes)
   end
 
-  it "#rails_method_to_human_size" do
-    expect(helper.rails_method_to_human_size('0')).to eq('0 Bytes')
-    expect(helper.rails_method_to_human_size('1')).to eq('1 Byte')
-    expect(helper.rails_method_to_human_size('123')).to eq('123 Bytes')
-    expect(helper.rails_method_to_human_size('0.bytes')).to eq('0 Bytes')
-    expect(helper.rails_method_to_human_size('1.bytes')).to eq('1 Byte')
-    expect(helper.rails_method_to_human_size('123.bytes')).to eq('123 Bytes')
-    expect(helper.rails_method_to_human_size('444.kilobytes')).to eq('444 KB')
-    expect(helper.rails_method_to_human_size('1023.megabytes')).to eq('1023 MB')
-    expect(helper.rails_method_to_human_size('123.gigabytes')).to eq('123 GB')
-    expect(helper.rails_method_to_human_size('1022.terabytes')).to eq('1022 TB')
-    expect(helper.rails_method_to_human_size('4.petabytes')).to eq('4 PB')
-    expect(helper.rails_method_to_human_size('123.4')).to eq('123 Bytes') # rounds bytes
-    expect(helper.rails_method_to_human_size('123.4.bytes')).to eq('123 Bytes') # rounds bytes
-    expect(helper.rails_method_to_human_size('12.1.kilobytes')).to eq('12.1 KB')
-    expect(helper.rails_method_to_human_size('1.2.megabytes')).to eq('1.2 MB')
-    expect(helper.rails_method_to_human_size('1.1.gigabytes')).to eq('1.1 GB')
-    expect(helper.rails_method_to_human_size('1.1.terabytes')).to eq('1.1 TB')
-
-    expect(helper.rails_method_to_human_size('-1')).to eq('-1 Byte')
-    expect(helper.rails_method_to_human_size('-123')).to eq('-123 Bytes')
-    expect(helper.rails_method_to_human_size('-1.bytes')).to eq('-1 Byte')
-    expect(helper.rails_method_to_human_size('-123.bytes')).to eq('-123 Bytes')
-    expect(helper.rails_method_to_human_size('-444.kilobytes')).to eq('-444 KB')
-    expect(helper.rails_method_to_human_size('-1023.megabytes')).to eq('-1023 MB')
-    expect(helper.rails_method_to_human_size('-123.gigabytes')).to eq('-123 GB')
-    expect(helper.rails_method_to_human_size('-1022.terabytes')).to eq('-1022 TB')
-    expect(helper.rails_method_to_human_size('-4.petabytes')).to eq('-4 PB')
-    expect(helper.rails_method_to_human_size('-123.4')).to eq('-123 Bytes') # rounds bytes
-    expect(helper.rails_method_to_human_size('-123.4.bytes')).to eq('-123 Bytes') # rounds bytes
-    expect(helper.rails_method_to_human_size('-12.1.kilobytes')).to eq('-12.1 KB')
-    expect(helper.rails_method_to_human_size('-1.2.megabytes')).to eq('-1.2 MB')
-    expect(helper.rails_method_to_human_size('-1.1.gigabytes')).to eq('-1.1 GB')
-    expect(helper.rails_method_to_human_size('-1.1.terabytes')).to eq('-1.1 TB')
-  end
-
   context "#mhz_to_human_size" do
     it "without options hash" do
       expect(helper.mhz_to_human_size(0)).to eq('0 MHz')
