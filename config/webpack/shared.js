@@ -9,6 +9,8 @@ const { basename, dirname, join, relative, resolve } = require('path')
 const { sync } = require('glob')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const extname = require('path-complete-extname')
+const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
+
 const { env, settings, output, engines } = require('./configuration.js')
 const loaders = require('./loaders.js')
 const RailsEnginesPlugin = require('./RailsEnginesPlugin')
@@ -58,6 +60,11 @@ module.exports = {
     new ManifestPlugin({
       publicPath: output.publicPath,
       writeToFileEmit: true,
+    }),
+
+    new DuplicatePackageCheckerPlugin({
+      verbose: true,
+      showHelp: false,
     }),
   ],
 
