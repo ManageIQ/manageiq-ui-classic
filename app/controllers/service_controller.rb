@@ -148,6 +148,15 @@ class ServiceController < ApplicationController
   end
   helper_method :sanitize_output
 
+  def raw_stdout(job, format)
+    if MiqRegion.my_region.role_active?("embedded_ansible")
+      job.raw_stdout(format) # call the original method if embedded Ansible role is enabled
+    else
+      _("Cannot get standard output of this playbook because the embedded Ansible role is not enabled")
+    end
+  end
+  helper_method :raw_stdout
+
   def textual_group_list
     if @record.type == "ServiceAnsiblePlaybook"
       [%i(properties), %i(lifecycle tags)]
