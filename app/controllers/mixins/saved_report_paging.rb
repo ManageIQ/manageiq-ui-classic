@@ -14,7 +14,7 @@ module Mixins
       @sb[:pages][:perpage] = settings(:perpage, :reports)
 
       rr = MiqReportResult.find(@sb[:pages][:rr_id])
-      @html = report_build_html_table(rr.report_results,
+      @html = report_build_html_table(rr.report,
                                       rr.html_rows(:page     => @sb[:pages][:current],
                                                    :per_page => @sb[:pages][:perpage]).join)
 

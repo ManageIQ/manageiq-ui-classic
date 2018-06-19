@@ -35,10 +35,9 @@ module ReportController::SavedReports
 
     return unless rr.status.downcase == "complete"
 
-    @report = rr.report_results
     session[:rpt_task_id] = nil
 
-    if @report.blank?
+    unless rr.valid_report_column?
       add_flash(_("Saved Report \"%{time}\" not found, Schedule may have failed") %
                 {:time => format_timezone(rr.created_on, Time.zone, "gtl")},
                 :error)
@@ -56,7 +55,7 @@ module ReportController::SavedReports
       return
     end
 
-    unless @report.contains_records?
+    unless rr.contains_records?
       add_flash(_("No records found for this report"), :warning)
       return
     end
