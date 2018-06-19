@@ -44,13 +44,6 @@ module NumberHelper
     nil
   end
 
-  # Converts "1.megabytes" to "1 MB"
-  def rails_method_to_human_size(size)
-    return number_to_human_size(eval(size))
-  rescue
-    nil
-  end
-
   # Converts in a similar manner as number_to_human_size, but in units of MHz
   def mhz_to_human_size(size, *args)
     precision = args.first
