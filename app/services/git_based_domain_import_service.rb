@@ -25,6 +25,7 @@ class GitBasedDomainImportService
       :class_name  => "MiqAeDomain",
       :method_name => "import_git_repo",
       :role        => "git_owner",
+      :user_id     => User.current_user.id,
       :args        => [import_options]
     }
 
@@ -42,6 +43,7 @@ class GitBasedDomainImportService
       :method_name => "refresh",
       :instance_id => git_repo_id,
       :role        => "git_owner",
+      :user_id     => User.current_user.id,
       :args        => []
     }
 
@@ -66,6 +68,7 @@ class GitBasedDomainImportService
       :class_name  => "MiqAeDomain",
       :method_name => "import_git_url",
       :role        => "git_owner",
+      :user_id     => User.current_user.id,
       :args        => [import_options]
     }
 
@@ -83,6 +86,7 @@ class GitBasedDomainImportService
       :method_name => "destroy",
       :instance_id => domain_id,
       :role        => "git_owner",
+      :user_id     => User.current_user.id,
       :args        => []
     }
 
