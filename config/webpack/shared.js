@@ -17,6 +17,17 @@ const RailsEnginesPlugin = require('./RailsEnginesPlugin')
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*` // */
 const entryPath = join(settings.source_path, settings.source_entry_path)
+const moduleDir = engines['manageiq-ui-classic'].node_modules
+
+const sharedPackages = [
+  'jquery',
+  'lodash',
+  'patternfly-react',
+  'patternfly-sass',
+  'react',
+  'react-dom',
+  'prop-types',
+];
 
 let packPaths = {}
 
@@ -86,12 +97,12 @@ module.exports = {
     extensions: settings.extensions,
     modules: [],
     plugins: [
-      new RailsEnginesPlugin('module', 'resolve', engines),
+      new RailsEnginesPlugin('module', 'resolve', engines, { packages: sharedPackages, root: moduleDir }),
     ],
   },
 
   resolveLoader: {
     // only read loaders from ui-classic
-    modules: [engines['manageiq-ui-classic'].node_modules],
+    modules: [moduleDir],
   },
 }
