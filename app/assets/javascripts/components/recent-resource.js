@@ -13,10 +13,14 @@ resentResourceController.$inject = ['miqService', '$q', '$http', 'chartsMixin'];
 function resentResourceController(miqService, $q, $http, chartsMixin) {
   var vm = this;
   this.$onInit = function() {
-    vm.id = "recentResourcesLineChart_" + vm.providerId;
+    vm.id = _.uniqueId("recentResourcesLineChart_" + vm.providerId);
     ManageIQ.angular.scope = vm;
     vm.loadingDone = false;
-    vm.config = chartsMixin.chartConfig.recentResourcesConfig;
+
+    vm.config = Object.assign({}, chartsMixin.chartConfig.recentResourcesConfig);
+    vm.config.chartId = _.uniqueId(vm.config.chartId);
+    vm.config.tooltip.position = vm.config.tooltip.position(vm.config.chartId);
+
     vm.timeframeLabel = __('Last 30 Days');
     vm.url = vm.url + vm.providerId;
     var resourcesDataPromise = $http.get(vm.url)

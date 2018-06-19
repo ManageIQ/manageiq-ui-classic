@@ -62,7 +62,7 @@ class EmsInfraDashboardService < EmsDashboardService
       :vms           => _('VMs'),
       :miq_templates => _('Templates'),
     }
-    
+
     format_data(attributes, attr_icon, attr_url, attr_hsh)
   end
 

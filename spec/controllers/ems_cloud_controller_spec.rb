@@ -446,9 +446,26 @@ describe EmsCloudController do
     subject { get :show, :params => { :id => @ems.id } }
 
     context "render listnav partial" do
+      subject { get :show, :params => { :id => @ems.id, :display => 'main' } }
+      render_views
+
       it do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => "layouts/listnav/_ems_cloud")
+      end
+    end
+
+    context "render dashboard" do
+      subject { get :show, :params => { :id => @ems.id, :display => 'dashboard' } }
+      render_views
+
+      it 'never render template show' do
+        is_expected.not_to render_template('shared/views/ems_common/show')
+      end
+
+      it 'uses its own template' do
+        is_expected.to have_http_status 200
+        is_expected.not_to render_template(:partial => "ems_cloud/show_dashboard")
       end
     end
 

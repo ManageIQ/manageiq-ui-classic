@@ -14,16 +14,16 @@ describe EmsInfraDashboardService do
       @host4 = FactoryGirl.create(:host, :ext_management_system => @ems2)
     end
 
-    subject { EmsInfraDashboardService.new(@ems1.id, "ems_infra") }
+    subject { EmsInfraDashboardService.new(@ems1.id, "ems_infra", EmsInfra) }
 
     it 'returns vms for a specified provider' do
-      expect(subject.recentVms[:xData].count).to eq(2)
-      expect(subject.recentVms[:yData].count).to eq(2)
+      expect(subject.recent_vms_data[:recentResources][:xData].count).to eq(2)
+      expect(subject.recent_vms_data[:recentResources][:yData].count).to eq(2)
     end
 
     it 'returns hosts for a specified provider' do
-      expect(subject.recentHosts[:xData].count).to eq(2)
-      expect(subject.recentHosts[:yData].count).to eq(2)
+      expect(subject.recent_hosts_data[:recentResources][:xData].count).to eq(2)
+      expect(subject.recent_hosts_data[:recentResources][:yData].count).to eq(2)
     end
   end
 end

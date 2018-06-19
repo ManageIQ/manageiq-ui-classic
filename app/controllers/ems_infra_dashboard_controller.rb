@@ -39,27 +39,27 @@ class EmsInfraDashboardController < ApplicationController
   private
 
   def collect_data(ems_id)
-    EmsInfraDashboardService.new(ems_id, self).all_data
+    EmsInfraDashboardService.new(ems_id, self, EmsInfra).all_data
   end
 
   def cluster_heatmap_data(ems_id)
-    EmsInfraDashboardService.new(ems_id, self).cluster_heatmap_data
+    EmsInfraDashboardService.new(ems_id, self, EmsInfra).cluster_heatmap_data
   end
 
   def recent_hosts(ems_id)
-    EmsInfraDashboardService.new(ems_id, self).recent_hosts_data
+    EmsInfraDashboardService.new(ems_id, self, EmsInfra).recent_hosts_data
   end
 
   def recent_vms(ems_id)
-    EmsInfraDashboardService.new(ems_id, self).recent_vms_data
+    EmsInfraDashboardService.new(ems_id, self, EmsInfra).recent_vms_data
   end
 
   def ems_data(ems_id)
-    EmsInfraDashboardService.new(ems_id, self).ems_utilization_data
+    EmsInfraDashboardService.new(ems_id, self, EmsInfra).ems_utilization_data
   end
 
   def aggregate_status(ems_id)
-    EmsInfraDashboardService.new(ems_id, self).aggregate_status_data
+    EmsInfraDashboardService.new(ems_id, self, EmsInfra).aggregate_status_data
   end
 
   def get_session_data

@@ -1173,6 +1173,16 @@ Rails.application.routes.draw do
                save_post
     },
 
+    :ems_cloud_dashboard      => {
+      :get => %w(
+        show
+        data
+        recent_instances_data
+        recent_images_data
+        aggregate_status_data
+      )
+    },
+
     :ems_cluster              => {
       :get  => %w(
         columns_json
