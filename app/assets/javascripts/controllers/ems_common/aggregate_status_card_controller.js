@@ -24,7 +24,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', 
       providerType: '@',
     },
     templateUrl: function(elem, attr) {
-      return '/static/' + attr.providerType + '/aggregate-status-card.html.haml';
+      return '/static/ems_common/aggregate-status-card.html.haml';
     },
   };
 });

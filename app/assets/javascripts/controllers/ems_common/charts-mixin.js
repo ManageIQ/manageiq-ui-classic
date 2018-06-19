@@ -72,22 +72,11 @@ angular.module('miq.util').factory('chartsMixin', ['$document', function($docume
       chartId: 'memoryDonutChart',
       thresholds: { 'warning': '60', 'error': '90' },
     },
-    recentHostsConfig: {
-      chartId: 'recentHostsChart',
+    recentResourcesConfig: {
+      chartId: 'recentResourcesChart',
       tooltip: {
         contents: dailyTimeTooltip,
-        position: lineChartTooltipPositionFactory('recentHostsChart'),
-      },
-      point: {r: 1},
-      size: {height: 145},
-      grid: {y: {show: false}},
-      setAreaChart: true,
-    },
-    recentVmsConfig: {
-      chartId: 'recentVmsChart',
-      tooltip: {
-        contents: dailyTimeTooltip,
-        position: lineChartTooltipPositionFactory('recentVmsChart'),
+        position: lineChartTooltipPositionFactory('recentResourcesChart'),
       },
       point: {r: 1},
       size: {height: 145},

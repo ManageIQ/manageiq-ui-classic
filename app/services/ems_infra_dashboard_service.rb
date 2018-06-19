@@ -1,14 +1,5 @@
-class EmsInfraDashboardService < DashboardService
-  include UiServiceMixin
-  include Mixins::CheckedIdMixin
-
+class EmsInfraDashboardService < EmsDashboardService
   CPU_USAGE_PRECISION = 2 # 2 decimal points
-
-  def initialize(ems_id, controller)
-    @ems_id = ems_id
-    @ems = find_record_with_rbac(EmsInfra, @ems_id) if @ems_id.present?
-    @controller = controller
-  end
 
   def cluster_heatmap_data
     {
@@ -17,15 +8,13 @@ class EmsInfraDashboardService < DashboardService
   end
 
   def recent_hosts_data
-    {
-      :recentHosts => recentHosts
-    }.compact
+    title = openstack? ? _('Recent Nodes') : _('Recent Hosts')
+    label = openstack? ? _('Nodes') : _('Hosts')
+    recent_resources(Host, title, label)
   end
 
   def recent_vms_data
-    {
-      :recentVms => recentVms
-    }.compact
+    recent_resources(VmOrTemplate, _('Recent VMs'), _('VMs'))
   end
 
   def ems_utilization_data
@@ -67,35 +56,14 @@ class EmsInfraDashboardService < DashboardService
     }
 
     attr_hsh = {
-      :ems_clusters  => @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ? _('Deployment Roles') : _('Clusters'),
-      :hosts         => @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ? _('Nodes') : _('Hosts'),
+      :ems_clusters  => openstack? ? _('Deployment Roles') : _('Clusters'),
+      :hosts         => openstack? ? _('Nodes') : _('Hosts'),
       :storages      => _('Datastores'),
       :vms           => _('VMs'),
       :miq_templates => _('Templates'),
     }
-
-    attr_data = []
-    attributes.each do |attr|
-      attr_data.push(
-        :id           => attr_hsh[attr] + '_' + @ems_id,
-        :iconClass    => attr_icon[attr],
-        :title        => attr_hsh[attr],
-        :count        => @ems.send(attr).length,
-        :href         => get_url(@ems_id, attr_url[attr]),
-        :notification => {
-          :iconClass => 'pficon pficon-error-circle-o',
-          :count     => 0,
-        },
-      )
-    end
-    attr_data
-  end
-
-  def status_data
-    {
-      :iconImage => get_icon(@ems),
-      :largeIcon => true,
-    }
+    
+    format_data(attributes, attr_icon, attr_url, attr_hsh)
   end
 
   def heatmaps
@@ -103,7 +71,7 @@ class EmsInfraDashboardService < DashboardService
     cluster_ids = @ems.ems_clusters if @ems.present?
     metrics = MetricRollup.latest_rollups(EmsCluster.name, cluster_ids)
     metrics = metrics.where('timestamp > ?', 30.days.ago.utc).includes(:resource)
-    metrics = metrics.includes(:resource => [:ext_management_system]) unless @ems.present?
+    metrics = metrics.includes(:resource => [:ext_management_system]) if @ems.blank?
 
     cluster_cpu_usage = []
     cluster_memory_usage = []
@@ -140,49 +108,6 @@ class EmsInfraDashboardService < DashboardService
     }
   end
 
-  def recentHosts
-    # Get recent hosts
-    all_hosts = recentRecords(Host)
-    config = {
-      :title => openstack? ? _('Recent Nodes') : _('Recent Hosts'),
-      :label => openstack? ? _('Nodes') : _('Hosts')
-    }
-    return { :dataAvailable => false, :config => config} if all_hosts.blank?
-    {
-      :dataAvailable => true,
-      :xData         => all_hosts.keys,
-      :yData         => all_hosts.values.map,
-      :config        => config
-    }
-  end
-
-  def recentVms
-    # Get recent VMs
-    all_vms = recentRecords(VmOrTemplate)
-    config = {
-      :title => _('Recent VMs'),
-      :label => _('VMs'),
-    }
-    return { :dataAvailable => false, :config => config } if all_vms.blank?
-    {
-      :dataAvailable => true,
-      :xData         => all_vms.keys,
-      :yData         => all_vms.values.map,
-      :config        => config
-    }
-  end
-
-  def recentRecords(model)
-    all_records = Hash.new(0)
-    records = model.where('created_on > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
-    records = records.includes(:resource => [:ext_management_system]) unless @ems.present?
-    records.sort_by { |r| r.created_on }.uniq.each do |r|
-      date = r.created_on.strftime("%Y-%m-%d")
-      all_records[date] += model.where('created_on = ?', r.created_on).count
-    end
-    all_records
-  end
-
   def ems_utilization
     used_cpu = Hash.new(0)
     used_mem = Hash.new(0)
@@ -211,9 +136,5 @@ class EmsInfraDashboardService < DashboardService
 
   def openstack?
     @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
-  end
-
-  def get_url(ems_id, attr_url)
-    "/ems_infra/#{ems_id}?display=#{attr_url}"
   end
 end
