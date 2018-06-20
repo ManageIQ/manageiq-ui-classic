@@ -5,6 +5,68 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 88 ending 2018-06-18
+
+### Added
+- Add icon for host_failure event. [(#4139)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4139)
+- Client-side print/export to PDF for dashboard widgets [(#4114)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4114)
+- TextualSummary: unify power states. [(#4085)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4085)
+- Added separate features for Requests subtabs [(#4062)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4062)
+- Use {reportrequest}_admin_user? [(#3993)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3993)
+- Hide "Add New Network Manager" unless Nuage is enabled [(#3979)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3979)
+- Add to the reconfigure screen the ability to attach ISOs to CDRoms  (VMware) [(#3956)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3956)
+
+### Fixed
+- Fix Datastore decorator format string  [(#4159)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4159)
+- Get Network adapters reconfigure data only when the reconfigure is supported  [(#4152)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4152)
+- Fixing textual summary payload mount for multilabel components [(#4148)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4148)
+- Use decorators for icons/images in the compressed compare view [(#4146)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4146)
+- Ensure new dialog user component is used for service reconfiguration [(#4140)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4140)
+- Display cloud subnets in the top-right quadrant of network providers [(#4134)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4134)
+- Added missing tooltips for some quadicon quadrants [(#4133)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4133)
+- Use fonticons for embedded items in automate and catalogs [(#4129)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4129)
+- Add the missing powering_down quadrant machine state [(#4128)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4128)
+- Fix error on default filters page [(#4127)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4127)
+- Add Gluster vendor svg [(#4125)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4125)
+- Remove unnecessary ref to 16/blue-circle.png from report timelines [(#4120)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4120)
+- Use fonticons for sorting items on the provisioning form [(#4118)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4118)
+- My Settings: fixes for recent uib-tab changes [(#4116)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4116)
+- Fix missing single_quad for container services [(#4110)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4110)
+- Do not store cockpit popups in session [(#4109)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4109)
+- Fix missing bottom-right fonticons on provider quadicons [(#4108)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4108)
+- Missing icon for powering-up state [(#4101)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4101)
+- Convert health state and provider status quadrant icons to fonticons [(#4098)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4098)
+- Use fonticon for unknown container registries in textual summaries [(#4094)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4094)
+- Use fonticon for the warning in catalog edit provision confirm modal [(#4093)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4093)
+- Replace q.png with vendor-redhat.svg in the automate simulation tree [(#4092)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4092)
+- Remove Discovered IP Address field from Physical Infra Provider [(#4091)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4091)
+- Don't use generic object definition fileicon if no picture present [(#4089)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4089)
+- Fix menu selection when on physical infra topology view [(#4083)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4083)
+- Fix Request Info for Catalog Items [(#4082)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4082)
+- Make sure @edit[:current].config[:server][:zone] is set [(#4072)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4072)
+- Adding Physical Switches to Physical Infra topology page [(#4068)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4068)
+- Add single_quad definition for configuration profiles [(#4067)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4067)
+- Force selectpicker refresh after dialog-user component initialization [(#4063)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4063)
+- Pull out health_state from physical infra decorators to the helper [(#4054)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4054)
+- Prefer fonticon for resource pool if it's not vapp [(#4048)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4048)
+- Add missing single_quad definition for ConfiguredSystemDecorator [(#4046)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4046)
+- fix deprecated passing class to AR notification [(#4044)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4044)
+- Do not use generic object fileicon if no picture specified [(#4040)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4040)
+- Display providers' suspended status in their quadicon [(#4022)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4022)
+- Fixing Provider PhysicalSwitches page summary show [(#3954)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3954)
+- Add Redfish provider creation dialog [(#3912)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3912)
+- Replaced ror form with react form component [(#3856)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3856)
+- Add a dashboard view for a physical infra provider [(#3806)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3806)
+
+### Removed
+- Remove fileicon from InventoryGroupDecorators [(#4053)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4053)
+- Drop fileicon from authentication decorators [(#4052)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4052)
+- Drop fileicon for ansible jobs [(#4050)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4050)
+- Drop fileicon for configuration script decorator [(#4049)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4049)
+
+- Drop fileicon for LanDecorator [(#4047)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4047)
+- Drop the fileicon in ConfiguredSystemDecorator [(#4038)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4038)
+
 ## Unreleased as of Sprint 87 ending 2018-06-04
 
 ### Added
