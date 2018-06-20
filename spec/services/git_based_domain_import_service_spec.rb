@@ -19,6 +19,7 @@ describe GitBasedDomainImportService do
         :class_name  => "MiqAeDomain",
         :method_name => method_name,
         :role        => "git_owner",
+        :user_id     => 123,
         :args        => [import_options]
       }
     end
@@ -43,6 +44,7 @@ describe GitBasedDomainImportService do
         :instance_id => git_repo.id,
         :method_name => method_name,
         :role        => "git_owner",
+        :user_id     => 123,
         :args        => []
       }
     end
@@ -56,6 +58,7 @@ describe GitBasedDomainImportService do
         :instance_id => domain.id,
         :method_name => method_name,
         :role        => "git_owner",
+        :user_id     => 123,
         :args        => []
       }
     end
