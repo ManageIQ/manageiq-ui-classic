@@ -1,20 +1,17 @@
 #ab_form
   #policy_bar
     - if @resolve[:uri] && Hash[*@resolve[:target_classes].flatten].invert[@resolve[:new][:target_class]] == @edit[:new][:target_class]
-
-      %li
-        - t = _("Paste object details for use in a Button.")
-        = link_to(image_tag(image_path('toolbars/paste.png'), :border => "0", :class  => "", :alt => t),
-          {:action => "resolve", :button => "paste"},
-          "data-miq_sparkle_on"  => true,
-          "data-miq_sparkle_off" => true,
-          :remote                => true,
-          "data-method"          => :post,
-          :title                 => t)
+      = link_to({:action => "resolve", :button => "paste"},
+        "data-miq_sparkle_on"  => true,
+        "data-miq_sparkle_off" => true,
+        :remote                => true,
+        "data-method"          => :post,
+        :class                 => 'btn btn-default',
+        :title                 => _("Paste object details for use in a Button.")) do
+        %i.fa.fa-clipboard
     - else
-      = image_tag(image_path('toolbars/paste.png'),
-        :class => "dimmed",
-        :title => _("Paste is not available, no object information has been copied from the Simulation screen"))
+      %button.btn.btn-default.disabled{:title => _("Paste is not available, no object information has been copied from the Simulation screen")}
+        %i.fa.fa-clipboard
   = render :partial => "layouts/flash_msg"
 
   #custom_button_tabs
