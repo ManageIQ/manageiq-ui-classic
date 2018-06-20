@@ -109,35 +109,6 @@ describe NumberHelper do
     expect(helper.human_size_to_rails_method('-1.1 TB')).to eq('-1.1.terabytes')
   end
 
-  it "#human_size_to_number" do
-    expect(helper.human_size_to_number('0 Bytes')).to eq(0)
-    expect(helper.human_size_to_number('1 Byte')).to eq(1)
-    expect(helper.human_size_to_number('123 Bytes')).to eq(123)
-    expect(helper.human_size_to_number('444 KB')).to eq(444.kilobytes)
-    expect(helper.human_size_to_number('1023 MB')).to eq(1023.megabytes)
-    expect(helper.human_size_to_number('123 GB')).to eq(123.gigabytes)
-    expect(helper.human_size_to_number('1022 TB')).to eq(1022.terabytes)
-    expect(helper.human_size_to_number('4 PB')).to eq(4.petabytes)
-    expect(helper.human_size_to_number('123.4 Bytes')).to eq(123.4)
-    expect(helper.human_size_to_number('12.1 KB')).to eq(12.1.kilobytes)
-    expect(helper.human_size_to_number('1.2 MB')).to eq(1.2.megabytes)
-    expect(helper.human_size_to_number('1.1 GB')).to eq(1.1.gigabytes)
-    expect(helper.human_size_to_number('1.1 TB')).to eq(1.1.terabytes)
-
-    expect(helper.human_size_to_number('-1 Byte')).to eq(-1)
-    expect(helper.human_size_to_number('-123 Bytes')).to eq(-123)
-    expect(helper.human_size_to_number('-444 KB')).to eq(-444.kilobytes)
-    expect(helper.human_size_to_number('-1023 MB')).to eq(-1023.megabytes)
-    expect(helper.human_size_to_number('-123 GB')).to eq(-123.gigabytes)
-    expect(helper.human_size_to_number('-1022 TB')).to eq(-1022.terabytes)
-    expect(helper.human_size_to_number('-4 PB')).to eq(-4.petabytes)
-    expect(helper.human_size_to_number('-123.4 Bytes')).to eq(-123.4)
-    expect(helper.human_size_to_number('-12.1 KB')).to eq(-12.1.kilobytes)
-    expect(helper.human_size_to_number('-1.2 MB')).to eq(-1.2.megabytes)
-    expect(helper.human_size_to_number('-1.1 GB')).to eq(-1.1.gigabytes)
-    expect(helper.human_size_to_number('-1.1 TB')).to eq(-1.1.terabytes)
-  end
-
   context "#mhz_to_human_size" do
     it "without options hash" do
       expect(helper.mhz_to_human_size(0)).to eq('0 MHz')
