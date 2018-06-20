@@ -30,13 +30,6 @@ module NumberHelper
     nil
   end
 
-  # Converts 1048576 (bytes) to "1.megabytes"
-  def number_to_rails_method(size)
-    return human_size_to_rails_method(number_to_human_size(size, :precision => 1))
-  rescue
-    nil
-  end
-
   # Converts "1 MB" to 1048576 (bytes)
   def human_size_to_number(size)
     return eval(human_size_to_rails_method(size))

@@ -109,48 +109,6 @@ describe NumberHelper do
     expect(helper.human_size_to_rails_method('-1.1 TB')).to eq('-1.1.terabytes')
   end
 
-  it "#number_to_rails_method" do
-    expect(helper.number_to_rails_method(0)).to eq('0')
-    expect(helper.number_to_rails_method(1)).to eq('1')
-    expect(helper.number_to_rails_method(3.14159265)).to eq('3')
-    expect(helper.number_to_rails_method(123.0)).to eq('123')
-    expect(helper.number_to_rails_method(123)).to eq('123')
-    expect(helper.number_to_rails_method(1234)).to eq('1.2.kilobytes')
-    expect(helper.number_to_rails_method(12_345)).to eq('12.1.kilobytes')
-    expect(helper.number_to_rails_method(1_234_567)).to eq('1.2.megabytes')
-    expect(helper.number_to_rails_method(1_234_567_890)).to eq('1.1.gigabytes')
-    expect(helper.number_to_rails_method(1_234_567_890_123)).to eq('1.1.terabytes')
-    expect(helper.number_to_rails_method(1_234_567_890_123_456)).to eq('1.1.petabytes')
-    expect(helper.number_to_rails_method(4.petabytes)).to eq('4.petabytes')
-    expect(helper.number_to_rails_method(1022.terabytes)).to eq('1022.terabytes')
-    expect(helper.number_to_rails_method(444.kilobytes)).to eq('444.kilobytes')
-    expect(helper.number_to_rails_method(1023.megabytes)).to eq('1023.megabytes')
-    expect(helper.number_to_rails_method(3.terabytes)).to eq('3.terabytes')
-    expect(helper.number_to_rails_method("123")).to eq('123')
-    expect(helper.number_to_rails_method(1.1)).to eq('1')
-    expect(helper.number_to_rails_method(10)).to eq('10')
-    expect(helper.number_to_rails_method(nil)).to be_nil
-
-    expect(helper.number_to_rails_method(-1)).to eq('-1')
-    expect(helper.number_to_rails_method(-3.14159265)).to eq('-3')
-    expect(helper.number_to_rails_method(-123.0)).to eq('-123')
-    expect(helper.number_to_rails_method(-123)).to eq('-123')
-    expect(helper.number_to_rails_method(-1234)).to eq('-1.2.kilobytes')
-    expect(helper.number_to_rails_method(-12_345)).to eq('-12.1.kilobytes')
-    expect(helper.number_to_rails_method(-1_234_567)).to eq('-1.2.megabytes')
-    expect(helper.number_to_rails_method(-1_234_567_890)).to eq('-1.1.gigabytes')
-    expect(helper.number_to_rails_method(-1_234_567_890_123)).to eq('-1.1.terabytes')
-    expect(helper.number_to_rails_method(-1_234_567_890_123_456)).to eq('-1.1.petabytes')
-    expect(helper.number_to_rails_method(-4.petabytes)).to eq('-4.petabytes')
-    expect(helper.number_to_rails_method(-1022.terabytes)).to eq('-1022.terabytes')
-    expect(helper.number_to_rails_method(-444.kilobytes)).to eq('-444.kilobytes')
-    expect(helper.number_to_rails_method(-1023.megabytes)).to eq('-1023.megabytes')
-    expect(helper.number_to_rails_method(-3.terabytes)).to eq('-3.terabytes')
-    expect(helper.number_to_rails_method("-123")).to eq('-123')
-    expect(helper.number_to_rails_method(-1.1)).to eq('-1')
-    expect(helper.number_to_rails_method(-10)).to eq('-10')
-  end
-
   it "#human_size_to_number" do
     expect(helper.human_size_to_number('0 Bytes')).to eq(0)
     expect(helper.human_size_to_number('1 Byte')).to eq(1)
