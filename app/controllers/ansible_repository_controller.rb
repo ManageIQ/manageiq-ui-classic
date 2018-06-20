@@ -40,7 +40,6 @@ class AnsibleRepositoryController < ApplicationController
         page.replace("gtl_div", :partial => "layouts/gtl")
       end
     when "ansible_repository_reload"
-      params[:display] = @display if @display
       show
       render :update do |page|
         page << javascript_prologue
