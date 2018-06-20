@@ -55,6 +55,11 @@ class AnsibleCredentialController < ApplicationController
     @id = auth.id
   end
 
+  def toolbar
+    return 'ansible_repositories_center' if %w(repositories).include?(@display) # for nested list screen
+    %w(show_list).include?(@lastaction) ? 'ansible_credentials_center' : 'ansible_credential_center'
+  end
+
   private
 
   def textual_group_list

@@ -21,6 +21,10 @@ class AnsiblePlaybookController < ApplicationController
     end
   end
 
+  def toolbar
+    %w(show_list).include?(@lastaction) ? 'ansible_playbooks_center' : 'ansible_playbook_center'
+  end
+
   private
 
   def textual_group_list

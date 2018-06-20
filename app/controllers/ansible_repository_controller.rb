@@ -110,6 +110,11 @@ class AnsibleRepositoryController < ApplicationController
     javascript_flash
   end
 
+  def toolbar
+    return 'ansible_playbooks_center' if %w(playbooks).include?(@display) # for nested list screen
+    %w(show_list).include?(@lastaction) ? 'ansible_repositories_center' : 'ansible_repository_center'
+  end
+
   private
 
   def textual_group_list
