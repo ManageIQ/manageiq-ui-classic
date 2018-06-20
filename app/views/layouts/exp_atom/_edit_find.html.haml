@@ -94,23 +94,23 @@
               = h(@edit[@expkey][:exp_value][1])
 
         - if @edit[@expkey][:val1][:date_format] == 's'
-          - t = _('Click to change to a relative Date/Time format')
-          = link_to(image_tag(image_path('toolbars/specific_date.png'), :class => "rollover tiny", :alt => t),
-            {:action => 'exp_changed', :date_format_1 => 'r'},
+          = link_to({:action => 'exp_changed', :date_format_1 => 'r'},
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
             :remote                => true,
+            :class                 => 'btn btn-default',
             "data-method"          => :post,
-            :title                 => t)
+            :title                 => _('Click to change to a relative Date/Time format'))
+            %i.fa.fa-moon-o
         - else
-          - t = _('Click to change to a specific Date/Time format')
-          = link_to(image_tag(image_path('toolbars/relative_date.png'), :class => "rollover tiny", :alt => t),
-            {:action => 'exp_changed', :date_format_1 => 's'},
+          = link_to({:action => 'exp_changed', :date_format_1 => 's'},
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
             :remote                => true,
+            :class                 => 'btn btn-default',
             "data-method"          => :post,
-            :title                 => t)
+            :title                 => _('Click to change to a specific Date/Time format'))
+            %i.fa.fa-calendar
 
       - else
         = text_field_tag("chosen_value", @edit[@expkey][:exp_value],
@@ -210,23 +210,23 @@
                   = h(@edit[@expkey][:exp_cvalue][1])
 
             - if @edit[@expkey][:val2][:date_format] == 's'
-              - t = _('Click to change to a relative Date/Time format')
-              = link_to(image_tag(image_path('toolbars/specific_date.png'), :class => "rollover tiny", :alt => t),
-                {:action => 'exp_changed', :date_format_2 => 'r'},
+              = link_to({:action => 'exp_changed', :date_format_2 => 'r'},
                 "data-miq_sparkle_on"  => true,
                 "data-miq_sparkle_off" => true,
                 :remote                => true,
+                :class                 => 'btn btn-default',
                 "data-method"          => :post,
-                :title                 => t)
+                :title                 => _('Click to change to a relative Date/Time format')) do
+                %i.fa.fa-moon-o
             - else
-              - t = _('Click to change to a specific Date/Time format')
-              = link_to(image_tag(image_path('toolbars/relative_date.png'), :class => "rollover tiny", :alt => t),
-                {:action => 'exp_changed', :date_format_2 => 's'},
+              = link_to({:action => 'exp_changed', :date_format_2 => 's'},
                 "data-miq_sparkle_on"  => true,
                 "data-miq_sparkle_off" => true,
                 :remote                => true,
+                :class                 => 'btn btn-default',
                 "data-method"          => :post,
-                :title                 => t)
+                :title                 => _('Click to change to a specific Date/Time format')) do
+                %i.fa.fa-calendar
 
           - else
             = text_field_tag("chosen_cvalue", @edit[@expkey][:exp_cvalue],
