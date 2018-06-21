@@ -858,7 +858,7 @@ module Mixins
     end
 
     def default_auth_status
-      @ems.authentication_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
+      @ems.default_auth_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
     end
   end
 end
