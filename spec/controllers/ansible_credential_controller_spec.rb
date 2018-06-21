@@ -89,4 +89,37 @@ describe AnsibleCredentialController do
       end
     end
   end
+
+  describe '#toolbar' do
+    let(:action) { 'show' }
+    subject { controller.send(:toolbar) }
+
+    before do
+      controller.instance_variable_set(:@lastaction, action)
+    end
+
+    context 'displaying list of credentials' do
+      let(:action) { 'show_list' }
+
+      it 'returns proper toolbar filename' do
+        expect(subject).to eq('ansible_credentials_center')
+      end
+    end
+
+    context 'displaying summary screen of a credential' do
+      it 'returns proper toolbar filename' do
+        expect(subject).to eq('ansible_credential_center')
+      end
+    end
+
+    context 'displaying nested list of repositories' do
+      before do
+        controller.instance_variable_set(:@display, 'repositories')
+      end
+
+      it 'returns proper toolbar filename' do
+        expect(subject).to eq('ansible_repositories_center')
+      end
+    end
+  end
 end
