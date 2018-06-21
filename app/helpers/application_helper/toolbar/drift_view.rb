@@ -36,10 +36,11 @@ class ApplicationHelper::Toolbar::DriftView < ApplicationHelper::Toolbar::Basic
           :url   => "/drift_to_csv"),
         button(
           :drift_download_pdf,
-          'fa fa-file-pdf-o fa-lg',
-          N_('Download comparison report in PDF format'),
-          N_('Download as PDF'),
-          :klass => ApplicationHelper::Button::Pdf,
+          'pficon pficon-print fa-lg',
+          N_('Print or export comparison report in PDF format'),
+          N_('Print or export as PDF'),
+          :klass => ApplicationHelper::Button::Basic,
+          :popup => true,
           :url   => "/drift_to_pdf"),
       ]
     ),
