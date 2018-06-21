@@ -55,4 +55,27 @@ describe AnsiblePlaybookController do
       end
     end
   end
+
+  describe '#toolbar' do
+    let(:action) { 'show' }
+    subject { controller.send(:toolbar) }
+
+    before do
+      controller.instance_variable_set(:@lastaction, action)
+    end
+
+    context 'displaying list of playbooks' do
+      let(:action) { 'show_list' }
+
+      it 'returns proper toolbar filename' do
+        expect(subject).to eq('ansible_playbooks_center')
+      end
+    end
+
+    context 'displaying summary screen of a playbook' do
+      it 'returns proper toolbar filename' do
+        expect(subject).to eq('ansible_playbook_center')
+      end
+    end
+  end
 end
