@@ -160,6 +160,13 @@ module EmsCommon
                          :flash_msg   => err.message,
                          :flash_error => true)
     end
+    if respond_to?(:model_feature_for_action) && !@ems.supports?(model_feature_for_action(:edit))
+      flash_to_session(_("Edit of %{object_type} %{object_name} is not supported.") % {
+        :object_type => ui_lookup(:model => model.to_s),
+        :object_name => @ems.name
+      }, :error)
+      return redirect_to(:action => @lastaction || "show_list")
+    end
     set_form_vars
     @in_a_form = true
     session[:changed] = false

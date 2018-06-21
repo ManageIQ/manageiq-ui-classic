@@ -35,6 +35,13 @@ class EmsNetworkController < ApplicationController
   end
   public :restful?
 
+  def model_feature_for_action(action)
+    case action
+    when :edit
+      :ems_network_new
+    end
+  end
+
   menu_section :net
   has_custom_buttons
 end

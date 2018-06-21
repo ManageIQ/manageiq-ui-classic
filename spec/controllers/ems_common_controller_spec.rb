@@ -268,3 +268,31 @@ describe EmsInfraController do
   end
   include_examples '#download_summary_pdf', :ems_openstack_infra
 end
+
+describe EmsNetworkController do
+  context "::EmsCommon" do
+    context "#button" do
+      before(:each) do
+        stub_user(:features => :all)
+        EvmSpecHelper.create_guid_miq_server_zone
+      end
+
+      it "when edit is pressed for unsupported network manager type" do
+        allow(controller).to receive(:role_allows?).and_return(true)
+        google_net = FactoryGirl.create(:ems_google_network)
+        get :edit, :params => { :id => google_net.id}
+        expect(response.status).to eq(302)
+        expect(session['flash_msgs']).not_to be_empty
+        expect(session['flash_msgs'].first[:message]).to include('is not supported')
+      end
+
+      it "when edit is pressed for supported network manager type" do
+        allow(controller).to receive(:role_allows?).and_return(true)
+        nuage_net = FactoryGirl.create(:ems_nuage_network)
+        get :edit, :params => { :id => nuage_net.id}
+        expect(response.status).to eq(200)
+        expect(session['flash_msgs']).to be_nil
+      end
+    end
+  end
+end
