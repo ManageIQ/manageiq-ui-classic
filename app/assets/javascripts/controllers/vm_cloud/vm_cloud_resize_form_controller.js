@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope', 'vmCloudResizeFormId', 'miqService', function($http, $scope, vmCloudResizeFormId, miqService) {
+ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope', 'vmCloudResizeFormId', 'objectId', 'miqService', function($http, $scope, vmCloudResizeFormId, objectId, miqService) {
   var vm = this;
 
   var init = function() {
@@ -6,12 +6,14 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
       flavor_id: null,
     };
     vm.flavors = [];
-    vm.formId = vmCloudResizeFormId;
-    vm.modelCopy = angular.copy(vm.vmCloudModel);
+    vm.vmCloudResizeformId = vmCloudResizeFormId;
+    vm.objectId = objectId;
 
     ManageIQ.angular.scope = vm;
 
-    $http.get('/vm_cloud/resize_form_fields/' + vmCloudResizeFormId)
+    vm.newRecord = vmCloudResizeFormId == 'new';
+
+    $http.get('/vm_cloud/resize_form_fields/' + vmCloudResizeFormId + '?objectId=' + vm.objectId)
       .then(getResizeFormData)
       .catch(miqService.handleFailure);
   };
@@ -19,18 +21,21 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/resize_vm/' + vmCloudResizeFormId + '?button=cancel';
-    miqService.miqAjaxButton(url);
+    miqService.miqAjaxButton(url, {objectId: vm.objectId});
   };
 
   $scope.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/resize_vm/' + vmCloudResizeFormId + '?button=submit';
-    miqService.miqAjaxButton(url, vm.vmCloudModel);
+    miqService.miqAjaxButton(url, {objectId: vm.objectId,
+                                   flavor_id: vm.vmCloudModel.flavor_id});
   };
 
   function getResizeFormData(response) {
     var data = response.data;
-    Object.assign(vm, data);
+    vm.flavors = data.flavors
+    vm.vmCloudModel.flavor_id = data.flavor_id
+    vm.modelCopy = angular.copy(vm.vmCloudModel);
     miqService.sparkleOff();
   };
 

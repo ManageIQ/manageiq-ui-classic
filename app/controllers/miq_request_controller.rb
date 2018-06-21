@@ -39,7 +39,11 @@ class MiqRequestController < ApplicationController
       session[:checked_items] = provision_request.options[:src_ids]
       @refresh_partial = "reconfigure"
       @_params[:controller] = "vm"
-      reconfigurevms
+      if provision_request.kind_of?(VmCloudReconfigureRequest)
+        resizevms
+      else
+        reconfigurevms
+      end
     end
   end
 

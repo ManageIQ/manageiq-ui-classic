@@ -18,6 +18,7 @@ describe('vmCloudResizeFormController', function() {
       $scope: $scope,
       miqService: miqService,
       vmCloudResizeFormId: 1000000000001,
+      objectId: 1000000000001,
     });
   }));
 
@@ -30,7 +31,8 @@ describe('vmCloudResizeFormController', function() {
       setTimeout(function() {
         expect(miqService.miqAjaxButton).toHaveBeenCalledWith(
           '/vm_cloud/resize_vm/1000000000001?button=submit',
-          vm.vmCloudModel
+          {objectId: vm.objectId,
+           flavor_id: vm.vmCloudModel.flavor_id}
         );
         done();
       });
@@ -47,7 +49,7 @@ describe('vmCloudResizeFormController', function() {
 
     it('delegates to miqService.miqAjaxButton', function(done) {
       setTimeout(function() {
-        expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/vm_cloud/resize_vm/1000000000001?button=cancel');
+        expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/vm_cloud/resize_vm/1000000000001?button=cancel', {objectId: vm.objectId});
         done();
       });
     });

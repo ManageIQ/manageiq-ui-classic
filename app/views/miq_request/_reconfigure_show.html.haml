@@ -72,4 +72,4 @@
   - if @view
     - @embedded = true
     - @gtl_type = "list"
-    = render :partial => "layouts/gtl"
+    = render :partial => "layouts/gtl", :locals => {:no_flash_div => true}
