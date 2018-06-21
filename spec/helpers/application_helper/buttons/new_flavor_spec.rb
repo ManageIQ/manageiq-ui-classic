@@ -1,6 +1,10 @@
 describe ApplicationHelper::Button::NewFlavor do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:button) { described_class.new(view_context, {}, {}, {}) }
+  let(:lastaction) { '' }
+  let(:display) { '' }
+  let(:button) { described_class.new(view_context, {}, {'lastaction' => lastaction, 'display' => display}, {}) }
+
+  it_behaves_like 'a _new or _discover button'
 
   describe '#disabled?' do
     subject { button[:title] }
