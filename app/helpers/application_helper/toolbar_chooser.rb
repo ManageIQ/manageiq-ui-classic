@@ -74,27 +74,27 @@ class ApplicationHelper::ToolbarChooser
 
       case @record
       when ManageIQ::Providers::Openstack::CloudManager::Vm
-        return 'openstack_vm_cloud_center_tb' # FIXME: this exception should be merged with ManageIQ::Providers::CloudManager::Vm
+        'openstack_vm_cloud_center_tb' # FIXME: this exception should be merged with ManageIQ::Providers::CloudManager::Vm
       when ManageIQ::Providers::CloudManager::Vm
-        return 'x_vm_cloud_center_tb'
+        'x_vm_cloud_center_tb'
       when ManageIQ::Providers::CloudManager::Template
-        return 'x_template_cloud_center_tb'
+        'x_template_cloud_center_tb'
       when ManageIQ::Providers::InfraManager::Vm
-        return 'x_vm_center_tb'
+        'x_vm_center_tb'
       when ManageIQ::Providers::InfraManager::Template
-        return 'x_miq_template_center_tb'
+        'x_miq_template_center_tb'
       else
-        raise 'FIXME: this would return "x_#{@button_group}_center_tb' # FIXME: remove this branch
+        raise 'FIXME: this would return "x_# {@button_group}_center_tb' # FIXME: remove this branch
       end
     else
-      return case x_active_tree
-             when :images_filter_tree, :images_tree       then 'template_clouds_center_tb'
-             when :instances_filter_tree, :instances_tree then 'vm_clouds_center_tb'
-             when :templates_images_filter_tree           then 'miq_templates_center_tb'
-             when :templates_filter_tree                  then 'template_infras_center_tb'
-             when :vms_filter_tree, :vandt_tree           then 'vm_infras_center_tb'
-             when :vms_instances_filter_tree              then 'vms_center_tb'
-             end
+      case x_active_tree
+      when :images_filter_tree, :images_tree       then 'template_clouds_center_tb'
+      when :instances_filter_tree, :instances_tree then 'vm_clouds_center_tb'
+      when :templates_images_filter_tree           then 'miq_templates_center_tb'
+      when :templates_filter_tree                  then 'template_infras_center_tb'
+      when :vms_filter_tree, :vandt_tree           then 'vm_infras_center_tb'
+      when :vms_instances_filter_tree              then 'vms_center_tb'
+      end
     end
   end
 
@@ -102,7 +102,7 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_explorer
     if %w(vm_cloud vm_infra vm_or_template).include?(@layout)
       return center_toolbar_name_vm_or_template
-    elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :configuration_manager_cs_filter_tree].include?(x_active_tree)
+    elsif @layout == "provider_foreman" && %i(configuration_manager_providers_tree configuration_manager_cs_filter_tree).include?(x_active_tree)
       return center_toolbar_filename_configuration_manager_providers
     elsif @layout == "automation_manager"
       return center_toolbar_filename_automation_manager
@@ -392,13 +392,11 @@ class ApplicationHelper::ToolbarChooser
     elsif x_active_tree == :iso_datastores_tree
       if x_node == "root"
         return "iso_datastores_center_tb"
+      elsif x_node_split.first == "isi"
+         # on image node
+        return "iso_image_center_tb"
       else
-        if x_node_split.first == "isi"
-          # on image node
-          return "iso_image_center_tb"
-        else
-          return "iso_datastore_center_tb"
-        end
+        return "iso_datastore_center_tb"
       end
     end
     nil
