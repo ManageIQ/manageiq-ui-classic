@@ -3,11 +3,9 @@ class ApplicationHelper::ToolbarChooser
 
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no center toolbar to be shown
   def center_toolbar_filename
-    if @explorer
-      center_toolbar_filename_explorer
-    else
-      center_toolbar_filename_classic
-    end
+    return "#{@center_toolbar}_center_tb" if @center_toolbar
+
+    @explorer ? center_toolbar_filename_explorer : center_toolbar_filename_classic
   end
 
   def history_toolbar_filename
@@ -432,8 +430,6 @@ class ApplicationHelper::ToolbarChooser
 
   # Return non-explorer based toolbar file name
   def center_toolbar_filename_classic
-    return "#{@center_toolbar}_center_tb" if @center_toolbar
-
     # Original non vmx view code follows
     # toolbar buttons on sub-screens
     to_display = %w(availability_zones cloud_networks cloud_object_store_containers cloud_subnets
