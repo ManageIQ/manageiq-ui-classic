@@ -1,66 +1,34 @@
-class ApplicationHelper::Toolbar::Basic
-  include Singleton
-  extend SingleForwardable
-  delegate %i(api_button button select twostate separator definition button_group custom_content) => :instance
-
-  attr_reader :definition
-
-  def custom_content(name, args)
-    @definition[name] = ApplicationHelper::Toolbar::Custom.new(name, args)
-  end
-
-  def button_group(name, buttons)
-    @definition[name] = ApplicationHelper::Toolbar::Group.new(name, buttons)
-  end
-
-  def api_button(id, icon, title, text, keys = {})
-    keys[:data] = {
-      'function'      => 'sendDataWithRx',
-      'function-data' => {
-        'type'       => "generic",
-        'controller' => "toolbarActions",
-        'payload'    => {
-          'entity' => keys[:api][:entity].pluralize,
-          'action' => keys[:api][:action]
-        }
-      }.to_json
-    }
-    generic_button(:button, id, icon, title, text, keys)
-  end
-
-  def button(id, icon, title, text, keys = {})
-    generic_button(:button, id, icon, title, text, keys)
-  end
-
-  def select(id, icon, title, text, keys = {})
-    generic_button(:buttonSelect, id, icon, title, text, keys)
-  end
-
-  def twostate(id, icon, title, text, keys = {})
-    generic_button(:buttonTwoState, id, icon, title, text, keys)
-  end
-
-  def separator
-    {:separator => true}
+class ApplicationHelper::Toolbar::Basic < ApplicationHelper::Toolbar::Base
+  def definition(record = nil)
+    extension_classes_filtered(record).reduce(@definition) do |acc, ext|
+      acc.merge(ext.definition)
+    end
   end
 
   private
 
-  def initialize
-    @definition = {}
+  def extension_classes
+    @extension_classes ||= load_extension_classes
   end
 
-  def generic_button(type, id, icon, title, text, keys)
-    if text.kind_of?(Hash)
-      keys = text
-      text = title
+  def extension_classes_filtered(record)
+    return extension_classes if record.nil?
+
+    # Example:
+    # "ManageIQ::Providers::Amazon::ToolbarOverrides::EmsCloudCenter" is a match for
+    #   "ManageIQ::Providers::Amazon::CloudManager
+    extension_classes.find_all do |ext|
+      ext.name.split('::')[0..-3] == record.class.name.split('::')[0..-2]
     end
-    {
-      :type  => type,
-      :id    => id.to_s,
-      :icon  => icon,
-      :title => title,
-      :text  => text
-    }.merge(keys)
+  end
+
+  def load_extension_classes
+    return [] if self.class.name.nil?
+
+    toolbar_base_name = self.class.name.to_s.split('::').last
+    Vmdb::Plugins.collect do |plugin|
+      instance = [plugin.name.chomp('::Engine'), 'ToolbarOverrides', toolbar_base_name].join('::')
+      instance.safe_constantize
+    end.compact
   end
 end
