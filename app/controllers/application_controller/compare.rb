@@ -535,7 +535,6 @@ module ApplicationController::Compare
     drop_breadcrumb(:name => _("Drift History"), :url => "/#{controller_name}/drift_history/#{@drift_obj.id}")
     @lastaction = "drift_history"
     @display = "main"
-    @button_group = "common_drift"
     if @explorer || request.xml_http_request? # Is this an Ajax request?
       @sb[:action] = params[:action]
       @refresh_partial = "vm_common/#{@showtype}"
