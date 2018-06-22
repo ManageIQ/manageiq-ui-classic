@@ -1,5 +1,5 @@
 class ApplicationHelper::Toolbar::CompareCenter < ApplicationHelper::Toolbar::Basic
-  button_group('comapre_tasks', [
+  button_group('compare_tasks', [
     twostate(
       :compare_all,
       'ff ff-compare-all fa-lg',

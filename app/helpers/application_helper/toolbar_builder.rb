@@ -430,12 +430,12 @@ class ApplicationHelper::ToolbarBuilder
     return true if id.starts_with?("view_") && id.ends_with?("textual")  # Summary view buttons
     return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if @ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type)  # GHT view buttons on report show
-    return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare))
-    return true if id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift))
+    return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare).to_s)
+    return true if id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift).to_s)
     return true if id == "compare_all"
     return true if id == "drift_all"
-    return true if id.starts_with?("comparemode_") && id.ends_with?(settings(:views, :compare_mode))
-    return true if id.starts_with?("driftmode_") && id.ends_with?(settings(:views, :drift_mode))
+    return true if id.starts_with?("comparemode_") && id.ends_with?(settings(:views, :compare_mode).to_s)
+    return true if id.starts_with?("driftmode_") && id.ends_with?(settings(:views, :drift_mode).to_s)
     return true if id == "view_dashboard" && @showtype == "dashboard"
     return true if id == "view_topology" && @showtype == "topology"
     return true if id == "view_summary" && @showtype == "main"
