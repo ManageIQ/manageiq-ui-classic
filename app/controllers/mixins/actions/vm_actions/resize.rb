@@ -6,6 +6,7 @@ module Mixins
           assert_privileges(params[:pressed])
           # if coming in to edit from miq_request list view
           recs = checked_or_params
+          @record = nil
           if !session[:checked_items].nil? && (@lastaction == "set_checked_items" || params[:pressed] == "miq_request_edit")
             request_id = params[:id]
             @record = VmCloudReconfigureRequest.find(request_id).vms.first
