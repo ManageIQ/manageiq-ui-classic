@@ -227,17 +227,6 @@ class ApplicationHelper::ToolbarBuilder
     end
   end
 
-  # @button_group is set in a controller
-  #
-  def group_skipped?(name)
-    @button_group && (!name.starts_with?(@button_group + "_") &&
-      !name.starts_with?("custom") && !name.starts_with?("dialog") &&
-      !name.starts_with?("miq_dialog") && !name.starts_with?("custom_button") &&
-      !name.starts_with?("instance_") && !name.starts_with?("image_")) &&
-       !%w(record_summary summary_main summary_download tree_main
-           x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard infra_networking_policy).include?(name)
-  end
-
   def cb_send_checked_list
     return true if %w(generic_objects).include?(@display)
   end
@@ -500,8 +489,6 @@ class ApplicationHelper::ToolbarBuilder
 
   def build_toolbar_from_class(toolbar_class)
     toolbar_class.definition.each_with_index do |(name, group), group_index|
-      next if group_skipped?(name)
-
       @sep_added = false
       @groups_added.push(group_index)
       case group
