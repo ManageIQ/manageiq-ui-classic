@@ -137,7 +137,7 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def center_toolbar_filename_automate
-    nodes = x_node.split('-')
+    nodes = x_node_split
     case nodes.first
     when "root" then "miq_ae_domains_center_tb"
     when "aen"  then domain_or_namespace_toolbar(nodes.last)
@@ -289,7 +289,7 @@ class ApplicationHelper::ToolbarChooser
         return "scan_profile_center_tb"
       elsif x_node.split('-').last == "z"
         return "zones_center_tb"
-      elsif x_node.split('-').first == "z" && @sb[:active_tab] != "settings_smartproxy_affinity"
+      elsif x_node_split.first == "z" && @sb[:active_tab] != "settings_smartproxy_affinity"
         return "zone_center_tb"
       end
     elsif x_active_tree == :diagnostics_tree
@@ -399,7 +399,7 @@ class ApplicationHelper::ToolbarChooser
       if x_node == "root"
         return "iso_datastores_center_tb"
       else
-        if x_node.split('-').first == "isi"
+        if x_node_split.first == "isi"
           # on image node
           return "iso_image_center_tb"
         else
@@ -412,13 +412,13 @@ class ApplicationHelper::ToolbarChooser
 
   def center_toolbar_filename_storage
     if x_active_tree == :storage_tree
-      if x_node.split('-').first == 'ds'
+      if x_node_split.first == 'ds'
         return "storage_center_tb"
       else
         return "storages_center_tb"
       end
     elsif x_active_tree == :storage_pod_tree
-      nodetype =  x_node.split('-').first
+      nodetype = x_node_split.first
       if nodetype == 'ds'
         return "storage_center_tb"
       elsif nodetype != 'root'
@@ -568,31 +568,33 @@ class ApplicationHelper::ToolbarChooser
     %w(show_list).include?(@lastaction) ? toolbar_filename.pluralize : toolbar_filename
   end
 
+  def x_node_split
+    x_node.split('-')
+  end
+
   def center_toolbar_filename_configuration_manager_providers
-    nodes = x_node.split('-')
     if x_active_tree == :configuration_manager_providers_tree
-      configuration_manager_providers_tree_center_tb(nodes)
+      configuration_manager_providers_tree_center_tb(x_node_split)
     elsif x_active_tree == :configuration_manager_cs_filter_tree
-      cs_filter_tree_center_tb(nodes)
+      cs_filter_tree_center_tb(x_node_split)
     elsif x_active_tree == :configuration_scripts_tree
-      configuration_scripts_tree_center_tb(nodes)
+      configuration_scripts_tree_center_tb(x_node_split)
     end
   end
 
   def center_toolbar_filename_automation_manager
-    nodes = x_node.split('-')
-    if x_active_tree == :automation_manager_providers_tree
-      automation_manager_providers_tree_center_tb(nodes)
-    elsif x_active_tree == :automation_manager_cs_filter_tree
-      automation_manager_cs_filter_tree_center_tb(nodes)
-    elsif x_active_tree == :configuration_scripts_tree
-      automation_manager_configuration_scripts_tree_center_tb(nodes)
+    case x_active_tree
+    when :automation_manager_providers_tree
+      automation_manager_providers_tree_center_tb(x_node_split)
+    when :automation_manager_cs_filter_tree
+      automation_manager_cs_filter_tree_center_tb(x_node_split)
+    when :configuration_scripts_tree
+      automation_manager_configuration_scripts_tree_center_tb(x_node_split)
     end
   end
 
   def center_toolbar_filename_infra_networking
-    nodes = x_node.split('-')
-    infra_networking_tree_center_tb(nodes)
+    infra_networking_tree_center_tb(x_node_split)
   end
 
   def configuration_manager_providers_tree_center_tb(nodes)
