@@ -148,14 +148,6 @@ class AutomationManagerController < ApplicationController
       rec_cls = "#{model_to_type_name(@record.ext_management_system.class.to_s)}_configured_system"
     end
     return unless @display == 'main'
-    @button_group = case x_active_accord
-                    when :automation_manager_cs_filter
-                      rec_cls.to_s
-                    when :automation_manager_providers
-                      "automation_manager_#{rec_cls}"
-                    when :configuration_scripts
-                      @record.kind_of?(ConfigurationScript) ? "configuration_script" : "configuration_scripts"
-                    end
   end
 
   def configscript_service_dialog_submit
