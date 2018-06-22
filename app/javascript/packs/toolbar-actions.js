@@ -1,5 +1,7 @@
-import { subscribeToRx, DELETE_EVENT } from '../miq_observable';
+import { subscribeToRx, DELETE_EVENT, REFRESH_EVENT, RESTART_EVENT } from '../miq_observable';
 import { onDelete } from '../toolbar-actions/delete';
+import { onRefresh } from '../toolbar-actions/refresh';
+import { onRestart } from '../toolbar-actions/restart';
 
 function transformResource(resource) {
   return ({ id: resource });
@@ -18,11 +20,13 @@ export function getGridChecks() {
  *     {type: 'example', payload: {...}}
  * You need to add:
  *     example: (data) => exampleFunction(data)
- * Where exampleFunction is you function which is triggered whenever new action is dispatched 
+ * Where exampleFunction is you function which is triggered whenever new action is dispatched
  * to RX with type 'example'.
  */
 const eventMapper = {
   [DELETE_EVENT]: data => onDelete(data, getGridChecks()),
+  [REFRESH_EVENT]: data => onRefresh(data, getGridChecks()),
+  [RESTART_EVENT]: data => onRestart(data, getGridChecks()),
 };
 
 subscribeToRx(eventMapper, 'toolbarActions');
