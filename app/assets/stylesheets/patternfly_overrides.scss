@@ -462,7 +462,7 @@ table.table.table-summary-screen tbody td img {
 /// ===================================================================
 
 .no-action .miq-data-table, .no-action .miq-tile-section {
-  td{
+  td, a {
     cursor: default !important;
   }
 }

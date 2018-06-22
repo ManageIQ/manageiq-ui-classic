@@ -192,7 +192,7 @@ module ApplicationController::PolicySupport
     )
     # session[:pol_db] = session[:pol_db] == Vm ? VmOrTemplate : session[:pol_db]
     @politems = session[:pol_db].find(session[:pol_items]).sort_by(&:name)  # Get the db records
-    @view = get_db_view(session[:pol_db])             # Instantiate the MIQ Report view object
+    @view = get_db_view(session[:pol_db], :clickable => false) # Instantiate the MIQ Report view object
     @view.table = MiqFilter.records2table(@politems, @view.cols + ['id'])
 
     @edit = {}
@@ -256,7 +256,7 @@ module ApplicationController::PolicySupport
     @edit[:pol_items] = session[:tag_items]
     @catinfo = {}
     @lastaction = "policy_sim"
-    @pol_view = get_db_view(session[:tag_db])       # Instantiate the MIQ Report view object
+    @pol_view = get_db_view(session[:tag_db], :clickable => false) # Instantiate the MIQ Report view object
     @pol_view.table = MiqFilter.records2table(@tagitems, @pol_view.cols + ['id'])
 
     # Build the profiles selection list

@@ -207,6 +207,36 @@ describe VmInfraController do
     expect(response.status).to eq(200)
   end
 
+  it 'policy management has no clickable quadicons' do
+    expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      :model_name                     => 'VmOrTemplate',
+      :report_data_additional_options => {
+        :model     => "VmOrTemplate",
+        :clickable => false
+      }
+    )
+
+    post :x_button, :params => {:pressed => 'vm_protect', :id => vm_vmware.id}
+
+    expect(response.status).to eq(200)
+    expect(response.body).to_not be_empty
+  end
+
+  it 'policy simulation has no clickable quadicons' do
+    expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      :model_name                     => 'VmOrTemplate',
+      :report_data_additional_options => {
+        :model     => "VmOrTemplate",
+        :clickable => false
+      }
+    )
+
+    post :x_button, :params => {:pressed => 'vm_policy_sim', :id => vm_vmware.id}
+
+    expect(response.status).to eq(200)
+    expect(response.body).to_not be_empty
+  end
+
   it 'can cancel Manage Policies' do
     post :explorer
     expect(response.status).to eq(200)

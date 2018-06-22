@@ -15,7 +15,7 @@ module GtlHelper
     content_tag(
       'miq-tile-view', '',
       "ng-if"            => "dataCtrl.gtlType === 'grid' || dataCtrl.gtlType === 'tile'",
-      "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === ''}",
+      "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === false}",
       "settings"         => "dataCtrl.settings",
       "per-page"         => "dataCtrl.perPage",
       "rows"             => "dataCtrl.gtlData.rows",

@@ -230,7 +230,7 @@ module ApplicationController::Tags
       @tagitems = @tagging.constantize.where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }
     end
 
-    @view = get_db_view(@tagging)               # Instantiate the MIQ Report view object
+    @view = get_db_view(@tagging, :clickable => false) # Instantiate the MIQ Report view object
     @view.table = MiqFilter.records2table(@tagitems, @view.cols + ['id'])
 
     # Start with the first items assignments

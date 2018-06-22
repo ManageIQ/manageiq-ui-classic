@@ -161,7 +161,33 @@ describe StorageController do
         expect(main_content).to include("<h3>\n1 Datastore Being Tagged\n<\/h3>")
         expect(main_content).to include("modelName: 'Storage'")
         expect(main_content).to include("isExplorer: 'true' === 'true' ? true : false")
-        expect(main_content).to include("showUrl: '/storage/x_show/'")
+      end
+
+      it "tagging has no clickable quadicons" do
+        ems = FactoryGirl.create(:ems_vmware)
+        datastore = FactoryGirl.create(:storage, :name => 'storage_name')
+        datastore.parent = ems
+        classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
+        @tag1 = FactoryGirl.create(:classification_tag,
+                                   :name   => "tag1",
+                                   :parent => classification)
+        @tag2 = FactoryGirl.create(:classification_tag,
+                                   :name   => "tag2",
+                                   :parent => classification)
+        allow(Classification).to receive(:find_assigned_entries).and_return([@tag1, @tag2])
+
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name                     => 'Storage',
+          :report_data_additional_options => {
+            :model     => "Storage",
+            :clickable => false
+          }
+        )
+
+        post :x_button, :params => {:miq_grid_checks => datastore.id, :pressed => "storage_tag", :format => :js}
+
+        expect(response.status).to eq(200)
+        expect(response.body).to_not be_empty
       end
 
       it 'can Perform a datastore Smart State Analysis from the datastore summary page' do
