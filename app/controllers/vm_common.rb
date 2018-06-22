@@ -181,11 +181,7 @@ module VmCommon
       return
     end
 
-    if @record.class.base_model.to_s == "MiqTemplate"
-      rec_cls = "miq_template"
-    else
-      rec_cls = "vm"
-    end
+    rec_cls = @record.class.base_model.to_s == 'MiqTemplate' ?  'miq_template' : 'vm'
     @gtl_url = "/show"
     if %w(main).include?(@display)
       get_tagdata(@record)
