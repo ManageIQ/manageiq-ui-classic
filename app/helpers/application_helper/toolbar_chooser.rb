@@ -68,70 +68,68 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  ###
+  def center_toolbar_name_vm_or_template
+    if @record
+      return "vm_performance_tb" if @display == "performance"
+
+      case @record
+      when ManageIQ::Providers::Openstack::CloudManager::Vm
+        return 'openstack_vm_cloud_center_tb' # FIXME: this exception should be merged with ManageIQ::Providers::CloudManager::Vm
+      when ManageIQ::Providers::CloudManager::Vm
+        return 'x_vm_cloud_center_tb'
+      when ManageIQ::Providers::CloudManager::Template
+        return 'x_template_cloud_center_tb'
+      when ManageIQ::Providers::InfraManager::Vm
+        return 'x_vm_center_tb'
+      when ManageIQ::Providers::InfraManager::Template
+        return 'x_miq_template_center_tb'
+      else
+        raise 'FIXME: this would return "x_#{@button_group}_center_tb' # FIXME: remove this branch
+      end
+    else
+      return case x_active_tree
+             when :images_filter_tree, :images_tree       then 'template_clouds_center_tb'
+             when :instances_filter_tree, :instances_tree then 'vm_clouds_center_tb'
+             when :templates_images_filter_tree           then 'miq_templates_center_tb'
+             when :templates_filter_tree                  then 'template_infras_center_tb'
+             when :vms_filter_tree, :vandt_tree           then 'vm_infras_center_tb'
+             when :vms_instances_filter_tree              then 'vms_center_tb'
+             end
+    end
+  end
 
   # Return explorer based toolbar file name
   def center_toolbar_filename_explorer
-    if @record && @button_group &&
-       !["catalogs", "chargeback", "miq_capacity_utilization", "miq_capacity_planning", "services"].include?(@layout)
-      if @button_group.eql? "snapshot"
-        return "x_vm_center_tb"
-      elsif @record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)
-        return "openstack_vm_cloud_center_tb"
-      elsif @record.kind_of?(ManageIQ::Providers::CloudManager::Vm)
-        return "x_vm_cloud_center_tb"
-      elsif @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
-        return "x_template_cloud_center_tb"
-      else
-        return "x_#{@button_group}_center_tb"
-      end
-    else
-      if ["vm_cloud", "vm_infra", "vm_or_template"].include?(@layout)
-        if @record
-          if @display == "performance"
-            return "vm_performance_tb"
-          end
-        else
-          return  case x_active_tree
-                  when :images_filter_tree, :images_tree then         "template_clouds_center_tb"
-                  when :instances_filter_tree, :instances_tree then  "vm_clouds_center_tb"
-                  when :templates_images_filter_tree then            "miq_templates_center_tb"
-                  when :templates_filter_tree then                   "template_infras_center_tb"
-                  when :vms_filter_tree, :vandt_tree then            "vm_infras_center_tb"
-                  when :vms_instances_filter_tree then               "vms_center_tb"
-                  end
-        end
-      elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :configuration_manager_cs_filter_tree].include?(x_active_tree)
-        return center_toolbar_filename_configuration_manager_providers
-      elsif @layout == "automation_manager"
-        return center_toolbar_filename_automation_manager
-      elsif [:infra_networking_tree].include?(x_active_tree)
-        return center_toolbar_filename_infra_networking
-      else
-        if x_active_tree == :ae_tree
-          return center_toolbar_filename_automate
-        elsif x_active_tree == :containers_tree
-          return center_toolbar_filename_containers
-        elsif [:sandt_tree, :svccat_tree, :stcat_tree, :svcs_tree, :ot_tree].include?(x_active_tree)
-          return center_toolbar_filename_services
-        elsif @layout == "chargeback"
-          return center_toolbar_filename_chargeback
-        elsif @layout == "miq_ae_tools"
-          return super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
-        elsif @layout == "miq_policy"
-          return center_toolbar_filename_miq_policy
-        elsif @layout == "ops"
-          return center_toolbar_filename_ops
-        elsif @layout == "pxe"
-          return center_toolbar_filename_pxe
-        elsif @layout == "storage"
-          return center_toolbar_filename_storage
-        elsif @layout == "report"
-          return center_toolbar_filename_report
-        elsif @layout == "miq_ae_customization"
-          return center_toolbar_filename_automate_customization
-        end
-      end
+    if %w(vm_cloud vm_infra vm_or_template).include?(@layout)
+      return center_toolbar_name_vm_or_template
+    elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :configuration_manager_cs_filter_tree].include?(x_active_tree)
+      return center_toolbar_filename_configuration_manager_providers
+    elsif @layout == "automation_manager"
+      return center_toolbar_filename_automation_manager
+    elsif x_active_tree == :ae_tree
+      return center_toolbar_filename_automate
+    elsif x_active_tree == :infra_networking_tree
+      return center_toolbar_filename_infra_networking
+    elsif x_active_tree == :containers_tree
+      return center_toolbar_filename_containers
+    elsif %i(sandt_tree svccat_tree stcat_tree svcs_tree ot_tree).include?(x_active_tree)
+      return center_toolbar_filename_services
+    elsif @layout == "chargeback"
+      return center_toolbar_filename_chargeback
+    elsif @layout == "miq_ae_tools"
+      return super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
+    elsif @layout == "miq_policy"
+      return center_toolbar_filename_miq_policy
+    elsif @layout == "ops"
+      return center_toolbar_filename_ops
+    elsif @layout == "pxe"
+      return center_toolbar_filename_pxe
+    elsif @layout == "storage"
+      return center_toolbar_filename_storage
+    elsif @layout == "report"
+      return center_toolbar_filename_report
+    elsif @layout == "miq_ae_customization"
+      return center_toolbar_filename_automate_customization
     end
     nil
   end
