@@ -31,11 +31,12 @@
         - else
           - session[:policies].invert.sort.each do |desc, id|
             %tr{:id => "#{desc}_tr"}
-              %td{:onclick => "#{remote_function(:loading  => "miqSparkle(true);",
-                                                 :complete => "miqSparkle(false);",
-                                                 :url      => {:action  => 'policy_sim_remove', :del_pol => id})}",
-                  :title => t = _("Click to remove this policy")}
-                = image_tag(image_path('toolbars/delete.png'), :alt => t)
+              %td
+                %button.btn.btn-default{:onclick  => "#{remote_function(:loading  => "miqSparkle(true);",
+                                        :complete => "miqSparkle(false);",
+                                        :url      => {:action  => 'policy_sim_remove', :del_pol => id})}",
+                                        :title    => _("Click to remove this policy")}
+                  %i.pficon.pficon-delete
               %td
                 = h(desc)
   %hr
