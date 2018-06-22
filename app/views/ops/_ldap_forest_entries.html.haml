@@ -17,9 +17,10 @@
           %th= _("Bind Password")
       %tbody
         - if entry != "new"
-          %tr{:onclick => remote_function(:url => {:action => 'forest_select', :ldaphost_id => "new"}), :title => _("Click to add a new forest")}
+          %tr
             %td
-              = image_tag(image_path('toolbars/new.png'))
+              %button.btn.btn-default{:onclick => remote_function(:url => {:action => 'forest_select', :ldaphost_id => "new"}), :title => _("Click to add a new forest")}
+                %i.fa.fa-plus
             %td
               = _("<Click on this row to create a new forest>")
             %td
@@ -30,10 +31,8 @@
         - else
           %tr
             %td
-              = image_submit_tag(image_path('toolbars/import.png'),
-                :class => "listbutton",
-                :id => "accept", :name => "accept",
-                :alt => _("Add this entry"), :title => _("Add this entry"))
+              %button.btn.btn-default#accept{:type => 'submit', :name => 'accept', :title => _("Add this entry")}
+                %i.pficon.pficon-import
             %td
               = text_field("user_proxies", "ldaphost", "maxlength" => 50)
             %td
@@ -52,10 +51,8 @@
           - if entry != nil && entry != "new" && entry[:ldaphost] == forest[:ldaphost]
             %tr
               %td
-                = image_submit_tag(image_path('toolbars/import.png'),
-                  :class => "listbutton",
-                  :id => "accept", :name => "accept",
-                  :alt => _("Update this entry"), :title => _("Update this entry"))
+                %button.btn.btn-default#accept{:type => :submit, :name => 'accept', :title => _("Update this entry")}
+                  %i.pficon.pficon-import
               %td
                 = text_field("user_proxies", "ldaphost", "maxlength" => 50, "value" => entry[:ldaphost])
               %td
