@@ -3,7 +3,12 @@ module Mixins
     module VmActions
       module Resize
         def resizevms
-          assert_privileges(params[:pressed])
+          case params[:pressed]
+          when "instance_resize"
+            assert_privileges("instance_resize")
+          when "miq_request_edit"
+            assert_privileges("miq_request_edit")
+          end
           # if coming in to edit from miq_request list view
           recs = checked_or_params
           @record = nil
