@@ -20,8 +20,7 @@
         %select{:name        => 'flavor_id',
                 'ng-model'   => 'vm.vmCloudModel.flavor_id',
                 'ng-options' => 'flavor.id as flavor.name for flavor in vm.flavors',
-                :miqrequired => true,
-                :checkchange => true}
+                :miqrequired => true}
 
   %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
                   'paging_div_buttons_id'            => "angular_paging_div_buttons",
