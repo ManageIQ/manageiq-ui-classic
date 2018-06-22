@@ -1512,7 +1512,8 @@ class CatalogController < ApplicationController
         @edit[:new][:manager_id]          = nil
       else
         @edit[:new][:manager_id] = params[:manager_id]
-        available_job_or_container_templates(params[:manager_id]) if %w(generic_ansible_tower generic_container_template).include?(@edit[:new][:st_prov_type])
+        available_job_templates(params[:manager_id]) if @edit[:new][:st_prov_type] == 'generic_ansible_tower'
+        available_container_templates(params[:manager_id]) if @edit[:new][:st_prov_type] == 'generic_container_template'
       end
     end
     @edit[:new][:template_id] = params[:template_id] if params[:template_id]
@@ -1541,10 +1542,22 @@ class CatalogController < ApplicationController
     available_orchestration_managers(@record.orchestration_template.id) if @record.orchestration_template
   end
 
-  def available_job_or_container_templates(manager_id)
+  def available_container_templates(manager_id)
     method = @edit[:new][:st_prov_type] == 'generic_ansible_tower' ? 'configuration_scripts' : 'container_templates'
     @edit[:new][:available_templates] =
       ExtManagementSystem.find_by(:id => manager_id).send(method).collect { |t| [t.name, t.id] }.sort
+  end
+
+  def available_job_templates(manager_id)
+    @edit[:new][:available_templates]= []
+    all_job_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_scripts').collect { |t| [t.name, t.id] }.sort
+    all_workflow_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_workflows').collect { |t| [t.name, t.id] }.sort
+    @edit[:new][:available_templates].push(["", [["<#{_('Choose a Template')}>",
+                                         :selected => "<#{_('Choose a Template')}>",
+                                         :disabled => "<#{_('Choose a Template')}>",
+                                         :style    => 'display:none']]])
+    @edit[:new][:available_templates].push(["Job Templates", all_job_templates]) unless all_job_templates.blank?
+    @edit[:new][:available_templates].push(["Workflow Templates", all_workflow_templates]) unless all_workflow_templates.blank?
   end
 
   def available_ansible_tower_managers

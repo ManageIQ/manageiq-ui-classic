@@ -9,7 +9,7 @@ class ApplicationHelper::Toolbar::XConfigurationScriptCenter < ApplicationHelper
         button(
           :configscript_service_dialog,
           'pficon pficon-add-circle-o fa-lg',
-          t = N_('Create Service Dialog from this Job Template'),
+          t = N_('Create Service Dialog from this Template'),
           t),
                 ]
     ),
@@ -23,7 +23,7 @@ class ApplicationHelper::Toolbar::XConfigurationScriptCenter < ApplicationHelper
         button(
           :configuration_script_tag,
           'pficon pficon-edit fa-lg',
-          N_('Edit Tags for this Job Template'),
+          N_('Edit Tags for this Template'),
           N_('Edit Tags'),
           :url          => "tagging",
           :url_parms    => "main_div",

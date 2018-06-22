@@ -169,6 +169,11 @@ class AutomationManagerController < ApplicationController
 
   private
 
+  def is_template_record?
+    @record.kind_of?(ConfigurationWorkflow) || @record.kind_of?(ConfigurationScript)
+  end
+  helper_method :is_template_record?
+
   def textual_group_list
     [%i(properties tags)]
   end
@@ -345,7 +350,7 @@ class AutomationManagerController < ApplicationController
     get_node_info(x_node)
     @delete_node = params[:id] if @replace_trees
     type, _id = parse_nodetype_and_id(x_node)
-    type && %w(ConfiguredSystem ConfigurationScript).include?(TreeBuilder.get_model_for_prefix(type))
+    type && %w(ConfiguredSystem ConfigurationScript ConfigurationWorkflow).include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def managed_group_record?(node = x_node)

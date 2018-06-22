@@ -11,7 +11,7 @@
 - elsif @configured_system_record
   #main_div
     = render :partial => "layouts/textual_groups_generic"
-- elsif @record.kind_of?(ConfigurationScript)
+- elsif is_template_record?
   #main_div
     = render(:partial => 'automation_manager/configuration_script', :locals => {:controller => "automation_manager"})
 - else
