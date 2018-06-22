@@ -17,7 +17,6 @@ module Mixins
             @record = VmCloudReconfigureRequest.find(request_id).vms.first
           end
 
-          recs = [params[:id].to_i] if recs.blank?
           @record ||= find_record_with_rbac(VmOrTemplate, recs.first) # Set the VM object
           if @record.supports_resize?
             if @explorer
