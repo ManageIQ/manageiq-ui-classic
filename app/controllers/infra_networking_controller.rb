@@ -108,7 +108,6 @@ class InfraNetworkingController < ApplicationController
     end
     return unless %w(download_pdf main).include?(@display)
     @showtype     = "main"
-    @button_group = "infra_networking_#{rec_cls}"
   end
 
   def explorer
