@@ -230,11 +230,7 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def center_toolbar_filename_containers
-    if x_node == "root"
-      return "containers_center_tb"
-    else
-      return "container_center_tb"
-    end
+    x_node == 'root' ? 'containers_center_tb' : 'container_center_tb'
   end
 
   def center_toolbar_filename_chargeback
