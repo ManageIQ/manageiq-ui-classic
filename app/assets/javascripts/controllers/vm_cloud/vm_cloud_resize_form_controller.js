@@ -27,8 +27,9 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
   $scope.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/resize_vm/' + vmCloudResizeFormId + '?button=submit';
-    miqService.miqAjaxButton(url, {objectId: vm.objectId,
-                                   flavor_id: vm.vmCloudModel.flavor_id});
+    miqService.miqAjaxButton(url, {
+      objectId: vm.objectId,
+      flavor_id: vm.vmCloudModel.flavor_id});
   };
 
   function getResizeFormData(response) {
