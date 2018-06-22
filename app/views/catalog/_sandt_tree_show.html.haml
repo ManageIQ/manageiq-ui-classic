@@ -108,18 +108,15 @@
               = image_tag("#{@record.picture.url_path}?#{rand(99_999_999)}",
                           :style => "width:100px; height:100px;")
             .col-md-9{:valign => "bottom"}
-              = link_to(image_tag(image_path('toolbars/remove.png'),
-                                  :class => "rollover small",
-                                  :alt   => t = _("Remove this Custom Image")),
-                        {:action  => "st_upload_image",
-                         :id      => @record.id,
-                         :pressed => "remove"},
+              = link_to({:action => "st_upload_image", :id => @record.id, :pressed => "remove"},
                         "data-miq_sparkle_on"  => true,
                         "data-miq_sparkle_off" => true,
                         :remote                => true,
+                        :class                 => 'btn btn-default',
                         "data-method"          => :post,
                         :confirm               => _("Are you sure you want to remove this Custom Image?"),
-                        :title                 => t)
+                        :title                 => _("Remove this Custom Image")) do
+                %i.pficon.pficon-delete
         - else
           = _('No custom image has been uploaded')
           %br
