@@ -189,7 +189,6 @@ module VmCommon
                        :url  => "/#{rec_cls}/show_list?page=#{@current_page}&refresh=y"}, true)
       drop_breadcrumb(:name => @record.name + _(" (Summary)"), :url => "/#{rec_cls}/show/#{@record.id}")
       @showtype = "main"
-      @button_group = rec_cls
     elsif @display == "networks"
       drop_breadcrumb(:name => @record.name + _(" (Networks)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
@@ -215,7 +214,6 @@ module VmCommon
                 else
                   false
                 end
-      @button_group = "snapshot"
     elsif @display == "devices"
       drop_breadcrumb(:name => @record.name + _(" (Devices)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
@@ -231,7 +229,6 @@ module VmCommon
         @genealogy_tree = TreeBuilderGenealogy.new(:genealogy_tree, :genealogy, @sb, true, @record)
         session[:genealogy_tree_root_id] = @genealogy_tree.root_id
       end
-      @button_group = "vmtree"
     elsif @display == "compliance_history"
       count = params[:count] ? params[:count].to_i : 10
       @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, @record)
@@ -287,7 +284,7 @@ module VmCommon
       add_flash(_("Last selected Snapshot no longer exists"), :error)
     end
     @active = @snap_selected.current? if @snap_selected
-    @button_group = "snapshot"
+    @center_toolbar = 'x_vm_snapshot'
     @explorer = true
     render :update do |page|
       page << javascript_prologue
@@ -377,7 +374,6 @@ module VmCommon
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     @name = @description = ""
     @in_a_form = true
-    @button_group = "snap"
     @show_snapshot_memory_checkbox = show_snapshot_memory_checkbox?(@vm)
     drop_breadcrumb(:name    => _("Snapshot VM '%{name}''") % {:name => @record.name},
                     :url     => "/vm_common/snap",
@@ -1185,8 +1181,10 @@ module VmCommon
       c_tb = build_toolbar("x_vm_performance_tb")
     elsif @sb[:action] == "drift_history"
       c_tb = build_toolbar("drifts_center_tb") # Use vm or template tb
-    elsif ["snapshot_info", "vmtree_info"].include?(@sb[:action])
-      c_tb = build_toolbar("x_vm_center_tb") # Use vm or template tb
+    elsif @sb[:action] == 'snapshot_info'
+      c_tb = build_toolbar("x_vm_snapshot_center_tb")
+    elsif @sb[:action] == 'vmtree_info'
+      c_tb = build_toolbar("x_vm_vmtree_center_tb")
     end
     h_tb = build_toolbar("x_history_tb") unless @in_a_form
 
