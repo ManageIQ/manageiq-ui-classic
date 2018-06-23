@@ -834,7 +834,6 @@ module VmCommon
   def scan_history
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     @scan_history = ScanHistory.find_by(:vm_or_template_id => @record.id)
-    @listicon = "scan_history"
     @showtype = "scan_history"
     @lastaction = "scan_history"
     @gtl_url = "/scan_history"
@@ -880,7 +879,6 @@ module VmCommon
       show_item
     else
       drop_breadcrumb({:name => time_ago_in_words(@scan_history.started_on.in_time_zone(Time.zone)).titleize, :url => "/vm/show/#{@scan_history.vm_or_template_id}"}, true)
-      @listicon = "scan_history"
       show_details(ScanHistory)
     end
   end

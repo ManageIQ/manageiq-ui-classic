@@ -77,7 +77,6 @@ module Mixins
         drop_breadcrumb({:name => @record.name, :url => "/#{@db}/show/#{@record.id}"}, true)
         drop_breadcrumb(:name => breadcrumb_name % {:name => @record.name},
                         :url  => "/#{@db}/guest_applications/#{@record.id}")
-        @listicon = "guest_application"
         show_details(GuestApplication)
       end
     end
@@ -101,7 +100,6 @@ module Mixins
       else
         drop_breadcrumb(:name => _("%{name} (Patches)") % {:name => @record.name},
                         :url  => "/#{@db}/patches/#{@record.id}")
-        @listicon = "patch"
         show_details(Patch)
       end
     end
@@ -120,7 +118,6 @@ module Mixins
       else
         drop_breadcrumb(:name => _("%{name} (Groups)") % {:name => @record.name},
                         :url  => "/#{@db}/groups/#{@record.id}")
-        @listicon = "group"
         show_details(Account, :association => "groups")
       end
     end
@@ -139,7 +136,6 @@ module Mixins
       else
         drop_breadcrumb(:name => _("%{name} (Users)") % {:name => @record.name},
                         :url  => "/#{@db}/users/#{@record.id}")
-        @listicon = "user"
         show_details(Account, :association => "users")
       end
     end
@@ -159,7 +155,6 @@ module Mixins
       else
         drop_breadcrumb(:name => _("%{name} (Hosts)") % {:name => @record.name},
                         :url  => "/#{controller_name}/hosts/#{@record.id}")
-        @listicon = "host"
         show_details(Host, :association => "hosts")
       end
     end

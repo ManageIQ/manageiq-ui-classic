@@ -72,7 +72,6 @@ class ChargebackController < ApplicationController
 
   # Show the main Schedules list view
   def cb_rates_list
-    @listicon = "chargeback_rates"
     @gtl_type = "list"
     @explorer = true
     if params[:ppsetting]                                              # User selected new per page value
