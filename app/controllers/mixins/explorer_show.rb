@@ -8,7 +8,7 @@ module Mixins
       obj
     end
 
-    def show_association(action, display_name, listicon, method, klass, association = nil, scopes = nil)
+    def show_association(action, display_name, method, klass, association = nil, scopes = nil)
       params[:display] = klass.name
       # Ajax request means in explorer, or if current explorer is one of the explorer controllers
       @explorer = true if request.xml_http_request? && explorer_controller?
@@ -37,7 +37,6 @@ module Mixins
                          :url  => "/#{controller_name}/show/#{@record.id}"}, true)
         drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
                         :url  => "/#{controller_name}/#{action}/#{@record.id}")
-        @listicon = listicon
 
         show_details(klass, :association => association, :scopes => scopes)
       end

@@ -17,7 +17,7 @@ class ConfigurationJobController < ApplicationController
   end
 
   def parameters
-    show_association('parameters', _('Parameters'), 'parameter', :parameters, OrchestrationStackParameter)
+    show_association('parameters', _('Parameters'), :parameters, OrchestrationStackParameter)
   end
 
   # handle buttons pressed on the button bar
