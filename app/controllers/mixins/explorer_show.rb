@@ -184,8 +184,6 @@ module Mixins
     def show_details(db, options = {})  # Pass in the db, parent vm is in @vm
       association = options[:association]
       scopes = options[:scopes]
-      # generate the grid/tile/list url to come back here when gtl buttons are pressed
-      @gtl_url       = "/#{@db}/#{@listicon.pluralize}/#{@record.id}?"
       @showtype      = "details"
       @display       = "main"
       @no_checkboxes = @no_checkboxes.nil? || @no_checkboxes
