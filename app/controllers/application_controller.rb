@@ -981,15 +981,13 @@ class ApplicationController < ActionController::Base
 
       # Generate html for the list icon
       item = listicon_item(view, row['id'])
-      icon, icon2, image, picture = listicon_glyphicon(item)
+      icon, icon2, image = fonticon_or_fileicon(item)
       # FIXME: adding exceptions here is a wrong approach
       icon = nil if params[:controller] == 'pxe'
       new_row[:cells] << {:title => _('View this item'),
                           :image   => ActionController::Base.helpers.image_path(image.to_s),
-                          :picture => ActionController::Base.helpers.image_path(picture.to_s),
                           :icon    => icon,
                           :icon2   => icon2}
-
 
       view.col_order.each_with_index do |col, col_idx|
         next if view.column_is_hidden?(col)

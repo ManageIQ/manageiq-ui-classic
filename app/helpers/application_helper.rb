@@ -1255,17 +1255,16 @@ module ApplicationHelper
       ).include?(x_tree[:type])
   end
 
-  def listicon_glyphicon(item)
+  def fonticon_or_fileicon(item)
     return nil unless item
     decorated = item.decorate
     [
       decorated.try(:fonticon),
       decorated.try(:secondary_icon),
-      decorated.try(:fileicon),
-      item.try(:picture) ? decorated.try(:fileicon) : nil
+      decorated.try(:fileicon)
     ]
   end
-  private :listicon_glyphicon
+  private :fonticon_or_fileicon
 
   CONTENT_TYPE_ID = {
     "report" => "r",
