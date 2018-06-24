@@ -1280,15 +1280,6 @@ module ApplicationHelper
     MiqWidget
   ).freeze
 
-  def fileicon_tag(item)
-    icon, _icon2, image = listicon_glyphicon(item)
-    if icon
-      content_tag(:i, nil, :class => icon)
-    else
-      image_tag(ActionController::Base.helpers.image_path(image), :alt => nil)
-    end
-  end
-
   def process_show_list_options(options, curr_model = nil)
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
     @report_data_additional_options.with_quadicon_options(
