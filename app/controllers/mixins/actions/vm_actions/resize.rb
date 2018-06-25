@@ -3,15 +3,22 @@ module Mixins
     module VmActions
       module Resize
         def resizevms
-          assert_privileges(params[:pressed])
+          case params[:pressed]
+          when "instance_resize"
+            assert_privileges("instance_resize")
+          when "miq_request_edit"
+            assert_privileges("miq_request_edit")
+          else
+            raise MiqException::RbacPrivilegeException, _("The user is not authorized for this task or item.")
+          end
           # if coming in to edit from miq_request list view
           recs = checked_or_params
+          @record = nil
           if !session[:checked_items].nil? && (@lastaction == "set_checked_items" || params[:pressed] == "miq_request_edit")
             request_id = params[:id]
             @record = VmCloudReconfigureRequest.find(request_id).vms.first
           end
 
-          recs = [params[:id].to_i] if recs.blank?
           @record ||= find_record_with_rbac(VmOrTemplate, recs.first) # Set the VM object
           if @record.supports_resize?
             if @explorer
@@ -43,7 +50,7 @@ module Mixins
             )
           end
           @sb[:explorer] = @explorer
-          @request_id = params[:req_id] ? params[:req_id] : nil
+          @request_id = params[:req_id]
           @in_a_form = true
           @resize = true
           render :action => "show" unless @explorer
