@@ -65,6 +65,8 @@ namespace :ui do
       end
     end
   end
+
+  task :load_inflectors => ["ui:load_app_inflectors", "ui:load_asset_engine_inflectors"]
 end
 
 namespace :webpack do
@@ -82,8 +84,6 @@ namespace :webpack do
       # 'webpacker:compile') to function.
       EvmRakeHelper.with_dummy_database_url_configuration do
         Dir.chdir ManageIQ::UI::Classic::Engine.root do
-          Rake::Task["ui:load_app_inflectors"].invoke
-          Rake::Task["ui:load_asset_engine_inflectors"].invoke
           Rake::Task["webpack:paths"].invoke
           Rake::Task["webpacker:#{webpacker_task}"].invoke
         end
@@ -91,7 +91,7 @@ namespace :webpack do
     end
   end
 
-  task :paths do
+  task :paths => 'ui:load_inflectors' do
     paths_config = ManageIQ::UI::Classic::Engine.root.join('config/webpack/paths.json')
 
     File.open(paths_config, 'w') do |file|
