@@ -13,6 +13,7 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
 
     vm.newRecord = vm.formId == 'new';
 
+    miqService.sparkleOn();
     $http.get('/vm_cloud/resize_form_fields/' + vm.formId + '?objectId=' + vm.objectId)
       .then(getResizeFormData)
       .catch(miqService.handleFailure);
