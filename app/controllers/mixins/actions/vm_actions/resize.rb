@@ -48,7 +48,7 @@ module Mixins
             )
           end
           @sb[:explorer] = @explorer
-          @request_id = params[:req_id] ? params[:req_id] : nil
+          @request_id = params[:req_id]
           @in_a_form = true
           @resize = true
           render :action => "show" unless @explorer
