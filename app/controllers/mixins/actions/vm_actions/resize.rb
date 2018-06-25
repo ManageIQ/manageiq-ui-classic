@@ -8,6 +8,8 @@ module Mixins
             assert_privileges("instance_resize")
           when "miq_request_edit"
             assert_privileges("miq_request_edit")
+          else
+            raise MiqException::RbacPrivilegeException, _("The user is not authorized for this task or item.")
           end
           # if coming in to edit from miq_request list view
           recs = checked_or_params
