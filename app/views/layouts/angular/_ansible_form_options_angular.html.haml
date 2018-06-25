@@ -128,13 +128,12 @@
                  'name'       => "#{prefix}_inventory_radio"}
           = _('Specify host values')
         %br
-        %input.form-control{'type'        => "text",
-                            'ng-model'    => "#{ng_model}.#{prefix}_inventory",
-                            'ng-if'       => "vm.inventory_mode !== 'localhost'",
-                            'name'        => "#{prefix}_inventory",
-                            'maxlength'   => 50,
-                            'miqrequired' => "",
-                            'checkchange' => true}
+        %textarea.form-control{'ng-model'    => "#{ng_model}.#{prefix}_inventory",
+                               'ng-if'       => "vm.inventory_mode !== 'localhost'",
+                                'name'        => "#{prefix}_inventory",
+                                'maxlength'   => 512,
+                                'miqrequired' => "",
+                                'checkchange' => true}
           %span.help-block{"ng-show" => "angularForm.#{prefix}_inventory.$error.miqrequired"}
             = _("Required")
     .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_execution_ttl.$invalid}"}
