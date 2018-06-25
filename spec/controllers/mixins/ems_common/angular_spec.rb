@@ -238,5 +238,29 @@ describe Mixins::EmsCommon::Angular do
         expect(@ems_cloud_controller.send(:get_task_args, @ems)).to eq(expected_connect_options)
       end
     end
+
+    context 'azure cloud' do
+      before do
+        @ems_cloud_controller = EmsCloudController.new
+        @params = {
+          :default_userid   => "abc",
+          :default_password => "abc",
+          :azure_tenant_id  => "77ecefb6-cff0-4e8d-a446-757a69cb9444",
+          :subscription     => "2586c64b-38b4-4527-a140-012d49dfc444",
+          :provider_region  => "East US",
+          :default_url      => "http://abc.test/mypath"
+        }
+        @ems = FactoryGirl.create(:ems_azure)
+        allow(@ems).to receive(:to_s).and_return('ManageIQ::Providers::Azure::CloudManager')
+      end
+
+      it "returns connect options for azure cloud" do
+        @params[:cred_type] = "default"
+        @ems_cloud_controller.instance_variable_set(:@_params, @params)
+
+        expected_connect_options = ["abc", "v2:{XpADRTTI7f11hNT7AuDaKg==}", "77ecefb6-cff0-4e8d-a446-757a69cb9444", "2586c64b-38b4-4527-a140-012d49dfc444", nil, "East US", URI.parse("http://abc.test/mypath")]
+        expect(@ems_cloud_controller.send(:get_task_args, @ems)).to eq(expected_connect_options)
+      end
+    end
   end
 end
