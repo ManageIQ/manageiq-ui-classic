@@ -646,7 +646,7 @@ class ApplicationHelper::ToolbarChooser
     if %w(root e h c).include?(nodes.first)
       "infra_networkings_center_tb"
     else
-      "infra_networking_center_tb"
+      nil
     end
   end
 

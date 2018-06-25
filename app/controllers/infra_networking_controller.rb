@@ -103,11 +103,9 @@ class InfraNetworkingController < ApplicationController
       return
     end
 
-    if @record.kind_of?(Switch)
-      rec_cls = @record.class.base_model.to_s
-    end
     return unless %w(download_pdf main).include?(@display)
-    @showtype     = "main"
+    @showtype = "main"
+    @center_toolbar = 'infra_networking'
   end
 
   def explorer
