@@ -21,7 +21,9 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/resize_vm/' + vm.formId + '?button=cancel';
-    miqService.miqAjaxButton(url, {objectId: vm.objectId});
+    miqService.miqAjaxButton(url, {
+      objectId: vm.objectId,
+    });
   };
 
   $scope.submitClicked = function() {
@@ -29,7 +31,8 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
     var url = '/vm_cloud/resize_vm/' + vm.formId + '?button=submit';
     miqService.miqAjaxButton(url, {
       objectId: vm.objectId,
-      flavor_id: vm.vmCloudModel.flavor_id});
+      flavor_id: vm.vmCloudModel.flavor_id,
+    });
   };
 
   function getResizeFormData(response) {
