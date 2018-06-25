@@ -6,27 +6,27 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
       flavor_id: null,
     };
     vm.flavors = [];
-    vm.vmCloudResizeformId = vmCloudResizeFormId;
+    vm.formId = vmCloudResizeFormId;
     vm.objectId = objectId;
 
     ManageIQ.angular.scope = vm;
 
-    vm.newRecord = vmCloudResizeFormId == 'new';
+    vm.newRecord = vm.formId == 'new';
 
-    $http.get('/vm_cloud/resize_form_fields/' + vmCloudResizeFormId + '?objectId=' + vm.objectId)
+    $http.get('/vm_cloud/resize_form_fields/' + vm.formId + '?objectId=' + vm.objectId)
       .then(getResizeFormData)
       .catch(miqService.handleFailure);
   };
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
-    var url = '/vm_cloud/resize_vm/' + vmCloudResizeFormId + '?button=cancel';
+    var url = '/vm_cloud/resize_vm/' + vm.formId + '?button=cancel';
     miqService.miqAjaxButton(url, {objectId: vm.objectId});
   };
 
   $scope.submitClicked = function() {
     miqService.sparkleOn();
-    var url = '/vm_cloud/resize_vm/' + vmCloudResizeFormId + '?button=submit';
+    var url = '/vm_cloud/resize_vm/' + vm.formId + '?button=submit';
     miqService.miqAjaxButton(url, {
       objectId: vm.objectId,
       flavor_id: vm.vmCloudModel.flavor_id});
