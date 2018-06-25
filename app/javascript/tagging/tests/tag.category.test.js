@@ -1,6 +1,7 @@
 import React from 'react';
 import TagCategory from '../components/InnerComponents/TagCategory';
-import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 
 const tagCategory = { description: 'animal', id: 1 };
 const tagValues = [
@@ -13,14 +14,14 @@ function onDelete(x) {
 
 describe('TagCategory Component', () => {
   it('match snapshot', () => {
-    const component = renderer.create(
+    const component = shallow(
       <TagCategory
         tagCategory={tagCategory}
-        tagValues={tagValues}
+        values={tagValues}
         onTagDeleteClick={onDelete}
       />
     );
-    const tree = component.toJSON();
+    const tree = toJson(component);
     expect(tree).toMatchSnapshot();
   });
 });

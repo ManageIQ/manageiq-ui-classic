@@ -1,10 +1,11 @@
 import React from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
+import TaggingPropTypes from '../TaggingPropTypes';
 
 class ValueSelector extends React.Component {
-  getTagValues = tagValues =>
-    tagValues.map(tag => ({ value: tag.id, label: tag.description }));
+  getvalues = values =>
+    values.map(tag => ({ value: tag.id, label: tag.description }));
 
   handleChange = (selectedOption) => {
     this.props.onTagValueChange({
@@ -13,13 +14,13 @@ class ValueSelector extends React.Component {
     });
   };
 
-  selector = (value, label, tagValues) => (
+  selector = (value, label, values) => (
     <Select
       name="form-field-name"
       value={value}
       label={label}
       onChange={this.handleChange}
-      options={tagValues}
+      options={values}
       clearable={false}
       ignoreCase
     />
@@ -29,20 +30,14 @@ class ValueSelector extends React.Component {
     return this.selector(
       this.props.selectedOption.id,
       this.props.selectedOption.description,
-      this.getTagValues(this.props.tagValues),
+      this.getvalues(this.props.values),
     );
   }
 }
 
 ValueSelector.propTypes = {
-  selectedOption: PropTypes.shape({
-    id: PropTypes.number,
-    description: PropTypes.string,
-  }),
-  tagValues: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  selectedOption: TaggingPropTypes.value,
+  values: PropTypes.arrayOf(TaggingPropTypes.value).isRequired,
   onTagValueChange: PropTypes.func.isRequired,
 };
 

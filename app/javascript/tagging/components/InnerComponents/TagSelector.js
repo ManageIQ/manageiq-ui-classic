@@ -2,6 +2,8 @@ import React from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'patternfly-react';
+import { __ } from '../../../global-functions';
+import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagSelector extends React.Component {
   handleChange = (selectedOption) => {
@@ -52,20 +54,14 @@ class TagSelector extends React.Component {
   }
 }
 TagSelector.propTypes = {
-  tagCategories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    description: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
-  selectedOption: PropTypes.shape({
-    id: PropTypes.number,
-    description: PropTypes.string,
-  }),
+  tagCategories: PropTypes.arrayOf(TaggingPropTypes.category).isRequired,
+  selectedOption: TaggingPropTypes.value,
   onTagCategoryChange: PropTypes.func.isRequired,
   infoText: PropTypes.string,
 };
 
 TagSelector.defaultProps = {
-  infoText: 'Only a single value can be assigned from these categories',
+  infoText: __('Only a single value can be assigned from these categories'),
   selectedOption: {},
 };
 

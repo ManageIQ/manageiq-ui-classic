@@ -1,6 +1,7 @@
 import React from 'react';
 import ValueModifier from '../components/InnerComponents/ValueModifier';
-import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 
 const selectedTagValue = { description: 'Duck', id: 1 };
 const onTagValueChange = jest.fn();
@@ -12,15 +13,16 @@ const tagValues = [
 
 describe('TagCategory Component', () => {
   it('match snapshot', () => {
-    const component = renderer.create(
+    const component = shallow(
       <ValueModifier
         onTagValueChange={onTagValueChange}
         selectedTagValue={selectedTagValue}
         multiValue={false}
-        tagValues={tagValues}
+        values={tagValues}
       />
     );
 
-    expect(toJson(tree)).toMatchSnapshot();
+    const tree = toJson(component);
+    expect(tree).toMatchSnapshot();
   });
 });

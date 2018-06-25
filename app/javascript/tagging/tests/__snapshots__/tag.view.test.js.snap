@@ -1,183 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tag view match snapshot 1`] = `
-<TagView
-  assignedTags={
-    Array [
-      Object {
-        "tagCategory": Object {
-          "description": "Name",
-          "id": 1,
-        },
-        "tagValues": Array [
-          Object {
-            "description": "Pepa",
-            "id": 11,
-          },
-        ],
-      },
-    ]
-  }
-  header="Assigned tags"
-  onTagDeleteClick={[Function]}
->
+<React.Fragment>
   <Row
     bsClass="row"
     componentClass="div"
   >
-    <div
-      className="row"
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={12}
     >
-      <Col
-        bsClass="col"
-        componentClass="div"
-        lg={12}
-      >
-        <div
-          className="col-lg-12"
-        >
-          <h2>
-            Assigned tags
-          </h2>
-        </div>
-      </Col>
-    </div>
+      <h2>
+        Assigned tags
+      </h2>
+    </Col>
   </Row>
   <Row
     bsClass="row"
     componentClass="div"
   >
-    <div
-      className="row"
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={12}
     >
-      <Col
-        bsClass="col"
-        componentClass="div"
-        lg={12}
+      <ul
+        className="list-inline"
       >
-        <div
-          className="col-lg-12"
-        >
-<<<<<<< HEAD
-          <ul
-            className="list-inline"
-          >
-            <TagCategory
-              key="1"
-              onTagDeleteClick={[Function]}
-              tagCategory={
-                Object {
-                  "description": "Name",
-                  "id": 1,
-                }
-              }
-              tagValues={
-                Array [
-                  Object {
-                    "description": "Pepa",
-                    "id": 11,
-                  },
-                ]
-              }
-=======
-          <div
-            className="category-label"
-            onBlur={[Function]}
-            onClick={null}
-            onFocus={[Function]}
-            onMouseOut={[Function]}
-            onMouseOver={[Function]}
-          >
-            Name
-          </div>
-          <li
-            className="tag"
-          >
-            <span
-              className="tagColor label label-primary"
-              onBlur={[Function]}
-              onClick={null}
-              onFocus={[Function]}
-              onMouseOut={[Function]}
-              onMouseOver={[Function]}
->>>>>>> Change tests
-            >
-              <ul
-                className="tag-category list-inline"
-              >
-                <div
-                  className="category-label"
-                >
-                  Name
-                </div>
-                <Tag
-                  key="11"
-                  onTagDeleteClick={[Function]}
-                  tagCategory={
-                    Object {
-                      "description": "Name",
-                      "id": 1,
-                    }
-                  }
-                  tagValue={
-                    Object {
-                      "description": "Pepa",
-                      "id": 11,
-                    }
-                  }
-                >
-                  <li
-                    className="tag"
-                    key="11"
-                  >
-                    <Label
-                      bsStyle="primary"
-                      className="tagColor"
-                      key="11"
-                      onRemoveClick={[Function]}
-                      type="default"
-                    >
-                      <Label
-                        bsClass="label"
-                        bsStyle="primary"
-                        className="tagColor"
-                      >
-                        <span
-                          className="tagColor label label-primary"
-                        >
-                          Pepa
-                          <RemoveButton
-                            className=""
-                            onRemoveClick={[Function]}
-                            title="Remove"
-                          >
-                            <a
-                              className="pf-remove-button"
-                              href="#"
-                              onClick={[Function]}
-                            >
-                              <span
-                                aria-hidden="true"
-                                className="pficon pficon-close"
-                              />
-                              <span
-                                className="sr-only"
-                              >
-                                Remove
-                              </span>
-                            </a>
-                          </RemoveButton>
-                        </span>
-                      </Label>
-                    </Label>
-                  </li>
-                </Tag>
-              </ul>
-            </TagCategory>
-          </ul>
-        </div>
-      </Col>
-    </div>
+        <TagCategory
+          categoryTruncate={[Function]}
+          key="1"
+          onTagDeleteClick={[MockFunction]}
+          tagCategory={
+            Object {
+              "description": "Name",
+              "id": 1,
+            }
+          }
+          valueTruncate={[Function]}
+          values={
+            Array [
+              Object {
+                "description": "Pepa",
+                "id": 11,
+              },
+            ]
+          }
+        />
+      </ul>
+    </Col>
   </Row>
-</TagView>
+</React.Fragment>
 `;

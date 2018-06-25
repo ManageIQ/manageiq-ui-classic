@@ -1,7 +1,6 @@
 import React from 'react';
 import { TaggingConnected } from '../containers/tagging';
 import Tagging from '../components/Tagging/Tagging';
-import renderer from 'react-test-renderer';
 import { shallow, mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';

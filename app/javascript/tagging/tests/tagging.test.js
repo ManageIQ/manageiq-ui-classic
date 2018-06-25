@@ -1,7 +1,7 @@
 import React from 'react';
 import Tagging from '../components/Tagging/Tagging';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 
 const tags = [
   {
@@ -48,36 +48,20 @@ const tags = [
 
 const selectedTagCategory = { description: 'animal', id: 1 };
 const selectedTagValue = { description: 'duck', id: 1 };
-<<<<<<< HEAD
-const assignedTags = [{ tagCategory: { description: 'Name', id: 1 }, tagValues: [{ description: 'Pepa', id: 11 }] }];
-=======
 const assignedTags = [
   {
     description: 'Name',
     id: 1,
-    tagValues: [{ description: 'Pepa', id: 11 }]
+    values: [{ description: 'Pepa', id: 11 }]
   }
 ];
->>>>>>> Change tests
 
-const onChange = x => x;
-const onDelete = x => x;
+const onChange = jest.fn();
+const onDelete = jest.fn();
 
 describe('Tagging component without redux mapping', () => {
   it('match snapshot', () => {
-<<<<<<< HEAD
-    const tree = mount(<Tagging
-      tags={tags}
-      assignedTags={assignedTags}
-      onTagValueChange={onChange}
-      onTagCategoryChange={onChange}
-      onTagDeleteClick={onDelete}
-      selectedTagCategory={selectedTagCategory}
-      selectedTagValue={selectedTagValue}
-    />);
-    expect(toJson(tree)).toMatchSnapshot();
-=======
-    const component = renderer.create(
+    const component = mount(
       <Tagging
         tags={tags}
         assignedTags={assignedTags}
@@ -89,9 +73,8 @@ describe('Tagging component without redux mapping', () => {
         selectedTagValue={selectedTagValue}
       />
     );
-    const tree = component.toJSON();
+    const tree = toJson(component);
     expect(tree).toMatchSnapshot();
->>>>>>> Change tests
   });
 
   it('should call methods', () => {
@@ -99,7 +82,7 @@ describe('Tagging component without redux mapping', () => {
     const onTagValueChange = jest.fn();
     const onTagDeleteClick = jest.fn();
     const onTagMultiValueChange = jest.fn();
-    const wrapper = shallow(
+    const wrapper = mount(
       <Tagging
         tags={tags}
         assignedTags={assignedTags}

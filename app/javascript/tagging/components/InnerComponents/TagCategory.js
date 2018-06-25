@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'patternfly-react';
 import Tag from './Tag';
+import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagCategory extends React.Component {
   generateTag = tagValue => (
@@ -15,11 +16,10 @@ class TagCategory extends React.Component {
   );
 
   render() {
-    const values = [...this.props.tagValues];
+    const values = [...this.props.values];
     const categoryTooltip = (
       <Tooltip id="tooltip">{this.props.tagCategory.description}</Tooltip>
     );
-    console.log(this.props);
     return (
       <ul className="tag-category list-inline">
         <OverlayTrigger placement="bottom" overlay={categoryTooltip}>
@@ -37,11 +37,8 @@ class TagCategory extends React.Component {
 
 TagCategory.propTypes = {
   onTagDeleteClick: PropTypes.func.isRequired,
-  tagCategory: PropTypes.object.isRequired,
-  tagValues: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  tagCategory: TaggingPropTypes.category,
+  values: PropTypes.arrayOf(TaggingPropTypes.category).isRequired,
   categoryTruncate: PropTypes.func,
   valueTruncate: PropTypes.func,
 };

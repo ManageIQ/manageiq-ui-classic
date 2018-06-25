@@ -17,6 +17,13 @@ const TaggingPropTypes = {
       description: PropTypes.string.isRequired,
     }).isRequired).isRequired,
   })).isRequired,
+  button: PropTypes.shape({
+    onClick: PropTypes.func,
+    href: PropTypes.string,
+    type: PropTypes.string,
+    disabled: PropTypes.bool,
+    description: PropTypes.string,
+  }).isRequired,
 };
 
 export default TaggingPropTypes;

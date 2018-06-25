@@ -1,200 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TagCategory Component match snapshot 1`] = `
-<TagCategory
-  onTagDeleteClick={[Function]}
-  tagCategory={
-    Object {
-      "description": "animal",
-      "id": 1,
-    }
-  }
-  tagValues={
-    Array [
-      Object {
-        "description": "duck",
-        "id": 1,
-      },
-      Object {
-        "description": "lion",
-        "id": 2,
-      },
-    ]
-  }
+<ul
+  className="tag-category list-inline"
 >
-<<<<<<< HEAD
-  <ul
-    className="tag-category list-inline"
+  <OverlayTrigger
+    defaultOverlayShown={false}
+    overlay={
+      <Tooltip
+        bsClass="tooltip"
+        id="tooltip"
+        placement="right"
+      >
+        animal
+      </Tooltip>
+    }
+    placement="bottom"
+    trigger={
+      Array [
+        "hover",
+        "focus",
+      ]
+    }
   >
     <div
       className="category-label"
     >
       animal
     </div>
-    <Tag
-      key="1"
-      onTagDeleteClick={[Function]}
-      tagCategory={
-        Object {
-          "description": "animal",
-          "id": 1,
-        }
+  </OverlayTrigger>
+  <Tag
+    key="1"
+    onTagDeleteClick={[Function]}
+    tagCategory={
+      Object {
+        "description": "animal",
+        "id": 1,
       }
-      tagValue={
-        Object {
-          "description": "duck",
-          "id": 1,
-        }
+    }
+    tagValue={
+      Object {
+        "description": "duck",
+        "id": 1,
       }
-=======
-  <div
-    className="category-label"
-    onBlur={[Function]}
-    onClick={null}
-    onFocus={[Function]}
-    onMouseOut={[Function]}
-    onMouseOver={[Function]}
-  >
-    animal
-  </div>
-  <li
-    className="tag"
-  >
-    <span
-      className="tagColor label label-primary"
-      onBlur={[Function]}
-      onClick={null}
-      onFocus={[Function]}
-      onMouseOut={[Function]}
-      onMouseOver={[Function]}
->>>>>>> Change tests
-    >
-      <li
-        className="tag"
-        key="1"
-      >
-        <Label
-          bsStyle="primary"
-          className="tagColor"
-          key="1"
-          onRemoveClick={[Function]}
-          type="default"
-        >
-<<<<<<< HEAD
-          <Label
-            bsClass="label"
-            bsStyle="primary"
-            className="tagColor"
-          >
-            <span
-              className="tagColor label label-primary"
-            >
-              duck
-              <RemoveButton
-                className=""
-                onRemoveClick={[Function]}
-                title="Remove"
-              >
-                <a
-                  className="pf-remove-button"
-                  href="#"
-                  onClick={[Function]}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="pficon pficon-close"
-                  />
-                  <span
-                    className="sr-only"
-                  >
-                    Remove
-                  </span>
-                </a>
-              </RemoveButton>
-            </span>
-          </Label>
-        </Label>
-      </li>
-    </Tag>
-    <Tag
-      key="2"
-      onTagDeleteClick={[Function]}
-      tagCategory={
-        Object {
-          "description": "animal",
-          "id": 1,
-        }
+    }
+    truncate={[Function]}
+  />
+  <Tag
+    key="2"
+    onTagDeleteClick={[Function]}
+    tagCategory={
+      Object {
+        "description": "animal",
+        "id": 1,
       }
-      tagValue={
-        Object {
-          "description": "lion",
-          "id": 2,
-        }
+    }
+    tagValue={
+      Object {
+        "description": "lion",
+        "id": 2,
       }
-=======
-          Remove
-        </span>
-      </a>
-    </span>
-  </li>
-  <li
-    className="tag"
-  >
-    <span
-      className="tagColor label label-primary"
-      onBlur={[Function]}
-      onClick={null}
-      onFocus={[Function]}
-      onMouseOut={[Function]}
-      onMouseOver={[Function]}
->>>>>>> Change tests
-    >
-      <li
-        className="tag"
-        key="2"
-      >
-        <Label
-          bsStyle="primary"
-          className="tagColor"
-          key="2"
-          onRemoveClick={[Function]}
-          type="default"
-        >
-          <Label
-            bsClass="label"
-            bsStyle="primary"
-            className="tagColor"
-          >
-            <span
-              className="tagColor label label-primary"
-            >
-              lion
-              <RemoveButton
-                className=""
-                onRemoveClick={[Function]}
-                title="Remove"
-              >
-                <a
-                  className="pf-remove-button"
-                  href="#"
-                  onClick={[Function]}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="pficon pficon-close"
-                  />
-                  <span
-                    className="sr-only"
-                  >
-                    Remove
-                  </span>
-                </a>
-              </RemoveButton>
-            </span>
-          </Label>
-        </Label>
-      </li>
-    </Tag>
-  </ul>
-</TagCategory>
+    }
+    truncate={[Function]}
+  />
+</ul>
 `;

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Row, ButtonGroup, Button } from 'patternfly-react';
 import { ButtonToolbar } from 'react-bootstrap';
 import Tagging from '../Tagging/Tagging';
+import TaggingPropTypes from '../TaggingPropTypes';
 
 class TaggingWithButtons extends React.Component {
   onTagCategoryChange = selectedTagCategory => this.props.onTagCategoryChange(selectedTagCategory);
@@ -63,68 +64,21 @@ class TaggingWithButtons extends React.Component {
 }
 
 TaggingWithButtons.propTypes = {
-  selectedTagCategory: PropTypes.shape({
-    id: PropTypes.number,
-    description: PropTypes.string,
-  }).isRequired,
-  selectedTagValue: PropTypes.shape({
-    id: PropTypes.number,
-    description: PropTypes.string,
-  }).isRequired,
-  tags: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    values: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-  })).isRequired,
-  assignedTags: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    tagValues: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-  })).isRequired,
+  selectedTagCategory: TaggingPropTypes.category,
+  selectedTagValue: TaggingPropTypes.value,
+  tags: TaggingPropTypes.tags,
+  assignedTags: TaggingPropTypes.tags,
   onTagDeleteClick: PropTypes.func.isRequired,
   onTagCategoryChange: PropTypes.func.isRequired,
   onTagValueChange: PropTypes.func.isRequired,
   onTagMultiValueChange: PropTypes.func,
   showReset: PropTypes.bool,
-  cancelButton: PropTypes.shape({
-    onClick: PropTypes.func,
-    href: PropTypes.string,
-    type: PropTypes.string,
-    disabled: PropTypes.bool,
-    description: PropTypes.string,
-  }),
-  resetButton: PropTypes.shape({
-    onClick: PropTypes.func,
-    href: PropTypes.string,
-    type: PropTypes.string,
-    disabled: PropTypes.bool,
-    description: PropTypes.string,
-  }),
-  saveButton: PropTypes.shape({
-    onClick: PropTypes.func,
-    href: PropTypes.string,
-    type: PropTypes.string,
-    disabled: PropTypes.bool,
-    description: PropTypes.string,
-  }),
+  cancelButton: TaggingPropTypes.button,
+  resetButton: TaggingPropTypes.button,
+  saveButton: TaggingPropTypes.button,
 };
 
 TaggingWithButtons.defaultProps = {
-  cancelButton: {
-    onClick: () => {}, href: '', type: 'button', disabled: false, description: 'Cancel',
-  },
-  resetButton: {
-    onClick: () => {}, href: '', type: 'reset', disabled: false, description: 'Reset',
-  },
-  saveButton: {
-    onClick: () => {}, href: '', type: 'submit', disabled: false, description: 'Save',
-  },
   showReset: true,
   onTagMultiValueChange: () => {},
 };

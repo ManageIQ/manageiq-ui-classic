@@ -1,6 +1,7 @@
 import React from 'react';
 import ValueSelector from '../components/InnerComponents/ValueSelector';
-import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 
 const tagValues = [
   { description: 'Asterix', id: 1 },
@@ -12,26 +13,26 @@ function onChange(x) {
 }
 
 test('match snapshot', () => {
-  const component = renderer.create(
+  const component = shallow(
     <ValueSelector
-      tagValues={tagValues}
+      values={tagValues}
       onTagValueChange={onChange}
       selectedOption={selectedTagValue}
     />
   );
-  const tree = component.toJSON();
+  const tree = toJson(component);
   expect(tree).toMatchSnapshot();
 });
 
 test('match snapshot without multiple values', () => {
-  const component = renderer.create(
+  const component = shallow(
     <ValueSelector
-      tagValues={tagValues}
+      values={tagValues}
       onTagValueChange={onChange}
       selectedOption={selectedTagValue}
       multiValue={false}
     />
   );
-  const tree = component.toJSON();
+  const tree = toJson(component);
   expect(tree).toMatchSnapshot();
 });

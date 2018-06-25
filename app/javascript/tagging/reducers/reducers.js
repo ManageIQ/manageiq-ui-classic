@@ -3,14 +3,14 @@ import * as actionsConstants from '../actions/actions';
 function deleteAssignedTag(state, actionTag) {
   const filteredState = state.filter(tag => (tag.id !== actionTag.tagCategory.id));
   const selectedItem = state.find(tag => (tag.id === actionTag.tagCategory.id));
-  const filteredTagValues = selectedItem.tagValues.filter(value => (value.id !== actionTag.tagValue.id));
+  const filteredTagValues = selectedItem.values.filter(value => (value.id !== actionTag.tagValue.id));
   return [...filteredState,
     {
       description: actionTag.tagCategory.description,
       id: actionTag.tagCategory.id,
-      tagValues: [...filteredTagValues],
+      values: [...filteredTagValues],
     },
-  ].filter(tag => (tag.tagValues.length !== 0));
+  ].filter(tag => (tag.values.length !== 0));
 }
 
 function changeAssignedTag(state, actionTag) {
@@ -20,20 +20,20 @@ function changeAssignedTag(state, actionTag) {
     {
       description: actionTag.tagCategory.description,
       id: actionTag.tagCategory.id,
-      tagValues: [actionTag.tagValue],
+      values: [actionTag.tagValue],
     },
   ];
 }
 
 function addAssignedTag(state, actionTag) {
   const filteredState = state.filter(tag => (tag.id !== actionTag.tagCategory.id));
-  const selectedItem = state.find(tag => (tag.id === actionTag.tagCategory.id)) || { tagValues: [] };
-  const oldValues = selectedItem.tagValues.filter(tagValue => (tagValue.id !== actionTag.tagValue.id));
+  const selectedItem = state.find(tag => (tag.id === actionTag.tagCategory.id)) || { values: [] };
+  const oldValues = selectedItem.values.filter(tagValue => (tagValue.id !== actionTag.tagValue.id));
   return [...filteredState,
     {
       description: actionTag.tagCategory.description,
       id: actionTag.tagCategory.id,
-      tagValues: [...oldValues].concat([actionTag.tagValue]),
+      values: [...oldValues].concat([actionTag.tagValue]),
     }];
 }
 

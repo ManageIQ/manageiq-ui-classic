@@ -5,11 +5,9 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
   assignedTags={
     Array [
       Object {
-        "tagCategory": Object {
-          "description": "Name",
-          "id": 1,
-        },
-        "tagValues": Array [
+        "description": "Name",
+        "id": 1,
+        "values": Array [
           Object {
             "description": "Pepa",
             "id": 11,
@@ -18,10 +16,10 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
       },
     ]
   }
-  onTagCategoryChange={[Function]}
-  onTagDeleteClick={[Function]}
-  onTagMultiValueChange={[Function]}
-  onTagValueChange={[Function]}
+  onTagCategoryChange={[MockFunction]}
+  onTagDeleteClick={[MockFunction]}
+  onTagMultiValueChange={[MockFunction]}
+  onTagValueChange={[MockFunction]}
   selectedTagCategory={
     Object {
       "description": "animal",
@@ -178,7 +176,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                   >
                     <CategoryModifier
                       categoryLabel="Category"
-                      onTagCategoryChange={[Function]}
+                      onTagCategoryChange={[MockFunction]}
                       selectedTagCategory={
                         Object {
                           "description": "animal",
@@ -224,12 +222,12 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                           <Col
                             bsClass="col"
                             componentClass="div"
-                            lg={6}
+                            lg={4}
                             md={4}
                             xs={12}
                           >
                             <div
-                              className="col-lg-6 col-md-4 col-xs-12"
+                              className="col-lg-4 col-md-4 col-xs-12"
                             >
                               <ControlLabel
                                 bsClass="control-label"
@@ -246,16 +244,16 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                           <Col
                             bsClass="col"
                             componentClass="div"
-                            lg={6}
+                            lg={8}
                             md={8}
                             xs={12}
                           >
                             <div
-                              className="col-lg-6 col-md-8 col-xs-12"
+                              className="col-lg-8 col-md-8 col-xs-12"
                             >
                               <TagSelector
                                 infoText="Only a single value can be assigned from these categories"
-                                onTagCategoryChange={[Function]}
+                                onTagCategoryChange={[MockFunction]}
                                 selectedOption={
                                   Object {
                                     "description": "animal",
@@ -331,22 +329,27 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                   options={
                                     Array [
                                       Object {
+                                        "keyWord": "name",
                                         "label": "Name",
                                         "value": 1,
                                       },
                                       Object {
+                                        "keyWord": "number",
                                         "label": "Number",
                                         "value": 2,
                                       },
                                       Object {
+                                        "keyWord": "animal",
                                         "label": "Animal",
                                         "value": 3,
                                       },
                                       Object {
+                                        "keyWord": "food",
                                         "label": "Food",
                                         "value": 4,
                                       },
                                       Object {
+                                        "keyWord": "something",
                                         "label": "Something",
                                         "value": 5,
                                       },
@@ -396,6 +399,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                           placeholder="Select..."
                                           value={
                                             Object {
+                                              "keyWord": "name",
                                               "label": "Name",
                                               "value": 1,
                                             }
@@ -490,7 +494,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                       </FormGroup>
                     </CategoryModifier>
                     <ValueModifier
-                      multiValue={true}
+                      multiValue={false}
                       onTagValueChange={[Function]}
                       selectedTagValue={
                         Object {
@@ -498,7 +502,8 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                           "id": 1,
                         }
                       }
-                      tagValues={
+                      valueLabel="Value"
+                      values={
                         Array [
                           Object {
                             "description": "Pepa",
@@ -510,7 +515,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                           },
                         ]
                       }
-                      valueLabel="Value"
                     >
                       <FormGroup
                         bsClass="form-group"
@@ -521,12 +525,12 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                           <Col
                             bsClass="col"
                             componentClass="div"
-                            lg={6}
+                            lg={4}
                             md={4}
                             xs={12}
                           >
                             <div
-                              className="col-lg-6 col-md-4 col-xs-12"
+                              className="col-lg-4 col-md-4 col-xs-12"
                             >
                               <ControlLabel
                                 bsClass="control-label"
@@ -543,15 +547,15 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                           <Col
                             bsClass="col"
                             componentClass="div"
-                            lg={6}
+                            lg={8}
                             md={8}
                             xs={12}
                           >
                             <div
-                              className="col-lg-6 col-md-8 col-xs-12"
+                              className="col-lg-8 col-md-8 col-xs-12"
                             >
                               <ValueSelector
-                                multiValue={true}
+                                multiValue={false}
                                 onTagValueChange={[Function]}
                                 selectedOption={
                                   Object {
@@ -559,7 +563,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                     "id": 1,
                                   }
                                 }
-                                tagValues={
+                                values={
                                   Array [
                                     Object {
                                       "description": "Pepa",
@@ -747,11 +751,9 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                 assignedTags={
                   Array [
                     Object {
-                      "tagCategory": Object {
-                        "description": "Name",
-                        "id": 1,
-                      },
-                      "tagValues": Array [
+                      "description": "Name",
+                      "id": 1,
+                      "values": Array [
                         Object {
                           "description": "Pepa",
                           "id": 11,
@@ -804,6 +806,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                           className="list-inline"
                         >
                           <TagCategory
+                            categoryTruncate={[Function]}
                             key="1"
                             onTagDeleteClick={[Function]}
                             tagCategory={
@@ -812,7 +815,8 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                 "id": 1,
                               }
                             }
-                            tagValues={
+                            valueTruncate={[Function]}
+                            values={
                               Array [
                                 Object {
                                   "description": "Pepa",
@@ -824,11 +828,36 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                             <ul
                               className="tag-category list-inline"
                             >
-                              <div
-                                className="category-label"
+                              <OverlayTrigger
+                                defaultOverlayShown={false}
+                                overlay={
+                                  <Tooltip
+                                    bsClass="tooltip"
+                                    id="tooltip"
+                                    placement="right"
+                                  >
+                                    Name
+                                  </Tooltip>
+                                }
+                                placement="bottom"
+                                trigger={
+                                  Array [
+                                    "hover",
+                                    "focus",
+                                  ]
+                                }
                               >
-                                Name
-                              </div>
+                                <div
+                                  className="category-label"
+                                  onBlur={[Function]}
+                                  onClick={null}
+                                  onFocus={[Function]}
+                                  onMouseOut={[Function]}
+                                  onMouseOver={[Function]}
+                                >
+                                  Name
+                                </div>
+                              </OverlayTrigger>
                               <Tag
                                 key="11"
                                 onTagDeleteClick={[Function]}
@@ -844,51 +873,87 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                     "id": 11,
                                   }
                                 }
+                                truncate={[Function]}
                               >
                                 <li
                                   className="tag"
                                   key="11"
                                 >
-                                  <Label
-                                    bsStyle="primary"
-                                    className="tagColor"
-                                    key="11"
-                                    onRemoveClick={[Function]}
-                                    type="default"
-                                  >
-                                    <Label
-                                      bsClass="label"
-                                      bsStyle="primary"
-                                      className="tagColor"
-                                    >
-                                      <span
-                                        className="tagColor label label-primary"
+                                  <OverlayTrigger
+                                    defaultOverlayShown={false}
+                                    overlay={
+                                      <Tooltip
+                                        bsClass="tooltip"
+                                        id="tooltip"
+                                        placement="right"
                                       >
                                         Pepa
-                                        <RemoveButton
-                                          className=""
-                                          onRemoveClick={[Function]}
-                                          title="Remove"
+                                      </Tooltip>
+                                    }
+                                    placement="bottom"
+                                    trigger={
+                                      Array [
+                                        "hover",
+                                        "focus",
+                                      ]
+                                    }
+                                  >
+                                    <Label
+                                      bsStyle="primary"
+                                      className="tagColor"
+                                      key="11"
+                                      onBlur={[Function]}
+                                      onClick={null}
+                                      onFocus={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      onRemoveClick={[Function]}
+                                      type="default"
+                                    >
+                                      <Label
+                                        bsClass="label"
+                                        bsStyle="primary"
+                                        className="tagColor"
+                                        onBlur={[Function]}
+                                        onClick={null}
+                                        onFocus={[Function]}
+                                        onMouseOut={[Function]}
+                                        onMouseOver={[Function]}
+                                      >
+                                        <span
+                                          className="tagColor label label-primary"
+                                          onBlur={[Function]}
+                                          onClick={null}
+                                          onFocus={[Function]}
+                                          onMouseOut={[Function]}
+                                          onMouseOver={[Function]}
                                         >
-                                          <a
-                                            className="pf-remove-button"
-                                            href="#"
-                                            onClick={[Function]}
+                                          Pepa
+                                          <RemoveButton
+                                            className=""
+                                            onRemoveClick={[Function]}
+                                            title="Remove"
                                           >
-                                            <span
-                                              aria-hidden="true"
-                                              className="pficon pficon-close"
-                                            />
-                                            <span
-                                              className="sr-only"
+                                            <a
+                                              className="pf-remove-button"
+                                              href="#"
+                                              onClick={[Function]}
                                             >
-                                              Remove
-                                            </span>
-                                          </a>
-                                        </RemoveButton>
-                                      </span>
+                                              <span
+                                                aria-hidden="true"
+                                                className="pficon pficon-close"
+                                              />
+                                              <span
+                                                className="sr-only"
+                                              >
+                                                Remove
+                                              </span>
+                                            </a>
+                                          </RemoveButton>
+                                        </span>
+                                      </Label>
                                     </Label>
-                                  </Label>
+                                  </OverlayTrigger>
                                 </li>
                               </Tag>
                             </ul>
@@ -900,81 +965,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                 </Row>
               </TagView>
             </div>
-<<<<<<< HEAD
           </Col>
-=======
-          </div>
-        </div>
-      </form>
-    </div>
-    <div
-      className="col-lg-6 col-md-4 col-xs-12"
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="col-lg-12"
-        >
-          <h2>
-            Assigned tags
-          </h2>
-        </div>
-      </div>
-      <div
-        className="row"
-      >
-        <div
-          className="col-lg-12"
-        >
-          <ul
-            className="list-inline"
-          >
-            <ul
-              className="tag-category list-inline"
-            >
-              <div
-                className="category-label"
-                onBlur={[Function]}
-                onClick={null}
-                onFocus={[Function]}
-                onMouseOut={[Function]}
-                onMouseOver={[Function]}
-              >
-                Name
-              </div>
-              <li
-                className="tag"
-              >
-                <span
-                  className="tagColor label label-primary"
-                  onBlur={[Function]}
-                  onClick={null}
-                  onFocus={[Function]}
-                  onMouseOut={[Function]}
-                  onMouseOver={[Function]}
-                >
-                  Pepa
-                  <a
-                    className="pf-remove-button"
-                    href="#"
-                    onClick={[Function]}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="pficon pficon-close"
-                    />
-                    <span
-                      className="sr-only"
-                    >
-                      Remove
-                    </span>
-                  </a>
-                </span>
-              </li>
-            </ul>
-          </ul>
->>>>>>> Change tests
         </div>
       </Row>
     </div>

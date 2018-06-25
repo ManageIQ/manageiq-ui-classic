@@ -1,6 +1,7 @@
 import React from 'react';
 import CategoryModifier from '../components/InnerComponents/CategoryModifier';
-import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 
 const selectedTagCategory = { description: 'animal', id: 1 };
 const onTagCategoryChange = jest.fn();
@@ -13,7 +14,7 @@ const tagCategories = [
 
 describe('TagCategory Component', () => {
   it('match snapshot', () => {
-    const component = renderer.create(
+    const component = shallow(
       <CategoryModifier
         selectedTagCategory={selectedTagCategory}
         onTagCategoryChange={onTagCategoryChange}
@@ -21,7 +22,7 @@ describe('TagCategory Component', () => {
       />
     );
 
-    const tree = component.toJSON();
+    const tree = toJson(component);
     expect(tree).toMatchSnapshot();
   });
 });

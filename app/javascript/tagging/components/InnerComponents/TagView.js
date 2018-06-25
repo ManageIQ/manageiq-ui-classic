@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'patternfly-react';
 import TagCategory from './TagCategory';
+import { __ } from '../../../global-functions';
+import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagView extends React.Component {
   generateTagCategories = tag => (
     <TagCategory
       key={tag.id}
       tagCategory={{ id: tag.id, description: tag.description }}
-      tagValues={tag.tagValues}
+      values={tag.values}
       onTagDeleteClick={this.props.onTagDeleteClick}
     />
   );
@@ -36,20 +38,13 @@ class TagView extends React.Component {
   }
 }
 TagView.propTypes = {
-  assignedTags: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    tagValues: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-  })).isRequired,
+  assignedTags: TaggingPropTypes.tags,
   onTagDeleteClick: PropTypes.func.isRequired,
   header: PropTypes.string,
 };
 
 TagView.defaultProps = {
-  header: 'Assigned tags',
+  header: __('Assigned tags'),
 };
 
 export default TagView;

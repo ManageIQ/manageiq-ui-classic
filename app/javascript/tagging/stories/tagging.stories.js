@@ -33,7 +33,18 @@ const singleTags = [
       { description: 'Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons', id: 52 }],
   },
 ];
-const assignedTags = [{ description: 'Name', id: 1, tagValues: [{ description: 'Pepa', id: 11 }] }];
+
+const cancelButton = {
+  onClick: () => {}, href: '', type: 'button', disabled: false, description: 'Cancel',
+};
+
+const resetButton = {
+  onClick: () => {}, href: '', type: 'reset', disabled: false, description: 'Reset',
+};
+const saveButton = {
+  onClick: () => {}, href: '', type: 'submit', disabled: false, description: 'Save',
+};
+const assignedTags = [{ description: 'Name', id: 1, values: [{ description: 'Pepa', id: 11 }] }];
 const selectedTagCategory = {};
 const selectedTagValue = {};
 const defaultState = { tags, assignedTags };
@@ -48,6 +59,7 @@ storiesOf('Tagging', module)
     tags={tags}
     assignedTags={assignedTags}
     onTagValueChange={action('onTagValueChange')}
+    onTagMultiValueChange={action('onTagMultiValueChange')}
     onTagCategoryChange={action('onTagCategoryChange')}
     onTagDeleteClick={action('onTagDeleteClick')}
     selectedTagCategory={selectedTagCategory}
@@ -58,10 +70,8 @@ storiesOf('Tagging', module)
 storiesOf('Tagging', module)
   .add('Simple Tagging', () => <Provider store={store}><TaggingConnected /></Provider>);
 storiesOf('Tagging', module)
-  .add('Tagging with single values', () => <Provider store={storeSingle}><TaggingConnected /></Provider>);
+  .add('Tagging with buttons', () => <Provider store={store}><TaggingWithButtonsConnected saveButton={saveButton} cancelButton={cancelButton} resetButton={resetButton}/></Provider>);
 storiesOf('Tagging', module)
-  .add('Tagging with buttons', () => <Provider store={store}><TaggingWithButtonsConnected /></Provider>);
-storiesOf('Tagging', module)
-  .add('Tagging with hidden reset button', () => <Provider store={store}><TaggingWithButtonsConnected showReset={false} /></Provider>);
+  .add('Tagging with hidden reset button', () => <Provider store={store}><TaggingWithButtonsConnected showReset={false} saveButton={saveButton} cancelButton={cancelButton} resetButton={resetButton}/></Provider>);
 storiesOf('Tagging', module)
   .add('TagView', () => <TagView assignedTags={assignedTags} onTagDeleteClick={action('onTagDeleteClick')} />);
