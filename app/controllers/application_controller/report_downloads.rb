@@ -39,6 +39,8 @@ module ApplicationController::ReportDownloads
       :title       => @result.name
     }
 
+    @data = @result.html_rows.join
+
     render :template => '/layouts/print/report', :layout => '/layouts/print'
   end
 
