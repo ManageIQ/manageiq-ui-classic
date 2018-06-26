@@ -1306,6 +1306,8 @@ describe ReportController do
 
       context "User2 generates report under Group1" do
         before :each do
+          os = OperatingSystem.create(:name => "RHEL 7", :product_name => "RHEL7")
+          FactoryGirl.create(:vm_vmware, :operating_system => os)
           @rpt = create_and_generate_report_for_user("Vendor and Guest OS", "User2")
         end
 
@@ -1330,12 +1332,16 @@ describe ReportController do
           controller.instance_variable_set(:@_params, :id => controller.to_cid(report_result_id),
                                                       :controller => "report", :action => "explorer")
           controller.instance_variable_set(:@sb, :last_savedreports_id => nil)
+          controller.instance_variable_set(:@settings, :perpage => { :reports => 20 })
           allow(controller).to receive(:get_all_reps)
           controller.send(:show_saved_report)
+
           fetched_report_result_id = controller.instance_variable_get(:@report_result_id)
           expect(fetched_report_result_id).to eq(@rpt.miq_report_results.first.id)
-          fetched_report = controller.instance_variable_get(:@report)
-          expect(fetched_report.id).to eq(@rpt.id)
+
+          fetched_report    = controller.instance_variable_get(:@report)
+          fetched_report.id = @rpt.id # Reports serialized into the report column don't have ids
+          expect(fetched_report).to eq(@rpt)
         end
       end
     end
