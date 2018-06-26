@@ -73,8 +73,6 @@ class ApplicationHelper::ToolbarChooser
       return "vm_performance_tb" if @display == "performance"
 
       case @record
-      when ManageIQ::Providers::Openstack::CloudManager::Vm
-        'openstack_vm_cloud_center_tb' # FIXME: this exception should be merged with ManageIQ::Providers::CloudManager::Vm
       when ManageIQ::Providers::CloudManager::Vm
         'x_vm_cloud_center_tb'
       when ManageIQ::Providers::CloudManager::Template
