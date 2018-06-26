@@ -892,7 +892,7 @@ class CatalogController < ApplicationController
         add_flash(_("Provider is required, please select one from the list"), :error)
       else
         # ensure Job Template is selected as well, required field
-        add_flash(_("Job Template is required, please select one from the list"), :error) if @edit[:new][:template_id].blank?
+        add_flash(_("Template is required, please select one from the list"), :error) if @edit[:new][:template_id].blank?
       end
     end
 
@@ -1487,7 +1487,7 @@ class CatalogController < ApplicationController
     ct = ContainerTemplate.find_by(:id => @record.config_info[:provision][:container_template_id]) if @record.config_info[:provision] && @record.config_info[:provision][:container_template_id]
     @edit[:new][:template_id] = ct.try(:id)
     @edit[:new][:manager_id] = ct.try(:ext_management_system).try(:id)
-    available_job_or_container_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
+    available_container_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
   end
 
   def get_form_vars_orchestration
@@ -1565,7 +1565,7 @@ class CatalogController < ApplicationController
       ManageIQ::Providers::AnsibleTower::AutomationManager.all.collect { |t| [t.name, t.id] }.sort
     @edit[:new][:template_id] = @record.job_template.try(:id)
     @edit[:new][:manager_id] = @record.job_template.try(:manager).try(:id)
-    available_job_or_container_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
+    available_job_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
   end
 
   def add_orchestration_template_vars(st)

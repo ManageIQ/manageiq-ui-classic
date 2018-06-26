@@ -370,7 +370,7 @@ module Mixins
     def miq_search_node
       options = {:model => model_from_active_tree(x_active_tree)}
       if x_active_tree == :configuration_scripts_tree
-        options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
+        options = {:model      => "ConfigurationScript",
                    :gtl_dbname => "automation_manager_configuration_scripts"}
       end
       process_show_list(options)

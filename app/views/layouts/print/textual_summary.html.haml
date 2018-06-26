@@ -3,7 +3,7 @@
   = render :partial => "#{controller}/main_configuration_profile"
 - elsif @record.kind_of?(ManageIQ::Providers::AutomationManager::InventoryGroup)
   = render :partial => "#{controller}/main_inventory_group"
-- elsif is_template_record?
+- elsif @record.kind_of?(ManageIQ::Providers::AutomationManager::ConfigurationWorkflow) || @record.kind_of?(ConfigurationScript)
   = render :partial => "#{controller}/configuration_script"
 - else
   = render :partial => "layouts/textual_groups_generic"

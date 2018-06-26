@@ -5,7 +5,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "ConfigurationScriptBase"}
+    {:leaf => "ConfigurationScript"}
   end
 
   def set_locals_for_render
@@ -43,7 +43,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
   end
 
   def x_get_tree_cmat_kids(object, count_only)
-    scripts = ConfigurationScriptBase.where(:manager_id => object.id).where.not(:type => ConfigurationScriptBase::EXCLUDED_WORKFLOW_TYPES)
+    scripts = ConfigurationScript.where(:manager_id => object.id)
     count_only_or_objects_filtered(count_only, scripts, "name")
   end
 

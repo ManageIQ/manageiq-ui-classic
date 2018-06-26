@@ -137,7 +137,7 @@ module ApplicationHelper
     "ManageIQ::Providers::CloudManager::Vm"       => VmOrTemplate,
     "ManageIQ::Providers::InfraManager::Template" => VmOrTemplate,
     "ManageIQ::Providers::InfraManager::Vm"       => VmOrTemplate,
-    "ManageIQ::Providers::AutomationManager"      => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
+    "ManageIQ::Providers::AutomationManager"      => ConfigurationScript
   }.freeze
 
   def controller_to_model
@@ -157,7 +157,7 @@ module ApplicationHelper
     "chargebacks"                            => ChargebackRate,
     "playbooks"                              => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook,
     "physical_servers_with_host"             => PhysicalServer,
-    "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript,
+    "manageiq/providers/automation_managers" => ConfigurationScript,
     "vms"                                    => VmOrTemplate,
     "ServiceCatalog"                         => ServiceTemplate
   }.freeze
@@ -333,7 +333,7 @@ module ApplicationHelper
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(MiqWidget
-                 ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
+                 ConfigurationScript
                  MiqReportResult).include?(view.db) &&
               %w(report automation_manager).include?(request.parameters[:controller])
           suffix = ''
@@ -454,7 +454,7 @@ module ApplicationHelper
       controller = request.parameters[:controller]
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
-        "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScriptBase"
+        "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScript"
       controller = request.parameters[:controller]
     when "ContainerVolume"
       controller = "persistent_volume"
@@ -972,7 +972,7 @@ module ApplicationHelper
     when :configuration_manager_cs_filter_tree
       "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"
     when :configuration_scripts_tree
-      "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript"
+      "ConfigurationScript"
     end
   end
 
