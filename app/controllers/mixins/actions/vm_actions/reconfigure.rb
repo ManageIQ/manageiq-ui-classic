@@ -46,6 +46,7 @@ module Mixins
 
         # Reconfigure selected VMs
         def reconfigurevms
+          binding.pry
           assert_privileges(params[:pressed])
           # check to see if coming from show_list or drilled into vms from another CI
           rec_cls = "vm"
