@@ -61,7 +61,6 @@ module ApplicationController::Timelines
 
     if @tl_options.policy_events?
       @tl_options.policy.result ||= "both"
-
       @tl_options.policy.categories ||= []
       if @tl_options.policy.categories.blank?
         @tl_options.policy.categories.push("VM Operation")
@@ -72,8 +71,6 @@ module ApplicationController::Timelines
           end
         end
       end
-    elsif @tl_options.management.level.nil?
-      @tl_options.management.level = "critical"
     end
   end
 

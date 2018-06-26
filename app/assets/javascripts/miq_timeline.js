@@ -62,6 +62,50 @@
     });
   }
 
+  function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function selectSevereer(severityX, severityY) {
+    var weight = {
+      detail: 0,
+      warning: 1,
+      critical: 2
+    };
+    return (weight[severityX] > weight[severityY] ? severityX : severityY);
+  }
+
+  function eventColor(eventData) {
+    var colors = {
+      detail: '#00659C',
+      critical: '#C00019',
+      warning: '#E17B1C'
+    };
+
+    if (eventData.hasOwnProperty('events')) {
+      var severity = 'detail';
+      var eventList = eventData.events;
+      for (var i = 0; i < eventList.length; i++) {
+        severity = selectSevereer(eventList[i].data.group_level.value, severity);
+      }
+      return colors[severity];
+    }
+    return colors[eventData.data.group_level.value];
+  }
+
+  function createTimelineLegend(eventData) {
+    var legendHTML = '';
+    for (var property in eventData) {
+      var value = eventData[property].value;
+      if (property === "group_level") {
+        var color = eventColor({data: eventData});
+        value = "<text style='color:" + color + "'>" + capitalize(value) + "</text>";
+      }
+      legendHTML += "<b>" + eventData[property].text + ":</b>&nbsp;" + value + "<br/>";
+    }
+    return legendHTML;
+  }
+
   ManageIQ.Timeline = {
     load: function (json, start, end) {
       var data = [],
@@ -80,10 +124,12 @@
         if (json[x].data !== undefined && json[x].data.length > 0) {
           var timelinedata = json[x].data[0];
           for (var y in timelinedata) {
+            var eventData = timelinedata[y].event;
             data[x].data.push({});
+            data[x].data[y].data = eventData;
             data[x].data[y].date = new Date(timelinedata[y].start);
             data[x].data[y].details = {};
-            data[x].data[y].details.event = timelinedata[y].description;
+            data[x].data[y].details.event = createTimelineLegend(eventData);
           }
           data[x].display = true;
         }
@@ -93,6 +139,7 @@
         .minScale(1)
         .maxScale(timeSpanMilliseconds / one_hour)
         .eventGrouping(360000).labelWidth(170)
+        .eventColor(eventColor)
         .eventPopover(handlePopover).eventClick(eventClick);
 
       if(!dataHasName) {

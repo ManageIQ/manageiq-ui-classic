@@ -30,18 +30,21 @@ module ApplicationController::Timelines
   end
 
   ManagementEventsOptions = Struct.new(
-    :level,
+    :levels,
     :categories,
   ) do
     def update_from_params(params)
-      self.level = params[:tl_fl_typ] == "critical" ? :critical : :detail
+      self.levels = params[:tl_levels]&.map(&:to_sym) || group_levels
       self.categories = {}
       if params[:tl_categories]
         params[:tl_categories].each do |category|
+          event_group = event_groups[events[category]].clone
+          next unless event_group.keys.include_any?(levels)
           categories[events[category]] = {:display_name => category}
-          categories[events[category]][:event_groups] = level == :critical ?
-            event_groups[events[category]][level] :
-            event_groups[events[category]][level] + event_groups[events[category]][:critical]
+          unless levels.include_all?(event_group.keys)
+            event_group.delete_if { |key, _v| !levels.include?(key) }
+          end
+          categories[events[category]][:event_groups] = event_group.values.flatten
         end
       end
     end
@@ -62,11 +65,21 @@ module ApplicationController::Timelines
     end
 
     def drop_cache
-      @events = @event_groups = nil
+      @events = @event_groups = @lvl_text_value = nil
     end
 
     def event_groups
       @event_groups ||= EmsEvent.event_groups
+    end
+
+    def levels_text_and_value
+      @lvl_text_value ||= group_levels.map { |level| [level.to_s.titleize, level] }
+    end
+
+    private
+
+    def group_levels
+      EmsEvent::GROUP_LEVELS
     end
   end
 

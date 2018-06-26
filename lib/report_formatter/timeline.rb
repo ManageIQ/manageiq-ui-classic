@@ -155,17 +155,20 @@ module ReportFormatter
                :ems_container => ems_container,
                :time_zone     => tz}
       tl_message = TimelineMessage.new(row, rec, flags, mri.db)
-      e_text = ''
+      event_data = {}
       col_order.each_with_index do |co, co_idx|
-        val = tl_message.message_html(co)
-        e_text += "<b>#{headers[co_idx]}:</b>&nbsp;#{val}<br/>" unless val.to_s.empty? || co == "id"
+        value = tl_message.message_html(co)
+        next if value.to_s.empty? || co == "id"
+        event_data[co] = {
+          :value => value,
+          :text  => headers[co_idx]
+        }
       end
-      e_text = e_text.chomp('<br/>')
 
       # Add the event to the timeline
-      @events_data.push("start"       => format_timezone(row[col], tz, 'view'),
-                        "title"       => e_title.length < 20 ? e_title : e_title[0...17] + "...",
-                        "description" => e_text)
+      @events_data.push("start" => format_timezone(row[col], tz, 'view'),
+                        "title" => e_title.length < 20 ? e_title : e_title[0...17] + "...",
+                        "event" => event_data)
     end
   end
 end

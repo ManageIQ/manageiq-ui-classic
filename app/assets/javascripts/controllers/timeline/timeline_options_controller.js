@@ -21,6 +21,12 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['$http', 'miqServi
     vm.availableCategories = categories;
   };
 
+  vm.clearLevelsIfNotSelected = function() {
+    if (vm.reportModel.tl_categories.length === 0) {
+      vm.reportModel.tl_levels = undefined;
+    }
+  };
+
   vm.eventTypeUpdated = function() {
     vm.reportModel.tl_categories = [];
   };
@@ -72,13 +78,6 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['$http', 'miqServi
     }
     ManageIQ.calendar.calDateFrom = startDay.toDate();
     ManageIQ.calendar.calDateTo = endDay.toDate();
-    if (vm.reportModel.tl_show === 'timeline') {
-      if (vm.reportModel.showDetailedEvents) {
-        vm.reportModel.tl_fl_typ = 'detail';
-      } else {
-        vm.reportModel.tl_fl_typ = 'critical';
-      }
-    }
     miqService.sparkleOn();
     miqService.miqAsyncAjaxButton(url, miqService.serializeModel(vm.reportModel));
   };

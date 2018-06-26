@@ -208,9 +208,8 @@ describe '#set data for headers that exist in col headers' do
     @report.rpt_options = nil
     allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
     events = ReportFormatter::ReportTimeline.new.build_document_body
-    expect(JSON.parse(events)[0]["data"][0][0]["description"]).to include("Source Instance Location:")
-    expect(JSON.parse(events)[0]["data"][0][0]["description"]).to_not include("Source Instance:")
-    expect(JSON.parse(events)[0]["data"][0][0]["description"]).to_not include("Destination Instance:")
-    expect(JSON.parse(events)[0]["data"][0][0]["description"]).to_not include("Destination Instance Location:")
+    json = JSON.parse(events)[0]["data"][0][0]["event"]
+    expect(json["vm_location"]["text"]).to eq("Source Instance Location")
+    expect(json["vm_location"]["value"]).to eq("foo")
   end
 end
