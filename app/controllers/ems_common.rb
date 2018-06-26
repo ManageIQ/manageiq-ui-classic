@@ -350,6 +350,8 @@ module EmsCommon
         case params[:pressed]
         when "#{display_s}_tag"
           tag(model_class)
+        when "#{display_s}_protect"
+          assign_policies(model_class)
         end
       end
 
