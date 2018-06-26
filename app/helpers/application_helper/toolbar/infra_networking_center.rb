@@ -1,4 +1,4 @@
-class ApplicationHelper::Toolbar::XInfraNetworkingSwitchCenter < ApplicationHelper::Toolbar::Basic
+class ApplicationHelper::Toolbar::InfraNetworkingCenter < ApplicationHelper::Toolbar::Basic
   button_group('infra_networking_policy', [
                                           select(
                                             :infra_networking_policy_choice,
@@ -9,7 +9,7 @@ class ApplicationHelper::Toolbar::XInfraNetworkingSwitchCenter < ApplicationHelp
                                               button(
                                                 :infra_networking_tag,
                                                 'pficon pficon-edit fa-lg',
-                                                N_('Edit Tags for this Distributed Switch'),
+                                                N_('Edit Tags for the selected Network Element'),
                                                 N_('Edit Tags')),
                                             ]
                                           ),

@@ -276,8 +276,6 @@ class StorageController < ApplicationController
     end
     return unless @display == 'main'
     @showtype = "main"
-    @button_group = "storage_pod_#{rec_cls}" if x_active_accord == :storage_pod
-    @button_group = "storage_#{rec_cls}" if x_active_accord == :storage
   end
 
   def explorer

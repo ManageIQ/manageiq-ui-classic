@@ -19,7 +19,7 @@ describe InfraNetworkingController do
 
       it 'renders the network switch center toolbar' do
         nodeid = [ems, cluster, switch].map { |item| TreeNode.new(item).key }.join('_')
-        expect(ApplicationHelper::Toolbar::XInfraNetworkingSwitchCenter).to receive(:definition).and_call_original.at_least(:once)
+        expect(ApplicationHelper::Toolbar::InfraNetworkingCenter).to receive(:definition).and_call_original.at_least(:once)
         post :tree_select, :params => { :id => nodeid }
       end
     end

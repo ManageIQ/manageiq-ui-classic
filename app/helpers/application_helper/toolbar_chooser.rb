@@ -3,11 +3,9 @@ class ApplicationHelper::ToolbarChooser
 
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no center toolbar to be shown
   def center_toolbar_filename
-    if @explorer
-      center_toolbar_filename_explorer
-    else
-      center_toolbar_filename_classic
-    end
+    return "#{@center_toolbar}_center_tb" if @center_toolbar
+
+    @explorer ? center_toolbar_filename_explorer : center_toolbar_filename_classic
   end
 
   def history_toolbar_filename
@@ -70,76 +68,75 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  ###
+  def center_toolbar_name_vm_or_template
+    if @record
+      return "vm_performance_tb" if @display == "performance"
+
+      case @record
+      when ManageIQ::Providers::Openstack::CloudManager::Vm
+        'openstack_vm_cloud_center_tb' # FIXME: this exception should be merged with ManageIQ::Providers::CloudManager::Vm
+      when ManageIQ::Providers::CloudManager::Vm
+        'x_vm_cloud_center_tb'
+      when ManageIQ::Providers::CloudManager::Template
+        'x_template_cloud_center_tb'
+      when ManageIQ::Providers::InfraManager::Vm
+        'x_vm_center_tb'
+      when ManageIQ::Providers::InfraManager::Template
+        'x_miq_template_center_tb'
+      else
+        raise 'FIXME: this would return "x_# {@button_group}_center_tb' # FIXME: remove this branch
+      end
+    else
+      case x_active_tree
+      when :images_filter_tree, :images_tree       then 'template_clouds_center_tb'
+      when :instances_filter_tree, :instances_tree then 'vm_clouds_center_tb'
+      when :templates_images_filter_tree           then 'miq_templates_center_tb'
+      when :templates_filter_tree                  then 'template_infras_center_tb'
+      when :vms_filter_tree, :vandt_tree           then 'vm_infras_center_tb'
+      when :vms_instances_filter_tree              then 'vms_center_tb'
+      end
+    end
+  end
 
   # Return explorer based toolbar file name
   def center_toolbar_filename_explorer
-    if @record && @button_group &&
-       !["catalogs", "chargeback", "miq_capacity_utilization", "miq_capacity_planning", "services"].include?(@layout)
-      if @button_group.eql? "snapshot"
-        return "x_vm_center_tb"
-      elsif @record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)
-        return "openstack_vm_cloud_center_tb"
-      elsif @record.kind_of?(ManageIQ::Providers::CloudManager::Vm)
-        return "x_vm_cloud_center_tb"
-      elsif @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
-        return "x_template_cloud_center_tb"
-      else
-        return "x_#{@button_group}_center_tb"
-      end
+    if %w(vm_cloud vm_infra vm_or_template).include?(@layout)
+      center_toolbar_name_vm_or_template
+    elsif @layout == "provider_foreman" && %i(configuration_manager_providers_tree configuration_manager_cs_filter_tree).include?(x_active_tree)
+      center_toolbar_filename_configuration_manager_providers
+    elsif @layout == "automation_manager"
+      center_toolbar_filename_automation_manager
+    elsif x_active_tree == :ae_tree
+      center_toolbar_filename_automate
+    elsif x_active_tree == :infra_networking_tree
+      infra_networking_tree_center_tb(x_node_split)
+    elsif x_active_tree == :containers_tree
+      center_toolbar_filename_containers
+    elsif %i(sandt_tree svccat_tree stcat_tree svcs_tree ot_tree).include?(x_active_tree)
+      center_toolbar_filename_services
+    elsif @layout == "chargeback"
+      center_toolbar_filename_chargeback
+    elsif @layout == "miq_ae_tools"
+      super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
+    elsif @layout == "miq_policy"
+      center_toolbar_filename_miq_policy
+    elsif @layout == "ops"
+      center_toolbar_filename_ops
+    elsif @layout == "pxe"
+      center_toolbar_filename_pxe
+    elsif @layout == "storage"
+      center_toolbar_filename_storage
+    elsif @layout == "report"
+      center_toolbar_filename_report
+    elsif @layout == "miq_ae_customization"
+      center_toolbar_filename_automate_customization
     else
-      if ["vm_cloud", "vm_infra", "vm_or_template"].include?(@layout)
-        if @record
-          if @display == "performance"
-            return "vm_performance_tb"
-          end
-        else
-          return  case x_active_tree
-                  when :images_filter_tree, :images_tree then         "template_clouds_center_tb"
-                  when :instances_filter_tree, :instances_tree then  "vm_clouds_center_tb"
-                  when :templates_images_filter_tree then            "miq_templates_center_tb"
-                  when :templates_filter_tree then                   "template_infras_center_tb"
-                  when :vms_filter_tree, :vandt_tree then            "vm_infras_center_tb"
-                  when :vms_instances_filter_tree then               "vms_center_tb"
-                  end
-        end
-      elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :configuration_manager_cs_filter_tree].include?(x_active_tree)
-        return center_toolbar_filename_configuration_manager_providers
-      elsif @layout == "automation_manager"
-        return center_toolbar_filename_automation_manager
-      elsif [:infra_networking_tree].include?(x_active_tree)
-        return center_toolbar_filename_infra_networking
-      else
-        if x_active_tree == :ae_tree
-          return center_toolbar_filename_automate
-        elsif x_active_tree == :containers_tree
-          return center_toolbar_filename_containers
-        elsif [:sandt_tree, :svccat_tree, :stcat_tree, :svcs_tree, :ot_tree].include?(x_active_tree)
-          return center_toolbar_filename_services
-        elsif @layout == "chargeback"
-          return center_toolbar_filename_chargeback
-        elsif @layout == "miq_ae_tools"
-          return super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
-        elsif @layout == "miq_policy"
-          return center_toolbar_filename_miq_policy
-        elsif @layout == "ops"
-          return center_toolbar_filename_ops
-        elsif @layout == "pxe"
-          return center_toolbar_filename_pxe
-        elsif @layout == "storage"
-          return center_toolbar_filename_storage
-        elsif @layout == "report"
-          return center_toolbar_filename_report
-        elsif @layout == "miq_ae_customization"
-          return center_toolbar_filename_automate_customization
-        end
-      end
+      nil
     end
-    nil
   end
 
   def center_toolbar_filename_automate
-    nodes = x_node.split('-')
+    nodes = x_node_split
     case nodes.first
     when "root" then "miq_ae_domains_center_tb"
     when "aen"  then domain_or_namespace_toolbar(nodes.last)
@@ -232,11 +229,7 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def center_toolbar_filename_containers
-    if x_node == "root"
-      return "containers_center_tb"
-    else
-      return "container_center_tb"
-    end
+    x_node == 'root' ? 'containers_center_tb' : 'container_center_tb'
   end
 
   def center_toolbar_filename_chargeback
@@ -291,7 +284,7 @@ class ApplicationHelper::ToolbarChooser
         return "scan_profile_center_tb"
       elsif x_node.split('-').last == "z"
         return "zones_center_tb"
-      elsif x_node.split('-').first == "z" && @sb[:active_tab] != "settings_smartproxy_affinity"
+      elsif x_node_split.first == "z" && @sb[:active_tab] != "settings_smartproxy_affinity"
         return "zone_center_tb"
       end
     elsif x_active_tree == :diagnostics_tree
@@ -400,13 +393,11 @@ class ApplicationHelper::ToolbarChooser
     elsif x_active_tree == :iso_datastores_tree
       if x_node == "root"
         return "iso_datastores_center_tb"
+      elsif x_node_split.first == "isi"
+         # on image node
+        return "iso_image_center_tb"
       else
-        if x_node.split('-').first == "isi"
-          # on image node
-          return "iso_image_center_tb"
-        else
-          return "iso_datastore_center_tb"
-        end
+        return "iso_datastore_center_tb"
       end
     end
     nil
@@ -414,13 +405,13 @@ class ApplicationHelper::ToolbarChooser
 
   def center_toolbar_filename_storage
     if x_active_tree == :storage_tree
-      if x_node.split('-').first == 'ds'
+      if x_node_split.first == 'ds'
         return "storage_center_tb"
       else
         return "storages_center_tb"
       end
     elsif x_active_tree == :storage_pod_tree
-      nodetype =  x_node.split('-').first
+      nodetype = x_node_split.first
       if nodetype == 'ds'
         return "storage_center_tb"
       elsif nodetype != 'root'
@@ -432,8 +423,6 @@ class ApplicationHelper::ToolbarChooser
 
   # Return non-explorer based toolbar file name
   def center_toolbar_filename_classic
-    return "#{@center_toolbar}_center_tb" if @center_toolbar
-
     # Original non vmx view code follows
     # toolbar buttons on sub-screens
     to_display = %w(availability_zones cloud_networks cloud_object_store_containers cloud_subnets
@@ -572,31 +561,33 @@ class ApplicationHelper::ToolbarChooser
     %w(show_list).include?(@lastaction) ? toolbar_filename.pluralize : toolbar_filename
   end
 
+  def x_node_split
+    x_node.split('-')
+  end
+
   def center_toolbar_filename_configuration_manager_providers
-    nodes = x_node.split('-')
     if x_active_tree == :configuration_manager_providers_tree
-      configuration_manager_providers_tree_center_tb(nodes)
+      configuration_manager_providers_tree_center_tb(x_node_split)
     elsif x_active_tree == :configuration_manager_cs_filter_tree
-      cs_filter_tree_center_tb(nodes)
+      cs_filter_tree_center_tb(x_node_split)
     elsif x_active_tree == :configuration_scripts_tree
-      configuration_scripts_tree_center_tb(nodes)
+      configuration_scripts_tree_center_tb(x_node_split)
     end
   end
 
   def center_toolbar_filename_automation_manager
-    nodes = x_node.split('-')
-    if x_active_tree == :automation_manager_providers_tree
-      automation_manager_providers_tree_center_tb(nodes)
-    elsif x_active_tree == :automation_manager_cs_filter_tree
-      automation_manager_cs_filter_tree_center_tb(nodes)
-    elsif x_active_tree == :configuration_scripts_tree
-      automation_manager_configuration_scripts_tree_center_tb(nodes)
+    case x_active_tree
+    when :automation_manager_providers_tree
+      automation_manager_providers_tree_center_tb(x_node_split)
+    when :automation_manager_cs_filter_tree
+      automation_manager_cs_filter_tree_center_tb(x_node_split)
+    when :configuration_scripts_tree
+      automation_manager_configuration_scripts_tree_center_tb(x_node_split)
     end
   end
 
   def center_toolbar_filename_infra_networking
-    nodes = x_node.split('-')
-    infra_networking_tree_center_tb(nodes)
+    infra_networking_tree_center_tb(x_node_split)
   end
 
   def configuration_manager_providers_tree_center_tb(nodes)
@@ -656,7 +647,7 @@ class ApplicationHelper::ToolbarChooser
     if %w(root e h c).include?(nodes.first)
       "infra_networkings_center_tb"
     else
-      "infra_networking_center_tb"
+      nil
     end
   end
 
