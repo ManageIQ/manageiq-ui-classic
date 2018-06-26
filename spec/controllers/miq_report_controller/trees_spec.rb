@@ -34,9 +34,12 @@ describe ReportController do
       before do
         login_as user
         controller.instance_variable_set(:@html, "<h1>Test</h1>")
-        allow(controller).to receive(:report_first_page)
-        allow(report).to receive(:contains_records?).and_return(true)
-        allow_any_instance_of(MiqReportResult).to receive(:report_results).and_return(report)
+        session[:settings] = {:perpage => {:reports => 20}}
+        report_result.report = report.to_hash.merge(:extras=> {:total_html_rows => 100})
+        report_result.save
+        # allow(controller).to receive(:report_first_page)
+        # allow(report).to receive(:contains_records?).and_return(true)
+        # allow_any_instance_of(MiqReportResult).to receive(:report_results).and_return(report)
       end
 
       it 'renders show from CI -> Reports -> Saved Reports' do

@@ -349,9 +349,8 @@ class ChargebackController < ApplicationController
       @report_result_id = session[:report_result_id] = rr.id
       session[:report_result_runtime]  = rr.last_run_on
       if rr.status.downcase == "complete"
-        @report = rr.report_results
         session[:rpt_task_id] = nil
-        if @report.blank?
+        unless rr.valid_report_column?
           @saved_reports = cb_rpts_get_all_reps(rr.miq_report_id.to_s)
           rep = MiqReport.find_by_id(rr.miq_report_id)
           if x_active_tree == :cb_reports_tree
@@ -359,7 +358,7 @@ class ChargebackController < ApplicationController
           end
           return
         else
-          if @report.contains_records?
+          if rr.contains_records?
             @html = report_first_page(rr) # Get the first page of the results
             unless @report.graph.blank?
               @zgraph = true
