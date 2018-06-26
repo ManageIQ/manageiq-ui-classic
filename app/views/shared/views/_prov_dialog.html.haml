@@ -191,42 +191,80 @@
           :keys                       => keys})
       - if (@edit && @edit[:new] && @edit[:new][:sysprep_enabled] && @edit[:new][:sysprep_enabled][0] == "fields") || (@options && @options[:sysprep_enabled] && @options[:sysprep_enabled][0] == "fields")
         - if wf.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow)
-          - keys = [:root_username, :root_password]
-          = render(:partial => "/miq_request/prov_dialog_fieldset",
-            :locals         => {:workflow => wf,
-              :dialog                     => dialog,
-              :label                      => _("Credentials"),
-              :prefix                     => "/miq_request/",
-              :keys                       => keys})
-          - keys = [:addr_mode, :hostname, :ip_addr, :subnet_mask, :gateway]
-          = render(:partial => "/miq_request/prov_dialog_fieldset",
-            :locals         => {:workflow => wf,
-              :dialog                     => dialog,
-              :label                      => _("IP Address Information"),
-              :prefix                     => "/miq_request/",
-              :keys                       => keys})
-          - keys = [:dns_servers, :dns_suffixes]
-          = render(:partial => "/miq_request/prov_dialog_fieldset",
-            :locals         => {:workflow => wf,
-              :dialog                     => dialog,
-              :label                      => _("DNS"),
-              :prefix                     => "/miq_request/",
-              :keys                       => keys})
-          - keys = [:customization_template_id]
-          = render(:partial => "/miq_request/prov_dialog_fieldset",
-            :locals         => {:workflow => wf,
-              :dialog                     => dialog,
-              :label                      => _("Customize Template"),
-              :prefix                     => "/miq_request/",
-              :keys                       => keys})
-          - show_customization_template_script = (@edit && @edit[:new] && @edit[:new][:customization_template_script]) || (@options && @options[:customization_template_script])
-          - keys = [show_customization_template_script ? :customization_template_script : nil].compact
-          = render(:partial => "/miq_request/prov_dialog_fieldset",
-            :locals         => {:workflow => wf,
-              :dialog                     => dialog,
-              :label                      => _("Selected Template Contents"),
-              :prefix                     => "/miq_request/",
-              :keys                       => keys})
+          - if @edit[:new][:sysprep_enabled][1] == "Sysprep Specification"
+            - keys = [:sysprep_computer_name, :sysprep_organization, :sysprep_admin_password, :sysprep_product_key]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("Computer Details"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+            - keys = [:sysprep_domain, :sysprep_domain_admin, :sysprep_domain_password, :sysprep_machine_object_ou]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+                :locals         => {:workflow => wf,
+                  :dialog                     => dialog,
+                  :label                      => _("Domain Information"),
+                  :prefix                     => "/miq_request/",
+                  :keys                       => keys})
+            - keys = [:sysprep_timezone, :sysprep_locale_ui, :sysprep_locale_system, :sysprep_locale_input, :sysprep_locale_user]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+                :locals         => {:workflow => wf,
+                  :dialog                     => dialog,
+                  :label                      => _("Localization"),
+                  :prefix                     => "/miq_request/",
+                  :keys                       => keys})
+            - keys = [:customization_template_id]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("Customize Template"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+            - show_customization_template_script = (@edit && @edit[:new] && @edit[:new][:customization_template_script]) || (@options && @options[:customization_template_script])
+            - keys = [show_customization_template_script ? :customization_template_script : nil].compact
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("Selected Template Contents"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+          - else
+            - keys = [:root_username, :root_password]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("Credentials"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+            - keys = [:addr_mode, :hostname, :ip_addr, :subnet_mask, :gateway]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("IP Address Information"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+            - keys = [:dns_servers, :dns_suffixes]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("DNS"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+            - keys = [:customization_template_id]
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("Customize Template"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
+            - show_customization_template_script = (@edit && @edit[:new] && @edit[:new][:customization_template_script]) || (@options && @options[:customization_template_script])
+            - keys = [show_customization_template_script ? :customization_template_script : nil].compact
+            = render(:partial => "/miq_request/prov_dialog_fieldset",
+              :locals         => {:workflow => wf,
+                :dialog                     => dialog,
+                :label                      => _("Selected Template Contents"),
+                :prefix                     => "/miq_request/",
+                :keys                       => keys})
         - else
           - keys = [:sysprep_custom_spec, :sysprep_spec_override]
           = render(:partial => "/miq_request/prov_dialog_fieldset",
