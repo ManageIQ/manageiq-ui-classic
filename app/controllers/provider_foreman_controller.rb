@@ -176,17 +176,8 @@ class ProviderForemanController < ApplicationController
       return
     end
 
-    if @record.kind_of?(ConfiguredSystem)
-      rec_cls = "#{model_to_type_name(@record.ext_management_system.class.to_s)}_configured_system"
-    end
     return unless @display == 'main'
-    @showtype     = "main"
-    @button_group = case x_active_accord
-                    when :configuration_manager_cs_filter
-                      rec_cls.to_s
-                    when :configuration_manager_providers
-                      "provider_foreman_#{rec_cls}"
-                    end
+    @showtype = "main"
   end
 
   def validate_before_save?
