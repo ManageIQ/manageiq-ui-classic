@@ -26,14 +26,25 @@ module OpsHelper
   end
 
   def advanced_tab_warning
-    if selected?(x_node, "z")
-      _('Caution: Manual changes to configuration files can disable the Zone!') + ' ' +
-        _('Changes made to any individual settings will overwrite settings inherited from the Region.')
-    elsif selected?(x_node, "svr")
-      _('Caution: Manual changes to configuration files can disable the Server!') + ' ' +
-        _('Changes made to any individual settings will overwrite settings inherited from the Zone.')
+    if selected?(x_node, "svr")
+      _('Caution: Manual changes to configuration files can disable the Server!') << " " <<
+        _('Changes made to any individual settings will overwrite settings inherited from the Zone!')
+    elsif selected?(x_node, "z")
+      _('Caution: Manual changes to configuration files can disable the Zone!') << " " <<
+        _('Changes made to any individual settings will overwrite settings inherited from the Region!')
     else
-      _('Caution: Manual changes to configuration files can disable the Region!')
+      _('Caution: Manual changes to configuration files can disable the Region!') << " " <<
+        _('Changes made to any individual settings will overwrite settings inherited from the template!')
+    end
+  end
+
+  def advanced_tab_info
+    if selected?(x_node, "svr")
+      _('To reset back to the Zone\'s setting or to delete a setting, set the value to <<reset>>.')
+    elsif selected?(x_node, "z")
+      _('To reset back to the Regions\'s setting or to delete a setting, set the value to <<reset>>.')
+    else
+      _('To reset back to the template\'s setting or to delete a setting, set the value to <<reset>>.')
     end
   end
 

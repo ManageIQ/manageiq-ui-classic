@@ -5,6 +5,10 @@
       %span.pficon.pficon-warning-triangle-o
       %strong
         = advanced_tab_warning
+    .alert.alert-info
+      %span.pficon.pficon-info
+      %strong
+        = advanced_tab_info
 
     = text_area_tag("file_data", @edit[:new][:file_data], :style => "display:none;")
     = render :partial => "/layouts/my_code_mirror",
