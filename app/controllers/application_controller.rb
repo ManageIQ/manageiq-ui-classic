@@ -922,17 +922,14 @@ class ApplicationController < ActionController::Base
     root = {:head => [], :rows => []}
 
     has_checkbox = !@embedded && !@no_checkboxes
-    has_listicon = !%w(miqaeclass miqaeinstance).include?(view.db.downcase) # do not add listicon for AE class show_list
 
     # Show checkbox or placeholder column
     if has_checkbox
       root[:head] << {:is_narrow => true}
     end
 
-    if has_listicon
-      # Icon column
-      root[:head] << {:is_narrow => true}
-    end
+    # Icon column
+    root[:head] << {:is_narrow => true}
 
     view.headers.each_with_index do |h, i|
       col = view.col_order[i]
@@ -983,18 +980,16 @@ class ApplicationController < ActionController::Base
       end
 
       # Generate html for the list icon
-      if has_listicon
-        item = listicon_item(view, row['id'])
-        icon, icon2, image, picture = listicon_glyphicon(item)
-        # FIXME: adding exceptions here is a wrong approach
-        icon = nil if params[:controller] == 'pxe'
-        new_row[:cells] << {:title => _('View this item'),
-                            :image   => ActionController::Base.helpers.image_path(image.to_s),
-                            :picture => ActionController::Base.helpers.image_path(picture.to_s),
-                            :icon    => icon,
-                            :icon2   => icon2}
+      item = listicon_item(view, row['id'])
+      icon, icon2, image, picture = listicon_glyphicon(item)
+      # FIXME: adding exceptions here is a wrong approach
+      icon = nil if params[:controller] == 'pxe'
+      new_row[:cells] << {:title => _('View this item'),
+                          :image   => ActionController::Base.helpers.image_path(image.to_s),
+                          :picture => ActionController::Base.helpers.image_path(picture.to_s),
+                          :icon    => icon,
+                          :icon2   => icon2}
 
-      end
 
       view.col_order.each_with_index do |col, col_idx|
         next if view.column_is_hidden?(col)
