@@ -11,13 +11,38 @@ module.exports = class RailsEnginesPlugin {
     this.shared = { packages, root };
   }
 
+  // match path to engine, even if it's under another engine's vendor (longest match)
+  pathToEngine(path) {
+    const rootCandidates = Object.keys(this.engines)
+      .filter((engine) => path.startsWith(this.engines[engine].root));
+
+    const moduleCandidates = Object.keys(this.engines)
+      .filter((engine) => path.startsWith(this.engines[engine].node_modules));
+
+    const pathLength = (path) => (path.match(/\//g) || []).length;
+
+    rootCandidates.sort((a, b) => {
+      const aLen = pathLength(this.engines[a].root);
+      const bLen = pathLength(this.engines[b].root);
+
+      return bLen - aLen;
+    });
+
+    moduleCandidates.sort((a, b) => {
+      const aLen = pathLength(this.engines[a].node_modules);
+      const bLen = pathLength(this.engines[b].node_modules);
+
+      return bLen - aLen;
+    });
+
+    return moduleCandidates[0] || rootCandidates[0];
+  }
+
   apply(resolver) {
     const target = resolver.ensureHook(this.target);
 
     resolver.getHook(this.source).tapAsync("RailsEnginesPlugin", (request, resolveContext, callback) => {
-      const identifyEngine = (engine) => request.path.startsWith(this.engines[engine].root) || request.path.startsWith(this.engines[engine].node_modules);
-
-      const engine = Object.keys(this.engines).filter(identifyEngine)[0];
+      const engine = this.pathToEngine(request.path);
       const engineModules = this.engines[engine].node_modules;
       const inNodeModules = request.path.startsWith(engineModules);
       const packageName = request.request.split('/')[0];
