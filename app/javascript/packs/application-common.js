@@ -11,8 +11,8 @@ import { Spinner } from 'spin.js';
 import 'spin.js/spin.css';
 import { API, http } from '../http_api';
 
-import * as newRegistry from '../miq-component/registry.ts';
-import reactBlueprint from '../miq-component/react-blueprint.tsx';
+import * as newRegistry from '../miq-component/registry';
+import reactBlueprint from '../miq-component/react-blueprint';
 import * as helpers from '../miq-component/helpers';
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
@@ -52,6 +52,8 @@ window.http = http;
 // for Automate > Simulate
 require('xml_display/XMLDisplay.js');
 require('xml_display/XMLDisplay.css');
+<<<<<<< HEAD
 
 // miqSpinner, miqSearchSpinner
 window.Spinner = Spinner;
+>>>>>>> Cleaning

@@ -16,7 +16,6 @@ export default class TaggingWrapper extends React.Component{
           saveButton={
             {
               onClick: (assignedTags) => {
-                console.log(assignedTags);
                 $.post(urls.save_url, { data: JSON.stringify(assignedTags)});
               },
               href: '',

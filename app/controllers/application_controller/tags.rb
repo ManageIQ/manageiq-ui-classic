@@ -161,8 +161,8 @@ module ApplicationController::Tags
 
   # Add/remove tags in a single transaction
   def tagging_save_tags
-    @edit[:new][:assignments] = JSON.parse(params['data']).map {|tag| tag['tagValues'].map {|v| v['id']}}.flatten
-
+    new_assignments = JSON.parse(params['data']).map { |tag| tag['values'].map { |v| v['id'] } }
+    @edit[:new][:assignments] = new_assignments.flatten
     Classification.bulk_reassignment({:model      => @edit[:tagging],
                                       :object_ids => @edit[:object_ids],
                                       :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
@@ -196,19 +196,35 @@ module ApplicationController::Tags
     @view = get_db_view(@tagging, :clickable => false) # Instantiate the MIQ Report view object
     @view.table = ReportFormatter::Converter.records2table(@tagitems, @view.cols + ['id'])
 
-    @edit[:new][:assignments] = @assignments = @tagitems.map { |tagitem| Classification.find_assigned_entries(tagitem).collect { |e| e unless e.parent.read_only? } }.reduce(:&)
-    @tags = cats.map do |cat| {:id => cat.id, :description => cat.description, :singleValue => cat.single_value, :values =>  cat.entries.map {|entry|
-      {:id => entry.id, :description => entry.description}}.sort_by {|e| e[:description.downcase]}}
+    @edit[:new][:assignments] = @assignments = @tagitems.map do |tagitem|
+      Classification.find_assigned_entries(tagitem).collect { |e| e unless e.parent.read_only? }
+    end.reduce(:&)
+
+    values = cat.entries.map do |entry|
+      { :id => entry.id, :description => entry.description }
     end
-    assignedTags = @assignments.map do |a|
-      { :description => a.parent.description,
-        :id => a.parent.id,
-        :values => [{:description => a.description, :id => a.id}] }
+
+    @tags = cats.map do |cat|
+      {:id          => cat.id,
+       :description => cat.description,
+       :singleValue => cat.single_value,
+       :values      => values.sort_by { |e| e[:description.downcase] }}
     end
-    @tags = {:tags => @tags, :assignedTags => assignedTags, :affectedItems => @tagitems.map { |item| item.id }}
-    # @tags = JSON.generate(@tags)
+
+    assigned_tags = @assignments.map do |a|
+      {:description => a.parent.description,
+       :id          => a.parent.id}
+    end
+
+    assigned_tags = assigned_tags.uniq.map do |tag|
+      {:id => tag[:id],
+       :description => tag[:description],
+       :values => @assignments.select { |a| a.parent_id == tag[:id] }.map { |b| { :description => b.description, :id => b[:id] } }}
+    end
+
+    @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => @tagitems.map(&:id)}
     @button_urls = {
-      :save_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "save"),
+      :save_url   => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "save"),
       :cancel_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "cancel")
     }
   end
