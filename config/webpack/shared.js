@@ -85,7 +85,7 @@ module.exports = {
       'window.jQuery': 'jquery',
       'React': 'react',
       'ReactDOM': 'react-dom',
-      '_': 'lodash',
+//      '_': 'lodash',   FIXME uncomment once on lodash 4
     }),
   ],
 
