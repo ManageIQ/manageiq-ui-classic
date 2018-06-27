@@ -27,6 +27,7 @@ const sharedPackages = [
   'react',
   'react-dom',
   'prop-types',
+  'graphql', // TODO remove once this gets added in manageiq-graphql
 ];
 
 let packPaths = {}
