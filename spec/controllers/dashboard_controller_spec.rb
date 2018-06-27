@@ -90,6 +90,21 @@ describe DashboardController do
       post :authenticate, :params => { :user_name => user_with_role.userid, :user_password => "dummy" }
       expect_successful_login(user_with_role, 'some_url')
     end
+
+    it "saves passed in locale for logged in user" do
+      skip_data_checks
+      locale = 'fr'
+      post :authenticate, :params => { :user_name => user_with_role.userid, :user_password => "dummy", :display_locale => locale }
+      expect(assigns(:settings)[:display][:locale]).to eq(locale)
+      expect_successful_login(user_with_role)
+    end
+
+    it "does not save locale for logged in user when user has not made selection on login screen" do
+      skip_data_checks
+      post :authenticate, :params => { :user_name => user_with_role.userid, :user_password => "dummy", :display_locale => 'default' }
+      expect(assigns(:settings)[:display][:locale]).to eq(nil)
+      expect_successful_login(user_with_role)
+    end
   end
 
   context "SAML support" do

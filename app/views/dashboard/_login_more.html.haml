@@ -1,20 +1,18 @@
 - if @more
   #login_more_div
     .form-group
-      %label.col-md-3.control-label
-        = _('New Password')
-      .col-md-9
-        = password_field_tag('user_new_password', nil,
-                             :onkeypress   => "if (miqEnterPressed(event)) miqAjaxAuth();",
-                             :autocomplete => "off",
-                             :class        => "form-control")
+      %label.sr-only= _('New Password')
+      = password_field_tag('user_new_password', nil,
+                           :onkeypress   => "if (miqEnterPressed(event)) miqAjaxAuth();",
+                           :autocomplete => "off",
+                           :class        => "form-control input-lg",
+                           "placeholder" => "New Password")
     .form-group
-      %label.col-md-3.control-label
-        = _('Verify Password')
-      .col-md-9
-        = password_field_tag('user_verify_password', nil,
-                             :onkeypress   => "if (miqEnterPressed(event)) miqAjaxAuth();",
-                             :autocomplete => "off",
-                             :class        => "form-control")
+      %label.sr-only= _('Verify Password')
+      = password_field_tag('user_verify_password', nil,
+                           :onkeypress   => "if (miqEnterPressed(event)) miqAjaxAuth();",
+                           :autocomplete => "off",
+                           :class        => "form-control input-lg",
+                           "placeholder" => "Verify Password")
 - else
   #login_more_div{:style => "display:none;"}

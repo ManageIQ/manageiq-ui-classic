@@ -20,20 +20,16 @@ $modal-about-pf-bg-img:                     "layout/bg-modal-about-pf.png"; // s
 $modal-about-pf-bg-color:                   #083c5a; // sets background color of 'About' modal
 
 // Product overrides of Patternfly Login variables
-$img-bg-login:                              "layout/bg-login.png";
-$img-bg-login-2:                            "layout/bg-login-2.png";
+$img-bg-login:                              "layout/bg-login.jpg";
 $img-bg-login-whitelabel:                   "/upload/custom_login_logo.png";
 $login-bg-color:                            #083c5a;
-$login-container-bg-color:                  #000000;
-$login-container-bg-color-rgba:             rgba(0, 0, 0, 0.2);
-$login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 
 @import "font-fabulous-sprockets";
 @import "font-fabulous";
 @import "patternfly-sprockets";
 @import "patternfly";
 @import "patternfly_overrides";
-@import "login";
+/*@import "login";*/
 @import "icon_customizations";
 @import "header_background"; // sets a custom background image in the header
 @import "about_modal_background"; // sets a custom background image in the 'About' modal
@@ -41,8 +37,8 @@ $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 @import "alerts";
 @import "graphql_explorer";
 
-.login-pf #brand img { // sets size of brand.svg on login screen (upstream only)
-  height: 38px;
+.login-pf-brand { // sets size of brand.svg on login screen (upstream only)
+  height: 46px;
 }
 
 .about-modal-pf .modal-footer img { // sets size of logo in 'About' modal footer
@@ -63,5 +59,4 @@ $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 
 body.whitelabel {
   background: url($img-bg-login-whitelabel);
-  background-size: 100% auto;
 }

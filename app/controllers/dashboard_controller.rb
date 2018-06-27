@@ -542,6 +542,7 @@ class DashboardController < ApplicationController
       # noop, page content already set by initiate_wait_for_task
     when :pass
       miq_api_token = require_api_token ? generate_ui_api_token(user[:name]) : nil
+      save_display_locale
       render :update do |page|
         page << javascript_prologue
         page << "localStorage.miq_token = '#{j_str(miq_api_token)}';" if miq_api_token
@@ -718,6 +719,15 @@ class DashboardController < ApplicationController
   end
 
   private
+
+  def save_display_locale
+    return if params[:display_locale] == 'default'
+    settings = {}
+    settings[:display] = {:locale => params[:display_locale]}
+    @settings.merge!(settings)
+    current_user.update_attributes(:settings => @settings)
+    ::Settings.reload!
+  end
 
   # Authenticate external user and generate API token
   def authenticate_external_user_generate_api_token

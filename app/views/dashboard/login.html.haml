@@ -1,78 +1,92 @@
 - auth_mode = ::Settings.authentication.mode
 
-%span#badge
-  %img{:src => ::Settings.server.custom_logo ? '/upload/custom_logo.png' : image_path("layout/login-screen-logo.png")}
+.login-pf-page
+  .container-fluid
+    %span#badge
+      %img{:src => ::Settings.server.custom_logo ? '/upload/custom_logo.png' : image_path("layout/login-screen-logo.png")}
+    .row
+      .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3
+        %header.login-pf-page-header
+          %img.login-pf-brand{:src => image_path("layout/brand.svg"), :alt => "ManageIQ"}
+          %p
+            - if ::Settings.server.use_custom_login_text
+              = ::Settings.server.custom_login_text.to_s
 
-.container
-  .row
-    .col-md-12
-      #brand
-        %img{:src => image_path("layout/brand.svg"), :alt => "ManageIQ"}
+        .row
+          .col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2
+        .card-pf#login_div
+          %header.login-pf-header
+            - all_locales = [[_("Global Default"), "default"]] + FastGettext.human_available_locales
+            = select_tag('display_locale',
+                         options_for_select(all_locales, 'default'),
+                         'data-live-search' => false,
+                         :class             => "selectpicker")
 
-    .col-md-6.col-lg-5.login
-      .form-horizontal#login_div
-        = render(:partial => "layouts/spinner",
-                 :locals  => {:login => true})
+            :javascript
+              miqInitSelectPicker();
 
-        #invalid_sso_credentials_flash{:style => "display: none"}
-          .flash_text_div{:title => _("Click to remove message")}
-            .alert.alert-danger
-              %span.pficon.pficon-error-circle-o
-              %strong= _("Invalid Single Sign-On credentials")
-        = render :partial => "layouts/flash_msg"
+            - if ext_auth?(:saml_enabled)
+              %h1=_('Log In to Corporate System')
+            - else
+              %h1=_('Log In to Your Account')
 
-        - if ext_auth?(:saml_enabled)
+            = render(:partial => "layouts/spinner",
+                     :locals  => {:login => true})
+
+            #invalid_sso_credentials_flash{:style => "display: none"}
+              .flash_text_div{:title => _("Click to remove message")}
+                .alert.alert-danger
+                  %span.pficon.pficon-error-circle-o
+                  %strong= _("Invalid Single Sign-On credentials")
+            = render :partial => "layouts/flash_msg"
+
+          - if ext_auth?(:saml_enabled)
+ 
+            = link_to(_("Log In"), {:action => "initiate_saml_login",
+                                                       :button => "saml_login"},
+                      :id                   => "saml_login",
+                      :class                => "btn btn-primary btn-block btn-lg",
+                      :alt                  => _("Log In"),
+                      :title                => _("Log In to Corporate System"),
+                      :remote               => true,
+                      "data-method"         => :post,
+                      "data-miq_sparkle_on" => true,
+                      "data-submit"         => 'login_div')
+
+            %div#saml-login.text-center
+              %hr#saml-login
+              &nbsp;
+              = _('Or')
+              &nbsp;
+              %hr#saml-login
+
           .form-group
-            %label.col-md-3.control-label
-            .col-md-9
-              = link_to(_("Log In to Corporate System"), {:action => "initiate_saml_login",
-                                                         :button => "saml_login"},
-                        :id                   => "saml_login",
-                        :class                => "btn btn-primary form-control",
-                        :alt                  => _("Log In"),
-                        :title                => _("Log In to Corporate System"),
-                        :remote               => true,
-                        "data-method"         => :post,
-                        "data-miq_sparkle_on" => true,
-                        "data-submit"         => 'login_div')
-
-              %div#saml-login.text-center
-                %hr#saml-login
-                &nbsp;
-                = _('Or')
-                &nbsp;
-                %hr#saml-login
-
-        .form-group
-          %label.col-md-3.control-label= _('Username')
-          .col-md-9
+            %label.sr-only= _('Username')
             = text_field_tag('user_name', @user_name,
-                             :class => "form-control",
+                             :class => "form-control input-lg",
                              :placeholder => _('Username'),
                              :onkeypress => ext_auth? ? "if (miqEnterPressed(event)) miqAjaxExtAuth();" : "if (miqEnterPressed(event)) miqAjaxAuth();")
             = javascript_tag(javascript_focus('user_name'))
 
-        .form-group
-          %label.col-md-3.control-label= _('Password')
-          .col-md-9
+          .form-group
+            %label.sr-only= _('Password')
             = password_field_tag('user_password',
               @user_password,
               :onkeypress => ext_auth? ? "if (miqEnterPressed(event)) miqAjaxExtAuth();" : "if (miqEnterPressed(event)) miqAjaxAuth();",
               :autocomplete => "off",
               :placeholder => (auth_mode == "httpd" ? _('Password or Password+One-Time-Password') : _('Password')),
-              :class => "form-control")
+              :class => "form-control input-lg")
 
-        - if auth_mode == 'database'
-          = render :partial => 'login_more'
+          - if auth_mode == 'database'
+            = render :partial => 'login_more'
 
-        -# Fields collected via JS functions, sent up with credentials
-        %input{:type => "hidden", :id => "browser_name", :name => "browser_name"}
-        %input{:type => "hidden", :id => "browser_version", :name => "browser_version"}
-        %input{:type => "hidden", :id => "browser_os", :name => "browser_os"}
-        %input{:type => "hidden", :id => "user_TZO", :name => "user_TZO"}
+          -# Fields collected via JS functions, sent up with credentials
+          %input{:type => "hidden", :id => "browser_name", :name => "browser_name"}
+          %input{:type => "hidden", :id => "browser_version", :name => "browser_version"}
+          %input{:type => "hidden", :id => "browser_os", :name => "browser_os"}
+          %input{:type => "hidden", :id => "user_TZO", :name => "user_TZO"}
 
-        .form-group
-          .col-xs-8.col-md-offset-3.col-md-6
+          .form-group.login-pf-settings
             - if auth_mode == "database"
               #back_button{:style => "display: none"}
                 = link_to(_("Back"), {:action => "authenticate",
@@ -87,44 +101,39 @@
                           "data-method" => :post,
                           :title        => _("Update Password"))
 
-          .col-xs-4.col-md-3.submit
-            - login_url = url_for_only_path(:action => "authenticate",
-                                  :button => "login")
-            - sso_url = url_for_only_path(:action => "kerberos_authenticate",
-                                :button => "sso_login")
 
-            = link_to(_("Log In"), '',
-                      :id                   => "login",
-                      :class                => "btn btn-primary",
-                      :alt                  => _("Log In"),
-                      :title                => _("Log In"),
-                      :onclick              => ext_auth? ? "miqAjaxExtAuth(); return false;" : "miqAjaxAuth('#{j login_url}'); return false;")
+          - login_url = url_for_only_path(:action => "authenticate",
+                                :button => "login")
+          - sso_url = url_for_only_path(:action => "kerberos_authenticate",
+                              :button => "sso_login")
 
-            = link_to(_("SSO Log In"), '',
-                      :id                    => "sso_login",
-                      :class                 => "btn btn-primary",
-                      :alt                   => _("SSO Log In"),
-                      :title                 => _("SSO Log In"),
-                      :style                 => "display: none;",
-                      :onclick              => "miqAjaxAuthSso('#{j sso_url}'); return false;")
+          = link_to(_("Log In"), '',
+                    :id                   => "login",
+                    :class                => "btn btn-primary btn-block btn-lg",
+                    :alt                  => _("Log In"),
+                    :title                => _("Log In"),
+                    :onclick              => ext_auth? ? "miqAjaxExtAuth(); return false;" : "miqAjaxAuth('#{j login_url}'); return false;")
 
-    .col-md-6.col-lg-7.details
-      - if ::Settings.session.show_login_info
-        %p
-          = _('Region:')
-          %span
-            = (MiqRegion.my_region.description)
-        %p
-          = _('Zone:')
-          %span
-            = (MiqServer.my_zone)
-        %p
-          = _('Appliance:')
-          %span
-            = (MiqServer.my_server.name)
-        %p.message
-          - if ::Settings.server.use_custom_login_text
-            = ::Settings.server.custom_login_text.to_s
+          = link_to(_("SSO Log In"), '',
+                    :id                    => "sso_login",
+                    :class                 => "btn btn-primary btn-block btn-lg",
+                    :alt                   => _("SSO Log In"),
+                    :title                 => _("SSO Log In"),
+                    :style                 => "display: none;",
+                    :onclick              => "miqAjaxAuthSso('#{j sso_url}'); return false;")
+
+        %footer.login-pf-page-footer
+          %ul.login-pf-page-footer-links.list-unstyled
+            - if ::Settings.session.show_login_info
+              %li.login-pf-page-footer-link
+                = _('Region:')
+                = (MiqRegion.my_region.description)
+              %li.login-pf-page-footer-link
+                = _('Zone:')
+                = (MiqServer.my_zone)
+              %li.login-pf-page-footer-link
+                = _('Appliance:')
+                = (MiqServer.my_server.name)
 
 :javascript
   miqGetTZO();

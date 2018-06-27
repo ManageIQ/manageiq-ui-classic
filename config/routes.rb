@@ -1118,6 +1118,7 @@ Rails.application.routes.draw do
         login_retry
         reset_widgets
         resize_layout
+        save_display_locale
         tl_generate
         tree_select
         wait_for_task

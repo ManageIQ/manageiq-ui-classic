@@ -40,11 +40,6 @@
     margin: 0 !important;
     padding: 0 !important;
   }
-
-  .login-pf body {
-    padding-bottom: 0 !important;
-    padding-top: 0 !important;
-  }
 }
 
 /// resizer styling (used in explorer type screens)
@@ -83,16 +78,12 @@ iframe,
 /// begin login screen styling
 /// ===================================================================
 
-.login-pf body {
-  padding-bottom: 0 !important;
-  padding-top: 0 !important;
-}
-
 div#saml-login {
-  padding-bottom: 8px;
+  padding-bottom: 16px;
 }
 
 div#saml-login hr {
+  border-color: #ccc;
   display: inline-block;
   position: relative;
   top: 15px;
