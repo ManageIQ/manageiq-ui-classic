@@ -1005,7 +1005,7 @@ module ApplicationController::Buttons
                                                                 x_node.split('-')[1].split('_')[1]]
     end
     @record = @edit[:custom_button] = @custom_button
-    @edit[:instance_names] = @resolve[:instance_names]
+    @edit[:instance_names] = Array(@resolve[:instance_names])
     @edit[:new] = {}
     @edit[:current] = {}
     @edit[:new][:attrs] ||= []
