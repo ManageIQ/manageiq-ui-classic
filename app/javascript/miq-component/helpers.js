@@ -14,3 +14,7 @@ export function componentFactory(blueprintName, selector, props) {
   const allProps = { ...element.dataset, ...props };
   ManageIQ.component.newInstance(blueprintName, allProps, element);
 }
+
+export function getReact(name) {
+  return registry.getDefinition(name).blueprint.component;
+}

@@ -38,6 +38,8 @@ export default (
 
     destroy(instance, unmountFrom) {
       ReactDOM.unmountComponentAtNode(unmountFrom);
-    }
+    },
+
+    component: ReactElement,
   };
 }

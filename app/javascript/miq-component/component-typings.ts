@@ -128,6 +128,7 @@ export interface ComponentBlueprint {
     unmountFrom?: HTMLElement
   ): void;
 
+  component?: any;
 }
 
 /**
