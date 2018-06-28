@@ -20,7 +20,7 @@ class TaggingWrapper extends React.Component {
   isLoaded = () => this.props.isLoaded();
 
   render() {
-    if (!this.props.isLoaded) return <Spinner />;
+    if (!this.props.isLoaded) return <Spinner loading size="lg" />;
     const { urls } = this.props;
     return (<TaggingWithButtonsConnected
       saveButton={{
@@ -57,8 +57,29 @@ TaggingWrapper.propTypes = {
   reset: PropTypes.func.isRequired,
   loadState: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
-  ulrs: PropTypes.arrayOf(PropTypes.object).isRequired,
-  tags: PropTypes.arrayOf(PropTypes.object).isRequired,
+  urls: PropTypes.shape({
+    cancel_url: PropTypes.string.isRequired,
+    save_url: PropTypes.string.isRequired,
+  }).isRequired,
+  tags: PropTypes.shape({
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      values: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        description: PropTypes.string.isRequired,
+      }).isRequired).isRequired,
+    })).isRequired,
+    assignedTags: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      values: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        description: PropTypes.string.isRequired,
+      }).isRequired).isRequired,
+    })).isRequired,
+    affectedItems: PropTypes.arrayOf(PropTypes.number),
+  }).isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -67,7 +88,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = ({ tagging }) => ({
-  isLoaded: false,
+  isLoaded: !!tagging,
 });
 
 const TaggingWrapperConnected = connect(
