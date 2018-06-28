@@ -32,9 +32,9 @@ class TaggingWrapper extends React.Component{
               description: 'Save'
             }
           }
-          cancelButton={{ onClick: () => { $.post(urls.cancel_url);  },
+          cancelButton={{ onClick: () => { this.reset(); $.post(urls.cancel_url);  },
             href: '', type: 'button', disabled: false, description: 'Cancel'}}
-          resetButton={{ onClick: () => this.reset({ type: "UI-COMPONENTS_TAGGING_RESET_STATE" }),
+          resetButton={{ onClick: () => this.reset(),
             href: '', type: 'button', disabled: false, description: 'Reset'}}
         />
       )
