@@ -352,6 +352,9 @@ module EmsCommon
           tag(model_class)
         when "#{display_s}_protect"
           assign_policies(model_class)
+        when "#{display_s}_check_compliance"
+          check_compliance_nested(model_class)
+          return
         end
       end
 
@@ -472,6 +475,39 @@ module EmsCommon
   end
 
   private ############################
+
+  # Check compliance of Last Known Configuration for items displayed in nested lists
+  def check_compliance_nested(model)
+    assert_privileges("#{model.name.underscore}_check_compliance")
+    ids = find_checked_ids_with_rbac(model)
+
+    if ids.empty?
+      add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:models => model.to_s),
+                                                              :task  => "Compliance Check"}, :error)
+    else
+      process_check_compliance(model, ids)
+    end
+
+    show_list
+    ids.count
+  end
+
+  def process_check_compliance(model, ids)
+    model.where(:id => ids).order("lower(name)").each do |entity|
+      begin
+        entity.check_compliance
+      rescue StandardError => bang
+        add_flash(_("%{model} \"%{name}\": Error during 'Check Compliance': %{error}") %
+                   {:model => ui_lookup(:model => model.to_s),
+                    :name  => entity.name,
+                    :error => bang.message},
+                  :error) # Push msg and error flag
+      else
+        add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
+      end
+    end
+    javascript_flash
+  end
 
   # Set form variables for edit
   def set_form_vars
