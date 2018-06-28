@@ -68,6 +68,7 @@ module VmRemote
         :secret => j(params[:secret]),
         :type   => proto
       }
+      @vm = identify_record(params[:id], VmOrTemplate)
       render(:template => 'layouts/remote_console', :layout => false)
     else
       raise 'Unsupported protocol'

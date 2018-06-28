@@ -2,7 +2,7 @@
 %html{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
     %title
-      = _('%{product_name} HTML5 Remote Console') % {:product_name => Vmdb::Appliance.PRODUCT_NAME}
+      = _('%{vm_hostname} - %{product_name} HTML5 Remote Console') % {:vm_hostname => @vm.hostnames[0] || @vm.name, :product_name => Vmdb::Appliance.PRODUCT_NAME}
     = favicon_link_tag
     = stylesheet_link_tag 'application'
     = stylesheet_link_tag '/custom.css'
