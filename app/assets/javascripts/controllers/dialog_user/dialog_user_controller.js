@@ -65,7 +65,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
       _.forEach(allErrorMessages, (function(errorMessage) {
         add_flash(errorMessage, 'error');
       }));
-      console.log(err);
+      console.error(err);
       return Promise.reject(err);
     });
   }
