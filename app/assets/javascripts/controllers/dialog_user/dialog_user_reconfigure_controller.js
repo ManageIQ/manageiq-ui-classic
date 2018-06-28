@@ -1,21 +1,20 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', function(API, dialogFieldRefreshService, miqService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType) {
+ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dialogFieldRefreshService', 'miqService', 'resourceActionId', 'targetId', function(API, dialogFieldRefreshService, miqService, resourceActionId, targetId) {
   var vm = this;
 
   vm.$onInit = function() {
     var apiCall = new Promise(function(resolve) {
-      var url = '/api/service_dialogs/' + dialogId +
-        '?resource_action_id=' + resourceActionId +
-        '&target_id=' + targetId +
-        '&target_type=' + targetType;
+      var url = '/api/services/' + targetId +
+        '?attributes=reconfigure_dialog';
 
-      resolve(API.get(url, {expand: 'resources', attributes: 'content'}).then(init));
+      resolve(API.get(url).then(init));
     });
 
     Promise.resolve(apiCall).then(miqService.refreshSelectpicker);
   };
 
-  function init(dialog) {
-    vm.dialog = dialog.content[0];
+  function init(data) {
+    vm.dialogId = data.reconfigure_dialog[0].id;
+    vm.dialog = data.reconfigure_dialog[0];
     vm.dialogLoaded = true;
   }
 
@@ -30,10 +29,10 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
 
   function refreshField(field) {
     var idList = {
-      dialogId: dialogId,
+      dialogId: vm.dialogId,
       resourceActionId: resourceActionId,
       targetId: targetId,
-      targetType: targetType
+      targetType: "service"
     };
 
     return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
@@ -45,18 +44,13 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   }
 
   function submitButtonClicked() {
-    vm.dialogData.action = apiAction;
     miqService.sparkleOn();
-    var apiData;
-    if (apiSubmitEndpoint.match(/generic_objects/)) {
-      apiData = {action: apiAction, parameters: _.omit(vm.dialogData, 'action')};
-    } else if (apiAction === 'reconfigure') {
-      apiData = {action: apiAction, resource: _.omit(vm.dialogData, 'action')};
-    } else {
-      apiData = vm.dialogData;
-    }
+
+    var apiData = {action: 'reconfigure', resource: _.omit(vm.dialogData, 'action')};
+    var apiSubmitEndpoint = '/api/services/' + targetId;
+
     return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
-      miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
+      miqService.redirectBack(__('Order Request was Submitted'), 'info', '/service/explorer');
     }).catch(function(err) {
       miqService.sparkleOff();
       var fullErrorMessage = err.data.error.message;
@@ -71,7 +65,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   }
 
   function cancelClicked(_event) {
-    miqService.redirectBack(__('Dialog Cancelled'), 'info', cancelEndpoint);
+    miqService.redirectBack(__('Dialog Cancelled'), 'info', '/service/explorer');
   }
 
   function saveable() {
