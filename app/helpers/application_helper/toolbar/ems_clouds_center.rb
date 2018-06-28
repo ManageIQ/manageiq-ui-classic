@@ -1,4 +1,16 @@
 class ApplicationHelper::Toolbar::EmsCloudsCenter < ApplicationHelper::Toolbar::Basic
+  button_group('magic', [
+    button(
+      :magic,
+      'fa fa-magic fa-lg',
+      t = N_('Magic'),
+      t,
+      :data  => {'function'      => 'sendDataWithRx',
+                 'function-data' => {:button     => :magic,
+                                     :controller => 'provider_dialogs',
+                                     :ems_id     => EmsCloud.first.id}.to_json},
+      :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck)
+  ])
   button_group('ems_cloud_vmdb', [
     select(
       :ems_cloud_vmdb_choice,
