@@ -29,8 +29,10 @@ window.listenToRx(function(buttonData) {
 });
 
 function reactModal(buttonData, response) {
-  // TODO
-  console.log('TODO reactModal', arguments);
+  let Component = ManageIQ.component.getReact(response.react);
+  let inner = () => <Component {...response.props} />;
+
+  renderModal(__("My React Modal"), inner);
 }
 
 function dialogModal(buttonData, response) {
