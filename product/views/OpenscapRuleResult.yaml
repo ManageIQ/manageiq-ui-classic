@@ -42,7 +42,7 @@ headers:
 - Result
 - Severity
 - Title
-- CVE
+- CVEs
 
 # Condition(s) string for the SQL query
 conditions:
