@@ -200,15 +200,13 @@ module ApplicationController::Tags
       Classification.find_assigned_entries(tagitem).collect { |e| e unless e.parent.read_only? }
     end.reduce(:&)
 
-    values = cat.entries.map do |entry|
-      { :id => entry.id, :description => entry.description }
-    end
-
     @tags = cats.map do |cat|
       {:id          => cat.id,
        :description => cat.description,
        :singleValue => cat.single_value,
-       :values      => values.sort_by { |e| e[:description.downcase] }}
+       :values      => cat.entries.map do |entry|
+         { :id => entry.id, :description => entry.description }
+       end.sort_by { |e| e[:description.downcase] }}
     end
 
     assigned_tags = @assignments.map do |a|
@@ -217,9 +215,9 @@ module ApplicationController::Tags
     end
 
     assigned_tags = assigned_tags.uniq.map do |tag|
-      {:id => tag[:id],
+      {:id          => tag[:id],
        :description => tag[:description],
-       :values => @assignments.select { |a| a.parent_id == tag[:id] }.map { |b| { :description => b.description, :id => b[:id] } }}
+       :values      => @assignments.select { |a| a.parent_id == tag[:id] }.map { |b| { :description => b.description, :id => b[:id] } }}
     end
 
     @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => @tagitems.map(&:id)}
