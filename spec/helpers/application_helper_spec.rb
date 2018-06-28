@@ -1133,15 +1133,6 @@ describe ApplicationHelper do
     end
   end
 
-  context "#fileicon_tag" do
-    it "returns correct image for miq task record based upon it's status" do
-      task = FactoryGirl.create(:miq_task)
-      task.state = "Running"
-      image = helper.fileicon_tag(task)
-      expect(image).to eq("<i class=\"pficon pficon-running\"></i>")
-    end
-  end
-
   it 'output of remote_function should not be html_safe' do
     expect(helper.remote_function(:url => {:controller => 'vm_infra', :action => 'explorer'}).html_safe?).to be_falsey
   end
