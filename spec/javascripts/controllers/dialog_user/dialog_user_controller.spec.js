@@ -1,11 +1,16 @@
 describe('dialogUserController', function() {
-  var $controller, API, dialogFieldRefreshService, miqService;
+  var $controller, API, dialogFieldRefreshService, dialogUserSubmitErrorHandlerService, miqService;
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function(_$controller_, _API_, _dialogFieldRefreshService_, _miqService_) {
+  beforeEach(inject(function(_$controller_,
+                             _API_,
+                             _dialogFieldRefreshService_,
+                             _dialogUserSubmitErrorHandlerService_,
+                             _miqService_) {
     API = _API_;
     dialogFieldRefreshService = _dialogFieldRefreshService_;
+    dialogUserSubmitErrorHandlerService = _dialogUserSubmitErrorHandlerService_;
     miqService = _miqService_;
 
     var responseResult = {content: ['the dialog']};
@@ -15,6 +20,7 @@ describe('dialogUserController', function() {
     });
 
     spyOn(dialogFieldRefreshService, 'refreshField');
+    spyOn(dialogUserSubmitErrorHandlerService, 'handleError');
     spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'redirectBack');
     spyOn(miqService, 'sparkleOn');
@@ -24,6 +30,7 @@ describe('dialogUserController', function() {
     $controller = _$controller_('dialogUserController', {
       API: API,
       dialogFieldRefreshService: dialogFieldRefreshService,
+      dialogUserSubmitErrorHandlerService: dialogUserSubmitErrorHandlerService,
       miqService: miqService,
       dialogId: '1234',
       apiSubmitEndpoint: 'submit endpoint',
@@ -201,36 +208,18 @@ describe('dialogUserController', function() {
     });
 
     context('when the API call fails', function() {
+      var rejectionData;
+
       beforeEach(function() {
-        var rejectionData = {data: {error: {message: "Failed! -One,Two"}}};
+        rejectionData = {data: {error: {message: "Failed! -One,Two"}}};
         spyOn(API, 'post').and.returnValue(Promise.reject(rejectionData));
-        spyOn(window, 'clearFlash');
-        spyOn(window, 'add_flash');
       });
 
-      it('turns off the sparkle', function(done) {
-        $controller.submitButtonClicked();
-        setTimeout(function() {
-          expect(miqService.sparkleOff).toHaveBeenCalled();
-          done();
-        });
-      });
-
-      it('clears flash messages', function(done) {
+      it('delegates to the dialogUserSubmitErrorHandlerService', function(done) {
         $controller.submitButtonClicked();
 
         setTimeout(function() {
-          expect(window.clearFlash).toHaveBeenCalled();
-          done();
-        });
-      });
-
-      it('adds flash messages for each message after the -', function(done) {
-        $controller.submitButtonClicked();
-
-        setTimeout(function() {
-          expect(window.add_flash).toHaveBeenCalledWith('One', 'error');
-          expect(window.add_flash).toHaveBeenCalledWith('Two', 'error');
+          expect(dialogUserSubmitErrorHandlerService.handleError).toHaveBeenCalledWith(rejectionData);
           done();
         });
       });

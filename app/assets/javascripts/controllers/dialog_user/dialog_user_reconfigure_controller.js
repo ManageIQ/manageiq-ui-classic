@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dialogFieldRefreshService', 'miqService', 'resourceActionId', 'targetId', function(API, dialogFieldRefreshService, miqService, resourceActionId, targetId) {
+ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'resourceActionId', 'targetId', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, resourceActionId, targetId) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -32,7 +32,7 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
       dialogId: vm.dialogId,
       resourceActionId: resourceActionId,
       targetId: targetId,
-      targetType: "service"
+      targetType: "service",
     };
 
     return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
@@ -52,15 +52,7 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
     return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
       miqService.redirectBack(__('Order Request was Submitted'), 'info', '/service/explorer');
     }).catch(function(err) {
-      miqService.sparkleOff();
-      var fullErrorMessage = err.data.error.message;
-      var allErrorMessages = fullErrorMessage.split('-')[1].split(',');
-      clearFlash();
-      _.forEach(allErrorMessages, (function(errorMessage) {
-        add_flash(errorMessage, 'error');
-      }));
-      console.error(err);
-      return Promise.reject(err);
+      return Promise.reject(dialogUserSubmitErrorHandlerService.handleError(err));
     });
   }
 
