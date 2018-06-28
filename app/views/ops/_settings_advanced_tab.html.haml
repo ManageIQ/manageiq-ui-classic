@@ -1,10 +1,8 @@
 - if @sb[:active_tab] == "settings_advanced"
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
   #form_div
-    .alert.alert-danger
-      %span.pficon-layered
-        %span.pficon.pficon-error-octagon
-        %span.pficon.pficon-error-exclamation
+    .alert.alert-warning
+      %span.pficon.pficon-warning-triangle-o
       %strong
         = advanced_tab_warning
 

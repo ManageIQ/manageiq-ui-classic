@@ -219,7 +219,7 @@ describe('import.js', function() {
       html += '  <div class="alert alert-success alert-danger alert-warning"></div>';
       html += '</div>';
       html += '<div class="icon-placeholder pficon pficon-ok pficon-layered"></div>';
-      html += '<div id="error-octagon" class="pficon-error-octagon"></div>';
+      html += '<div id="error-circle-o" class="pficon-error-circle-o"></div>';
       html += '<div id="error-exclamation" class="pficon-error-exclamation"></div>';
       html += '<div id="warning-triangle" class="pficon-warning-triangle-o"></div>';
       html += '<div id="warning-exclamation" class="pficon-warning-exclamation"></div>';
@@ -240,8 +240,8 @@ describe('import.js', function() {
       expect($('.icon-placeholder')).not.toHaveClass('pficon-layered');
     });
 
-    it('removes pficon-error-octagon class', function() {
-      expect($('#error-octagon')).not.toHaveClass('pficon-error-octagon');
+    it('removes pficon-error-circle-o class', function() {
+      expect($('#error-circle-o')).not.toHaveClass('pficon-error-circle-o');
     });
 
     it('removes pficon-error-exclamation class', function() {
