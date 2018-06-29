@@ -175,7 +175,7 @@ class TreeBuilder
   end
 
   def add_root_node(nodes)
-    root = nodes.first.merge!(root_options)
+    root = nodes.first.merge!(%i(text tooltip).each_with_object(root_options) { |key, hsh| hsh[key] = ERB::Util.html_escape(hsh[key]) })
     if root[:image]
       root[:image] = ActionController::Base.helpers.image_path(root[:image])
     else
