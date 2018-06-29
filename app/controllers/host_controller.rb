@@ -60,7 +60,7 @@ class HostController < ApplicationController
 
   def filesystems
     label, scope = filesystems_subsets
-    show_association('filesystems', label, 'filesystems', :filesystems, Filesystem, nil, scope)
+    show_association('filesystems', label, :filesystems, Filesystem, nil, scope)
   end
 
   def host_services_subsets
@@ -87,27 +87,27 @@ class HostController < ApplicationController
 
   def host_services
     label, scope = host_services_subsets
-    show_association('host_services', label, 'service', :host_services, SystemService, nil, scope)
+    show_association('host_services', label, :host_services, SystemService, nil, scope)
     session[:host_display] = "host_services"
   end
 
   def host_cloud_services
     @center_toolbar = 'host_cloud_services'
     @no_checkboxes = false
-    show_association('host_cloud_services', _('Cloud Services'), 'service', :cloud_services, CloudService, nil, nil)
+    show_association('host_cloud_services', _('Cloud Services'), :cloud_services, CloudService, nil, nil)
   end
 
   def advanced_settings
-    show_association('advanced_settings', _('Advanced Settings'), 'advancedsetting', :advanced_settings, AdvancedSetting)
+    show_association('advanced_settings', _('Advanced Settings'), :advanced_settings, AdvancedSetting)
   end
 
   def firewall_rules
     @display = "main"
-    show_association('firewall_rules', _('Firewall Rules'), 'firewallrule', :firewall_rules, FirewallRule)
+    show_association('firewall_rules', _('Firewall Rules'), :firewall_rules, FirewallRule)
   end
 
   def guest_applications
-    show_association('guest_applications', _('Packages'), 'guest_application', :guest_applications, GuestApplication)
+    show_association('guest_applications', _('Packages'), :guest_applications, GuestApplication)
   end
 
   # Show the main Host list view overriding method from Mixins::GenericListMixin

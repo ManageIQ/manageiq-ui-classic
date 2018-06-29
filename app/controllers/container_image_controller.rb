@@ -20,11 +20,11 @@ class ContainerImageController < ApplicationController
   end
 
   def guest_applications
-    show_association('guest_applications', _('Packages'), 'guest_application', :guest_applications, GuestApplication)
+    show_association('guest_applications', _('Packages'), :guest_applications, GuestApplication)
   end
 
   def openscap_rule_results
-    show_association('openscap_rule_results', 'Openscap', 'openscap_rule_result', :openscap_rule_results,
+    show_association('openscap_rule_results', 'Openscap', :openscap_rule_results,
                      OpenscapRuleResult)
   end
 

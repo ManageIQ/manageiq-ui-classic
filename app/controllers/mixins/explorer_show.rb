@@ -8,7 +8,7 @@ module Mixins
       obj
     end
 
-    def show_association(action, display_name, listicon, method, klass, association = nil, scopes = nil)
+    def show_association(action, display_name, method, klass, association = nil, scopes = nil)
       params[:display] = klass.name
       # Ajax request means in explorer, or if current explorer is one of the explorer controllers
       @explorer = true if request.xml_http_request? && explorer_controller?
@@ -37,7 +37,6 @@ module Mixins
                          :url  => "/#{controller_name}/show/#{@record.id}"}, true)
         drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
                         :url  => "/#{controller_name}/#{action}/#{@record.id}")
-        @listicon = listicon
 
         show_details(klass, :association => association, :scopes => scopes)
       end
@@ -78,7 +77,6 @@ module Mixins
         drop_breadcrumb({:name => @record.name, :url => "/#{@db}/show/#{@record.id}"}, true)
         drop_breadcrumb(:name => breadcrumb_name % {:name => @record.name},
                         :url  => "/#{@db}/guest_applications/#{@record.id}")
-        @listicon = "guest_application"
         show_details(GuestApplication)
       end
     end
@@ -102,7 +100,6 @@ module Mixins
       else
         drop_breadcrumb(:name => _("%{name} (Patches)") % {:name => @record.name},
                         :url  => "/#{@db}/patches/#{@record.id}")
-        @listicon = "patch"
         show_details(Patch)
       end
     end
@@ -121,7 +118,6 @@ module Mixins
       else
         drop_breadcrumb(:name => _("%{name} (Groups)") % {:name => @record.name},
                         :url  => "/#{@db}/groups/#{@record.id}")
-        @listicon = "group"
         show_details(Account, :association => "groups")
       end
     end
@@ -140,7 +136,6 @@ module Mixins
       else
         drop_breadcrumb(:name => _("%{name} (Users)") % {:name => @record.name},
                         :url  => "/#{@db}/users/#{@record.id}")
-        @listicon = "user"
         show_details(Account, :association => "users")
       end
     end
@@ -160,7 +155,6 @@ module Mixins
       else
         drop_breadcrumb(:name => _("%{name} (Hosts)") % {:name => @record.name},
                         :url  => "/#{controller_name}/hosts/#{@record.id}")
-        @listicon = "host"
         show_details(Host, :association => "hosts")
       end
     end
@@ -190,8 +184,6 @@ module Mixins
     def show_details(db, options = {})  # Pass in the db, parent vm is in @vm
       association = options[:association]
       scopes = options[:scopes]
-      # generate the grid/tile/list url to come back here when gtl buttons are pressed
-      @gtl_url       = "/#{@db}/#{@listicon.pluralize}/#{@record.id}?"
       @showtype      = "details"
       @display       = "main"
       @no_checkboxes = @no_checkboxes.nil? || @no_checkboxes

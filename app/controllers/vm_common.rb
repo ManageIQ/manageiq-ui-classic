@@ -300,73 +300,73 @@ module VmCommon
   end
 
   def processes
-    show_association('processes', _('Running Processes'), 'processes', [:operating_system, :processes], OsProcess,
+    show_association('processes', _('Running Processes'), [:operating_system, :processes], OsProcess,
                      'processes')
   end
 
   def registry_items
-    show_association('registry_items', _('Registry Entries'), 'registry_items', :registry_items, RegistryItem)
+    show_association('registry_items', _('Registry Entries'), :registry_items, RegistryItem)
   end
 
   def advanced_settings
-    show_association('advanced_settings', _('Advanced Settings'), 'advancedsetting', :advanced_settings,
+    show_association('advanced_settings', _('Advanced Settings'), :advanced_settings,
                      AdvancedSetting)
   end
 
   def linux_initprocesses
-    show_association('linux_initprocesses', _('Init Processes'), 'linuxinitprocesses', :linux_initprocesses,
+    show_association('linux_initprocesses', _('Init Processes'), :linux_initprocesses,
                      SystemService, 'linux_initprocesses')
   end
 
   def win32_services
-    show_association('win32_services', _('Win32 Services'), 'win32service', :win32_services, SystemService,
+    show_association('win32_services', _('Win32 Services'), :win32_services, SystemService,
                      'win32_services')
   end
 
   def kernel_drivers
-    show_association('kernel_drivers', _('Kernel Drivers'), 'kerneldriver', :kernel_drivers, SystemService,
+    show_association('kernel_drivers', _('Kernel Drivers'), :kernel_drivers, SystemService,
                      'kernel_drivers')
   end
 
   def filesystem_drivers
-    show_association('filesystem_drivers', _('File System Drivers'), 'filesystemdriver', :filesystem_drivers,
+    show_association('filesystem_drivers', _('File System Drivers'), :filesystem_drivers,
                      SystemService, 'filesystem_drivers')
   end
 
   def filesystems
-    show_association('filesystems', _('Files'), 'filesystems', :filesystems, Filesystem)
+    show_association('filesystems', _('Files'), :filesystems, Filesystem)
   end
 
   def security_groups
-    show_association('security_groups', _('Security Groups'), 'security_group', :security_groups, SecurityGroup)
+    show_association('security_groups', _('Security Groups'), :security_groups, SecurityGroup)
   end
 
   def floating_ips
-    show_association('floating_ips', _('Floating IPs'), 'floating_ip', :floating_ips, FloatingIp)
+    show_association('floating_ips', _('Floating IPs'), :floating_ips, FloatingIp)
   end
 
   def cloud_subnets
-    show_association('cloud_subnets', _('Subnets'), 'cloud_subnet', :cloud_subnets, CloudSubnet)
+    show_association('cloud_subnets', _('Subnets'), :cloud_subnets, CloudSubnet)
   end
 
   def cloud_networks
-    show_association('cloud_subnets', _('Networks'), 'cloud_subnet', :cloud_subnets, CloudNetwork)
+    show_association('cloud_subnets', _('Networks'), :cloud_subnets, CloudNetwork)
   end
 
   def cloud_volumes
-    show_association('cloud_volumes', _('Cloud Volumes'), 'cloud_volume', :cloud_volumes, CloudVolume)
+    show_association('cloud_volumes', _('Cloud Volumes'), :cloud_volumes, CloudVolume)
   end
 
   def network_routers
-    show_association('network_routers', _('Routers'), 'network_router', :network_routers, NetworkRouter)
+    show_association('network_routers', _('Routers'), :network_routers, NetworkRouter)
   end
 
   def network_ports
-    show_association('network_ports', _('Ports'), 'network_port', :network_ports, NetworkPort)
+    show_association('network_ports', _('Ports'), :network_ports, NetworkPort)
   end
 
   def load_balancers
-    show_association('load_balancers', _('Load Balancers'), 'load_balancer', :load_balancers, LoadBalancer)
+    show_association('load_balancers', _('Load Balancers'), :load_balancers, LoadBalancer)
   end
 
   def snap
@@ -820,7 +820,6 @@ module VmCommon
   def scan_history
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     @scan_history = ScanHistory.find_by(:vm_or_template_id => @record.id)
-    @listicon = "scan_history"
     @showtype = "scan_history"
     @lastaction = "scan_history"
     @gtl_url = "/scan_history"
@@ -866,7 +865,6 @@ module VmCommon
       show_item
     else
       drop_breadcrumb({:name => time_ago_in_words(@scan_history.started_on.in_time_zone(Time.zone)).titleize, :url => "/vm/show/#{@scan_history.vm_or_template_id}"}, true)
-      @listicon = "scan_history"
       show_details(ScanHistory)
     end
   end

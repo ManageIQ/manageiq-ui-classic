@@ -1283,7 +1283,6 @@ module ApplicationHelper
   def process_show_list_options(options, curr_model = nil)
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
     @report_data_additional_options.with_quadicon_options(
-      :listicon   => @listicon,
       :embedded   => @embedded,
       :showlinks  => @showlinks,
       :policy_sim => @policy_sim,
@@ -1321,7 +1320,6 @@ module ApplicationHelper
   # This is a temporary solution that is ot be replaced by proper
   # parametrization of an ancessor class of QuadiconHelper.
   def restore_quadicon_options(quadicon_options)
-    @listicon = quadicon_options[:listicon]
     @embedded = quadicon_options[:embedded]
     @showlinks = quadicon_options[:showlinks]
     @policy_sim = quadicon_options[:policy_sim]

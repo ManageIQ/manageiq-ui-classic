@@ -129,13 +129,12 @@ class StorageController < ApplicationController
   end
 
   def files
-    show_association('files', _('All Files'), 'storage_files', :storage_files, StorageFile, 'files')
+    show_association('files', _('All Files'), :storage_files, StorageFile, 'files')
   end
 
   def disk_files
     show_association('disk_files',
                      _('VM Provisioned Disk Files'),
-                     'storage_disk_files',
                      :storage_files,
                      StorageFile,
                      'disk_files')
@@ -144,7 +143,6 @@ class StorageController < ApplicationController
   def snapshot_files
     show_association('snapshot_files',
                      _('VM Snapshot Files'),
-                     'storage_snapshot_files',
                      :storage_files,
                      StorageFile,
                      'snapshot_files')
@@ -153,7 +151,6 @@ class StorageController < ApplicationController
   def vm_ram_files
     show_association('vm_ram_files',
                      _('VM Memory Files'),
-                     'storage_memory_files',
                      :storage_files, StorageFile,
                      'vm_ram_files')
   end
@@ -161,7 +158,6 @@ class StorageController < ApplicationController
   def vm_misc_files
     show_association('vm_misc_files',
                      _('Other VM Files'),
-                     'storage_other_vm_files',
                      :storage_files, StorageFile,
                      'vm_misc_files')
   end
@@ -169,7 +165,6 @@ class StorageController < ApplicationController
   def debris_files
     show_association('debris_files',
                      _('Non-VM Files'),
-                     'storage_non_vm_files',
                      :storage_files, StorageFile,
                      'debris_files')
   end

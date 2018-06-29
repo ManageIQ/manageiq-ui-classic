@@ -14,7 +14,6 @@ class ApplicationController
     :menu_click,
     :sb_controller,
 
-    :listicon,
     :embedded,
     :showlinks,
     :policy_sim,
@@ -43,7 +42,6 @@ class ApplicationController
     end
 
     def with_quadicon_options(options)
-      self.listicon   = options[:listicon]
       self.embedded   = options[:embedded]
       self.showlinks  = options[:showlinks]
       self.policy_sim = options[:policy_sim]

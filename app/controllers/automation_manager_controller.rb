@@ -300,7 +300,6 @@ class AutomationManagerController < ApplicationController
   def configuration_scripts_list(id, model)
     return configuration_script_node(id) if id
     @show_adv_search = true
-    @listicon = "configuration_script"
     if x_active_tree == :configuration_scripts_tree
       options = {:model      => model.to_s,
                  :gtl_dbname => "configuration_scripts"}

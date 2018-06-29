@@ -31,19 +31,19 @@ class OrchestrationStackController < ApplicationController
   end
 
   def cloud_networks
-    show_association('cloud_networks', _('Cloud Networks'), 'cloud_network', :cloud_networks, CloudNetwork)
+    show_association('cloud_networks', _('Cloud Networks'), :cloud_networks, CloudNetwork)
   end
 
   def outputs
-    show_association('outputs', _('Outputs'), 'output', :outputs, OrchestrationStackOutput)
+    show_association('outputs', _('Outputs'), :outputs, OrchestrationStackOutput)
   end
 
   def parameters
-    show_association('parameters', _('Parameters'), 'parameter', :parameters, OrchestrationStackParameter)
+    show_association('parameters', _('Parameters'), :parameters, OrchestrationStackParameter)
   end
 
   def resources
-    show_association('resources', _('Resources'), 'resource', :resources, OrchestrationStackResource)
+    show_association('resources', _('Resources'), :resources, OrchestrationStackResource)
   end
 
   # handle buttons pressed on the button bar

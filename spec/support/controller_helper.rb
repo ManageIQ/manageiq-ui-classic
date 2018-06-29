@@ -109,7 +109,7 @@ module Spec
             'parent_class_name'     => options[:parent_model],
             'parent_method'         => options[:parent_method],
             'lastaction'            => options[:lastaction],
-            'association' => nil, 'view_suffix' => nil, 'listicon' => nil, 'embedded' => nil, 'showlinks' => nil, 'policy_sim' => nil
+            'association' => nil, 'view_suffix' => nil, 'embedded' => nil, 'showlinks' => nil, 'policy_sim' => nil
           }.compact
         }.compact
       end

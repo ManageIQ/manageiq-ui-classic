@@ -75,7 +75,6 @@ class MiqRequestController < ApplicationController
     end
     @sortcol = session[:request_sortcol].nil? ? 0 : session[:request_sortcol].to_i
     @sortdir = session[:request_sortdir].nil? ? "ASC" : session[:request_sortdir]
-    @listicon = "miq_request"
     @no_checkboxes = true # Don't show checkboxes, read_only
     kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
     @view, @pages = get_view(kls, :named_scope => prov_scope(prov_set_default_options))
@@ -96,7 +95,6 @@ class MiqRequestController < ApplicationController
       prov_set_show_vars
     elsif @display == "miq_provisions"
       @showtype = "miq_provisions"
-      @listicon = "miq_request"
       @no_checkboxes = true
       @showlinks = true
       @view, @pages = get_view(MiqProvision, :named_scope => [[:with_miq_request_id, @miq_request.id]]) # Get all requests

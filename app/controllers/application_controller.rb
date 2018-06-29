@@ -470,7 +470,6 @@ class ApplicationController < ActionController::Base
       show_item
     else
       drop_breadcrumb(:name => @record.name + " (#{bc_text})", :url => "/#{obj}/event_logs/#{@record.id}")
-      @listicon = "event_logs"
       show_details(EventLog, :association => "event_logs")
     end
   end
