@@ -5,7 +5,7 @@ class AnsibleTowerJobTemplateDialogService
       tab = dialog.dialog_tabs.build(:display => "edit", :label => "Basic Information", :position => 0)
 
       group_pos = 0
-      add_options_group(tab, group_pos)
+      add_options_group(tab, group_pos, template)
 
       unless template.survey_spec.blank?
         group_pos += 1
@@ -23,30 +23,49 @@ class AnsibleTowerJobTemplateDialogService
 
   private
 
-  def add_options_group(tab, position)
+  def add_options_group(tab, position, template)
     tab.dialog_groups.build(
       :display  => "edit",
       :label    => "Options",
       :position => position
     ).tap do |dialog_group|
-      add_limit_field(dialog_group, 0)
+      add_service_name_field(dialog_group, 0)
+      add_limit_field(dialog_group, 1) if template.supports_limit?
     end
   end
 
-  def add_limit_field(group, position)
+  def add_options_field(group, position, options)
     group.dialog_fields.build(
       :type           => "DialogFieldTextBox",
-      :name           => "limit",
-      :description    => "A ':'-separated string to constrain the list of hosts managed or affected by the playbook",
+      :name           => options[:name],
+      :description    => options[:description],
       :data_type      => "string",
       :display        => "edit",
       :required       => false,
       :options        => {:protected => false},
-      :label          => "Limit",
+      :label          => options[:label],
       :position       => position,
       :reconfigurable => true,
       :dialog_group   => group
     )
+  end
+
+  def add_service_name_field(group, position)
+    options = {
+      :name        => "service_name",
+      :description => "Name of the new service",
+      :label       => "Service Name",
+    }
+    add_options_field(group, position, options)
+  end
+
+  def add_limit_field(group, position)
+    options = {
+      :name        => "limit",
+      :description => "A ':'-separated string to constrain the list of hosts managed or affected by the playbook",
+      :label       => "Limit",
+    }
+    add_options_field(group, position, options)
   end
 
   def add_survey_group(tab, position, template)
