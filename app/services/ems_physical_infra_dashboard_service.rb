@@ -27,6 +27,12 @@ class EmsPhysicalInfraDashboardService < DashboardService
     }
   end
 
+  def servers_group_data
+    {
+      :serversGroup => servers_group
+    }.compact
+  end
+
   def attributes_data
     attributes = %i(physical_servers physical_switches physical_racks)
 
@@ -68,6 +74,12 @@ class EmsPhysicalInfraDashboardService < DashboardService
       :iconImage => get_icon(@ems),
       :largeIcon => true,
     }
+  end
+
+  def servers_health_data
+    {
+      :serversHealth => servers_health
+    }.compact
   end
 
   def recent_servers
@@ -121,6 +133,63 @@ class EmsPhysicalInfraDashboardService < DashboardService
     }
   end
 
+  def servers_group
+    # Get recent Servers
+    all_servers = Hash.new(0)
+    servers_with_host = Hash.new(0)
+    valid_servers = Hash.new(0)
+    warning_servers = Hash.new(0)
+    critical_servers = Hash.new(0)
+    all_physical_servers = PhysicalServer.where('created_at > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
+    all_physical_servers.sort_by(&:created_at).each do |server|
+      date = server.created_at.strftime("%Y-%m-%d")
+      all_servers[date] += 1
+      servers_with_host[date] += 1 if server.host.present?
+      valid_servers[date] += 1 if server.health_state == 'Valid'
+      warning_servers[date] += 1 if server.health_state == 'Warning'
+      critical_servers[date] += 1 if server.health_state == 'Critical'
+    end
+
+    format_server_utilization_data(all_servers, valid_servers, warning_servers, critical_servers, servers_with_host)
+  end
+
+  private
+
+  def format_server_utilization_data(total_servers, valid_servers, warning_servers, critical_servers, servers_with_host)
+    {
+      :availableServers => total_servers.any? ? format_value(total_servers, servers_with_host) : nil,
+      :serversHealth    => total_servers.any? ? format_servers_health(total_servers, valid_servers, warning_servers, critical_servers) : nil,
+    }
+  end
+
+  def format_value(total, target)
+    available = check_num(total.values.last) - check_num(target.values.last)
+    {
+      :columns => {
+        :used      => check_num(target.values.last),
+        :available => check_num(available),
+      },
+      :xData   => total.keys,
+      :yData   => total.values.map,
+    }
+  end
+
+  def format_servers_health(total_servers, valid_servers, warning_servers, critical_servers)
+    {
+      :columns => {
+        :valid    => check_num(valid_servers.values.last),
+        :warning  => check_num(warning_servers.values.last),
+        :critical => check_num(critical_servers.values.last),
+      },
+      :xData   => total_servers.keys,
+      :yData   => total_servers.values.map,
+    }
+  end
+
+  def check_num(val)
+    (val || 0)
+  end
+
   def recent_records(model)
     all_records = Hash.new(0)
     records = model.where('created_at > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
@@ -130,6 +199,15 @@ class EmsPhysicalInfraDashboardService < DashboardService
       all_records[date] += model.where('created_at = ?', r.created_at).count
     end
     all_records
+  end
+
+  def daily_provider_metrics
+    current_user = @controller.current_user
+    tp = TimeProfile.profile_for_user_tz(current_user.id, current_user.get_timezone) || TimeProfile.default_time_profile
+
+    @daily_metrics ||= Metric::Helper.find_for_interval_name('daily', tp)
+                                     .where(:resource => (@ems || ManageIQ::Providers::PhysicalInfraManager.all))
+                                     .where('timestamp > ?', 30.days.ago.utc).order('timestamp')
   end
 
   def get_url(ems_id, attr_url)

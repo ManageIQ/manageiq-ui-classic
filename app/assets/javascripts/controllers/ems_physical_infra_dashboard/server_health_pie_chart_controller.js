@@ -1,28 +1,21 @@
-angular.module( 'patternfly.charts' ).controller('utilizationTrendChartController', ['$q', 'providerDashboard', 'providerId', 'chartsMixin', '$http', 'miqService', function($q, providerDashboard, providerId, chartsMixin, $http, miqService) {
+angular.module( 'patternfly.charts' ).controller( 'serverHealthPieChartController', ['providerId', '$http', 'chartsMixin', 'miqService', function(providerId, $http, chartsMixin, miqService) {
   var vm = this;
-
+  vm.id = "serverHealthPieChart_" + providerId;
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.data = {};
     vm.loadingDone = false;
 
-    var url = '/' + providerDashboard + '/ems_utilization_data/' + providerId;
-    var metricsPromise = $http.get(url)
+    var url = '/ems_physical_infra_dashboard/servers_group_data/' + providerId;
+    $http.get(url)
       .then(function(response) {
         vm.metricsData = response.data.data;
+        vm.data = processMetricsData(vm.data, vm.metricsData.serversGroups);
+        vm.loadingDone = true;
       })
       .catch(miqService.handleFailure);
 
-    $q.all([metricsPromise]).then(function() {
-      vm.data = processMetricsData(vm.data, vm.metricsData.ems_utilization);
-      vm.loadingDone = true;
-    });
-
-    vm.title = "Global Utilization";
-    vm.centerLabel = 'used';
-    vm.custShowXAxis = false;
-    vm.custShowYAxis = false;
-    vm.custChartHeight = 60;
+    vm.title = "Servers Data";
     vm.dataAvailable = false;
     vm.timeframeLabel = __('Last 30 Days');
 
@@ -44,7 +37,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
           metricsDataStruct.data[keys[i]] = {
             'data': {dataAvailable: false},
             'config': {
-              'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
+              'title':chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
             },
           };
         } else {
@@ -55,8 +48,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
               'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
               'units': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units,
             },
-            'donutConfig': chartsMixin.chartConfig[keys[i] + 'UsageDonutConfig'],
-            'sparklineConfig': chartsMixin.chartConfig[keys[i] + 'UsageSparklineConfig'],
+            'pieConfig': chartsMixin.chartConfig[keys[i] + 'UsagePieConfig'],
           };
         }
       }
