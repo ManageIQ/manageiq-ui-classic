@@ -953,6 +953,7 @@ module OpsController::Settings::Common
     @edit[:current].config[:smtp][:openssl_verify_mode] ||= "none"
     @edit[:current].config[:ntp] ||= {}
     @edit[:current].config[:server][:zone] = MiqServer.find(@sb[:selected_server_id]).zone.name
+    @edit[:current].config[:server][:name] = MiqServer.find(@sb[:selected_server_id]).name
 
     @in_a_form = true
   end
