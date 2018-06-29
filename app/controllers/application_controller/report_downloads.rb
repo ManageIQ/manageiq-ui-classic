@@ -39,6 +39,8 @@ module ApplicationController::ReportDownloads
       :title       => @result.name
     }
 
+    @data = @result.html_rows.join
+
     render :template => '/layouts/print/report', :layout => '/layouts/print'
   end
 
@@ -69,10 +71,14 @@ module ApplicationController::ReportDownloads
       javascript_flash(:spinner_off => true)
     else
       @sb[:render_rr_id] = miq_task.miq_report_result.id
-      render :update do |page|
-        page << javascript_prologue
-        page << "miqSparkle(false);"
-        page << "DoNav('#{url_for_only_path(:action => "send_report_data")}');"
+      if @sb[:render_type] == :pdf
+        javascript_open_window(url_for_only_path(:action => "send_report_data"))
+      else
+        render :update do |page|
+          page << javascript_prologue
+          page << "miqSparkle(false);"
+          page << "DoNav('#{url_for_only_path(:action => "send_report_data")}');"
+        end
       end
     end
   end
@@ -83,14 +89,28 @@ module ApplicationController::ReportDownloads
   # Send rendered report data
   def send_report_data
     if @sb[:render_rr_id]
-      rr = MiqReportResult.find(@sb[:render_rr_id])
-      filename = filename_timestamp(rr.report.title, 'export_filename')
       disable_client_cache
-      generated_result = rr.get_generated_result(@sb[:render_type])
-      rr.destroy
-      send_data(generated_result,
-                :filename => "#{filename}.#{@sb[:render_type]}",
-                :type     => "application/#{@sb[:render_type]}")
+      @result = MiqReportResult.find(@sb[:render_rr_id])
+      @report = @result.report
+      @data = @result.get_generated_result(@sb[:render_type])
+      # We need the last_run_on time from the original result
+      last_run_on = MiqReportResult.select(:last_run_on).find(session[:report_result_id]).last_run_on
+      @result.destroy
+
+      if @sb[:render_type] == :pdf
+        @options = {
+          :page_layout => 'landscape',
+          :page_size   => @report.page_size || 'a4',
+          :run_date    => format_timezone(last_run_on, @result.user_timezone, "gtl"),
+          :title       => @result.name
+        }
+        render :template => '/layouts/print/report', :layout => '/layouts/print'
+      else
+        filename = filename_timestamp(@result.report.title, 'export_filename')
+        send_data(@data,
+                  :filename => "#{filename}.#{@sb[:render_type]}",
+                  :type     => "application/#{@sb[:render_type]}")
+      end
     end
   end
 
