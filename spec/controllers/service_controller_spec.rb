@@ -23,6 +23,35 @@ describe ServiceController do
     service
   end
 
+  describe "#service_reconfigure" do
+    let(:service) { instance_double("Service", :id => 3000000000001, :service_template => service_template) }
+    let(:service_template) { instance_double("ServiceTemplate", :name => "the name") }
+    let(:ar_association_dummy) { double }
+    let(:resource_action) { instance_double("ResourceAction", :id => 123) }
+
+    before do
+      allow(Service).to receive(:find_by_id).with(3000000000001).and_return(service)
+      allow(service_template).to receive(:resource_actions).and_return(ar_association_dummy)
+      allow(ar_association_dummy).to receive(:find_by).with(:action => 'Reconfigure').and_return(resource_action)
+      allow(controller).to receive(:replace_right_cell)
+      controller.instance_variable_set(:@_params, :id => "3r1")
+    end
+
+    it "sets the right cell text" do
+      controller.send(:service_reconfigure)
+      expect(controller.instance_variable_get(:@right_cell_text)).to eq("Reconfigure Service \"the name\"")
+    end
+
+    it "replaces the right cell with the reconfigure dialog partial" do
+      expect(controller).to receive(:replace_right_cell).with(
+        :action        => "reconfigure_dialog",
+        :dialog_locals => {:resource_action_id => 123, :target_id => 3000000000001}
+      )
+
+      controller.send(:service_reconfigure)
+    end
+  end
+
   describe "#service_delete" do
     it "display flash message with description of deleted Service" do
       st  = FactoryGirl.create(:service_template)

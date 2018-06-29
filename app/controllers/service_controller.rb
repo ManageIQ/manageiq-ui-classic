@@ -153,21 +153,13 @@ class ServiceController < ApplicationController
 
   def service_reconfigure
     @explorer = true
-    s = Service.find_by_id(from_cid(params[:id]))
-    st = s.service_template
-    ra = st.resource_actions.find_by_action('Reconfigure') if st
-    if ra && ra.dialog_id
-      @right_cell_text = _("Reconfigure Service \"%{name}\"") % {:name => st.name}
-      options = {
-        :header        => @right_cell_text,
-        :target_id     => s.id,
-        :target_kls    => s.class.name,
-        :dialog        => s.options[:dialog],
-        :dialog_mode   => :reconfigure,
-        :dialog_locals => DialogLocalService.new.determine_dialog_locals_for_service_reconfiguration(ra, s)
-      }
-      dialog_initialize(ra, options)
-    end
+    service = Service.find_by_id(from_cid(params[:id]))
+    service_template = service.service_template
+    resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
+
+    @right_cell_text = _("Reconfigure Service \"%{name}\"") % {:name => service_template.name}
+    dialog_locals = {:resource_action_id => resource_action.id, :target_id => service.id}
+    replace_right_cell(:action => "reconfigure_dialog", :dialog_locals => dialog_locals)
   end
 
   def service_form_fields
@@ -373,6 +365,10 @@ class ServiceController < ApplicationController
       partial = "shared/views/retire"
       header = _("Set/Remove retirement date for Service")
       action = "retire"
+    when "reconfigure_dialog"
+      partial = "shared/dialogs/reconfigure_dialog"
+      header = @right_cell_text
+      action = nil
     when "service_edit"
       partial = "service_form"
       header = _("Editing Service \"%{name}\"") % {:name => @service.name}
@@ -421,7 +417,7 @@ class ServiceController < ApplicationController
     # Replace right cell divs
     presenter.update(
       :main_div,
-      if %w(dialog_provision ownership retire service_edit tag service_tag).include?(action)
+      if %w(dialog_provision ownership retire service_edit tag service_tag reconfigure_dialog).include?(action)
         r[:partial => partial, :locals => options[:dialog_locals]]
       elsif params[:display]
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]

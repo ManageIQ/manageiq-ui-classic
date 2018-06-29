@@ -1,0 +1,25 @@
+#main_div
+  .row.wrapper{"ng-controller" => "dialogUserReconfigureController as vm"}
+    .spinner{'ng-show' => "!vm.dialogLoaded"}
+
+    .col-md-12.col-lg-12{'ng-if' => 'vm.dialog'}
+      %dialog-user{"dialog" =>"vm.dialog", "refresh-field" => "vm.refreshField(field)", "on-update" => "vm.setDialogData(data)"}
+
+      .clearfix
+      .pull-right.button-group{'ng-show' => "vm.dialogLoaded"}
+        %miq-button{:name      => t = _("Submit"),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => 'vm.saveable()',
+                    'on-click' => "vm.submitButtonClicked()",
+                    :primary   => 'true'}
+        %miq-button{:name      => t = _("Cancel"),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => 'true',
+                    'on-click' => "vm.cancelClicked($event)"}
+
+  :javascript
+    ManageIQ.angular.app.value('resourceActionId', '#{resource_action_id}');
+    ManageIQ.angular.app.value('targetId', '#{target_id}');
+    miq_bootstrap('.wrapper');
