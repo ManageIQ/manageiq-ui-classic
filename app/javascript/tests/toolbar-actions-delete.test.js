@@ -1,5 +1,5 @@
 import 'angular-mocks';
-import * as commonActions from '../packs/toolbar-actions';
+import getGridChecks from '../packs/toolbar-actions-common';
 import * as deleteActions from '../toolbar-actions/delete';
 
 describe('Toolbar actions', () => {
@@ -14,12 +14,12 @@ describe('Toolbar actions', () => {
 
     it('should use ManageIQ.gridChecks if any present', () => {
       window.ManageIQ.gridChecks = ['something', '15586'];
-      expect(commonActions.getGridChecks()).toEqual([{ id: 'something' }, { id: '15586' }]);
+      expect(getGridChecks()).toEqual([{ id: 'something' }, { id: '15586' }]);
     });
 
     it('should use ManageIQ.record if no gridChecks', () => {
       window.ManageIQ.record = { recordId: 'something' };
-      expect(commonActions.getGridChecks()).toEqual([{ id: 'something' }]);
+      expect(getGridChecks()).toEqual([{ id: 'something' }]);
     });
   });
 

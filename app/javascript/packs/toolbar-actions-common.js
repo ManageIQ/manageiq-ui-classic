@@ -1,13 +1,13 @@
-import { subscribeToRx, DELETE_EVENT, REFRESH_EVENT, RESTART_EVENT } from '../miq_observable';
+import { subscribeToRx, DELETE_EVENT, GENERIC_EVENT } from '../miq_observable';
+
 import { onDelete } from '../toolbar-actions/delete';
-import { onRefresh } from '../toolbar-actions/refresh';
-import { onRestart } from '../toolbar-actions/restart';
+import { onCustomAction } from '../toolbar-actions/custom-action';
 
 function transformResource(resource) {
   return ({ id: resource });
 }
 
-export function getGridChecks() {
+export default function getGridChecks() {
   if (ManageIQ.gridChecks.length === 0) {
     return [ManageIQ.record.recordId].map(transformResource);
   }
@@ -25,8 +25,7 @@ export function getGridChecks() {
  */
 const eventMapper = {
   [DELETE_EVENT]: data => onDelete(data, getGridChecks()),
-  [REFRESH_EVENT]: data => onRefresh(data, getGridChecks()),
-  [RESTART_EVENT]: data => onRestart(data, getGridChecks()),
+  [GENERIC_EVENT]: data => onCustomAction(data, getGridChecks()),
 };
 
 subscribeToRx(eventMapper, 'toolbarActions');

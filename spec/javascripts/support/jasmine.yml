@@ -17,9 +17,11 @@ src_files:
 - assets/bower_components/jasmine-jquery/lib/jasmine-jquery
 - assets/angular-mocks
 - __spec__/helpers/fixtures-fix.js
+- __spec__/helpers/toolbar.js
 - packs/vendor.js
 - packs/manageiq-ui-classic/application-common.js
 - packs/manageiq-ui-classic/miq-redux-common.js
+- packs/manageiq-ui-classic/toolbar-actions-common.js
 
 # stylesheets
 #

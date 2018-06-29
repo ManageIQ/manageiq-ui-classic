@@ -8,13 +8,15 @@ class ApplicationHelper::Toolbar::PhysicalSwitchCenter < ApplicationHelper::Tool
         t = N_('Configuration'),
         t,
         :items => [
-          button(
+          api_button(
             :physical_switch_refresh,
             'fa fa-refresh fa-lg',
             N_('Refresh relationships and power states for all items related to this Physical Switch'),
             N_('Refresh Relationships and Power States'),
-            :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "refresh", "controller": "toolbarActions", "payload": {"entity": "physical_switches"}}'},
+            :api     => {
+              :action => 'refresh',
+              :entity => 'physical_switches'
+            },
             :confirm => N_("Refresh relationships and power states for all items related to this Physical Switch?"),
             :options => {:feature => :refresh}
           ),
@@ -32,14 +34,16 @@ class ApplicationHelper::Toolbar::PhysicalSwitchCenter < ApplicationHelper::Tool
         N_('Power Functions'),
         N_('Power'),
         :items => [
-          button(
+          api_button(
             :physical_switch_restart,
             nil,
             N_('Restart the switch'),
             N_('Restart'),
             :icon    => "pficon pficon-restart fa-lg",
-            :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "restart", "controller": "toolbarActions", "payload": {"entity": "physical_switches"}}'},
+            :api     => {
+              :action => 'restart',
+              :entity => 'physical_switches'
+            },
             :confirm => N_("Restart the switch?"),
             :options => {:feature => :restart}
           ),
