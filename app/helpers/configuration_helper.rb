@@ -15,7 +15,7 @@ module ConfigurationHelper
   # Returns with a hash of allowed quadicons for the current user
   def allowed_quadicons
     MiqDecorator.descendants # Get all the decorator classes
-                .select { |klass| klass.method_defined?(:quadicon) } # Select only the decorators that define a quadicon
+                .select { |klass| klass.instance_methods(false).include?(:quadicon) } # Select only the decorators that define a quadicon
                 .sort(&method(:compare_decorator_class))
                 .map do |decorator|
       # Get the model name by removing Decorator from the class name
