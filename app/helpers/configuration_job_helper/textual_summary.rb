@@ -7,11 +7,11 @@ module ConfigurationJobHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name description type status status_reason))
+    TextualGroup.new(_("Properties"), %i(name description type status status_reason start_time finish_time))
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(provider service parameters status))
+    TextualGroup.new(_("Relationships"), %i(provider service parameters status log_output))
   end
 
   #
@@ -27,6 +27,22 @@ module ConfigurationJobHelper::TextualSummary
 
   def textual_status_reason
     @record.status_reason
+  end
+
+  def textual_start_time
+    @record.start_time
+  end
+
+  def textual_finish_time
+    @record.finish_time
+  end
+
+  def textual_log_output
+    {
+      :label => _("Logging"),
+      :link => "",
+      :value => _("open in Ansible Tower")
+    }
   end
 
   def textual_service
