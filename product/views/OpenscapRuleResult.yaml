@@ -22,6 +22,8 @@ cols:
 - name
 - result
 - severity
+- title
+- cves
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -31,12 +33,16 @@ col_order:
 - name
 - result
 - severity
+- title
+- cves
 
 # Column titles, in order
 headers:
 - Name
 - Result
 - Severity
+- Title
+- CVEs
 
 # Condition(s) string for the SQL query
 conditions:
