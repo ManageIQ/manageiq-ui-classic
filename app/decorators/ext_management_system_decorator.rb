@@ -13,7 +13,7 @@ class ExtManagementSystemDecorator < MiqDecorator
 
   def single_quad
     {
-      :fonticon => fonticon
+      :fileicon => fileicon
     }
   end
 end
