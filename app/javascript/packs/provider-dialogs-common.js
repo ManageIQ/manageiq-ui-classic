@@ -1,8 +1,12 @@
 import React from 'react';
+import { http, API } from '../http_api';
 import sampleDialog from '../provider-dialogs/sample-dialog.json'
 import renderModal from '../provider-dialogs/modal'
 
 function call_the_endpoint(buttonData) {
+  // return http.get('/controller/action');
+  // return http.post('/controller/action', { foo: 'bar' });
+
   if (buttonData.button === 'magic') {
     return Promise.resolve({
       react: 'CreateAmazonSecurityGroupForm',
@@ -11,6 +15,7 @@ function call_the_endpoint(buttonData) {
       },
     });
   } else if (buttonData.button === 'magic_dialog') {
+    // return API.get('/api/service_templates/1/service_dialogs?expand=resources&attributes=content');
     return Promise.resolve({
       dialog: sampleDialog,
     });
