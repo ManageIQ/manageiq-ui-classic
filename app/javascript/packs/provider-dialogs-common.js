@@ -35,6 +35,23 @@ function reactModal(buttonData, response) {
 }
 
 function dialogModal(buttonData, response) {
-  // TODO
   console.log('TODO dialogModal', arguments);
+
+  // %dialog-user{"dialog" =>"vm.dialog"}
+  const elem = $('<dialog-user></dialog-user>');
+  elem.attr('dialog', JSON.stringify(response.dialog));
+
+  const id = 'angular-provider-dialog';
+
+  let inner = () => {
+    // TODO react component lifecycle instead of setTimeout?
+    setTimeout(() => {
+      elem.appendTo(`#${id}`);
+      miq_bootstrap(`#${id}`);
+    });
+
+    return <div id={id}></div>;
+  };
+
+  renderModal(__("My dialog-user"), inner);
 }
