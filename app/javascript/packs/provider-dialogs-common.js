@@ -1,4 +1,5 @@
 import React from 'react';
+import sampleDialog from '../provider-dialogs/sample-dialog.json'
 import renderModal from '../provider-dialogs/modal'
 
 function call_the_endpoint(buttonData) {
@@ -11,7 +12,7 @@ function call_the_endpoint(buttonData) {
     });
   } else if (buttonData.button === 'magic_dialog') {
     return Promise.resolve({
-      dialog: {}, // FIXME
+      dialog: sampleDialog,
     });
   } else {
     console.error('ELSE');  // FIXME
