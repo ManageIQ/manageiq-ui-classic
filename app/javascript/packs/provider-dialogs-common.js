@@ -2,12 +2,20 @@ import React from 'react';
 import renderModal from '../provider-dialogs/modal'
 
 function call_the_endpoint(buttonData) {
-  return Promise.resolve({
-    react: 'CreateAmazonSecurityGroupForm',
-    props: {
-      providerId: buttonData.ems_id,
-    },
-  });
+  if (buttonData.button === 'magic') {
+    return Promise.resolve({
+      react: 'CreateAmazonSecurityGroupForm',
+      props: {
+        providerId: buttonData.ems_id,
+      },
+    });
+  } else if (buttonData.button === 'magic_dialog') {
+    return Promise.resolve({
+      dialog: {}, // FIXME
+    });
+  } else {
+    console.error('ELSE');  // FIXME
+  }
 }
 
 window.listenToRx(function(buttonData) {
@@ -35,6 +43,7 @@ function reactModal(buttonData, response) {
 }
 
 function dialogModal(buttonData, response) {
-  // TODO
+  // TODO %dialog-user{"dialog" =>"vm.dialog"}
+  const elem = $('<dialog-user></dialog-user>');
   console.log('TODO dialogModal', arguments);
 }
