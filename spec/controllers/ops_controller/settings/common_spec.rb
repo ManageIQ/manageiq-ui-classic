@@ -360,6 +360,15 @@ describe OpsController do
           edit_current = assigns(:edit)
           expect(edit_current[:current].config[:server][:zone]).to eq("default")
         end
+
+        it 'sets the server name' do
+          zone = FactoryGirl.create(:zone, :name => 'Foo Zone')
+          server = FactoryGirl.create(:miq_server, :zone => zone, :name => 'ServerName')
+          controller.instance_variable_set(:@sb, :selected_server_id => server.id)
+          controller.send(:settings_set_form_vars_server)
+          edit_current = assigns(:edit)
+          expect(edit_current[:current].config[:server][:name]).to eq(server.name)
+        end
       end
     end
   end
