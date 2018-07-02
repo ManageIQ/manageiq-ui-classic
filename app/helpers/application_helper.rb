@@ -778,6 +778,8 @@ module ApplicationHelper
                               "#{controller.class.toolbar_plural}_center_tb"
                             elsif controller.class.toolbar_singular.present?
                               "#{controller.class.toolbar_singular}_center_tb"
+                            elsif controller.try(:toolbar)
+                              controller.toolbar.to_s
                             else
                               center_toolbar_filename
                             end
