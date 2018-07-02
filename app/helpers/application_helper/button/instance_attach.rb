@@ -1,7 +1,7 @@
 class ApplicationHelper::Button::InstanceAttach < ApplicationHelper::Button::Basic
   def visible?
     # FIXME: feature for attach/detach is missing, testing class for now
-    ManageIQ::Providers::Openstack::CloudManager::Vm === @record
+    @record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)
   end
 
   def disabled?

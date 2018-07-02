@@ -4,7 +4,7 @@ class ApplicationHelper::Button::CockpitConsole < ApplicationHelper::Button::Bas
   def visible?
     # disabled for Openstack as discussed in https://github.com/ManageIQ/manageiq-ui-classic/pull/4212
     # FIXME: there should be some supports_? based check instead.
-    !(ManageIQ::Providers::Openstack::CloudManager::Vm === @record)
+    !@record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)
   end
 
   def disabled?
