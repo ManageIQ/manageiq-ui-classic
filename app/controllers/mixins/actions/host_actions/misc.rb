@@ -222,7 +222,7 @@ module Mixins
 
           # Either a list or coming from a different controller (eg from ems screen, go to its hosts)
           if @lastaction == "show_list" || @layout != "host"
-            hosts = find_checked_ids_with_rbac(Host)
+            hosts = find_records_with_rbac(Host, checked_or_params).ids
             if hosts.empty?
               add_flash(_("No Hosts were selected for %{task}") % {:task => display_name}, :error)
             else
