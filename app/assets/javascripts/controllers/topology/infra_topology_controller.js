@@ -1,33 +1,13 @@
 angular.module('ManageIQ').controller('infraTopologyController', InfraTopologyCtrl);
-InfraTopologyCtrl.$inject = ['$scope', '$interval', 'topologyService'];
+InfraTopologyCtrl.$inject = ['$scope', 'topologyService'];
 
-function InfraTopologyCtrl($scope, $interval, topologyService) {
-  ManageIQ.angular.scope = $scope;
-  miqHideSearchClearButton();
+function InfraTopologyCtrl($scope, topologyService) {
   var vm = this;
   vm.dataUrl = '/infra_topology/data';
   vm.vs = null;
   vm.icons = null;
 
-  var d3 = window.d3;
-  vm.d3 = d3;
-
-  topologyService.mixinContextMenu(vm, vm);
-  vm.checkboxModel = {
-    value: false
-  };
-
-  vm.legendTooltip = __("Click here to show/hide entities of this type");
-
-  $('input#box_display_names').click(topologyService.showHideNames(vm));
-  topologyService.mixinRefresh(vm, $scope);
-  topologyService.mixinGetIcon(vm);
-  vm.refresh();
-  var promise = $interval(vm.refresh, 1000 * 60 * 3);
-
-  $scope.$on('$destroy', function() {
-    $interval.cancel(promise);
-  });
+  topologyService.mixinTopology(vm, $scope);
 
   $scope.$on("render", function(ev, vertices, added) {
     /*
@@ -154,6 +134,4 @@ function InfraTopologyCtrl($scope, $interval, topologyService) {
         return defaultDimensions;
     }
   };
-
-  topologyService.mixinSearch(vm);
 }

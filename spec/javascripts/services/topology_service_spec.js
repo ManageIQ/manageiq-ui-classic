@@ -42,7 +42,6 @@ describe('topologyService', function() {
     context('cloud', function() {
       beforeEach(function() {
         controller.dataUrl = '/cloud_topology/data';
-        controller.detailUrl = null;
 
         testService.mixinRefresh(controller);
       });
@@ -61,8 +60,6 @@ describe('topologyService', function() {
     context('container', function() {
       beforeEach(function() {
         controller.dataUrl = '/container_topology/data';
-        controller.detailUrl = '/container_project_topology/data';
-
         testService.mixinRefresh(controller);
       });
 
@@ -79,9 +76,7 @@ describe('topologyService', function() {
 
     context('container project', function() {
       beforeEach(function() {
-        controller.dataUrl = '/container_topology/data';
-        controller.detailUrl = '/container_project_topology/data';
-
+        controller.dataUrl = '/container_project_topology/data';
         testService.mixinRefresh(controller);
       });
 
@@ -94,7 +89,6 @@ describe('topologyService', function() {
     context('infra', function() {
       beforeEach(function() {
         controller.dataUrl = '/infra_topology/data';
-        controller.detailUrl = null;
 
         testService.mixinRefresh(controller);
       });
@@ -113,7 +107,6 @@ describe('topologyService', function() {
     context('middleware', function() {
       beforeEach(function() {
         controller.dataUrl = '/middleware_topology/data';
-        controller.detailUrl = null;
 
         testService.mixinRefresh(controller);
       });
@@ -129,7 +122,12 @@ describe('topologyService', function() {
       });
     });
 
-    /** TODO: network, once converted
+    context('network', function() {
+      beforeEach(function () {
+        controller.dataUrl = '/network_topology/data';
+
+        testService.mixinRefresh(controller);
+      });
       it('Networks > Topology', function() {
         var url = controller.parseUrl('/network_topology/show');
         expect(url).toEqual('/network_topology/data');
@@ -139,12 +137,11 @@ describe('topologyService', function() {
         var url = controller.parseUrl('/network_topology/show/10000000000005');
         expect(url).toEqual('/network_topology/data/10000000000005');
       });
-    */
+    })
 
     context('physical infra', function() {
       beforeEach(function() {
         controller.dataUrl = '/physical_infra_topology/data';
-        controller.detailUrl = null;
 
         testService.mixinRefresh(controller);
       });
