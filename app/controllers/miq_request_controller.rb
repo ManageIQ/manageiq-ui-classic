@@ -364,7 +364,7 @@ class MiqRequestController < ApplicationController
 
   def requester_label(request)
     if request.requester.nil?
-      (_("%{name} (no longer exists)") % {:name => r.requester_name})
+      (_("%{name} (no longer exists)") % {:name => request.requester_name})
     else
       request.requester_name
     end
