@@ -21,7 +21,7 @@ class TreeBuilderOps < TreeBuilder
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
     region = MiqRegion.my_region
-    objects = region.zones.sort_by { |z| z.name.downcase }
+    objects = region.zones.visible.sort_by { |z| z.name.downcase }
     count_only_or_objects(count_only, objects)
   end
 end
