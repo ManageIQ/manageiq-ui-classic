@@ -721,6 +721,7 @@ module OpsController::Settings::Common
 
       new[:server][:custom_support_url] = params[:custom_support_url].strip if params[:custom_support_url]
       new[:server][:custom_support_url_description] = params[:custom_support_url_description] if params[:custom_support_url_description]
+      new[:server][:name] = params[:server_name] if params[:server_name]
     when "settings_authentication"                                        # Authentication tab
       auth = new[:authentication]
       @sb[:form_vars][:session_timeout_mins] = params[:session_timeout_mins] if params[:session_timeout_mins]
@@ -941,6 +942,7 @@ module OpsController::Settings::Common
       @edit[:current].config[:smtp][:openssl_verify_mode] ||= "none"
       @edit[:current].config[:ntp] ||= {}
       @edit[:current].config[:server][:zone] = MiqServer.find(@sb[:selected_server_id]).zone.name
+      @edit[:current].config[:server][:name] = MiqServer.find(@sb[:selected_server_id]).name
       @in_a_form = true
     when "settings_authentication"        # Authentication tab
       @edit = {}
