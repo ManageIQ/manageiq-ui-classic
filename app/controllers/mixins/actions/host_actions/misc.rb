@@ -218,33 +218,18 @@ module Mixins
         end
 
         def host_button_operation(method, display_name)
-          hosts = []
+          hosts = find_records_with_rbac(Host, checked_or_params).ids
+          process_hosts(hosts, method, display_name)
 
           # Either a list or coming from a different controller (eg from ems screen, go to its hosts)
           if @lastaction == "show_list" || @layout != "host"
-            hosts = find_records_with_rbac(Host, checked_or_params).ids
-            if hosts.empty?
-              add_flash(_("No Hosts were selected for %{task}") % {:task => display_name}, :error)
-            else
-              process_hosts(hosts, method, display_name)
-            end
-
             if @lastaction == "show_list" # In host controller, refresh show_list, else let the other controller handle it
               show_list
               @refresh_partial = "layouts/gtl"
             end
-
           else # showing 1 host
-            if params[:id].nil? || Host.find_by(:id => params[:id]).nil?
-              add_flash(_("Host no longer exists"), :error)
-            else
-              hosts.push(find_id_with_rbac(Host, params[:id]))
-              process_hosts(hosts, method, display_name) unless hosts.empty?
-            end
-
             params[:display] = @display
             show
-
             # TODO: tells callers to go back to show_list because this Host may be gone
             # Should be refactored into calling show_list right here
             if method == 'destroy'
