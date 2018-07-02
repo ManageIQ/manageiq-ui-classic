@@ -124,8 +124,12 @@ module Mixins
       user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
       case ems.to_s
       when 'ManageIQ::Providers::Openstack::CloudManager', 'ManageIQ::Providers::Openstack::InfraManager'
-        connect_opts = [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)] if params[:cred_type] == "default"
-        connect_opts = [MiqPassword.encrypt(params[:amqp_password]), params.to_hash.symbolize_keys.slice(*OPENSTACK_AMQP_PARAMS)] if params[:cred_type] == "amqp"
+        case params[:cred_type]
+        when 'amqp'
+          connect_opts = [MiqPassword.encrypt(params[:amqp_password]), params.to_hash.symbolize_keys.slice(*OPENSTACK_AMQP_PARAMS)]
+        when 'default'
+          connect_opts = [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)]
+        end
         connect_opts
       when 'ManageIQ::Providers::Amazon::CloudManager'
         uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
