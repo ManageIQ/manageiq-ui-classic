@@ -21,7 +21,7 @@ module MiqAeCustomizationController::CustomButtons
       else
         build_resolve_screen
       end
-      @resolve[:target_classes].each do |node|
+      Array(@resolve[:target_classes]).each do |node|
         @sb[:obj_list][node[0]] = "ab_#{node[0]}"
       end
     elsif @nodetype[0] == "xx-ab" && nodeid.length == 2   # one of the CI's node selected
