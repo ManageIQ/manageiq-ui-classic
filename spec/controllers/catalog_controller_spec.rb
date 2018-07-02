@@ -29,13 +29,26 @@ describe CatalogController do
     controller.send(:st_delete)
   end
 
-  it "checks method x_edit_tags_reset" do
+  it "checks method x_edit_tags_reset when multiple records selected from list view" do
     login_as admin_user
     allow(User).to receive(:current_user).and_return(admin_user)
-    allow(controller).to receive(:checked_or_params).and_return(ServiceTemplate.all.ids)
+    controller.params["check_1"] = '1'
     controller.instance_variable_set(:@sb, :action => nil)
     allow(controller).to receive(:checked_or_params).and_return(ServiceTemplate.all.ids)
     allow(controller).to receive(:find_checked_items).and_return(ServiceTemplate.all.ids)
+    allow(controller).to receive(:tag_edit_build_entries_pulldown).and_return(nil)
+    allow(controller).to receive(:replace_right_cell).with(:action => nil)
+    expect(controller).to receive(:x_tags_set_form_vars)
+    controller.send(:x_edit_tags_reset, "ServiceTemplate")
+  end
+
+  it "checks method x_edit_tags_reset when tagging from summary screen" do
+    login_as admin_user
+    allow(User).to receive(:current_user).and_return(admin_user)
+    controller.instance_variable_set(:@_params, :id => "#{service_template_with_child_tenant.id}")
+    controller.instance_variable_set(:@sb, :action => nil)
+    allow(controller).to receive(:checked_or_params).and_return([])
+    allow(controller).to receive(:find_checked_items).and_return([])
     allow(controller).to receive(:tag_edit_build_entries_pulldown).and_return(nil)
     allow(controller).to receive(:replace_right_cell).with(:action => nil)
     expect(controller).to receive(:x_tags_set_form_vars)

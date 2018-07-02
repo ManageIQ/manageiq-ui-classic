@@ -2196,7 +2196,8 @@ class CatalogController < ApplicationController
 
   def x_edit_tags_reset(db)
     @tagging = session[:tag_db] = db
-    @object_ids = find_records_with_rbac(db.safe_constantize, find_checked_items).ids
+    checked_ids = find_checked_items.empty? ? [params[:id]] : find_checked_items
+    @object_ids = find_records_with_rbac(db.safe_constantize, checked_ids).ids
     if params[:button] == 'reset'
       id = params[:id] if params[:id]
       return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", 'replace_cell__explorer')
