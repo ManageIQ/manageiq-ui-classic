@@ -530,7 +530,7 @@ module EmsCommon
 
   def form_instance_vars
     @server_zones = []
-    zones = Zone.order('lower(description)')
+    zones = Zone.visible.order('lower(description)')
     zones.each do |zone|
       @server_zones.push([zone.description, zone.name])
     end

@@ -736,7 +736,7 @@ module OpsController::Diagnostics
                          end
     elsif x_node == "root"
       if @sb[:active_tab] == "diagnostics_zones"
-        @zones = Zone.in_my_region
+        @zones = Zone.visible.in_my_region
       elsif %w(diagnostics_roles_servers diagnostics_servers_roles).include?(@sb[:active_tab])
         @selected_server = MiqRegion.my_region
         @sb[:selected_server_id] = @selected_server.id

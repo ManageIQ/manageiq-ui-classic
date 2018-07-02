@@ -1227,7 +1227,7 @@ module OpsController::Settings::Common
       case nodes[1]
       when "z"
         @right_cell_text = _("Settings Zones")
-        @zones = Zone.in_my_region
+        @zones = Zone.visible.in_my_region
       when "sis"
         @right_cell_text = _("Settings Analysis Profiles")
         aps_list
@@ -1279,7 +1279,7 @@ module OpsController::Settings::Common
     if @sb[:active_tab] == "settings_details"
       # Enterprise Details tab
       @scan_items = ScanItemSet.all
-      @zones = Zone.in_my_region
+      @zones = Zone.visible.in_my_region
       @miq_schedules = MiqSchedule.where("(prod_default != 'system' or prod_default is null) and adhoc IS NULL")
                                   .sort_by { |s| s.name.downcase }
     end
