@@ -368,6 +368,31 @@ describe MiqRequestController do
     end
   end
 
+  context "requester_label" do
+    before(:each) do
+      EvmSpecHelper.local_miq_server
+      stub_server_configuration(:server => {}, :session => {})
+
+      # Create user
+      @approver = FactoryGirl.create(:user, :role => "approver")
+      allow(@approver).to receive(:role_allows?).with(:identifier => 'miq_request_approval').and_return(true)
+
+      # Create request
+      @request = FactoryGirl.create(:vm_migrate_request, :requester => @approver)
+    end
+
+    it "returns label with requester_name" do
+      label = controller.send(:requester_label, @request)
+      expect(label).to eq(@approver.name)
+    end
+
+    it "returns label when requester no longer exists" do
+      @request.update_attributes(:requester => nil)
+      label = controller.send(:requester_label, @request)
+      expect(label).to eq("#{@approver.name} (no longer exists)")
+    end
+  end
+
   private
 
   def create_user_in_other_region(userid)
