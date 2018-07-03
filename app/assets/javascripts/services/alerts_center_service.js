@@ -490,7 +490,6 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
 
   function convertAlert(alertData, objectName, objectClassifiedType, objectType, retrievalTime) {
     var hostType = alertData.resource.type;
-
     var newAlert = {
       id: alertData.id,
       description: alertData.description,
