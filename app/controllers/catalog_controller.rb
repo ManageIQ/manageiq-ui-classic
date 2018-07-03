@@ -1356,7 +1356,7 @@ class CatalogController < ApplicationController
         @edit[:new][:retire_fqname] = ra.fqname
       end
     end
-    get_available_dialogs
+    load_available_dialogs
     if @record.id.blank?
       @right_cell_text = _("Adding a new Service Catalog Item")
     else
@@ -1406,7 +1406,7 @@ class CatalogController < ApplicationController
 
     @edit[:new][:available_resources] = {}
     get_available_resources("ServiceTemplate")
-    get_available_dialogs
+    load_available_dialogs
     @edit[:current] = copy_hash(@edit[:new])
     if @record.id.blank?
       @right_cell_text = _("Adding a new Catalog Bundle")
