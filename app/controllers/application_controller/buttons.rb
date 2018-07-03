@@ -780,7 +780,7 @@ module ApplicationController::Buttons
   end
 
   def move_cols_top
-    if !params[:selected_fields] || params[:selected_fields].empty? || params[:selected_fields][0] == ""
+    if params[:selected_fields].blank? || params[:selected_fields][0] == ""
       add_flash(_("No fields were selected to move top"), :error)
       return
     end
@@ -801,7 +801,7 @@ module ApplicationController::Buttons
   end
 
   def move_cols_bottom
-    if !params[:selected_fields] || params[:selected_fields].empty? || params[:selected_fields][0] == ""
+    if params[:selected_fields].blank? || params[:selected_fields][0] == ""
       add_flash(_("No fields were selected to move bottom"), :error)
       return
     end
@@ -1224,7 +1224,7 @@ module ApplicationController::Buttons
   end
 
   def move_cols_up
-    if !params[:selected_fields] || params[:selected_fields].empty? || params[:selected_fields][0] == ""
+    if params[:selected_fields].blank? || params[:selected_fields][0] == ""
       add_flash(_("No fields were selected to move up"), :error)
       return
     end
@@ -1245,7 +1245,7 @@ module ApplicationController::Buttons
   end
 
   def move_cols_down
-    if !params[:selected_fields] || params[:selected_fields].empty? || params[:selected_fields][0] == ""
+    if params[:selected_fields].blank? || params[:selected_fields][0] == ""
       add_flash(_("No fields were selected to move down"), :error)
       return
     end
