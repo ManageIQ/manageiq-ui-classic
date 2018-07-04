@@ -3,5 +3,5 @@
     %pf-aggregate-status-card{:class => "aggregate-object-card", :status => "vm.status"}
   .col-xs-12.col-sm-12.col-md-10
     .row
-      .col-xs-6.col-sm-6.col-md-3{"ng-repeat" => "status in vm.AggStatus"}
+      .col-xs-12.col-sm-6.col-md-6.col-lg-4{"ng-repeat" => "status in vm.AggStatus"}
         %pf-aggregate-status-card{:layout => "mini",'ng-attr-id' => "{{status.id}}", :status => "status", "show-top-border" => "true", :class =>"ng-isolate-scope"}
