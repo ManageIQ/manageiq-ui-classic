@@ -1,4 +1,4 @@
-//= require jquery
+//= require bower_components/jquery/dist/jquery
 //= require novnc-rails
 //= require_tree ../locale
 //= require gettext/all
