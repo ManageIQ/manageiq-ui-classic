@@ -1145,19 +1145,17 @@ module ApplicationController::Buttons
       @right_cell_text = _("Button Group \"%{name}\"") % {:name => @record.name.split("|").first}
       @sb[:buttons] = []
       button_order = @record[:set_data] && @record[:set_data][:button_order] ? @record[:set_data][:button_order] : nil
-      if button_order # show assigned buttons in order they were saved
-        button_order.each do |bidx|
-          @record.members.each do |b|
-            next if bidx != b.id
-            button = {
-              :name         => b.name,
-              :id           => b.id,
-              :description  => b.description,
-              :button_icon  => b.options[:button_icon],
-              :button_color => b.options[:button_color],
-            }
-            @sb[:buttons].push(button) unless @sb[:buttons].include?(button)
-          end
+      button_order&.each do |bidx| # show assigned buttons in order they were saved
+        @record.members.each do |b|
+          next if bidx != b.id
+          button = {
+            :name         => b.name,
+            :id           => b.id,
+            :description  => b.description,
+            :button_icon  => b.options[:button_icon],
+            :button_color => b.options[:button_color],
+          }
+          @sb[:buttons].push(button) unless @sb[:buttons].include?(button)
         end
       end
     elsif nodetype.length >= 4 && (nodetype[3].split('-').first == "cb" || nodetype[4].split('-').first == "cb") # button selected
