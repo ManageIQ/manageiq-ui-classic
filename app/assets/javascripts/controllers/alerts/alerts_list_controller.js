@@ -10,7 +10,6 @@ angular.module('alertsCenter').controller('alertsListController',
 
     function processData(response) {
       var updatedAlerts = alertsCenterService.convertToAlertsList(response);
-
       // update display data for the alerts from the current alert settings
       angular.forEach(updatedAlerts, function(nextUpdate) {
         var matchingAlert = _.find(vm.alerts, function(existingAlert) {
