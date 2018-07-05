@@ -118,3 +118,8 @@ kubernetes-topology-icon svg {
   padding: 24px;
   z-index: 100;
 }
+
+line.PhysicalServerPhysicalSwitch {
+  stroke : #3f9c35;
+  stroke-dasharray: 5;
+}

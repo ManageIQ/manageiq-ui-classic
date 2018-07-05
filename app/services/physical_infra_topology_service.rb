@@ -8,6 +8,7 @@ class PhysicalInfraTopologyService < TopologyService
       :writable_classification_tags,
       :physical_servers => [
         :writable_classification_tags,
+        :physical_switches,
         :host => [
           :writable_classification_tags,
           :vms => :writable_classification_tags
@@ -16,6 +17,7 @@ class PhysicalInfraTopologyService < TopologyService
     ],
     :physical_servers  => [
       :writable_classification_tags,
+      :physical_switches,
       :host => [
         :writable_classification_tags,
         :vms => :writable_classification_tags
@@ -72,7 +74,8 @@ class PhysicalInfraTopologyService < TopologyService
 
   # Decide whether or not to add an entity to the graph stack
   def add_to_graph?(entity, links_index, links, parent_id)
-    return true if entity.kind_of?(Tag)
+    return true if entity.kind_of?(Tag) || entity.kind_of?(PhysicalSwitch)
+
     idx = links_index[entity_id(entity)]
     # If a node has already been processed, change its parent rather than pushing to the stack
     if idx
