@@ -254,7 +254,8 @@ describe('emsCommonFormController', function() {
       emstype_vm: false,
       provider_id: 111,
       openstack_infra_providers_exist: false,
-      default_userid: "default_user"
+      default_userid: "default_user",
+      default_url: "http://host.test/abc"
     };
 
     beforeEach(inject(function(_$controller_) {
@@ -310,6 +311,10 @@ describe('emsCommonFormController', function() {
 
     it('sets the current tab to default', function() {
       expect($scope.currentTab).toEqual('default');
+    });
+
+    it('sets the default_url', function() {
+      expect($scope.emsCommonModel.default_url).toEqual("http://host.test/abc");
     });
   });
 
