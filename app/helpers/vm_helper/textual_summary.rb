@@ -552,7 +552,7 @@ module VmHelper::TextualSummary
   def textual_normal_operating_ranges_cpu_usage
     h = {:label => _("CPU Usage"), :value => []}
     [:max, _("Max"), :high, _("High"), :avg, _("Average"), :low, _("Low")].each_slice(2) do |key, label|
-      value = @record.send("max_cpu_usage_rate_average_#{key}_over_time_period")
+      value = @record.send("cpu_usage_rate_average_#{key}_over_time_period")
       h[:value] << {:label => label,
                     :value => (value.nil? ? _("Not Available") : number_to_percentage(value, :precision => 2))}
     end
@@ -573,7 +573,7 @@ module VmHelper::TextualSummary
   def textual_normal_operating_ranges_memory_usage
     h = {:label => _("Memory Usage"), :value => []}
     [:max, _("Max"), :high, _("High"), :avg, _("Average"), :low, _("Low")].each_slice(2) do |key, label|
-      value = @record.send("max_mem_usage_absolute_average_#{key}_over_time_period")
+      value = @record.send("mem_usage_absolute_average_#{key}_over_time_period")
       h[:value] << {:label => label,
                     :value => (value.nil? ? _("Not Available") : number_to_percentage(value, :precision => 2))}
     end
