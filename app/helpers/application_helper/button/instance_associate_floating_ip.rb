@@ -1,4 +1,8 @@
 class ApplicationHelper::Button::InstanceAssociateFloatingIp < ApplicationHelper::Button::Basic
+  def visible?
+    @record.class.supports_associate_floating_ip?
+  end
+
   def disabled?
     if !@record.supports_associate_floating_ip?
       @error_message = @record.unsupported_reason(:associate_floating_ip)

@@ -45,6 +45,61 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           t = N_('Edit Management Engine Relationship'),
           t),
+        separator,
+        button(
+          :instance_attach,
+          'pficon pficon-volume fa-lg',
+          t = N_('Attach a Cloud Volume to this Instance'),
+          t,
+          :klass => ApplicationHelper::Button::InstanceAttach),
+        button(
+          :instance_detach,
+          'pficon pficon-volume fa-lg',
+          t = N_('Detach a Cloud Volume from this Instance'),
+          t,
+          :klass => ApplicationHelper::Button::InstanceDetach),
+        button(
+          :instance_associate_floating_ip,
+          'ff ff-floating-ip fa-lg',
+          t = N_('Associate a Floating IP with this Instance'),
+          t,
+          :klass => ApplicationHelper::Button::InstanceAssociateFloatingIp),
+        button(
+          :instance_disassociate_floating_ip,
+          'ff ff-floating-ip fa-lg',
+          t = N_('Disassociate a Floating IP from this Instance'),
+          t,
+          :klass => ApplicationHelper::Button::InstanceDisassociateFloatingIp),
+        button(
+          :instance_add_security_group,
+          'pficon pficon-cloud-security fa-lg',
+          t = N_('Add a Security Group to this Instance'),
+          t,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options => {:feature => :add_security_group}
+        ),
+        button(
+          :instance_remove_security_group,
+          'pficon pficon-cloud-security fa-lg',
+          t = N_('Remove a Security Group from this Instance'),
+          t,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options => {:feature => :remove_security_group}
+        ),
+        button(
+          :instance_resize,
+          'pficon pficon-edit fa-lg',
+          t = N_('Reconfigure this Instance'),
+          t,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options => {:feature => :resize}
+        ),
+        button(
+          :vm_right_size,
+          'ff ff-database-squeezed fa-lg',
+          N_('CPU/Memory Recommendations of this VM'),
+          N_('Right-Size Recommendations')
+        ),
         button(
           :vm_reconfigure,
           'pficon pficon-edit fa-lg',
@@ -106,6 +161,24 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
           t,
           :confirm => N_("Retire this Instance?"),
           :klass   => ApplicationHelper::Button::InstanceRetire),
+        button(
+          :instance_live_migrate,
+          'fa fa-reply fa-rotate-90 fa-lg',
+          t = N_('Migrate Instance'),
+          t,
+          :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options      => {:feature => :live_migrate},
+          :url_parms    => 'main_div',
+          :send_checked => true),
+        button(
+          :instance_evacuate,
+          'fa fa-reply fa-rotate-90 fa-lg',
+          t = N_('Evacuate Instance'),
+          t,
+          :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options      => {:feature => :evacuate},
+          :url_parms    => 'main_div',
+          :send_checked => true),
       ]
     ),
   ])
