@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 89 ending 2018-07-02
+
+### Added
+- Teporarily removing the topology icon from physical infra view [(#4216)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4216)
+- Hide quadicon setting for decorators that inherit the quadicon method [(#4209)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4209)
+- Use the browser's native printing for asynchronously generated saved reports [(#4201)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4201)
+- Use the client-side printing for reports where the PDF was generated synchronously [(#4130)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4130)
+- Adding power operation in physical switch pages [(#4084)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4084)
+- Display two new added columns in Openscap rule results page [(#4078)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4078)
+- Add folder dropdown to VM Migrate. [(#4045)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4045)
+- Fix to show meaningful policy name when add/delete it in audit.log [(#4017)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4017)
+- Add generic toolbar actions and use it in physical servers [(#3756)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3756)
+
+## Fixed
+- Pass in id of selected record correctly. [(#4242)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4242)
+- Fixed variable name [(#4240)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4240)
+- Don't create create schedule if already created [(#4234)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4234)
+- Fix the EMS fallback decorator's single_quad definition [(#4233)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4233)
+- Show and allow the server name to be saved in the settings/server screen [(#4232)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4232)
+- Add single_quad definition for embedded ansible credentials [(#4228)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4228)
+- Fix nonexistent pficon-error-octagon [(#4227)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4227)
+- Change reconfigure setup to include values configured with originally [(#4226)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4226)
+- Escape special chars in tooltip & text of TreeBuilder's root [(#4225)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4225)
+- Add guidance text for new <<reset>> magic word [(#4224)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4224)
+- Fix toolbar switching for Buttons accord and Add a new Button action  [(#4223)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4223)
+- Don't allow user to create a repository if he has no rights to EA provider [(#4214)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4214)
+- Add single_quad definition into the SwitchDecorator [(#4210)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4210)
+- Fix Generic Objects default menu definition [(#4207)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4207)
+- webpack:paths - always load inflectors [(#4205)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4205)
+- Reprioritize icons and images for GTLs prefer images first [(#4198)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4198)
+- Increase maxlength for playbooks' host option field [(#4197)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4197)
+- Fix issues in Reconfigure/Resize [(#4182)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4182)
+- Don't show Add Flavor in sublist view [(#4180)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4180)
+- Make policy assignment simulation and tagging quads non-clickable [(#4179)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4179)
+- Change the paste image with a fonticon in custom button forms [(#4172)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4172)
+- Use fonticons for relative/specific date selection in exp editor [(#4171)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4171)
+- Fixed Automate import domain from git repository to use current user. [(#4170)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4170)
+- Fix include domain prefix behavior for catalog entrypoint selection [(#4166)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4166)
+- Fixing showtype error [(#4164)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4164)
+- Don't allow network manager edit if the network manager doesn't support it [(#4162)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4162)
+- Fixes confirmation messages for Widgets Add/Edit/Cancel actions. [(#4154)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4154)
+- Fix resize approval to work for editing requests [(#2598)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2598)
+
 ## Unreleased as of Sprint 88 ending 2018-06-18
 
 ### Added
