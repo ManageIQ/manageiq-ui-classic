@@ -350,7 +350,7 @@ module VmCommon
   end
 
   def cloud_networks
-    show_association('cloud_subnets', _('Networks'), :cloud_subnets, CloudNetwork)
+    show_association('cloud_networks', _('Networks'), :cloud_networks, CloudNetwork)
   end
 
   def cloud_volumes
