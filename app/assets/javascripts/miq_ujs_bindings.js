@@ -137,6 +137,22 @@ $(document).ready(function () {
     }
   });
 
+  // Firefox on MacOs isn't firing onfocus events for radio buttons so onchange is used instead
+  $(document).on('change', '[data-miq_observe]', function () {
+    var el = $(this);
+    var parms = $.parseJSON(el.attr('data-miq_observe'));
+    var id = el.attr('id');
+    var value = el.prop('multiple') ? el.val() : encodeURIComponent(el.prop('value'));
+
+    miqObserveRequest(parms.url, {
+      no_encoding: true,
+      data: id + '=' + value,
+      beforeSend: !! el.attr('data-miq_sparkle_on'),
+      complete: !! el.attr('data-miq_sparkle_off'),
+      done: attemptAutoRefreshTrigger(parms),
+    });
+  });
+
   $(document).on('change', '[data-miq_observe_checkbox]', function (event) {
     var el = $(this);
     var parms = $.parseJSON(el.attr('data-miq_observe_checkbox'));
