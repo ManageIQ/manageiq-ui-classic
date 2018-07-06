@@ -17,4 +17,11 @@ class ApplicationHelper::Button::MiqRequest < ApplicationHelper::Button::Generic
                    !%w(miq_request_approval miq_request_deny miq_request_delete).include?(@feature)
     true
   end
+
+  # need to add this method here to handle reload button on list view,
+  # on list view @record is not set so parent skipped method always returns true that makes button not visible.
+  def skipped?
+    return false if @feature == 'miq_request_reload' && role_allows_feature?
+    super
+  end
 end
