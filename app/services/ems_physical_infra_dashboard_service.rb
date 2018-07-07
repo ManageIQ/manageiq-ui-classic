@@ -28,21 +28,24 @@ class EmsPhysicalInfraDashboardService < DashboardService
   end
 
   def attributes_data
-    attributes = %i(physical_servers physical_racks)
+    attributes = %i(physical_servers physical_switches physical_racks)
 
     attr_icon = {
-      :physical_servers => 'pficon pficon-cluster',
-      :physical_racks   => 'pficon pficon-enterprise',
+      :physical_servers  => 'pficon pficon-cluster',
+      :physical_switches => 'pficon ff ff-network-switch',
+      :physical_racks    => 'pficon pficon-enterprise',
     }
 
     attr_url = {
-      :physical_servers => 'physical_servers',
-      :physical_racks   => 'physical_racks',
+      :physical_servers  => 'physical_servers',
+      :physical_switches => 'physical_switches',
+      :physical_racks    => 'physical_racks',
     }
 
     attr_hsh = {
-      :physical_servers => _('Servers'),
-      :physical_racks   => _('Racks'),
+      :physical_servers  => _('Servers'),
+      :physical_switches => _('Switches'),
+      :physical_racks    => _('Racks'),
     }
 
     attr_data = []
