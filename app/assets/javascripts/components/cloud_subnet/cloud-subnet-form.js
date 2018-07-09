@@ -39,7 +39,7 @@ function cloudSubnetFormController(API, miqService) {
       }).catch(miqService.handleFailure);
     } else {
       API.get("/api/cloud_subnets/" + vm.cloudSubnetFormId + "?expand=resources&attributes=ext_management_system.name,cloud_tenant.name,cloud_network.name").then(function(data) {
-        Object.assign(vm.cloudSubnetModel, data);
+        Object.assign(vm.cloudSubnetModel, _.pick(data, 'name', 'ext_management_system', 'cloud_network', 'cloud_tenant', 'network_protocol', 'cidr', 'dhcp_enabled', 'gateway'));
         vm.afterGet = true;
         vm.modelCopy = angular.copy( vm.cloudSubnetModel );
         miqService.sparkleOff();

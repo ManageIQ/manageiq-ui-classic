@@ -149,13 +149,13 @@ class CloudSubnetController < ApplicationController
   def update
     assert_privileges("cloud_subnet_edit")
     @subnet = find_record_with_rbac(CloudSubnet, params[:id])
-    options = changed_form_params
     case params[:button]
     when "cancel"
       cancel_action(_("Edit of Subnet \"%{name}\" was cancelled by the user") % {:name  => @subnet.name})
 
     when "save"
       if @subnet.supports_create?
+        options = changed_form_params
         task_id = @subnet.update_cloud_subnet_queue(session[:userid], options)
 
         if task_id.kind_of?(Integer)

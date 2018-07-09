@@ -45,8 +45,7 @@ describe('cloud-subnet-form', function() {
       spyOn(miqService, 'miqAjaxButton');
 
       var cloudSubnetFormResponse = {
-        name: 'abc',
-        gateway_ip: '172.10.1.1'
+        name: 'abc'
       };
 
       spyOn(API, 'get').and.callFake(function() {
@@ -76,13 +75,13 @@ describe('cloud-subnet-form', function() {
     });
 
     it('sets vm.cloudSubnetModel.gateway_ip', function () {
-      expect(vm.cloudSubnetModel.gateway_ip).toBe('172.10.1.1');
+      expect(vm.cloudSubnetModel.gateway_ip).toBe(undefined);
     });
 
     it('updates a Cloud Subnet record', function () {
 
       vm.cloudSubnetModel.name = 'xyz';
-      vm.cloudSubnetModel.gateway_ip = '172.10.1.1';
+      vm.cloudSubnetModel.gateway_ip = '172.10.1.2';
       vm.saveClicked();
 
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/cloud_subnet/update/1111?button=save', vm.cloudSubnetModel, { complete: false });
