@@ -9,21 +9,8 @@ const VmSnapshotFormComponent = (props) => {
     cancelUrl,
     ...rest
   } = props;
-  const errorMessages = {
-    name: __('Required'),
-    description: __('Required'),
-  };
-  const labels = {
-    name: __('Name'),
-    description: __('Description'),
-    snapMemory: __('Snapshot VM memory'),
-    create: __('Create'),
-    cancel: __('Cancel'),
-  };
   return (
     <VmSnapshotForm
-      errorMessages={errorMessages}
-      labels={labels}
       hideName={nameOptional}
       nameRequired
       descriptionRequired={nameOptional}
