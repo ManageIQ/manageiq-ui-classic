@@ -1377,6 +1377,19 @@ Rails.application.routes.draw do
       )
     },
 
+    :physical_network_port    =>  {
+      :get  =>  %w(
+        download_data
+        show_list
+        show
+      ),
+
+      :post   =>  %w(
+        button
+        show_list
+      )
+    },
+
     :guest_device    =>  {
       :get  =>  %w(
         show_list
