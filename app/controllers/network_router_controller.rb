@@ -146,18 +146,18 @@ class NetworkRouterController < ApplicationController
   def update
     assert_privileges("network_router_edit")
     @router = find_record_with_rbac(NetworkRouter, params[:id])
-    options = form_params(params)
-    if switch_to_bool(params[:external_gateway])
-      options.merge!(form_external_gateway(params))
-    else
-      options.merge!(form_external_gateway({}))
-    end
 
     case params[:button]
     when "cancel"
       cancel_action(_("Edit of Router \"%{name}\" was cancelled by the user") % {:name => @router.name})
 
     when "save"
+      options = form_params(params)
+      if switch_to_bool(params[:external_gateway])
+        options.merge!(form_external_gateway(params))
+      else
+        options.merge!(form_external_gateway({}))
+      end
       task_id = @router.update_network_router_queue(session[:userid], options)
 
       add_flash(_("Router update failed: Task start failed: ID [%{id}]") %
