@@ -1,56 +1,26 @@
 import React from 'react';
 import renderModal from '../provider-dialogs/modal'
 
-function call_the_endpoint(buttonData) {
-  return Promise.resolve({
-    react: 'CreateAmazonSecurityGroupForm',
-    props: {
-      providerId: buttonData.ems_id,
-    },
-  });
-}
-
 window.listenToRx(function(buttonData) {
   if (!buttonData || buttonData.controller !== 'provider_dialogs') {
     return;
   }
 
-  call_the_endpoint(buttonData)
-    .then(function(response) {
-      if (response.react) {
-        reactModal(buttonData, response);
-      } else if (response.dialog) {
-        dialogModal(buttonData, response);
-      } else {
-        console.error('provider-dialogs: surprising response', buttonData, response);
-      }
-    });
+  if (! buttonData.component_name) {
+    console.error('provider-dialogs: missing component_name', buttonData);
+    return;
+  }
+
+  reactModal(buttonData);
 });
 
-function reactModal(buttonData, response) {
-  let Component = ManageIQ.component.getReact(response.react);
-  let inner = () => <Component {...response.props} />;
-
-  renderModal(__("My React Modal"), inner);
-}
-
-function dialogModal(buttonData, response) {
-  // %dialog-user{"dialog" =>"vm.dialog"}
-  const elem = $('<dialog-user></dialog-user>');
-  elem.attr('dialog', JSON.stringify(response.dialog));
-
-  const id = 'angular-provider-dialog';
-
-  let inner = class extends React.Component {
-    componentDidMount() {
-      elem.appendTo(`#${id}`);
-      miq_bootstrap(`#${id}`);
-    }
-
-    render() {
-      return <div id={id}></div>;
-    }
+function reactModal(buttonData) {
+  const props = {
+    recordId: ManageIQ.record.recordId,
   };
 
-  renderModal(__("My dialog-user"), inner);
+  let Component = ManageIQ.component.getReact(buttonData.component_name);
+  let inner = () => <Component {...props} />;
+
+  renderModal(__(buttonData.modal_title), inner);
 }
