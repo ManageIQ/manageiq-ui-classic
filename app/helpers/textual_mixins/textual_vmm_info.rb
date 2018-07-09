@@ -8,7 +8,7 @@ module TextualMixins::TextualVmmInfo
       h[:value] = _("None")
       h[:icon] = "fa fa-question-circle"
     else
-      h[:image] = "svg/vendor-#{vmm_info[0][:description].downcase}.svg"
+      h[:image] = @record.decorate.fileicon
       h[:value] = vmm_info[0][:description]
       h[:title] = _("Show VMM information")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'hv_info')
