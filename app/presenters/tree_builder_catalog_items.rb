@@ -22,9 +22,9 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
 
   def x_get_tree_stc_kids(object, count_only)
     templates = if object.id.nil?
-                  ServiceTemplate.where(:service_template_catalog_id => nil)
+                  ServiceTemplate.where("service_template_catalog_id is null and service_type != 'internal'")
                 else
-                  object.service_templates
+                  object.service_templates.where("service_type != 'internal'")
                 end
     count_only_or_objects_filtered(count_only, templates, 'name')
   end

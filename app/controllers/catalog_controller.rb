@@ -1455,7 +1455,7 @@ class CatalogController < ApplicationController
 
   def get_available_resources(kls)
     @edit[:new][:available_resources] = {}
-    Rbac.filtered(kls.constantize.where("type is null or type != 'ServiceTemplateAnsiblePlaybook'")).select(:id, :name).each do |r|
+    Rbac.filtered(kls.constantize.where("type is null or type not in (?)", ['ServiceTemplateAnsiblePlaybook', 'ServiceTemplateTransformationPlan'])).select(:id, :name).each do |r|
       @edit[:new][:available_resources][r.id] = r.name if  r.id.to_s != @edit[:rec_id].to_s &&
                                                            !@edit[:new][:selected_resources].include?(r.id)  # don't add the servicetemplate record that's being edited, or add all vm templates
     end
@@ -1733,9 +1733,10 @@ class CatalogController < ApplicationController
     typ = root_node_model(x_active_tree)
     @no_checkboxes = true if x_active_tree == :svcs_tree
     if x_active_tree == :svccat_tree
-      service_template_list([:displayed, :with_existent_service_template_catalog_id], :no_checkboxes => true)
+      service_template_list([:displayed, :with_existent_service_template_catalog_id, :public_service_templates], :no_checkboxes => true)
     else
       options = {:model => typ.constantize}
+      options[:named_scope] = :public_service_templates if x_active_tree == :sandt_tree
       options[:named_scope] = :orderable if x_active_tree == :ot_tree
       process_show_list(options)
     end
@@ -1765,7 +1766,7 @@ class CatalogController < ApplicationController
   def get_node_info_handle_stc_node(id)
     if x_active_tree == :sandt_tree
       # catalog items accordion also shows the non-"Display in Catalog" items
-      scope = [[:with_service_template_catalog_id, id]]
+      scope = [:public_service_templates, [:with_service_template_catalog_id, id]]
     else
       scope = [:displayed, [:with_service_template_catalog_id, id]]
     end
@@ -1776,7 +1777,7 @@ class CatalogController < ApplicationController
 
   def get_node_info_handle_leaf_node_stcat(id)
     @record = ServiceTemplateCatalog.find(id)
-    @record_service_templates = Rbac.filtered(@record.service_templates)
+    @record_service_templates = Rbac.filtered(@record.service_templates.where("service_type != 'internal'"))
     typ = TreeBuilder.get_model_for_prefix(@nodetype)
     @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
   end

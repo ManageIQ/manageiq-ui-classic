@@ -25,14 +25,14 @@ class TreeBuilderServiceCatalog < TreeBuilderCatalogsClass
     filtered_objects = []
     # only show catalogs nodes that have any servicetemplate records under them
     objects.each do |object|
-      items = Rbac.filtered(object.service_templates)
+      items = Rbac.filtered(object.service_templates.where("service_type != 'internal' and display is true"))
       filtered_objects.push(object) unless items.empty?
     end
     count_only_or_objects(count_only, filtered_objects, 'name')
   end
 
   def x_get_tree_stc_kids(object, count_only)
-    objects = Rbac.filtered(object.service_templates.where(:display => true))
+    objects = Rbac.filtered(object.service_templates.where("service_type != 'internal' and display is true"))
     count_only_or_objects(count_only, objects, 'name')
   end
 end
