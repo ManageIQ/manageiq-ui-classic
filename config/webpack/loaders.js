@@ -1,6 +1,7 @@
 const merge = require('webpack-merge')
 
 const { env, publicPath } = require('./configuration.js')
+const babelrc = require('../../.babelrc.json');
 
 // set WEBPACK_EXCLUDE_NODE_MODULES=1 to skip compiling code in node_modules
 let base = {};
@@ -11,10 +12,12 @@ if (env.WEBPACK_EXCLUDE_NODE_MODULES) {
 module.exports = [
   merge(base, {
     test: /\.(mjs|js|jsx)$/,
-    loader: 'babel-loader',
-    query: {
-      presets: ['react'],
-    },
+    use: [{
+      loader: 'babel-loader',
+      options: merge(babelrc, {
+        babelrc: false,
+      }),
+    }],
   }),
 
   {
