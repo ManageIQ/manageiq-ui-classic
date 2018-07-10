@@ -7,7 +7,6 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const { basename, dirname, join, relative, resolve } = require('path')
 const { sync } = require('glob')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const extname = require('path-complete-extname')
 const { env, settings, output, engines } = require('./configuration.js')
@@ -46,7 +45,6 @@ module.exports = {
 
   plugins: [
     new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
-    new ExtractTextPlugin(env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css'),
 
     // Workaround for graphql/graphql-language-service#128
     new webpack.ContextReplacementPlugin(
