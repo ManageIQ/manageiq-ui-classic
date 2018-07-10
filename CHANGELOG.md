@@ -5,6 +5,52 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Gaprindashvili-4
+
+### Added
+- Menu pluggability improvements [(#3347)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3347)
+- page_title - don't require leading ": " in @page_title [(#3965)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3965)
+- Add a new "full_center" layout [(#3970)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3970)
+- Support for hidden columns in reports and views [(#3564)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3564)
+- Resize disk reconfigure screen [(#3128)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3128)
+- Reconfigure VM: Add / Remove Network Adapters [(#3121)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3121)
+- Support VM Reconfigure for VMware vCloud provider [(#3854)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3854)
+- Network adapter reconfiguration for vCloud provider [(#3972)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3972)
+- Move with_dummy_database... around the implementation of webpack:compile, not the call [(#2810)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2810)
+- update:ui - ensure we always see all the js engines [(#3538)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3538)
+- Backport Webpack related changes [(#4059)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4059)
+- Use new dialog-user feature for custom buttons for more object types [(#3439)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3439)
+
+### Fixed
+- Validate Help->Documentation screen against the documentation feature [(#3882)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3882)
+- Fixed Secondary filter to be added/edited correctly. [(#3747)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3747)
+- Check @record has description method before using provider_region row [(#3735)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3735)
+- Render new dialog runner for all service types. [(#3793)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3793)
+- Enable Compilance button for list of VMs [(#3810)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3810)
+- cloud volume create fixes [(#3878)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3878)
+- Chart tooltips should match table [(#3813)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3813)
+- Selection of a dialog is required for a playbook catalog item [(#3926)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3926)
+- Utilize a new 'miq-select' directive for dialog fields [(#3945)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3945)
+- Fix opening incorrect tag page, opened for Ansible Playbooks navigated through Repository summary page [(#3721)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3721)
+- Fix Categories order for Reporting charts [(#3964)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3964)
+- vertical_navbar - a element to use exisitng param, href [(#3683)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3683)
+- Add back Menu::Item defaults attribute as it is required by help_menu [(#3726)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3726)
+- Error modal - ensure visibility over other modals [(#3988)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3988)
+- API transformRequest support + http service [(#4005)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4005)
+- Remove compliances include from Host.yaml [(#3989)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3989)
+- Add support for ssh key pair credentials to rhv [(#3983)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3983)
+- Render notifications fetched from the API in the correct order [(#4010)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4010)
+- Force selectpicker refresh after dialog-user component initialization [(#4063)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4063)
+- Fix for 400 error when using a custom button from an infra provider. [(#3713)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3713)
+- Ensure new dialog user component is used for service reconfiguration [(#4140)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4140)
+- Get Network adapters reconfigure data only when the reconfigure is supported [(#4152)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4152)
+- Fix error on localized worker settings screen [(#4156)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4156)
+- Fix include domain prefix behavior for catalog entrypoint selection [(#4166)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4166)
+- Fix displaying correct tags of Datastore of a provider [(#3407)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3407)
+- Increase maxlength for playbooks' host option field [(#4197)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4197)
+- Faster report result index pages [(#4143)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4143)
+- Change reconfigure setup to include values configured with originally [(#4226)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4226)
+
 ## Gaprindashvili-3
 
 ### Added
