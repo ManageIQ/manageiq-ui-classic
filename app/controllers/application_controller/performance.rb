@@ -1577,9 +1577,11 @@ module ApplicationController::Performance
   # rpt.where_clause[2] should be id
   def perf_filter_charts(chart_layout, rpt)
     return unless rpt&.where_clause
-    model = rpt.where_clause[1].constantize
-    id = rpt.where_clause[2]
-    if model.find(id).type == "ManageIQ::Providers::Amazon::CloudManager::AvailabilityZone"
+    model = rpt.where_clause.dig(1).constantize
+    id = rpt.where_clause.dig(2)
+    return unless model && id
+    if model == AvailabilityZone &&
+       model.find(id).type == "ManageIQ::Providers::Amazon::CloudManager::AvailabilityZone"
       chart_layout.reject! { |chart| chart[:title].include?("Memory") }
     end
   end
