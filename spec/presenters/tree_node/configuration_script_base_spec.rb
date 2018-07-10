@@ -4,5 +4,5 @@ describe TreeNode::ConfigurationScriptBase do
 
   include_examples 'TreeNode::Node#key prefix', 'cf-'
   include_examples 'TreeNode::Node#icon', 'pficon pficon-template'
-  include_examples 'TreeNode::Node#tooltip prefix', 'Ansible Tower Job Template'
+  include_examples 'TreeNode::Node#tooltip prefix', 'Job Template (Ansible Tower)'
 end

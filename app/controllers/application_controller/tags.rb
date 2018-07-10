@@ -104,9 +104,9 @@ module ApplicationController::Tags
       return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}")
       @object_ids = @edit[:object_ids]
     end
+    @in_a_form = true
     tagging_tags_set_form_vars
     @display   = nil
-    @in_a_form = true
     session[:changed] = false
     add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
     @title = _('Tag Assignment')

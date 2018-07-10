@@ -644,7 +644,7 @@ describe AutomationManagerController do
       FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
       post :tagging, :params => {:id => @cs.id, :format => :js}
       expect(response.status).to eq(200)
-      expect(response.body).to include('Job Template (Ansible Tower) Being Tagged')
+      expect(response.body).to include('Template (Ansible Tower) Being Tagged')
     end
   end
 

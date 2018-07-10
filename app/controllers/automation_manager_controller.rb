@@ -170,7 +170,7 @@ class AutomationManagerController < ApplicationController
   private
 
   def is_template_record?
-    @record.kind_of?(ManageIQ::Providers::AutomationManager::ConfigurationWorkflow) || @record.kind_of?(ConfigurationScript)
+    @record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow) || @record.kind_of?(ConfigurationScript)
   end
   helper_method :is_template_record?
 
