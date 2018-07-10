@@ -22,10 +22,5 @@
     "transform-export-extensions",
     "transform-object-rest-spread",
     "transform-object-assign"
-  ],
-  "env": {
-    "test": {
-      "plugins": ["transform-es2015-modules-commonjs"]
-    }
-  }
+  ]
 }
