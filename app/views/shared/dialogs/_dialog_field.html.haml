@@ -23,7 +23,14 @@
                               :auto_refreshable_field_indicies => auto_refreshable_field_indicies,
                               :trigger                         => field.trigger_auto_refresh,
                               :current_index                   => current_index}
-    - locals = {:edit => edit, :field => field, :url => url, :wf => wf, :auto_refresh_options => auto_refresh_options}
+    -# Don't show refresh buttons on Requests page
+    - show_refresh_button = field.show_refresh_button? && !controller.kind_of?(MiqRequestController)
+    - locals = {:edit                 => edit,
+                :field                => field,
+                :url                  => url,
+                :wf                   => wf,
+                :auto_refresh_options => auto_refresh_options,
+                :show_refresh_button  => show_refresh_button}
     - case field.type
     - when 'DialogFieldTextBox'
       = render(:partial => "shared/dialogs/dialog_field_text_box", :locals => locals)
