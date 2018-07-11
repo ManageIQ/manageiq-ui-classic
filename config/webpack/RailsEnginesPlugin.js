@@ -42,17 +42,19 @@ module.exports = class RailsEnginesPlugin {
 
     resolver.getHook(this.source).tapAsync("RailsEnginesPlugin", (request, resolveContext, callback) => {
       const engine = this.pathToEngine(request.path);
-      const engineModules = this.engines[engine.engine].node_modules;
+      const engineModules = !engine.fallback ?
+        this.engines[engine.engine].node_modules :
+        `${request.descriptionFileRoot}/node_modules`;
       const inNodeModules = engine.inNodeModules;
 
       const packageName = request.request.split('/')[0];
       let targetEngineModules = engineModules;
 
       if (engine.fallback) {
-        throw `RailsEnginesPlugin: no engine found for ${request.path} ${request.request}`;
+        console.warn(`RailsEnginesPlugin: no engine found for ${request.path} asking for ${request.request} (only a problem if you're *not* using yarn link)`);
       }
 
-      if (this.shared.packages.includes(packageName)) {
+      if (this.shared.packages.includes(packageName) || engine.fallback) {
         targetEngineModules = this.shared.root;
       }
 
