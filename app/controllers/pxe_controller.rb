@@ -250,7 +250,7 @@ class PxeController < ApplicationController
   end
 
   def self.table_name
-    @table_name   = "pxe"
+    @table_name = "pxe"
   end
 
   def get_session_data
