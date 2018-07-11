@@ -117,6 +117,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.name                            = data.name;
       $scope.emsCommonModel.emstype                         = data.emstype;
       $scope.emsCommonModel.zone                            = data.zone;
+      $scope.emsCommonModel.zone_hidden                     = data.zone_hidden;
       $scope.emsCommonModel.tenant_mapping_enabled          = data.tenant_mapping_enabled;
       $scope.emsCommonModel.hostname                        = data.hostname;
       $scope.emsCommonModel.default_hostname                = data.default_hostname;

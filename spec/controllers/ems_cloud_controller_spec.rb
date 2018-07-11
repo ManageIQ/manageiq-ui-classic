@@ -144,6 +144,7 @@ describe EmsCloudController do
     end
 
     it 'gets the ems cloud form fields on a get' do
+      Zone.seed
       post :create, :params => {
         "button"           => "add",
         "default_hostname" => "openstack.example.com",

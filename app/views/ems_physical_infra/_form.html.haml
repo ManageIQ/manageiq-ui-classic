@@ -40,7 +40,7 @@
                               "style"       => "color: black; font-weight: normal;"}
             = @emstype_display
 
-    .form-group{"ng-class" => "{'has-error': angularForm.zone.$invalid}"}
+    .form-group{"ng-class" => "{'has-error': angularForm.zone.$invalid}", "ng-if" => "!emsCommonModel.zone_hidden"}
       %label.col-md-2.control-label{"for" => "ems_zone"}
         = _("Zone")
       .col-md-8
