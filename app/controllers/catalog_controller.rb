@@ -1336,10 +1336,7 @@ class CatalogController < ApplicationController
     @edit[:new][:catalog_id] = @record.service_template_catalog.try(:id)
     @edit[:new][:st_prov_type] ||= @record.prov_type
     @edit[:new][:generic_subtype] = @record.generic_subtype || "custom" if @edit[:new][:st_prov_type] == 'generic'
-    @edit[:new][:available_catalogs] = Rbac.filtered(ServiceTemplateCatalog.all).collect do |stc|
-      [stc.tenant.present? && stc.tenant.ancestors.present? ? stc.name + " (#{stc.tenant.name})" : stc.name, stc.id]
-    end
-    @edit[:new][:available_catalogs] = @edit[:new][:available_catalogs].sort
+    @edit[:new][:available_catalogs] = available_catalogs.sort
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
     available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower)
     available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
@@ -1363,6 +1360,21 @@ class CatalogController < ApplicationController
       @right_cell_text = _("Editing Service Catalog Item \"%{name}\"") % {:name => @record.name}
     end
     build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree
+  end
+
+  # Get all the available Catalogs
+  def available_catalogs
+    Rbac.filtered(ServiceTemplateCatalog.all).collect do |sc|
+      if sc.tenant.present?
+        tenant_names = []
+        sc.tenant.ancestor_ids.map do |t|
+         tenant_names.push(Tenant.find_by(:id => t).name)
+        end
+        tenant_names.push(sc.tenant.name)
+        tenant_names = tenant_names.join("/")
+      end
+      [tenant_names.present? ? "#{tenant_names}/" + sc.name : sc.name, sc.id]
+    end
   end
 
   def st_set_form_vars
