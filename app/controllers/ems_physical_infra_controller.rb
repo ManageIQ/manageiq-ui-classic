@@ -33,17 +33,18 @@ class EmsPhysicalInfraController < ApplicationController
     @ems = find_record_with_rbac(model, params[:id]) if params[:id] != 'new'
 
     render :json => {
-      :name                => @ems.name,
-      :emstype             => @ems.emstype,
-      :zone                => zone,
-      :provider_id         => @ems.provider_id ? @ems.provider_id : "",
-      :hostname            => @ems.hostname,
-      :default_hostname    => @ems.connection_configurations.default.endpoint.hostname,
-      :default_api_port    => @ems.connection_configurations.default.endpoint.port,
-      :provider_region     => @ems.provider_region,
-      :default_userid      => @ems.authentication_userid ? @ems.authentication_userid : "",
-      :ems_controller      => controller_name,
-      :default_auth_status => default_auth_status,
+      :name                      => @ems.name,
+      :emstype                   => @ems.emstype,
+      :zone                      => zone,
+      :provider_id               => @ems.provider_id ? @ems.provider_id : "",
+      :hostname                  => @ems.hostname,
+      :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
+      :default_api_port          => @ems.connection_configurations.default.endpoint.port,
+      :provider_region           => @ems.provider_region,
+      :default_userid            => @ems.authentication_userid ? @ems.authentication_userid : "",
+      :ems_controller            => controller_name,
+      :default_auth_status       => default_auth_status,
+      :default_security_protocol => @ems.security_protocol || "",
     }
   end
 
