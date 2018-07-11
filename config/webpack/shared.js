@@ -80,7 +80,7 @@ module.exports = {
     }),
 
     new webpack.ProvidePlugin({
-      '$': 'jquery',
+//      '$': 'jquery',  FIXME uncoment once it doesn't break $().selectpicker in v2v
       'jQuery': 'jquery',
       'window.jQuery': 'jquery',
       'React': 'react',
