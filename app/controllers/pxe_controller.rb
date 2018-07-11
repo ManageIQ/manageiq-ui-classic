@@ -10,6 +10,8 @@ class PxeController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
+
   PXE_X_BUTTON_ALLOWED_ACTIONS = {
     'pxe_image_edit'                => :pxe_image_edit,
     'pxe_image_type_new'            => :pxe_image_type_new,
@@ -53,6 +55,10 @@ class PxeController < ApplicationController
     @right_cell_text ||= _("All PXE Servers")
 
     render :layout => "application"
+  end
+
+  def title
+    @title = "PXE"
   end
 
   private
@@ -243,18 +249,18 @@ class PxeController < ApplicationController
     render :json => presenter.for_render
   end
 
+  def self.table_name
+    @table_name   = "pxe"
+  end
+
   def get_session_data
-    @title        = "PXE"
-    @layout       = "pxe"
-    @lastaction   = session[:pxe_lastaction]
-    @display      = session[:pxe_display]
+    super
     @current_page = session[:pxe_current_page]
   end
 
   def set_session_data
-    session[:pxe_lastaction]   = @lastaction
+    super
     session[:pxe_current_page] = @current_page
-    session[:pxe_display]      = @display unless @display.nil?
   end
 
   menu_section :inf
