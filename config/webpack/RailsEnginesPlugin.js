@@ -13,27 +13,19 @@ module.exports = class RailsEnginesPlugin {
 
   // match path to engine, even if it's under another engine's vendor (longest match)
   pathToEngine(path) {
-    const rootCandidates = Object.keys(this.engines)
-      .filter((engine) => path.startsWith(this.engines[engine].root));
-
-    const moduleCandidates = Object.keys(this.engines)
-      .filter((engine) => path.startsWith(this.engines[engine].node_modules));
-
     const pathLength = (path) => (path.match(/\//g) || []).length;
 
-    rootCandidates.sort((a, b) => {
-      const aLen = pathLength(this.engines[a].root);
-      const bLen = pathLength(this.engines[b].root);
+    const candidates = (path, field) => Object.keys(this.engines)
+      .filter((engine) => path.startsWith(this.engines[engine][field]))
+      .sort((a, b) => {
+        const aLen = pathLength(this.engines[a][field]);
+        const bLen = pathLength(this.engines[b][field]);
 
-      return bLen - aLen;
-    });
+        return bLen - aLen;
+      });
 
-    moduleCandidates.sort((a, b) => {
-      const aLen = pathLength(this.engines[a].node_modules);
-      const bLen = pathLength(this.engines[b].node_modules);
-
-      return bLen - aLen;
-    });
+    const rootCandidates = candidates(path, 'root');
+    const moduleCandidates = candidates(path, 'node_modules');
 
     return moduleCandidates[0] || rootCandidates[0];
   }
