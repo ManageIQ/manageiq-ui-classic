@@ -5,20 +5,21 @@
     = field.value
 
 - if field.type == "DialogFieldDateTimeControl"
-  - date_val = field.refresh_json_value
+  - date_val, time_val = field.value.split(" ")
+  - hour_val, minute_val = time_val.split(":")
   - if edit
-    = datepicker_input_tag("miq_date__#{field.name}", date_val[:date], date_tag_options(field, url, auto_refresh_options))
+    = datepicker_input_tag("miq_date__#{field.name}", date_val, date_tag_options(field, url, auto_refresh_options))
   - else
-    = date_val[:date]
+    = date_val
 
   &nbsp;at&nbsp;
   - if edit
-    = select_tag("start_hour", hour_select_options(date_val[:hour]), time_tag_options(field, url, "hour", auto_refresh_options))
+    = select_tag("start_hour", hour_select_options(hour_val), time_tag_options(field, url, "hour", auto_refresh_options))
     = ':'
-    = select_tag("start_min", minute_select_options(date_val[:min]), time_tag_options(field, url, "min", auto_refresh_options))
+    = select_tag("start_min", minute_select_options(minute_val), time_tag_options(field, url, "min", auto_refresh_options))
 
   - else
-    = "#{date_val[:hour].rjust(2, '0')}:#{date_val[:min].rjust(2, '0')}"
+    = "#{hour_val.rjust(2, '0')}:#{minute_val.rjust(2, '0')}"
   &nbsp;
   = session[:user_tz]
 
