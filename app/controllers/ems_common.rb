@@ -307,35 +307,55 @@ module EmsCommon
       end
     else
       @refresh_div = "main_div" # Default div for button.rjs to refresh
-      redirect_to :action => "new" if params[:pressed] == "new"
-      deleteemss if params[:pressed] == "#{table_name}_delete"
-      refresh_or_capture_emss("refresh_ems", _("Refresh")) if params[:pressed] == "#{table_name}_refresh"
-      refresh_or_capture_emss("capture_ems", _("Capture Metrics")) if params[:pressed] == "#{table_name}_capture_metrics"
-      pause_or_resume_emss(:pause => true) if params[:pressed] == "#{table_name}_pause"
-      pause_or_resume_emss(:resume => true) if params[:pressed] == "#{table_name}_resume"
-      tag(model) if params[:pressed] == "#{table_name}_tag"
 
-      # Edit Tags for Middleware Manager Relationship pages
-      tag(@display.camelize.singularize) if @display && @display != 'main' &&
-                                            params[:pressed] == "#{@display.singularize}_tag"
-      assign_policies(model) if params[:pressed] == "#{table_name}_protect"
-      check_compliance(model) if params[:pressed] == "#{table_name}_check_compliance"
-      edit_record if params[:pressed] == "#{table_name}_edit"
-      if params[:pressed] == "#{table_name}_timeline"
+      case params[:pressed]
+      when 'new'
+        redirect_to(:action => 'new')
+      when "#{table_name}_delete"
+        deleteemss
+      when "#{table_name}_refresh"
+        refresh_or_capture_emss("refresh_ems", _("Refresh"))
+      when "#{table_name}_capture_metrics"
+        refresh_or_capture_emss("capture_ems", _("Capture Metrics"))
+      when "#{table_name}_pause"
+        pause_or_resume_emss(:pause => true)
+      when "#{table_name}_resume"
+        pause_or_resume_emss(:resume => true)
+      when "#{table_name}_tag"
+        tag(model)
+      when "#{table_name}_protect"
+        assign_policies(model)
+      when "#{table_name}_check_compliance"
+        check_compliance(model)
+      when "#{table_name}_edit"
+        edit_record
+      when "#{table_name}_timeline"
         timeline_pressed
         return
-      end
-      if params[:pressed] == "#{table_name}_perf"
+      when "#{table_name}_perf"
         performance_pressed
         return
-      end
-      if params[:pressed] == "#{table_name}_ad_hoc_metrics"
+      when "#{table_name}_ad_hoc_metrics"
         ad_hoc_metrics_pressed
         return
-      end
-      if params[:pressed] == "refresh_server_summary"
+      when 'refresh_server_summary'
         javascript_redirect :back
         return
+      end
+
+      if @display && @display != 'main'
+        model_class = @display.camelize.singularize.safe_constantize
+        display_s = @display.singularize
+
+        case params[:pressed]
+        when "#{display_s}_tag"
+          tag(model_class)
+        when "#{display_s}_protect"
+          assign_policies(model_class)
+        when "#{display_s}_check_compliance"
+          check_compliance_nested(model_class)
+          return
+        end
       end
 
       if params[:pressed] == "ems_cloud_recheck_auth_status"          ||
@@ -455,6 +475,39 @@ module EmsCommon
   end
 
   private ############################
+
+  # Check compliance of Last Known Configuration for items displayed in nested lists
+  def check_compliance_nested(model)
+    assert_privileges("#{model.name.underscore}_check_compliance")
+    ids = find_checked_ids_with_rbac(model)
+
+    if ids.empty?
+      add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:models => model.to_s),
+                                                              :task  => "Compliance Check"}, :error)
+    else
+      process_check_compliance(model, ids)
+    end
+
+    show_list
+    ids.count
+  end
+
+  def process_check_compliance(model, ids)
+    model.where(:id => ids).order("lower(name)").each do |entity|
+      begin
+        entity.check_compliance
+      rescue StandardError => bang
+        add_flash(_("%{model} \"%{name}\": Error during 'Check Compliance': %{error}") %
+                   {:model => ui_lookup(:model => model.to_s),
+                    :name  => entity.name,
+                    :error => bang.message},
+                  :error) # Push msg and error flag
+      else
+        add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
+      end
+    end
+    javascript_flash
+  end
 
   # Set form variables for edit
   def set_form_vars

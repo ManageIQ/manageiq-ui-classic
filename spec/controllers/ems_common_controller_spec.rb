@@ -126,9 +126,9 @@ describe EmsContainerController do
       end
     end
 
-    context "#update" do
+    describe "#update" do
       context "updates provider with new token" do
-        before :each do
+        before do
           stub_user(:features => :all)
           session[:edit] = assigns(:edit)
         end
@@ -202,8 +202,8 @@ describe EmsContainerController do
       end
     end
 
-    context "#button" do
-      before(:each) do
+    describe "#button" do
+      before do
         stub_user(:features => :all)
         EvmSpecHelper.create_guid_miq_server_zone
       end
@@ -231,6 +231,57 @@ describe EmsContainerController do
         vm = FactoryGirl.create(:vm_vmware)
         post :button, :params => { :pressed => "vm_edit", :format => :js, "check_#{vm.id}" => "1" }
         expect(controller.send(:flash_errors?)).not_to be_truthy
+      end
+
+      context 'displaying nested lists from summary page of container provider' do
+        let(:provider) { ManageIQ::Providers::ContainerManager.new }
+
+        before do
+          allow(controller).to receive(:javascript_redirect)
+          allow(controller).to receive(:performed?).and_return(true)
+          controller.instance_variable_set(:@display, display)
+          controller.instance_variable_set(:@_params, :pressed => press, :miq_grid_checks => item.id.to_s, :id => provider.id)
+          controller.instance_variable_set(:@breadcrumbs, [])
+        end
+
+        {
+          'container_image'      => 'Container Images',
+          'container_replicator' => 'Container Replicators',
+          'container_node'       => 'Container Nodes',
+          'container_group'      => 'Container Pods'
+        }.each do |display_s, items|
+          context "displaying #{items}" do
+            let(:item) { FactoryGirl.create(display_s.to_sym) }
+            let(:display) { display_s.pluralize }
+
+            context "tagging selected #{items}" do
+              let(:press) { "#{display_s}_tag" }
+
+              it 'calls tag method with proper model class' do
+                expect(controller).to receive(:tag).with(display_s.classify.safe_constantize)
+                controller.send(:button)
+              end
+            end
+
+            context "managing policies of selected #{items}" do
+              let(:press) { "#{display_s}_protect" }
+
+              it 'calls assign_policies method with proper model class' do
+                expect(controller).to receive(:assign_policies).with(display_s.classify.safe_constantize)
+                controller.send(:button)
+              end
+            end
+
+            context "checking compliance of selected #{items}" do
+              let(:press) { "#{display_s}_check_compliance" }
+
+              it 'calls check_compliance_nested method with proper model class' do
+                expect(controller).to receive(:check_compliance_nested).with(display_s.classify.safe_constantize)
+                controller.send(:button)
+              end
+            end
+          end
+        end
       end
     end
 
