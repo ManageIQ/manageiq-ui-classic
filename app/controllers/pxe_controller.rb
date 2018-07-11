@@ -61,6 +61,10 @@ class PxeController < ApplicationController
     @title = "PXE"
   end
 
+  def self.table_name
+    @table_name = "pxe"
+  end
+
   private
 
   def features
@@ -247,10 +251,6 @@ class PxeController < ApplicationController
     presenter[:lock_sidebar] = @in_a_form && @edit
 
     render :json => presenter.for_render
-  end
-
-  def self.table_name
-    @table_name = "pxe"
   end
 
   def get_session_data
