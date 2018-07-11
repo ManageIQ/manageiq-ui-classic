@@ -27,7 +27,14 @@ module.exports = class RailsEnginesPlugin {
     const rootCandidates = candidates(path, 'root');
     const moduleCandidates = candidates(path, 'node_modules');
 
-    return moduleCandidates[0] || rootCandidates[0];
+    if (moduleCandidates[0]) {
+      return { engine: moduleCandidates[0], inNodeModules: true };
+    } else if (rootCandidates[0]) {
+      return { engine: rootCandidates[0], inNodeModules: false };
+    } else {
+      // yarn linked package requiring further stuff - limited to shared packages or nested node_modules
+      return { engine: 'manageiq-ui-classic', inNodeModules: true, fallback: true };
+    }
   }
 
   apply(resolver) {
@@ -35,12 +42,13 @@ module.exports = class RailsEnginesPlugin {
 
     resolver.getHook(this.source).tapAsync("RailsEnginesPlugin", (request, resolveContext, callback) => {
       const engine = this.pathToEngine(request.path);
-      const engineModules = this.engines[engine].node_modules;
-      const inNodeModules = request.path.startsWith(engineModules);
+      const engineModules = this.engines[engine.engine].node_modules;
+      const inNodeModules = engine.inNodeModules;
+
       const packageName = request.request.split('/')[0];
       let targetEngineModules = engineModules;
 
-      if (! engine) {
+      if (engine.fallback) {
         throw `RailsEnginesPlugin: no engine found for ${request.path} ${request.request}`;
       }
 
@@ -55,7 +63,7 @@ module.exports = class RailsEnginesPlugin {
           request: `./${request.request}`,
         };
 
-        resolver.doResolve(target, obj, `engine ${engine}`, resolveContext, callback);
+        resolver.doResolve(target, obj, `engine ${engine.engine}`, resolveContext, callback);
         return;
       }
 
