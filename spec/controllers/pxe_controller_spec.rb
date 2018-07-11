@@ -26,7 +26,6 @@ describe PxeController do
     before do
       ApplicationController.handle_exceptions = true
     end
-
     describe 'corresponding methods are called for allowed actions' do
       PxeController::PXE_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
         it "calls the appropriate method: '#{method}' for action '#{action_name}'" do
@@ -99,6 +98,34 @@ describe PxeController do
       )
       expect(controller).to receive(:render)
       controller.send(:replace_right_cell, :replace_trees => %i(pxe_servers pxe_image_types customization_templates iso_datastores))
+    end
+  end
+
+  describe '#get_session_data' do
+    it "Sets variables correctly" do
+      allow(controller).to receive(:session).and_return({
+        :pxe_lastaction => 'lastaction',
+        :pxe_display => 'display',
+        :pxe_current_page => 'current_page',
+      })
+      controller.send(:get_session_data)
+      expect(controller.instance_variable_get(:@title)).to eq("PXE")
+      expect(controller.instance_variable_get(:@layout)).to eq("pxe")
+      expect(controller.instance_variable_get(:@lastaction)).to eq("lastaction")
+      expect(controller.instance_variable_get(:@display)).to eq("display")
+      expect(controller.instance_variable_get(:@current_page)).to eq("current_page")
+    end  
+  end
+
+  describe '#set_session_data' do
+    it "Sets session correctly" do
+      controller.instance_variable_set(:@lastaction, "lastaction")
+      controller.instance_variable_set(:@display, "display")
+      controller.instance_variable_set(:@current_page, "current_page")
+      controller.send(:set_session_data)
+      expect(controller.session[:pxe_lastaction]).to eq("lastaction")
+      expect(controller.session[:pxe_display]).to eq("display") 
+      expect(controller.session[:pxe_current_page]).to eq("current_page")     
     end
   end
 end
