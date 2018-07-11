@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalogItemFormId', 'currentRegion', 'miqService', 'postService', 'catalogItemDataFactory', 'playbookReusableCodeMixin', function($scope, catalogItemFormId, currentRegion, miqService, postService, catalogItemDataFactory, playbookReusableCodeMixin) {
+ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalogItemFormId', 'currentRegion', 'miqService', 'postService', 'catalogItemDataFactory', 'playbookReusableCodeMixin', 'allCatalogsNames', function($scope, catalogItemFormId, currentRegion, miqService, postService, catalogItemDataFactory, playbookReusableCodeMixin, allCatalogsNames) {
   var vm = this;
   var init = function() {
     vm.catalogItemModel = {
@@ -54,6 +54,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.formId = catalogItemFormId;
     vm.afterGet = false;
     vm.inventory_mode = 'localhost';
+    vm.all_catalogs = allCatalogsNames;
 
     ManageIQ.angular.scope = $scope;
 

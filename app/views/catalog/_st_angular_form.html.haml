@@ -73,5 +73,6 @@
 :javascript
   ManageIQ.angular.app.value('catalogItemFormId', '#{@record.id || "new"}');
   ManageIQ.angular.app.value('currentRegion', '#{@current_region}');
+  ManageIQ.angular.app.value('allCatalogsNames', #{@available_catalogs});
   miq_bootstrap('#form_div');
 
