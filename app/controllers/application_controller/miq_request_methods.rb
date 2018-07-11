@@ -170,7 +170,7 @@ module ApplicationController::MiqRequestMethods
     case request.parameters[:controller]
     when "vm_cloud"
       return ManageIQ::Providers::CloudManager::Template
-    when "vm_infra"
+    when "vm_infra", 'miq_request'
       return ManageIQ::Providers::InfraManager::Template
     else
       return MiqTemplate
