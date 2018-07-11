@@ -1437,4 +1437,87 @@ describe ReportController do
       expect(resp.error?).to be_falsey
     end
   end
+
+  context "GenericSessionMixin" do
+    let(:report_tab) { 'report_tab' }
+    let(:report_result_id) { 'report_result_id' }
+    let(:menu) { 'menu' }
+    let(:folders) { 'folders' }
+    let(:ght_type) { 'ght_type' }
+    let(:report_groups) { 'report_groups' }
+    let(:edit) { 'edit' }
+    let(:catinfo) { 'catinfo' }
+    let(:grid_folders) { 'gridfolders' }
+    let(:report_lastaction) { 'lastaction' }
+    let(:report_display) { 'display' }
+    let(:report_filters) { 'filters' }
+    let(:report_showtype) { 'showtype' }
+    let(:panels) { 'panels' }
+
+    describe '#get_session_data' do
+      it "Sets variables correctly" do
+        allow(controller).to receive(:session).and_return(:report_tab          => report_tab,
+                                                          :report_result_id    => report_result_id,
+                                                          :report_menu         => menu,
+                                                          :report_folders      => folders,
+                                                          :ght_type            => ght_type,
+                                                          :report_groups       => report_groups,
+                                                          :edit                => edit,
+                                                          :vm_catinfo          => catinfo,
+                                                          :report_grid_folders => grid_folders,
+                                                          :report_lastaction   => report_lastaction,
+                                                          :report_display      => report_display,
+                                                          :report_filters      => report_filters,
+                                                          :report_showtype     => report_showtype)
+        controller.send(:get_session_data)
+
+        expect(controller.instance_variable_get(:@report_tab)).to eq(report_tab)
+        expect(controller.instance_variable_get(:@report_result_id)).to eq(report_result_id)
+        expect(controller.instance_variable_get(:@menu)).to eq(menu)
+        expect(controller.instance_variable_get(:@folders)).to eq(folders)
+        expect(controller.instance_variable_get(:@ght_type)).to eq(ght_type)
+        expect(controller.instance_variable_get(:@report_groups)).to eq(report_groups)
+        expect(controller.instance_variable_get(:@edit)).to eq(edit)
+        expect(controller.instance_variable_get(:@catinfo)).to eq(catinfo)
+        expect(controller.instance_variable_get(:@grid_folders)).to eq(grid_folders)
+        expect(controller.instance_variable_get(:@lastaction)).to eq(report_lastaction)
+        expect(controller.instance_variable_get(:@display)).to eq(report_display)
+        expect(controller.instance_variable_get(:@filters)).to eq(report_filters)
+        expect(controller.instance_variable_get(:@showtype)).to eq(report_showtype)
+      end
+    end
+
+    describe '#set_session_data' do
+      it "Sets session correctly" do
+        controller.instance_variable_set(:@report_tab, report_tab)
+        controller.instance_variable_set(:@report_result_id, report_result_id)
+        controller.instance_variable_set(:@menu, menu)
+        controller.instance_variable_set(:@folders, folders)
+        controller.instance_variable_set(:@ght_type, ght_type)
+        controller.instance_variable_set(:@report_groups, report_groups)
+        controller.instance_variable_set(:@catinfo, catinfo)
+        controller.instance_variable_set(:@grid_folders, grid_folders)
+        controller.instance_variable_set(:@lastaction, report_lastaction)
+        controller.instance_variable_set(:@display, report_display)
+        controller.instance_variable_set(:@filters, report_filters)
+        controller.instance_variable_set(:@showtype, report_showtype)
+        controller.instance_variable_set(:@panels, panels)
+        controller.send(:set_session_data)
+
+        expect(controller.session[:report_tab]).to eq(report_tab)
+        expect(controller.session[:report_result_id]).to eq(report_result_id)
+        expect(controller.session[:report_menu]).to eq(menu)
+        expect(controller.session[:report_folders]).to eq(folders)
+        expect(controller.session[:ght_type]).to eq(ght_type)
+        expect(controller.session[:report_groups]).to eq(report_groups)
+        expect(controller.session[:vm_catinfo]).to eq(catinfo)
+        expect(controller.session[:report_grid_folders]).to eq(grid_folders)
+        expect(controller.session[:report_lastaction]).to eq(report_lastaction)
+        expect(controller.session[:report_display]).to eq(report_display)
+        expect(controller.session[:report_filters]).to eq(report_filters)
+        expect(controller.session[:report_showtype]).to eq(report_showtype)
+        expect(controller.session[:panels]).to eq(panels)
+      end
+    end
+  end
 end
