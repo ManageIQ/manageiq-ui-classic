@@ -78,15 +78,6 @@ module.exports = {
       verbose: true,
       showHelp: false,
     }),
-
-    new webpack.ProvidePlugin({
-//      '$': 'jquery',  FIXME uncoment once it doesn't break $().selectpicker in v2v
-      'jQuery': 'jquery',
-      'window.jQuery': 'jquery',
-      'React': 'react',
-      'ReactDOM': 'react-dom',
-//      '_': 'lodash',   FIXME uncomment once on lodash 4
-    }),
   ],
 
   optimization: {
