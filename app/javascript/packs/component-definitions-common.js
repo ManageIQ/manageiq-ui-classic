@@ -5,6 +5,7 @@ import TableListViewWrapper from '../react/table_list_view_wrapper';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
 import { addReact } from '../miq-component/helpers';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
+import RouterTest from '../components/router-test';
 
 /**
 * Add component definitions to this file.
@@ -19,3 +20,4 @@ addReact('GenericGroup', GenericGroup);
 addReact('GenericGroupWrapper', GenericGroupWrapper);
 addReact('TextualSummaryWrapper', TextualSummaryWrapper);
 addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
+addReact('RouterTest', RouterTest);
