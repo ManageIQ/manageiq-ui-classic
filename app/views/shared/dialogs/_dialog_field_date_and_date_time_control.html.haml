@@ -31,7 +31,7 @@
 
     = render(:partial => "shared/dialogs/auto_refresh_javascript", :locals => javascript_locals)
 
-  - if field.show_refresh_button?
+  - if show_refresh_button
     = button_tag(_('Refresh'), :id => "refresh-dynamic-date-#{field.id}", :class => "btn btn-default")
 
   :javascript
