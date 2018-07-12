@@ -97,7 +97,6 @@ class MiqEventDefinitionDecorator < MiqDecorator
       "host_disconnect"                             => "pficon pficon-screen",
       "host_failure"                                => "pficon pficon-screen",
       "host_perf_complete"                          => "pficon pficon-screen",
-      "host_provisioned"                            => "pficon pficon-screen",
       "host_remove_from_cluster"                    => "pficon pficon-screen",
       "host_scan_complete"                          => "pficon pficon-screen",
       "request_assign_company_tag"                  => "fa fa-tag",

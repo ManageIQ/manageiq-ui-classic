@@ -160,26 +160,6 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
       ]
     ),
   ])
-  button_group('host_lifecycle', [
-    select(
-      :host_lifecycle_choice,
-      'fa fa-recycle fa-lg',
-      t = N_('Lifecycle'),
-      t,
-      :items => [
-        button(
-          :host_miq_request_new,
-          'pficon pficon-add-circle-o fa-lg',
-          N_('Request to Provision items'),
-          N_('Provision items'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1+",
-          :klass        => ApplicationHelper::Button::ButtonNewDiscover),
-      ]
-    ),
-  ])
   button_group('host_operations', [
     select(
       :host_power_choice,

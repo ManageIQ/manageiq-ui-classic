@@ -332,7 +332,6 @@ class HostController < ApplicationController
       assign_policies(Host) if params[:pressed] == "host_protect"
       edit_record if params[:pressed] == "host_edit"
       custom_buttons if params[:pressed] == "custom_button"
-      prov_redirect if params[:pressed] == "host_miq_request_new"
       toggleservicescheduling if params[:pressed] == "host_cloud_service_scheduling_toggle"
       sethoststomanageable if params[:pressed] == "host_manageable"
       introspecthosts if params[:pressed] == "host_introspect"
@@ -352,7 +351,7 @@ class HostController < ApplicationController
                  "host_protect", "perf_reload"].include?(params[:pressed]) &&
                 @flash_array.nil? # Another screen showing, so return
 
-      if @flash_array.nil? && !@refresh_partial && !["host_miq_request_new"].include?(params[:pressed]) # if no button handler ran, show not implemented msg
+      if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
         add_flash(_("Button not yet implemented"), :error)
         @refresh_partial = "layouts/flash_msg"
         @refresh_div = "flash_msg_div"
@@ -363,13 +362,13 @@ class HostController < ApplicationController
       end
     end
 
-    if @lastaction == "show" && ["custom_button", "host_miq_request_new"].include?(params[:pressed])
+    if @lastaction == "show" && ["custom_button"].include?(params[:pressed])
       @host = @record = identify_record(params[:id])
     end
 
     if single_delete_test
       single_delete_redirect
-    elsif params[:pressed].ends_with?("_edit") || ["host_miq_request_new", "#{pfx}_miq_request_new",
+    elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new",
                                                    "#{pfx}_clone", "#{pfx}_migrate",
                                                    "#{pfx}_publish"].include?(params[:pressed])
       if @flash_array
@@ -377,7 +376,7 @@ class HostController < ApplicationController
         replace_gtl_main_div
       else
         if @redirect_controller
-          if ["host_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
+          if ["#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
             if flash_errors?
               javascript_flash
             else

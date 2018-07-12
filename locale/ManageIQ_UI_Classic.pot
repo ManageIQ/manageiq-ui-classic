@@ -16836,10 +16836,6 @@ msgstr ""
 msgid "No Owner"
 msgstr ""
 
-#: ../app/helpers/application_helper/button/host_miq_request_new.rb:5
-msgid "No PXE Servers are available for Host provisioning"
-msgstr ""
-
 #: ../app/controllers/pxe_controller/pxe_servers.rb:111
 msgid "No PXE Servers were selected to %{button}"
 msgstr ""
@@ -26544,10 +26540,6 @@ msgstr ""
 
 #: ../app/helpers/application_helper/button/rbac_group_edit.rb:5
 msgid "This Group is Read Only and can not be edited"
-msgstr ""
-
-#: ../app/helpers/application_helper/button/host_miq_request_new.rb:6
-msgid "This Host can not be provisioned because the MAC address is not known"
 msgstr ""
 
 #: ../app/helpers/view_helper.rb:50

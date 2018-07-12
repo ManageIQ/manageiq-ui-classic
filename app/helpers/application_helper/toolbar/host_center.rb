@@ -100,22 +100,6 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
       ]
     ),
   ])
-  button_group('host_lifecycle', [
-    select(
-      :host_lifecycle_choice,
-      'fa fa-recycle fa-lg',
-      t = N_('Lifecycle'),
-      t,
-      :items => [
-        button(
-          :host_miq_request_new,
-          'pficon pficon-add-circle-o fa-lg',
-          t = N_('Provision this item'),
-          t,
-          :klass => ApplicationHelper::Button::HostMiqRequestNew),
-      ]
-    ),
-  ])
   button_group('host_monitoring', [
     select(
       :host_monitoring_choice,

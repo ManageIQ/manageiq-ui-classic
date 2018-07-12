@@ -21,28 +21,21 @@
             - else
               = h(options[:host_headers][h])
     %tbody
-      - unless options[:wf].kind_of?(MiqHostProvisionWorkflow)
-        - cls = @edit[:new][:placement_host_name] && @edit[:new][:placement_host_name][0].nil? ? "selected" : ""
-        %tr{:class => cls, :onclick => "miqAjax('/miq_request/prov_field_changed/?#{field_id}=__HOST__NONE__&id=#{id}');"}
-          %td
-            = "<#{_('None')}>"
-          %td
-          %td
-          %td
-          %td
-          %td
+      - cls = @edit[:new][:placement_host_name] && @edit[:new][:placement_host_name][0].nil? ? "selected" : ""
+      %tr{:class => cls, :onclick => "miqAjax('/miq_request/prov_field_changed/?#{field_id}=__HOST__NONE__&id=#{id}');"}
+        %td
+          = "<#{_('None')}>"
+        %td
+        %td
+        %td
+        %td
+        %td
       - @hosts.each do |row|
         - @id = row.id
-        - if options[:wf].kind_of?(MiqHostProvisionWorkflow)
-          %tr
-            - options[:host_columns].each do |col|
-              %td
-                = h(row.send(col))
-        - else
-          - cls = @edit[:new][:placement_host_name] && @edit[:new][:placement_host_name][0] == @id ? "selected" : ""
-          %tr{:class => cls, :onclick => "miqAjax('/miq_request/prov_field_changed/?#{field_id}=#{@id}&id=#{id}');"}
-            - options[:host_columns].each do |col|
-              %td
-                = h(row.send(col))
+        - cls = @edit[:new][:placement_host_name] && @edit[:new][:placement_host_name][0] == @id ? "selected" : ""
+        %tr{:class => cls, :onclick => "miqAjax('/miq_request/prov_field_changed/?#{field_id}=#{@id}&id=#{id}');"}
+          - options[:host_columns].each do |col|
+            %td
+              = h(row.send(col))
 :javascript
   miqScrollToSelected('prov_host_div')

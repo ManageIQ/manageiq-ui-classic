@@ -238,7 +238,7 @@ module ApplicationController::MiqRequestMethods
   # get the sort column that was clicked on, else use the current one
   def sort_host_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    @edit[:wf].kind_of?(MiqHostProvisionWorkflow) ? sort_grid('host', @edit[:wf].get_field(:src_host_ids, :service)[:values]) : sort_grid('host', @edit[:wf].get_field(:placement_host_name, :environment)[:values])
+    sort_grid('host', @edit[:wf].get_field(:placement_host_name, :environment)[:values])
   end
 
   # get the sort column that was clicked on, else use the current one
@@ -430,23 +430,13 @@ module ApplicationController::MiqRequestMethods
     # need to set options from @edit/@option based upon calling screen: show/edit
     options = @edit || @options
 
-    headers = if options[:wf].kind_of?(MiqHostProvisionWorkflow)
-                # non-editable grid for host prov to display hosts being provisioned
-                {
-                  "name"        => _("Name"),
-                  "mac_address" => _("MAC Address"),
-                }
-              else
-                # editable grid for vm/migrate prov screens
-                {
-                  "name"        => _("Name"),
-                  "v_total_vms" => _("Total VMs"),
-                  "vmm_product" => _("Platform"),
-                  "vmm_version" => _("Version"),
-                  "state"       => _("State"),
-                  "maintenance" => _("Maintenance")
-                }
-              end
+    # editable grid for vm/migrate prov screens
+    headers = { "name"        => _("Name"),
+                "v_total_vms" => _("Total VMs"),
+                "vmm_product" => _("Platform"),
+                "vmm_version" => _("Version"),
+                "state"       => _("State"),
+                "maintenance" => _("Maintenance") }
 
     integer_fields = %w(v_total_vms)
 
@@ -519,7 +509,6 @@ module ApplicationController::MiqRequestMethods
     case workflow
     when MiqProvisionVirtWorkflow                    then "shared/views/prov_dialog"
     when ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow then "prov_configured_system_foreman_dialog"
-    when MiqHostProvisionWorkflow                    then "prov_host_dialog"
     when VmMigrateWorkflow                           then "prov_vm_migrate_dialog"
     when PhysicalServerProvisionWorkflow             then "prov_physical_server_dialog"
     end
@@ -769,7 +758,7 @@ module ApplicationController::MiqRequestMethods
   def prov_set_show_vars
     @showtype = "main"
     @options = @miq_request.get_options                         # Get the provision options from the request record
-    @options[:org_controller] = @miq_request.resource_type == "MiqHostProvisionRequest" ? "host" : "vm"
+    @options[:org_controller] = "vm"
     if @options[:schedule_time]
       @options[:schedule_time] = format_timezone(@options[:schedule_time], Time.zone, "raw")
       @options[:start_date] = "#{@options[:schedule_time].month}/#{@options[:schedule_time].day}/#{@options[:schedule_time].year}"  # Set the start date
@@ -794,7 +783,7 @@ module ApplicationController::MiqRequestMethods
           end
         end
         @options[tag_symbol_for_workflow] ||= []  # Initialize if came back nil from record
-        unless ["MiqHostProvisionRequest", "VmMigrateRequest"].include?(@miq_request.resource_type)
+        unless ["VmMigrateRequest"].include?(@miq_request.resource_type)
           svm = VmOrTemplate.where(:id => @options[:src_vm_id][0]).first if @options[:src_vm_id] && @options[:src_vm_id][0]
           @sb[:vm_os] = svm.platform if svm
         end
@@ -946,8 +935,6 @@ module ApplicationController::MiqRequestMethods
             MiqProvisionWorkflow.class_for_platform(@edit[:st_prov_type])
           elsif @edit[:new][:st_prov_type]
             MiqProvisionWorkflow.class_for_platform(@edit[:new][:st_prov_type])
-          else # handle copy button for host provisioning
-            MiqHostProvisionWorkflow
           end
         pre_prov_values = copy_hash(@edit[:wf].values) if @edit[:wf]
 
@@ -962,13 +949,6 @@ module ApplicationController::MiqRequestMethods
       @edit[:prov_type] = "PhysicalServer"
       @edit[:new][:src_configured_system_ids] = params[:prov_id].kind_of?(Array) ? params[:prov_id] : [params[:prov_id]]
       wf_type = PhysicalServerProvisionWorkflow
-    else
-      @edit[:prov_type] = "Host"
-      if @edit[:new].empty?
-        # multiple / single hosts selected, src_host_ids should always be an array
-        @edit[:new][:src_host_ids] = params[:prov_id].kind_of?(Array) ? params[:prov_id] : [params[:prov_id]]
-      end
-      wf_type = MiqHostProvisionWorkflow
     end
 
     [wf_type.new(@edit[:new], current_user, options), pre_prov_values]  # Return the new workflow and any pre_prov_values
