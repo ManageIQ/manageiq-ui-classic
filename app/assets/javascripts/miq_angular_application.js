@@ -29,6 +29,14 @@ ManageIQ.constants = {
 };
 
 function miqHttpInject(angular_app) {
+  angular_app.config(['$locationProvider', function($locationProvider) {
+    /**
+     * hashPrefix must be empty othervise it will conflict with HashRouter and create infinite loop
+     * React HashRouter can be configured to have hashbang prefix,
+     * but both $locationProvider and ReactRouter must have the same prefix!
+     */
+    $locationProvider.hashPrefix('');
+  }]);
   angular_app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.common['X-Angular-Request'] = true;
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = function() {
