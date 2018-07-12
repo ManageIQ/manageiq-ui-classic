@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::Basic < ApplicationHelper::Toolbar::Base
     # "ManageIQ::Providers::Amazon::ToolbarOverrides::EmsCloudCenter" is a match for
     #   "ManageIQ::Providers::Amazon::CloudManager
     extension_classes.find_all do |ext|
-      ext.name.split('::')[0..-3] == record.class.name.split('::')[0..-2]
+      ext.name.split('::')[0..2] == record.class.name.split('::')[0..2]
     end
   end
 
