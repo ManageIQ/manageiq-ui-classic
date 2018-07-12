@@ -86,9 +86,18 @@ module.exports = {
       minSize: 0,
       cacheGroups: {
         vendor: {
-          test: /node_modules/,
-          name: 'vendor',
           chunks: 'all',
+          name: 'vendor',
+          priority: -10,
+          reuseExistingChunk: true,
+          test: /node_modules/,
+        },
+        default: {
+          chunks: 'all',
+          minChunks: 2,
+          name: 'vendor',
+          priority: -20,
+          reuseExistingChunk: true,
         },
       },
     },
