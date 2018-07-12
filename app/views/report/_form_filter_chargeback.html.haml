@@ -207,7 +207,7 @@
       = _("going back")
       - case @edit[:new][:cb_interval]
       - when "daily"
-        - opts = (1..6).map { |i| [n_('%{number} Day', '%{number} Days', i) % {:number => i}, i] } + (1..4).map { |i| [n_('%{number} Week', '%{number} Weeks', i) % {:number => i}, i * 7] }
+        - opts = (1..6).map { |i| [n_('%{number} Day', '%{number} Days', i) % {:number => i}, i] } + (1..5).map { |i| [n_('%{number} Week', '%{number} Weeks', i) % {:number => i}, i * 7] }
       - when "weekly"
         - opts = [1, 2, 3, 4, 8, 12].map! { |i| [n_('%{number} Week', '%{number} Weeks', i) % {:number => i}, i] }
       - when "monthly"
