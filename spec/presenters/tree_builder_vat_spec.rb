@@ -21,11 +21,10 @@ describe TreeBuilderVat do
 
     it 'returns EmsCluster as root' do
       root = @vat_tree.send(:root_options)
-      image = "svg/vendor-#{@vat_tree.instance_variable_get(:@root).image_name}.svg"
       expect(root).to eq(
         :text    => @vat_tree.instance_variable_get(:@root).name,
         :tooltip => @vat_tree.instance_variable_get(:@root).name,
-        :image   => image
+        :image   => nil
       )
     end
 
