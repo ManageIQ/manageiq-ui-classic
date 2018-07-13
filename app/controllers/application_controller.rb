@@ -1806,7 +1806,7 @@ class ApplicationController < ActionController::Base
   alias_method :miq_template_miq_request_new, :prov_redirect
 
   def template_types_for_controller
-    if %w(ems_infra).include?(request.parameters[:controller])
+    if %w(ems_infra host).include?(request.parameters[:controller])
       'infra'
     else
       'cloud'

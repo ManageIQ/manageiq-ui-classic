@@ -389,7 +389,7 @@ class HostController < ApplicationController
                                   :escape         => false
             end
           else
-            javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id, :org_controller => @org_controller
+            render_or_redirect_partial(pfx)
           end
         else
           javascript_redirect :action => @refresh_partial, :id => @redirect_id
