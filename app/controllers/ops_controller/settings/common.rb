@@ -97,9 +97,9 @@ module OpsController::Settings::Common
           page << set_element_visible("httpd_div", verb)
           page << set_element_visible("httpd_role_div", verb)
         end
-        if @saml_enabled_changed
-          verb = @edit[:new][:authentication][:saml_enabled]
-          page << set_element_visible("saml_local_login_div", verb)
+        if @provider_type_changed
+          verb = @edit[:new][:authentication][:provider_type] == 'none'
+          page << set_element_visible("none_local_login_div", !verb)
         end
         if @authusertype_changed
           verb = @edit[:new][:authentication][:user_type] == 'samaccountname'
@@ -759,8 +759,11 @@ module OpsController::Settings::Common
       @sb[:newrole] = (params[:ldap_role].to_s == "1") if params[:ldap_role]
       @sb[:new_amazon_role] = (params[:amazon_role].to_s == "1") if params[:amazon_role]
       @sb[:new_httpd_role] = (params[:httpd_role].to_s == "1") if params[:httpd_role]
-      if params[:saml_enabled] && params[:saml_enabled] != auth[:saml_enabled]
-        @saml_enabled_changed = true
+      if params[:provider_type] && params[:provider_type] != auth[:provider_type]
+        auth[:provider_type] = params[:provider_type]
+        auth[:saml_enabled] = params[:provider_type] == "saml"
+        auth[:oidc_enabled] = params[:provider_type] == "oidc"
+        @provider_type_changed = true
       end
       if params[:authentication_user_type] && params[:authentication_user_type] != auth[:user_type]
         @authusertype_changed = true
@@ -820,9 +823,10 @@ module OpsController::Settings::Common
         @authmode_changed = true
       end
       auth[:sso_enabled] = (params[:sso_enabled].to_s == "1") if params[:sso_enabled]
-      auth[:saml_enabled] = (params[:saml_enabled].to_s == "1") if params[:saml_enabled]
+      auth[:provider_type] = params[:provider_type] if params[:provider_type]
       auth[:local_login_disabled] = (params[:local_login_disabled].to_s == "1") if params[:local_login_disabled]
       auth[:default_group_for_users] = params[:authentication_default_group_for_users] if params[:authentication_default_group_for_users]
+
     when "settings_workers"                                       # Workers Settings tab
       wb  = new.config[:workers][:worker_base]
       qwb = wb[:queue_worker_base]
@@ -975,7 +979,7 @@ module OpsController::Settings::Common
     @edit[:current].config[:authentication][:user_proxies] ||= [{}]
     @edit[:current].config[:authentication][:follow_referrals] ||= false
     @edit[:current].config[:authentication][:sso_enabled] ||= false
-    @edit[:current].config[:authentication][:saml_enabled] ||= false
+    @edit[:current].config[:authentication][:provider_type] ||= "none"
     @edit[:current].config[:authentication][:local_login_disabled] ||= false
     @sb[:newrole] = @edit[:current].config[:authentication][:ldap_role]
     @sb[:new_amazon_role] = @edit[:current].config[:authentication][:amazon_role]

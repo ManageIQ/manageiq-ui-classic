@@ -92,44 +92,50 @@ describe DashboardController do
     end
   end
 
-  context "SAML support" do
+  context "SAML and OIDC support" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
     end
 
-    it "SAML Login should redirect to the protected page" do
-      page = double("page")
-      allow(page).to receive(:<<).with(any_args)
-      expect(page).to receive(:redirect_to).with(controller.saml_protected_page)
-      expect(controller).to receive(:render).with(:update).and_yield(page)
-      controller.send(:initiate_saml_login)
+    %i(saml oidc).each do |protocol|
+      it "#{protocol.upcase} login should redirect to the protected page" do
+        page = double("page")
+        allow(page).to receive(:<<).with(any_args)
+        expect(page).to receive(:redirect_to).with(controller.send("#{protocol}_protected_page"))
+        expect(controller).to receive(:render).with(:update).and_yield(page)
+        controller.send("initiate_#{protocol}_login")
+      end
     end
 
-    it "SAML protected page should redirect to logout without a valid user" do
-      get :saml_login
-      expect(response).to redirect_to(:action => "logout")
+    %i(saml oidc).each do |protocol|
+      it "#{protocol.upcase} protected page should redirect to #{protocol}_logout without a valid user" do
+        get "#{protocol}_login".to_sym
+        expect(response).to redirect_to(:action => "logout")
+      end
     end
 
-    it "SAML protected page should render the saml_login page with the proper validation_url and api token" do
-      user           = FactoryGirl.create(:user, :userid => "johndoe", :role => "test")
-      auth_token     = "aabbccddeeff"
-      validation_url = "/user_validation_url"
+    %i(saml oidc).each do |protocol|
+      it "#{protocol.upcase} protected page should render the #{protocol}_login page with the proper validation_url and api token" do
+        user           = FactoryGirl.create(:user, :userid => "johndoe", :role => "test")
+        auth_token     = "aabbccddeeff"
+        validation_url = "/user_validation_url"
 
-      request.env["HTTP_X_REMOTE_USER"] = user.userid
-      skip_data_checks(validation_url)
+        request.env["HTTP_X_REMOTE_USER"] = user.userid
+        skip_data_checks(validation_url)
 
-      allow(User).to receive(:authenticate).and_return(user)
-      allow_any_instance_of(Api::UserTokenService).to receive(:generate_token)
-        .with(user.userid, "ui")
-        .and_return(auth_token)
+        allow(User).to receive(:authenticate).and_return(user)
+        allow_any_instance_of(Api::UserTokenService).to receive(:generate_token)
+          .with(user.userid, "ui")
+          .and_return(auth_token)
 
-      expect(controller).to receive(:render)
-        .with(:template => "dashboard/saml_login",
-              :layout   => false,
-              :locals   => {:api_auth_token => auth_token, :validation_url => validation_url})
-        .exactly(1).times
+        expect(controller).to receive(:render)
+          .with(:template => "dashboard/#{protocol}_login",
+                :layout   => false,
+                :locals   => {:api_auth_token => auth_token, :validation_url => validation_url})
+          .exactly(1).times
 
-      controller.send(:saml_login)
+        controller.send("#{protocol}_login")
+      end
     end
   end
 

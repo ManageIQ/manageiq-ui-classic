@@ -239,14 +239,40 @@
           = check_box_tag("sso_enabled", "1",
                           @edit[:new][:authentication][:sso_enabled],
                           "data-miq_observe_checkbox" => {:url => url}.to_json)
+    %h3
+    .form-horizontal
       .form-group
-        %label.col-md-2.control-label
-          = _("Enable SAML")
-        .col-md-4
-          = check_box_tag("saml_enabled", "1",
-                          @edit[:new][:authentication][:saml_enabled],
-                          "data-miq_observe_checkbox" => {:url => url}.to_json)
-      = hidden_div_if(@edit[:new][:authentication][:saml_enabled] == false, :id => "saml_local_login_div") do
+        %label.control-label.col-md-2
+          = _("Provider Type:")
+        .col-md-8
+          %label
+            %input{:type              => 'radio',
+                   :name              => 'provider_type',
+                   :id                => 'provider_type',
+                   :value             => 'none',
+                   "data-miq_observe" => {:url => url}.to_json,
+                   :checked           => @edit[:new][:authentication][:provider_type] == "none"}
+            = _("None")
+          %br
+          %label
+            %input{:type              => 'radio',
+                   :name              => 'provider_type',
+                   :id                => 'provider_type',
+                   :value             => 'saml',
+                   "data-miq_observe" => {:url => url}.to_json,
+                   :checked           => @edit[:new][:authentication][:provider_type] == "saml"}
+            = _("Enable SAML")
+          %br
+          %label
+            %input{:type              => 'radio',
+                   :name              => 'provider_type',
+                   :id                => 'provider_type',
+                   :value             => 'oidc',
+                   "data-miq_observe" => {:url => url}.to_json,
+                   :checked           => @edit[:new][:authentication][:provider_type] == "oidc"}
+            = _("Enable OpenID-Connect")
+
+      = hidden_div_if(@edit[:new][:authentication][:provider_type] == "none", :id => "none_local_login_div") do
         .form-group
           %label.col-md-2.control-label
             = _("Disable Local Login")

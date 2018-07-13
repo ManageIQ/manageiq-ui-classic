@@ -1091,6 +1091,7 @@ Rails.application.routes.draw do
         login
         logout
         saml_login
+        oidc_login
         maintab
         render_csv
         render_pdf
@@ -1111,6 +1112,7 @@ Rails.application.routes.draw do
         external_authenticate
         kerberos_authenticate
         initiate_saml_login
+        initiate_oidc_login
         authenticate
         change_group
         csp_report
@@ -3196,6 +3198,7 @@ Rails.application.routes.draw do
   get '/pictures/:basename' => 'picture#show', :basename => /[\da-zA-Z]+\.[\da-zA-Z]+/
 
   get '/saml_login(/*path)' => 'dashboard#saml_login'
+  get '/oidc_login(/*path)' => 'dashboard#oidc_login'
 
   # ping response for load balancing
   get '/ping' => 'ping#index'

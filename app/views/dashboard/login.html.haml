@@ -21,13 +21,13 @@
               %strong= _("Invalid Single Sign-On credentials")
         = render :partial => "layouts/flash_msg"
 
-        - if ext_auth?(:saml_enabled)
+        - if ext_auth?(:saml_enabled) || ext_auth?(:oidc_enabled)
           .form-group
             %label.col-md-3.control-label
             .col-md-9
-              = link_to(_("Log In to Corporate System"), {:action => "initiate_saml_login",
-                                                         :button => "saml_login"},
-                        :id                   => "saml_login",
+              = link_to(_("Log In to Corporate System"), {:action => (ext_auth?(:saml_enabled) ? "initiate_saml_login" : "initiate_oidc_login"),
+                                                         :button => (ext_auth?(:saml_enabled) ? "saml_login" : "oidc_login")},
+                        :id                   => (ext_auth?(:saml_enabled) ? "saml_login" : "oidc_login"),
                         :class                => "btn btn-primary form-control",
                         :alt                  => _("Log In"),
                         :title                => _("Log In to Corporate System"),
@@ -139,6 +139,11 @@
       :javascript
         $(function () {
           $('#saml_login').click();
+        });
+    - elsif ext_auth?(:oidc_enabled)
+      :javascript
+        $(function () {
+          $('#oidc_login').click();
         });
     - else
       :javascript
