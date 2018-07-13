@@ -184,6 +184,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       case 'Error':
       case 'Unreachable':
       case 'Inactive':
+      case 'Critical':
         return 'error';
       case 'Warning':
       case 'Waiting':
