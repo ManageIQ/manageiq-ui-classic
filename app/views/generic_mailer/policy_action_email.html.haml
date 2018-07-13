@@ -12,3 +12,8 @@
     %td
       (#{@miq_action_hash[:entity_type]})
       = @miq_action_hash[:entity_name]
+  - if @miq_action_hash[:event_details]
+    %tr
+      %td= _('Details')
+      %td
+        = @miq_action_hash[:event_details]
