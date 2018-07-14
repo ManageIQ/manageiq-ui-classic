@@ -1213,8 +1213,7 @@ class CatalogController < ApplicationController
     @edit[:new][:description]  = @record.description
     @edit[:new][:fields] = @record.service_templates.collect { |st| [st.name, st.id] }.sort
 
-    @edit[:new][:available_fields] = ServiceTemplate.all
-                                     .select  { |st| st.service_template_catalog.nil? && st.display }
+    @edit[:new][:available_fields] = Rbac.filtered(ServiceTemplate, :named_scope => [:displayed, :public_service_templates, :without_service_template_catalog_id])
                                      .collect { |st| [st.name, st.id] }
                                      .sort
 
@@ -1455,7 +1454,7 @@ class CatalogController < ApplicationController
 
   def get_available_resources(kls)
     @edit[:new][:available_resources] = {}
-    Rbac.filtered(kls.constantize.where("type is null or type not in (?)", ['ServiceTemplateAnsiblePlaybook', 'ServiceTemplateTransformationPlan'])).select(:id, :name).each do |r|
+    Rbac.filtered(kls.constantize.public_service_templates.where("type is null or type != 'ServiceTemplateAnsiblePlaybook'")).select(:id, :name).each do |r|
       @edit[:new][:available_resources][r.id] = r.name if  r.id.to_s != @edit[:rec_id].to_s &&
                                                            !@edit[:new][:selected_resources].include?(r.id)  # don't add the servicetemplate record that's being edited, or add all vm templates
     end
@@ -1777,7 +1776,7 @@ class CatalogController < ApplicationController
 
   def get_node_info_handle_leaf_node_stcat(id)
     @record = ServiceTemplateCatalog.find(id)
-    @record_service_templates = Rbac.filtered(@record.service_templates.where("service_type != 'internal'"))
+    @record_service_templates = Rbac.filtered(@record.service_templates, :named_scope => :public_service_templates)
     typ = TreeBuilder.get_model_for_prefix(@nodetype)
     @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => typ)}
   end
