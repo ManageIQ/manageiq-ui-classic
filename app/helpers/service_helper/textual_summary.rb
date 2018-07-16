@@ -50,6 +50,26 @@ module ServiceHelper::TextualSummary
     fetch_job_plays
   end
 
+  def textual_group_tower_job_results
+    return nil unless fetch_job
+    TextualGroup.new(_("Results"), %i(status start_time finish_time elapsed_time owner))
+  end
+
+  def textual_group_tower_job_details
+    return nil unless fetch_job
+    TextualGroup.new(_("Details"), %i(verbosity))
+  end
+
+  def textual_group_tower_job_credentials
+    return nil unless fetch_job
+    TextualGroup.new(_("Credentials"), %i(machine_credential vault_credential network_credential cloud_credential))
+  end
+
+  def textual_group_tower_job_plays
+    return nil unless fetch_job
+    fetch_job_plays
+  end
+
   def textual_group_vm_totals
     TextualGroup.new(
       _("Totals for Service VMs"),
@@ -272,9 +292,8 @@ module ServiceHelper::TextualSummary
     fetch_job("Retirement")
   end
 
-  def fetch_job(type)
+  def fetch_job(type = nil)
     @job = @record.try(:job, type)
-    @job
   end
 
   def fetch_job_plays
