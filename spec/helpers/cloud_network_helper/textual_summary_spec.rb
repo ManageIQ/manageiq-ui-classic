@@ -1,0 +1,12 @@
+describe CloudNetworkHelper::TextualSummary do
+  include_examples "textual_group", "Relationships", %i(
+    parent_ems_cloud
+    ems_network
+    cloud_tenant
+    instances
+    cloud_subnets
+    network_routers
+    floating_ips
+  )
+  include_examples "textual_group", "Properties", %i(name type status ems_ref)
+end

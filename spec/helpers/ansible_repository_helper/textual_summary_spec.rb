@@ -1,4 +1,4 @@
-describe AnsibleRepositoryHelper do
+describe AnsibleRepositoryHelper::TextualSummary do
   include TextualMixins::TextualName
   include TextualMixins::TextualDescription
 
@@ -20,4 +20,14 @@ describe AnsibleRepositoryHelper do
                    textual_scm_update_on_launch)
 
   include_examples "method_exists", all_methods
+
+  include_examples "textual_group", "Properties", %i(name description created updated status)
+  include_examples "textual_group", "Relationships", %i(provider playbooks credential)
+  include_examples "textual_group", "Repository Options", %i(
+    scm_type scm_url
+    scm_branch scm_clean
+    scm_delete_on_update
+    scm_update_on_launch
+  ), "options"
+  include_examples "textual_group_smart_management"
 end

@@ -21,4 +21,24 @@ describe EmsContainerHelper::TextualSummary do
       expect(textual_miq_custom_attributes).to eq(nil)
     end
   end
+
+  describe 'Creates correctly textual groups' do
+    let(:textual_authentications_status) { [] }
+    include_examples "textual_group", "Properties", %i(name type hostname port cpu_cores memory_resources)
+    include_examples "textual_group", "Relationships", %i(
+      container_projects
+      container_services
+      container_replicators
+      container_groups
+      containers
+      container_nodes
+      container_image_registries
+      container_images
+      volumes
+      container_builds
+      container_templates
+    )
+    include_examples "textual_group", "Status", %i(authentications_status metrics_status refresh_status refresh_date data_collection_state)
+    include_examples "textual_group_smart_management", %i(zone)
+  end
 end

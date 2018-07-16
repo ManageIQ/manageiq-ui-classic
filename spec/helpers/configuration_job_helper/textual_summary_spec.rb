@@ -10,4 +10,7 @@ describe ConfigurationJobHelper::TextualSummary do
     expect(textual_provider[:image]).to eq("svg/vendor-ansible.svg")
     expect(textual_provider[:link]).to eq("/automation_manager/explorer/at-#{manager.id}?accordion=automation_manager_providers")
   end
+
+  include_examples "textual_group", "Relationships", %i(provider service parameters status)
+  include_examples "textual_group", "Properties", %i(name description type status status_reason)
 end
