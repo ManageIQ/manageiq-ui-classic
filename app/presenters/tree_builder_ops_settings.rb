@@ -45,7 +45,7 @@ class TreeBuilderOpsSettings < TreeBuilderOps
       count_only_or_objects(count_only, ScanItemSet.all, "name")
     when "z"
       region = MiqRegion.my_region
-      count_only_or_objects(count_only, region.zones, "name")
+      count_only_or_objects(count_only, region.zones.visible, "name")
     end
   end
 end

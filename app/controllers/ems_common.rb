@@ -633,8 +633,8 @@ module EmsCommon
                  :userid       => session[:userid]}
         AuditEvent.success(audit)
 
-        ems.disable! if action == "pause"
-        ems.enable! if action == "resume"
+        ems.pause! if action == "pause"
+        ems.resume! if action == "resume"
       end
     else
       model.where(:id => emss).order("lower(name)").each do |ems|
