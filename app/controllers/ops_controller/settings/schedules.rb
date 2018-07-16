@@ -692,6 +692,8 @@ module OpsController::Settings::Schedules
     end
     uri_settings[:uri] = "#{params[:uri_prefix]}://#{params[:uri]}"
     uri_settings[:uri_prefix] = params[:uri_prefix]
+    uri_settings[:log_protocol] = params[:log_protocol]
+    uri_settings[:type] = type
     uri_settings
   end
 end

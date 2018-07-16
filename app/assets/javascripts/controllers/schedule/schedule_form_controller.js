@@ -96,7 +96,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       }
 
       if (data.filter_type === null &&
-        (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba')) {
+        (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba' && data.protocol !== 'AWS S3')) {
         $scope.scheduleModel.filter_typ = 'all';
       }
 
@@ -204,6 +204,10 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'Samba';
   };
 
+  $scope.s3Backup = function() {
+    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'AWS S3';
+  };
+
   $scope.actionTypeChanged = function() {
     if ($scope.dbBackup()) {
       $scope.scheduleModel.log_protocol = 'Network File System';
@@ -290,6 +294,20 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
       $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
     }
+
+    if ($scope.scheduleModel.log_protocol === "AWS S3") {
+      $scope.scheduleModel.uri_prefix = "s3";
+      $scope.$broadcast('resetClicked');
+      $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
+      $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
+    }
+
+    if ($scope.scheduleModel.log_protocol === "Openstack Swift") {
+      $scope.scheduleModel.uri_prefix = "oss";
+      $scope.$broadcast('resetClicked');
+      $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
+      $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
+    }
   };
 
   $scope.filterValueChanged = function() {
@@ -361,6 +379,10 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
   $scope.sambaRequired = function(value) {
     return $scope.sambaBackup() && !value;
+  };
+
+  $scope.s3Required = function(value) {
+    return $scope.s3Backup() && !value;
   };
 
   $scope.isBasicInfoValid = function() {

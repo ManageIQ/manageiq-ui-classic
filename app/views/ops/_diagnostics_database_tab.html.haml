@@ -88,12 +88,12 @@
                               :ng_model_uri_prefix => "vm.diagnosticsDatabaseModel.uri_prefix",
                               :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
 
-  %auth-credentials{'ng-if'                => 'vm.sambaBackup()',
+  %auth-credentials{'ng-if'                => 'vm.credsProtocol()',
                     'form-model'           => 'vm.diagnosticsDatabaseModel',
                     'model-copy'           => 'vm.modelCopy',
                     'prefix'               => '{{vm.prefix}}',
-                    'user-required'        => 'vm.sambaRequired(vm.diagnosticsDatabaseModel.log_userid)',
-                    'password-required'    => 'vm.sambaRequired(vm.diagnosticsDatabaseModel.log_password)',
+                    'user-required'        => 'vm.credsRequired(vm.diagnosticsDatabaseModel.log_userid)',
+                    'password-required'    => 'vm.credsRequired(vm.diagnosticsDatabaseModel.log_password)',
                     'enable-valid-button'  => 'vm.canValidateBasicInfo()',
                     'validate'             => 'vm.validateClicked',
                     'new-record'           => true}

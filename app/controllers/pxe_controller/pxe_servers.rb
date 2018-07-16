@@ -274,7 +274,8 @@ module PxeController::PxeServers
     if @edit[:new][:uri_prefix] == "nfs" && @edit[:new][:uri].blank?
       add_flash(_("URI is required"), :error)
     end
-    if @edit[:new][:uri_prefix] == "smb" || @edit[:new][:uri_prefix] == "ftp"
+    if @edit[:new][:uri_prefix] == "smb" || @edit[:new][:uri_prefix] == "ftp" ||
+       @edit[:new][:uri_prefix] == "s3"
       if @edit[:new][:uri].blank?
         add_flash(_("URI is required"), :error)
       end
