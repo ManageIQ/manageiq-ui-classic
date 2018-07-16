@@ -93,10 +93,10 @@ describe EmsClusterController do
 
     describe '#get_session_data' do
       it "Sets variables correctly" do
-        allow(controller).to receive(:session).and_return(:ems_cluster_lastaction   => lastaction,
-                                                          :ems_cluster_display      => display,
-                                                          :ems_cluster_catinfo      => catinfo,
-                                                          :ems_cluster_filters      => filters)
+        allow(controller).to receive(:session).and_return(:ems_cluster_lastaction => lastaction,
+                                                          :ems_cluster_display    => display,
+                                                          :ems_cluster_catinfo    => catinfo,
+                                                          :ems_cluster_filters    => filters)
         controller.send(:get_session_data)
 
         expect(controller.instance_variable_get(:@title)).to eq("Clusters")
