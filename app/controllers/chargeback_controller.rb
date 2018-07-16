@@ -5,6 +5,7 @@ class ChargebackController < ApplicationController
   after_action :set_session_data
 
   include Mixins::SavedReportPaging
+  include Mixins::GenericSessionMixin
 
   CB_X_BUTTON_ALLOWED_ACTIONS = {
     'chargeback_rates_copy'   => :cb_rate_edit,
@@ -297,6 +298,10 @@ class ChargebackController < ApplicationController
         replace_right_cell
       end
     end
+  end
+
+  def title
+    @title = _("Chargeback")
   end
 
   private ############################
@@ -918,17 +923,13 @@ class ChargebackController < ApplicationController
   end
 
   def get_session_data
-    @title        = _("Chargeback")
-    @layout ||= "chargeback"
-    @lastaction   = session[:chargeback_lastaction]
-    @display      = session[:chargeback_display]
+    super
     @current_page = session[:chargeback_current_page]
   end
 
   def set_session_data
-    session[:chargeback_lastaction]   = @lastaction
+    super
     session[:chargeback_current_page] = @current_page
-    session[:chageback_display]       = @display unless @display.nil?
   end
 
   def display_detail_errors(detail, errors)
