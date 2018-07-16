@@ -235,6 +235,9 @@ module EmsCommon
       when "ems_cluster_protect"              then assign_policies(EmsCluster)
       when "ems_cluster_scan"                 then scanclusters
       when "ems_cluster_tag"                  then tag(EmsCluster)
+      # Flavor
+      when 'flavor_create'                    then javascript_redirect(:action => 'new')
+      when 'flavor_delete'                    then delete_flavors
       # Hosts
       when "host_analyze_check_compliance"    then analyze_check_compliance_hosts
       when "host_check_compliance"            then check_compliance_hosts

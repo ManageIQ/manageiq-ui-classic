@@ -6,8 +6,8 @@ class FlavorController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
-  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
+  include EmsCommon
 
   def self.display_methods
     %w(instances)
@@ -18,14 +18,6 @@ class FlavorController < ApplicationController
     drop_breadcrumb(:name => _("Add a new Flavor"), :url => "/flavor/new")
     @in_a_form = true
     @id = 'new'
-  end
-
-  def button
-    case params[:pressed]
-    when 'flavor_create' then javascript_redirect(:action => 'new')
-    when 'flavor_delete' then delete_flavors
-    when 'flavor_tag'    then tag(Flavor)
-    end
   end
 
   def ems_list
