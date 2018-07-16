@@ -1213,7 +1213,7 @@ class CatalogController < ApplicationController
     @edit[:new][:description]  = @record.description
     @edit[:new][:fields] = @record.service_templates.collect { |st| [st.name, st.id] }.sort
 
-    @edit[:new][:available_fields] = Rbac.filtered(ServiceTemplate, :named_scope => [:displayed, :public_service_templates, :without_service_template_catalog_id])
+    @edit[:new][:available_fields] = Rbac.filtered(ServiceTemplate, :named_scope => %i(displayed public_service_templates without_service_template_catalog_id))
                                      .collect { |st| [st.name, st.id] }
                                      .sort
 
@@ -1732,14 +1732,21 @@ class CatalogController < ApplicationController
     typ = root_node_model(x_active_tree)
     @no_checkboxes = true if x_active_tree == :svcs_tree
     if x_active_tree == :svccat_tree
-      service_template_list([:displayed, :with_existent_service_template_catalog_id, :public_service_templates], :no_checkboxes => true)
+      service_template_list(%i(displayed with_existent_service_template_catalog_id public_service_templates), :no_checkboxes => true)
     else
-      options = {:model => typ.constantize}
-      options[:named_scope] = :public_service_templates if x_active_tree == :sandt_tree
-      options[:named_scope] = :orderable if x_active_tree == :ot_tree
-      process_show_list(options)
+      process_show_list(get_show_list_options(typ))
     end
     @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
+  end
+
+  def get_show_list_options(typ)
+    options = {:model => typ.constantize}
+    if x_active_tree == :sandt_tree
+      options[:named_scope] = :public_service_templates
+    elsif x_active_tree == :ot_tree
+      options[:named_scope] = :orderable
+    end
+    options
   end
 
   def get_node_info_handle_ot_folder_nodes
