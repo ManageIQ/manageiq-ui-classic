@@ -37,16 +37,7 @@ class CloudVolumeSnapshotController < ApplicationController
     assert_privileges("cloud_volume_snapshot_delete")
 
     snapshots = find_records_with_rbac(CloudVolumeSnapshot, checked_or_params)
-
-    snapshots_to_delete = []
-    snapshots.each do |snapshot|
-      if !snapshot.supports?(:delete)
-        add_flash(_(snapshot.unsupported_reason(:delete)), :error)
-      else
-        snapshots_to_delete.push(snapshot)
-      end
-    end
-    process_cloud_volume_snapshots(snapshots_to_delete, "destroy") unless snapshots_to_delete.empty?
+    process_cloud_volume_snapshots(snapshots, "destroy")
 
     # refresh the list if applicable
     if @lastaction == "show_list"
