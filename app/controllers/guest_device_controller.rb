@@ -2,6 +2,7 @@ class GuestDeviceController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::MoreShowActions
+  include Mixins::GenericSessionMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -21,18 +22,12 @@ class GuestDeviceController < ApplicationController
   end
 
   def self.table_name
-    @table_name ||= "guest_devices"
-  end
-
-  def get_session_data
-    @title  = _("Guest Devices")
-    @layout = "guest_device"
-    @lastaction = session[:guest_device_lastaction]
+    @table_name ||= "guest_device"
   end
 
   def set_session_data
+    super
     session[:layout] = @layout
-    session[:guest_device_lastaction] = @lastaction
   end
 
   def textual_group_list
