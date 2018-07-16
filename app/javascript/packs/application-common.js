@@ -52,8 +52,6 @@ window.http = http;
 // for Automate > Simulate
 require('xml_display/XMLDisplay.js');
 require('xml_display/XMLDisplay.css');
-<<<<<<< HEAD
 
 // miqSpinner, miqSearchSpinner
 window.Spinner = Spinner;
->>>>>>> Cleaning

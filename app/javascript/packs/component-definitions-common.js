@@ -16,7 +16,7 @@ import VmServerRelationshipForm from '../components/vm-server-relationship-form'
 import CatalogForm from '../components/catalog-form/catalog-form';
 import Breadcrumbs from '../components/breadcrumbs';
 import { taggingApp } from '@manageiq/react-ui-components/dist/tagging';
-import TaggingWrapper from '../components/taggingWrapper'
+import TaggingWrapperConnected from '../components/taggingWrapper';
 import '@manageiq/react-ui-components/dist/tagging.css';
 
 /**
@@ -43,3 +43,4 @@ ManageIQ.component.addReact('VmServerRelationshipForm', VmServerRelationshipForm
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
 ManageIQ.component.addReact('TaggingWrapper', TaggingWrapper);
+ManageIQ.component.addReact('TaggingWrapperConnected', TaggingWrapperConnected);
