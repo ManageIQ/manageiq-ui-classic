@@ -680,4 +680,38 @@ describe ChargebackController do
       end
     end
   end
+
+  context "GenericSessionMixin" do
+    let(:lastaction) { 'lastaction' }
+    let(:display) { 'display' }
+    let(:current_page) { 'current_page' }
+
+    describe '#get_session_data' do
+      it "Sets variables correctly" do
+        allow(controller).to receive(:session).and_return(:chargeback_lastaction   => lastaction,
+                                                          :chargeback_display      => display,
+                                                          :chargeback_current_page => current_page)
+        controller.send(:get_session_data)
+
+        expect(controller.instance_variable_get(:@title)).to eq("Chargeback")
+        expect(controller.instance_variable_get(:@layout)).to eq("chargeback")
+        expect(controller.instance_variable_get(:@lastaction)).to eq(lastaction)
+        expect(controller.instance_variable_get(:@display)).to eq(display)
+        expect(controller.instance_variable_get(:@current_page)).to eq(current_page)
+      end
+    end
+
+    describe '#set_session_data' do
+      it "Sets session correctly" do
+        controller.instance_variable_set(:@lastaction, lastaction)
+        controller.instance_variable_set(:@display, display)
+        controller.instance_variable_set(:@current_page, current_page)
+        controller.send(:set_session_data)
+
+        expect(controller.session[:chargeback_lastaction]).to eq(lastaction)
+        expect(controller.session[:chargeback_display]).to eq(display)
+        expect(controller.session[:chargeback_current_page]).to eq(current_page)
+      end
+    end
+  end
 end
