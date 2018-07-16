@@ -289,25 +289,23 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     }
 
     if ($scope.scheduleModel.log_protocol === "Network File System") {
-      $scope.scheduleModel.uri_prefix = "nfs";
-      $scope.$broadcast('resetClicked');
-      $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
-      $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
+      $scope.updateLogProtocol("nfs");
     }
 
     if ($scope.scheduleModel.log_protocol === "AWS S3") {
-      $scope.scheduleModel.uri_prefix = "s3";
-      $scope.$broadcast('resetClicked');
-      $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
-      $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
+      $scope.updateLogProtocol("s3");
     }
 
     if ($scope.scheduleModel.log_protocol === "Openstack Swift") {
-      $scope.scheduleModel.uri_prefix = "oss";
-      $scope.$broadcast('resetClicked');
-      $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
-      $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
+      $scope.updateLogProtocol("oss");
     }
+  };
+
+  $scope.updateLogProtocol = function(prefix) {
+    $scope.scheduleModel.uri_prefix = prefix;
+    $scope.$broadcast('resetClicked');
+    $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
+    $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
   };
 
   $scope.filterValueChanged = function() {

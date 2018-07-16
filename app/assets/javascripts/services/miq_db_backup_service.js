@@ -28,16 +28,16 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
     return (model.log_protocol === 'Samba');
   };
 
-  this.S3Backup = function(model) {
+  this.s3Backup = function(model) {
     return (model.log_protocol === 'AWS S3');
   };
 
-  this.SwiftBackup = function(model) {
+  this.swiftBackup = function(model) {
     return (model.log_protocol === 'Openstack Swift' || model.log_protocol === 'Swift');
   };
 
   this.credsProtocol = function(model) {
-    return (model.log_protocol === 'Samba' || model.log_protocol === 'FTP' || this.S3Backup(model) || this.SwiftBackup(model));
+    return (model.log_protocol === 'Samba' || model.log_protocol === 'FTP' || this.s3Backup(model) || this.swiftBackup(model));
   };
 
   this.dbRequired = function(model, value) {
@@ -64,7 +64,7 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
   };
 
   this.regionRequired = function(model, value) {
-    return this.S3Backup(model) &&
+    return this.s3Backup(model) &&
            (this.isModelValueNil(value));
   };
 
