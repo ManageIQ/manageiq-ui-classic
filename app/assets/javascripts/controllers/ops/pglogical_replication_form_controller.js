@@ -18,21 +18,18 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     $scope.model = 'pglogicalReplicationModel';
     $scope.newRecord = false;
 
-    miqService.sparkleOn();
-    $http.get('/ops/pglogical_subscriptions_form_fields/' + pglogicalReplicationFormId)
-      .then(getPgLogicalFormData)
-      .catch(miqService.handleFailure);
+    pglogicalDataLoad()
   };
 
   var pglogicalManageSubscriptionsButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
     var url = '/ops/pglogical_save_subscriptions/' + pglogicalReplicationFormId + '?button=' + buttonName;
     miqService.miqAjaxButton(url, serializeFields);
-    pglogicalDataReload();
+    // pglogicalDataReload();
   };
 
 
-  var pglogicalDataReload = function() {
+  var pglogicalDataLoad = function() {
     $http.get('/ops/pglogical_subscriptions_form_fields/' + pglogicalReplicationFormId)
       .then(getPgLogicalFormData)
       .catch(miqService.handleFailure);

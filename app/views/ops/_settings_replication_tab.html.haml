@@ -149,7 +149,7 @@
             %td
               {{subscription.status}}
             %td{:class => "action-cell", "ng-show" => "showCancelDelete($index)"}
-              %button.btn.btn-default.btn-sm{:type => "button", "ng-click" => "cancelDelete($index)"}= _('Cancel Delete')
+              %button.btn.btn-default.btn-sm{:type => "button", "ng-click" => "cancelDelete($index)"}= _('Cancel Deletion')
 
             %td{:class => "action-cell","ng-show" => "!showCancelDelete($index) && !pglogicalReplicationModel.updateEnabled || (pglogicalReplicationModel.updateEnabled && $index !== pglogicalReplicationModel.s_index)"}
               %button.btn.btn-default.btn-block.btn-sm{:type => "button", "ng-disabled" => "addInProgress()",  "ng-click" => "enableSubscriptionUpdate($index)"}= _('Update')
