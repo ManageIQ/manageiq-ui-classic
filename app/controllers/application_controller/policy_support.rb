@@ -135,7 +135,7 @@ module ApplicationController::PolicySupport
   def assign_policies(db)
     assert_privileges(params[:pressed])
     session[:pol_db] = db # Remember the DB
-    session[:pol_items] = find_records_with_rbac(db, find_checked_items).ids # Set the array of tag items
+    session[:pol_items] = find_records_with_rbac(db, checked_or_params).ids # Set the array of tag items
     @in_a_form = true
     if @explorer
       protect
