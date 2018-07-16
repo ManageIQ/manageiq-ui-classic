@@ -37,7 +37,7 @@
 
       - if @record.type == "ServiceAnsiblePlaybook"
         = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
-          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list}
+          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list, :tab_id => "provisioning"}
           - if provision_job
             %ansible-raw-stdout#service_detail_ansible_playbook{'task-id' => provision_job.raw_stdout_via_worker(nil, 'html')}
             :javascript
@@ -45,7 +45,7 @@
 
         - if retirement_job
           = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
-            = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list}
+            = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list, :tab_id => "retirement"}
             %ansible-raw-stdout#service_detail_job{'task-id' => retirement_job.raw_stdout_via_worker(nil, 'html')}
             :javascript
               miq_bootstrap('#service_detail_job');

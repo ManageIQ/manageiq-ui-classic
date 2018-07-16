@@ -1,3 +1,4 @@
-#textual_summary
+- tab_id = "textual_summary#{tab_id ? "_" + tab_id : ""}"
+%div{:id => tab_id}
 :javascript
-  ManageIQ.component.componentFactory('TextualSummaryWrapper', '#textual_summary', {summary: #{process_textual_info(textual_group_list, @record).to_json}});
+  ManageIQ.component.componentFactory('TextualSummaryWrapper', "##{tab_id}", {summary: #{process_textual_info(textual_group_list, @record).to_json}});
