@@ -296,7 +296,7 @@ module EmsCommon
                   @flash_array.nil?
 
         unless ["host_edit", "#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-                "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename'].include?(params[:pressed])
+                "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename', 'flavor_create', 'flavor_delete'].include?(params[:pressed])
           @refresh_div = "main_div"
           @refresh_partial = "layouts/gtl"
           show                                                        # Handle EMS buttons
