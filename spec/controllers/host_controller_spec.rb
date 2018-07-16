@@ -2,7 +2,7 @@ describe HostController do
   let(:h1) { FactoryGirl.create(:host, :name => 'foobar') }
   let(:h2) { FactoryGirl.create(:host, :name => 'bar') }
 
-  context "#button" do
+  describe "#button" do
     render_views
 
     before(:each) do
@@ -126,9 +126,26 @@ describe HostController do
       post :button, :params => {:pressed => 'common_drift', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
+
+    context 'provisioning VMS displayed through details page of a Host' do
+      before do
+        allow(controller).to receive(:process_vm_buttons)
+        allow(controller).to receive(:performed?).and_return(false)
+        allow(request).to receive(:parameters).and_return(:pressed => 'vm_miq_request_new')
+        controller.instance_variable_set(:@display, 'vms')
+        controller.instance_variable_set(:@lastaction, 'show')
+        controller.instance_variable_set(:@_params, :pressed => 'vm_miq_request_new')
+      end
+
+      it 'calls render_or_redirect_partial method' do
+        controller.send(:prov_redirect)
+        expect(controller).to receive(:render_or_redirect_partial).with('vm')
+        controller.send(:button)
+      end
+    end
   end
 
-  context "#create" do
+  describe "#create" do
     it "can create a host with custom id and no host name" do
       stub_user(:features => :all)
       controller.instance_variable_set(:@breadcrumbs, [])
@@ -170,7 +187,7 @@ describe HostController do
     end
   end
 
-  context "#set_record_vars" do
+  describe "#set_record_vars" do
     it "strips leading/trailing whitespace from hostname/ipaddress when adding infra host" do
       stub_user(:features => :all)
       controller.instance_variable_set(
@@ -185,7 +202,7 @@ describe HostController do
     end
   end
 
-  context "#show_association" do
+  describe "#show_association" do
     before(:each) do
       stub_user(:features => :all)
       @host = FactoryGirl.create(:host, :name =>'hostname1')
@@ -340,7 +357,7 @@ describe HostController do
 
   include_examples '#download_summary_pdf', :host
 
-  context "#set_credentials" do
+  describe "#set_credentials" do
     let(:mocked_host) { double(Host) }
     it "uses params[:default_password] for validation if one exists" do
       controller.instance_variable_set(:@_params,
@@ -410,7 +427,7 @@ describe HostController do
     end
   end
 
-  context "#render pages" do
+  describe "#render pages" do
     render_views
     before do
       stub_user(:features => :all)
