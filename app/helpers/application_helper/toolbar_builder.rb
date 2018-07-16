@@ -16,12 +16,12 @@ class ApplicationHelper::ToolbarBuilder
 
     build_toolbar_setup
     toolbar_class = toolbar_class(toolbar_name)
-    build_toolbar_from_class(toolbar_class)
+    build_toolbar_from_class(toolbar_class, @record)
   end
 
   def build_toolbar_by_class(toolbar_class)
     build_toolbar_setup
-    build_toolbar_from_class(toolbar_class)
+    build_toolbar_from_class(toolbar_class, @record)
   end
 
   private
@@ -450,8 +450,8 @@ class ApplicationHelper::ToolbarBuilder
     @sep_added = false
   end
 
-  def build_toolbar_from_class(toolbar_class)
-    toolbar_class.definition.each_with_index do |(name, group), group_index|
+  def build_toolbar_from_class(toolbar_class, record)
+    toolbar_class.definition(record).each_with_index do |(_name, group), group_index|
       @sep_added = false
       @groups_added.push(group_index)
       case group
