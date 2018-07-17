@@ -9,7 +9,7 @@ module PhysicalRackHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ext_management_system physical_servers)
+      %i(ext_management_system physical_chassis physical_servers)
     )
   end
 
@@ -23,6 +23,10 @@ module PhysicalRackHelper::TextualSummary
 
   def textual_ems_ref
     {:label => _("UUID"), :value => @record.ems_ref }
+  end
+
+  def textual_physical_chassis
+    textual_link(@record.physical_chassis)
   end
 
   def textual_physical_servers

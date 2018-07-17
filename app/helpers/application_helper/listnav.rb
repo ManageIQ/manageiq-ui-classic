@@ -50,6 +50,7 @@ module ApplicationHelper
         orchestration_stack
         persistent_volume
         physical_rack
+        physical_chassis
         physical_server
         physical_switch
         resource_pool
