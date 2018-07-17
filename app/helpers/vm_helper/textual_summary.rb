@@ -136,7 +136,7 @@ module VmHelper::TextualSummary
     if vendor.blank?
       h[:value] = _("None")
     else
-      h[:image] = "svg/vendor-#{vendor}.svg"
+      h[:image] = @record.decorate.fileicon
       h[:title] = _("Show VMM container information")
       h[:explorer] = true
       h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'hv_info')

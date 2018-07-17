@@ -31,7 +31,7 @@ module ProviderConfigurationManagerHelper
 
   def textual_provider_name
     {:label    => _("Provider"),
-     :image    => "svg/vendor-#{@record.configuration_manager.image_name}.svg",
+     :image    => @record.configuration_manager.decorate.fileicon,
      :value    => @record.configuration_manager.try(:name),
      :explorer => true
     }
