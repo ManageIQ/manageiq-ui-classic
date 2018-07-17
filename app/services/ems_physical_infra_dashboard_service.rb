@@ -3,7 +3,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
 
   def initialize(ems_id, controller)
     @ems_id = ems_id
-    @ems = find_record_with_rbac(EmsPhysicalInfra, @ems_id)
+    @resource = @ems_id.present? ? Array(find_record_with_rbac(EmsPhysicalInfra, @ems_id)) : EmsPhysicalInfra.all
     @controller = controller
   end
 
@@ -20,10 +20,23 @@ class EmsPhysicalInfraDashboardService < DashboardService
   end
 
   def aggregate_status
-    {
-      :status   => status_data,
-      :attrData => attributes_data
-    }
+    if @ems_id.present?
+      {
+        :status          => single_provider,
+        :attrData        => attributes_data,
+        :showTopBorder   => 'false',
+        :aggregateClass  => 'aggregate-object-card',
+        :aggregateLayout => '',
+      }
+    else
+      {
+        :status          => multiple_providers,
+        :attrData        => attributes_data,
+        :showTopBorder   => 'true',
+        :aggregateClass  => '',
+        :aggregateLayout => 'tall',
+      }
+    end
   end
 
   def servers_group_data
@@ -34,53 +47,85 @@ class EmsPhysicalInfraDashboardService < DashboardService
 
   def attributes_data
     attributes = %i(physical_chassis
-                    physical_servers
-                    physical_switches
                     physical_racks
-                    physical_storages)
+                    physical_servers
+                    physical_storages
+                    physical_switches)
 
     attr_url = {
       :physical_chassis  => 'physical_chassis',
-      :physical_servers  => 'physical_servers',
-      :physical_switches => 'physical_switches',
-      :physical_racks    => 'physical_racks',
-      :physical_storages => 'physical_storages',
+      :physical_racks    => 'physical_rack',
+      :physical_servers  => 'physical_server',
+      :physical_storages => 'physical_storage',
+      :physical_switches => 'physical_switch',
     }
 
     attr_hsh = {
       :physical_chassis  => _('Chassis'),
-      :physical_servers  => _('Servers'),
-      :physical_switches => _('Switches'),
       :physical_racks    => _('Racks'),
+      :physical_servers  => _('Servers'),
       :physical_storages => _('Storages'),
+      :physical_switches => _('Switches'),
     }
 
     attr_data = []
     attributes.each do |attr|
-      ems_attr = @ems.send(attr)
-      attr_data.push(
-        :id           => attr_hsh[attr] + '_' + @ems_id,
+      attr_notification = []
+      current_data = {
+        :id           => attr_hsh[attr] + 'Id',
         :iconClass    => attr.to_s.classify.safe_constantize.try(:decorate).try(:fonticon),
         :title        => attr_hsh[attr],
-        :count        => ems_attr.length,
-        :href         => get_url(@ems_id, attr_url[attr]),
-        :notification => notification_data(ems_attr, attr_hsh[attr])
-      )
+        :count        => 0,
+        :href         => get_url_to_entity(@controller, attr_url[attr], @ems_id, @resource.first),
+        :notification => {}
+      }
+      @resource.each do |ems|
+        ems_attr = ems.send(attr)
+        current_data[:count] += ems_attr.length
+        attr_notification.concat(ems_attr)
+      end
+      current_data[:notification] = notification_data(attr_notification, attr_hsh[attr])
+      attr_data.push(current_data)
     end
     attr_data
   end
 
-  def status_data
+  def single_provider
     {
-      :iconImage => get_icon(@ems),
+      :iconImage => get_icon(@resource.first),
       :largeIcon => true,
     }
   end
 
-  def servers_health_data
+  def multiple_providers
+    providers_data = {
+      :title         => _('Providers'),
+      :count         => 0,
+      :href          => get_url_to_entity(@controller, :ems_physical_infra),
+      :notifications => {}
+    }
+    notification = []
+
+    physical_infra_providers = ManageIQ::Providers::PhysicalInfraManager
+    providers_count = physical_infra_providers.group(:type).count
+
+    providers_count.each do |provider, count|
+      providers_data[:count] += count
+      notification.push(build_provider_notification(provider, count))
+    end
+    providers_data[:notifications] = notification
+
+    providers_data
+  end
+
+  def build_provider_notification(provider_namespace, count)
+    type = provider_namespace.split('::')[2].to_sym
+    provider = provider_namespace.constantize.new
     {
-      :serversHealth => servers_health
-    }.compact
+      :count     => count,
+      :typeName  => _(type),
+      :iconImage => get_icon(provider),
+    }
   end
 
   def recent_servers
@@ -102,7 +147,9 @@ class EmsPhysicalInfraDashboardService < DashboardService
   def notification_data(components, component_type)
     if components&.first.respond_to?(:health_state)
       count = 0
-      health_states = components.group('lower(health_state)').count
+      health_states = components.each_with_object({}) do |component, health_state|
+        health_state[component.health_state&.downcase] = (health_state[component.health_state&.downcase] || 0) + 1
+      end
       health_states.default = 0
       critical_count = health_states["critical"]
       warning_count = health_states["warning"]
@@ -119,7 +166,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
         health_state = 'valid'
         icon_class = 'pficon pficon-ok'
       end
-      tooltip_count = count.positive? ? count : components.count
+      tooltip_count = count.positive? ? count : components.length
       {
         :count     => count,
         :iconClass => icon_class,
@@ -148,7 +195,8 @@ class EmsPhysicalInfraDashboardService < DashboardService
     valid_servers = Hash.new(0)
     warning_servers = Hash.new(0)
     critical_servers = Hash.new(0)
-    all_physical_servers = PhysicalServer.where('created_at > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
+    all_physical_servers = PhysicalServer.where('created_at > ?', 30.days.ago.utc)
+    all_physical_servers = all_physical_servers.where('ems_id = ?', @ems_id) if @ems_id
     all_physical_servers.sort_by(&:created_at).each do |server|
       date = server.created_at.strftime("%Y-%m-%d")
       all_servers[date] += 1
@@ -200,25 +248,16 @@ class EmsPhysicalInfraDashboardService < DashboardService
 
   def recent_records(model)
     all_records = Hash.new(0)
-    records = model.where('created_at > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
-    records = records.includes(:resource => [:ext_management_system]) if @ems.blank?
+    records = model.where('created_at > ?', 30.days.ago.utc)
+    records = if @ems_id
+                records.where('ems_id = ?', @ems_id)
+              else
+                records.includes(:resource => [:ext_management_system])
+              end
     records.sort_by(&:created_at).uniq.each do |r|
       date = r.created_at.strftime("%Y-%m-%d")
       all_records[date] += model.where('created_at = ?', r.created_at).count
     end
     all_records
-  end
-
-  def daily_provider_metrics
-    current_user = @controller.current_user
-    tp = TimeProfile.profile_for_user_tz(current_user.id, current_user.get_timezone) || TimeProfile.default_time_profile
-
-    @daily_metrics ||= Metric::Helper.find_for_interval_name('daily', tp)
-                                     .where(:resource => (@ems || ManageIQ::Providers::PhysicalInfraManager.all))
-                                     .where('timestamp > ?', 30.days.ago.utc).order('timestamp')
-  end
-
-  def get_url(ems_id, attr_url)
-    "/ems_physical_infra/#{ems_id}?display=#{attr_url}"
   end
 end

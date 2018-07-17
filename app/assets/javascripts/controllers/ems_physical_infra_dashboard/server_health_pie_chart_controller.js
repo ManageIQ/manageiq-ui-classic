@@ -1,12 +1,22 @@
-angular.module( 'patternfly.charts' ).controller( 'serverHealthPieChartController', ['providerId', '$http', 'chartsMixin', 'miqService', function(providerId, $http, chartsMixin, miqService) {
+angular.module('patternfly.charts' ).component( 'serverHealthPieChart', {
+  bindings: {
+    providerId: '@?',
+  },
+  templateUrl: '/static/ems_physical_infra/group-chart.html.haml',
+  controller: 'serverHealthPieChartController',
+}).controller('serverHealthPieChartController',  ['$http', 'chartsMixin', 'miqService', function($http, chartsMixin, miqService) {
+  'use strict';
   var vm = this;
-  vm.id = "serverHealthPieChart_" + providerId;
+  vm.id = "serverHealthPieChartData";
+
   var init = function() {
-    ManageIQ.angular.scope = vm;
     vm.data = {};
     vm.loadingDone = false;
+    var url = '/ems_physical_infra_dashboard/servers_group_data/';
+    if (vm.providerId) {
+      url += vm.providerId;
+    }
 
-    var url = '/ems_physical_infra_dashboard/servers_group_data/' + providerId;
     $http.get(url)
       .then(function(response) {
         vm.metricsData = response.data.data;
@@ -43,7 +53,7 @@ angular.module( 'patternfly.charts' ).controller( 'serverHealthPieChartControlle
         } else {
           metricsDataStruct.data[keys[i]] = {
             'data': chartsMixin.processData(data[keys[i]], 'dates', chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units),
-            'id': keys[i] + 'UsageConfig_' + providerId,
+            'id': keys[i] + 'UsageConfigData',
             'config': {
               'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
               'units': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units,

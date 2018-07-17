@@ -43,4 +43,15 @@ class DashboardService
   def get_icon(ems)
     ActionController::Base.helpers.image_path(ems.decorate.fileicon)
   end
+
+  def get_url_to_entity(controller, entity, ems_id = nil, ems = nil)
+    if controller.present?
+      if ems_id.present?
+        controller.polymorphic_url(ems, :display => entity.to_s.pluralize)
+      else
+        controller.url_for_only_path(:action     => 'show_list',
+                                     :controller => entity.to_sym)
+      end
+    end
+  end
 end

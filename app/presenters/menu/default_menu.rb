@@ -87,13 +87,13 @@ module Menu
 
       def physical_infrastructure_menu_section
         Menu::Section.new(:phy, N_("Physical Infrastructure"), 'fa fa-plus fa-2x', [
-          Menu::Item.new('ems_physical_infra',    N_('Providers'), 'ems_physical_infra',    {:feature => 'ems_physical_infra_show_list'},    '/ems_physical_infra'),
-          Menu::Item.new('physical_chassis', N_('Chassis'), 'physical_chassis', {:feature => 'physical_chassis_show_list'}, '/physical_chassis'),
-          Menu::Item.new('physical_rack', N_('Racks'), 'physical_rack', {:feature => 'physical_rack_show_list'}, '/physical_rack'),
-          Menu::Item.new('physical_server', N_('Servers'),   'physical_server', {:feature => 'physical_server_show_list'}, '/physical_server'),
-          Menu::Item.new('physical_storage', N_('Storages'), 'physical_storage', {:feature => 'physical_storage_show_list'}, '/physical_storage'),
-          Menu::Item.new('physical_switch', N_('Switches'),  'physical_switch', {:feature => 'physical_switch_show_list'}, '/physical_switch'),
-          Menu::Item.new('physical_infra_topology', N_('Topology'), 'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology'),
+          Menu::Item.new('physical_infra_overview', N_('Overview'),  'physical_infra_overview', {:feature => 'physical_infra_overview'},               '/physical_infra_overview'),
+          Menu::Item.new('ems_physical_infra',      N_('Providers'), 'ems_physical_infra',      {:feature => 'ems_physical_infra_show_list'},          '/ems_physical_infra'),
+          Menu::Item.new('physical_rack',           N_('Racks'),     'physical_rack',           {:feature => 'physical_rack_show_list'},               '/physical_rack'),
+          Menu::Item.new('physical_server',         N_('Servers'),   'physical_server',         {:feature => 'physical_server_show_list'},             '/physical_server'),
+          Menu::Item.new('physical_storage',        N_('Storages'),  'physical_storage',        {:feature => 'physical_storage_show_list'},            '/physical_storage'),
+          Menu::Item.new('physical_switch',         N_('Switches'),  'physical_switch',         {:feature => 'physical_switch_show_list'},             '/physical_switch'),
+          Menu::Item.new('physical_infra_topology', N_('Topology'),  'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology'),
         ])
       end
 

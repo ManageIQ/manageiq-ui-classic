@@ -5,11 +5,10 @@ angular.module('patternfly.charts').component('pfGroupChart', {
     pieConfig: '<',
   },
   templateUrl: '/static/pf_charts/group-chart.html.haml',
-  controller: utilizationTrendChartController,
+  controller: groupChartController,
 });
-utilizationTrendChartController.$inject = ['pfUtils'];
 
-function utilizationTrendChartController() {
+function groupChartController() {
   'use strict';
   var vm = this;
   var prevChartData;
