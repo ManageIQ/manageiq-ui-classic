@@ -90,7 +90,7 @@
               %th= _('Name')
               %th= _('Rate')
           %tbody
-            - @edit[:cb_assign][:tags].invert.sort_by { |a| a.first.downcase }.each do |tag, id|
+            - @edit[:cb_assign][:tags][@edit[:new][:cbtag_cat].to_i].invert.sort_by { |a| a.first.downcase }.each do |tag, id|
               %tr
                 %td
                   = h(tag)
