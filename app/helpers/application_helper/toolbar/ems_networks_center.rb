@@ -25,16 +25,6 @@ class ApplicationHelper::Toolbar::EmsNetworksCenter < ApplicationHelper::Toolbar
           :url   => "/new",
           :klass => ApplicationHelper::Button::EmsNetworkNew),
         button(
-          :ems_network_edit,
-          'pficon pficon-edit fa-lg',
-          N_('Select a single Network Provider to edit'),
-          N_('Edit Selected Network Provider'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1",
-          :klass        => ApplicationHelper::Button::EmsNetwork),
-        button(
           :ems_network_delete,
           'pficon pficon-delete fa-lg',
           N_('Remove selected Network Providers from Inventory'),
