@@ -5,7 +5,9 @@ export default function textualSummaryGenericClick(item, event) {
     return;
   }
 
-  if (item.explorer) {
+  if (item.external) {
+    window.open(item.link, '_blank');
+  } else if (item.explorer) {
     $.ajax({
       data: `authenticity_token=${encodeURIComponent($('meta[name=csrf-token]').attr('content'))}`,
       dataType: 'script',

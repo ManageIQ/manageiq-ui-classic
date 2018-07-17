@@ -128,11 +128,18 @@ module PhysicalServerHelper::TextualSummary
     # by commas, so first convert the array into a string, separating each array element
     # with a comma. Then split this string back into an array using a comma, possibly
     # followed by whitespace as the delimiter. Finally, iterate through the array
-    # and convert each element into a URL containing an IP address.
+    # and convert each element into link with an URL containing an IP address.
     ip_addresses = ip_addresses.join(",").split(/,\s*/)
-    ip_address_urls = ip_addresses.collect { |ip_address| create_https_url(ip_address) }
 
-    {:label => _("IPv4 Address"), :value => sanitize(ip_address_urls.join(", "), :attributes => %w(href target)) }
+    ip_address_links = ip_addresses.collect do |ip|
+      {
+        :link     => URI::HTTPS.build(:host => ip).to_s,
+        :external => true,
+        :value    => ip
+      }
+    end
+
+    {:label => _("IPv4 Address"), :value => ip_address_links}
   end
 
   def textual_ipv6
@@ -202,13 +209,5 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_compliance_status
     {:label => _("Status"), :value => @record.ems_compliance_status }
-  end
-
-  private
-
-  def create_https_url(ip)
-    # A target argument with a value of "_blank" is passed so that the
-    # page loads in a new tab when the link is clicked.
-    ip.present? ? link_to(ip, URI::HTTPS.build(:host => ip).to_s, :target => "_blank") : ''
   end
 end
