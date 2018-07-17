@@ -8,21 +8,31 @@ describe PhysicalServerHelper::TextualSummary do
 
     result = helper.textual_ipv4
     expect(result[:label]).to eq("IPv4 Address")
-    expect(result[:value]).to eq("<a target=\"_blank\" href=\"https://192.168.1.1\">192.168.1.1</a>")
+    expect(result[:value]).to eq([{:link => "https://192.168.1.1", :external => true, :value => "192.168.1.1"}])
 
     network.ipaddress = "192.168.1.1,192.168.1.2"
     result = helper.textual_ipv4
     expect(result[:label]).to eq("IPv4 Address")
-    expect(result[:value]).to eq("<a target=\"_blank\" href=\"https://192.168.1.1\">192.168.1.1</a>, <a target=\"_blank\" href=\"https://192.168.1.2\">192.168.1.2</a>")
+    expect(result[:value]).to eq(
+      [
+        {:link => "https://192.168.1.1", :external => true, :value => "192.168.1.1"},
+        {:link => "https://192.168.1.2", :external => true, :value => "192.168.1.2"}
+      ]
+    )
 
     network.ipaddress = "192.168.1.1, 192.168.1.2"
     result = helper.textual_ipv4
     expect(result[:label]).to eq("IPv4 Address")
-    expect(result[:value]).to eq("<a target=\"_blank\" href=\"https://192.168.1.1\">192.168.1.1</a>, <a target=\"_blank\" href=\"https://192.168.1.2\">192.168.1.2</a>")
+    expect(result[:value]).to eq(
+      [
+        {:link => "https://192.168.1.1", :external => true, :value => "192.168.1.1"},
+        {:link => "https://192.168.1.2", :external => true, :value => "192.168.1.2"}
+      ]
+    )
 
     network.ipaddress = ""
     result = helper.textual_ipv4
     expect(result[:label]).to eq("IPv4 Address")
-    expect(result[:value]).to eq("")
+    expect(result[:value]).to eq([])
   end
 end
