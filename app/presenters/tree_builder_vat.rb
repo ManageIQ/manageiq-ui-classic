@@ -15,7 +15,7 @@ class TreeBuilderVat < TreeBuilderDatacenter
     {
       :text    => @root.name,
       :tooltip => @root.name,
-      :image   => "svg/vendor-#{@root.image_name}.svg"
+      :image   => @root.decorate.fileicon
     }
   end
 
