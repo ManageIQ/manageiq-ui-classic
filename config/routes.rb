@@ -141,6 +141,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         index
         new
+        protect
         show
         show_list
         tagging_edit
@@ -155,6 +156,7 @@ Rails.application.routes.draw do
         dynamic_checkbox_refresh
         form_field_changed
         listnav_search_selected
+        protect
         quick_search
         sections_field_changed
         show
@@ -256,6 +258,7 @@ Rails.application.routes.draw do
         index
         new
         perf_top_chart
+        protect
         remove_host_select
         show
         show_list
@@ -268,6 +271,7 @@ Rails.application.routes.draw do
         button
         listnav_search_selected
         create
+        protect
         quick_search
         remove_host
         remove_host_select
@@ -1799,6 +1803,7 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         index
+        protect
         show
         show_list
         new
@@ -1809,6 +1814,7 @@ Rails.application.routes.draw do
       :post => %w(
         button
         listnav_search_selected
+        protect
         quick_search
         sections_field_changed
         show
