@@ -7,12 +7,14 @@ import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagView extends React.Component {
   generateTagCategories = tag => (
-    <TagCategory
-      key={tag.id}
-      tagCategory={{ id: tag.id, description: tag.description }}
-      values={tag.values}
-      onTagDeleteClick={this.props.onTagDeleteClick}
-    />
+    <li key={tag.id}>
+      <TagCategory
+        key={tag.id}
+        tagCategory={{ id: tag.id, description: tag.description }}
+        values={tag.values}
+        onTagDeleteClick={this.props.onTagDeleteClick}
+      />
+    </li>
   );
 
   render() {

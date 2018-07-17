@@ -9,7 +9,8 @@
   margin-bottom: 5px;
   font-size: 14px;
   line-height: 24px;
-  display: table;
+  display: flex;
+  flex-wrap: wrap;
   float: left;
 
   li a span {

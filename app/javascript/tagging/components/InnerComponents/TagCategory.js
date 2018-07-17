@@ -22,11 +22,13 @@ class TagCategory extends React.Component {
     );
     return (
       <ul className="tag-category list-inline">
-        <OverlayTrigger placement="bottom" overlay={categoryTooltip}>
-          <div className="category-label">
-            {this.props.categoryTruncate(this.props.tagCategory.description)}
-          </div>
-        </OverlayTrigger>
+        <li key={this.props.tagCategory.id}>
+          <OverlayTrigger placement="bottom" overlay={categoryTooltip}>
+            <div className="category-label">
+              {this.props.categoryTruncate(this.props.tagCategory.description)}
+            </div>
+          </OverlayTrigger>
+        </li>
         {values
           .sort((a, b) => (a.description < b.description ? -1 : 1))
           .map(tagValue => this.generateTag(tagValue))}
