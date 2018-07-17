@@ -36,26 +36,8 @@ class CloudVolumeSnapshotController < ApplicationController
   def delete_cloud_volume_snapshots
     assert_privileges("cloud_volume_snapshot_delete")
 
-    snapshots = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_volume_snapshot")
-                  find_checked_ids_with_rbac(CloudVolumeSnapshot)
-                else
-                  [find_id_with_rbac(CloudVolumeSnapshot, params[:id])]
-                end
-
-    if snapshots.empty?
-      add_flash(_("No Cloud Volume Snapshots were selected for deletion."), :error)
-    end
-
-    snapshots_to_delete = []
-    snapshots.each do |snapshot_id|
-      snapshot = CloudVolumeSnapshot.find_by_id(snapshot_id)
-      if snapshot.nil?
-        add_flash(_("Cloud Volume Snapshot no longer exists."), :error)
-      else
-        snapshots_to_delete.push(snapshot)
-      end
-    end
-    process_cloud_volume_snapshots(snapshots_to_delete, "destroy") unless snapshots_to_delete.empty?
+    snapshots = find_records_with_rbac(CloudVolumeSnapshot, checked_or_params)
+    process_cloud_volume_snapshots(snapshots, "destroy")
 
     # refresh the list if applicable
     if @lastaction == "show_list"
