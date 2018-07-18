@@ -25,7 +25,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     miqService.sparkleOn();
     var url = '/ops/pglogical_save_subscriptions/' + pglogicalReplicationFormId + '?button=' + buttonName;
     miqService.miqAjaxButton(url, serializeFields);
-    // pglogicalDataReload();
+    $scope.modelCopy = angular.copy( $scope.pglogicalReplicationModel );
   };
 
 
