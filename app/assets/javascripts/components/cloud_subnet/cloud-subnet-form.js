@@ -64,7 +64,7 @@ function cloudSubnetFormController(API, miqService) {
 
   vm.saveClicked = function() {
     var url = '/cloud_subnet/update/' + vm.cloudSubnetFormId + '?button=save';
-    miqService.miqAjaxButton(url, vm.cloudSubnetModel, { complete: false });
+    miqService.miqAjaxButton(url, _.pick(vm.cloudSubnetModel, 'name', 'dhcp_enabled', 'gateway'), { complete: false });
   };
 
   vm.resetClicked = function(angularForm) {
