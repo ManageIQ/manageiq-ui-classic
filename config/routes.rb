@@ -1430,6 +1430,7 @@ Rails.application.routes.draw do
         data
         recent_servers_data
         aggregate_status_data
+        servers_group_data
       )
     },
 

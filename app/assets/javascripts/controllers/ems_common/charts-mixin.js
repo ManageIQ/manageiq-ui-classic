@@ -105,6 +105,35 @@ angular.module('miq.util').factory('chartsMixin', ['$document', function($docume
       grid: {y: {show: false}},
       setAreaChart: true,
     },
+    availableServersUsageConfig: {
+      chartId: 'serverAvailabilityChart',
+      title: __('Servers Available'),
+      units: __('Server'),
+      usageDataName: __('Used'),
+      legendLeftText: __('Last 30 Days'),
+      legendRightText: '',
+      numDays: 30,
+    },
+    availableServersUsagePieConfig: {
+      chartId: 'serverAvailablePieChart_',
+    },
+    serversHealthUsageConfig: {
+      chartId: 'serverHealthChart',
+      title: __('Servers Health'),
+      units: __('Server'),
+      usageDataName: __('Used'),
+      legendLeftText: __('Last 30 Days'),
+      legendRightText: '',
+      numDays: 30,
+    },
+    serversHealthUsagePieConfig: {
+      chartId: 'serverHealthPieChart_',
+      color: {
+        valid: $.pfPaletteColors.green,
+        warning: $.pfPaletteColors.orange,
+        critical: $.pfPaletteColors.red,
+      },
+    },
   };
 
   var processData = function(data, xDataLabel, yDataLabel) {
