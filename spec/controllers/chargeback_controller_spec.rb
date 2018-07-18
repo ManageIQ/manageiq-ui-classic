@@ -41,6 +41,17 @@ describe ChargebackController do
         expect(assigns(:edit)[:current_assignment]).to eq([])
       end
     end
+
+    describe '#cb_assign_get_form_vars' do
+      before do
+        controller.instance_variable_set(:@_params, :cblabel_key => 'null')
+        controller.instance_variable_set(:@edit, :new => {:cbshow_typ => '-labels'}, :cb_assign => {})
+      end
+
+      it "returns tag for current assignments" do
+        expect { controller.send(:cb_assign_get_form_vars) }.not_to raise_error
+      end
+    end
   end
 
   context "Saved chargeback rendering" do
