@@ -236,7 +236,8 @@ module OpsController::Settings::Common
         end
       end
     end
-    javascript_flash(:spinner_off => true)
+    #javascript_flash(:spinner_off => true)
+    change_tab("settings_replication")
   end
 
   def pglogical_validate_subscription
