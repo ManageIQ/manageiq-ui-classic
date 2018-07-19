@@ -62,7 +62,7 @@ describe('cloud-subnet-form', function() {
       vm.$onInit();
     }));
 
-    it('sets newRecord to true', function () {
+    it('sets newRecord to false', function () {
       expect(vm.newRecord).toBe(false);
     });
 
@@ -74,17 +74,16 @@ describe('cloud-subnet-form', function() {
       expect(vm.cloudSubnetModel.name).toBe('abc');
     });
 
-    it('sets vm.cloudSubnetModel.gateway_ip', function () {
-      expect(vm.cloudSubnetModel.gateway_ip).toBe(undefined);
-    });
-
     it('updates a Cloud Subnet record', function () {
 
       vm.cloudSubnetModel.name = 'xyz';
-      vm.cloudSubnetModel.gateway_ip = '172.10.1.2';
+      vm.cloudSubnetModel.gateway = '172.10.1.2';
+      vm.cloudSubnetModel.dhcp_enabled = '172.10.1.2';
+      vm.cloudSubnetModel.random_field_from_API = "random data from API";
+      var correct_data = _.pick(vm.cloudSubnetModel, 'name', 'gateway', 'dhcp_enabled');
       vm.saveClicked();
 
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/cloud_subnet/update/1111?button=save', vm.cloudSubnetModel, { complete: false });
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/cloud_subnet/update/1111?button=save', correct_data, { complete: false });
     });
   });
 });
