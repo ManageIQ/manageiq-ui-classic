@@ -83,7 +83,7 @@ module NetworkPortHelper::TextualSummary
   def textual_host
     return nil unless @record.device_type == "Host"
     {
-      :icon  => "pficon pficon-screen",
+      :icon  => "pficon pficon-container-node",
       :value => @record.device,
       :link  => url_for_only_path(
         :controller => "host",

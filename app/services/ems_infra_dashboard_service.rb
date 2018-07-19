@@ -52,7 +52,7 @@ class EmsInfraDashboardService < DashboardService
 
     attr_icon = {
       :ems_clusters  => 'pficon pficon-cluster',
-      :hosts         => 'pficon pficon-screen',
+      :hosts         => 'pficon pficon-container-node',
       :storages      => 'fa fa-database',
       :vms           => 'pficon pficon-virtual-machine',
       :miq_templates => 'pficon pficon-virtual-machine',

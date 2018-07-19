@@ -21,7 +21,7 @@ describe TreeBuilderStorageAdapters do
       expect(root).to eq(
         :text    => @sa_tree.instance_variable_get(:@root).name,
         :tooltip => "Host: #{@sa_tree.instance_variable_get(:@root).name}",
-        :icon    => 'pficon pficon-screen'
+        :icon    => 'pficon pficon-container-node'
       )
     end
 

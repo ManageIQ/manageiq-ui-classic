@@ -52,7 +52,7 @@ class TreeBuilderClusters < TreeBuilder
     if @root[:non_cl_hosts].present?
       node = {:id         => "NonCluster",
               :text       => _("Non-clustered Hosts"),
-              :icon       => 'pficon pficon-screen',
+              :icon       => 'pficon pficon-container-node',
               :tip        => _("Non-clustered Hosts"),
               :select     => non_cluster_selected,
               :nodes      => @root[:non_cl_hosts],
@@ -71,7 +71,7 @@ class TreeBuilderClusters < TreeBuilder
       {:id         => "#{parent[:id]}_#{node[:id]}",
        :text       => node[:name],
        :tip        => _("Host: %{name}") % {:name => node[:name]},
-       :icon       => 'pficon pficon-screen',
+       :icon       => 'pficon pficon-container-node',
        :select     => node.kind_of?(Hash) ? node[:capture] : !value,
        :selectable => false,
        :nodes      => []}

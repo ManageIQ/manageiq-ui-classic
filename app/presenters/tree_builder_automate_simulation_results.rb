@@ -108,7 +108,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
     when GuestApplication
       'ff ff-software-package'
     when HostAggregate
-      'pficon pficon-screen'
+      'pficon pficon-container-node'
     when MiqRequest
       'fa fa-question'
     when Network

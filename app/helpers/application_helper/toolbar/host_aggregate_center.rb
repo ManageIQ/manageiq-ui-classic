@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::HostAggregateCenter < ApplicationHelper::Toolb
         ),
         button(
           :host_aggregate_add_host,
-          'pficon pficon-screen fa-lg',
+          'pficon pficon-container-node fa-lg',
           N_('Select this Host Aggregate'),
           N_('Add Host to Host Aggregate'),
           :url_parms    => "main_div",
@@ -28,7 +28,7 @@ class ApplicationHelper::Toolbar::HostAggregateCenter < ApplicationHelper::Toolb
         ),
         button(
           :host_aggregate_remove_host,
-          'pficon pficon-screen fa-lg',
+          'pficon pficon-container-node fa-lg',
           N_('Select this Host Aggregate'),
           N_('Remove Host from Host Aggregate'),
           :url_parms    => "main_div",

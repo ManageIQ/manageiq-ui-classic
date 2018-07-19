@@ -19,7 +19,7 @@ describe TreeBuilderNetwork do
       expect(root).to eq(
         :text       => @network_tree.instance_variable_get(:@root).name,
         :tooltip    => "Host: %{name}" % {:name => @network_tree.instance_variable_get(:@root).name},
-        :icon       => 'pficon pficon-screen',
+        :icon       => 'pficon pficon-container-node',
         :selectable => false
       )
     end

@@ -37,7 +37,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
   end
 
   def x_get_server_kids(parent, count_only = false)
-    nodes = {'host' => 'pficon pficon-screen', "storage" => 'fa fa-database'}.map do |kid, icon|
+    nodes = {'host' => 'pficon pficon-container-node', "storage" => 'fa fa-database'}.map do |kid, icon|
       {:id              => "#{parent.id}__#{kid}",
        :icon            => icon,
        :parent          => parent,

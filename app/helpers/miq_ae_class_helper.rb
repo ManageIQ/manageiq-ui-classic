@@ -88,7 +88,7 @@ module MiqAeClassHelper
     when 'null coalescing', 'nil_class'
       'fa fa-question'
     when 'host'
-      'pficon pficon-screen'
+      'pficon pficon-container-node'
     when 'vm'
       'pficon pficon-virtual-machine'
     when 'storage'

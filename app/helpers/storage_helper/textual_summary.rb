@@ -75,7 +75,7 @@ module StorageHelper::TextualSummary
   def textual_hosts
     label = title_for_hosts
     num   = @record.number_of(:hosts)
-    h     = {:label => label, :icon => "pficon pficon-screen", :value => num}
+    h     = {:label => label, :icon => "pficon pficon-container-node", :value => num}
     if num > 0 && role_allows?(:feature => "host_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'hosts')
       h[:title] = _("Show all %{label}") % {:label => label}

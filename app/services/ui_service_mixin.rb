@@ -14,7 +14,7 @@ module UiServiceMixin
       :ContainerService        => {:type => "glyph", :class => 'pficon pficon-service'},
       :EmsCluster              => {:type => "glyph", :class => 'pficon pficon-cluster'},
       :FloatingIp              => {:type => "glyph", :class => 'ff ff-floating-ip'},
-      :Host                    => {:type => "glyph", :class => 'pficon pficon-screen'},
+      :Host                    => {:type => "glyph", :class => 'pficon pficon-container-node'},
       :LoadBalancer            => {:type => "glyph", :class => 'ff ff-load-balancer'},
       :MiddlewareDeployment    => {:type => "glyph", :class => 'fa fa-file-text-o'},
       :MiddlewareDeploymentEar => {:type => "glyph", :class => 'ff ff-file-ear-o'},

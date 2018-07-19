@@ -80,7 +80,7 @@ module EmsClusterHelper::TextualSummary
 
       all = {:title => _("Show list of hosts with %{name}") % {:name => x.name},
              :value => _("All (%{number})") % {:number => all_count},
-             :icon  => 'pficon pficon-screen',
+             :icon  => 'pficon pficon-container-node',
              :link  => if all_count > 0
                          url_for_only_path(:controller              => controller.controller_name,
                                  :action                  => 'show',
@@ -137,7 +137,7 @@ module EmsClusterHelper::TextualSummary
 
   def textual_total_hosts
     num = @record.total_hosts
-    h = {:label => title_for_hosts, :icon => "pficon pficon-screen", :value => num}
+    h = {:label => title_for_hosts, :icon => "pficon pficon-container-node", :value => num}
     if num > 0 && role_allows?(:feature => "host_show_list")
       h[:title] = _("Show all %{title}") % {:title => title_for_hosts}
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'hosts')
