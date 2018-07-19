@@ -23,6 +23,7 @@
 //= require bower_components/sprintf/dist/sprintf.min
 //= require bower_components/numeral/numeral
 //= require ./cable
+//= require ./gettextCatalog
 //= require ./miq_api
 //= require ./miq_angular_application
 //= require_tree ./angular_modules/
