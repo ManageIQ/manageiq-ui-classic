@@ -105,7 +105,8 @@ module ApplicationController::Buttons
       end
       @edit[:new][:display] = params[:display] == "1" if params[:display]
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
-      copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color dialog_id disabled_text button_type inventory_type))
+      copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color disabled_text button_type inventory_type))
+      @edit[:new][:dialog_id] = params[:dialog_id] == "" ? nil : params[:dialog_id] if params.keys.include?("dialog_id")
       visibility_box_edit
 
       if params[:button_type] == 'default'
@@ -1074,7 +1075,7 @@ module ApplicationController::Buttons
     MiqUserRole.all.sort_by { |ur| ur.name.downcase }.each do |r|
       @edit[:sorted_user_roles].push(r.name => r.id)
     end
-    @edit[:new][:dialog_id] = @custom_button.resource_action.dialog_id.to_i
+    @edit[:new][:dialog_id] = @custom_button.resource_action.dialog_id
     load_available_dialogs
 
     button_set_playbook_form_vars
