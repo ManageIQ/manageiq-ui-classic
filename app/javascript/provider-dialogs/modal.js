@@ -29,13 +29,13 @@ export default function renderModal(title = __("Modal"), Inner = () => <div>Empt
 function modal(title, Inner, closed, removeId) {
   const overrides = {
     addClicked: function(orig) {
-      Promise.when(orig()).then(closed);
+      Promise.resolve(orig()).then(closed);
     },
     saveClicked: function(orig) {
-      Promise.when(orig()).then(closed);
+      Promise.resolve(orig()).then(closed);
     },
     cancelClicked: function(orig) {
-      Promise.when(orig()).then(closed);
+      Promise.resolve(orig()).then(closed);
     },
     // don't close on reset
   };
