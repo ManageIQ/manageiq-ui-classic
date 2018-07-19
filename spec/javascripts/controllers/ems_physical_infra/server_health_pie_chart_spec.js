@@ -1,7 +1,7 @@
 describe('serverHealthPieChartController', function() {
   var  miqService, $httpBackend, $http, chartsMixin;
   var serversGroup = {
-    serversGroups: {
+    serversGroup: {
       availableServers: {
         columns: {used: 0, available: 4},
         xData: ["dates", "2018-07-03"],
@@ -58,7 +58,8 @@ describe('serverHealthPieChartController', function() {
           $http: $http
         }))
         .then(function (serverHealthController) {
-          expect(serverHealthController.metricsData).toBeTruthy();
+          expect(serverHealthController.metricsData.serversGroup).toBeTruthy();
+          expect(serverHealthController.data).toBeTruthy();
           done();
         });
     });
