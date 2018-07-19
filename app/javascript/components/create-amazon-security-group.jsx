@@ -16,20 +16,56 @@ const createGroups = (values, providerId) =>
     resource: { ...values },
   });
 
-const CreateAmazonSecurityGroupForm = ({ providerId }) => (
-  <AmazonSecurityGroupForm
-    onSave={values => createGroups(values, providerId)}
-    onCancel={() => console.log('Cancel clicked')}
-    loadData={getData}
-  />
-);
+class CreateAmazonSecurityGroupForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      values: {},
+    };
+    this.handleFormStateUpdate = this.handleFormStateUpdate.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'FormButtons.init',
+      payload: {
+        newRecord: true,
+        pristine: true,
+        addClicked: () => {
+          createGroups(this.state.values, this.props.recordId);
+        },
+      },
+    });
+  }
+
+  handleFormStateUpdate(formState) {
+    this.props.dispatch({
+      type: 'FormButtons.saveable',
+      payload: formState.valid,
+    });
+    this.props.dispatch({
+      type: 'FormButtons.pristine',
+      payload: formState.pristine,
+    });
+    this.setState({ values: formState.values });
+  }
+
+  render() {
+    return (
+      <AmazonSecurityGroupForm
+        onSave={values => createGroups(values, this.props.recordId)}
+        onCancel={() => console.log('Cancel clicked')}
+        loadData={getData}
+        updateFormState={this.handleFormStateUpdate}
+        hideControls
+      />
+    );
+  }
+}
 
 CreateAmazonSecurityGroupForm.propTypes = {
-  providerId: PropTypes.number.isRequired,
+  recordId: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  test: dispatch,
-});
-
-export default connect(() => {}, mapDispatchToProps)(CreateAmazonSecurityGroupForm);
+export default connect()(CreateAmazonSecurityGroupForm);
