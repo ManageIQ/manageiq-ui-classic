@@ -6,6 +6,7 @@ import GenericGroupWrapper from '../react/generic_group_wrapper';
 import { addReact } from '../miq-component/helpers';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 import FormButtonsRedux from '../forms/form-buttons-redux';
+import CreateAmazonSecurityGroupForm from '../components/create-amazon-security-group';
 
 /**
 * Add component definitions to this file.
@@ -21,3 +22,4 @@ addReact('GenericGroupWrapper', GenericGroupWrapper);
 addReact('TextualSummaryWrapper', TextualSummaryWrapper);
 addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
 addReact('FormButtonsRedux', FormButtonsRedux);
+addReact('CreateAmazonSecurityGroupForm', CreateAmazonSecurityGroupForm);
