@@ -8,6 +8,7 @@
 //= require patternfly
 //= require bower_components/jquery-ujs/src/rails
 //= require angular
+//= require angular-gettext/dist/angular-gettext.min.js
 //= require bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists
 //= require bower_components/angular-patternfly/dist/angular-patternfly
 //= require bower_components/angular-bootstrap/ui-bootstrap
