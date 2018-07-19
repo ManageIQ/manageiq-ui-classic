@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Icon, Modal } from 'patternfly-react';
+import FormButtonsRedux from '../forms/form-buttons-redux';
 
 function closeModal(id) {
   // this should have been div.remove();
@@ -25,6 +26,19 @@ export default function renderModal(title = __("Modal"), Inner = () => <div>Empt
 }
 
 function modal(title, Inner, closed, removeId) {
+  const overrides = {
+    addClicked: function(orig) {
+      Promise.when(orig()).then(closed);
+    },
+    saveClicked: function(orig) {
+      Promise.when(orig()).then(closed);
+    },
+    cancelClicked: function(orig) {
+      Promise.when(orig()).then(closed);
+    },
+    // don't close on reset
+  };
+
   return (
     <Modal
       show={true}
@@ -47,13 +61,7 @@ function modal(title, Inner, closed, removeId) {
         <div id={/* see closeModal */ removeId}></div>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          bsStyle="primary"
-          onClick={closed}
-          autoFocus
-        >
-          {__('Close')}
-        </Button>
+        <FormButtonsRedux callbackOverrides={overrides} />
       </Modal.Footer>
     </Modal>
   );

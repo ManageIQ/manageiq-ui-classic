@@ -12,14 +12,29 @@ function FormButtonsRedux(props) {
 }
 
 FormButtonsRedux.propTypes = {
+  callbackOverrides: PropTypes.object,
 };
 
 FormButtonsRedux.defaultProps = {
+  callbackOverrides: {},
 };
 
 
-function mapStateToProps(state) {
-  return {...state.FormButtons};
+function mapStateToProps(state, ownProps) {
+  let props = {...state.FormButtons};
+
+  if (state.FormButtons && ownProps.callbackOverrides) {
+    // allow overriding click handlers
+    // the original handler is passed as the only argument to the new one
+    Object.keys(ownProps.callbackOverrides).forEach((name) => {
+      props[name] = () => {
+        let origHandler = state.FormButtons[name];
+        ownProps.callbackOverrides[name](origHandler);
+      };
+    });
+  }
+
+  return props;
 }
 
 export default connect(mapStateToProps)(FormButtonsRedux);
@@ -36,12 +51,7 @@ function initReducer() {
   initReducer.done = true;
 
 
-  const initialState = {
-    customLabel: '',
-    newRecord: false,
-    pristine: false,
-    saveable: true,
-  };
+  const initialState = {...FormButtons.defaultProps};
 
   const actions = {
     'FormButtons.init': (_state, payload) => ({ ...initialState, ...payload }),
