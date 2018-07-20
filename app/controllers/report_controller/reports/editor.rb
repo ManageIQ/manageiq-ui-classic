@@ -542,6 +542,7 @@ module ReportController::Reports::Editor
         @edit[:new][:tz] = session[:user_tz]
         @edit[:new][:cb_include_metrics] = true if @edit[:new][:model] == 'ChargebackVm'
         @edit[:new][:method_for_allocated_metrics] = default_chargeback_allocated_method
+        @edit[:new][:cumulative_rate_calculation] ||= false
       end
       reset_report_col_fields
       build_edit_screen
@@ -637,6 +638,8 @@ module ReportController::Reports::Editor
       @edit[:new][:cb_include_metrics] = params[:cb_include_metrics] == 'true'
     elsif params.key?(:method_for_allocated_metrics)
       @edit[:new][:method_for_allocated_metrics] = params[:method_for_allocated_metrics].try(:to_sym) || default_chargeback_allocated_method
+    elsif params.key?(:cumulative_rate_calculation)
+      @edit[:new][:cumulative_rate_calculation] = params[:cumulative_rate_calculation] == 'true'
     elsif params.key?(:cb_owner_id)
       @edit[:new][:cb_owner_id] = params[:cb_owner_id].blank? ? nil : params[:cb_owner_id]
     elsif params.key?(:cb_tenant_id)
@@ -1042,6 +1045,7 @@ module ReportController::Reports::Editor
 
       options[:method_for_allocated_metrics] = @edit[:new][:method_for_allocated_metrics]
       options[:include_metrics] = @edit[:new][:cb_include_metrics]
+      options[:cumulative_rate_calculation] = @edit[:new][:cumulative_rate_calculation]
       options[:groupby] = @edit[:new][:cb_groupby]
       options[:groupby_tag] = @edit[:new][:cb_groupby] == 'tag' ? @edit[:new][:cb_groupby_tag] : nil
       options[:groupby_label] = @edit[:new][:cb_groupby] == 'label' ? @edit[:new][:cb_groupby_label] : nil
@@ -1328,6 +1332,7 @@ module ReportController::Reports::Editor
       # @edit[:new][:cb_include_metrics] = nil - it means YES (YES is default value for new and legacy reports)
       @edit[:new][:cb_include_metrics] = options[:include_metrics].nil? || options[:include_metrics]
       @edit[:new][:method_for_allocated_metrics] = options[:method_for_allocated_metrics].try(:to_sym) || default_chargeback_allocated_method
+      @edit[:new][:cumulative_rate_calculation] = options[:cumulative_rate_calculation].nil? || options[:cumulative_rate_calculation]
       @edit[:new][:cb_groupby_tag] = options[:groupby_tag] if options.key?(:groupby_tag)
       @edit[:new][:cb_groupby_label] = options[:groupby_label] if options.key?(:groupby_label)
       @edit[:new][:cb_model] = Chargeback.report_cb_model(@rpt.db)
