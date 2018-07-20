@@ -46,4 +46,31 @@ describe GuestDeviceController do
       end
     end
   end
+
+  context "GenericSessionMixin" do
+    let(:lastaction) { 'lastaction' }
+    let(:layout) { 'layout' }
+
+    describe '#get_session_data' do
+      it "Sets variables correctly" do
+        allow(controller).to receive(:session).and_return(:guest_device_lastaction => lastaction)
+        controller.send(:get_session_data)
+
+        expect(controller.instance_variable_get(:@title)).to eq("Guest Devices")
+        expect(controller.instance_variable_get(:@layout)).to eq("guest_device")
+        expect(controller.instance_variable_get(:@lastaction)).to eq(lastaction)
+      end
+    end
+
+    describe '#set_session_data' do
+      it "Sets session correctly" do
+        controller.instance_variable_set(:@lastaction, lastaction)
+        controller.instance_variable_set(:@layout, layout)
+        controller.send(:set_session_data)
+
+        expect(controller.session[:guest_device_lastaction]).to eq(lastaction)
+        expect(controller.session[:layout]).to eq(layout)
+      end
+    end
+  end
 end
