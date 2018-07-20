@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ManageIQ/manageiq#readme",
   "dependencies": {
+    "angular-gettext": "^2.4.1",
     "base64-js": "~1.2.3",
     "rxjs": "~5.3.0",
     "text-encoder-lite": "git://github.com/coolaj86/TextEncoderLite.git#e1e031b",

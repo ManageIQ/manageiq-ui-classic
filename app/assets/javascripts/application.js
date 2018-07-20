@@ -9,6 +9,7 @@
 //= require jquery-ujs
 //= require angular
 //= require angular-drag-and-drop-lists
+//= require angular-gettext/dist/angular-gettext.min.js
 //= require angular-patternfly-sass/dist/angular-patternfly
 //= require angular-bootstrap/ui-bootstrap
 //= require angular-bootstrap/ui-bootstrap-tpls
@@ -21,6 +22,7 @@
 //= require sprintf
 //= require numeral
 //= require cable
+//= require gettextCatalog
 //= require miq_api
 //= require rxjs/dist/rx.all
 //= require miq_angular_application
