@@ -31,7 +31,7 @@ class TreeBuilderNetwork < TreeBuilder
     {
       :text       => @root.name,
       :tooltip    => _("Host: %{name}") % {:name => @root.name},
-      :icon       => 'pficon pficon-screen',
+      :icon       => 'pficon pficon-container-node',
       :selectable => false
     }
   end

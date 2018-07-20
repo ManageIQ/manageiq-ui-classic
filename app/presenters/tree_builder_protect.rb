@@ -41,7 +41,7 @@ class TreeBuilderProtect < TreeBuilder
     nodes = parent[:nodes].map do |policy|
       icon = case policy.towhat
              when 'Host'
-               'pficon pficon-screen'
+               'pficon pficon-container-node'
              when 'Vm'
                'pficon pficon-virtual-machine'
              when 'ContainerReplicator'

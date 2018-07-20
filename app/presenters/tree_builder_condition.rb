@@ -22,7 +22,7 @@ class TreeBuilderCondition < TreeBuilder
   def self.folder_icon(klassname)
     case klassname
     when 'Host'
-      'pficon pficon-screen'
+      'pficon pficon-container-node'
     when 'Vm'
       'pficon pficon-virtual-machine'
     when 'ContainerReplicator'

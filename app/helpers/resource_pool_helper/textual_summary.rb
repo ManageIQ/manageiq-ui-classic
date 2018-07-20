@@ -90,7 +90,7 @@ module ResourcePoolHelper::TextualSummary
   def textual_parent_host
     host = @record.parent_host
     h = {:label => _("Parent %{title}") % {:title => title_for_host},
-         :icon  => "pficon pficon-screen",
+         :icon  => "pficon pficon-container-node",
          :value => (host.nil? ? _("None") : host.name)}
     if host && role_allows?(:feature => "host_show")
       h[:title] = _("Show Parent %{title} '%{name}'") % {:title => title_for_host, :name => host.name}

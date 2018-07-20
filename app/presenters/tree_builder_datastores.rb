@@ -58,7 +58,7 @@ class TreeBuilderDatastores < TreeBuilder
     nodes = parent[:nodes].map do |node|
       { :id           => node[:name],
         :text         => node[:name],
-        :icon         => 'pficon pficon-screen',
+        :icon         => 'pficon pficon-container-node',
         :tip          => node[:name],
         :hideCheckbox => true,
         :selectable   => false,

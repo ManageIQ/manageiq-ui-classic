@@ -38,7 +38,7 @@ class TreeBuilderPolicy < TreeBuilder
       text = text_i18n[mode.to_sym][model.name.to_sym]
       icon = case model.to_s
              when 'Host'
-               'pficon pficon-screen'
+               'pficon pficon-container-node'
              when 'Vm'
                'pficon pficon-virtual-machine'
              when 'ContainerReplicator'

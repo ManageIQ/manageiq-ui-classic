@@ -82,7 +82,7 @@ module EmsInfraHelper::TextualSummary
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
     label     = "#{title_for_hosts} & #{title_for_clusters}"
     available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
-    h         = {:label => label, :icon => "pficon pficon-screen", :value => available ? _("Available") : _("N/A")}
+    h         = {:label => label, :icon => "pficon pficon-container-node", :value => available ? _("Available") : _("N/A")}
     if available
       h[:link]  = ems_infra_path(@record.id, :display => 'ems_folders')
       h[:title] = _("Show %{label}") % {:label => label}
@@ -116,7 +116,7 @@ module EmsInfraHelper::TextualSummary
   def textual_hosts
     label = title_for_hosts
     num   = @record.number_of(:hosts)
-    h     = {:label => label, :icon => "pficon pficon-screen", :value => num}
+    h     = {:label => label, :icon => "pficon pficon-container-node", :value => num}
     if num > 0 && role_allows?(:feature => "host_show_list")
       h[:link]  = ems_infra_path(@record.id, :display => 'hosts')
       h[:title] = _("Show all %{label}") % {:label => label}

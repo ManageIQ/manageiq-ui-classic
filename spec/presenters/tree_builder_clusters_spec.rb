@@ -41,7 +41,7 @@ describe TreeBuilderClusters do
       # non-cluster-node
       expect(cluster_nodes.last).to eq(:id         => "NonCluster",
                                        :text       => "Non-clustered Hosts",
-                                       :icon       => 'pficon pficon-screen',
+                                       :icon       => 'pficon pficon-container-node',
                                        :tip        => "Non-clustered Hosts",
                                        :select     => true,
                                        :selectable => false,
@@ -54,7 +54,7 @@ describe TreeBuilderClusters do
       expect(non_cluster_host).to eq([{:id         => "NonCluster_2",
                                        :text       => "Non Cluster Host",
                                        :tip        => "Host: Non Cluster Host",
-                                       :icon       => 'pficon pficon-screen',
+                                       :icon       => 'pficon pficon-container-node',
                                        :select     => true,
                                        :selectable => false,
                                        :nodes      => []}])
@@ -67,7 +67,7 @@ describe TreeBuilderClusters do
         {:id         => "#{cluster_nodes.first[:id]}_#{node[:id]}",
          :text       => node[:name],
          :tip        => "Host: %{name}" % {:name => node[:name]},
-         :icon       => 'pficon pficon-screen',
+         :icon       => 'pficon pficon-container-node',
          :select     => true,
          :selectable => false,
          :nodes      => []}
@@ -76,7 +76,7 @@ describe TreeBuilderClusters do
         {:id         => "#{cluster_nodes.first[:id]}_#{node[:id]}",
          :text       => node[:name],
          :tip        => "Host: %{name}" % {:name => node[:name]},
-         :icon       => 'pficon pficon-screen',
+         :icon       => 'pficon pficon-container-node',
          :select     => false,
          :selectable => false,
          :nodes      => []}
