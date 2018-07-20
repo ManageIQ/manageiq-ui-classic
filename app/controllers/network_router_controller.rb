@@ -46,57 +46,6 @@ class NetworkRouterController < ApplicationController
     end
   end
 
-  def network_router_form_fields
-    assert_privileges("network_router_edit")
-    router = find_record_with_rbac(NetworkRouter, params[:id])
-    available_networks = get_networks_by_ems(router.ems_id)
-    network_id = nil
-    subnet_id = nil
-    external_gateway = false
-    enable_snat = true
-    available_subnets = {}
-
-    unless router.external_gateway_info.nil? || router.external_gateway_info.empty?
-      external_gateway = true
-      cloud_network_ref = router.external_gateway_info["network_id"]
-      enable_snat = router.external_gateway_info["enable_snat"]
-      network = CloudNetwork.where(:ems_ref => cloud_network_ref).first
-      network_id = network.id
-      available_subnets = get_subnets_by_network(network_id)
-      external_fixed_ips = router.external_gateway_info["external_fixed_ips"]
-      unless external_fixed_ips.nil? || external_fixed_ips.empty?
-        # TODO: Replace with array/table
-        subnet = CloudSubnet.where(:ems_ref => external_fixed_ips[0]["subnet_id"]).first
-        subnet_id = subnet.id
-      end
-    end
-
-    render :json => {
-      :name               => router.name,
-      :ems_id             => router.ems_id,
-      :cloud_network_id   => network_id,
-      :cloud_subnet_id    => subnet_id,
-      :external_gateway   => external_gateway,
-      :enable_snat        => enable_snat,
-      :available_networks => available_networks,
-      :available_subnets  => available_subnets
-    }
-  end
-
-  def network_router_networks_by_ems
-    assert_privileges("network_router_new")
-    render :json => {
-      :available_networks => get_networks_by_ems(params[:id])
-    }
-  end
-
-  def network_router_subnets_by_network
-    assert_privileges("network_router_new")
-    render :json => {
-      :available_subnets => get_subnets_by_network(params[:id])
-    }
-  end
-
   def new
     @router = NetworkRouter.new
     assert_privileges("network_router_new")
@@ -118,11 +67,10 @@ class NetworkRouterController < ApplicationController
                           :flash_msg => _("Add of new Network Router was cancelled by the user")
 
     when "add"
-      @router = NetworkRouter.new
       options = form_params(params)
       options.merge!(form_external_gateway(params)) if switch_to_bool(params[:external_gateway])
-      ems = ExtManagementSystem.find(options[:ems_id])
-      options.delete(:ems_id)
+
+      ems = ExtManagementSystem.find(params[:ems_id])
       task_id = ems.create_network_router_queue(session[:userid], options)
 
       add_flash(_("Network Router creation failed: Task start failed: ID [%{id}]") %
@@ -198,18 +146,18 @@ class NetworkRouterController < ApplicationController
   def update
     assert_privileges("network_router_edit")
     @router = find_record_with_rbac(NetworkRouter, params[:id])
-    options = form_params(params)
-    if switch_to_bool(params[:external_gateway])
-      options.merge!(form_external_gateway(params))
-    else
-      options.merge!(form_external_gateway({}))
-    end
 
     case params[:button]
     when "cancel"
       cancel_action(_("Edit of Router \"%{name}\" was cancelled by the user") % {:name => @router.name})
 
     when "save"
+      options = form_params(params)
+      if switch_to_bool(params[:external_gateway])
+        options.merge!(form_external_gateway(params))
+      else
+        options.merge!(form_external_gateway({}))
+      end
       task_id = @router.update_network_router_queue(session[:userid], options)
 
       add_flash(_("Router update failed: Task start failed: ID [%{id}]") %
@@ -429,14 +377,6 @@ class NetworkRouterController < ApplicationController
 
   private
 
-  def get_networks_by_ems(id)
-    Rbac::Filterer.filtered(CloudNetwork.where(:ems_id => id)).select(:id, :name).as_json
-  end
-
-  def get_subnets_by_network(id)
-    Rbac::Filterer.filtered(CloudSubnet.where(:cloud_network_id => id)).select(:id, :name).as_json
-  end
-
   def textual_group_list
     [%i(properties relationships), %i(tags)]
   end
@@ -451,14 +391,16 @@ class NetworkRouterController < ApplicationController
         subnet = find_record_with_rbac(CloudSubnet, params[:cloud_subnet_id])
         options[:external_gateway_info][:external_fixed_ips] = [{:subnet_id => subnet.ems_ref}]
       end
-      options[:external_gateway_info][:enable_snat] = switch_to_bool(params[:enable_snat])
+      if params.fetch_path(:extra_attributes, :external_gateway_info, :enable_snat)
+        options[:external_gateway_info][:enable_snat] = params[:extra_attributes][:external_gateway_info][:enable_snat]
+      end
     end
     options
   end
 
   def form_params(params)
-    options = %i(name ems_id admin_state_up cloud_group_id cloud_subnet_id
-      cloud_network_id).each_with_object({}) do |param, opt|
+    options = %i(name admin_state_up ems_id cloud_group_id cloud_subnet_id
+                 cloud_network_id).each_with_object({}) do |param, opt|
       opt[param] = params[param] if params[param]
     end
 
