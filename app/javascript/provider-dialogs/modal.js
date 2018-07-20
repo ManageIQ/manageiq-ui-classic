@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Icon, Modal } from 'patternfly-react';
+import { Provider } from 'react-redux';
+import FormButtonsRedux from '../forms/form-buttons-redux';
 
 function closeModal(id) {
   // this should have been div.remove();
@@ -25,36 +27,45 @@ export default function renderModal(title = __("Modal"), Inner = () => <div>Empt
 }
 
 function modal(title, Inner, closed, removeId) {
+  const overrides = {
+    addClicked: function(orig) {
+      Promise.resolve(orig()).then(closed);
+    },
+    saveClicked: function(orig) {
+      Promise.resolve(orig()).then(closed);
+    },
+    cancelClicked: function(orig) {
+      Promise.resolve(orig()).then(closed);
+    },
+    // don't close on reset
+  };
+
   return (
-    <Modal
-      show={true}
-      onHide={closed}
-      onExited={closed}
-    >
-      <Modal.Header>
-        <button
-          className="close"
-          onClick={closed}
-          aria-hidden="true"
-          aria-label="Close"
-        >
-          <Icon type="pf" name="close" />
-        </button>
-        <Modal.Title>{title}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Inner />
-        <div id={/* see closeModal */ removeId}></div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button
-          bsStyle="primary"
-          onClick={closed}
-          autoFocus
-        >
-          {__('Close')}
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <Provider store={ManageIQ.redux.store}>
+      <Modal
+        show={true}
+        onHide={closed}
+        onExited={closed}
+      >
+        <Modal.Header>
+          <button
+            className="close"
+            onClick={closed}
+            aria-hidden="true"
+            aria-label="Close"
+          >
+            <Icon type="pf" name="close" />
+          </button>
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Inner />
+          <div id={/* see closeModal */ removeId}></div>
+        </Modal.Body>
+        <Modal.Footer>
+          <FormButtonsRedux callbackOverrides={overrides} />
+        </Modal.Footer>
+      </Modal>
+    </Provider>
   );
 }
