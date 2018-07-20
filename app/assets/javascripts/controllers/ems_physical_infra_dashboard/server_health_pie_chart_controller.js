@@ -10,7 +10,7 @@ angular.module( 'patternfly.charts' ).controller( 'serverHealthPieChartControlle
     $http.get(url)
       .then(function(response) {
         vm.metricsData = response.data.data;
-        vm.data = processMetricsData(vm.data, vm.metricsData.serversGroups);
+        vm.data = processMetricsData(vm.data, vm.metricsData.serversGroup);
         vm.loadingDone = true;
       })
       .catch(miqService.handleFailure);
