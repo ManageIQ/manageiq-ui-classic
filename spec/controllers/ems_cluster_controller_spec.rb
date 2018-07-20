@@ -84,4 +84,43 @@ describe EmsClusterController do
   include_examples '#download_summary_pdf', :ems_cluster
 
   it_behaves_like "controller with custom buttons"
+
+  context "GenericSessionMixin" do
+    let(:lastaction) { 'lastaction' }
+    let(:display) { 'display' }
+    let(:filters) { 'filters' }
+    let(:catinfo) { 'catinfo' }
+
+    describe '#get_session_data' do
+      it "Sets variables correctly" do
+        allow(controller).to receive(:session).and_return(:ems_cluster_lastaction => lastaction,
+                                                          :ems_cluster_display    => display,
+                                                          :ems_cluster_catinfo    => catinfo,
+                                                          :ems_cluster_filters    => filters)
+        controller.send(:get_session_data)
+
+        expect(controller.instance_variable_get(:@title)).to eq("Clusters")
+        expect(controller.instance_variable_get(:@layout)).to eq("ems_cluster")
+        expect(controller.instance_variable_get(:@lastaction)).to eq(lastaction)
+        expect(controller.instance_variable_get(:@display)).to eq(display)
+        expect(controller.instance_variable_get(:@catinfo)).to eq(catinfo)
+        expect(controller.instance_variable_get(:@filters)).to eq(filters)
+      end
+    end
+
+    describe '#set_session_data' do
+      it "Sets session correctly" do
+        controller.instance_variable_set(:@lastaction, lastaction)
+        controller.instance_variable_set(:@display, display)
+        controller.instance_variable_set(:@filters, filters)
+        controller.instance_variable_set(:@catinfo, catinfo)
+        controller.send(:set_session_data)
+
+        expect(controller.session[:ems_cluster_lastaction]).to eq(lastaction)
+        expect(controller.session[:ems_cluster_display]).to eq(display)
+        expect(controller.session[:ems_cluster_filters]).to eq(filters)
+        expect(controller.session[:ems_cluster_catinfo]).to eq(catinfo)
+      end
+    end
+  end
 end

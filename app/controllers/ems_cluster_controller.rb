@@ -7,6 +7,11 @@ class EmsClusterController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
   include Mixins::GenericShowMixin
+  include Mixins::GenericSessionMixin
+
+  def title
+    @title = _("Clusters")
+  end
 
   def drift_history
     @display = "drift_history"
@@ -114,22 +119,6 @@ class EmsClusterController < ApplicationController
                          :description => db_record.drs_automation_level) unless db_record.drs_automation_level.nil?
     @cluster_config.push(:field       => "DRS Migration Threshold",
                          :description => db_record.drs_migration_threshold) unless db_record.drs_migration_threshold.nil?
-  end
-
-  def get_session_data
-    @title      = _("Clusters")
-    @layout     = "ems_cluster"
-    @lastaction = session[:ems_cluster_lastaction]
-    @display    = session[:ems_cluster_display]
-    @filters    = session[:ems_cluster_filters]
-    @catinfo    = session[:ems_cluster_catinfo]
-  end
-
-  def set_session_data
-    session[:ems_cluster_lastaction] = @lastaction
-    session[:ems_cluster_display]    = @display unless @display.nil?
-    session[:ems_cluster_filters]    = @filters
-    session[:ems_cluster_catinfo]    = @catinfo
   end
 
   menu_section :inf
