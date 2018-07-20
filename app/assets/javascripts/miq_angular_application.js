@@ -3,6 +3,7 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'angular.validators',
   'ngRedux',
   'frapontillo.bootstrap-switch',
+  'gettext',
   'kubernetesUI',
   'miq.api',
   'miq.card',
