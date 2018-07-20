@@ -104,5 +104,47 @@ describe MiqPolicyController do
         expect(response).to render_template(:partial => 'miq_policy/_alert_details')
       end
     end
+
+    context "alert_valid_record?" do
+      before do
+        login_as FactoryGirl.create(:user, :features => "alert_admin")
+      end
+
+      before :each do
+        expression = MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1)
+        @miq_alert = FactoryGirl.create(
+          :miq_alert,
+          :db         => "Host",
+          :options    => {:notifications => {:email => {:to => "fred@test.com"}}},
+          :expression => expression
+        )
+        edit = {
+          :new => {
+            :name       => "New Name",
+            :expression => {:eval_method => nil},
+            :db         => "Host"
+          }
+        }
+        controller.instance_variable_set(:@edit, edit)
+      end
+
+      it "forces Driving Event to be present for non-container alerts" do
+        controller.send(:alert_valid_record?, @miq_alert)
+        expect(assigns(:flash_array).first[:message]).to match("A Driving Event must be selected")
+      end
+
+      it "does not force Driving Event to be present for container alerts" do
+        edit = {
+          :new => {
+            :name       => "New Name",
+            :expression => {:eval_method => nil},
+            :db         => "ContainerNode",
+          }
+        }
+        controller.instance_variable_set(:@edit, edit)
+        controller.send(:alert_valid_record?, @miq_alert)
+        expect(assigns(:flash_array)).to be_nil
+      end
+    end
   end
 end

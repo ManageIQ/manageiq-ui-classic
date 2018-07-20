@@ -1,6 +1,10 @@
 module MiqPolicyController::Alerts
   extend ActiveSupport::Concern
 
+  included do
+    helper_method :display_driving_event?
+  end
+
   def alert_edit_cancel
     @edit = nil
     @alert = session[:edit][:alert_id] ? MiqAlert.find(session[:edit][:alert_id]) : MiqAlert.new
@@ -105,6 +109,7 @@ module MiqPolicyController::Alerts
         @edit[:expression_options] = MiqAlert.expression_options(@edit[:new][:expression][:eval_method])
         alert_build_exp_options_info
       end
+      @edit[:new][:exp_event] = %w(ContainerNode ContainerProject).include?(@edit[:new][:db]) ? nil : @edit[:current][:exp_event]
     end
 
     if params.key?(:exp_name)
@@ -231,6 +236,11 @@ module MiqPolicyController::Alerts
   end
 
   private
+
+  def display_driving_event?
+    (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing") ||
+      %w(ContainerNode ContainerProject).include?(@edit[:new][:db])
+  end
 
   def process_alerts(alerts, task)
     process_elements(alerts, MiqAlert, task)
@@ -560,7 +570,7 @@ module MiqPolicyController::Alerts
     if alert.expression.nil?
       add_flash(_("A valid expression must be present"), :error)
     end
-    unless @edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing"
+    unless display_driving_event?
       add_flash(_("A Driving Event must be selected"), :error) if alert.responds_to_events.blank?
     end
     if alert.options[:notifications][:automate]

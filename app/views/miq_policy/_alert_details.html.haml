@@ -80,7 +80,7 @@
 
         -# Expression driving event
         - if @edit
-          - unless @edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing"
+          - unless display_driving_event?
             .form-group
               %label.control-label.col-md-2
                 = _("Driving Event")
@@ -93,7 +93,7 @@
                   miqInitSelectPicker();
                   miqSelectPickerEvent('exp_event', '#{url}', {beforeSend: true, complete: true})
         - else
-          - if @alert.expression.kind_of?(MiqExpression) || @alert.expression[:eval_method] == "nothing"
+          - if (@alert.expression.kind_of?(MiqExpression) || @alert.expression[:eval_method] == "nothing") && !%w(ContainerNode ContainerProject).include?(@alert.db)
             .form-group
               %label.control-label.col-md-2
                 = _("Driving Event")
