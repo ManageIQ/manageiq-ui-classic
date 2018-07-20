@@ -23,6 +23,21 @@
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('method_for_allocated_metrics', '#{url}', {beforeSend: true, complete: true});
+
+- if @edit[:new][:model].starts_with?('Chargeback')
+  %h3
+    = _('Chargeback Resources')
+  .form-horizontal
+    .form-group
+      %label.control-label.col-md-2
+        = _('Include Cumulative Rate Calculation')
+      .col-md-8
+        = check_box_tag("cumulative_rate_calculation", true, @edit[:new][:cumulative_rate_calculation],
+                        "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true,
+                        :data => {:on_text => _('Yes'), :off_text => _('No')})
+      :javascript
+        miqInitBootstrapSwitch('cumulative_rate_calculation', "#{url}")
+
 %h3
   = _('Chargeback Filters')
 .form-horizontal
