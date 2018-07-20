@@ -13,7 +13,13 @@ class MiqPolicyController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
+
   UI_FOLDERS = [Host, Vm, ContainerReplicator, ContainerGroup, ContainerNode, ContainerImage, ContainerProject, ExtManagementSystem, PhysicalServer].freeze
+
+  def title
+    @title = _("Policies")
+  end
 
   def export
     @breadcrumbs = []
@@ -1097,10 +1103,9 @@ class MiqPolicyController < ApplicationController
   end
 
   def set_session_data
+    super
     session[:layout]                  = @layout
-    session[:miq_policy_lastaction]   = @lastaction
     session[:miq_policy_current_page] = @current_page
-    session[:miq_policy_display]      = @display unless @display.nil?
     session[:server_options]          = @server_options
   end
 

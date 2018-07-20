@@ -300,4 +300,49 @@ describe MiqPolicyController do
       expect(response).to render_template('layouts/exception')
     end
   end
+
+  context "GenericSessionMixin" do
+    let(:lastaction) { 'lastaction' }
+    let(:display) { 'display' }
+    let(:current_page) { 'current_page' }
+    let(:server_options) { 'server options' }
+    let(:layout) { 'layout' }
+
+    describe '#get_session_data' do
+      it "Sets variables correctly" do
+        allow(controller).to receive(:session).and_return(:miq_policy_lastaction   => lastaction,
+                                                          :miq_policy_display      => display,
+                                                          :miq_policy_current_page => current_page,
+                                                          :server_options          => server_options,
+                                                          :layout                  => layout)
+        allow(controller).to receive(:alert_build_pulldowns).and_return(nil)
+        allow(controller.request).to receive(:parameters).and_return('action' => 'wait_for_task')
+        controller.send(:get_session_data)
+
+        expect(controller.instance_variable_get(:@title)).to eq("Policies")
+        expect(controller.instance_variable_get(:@layout)).to eq(layout)
+        expect(controller.instance_variable_get(:@lastaction)).to eq(lastaction)
+        expect(controller.instance_variable_get(:@display)).to eq(display)
+        expect(controller.instance_variable_get(:@current_page)).to eq(current_page)
+        expect(controller.instance_variable_get(:@server_options)).to eq(server_options)
+      end
+    end
+
+    describe '#set_session_data' do
+      it "Sets session correctly" do
+        controller.instance_variable_set(:@lastaction, lastaction)
+        controller.instance_variable_set(:@display, display)
+        controller.instance_variable_set(:@current_page, current_page)
+        controller.instance_variable_set(:@layout, layout)
+        controller.instance_variable_set(:@server_options, server_options)
+        controller.send(:set_session_data)
+
+        expect(controller.session[:miq_policy_lastaction]).to eq(lastaction)
+        expect(controller.session[:miq_policy_display]).to eq(display)
+        expect(controller.session[:miq_policy_current_page]).to eq(current_page)
+        expect(controller.session[:layout]).to eq(layout)
+        expect(controller.session[:server_options]).to eq(server_options)
+      end
+    end
+  end
 end
