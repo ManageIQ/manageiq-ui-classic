@@ -7,4 +7,4 @@ import { routerMiddleware } from 'connected-react-router';
  *  routerMiddleware adds middleware which is listening for location changes and updates router state
  *  thunk is a middleware for async redux functions
  */
-export const createMiddlewares = ({ history }) => ([routerMiddleware(history), thunk]);
+export const createMiddlewares = ({ history, middlewares = [] }) => ([routerMiddleware(history), thunk, ...middlewares]);
