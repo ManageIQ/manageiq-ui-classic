@@ -11,7 +11,7 @@ class NetworkRouterController < ApplicationController
   include Mixins::GenericFormMixin
 
   def self.display_methods
-    %w(instances cloud_subnets)
+    %w(instances cloud_subnets floating_ips)
   end
 
   def button
