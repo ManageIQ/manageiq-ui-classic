@@ -473,7 +473,6 @@ class ProviderForemanController < ApplicationController
   def add_unassigned_configuration_profile_record_to_view(unassigned_profile_row, unassigned_configuration_profile)
     @view.table.data.push(unassigned_profile_row)
     @targets_hash[unassigned_profile_row['id']] = unassigned_configuration_profile
-    @grid_hash = view_to_hash(@view)
   end
 
   def update_options(options = {})
