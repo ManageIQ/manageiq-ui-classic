@@ -139,6 +139,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   }
 
   function saveFailure(response) {
+    vm.saveButtonDisabled = false;
     miqService.miqFlash(
       'error',
       __('There was an error editing this dialog: ') + response.data.error.message

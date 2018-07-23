@@ -21,7 +21,6 @@
     .pull-right
       %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()",
                               "ng-disabled" => "!vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content) || vm.saveButtonDisabled",
-                              "ng-dblclick" => "return false;",
                               "ng-attr-title" => "{{vm.DialogValidation.invalid.message}}",
                               :type => "button"}= _("Save")
       %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
