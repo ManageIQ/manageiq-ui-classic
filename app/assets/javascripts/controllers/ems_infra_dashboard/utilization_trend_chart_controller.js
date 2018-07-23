@@ -1,4 +1,4 @@
-angular.module( 'patternfly.charts' ).controller('utilizationTrendChartController', ['$q', 'providerDashboard', 'providerId', 'chartsMixin', '$http', 'miqService', function($q, providerDashboard, providerId, chartsMixin, $http, miqService) {
+angular.module( 'patternfly.charts' ).controller('utilizationTrendChartController', ['$q', 'providerId', 'chartsMixin', '$http', 'miqService', function($q, providerId, chartsMixin, $http, miqService) {
   var vm = this;
 
   var init = function() {
@@ -6,7 +6,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
     vm.data = {};
     vm.loadingDone = false;
 
-    var url = '/' + providerDashboard + '/ems_utilization_data/' + providerId;
+    var url = '/ems_infra_dashboard/ems_utilization_data/' + providerId;
     var metricsPromise = $http.get(url)
       .then(function(response) {
         vm.metricsData = response.data.data;
