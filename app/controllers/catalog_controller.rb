@@ -458,7 +458,7 @@ class CatalogController < ApplicationController
 
   # Edit user or group tags
   def st_tags_edit
-    assert_privileges("catalogitem_edit")
+    assert_privileges("catalogitem_tag")
     tags_edit("ServiceTemplate")
   end
 
