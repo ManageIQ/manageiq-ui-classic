@@ -20,7 +20,8 @@
     %dialog-editor{'tree-selector-data' => 'vm.treeSelectorData', 'tree-selector-lazy-load' => 'vm.lazyLoad'}
     .pull-right
       %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()",
-                              "ng-disabled" => "!vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content)",
+                              "ng-disabled" => "!vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content) || vm.saveButtonDisabled",
+                              "ng-dblclick" => "return false;",
                               "ng-attr-title" => "{{vm.DialogValidation.invalid.message}}",
                               :type => "button"}= _("Save")
       %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
