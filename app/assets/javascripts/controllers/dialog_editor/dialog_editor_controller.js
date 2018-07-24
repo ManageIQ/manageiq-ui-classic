@@ -56,7 +56,38 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
       });
     }
 
+    // function is used to replace undefined values in dialogs
+    // with boolean, so the bootstrap switch is not initialized with
+    // undefined state
+    //
+    function undefinedAttrsToBoolean(dialog) {
+      _.forEach(dialog.dialog_tabs, function(tab) {
+        _.forEach(tab.dialog_groups, function(group) {
+          _.forEach(group.dialog_fields, function(field) {
+            var attributes = [
+              "required", "visible", "read_only", "show_refresh_button",
+              "load_values_on_init",
+            ];
+            var optionalAttributes = [
+              "show_past_days", "protected", "force_multi_value"
+            ];
+            attributes.forEach(function(attr) {
+              if (field[attr] == null) {
+                field[attr] = false;
+              }
+            });
+            optionalAttributes.forEach(function(attr) {
+              if (field["options"][attr] == null) {
+                field["options"][attr] = false;
+              }
+            });
+          });
+        });
+      });
+    }
+
     translateResponderNamesToIds(dialog.content[0]);
+    undefinedAttrsToBoolean(dialog.content[0]);
 
     if (requestDialogAction() === 'copy') {
       dialog.label = dialog.content[0].label = "Copy of " + dialog.label;
