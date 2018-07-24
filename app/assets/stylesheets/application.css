@@ -1,7 +1,7 @@
 /*
  *= require bower_components/c3/c3
  *= require bower_components/patternfly-bootstrap-treeview/dist/bootstrap-treeview.min
- *= require ./main
+ *= require main
  *= require ./automate_import_export
  *= require ./dialog_fields
  *= require angular
