@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     dynamic_date_refresh
     dynamic_radio_button_refresh
     dynamic_text_box_refresh
+    open_url_after_dialog
   )
 
   discover_get_post = %w(
