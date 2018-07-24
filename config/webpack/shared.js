@@ -44,7 +44,9 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV || 'development'),
+    }),
 
     // Workaround for graphql/graphql-language-service#128
     new webpack.ContextReplacementPlugin(
