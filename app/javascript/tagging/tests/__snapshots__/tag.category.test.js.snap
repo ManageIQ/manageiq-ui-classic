@@ -4,31 +4,35 @@ exports[`TagCategory Component match snapshot 1`] = `
 <ul
   className="tag-category list-inline"
 >
-  <OverlayTrigger
-    defaultOverlayShown={false}
-    overlay={
-      <Tooltip
-        bsClass="tooltip"
-        id="tooltip"
-        placement="right"
+  <li
+    key="1"
+  >
+    <OverlayTrigger
+      defaultOverlayShown={false}
+      overlay={
+        <Tooltip
+          bsClass="tooltip"
+          id="tooltip"
+          placement="right"
+        >
+          animal
+        </Tooltip>
+      }
+      placement="bottom"
+      trigger={
+        Array [
+          "hover",
+          "focus",
+        ]
+      }
+    >
+      <div
+        className="category-label"
       >
         animal
-      </Tooltip>
-    }
-    placement="bottom"
-    trigger={
-      Array [
-        "hover",
-        "focus",
-      ]
-    }
-  >
-    <div
-      className="category-label"
-    >
-      animal
-    </div>
-  </OverlayTrigger>
+      </div>
+    </OverlayTrigger>
+  </li>
   <Tag
     key="1"
     onTagDeleteClick={[Function]}

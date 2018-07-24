@@ -28,26 +28,30 @@ exports[`Tag view match snapshot 1`] = `
       <ul
         className="list-inline"
       >
-        <TagCategory
-          categoryTruncate={[Function]}
+        <li
           key="1"
-          onTagDeleteClick={[MockFunction]}
-          tagCategory={
-            Object {
-              "description": "Name",
-              "id": 1,
-            }
-          }
-          valueTruncate={[Function]}
-          values={
-            Array [
+        >
+          <TagCategory
+            categoryTruncate={[Function]}
+            key="1"
+            onTagDeleteClick={[MockFunction]}
+            tagCategory={
               Object {
-                "description": "Pepa",
-                "id": 11,
-              },
-            ]
-          }
-        />
+                "description": "Name",
+                "id": 1,
+              }
+            }
+            valueTruncate={[Function]}
+            values={
+              Array [
+                Object {
+                  "description": "Pepa",
+                  "id": 11,
+                },
+              ]
+            }
+          />
+        </li>
       </ul>
     </Col>
   </Row>

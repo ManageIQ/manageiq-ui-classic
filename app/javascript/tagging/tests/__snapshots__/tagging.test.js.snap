@@ -805,79 +805,34 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                         <ul
                           className="list-inline"
                         >
-                          <TagCategory
-                            categoryTruncate={[Function]}
+                          <li
                             key="1"
-                            onTagDeleteClick={[Function]}
-                            tagCategory={
-                              Object {
-                                "description": "Name",
-                                "id": 1,
-                              }
-                            }
-                            valueTruncate={[Function]}
-                            values={
-                              Array [
-                                Object {
-                                  "description": "Pepa",
-                                  "id": 11,
-                                },
-                              ]
-                            }
                           >
-                            <ul
-                              className="tag-category list-inline"
-                            >
-                              <OverlayTrigger
-                                defaultOverlayShown={false}
-                                overlay={
-                                  <Tooltip
-                                    bsClass="tooltip"
-                                    id="tooltip"
-                                    placement="right"
-                                  >
-                                    Name
-                                  </Tooltip>
+                            <TagCategory
+                              categoryTruncate={[Function]}
+                              key="1"
+                              onTagDeleteClick={[Function]}
+                              tagCategory={
+                                Object {
+                                  "description": "Name",
+                                  "id": 1,
                                 }
-                                placement="bottom"
-                                trigger={
-                                  Array [
-                                    "hover",
-                                    "focus",
-                                  ]
-                                }
-                              >
-                                <div
-                                  className="category-label"
-                                  onBlur={[Function]}
-                                  onClick={null}
-                                  onFocus={[Function]}
-                                  onMouseOut={[Function]}
-                                  onMouseOver={[Function]}
-                                >
-                                  Name
-                                </div>
-                              </OverlayTrigger>
-                              <Tag
-                                key="11"
-                                onTagDeleteClick={[Function]}
-                                tagCategory={
-                                  Object {
-                                    "description": "Name",
-                                    "id": 1,
-                                  }
-                                }
-                                tagValue={
+                              }
+                              valueTruncate={[Function]}
+                              values={
+                                Array [
                                   Object {
                                     "description": "Pepa",
                                     "id": 11,
-                                  }
-                                }
-                                truncate={[Function]}
+                                  },
+                                ]
+                              }
+                            >
+                              <ul
+                                className="tag-category list-inline"
                               >
                                 <li
-                                  className="tag"
-                                  key="11"
+                                  key="1"
                                 >
                                   <OverlayTrigger
                                     defaultOverlayShown={false}
@@ -887,7 +842,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                         id="tooltip"
                                         placement="right"
                                       >
-                                        Pepa
+                                        Name
                                       </Tooltip>
                                     }
                                     placement="bottom"
@@ -898,66 +853,119 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    <Label
-                                      bsStyle="primary"
-                                      className="tagColor"
-                                      key="11"
+                                    <div
+                                      className="category-label"
                                       onBlur={[Function]}
                                       onClick={null}
                                       onFocus={[Function]}
                                       onMouseOut={[Function]}
                                       onMouseOver={[Function]}
-                                      onRemoveClick={[Function]}
-                                      type="default"
+                                    >
+                                      Name
+                                    </div>
+                                  </OverlayTrigger>
+                                </li>
+                                <Tag
+                                  key="11"
+                                  onTagDeleteClick={[Function]}
+                                  tagCategory={
+                                    Object {
+                                      "description": "Name",
+                                      "id": 1,
+                                    }
+                                  }
+                                  tagValue={
+                                    Object {
+                                      "description": "Pepa",
+                                      "id": 11,
+                                    }
+                                  }
+                                  truncate={[Function]}
+                                >
+                                  <li
+                                    className="tag"
+                                    key="11"
+                                  >
+                                    <OverlayTrigger
+                                      defaultOverlayShown={false}
+                                      overlay={
+                                        <Tooltip
+                                          bsClass="tooltip"
+                                          id="tooltip"
+                                          placement="right"
+                                        >
+                                          Pepa
+                                        </Tooltip>
+                                      }
+                                      placement="bottom"
+                                      trigger={
+                                        Array [
+                                          "hover",
+                                          "focus",
+                                        ]
+                                      }
                                     >
                                       <Label
-                                        bsClass="label"
                                         bsStyle="primary"
                                         className="tagColor"
+                                        key="11"
                                         onBlur={[Function]}
                                         onClick={null}
                                         onFocus={[Function]}
                                         onMouseOut={[Function]}
                                         onMouseOver={[Function]}
+                                        onRemoveClick={[Function]}
+                                        type="default"
                                       >
-                                        <span
-                                          className="tagColor label label-primary"
+                                        <Label
+                                          bsClass="label"
+                                          bsStyle="primary"
+                                          className="tagColor"
                                           onBlur={[Function]}
                                           onClick={null}
                                           onFocus={[Function]}
                                           onMouseOut={[Function]}
                                           onMouseOver={[Function]}
                                         >
-                                          Pepa
-                                          <RemoveButton
-                                            className=""
-                                            onRemoveClick={[Function]}
-                                            title="Remove"
+                                          <span
+                                            className="tagColor label label-primary"
+                                            onBlur={[Function]}
+                                            onClick={null}
+                                            onFocus={[Function]}
+                                            onMouseOut={[Function]}
+                                            onMouseOver={[Function]}
                                           >
-                                            <a
-                                              className="pf-remove-button"
-                                              href="#"
-                                              onClick={[Function]}
+                                            Pepa
+                                            <RemoveButton
+                                              className=""
+                                              onRemoveClick={[Function]}
+                                              title="Remove"
                                             >
-                                              <span
-                                                aria-hidden="true"
-                                                className="pficon pficon-close"
-                                              />
-                                              <span
-                                                className="sr-only"
+                                              <a
+                                                className="pf-remove-button"
+                                                href="#"
+                                                onClick={[Function]}
                                               >
-                                                Remove
-                                              </span>
-                                            </a>
-                                          </RemoveButton>
-                                        </span>
+                                                <span
+                                                  aria-hidden="true"
+                                                  className="pficon pficon-close"
+                                                />
+                                                <span
+                                                  className="sr-only"
+                                                >
+                                                  Remove
+                                                </span>
+                                              </a>
+                                            </RemoveButton>
+                                          </span>
+                                        </Label>
                                       </Label>
-                                    </Label>
-                                  </OverlayTrigger>
-                                </li>
-                              </Tag>
-                            </ul>
-                          </TagCategory>
+                                    </OverlayTrigger>
+                                  </li>
+                                </Tag>
+                              </ul>
+                            </TagCategory>
+                          </li>
                         </ul>
                       </div>
                     </Col>
