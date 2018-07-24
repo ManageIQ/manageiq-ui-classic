@@ -42,6 +42,6 @@ class PhysicalRackController < ApplicationController
   helper_method(:textual_group_list)
 
   def self.display_methods
-    %w(physical_servers)
+    %w(physical_chassis physical_servers)
   end
 end
