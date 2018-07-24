@@ -53,6 +53,6 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
   vm.resetClicked = function() {
     vm.cloudTenantModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", "All changes have been reset");
+    miqService.miqFlash("warn", __('All changes have been reset'));
   };
 }]);
