@@ -34,7 +34,7 @@ module PhysicalSwitchHelper::TextualSummary
     ports_count = @record.physical_network_ports.count
     ports = {:label => _("Ports"), :value => ports_count, :icon => "ff ff-network-port"}
     if ports_count.positive?
-      ports[:link] = "/physical_switch/show/#{@record.id}?display=ports"
+      ports[:link] = "/physical_switch/show/#{@record.id}?display=physical_network_ports"
     end
     ports
   end
