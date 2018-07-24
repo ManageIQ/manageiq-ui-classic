@@ -4,6 +4,11 @@ module CloudTenantHelper::TextualSummary
   #
   # Groups
   #
+
+  def textual_group_properties
+    TextualGroup.new(_("Properties"), %i(name description))
+  end
+
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
@@ -13,6 +18,14 @@ module CloudTenantHelper::TextualSummary
         network_routers security_groups floating_ips network_ports
       )
     )
+  end
+
+  def textual_name
+    @record.name
+  end
+
+  def textual_description
+    @record.description
   end
 
   def textual_group_quotas
