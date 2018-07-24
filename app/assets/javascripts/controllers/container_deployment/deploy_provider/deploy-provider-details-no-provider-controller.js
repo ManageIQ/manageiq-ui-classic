@@ -69,7 +69,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
         },
         {
           name: __('Remove VM(s)'),
-          title: 'Clear the selected items.',
+          title: __('Clear the selected items.'),
           actionFn: removeItems
         }
       ]
