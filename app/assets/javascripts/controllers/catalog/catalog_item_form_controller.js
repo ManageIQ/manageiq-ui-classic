@@ -464,7 +464,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     $scope.angularForm.$setValidity('unchanged', true);
 
     if (vm.dialogs.filter(function(e) { return e.label === vm.catalogItemModel.provisioning_dialog_name; }).length > 0) {
-      miqService.miqFlash('error', 'Dialog name already exists');
+      miqService.miqFlash('error', __('Dialog name already exists'));
       $scope.angularForm.$setValidity('unchanged', false);
     }
   };
