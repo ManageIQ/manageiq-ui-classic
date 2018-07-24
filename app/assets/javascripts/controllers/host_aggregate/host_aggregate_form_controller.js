@@ -76,7 +76,7 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
   $scope.resetClicked = function() {
     $scope.hostAggregateModel = angular.copy( $scope.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", "All changes have been reset");
+    miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   function getHostAggregateFormData(response) {
