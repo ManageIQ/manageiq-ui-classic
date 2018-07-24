@@ -13,7 +13,7 @@ module NetworkRouterHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_ems_cloud ems_network cloud_tenant instances cloud_subnets external_gateway)
+      %i(parent_ems_cloud ems_network cloud_tenant instances cloud_subnets external_gateway floating_ips)
     )
   end
 
@@ -85,5 +85,9 @@ module NetworkRouterHelper::TextualSummary
 
   def textual_external_gateway
     textual_link(@record.cloud_network, :label => _('Cloud Network'))
+  end
+
+  def textual_floating_ips
+    textual_link(@record.floating_ips, :label => _('Floating Ips'))
   end
 end
