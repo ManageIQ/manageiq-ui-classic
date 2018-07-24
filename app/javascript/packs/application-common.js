@@ -7,6 +7,7 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import 'proxy-polyfill';
+import 'ng-redux';
 
 import { mount } from '../react/mounter';
 import componentRegistry from '../react/componentRegistry';
