@@ -194,6 +194,7 @@ describe ApplicationController do
       expect(assigns(:edit)[:new][:display]).to eq(false)
       expect(assigns(:edit)[:new][:button_icon]).to eq('fa fa-info')
       expect(assigns(:edit)[:new][:open_url]).to eq(false)
+      expect(assigns(:edit)[:new][:dialog_id]).to eq(nil)
 
       controller.instance_variable_set(:@sb,
                                        :trees       => {
@@ -212,6 +213,7 @@ describe ApplicationController do
       custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Vm", :visibility_expression => v_expression, :enablement_expression => e_expression, :options => {:display => false, :button_icon => "5"})
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
       custom_button.uri_attributes["request"] = "test_req"
+      custom_button.resource_action.dialog_id = 42
       custom_button.save
       controller.instance_variable_set(:@_params, :id => custom_button.id)
       controller.instance_variable_set(:@custom_button, custom_button)
@@ -225,6 +227,7 @@ describe ApplicationController do
       expect(assigns(:edit)[:new][:open_url]).to eq(false)
       expect(assigns(:edit)[:new][:enablement_expression]).to eq(e_expression.exp)
       expect(assigns(:edit)[:new][:visibility_expression]).to eq(v_expression.exp)
+      expect(assigns(:edit)[:new][:dialog_id]).to eq(42)
 
       controller.instance_variable_set(:@sb,
                                        :trees       => { :ab_tree => {:active_node => "xx-ab_Vm_cbg-10r96_cb-10r7"}},
@@ -303,6 +306,34 @@ describe ApplicationController do
 
       controller.send(:button_valid?, edit[:new])
       expect(assigns(:flash_array)).to match(flash_errors)
+    end
+  end
+
+  context "#automate_button_field_changed" do
+    let(:resource_action) { FactoryGirl.create(:resource_action, :dialog_id => 1) }
+    let(:button)          { FactoryGirl.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
+    before do
+      controller.instance_variable_set(:@custom_button, button)
+      allow(controller).to receive(:render).and_return(nil)
+      edit = {
+        :new           => {},
+        :current       => {},
+        :custom_button => button
+      }
+      controller.instance_variable_set(:@edit, edit)
+      session[:edit] = edit
+    end
+
+    it "sets dialog_id to id of selected dialog" do
+      controller.instance_variable_set(:@_params, {:id => button.id, :dialog_id => 42}.with_indifferent_access)
+      controller.send(:automate_button_field_changed)
+      expect(assigns(:edit)[:new][:dialog_id]).to eq(42)
+    end
+
+    it "sets dialog_id to nil if no dialog selected" do
+      controller.instance_variable_set(:@_params, "id" => button.id, "dialog_id" => "")
+      controller.send(:automate_button_field_changed)
+      expect(assigns(:edit)[:new][:dialog_id]).to eq(nil)
     end
   end
 end
