@@ -1361,6 +1361,16 @@ module ApplicationHelper
     end
   end
 
+  def plugin_name(engine)
+    start_marker = "ManageIQ::"
+    end_marker = "::Engine"
+    engine.to_s[/#{Regexp.escape(start_marker)}(.*?)#{Regexp.escape(end_marker)}/m, 1]
+  end
+
+  def vmdb_plugins_sha
+    Vmdb::Plugins.versions
+  end
+
   def user_role_name
     User.current_user.miq_user_role_name
   end

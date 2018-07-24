@@ -20,6 +20,13 @@
                 %strong
                   = session_info[0]
                 = session_info[1]
+          %strong
+            = _("Plugins")
+          %ul.list-unstyled{:style => "height: 40px;overflow: auto"}
+            - vmdb_plugins_sha.each do |engine, sha|
+              %div
+                = "#{plugin_name(engine)} #{sha}"
+
         .trademark-pf
           = I18n.t("product.copyright")
       .modal-footer
