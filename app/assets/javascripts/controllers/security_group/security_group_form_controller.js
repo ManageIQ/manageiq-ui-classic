@@ -106,7 +106,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
       }
     }
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", "All changes have been reset");
+    miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   vm.filterNetworkManagerChanged = miqService.getProviderTenants(function(data) {
