@@ -1120,8 +1120,8 @@ class ApplicationController < ActionController::Base
       @title = new_bc [:name] # Set the title to be the new breadcrumb
     end
 
-    # Modify user feedback for quick searches when not found
-    unless @search_text.blank?
+    # add @search_text to title for gtl screens only
+    if @search_text.present? && @display.nil?
       @title += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text}
     end
   end

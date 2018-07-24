@@ -15,6 +15,16 @@ describe FlavorController do
         is_expected.to render_template(:partial => "layouts/listnav/_flavor")
       end
     end
+
+    context "with @search_text set" do
+      render_views
+      it "doesn't render @search_text in summary screen" do
+        controller.instance_variable_set(:@search_text, 'search text')
+        get :show, :params => {:id => @flavor.id}
+        expect(response.body).not_to include('search text')
+        expect(controller.instance_variable_get(:@title)).not_to include('search text')
+      end
+    end
   end
 
   describe 'button' do
