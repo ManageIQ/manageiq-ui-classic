@@ -236,13 +236,13 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
         {
           id: 'name',
           title: __('Name'),
-          placeholder: 'Filter by Name...',
+          placeholder: __('Filter by Name...'),
           filterType: 'text'
         },
         {
           id: 'role',
           title: __('Role'),
-          placeholder: 'Filter by Role...',
+          placeholder: __('Filter by Role...'),
           filterType: 'select',
           filterValues: ['Unset', 'Master', 'Node', 'Storage', 'Load Balancer', 'DNS', 'Etcd', 'Infrastructure']
         }
