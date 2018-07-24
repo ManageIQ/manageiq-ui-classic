@@ -100,7 +100,7 @@
             :remote                => true,
             :class                 => 'btn btn-default',
             "data-method"          => :post,
-            :title                 => _('Click to change to a relative Date/Time format'))
+            :title                 => _('Click to change to a relative Date/Time format')) do
             %i.fa.fa-moon-o
         - else
           = link_to({:action => 'exp_changed', :date_format_1 => 's'},
@@ -109,7 +109,7 @@
             :remote                => true,
             :class                 => 'btn btn-default',
             "data-method"          => :post,
-            :title                 => _('Click to change to a specific Date/Time format'))
+            :title                 => _('Click to change to a specific Date/Time format')) do
             %i.fa.fa-calendar
 
       - else
