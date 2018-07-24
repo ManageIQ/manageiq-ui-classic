@@ -70,7 +70,7 @@ function cloudSubnetFormController(API, miqService) {
   vm.resetClicked = function(angularForm) {
     vm.cloudSubnetModel = angular.copy( vm.modelCopy );
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", _('All changes have been reset'));
+    miqService.miqFlash("warn", __('All changes have been reset'));
   };
 
   vm.filterNetworkManagerChanged = function(id) {
