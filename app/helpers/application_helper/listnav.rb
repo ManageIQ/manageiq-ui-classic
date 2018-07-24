@@ -52,6 +52,7 @@ module ApplicationHelper
         physical_rack
         physical_chassis
         physical_server
+        physical_storage
         physical_switch
         resource_pool
         security_group

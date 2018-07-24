@@ -125,6 +125,7 @@ module EmsCommon
         physical_chassis
         physical_servers_with_host
         physical_switches
+        physical_storages
         security_groups
         storage_managers
         storages

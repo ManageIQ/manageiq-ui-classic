@@ -515,6 +515,7 @@ class ApplicationHelper::ToolbarChooser
             physical_rack
             physical_server
             physical_switch
+            physical_storage
             resource_pool
             container_template
             ems_block_storage

@@ -9,7 +9,7 @@ module PhysicalRackHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ext_management_system physical_chassis physical_servers)
+      %i(ext_management_system physical_chassis physical_servers physical_storages)
     )
   end
 
@@ -31,5 +31,9 @@ module PhysicalRackHelper::TextualSummary
 
   def textual_physical_servers
     textual_link(@record.physical_servers)
+  end
+
+  def textual_physical_storages
+    textual_link(@record.physical_storages)
   end
 end

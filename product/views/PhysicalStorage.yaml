@@ -1,0 +1,63 @@
+#Report title
+title: Physical Storages
+
+#Menu name
+name: Physical Storage
+
+
+db: PhysicalStorage
+
+
+# Columns to fetch from main table
+cols:
+- name
+- type
+- health_state
+- power_state
+- asset_detail
+
+
+include:
+
+
+include_for_find:
+  :ext_management_system: {}
+
+
+col_order:
+- name
+- type
+- health_state
+- power_state
+- asset_detail.product_name
+- asset_detail.manufacturer
+
+col_formats:
+-
+- :model_name
+
+headers:
+- Name
+- Type
+- Health State
+- Power State
+- Product Name
+- Manufacturer
+
+
+conditions:
+
+
+order: Ascending
+
+
+sortby:
+- name
+
+group: n
+
+
+graph:
+
+
+dims:

@@ -27,6 +27,6 @@ class PhysicalChassisController < ApplicationController
   helper_method(:textual_group_list)
 
   def self.display_methods
-    %w(physical_servers)
+    %w(physical_storages physical_servers)
   end
 end

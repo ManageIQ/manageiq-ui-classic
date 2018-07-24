@@ -1158,6 +1158,7 @@ module ApplicationHelper
                         physical_rack
                         physical_chassis
                         physical_switch
+                        physical_storage
                         physical_server
                         persistent_volume
                         policy

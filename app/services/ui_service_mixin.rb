@@ -25,6 +25,7 @@ module UiServiceMixin
       :PhysicalRack            => {:type => "glyph", :class => 'pficon pficon-enterprise'},
       :PhysicalServer          => {:type => "glyph", :class => 'pficon pficon-server-group'},
       :PhysicalSwitch          => {:type => "glyph", :class => 'ff ff-network-switch'},
+      :PhysicalStorage         => {:type => "glyph", :class => 'pficon-container-node'},
       :SecurityGroup           => {:type => "glyph", :class => 'pficon pficon-cloud-security'},
       :Tag                     => {:type => "glyph", :class => 'fa fa-tag'},
       :Vm                      => {:type => "glyph", :class => 'pficon pficon-virtual-machine'},
