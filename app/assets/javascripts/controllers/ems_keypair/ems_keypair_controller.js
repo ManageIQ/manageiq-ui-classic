@@ -63,9 +63,10 @@
   };
 
   EmsKeypairController.prototype.showValidate = function(tab) {
-    var openstackAndNew = (this.model.emstype === 'openstack_infra') && this.newRecord;
+    var openstackInfraAndNew = (this.model.emstype === 'openstack_infra') && this.newRecord;
+    var openstackCloud = this.model.emstype === 'openstack';
     var rhevm = this.model.emstype === 'rhevm';
-    return ! ((openstackAndNew || rhevm) && tab === 'ssh_keypair');
+    return ! ((openstackInfraAndNew || openstackCloud || rhevm) && tab === 'ssh_keypair');
   };
 
   EmsKeypairController.$inject = ["$scope"];

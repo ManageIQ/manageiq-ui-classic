@@ -309,8 +309,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.emsCommonModel.emstype == "ec2" ||
        ['kubevirt', 'nuage_network', 'openstack', 'openstack_infra', 'rhevm', 'scvmm', 'vmwarews', 'vmware_cloud'].includes($scope.emsCommonModel.emstype) &&
        $scope.emsCommonModel.default_hostname) &&
-      ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
-       $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
+      ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid !== undefined && $scope.angularForm.default_userid.$valid &&
+       $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password !== undefined && $scope.angularForm.default_password.$valid)) {
       return true;
     } else if(($scope.currentTab == "amqp") &&
       ($scope.emsCommonModel.amqp_hostname) &&
@@ -331,7 +331,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
        $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid) &&
        ($scope.newRecord && $scope.angularForm.provider_region.$valid || ! $scope.newRecord)) {
       return true;
-    } else if(($scope.currentTab == "ssh_keypair" && $scope.emsCommonModel.emstype == "openstack_infra") &&
+    } else if(($scope.currentTab == "ssh_keypair" &&
+      ($scope.emsCommonModel.emstype == "openstack" || $scope.emsCommonModel.emstype == "openstack_infra")) &&
       ($scope.emsCommonModel.ssh_keypair_userid != '' && $scope.angularForm.ssh_keypair_userid.$valid &&
       $scope.emsCommonModel.ssh_keypair_password != '' && $scope.angularForm.ssh_keypair_password.$valid)) {
       return true;
