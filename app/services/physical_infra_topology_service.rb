@@ -6,6 +6,28 @@ class PhysicalInfraTopologyService < TopologyService
     :writable_classification_tags,
     :physical_racks    => [
       :writable_classification_tags,
+      :physical_chassis => [
+        :writable_classification_tags,
+        :physical_servers => [
+          :writable_classification_tags,
+          :physical_switches,
+          :host => [
+            :writable_classification_tags,
+            :vms => :writable_classification_tags
+          ]
+        ]
+      ],
+      :physical_servers => [
+        :writable_classification_tags,
+        :physical_switches,
+        :host => [
+          :writable_classification_tags,
+          :vms => :writable_classification_tags
+        ]
+      ]
+    ],
+    :physical_chassis  => [
+      :writable_classification_tags,
       :physical_servers => [
         :writable_classification_tags,
         :physical_switches,
@@ -28,7 +50,7 @@ class PhysicalInfraTopologyService < TopologyService
     ],
   ]
 
-  @kinds = %i(PhysicalInfraManager PhysicalRack PhysicalServer Host Vm Tag PhysicalSwitch)
+  @kinds = %i(PhysicalInfraManager PhysicalRack PhysicalChassis PhysicalServer Host Vm Tag PhysicalSwitch)
 
   def entity_type(entity)
     if entity.kind_of?(Host)
@@ -78,16 +100,16 @@ class PhysicalInfraTopologyService < TopologyService
     end
   end
 
-  # Decide whether or not to add an entity to the graph stack
-  def add_to_graph?(entity, links_index, links, parent_id)
-    return true if entity.kind_of?(Tag) || entity.kind_of?(PhysicalSwitch)
-
-    idx = links_index[entity_id(entity)]
-    # If a node has already been processed, change its parent rather than pushing to the stack
-    if idx
-      links[idx][:source] = parent_id
-      return false
+  # We don't allow a node to have more than one parent.
+  # The Physical Infra Topology must be a Tree without double links to the same node.
+  def filter_links(links)
+    has_parent = {}
+    links.reverse.each_with_object([]) do |link, filtered_links|
+      target = link[:target]
+      unless has_parent[target]
+        has_parent[target] = true
+        filtered_links << link
+      end
     end
-    true
   end
 end
