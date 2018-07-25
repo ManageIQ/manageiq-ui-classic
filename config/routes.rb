@@ -2895,6 +2895,7 @@ Rails.application.routes.draw do
         disassociate_floating_ip_form_fields
         add_security_group
         remove_security_group
+        rename_vm
         retire
         right_size
         show
@@ -2903,6 +2904,7 @@ Rails.application.routes.draw do
       :post => %w(
         edit_vm
         form_field_changed
+        name_changed
         policy_sim
         policy_sim_add
         policy_sim_remove
@@ -2915,6 +2917,7 @@ Rails.application.routes.draw do
         live_migrate_vm
         associate_floating_ip_vm
         disassociate_floating_ip_vm
+        rename_vm
         retire
         right_size
         set_checked_items
@@ -3077,6 +3080,7 @@ Rails.application.routes.draw do
         groups
         kernel_drivers
         linux_initprocesses
+        name_changed
         ownership_field_changed
         ownership_update
         patches
@@ -3091,11 +3095,13 @@ Rails.application.routes.draw do
         reconfigure_update
         registry_items
         reload
+        rename_vm
         retire
         scan_histories
         sections_field_changed
         security_groups
         show
+        show_list
         sort_ds_grid
         sort_host_grid
         sort_iso_img_grid
@@ -3172,6 +3178,7 @@ Rails.application.routes.draw do
         guest_applications
         kernel_drivers
         linux_initprocesses
+        name_changed
         ownership_field_changed
         ownership_update
         patches
@@ -3186,6 +3193,7 @@ Rails.application.routes.draw do
         reconfigure_update
         registry_items
         reload
+        rename_vm
         retire
         scan_histories
         sections_field_changed
