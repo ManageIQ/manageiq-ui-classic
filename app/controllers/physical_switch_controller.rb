@@ -31,13 +31,13 @@ class PhysicalSwitchController < ApplicationController
   def textual_group_list
     [
       %i(properties management_networks relationships),
-      %i(power_management firmware_details),
+      %i(power_management firmware_details connected_components),
     ]
   end
   helper_method(:textual_group_list)
 
   def self.display_methods
-    %w(physical_switches physical_network_ports)
+    %w(physical_switches physical_network_ports physical_servers)
   end
 
   def display_physical_network_ports
