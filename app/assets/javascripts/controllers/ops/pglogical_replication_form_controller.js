@@ -113,7 +113,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       $scope.pglogicalReplicationModel.user          = subscription.user;
       $scope.pglogicalReplicationModel.password      = subscription.password;
       $scope.pglogicalReplicationModel.port          = subscription.port;
-    } else if (confirm("An updated subscription must point to the same database with which it was originally created. Failure to do so will result in undefined behavior. Do you want to continue?")) {
+    } else if (confirm(__("An updated subscription must point to the same database with which it was originally created. Failure to do so will result in undefined behavior. Do you want to continue?"))) {
       $scope.pglogicalReplicationModel.s_index       = idx;
       $scope.pglogicalReplicationModel.updateEnabled = true;
       $scope.pglogicalReplicationModel.dbname        = subscription.dbname;
@@ -153,7 +153,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       $scope.pglogicalReplicationModel.subscriptions.splice(idx, 1);
       if (angular.equals($scope.pglogicalReplicationModel.subscriptions, $scope.modelCopy.subscriptions))
         $scope.angularForm.$setPristine(true);
-    } else if (confirm("Deleting a subscription will remove all replicated data which originated in the selected region. Do you want to continue?"))
+    } else if (confirm(__("Deleting a subscription will remove all replicated data which originated in the selected region. Do you want to continue?")))
       subscription.remove = true;
   };
 

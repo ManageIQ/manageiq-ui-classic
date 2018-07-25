@@ -38,7 +38,7 @@ ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService'
   vm.resetClicked = function(angularForm) {
     resetModel();
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", "All changes have been reset");
+    miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   function getVolumeFormDataComplete(response) {

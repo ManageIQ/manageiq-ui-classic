@@ -15,7 +15,7 @@ angular.module( 'patternfly.charts' ).controller( 'serverHealthPieChartControlle
       })
       .catch(miqService.handleFailure);
 
-    vm.title = "Servers Data";
+    vm.title = __("Servers Data");
     vm.dataAvailable = false;
     vm.timeframeLabel = __('Last 30 Days');
 

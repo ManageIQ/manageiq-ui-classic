@@ -110,7 +110,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   vm.resetClicked = function(angularForm) {
     vm.cloudVolumeModel = angular.copy(vm.modelCopy);
     angularForm.$setPristine(true);
-    miqService.miqFlash('warn', 'All changes have been reset');
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.storageManagerChanged = function(id) {
@@ -196,10 +196,10 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   var loadEBSVolumeTypes = function() {
     // This ia a fixed list of available cloud volume types for Amazon EBS.
     vm.awsVolumeTypes = [
-      { type: 'gp2', name: 'General Purpose SSD (GP2)' },
-      { type: 'io1', name: 'Provisioned IOPS SSD (IO1)' },
-      { type: 'st1', name: 'Throughput Optimized HDD (ST1)' },
-      { type: 'sc1', name: 'Cold HDD (SC1)' },
+      { type: 'gp2', name: __('General Purpose SSD (GP2)') },
+      { type: 'io1', name: __('Provisioned IOPS SSD (IO1)') },
+      { type: 'st1', name: __('Throughput Optimized HDD (ST1)') },
+      { type: 'sc1', name: __('Cold HDD (SC1)') },
     ];
 
     // Standard volume type is available only when creating new volume or editing
@@ -207,7 +207,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     // that the "Magnetic (standard)" option can be picked in the select that is
     // otherwise disabled.
     if (vm.newRecord || vm.cloudVolumeModel.aws_volume_type === 'standard') {
-      vm.awsVolumeTypes.push({ type: 'standard', name: 'Magnetic' });
+      vm.awsVolumeTypes.push({ type: 'standard', name: __('Magnetic') });
     }
   };
 

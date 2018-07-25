@@ -21,7 +21,7 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'pr
     });
 
     vm.dataAvailable = true;
-    vm.titleAlt = 'Utilization - Overriding Defaults';
+    vm.titleAlt = __('Utilization - Overriding Defaults');
     vm.legendLabels = ['< 60%', '70%', '70-80%', '80-90%', '> 90%'];
     vm.rangeTooltips = ['Memory Utilization < 70%<br\>40 Nodes', 'Memory Utilization 70-80%<br\>4 Nodes', 'Memory Utilization 80-90%<br\>4 Nodes', 'Memory Utilization > 90%<br\>4 Nodes'];
     vm.thresholds = [0.6, 0.7, 0.8, 0.9];
@@ -30,8 +30,8 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'pr
   };
 
   var heatmapTitles = {
-    "clusterCpuUsage": "CPU",
-    "clusterMemoryUsage": "Memory",
+    "clusterCpuUsage": __("CPU"),
+    "clusterMemoryUsage": __("Memory"),
   };
 
   var processHeatmapData = function(heatmapsStruct, data) {
