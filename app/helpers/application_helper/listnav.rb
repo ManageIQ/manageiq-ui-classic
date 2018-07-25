@@ -105,7 +105,7 @@ module ApplicationHelper
         link_to("#{name}: #{ent.name}",
                 link_params,
                 :title => _("Show this %{entity_name}'s parent %{linked_entity_name}") %
-                          {:entity_name        => record.class.name.demodulize.titleize,
+                          {:entity_name        => ui_lookup(:model => record.class.name.demodulize),
                            :linked_entity_name => name})
       end
     end
