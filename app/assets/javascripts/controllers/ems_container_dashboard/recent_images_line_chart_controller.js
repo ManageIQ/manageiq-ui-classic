@@ -23,6 +23,11 @@ angular.module( 'patternfly.charts' ).controller( 'recentImagesLineChartControll
         } else {
           vm.config = chartsMixin.chartConfig.hourlyImageUsageConfig;
         }
+
+        vm.data.image_metrics.xy_data.xData = vm.data.image_metrics.xy_data.xData.map(function(date) {
+          return chartsMixin.parseDate(date);
+        });
+
         vm.data = chartsMixin.processData(vm.data.image_metrics.xy_data, 'dates', __("Images"));
       }
       vm.loadingDone = true;

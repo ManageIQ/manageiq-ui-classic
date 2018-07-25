@@ -314,7 +314,7 @@ describe ContainerDashboardService do
             :percent  => 0.1
           }
         ],
-        :title=>"Node Utilization"
+        :title           => "Node Utilization"
       )
     end
   end
