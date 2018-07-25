@@ -102,4 +102,23 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
       ]
     ),
   ])
+  button_group('ems_cloud', [
+    twostate(
+      :view_dashboard,
+      'fa fa-tachometer fa-1xplus',
+      N_('Dashboard View'),
+      nil,
+      :url       => "/",
+      :url_parms => "?display=dashboard",
+      :klass     => ApplicationHelper::Button::ViewDashboard
+    ),
+    twostate(
+      :view_summary,
+      'fa fa-th-list',
+      N_('Summary View'),
+      nil,
+      :url       => "/",
+      :url_parms => "?display=main"
+    ),
+  ])
 end
