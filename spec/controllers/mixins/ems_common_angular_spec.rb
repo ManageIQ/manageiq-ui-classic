@@ -199,10 +199,9 @@ describe Mixins::EmsCommonAngular do
         @params[:cred_type] = "default"
         @ems_infra_controller.instance_variable_set(:@_params, @params)
 
-        expected_connect_options = [{:pass       => "v2:{XpADRTTI7f11hNT7AuDaKg==}",
-                                     :user       => "abc",
-                                     :ip         => "host_default",
-                                     :use_broker => false}]
+        expected_connect_options = [{:pass => "v2:{XpADRTTI7f11hNT7AuDaKg==}",
+                                     :user => "abc",
+                                     :ip   => "host_default"}]
         expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Vmware::InfraManager')).to eq(expected_connect_options)
       end
 
@@ -210,10 +209,9 @@ describe Mixins::EmsCommonAngular do
         @params[:cred_type] = "console"
         @ems_infra_controller.instance_variable_set(:@_params, @params)
 
-        expected_connect_options = [{:pass       => "v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
-                                     :user       => "xyz",
-                                     :ip         => "host_default",
-                                     :use_broker => false}]
+        expected_connect_options = [{:pass => "v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
+                                     :user => "xyz",
+                                     :ip   => "host_default"}]
         expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Vmware::InfraManager')).to eq(expected_connect_options)
       end
     end
