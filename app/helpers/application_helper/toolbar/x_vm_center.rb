@@ -35,6 +35,14 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           t = N_('Edit this VM'),
           t),
         button(
+          :vm_rename,
+          'pficon pficon-edit fa-lg',
+          t = N_('Rename this VM'),
+          t,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options => {:feature => :rename}
+        ),
+        button(
           :vm_ownership,
           'pficon pficon-user fa-lg',
           N_('Set Ownership for this VM'),
