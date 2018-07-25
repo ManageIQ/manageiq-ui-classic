@@ -67,8 +67,12 @@ class PhysicalInfraTopologyService < TopologyService
     case entity
     when ManageIQ::Providers::PhysicalInfraManager
       entity.authentications.blank? ? _('Unknown') : entity.authentications.first.status.try(:capitalize)
-    when PhysicalServer, PhysicalSwitch
+    when PhysicalServer, PhysicalSwitch, PhysicalStorage, PhysicalChassis
       entity.health_state ? entity.health_state : _('Unknown')
+    when Host
+      entity.state ? entity.state.downcase.capitalize : _('Unknown')
+    when Vm
+      entity.power_state ? entity.power_state.downcase.capitalize : _('Unknown')
     else
       _('Unknown')
     end
