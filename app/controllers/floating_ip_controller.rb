@@ -68,7 +68,7 @@ class FloatingIpController < ApplicationController
       else
         @in_a_form = true
         add_flash(_(FloatingIp.unsupported_reason(:create)), :error)
-        drop_breadcrumb(:name => _("Add New Floating Ip "), :url => "/floating_ip/new")
+        drop_breadcrumb(:name => _("Add New Floating IP "), :url => "/floating_ip/new")
         javascript_flash
       end
     end

@@ -88,6 +88,6 @@ module NetworkRouterHelper::TextualSummary
   end
 
   def textual_floating_ips
-    textual_link(@record.floating_ips, :label => _('Floating Ips'))
+    textual_link(@record.floating_ips, :label => _('Floating IPs'))
   end
 end
