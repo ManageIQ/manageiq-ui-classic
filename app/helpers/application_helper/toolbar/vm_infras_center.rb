@@ -190,13 +190,6 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
           :onwhen       => "1+",
           :klass        => ApplicationHelper::Button::BasicImage),
         button(
-          :vm_transform_mass,
-          'fa fa-random fa-lg',
-          t = N_('Transform tagged VMs to RHV'),
-          t,
-          :klass => ApplicationHelper::Button::MassTransformVmButton
-        ),
-        button(
           :vm_retire,
           'fa fa-clock-o fa-lg',
           N_('Set Retirement Dates for the selected items'),
