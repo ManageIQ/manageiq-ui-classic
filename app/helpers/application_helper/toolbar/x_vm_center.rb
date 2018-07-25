@@ -129,13 +129,6 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :migrate}),
         button(
-          :vm_transform,
-          'fa fa-random fa-lg',
-          t = N_('Transform this VM to RHV'),
-          t,
-          :klass => ApplicationHelper::Button::TransformVmButton
-        ),
-        button(
           :vm_retire,
           'fa fa-clock-o fa-lg',
           N_('Set Retirement Dates for this VM'),
