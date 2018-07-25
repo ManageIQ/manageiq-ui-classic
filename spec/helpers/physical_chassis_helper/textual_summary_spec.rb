@@ -48,6 +48,12 @@ describe PhysicalChassisHelper::TextualSummary do
     ]
   end
 
+  let(:physical_storages) do
+    [
+      FactoryGirl.create(:physical_storage, :name => 'Physical Storage A')
+    ]
+  end
+
   let(:physical_chassis) do
     FactoryGirl.create(:physical_chassis,
                        :ems_id                       => ems.id,
@@ -62,7 +68,8 @@ describe PhysicalChassisHelper::TextualSummary do
                        :blade_slot_count             => 16,
                        :powersupply_slot_count       => 1,
                        :physical_rack                => physical_rack,
-                       :physical_servers             => physical_servers)
+                       :physical_servers             => physical_servers,
+                       :physical_storages            => physical_storages)
   end
 
   before do
@@ -106,13 +113,13 @@ describe PhysicalChassisHelper::TextualSummary do
       expect(subject.title).to eq('Relationships')
     end
 
-    it 'shows 3 relationships' do
+    it 'shows 4 relationships' do
       expect(subject.items).to be_kind_of(Array)
-      expect(subject.items.size).to eq(3)
+      expect(subject.items.size).to eq(4)
     end
 
     it 'shows main relationships' do
-      expect(subject.items).to include(:ext_management_system, :physical_rack, :physical_servers)
+      expect(subject.items).to include(:ext_management_system, :physical_rack, :physical_servers, :physical_storages)
     end
   end
 
@@ -257,6 +264,19 @@ describe PhysicalChassisHelper::TextualSummary do
         :label => "Physical Servers",
         :value => "3",
         :icon  => "pficon pficon-server",
+        :image => nil
+      )
+    end
+  end
+
+  describe '.textual_physical_storages' do
+    subject { textual_physical_storages }
+
+    it 'show the chassis physical storages' do
+      expect(subject).to eq(
+        :label => "Physical Storages",
+        :value => "1",
+        :icon  => "pficon pficon-container-node",
         :image => nil
       )
     end
