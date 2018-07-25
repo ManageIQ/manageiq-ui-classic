@@ -64,9 +64,9 @@ module QuadiconHelper
     when "Critical"
       {:fonticon => "fa fa-exclamation", :color => '#cc0000', :tooltip => _('Critical health state')}
     when "Warning"
-      {:fileicon => "pficon pficon-warning-triangle-o", :tooltip => _('Health state warning')}
+      {:fonticon => "pficon pficon-warning-triangle-o", :tooltip => _('Health state warning')}
     else
-      {:fonticon => "pficon-unknown", :tooltip => _('Could not determine health state')}
+      {:fonticon => "pficon pficon-unknown", :tooltip => _('Could not determine health state')}
     end
   end
 
