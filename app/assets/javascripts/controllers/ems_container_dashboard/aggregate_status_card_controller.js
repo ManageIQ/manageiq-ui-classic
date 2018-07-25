@@ -4,14 +4,14 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
   var vm = this;
   var attributes = ["nodes", "containers", "registries", "projects", "pods", "services", "images", "routes"];
   var attrHsh = {
-    "nodes": "Nodes",
-    "containers": "Containers",
-    "registries": "Registries",
-    "projects": "Projects",
-    "pods": "Pods",
-    "services": "Services",
-    "images": "Images",
-    "routes": "Routes",
+    "nodes": __("Nodes"),
+    "containers": __("Containers"),
+    "registries": __("Registries"),
+    "projects": __("Projects"),
+    "pods": __("Pods"),
+    "services": __("Services"),
+    "images": _("Images"),
+    "routes": __("Routes"),
   };
 
   var attrIconHsh = {
