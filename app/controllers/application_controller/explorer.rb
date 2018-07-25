@@ -74,6 +74,7 @@ module ApplicationController::Explorer
     'disassociate_floating_ip' => :s2,
     'add_security_group'       => :s2,
     'remove_security_group'    => :s2,
+    'rename'                   => :s2,
 
     # specials
     'perf'         => :show,

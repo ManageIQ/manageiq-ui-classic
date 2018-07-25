@@ -1306,7 +1306,7 @@ module VmCommon
         elsif %w(attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
                  associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
-        elsif action != "retire" && action != "reconfigure_update" && !hide_x_edit_buttons(action)
+        elsif %w(reconfigure_update retire).exclude?(action) && !hide_x_edit_buttons(action)
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
         end
 
@@ -1572,6 +1572,10 @@ module VmCommon
       partial = "vm_common/reconfigure"
       header = _("Reconfigure %{vm_or_template}") % {:vm_or_template => ui_lookup(:table => table)}
       action = "reconfigure_update"
+    when "rename"
+      partial = 'vm_common/rename'
+      header = _("Renaming VM \"%{name}\"") % {:name => name}
+      action = 'rename_vm'
     when "resize"
       partial = "vm_common/resize"
       header = _("Reconfiguring %{vm_or_template} \"%{name}\"") %
@@ -1688,6 +1692,7 @@ module VmCommon
     @record = VmOrTemplate.find_by(:id => @edit[:vm_id])
     @edit[:new][:custom_1] = params[:custom_1] if params[:custom_1]
     @edit[:new][:description] = params[:description] if params[:description]
+    @edit[:new][:name] = params[:name] if params[:name]
     @edit[:new][:parent] = params[:chosen_parent].to_i if params[:chosen_parent]
     # if coming from explorer
     get_vm_child_selection if %w(allright left right).include?(params[:button])
