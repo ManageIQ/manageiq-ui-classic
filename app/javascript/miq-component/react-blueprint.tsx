@@ -29,7 +29,7 @@ export default (
   return {
     create(props, mountTo) {
       render(props, mountTo);
-      return { interact: mapPropsToInteract(props) };
+      return { interact: mapPropsToInteract(props), elementId: mountTo.id };
     },
 
     update(newProps, mountedTo) {

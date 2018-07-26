@@ -1,5 +1,5 @@
-import * as registry from '../miq-component/registry';
-import reactBlueprint from '../miq-component/react-blueprint';
+import * as registry from './registry.ts';
+import reactBlueprint from './react-blueprint.tsx';
 
 export function addReact(name, component) {
   return registry.define(name, reactBlueprint(component));
@@ -17,4 +17,18 @@ export function componentFactory(blueprintName, selector, props) {
 
 export function getReact(name) {
   return registry.getDefinition(name).blueprint.component;
+}
+
+/**
+ * @description Removes lingering React components in the virtual DOM
+ * if mounting element with generated ID is no longer in actual DOM,
+ * instance is destroyed and removed from virtual DOM
+ */
+export function cleanVirtualDom() {
+  registry.getComponentNames().forEach(name =>
+    registry.getComponentInstances(name).forEach((instance) => {
+      if (!document.getElementById(instance.elementId)) {
+        instance.destroy();
+      }
+    }));
 }
