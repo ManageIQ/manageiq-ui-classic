@@ -121,7 +121,8 @@ class ContainerDashboardService < DashboardService
       ui_type = provider_classes_to_ui_types[provider]
       (result[ui_type] ||= build_provider_status(ui_type))[:count] += count
     end
-    result.values
+    all_providers_info = @ems.present? ? nil : {:count => ManageIQ::Providers::ContainerManager.count, :href => '/ems_container/show_list'}
+    return result.values, all_providers_info
   end
 
   def alerts

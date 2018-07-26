@@ -36,23 +36,37 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
       .catch(miqService.handleFailure);
 
     $q.all([promiseProviderData]).then(function() {
-      var data = vm.provider.data.data
+      var data = vm.provider.data.data;
+      // count and href for all container providers
+      var all_providers_info = data.providers[1];
+
+      // icon/notifications and other info for providers
+      var providers_info = data.providers[0];
 
       vm.status = {
-        "iconImage": data.providers[0].iconImage,
+        "iconImage": providers_info[0].iconImage,
         "largeIcon": true,
         "notifications":[
           {
-            "iconImage": data.providers[0].statusIcon,
+            "iconImage": providers_info[0].statusIcon,
           },
         ],
       };
 
+      // show total providers count and link on Containers dashboard only
+      if(all_providers_info !== null && typeof all_providers_info.href !== 'undefined') {
+        vm.status["title"] = __("Providers");
+        vm.status["count"] = all_providers_info.count;
+        vm.status["href"] = all_providers_info.href;
+      }
+
       vm.alertStatus = {
-        "title": "Alerts",
+        "title": __("Alerts"),
         "notifications": [
           {
             "iconClass": data.alerts.notifications[0].iconClass,
+            "href": data.alerts.href,
+            "count": data.alerts.notifications[0].count,
           },
         ],
       };
