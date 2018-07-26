@@ -51,6 +51,8 @@ class StorageDecorator < MiqDecorator
       {:fonticon => 'ff ff-network-interface fa-rotate-180', :color => '#0099cc'}
     when 'iscsi'
       {:fonticon => 'ff ff-network-interface fa-rotate-180', :color => '#0099cc'}
+    when 'ntfs'
+      {:fileicon => 'svg/vendor-microsoft.svg'}
     when 'glusterfs'
       {:fileicon => 'svg/vendor-gluster.svg'}
     else
