@@ -11,6 +11,10 @@
         - if retirement_job
           = miq_tab_header("retirement") do
             = _("Retirement")
+      -if @record.type == "ServiceAnsibleTower"
+        - job = @record.try(:job)
+        = miq_tab_header("tower_job") do
+          = _("Job")
     .tab-content
       = miq_tab_content("details", 'default', :class => 'cm-tab') do
         = render :partial => "layouts/textual_groups_generic"
@@ -34,10 +38,17 @@
               = _('VMs')
             - if @view
               = render :partial => "layouts/gtl", :locals => {:view => @view, :no_flash_div => true}
+      - if @record.type == "ServiceAnsibleTower"
+        = miq_tab_content("tower_job", 'default', :class => 'cm-tab') do
+          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_tower_job_group_list, :tab_id => "tower_job"}
+          - if job
+            %ansible-raw-stdout#service_detail_ansible_tower_job{'task-id' => @record.job.raw_stdout_via_worker(nil, 'html')}
+            :javascript
+              miq_bootstrap('#service_detail_ansible_tower_job');
 
       - if @record.type == "ServiceAnsiblePlaybook"
         = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
-          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list}
+          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list, :tab_id => "provisioning"}
           - if provision_job
             %ansible-raw-stdout#service_detail_ansible_playbook{'task-id' => provision_job.raw_stdout_via_worker(nil, 'html')}
             :javascript
@@ -45,7 +56,7 @@
 
         - if retirement_job
           = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
-            = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list}
+            = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list, :tab_id => "retirement"}
             %ansible-raw-stdout#service_detail_job{'task-id' => retirement_job.raw_stdout_via_worker(nil, 'html')}
             :javascript
               miq_bootstrap('#service_detail_job');

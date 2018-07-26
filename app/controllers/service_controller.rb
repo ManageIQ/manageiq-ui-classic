@@ -215,7 +215,7 @@ class ServiceController < ApplicationController
   def textual_group_list
     if @item && @item.kind_of?(GenericObject)
       [%i(go_properties attribute_details_list methods)]
-    elsif @record.type == "ServiceAnsiblePlaybook"
+    elsif %w(ServiceAnsiblePlaybook ServiceAnsibleTower).include?(@record.type)
       [%i(properties miq_custom_attributes), %i(lifecycle tags generic_objects)]
     else
       [%i(properties lifecycle relationships generic_objects miq_custom_attributes), %i(vm_totals tags)]
@@ -232,6 +232,11 @@ class ServiceController < ApplicationController
     [%i(retirement_results retirement_plays), %i(retirement_details retirement_credentials)]
   end
   helper_method :textual_retirement_group_list
+
+  def textual_tower_job_group_list
+    [%i(tower_job_results tower_job_plays), %i(tower_job_details tower_job_credentials)]
+  end
+  helper_method :textual_tower_job_group_list
 
   def features
     [ApplicationController::Feature.new_with_hash(:role     => "service",
