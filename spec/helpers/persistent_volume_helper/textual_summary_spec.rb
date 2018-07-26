@@ -26,4 +26,17 @@ describe PersistentVolumeHelper::TextualSummary do
       expect(subject.options[:values]).to include(%w(storage 123456789), %w(foo something))
     end
   end
+
+  context "#textual_groups" do
+    before do
+      instance_variable_set(:@record, FactoryGirl.create(:persistent_volume))
+      allow(@record).to receive(:persistent_volume_claim).and_return(true)
+    end
+
+    include_examples "textual_group", "Relationships", %i(parent pods_using_persistent_volume)
+
+    include_examples "textual_group_smart_management"
+
+    include_examples "textual_group", "Volume Claim", %i(claim_name claim_creation_timestamp desired_access_modes), "claim_properties"
+  end
 end

@@ -14,4 +14,15 @@ describe SecurityGroupHelper::TextualSummary do
       expect(subject).to be_kind_of(Struct)
     end
   end
+
+  include_examples "textual_group", "Properties", %i(description type)
+
+  include_examples "textual_group", "Relationships", %i(
+    parent_ems_cloud
+    ems_network
+    cloud_tenant
+    instances
+    orchestration_stack
+    network_ports
+  )
 end

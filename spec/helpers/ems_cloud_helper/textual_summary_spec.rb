@@ -25,19 +25,30 @@ describe EmsCloudHelper::TextualSummary do
     end
   end
 
-  include_examples "textual_group", "Relationships", %i(
-    ems_infra
-    network_manager
-    availability_zones
-    host_aggregates
-    cloud_tenants
-    flavors
-    security_groups
-    instances
-    images
-    orchestration_stacks
-    storage_managers
-  )
-  include_examples "textual_group", "Properties", %i(provider_region hostname ipaddress type port guid region keystone_v3_domain_id)
-  include_examples "textual_group_smart_management", %i(zone)
+  context "#textual_groups" do
+    before do
+      instance_variable_set(:@record, FactoryGirl.create(:ems_cloud))
+      allow(self).to receive(:textual_authentications).and_return([])
+      allow(@record).to receive(:authentication_for_summary).and_return([])
+    end
+
+    include_examples "textual_group", "Relationships", %i(
+      ems_infra
+      network_manager
+      availability_zones
+      host_aggregates
+      cloud_tenants
+      flavors
+      security_groups
+      instances
+      images
+      orchestration_stacks
+      storage_managers
+    )
+    include_examples "textual_group", "Properties", %i(provider_region hostname ipaddress type port guid region keystone_v3_domain_id)
+
+    include_examples "textual_group", "Status", %i(refresh_status refresh_date)
+
+    include_examples "textual_group_smart_management", %i(zone)
+  end
 end

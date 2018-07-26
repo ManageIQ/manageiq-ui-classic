@@ -29,4 +29,6 @@ describe CatalogHelper::TextualSummary do
       expect(tag[:value].first).to eq(:icon => "fa fa-tag", :label => "Label", :value => ["Value"])
     end
   end
+
+  include_examples "textual_group_smart_management"
 end
