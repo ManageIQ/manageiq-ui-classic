@@ -70,7 +70,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       return true;
   }
 
-  var updateSubscriptionLists = function () {
+  var updateSubscriptionLists = function() {
     $scope.pglogicalReplicationModel.subscriptions.forEach(function(subscription, index, object) {
       if (subscription["remove"] === true ) {
         object.splice(index, 1);
@@ -160,7 +160,6 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       subscription.host     = $scope.pglogicalReplicationModel.host;
       subscription.user     = $scope.pglogicalReplicationModel.user;
       subscription.port     = $scope.pglogicalReplicationModel.port;
-
     }
     $scope.pglogicalReplicationModel.addEnabled = false;
     $scope.pglogicalReplicationModel.updateEnabled = false;

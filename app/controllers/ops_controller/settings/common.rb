@@ -175,12 +175,16 @@ module OpsController::Settings::Common
     javascript_miq_button_visibility(@edit[:new] != @edit[:current])
   end
 
+  def pglogical_get_exclusion_list
+    replication_type == :remote ? MiqPglogical.new.active_excludes : MiqPglogical.default_excludes
+  end
+
   def pglogical_get_replication_data
     replication_type = MiqRegion.replication_type
     subscriptions = replication_type == :global ? PglogicalSubscription.all : []
     subscriptions = get_subscriptions_array(subscriptions) unless subscriptions.empty?
-    exclusion_list = replication_type == :remote ? MiqPglogical.new.active_excludes : MiqPglogical.default_excludes
-    return {:replication_type => replication_type, :subscriptions => subscriptions, :exclusion_list => exclusion_list}
+    exclusion_list = pglogical_get_exclusion_list
+    {:replication_type => replication_type, :subscriptions => subscriptions, :exclusion_list => exclusion_list}
   end
 
   def pglogical_subscriptions_form_fields
@@ -236,7 +240,6 @@ module OpsController::Settings::Common
         end
       end
     end
-    #javascript_flash(:spinner_off => true)
     change_tab("settings_replication")
   end
 
