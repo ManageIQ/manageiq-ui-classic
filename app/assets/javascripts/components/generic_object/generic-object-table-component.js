@@ -99,7 +99,7 @@ function genericObjectTableController($timeout) {
 
     if (_.includes(vm.uniqueProperty(), possibleDupeKey)
       || _.includes(getCurrentUniqueArrayValues(possibleDupeKey), possibleDupeKey)) {
-      vm.dupicatePropertyError[dupeErrorIndex] = __(sprintf('Property Name "%s" is not unique', possibleDupeKey));
+      vm.dupicatePropertyError[dupeErrorIndex] = sprintf(__('Property Name "%s" is not unique'), possibleDupeKey);
       cellElement.$setValidity("duplicateProperty", false);
     } else {
       cellElement.$setValidity("duplicateProperty", true);
