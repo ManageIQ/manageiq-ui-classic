@@ -26,6 +26,8 @@ module ApplicationHelper
         _("Automation Managers")
       when "catalogs"
         _("Catalogs")
+      when "cloud_topology"
+        _("Cloud Topology")
       when "configuration"
         _("My Settings")
       when "configuration_job"
