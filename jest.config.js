@@ -7,6 +7,7 @@ module.exports = {
   roots: ['app/javascript'],
   setupFiles: ['./config/jest.setup.js'],
   testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.(jsx?|tsx?)$',
+  testURL: 'http://localhost',
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
     '.(ts|tsx)': 'ts-jest'
