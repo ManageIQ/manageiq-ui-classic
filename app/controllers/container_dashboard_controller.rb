@@ -9,6 +9,7 @@ class ContainerDashboardController < ApplicationController
   after_action :set_session_data
 
   def show
+    @lastaction = "show_dashboard"
     if params[:id].nil?
       @breadcrumbs.clear
     end
@@ -21,6 +22,26 @@ class ContainerDashboardController < ApplicationController
   def data
     return data_live if params[:live] == 'true'
     render :json => {:data => collect_data(params[:id])}
+  end
+
+  def heatmaps_data
+    render :json => {:data => collect_heatmaps_data(params[:id])}
+  end
+
+  def ems_utilization_data
+    render :json => {:data => collect_ems_utilization_data(params[:id])}
+  end
+
+  def network_metrics_data
+    render :json => {:data => collect_network_metrics_data(params[:id])}
+  end
+
+  def pod_metrics_data
+    render :json => {:data => collect_pod_metrics_data(params[:id])}
+  end
+
+  def image_metrics_data
+    render :json => {:data => collect_image_metrics_data(params[:id])}
   end
 
   def data_live
@@ -47,6 +68,26 @@ class ContainerDashboardController < ApplicationController
 
   def collect_data(provider_id)
     ContainerDashboardService.new(provider_id, self).all_data
+  end
+
+  def collect_heatmaps_data(provider_id)
+    ContainerDashboardService.new(provider_id, self).all_heatmaps_data
+  end
+
+  def collect_ems_utilization_data(provider_id)
+    ContainerDashboardService.new(provider_id, self).ems_utilization_data
+  end
+
+  def collect_network_metrics_data(provider_id)
+    ContainerDashboardService.new(provider_id, self).network_metrics_data
+  end
+
+  def collect_pod_metrics_data(provider_id)
+    ContainerDashboardService.new(provider_id, self).pod_metrics_data
+  end
+
+  def collect_image_metrics_data(provider_id)
+    ContainerDashboardService.new(provider_id, self).image_metrics_data
   end
 
   def collect_live_data(provider_id, query)

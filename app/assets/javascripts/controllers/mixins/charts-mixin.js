@@ -1,18 +1,10 @@
-angular.module('miq.util').factory('containerChartsMixin', ['pfUtils', function(pfUtils) {
+angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', function($document, pfUtils) {
   'use strict';
 
   var dailyTimeTooltip = function(data) {
     var theMoment = moment(data[0].x);
     return _.template('<div class="tooltip-inner"><%- col1 %>  <%- col2 %></div>')({
       col1: theMoment.format('MM/DD/YYYY'),
-      col2: data[0].value + ' ' + data[0].name,
-    });
-  };
-
-  var hourlyTimeTooltip = function(data) {
-    var theMoment = moment(data[0].x);
-    return _.template('<div class="tooltip-inner"><%- col1 %>: <%- col2 %></div>')({
-      col1: theMoment.format('h:mm A'),
       col2: data[0].value + ' ' + data[0].name,
     });
   };
@@ -33,6 +25,14 @@ angular.module('miq.util').factory('containerChartsMixin', ['pfUtils', function(
     });
   };
 
+  var hourlyTimeTooltip = function(data) {
+    var theMoment = moment(data[0].x);
+    return _.template('<div class="tooltip-inner"><%- col1 %>: <%- col2 %></div>')({
+      col1: theMoment.format('h:mm A'),
+      col2: data[0].value + ' ' + data[0].name,
+    });
+  };
+
   var lineChartTooltipPositionFactory = function(chartId) {
     var elementQuery = '#' + chartId + 'lineChart';
 
@@ -40,8 +40,8 @@ angular.module('miq.util').factory('containerChartsMixin', ['pfUtils', function(
       try {
         var center = parseInt(element.getAttribute('x'), 10);
         var top = parseInt(element.getAttribute('y'), 10);
-        var chartBox = document.querySelector(elementQuery).getBoundingClientRect();
-        var graphOffsetX = document.querySelector(elementQuery + ' g.c3-axis-y').getBoundingClientRect().right;
+        var chartBox = $document[0].querySelector(elementQuery).getBoundingClientRect();
+        var graphOffsetX = $document[0].querySelector(elementQuery + ' g.c3-axis-y').getBoundingClientRect().right;
 
         var x = Math.max(0, center + graphOffsetX - chartBox.left - Math.floor(width / 2));
 
@@ -59,135 +59,155 @@ angular.module('miq.util').factory('containerChartsMixin', ['pfUtils', function(
     cpuUsageConfig: {
       chartId: 'cpuUsageChart',
       title: __('CPU'),
-      timeFrame: __('Last 30 Days'),
       units: __('Cores'),
       usageDataName: __('Used'),
       legendLeftText: __('Last 30 Days'),
       legendRightText: '',
       numDays: 30,
     },
+    cpuUsageSparklineConfig: {
+      tooltipFn: dailyTimeTooltip,
+      chartId: 'cpuSparklineChart',
+      units: __('Cores'),
+    },
+    cpuUsageDonutConfig: {
+      chartId: 'cpuDonutChart',
+      thresholds: { 'warning': '60', 'error': '90' },
+    },
     memoryUsageConfig: {
-      chartId: 'memoryUsageChart',
+      chartId: 'memUsageChart',
       title: __('Memory'),
-      timeFrame: __('Last 30 Days'),
       units: __('GB'),
       usageDataName: __('Used'),
       legendLeftText: __('Last 30 Days'),
       legendRightText: '',
       numDays: 30,
     },
+    memoryUsageSparklineConfig: {
+      tooltipFn: dailyTimeTooltip,
+      chartId: 'memorySparklineChart',
+      units: __('GB'),
+    },
+    memoryUsageDonutConfig: {
+      chartId: 'memoryDonutChart',
+      thresholds: { 'warning': '60', 'error': '90' },
+    },
+    recentHostsConfig: {
+      chartId: 'recentHostsChart',
+      headTitle: __('Recent Hosts'),
+      label: __('Hosts'),
+      tooltip: {
+        contents: dailyTimeTooltip,
+        position: lineChartTooltipPositionFactory('recentHostsChart'),
+      },
+      point: {r: 1},
+      size: {height: 145},
+      grid: {y: {show: false}},
+      setAreaChart: true,
+    },
+    recentVmsConfig: {
+      chartId: 'recentVmsChart',
+      headTitle: __('Recent VMs'),
+      label: __('VMs'),
+      tooltip: {
+        contents: dailyTimeTooltip,
+        position: lineChartTooltipPositionFactory('recentVmsChart'),
+      },
+      point: {r: 1},
+      size: {height: 145},
+      grid: {y: {show: false}},
+      setAreaChart: true,
+    },
     dailyNetworkUsageConfig: {
-      chartId  : 'networkUsageDailyChart',
+      chartId: 'networkUsageDailyChart',
       headTitle: __('Network Utilization Trend'),
       timeFrame: __('Last 30 Days'),
-      units    : __('KBps'),
-      dataName : __('KBps'),
-      tooltipFn  : dailyTimeTooltip,
+      units: __('KBps'),
+      dataName: __('KBps'),
+      tooltipFn: dailyTimeTooltip,
     },
     hourlyNetworkUsageConfig: {
-      chartId  : 'networkUsageHourlyChart',
+      chartId: 'networkUsageHourlyChart',
       headTitle: __('Network Utilization Trend'),
       timeFrame: __('Last 24 Hours'),
-      units    : __('KBps'),
-      dataName : __('KBps'),
-      tooltipFn  : hourlyTimeTooltip,
+      units: __('KBps'),
+      dataName: __('KBps'),
+      tooltipFn: hourlyTimeTooltip,
     },
     dailyPodUsageConfig: {
-      chartId     : 'podUsageDailyChart',
-      headTitle   : __('Pod Creation and Deletion Trends'),
-      timeFrame   : __('Last 30 days'),
+      chartId: 'podUsageDailyChart',
+      headTitle: __('Pod Creation and Deletion Trends'),
+      timeFrame: __('Last 30 days'),
       createdLabel: __('Created'),
       deletedLabel: __('Deleted'),
-      tooltip     : {
+      tooltip: {
         contents: dailyPodTimeTooltip,
         position: lineChartTooltipPositionFactory('podUsageDailyChart'),
       },
-      point       : {r: 1},
-      size        : {height: 145},
-      color       : {pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green]},
-      grid        : {y: {show: false}},
+      point: {r: 1},
+      size: {height: 145},
+      color: {pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green]},
+      grid: {y: {show: false}},
       setAreaChart: true,
     },
     hourlyPodUsageConfig: {
-      chartId     : 'podUsageHourlyChart',
-      headTitle   : __('Pod Creation and Deletion Trends'),
-      timeFrame   : __('Last 24 hours'),
+      chartId: 'podUsageHourlyChart',
+      headTitle: __('Pod Creation and Deletion Trends'),
+      timeFrame: __('Last 24 hours'),
       createdLabel: __('Created'),
       deletedLabel: __('Deleted'),
-      tooltip     : {
+      tooltip: {
         contents: hourlyPodTimeTooltip,
         position: lineChartTooltipPositionFactory('podUsageHourlyChart'),
       },
-      point       : {r: 1},
-      size        : {height: 145},
-      color       : {pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green]},
-      grid        : {y: {show: false}},
+      point: {r: 1},
+      size: {height: 145},
+      color: {pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green]},
+      grid: {y: {show: false}},
       setAreaChart: true,
     },
     dailyImageUsageConfig: {
-      chartId     : 'imageUsageDailyChart',
-      headTitle   : __('New Image Usage Trend'),
-      timeFrame   : __('Last 30 days'),
+      chartId: 'imageUsageDailyChart',
+      headTitle: __('New Image Usage Trend'),
+      timeFrame: __('Last 30 days'),
       createdLabel: __('Images'),
-      tooltip     : {
+      tooltip: {
         contents: dailyTimeTooltip,
         position: lineChartTooltipPositionFactory('imageUsageDailyChart'),
       },
-      point       : {r: 1},
-      size        : {height: 93},
-      grid        : {y: {show: false}},
+      point: {r: 1},
+      size: {height: 93},
+      grid: {y: {show: false}},
       setAreaChart: true,
     },
     hourlyImageUsageConfig: {
-      chartId     : 'imageUsageHourlyChart',
-      headTitle   : __('New Image Usage Trend'),
-      timeFrame   : __('Last 24 hours'),
+      chartId: 'imageUsageHourlyChart',
+      headTitle: __('New Image Usage Trend'),
+      timeFrame: __('Last 24 hours'),
       createdLabel: __('Images'),
       tooltip     : {
         contents: hourlyTimeTooltip,
         position: lineChartTooltipPositionFactory('imageUsageHourlyChart'),
       },
-      point       : {r: 1},
-      size        : {height: 93},
-      grid        : {y: {show: false}},
+      point: {r: 1},
+      size: {height: 93},
+      grid: {y: {show: false}},
       setAreaChart: true,
     },
   };
 
-  var processHeatmapData = function(heatmapsStruct, data) {
-    if (data) {
-      var heatmapsStructData = data.map(function(d) {
-        var percent = -1;
-        var tooltip = __('Node: ') + d.node + '<br>' + __('Provider: ') + d.provider;
-        if (d.percent === null || d.total === null) {
-          tooltip += '<br> ' + __('Usage: Unknown');
-        } else {
-          percent = d.percent;
-          tooltip += '<br>' + __('Usage: ') + sprintf(__('%d%% in use of %d total'), (percent * 100).toFixed(0), d.total);
-        }
-
-        return {
-          'id': d.id,
-          'tooltip': tooltip,
-          'value': percent,
-        };
-      });
-      heatmapsStruct.data = _.sortBy(heatmapsStructData, 'value').reverse();
-    } else  {
-      heatmapsStruct.data = [];
-      heatmapsStruct.dataAvailable = false;
-    }
-
-    return heatmapsStruct;
+  var parseDate = function(date) {
+    var myDate = Date.parse(date);
+    return isNaN(myDate) ? date : myDate;
   };
 
-  var processUtilizationData = function(data, xDataLabel, yDataLabel) {
+  var processData = function(data, xDataLabel, yDataLabel) {
     if (! data) {
       return { dataAvailable: false };
     }
-
     data.xData.unshift(xDataLabel);
-    data.yData.unshift(yDataLabel);
+    if (data.yData !== undefined)
+      data.yData.unshift(yDataLabel);
     return data;
   };
 
@@ -206,9 +226,9 @@ angular.module('miq.util').factory('containerChartsMixin', ['pfUtils', function(
     dashboardHeatmapChartHeight: 90,
     nodeHeatMapUsageLegendLabels: ['< 70%', '70-80%', '80-90%', '> 90%'],
     chartConfig: chartConfig,
-    processHeatmapData: processHeatmapData,
-    processUtilizationData: processUtilizationData,
+    parseDate: parseDate,
     processPodUtilizationData: processPodUtilizationData,
+    processData: processData,
     dailyTimeTooltip: dailyTimeTooltip,
     hourlyTimeTooltip: hourlyTimeTooltip,
   };

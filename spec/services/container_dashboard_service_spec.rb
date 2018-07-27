@@ -11,7 +11,7 @@ describe ContainerDashboardService do
     it "filters containers providers with zero entity count and sorts providers by type correctly" do
       FactoryGirl.create(:ems_openshift, :hostname => "test2.com")
 
-      providers_data = ContainerDashboardService.new(nil, nil).providers
+      providers_data = ContainerDashboardService.new(nil, nil).providers[0]
 
       # Kubernetes should not appear
       providers_data.each do |p|
@@ -146,6 +146,7 @@ describe ContainerDashboardService do
       heatmaps_single_provider = described_class.new(ems_openshift, controller).heatmaps
 
       expect(heatmaps_all_providers).to eq(
+        :title           => "Node Utilization",
         :nodeCpuUsage    => [
           {
             :id       => @node1.id,
@@ -209,6 +210,7 @@ describe ContainerDashboardService do
       )
 
       expect(heatmaps_single_provider).to eq(
+        :title           => "Node Utilization",
         :nodeCpuUsage    => [
           {
             :id       => @node1.id,
@@ -248,8 +250,8 @@ describe ContainerDashboardService do
       ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
       heatmaps_all_providers = described_class.new(nil, controller).heatmaps
       heatmaps_single_provider = described_class.new(ems_openshift.id, controller).heatmaps
-      expect(heatmaps_all_providers).to eq(:nodeCpuUsage => nil, :nodeMemoryUsage => nil)
-      expect(heatmaps_single_provider).to eq(:nodeCpuUsage => nil, :nodeMemoryUsage => nil)
+      expect(heatmaps_all_providers).to eq(:nodeCpuUsage => nil, :nodeMemoryUsage => nil, :title => "Node Utilization")
+      expect(heatmaps_single_provider).to eq(:nodeCpuUsage => nil, :nodeMemoryUsage => nil, :title => "Node Utilization")
     end
 
     # BZ: https://bugzilla.redhat.com/show_bug.cgi?id=1439671
@@ -311,7 +313,8 @@ describe ContainerDashboardService do
             :total    => 8192,
             :percent  => 0.1
           }
-        ]
+        ],
+        :title           => "Node Utilization"
       )
     end
   end

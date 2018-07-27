@@ -16,6 +16,7 @@ module ContainerServiceMixin
 
     if daily_pod_create_trend.size > 1
       {
+        :dataAvailable => true,
         :interval_name => "daily",
         :xy_data       => create_delete_data(daily_pod_create_trend, daily_pod_delete_trend)
       }
@@ -23,7 +24,7 @@ module ContainerServiceMixin
   end
 
   def pod_metrics
-    daily_pod_metrics || hourly_pod_metrics
+    daily_pod_metrics || hourly_pod_metrics || empty_metrics_data
   end
 
   def fill_pod_metrics(m, time, pod_create_trend, pod_delete_trend)
@@ -40,6 +41,7 @@ module ContainerServiceMixin
     end
 
     {
+      :dataAvailable => true,
       :interval_name => "hourly",
       :xy_data       => create_delete_data(hourly_pod_create_trend, hourly_pod_delete_trend)
     }
@@ -84,6 +86,7 @@ module ContainerServiceMixin
 
     if realtime_metrics.size > 1
       {
+        :dataAvailable => true,
         :interval_name => "realtime",
         :xy_data       => trend_data(realtime_network_metrics)
       }
@@ -99,6 +102,7 @@ module ContainerServiceMixin
 
     if hourly_network_metrics.size > 1
       {
+        :dataAvailable => true,
         :interval_name => "hourly",
         :xy_data       => trend_data(hourly_network_metrics)
       }
@@ -107,6 +111,7 @@ module ContainerServiceMixin
 
   def empty_utilization_trend_data
     {
+      :dataAvailable => false,
       :interval_name => "",
       :xy_data       => {:cpu => nil, :memory => nil}
     }
@@ -114,6 +119,7 @@ module ContainerServiceMixin
 
   def empty_network_trend_data
     {
+      :dataAvailable => false,
       :interval_name => "",
       :xy_data       => nil
     }
@@ -128,6 +134,7 @@ module ContainerServiceMixin
 
     if daily_network_metrics.size > 1
       {
+        :dataAvailable => true,
         :interval_name => "daily",
         :xy_data       => trend_data(daily_network_metrics)
       }

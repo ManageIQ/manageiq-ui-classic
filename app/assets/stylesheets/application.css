@@ -12,7 +12,6 @@
  *= require bower_components/codemirror/lib/codemirror
  *= require bower_components/codemirror/theme/eclipse
  *= require bower_components/kubernetes-topology-graph/dist/topology-graph
- *= require ./container_providers_dashboard
  *= require ./wizard
  *= require ./timeline
  *= require ./topology
