@@ -41,6 +41,78 @@ describe DialogLocalService do
     let(:button_name) { "custom-button-name" }
     let(:resource_action) { instance_double("ResourceAction", :id => 321, :dialog_id => 654) }
 
+    context "when the object is a AvailabilityZone" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::AvailabilityZone, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'availability_zone',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/availability_zones/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/availability_zone",
+          :cancel_endpoint        => "/availability_zone"
+        )
+      end
+    end
+
+    context "when the object is a CloudNetwork" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudNetwork, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'cloud_network',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/cloud_networks/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/cloud_network",
+          :cancel_endpoint        => "/cloud_network"
+        )
+      end
+    end
+
+    context "when the object is a CloudObjectStoreContainer" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudObjectStoreContainer, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'cloud_object_store_container',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/cloud_object_store_containers/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/cloud_object_store_container",
+          :cancel_endpoint        => "/cloud_object_store_container"
+        )
+      end
+    end
+
+    context "when the object is a CloudSubnet" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudSubnet, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'cloud_subnet',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/cloud_subnets/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/cloud_subnet",
+          :cancel_endpoint        => "/cloud_subnet"
+        )
+      end
+    end
+
     context "when the object is a CloudTenant" do
       let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudTenant, :id => 123) }
 
@@ -77,6 +149,42 @@ describe DialogLocalService do
       end
     end
 
+    context "when the object is a ContainerGroup" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerGroup, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'container_group',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/container_groups/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/container_group",
+          :cancel_endpoint        => "/container_group"
+        )
+      end
+    end
+
+    context "when the object is a ContainerImage" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerImage, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'container_image',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/container_images/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/container_image",
+          :cancel_endpoint        => "/container_image"
+        )
+      end
+    end
+
     context "when the object is a ContainerNode" do
       let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerNode, :id => 123) }
 
@@ -91,6 +199,60 @@ describe DialogLocalService do
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/container_node",
           :cancel_endpoint        => "/container_node"
+        )
+      end
+    end
+
+    context "when the object is a ContainerProject" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerProject, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'container_project',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/container_projects/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/container_project",
+          :cancel_endpoint        => "/container_project"
+        )
+      end
+    end
+
+    context "when the object is a ContainerTemplate" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerTemplate, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'container_template',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/container_templates/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/container_template",
+          :cancel_endpoint        => "/container_template"
+        )
+      end
+    end
+
+    context "when the object is a ContainerVolume" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerVolume, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'container_volume',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/container_volumes/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/container_volume",
+          :cancel_endpoint        => "/container_volume"
         )
       end
     end
@@ -167,20 +329,74 @@ describe DialogLocalService do
       end
     end
 
-    context "when the object is a Template" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Template, :id => 123) }
+    context "when the object is a LoadBalancer" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::LoadBalancer, :id => 123) }
 
       it "returns a hash" do
         expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
           :resource_action_id     => 321,
           :target_id              => 123,
-          :target_type            => 'miq_template',
+          :target_type            => 'load_balancer',
           :dialog_id              => 654,
           :force_old_dialog_use   => false,
-          :api_submit_endpoint    => "/api/templates/123",
+          :api_submit_endpoint    => "/api/load_balancers/123",
           :api_action             => "custom-button-name",
-          :finish_submit_endpoint => "/vm_or_template/explorer",
-          :cancel_endpoint        => "/vm_or_template/explorer"
+          :finish_submit_endpoint => "/load_balancer",
+          :cancel_endpoint        => "/load_balancer"
+        )
+      end
+    end
+
+    context "when the object is a NetworkRouter" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::NetworkRouter, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'network_router',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/network_routers/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/network_router",
+          :cancel_endpoint        => "/network_router"
+        )
+      end
+    end
+
+    context "when the object is an OrchestrationStack" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::OrchestrationStack, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'orchestration_stack',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/orchestration_stacks/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/orchestration_stack",
+          :cancel_endpoint        => "/orchestration_stack"
+        )
+      end
+    end
+
+    context "when the object is a SecurityGroup" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::SecurityGroup, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'security_group',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/security_groups/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/security_group",
+          :cancel_endpoint        => "/security_group"
         )
       end
     end
@@ -253,6 +469,42 @@ describe DialogLocalService do
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/storage/explorer",
           :cancel_endpoint        => "/storage/explorer"
+        )
+      end
+    end
+
+    context "when the object is a Switch" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Switch, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'switch',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/switches/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/infra_networking/explorer",
+          :cancel_endpoint        => "/infra_networking/explorer"
+        )
+      end
+    end
+
+    context "when the object is a Template" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Template, :id => 123) }
+
+      it "returns a hash" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
+          :resource_action_id     => 321,
+          :target_id              => 123,
+          :target_type            => 'miq_template',
+          :dialog_id              => 654,
+          :force_old_dialog_use   => false,
+          :api_submit_endpoint    => "/api/templates/123",
+          :api_action             => "custom-button-name",
+          :finish_submit_endpoint => "/vm_or_template/explorer",
+          :cancel_endpoint        => "/vm_or_template/explorer"
         )
       end
     end
