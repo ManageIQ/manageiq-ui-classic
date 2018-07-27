@@ -155,7 +155,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
         break;
 
       default:
-        vm.cloudVolumeModel.aws_iops = 'Not Applicable';
+        vm.cloudVolumeModel.aws_iops = __('Not Applicable');
         break;
     }
   };
