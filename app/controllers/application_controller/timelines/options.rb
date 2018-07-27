@@ -36,16 +36,28 @@ module ApplicationController::Timelines
     def update_from_params(params)
       self.levels = params[:tl_levels]&.map(&:to_sym) || group_levels
       self.categories = {}
-      if params[:tl_categories]
-        params[:tl_categories].each do |category|
-          event_group = event_groups[events[category]].clone
-          next unless event_group.keys.include_any?(levels)
-          categories[events[category]] = {:display_name => category}
-          unless levels.include_all?(event_group.keys)
-            event_group.delete_if { |key, _v| !levels.include?(key) }
+      params.fetch(:tl_categories, []).each do |category_display_name|
+        group_data = event_groups[events[category_display_name]]
+        category = {
+          :display_name => category_display_name,
+          :include_set  => [],
+          :exclude_set  => [],
+          :regexes      => []
+        }
+
+        group_levels.each do |lvl|
+          next unless group_data[lvl]
+          strings, regexes = group_data[lvl].partition { |typ| typ.kind_of?(String) }
+          if levels.include?(lvl)
+            category[:include_set].push(*strings)
+            category[:regexes].push(*regexes)
+          else
+            category[:exclude_set].push(*strings)
           end
-          categories[events[category]][:event_groups] = event_group.values.flatten
         end
+        next if category[:include_set].empty? && category[:regexes].empty?
+
+        categories[events[category_display_name]] = category
       end
     end
 
@@ -54,14 +66,6 @@ module ApplicationController::Timelines
         gname, list = egroup
         hash[list[:name].to_s] = gname
       end
-    end
-
-    def event_set
-      event_set = []
-      categories.each do |category|
-        event_set.push(category.last[:event_groups])
-      end
-      event_set
     end
 
     def drop_cache
@@ -90,10 +94,13 @@ module ApplicationController::Timelines
     def update_from_params(params)
       self.result = params[:tl_result] || "success"
       self.categories = {}
-      if params[:tl_categories]
-        params[:tl_categories].each do |category|
-          categories[category] = {:display_name => category, :event_groups => events[category]}
-        end
+      params.fetch(:tl_categories, []).each do |category|
+        categories[category] = {
+          :display_name => category,
+          :include_set  => events[category],
+          :exclude_set  => [],
+          :regexes      => []
+        }
       end
     end
 
@@ -106,11 +113,6 @@ module ApplicationController::Timelines
     def drop_cache
       @events = @fltr_cache = nil
     end
-
-    def event_set
-      categories.blank? ? [] : categories.collect { |_, e| e[:event_groups] }
-    end
-
   end
 
   Options = Struct.new(
@@ -139,12 +141,12 @@ module ApplicationController::Timelines
       management_events? ? :event_streams : :policy_events
     end
 
-    def event_set
-      (policy_events? ? policy : management).event_set
-    end
-
     def categories
       (policy_events? ? policy : management).categories
+    end
+
+    def get_set(name)
+      categories.values.flat_map { |v| v[name] }
     end
 
     def drop_cache

@@ -117,9 +117,36 @@ module ApplicationController::Timelines
   end
 
   def tl_add_event_type_conditions(conditions, parameters)
-    unless @tl_options.event_set.empty?
-      conditions << "event_type in (?)"
-      parameters << @tl_options.event_set.flatten
+    tl_add_event_type_inclusions(conditions, parameters)
+    tl_add_event_type_exclusions(conditions, parameters)
+  end
+
+  def tl_add_event_type_inclusions(conditions, parameters)
+    expressions = []
+    @tl_options.get_set(:regexes).each do |regex|
+      expressions << tl_get_regex_sql_expression(regex)
+      parameters << regex.source
+    end
+
+    includes = @tl_options.get_set(:include_set)
+    unless includes.empty?
+      expressions << "event_type in (?)"
+      parameters << includes
+    end
+
+    condition = expressions.join(") or (")
+    conditions << "(#{condition})" unless condition.empty?
+  end
+
+  def tl_get_regex_sql_expression(regex)
+    regex.casefold? ? "event_type ~* ?" : "event_type ~ ?"
+  end
+
+  def tl_add_event_type_exclusions(conditions, parameters)
+    excludes = @tl_options.get_set(:exclude_set)
+    unless excludes.empty?
+      conditions << "event_type not in (?)"
+      parameters << excludes
     end
   end
 

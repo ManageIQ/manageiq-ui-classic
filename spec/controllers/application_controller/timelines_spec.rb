@@ -47,8 +47,8 @@ describe ApplicationController, "#Timelines" do
         expect(controller).to receive(:render)
         controller.send(:tl_chooser)
         options = assigns(:tl_options)
-        expect(options.management[:categories][:power][:event_groups]).to include('AUTO_FAILED_SUSPEND_VM')
-        expect(options.management[:categories][:power][:event_groups]).to_not include('PowerOffVM_Task')
+        expect(options.management[:categories][:power][:include_set]).to include('AUTO_FAILED_SUSPEND_VM')
+        expect(options.management[:categories][:power][:include_set]).to_not include('PowerOffVM_Task')
       end
 
       it "selecting details option of the selectpicker in the timeline should append them to events filter list" do
@@ -60,8 +60,8 @@ describe ApplicationController, "#Timelines" do
         expect(controller).to receive(:render)
         controller.send(:tl_chooser)
         options = assigns(:tl_options)
-        expect(options.management[:categories][:power][:event_groups]).to include('PowerOffVM_Task')
-        expect(options.management[:categories][:power][:event_groups]).to_not include('AUTO_FAILED_SUSPEND_VM')
+        expect(options.management[:categories][:power][:include_set]).to_not include('AUTO_FAILED_SUSPEND_VM')
+        expect(options.management[:categories][:power][:include_set]).to include('PowerOffVM_Task')
       end
 
       it "selecting two options of the selectpicker in the timeline should append both to events filter list" do
@@ -73,8 +73,8 @@ describe ApplicationController, "#Timelines" do
         expect(controller).to receive(:render)
         controller.send(:tl_chooser)
         options = assigns(:tl_options)
-        expect(options.management[:categories][:power][:event_groups]).to include('AUTO_FAILED_SUSPEND_VM')
-        expect(options.management[:categories][:power][:event_groups]).to include('PowerOffVM_Task')
+        expect(options.management[:categories][:power][:include_set]).to include('AUTO_FAILED_SUSPEND_VM')
+        expect(options.management[:categories][:power][:include_set]).to include('PowerOffVM_Task')
       end
     end
   end
