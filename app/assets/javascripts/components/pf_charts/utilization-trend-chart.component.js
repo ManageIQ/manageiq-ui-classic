@@ -41,10 +41,10 @@ function utilizationTrendChartController() {
 
     if (vm.centerLabel === 'available') {
       vm.currentValue = vm.chartData.used;
-      vm.currentText = 'Used';
+      vm.currentText = __('Used');
     } else {
       vm.currentValue = vm.chartData.total - vm.chartData.used;
-      vm.currentText = 'Available';
+      vm.currentText = __('Available');
     }
   };
 

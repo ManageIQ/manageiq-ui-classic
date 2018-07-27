@@ -88,8 +88,8 @@ function donutPctChartController(pfUtils) {
   vm.getDonutData = function() {
     return {
       columns: [
-        ['Used', vm.data.used],
-        ['Available', vm.data.available],
+        [__('Used'), vm.data.used],
+        [__('Available'), vm.data.available],
       ],
       type: 'donut',
       donut: {
@@ -109,7 +109,7 @@ function donutPctChartController(pfUtils) {
 
     // default to 'used' info.
     centerLabelText = { bigText: vm.data.used,
-      smText: vm.config.units + ' Used' };
+      smText: vm.config.units + __(' Used') };
 
     if (vm.config.centerLabelFn) {
       centerLabelText.bigText = vm.config.centerLabelFn();
@@ -119,10 +119,10 @@ function donutPctChartController(pfUtils) {
       centerLabelText.smText = '';
     } else if (vm.centerLabel === 'available') {
       centerLabelText.bigText = vm.data.available;
-      centerLabelText.smText = vm.config.units + ' Available';
+      centerLabelText.smText = vm.config.units + __(' Available');
     } else if (vm.centerLabel === 'percent') {
       centerLabelText.bigText = Math.round(vm.data.used / vm.data.total * 100.0) + '%';
-      centerLabelText.smText = 'of ' + vm.data.total + ' ' + vm.config.units;
+      centerLabelText.smText = __('of ') + vm.data.total + ' ' + vm.config.units;
     }
 
     return centerLabelText;
