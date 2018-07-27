@@ -44,7 +44,7 @@ module Mixins
         def associate_floating_ip_form_fields
           assert_privileges("instance_associate_floating_ip")
           @record = find_record_with_rbac(VmCloud, params[:id])
-          floating_ips = @record.cloud_tenant.nil? ? [] : @record.cloud_tenant.floating_ips
+          floating_ips = @record.cloud_tenant.nil? ? [] : @record.cloud_tenant.floating_ips.find_by(:vm_id => nil)
 
           render :json => {
             :floating_ips => floating_ips
