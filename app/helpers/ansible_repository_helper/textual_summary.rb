@@ -27,7 +27,11 @@ module AnsibleRepositoryHelper::TextualSummary
   end
 
   def textual_status
-    {:label => _("Status"), :value => @record.status}
+    h = {:label => _("Status"), :value => @record.status}
+    unless @record.last_update_error.nil?
+      h.update(:link => show_output_link, :title => _('Show refresh output'))
+    end
+    h
   end
 
   def textual_provider

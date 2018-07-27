@@ -16,6 +16,10 @@ class AnsibleRepositoryController < ApplicationController
     %w(playbooks)
   end
 
+  def self.custom_display_modes
+    %w(output)
+  end
+
   def self.model
     ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource
   end
@@ -97,6 +101,11 @@ class AnsibleRepositoryController < ApplicationController
     @in_a_form = true
   end
 
+  def show_output
+    drop_breadcrumb(:name => _("Refresh output"), :url => show_output_link)
+    @showtype = 'output'
+  end
+
   def display_playbooks
     nested_list(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, :breadcrumb_title => _('Playbooks'))
   end
@@ -120,5 +129,10 @@ class AnsibleRepositoryController < ApplicationController
   def textual_group_list
     [%i(properties relationships options smart_management)]
   end
-  helper_method :textual_group_list
+
+  def show_output_link
+    show_link(@record, :display => :output)
+  end
+
+  helper_method :textual_group_list, :show_output_link
 end
