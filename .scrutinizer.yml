@@ -6,7 +6,7 @@ build:
   tests:
     override:
       -
-        command: true
+        command: "true"
   nodes:
     analysis:
       tests:
