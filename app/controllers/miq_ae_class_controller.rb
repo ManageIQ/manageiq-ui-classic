@@ -1513,7 +1513,7 @@ class MiqAeClassController < ApplicationController
       page.replace('column_lists', :partial => 'fields_seq_form')
       @changed = (@edit[:new] != @edit[:current])
       page << javascript_for_miq_button_visibility(@changed) if @changed
-      page << "miqsparkle(false);"
+      page << "miqSparkle(false);"
     end
   end
 
@@ -1576,7 +1576,7 @@ class MiqAeClassController < ApplicationController
                    :locals  => {:action => "domains_priority_edit"})
       @changed = (@edit[:new] != @edit[:current])
       page << javascript_for_miq_button_visibility(@changed) if @changed
-      page << "miqsparkle(false);"
+      page << "miqSparkle(false);"
     end
   end
 
