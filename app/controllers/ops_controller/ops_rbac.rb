@@ -1109,7 +1109,8 @@ module OpsController::OpsRbac
     end
 
     # Build roles hash
-    @edit[:roles]["<#{_('Choose a Role')}>"] = nil if @record.id.nil?
+    placeholder_text_role = _('Choose a Role')
+    @edit[:roles]["<#{placeholder_text_role}>"] = nil if @record.id.nil?
 
     Rbac::Filterer.filtered(MiqUserRole).each do |r|
       @edit[:roles][r.name] = r.id
@@ -1121,9 +1122,10 @@ module OpsController::OpsRbac
     end
 
     all_tenants, all_projects = Tenant.tenant_and_project_names
-    @edit[:projects_tenants].push(["", [["<#{_('Choose a Project/Tenant')}>",
-                                         :selected => "<#{_('Choose a Project/Tenant')}>",
-                                         :disabled => "<#{_('Choose a Project/Tenant')}>",
+    placeholder_text_tenant = _('Choose a Project/Tenant')
+    @edit[:projects_tenants].push(["", [["<#{placeholder_text_tenant}>",
+                                         :selected => "<#{placeholder_text_tenant}>",
+                                         :disabled => "<#{placeholder_text_tenant}>",
                                          :style    => 'display:none']]])
     @edit[:projects_tenants].push(["Projects", all_projects]) unless all_projects.blank?
     @edit[:projects_tenants].push(["Tenants", all_tenants]) unless all_tenants.blank?
