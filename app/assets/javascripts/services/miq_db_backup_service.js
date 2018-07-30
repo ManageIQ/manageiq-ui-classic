@@ -55,15 +55,15 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
            (this.isModelValueNil(value));
   };
 
-  this.regionNotSelected = function(model) {
-    return model.region === '' || model.region === undefined;
+  this.awsRegionNotSelected = function(model) {
+    return model.aws_region === '' || model.aws_region === undefined;
   };
 
-  this.regionSelected = function(model) {
-    return model.region !== '' && model.region !== undefined;
+  this.awsRegionSelected = function(model) {
+    return model.aws_region !== '' && model.aws_region !== undefined;
   };
 
-  this.regionRequired = function(model, value) {
+  this.awsRegionRequired = function(model, value) {
     return this.s3Backup(model) &&
            (this.isModelValueNil(value));
   };

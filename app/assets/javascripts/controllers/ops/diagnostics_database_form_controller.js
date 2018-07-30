@@ -10,7 +10,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       log_protocol: '',
       log_userid: '',
       log_password: '',
-      log_region: '',
+      log_aws_region: '',
     };
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.diagnosticsDatabaseModel );
@@ -35,7 +35,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       vm.diagnosticsDatabaseModel.log_userid = '';
       vm.diagnosticsDatabaseModel.log_password = '';
       vm.diagnosticsDatabaseModel.log_protocol = '';
-      vm.diagnosticsDatabaseModel.log_region = '';
+      vm.diagnosticsDatabaseModel.log_aws_region = '';
       return;
     }
 
@@ -97,8 +97,8 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     return miqDBBackupService.credsRequired(vm.diagnosticsDatabaseModel, value);
   };
 
-  vm.regionRequired = function(value) {
-    return miqDBBackupService.regionRequired(vm.diagnosticsDatabaseModel, value);
+  vm.awsRegionRequired = function(value) {
+    return miqDBBackupService.awsRegionRequired(vm.diagnosticsDatabaseModel, value);
   };
 
   function postdiagnosticsDatabaseFormData(response) {
