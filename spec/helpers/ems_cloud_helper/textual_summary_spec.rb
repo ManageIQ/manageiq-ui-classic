@@ -24,4 +24,20 @@ describe EmsCloudHelper::TextualSummary do
       expect(textual_security_groups[:link]).to eq("/ems_cloud/#{@record.id}?display=security_groups")
     end
   end
+
+  include_examples "textual_group", "Relationships", %i(
+    ems_infra
+    network_manager
+    availability_zones
+    host_aggregates
+    cloud_tenants
+    flavors
+    security_groups
+    instances
+    images
+    orchestration_stacks
+    storage_managers
+  )
+  include_examples "textual_group", "Properties", %i(provider_region hostname ipaddress type port guid region keystone_v3_domain_id)
+  include_examples "textual_group_smart_management", %i(zone)
 end
