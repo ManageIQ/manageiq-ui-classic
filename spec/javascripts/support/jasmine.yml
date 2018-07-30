@@ -20,7 +20,6 @@ src_files:
 - __spec__/helpers/toolbar.js
 - packs/vendor.js
 - packs/manageiq-ui-classic/application-common.js
-- packs/manageiq-ui-classic/miq-redux-common.js
 - packs/manageiq-ui-classic/toolbar-actions-common.js
 
 # stylesheets
