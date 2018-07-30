@@ -1,6 +1,6 @@
 import { Unsubscribe } from 'redux';
 
-import { AppState, AppReducer, Action, AppReducerHash } from './redux-typings';
+import { AppState, AppReducer, Action } from './redux-typings';
 
 const reducers: Set<AppReducer> = new Set();
 
