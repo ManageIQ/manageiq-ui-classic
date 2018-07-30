@@ -13,8 +13,8 @@
                      :multipart => true,
                      :method    => :post) do
             .form-group
-              .col-md-4
+              .col-md-7
                 = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
-              .col-md-6
+              .col-md-5
                 = submit_tag(_("Upload"), :id => "upload_tags", :class => "btn btn-default")
-                = _("* Requirements: CSV formatted file.")
+            = _("* Requirements: CSV formatted file.")
