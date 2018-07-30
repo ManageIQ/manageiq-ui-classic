@@ -2,9 +2,10 @@
   - url = url_for_only_path(:action => 'rbac_group_field_changed', :id => (@edit[:group_id] || "new"))
   - combo_url = "/ops/rbac_group_field_changed/#{@edit[:group_id] || 'new'}"
 - mode = ::Settings.authentication.mode
+- oidc_enabled = ::Settings.authentication.oidc_enabled
 - saml_enabled = ::Settings.authentication.saml_enabled
 - can_lookup_groups = mode.downcase.start_with?('ldap')
-- can_lookup_groups = mode.downcase == "httpd" && ! saml_enabled unless can_lookup_groups
+- can_lookup_groups = mode.downcase == "httpd" && ! (saml_enabled || oidc_enabled) unless can_lookup_groups
 = render :partial => "layouts/flash_msg"
 #group_info
   %h3

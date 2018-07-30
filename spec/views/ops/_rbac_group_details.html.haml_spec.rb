@@ -65,14 +65,21 @@ describe 'ops/_rbac_group_details.html.haml' do
     end
 
     it 'should show "Look up groups" checkbox and label for auth mode httpd' do
-      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false}, :server => {})
+      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false, :oidc_enabled => false}, :server => {})
       render :partial => 'ops/rbac_group_details'
       expect(rendered).to have_selector('input#lookup')
       expect(rendered).to include('Look up External Authentication Groups')
     end
 
     it 'should not show "Look up groups" checkbox and label for auth mode httpd with SAML enabled' do
-      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => true}, :server => {})
+      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => true, :oidc_enabled => false}, :server => {})
+      render :partial => 'ops/rbac_group_details'
+      expect(rendered).not_to have_selector('input#lookup')
+      expect(rendered).not_to include('Look up External Authentication Groups')
+    end
+
+    it 'should not show "Look up groups" checkbox and label for auth mode httpd with OIDC enabled' do
+      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false, :oidc_enabled => true}, :server => {})
       render :partial => 'ops/rbac_group_details'
       expect(rendered).not_to have_selector('input#lookup')
       expect(rendered).not_to include('Look up External Authentication Groups')
