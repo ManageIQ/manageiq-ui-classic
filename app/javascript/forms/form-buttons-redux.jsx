@@ -40,10 +40,6 @@ function mapStateToProps(state, ownProps) {
 export default connect(mapStateToProps)(FormButtonsRedux);
 
 function initReducer() {
-  if (! ManageIQ.redux || ! ManageIQ.redux.addReducer) {
-    // login screen
-    return;
-  }
   if (initReducer.done) {
     // don't init twice
     return;
