@@ -1,30 +1,23 @@
 module OpsController::Settings::Upload
   extend ActiveSupport::Concern
 
-  logo_dir = File.expand_path(File.join(Rails.root, "public/upload"))
-  Dir.mkdir logo_dir unless File.exist?(logo_dir)
-  @@logo_file = File.join(logo_dir, "custom_logo.png")
-  @@login_logo_file = File.join(logo_dir, "custom_login_logo.png")
   def upload_logo
-    upload_logos("custom")
+    logo_file = File.join(logo_dir, "custom_logo.png")
+    upload_logos(logo_file, params[:upload], _('Custom logo image'))
   end
 
   def upload_login_logo
-    upload_logos("login")
+    login_logo_file = File.join(logo_dir, "custom_login_logo.png")
+    upload_logos(login_logo_file, params[:login], _('Custom login image'))
   end
 
-  def upload_logos(typ)
-    fld = typ == 'custom' ? params[:upload] : params[:login]
-    if fld && fld[:logo] && fld[:logo].respond_to?(:read)
-      if fld[:logo].original_filename.split(".").last.downcase != "png"
-        add_flash(
-          typ == "custom" ? _("Custom logo image must be a .png file") : _("Custom login image must be a .png file"),
-          :error
-        )
+  def upload_logos(file, field, text)
+    if field && field[:logo] && field[:logo].respond_to?(:read)
+      if field[:logo].original_filename.split(".").last.downcase != "png"
+        add_flash("%{image} must be a .png file" % {:image => text}, :error)
       else
-        File.open(typ == "custom" ? @@logo_file : @@login_logo_file, "wb") { |f| f.write(fld[:logo].read) }
-        msg = typ == "custom" ? _('Custom logo file "%{name}" uploaded') : _('Custom login file "%{name}" uploaded')
-        add_flash(msg % {:name => fld[:logo].original_filename})
+        File.open(file, "wb") { |f| f.write(field[:logo].read) }
+        add_flash(_("%{image} \"%{name}\" uploaded") % {:image => text, :name => field[:logo].original_filename})
       end
     else
       add_flash(_("Use the Choose file button to locate .png image file"), :error)
@@ -89,5 +82,13 @@ module OpsController::Settings::Upload
     flash_to_session
     session[:flash_msgs] = @flash_array.dup if @flash_array
     redirect_to(:action => 'explorer', :no_refresh => true)
+  end
+
+  private
+
+  def logo_dir
+    dir = File.expand_path(Rails.root.join('public', 'upload'))
+    Dir.mkdir(dir) unless File.exist?(dir)
+    dir
   end
 end
