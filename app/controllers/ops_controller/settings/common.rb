@@ -6,6 +6,7 @@ module OpsController::Settings::Common
   Dir.mkdir logo_dir unless File.exist?(logo_dir)
   @@logo_file = File.join(logo_dir, "custom_logo.png")
   @@login_logo_file = File.join(logo_dir, "custom_login_logo.png")
+  @@login_brand_file = File.join(logo_dir, "custom_brand.png")
 
   # AJAX driven routine to check for changes in ANY field on the form
   def settings_form_field_changed
@@ -877,6 +878,7 @@ module OpsController::Settings::Common
     when "settings_custom_logos"                                            # Custom Logo tab
       new[:server][:custom_logo] = (params[:server_uselogo] == "true") if params[:server_uselogo]
       new[:server][:custom_login_logo] = (params[:server_useloginlogo] == "true") if params[:server_useloginlogo]
+      new[:server][:custom_brand] = (params[:server_usebrand] == "true") if params[:server_usebrand]
       new[:server][:use_custom_login_text] = (params[:server_uselogintext] == "true") if params[:server_uselogintext]
       if params[:login_text]
         new[:server][:custom_login_text] = params[:login_text]
@@ -1105,11 +1107,16 @@ module OpsController::Settings::Common
     if @edit[:current].config[:server][:custom_login_logo].nil?
       @edit[:current].config[:server][:custom_login_logo] = false # Set default custom_logo flag
     end
+    if @edit[:current].config[:server][:custom_brand].nil?
+      @edit[:current].config[:server][:custom_brand] = false # Set default custom_brand flag
+    end
+
     if @edit[:current].config[:server][:use_custom_login_text].nil?
-      @edit[:current].config[:server][:use_custom_login_text] = false # Set default custom_logo flag
+      @edit[:current].config[:server][:use_custom_login_text] = false # Set default custom_login_text flag
     end
     @logo_file = @@logo_file
     @login_logo_file = @@login_logo_file
+    @login_brand_file = @@login_brand_file
     @in_a_form = true
   end
 

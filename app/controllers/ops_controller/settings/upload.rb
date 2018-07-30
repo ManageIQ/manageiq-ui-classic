@@ -11,6 +11,11 @@ module OpsController::Settings::Upload
     upload_logos(login_logo_file, params[:login], _('Custom login image'))
   end
 
+  def upload_login_brand
+    login_logo_file = File.join(logo_dir, "custom_brand.png")
+    upload_logos(login_logo_file, params[:brand], _('Custom brand'))
+  end
+
   def upload_logos(file, field, text)
     if field && field[:logo] && field[:logo].respond_to?(:read)
       if field[:logo].original_filename.split(".").last.downcase != "png"
@@ -87,8 +92,8 @@ module OpsController::Settings::Upload
   private
 
   def logo_dir
-    dir = File.expand_path(Rails.root.join('public', 'upload'))
-    Dir.mkdir(dir) unless File.exist?(dir)
-    dir
+    dir = Rails.root.join('public', 'upload').expand_path
+    Dir.mkdir(dir) unless dir.exist?
+    dir.to_s
   end
 end

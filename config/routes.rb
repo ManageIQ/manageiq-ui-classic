@@ -2597,6 +2597,7 @@ Rails.application.routes.draw do
         update
         upload_csv
         upload_form_field_changed
+        upload_login_brand
         upload_login_logo
         upload_logo
         validate_replcation_worker
