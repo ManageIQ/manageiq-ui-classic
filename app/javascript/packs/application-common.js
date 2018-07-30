@@ -18,6 +18,8 @@ import * as helpers from '../miq-component/helpers';
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
 
+import { store, addReducer } from '../miq-redux';
+
 ManageIQ.react = {
   mount,
   componentRegistry,
@@ -29,6 +31,10 @@ ManageIQ.component = {
   ...helpers,
 };
 
+ManageIQ.redux = {
+  store,
+  addReducer,
+};
 
 ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
