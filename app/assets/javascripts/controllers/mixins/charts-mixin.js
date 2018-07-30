@@ -92,13 +92,11 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
       chartId: 'memoryDonutChart',
       thresholds: { 'warning': '60', 'error': '90' },
     },
-    recentHostsConfig: {
-      chartId: 'recentHostsChart',
-      headTitle: __('Recent Hosts'),
-      label: __('Hosts'),
+    recentResourcesConfig: {
+      chartId: 'recentResourcesChart',
       tooltip: {
         contents: dailyTimeTooltip,
-        position: lineChartTooltipPositionFactory('recentHostsChart'),
+        position: lineChartTooltipPositionFactory,
       },
       point: {r: 1},
       size: {height: 145},
@@ -191,6 +189,46 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
       },
       point: {r: 1},
       size: {height: 93},
+      grid: {y: {show: false}},
+      setAreaChart: true,
+    },
+    availableServersUsageConfig: {
+      chartId: 'serverAvailabilityChart',
+      title: __('Servers Available'),
+      units: __('Server'),
+      usageDataName: __('Used'),
+      legendLeftText: __('Last 30 Days'),
+      legendRightText: '',
+      numDays: 30,
+    },
+    availableServersUsagePieConfig: {
+      chartId: 'serverAvailablePieChart_',
+    },
+    serversHealthUsageConfig: {
+      chartId: 'serverHealthChart',
+      title: __('Servers Health'),
+      units: __('Server'),
+      usageDataName: __('Used'),
+      legendLeftText: __('Last 30 Days'),
+      legendRightText: '',
+      numDays: 30,
+    },
+    serversHealthUsagePieConfig: {
+      chartId: 'serverHealthPieChart_',
+      color: {
+        valid: $.pfPaletteColors.green,
+        warning: $.pfPaletteColors.orange,
+        critical: $.pfPaletteColors.red,
+      },
+    },
+    recentServersConfig: {
+      chartId: 'recentServersChart',
+      tooltip: {
+        contents: dailyTimeTooltip,
+        position: lineChartTooltipPositionFactory('recentServersChart'),
+      },
+      point: {r: 1},
+      size: {height: 145},
       grid: {y: {show: false}},
       setAreaChart: true,
     },
