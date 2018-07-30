@@ -1,9 +1,10 @@
 import { IModule } from 'angular';
 import { devToolsEnhancer, EnhancerOptions } from 'redux-devtools-extension/logOnlyInProduction';
-
+import { connectRouter } from 'connected-react-router';
 import { rootReducer } from './reducer';
-import { middlewares } from './middleware';
+import { createMiddlewares } from './middleware';
 import { AppState } from './redux-typings';
+import { history } from '../miq-component/react-history';
 
 const devToolsOptions: EnhancerOptions = {};
 
@@ -14,6 +15,9 @@ const devToolsOptions: EnhancerOptions = {};
  * The store supports Redux DevTools browser extension in development
  * as well as production, allowing users to inspect application state.
  * In production, however, Redux DevTools runs in *log only* mode.
+ * 
+ * connectRouter is used for adding router reducer for react redux routing
+ * createMiddlewares creates a middlewares for store
  *
  * @param app Angular application to configure.
  * @param initialState Initial application state.
@@ -21,8 +25,8 @@ const devToolsOptions: EnhancerOptions = {};
 export function configureNgReduxStore(app: IModule, initialState: AppState): void {
   app.config(['$ngReduxProvider', ($ngReduxProvider) => {
     $ngReduxProvider.createStoreWith(
-      rootReducer,
-      middlewares,
+      connectRouter(history)(rootReducer),
+      createMiddlewares({ history }),
       [devToolsEnhancer(devToolsOptions)],
       initialState);
   }]);
