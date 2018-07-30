@@ -49,5 +49,4 @@ export type ReduxStore = Store<AppState>;
 export interface ReduxApi {
   store: ReduxStore;
   addReducer(appReducer: AppReducer): Unsubscribe;
-  applyReducerHash(reducerHash: AppReducerHash, state: AppState, action: Action): AppState;
 }
