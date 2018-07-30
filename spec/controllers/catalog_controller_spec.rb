@@ -633,7 +633,7 @@ describe CatalogController do
       end
 
       it "save tags" do
-        controller.instance_variable_set(:@_params, :button => "save", :id => @ot.id)
+        controller.instance_variable_set(:@_params, :button => "save", :id => @ot.id, 'data' => get_tags_json([@tag1, @tag2]))
         controller.send(:tags_edit, "OrchestrationTemplate")
         expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
         expect(assigns(:edit)).to be_nil
@@ -1240,7 +1240,7 @@ describe CatalogController do
       end
 
       it "save tags" do
-        controller.instance_variable_set(:@_params, :button => "save", :id => @st.id)
+        controller.instance_variable_set(:@_params, :button => "save", :id => @st.id, 'data' => get_tags_json([@tag1, @tag2]))
         controller.send(:st_tags_edit)
         expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
         expect(assigns(:edit)).to be_nil

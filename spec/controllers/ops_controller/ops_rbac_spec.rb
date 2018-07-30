@@ -294,7 +294,7 @@ describe OpsController do
       end
 
       it "save tags" do
-        controller.instance_variable_set(:@_params, :button => "save", :id => @tenant.id)
+        controller.instance_variable_set(:@_params, :button => "save", :id => @tenant.id, 'data' => get_tags_json([@tag1, @tag2]))
         controller.send(:rbac_tenant_tags_edit)
         expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
         expect(assigns(:edit)).to be_nil

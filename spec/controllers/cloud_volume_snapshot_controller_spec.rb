@@ -42,7 +42,7 @@ describe CloudVolumeSnapshotController do
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "cloud_volume_snapshot/show/#{@snapshot.id}"}, 'placeholder']
-      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @snapshot.id}
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @snapshot.id, :data => get_tags_json([@tag1, @tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
     end

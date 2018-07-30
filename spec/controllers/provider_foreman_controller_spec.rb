@@ -689,7 +689,7 @@ describe ProviderForemanController do
 
     it "save tags" do
       allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
-      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @configured_system.id}
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @configured_system.id, :data => get_tags_json([@tag1, @tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
       expect(response.status).to eq(200)

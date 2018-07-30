@@ -49,6 +49,7 @@ RSpec.configure do |config|
 
   config.include Spec::Support::ControllerHelper, :type => :controller
   config.include Spec::Support::AuthHelper, :type => :controller
+  config.include Spec::Support::TaggingHelper, :type => :controller
 
   config.include Spec::Support::AuthHelper, :type => :helper
 
