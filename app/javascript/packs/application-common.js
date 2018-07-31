@@ -7,7 +7,6 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import 'proxy-polyfill';
-import 'ng-redux';
 
 import { mount } from '../react/mounter';
 import componentRegistry from '../react/componentRegistry';
@@ -18,6 +17,8 @@ import reactBlueprint from '../miq-component/react-blueprint';
 import * as helpers from '../miq-component/helpers';
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
+
+import { store, addReducer } from '../miq-redux';
 
 ManageIQ.react = {
   mount,
@@ -30,6 +31,10 @@ ManageIQ.component = {
   ...helpers,
 };
 
+ManageIQ.redux = {
+  store,
+  addReducer,
+};
 
 ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;

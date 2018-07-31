@@ -30,14 +30,6 @@ export interface Action extends BaseAction {
 }
 
 /**
- * Application reducer hash, containing action types as keys and the
- * corresponding reducers (to handle those action types) as values.
- */
-export interface AppReducerHash {
-  [propName: string]: AppReducer;
-}
-
-/**
  * Redux store, holding application's state tree and providing
  * functions to dispatch actions and subscribe to state changes.
  */
@@ -49,5 +41,4 @@ export type ReduxStore = Store<AppState>;
 export interface ReduxApi {
   store: ReduxStore;
   addReducer(appReducer: AppReducer): Unsubscribe;
-  applyReducerHash(reducerHash: AppReducerHash, state: AppState, action: Action): AppState;
 }

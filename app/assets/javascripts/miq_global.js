@@ -75,7 +75,10 @@ if (! window.ManageIQ) {
       parentId: null, // parent record ID for JS function miqGridSort to build URL
       recordId: null, // record being displayed or edited
     },
-    redux: null, // Redux API - app/javascript/miq-redux
+    redux: { // Redux API - app/javascript/miq-redux
+      store: null,
+      addReducer: null,
+    },
     reportEditor: {
       prefillCount: 0,
       valueStyles: null,
