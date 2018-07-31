@@ -4,6 +4,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel = {
       name: '',
       description: '',
+      long_description: '',
       display: false,
       prov_type: 'generic_ansible_playbook',
       catalog_id: '',
@@ -67,6 +68,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         $scope.newRecord = false;
         vm.catalogItemModel.name = catalogItemData.name;
         vm.catalogItemModel.description = catalogItemData.description;
+        vm.catalogItemModel.long_description = catalogItemData.long_description;
         vm.catalogItemModel.display = catalogItemData.display;
         vm.catalogItemModel.catalog_id = catalogItemData.service_template_catalog_id === undefined ? '' : catalogItemData.service_template_catalog_id;
         vm.catalogItemModel.provisioning_dialog_id = catalogItemData.config_info.provision.dialog_id;
@@ -209,6 +211,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     var catalog_item = {
       name: configData.name,
       description: configData.description,
+      long_description: configData.long_description,
       display: configData.display,
       service_template_catalog_id: configData.catalog_id,
       prov_type: 'generic_ansible_playbook',
