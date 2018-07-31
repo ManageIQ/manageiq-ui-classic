@@ -1852,7 +1852,7 @@ class MiqAeClassController < ApplicationController
     model = @edit[:selected_items].count > 1 ? :models : :model
     add_flash(_("Copy selected %{record} was saved") % {:record => ui_lookup(model => @edit[:typ].to_s)})
     @record = res.kind_of?(Array) ? @edit[:typ].find(res.first) : res
-    self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{@record.id}"
+    self.x_node = TreeNode.new(@record).key
     @in_a_form = @changed = session[:changed] = false
     @sb[:action] = @edit = session[:edit] = nil
     replace_right_cell

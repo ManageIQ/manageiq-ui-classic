@@ -360,7 +360,7 @@ module ApplicationHelper
                  IsoDatastore
                  CustomizationTemplate).include?(view.db) &&
               %w(miq_policy ops pxe report).include?(params[:controller])
-          return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
+          return "/#{params[:controller]}/tree_select/?id=#{TreeNode.new(view.db).key}"
         elsif %w(MiqPolicy).include?(view.db) && %w(miq_policy).include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{x_node}"
         else

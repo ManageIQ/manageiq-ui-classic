@@ -504,8 +504,7 @@ module ApplicationController::Performance
     session[:sandboxes][cont][:perf_options][:hourly_date] = [ts.month, ts.day, ts.year].join("/") if chart_click_data.type == "Hourly"
 
     if data_row["resource_type"] == "VmOrTemplate"
-      prefix = TreeBuilder.get_prefix_for_model(@record.class.base_model)
-      tree_node_id = "#{prefix}-#{@record.id}" # Build the tree node id
+      tree_node_id = TreeNode.new(@record).key
       session[:exp_parms] = {:display => "performance", :refresh => "n", :id => tree_node_id}
       javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
                           :action     => "explorer"
