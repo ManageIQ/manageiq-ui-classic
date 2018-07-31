@@ -65,8 +65,7 @@ class TreeBuilder
   end
 
   def self.get_prefix_for_model(model)
-    model = model.to_s unless model.kind_of?(String)
-    X_TREE_NODE_PREFIXES_INVERTED[model]
+    X_TREE_NODE_PREFIXES_INVERTED[model.to_s] || X_TREE_NODE_PREFIXES_INVERTED[model.base_model.name]
   end
 
   def self.hide_vms
