@@ -163,7 +163,7 @@ class MiqAeCustomizationController < ApplicationController
     record = Dialog.find_by(:id =>nodes.last)
     self.x_active_accord = "dialogs"
     self.x_active_tree   = "#{x_active_accord}_tree"
-    self.x_node = TreeBuilder.build_node_cid(record)
+    self.x_node = TreeNode.new(record).key
     get_node_info
     redirect_to :controller => "miq_ae_customization",
                 :action     => "explorer",

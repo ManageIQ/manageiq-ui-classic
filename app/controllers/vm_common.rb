@@ -875,18 +875,18 @@ module VmCommon
     elsif vm.archived
       "xx-arch"
     elsif vm.cloud && vm.template
-      TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
+      TreeNode.new(vm.ext_management_system).key
     elsif vm.cloud && vm.availability_zone_id.nil?
-      TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
+      TreeNode.new(vm.ext_management_system).key
     elsif vm.cloud
-      TreeBuilder.build_node_cid(vm.availability_zone_id, 'AvailabilityZone')
+      TreeNode.new(vm.availability_zone).key
     elsif (blue_folder = vm.parent_blue_folder) && !blue_folder.hidden
-      TreeBuilder.build_node_cid(blue_folder.id, 'EmsFolder')
+      TreeNode.new(blue_folder).key
     elsif vm.ems_id # has no folder parent but is in the tree
       if vm.parent_datacenter
-        TreeBuilder.build_node_cid(vm.parent_datacenter.id, 'Datacenter')
+        TreeNode.new(vm.parent_datacenter).key
       else
-        TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
+        TreeNode.new(vm.ext_management_system).key
       end
 
     else
@@ -1154,7 +1154,7 @@ module VmCommon
     end
 
     if !@in_a_form && !@sb[:action]
-      id = @record.present? && hide_vms ? TreeBuilder.build_node_cid(@record) : x_node
+      id = @record.present? && hide_vms ? TreeNode.new(@record).key : x_node
       id = @sb[@sb[:active_accord]] if @sb[@sb[:active_accord]].present? && params[:action] != 'tree_select'
       get_node_info(id)
       type, _id = parse_nodetype_and_id(id)

@@ -231,7 +231,7 @@ describe VmOrTemplateController do
                                             :ext_management_system => FactoryGirl.create(:ems_google),
                                             :storage               => FactoryGirl.create(:storage),
                                             :availability_zone     => FactoryGirl.create(:availability_zone_google))
-      expect(controller.parent_folder_id(vm_cloud_with_az)).to eq(TreeBuilder.build_node_cid(vm_cloud_with_az.availability_zone))
+      expect(controller.parent_folder_id(vm_cloud_with_az)).to eq(TreeNode.new(vm_cloud_with_az.availability_zone).key)
     end
 
     it 'returns id of Provider folder for Cloud VM without Availability Zone' do
@@ -239,21 +239,21 @@ describe VmOrTemplateController do
                                                :ext_management_system => FactoryGirl.create(:ems_google),
                                                :storage               => FactoryGirl.create(:storage),
                                                :availability_zone     => nil)
-      expect(controller.parent_folder_id(vm_cloud_without_az)).to eq(TreeBuilder.build_node_cid(vm_cloud_without_az.ext_management_system))
+      expect(controller.parent_folder_id(vm_cloud_without_az)).to eq(TreeNode.new(vm_cloud_without_az.ext_management_system).key)
     end
 
     it 'returns id of Provider folder for Cloud Template' do
       template_cloud = FactoryGirl.create(:template_cloud,
                                           :ext_management_system => FactoryGirl.create(:ems_google),
                                           :storage               => FactoryGirl.create(:storage))
-      expect(controller.parent_folder_id(template_cloud)).to eq(TreeBuilder.build_node_cid(template_cloud.ext_management_system))
+      expect(controller.parent_folder_id(template_cloud)).to eq(TreeNode.new(template_cloud.ext_management_system).key)
     end
 
     it 'returns id of Provider folder for infra VM/Template without blue folder' do
       vm_infra = FactoryGirl.create(:vm_infra, :ext_management_system => FactoryGirl.create(:ems_infra))
       template_infra = FactoryGirl.create(:template_infra, :ext_management_system => FactoryGirl.create(:ems_infra))
-      expect(controller.parent_folder_id(vm_infra)).to eq(TreeBuilder.build_node_cid(vm_infra.ext_management_system))
-      expect(controller.parent_folder_id(template_infra)).to eq(TreeBuilder.build_node_cid(template_infra.ext_management_system))
+      expect(controller.parent_folder_id(vm_infra)).to eq(TreeNode.new(vm_infra.ext_management_system).key)
+      expect(controller.parent_folder_id(template_infra)).to eq(TreeNode.new(template_infra.ext_management_system).key)
     end
 
     it 'returns id of Datacenter folder for infra VM/Template without blue folder but with Datacenter parent' do
@@ -264,8 +264,8 @@ describe VmOrTemplateController do
       allow(vm_infra_datacenter).to receive(:parent_datacenter).and_return(datacenter)
       template_infra_datacenter.with_relationship_type("ems_metadata") { template_infra_datacenter.parent = datacenter }
       allow(template_infra_datacenter).to receive(:parent_datacenter).and_return(datacenter)
-      expect(controller.parent_folder_id(vm_infra_datacenter)).to eq(TreeBuilder.build_node_cid(datacenter.id, 'Datacenter'))
-      expect(controller.parent_folder_id(template_infra_datacenter)).to eq(TreeBuilder.build_node_cid(datacenter.id, 'Datacenter'))
+      expect(controller.parent_folder_id(vm_infra_datacenter)).to eq(TreeNode.new(datacenter).key)
+      expect(controller.parent_folder_id(template_infra_datacenter)).to eq(TreeNode.new(datacenter).key)
     end
 
     it 'returns id of blue folder for VM/Template with one' do
@@ -275,8 +275,8 @@ describe VmOrTemplateController do
       template_infra_folder = FactoryGirl.create(:template_infra,
                                                  :ext_management_system => FactoryGirl.create(:ems_infra))
       template_infra_folder.with_relationship_type("ems_metadata") { template_infra_folder.parent = folder } # add folder
-      expect(controller.parent_folder_id(vm_infra_folder)).to eq(TreeBuilder.build_node_cid(folder))
-      expect(controller.parent_folder_id(template_infra_folder)).to eq(TreeBuilder.build_node_cid(folder))
+      expect(controller.parent_folder_id(vm_infra_folder)).to eq(TreeNode.new(folder).key)
+      expect(controller.parent_folder_id(template_infra_folder)).to eq(TreeNode.new(folder).key)
     end
   end
 
@@ -295,15 +295,15 @@ describe VmOrTemplateController do
       User.current_user.settings[:display] = {:display_vms => false}
 
       allow(vm_common).to receive(:x_node=) { |id| expect(id).to eq(controller.parent_folder_id(@vm_arch)) }
-      allow(vm_common).to receive(:get_node_info) { |id| expect(id).to eq(TreeBuilder.build_node_cid(@vm_arch)) }
+      allow(vm_common).to receive(:get_node_info) { |id| expect(id).to eq(TreeNode.new(@vm_arch).key) }
       vm_common.resolve_node_info("v-#{@vm_arch[:id]}")
     end
 
     it 'when VM shown select it in tree and show its info' do
       User.current_user.settings[:display] = {:display_vms => true}
 
-      allow(vm_common).to receive(:x_node=) { |id| expect(id).to eq(TreeBuilder.build_node_cid(@vm_arch)) }
-      allow(vm_common).to receive(:get_node_info) { |id| expect(id).to eq(TreeBuilder.build_node_cid(@vm_arch)) }
+      allow(vm_common).to receive(:x_node=) { |id| expect(id).to eq(TreeNode.new(@vm_arch).key) }
+      allow(vm_common).to receive(:get_node_info) { |id| expect(id).to eq(TreeNode.new(@vm_arch).key) }
       vm_common.resolve_node_info("v-#{@vm_arch[:id]}")
     end
   end
