@@ -11,7 +11,12 @@ describe('physical-server-toolbar', function() {
     it('calls API.post with the appropriate URL', function () {
       expect(window.fetch).toHaveBeenCalledWith(
         '/api/physical_servers',
-        { method: 'POST', backendName: 'API', headers: {}, body: '{"action":"power_on","resources":[{"id":1}]}' }
+        {
+          method: 'POST',
+          backendName: 'API',
+          headers: jasmine.any(Object),
+          body: '{"action":"power_on","resources":[{"id":1}]}',
+        }
       );
     });
 
@@ -34,8 +39,9 @@ describe('physical-server-toolbar', function() {
         {
           method: 'POST',
           backendName: 'API',
-          headers: {},
-          body: '{"action":"blink_loc_led","resources":[{"id":1},{"id":2}]}' }
+          headers: jasmine.any(Object),
+          body: '{"action":"blink_loc_led","resources":[{"id":1},{"id":2}]}',
+        }
       );
     });
 
