@@ -62,7 +62,10 @@
      * @description Function that is traversing the tree and looking for the target node. The target is determined by the node key.
      * If the target is found, it will store its location is stored inside variable for further use.
      */
-    vm.findNodePath = function(node, target, path = '') {
+    vm.findNodePath = function(node, target, path) {
+      if (path === undefined) {
+        path = '';
+      }
       if (node.key === target) {
         vm.nodePath = path;
         return path;
