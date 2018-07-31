@@ -214,7 +214,7 @@
       - if tree_node == "root"
         = miq_tab_header("db_summary", @sb[:active_tab]) do
           = _("Summary")
-      - if tree_node == "root" || tree_node.split("-").first == TreeBuilder.get_prefix_for_model("VmdbTable")
+      - if tree_node == "root" || TreeBuilder.get_model_for_prefix(tree_node.split("-").first) == "VmdbTable"
         = miq_tab_header("db_details", @sb[:active_tab]) do
           = @tab_text
       - if tree_node == "root"
@@ -224,7 +224,7 @@
           = _("Settings")
         = miq_tab_header("db_connections", @sb[:active_tab]) do
           = _("Client Connections")
-      - if tree_node == "root" || tree_node.split("-").first == TreeBuilder.get_prefix_for_model("VmdbTable")
+      - if tree_node == "root" || TreeBuilder.get_model_for_prefix(tree_node.split("-").first) == "VmdbTable"
         = miq_tab_header("db_utilization", @sb[:active_tab]) do
           = _("Utilization")
     .tab-content
@@ -245,7 +245,7 @@
         = miq_tab_content("db_connections", @sb[:active_tab]) do
           - if @sb[:active_tab] == "db_connections"
             = render :partial => "db_details_tab"
-      - if tree_node == "root" || tree_node.split("-").first == TreeBuilder.get_prefix_for_model("VmdbTable")
+      - if tree_node == "root" || TreeBuilder.get_model_for_prefix(tree_node.split("-").first) == "VmdbTable"
         = miq_tab_content("db_utilization", @sb[:active_tab]) do
           - if @sb[:active_tab] == "db_utilization" && @record
             = render(:partial => "layouts/performance")
