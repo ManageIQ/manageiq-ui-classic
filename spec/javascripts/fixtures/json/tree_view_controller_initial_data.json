@@ -1,0 +1,230 @@
+{
+    "rbac_tree": [
+        {
+            "key": "root",
+            "nodes": [
+                {
+                    "key": "xx-u",
+                    "text": "Users",
+                    "tooltip": "Users",
+                    "icon": "pficon pficon-user",
+                    "selectable": true,
+                    "nodes": [
+                        {
+                            "key": "u-10000000000001",
+                            "text": "Administrator",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000003",
+                            "text": "Ansible Tower ",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000008",
+                            "text": "Chris Keller",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": true
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000004",
+                            "text": "Cloud Operators",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000005",
+                            "text": "Cloud User",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000007",
+                            "text": "Cloud User1",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000002",
+                            "text": "Demo Guy",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000006",
+                            "text": "fisherprice",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000010",
+                            "text": "loic",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000011",
+                            "text": "Loic Avenel",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        },
+                        {
+                            "key": "u-10000000000055",
+                            "text": "test",
+                            "icon": "pficon pficon-user",
+                            "selectable": true,
+                            "state": {
+                                "expanded": false
+                            },
+                            "class": ""
+                        }
+                    ],
+                    "state": {
+                        "expanded": true
+                    },
+                    "class": ""
+                },
+                {
+                    "key": "xx-g",
+                    "text": "Groups",
+                    "tooltip": "Groups",
+                    "icon": "ff ff-group",
+                    "selectable": true,
+                    "lazyLoad": true,
+                    "state": {
+                        "expanded": false
+                    },
+                    "class": ""
+                },
+                {
+                    "key": "xx-ur",
+                    "text": "Roles",
+                    "tooltip": "Roles",
+                    "icon": "ff ff-user-role",
+                    "selectable": true,
+                    "lazyLoad": true,
+                    "state": {
+                        "expanded": false
+                    },
+                    "class": ""
+                },
+                {
+                    "key": "xx-tn",
+                    "text": "Tenants",
+                    "tooltip": "Tenants",
+                    "icon": "pficon pficon-tenant",
+                    "selectable": true,
+                    "nodes": [
+                        {
+                            "key": "tn-10000000000001",
+                            "text": "My Company",
+                            "icon": "pficon pficon-tenant",
+                            "selectable": true,
+                            "nodes": [
+                                {
+                                    "key": "tn-10000000000009",
+                                    "text": "ckeller",
+                                    "icon": "pficon pficon-tenant",
+                                    "selectable": true,
+                                    "lazyLoad": true,
+                                    "state": {
+                                        "expanded": false
+                                    },
+                                    "class": ""
+                                },
+                                {
+                                    "key": "tn-10000000000008",
+                                    "text": "cloudusers",
+                                    "icon": "pficon pficon-tenant",
+                                    "selectable": true,
+                                    "state": {
+                                        "expanded": false
+                                    },
+                                    "class": ""
+                                },
+                                {
+                                    "key": "tn-10000000000002",
+                                    "text": "OpenStack Cloud Provider OpenStack",
+                                    "icon": "pficon pficon-tenant",
+                                    "selectable": true,
+                                    "lazyLoad": true,
+                                    "state": {
+                                        "expanded": false
+                                    },
+                                    "class": ""
+                                },
+                                {
+                                    "key": "tn-10000000000013",
+                                    "text": "Ten",
+                                    "icon": "pficon pficon-tenant",
+                                    "selectable": true,
+                                    "state": {
+                                        "expanded": false
+                                    },
+                                    "class": ""
+                                }
+                            ],
+                            "state": {
+                                "expanded": true
+                            },
+                            "class": ""
+                        }
+                    ],
+                    "state": {
+                        "expanded": true
+                    },
+                    "class": ""
+                }
+            ],
+            "text": "ManageIQ Region: Region 10 [10]",
+            "tooltip": "ManageIQ Region: Region 10 [10]",
+            "icon": "pficon pficon-regions",
+            "state": {
+                "expanded": true
+            },
+            "class": ""
+        }
+    ]
+}
