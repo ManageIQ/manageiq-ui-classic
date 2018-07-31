@@ -57,7 +57,7 @@ class ServiceController < ApplicationController
     end
 
     unless @explorer
-      tree_node_id = TreeBuilder.build_node_id(@record)
+      tree_node_id = TreeNode.new(@record).key
       redirect_to :controller => "service",
                   :action     => "explorer",
                   :id         => tree_node_id

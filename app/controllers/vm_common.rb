@@ -150,7 +150,7 @@ module VmCommon
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
     unless @explorer
-      tree_node_id = TreeBuilder.build_node_id(@record)
+      tree_node_id = TreeNode.new(@record).key
       session[:exp_parms] = {:display => @display, :refresh => params[:refresh], :id => tree_node_id}
       controller_name = controller_for_vm(model_for_vm(@record))
       # redirect user back to where they came from if they dont have access to any of vm explorers
@@ -205,7 +205,7 @@ module VmCommon
       drop_breadcrumb(:name => @record.name + _(" (Snapshots)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
       session[:snap_selected] = nil if Snapshot.find_by(:id => session[:snap_selected]).nil?
-      @sb[@sb[:active_accord]] = TreeBuilder.build_node_id(@record)
+      @sb[@sb[:active_accord]] = TreeNode.new(@record).key
       @snapshot_tree = TreeBuilderSnapshots.new(:snapshot_tree, :snapshot, @sb, true, :root => @record)
       @active = if @snapshot_tree.selected_node
                   snap_selected = Snapshot.find(@snapshot_tree.selected_node.split('-').last)

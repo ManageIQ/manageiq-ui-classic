@@ -7,7 +7,7 @@ class TreeBuilderNetwork < TreeBuilder
   end
 
   def initialize(name, type, sandbox, build = true, root = nil)
-    sandbox[:network_root] = TreeBuilder.build_node_id(root) if root
+    sandbox[:network_root] = TreeNode.new(root).key if root
     @root = root
     unless @root
       model, id = TreeBuilder.extract_node_model_and_id(sandbox[:network_root])

@@ -7,7 +7,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
   end
 
   def initialize(name, type, sandbox, build = true, root = nil)
-    sandbox[:ch_root] = TreeBuilder.build_node_id(root) if root
+    sandbox[:ch_root] = TreeNode.new(root).key if root
     @root = root
     unless @root
       model, id = TreeBuilder.extract_node_model_and_id(sandbox[:ch_root])

@@ -23,7 +23,7 @@ class TreeBuilderDatacenter < TreeBuilder
   end
 
   def initialize(name, type, sandbox, build = true, root = nil)
-    sandbox[:datacenter_root] = TreeBuilder.build_node_id(root) if root
+    sandbox[:datacenter_root] = TreeNode.new(root).key if root
     @root = root
     unless @root
       model, id = TreeBuilder.extract_node_model_and_id(sandbox[:datacenter_root])

@@ -190,7 +190,7 @@ class CatalogController < ApplicationController
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
     record = ServiceTemplate.find_by_id(params[:id])
     if !@explorer
-      tree_node_id = TreeBuilder.build_node_id(record)
+      tree_node_id = TreeNode.new(record).key
       redirect_to :controller => "catalog",
                   :action     => "explorer",
                   :id         => tree_node_id

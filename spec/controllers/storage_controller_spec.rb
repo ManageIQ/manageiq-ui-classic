@@ -230,7 +230,7 @@ describe StorageController do
       end
 
       it 'can render datastore details' do
-        tree_node_id = TreeBuilder.build_node_id(storage)
+        tree_node_id = TreeNode.new(storage).key
         session[:sandboxes] = {} # no prior data in @sb
         session[:exp_parms] = {:controller => 'storage',
                                :action     => 'show',

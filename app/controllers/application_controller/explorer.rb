@@ -214,7 +214,7 @@ module ApplicationController::Explorer
         tree_select
       end
       format.html do # HTML, redirect to explorer
-        tree_node_id = TreeBuilder.build_node_id(@record)
+        tree_node_id = TreeNode.new(@record).key
         session[:exp_parms] = {:id => tree_node_id}
         redirect_to :action => "explorer"
       end

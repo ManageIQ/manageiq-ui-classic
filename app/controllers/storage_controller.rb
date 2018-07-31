@@ -40,7 +40,7 @@ class StorageController < ApplicationController
   def init_show
     return unless super
     if !@explorer && @display == "main"
-      tree_node_id = TreeBuilder.build_node_id(@record)
+      tree_node_id = TreeNode.new(@record).key
       session[:exp_parms] = {:display => @display, :refresh => params[:refresh], :id => tree_node_id}
 
       # redirect user back to where they came from if they dont have access to any of vm explorers
