@@ -692,12 +692,18 @@ module ApplicationController::CiProcessing
       reboot_guest stop start check_compliance_queue destroy
       refresh_ems vm_miq_request_new suspend reset shutdown_guest
     )
-    ems_cluster_untestable_actions = %w(scan)
-    if controller == "vm_infra"
+    ems_cluster_untestable_actions = %w(scan destroy)
+    other_untestable_actions = %w(destroy) # Note: destroy is testable for host controller
+
+    case controller
+    when 'vm_infra'
       return vm_infra_untestable_actions.exclude?(action)
-    end
-    if controller == "ems_cluster"
+    when 'ems_cluster'
       return ems_cluster_untestable_actions.exclude?(action)
+    when 'host'
+      return true
+    else
+      return other_untestable_actions.exclude?(action)
     end
     true
   end
