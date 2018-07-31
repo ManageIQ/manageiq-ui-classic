@@ -17,11 +17,11 @@
       .col-md-8
         = select_tag('ems_id',
                 '',
-                'ng-model'                   => 'vm.flavorModel.ems',
-                'ng-options'                 => 'ems.name for ems in vm.ems_list',
-                :id                          => 'ems_id',
-                :required                    => '',
-                'miq-select'                 => true)
+                'ng-model'   => 'vm.flavorModel.ems',
+                'ng-options' => 'ems.name for ems in vm.ems_list',
+                :id          => 'ems_id',
+                :required    => '',
+                'miq-select' => true)
         :javascript
           miqInitSelectPicker();
     .form-group
@@ -59,12 +59,12 @@
       %label.col-md-2.control-label
         = _('VCPUs')
       .col-md-8
-        %input.form-control{:type                       => "text",
-                            :name                       => "vcpus",
-                            "id"                        => "vcpus",
-                            'ng-model'                  => "vm.flavorModel.vcpus",
-                            :required                   => "",
-                            "is-int"                => true,
+        %input.form-control{:type               => "text",
+                            :name               => "vcpus",
+                            "id"                => "vcpus",
+                            'ng-model'          => "vm.flavorModel.vcpus",
+                            :required           => "",
+                            "is-int"            => true,
                             "greater-than-zero" => true}
         %span.help-block{"ng-show" => "angularForm.vcpus.$error.required"}
           = _("Required")
@@ -100,7 +100,7 @@
                             "id"              => "swap",
                             'ng-model'        => "vm.flavorModel.swap",
                             :required         => "",
-                            "is-int"      => true,
+                            "is-int"          => true,
                             "greater-or-zero" => true}
         %span.help-block{"ng-show" => "angularForm.swap.$error.required"}
           = _("Required")
@@ -136,6 +136,20 @@
                             :name         => "is_public",
                             'ng-model'    => "vm.flavorModel.is_public",
                             :checkchange  => true}
+    .form-group{'ng-if' => "!vm.flavorModel.is_public"}
+      %label.col-md-2.control-label
+        = _('Cloud Tenant')
+      .col-md-8
+        = select_tag('cloud_tenant_refs[]',
+                '',
+                'ng-model'   => 'vm.selectedCloudTenants',
+                'ng-options' => 'cloud_tenant.name for cloud_tenant in vm.cloudTenants',
+                :id          => 'cloud_tenant',
+                :required    => false,
+                :multiple    => true,
+                'pf-select'  => true)
+        :javascript
+          miqInitSelectPicker();
 
     = render :partial => 'layouts/angular/generic_form_buttons'
 
