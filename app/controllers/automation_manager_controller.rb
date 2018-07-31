@@ -169,10 +169,10 @@ class AutomationManagerController < ApplicationController
 
   private
 
-  def is_template_record?
+  def template_record?
     @record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow) || @record.kind_of?(ConfigurationScript)
   end
-  helper_method :is_template_record?
+  helper_method :template_record?
 
   def textual_group_list
     [%i(properties tags)]
@@ -272,9 +272,9 @@ class AutomationManagerController < ApplicationController
   end
 
   def cs_provider_node(provider)
-    options = {:model                 => "ConfigurationScript",
-               :named_scope           => [[:with_manager, provider.id]],
-               :gtl_dbname            => "automation_manager_configuration_scripts"}
+    options = {:model       => "ConfigurationScript",
+               :named_scope => [[:with_manager, provider.id]],
+               :gtl_dbname  => "automation_manager_configuration_scripts"}
     @show_adv_search = true
     process_show_list(options)
     @right_cell_text = _("Templates under \"%{name}\"") % {:name => provider.name}
@@ -306,8 +306,8 @@ class AutomationManagerController < ApplicationController
     return configuration_script_node(id) if id
     @show_adv_search = true
     if x_active_tree == :configuration_scripts_tree
-      options = {:model       => model.to_s,
-                 :gtl_dbname  => "configuration_scripts"}
+      options = {:model      => model.to_s,
+                 :gtl_dbname => "configuration_scripts"}
       @right_cell_text = _("All Ansible Tower Templates")
       process_show_list(options)
     end
@@ -333,8 +333,8 @@ class AutomationManagerController < ApplicationController
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Configured Systems")
     elsif x_active_tree == :configuration_scripts_tree
-      options = {:model       => "ConfigurationScript",
-                 :gtl_dbname  => "automation_manager_configuration_scripts"}
+      options = {:model      => "ConfigurationScript",
+                 :gtl_dbname => "automation_manager_configuration_scripts"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Templates")
     end

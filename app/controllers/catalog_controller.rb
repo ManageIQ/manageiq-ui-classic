@@ -890,9 +890,9 @@ class CatalogController < ApplicationController
     if @edit[:new][:st_prov_type] == 'generic_ansible_tower'
       if @edit[:new][:manager_id].blank?
         add_flash(_("Provider is required, please select one from the list"), :error)
-      else
+      elsif @edit[:new][:template_id].blank?
         # ensure Job Template is selected as well, required field
-        add_flash(_("Template is required, please select one from the list"), :error) if @edit[:new][:template_id].blank?
+        add_flash(_("Template is required, please select one from the list"), :error)
       end
     end
 
@@ -1549,15 +1549,16 @@ class CatalogController < ApplicationController
   end
 
   def available_job_templates(manager_id)
-    @edit[:new][:available_templates]= []
+    @edit[:new][:available_templates] = []
     all_job_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_scripts').collect { |t| [t.name, t.id] }.sort
     all_workflow_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_workflows').collect { |t| [t.name, t.id] }.sort
-    @edit[:new][:available_templates].push(["", [["<#{_('Choose a Template')}>",
-                                         :selected => "<#{_('Choose a Template')}>",
-                                         :disabled => "<#{_('Choose a Template')}>",
-                                         :style    => 'display:none']]])
-    @edit[:new][:available_templates].push(["Job Templates", all_job_templates]) unless all_job_templates.blank?
-    @edit[:new][:available_templates].push(["Workflow Templates", all_workflow_templates]) unless all_workflow_templates.blank?
+    @edit[:new][:available_templates].push(["",
+                                            [["<#{_('Choose a Template')}>",
+                                              :selected => "<#{_('Choose a Template')}>",
+                                              :disabled => "<#{_('Choose a Template')}>",
+                                              :style    => 'display:none']]])
+    @edit[:new][:available_templates].push(["Job Templates", all_job_templates]) if all_job_templates.present?
+    @edit[:new][:available_templates].push(["Workflow Templates", all_workflow_templates]) if all_workflow_templates.present?
   end
 
   def available_ansible_tower_managers
