@@ -1,5 +1,5 @@
 jasmine.createEmptyPromise = function() {
- return new Promise(function() {})
+  return new Promise(function() {})
 };
 
 jasmine.spyOnFetch = function() {

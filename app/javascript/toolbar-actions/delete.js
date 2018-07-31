@@ -1,7 +1,4 @@
-import { DELETE_EVENT } from '../miq_observable';
-
-const API = angular.injector(['ng', 'miq.api']).get('API');
-const API_ENDPOINT = 'api';
+import { API } from '../http_api';
 
 export function showMessage(messages, success) {
   if (typeof messages === 'string') {
@@ -29,8 +26,8 @@ export function generateMessages(results) {
 }
 
 export function APIDelete(entity, resources) {
-  API.post(`/${API_ENDPOINT}/${entity}`, {
-    action: DELETE_EVENT,
+  API.post(`/api/${entity}`, {
+    action: 'delete',
     resources,
   })
   .then((data) => {
