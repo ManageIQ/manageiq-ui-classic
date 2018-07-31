@@ -187,13 +187,6 @@ describe TreeBuilder do
     end
   end
 
-  context "#build_node_cid" do
-    it "returns correct cid for VM" do
-      vm = FactoryGirl.create(:vm)
-      expect(TreeBuilder.build_node_cid(vm)).to eq("v-#{vm.id}")
-    end
-  end
-
   context "#hide_vms" do
     before(:each) do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
