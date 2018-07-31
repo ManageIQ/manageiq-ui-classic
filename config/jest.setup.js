@@ -15,3 +15,8 @@ window.sprintf = sprintf.sprintf;
 
 import { API } from '../app/javascript/http_api';
 window.vanillaJsAPI = API;
+
+import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
+ManageIQ.angular.rxSubject = rxSubject;
+window.sendDataWithRx = sendDataWithRx;
+window.listenToRx = listenToRx;
