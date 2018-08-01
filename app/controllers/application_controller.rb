@@ -973,7 +973,7 @@ class ApplicationController < ActionController::Base
       if row.data["job.target_class"] && row.data["job.target_id"]
         controller = view_to_hash_controller_from_job_target_class(row.data["job.target_class"])
         new_row[:parent_path] = (url_for_only_path(:controller => controller, :action => "show") rescue nil)
-        new_row[:parent_id] = row.data["job.target_id"] if row.data["job.target_id"]
+        new_row[:parent_id] = row.data["job.target_id"].to_s if row.data["job.target_id"]
       end
       root[:rows] << new_row
 
