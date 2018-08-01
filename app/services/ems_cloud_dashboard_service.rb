@@ -56,6 +56,6 @@ class EmsCloudDashboardService < EmsDashboardService
       :cloud_volumes      => "Cloud Volumes"
     }
 
-    format_data(attributes, attr_icon, attr_url, attr_hsh)
+    format_data('ems_cloud', attributes, attr_icon, attr_url, attr_hsh)
   end
 end
