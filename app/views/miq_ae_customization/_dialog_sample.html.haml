@@ -71,7 +71,7 @@
 
                         - else
                           - if field.values.length > 1
-                            - val = copy_array(field.values)
+                            - val = copy_array(field.values.map {|x, y| x.nil? ? [x,_(y)] : [x, y]})
 
                             - if field.type == "DialogFieldDropDownList"
                               - if field.required

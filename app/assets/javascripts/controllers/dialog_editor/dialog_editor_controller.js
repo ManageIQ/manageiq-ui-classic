@@ -49,6 +49,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
             if (field.dynamic === true) {
               dynamicFields.push(field);
             }
+            _.forEach(field.values, function(value) {
+              if (value[0] === null) {
+                value[1] = __(value[1]);
+              }
+            });
 
             allFields.push(field);
           });
