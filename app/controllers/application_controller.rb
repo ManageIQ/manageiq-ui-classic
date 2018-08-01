@@ -969,7 +969,7 @@ class ApplicationController < ActionController::Base
         new_row[:parent_id] = "xx-#{row.data['miq_report_id']}" if row.data['miq_report_id']
       end
       new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
-      new_row[:tree_id] = TreeNode.new(target).key if target
+      new_row[:tree_id] = TreeNode.new(target).key if target && TreeNode.exists?(target)
       if row.data["job.target_class"] && row.data["job.target_id"]
         controller = view_to_hash_controller_from_job_target_class(row.data["job.target_class"])
         new_row[:parent_path] = (url_for_only_path(:controller => controller, :action => "show") rescue nil)
