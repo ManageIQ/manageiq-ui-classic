@@ -36,7 +36,7 @@
     "history": "^4.7.2",
     "jquery": "~2.2.4",
     "lodash": "^4.17.4",
-    "patternfly": "3.52.3",
+    "patternfly": "~3.54.1",
     "patternfly-react": "2.10.1",
     "prop-types": "^15.6.0",
     "proxy-polyfill": "^0.1.7",
