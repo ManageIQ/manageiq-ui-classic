@@ -1,6 +1,6 @@
 ManageIQ.angular.app.component('ansibleRawStdout', {
   bindings: {
-    taskId: '<',
+    taskId: '@',
   },
   controller: ['$sce', 'API', function($sce, API) {
     var vm = this;
