@@ -64,7 +64,7 @@
                             %label{:for => "dialog_field_radio_sample_2"} Option 2
 
                           - if field.type == "DialogFieldDropDownList"
-                            = select_tag("#{field.id}", options_for_select([_("Option 1"), _("Option 2")]))
+                            = select_tag("#{field.id}", options_for_select([_("Option 1"), _("Option 2")]), :class => 'selectpicker')
 
                           - if field.show_refresh_button?
                             = button_tag(_('Refresh'), :disabled => true)
@@ -75,7 +75,7 @@
 
                             - if field.type == "DialogFieldDropDownList"
                               - if field.required
-                                = select_tag(field_id, options_for_select(val.collect(&:reverse), field.default_value))
+                                = select_tag(field_id, options_for_select(val.collect(&:reverse), field.default_value), :class => 'selectpicker')
 
                               - else
                                 -# NOT REQUIRED
