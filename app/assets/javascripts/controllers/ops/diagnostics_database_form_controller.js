@@ -116,8 +116,6 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       vm.diagnosticsDatabaseModel.log_protocol = 'Samba';
     } else if (vm.diagnosticsDatabaseModel.uri_prefix === 's3') {
       vm.diagnosticsDatabaseModel.log_protocol = 'AWS S3';
-    } else if (vm.diagnosticsDatabaseModel.uri_prefix === 'oss') {
-      vm.diagnosticsDatabaseModel.log_protocol = 'Openstack Swift';
     }
 
     vm.diagnosticsDatabaseModel.action_typ = 'db_backup';

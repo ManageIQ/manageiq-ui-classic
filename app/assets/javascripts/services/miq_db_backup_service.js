@@ -1,5 +1,5 @@
 ManageIQ.angular.app.service('miqDBBackupService', function() {
-  this.knownProtocolsList = ['Anonymous FTP', 'FTP', 'NFS', 'Samba', 'AWS S3', 'Swift'];
+  this.knownProtocolsList = ['Anonymous FTP', 'FTP', 'NFS', 'Samba', 'AWS S3'];
 
   this.logProtocolNotSelected = function(model) {
     return model.log_protocol === '' || model.log_protocol === undefined;
@@ -19,8 +19,6 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
       model.uri_prefix = 'ftp';
     } else if (model.log_protocol === 'AWS S3') {
       model.uri_prefix = 's3';
-    } else if (model.log_protocol === 'Openstack Swift' || model.log_protocol === 'Swift') {
-      model.uri_prefix = 'oss';
     }
   };
 
@@ -32,12 +30,8 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
     return (model.log_protocol === 'AWS S3');
   };
 
-  this.swiftBackup = function(model) {
-    return (model.log_protocol === 'Openstack Swift' || model.log_protocol === 'Swift');
-  };
-
   this.credsProtocol = function(model) {
-    return (model.log_protocol === 'Samba' || model.log_protocol === 'FTP' || this.s3Backup(model) || this.swiftBackup(model));
+    return (model.log_protocol === 'Samba' || model.log_protocol === 'FTP' || this.s3Backup(model));
   };
 
   this.dbRequired = function(model, value) {

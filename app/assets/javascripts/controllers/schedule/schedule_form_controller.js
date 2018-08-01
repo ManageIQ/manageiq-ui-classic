@@ -295,10 +295,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     if ($scope.scheduleModel.log_protocol === "AWS S3") {
       $scope.updateLogProtocol("s3");
     }
-
-    if ($scope.scheduleModel.log_protocol === "Openstack Swift") {
-      $scope.updateLogProtocol("oss");
-    }
   };
 
   $scope.updateLogProtocol = function(prefix) {
