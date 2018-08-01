@@ -1253,7 +1253,7 @@ module VmCommon
       partial_locals = { :controller => 'vm' }
       if partial == 'layouts/x_gtl'
         partial_locals[:action_url]  = @lastaction
-        presenter[:parent_id]    = @record.id           # Set parent rec id for JS function miqGridSort to build URL
+        presenter[:parent_id]    = @record.id.to_s           # Set parent rec id for JS function miqGridSort to build URL
         presenter[:parent_class] = params[:controller] # Set parent class for URL also
       end
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
