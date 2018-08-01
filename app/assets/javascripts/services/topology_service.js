@@ -257,6 +257,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       controller.relations = data.data.relations;
       // NOTE: $scope.kinds is required by kubernetes icons used for filtering
       controller.kinds = $scope.kinds = data.data.kinds;
+      controller.filters = $scope.filters = {};
       controller.icons = data.data.icons;
       if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(controller.kinds).length)) {
         controller.kinds = $scope.kinds = currentSelectedKinds;

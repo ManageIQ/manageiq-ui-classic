@@ -3,14 +3,22 @@ $topology-colors: (
   PhysicalRack:    #030303,
   PhysicalSwitch:  #030303,
   PhysicalChassis: #030303,
+  Valid:           #3f9c35,
+  Warning:         #ec7a08,
+  Critical:        #cc0000,
+  Unknown:         #bbb,
 );
 
-@each $component, $color in $topology-colors {
-  .legend kubernetes-topology-icon[kind="#{$component}"] i{
-    color: $color;
-  }
-
-  .topology g.#{$component} text.glyph{
+@each $filter-value, $color in $topology-colors {
+  .topology g.#{$filter-value} text.glyph{
     fill: $color !important;
   }
+
+  .legend kubernetes-topology-filter[filter-value="#{$filter-value}"] i{
+    color: $color;
+  }
+}
+
+.legend kubernetes-topology-filter[filter-value="Unknown,None"] i{
+  color: map-get($topology-colors, Unknown)
 }

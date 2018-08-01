@@ -13,7 +13,7 @@ describe CloudTopologyService do
     end
 
     it "topology contains only the expected keys" do
-      expect(subject.keys).to match_array(%i(items kinds relations icons))
+      expect(subject.keys).to match_array(%i(items kinds filter_properties relations icons))
     end
 
     it "provider has unknown status when no authentication exists" do

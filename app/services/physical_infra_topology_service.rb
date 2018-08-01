@@ -51,6 +51,7 @@ class PhysicalInfraTopologyService < TopologyService
   ]
 
   @kinds = %i(PhysicalInfraManager PhysicalRack PhysicalChassis PhysicalServer Host Vm Tag PhysicalSwitch)
+  @filter_properties = %i(kind status)
 
   def entity_type(entity)
     if entity.kind_of?(Host)
