@@ -38,6 +38,12 @@ class TopologyService
     true
   end
 
+  # After the graph is completed, we can filter which links are valid
+  # e.g.: We can perform a transitive reduction.
+  def filter_links(links)
+    links
+  end
+
   def build_base_entity_data(entity)
     {
       :name   => entity_name(entity),
@@ -131,6 +137,8 @@ class TopologyService
         end
       end
     end
+
+    links = filter_links(links)
 
     [topo_items, links]
   end
