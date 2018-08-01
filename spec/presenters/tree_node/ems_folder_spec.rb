@@ -2,17 +2,17 @@ describe TreeNode::EmsFolder do
   subject { described_class.new(object, nil, options) }
   let(:options) { {} }
 
-  %i(
-    ems_folder
-    storage_cluster
-    inventory_group
-    inventory_root_group
-  ).each do |factory|
+  {
+    :ems_folder           => 'f-',
+    :storage_cluster      => 'dsc-',
+    :inventory_group      => 'f-',
+    :inventory_root_group => 'f-'
+  }.each do |factory, prefix|
     klass = FactoryGirl.factory_by_name(factory).instance_variable_get(:@class_name)
     context(klass) do
       let(:object) { FactoryGirl.create(factory) }
 
-      include_examples 'TreeNode::Node#key prefix', 'f-'
+      include_examples 'TreeNode::Node#key prefix', prefix
       include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'
       include_examples 'TreeNode::Node#tooltip prefix', 'Folder'
 

@@ -551,7 +551,7 @@ describe ProviderForemanController do
     # then get to explorer renders the data for the active node
     # we test the textual_summary for a configured system
 
-    seed_session_trees('provider_foreman', 'cs_tree', "cs-#{tree_node_id}")
+    seed_session_trees('provider_foreman', 'cs_tree', "csf-#{tree_node_id}")
     get :explorer
 
     expect(response.status).to eq(200)
