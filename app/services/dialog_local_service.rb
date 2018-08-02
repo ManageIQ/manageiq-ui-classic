@@ -13,6 +13,7 @@ class DialogLocalService
     MiqGroup
     Service
     ServiceAnsiblePlaybook
+    ServiceContainerTemplate
     Storage
     Template
     Tenant
@@ -126,11 +127,11 @@ class DialogLocalService
 
   def determine_target_type(obj)
     case obj.class.name.demodulize
-    when /Template/
+    when /^Template/
       "miq_template"
     when /InfraManager/
       "ext_management_system"
-    when /ServiceAnsiblePlaybook/
+    when /ServiceAnsiblePlaybook/, /ServiceContainerTemplate/
       "service"
     else
       obj.class.name.demodulize.underscore
