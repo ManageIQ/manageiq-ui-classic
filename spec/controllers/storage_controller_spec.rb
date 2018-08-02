@@ -253,7 +253,7 @@ describe StorageController do
       it " returns VM Templates associated with selected Datastore" do
         req = {
           :model_name                     => 'MiqTemplate',
-          :parent_id                      => storage_with_miq_templates.id,
+          :parent_id                      => storage_with_miq_templates.id.to_s,
           :display                        => 'all_miq_templates',
           :parent                         => storage_with_miq_templates,
           :report_data_additional_options => {
@@ -308,7 +308,7 @@ describe StorageController do
         seed_session_trees('storage', :storage_pod_tree, 'root')
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
           :model_name                     => 'Storage',
-          :parent_id                      => storage_cluster.id,
+          :parent_id                      => storage_cluster.id.to_s,
           :report_data_additional_options => {
             :association       => 'storages',
             :parent_class_name => 'StorageCluster',

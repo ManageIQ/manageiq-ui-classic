@@ -31,7 +31,7 @@ class ApplicationController
       additional_options.gtl_dbname = options[:gtl_dbname]
       additional_options.with_model(options[:model]) if options[:model]
       additional_options.match_via_descendants = options[:match_via_descendants]
-      additional_options.parent_id = options[:parent].id if options[:parent]
+      additional_options.parent_id = options[:parent].id.to_s if options[:parent]
       additional_options.parent_class_name = options[:parent].class.name if options[:parent]
       additional_options.association = options[:association]
       additional_options.view_suffix = options[:view_suffix]
