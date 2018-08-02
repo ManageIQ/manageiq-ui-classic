@@ -1,14 +1,15 @@
 import { connectRouter } from 'connected-react-router';
-import { createStore, applyMiddleware } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import { rootReducer } from './reducer';
 import { createMiddlewares } from './middleware';
 import { history } from '../miq-component/react-history';
 
 const initialState = {};
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export const store = createStore(
   connectRouter(history)(rootReducer),
   initialState,
-  applyMiddleware( createMiddlewares({ history }) ),
+  composeEnhancers(applyMiddleware(...createMiddlewares(history))),
 );
-
