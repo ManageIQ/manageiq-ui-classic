@@ -890,9 +890,9 @@ class CatalogController < ApplicationController
     if @edit[:new][:st_prov_type] == 'generic_ansible_tower'
       if @edit[:new][:manager_id].blank?
         add_flash(_("Provider is required, please select one from the list"), :error)
-      else
+      elsif @edit[:new][:template_id].blank?
         # ensure Job Template is selected as well, required field
-        add_flash(_("Job Template is required, please select one from the list"), :error) if @edit[:new][:template_id].blank?
+        add_flash(_("Template is required, please select one from the list"), :error)
       end
     end
 
@@ -1486,7 +1486,7 @@ class CatalogController < ApplicationController
     ct = ContainerTemplate.find_by(:id => @record.config_info[:provision][:container_template_id]) if @record.config_info[:provision] && @record.config_info[:provision][:container_template_id]
     @edit[:new][:template_id] = ct.try(:id)
     @edit[:new][:manager_id] = ct.try(:ext_management_system).try(:id)
-    available_job_or_container_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
+    available_container_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
   end
 
   def get_form_vars_orchestration
@@ -1511,7 +1511,8 @@ class CatalogController < ApplicationController
         @edit[:new][:manager_id]          = nil
       else
         @edit[:new][:manager_id] = params[:manager_id]
-        available_job_or_container_templates(params[:manager_id]) if %w(generic_ansible_tower generic_container_template).include?(@edit[:new][:st_prov_type])
+        available_job_templates(params[:manager_id]) if @edit[:new][:st_prov_type] == 'generic_ansible_tower'
+        available_container_templates(params[:manager_id]) if @edit[:new][:st_prov_type] == 'generic_container_template'
       end
     end
     @edit[:new][:template_id] = params[:template_id] if params[:template_id]
@@ -1540,10 +1541,23 @@ class CatalogController < ApplicationController
     available_orchestration_managers(@record.orchestration_template.id) if @record.orchestration_template
   end
 
-  def available_job_or_container_templates(manager_id)
+  def available_container_templates(manager_id)
     method = @edit[:new][:st_prov_type] == 'generic_ansible_tower' ? 'configuration_scripts' : 'container_templates'
     @edit[:new][:available_templates] =
       ExtManagementSystem.find_by(:id => manager_id).send(method).collect { |t| [t.name, t.id] }.sort
+  end
+
+  def available_job_templates(manager_id)
+    @edit[:new][:available_templates] = []
+    all_job_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_scripts').collect { |t| [t.name, t.id] }.sort
+    all_workflow_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_workflows').collect { |t| [t.name, t.id] }.sort
+    @edit[:new][:available_templates].push(["",
+                                            [["<#{_('Choose a Template')}>",
+                                              :selected => "<#{_('Choose a Template')}>",
+                                              :disabled => "<#{_('Choose a Template')}>",
+                                              :style    => 'display:none']]])
+    @edit[:new][:available_templates].push(["Job Templates", all_job_templates]) if all_job_templates.present?
+    @edit[:new][:available_templates].push(["Workflow Templates", all_workflow_templates]) if all_workflow_templates.present?
   end
 
   def available_ansible_tower_managers
@@ -1551,7 +1565,7 @@ class CatalogController < ApplicationController
       ManageIQ::Providers::AnsibleTower::AutomationManager.all.collect { |t| [t.name, t.id] }.sort
     @edit[:new][:template_id] = @record.job_template.try(:id)
     @edit[:new][:manager_id] = @record.job_template.try(:manager).try(:id)
-    available_job_or_container_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
+    available_job_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
   end
 
   def add_orchestration_template_vars(st)

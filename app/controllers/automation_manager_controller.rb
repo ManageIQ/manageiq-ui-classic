@@ -52,7 +52,7 @@ class AutomationManagerController < ApplicationController
       tagging_edit('ConfiguredSystem', false)
     when :configuration_scripts
       assert_privileges("automation_manager_configuration_script_tag")
-      tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript', false)
+      tagging_edit('ConfigurationScript', false)
     end
     render_tagging_form
   end
@@ -127,8 +127,8 @@ class AutomationManagerController < ApplicationController
   def configuration_scripts_tree_rec
     nodes = x_node.split('-')
     case nodes.first
-    when "root", "at", "cf"
-      find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, params[:id])
+    when "root", "at", "cf", "cw"
+      find_record(ConfigurationScript, params[:id])
     end
   end
 
@@ -169,6 +169,11 @@ class AutomationManagerController < ApplicationController
 
   private
 
+  def template_record?
+    @record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow) || @record.kind_of?(ConfigurationScript)
+  end
+  helper_method :template_record?
+
   def textual_group_list
     [%i(properties tags)]
   end
@@ -196,7 +201,7 @@ class AutomationManagerController < ApplicationController
         :role     => "automation_manager_configuration_scripts_accord",
         :role_any => true,
         :name     => :configuration_scripts,
-        :title    => _("Job Templates")
+        :title    => _("Templates")
       )
     ]
   end
@@ -218,7 +223,7 @@ class AutomationManagerController < ApplicationController
       inventory_group_node(id, model)
     when "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", "ConfiguredSystem"
       configured_system_list(id, model)
-    when "ConfigurationScript"
+    when "ConfigurationScript", "ConfigurationWorkflow"
       configuration_scripts_list(id, model)
     when "MiqSearch"
       miq_search_node
@@ -267,12 +272,12 @@ class AutomationManagerController < ApplicationController
   end
 
   def cs_provider_node(provider)
-    options = {:model                 => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
-               :named_scope           => [[:with_manager, provider.id]],
-               :gtl_dbname            => "automation_manager_configuration_scripts"}
+    options = {:model       => "ConfigurationScript",
+               :named_scope => [[:with_manager, provider.id]],
+               :gtl_dbname  => "automation_manager_configuration_scripts"}
     @show_adv_search = true
     process_show_list(options)
-    @right_cell_text = _("Job Templates under \"%{name}\"") % {:name => provider.name}
+    @right_cell_text = _("Templates under \"%{name}\"") % {:name => provider.name}
   end
 
   def inventory_group_node(id, model)
@@ -303,13 +308,13 @@ class AutomationManagerController < ApplicationController
     if x_active_tree == :configuration_scripts_tree
       options = {:model      => model.to_s,
                  :gtl_dbname => "configuration_scripts"}
-      @right_cell_text = _("All Ansible Tower Job Templates")
+      @right_cell_text = _("All Ansible Tower Templates")
       process_show_list(options)
     end
   end
 
   def configuration_script_node(id)
-    @record = @configuration_script_record = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, id)
+    @record = @configuration_script_record = find_record(ConfigurationScript, id)
     @show_adv_search = false
     display_node(id, nil)
   end
@@ -328,10 +333,10 @@ class AutomationManagerController < ApplicationController
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Configured Systems")
     elsif x_active_tree == :configuration_scripts_tree
-      options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
+      options = {:model      => "ConfigurationScript",
                  :gtl_dbname => "automation_manager_configuration_scripts"}
       process_show_list(options)
-      @right_cell_text = _("All Ansible Tower Job Templates")
+      @right_cell_text = _("All Ansible Tower Templates")
     end
   end
 
@@ -343,7 +348,7 @@ class AutomationManagerController < ApplicationController
     get_node_info(x_node)
     @delete_node = params[:id] if @replace_trees
     type, _id = parse_nodetype_and_id(x_node)
-    type && %w(ConfiguredSystem ConfigurationScript).include?(TreeBuilder.get_model_for_prefix(type))
+    type && %w(ConfiguredSystem ConfigurationScript ConfigurationWorkflow).include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def managed_group_record?(node = x_node)
@@ -448,7 +453,7 @@ class AutomationManagerController < ApplicationController
 
   def configscript_service_dialog
     assert_privileges("automation_manager_configuration_script_service_dialog")
-    cs = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.find_by(:id => params[:id])
+    cs = ConfigurationScript.find_by(:id => params[:id])
     @edit = {:new    => {:dialog_name => ""},
              :key    => "cs_edit__#{cs.id}",
              :rec_id => cs.id}

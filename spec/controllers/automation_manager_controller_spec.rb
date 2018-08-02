@@ -427,7 +427,7 @@ describe AutomationManagerController do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
       controller.instance_variable_set(:@_params, :id => "configuration_scripts")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript", :gtl_dbname => "automation_manager_configuration_scripts").and_call_original
+      expect(controller).to receive(:get_view).with("ConfigurationScript", :gtl_dbname => "automation_manager_configuration_scripts").and_call_original
       controller.send(:accordion_select)
     end
   end
@@ -644,7 +644,7 @@ describe AutomationManagerController do
       FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
       post :tagging, :params => {:id => @cs.id, :format => :js}
       expect(response.status).to eq(200)
-      expect(response.body).to include('Job Template (Ansible Tower) Being Tagged')
+      expect(response.body).to include('Template (Ansible Tower) Being Tagged')
     end
   end
 
