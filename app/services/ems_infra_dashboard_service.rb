@@ -63,7 +63,7 @@ class EmsInfraDashboardService < EmsDashboardService
       :miq_templates => _('Templates'),
     }
 
-    format_data(attributes, attr_icon, attr_url, attr_hsh)
+    format_data('ems_infra', attributes, attr_icon, attr_url, attr_hsh)
   end
 
   def heatmaps

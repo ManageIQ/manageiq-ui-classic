@@ -44,7 +44,7 @@ class EmsDashboardService < DashboardService
     all_records
   end
 
-  def format_data(attributes, attr_icon, attr_url, attr_hsh)
+  def format_data(ems_type, attributes, attr_icon, attr_url, attr_hsh)
     attr_data = []
     attributes.each do |attr|
       attr_data.push(
@@ -52,7 +52,7 @@ class EmsDashboardService < DashboardService
         :iconClass    => attr_icon[attr],
         :title        => attr_hsh[attr],
         :count        => @ems.send(attr).length,
-        :href         => get_url('ems_cloud', @ems_id, attr_url[attr]),
+        :href         => get_url(ems_type, @ems_id, attr_url[attr]),
         :notification => {
           :iconClass => 'pficon pficon-error-circle-o',
           :count     => 0,
