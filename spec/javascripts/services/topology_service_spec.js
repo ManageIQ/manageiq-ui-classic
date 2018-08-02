@@ -137,6 +137,11 @@ describe('topologyService', function() {
         var url = controller.parseUrl('/network_topology/show/10000000000005');
         expect(url).toEqual('/network_topology/data/10000000000005');
       });
+
+      it('works with a hash url', function() {
+        var url = controller.parseUrl('/network_topology/show/4#/');
+        expect(url).toEqual('/network_topology/data/4');
+      });
     })
 
     context('physical infra', function() {
