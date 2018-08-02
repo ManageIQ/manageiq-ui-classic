@@ -228,7 +228,7 @@ describe HostController do
     it "renders a grid of associated Users" do
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name      => 'Account',
-        :parent_id       => @host.id,
+        :parent_id       => @host.id.to_s,
         :parent          => @host,
         :gtl_type_string => 'list'
       )
@@ -241,7 +241,7 @@ describe HostController do
       @guest_application = FactoryGirl.create(:guest_application, :name => "foo", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name      => 'GuestApplication',
-        :parent_id       => @host.id,
+        :parent_id       => @host.id.to_s,
         :parent          => @host,
         :gtl_type_string => 'list'
       )
@@ -254,7 +254,7 @@ describe HostController do
       @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name                     => 'Filesystem',
-        :parent_id                      => @host.id,
+        :parent_id                      => @host.id.to_s,
         :parent                         => @host,
         :gtl_type_string                => 'list',
         :report_data_additional_options => {
@@ -270,7 +270,7 @@ describe HostController do
       @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name                     => 'SystemService',
-        :parent_id                      => @host.id,
+        :parent_id                      => @host.id.to_s,
         :parent                         => @host,
         :gtl_type_string                => 'list',
         :report_data_additional_options => {
@@ -286,7 +286,7 @@ describe HostController do
       @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name                     => 'SystemService',
-        :parent_id                      => @host.id,
+        :parent_id                      => @host.id.to_s,
         :parent                         => @host,
         :gtl_type_string                => 'list',
         :report_data_additional_options => {
@@ -302,7 +302,7 @@ describe HostController do
       @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name                     => 'SystemService',
-        :parent_id                      => @host.id,
+        :parent_id                      => @host.id.to_s,
         :parent                         => @host,
         :gtl_type_string                => 'list',
         :report_data_additional_options => {

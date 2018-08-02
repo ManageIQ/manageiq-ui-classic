@@ -260,7 +260,7 @@ describe ServiceController do
         report_data_request(
           :model         => 'Vm',
           :parent_model  => 'Service',
-          :parent_id     => service.id,
+          :parent_id     => service.id.to_s,
           :active_tree   => 'svcs_tree',
           :parent_method => 'all_vms'
         )
@@ -277,7 +277,7 @@ describe ServiceController do
       it 'renders GTL of VMs associated to the selected Service' do
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
           :model_name                     => 'Vm',
-          :parent_id                      => service.id,
+          :parent_id                      => service.id.to_s,
           :report_data_additional_options => {
             :parent_class_name => 'Service',
             :parent_method     => :all_vms,
