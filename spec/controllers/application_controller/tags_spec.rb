@@ -75,14 +75,18 @@ describe ApplicationController do
 
     it "region id of classification/entries should match" do
       # only classification/entries from same region should be returned
+      allow(controller).to receive(:button_url).with("application", @st.id, "save").and_return("save_url")
+      allow(controller).to receive(:button_url).with("application", @st.id, "cancel").and_return("cancel_url")
       controller.instance_variable_set(:@edit, :new => {})
+      controller.instance_variable_set(:@sb, {})
       controller.instance_variable_set(:@tagging, 'ServiceTemplate')
       controller.instance_variable_set(:@object_ids, [@st.id])
       session[:assigned_filters] = {:Test => %w("Entry1 Entry2)}
 
       controller.send(:tag_edit_build_screen)
-      expect(convert_to_region_id(assigns(:categories)['Clergy']))
-        .to eq(convert_to_region_id(assigns(:entries)['Bishop']))
+      expect(convert_to_region_id(assigns(:tags)[:tags].first[:id]))
+        .to eq(convert_to_region_id(assigns(:tags)[:tags].first[:values].first[:id]))
+
     end
   end
 

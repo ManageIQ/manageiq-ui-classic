@@ -620,9 +620,11 @@ describe CatalogController do
 
         controller.instance_variable_set(:@sb, :action => "ot_tags_edit")
         controller.instance_variable_set(:@_params, :miq_grid_checks => @ot.id.to_s)
+        allow(controller).to receive(:button_url).with("catalog", @ot.id, "save").and_return("save_url")
+        allow(controller).to receive(:button_url).with("catalog", @ot.id, "cancel").and_return("cancel_url")
+
         controller.send(:tags_edit, "OrchestrationTemplate")
         expect(assigns(:flash_array)).to be_nil
-        expect(assigns(:entries)).not_to be_nil
       end
 
       it "cancels tags edit" do
@@ -1227,9 +1229,10 @@ describe CatalogController do
 
         controller.instance_variable_set(:@sb, :action => "catalogitem_tag")
         controller.instance_variable_set(:@_params, :miq_grid_checks => @st.id.to_s)
+        allow(controller).to receive(:button_url).with("catalog", @st.id, "save").and_return("save_url")
+        allow(controller).to receive(:button_url).with("catalog", @st.id, "cancel").and_return("cancel_url")
         controller.send(:st_tags_edit)
         expect(assigns(:flash_array)).to be_nil
-        expect(assigns(:entries)).not_to be_nil
       end
 
       it "cancels tags edit" do

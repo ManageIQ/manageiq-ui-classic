@@ -177,9 +177,9 @@ module ApplicationController::Tags
   # Build the @edit elements for the tag edit screen
   def tag_edit_build_screen
     @showlinks = true
+    @edit[:object_ids] ||= @object_ids
 
     cats = Classification.categories.select(&:show).sort_by { |t| t.description.try(:downcase) } # Get the categories, sort by description
-    @categories = {}    # Classifications array for first chooser
     cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
     if ["User", "MiqGroup", "Tenant"].include?(@tagging)
       session[:assigned_filters] = []  # No view filters used for user/groups/tenants, set as empty for later methods
@@ -219,11 +219,10 @@ module ApplicationController::Tags
        :description => tag[:description],
        :values      => @assignments.select { |a| a.parent_id == tag[:id] }.map { |b| { :description => b.description, :id => b[:id] } }}
     end
-
     @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => @tagitems.map(&:id)}
     @button_urls = {
-      :save_url   => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "save"),
-      :cancel_url => url_for_only_path(:action => 'tagging_edit', :id => @sb[:rec_id] || @edit[:object_ids][0], :button => "cancel")
+      :save_url   => button_url(controller_path, @sb[:rec_id] || @edit[:object_ids][0], 'save'),
+      :cancel_url => button_url(controller_path, @sb[:rec_id] || @edit[:object_ids][0], 'cancel')
     }
   end
 
@@ -263,5 +262,16 @@ module ApplicationController::Tags
                                   :locals  => locals_for_tagging])
     presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons',
                                           :locals  => locals_for_tagging])
+  end
+
+  def button_url(controller, id, type)
+    case controller
+    when 'catalog'
+      url_for_only_path(:action => 'ot_tags_edit', :id => id, :button => type)
+    when 'ops'
+      url_for_only_path(:action => 'rbac_tags_edit', :id => id, :button => type)
+    else
+      url_for_only_path(:action => 'tagging_edit', :id => id, :button => type)
+    end
   end
 end
