@@ -1,20 +1,31 @@
 class DialogLocalService
   NEW_DIALOG_USERS = %w(
+    AvailabilityZone
     CloudNetwork
     CloudObjectStoreContainer
     CloudSubnet
     CloudTenant
     CloudVolume
+    ContainerGroup
+    ContainerImage
     ContainerNode
+    ContainerProject
+    ContainerTemplate
+    ContainerVolume
     EmsCluster
     GenericObject
     Host
     InfraManager
+    LoadBalancer
     MiqGroup
+    NetworkRouter
+    OrchestrationStack
+    SecurityGroup
     Service
     ServiceAnsiblePlaybook
     ServiceContainerTemplate
     Storage
+    Switch
     Template
     Tenant
     User
@@ -62,25 +73,8 @@ class DialogLocalService
   private
 
   def determine_api_endpoints(obj, display_options = {})
-    case obj.class.name.demodulize
-    when /CloudNetwork/
-      api_collection_name = "cloud_networks"
-      cancel_endpoint = "/cloud_network"
-    when /CloudObjectStoreContainer/
-      api_collection_name = "cloud_object_store_containers"
-      cancel_endpoint = "/cloud_object_store_container"
-    when /CloudSubnet/
-      api_collection_name = "cloud_subnets"
-      cancel_endpoint = "/cloud_subnet"
-    when /CloudTenant/
-      api_collection_name = "cloud_tenants"
-      cancel_endpoint = "/cloud_tenant"
-    when /CloudVolume/
-      api_collection_name = "cloud_volumes"
-      cancel_endpoint = "/cloud_volume"
-    when /ContainerNode/
-      api_collection_name = "container_nodes"
-      cancel_endpoint = "/container_node"
+    base_name = obj.class.name.demodulize
+    case base_name
     when /EmsCluster/
       api_collection_name = "clusters"
       cancel_endpoint = "/ems_cluster"
@@ -91,9 +85,6 @@ class DialogLocalService
                         else
                           "/service/explorer"
                         end
-    when /Host/
-      api_collection_name = "hosts"
-      cancel_endpoint = "/host"
     when /InfraManager/
       api_collection_name = "providers"
       cancel_endpoint = "/ems_infra"
@@ -106,10 +97,17 @@ class DialogLocalService
     when /Storage/
       api_collection_name = "data_stores"
       cancel_endpoint = "/storage/explorer"
-    when /Template/
+    when /Switch/
+      api_collection_name = "switches"
+      cancel_endpoint = "/infra_networking/explorer"
+
+    # ^ is necessary otherwise we match on ContainerTemplates
+    when /^Template/
       api_collection_name = "templates"
       cancel_endpoint = "/vm_or_template/explorer"
-    when /Tenant/
+
+    # ^ is necessary otherwise we match CloudTenant
+    when /^Tenant/
       api_collection_name = "tenants"
       cancel_endpoint = "/ops/explorer"
     when /User/
@@ -118,6 +116,9 @@ class DialogLocalService
     when /Vm/
       api_collection_name = "vms"
       cancel_endpoint = display_options[:cancel_endpoint] || "/vm_infra/explorer"
+    else
+      api_collection_name = base_name.underscore.pluralize
+      cancel_endpoint = "/#{base_name.underscore}"
     end
 
     submit_endpoint = "/api/#{api_collection_name}/#{obj.id}"
