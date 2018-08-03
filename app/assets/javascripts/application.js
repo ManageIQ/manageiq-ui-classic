@@ -73,7 +73,6 @@
 //= require ./miq_list_grid
 //= require ./miq_toolbar
 //= require ./resizable_sidebar
-//= require bower_components/xml_display/XMLDisplay
 //= require ./miq_c3
 //= require ./miq_explorer
 //= require bower_components/qs/dist/qs.min
