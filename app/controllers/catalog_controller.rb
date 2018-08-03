@@ -1549,8 +1549,10 @@ class CatalogController < ApplicationController
 
   def available_job_templates(manager_id)
     @edit[:new][:available_templates] = []
-    all_job_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_scripts').collect { |t| [t.name, t.id] }.sort
-    all_workflow_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_workflows').collect { |t| [t.name, t.id] }.sort
+    all_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_scripts').sort_by(&:name)
+    all_job_templates = all_templates.collect { |t| [t.name, t.id] if t.type == 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript' }.compact
+    all_workflow_templates = all_templates.collect { |t| [t.name, t.id] if t.type == 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow' }.compact
+
     @edit[:new][:available_templates].push(["",
                                             [["<#{_('Choose a Template')}>",
                                               :selected => "<#{_('Choose a Template')}>",

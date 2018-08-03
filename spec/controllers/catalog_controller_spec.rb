@@ -1158,6 +1158,25 @@ describe CatalogController do
         end
       end
     end
+
+    describe '#available_job_templates' do
+      it "" do
+        ems = FactoryGirl.create(:automation_manager_ansible_tower)
+        cs = FactoryGirl.create(:configuration_script,
+                                :type => 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript',
+                                :name => 'fred job template')
+        cf = FactoryGirl.create(:configuration_workflow, :name => 'wilma workflow template')
+        ems.configuration_scripts = [cs, cf]
+        controller.instance_variable_set(:@edit, :new => {})
+        controller.send(:available_job_templates, ems.id)
+        template_options = [["", [["<Choose a Template>", {:selected => "<Choose a Template>",
+                                                           :disabled => "<Choose a Template>",
+                                                           :style    => "display:none"}]]],
+                            ["Job Templates", [["fred job template", cs.id]]],
+                            ["Workflow Templates", [["wilma workflow template", cf.id]]]]
+        expect(assigns(:edit)[:new][:available_templates]).to eq(template_options)
+      end
+    end
   end
 
   describe "tests that need only specific rbac feature access" do
