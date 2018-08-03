@@ -610,7 +610,8 @@ class ChargebackController < ApplicationController
   def cb_assign_set_record_vars
     if @edit[:new][:cbshow_typ].ends_with?("-tags")
       @edit[:set_assignments] = []
-      @edit[:cb_assign][:tags].each do |id, _tag|
+      assigned_rates_from_all_categories = @edit[:cb_assign][:tags].values.reduce({}, :merge)
+      assigned_rates_from_all_categories.each_key do |id|
         key = "#{@edit[:new][:cbshow_typ]}__#{id}"
         if !@edit[:new][key].nil? && @edit[:new][key] != "nil"
           temp = {
@@ -739,9 +740,10 @@ class ChargebackController < ApplicationController
   end
 
   def get_tags_all(category)
-    @edit[:cb_assign][:tags] = {}
+    @edit[:cb_assign][:tags] ||= {}
+    @edit[:cb_assign][:tags][category] ||= {}
     classification = Classification.find_by_id(category.to_s)
-    classification.entries.each { |e| @edit[:cb_assign][:tags][e.id.to_s] = e.description } if classification
+    classification&.entries&.each { |e| @edit[:cb_assign][:tags][category][e.id.to_s] = e.description }
   end
 
   DEFAULT_CHARGEBACK_LABELS = ["com.redhat.component"].freeze
@@ -799,15 +801,15 @@ class ChargebackController < ApplicationController
     end
   end
 
-  def cb_assign_params_to_edit(cb_assign_key)
-    return unless @edit[:cb_assign][cb_assign_key]
+  def cb_assign_params_to_edit(cb_assign_key, tag_category_id = nil)
+    current_assingments = cb_assign_key == :tags ? @edit[:cb_assign][cb_assign_key].try(:[], tag_category_id) : @edit[:cb_assign][cb_assign_key]
 
-    @edit[:cb_assign][cb_assign_key].each do |id, _ci|
+    return unless current_assingments
+    current_assingments.each_key do |id|
       key = "#{@edit[:new][:cbshow_typ]}__#{id}"
       @edit[:new][key] = params[key].to_s if params[key]
     end
   end
-
 
   # Get variables from edit form
   def cb_assign_get_form_vars
@@ -819,7 +821,7 @@ class ChargebackController < ApplicationController
 
     if @edit[:new][:cbshow_typ].ends_with?("-tags")
       get_categories_all
-      get_tags_all(params[:cbtag_cat]) if params[:cbtag_cat]
+      get_tags_all(params[:cbtag_cat].to_i) if params[:cbtag_cat]
     elsif @edit[:new][:cbshow_typ].ends_with?("-labels")
       get_docker_labels_all_keys
       get_docker_labels_all_values(params[:cblabel_key]) if params[:cblabel_key] && params[:cblabel_key] != 'null'
@@ -828,7 +830,7 @@ class ChargebackController < ApplicationController
     end
 
     cb_assign_params_to_edit(:cis)
-    cb_assign_params_to_edit(:tags)
+    cb_assign_params_to_edit(:tags, @edit[:new][:cbtag_cat].try(:to_i))
     cb_assign_params_to_edit(:docker_label_values)
   end
 
