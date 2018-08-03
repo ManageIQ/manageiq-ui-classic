@@ -2015,6 +2015,7 @@ Rails.application.routes.draw do
       :get  => %w(
         explorer
         method_form_fields
+        namespace
       ),
       :post => %w(
         add_update_method
@@ -2025,7 +2026,7 @@ Rails.application.routes.draw do
         create
         create_instance
         create_method
-        create_ns
+        create_namespace
         domains_priority_edit
         embedded_methods_add
         embedded_methods_remove
@@ -2044,7 +2045,6 @@ Rails.application.routes.draw do
         form_field_changed
         form_instance_field_changed
         form_method_field_changed
-        form_ns_field_changed
         priority_form_field_changed
         refresh_git_domain
         reload
@@ -2054,7 +2054,7 @@ Rails.application.routes.draw do
         update_fields
         update_instance
         update_method
-        update_ns
+        update_namespace
         validate_method_data
         x_button
         x_history

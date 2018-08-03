@@ -468,6 +468,7 @@ class MiqAeClassController < ApplicationController
 
   def edit_ns
     assert_privileges("miq_ae_namespace_edit")
+    @angular_form = true
     edit_domain_or_namespace
   end
 
@@ -1001,17 +1002,6 @@ class MiqAeClassController < ApplicationController
     render :json => method_hash
   end
 
-  # AJAX driven routine to check for changes in ANY field on the form
-  def form_ns_field_changed
-    return unless load_edit("aens_edit__#{params[:id]}", "replace_cell__explorer")
-    get_ns_form_vars
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_for_miq_button_visibility(@changed)
-    end
-  end
-
   def update
     assert_privileges("miq_ae_class_edit")
     return unless load_edit("aeclass_edit__#{params[:id]}", "replace_cell__explorer")
@@ -1099,42 +1089,22 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def update_ns
+  def update_namespace
     assert_privileges("miq_ae_namespace_edit")
     return unless load_edit("aens_edit__#{params[:id]}", "replace_cell__explorer")
-    get_ns_form_vars
-    @changed = (@edit[:new] != @edit[:current])
-    case params[:button]
-    when "cancel"
-      session[:edit] = nil # clean out the saved info
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => @edit[:typ]), :name => @ae_ns.name})
-      @in_a_form = false
-      replace_right_cell
-    when "save"
-      ae_ns = find_record_with_rbac(@edit[:typ].constantize, params[:id])
-      ns_set_record_vars(ae_ns) # Set the record variables, but don't save
-      begin
-        ae_ns.save!
-      rescue => bang
-        add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
-        session[:changed] = @changed
-        @changed = true
-        javascript_flash
-      else
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name => get_record_display_name(ae_ns)})
-        AuditEvent.success(build_saved_audit(ae_ns, @edit))
-        session[:edit] = nil # clean out the saved info
-        @in_a_form = false
-        replace_right_cell(:replace_trees => [:ae])
-      end
-    when "reset"
-      ns_set_form_vars
-      session[:changed] = @changed = false
-      add_flash(_("All changes have been reset"), :warning)
-      @button = "reset"
-      replace_right_cell
+    ae_ns = find_record_with_rbac(MiqAeNamespace, params[:id])
+    old_namespace_attributes = ae_ns.attributes.clone
+    namespace_set_record_vars(ae_ns) # Set the record variables, but don't save
+    begin
+      ae_ns.save!
+    rescue => bang
+      add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
+      javascript_flash
     else
-      @changed = session[:changed] = (@edit[:new] != @edit[:current])
+      add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name => get_record_display_name(ae_ns)})
+      AuditEvent.success(build_saved_audit_hash_angular(old_namespace_attributes, ae_ns, false))
+      session[:edit] = nil # clean out the saved info
+      @in_a_form = false
       replace_right_cell(:replace_trees => [:ae])
     end
   end
@@ -1336,35 +1306,24 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def create_ns
+  def create_namespace
     assert_privileges("miq_ae_namespace_new")
     return unless load_edit("aens_edit__new", "replace_cell__explorer")
-    get_ns_form_vars
-    case params[:button]
-    when "cancel"
-      add_flash(_("Add of new %{record} was cancelled by the user") % {:record => ui_lookup(:model => @edit[:typ])})
+    add_ae_ns = if @edit[:typ] == "MiqAeDomain"
+                  current_tenant.ae_domains.new
+                else
+                  MiqAeNamespace.new(:parent_id => x_node.split('-')[1])
+                end
+    namespace_set_record_vars(add_ae_ns) # Set the record variables, but don't save
+    if add_ae_ns.valid? && !flash_errors? && add_ae_ns.save
+      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => add_ae_ns.class.name), :name => get_record_display_name(add_ae_ns)})
       @in_a_form = false
-      replace_right_cell
-    when "add"
-      add_ae_ns = if @edit[:typ] == "MiqAeDomain"
-                    current_tenant.ae_domains.new
-                  else
-                    MiqAeNamespace.new(:parent_id => x_node.split('-')[1])
-                  end
-      ns_set_record_vars(add_ae_ns) # Set the record variables, but don't save
-      if add_ae_ns.valid? && !flash_errors? && add_ae_ns.save
-        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => add_ae_ns.class.name), :name => get_record_display_name(add_ae_ns)})
-        @in_a_form = false
-        replace_right_cell(:replace_trees => [:ae])
-      else
-        add_ae_ns.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        javascript_flash
-      end
+      replace_right_cell(:replace_trees => [:ae])
     else
-      @changed = session[:changed] = (@edit[:new] != @edit[:current])
-      replace_right_cell
+      add_ae_ns.errors.each do |field, msg|
+        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      end
+      javascript_flash
     end
   end
 
@@ -1723,6 +1682,11 @@ class MiqAeClassController < ApplicationController
     replace_right_cell(:replace_trees => [:ae])
   end
 
+  def namespace
+    assert_privileges("miq_ae_namespace_edit")
+    render :json => find_record_with_rbac(MiqAeNamespace, params[:id]).attributes.slice('name', 'description', 'enabled')
+  end
+
   private
 
   def playbook_inputs(method)
@@ -1938,10 +1902,10 @@ class MiqAeClassController < ApplicationController
         suffix = suffix_hash[@sb[:active_tab]]
       else
         suffix_hash = {
-          'root' => '_ns',
+          'root' => '_namespace',
           'aei'  => '_instance',
           'aem'  => '_method',
-          'aen'  => @edit.key?(:ae_class_id) ? '' : '_ns'
+          'aen'  => @edit.key?(:ae_class_id) ? '' : '_namespace'
         }
         suffix = suffix_hash[node]
       end
@@ -2343,11 +2307,10 @@ class MiqAeClassController < ApplicationController
     miqaemethod.embedded_methods = @edit[:new][:embedded_methods] if @edit[:new][:location] == 'inline'
   end
 
-  # Set record variables to new values
-  def ns_set_record_vars(miqaens)
-    miqaens.name        = @edit[:new][:ns_name].strip unless @edit[:new][:ns_name].blank?
-    miqaens.description = @edit[:new][:ns_description]
-    miqaens.enabled     = @edit[:new][:enabled] if miqaens.domain?
+  def namespace_set_record_vars(miqaens)
+    miqaens.name        = params[:name].strip if params[:name].present?
+    miqaens.description = params[:description]
+    miqaens.enabled     = params[:enabled] if miqaens.domain?
   end
 
   # Set record variables to new values
@@ -2520,6 +2483,7 @@ class MiqAeClassController < ApplicationController
     else
       ns_set_form_vars
       @in_a_form = true
+      @angular_form = true
       session[:changed] = @changed = false
     end
     replace_right_cell
@@ -2540,6 +2504,7 @@ class MiqAeClassController < ApplicationController
     @ae_ns = klass.new(:parent_id => parent_id)
     ns_set_form_vars
     @in_a_form = true
+    @angular_form = true
     replace_right_cell
   end
 
