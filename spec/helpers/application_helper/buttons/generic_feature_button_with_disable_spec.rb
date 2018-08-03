@@ -5,5 +5,16 @@ describe ApplicationHelper::Button::GenericFeatureButtonWithDisable do
   let(:props) { {:options => {:feature => feature}} }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
 
-  it_behaves_like 'a generic feature button with disabled'
+  context 'the feature is unavailable' do
+    let(:supports_feature) { false }
+
+    it 'the button is visible' do
+      expect(button.visible?).to be_truthy
+    end
+
+    it 'the button has error message in the title' do
+      button.calculate_properties
+      expect(button[:title]).not_to be(nil)
+    end
+  end
 end
