@@ -25,6 +25,7 @@ class PhysicalChassisController < ApplicationController
     ]
   end
   helper_method(:textual_group_list)
+  toolbar('physical_chassis_summary', 'physical_chassis_list')
 
   def self.display_methods
     %w(physical_storages physical_servers)
