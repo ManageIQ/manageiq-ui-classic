@@ -1,5 +1,5 @@
 //= require jquery
-//= require bower_components/spice-html5-bower/spice-html5-rails
+//= require spice-html5-bower/spice-html5-rails
 //= require_tree ../locale
 //= require gettext/all
 
