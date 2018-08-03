@@ -1,4 +1,12 @@
 describe CloudTenantHelper::TextualSummary do
+  before do
+    instance_variable_set(:@record, FactoryGirl.create(:cloud_tenant))
+    allow(@record).to receive_message_chain(:cloud_resource_quotas, :order).and_return([])
+    allow(self).to receive(:textual_authentications).and_return([])
+  end
+
+  include_examples "textual_group", "Properties", %i(name description)
+
   include_examples "textual_group", "Relationships", %i(
     ems_cloud
     instances images
@@ -12,4 +20,6 @@ describe CloudTenantHelper::TextualSummary do
     floating_ips
     network_ports
   )
+
+  include_examples "textual_group", "Quotas", []
 end

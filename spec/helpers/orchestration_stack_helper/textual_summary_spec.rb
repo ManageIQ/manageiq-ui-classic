@@ -15,4 +15,22 @@ describe OrchestrationStackHelper::TextualSummary do
       expect(textual_retirement_date[:value]).to eq("11/01/15 00:00 UTC")
     end
   end
+
+  include_examples "textual_group", "Properties", %i(name description type status status_reason)
+
+  include_examples "textual_group", "Lifecycle", %i(retirement_date)
+
+  include_examples "textual_group", "Relationships", %i(
+    ems_cloud
+    service
+    parent_orchestration_stack
+    child_orchestration_stack
+    orchestration_template
+    instances
+    security_groups
+    cloud_networks
+    parameters
+    outputs
+    resources
+  )
 end

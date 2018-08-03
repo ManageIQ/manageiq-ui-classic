@@ -10,6 +10,7 @@ describe ContainerGroupHelper::TextualSummary do
     container_images
     persistent_volumes
   )
+
   include_examples "textual_group", "Properties", %i(
     name
     status
@@ -21,5 +22,8 @@ describe ContainerGroupHelper::TextualSummary do
     dns_policy
     ip
   )
+
   include_examples "textual_group_smart_management"
+
+  include_examples "textual_group", "Container Statuses Summary", %i(waiting running terminated), "container_statuses_summary"
 end
