@@ -45,7 +45,6 @@
     "qs": "~0.3.10",
     "spice-html5-bower": "himdel/spice-html5-bower#~1.7.2",
     "spin.js": "~2.3.2",
-    "sprintf": "~1.0.3",
     "xml_display": "~0.1.1"
   },
   "resolutions": {

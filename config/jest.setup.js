@@ -4,14 +4,12 @@ window.$ = require('jquery');
 window._ = require('lodash');
 window.__ = (x) => x;
 window.n__ = (x) => x;
+window.sprintf = require('sprintf-js').sprintf;
 
 require('../app/assets/javascripts/miq_global');
 require('../app/assets/javascripts/miq_application');
 require('../app/assets/javascripts/miq_api');
 require('../app/assets/javascripts/miq_angular_application');
-
-let sprintf = require('../vendor/assets/bower/bower_components/sprintf/src/sprintf.js');
-window.sprintf = sprintf.sprintf;
 
 import { API } from '../app/javascript/http_api';
 window.vanillaJsAPI = API;
