@@ -42,6 +42,8 @@ ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
 
+window.sprintf = require('sprintf-js').sprintf;
+
 // compatibility: vanillaJsAPI should be considered deprecated
 // the new convention is: API is for vanilla/react, $API is for angular
 window.API = API;

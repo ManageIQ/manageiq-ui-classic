@@ -49,6 +49,7 @@
     "redux-promise-middleware": "^5.1.1",
     "redux-thunk": "^2.3.0",
     "rxjs": "~5.6.0-forward-compat.2",
+    "sprintf-js": "~1.1.1",
     "text-encoder-lite": "git://github.com/coolaj86/TextEncoderLite.git#e1e031b",
     "ui-select": "0.19.8"
   },
