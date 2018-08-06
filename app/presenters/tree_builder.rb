@@ -569,6 +569,7 @@ class TreeBuilder
     "ms"   => "MiqSearch",
     "odg"  => "MiqDialog",
     "ot"   => "OrchestrationTemplate",
+    "phys" => "PhysicalServer",
     "pi"   => "PxeImage",
     "pit"  => "PxeImageType",
     "ps"   => "PxeServer",
