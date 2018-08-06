@@ -1824,7 +1824,7 @@ class ApplicationController < ActionController::Base
     return if request.xml_http_request? || !request.get? || request.format != Mime[:html] ||
               request.headers['X-Angular-Request'].present?
 
-    return if controller_name == 'dashboard' && %(iframe maintab).include?(action_name)
+    return if controller_name == 'dashboard' && %(iframe maintab cockpit_redirect).include?(action_name)
 
     remember_tab
   end
