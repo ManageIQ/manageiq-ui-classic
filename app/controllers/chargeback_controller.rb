@@ -762,6 +762,8 @@ class ChargebackController < ApplicationController
 
   def get_docker_labels_all_values(label_id)
     @edit[:cb_assign][:docker_label_values] = {}
+    return if label_id && label_id == 'null' || label_id.nil?
+
     label_name = CustomAttribute.find(label_id).name
 
     CustomAttribute.where(:section => "docker_labels", :name => label_name).pluck(:id, :value).uniq(&:second).each do |label|
@@ -824,7 +826,7 @@ class ChargebackController < ApplicationController
       get_tags_all(params[:cbtag_cat].to_i) if params[:cbtag_cat]
     elsif @edit[:new][:cbshow_typ].ends_with?("-labels")
       get_docker_labels_all_keys
-      get_docker_labels_all_values(params[:cblabel_key]) if params[:cblabel_key] && params[:cblabel_key] != 'null'
+      get_docker_labels_all_values(params[:cblabel_key])
     else
       get_cis_all
     end
