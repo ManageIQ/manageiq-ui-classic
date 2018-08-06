@@ -49,3 +49,7 @@ window.sprintf = require('sprintf-js').sprintf;
 window.API = API;
 window.vanillaJsAPI = API;
 window.http = http;
+
+// for Automate > Simulate
+require('xml_display/XMLDisplay.js');
+require('xml_display/XMLDisplay.css');

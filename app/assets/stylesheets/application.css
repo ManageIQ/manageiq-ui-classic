@@ -19,7 +19,6 @@
  *= require ./physical_infra_topology
  *= require ./metrics
  *= require ./service_dialogs
- *= require bower_components/xml_display/XMLDisplay
  *= require bower_components/patternfly-timeline/dist/timeline
  *= require bower_components/manageiq-ui-components/dist/css/ui-components
  *= require ui-select/dist/select
