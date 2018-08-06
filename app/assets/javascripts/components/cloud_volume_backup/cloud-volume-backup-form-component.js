@@ -23,7 +23,9 @@ function cloudVolumeBackupFormController(miqService, $http) {
     vm.model = "cloudVolumeBackupModel";
 
     ManageIQ.angular.scope = vm;
-    vm.saveable = miqService.saveable;
+    vm.saveable = function(form) {
+      return form.$valid;
+    };
 
     vm.newRecord = false;
 
@@ -47,7 +49,7 @@ function cloudVolumeBackupFormController(miqService, $http) {
   vm.resetClicked = function(angularForm) {
     resetModel();
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", "All changes have been reset");
+    miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   function getVolumeFormDataComplete(response) {
