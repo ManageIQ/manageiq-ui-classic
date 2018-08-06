@@ -214,8 +214,29 @@ describe DialogLocalService do
                        "service", "services", "/service/explorer"
     end
 
+    context "when the object is a ServiceAnsibleTower" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceAnsibleTower, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "service", "services", "/service/explorer"
+    end
+
     context "when the object is a ServiceContainerTemplate" do
       let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceContainerTemplate, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "service", "services", "/service/explorer"
+    end
+
+    context "when the object is a ServiceGeneric" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceGeneric, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "service", "services", "/service/explorer"
+    end
+
+    context "when the object is a ServiceOrchestration" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceOrchestration, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "service", "services", "/service/explorer"
