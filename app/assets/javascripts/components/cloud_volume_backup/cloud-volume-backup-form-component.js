@@ -29,24 +29,28 @@ function cloudVolumeBackupFormController(miqService, $http) {
 
     vm.newRecord = false;
 
+    miqService.sparkleOn();
     $http.get('/cloud_volume_backup/volume_form_choices')
       .then(getVolumeFormDataComplete)
       .catch(miqService.handleFailure);
   };
 
   vm.saveClicked = function() {
+    miqService.sparkleOn();
     var restoreUrl = '/cloud_volume_backup/backup_restore/';
     var buttonUrl = '?button=restore';
     miqService.miqAjaxButton(restoreUrl + vm.cloudVolumeBackupFormId + buttonUrl, vm.cloudVolumeBackupModel, { complete: false });
   };
 
   vm.cancelClicked = function() {
+    miqService.sparkleOn();
     var cancelUrl = '/cloud_volume_backup/backup_restore/';
     var buttonUrl = '?button=cancel';
     miqService.miqAjaxButton(cancelUrl + vm.cloudVolumeBackupFormId + buttonUrl);
   };
 
   vm.resetClicked = function(angularForm) {
+    miqService.sparkleOn();
     resetModel();
     angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
@@ -57,6 +61,8 @@ function cloudVolumeBackupFormController(miqService, $http) {
     if (foundVolumes()) {
       vm.cloudVolumeBackupModel.volume = vm.volume_choices[0];
     }
+    vm.modelCopy = angular.copy(vm.cloudVolumeBackupModel);
+    miqService.sparkleOff();
   }
 
   function resetModel() {
