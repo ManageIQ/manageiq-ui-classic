@@ -17,6 +17,20 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   function init(dialog) {
     vm.dialog = dialog.content[0];
     vm.dialogLoaded = true;
+
+    _.forEach(vm.dialog.dialog_tabs, function(tab) {
+      _.forEach(tab.dialog_groups, function(group) {
+        _.forEach(group.dialog_fields, function(field) {
+          if (field.type === 'DialogFieldDropDownList') {
+            _.forEach(field.values, function(value) {
+              if (value[0] === null) {
+                value[1] = __(value[1]);
+              }
+            });
+          }
+        });
+      });
+    });
   }
 
   vm.refreshField = refreshField;
