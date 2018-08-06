@@ -182,7 +182,9 @@ function playbookReusableCodeMixin(API, $q, miqService) {
 
   var checkFormDataRetrieval = function(vm) {
     $q.all(allApiPromises)
-      .then(retrievedFormData(vm));
+      .then(function() {
+        retrievedFormData(vm);
+      });
   };
 
   // get playbooks for selected repository
