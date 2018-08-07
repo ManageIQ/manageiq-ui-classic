@@ -1,5 +1,3 @@
-import { subscribeToRx, DELETE_EVENT, GENERIC_EVENT } from '../miq_observable';
-
 import { onDelete } from '../toolbar-actions/delete';
 import { onCustomAction } from '../toolbar-actions/custom-action';
 
@@ -14,6 +12,25 @@ export default function getGridChecks() {
   return ManageIQ.gridChecks.map(transformResource);
 }
 
+function callMapperFunction(eventMapper, event) {
+  return Object.prototype.hasOwnProperty.call(eventMapper, event.type)
+    && eventMapper[event.type](event.payload);
+}
+
+function subscribeToRx(eventMapper, controllerName) {
+  listenToRx(function(event) {
+    if (!event.type) {
+      return;
+    }
+
+    if (event.controller !== controllerName) {
+      return;
+    }
+
+    return callMapperFunction(eventMapper, event);
+  });
+}
+
 /**
  * Function event mapper for observed RX subject.
  * For action:
@@ -24,8 +41,8 @@ export default function getGridChecks() {
  * to RX with type 'example'.
  */
 const eventMapper = {
-  [DELETE_EVENT]: data => onDelete(data, getGridChecks()),
-  [GENERIC_EVENT]: data => onCustomAction(data, getGridChecks()),
+  'delete': data => onDelete(data, getGridChecks()),
+  'generic': data => onCustomAction(data, getGridChecks()),
 };
 
 subscribeToRx(eventMapper, 'toolbarActions');

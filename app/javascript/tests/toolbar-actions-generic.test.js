@@ -1,7 +1,6 @@
 import 'angular-mocks';
 import getGridChecks from '../packs/toolbar-actions-common';
 import { onCustomAction } from '../toolbar-actions/custom-action';
-import { sendDataWithRx } from '../miq_observable';
 
 describe('Toolbar actions', () => {
   beforeEach(() => {

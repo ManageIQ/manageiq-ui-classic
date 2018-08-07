@@ -9,16 +9,31 @@ const { basename, dirname, join, relative, resolve } = require('path')
 const { sync } = require('glob')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const extname = require('path-complete-extname')
+const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
+
 const { env, settings, output, engines } = require('./configuration.js')
 const loaders = require('./loaders.js')
+const RailsEnginesPlugin = require('./RailsEnginesPlugin')
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*` // */
 const entryPath = join(settings.source_path, settings.source_entry_path)
+const moduleDir = engines['manageiq-ui-classic'].node_modules
+
+const sharedPackages = [
+  'jquery',
+  'lodash',
+  'patternfly-react',
+  'patternfly-sass',
+  'react',
+  'react-dom',
+  'prop-types',
+  'graphql', // TODO remove once this gets added in manageiq-graphql
+];
 
 let packPaths = {}
 
 Object.keys(engines).forEach(function(k) {
-  let root = engines[k]
+  let root = engines[k].root
   let glob = join(root, entryPath, extensionGlob)
   packPaths[k] = sync(glob)
 })
@@ -58,20 +73,46 @@ module.exports = {
       publicPath: output.publicPath,
       writeToFileEmit: true,
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: module => /node_modules/.test(module.resource),
+
+    new DuplicatePackageCheckerPlugin({
+      verbose: true,
+      showHelp: false,
     }),
   ],
 
+  optimization: {
+    splitChunks: {
+      minChunks: 1,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          chunks: 'all',
+          name: 'vendor',
+          priority: -10,
+          reuseExistingChunk: true,
+          test: /node_modules/,
+        },
+        default: {
+          chunks: 'all',
+          minChunks: 2,
+          name: 'vendor',
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
+
   resolve: {
     extensions: settings.extensions,
-    modules: [resolve(settings.source_path)].concat(
-      Object.keys(engines).map(key => engines[key]).map(engine => `${engine}/node_modules`)
-    ),
+    modules: [],
+    plugins: [
+      new RailsEnginesPlugin('module', 'resolve', engines, { packages: sharedPackages, root: moduleDir }),
+    ],
   },
 
   resolveLoader: {
-    modules: ['node_modules']
-  }
+    // only read loaders from ui-classic
+    modules: [moduleDir],
+  },
 }

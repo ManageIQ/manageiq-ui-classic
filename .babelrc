@@ -1,31 +1,11 @@
+// only used by jest; webpack loads .babelrc.json
 {
-  "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "browsers": [
-            "> 1%",
-            "last 2 versions",
-            "Firefox ESR",
-            "IE 10",
-            "IE 11"
-          ]
-        }
-      }
-    ],
-    "react",
-    "es2015",
-  ],
-  "plugins": [
-    "transform-class-properties",
-    "transform-export-extensions",
-    "transform-object-rest-spread",
-    "transform-object-assign"
-  ],
   "env": {
     "test": {
-      "plugins": ["transform-es2015-modules-commonjs"]
-    }
-  }
+      "presets": [
+        "react",
+      ],
+      "plugins": ["transform-es2015-modules-commonjs"],
+    },
+  },
 }

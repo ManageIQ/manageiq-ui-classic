@@ -13,3 +13,8 @@ require('../app/assets/javascripts/miq_angular_application');
 
 import { API } from '../app/javascript/http_api';
 window.vanillaJsAPI = API;
+
+import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
+ManageIQ.angular.rxSubject = rxSubject;
+window.sendDataWithRx = sendDataWithRx;
+window.listenToRx = listenToRx;

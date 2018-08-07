@@ -6,6 +6,7 @@ const { settings, output } = require('./configuration.js')
 const { env } = require('process')
 
 module.exports = merge(sharedConfig, {
+  mode: 'development',
   devtool: 'inline-source-map',
 
   stats: {

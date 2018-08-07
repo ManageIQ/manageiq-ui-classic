@@ -1,12 +1,11 @@
+import { API } from '../http_api';
+
 export function customActionFunction(payload, resources) {
   throw new Error(`customAction ${payload.action} not yet implemented!`, payload, resources);
 }
 
 export function APIFunction(actionType, entity, resources) {
-  const API = angular.injector(['ng', 'miq.api']).get('API');
-  const API_ENDPOINT = 'api';
-
-  return API.post(`/${API_ENDPOINT}/${entity}`, {
+  return API.post(`/api/${entity}`, {
     action: actionType,
     resources,
   })
