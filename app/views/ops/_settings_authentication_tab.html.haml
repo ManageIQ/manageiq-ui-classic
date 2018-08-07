@@ -166,7 +166,7 @@
       .form-horizontal
         .form-group#get_roles_now{:style => @edit[:new][:authentication][:user_proxies].blank? ? "display: none" : ""}
           %label.col-md-2.control-label
-            = _("Get Roles from Home Forest")
+            = _("Get Groups from Home Forest")
           .col-md-8
             = check_box_tag("get_direct_groups", "1",
                             @edit[:new][:authentication][:get_direct_groups],
