@@ -3,7 +3,6 @@ import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-compon
 import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import TableListViewWrapper from '../react/table_list_view_wrapper';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
-import { addReact } from '../miq-component/helpers';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 
@@ -13,11 +12,11 @@ import FormButtonsRedux from '../forms/form-buttons-redux';
 * ManageIQ.component.addReact('ComponentName', props => <ComponentName {...props} />);
 */
 
-addReact('TagGroup', props => <TagGroup {...props} />);
-addReact('TableListView', TableListView);
-addReact('TableListViewWrapper', TableListViewWrapper);
-addReact('GenericGroup', GenericGroup);
-addReact('GenericGroupWrapper', GenericGroupWrapper);
-addReact('TextualSummaryWrapper', TextualSummaryWrapper);
-addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
-addReact('FormButtonsRedux', FormButtonsRedux);
+ManageIQ.component.addReact('TagGroup', props => <TagGroup {...props} />);
+ManageIQ.component.addReact('TableListView', TableListView);
+ManageIQ.component.addReact('TableListViewWrapper', TableListViewWrapper);
+ManageIQ.component.addReact('GenericGroup', GenericGroup);
+ManageIQ.component.addReact('GenericGroupWrapper', GenericGroupWrapper);
+ManageIQ.component.addReact('TextualSummaryWrapper', TextualSummaryWrapper);
+ManageIQ.component.addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
+ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
