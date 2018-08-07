@@ -47,7 +47,7 @@ describe TextualMixins::TextualDevices do
                                                          :controller_type => "AZURE")])
       end
       it { expect(subject[0][:name]).to include("Hard Disk") }
-      it { expect(subject[0][:description]).to include("Name: HD01, Location: N/A, Size: 1072693248, Percent Used Provisioned Space: N/A, Filename: N/A, Mode: N/A") }
+      it { expect(subject[0][:description]).to include("Name: HD01, Location: N/A, Size: 1023 MB, Percent Used Provisioned Space: N/A, Filename: N/A, Mode: N/A") }
     end
 
     context "with hdd with size_on_disk and percent provisioned collected (AZURE)" do
@@ -66,7 +66,7 @@ describe TextualMixins::TextualDevices do
       it "expect hard disk description with percent provisioned " do
         expected_description = "Name: CLIA566D60F38FB9ECC, " \
                                "Location: https://jdg.blob.core.windows.net/vhds/clia566d60f38fb9ecc.vhd, " \
-                               "Size: 1072693248, " \
+                               "Size: 1023 MB, " \
                                "Percent Used Provisioned Space: 33.3, " \
                                "Filename: N/A, " \
                                "Mode: N/A"
