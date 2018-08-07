@@ -30,17 +30,33 @@ module PhysicalSwitchHelper::TextualSummary
     TextualTable.new(_("Firmwares"), firmware_details, [_("Name"), _("Version")])
   end
 
+  def textual_group_connected_components
+    TextualGroup.new(
+      _("Connected Components"),
+      %i(connected_physical_servers)
+    )
+  end
+
   def textual_ports
     ports_count = @record.physical_network_ports.count
-    ports = {:label => _("Ports"), :value => ports_count, :icon => "ff ff-network-port"}
+    ports = {:label => _("Ports"), :value => ports_count, :icon => PhysicalNetworkPortDecorator.fonticon}
     if ports_count.positive?
-      ports[:link] = "/physical_switch/show/#{@record.id}?display=physical_network_ports"
+      ports[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'physical_network_ports')
     end
     ports
   end
 
   def textual_ext_management_system
     textual_link(ExtManagementSystem.find(@record.ems_id))
+  end
+
+  def textual_connected_physical_servers
+    physical_servers_count = @record.physical_servers.count
+    physical_servers = {:label => _("Physical Servers"), :value => physical_servers_count, :icon => PhysicalServerDecorator.fonticon}
+    if physical_servers_count.positive?
+      physical_servers[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'physical_servers')
+    end
+    physical_servers
   end
 
   def textual_name
