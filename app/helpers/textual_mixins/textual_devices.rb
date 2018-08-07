@@ -46,7 +46,7 @@ module TextualMixins::TextualDevices
 
       hd_name = disk.device_name.upcase
       location = disk.location.presence || _("N/A")
-      size = disk.size.presence || _("N/A")
+      size = disk.size.present? ? number_to_human_size(disk.size, :precision => 2) : _("N/A")
       pct_prov = disk.size_on_disk.nil? ? _("N/A") : disk.used_percent_of_provisioned
       filename = disk.filename.presence || _("N/A")
       mode = disk.mode.presence || _("N/A")
