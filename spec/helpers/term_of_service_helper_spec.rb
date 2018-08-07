@@ -17,5 +17,10 @@ describe TermOfServiceHelper do
       expect(TermOfServiceHelper::ASSIGN_TOS["Vm"]).to eq(vm_values)
       expect(TermOfServiceHelper::ASSIGN_TOS["Vm"].length).to eq(11)
     end
+
+    it "verify that there is a value for PhysicalServer in the hash" do
+      expect(TermOfServiceHelper::ASSIGN_TOS["PhysicalServer"]). to eq("physical_server" => "Selected Servers")
+      expect(TermOfServiceHelper::ASSIGN_TOS["PhysicalServer"].length). to eq(1)
+    end
   end
 end

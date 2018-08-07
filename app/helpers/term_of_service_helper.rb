@@ -48,6 +48,9 @@ module TermOfServiceHelper
       "container_image-tags"   => N_("Tagged Container Images"),
       "container_image-labels" => N_("Labeled Container Images"),
       "tenant"                 => N_("Tenants")
+    },
+    "PhysicalServer" => {
+      "physical_server" => N_("Selected Servers")
     }
   }
 
