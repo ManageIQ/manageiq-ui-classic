@@ -1549,8 +1549,7 @@ class CatalogController < ApplicationController
 
   def available_job_templates(manager_id)
     @edit[:new][:available_templates] = []
-    all_job_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_scripts').collect { |t| [t.name, t.id] }.sort
-    all_workflow_templates = ExtManagementSystem.find_by(:id => manager_id).send('configuration_workflows').collect { |t| [t.name, t.id] }.sort
+    all_job_templates, all_workflow_templates = fetch_all_templates(manager_id)
     @edit[:new][:available_templates].push(["",
                                             [["<#{_('Choose a Template')}>",
                                               :selected => "<#{_('Choose a Template')}>",
@@ -1558,6 +1557,13 @@ class CatalogController < ApplicationController
                                               :style    => 'display:none']]])
     @edit[:new][:available_templates].push(["Job Templates", all_job_templates]) if all_job_templates.present?
     @edit[:new][:available_templates].push(["Workflow Templates", all_workflow_templates]) if all_workflow_templates.present?
+  end
+
+  def fetch_all_templates(manager_id)
+    all_templates = ExtManagementSystem.find_by(:id => manager_id).configuration_scripts.sort_by(&:name)
+    job_templates = all_templates.collect { |t| [t.name, t.id] if t.type == 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript' }.compact
+    workflow_templates = all_templates.collect { |t| [t.name, t.id] if t.type == 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow' }.compact
+    return job_templates, workflow_templates
   end
 
   def available_ansible_tower_managers
