@@ -34,14 +34,14 @@ describe MiqRequestController do
       datacenter = FactoryGirl.create(:datacenter, :name => 'dcname')
       ems_folder = FactoryGirl.create(:ems_folder)
       ems = FactoryGirl.create(:ems_vmware)
-      vm1 = FactoryGirl.create(:vm_vmware)
+      template = FactoryGirl.create(:template_vmware)
       vm2 = FactoryGirl.create(:vm_vmware)
       datacenter.ext_management_system = ems
       ems_folder.ext_management_system = ems
       @wf.instance_variable_set(:@dialogs, :dialogs => {:environment => {:fields => {:placement_dc_name => {:values => {datacenter.id.to_s => datacenter.name}}}}})
-      controller.instance_variable_set(:@edit, :wf => @wf, :new => {:src_vm_id => vm1.id.to_s})
+      controller.instance_variable_set(:@edit, :wf => @wf, :new => {:src_vm_id => template.id.to_s})
       controller.instance_variable_set(:@last_vm_id, vm2.id)
-      controller.instance_variable_set(:@_params, 'service__src_vm_id' => vm1.id, :id => "new", :controller => "miq_request")
+      controller.instance_variable_set(:@_params, 'service__src_vm_id' => template.id, :id => "new", :controller => "miq_request")
       @wf.instance_variable_set(:@values, :placement_dc_name=>[datacenter.id.to_s, datacenter.name])
       edit = {:wf => @wf, :new => {:placement_dc_name => [datacenter.id, datacenter.name]}}
       @wf.instance_variable_set(:@edit, edit)
