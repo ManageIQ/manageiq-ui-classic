@@ -22,25 +22,16 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
     }
   };
 
-  this.sambaBackup = function(model) {
-    return (model.log_protocol === 'Samba');
+  this.credsProtocol = function(model) {
+    return (model.log_protocol === 'Samba' || model.log_protocol === 'AWS S3');
   };
 
   this.s3Backup = function(model) {
     return (model.log_protocol === 'AWS S3');
   };
 
-  this.credsProtocol = function(model) {
-    return (model.log_protocol === 'Samba' || model.log_protocol === 'FTP' || this.s3Backup(model));
-  };
-
   this.dbRequired = function(model, value) {
     return this.logProtocolSelected(model) &&
-           (this.isModelValueNil(value));
-  };
-
-  this.sambaRequired = function(model, value) {
-    return this.sambaBackup(model) &&
            (this.isModelValueNil(value));
   };
 
@@ -57,8 +48,13 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
     return model.aws_region !== '' && model.aws_region !== undefined;
   };
 
-  this.awsRegionRequired = function(model, value) {
+  this.badAwsRegionRequired = function(model, value) {
     return this.s3Backup(model) &&
+           (this.isModelValueNil(value));
+  };
+
+  this.awsRegionRequired = function(model, value) {
+    return model.log_protocol === 'AWS S3' &&
            (this.isModelValueNil(value));
   };
 

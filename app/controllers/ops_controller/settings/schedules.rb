@@ -656,6 +656,12 @@ module OpsController::Settings::Schedules
     @protocols_arr = []
     DatabaseBackup.supported_depots.each { |depot| @protocols_arr.push(depot[1]) }
     @database_backup_options_for_select = @protocols_arr.sort
+    @regions_options_for_select = retrieve_regions
+  end
+
+  def retrieve_regions
+    # ManageIQ::Providers::Amazon::Regions::REGIONS.collect { |region| [region[1][:name], region[1][:description]]}
+    ManageIQ::Providers::Amazon::Regions::REGIONS.collect { |region| [region[1][:name]] }
   end
 
   def schedule_set_basic_record_vars(schedule)

@@ -88,6 +88,16 @@
                               :ng_model_uri_prefix => "vm.diagnosticsDatabaseModel.uri_prefix",
                               :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
 
+  %region{'ng-if' => 'vm.regionSelect()'}
+    .form-group
+      %label.col-md-2.control-label
+        = _("AWS Region")
+      .col-md-8
+        - default_option = [_("<Choose>"), '']
+        = select_tag('log_aws_region', options_for_select([default_option] + @regions_options_for_select),
+                     "ng-model"                    => "vm.diagnosticsDatabaseModel.log_aws_region",
+                     "ng-required"                 => "vm.regionRequired()",
+                     "selectpicker-for-select-tag" => "")
   %auth-credentials{'ng-if'                => 'vm.credsProtocol()',
                     'form-model'           => 'vm.diagnosticsDatabaseModel',
                     'model-copy'           => 'vm.modelCopy',

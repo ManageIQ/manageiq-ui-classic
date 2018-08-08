@@ -89,6 +89,15 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     return miqDBBackupService.sambaRequired(vm.diagnosticsDatabaseModel, value);
   };
 
+  vm.regionSelect = function() {
+    return vm.diagnosticsDatabaseModel.log_protocol === 'AWS S3';
+  };
+
+  vm.regionRequired = function() {
+    return (vm.diagnosticsDatabaseModel.log_protocol === 'AWS S3' &&
+      (vm.diagnosticsDatabaseModel.log_aws_region === '' || typeof vm.diagnosticsDatabaseModel.log_aws_region === 'undefined'));
+  };
+
   vm.credsProtocol = function() {
     return miqDBBackupService.credsProtocol(vm.diagnosticsDatabaseModel);
   };
@@ -116,6 +125,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       vm.diagnosticsDatabaseModel.log_protocol = 'Samba';
     } else if (vm.diagnosticsDatabaseModel.uri_prefix === 's3') {
       vm.diagnosticsDatabaseModel.log_protocol = 'AWS S3';
+      vm.diagnosticsDatabaseModel.log_aws_region = data.log_aws_region;
     }
 
     vm.diagnosticsDatabaseModel.action_typ = 'db_backup';
