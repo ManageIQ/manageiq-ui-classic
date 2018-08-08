@@ -25,8 +25,20 @@ class ApplicationHelper::Toolbar::NetworkRoutersCenter < ApplicationHelper::Tool
             :confirm      => N_('Warning: This Router and ALL of its components will be removed!'),
             :enabled      => false,
             :onwhen       => "1+",
-            :data         => {'function'      => 'sendDataWithRx',
-                              'function-data' => '{"type": "delete", "controller": "toolbarActions", "payload": {"entity": "network_routers"}}'},
+            :data         => {
+              'function'      => 'sendDataWithRx',
+              'function-data' => {
+                :type       => 'delete',
+                :controller => 'toolbarActions',
+                :payload    => {
+                  :entity => 'network_routers',
+                  :labels => {
+                    :single   => _('Network Router'),
+                    :multiple => _('Network Routers')
+                  }
+                }
+              }.to_json
+            }
           )
         ]
       )

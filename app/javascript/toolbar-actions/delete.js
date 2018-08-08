@@ -1,18 +1,16 @@
 import { API } from '../http_api';
 
-export function showMessage(messages, success) {
-  if (typeof messages === 'string') {
-    add_flash(messages, success ? 'success' : 'error');
-  } else {
-    Object.keys(messages).forEach((msgStatus) => {
-      const statusKey = msgStatus === 'true';
-      if (statusKey && messages[statusKey] > 0) {
-        add_flash(sprintf(__('Deleting of %s items queued.'), messages[statusKey]), 'success');
-      } else if (messages[statusKey] > 0) {
-        add_flash(sprintf(__('Failed to delete %s items.'), messages[statusKey]), 'error');
-      }
-    });
-  }
+export function showMessage(messages, labels = {single: '', multiple: ''}) {
+  Object.keys(messages).forEach((msgStatus) => {
+    const statusKey = msgStatus === 'true';
+    if (statusKey && messages[statusKey] > 0) {
+      const label = messages[statusKey] === 1 ? labels.single : labels.multiple;
+      add_flash(sprintf(__('Delete initiated for %s %s.'), messages[statusKey], label), 'success');
+    } else if (messages[statusKey] > 0) {
+      const label = messages[statusKey] === 1 ? labels.single : labels.multiple;
+      add_flash(sprintf(__('Failed to delete %s %s.'), messages[statusKey], label), 'error');
+    }
+  });
 }
 
 export function generateMessages(results) {
@@ -25,17 +23,14 @@ export function generateMessages(results) {
   }, { false: 0, true: 0 });
 }
 
-export function APIDelete(entity, resources) {
+export function APIDelete(entity, resources, labels) {
   API.post(`/api/${entity}`, {
     action: 'delete',
     resources,
   })
   .then((data) => {
-    if (data.results.length > 1) {
-      showMessage(generateMessages(data.results));
-    } else if (data.results.length === 1) {
-      showMessage(data.results[0].message, data.results[0].success);
-    }
+    showMessage(generateMessages(data.results), labels);
+    return data;
   });
 }
 
@@ -47,6 +42,6 @@ export function onDelete(data, resources) {
   if (data.customAction) {
     customActionDelete(data, resources);
   } else {
-    APIDelete(data.entity, resources);
+    APIDelete(data.entity, resources, data.labels);
   }
 }
