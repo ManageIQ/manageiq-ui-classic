@@ -109,7 +109,7 @@
                               :uri_prefix_display  =>  "{{scheduleModel.uri_prefix}}://"}
 
         %region{'ng-if' => 'regionSelect()'}
-          .form-group
+          .form-group{"ng-class" => "{'has-error': angularForm.log_aws_region.$invalid}"}
             %label.col-md-2.control-label
               = _("AWS Region")
             .col-md-8
@@ -118,6 +118,8 @@
                            "ng-model"                    => "scheduleModel.log_aws_region",
                            "ng-required"                 => "regionRequired()",
                            "selectpicker-for-select-tag" => "")
+              %span.help-block{"ng-show" => "angularForm.log_aws_region.$invalid"}
+                = _("Required")
 
         = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
                  :locals  => {:ng_show           => "credsProtocol()",

@@ -89,7 +89,7 @@
                               :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
 
   %region{'ng-if' => 'vm.regionSelect()'}
-    .form-group
+    .form-group{"ng-class" => "{'has-error': angularForm.log_aws_region.$invalid}"}
       %label.col-md-2.control-label
         = _("AWS Region")
       .col-md-8
@@ -98,6 +98,8 @@
                      "ng-model"                    => "vm.diagnosticsDatabaseModel.log_aws_region",
                      "ng-required"                 => "vm.regionRequired()",
                      "selectpicker-for-select-tag" => "")
+        %span.help-block{"ng-show" => "angularForm.log_aws_region.$invalid"}
+          = _("Required")
   %auth-credentials{'ng-if'                => 'vm.credsProtocol()',
                     'form-model'           => 'vm.diagnosticsDatabaseModel',
                     'model-copy'           => 'vm.modelCopy',
