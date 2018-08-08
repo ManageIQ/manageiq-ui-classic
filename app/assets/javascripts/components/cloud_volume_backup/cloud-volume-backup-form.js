@@ -1,9 +1,9 @@
-ManageIQ.angular.app.component('cloudVolumeBackupFormComponent', {
+ManageIQ.angular.app.component('cloudVolumeBackupForm', {
   templateUrl: '/static/cloud_volume_backup/volume_select.html.haml',
   controller: cloudVolumeBackupFormController,
   controllerAs: 'vm',
   bindings: {
-    'cloudVolumeBackupFormId': '@',
+    "recordId": '@',
   },
 });
 
@@ -16,10 +16,9 @@ function cloudVolumeBackupFormController(miqService, $http) {
     vm.afterGet = false;
 
     vm.cloudVolumeBackupModel = {
-      volume_id: '',
+      volume: '',
     };
 
-    vm.formId = vm.cloudVolumeBackupFormId;
     vm.model = "cloudVolumeBackupModel";
 
     ManageIQ.angular.scope = vm;
@@ -39,18 +38,17 @@ function cloudVolumeBackupFormController(miqService, $http) {
     miqService.sparkleOn();
     var restoreUrl = '/cloud_volume_backup/backup_restore/';
     var buttonUrl = '?button=restore';
-    miqService.miqAjaxButton(restoreUrl + vm.cloudVolumeBackupFormId + buttonUrl, vm.cloudVolumeBackupModel, { complete: false });
+    miqService.miqAjaxButton(restoreUrl + vm.recordId + buttonUrl, vm.cloudVolumeBackupModel, { complete: false });
   };
 
   vm.cancelClicked = function() {
     miqService.sparkleOn();
     var cancelUrl = '/cloud_volume_backup/backup_restore/';
     var buttonUrl = '?button=cancel';
-    miqService.miqAjaxButton(cancelUrl + vm.cloudVolumeBackupFormId + buttonUrl);
+    miqService.miqAjaxButton(cancelUrl + vm.recordId + buttonUrl);
   };
 
   vm.resetClicked = function(angularForm) {
-    miqService.sparkleOn();
     resetModel();
     angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
@@ -59,7 +57,7 @@ function cloudVolumeBackupFormController(miqService, $http) {
   function getVolumeFormDataComplete(response) {
     vm.volume_choices = response.data.volume_choices;
     if (foundVolumes()) {
-      vm.cloudVolumeBackupModel.volume = vm.volume_choices[0];
+      vm.cloudVolumeBackupModel.volume = vm.volume_choices[0].name;
     }
     vm.modelCopy = angular.copy(vm.cloudVolumeBackupModel);
     miqService.sparkleOff();
