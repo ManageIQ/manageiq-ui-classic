@@ -16,7 +16,7 @@ module Mixins
         prefix = "check" if prefix.nil?
         params.each_with_object([]) do |(var, val), items|
           vars = var.to_s.split("_")
-          if vars[0] == prefix && val == "1"
+          if vars[0] == prefix
             ids = vars[1..-1]
             items << ids.join("_")
           end
