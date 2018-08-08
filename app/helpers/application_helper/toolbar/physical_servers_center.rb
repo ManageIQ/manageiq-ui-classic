@@ -242,6 +242,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             t = N_('Provision Physical Server'),
             t,
             :url       => "provision",
+            :send_checked => true,
             :url_parms => "main_div",
             :klass     => ApplicationHelper::Button::PhysicalServerProvision
           )
