@@ -1,7 +1,8 @@
 $topology-colors: (
-  PhysicalServer: #00659c,
-  PhysicalRack:   #2d7623,
-  PhysicalSwitch: #b35c00,
+  PhysicalServer:  #030303,
+  PhysicalRack:    #030303,
+  PhysicalSwitch:  #030303,
+  PhysicalChassis: #030303,
 );
 
 @each $component, $color in $topology-colors {
