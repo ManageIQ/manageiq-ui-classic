@@ -49,7 +49,8 @@ describe OrchestrationStackController do
     end
 
     context "orchestration templates" do
-      let(:record) { FactoryGirl.create(:orchestration_stack_cloud_with_template) }
+      let(:ems) { FactoryGirl.create(:ems_cloud) }
+      let(:record) { FactoryGirl.create(:orchestration_stack_cloud_with_template, :ext_management_system => ems, :name => 'stack01') }
 
       before do
         session[:settings] = {
@@ -66,6 +67,12 @@ describe OrchestrationStackController do
       it "renders the orchestration template details" do
         expect(response.status).to eq(200)
         expect(response).to render_template(:partial => "orchestration_stack/_stack_orchestration_template")
+      end
+
+      it "renders template name correctly" do
+        expect(response.status).to eq(200)
+        expect(response.body).to include("<h1>\ntemplate name")
+        expect(response.body).not_to include("<h1>\nstack01")
       end
     end
   end
