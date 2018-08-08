@@ -11,14 +11,11 @@ describe ChargebackController do
 
       it "returns the classification entry record" do
         controller.instance_variable_set(:@edit, :cb_assign => {:tags => {}})
-        controller.send(:get_tags_all, tag.id)
-        expect(assigns(:edit)[:cb_assign][:tags][tag.id]).to eq(entry.id.to_s => entry.description)
-      end
+        controller.send(:get_tags_all)
 
-      it "returns empty hash when classification entry is not found" do
-        controller.instance_variable_set(:@edit, :cb_assign => {:tags => {}})
-        controller.send(:get_tags_all, 1)
-        expect(assigns(:edit)[:cb_assign][:tags][1]).to eq({})
+        result = {category.id => {tag.id.to_s => tag.description}, tag.id => { entry.id.to_s => entry.description}, entry.id => {}}
+
+        expect(assigns(:edit)[:cb_assign][:tags]).to eq(result)
       end
     end
 
