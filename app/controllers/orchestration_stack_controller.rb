@@ -20,7 +20,7 @@ class OrchestrationStackController < ApplicationController
   end
 
   def display_stack_orchestration_template
-    drop_breadcrumb(:name => "%{name} (Orchestration Template)" % {:name => @record.name},
+    drop_breadcrumb(:name => "%{name} (Orchestration Template)" % {:name => @record.orchestration_template.name},
                     :url  => show_link(@record, :display => @display))
   end
 
