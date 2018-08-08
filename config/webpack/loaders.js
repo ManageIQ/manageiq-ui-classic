@@ -1,7 +1,7 @@
 const merge = require('webpack-merge')
 
 const { env, publicPath } = require('./configuration.js')
-const babelrc = require('../../.babelrc.json');
+const babelrc = require('../../.babelrc.js');
 
 // set WEBPACK_EXCLUDE_NODE_MODULES=1 to skip compiling code in node_modules
 let base = {};
