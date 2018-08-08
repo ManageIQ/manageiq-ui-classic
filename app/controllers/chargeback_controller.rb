@@ -694,7 +694,7 @@ class ChargebackController < ApplicationController
       tag = @edit[:current_assignment][0][:tag][0]
       if tag
         @edit[:new][:cbtag_cat] = tag["parent_id"].to_s
-        get_tags_all(tag["parent_id"])
+        get_tags_all
       else
         @edit[:current_assignment] = []
       end
@@ -739,11 +739,15 @@ class ChargebackController < ApplicationController
     end
   end
 
-  def get_tags_all(category)
+  def get_tags_all
     @edit[:cb_assign][:tags] ||= {}
-    @edit[:cb_assign][:tags][category] ||= {}
-    classification = Classification.find_by_id(category.to_s)
-    classification&.entries&.each { |e| @edit[:cb_assign][:tags][category][e.id.to_s] = e.description }
+
+    Classification.all.each do |category|
+      @edit[:cb_assign][:tags][category.id] ||= {}
+      category.entries.each do |entry|
+        @edit[:cb_assign][:tags][category.id][entry.id.to_s] = entry.description
+      end
+    end
   end
 
   DEFAULT_CHARGEBACK_LABELS = ["com.redhat.component"].freeze
@@ -829,7 +833,7 @@ class ChargebackController < ApplicationController
 
     if @edit[:new][:cbshow_typ].ends_with?("-tags")
       get_categories_all
-      get_tags_all(params[:cbtag_cat].to_i) if params[:cbtag_cat]
+      get_tags_all
     elsif @edit[:new][:cbshow_typ].ends_with?("-labels")
       get_docker_labels_all_keys
       get_docker_labels_all_values(@edit[:new][:cblabel_key])
