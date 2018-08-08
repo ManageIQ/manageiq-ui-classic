@@ -1,4 +1,6 @@
 build:
+  environment:
+    node: v8.11.3
   dependencies:
     before:
     - sudo apt-get -y install cmake;
@@ -9,6 +11,8 @@ build:
         command: "true"
   nodes:
     analysis:
+      environment:
+        node: v8.11.3
       tests:
         override:
           -
