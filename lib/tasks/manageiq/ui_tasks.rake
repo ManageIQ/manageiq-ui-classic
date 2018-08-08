@@ -29,7 +29,7 @@ namespace :update do
       puts "    namespace: #{engine.namespace}"
       puts "    path: #{engine.path}"
       puts "    node_modules: #{engine.node_modules}"
-      puts "    is_gem: #{engine.is_gem}"
+      puts "    development_gem?: #{engine.development_gem?}"
     end
     puts
   end
