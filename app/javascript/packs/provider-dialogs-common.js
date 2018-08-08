@@ -6,16 +6,16 @@ ManageIQ.angular.app.component('providerDialogUser', {
     dialog: '<',
     entityName: '@',
     actionName: '@',
+    successMessage: '@',
   },
   template: '<dialog-user dialog="$ctrl.dialog" refresh-field="$ctrl.refreshField(field)" on-update="$ctrl.setDialogData(data)"></dialog-user>',
   controller: [function() {
     let formData = {};
 
-    /* this.refreshField = (field) => {
+    this.refreshField = (field) => {
       // dynamic fields are not supported in this context
-      console.log('TODO dialogFieldRefreshService.refreshField', field);
       return Promise.resolve({values:[], options:[]});
-    }; */
+    };
 
     this.setDialogData = (data) => {
       formData = data.data;
@@ -35,8 +35,9 @@ ManageIQ.angular.app.component('providerDialogUser', {
           addClicked: () => {
             apiCall(
               {
-                entity_name: this.entityName,
-                action_name: this.actionName,
+                entity_name:     this.entityName,
+                action_name:     this.actionName,
+                success_message: this.successMessage,
               },
               this.formData
             );
@@ -72,18 +73,19 @@ function apiCall(buttonData, dialogData) {
       add_flash(errorMessage, 'error');
       return;
     }
-    add_flash(buttonData.success_message, 'success');
+    add_flash(__(buttonData.success_message), 'success');
   }).catch((error) => {
     add_flash(__('An unknown error has occurred calling the API.'));
   });
 }
 
-// careful: the dialogDefinigion is string, not JSON here
+// careful: the dialogDefinigion is string, not an object here
 function dialogModal(dialogDefinition, buttonData) {
   const elem = $('<provider-dialog-user></provider-dialog-user>');
   elem.attr('dialog', dialogDefinition);
   elem.attr('action-name', buttonData.action_name);
   elem.attr('entity-name', buttonData.entity_name);
+  elem.attr('success-message', buttonData.success_message);
 
   const id = 'angular-provider-dialog';
 
