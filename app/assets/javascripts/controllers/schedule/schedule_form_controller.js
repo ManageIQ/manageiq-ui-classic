@@ -381,7 +381,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return $scope.scheduleModel.log_protocol === 'AWS S3';
   };
 
-  $scope.regionRequired = function(value) {
+  $scope.regionRequired = function() {
     return ($scope.s3Backup() &&
       ($scope.scheduleModel.log_aws_region === '' || typeof $scope.scheduleModel.log_aws_region === 'undefined'));
   };

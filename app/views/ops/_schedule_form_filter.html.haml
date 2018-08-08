@@ -116,7 +116,7 @@
               - default_option = [_("<Choose>"), '']
               = select_tag('log_aws_region', options_for_select([default_option] + @regions_options_for_select),
                            "ng-model"                    => "scheduleModel.log_aws_region",
-                           "ng-required"                 => "regionRequired(scheduleModel.log_aws_region)",
+                           "ng-required"                 => "regionRequired()",
                            "selectpicker-for-select-tag" => "")
 
         = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
