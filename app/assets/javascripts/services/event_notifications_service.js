@@ -63,6 +63,7 @@ function eventNotifications($timeout, API) {
       notifications: [],
     };
     state.groups.push(events);
+    /*
     state.groups.push(
       {
         notificationType: this.TASK_NOTIFICATION,
@@ -71,6 +72,7 @@ function eventNotifications($timeout, API) {
         notifications: [],
       }
     );
+    */
     state.unreadNotifications = false;
     state.toastNotifications = [];
 
