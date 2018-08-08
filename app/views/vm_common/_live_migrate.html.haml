@@ -1,9 +1,7 @@
 - message = n_("1 Instance to be Live Migrated", "%{amount} Instances to be Live Migrated", @live_migrate_items.length) % {:amount => @live_migrate_items.length}
-- form_id = @live_migrate_items.length == 1 ? @live_migrate_items[0].id : ''
+- record_id = @live_migrate_items.length == 1 ? @live_migrate_items[0].id : ''
 
-%vm-cloud-live-migrate-form{ 'message' => message,
-'vm-cloud-live-migrate-form-id'=> form_id,
-}
+%vm-cloud-live-migrate-form{'message' => message, 'record-id' => record_id}
 
 - unless @explorer
   %table{:width => '100%'}
