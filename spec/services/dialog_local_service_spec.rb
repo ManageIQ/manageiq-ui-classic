@@ -40,6 +40,25 @@ describe DialogLocalService do
   describe "#determine_dialog_locals_for_custom_button" do
     let(:button_name) { "custom-button-name" }
     let(:resource_action) { instance_double("ResourceAction", :id => 321, :dialog_id => 654) }
+    let(:display_options) { {} }
+
+    shared_examples_for "DialogLocalService#determine_dialog_locals_for_custom_button return value" do
+      |target_type, collection_name, finish_endpoint|
+      it "returns a hash with the proper parameters" do
+        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action, display_options))
+          .to eq(
+            :resource_action_id     => 321,
+            :target_id              => 123,
+            :target_type            => target_type,
+            :dialog_id              => 654,
+            :force_old_dialog_use   => false,
+            :api_submit_endpoint    => "/api/#{collection_name}/123",
+            :api_action             => "custom-button-name",
+            :finish_submit_endpoint => finish_endpoint,
+            :cancel_endpoint        => finish_endpoint
+          )
+      end
+    end
 
     context "when the object is a CloudTenant" do
       let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudTenant, :id => 123) }
