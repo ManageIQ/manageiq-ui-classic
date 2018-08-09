@@ -33,15 +33,33 @@ class EmsDashboardService < DashboardService
     }.compact
   end
 
+  # Generates the following SQL:
+  #
+  #   SELECT COUNT(id), to_char(created_on, 'YYYY-MM-DD')
+  #   FROM   model
+  #   WHERE  ems_id = ?
+  #     AND (created_on > 30.days.ago)
+  #   GROUP BY to_char(created_on 'YYYY-MM-DD')
+  #
+  # Returns in the format:
+  #
+  #   {
+  #     "2000-01-01" => 123,
+  #     "2000-01-02" => 234,
+  #     "2000-01-03" => 345,
+  #     ...
+  #   }
   def recent_records(model)
-    all_records = Hash.new(0)
-    records = model.where('created_on > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
-    records = records.includes(:resource => [:ext_management_system]) if @ems.blank?
-    records.sort_by(&:created_on).uniq.each do |r|
-      date = r.created_on.strftime("%Y-%m-%d")
-      all_records[date] += model.where('created_on = ?', r.created_on).count
-    end
-    all_records
+    db_table     = model.arel_table
+    to_char_args = [db_table[:created_on], Arel::Nodes::SqlLiteral.new("'YYYY-MM-DD'")]
+    group_by_sql = Arel::Nodes::NamedFunction.new("to_char", to_char_args)
+
+    sql = model.where(:ems_id => @ems.id)
+               .where(db_table[:created_on].gt(30.days.ago.utc))
+               .group(group_by_sql.to_sql)
+    sql = sql.includes(:resource => [:ext_management_system]) if @ems.blank?
+
+    sql.count
   end
 
   def format_data(ems_type, attributes, attr_icon, attr_url, attr_hsh)
