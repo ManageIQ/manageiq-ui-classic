@@ -55,12 +55,11 @@ ManageIQ.angular.app.component('namespaceForm', {
         message = vm.aeNsDomain ? __('Edit of Domain "%s" was cancelled by user.') : __('Edit of Namespace "%s" was cancelled by user.');
         message = sprintf(message, vm.namespaceModel.name);
       }
-      var url = '/miq_ae_class/explorer';
       miqFlashLater({
         message: message,
         level: 'warning',
       });
-      $window.location.href = url;
+      $window.location.href = '/miq_ae_class/explorer';
     };
 
     vm.resetClicked = function(angularForm) {
