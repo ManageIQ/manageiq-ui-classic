@@ -1,14 +1,24 @@
-ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService', 'cloudVolumeBackupFormId', '$http', function(miqService, cloudVolumeBackupFormId, $http) {
+ManageIQ.angular.app.component('cloudVolumeBackupForm', {
+  templateUrl: '/static/cloud_volume_backup/volume_select.html.haml',
+  controller: cloudVolumeBackupFormController,
+  controllerAs: 'vm',
+  bindings: {
+    "recordId": '@',
+  },
+});
+
+cloudVolumeBackupFormController.$inject = ['miqService', '$http'];
+
+function cloudVolumeBackupFormController(miqService, $http) {
   var vm = this;
 
   var init = function() {
     vm.afterGet = false;
 
     vm.cloudVolumeBackupModel = {
-      volume_id: '',
+      volume: '',
     };
 
-    vm.formId = cloudVolumeBackupFormId;
     vm.model = "cloudVolumeBackupModel";
 
     ManageIQ.angular.scope = vm;
@@ -18,21 +28,24 @@ ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService'
 
     vm.newRecord = false;
 
+    miqService.sparkleOn();
     $http.get('/cloud_volume_backup/volume_form_choices')
       .then(getVolumeFormDataComplete)
       .catch(miqService.handleFailure);
   };
 
   vm.saveClicked = function() {
+    miqService.sparkleOn();
     var restoreUrl = '/cloud_volume_backup/backup_restore/';
     var buttonUrl = '?button=restore';
-    miqService.miqAjaxButton(restoreUrl + cloudVolumeBackupFormId + buttonUrl, vm.cloudVolumeBackupModel, { complete: false });
+    miqService.miqAjaxButton(restoreUrl + vm.recordId + buttonUrl, vm.cloudVolumeBackupModel, { complete: false });
   };
 
   vm.cancelClicked = function() {
+    miqService.sparkleOn();
     var cancelUrl = '/cloud_volume_backup/backup_restore/';
     var buttonUrl = '?button=cancel';
-    miqService.miqAjaxButton(cancelUrl + cloudVolumeBackupFormId + buttonUrl);
+    miqService.miqAjaxButton(cancelUrl + vm.recordId + buttonUrl);
   };
 
   vm.resetClicked = function(angularForm) {
@@ -46,6 +59,8 @@ ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService'
     if (foundVolumes()) {
       vm.cloudVolumeBackupModel.volume = vm.volume_choices[0];
     }
+    vm.modelCopy = angular.copy(vm.cloudVolumeBackupModel);
+    miqService.sparkleOff();
   }
 
   function resetModel() {
@@ -56,5 +71,5 @@ ManageIQ.angular.app.controller('cloudVolumeBackupFormController', ['miqService'
     return vm.volume_choices.length > 0;
   }
 
-  init();
-}]);
+  vm.$onInit = init;
+}
