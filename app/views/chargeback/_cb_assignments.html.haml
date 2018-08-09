@@ -48,9 +48,9 @@
     - show_type = @edit[:new][:cbshow_typ]
     - if !(show_type.ends_with?("-tags") || show_type.ends_with?("-labels")) || @edit[:new][:cbtag_cat].present? || @edit[:new][:cblabel_key].present?
       %hr
-      %h3
-        = _('Selections')
       - if @edit[:new][:cbshow_typ] == "tenant"
+        %h3
+          = _('Selections')
         %table.table.table-bordered.table-hover.table-treegrid
           %thead
             %tr
@@ -84,6 +84,26 @@
         :javascript
            $('.table-treegrid').treegrid({})
       - elsif @edit[:new][:cbshow_typ].ends_with?("-tags")
+        - if @edit[:current_assignment].try(:first).try(:[], :tag) && "#{@edit[:current_assignment].try(:first).try(:[], :tag).second}-tags" == @edit[:new][:cbshow_typ]
+          %h3
+            = _('Saved Items')
+          %table.table.table-bordered.table-striped
+            %thead
+              %tr
+                %th= _('Tag Category')
+                %th= _('Tag Name')
+                %th= _('Rate')
+            - @edit[:current_assignment].sort_by{|x| x[:tag].first.parent.description }.each do |value|
+              %tr
+                %td
+                  = value[:tag].first.parent.description
+                %td
+                  = value[:tag].first.description
+                %td
+                  = value[:cb_rate].description
+          %hr
+        %h3
+          = _('Selections')
         %table.table.table-bordered.table-striped
           %thead
             %tr
@@ -103,6 +123,26 @@
                   miqInitSelectPicker();
                   miqSelectPickerEvent("#{@edit[:new][:cbshow_typ]}__#{id}", "#{url}")
       - elsif @edit[:new][:cbshow_typ].ends_with?("-labels")
+        - if @edit[:current_assignment].try(:first).try(:[], :label)
+          %h3
+            = _('Saved Items')
+          %table.table.table-bordered.table-striped
+            %thead
+              %tr
+                %th= _('Section')
+                %th= _('Label')
+                %th= _('Rate')
+            - @edit[:current_assignment].sort_by{|x| x[:label].first.name }.each do |value|
+              %tr
+                %td
+                  = value[:label].first.name
+                %td
+                  = value[:label].first.value
+                %td
+                  = value[:cb_rate].description
+          %hr
+        %h3
+          = _('Selections')
         %table.table.table-bordered.table-striped
           %thead
             %tr
@@ -122,6 +162,8 @@
                   miqInitSelectPicker();
                   miqSelectPickerEvent("#{@edit[:new][:cbshow_typ]}__#{id}", "#{url}")
       - else
+        %h3
+          = _('Selections')
         %table.table.table-bordered.table-striped
           %thead
             %tr
