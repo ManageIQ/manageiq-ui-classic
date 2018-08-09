@@ -1018,33 +1018,48 @@ function miqQsEnterEscape(e) {
 
 // Start/stop the JS spinner
 function miqSpinner(status) {
-  var opts = {
-    lines: 15, // The number of lines to draw
-    length: 18, // The length of each line
-    width: 4, // The line thickness
-    radius: 25, // The radius of the inner circle
-    color: '#fff', // #rgb or #rrggbb
-    trail: 60, // Afterglow percentage
-    className: 'miq-spinner', // The CSS class to assign to the spinner
-  };
+  if (! miqSpinner.spinner) {
+    miqSpinner.spinner = new Spinner({
+      lines: 15, // The number of lines to draw
+      length: 18, // The length of each line
+      width: 4, // The line thickness
+      radius: 25, // The radius of the inner circle
+      color: '#fff', // #rgb or #rrggbb
+      trail: 60, // Afterglow percentage
+      className: 'miq-spinner', // The CSS class to assign to the spinner
+    });
+  }
 
-  $('#spinner_div').spin(status ? opts : false);
+  if (status) {
+    var target = document.querySelector('#spinner_div');
+    miqSpinner.spinner.spin(target);
+  } else {
+    miqSpinner.spinner.stop();
+  }
 }
 
 // Start/stop the search spinner
 function miqSearchSpinner(status) {
-  var opts = {
-    lines: 13, // The number of lines to draw
-    length: 20, // The length of each line
-    width: 10, // The line thickness
-    radius: 30, // The radius of the inner circle
-    color: '#000', // #rgb or #rrggbb or array of colors
-    trail: 60, // Afterglow percentage
-    className: 'miq-spinner', // The CSS class to assign to the spinner
-  };
+  if (! miqSearchSpinner.spinner) {
+    miqSearchSpinner.spinner = new Spinner({
+      lines: 13, // The number of lines to draw
+      length: 20, // The length of each line
+      width: 10, // The line thickness
+      radius: 30, // The radius of the inner circle
+      color: '#000', // #rgb or #rrggbb or array of colors
+      trail: 60, // Afterglow percentage
+      className: 'miq-spinner', // The CSS class to assign to the spinner
+    });
+  }
 
   $('#search_notification').toggle(!! status);
-  $('#searching_spinner_center').spin(status ? opts : false);
+
+  if (status) {
+    var target = document.querySelector('#searching_spinner_center');
+    miqSearchSpinner.spinner.spin(target);
+  } else {
+    miqSearchSpinner.spinner.stop();
+  }
 }
 
 function miqProcessObserveQueue() {

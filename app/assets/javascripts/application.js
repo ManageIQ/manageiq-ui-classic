@@ -65,8 +65,6 @@
 //= require bower_components/codemirror/mode/shell/shell
 //= require bower_components/codemirror/mode/xml/xml
 //= require bower_components/codemirror/mode/yaml/yaml
-//= require bower_components/spin.js/spin
-//= require bower_components/spin.js/jquery.spin
 //= require jquery-hotkeys
 //= require ./miq_formatters
 //= require ./miq_grid

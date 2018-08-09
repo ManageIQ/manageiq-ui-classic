@@ -42,8 +42,7 @@
     "patternfly-bootstrap-treeview": "~2.1.5",
     "patternfly-timeline": "~1.0.5",
     "phantomjs-polyfill": "~0.0.2",
-    "qs": "~0.3.10",
-    "spin.js": "~2.3.2"
+    "qs": "~0.3.10"
   },
   "resolutions": {
     "d3": "~3.5.0",

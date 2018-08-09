@@ -53,3 +53,8 @@ window.http = http;
 // for Automate > Simulate
 require('xml_display/XMLDisplay.js');
 require('xml_display/XMLDisplay.css');
+
+// miqSpinner, miqSearchSpinner
+import {Spinner} from 'spin.js';
+import 'spin.js/spin.css';
+window.Spinner = Spinner;
