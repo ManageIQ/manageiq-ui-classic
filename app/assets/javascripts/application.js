@@ -15,7 +15,6 @@
 //= require bower_components/moment-strftime/lib/moment-strftime
 //= require bower_components/moment-timezone/moment-timezone
 //= require bower_components/moment-duration-format/lib/moment-duration-format
-//= require bower_components/numeral/numeral
 //= require ./cable
 //= require ./gettextCatalog
 //= require ./miq_api
