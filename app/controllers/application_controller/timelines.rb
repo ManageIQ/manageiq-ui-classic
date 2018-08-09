@@ -76,30 +76,21 @@ module ApplicationController::Timelines
 
   def tl_build_timeline_report_options
     if !@tl_options.date.start.nil? && !@tl_options.date.end.nil?
-      case @tl_options.date.typ
-      when "Hourly"
-        tl_rpt = @tl_options.management_events? ? "tl_events_hourly" : "tl_policy_events_hourly"
-        @report = tl_get_rpt(tl_rpt)
-        @report.headers.map! { |header| _(header) }
-        mm, dd, yy = @tl_options.date.hourly.split("/")
-        from_dt = create_time_in_utc("#{yy}-#{mm}-#{dd} 00:00:00", session[:user_tz]) # Get tz 12am in user's time zone
-        to_dt = create_time_in_utc("#{yy}-#{mm}-#{dd} 23:59:59", session[:user_tz])   # Get tz 11pm in user's time zone
-        st_time = Time.gm(yy, mm, dd, 00, 00, 00)
-        end_time = Time.gm(yy, mm, dd, 23, 59, 00)
-        #        START of TIMELINE TIMEZONE Code
-        #        @report.timeline[:bands][0][:center_position] = Time.gm(yy,mm,dd,21,00,00)    # calculating mid position to align timeline in center
-        #        @report.timeline[:bands][0][:st_time] = st_time.strftime("%b %d %Y 00:00:00 GMT")
-        #        @report.timeline[:bands][0][:end_time] = end_time.strftime("%b %d %Y 23:59:00 GMT")
-        tz = @report.tz ? @report.tz : Time.zone
-      when "Daily"
-        tl_rpt = @tl_options.management_events? ? "tl_events_daily" : "tl_policy_events_daily"
-        @report = tl_get_rpt(tl_rpt)
-        @report.headers.map! { |header| _(header) }
-        from = Date.parse(@tl_options.date.daily) - @tl_options.date.days.to_i
-        from_dt = create_time_in_utc("#{from.year}-#{from.month}-#{from.day} 00:00:00", session[:user_tz])  # Get tz 12am in user's time zone
-        mm, dd, yy = @tl_options.date.daily.split("/")
-        to_dt = create_time_in_utc("#{yy}-#{mm}-#{dd} 23:59:59", session[:user_tz]) # Get tz 11pm in user's time zone
-      end
+      tl_type = @tl_options.management_events? ? "events" : "policy_events"
+      tl_granularity = case @tl_options.date.typ
+                       when "Hourly" then "hourly"
+                       when "Daily" then "daily"
+                       end
+      @report = tl_get_rpt("tl_#{tl_type}_#{tl_granularity}")
+      @report.headers.map! { |header| _(header) }
+
+      to_date = Date.parse(@tl_options.date.end_date)
+      to_dt = create_time_in_utc("#{to_date.strftime} 23:59:59",
+                                 session[:user_tz])
+
+      from_date = to_date - @tl_options.date.days.to_i + 1
+      from_dt = create_time_in_utc("#{from_date.strftime} 00:00:00",
+                                   session[:user_tz])
 
       rec_cond, *rec_params = @tl_record.event_where_clause(@tl_options.evt_type)
       conditions = [rec_cond, "timestamp >= ?", "timestamp <= ?"]
