@@ -43,11 +43,12 @@
       %label.col-md-2.control-label{'for' => 'target_class'}
         = _('Type')
       .col-md-8
-        %select#target_class{'ng-model'     => '$ctrl.targetClass',
-                             'name'         => 'target_class',
-                             'ng-options'   => 'target_class[1] as target_class[0]  for target_class in $ctrl.targetClassOptions',
-                             'ng-change'    => '$ctrl.targetClassChange({targetClass: $ctrl.targetClass})',
-                             'pf-select'    => true}
+        %select#target_class{'ng-model'       => '$ctrl.targetClass',
+                             'name'           => 'target_class',
+                             'ng-options'     => 'target_class[1] as target_class[0]  for target_class in $ctrl.targetClassOptions',
+                             'ng-change'      => '$ctrl.targetClassChange({targetClass: $ctrl.targetClass})',
+                             'data-container' => 'body',
+                             'pf-select'      => true}
           %option{'value' => ''}
             = "<#{_('Choose')}>"
     .form-group{'ng-class' => "{'has-error': aeResolveOptionsForm.target_id.$invalid}",
