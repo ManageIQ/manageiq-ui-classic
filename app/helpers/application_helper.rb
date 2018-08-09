@@ -816,6 +816,7 @@ module ApplicationHelper
        cloud_volume
        cloud_volume_backup
        cloud_volume_snapshot
+       cloud_volume_type
        configuration_job
        configuration_scripts
        container
@@ -1100,6 +1101,7 @@ module ApplicationHelper
                         cloud_volume
                         cloud_volume_backup
                         cloud_volume_snapshot
+                        cloud_volume_type
                         condition
                         configuration_job
                         configuration_script_source

@@ -472,6 +472,7 @@ class ApplicationHelper::ToolbarChooser
             cloud_volume
             cloud_volume_backup
             cloud_volume_snapshot
+            cloud_volume_type
             configuration_job
             container
             container_group
