@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope', 'keyPairFormId', 'miqService', function($http, $scope, keyPairFormId, miqService) {
+ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope', 'miqService', function($http, $scope, miqService) {
   var vm = this;
 
   var init = function() {
@@ -8,13 +8,13 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
       ems_id: '',
     };
 
-    vm.formId = keyPairFormId;
+    vm.formId = vm.keyPairFormId;
     vm.afterGet = false;
     vm.modelCopy = angular.copy( vm.keyPairModel );
     vm.model = 'keyPairModel';
     vm.ems_choices = [];
     vm.saveable = miqService.saveable;
-    vm.newRecord = keyPairFormId == 'new';
+    vm.newRecord = vm.keyPairFormId == 'new';
 
     ManageIQ.angular.scope = vm;
 
@@ -28,7 +28,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
     miqService.sparkleOn();
 
     var url = '/auth_key_pair_cloud/create/' + keyPairFormId + '?button=' + buttonName;
-    vm.keyPairModel.ems_id = vm.keyPairModel.ems.id;
+    //vm.keyPairModel.ems_id = vm.keyPairModel.ems.id;
     if (serializeFields) {
       miqService.miqAjaxButton(url, miqService.serializeModel(vm.keyPairModel), { complete: false });
     } else {
@@ -65,5 +65,5 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
     miqService.sparkleOff();
   }
 
-  init();
+  vm.$onInit = init;
 }]);
