@@ -1410,7 +1410,11 @@ class ApplicationController < ActionController::Base
     @gtl_type = get_view_calculate_gtl_type(db_sym) unless fetch_data
 
     # Get the view for this db or use the existing one in the session
-    view = refresh_view ? get_db_view(db.gsub('::', '_'), :association => association, :view_suffix => view_suffix) : session[:view]
+    view = if options['path_to_report']
+        MiqReport.new(YAML.load(File.open(options['path_to_report'])))
+      else
+      refresh_view ? get_db_view(db.gsub('::', '_'), :association => association, :view_suffix => view_suffix) : session[:view]
+    end
 
     # Check for changed settings in params
     if params[:ppsetting] # User selected new per page value

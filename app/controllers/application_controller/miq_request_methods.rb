@@ -141,6 +141,16 @@ module ApplicationController::MiqRequestMethods
   alias_method :vm_pre_prov, :pre_prov
 
   def render_updated_templates
+    report_scopes = [:eligible_for_provisioning]
+    report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
+    options = {
+      :model => @view.db,
+      :gtl_type => "table",
+      :named_scope => report_scopes
+    }
+
+    @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
+
     templates = Rbac.filtered(@edit[:template_kls].eligible_for_provisioning).sort_by { |a| a.name.downcase }
     build_vm_grid(templates, @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
     render :update do |page|
@@ -158,9 +168,27 @@ module ApplicationController::MiqRequestMethods
     @edit[:vm_sortcol] ||= "name"
     @edit[:prov_type] = "VM Provision"
     @edit[:hide_deprecated_templates] = true if request.parameters[:controller] == "vm_cloud"
+
     unless %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
+      path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", "ProvisionTemplates.yaml").to_s
+      @view = MiqReport.new(YAML.load(File.open(path_to_report)))
+      @view.db = get_template_kls.to_s
+      report_scopes = [:eligible_for_provisioning, :non_deprecated]
+      options = {
+        :model => @view.db,
+        :gtl_type => "table",
+        :named_scope => report_scopes,
+        :path_to_report => path_to_report,
+      }
+      @custom_action = {
+        :url => "/miq_request/pre_prov/?sel_id=",
+        :type => 'provisioning'
+      }
+
+      @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
+
       @edit[:template_kls] = get_template_kls
-      templates = Rbac.filtered(@edit[:template_kls].eligible_for_provisioning).sort_by { |a| a.name.downcase }
+      templates = Rbac.filtered(@edit[:template_kls].eligible_for_provisioning)
       build_vm_grid(templates, @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
     end
     session[:changed] = false # Turn off the submit button
@@ -422,7 +450,6 @@ module ApplicationController::MiqRequestMethods
     integer_fields = %w(allocated_disk_storage mem_cpu cpu_total_cores v_total_snapshots)
 
     filtered_vms = vms.select { |x| filter_by.call(x) }
-
     @vms = _build_whatever_grid('vm', filtered_vms, headers, sort_order, sort_by, integer_fields)
   end
 
