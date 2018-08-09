@@ -331,3 +331,7 @@ describe VmOrTemplateController do
   include_examples '#download_summary_pdf', :vm_cloud
   include_examples '#download_summary_pdf', :vm_infra
 end
+
+describe VmInfraController do
+  include_examples '#download_summary_pdf', :template_infra
+end

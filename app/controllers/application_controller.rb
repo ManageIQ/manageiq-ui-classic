@@ -295,7 +295,7 @@ class ApplicationController < ActionController::Base
     redirect_to(:action => params[:tab], :id => params[:id])
   end
 
-  def download_summary_pdf
+  def download_summary_pdf(klass = self.class.model)
     # do not build quadicon links
     @embedded = true
     @showlinks = false
@@ -303,7 +303,7 @@ class ApplicationController < ActionController::Base
     # encode images and embed in HTML that is sent to Prince
     @base64_encode_images = true
 
-    @record = identify_record(params[:id])
+    @record = identify_record(params[:id], klass)
     yield if block_given?
     return if record_no_longer_exists?(@record)
     get_tagdata(@record) if @record.try(:taggings)

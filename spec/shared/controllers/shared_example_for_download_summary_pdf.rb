@@ -19,5 +19,9 @@ shared_examples '#download_summary_pdf' do |object|
     it 'title is set correctly' do
       expect(pdf_options[:title]).to eq("#{ui_lookup(:model => record.class.name)} \"#{record.name}\"")
     end
+
+    it "should not raise error" do
+      expect(assigns(:bang)).to be_nil
+    end
   end
 end
