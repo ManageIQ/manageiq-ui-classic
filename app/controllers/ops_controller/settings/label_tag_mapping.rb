@@ -20,6 +20,8 @@ module OpsController::Settings::LabelTagMapping
                                                 nil),
     "Vm"                  => MappableEntity.new("amazon:vm:",
                                                 "ManageIQ::Providers::Amazon::CloudManager::Vm"),
+    "VmOpenstack"         => MappableEntity.new("openstack:vm:",
+                                                "ManageIQ::Providers::Openstack::CloudManager::Vm"),
     "VmAzure"             => MappableEntity.new("azure:vm:",
                                                 "ManageIQ::Providers::Azure::CloudManager::Vm"),
     "Image"               => MappableEntity.new("amazon:image:",
