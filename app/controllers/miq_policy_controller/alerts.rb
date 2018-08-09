@@ -477,10 +477,10 @@ module MiqPolicyController::Alerts
       @sb[:alert][:events] ||= {}
       EmsEvent.event_groups.each do |_k, v|
         name = v[:name]
-        v[:detail].each do |d|
+        v[:detail]&.each do |d|
           @sb[:alert][:events][d] = name + ": " + d if vm_events.include?(d)
         end
-        v[:critical].each do |c|
+        v[:critical]&.each do |c|
           @sb[:alert][:events][c] = name + ": " + c if vm_events.include?(c)
         end
       end
