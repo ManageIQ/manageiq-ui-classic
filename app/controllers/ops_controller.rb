@@ -451,6 +451,7 @@ class OpsController < ApplicationController
         record_id = @lt_map.try(:id)
       elsif @sb[:active_tab] == 'settings_rhn_edit'
         locals[:no_cancel] = false
+        locals[:observe_queue] = true
         action_url = "settings_update"
         record_id  = @sb[:active_tab].split("settings_").last
       else
