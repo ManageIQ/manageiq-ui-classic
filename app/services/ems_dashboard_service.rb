@@ -48,7 +48,7 @@ class EmsDashboardService < DashboardService
     attr_data = []
     attributes.each do |attr|
       attr_data.push(
-        :id           => attr_hsh[attr] + '_' + @ems_id,
+        :id           => "#{attr_hsh[attr]}_#{@ems_id}",
         :iconClass    => attr_icon[attr],
         :title        => attr_hsh[attr],
         :count        => @ems.send(attr).count,
