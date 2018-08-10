@@ -19,6 +19,11 @@ namespace :update do
       # clean up old bower install to prevent it from winning over npm
       system("rm -rf vendor/assets/bower_components")
     end
+
+    Dir.chdir Rails.root do
+      # clean up old webpack packs to prevent stale packs now that we're hashing the filenames
+      system("rm -rf public/packs/")
+    end
   end
 
   task :print_engines do
