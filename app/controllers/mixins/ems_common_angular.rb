@@ -199,7 +199,7 @@ module Mixins
       else
         @in_a_form = true
         ems.errors.each do |field, msg|
-          add_flash("#{ems.class.human_attribute_name(field)} #{msg}", :error)
+          add_flash("#{ems.class.human_attribute_name(field, :ui => true)} #{msg}", :error)
         end
 
         drop_breadcrumb(:name => _("Add New %{tables}") % {:tables => ui_lookup(:tables => table_name)},

@@ -16,7 +16,7 @@ module TextualSummaryHelper
       result = send("textual_#{summary}")
       return result if result.kind_of?(Hash) && result[:label]
 
-      automatic_label = context.class.human_attribute_name(summary, :default => summary.to_s.titleize)
+      automatic_label = context.class.human_attribute_name(summary, :default => summary.to_s.titleize, :ui => true)
 
       case result
       when Hash
