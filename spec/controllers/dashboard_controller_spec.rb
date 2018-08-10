@@ -492,6 +492,19 @@ describe DashboardController do
     end
   end
 
+  context 'skip_after_action :set_global_session_data' do
+    before do
+      _, _server, = EvmSpecHelper.create_guid_miq_server_zone
+      session[:edit] = "xyz"
+    end
+
+    it 'retains the existing value of session[:edit] after the POST request' do
+      post :csp_report, '{"csp-report":{"document-uri":"https://example.com/foo/bar"}}', :format => 'json'
+      expect(session[:edit]).to eq("xyz")
+      expect(response.status).to eq(200)
+    end
+  end
+
   def skip_data_checks(url = '/')
     allow_any_instance_of(UserValidationService).to receive(:server_ready?).and_return(true)
     allow(controller).to receive(:start_url_for_user).and_return(url)

@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
   before_action :set_user_time_zone
   before_action :set_gettext_locale
   before_action :allow_websocket
-  after_action :set_global_session_data, :except => [:resize_layout]
+  after_action :set_global_session_data, :except => %i(csp_report resize_layout)
 
   TIMELINES_FOLDER = Rails.root.join("product", "timelines")
 
