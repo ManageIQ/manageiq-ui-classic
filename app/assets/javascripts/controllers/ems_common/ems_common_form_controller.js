@@ -375,7 +375,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     } else if($scope.emsCommonModel.emstype === "kubevirt") {
       return true;
     } else {
-      return false;
+      return true;
     }
   };
 

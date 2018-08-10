@@ -122,6 +122,9 @@ module Mixins
     end
 
     def get_task_args(ems)
+      if ems.respond_to?(:validate_authentication_args)
+        return ems.validate_authentication_args(params)
+      end
       user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
       case ems.to_s
       when 'ManageIQ::Providers::Openstack::CloudManager', 'ManageIQ::Providers::Openstack::InfraManager'
@@ -513,6 +516,9 @@ module Mixins
     end
 
     def set_ems_record_vars(ems, mode = nil)
+      if ems.respond_to?(:populate_record)
+        return ems.populate_record(params, session, mode)
+      end
       ems.name                   = params[:name].strip if params[:name]
       ems.provider_region        = params[:provider_region] if params[:provider_region]
       ems.api_version            = params[:api_version].strip if params[:api_version]
