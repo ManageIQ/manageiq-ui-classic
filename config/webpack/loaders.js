@@ -57,7 +57,7 @@ module.exports = [
       loader: 'file-loader',
       options: {
         publicPath,
-        name: env.NODE_ENV === 'production' ? '[name]-[hash].[ext]' : '[name].[ext]'
+        name: '[name]-[hash].[ext]',
       }
     }]
   },
