@@ -123,7 +123,7 @@ module VmCommon
   end
 
   def download_summary_pdf
-    super do
+    super(VmOrTemplate) do
       @flash_array = []
       @record = identify_record(params[:id], VmOrTemplate)
     end
