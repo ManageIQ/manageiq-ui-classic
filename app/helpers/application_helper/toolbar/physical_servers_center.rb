@@ -244,6 +244,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             :url       => "provision",
             :send_checked => true,
             :url_parms => "main_div",
+            :enabled      => false,
+            :onwhen       => "1+",
             :klass     => ApplicationHelper::Button::PhysicalServerProvision
           )
         ]
