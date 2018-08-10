@@ -48,10 +48,10 @@ class EmsDashboardService < DashboardService
     attr_data = []
     attributes.each do |attr|
       attr_data.push(
-        :id           => attr_hsh[attr] + '_' + @ems_id,
+        :id           => "#{attr_hsh[attr]}_#{@ems_id}",
         :iconClass    => attr_icon[attr],
         :title        => attr_hsh[attr],
-        :count        => @ems.send(attr).length,
+        :count        => @ems.send(attr).count,
         :href         => get_url(ems_type, @ems_id, attr_url[attr]),
         :notification => {
           :iconClass => 'pficon pficon-error-circle-o',
