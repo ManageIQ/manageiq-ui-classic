@@ -22,7 +22,7 @@
             "class"                => "selectpicker")
           :javascript
             miqInitSelectPicker();
-            miqSelectPickerEvent("tag_cat", "#{url}", {beforeSend: true, complete: true});
+            miqSelectPickerEvent("tag_cat", "#{url}", {beforeSend: true});
         %th
           = render :partial => "layouts/tag_edit_cat_tags"
   = render :partial => 'layouts/tag_edit_assignments', :locals => {:entry => nil}
