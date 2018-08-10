@@ -15,15 +15,11 @@ namespace :update do
   end
 
   task :clean do
-    Dir.chdir ManageIQ::UI::Classic::Engine.root do
-      # clean up old bower install to prevent it from winning over npm
-      system("rm -rf vendor/assets/bower_components")
-    end
+    # clean up old bower install to prevent it from winning over npm
+    FileUtils.rm_rf(ManageIQ::UI::Classic::Engine.root.join('vendor', 'assets', 'bower_components'))
 
-    Dir.chdir Rails.root do
-      # clean up old webpack packs to prevent stale packs now that we're hashing the filenames
-      system("rm -rf public/packs/")
-    end
+    # clean up old webpack packs to prevent stale packs now that we're hashing the filenames
+    FileUtils.rm_rf(Rails.root.join('public', 'packs'))
   end
 
   task :print_engines do
