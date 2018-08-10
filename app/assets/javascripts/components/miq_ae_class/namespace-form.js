@@ -48,14 +48,18 @@ ManageIQ.angular.app.component('namespaceForm', {
 
     vm.cancelClicked = function() {
       miqService.sparkleOn();
-      var type = vm.aeNsDomain ? __("Domain") : __("Namespace");
-      var message = vm.newRecord ? sprintf(__('Add of %s \"%s\" cancelled by user.'), type, vm.namespaceModel.name) : sprintf(__('Edit of %s \"%s\" cancelled by user.'), type, vm.namespaceModel.name);
-      var url = '/miq_ae_class/explorer';
+      var message = '';
+      if (vm.newRecord) {
+        message = vm.aeNsDomain ? __('Add of Domain was cancelled by user.') : __('Add of Namespace was cancelled by user.');
+      } else {
+        message = vm.aeNsDomain ? __('Edit of Domain "%s" was cancelled by user.') : __('Edit of Namespace "%s" was cancelled by user.');
+        message = sprintf(message, vm.namespaceModel.name);
+      }
       miqFlashLater({
         message: message,
         level: 'warning',
       });
-      $window.location.href = url;
+      $window.location.href = '/miq_ae_class/explorer';
     };
 
     vm.resetClicked = function(angularForm) {
