@@ -45,28 +45,7 @@ module ApplicationController::Tags
   def tag_edit_form_field_changed
     id = params[:id]
     return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", "replace_cell__explorer")
-
-    if params[:tag_cat]
-      @edit[:cat] = Classification.find_by_id(params[:tag_cat])
-      tag_edit_build_entries_pulldown
-    elsif params[:tag_add]
-      @edit[:new][:assignments].push(params[:tag_add].to_i)
-      @assignments ||= Classification.find(@edit.fetch_path(:new, :assignments))
-      @assignments.each_with_index do |a, a_idx|
-        if a.parent.name == @edit[:cat].name && # If same category
-           a.parent.single_value && #    single value category
-           a.id != params[:tag_add].to_i           #    different tag
-          @edit[:new][:assignments].delete(a.id)  # Remove prev tag from new
-          @assignments.delete_at(a_idx)           # Remove prev tag from display
-          break
-        end
-      end
-    elsif params[:tag_remove]
-      @edit[:new][:assignments].delete(params[:tag_remove].to_i)
-    end
-    @edit[:new][:assignments].sort!
-    @assignments ||= Classification.find(@edit.fetch_path(:new, :assignments))
-
+    tag_set_vars_from_params
     tag_edit_build_entries_pulldown
     render :update do |page|
       page << javascript_prologue
@@ -80,13 +59,39 @@ module ApplicationController::Tags
       if params[:tag_add]
         page << jquery_pulsate_element("#{j_str(params[:tag_add])}_tr")
       end
-      if params[:tag_cat]
-        page << set_spinner_off
-      end
+      page << set_spinner_off if params[:tag_cat]
     end
   end
 
   private ############################
+
+  def tag_set_vars_from_params
+    if params[:tag_cat]
+      @edit[:cat] = Classification.find_by(:id => params[:tag_cat])
+      tag_edit_build_entries_pulldown
+    elsif params[:tag_add]
+      tad_add_assignments
+    elsif params[:tag_remove]
+      @edit[:new][:assignments].delete(params[:tag_remove].to_i)
+    end
+    @edit[:new][:assignments].sort!
+    @assignments ||= Classification.find(@edit.fetch_path(:new, :assignments))
+  end
+
+  def tad_add_assignments
+    @edit[:new][:assignments].push(params[:tag_add].to_i)
+    @assignments ||= Classification.find(@edit.fetch_path(:new, :assignments))
+    @assignments.each_with_index do |a, a_idx|
+      # skip when same category, single value category, different tag
+      next unless delete_from_assignments?(a)
+      @edit[:new][:assignments].delete(a.id) # Remove prev tag from new
+      @assignments.delete_at(a_idx) # Remove prev tag from display
+    end
+  end
+
+  def delete_from_assignments?(value)
+    value.parent.name == @edit[:cat].name && value.parent.single_value && value.id != params[:tag_add].to_i
+  end
 
   def get_tag_items
     record_ids = find_records_with_rbac(
