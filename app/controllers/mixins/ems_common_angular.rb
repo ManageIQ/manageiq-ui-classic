@@ -495,9 +495,7 @@ module Mixins
     private ############################
 
     def metrics_default_database_name
-      if @ems.class.name == 'ManageIQ::Providers::Redhat::InfraManager'
-        ManageIQ::Providers::Redhat::InfraManager.default_history_database_name
-      end
+      ManageIQ::Providers::Redhat::InfraManager.default_history_database_name
     end
 
     def security_protocol_default
@@ -577,6 +575,9 @@ module Mixins
           :verify_ssl            => params[:default_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
           :certificate_authority => params[:default_tls_ca_certs],
         }
+      end
+
+      if ems.kind_of?(ManageIQ::Providers::Redhat::InfraManager) && metrics_database_name
         metrics_endpoint = { :role     => :metrics,
                              :hostname => metrics_hostname,
                              :port     => metrics_port,
