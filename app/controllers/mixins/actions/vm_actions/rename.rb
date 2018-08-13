@@ -76,6 +76,17 @@ module Mixins
               flash_to_session(msg)
               javascript_redirect(previous_breadcrumb_url)
             end
+          when 'save'
+            task_id = @record.rename_queue(session[:userid], @edit[:new][:name])
+            if task_id.kind_of?(Integer)
+              initiate_wait_for_task(:task_id => task_id, :action => "rename_finished")
+            else
+              add_flash(
+                :text        => _("VM rename: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
+                :severity    => :error,
+                :spinner_off => true
+              )
+            end
           when 'reset'
             vm_rename
             add_flash(_('All changes have been reset'), :warning)
@@ -93,6 +104,26 @@ module Mixins
             else
               render :action => 'rename'
             end
+          end
+        end
+
+        def rename_finished
+          task_id = session[:async][:params][:task_id]
+          vm_name = session[:edit][:current][:name]
+          task = MiqTask.find(task_id)
+          if MiqTask.status_ok?(task.status)
+            add_flash(_("Rename of Virtual Machine \"%{name}\" has been initiated") % { :name => vm_name })
+          else
+            add_flash(_("Unable to rename Virtual Machine \"%{name}\": %{details}") %
+                      { :name => vm_name, :details => task.message }, :error)
+          end
+          session[:edit] = nil
+          if @edit[:explorer]
+            @sb[:action] = nil
+            replace_right_cell
+          else
+            flash_to_session
+            javascript_redirect(previous_breadcrumb_url)
           end
         end
       end
