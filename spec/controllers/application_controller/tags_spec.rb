@@ -86,7 +86,6 @@ describe ApplicationController do
       controller.send(:tag_edit_build_screen)
       expect(convert_to_region_id(assigns(:tags)[:tags].first[:id]))
         .to eq(convert_to_region_id(assigns(:tags)[:tags].first[:values].first[:id]))
-
     end
   end
 
