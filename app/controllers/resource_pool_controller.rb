@@ -31,7 +31,7 @@ class ResourcePoolController < ApplicationController
                   @flash_array.nil?   # Some other screen is showing, so return
 
         unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-                "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
+                "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename'].include?(params[:pressed])
           @refresh_div = "main_div"
           @refresh_partial = "layouts/gtl"
           show
@@ -51,7 +51,8 @@ class ResourcePoolController < ApplicationController
     if single_delete_test
       single_delete_redirect
     elsif ["#{pfx}_miq_request_new", "#{pfx}_migrate", "#{pfx}_clone",
-           "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
+           "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
+          params[:pressed] == 'vm_rename' && @flash_array.nil?
       render_or_redirect_partial(pfx)
     else
       if @refresh_div == "main_div" && @lastaction == "show_list"

@@ -311,7 +311,7 @@ class HostController < ApplicationController
                  "#{pfx}_reconfigure", "#{pfx}_retire", "#{pfx}_right_size",
                  "storage_tag"].include?(params[:pressed]) && @flash_array.nil?
 
-      unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
+      unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename'].include?(params[:pressed])
         @refresh_div = "main_div"
         @refresh_partial = "layouts/gtl"
         show
@@ -368,9 +368,9 @@ class HostController < ApplicationController
 
     if single_delete_test
       single_delete_redirect
-    elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new",
-                                                   "#{pfx}_clone", "#{pfx}_migrate",
-                                                   "#{pfx}_publish"].include?(params[:pressed])
+    elsif params[:pressed].ends_with?("_edit") ||
+          ["#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
+          params[:pressed] == 'vm_rename' && @flash_array.nil?
       if @flash_array
         show_list
         replace_gtl_main_div
