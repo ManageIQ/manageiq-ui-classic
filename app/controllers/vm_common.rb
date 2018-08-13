@@ -1056,7 +1056,7 @@ module VmCommon
     else      # Get list of child VMs of this node
       options = {:model => model}
       if model == "ManageIQ::Providers::CloudManager::Template"
-        options[:named_scope] = [:without_volume_templates]
+        options[:named_scope] = [:filtered_without_volume_templates]
       end
       if x_node == "root"
         if x_active_tree == :vandt_tree
