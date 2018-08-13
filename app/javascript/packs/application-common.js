@@ -20,6 +20,7 @@ import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
 
 import { store, addReducer } from '../miq-redux';
 import { history } from '../miq-component/react-history.ts';
+import createReduxRoutingActions from '../miq-redux/redux-router-actions';
 
 ManageIQ.react = {
   mount,
@@ -36,6 +37,7 @@ ManageIQ.redux = {
   store,
   addReducer,
   history,
+  ...createReduxRoutingActions(store),
 };
 
 ManageIQ.angular.rxSubject = rxSubject;

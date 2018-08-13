@@ -45,6 +45,7 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
+    "redux-mock-store": "^1.5.3",
     "redux-promise-middleware": "^5.1.1",
     "redux-thunk": "^2.3.0",
     "rxjs": "~5.6.0-forward-compat.2",
