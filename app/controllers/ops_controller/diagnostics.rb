@@ -271,10 +271,11 @@ module OpsController::Diagnostics
     depot        = schedule.file_depot
     uri_settings = depot.try(:[], :uri).to_s.split("://")
     render :json => {
-      :depot_name   => depot.try(:name),
-      :uri          => uri_settings[1],
-      :uri_prefix   => uri_settings[0],
-      :log_userid   => depot.try(:authentication_userid)
+      :depot_name     => depot.try(:name),
+      :uri            => uri_settings[1],
+      :uri_prefix     => uri_settings[0],
+      :log_userid     => depot.try(:authentication_userid),
+      :log_aws_region => depot.try(:aws_region)
     }
   end
 

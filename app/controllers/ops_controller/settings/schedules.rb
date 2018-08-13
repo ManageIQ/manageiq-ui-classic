@@ -95,6 +95,7 @@ module OpsController::Settings::Schedules
       @protocol         = DatabaseBackup.supported_depots[@uri_prefix]
       @log_userid       = depot.try(:authentication_userid)
       @log_password     = depot.try(:authentication_password)
+      @log_aws_region   = depot.try(:aws_region)
 
       # This is a hack to trick the controller into thinking we loaded an edit variable
       session[:edit] = {:key => "schedule_edit__#{@schedule.id || 'new'}"}
@@ -120,6 +121,7 @@ module OpsController::Settings::Schedules
       protocol        = DatabaseBackup.supported_depots[uri_prefix]
       depot_name      = depot.try(:name)
       log_userid      = depot.try(:authentication_userid)
+      log_aws_region  = depot.try(:aws_region)
     elsif schedule_automation_request?(schedule)
       action_type = schedule.sched_action[:method]
       automate_request = fetch_automate_request_vars(schedule)
@@ -153,7 +155,8 @@ module OpsController::Settings::Schedules
       :schedule_timer_type  => schedule.run_at[:interval][:unit].capitalize,
       :schedule_timer_value => schedule.run_at[:interval][:value].to_i,
       :uri                  => uri,
-      :uri_prefix           => uri_prefix
+      :uri_prefix           => uri_prefix,
+      :log_aws_region       => log_aws_region ? log_aws_region : ""
     }
 
     if schedule.sched_action[:method] == "automation_request"
@@ -656,11 +659,10 @@ module OpsController::Settings::Schedules
     @protocols_arr = []
     DatabaseBackup.supported_depots.each { |depot| @protocols_arr.push(depot[1]) }
     @database_backup_options_for_select = @protocols_arr.sort
-    @regions_options_for_select = retrieve_regions
+    @regions_options_for_select = retrieve_aws_regions
   end
 
-  def retrieve_regions
-    # ManageIQ::Providers::Amazon::Regions::REGIONS.collect { |region| [region[1][:name], region[1][:description]]}
+  def retrieve_aws_regions
     ManageIQ::Providers::Amazon::Regions::REGIONS.collect { |region| [region[1][:name]] }
   end
 
@@ -699,6 +701,7 @@ module OpsController::Settings::Schedules
     uri_settings[:uri] = "#{params[:uri_prefix]}://#{params[:uri]}"
     uri_settings[:uri_prefix] = params[:uri_prefix]
     uri_settings[:log_protocol] = params[:log_protocol]
+    uri_settings[:aws_region] = params[:log_aws_region]
     uri_settings[:type] = type
     uri_settings
   end
