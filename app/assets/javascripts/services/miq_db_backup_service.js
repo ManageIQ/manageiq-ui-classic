@@ -1,5 +1,5 @@
 ManageIQ.angular.app.service('miqDBBackupService', function() {
-  this.knownProtocolsList = ['Anonymous FTP', 'FTP', 'NFS', 'Samba'];
+  this.knownProtocolsList = ['Anonymous FTP', 'FTP', 'NFS', 'Samba', 'AWS S3'];
 
   this.logProtocolNotSelected = function(model) {
     return model.log_protocol === '' || model.log_protocol === undefined;
@@ -17,15 +17,17 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
       model.uri_prefix = 'smb';
     } else if (model.log_protocol === 'Anonymous FTP' || model.log_protocol === 'FTP') {
       model.uri_prefix = 'ftp';
+    } else if (model.log_protocol === 'AWS S3') {
+      model.uri_prefix = 's3';
     }
   };
 
-  this.sambaBackup = function(model) {
-    return (model.log_protocol === 'Samba');
+  this.credsProtocol = function(model) {
+    return (model.log_protocol === 'Samba' || model.log_protocol === 'AWS S3');
   };
 
-  this.credsProtocol = function(model) {
-    return (model.log_protocol === 'Samba' || model.log_protocol === 'FTP');
+  this.s3Backup = function(model) {
+    return (model.log_protocol === 'AWS S3');
   };
 
   this.dbRequired = function(model, value) {
@@ -33,13 +35,26 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
            (this.isModelValueNil(value));
   };
 
-  this.sambaRequired = function(model, value) {
-    return this.sambaBackup(model) &&
+  this.credsRequired = function(model, value) {
+    return this.credsProtocol(model) &&
            (this.isModelValueNil(value));
   };
 
-  this.credsRequired = function(model, value) {
-    return this.credsProtocol(model) &&
+  this.awsRegionNotSelected = function(model) {
+    return model.aws_region === '' || model.aws_region === undefined;
+  };
+
+  this.awsRegionSelected = function(model) {
+    return model.aws_region !== '' && model.aws_region !== undefined;
+  };
+
+  this.badAwsRegionRequired = function(model, value) {
+    return this.s3Backup(model) &&
+           (this.isModelValueNil(value));
+  };
+
+  this.awsRegionRequired = function(model, value) {
+    return model.log_protocol === 'AWS S3' &&
            (this.isModelValueNil(value));
   };
 

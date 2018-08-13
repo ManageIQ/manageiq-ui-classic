@@ -274,18 +274,23 @@ module PxeController::PxeServers
     if @edit[:new][:uri_prefix] == "nfs" && @edit[:new][:uri].blank?
       add_flash(_("URI is required"), :error)
     end
-    if @edit[:new][:uri_prefix] == "smb" || @edit[:new][:uri_prefix] == "ftp"
-      if @edit[:new][:uri].blank?
-        add_flash(_("URI is required"), :error)
-      end
-      if @edit[:new][:log_userid].blank?
-        add_flash(_("Username is required"), :error)
-      end
-      if @edit[:new][:log_password].blank?
-        add_flash(_("Password is required"), :error)
-      elsif @edit[:new][:log_password] != @edit[:new][:log_verify]
-        add_flash(_("Password/Verify Password do not match"), :error)
-      end
+    if @edit[:new][:uri_prefix] == "smb" || @edit[:new][:uri_prefix] == "ftp" ||
+       @edit[:new][:uri_prefix] == "s3"
+      pxe_server_validate_creds
+    end
+  end
+
+  def pxe_server_validate_creds
+    if @edit[:new][:uri].blank?
+      add_flash(_("URI is required"), :error)
+    end
+    if @edit[:new][:log_userid].blank?
+      add_flash(_("Username is required"), :error)
+    end
+    if @edit[:new][:log_password].blank?
+      add_flash(_("Password is required"), :error)
+    elsif @edit[:new][:log_password] != @edit[:new][:log_verify]
+      add_flash(_("Password/Verify Password do not match"), :error)
     end
   end
 

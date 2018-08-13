@@ -5,6 +5,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       depot_name: '',
       filter_typ: '',
       log_userid: '',
+      log_aws_region: '',
       log_protocol: '',
       description: '',
       enabled: '',
@@ -81,6 +82,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.scheduleModel.target_class    = data.target_class;
       $scope.scheduleModel.target_id       = data.target_id;
       $scope.scheduleModel.ui_attrs        = data.ui_attrs;
+      $scope.scheduleModel.log_aws_region  = data.log_aws_region;
 
       $scope.setTimerType();
 
@@ -96,7 +98,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       }
 
       if (data.filter_type === null &&
-        (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba')) {
+        (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba' && data.protocol !== 'AWS S3')) {
         $scope.scheduleModel.filter_typ = 'all';
       }
 
@@ -200,8 +202,12 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return $scope.scheduleModel.action_typ === 'automation_request';
   };
 
-  $scope.sambaBackup = function() {
-    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'Samba';
+  $scope.credsProtocol = function() {
+    return $scope.dbBackup() && ($scope.scheduleModel.log_protocol === 'Samba' || $scope.scheduleModel.log_protocol === 'AWS S3');
+  };
+
+  $scope.s3Backup = function() {
+    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'AWS S3';
   };
 
   $scope.actionTypeChanged = function() {
@@ -285,11 +291,19 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     }
 
     if ($scope.scheduleModel.log_protocol === "Network File System") {
-      $scope.scheduleModel.uri_prefix = "nfs";
-      $scope.$broadcast('resetClicked');
-      $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
-      $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
+      $scope.updateLogProtocol("nfs");
     }
+
+    if ($scope.scheduleModel.log_protocol === "AWS S3") {
+      $scope.updateLogProtocol("s3");
+    }
+  };
+
+  $scope.updateLogProtocol = function(prefix) {
+    $scope.scheduleModel.uri_prefix = prefix;
+    $scope.$broadcast('resetClicked');
+    $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
+    $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
   };
 
   $scope.filterValueChanged = function() {
@@ -361,6 +375,19 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
   $scope.sambaRequired = function(value) {
     return $scope.sambaBackup() && !value;
+  };
+
+  $scope.regionSelect = function() {
+    return $scope.scheduleModel.log_protocol === 'AWS S3';
+  };
+
+  $scope.regionRequired = function() {
+    return ($scope.s3Backup() &&
+      ($scope.scheduleModel.log_aws_region === '' || typeof $scope.scheduleModel.log_aws_region === 'undefined'));
+  };
+
+  $scope.s3Required = function(value) {
+    return $scope.s3Backup() && !value;
   };
 
   $scope.isBasicInfoValid = function() {

@@ -640,7 +640,7 @@ describe('scheduleFormController', function() {
     });
   });
 
-  describe('#sambaBackup', function() {
+  describe('#credsProtocol', function() {
     describe('when the action type is db_backup', function() {
       beforeEach(function() {
         $scope.scheduleModel.action_typ = 'db_backup';
@@ -652,20 +652,30 @@ describe('scheduleFormController', function() {
         });
 
         it('returns true', function() {
-          expect($scope.sambaBackup()).toBe(true);
+          expect($scope.credsProtocol()).toBe(true);
         });
       });
 
-      describe('when the log protocol is not Samba', function() {
+      describe('when the log protocol is S3', function() {
+        beforeEach(function() {
+          $scope.scheduleModel.log_protocol = 'AWS S3';
+        });
+
+        it('returns true', function() {
+          expect($scope.credsProtocol()).toBe(true);
+        });
+      });
+
+      describe('when the log protocol is not Samba or S3', function() {
         it('returns false', function() {
-          expect($scope.sambaBackup()).toBe(false);
+          expect($scope.credsProtocol()).toBe(false);
         });
       });
     });
 
     describe('when the action type is not db_backup', function() {
       it('returns false', function() {
-        expect($scope.sambaBackup()).toBe(false);
+        expect($scope.credsProtocol()).toBe(false);
       });
     });
   });

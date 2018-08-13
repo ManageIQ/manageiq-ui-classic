@@ -10,6 +10,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       log_protocol: '',
       log_userid: '',
       log_password: '',
+      log_aws_region: '',
     };
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.diagnosticsDatabaseModel );
@@ -34,6 +35,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       vm.diagnosticsDatabaseModel.log_userid = '';
       vm.diagnosticsDatabaseModel.log_password = '';
       vm.diagnosticsDatabaseModel.log_protocol = '';
+      vm.diagnosticsDatabaseModel.log_aws_region = '';
       return;
     }
 
@@ -87,6 +89,27 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     return miqDBBackupService.sambaRequired(vm.diagnosticsDatabaseModel, value);
   };
 
+  vm.regionSelect = function() {
+    return vm.diagnosticsDatabaseModel.log_protocol === 'AWS S3';
+  };
+
+  vm.regionRequired = function() {
+    return (vm.diagnosticsDatabaseModel.log_protocol === 'AWS S3' &&
+      (vm.diagnosticsDatabaseModel.log_aws_region === '' || typeof vm.diagnosticsDatabaseModel.log_aws_region === 'undefined'));
+  };
+
+  vm.credsProtocol = function() {
+    return miqDBBackupService.credsProtocol(vm.diagnosticsDatabaseModel);
+  };
+
+  vm.credsRequired = function(value) {
+    return miqDBBackupService.credsRequired(vm.diagnosticsDatabaseModel, value);
+  };
+
+  vm.awsRegionRequired = function(value) {
+    return miqDBBackupService.awsRegionRequired(vm.diagnosticsDatabaseModel, value);
+  };
+
   function postdiagnosticsDatabaseFormData(response) {
     var data = response.data;
 
@@ -98,8 +121,11 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
 
     if (vm.diagnosticsDatabaseModel.uri_prefix === 'nfs') {
       vm.diagnosticsDatabaseModel.log_protocol = 'Network File System';
-    } else {
+    } else if (vm.diagnosticsDatabaseModel.uri_prefix === 'smb') {
       vm.diagnosticsDatabaseModel.log_protocol = 'Samba';
+    } else if (vm.diagnosticsDatabaseModel.uri_prefix === 's3') {
+      vm.diagnosticsDatabaseModel.log_protocol = 'AWS S3';
+      vm.diagnosticsDatabaseModel.log_aws_region = data.log_aws_region;
     }
 
     vm.diagnosticsDatabaseModel.action_typ = 'db_backup';
