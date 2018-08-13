@@ -27,4 +27,4 @@ fi
 bundle exec rake webpacker:check_yarn || npm install -g yarn
 
 # install & compile dependencies
-bundle exec rake update:ui
+bundle exec rake update:ui || bin/webpack
