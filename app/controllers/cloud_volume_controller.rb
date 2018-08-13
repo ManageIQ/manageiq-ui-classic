@@ -149,8 +149,8 @@ class CloudVolumeController < ApplicationController
           javascript_flash(:spinner_off => true)
         end
       else
-        add_flash(_(volume.is_available_now_error_message(:detach_volume)), :error)
-        javascript_flash
+        add_flash(_(@volume.is_available_now_error_message(:detach_volume)), :error)
+        javascript_flash(:spinner_off => true)
       end
     end
   end
