@@ -76,7 +76,7 @@ module ApplicationController::MiqRequestMethods
   # Pre provisioning, select a template
   def pre_prov
     if params[:button] == "cancel"
-      flash_to_session(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
+      add_flash(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
       @edit = session[:edit] =  nil                                               # Clear out session[:edit]
       prov_request_cancel_submit_response
