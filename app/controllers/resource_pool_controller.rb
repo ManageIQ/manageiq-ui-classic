@@ -7,6 +7,7 @@ class ResourcePoolController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   def self.display_methods
     %w(vms descendant_vms all_vms resource_pools)
@@ -69,6 +70,10 @@ class ResourcePoolController < ApplicationController
     [%i(properties relationships), %i(configuration smart_management)]
   end
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Compute")}, {:title => _("Infrastructure")}, {:title => _("Resource Pools"), :url => "/" + controller_name}]
+  end
 
   menu_section :inf
 end

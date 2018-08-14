@@ -1,0 +1,31 @@
+%span
+  %ol.breadcrumb{:style => "margin-bottom: 0px; padding-bottom: 0px; margin-left: -20px; margin-right: -20px; padding-left: 20px"}
+    - if @title.nil?
+      - @title = ""
+    - if respond_to?(:data_for_breadcrumbs)
+      - @breadcrumb_new = data_for_breadcrumbs
+      - @breadcrumb_new[0...-1].each do |breadcrumb_new|
+        %li
+          - if breadcrumb_new.key?(:url)
+            %a{:href => breadcrumb_new[:url], :onclick => "return miqCheckForChanges()"}
+              = h(breadcrumb_new[:title])
+          - else
+            = h(breadcrumb_new[:title])
+      - if @title.end_with?("(Summary)") || @title.end_with?("(Dashboard)") || @title == @breadcrumb_new[-1][:title]
+        %li.active
+          %strong
+            = @title.gsub(" (Summary)", "").gsub(" (Dashboard)", "")
+      - else
+        %li
+          - if @breadcrumb_new[-1].key?(:url)
+            %a{:href => @breadcrumb_new[-1][:url], :onclick => "return miqCheckForChanges()"}
+              = h(@breadcrumb_new[-1][:title])
+          - else
+            = h(@breadcrumb_new[-1][:title])
+        %li.active
+          %strong
+            = @title
+    - else
+      %li.active
+        %strong
+          = @title

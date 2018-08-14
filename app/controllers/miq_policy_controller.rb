@@ -14,6 +14,7 @@ class MiqPolicyController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericSessionMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   UI_FOLDERS = [Host, Vm, ContainerReplicator, ContainerGroup, ContainerNode, ContainerImage, ContainerProject, ExtManagementSystem, PhysicalServer].freeze
 
@@ -1121,6 +1122,11 @@ class MiqPolicyController < ApplicationController
     ].map do |hsh|
       ApplicationController::Feature.new_with_hash(hsh)
     end
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Control")}]
+    @breadcrumbs_start.push(:title => _("Simulation")) if action_name == "rsop"
   end
 
   menu_section :con

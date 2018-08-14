@@ -3,6 +3,7 @@ class PhysicalChassisController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
   include Mixins::MoreShowActions
+  include Mixins::NetworksBreadcrumbMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -29,5 +30,10 @@ class PhysicalChassisController < ApplicationController
 
   def self.display_methods
     %w(physical_storages physical_servers)
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Compute")}, {:title => _("Physical Infrastructure")}, {:title => _("Chassis")}]
+    @show_list_title = _("Physical Chassis")
   end
 end

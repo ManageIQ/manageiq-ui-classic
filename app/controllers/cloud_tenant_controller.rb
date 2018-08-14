@@ -9,6 +9,7 @@ class CloudTenantController < ApplicationController
   include Mixins::GenericButtonMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericSessionMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   # handle buttons pressed on the button bar
   def button
@@ -263,6 +264,12 @@ class CloudTenantController < ApplicationController
                    "Delete initiated for %{number} Cloud Tenants.",
                    tenants.length) % {:number => tenants.length})
     end
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Compute")}, {:title => _("Clouds")}, {:title => _("Tenants"),  :url => "/" + controller_name}]
+    @custom_record = {"title" => @tenant.name, "id" => @tenant.id} unless @tenant.nil?
+    @show_list_title = _("Cloud Tenants")
   end
 
   menu_section :clo

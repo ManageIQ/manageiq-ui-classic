@@ -3,6 +3,7 @@ class PhysicalRackController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
   include Mixins::MoreShowActions
+  include Mixins::NetworksBreadcrumbMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -43,5 +44,10 @@ class PhysicalRackController < ApplicationController
 
   def self.display_methods
     %w(physical_chassis physical_storages physical_servers)
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Compute")}, {:title => _("Physical Infrastructure")}, {:title => _("Racks")}]
+    @show_list_title = _("Physical Racks")
   end
 end

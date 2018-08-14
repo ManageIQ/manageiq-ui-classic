@@ -4,6 +4,7 @@ class EmsObjectStorageController < ApplicationController
   include EmsCommon
   include Mixins::EmsCommonAngular
   include Mixins::GenericSessionMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -40,6 +41,11 @@ class EmsObjectStorageController < ApplicationController
 
   def ems_storage_form_fields
     ems_form_fields
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Storage")}, {:title => _("Object Storage")}, {:title => _("Managers")}]
+    @show_list_title = _("Object Storage Managers")
   end
 
   menu_section :ost

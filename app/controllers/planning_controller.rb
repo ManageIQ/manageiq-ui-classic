@@ -1,4 +1,6 @@
 class PlanningController < ApplicationController
+  include Mixins::NetworksBreadcrumbMixin
+
   before_action :check_privileges
   before_action :get_session_data
 
@@ -294,5 +296,9 @@ class PlanningController < ApplicationController
                                     end
 
     render :json => presenter.for_render
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Optimize")}]
   end
 end

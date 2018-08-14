@@ -9,6 +9,7 @@ class AvailabilityZoneController < ApplicationController
   include Mixins::MoreShowActions
   include Mixins::GenericShowMixin
   include EmsCommon
+  include Mixins::NetworksBreadcrumbMixin
 
   def self.display_methods
     %w(ems_cloud instances cloud_volumes)
@@ -20,6 +21,10 @@ class AvailabilityZoneController < ApplicationController
     [%i(relationships), %i(availability_zone_totals tags)]
   end
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Compute")}, {:title => _("Clouds")}, {:title => _("Availability Zones"),  :url => "/" + controller_name}]
+  end
 
   menu_section :clo
 

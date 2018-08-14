@@ -4,6 +4,7 @@ class EmsStorageController < ApplicationController
   include EmsCommon
   include Mixins::EmsCommonAngular
   include Mixins::GenericSessionMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -60,6 +61,10 @@ class EmsStorageController < ApplicationController
     elsif record.supports_block_storage?
       'ems_block_storage_show'
     end
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Storage")}]
   end
 
   menu_section :sto

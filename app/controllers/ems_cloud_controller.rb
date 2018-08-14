@@ -5,6 +5,7 @@ class EmsCloudController < ApplicationController
   include Mixins::EmsCommonAngular
   include Mixins::GenericSessionMixin
   include Mixins::DashboardViewMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -101,5 +102,12 @@ class EmsCloudController < ApplicationController
                        :admin_roles          => admin_roles,
                        :member_roles         => member_roles,
                        :ems                  => ems})
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Compute")}, {:title => _("Clouds")}, {:title => _("Providers")}]
+    @show_list_title = _("Cloud Providers")
+    @custom_record = {"title" => @ems.name, "id" => @ems.id} unless @ems.nil?
+    @notshow = "true"
   end
 end

@@ -1,4 +1,5 @@
 class GraphQLExplorerController < ApplicationController
+  include Mixins::NetworksBreadcrumbMixin
   before_action :check_privileges
 
   after_action :cleanup_action
@@ -8,5 +9,10 @@ class GraphQLExplorerController < ApplicationController
   def index
     @in_a_form = true
     @layout = "graphql_explorer"
+    @title = _("ManageIQ GraphQL Explorer")
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("GraphQL")}, {:title => _("Explorer")}]
   end
 end
