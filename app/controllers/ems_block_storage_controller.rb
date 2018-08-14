@@ -4,6 +4,7 @@ class EmsBlockStorageController < ApplicationController
   include EmsCommon
   include Mixins::EmsCommonAngular
   include Mixins::GenericSessionMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -41,6 +42,11 @@ class EmsBlockStorageController < ApplicationController
             :layout                    => "ems_storage",
             :model                     => model}
     process_show_list(opts)
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Storage")}, {:title => _("Block Storage")}]
+    @show_list_title = _("Network Managers")
   end
 
   menu_section :bst

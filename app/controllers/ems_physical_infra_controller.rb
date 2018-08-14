@@ -5,6 +5,7 @@ class EmsPhysicalInfraController < ApplicationController
   include Mixins::EmsCommonAngular
   include Mixins::GenericSessionMixin
   include Mixins::DashboardViewMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -82,6 +83,13 @@ class EmsPhysicalInfraController < ApplicationController
     true
   end
   public :restful?
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Compute")}, {:title => _("Physical Infrastructure")}, {:title => _("Providers")}]
+    @show_list_title = _("Physical Infrastructure Providers")
+    @custom_record = {"title" => @ems.name, "id" => @ems.id} unless @ems.nil?
+    @notshow = "true"
+  end
 
   menu_section :phy
   has_custom_buttons

@@ -1,4 +1,5 @@
 class MiqAeToolsController < ApplicationController
+  include Mixins::NetworksBreadcrumbMixin
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -457,6 +458,11 @@ Methods updated/added: %{method_stats}") % stat_options)
 
   def set_session_data
     session[:resolve_tools] = @resolve if @resolve
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Automation")}, {:title => _("Automate")}]
+    @breadcrumbs_start.push({:title => _("Simulation")}) if action_name == "resolve"
   end
 
   menu_section :automate

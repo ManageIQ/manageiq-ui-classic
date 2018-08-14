@@ -1,5 +1,6 @@
 class AlertsListController < ApplicationController
   extend ActiveSupport::Concern
+  include Mixins::NetworksBreadcrumbMixin
 
   before_action :check_privileges
   before_action :session_data
@@ -7,6 +8,7 @@ class AlertsListController < ApplicationController
   after_action :set_session_data
 
   def show
+    @title = _("All Allerts")
     if params[:id].nil?
       @breadcrumbs.clear
     end
@@ -39,4 +41,8 @@ class AlertsListController < ApplicationController
   end
 
   menu_section :monitor_alerts
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Monitor")}, {:title => _("Alerts")}]
+  end
 end

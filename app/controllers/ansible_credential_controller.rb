@@ -9,6 +9,7 @@ class AnsibleCredentialController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::EmbeddedAnsibleRefreshMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   menu_section :ansible_credentials
 
@@ -80,5 +81,9 @@ class AnsibleCredentialController < ApplicationController
     end
     session[:flash_msgs] = @flash_array
     javascript_redirect :action => 'show_list'
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Automation")}, {:title => _("Ansible")}, {:title => _("Credentials"),  :url => "/" + controller_name}]
   end
 end

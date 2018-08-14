@@ -8,6 +8,7 @@ class CloudVolumeSnapshotController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericButtonMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   def self.display_methods
     %w(based_volumes)
@@ -72,6 +73,11 @@ class CloudVolumeSnapshotController < ApplicationController
                    "Delete initiated for %{number} Cloud Volume Snapshots.",
                    snapshots.length) % {:number => snapshots.length})
     end
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Storage")}, {:title => _("Block Storage")}, {:title => _("Volume Snapshots")}]
+    @show_list_title = _("Cloud Volume Snapshots")
   end
 
   menu_section :bst

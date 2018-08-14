@@ -9,6 +9,7 @@ class FloatingIpController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericFormMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   def self.display_methods
     %w()
@@ -219,5 +220,10 @@ class FloatingIpController < ApplicationController
                    "Delete initiated for %{number} Floating IPs.",
                    floating_ips.length) % {:number => floating_ips.length})
     end
+  end
+  
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Networks")}, {:title => _("Floating IPs"), :url => "/" + controller_name}]
+    @custom_record = {"title" => @floating_ip.address, "id" => @floating_ip.id} unless @floating_ip.nil?
   end
 end

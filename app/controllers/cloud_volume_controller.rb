@@ -9,6 +9,7 @@ class CloudVolumeController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericButtonMixin
+  include Mixins::NetworksBreadcrumbMixin
 
   def self.display_methods
     %w(cloud_volume_snapshots cloud_volume_backups instances)
@@ -607,6 +608,12 @@ class CloudVolumeController < ApplicationController
     add_flash(n_("Delete initiated for %{number} Cloud Volume.",
                  "Delete initiated for %{number} Cloud Volumes.",
                  volumes.length) % {:number => volumes.length})
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Storage")}, {:title => _("Block Storage")}, {:title => _("Volumes")}]
+    @custom_record = {"title" => @volume.name, "id" => @volume.id} unless @volume.nil?
+    @show_list_title = _("Cloud Volumes")
   end
 
   menu_section :bst

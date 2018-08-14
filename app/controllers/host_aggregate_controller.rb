@@ -8,6 +8,7 @@ class HostAggregateController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::MoreShowActions
+  include Mixins::NetworksBreadcrumbMixin
 
   def self.display_methods
     %w(instances hosts)
@@ -513,6 +514,11 @@ class HostAggregateController < ApplicationController
     add_flash(n_("Delete initiated for %{number} Host Aggregate.",
                  "Delete initiated for %{number} Host Aggregates.",
                  host_aggregates.length) % {:number => host_aggregates.length})
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Compute")}, {:title => _("Clouds")}, {:title => _("Host Aggregates"),  :url => "/" + controller_name}]
+    @custom_record = {"title" => @host_aggregate.name, "id" => @host_aggregate.id} unless @host_aggregate.nil?
   end
 
   menu_section :clo

@@ -8,6 +8,7 @@ class HostController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::MoreShowActions
+  include Mixins::NetworksBreadcrumbMixin
 
   def self.display_methods
     %w(hv_info os_info devices network storage_adapters performance timeline storages resource_pools vms miq_templates compliance_history)
@@ -516,6 +517,11 @@ class HostController < ApplicationController
     super
     session[:miq_compressed]  = @compressed  unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
+  end
+
+  def breadcrumbs_options
+    @breadcrumbs_start = [{:title => _("Compute")}, {:title => _("Infrastructure")}, {:title => _("Hosts / Nodes")}]
+    @custom_record = {"title" => @host.name, "id" => @host.id} unless @host.nil?
   end
 
   menu_section :inf
