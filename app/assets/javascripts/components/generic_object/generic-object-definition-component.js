@@ -72,7 +72,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     if (vm.newRecord) {
       miqService.redirectBack(sprintf(__('Creation of new %s was canceled by the user.'), vm.entity), 'warning', vm.redirectUrl);
     } else {
-      miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.genericObjectDefinitionModel.name), 'warning', vm.redirectUrl);
+      miqService.redirectBack(sprintf(__('Edit of %s "%s" was canceled by the user.'), vm.entity, vm.genericObjectDefinitionModel.name), 'warning', vm.redirectUrl);
     }
   };
 
@@ -90,12 +90,12 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
   };
 
   vm.saveClicked = function() {
-    var saveMsg = sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.genericObjectDefinitionModel.name);
+    var saveMsg = sprintf(__('%s "%s" has been successfully saved.'), vm.entity, vm.genericObjectDefinitionModel.name);
     vm.saveWithAPI('put', '/api/generic_object_definitions/' + vm.recordId, vm.prepSaveObject(), saveMsg);
   };
 
   vm.addClicked = function() {
-    var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.genericObjectDefinitionModel.name);
+    var saveMsg = sprintf(__('%s "%s" has been successfully added.'), vm.entity, vm.genericObjectDefinitionModel.name);
     vm.saveWithAPI('post', '/api/generic_object_definitions/', vm.prepSaveObject(), saveMsg);
   };
 
