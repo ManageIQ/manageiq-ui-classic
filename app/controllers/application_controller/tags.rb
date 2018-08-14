@@ -198,7 +198,7 @@ module ApplicationController::Tags
 
     @edit[:new][:assignments] = @assignments = @tagitems.map do |tagitem|
       Classification.find_assigned_entries(tagitem).collect { |e| e unless e.parent.read_only? }
-    end.reduce(:&)
+    end.reduce(:&).compact
 
     @tags = cats.map do |cat|
       {:id          => cat.id,
