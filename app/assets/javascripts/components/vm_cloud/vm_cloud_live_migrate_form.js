@@ -1,7 +1,7 @@
 ManageIQ.angular.app.component('vmCloudLiveMigrateForm', {
   controller: vmCloudLiveMigrateFormController,
   controllerAs: 'vm',
-  templateUrl: '/static/live_migrate.html.haml',
+  templateUrl: '/static/vm_cloud/live_migrate.html.haml',
   bindings: {
     'recordId': '@',
     'message': '@',
