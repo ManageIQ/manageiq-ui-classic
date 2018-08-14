@@ -47,7 +47,7 @@ function tenantFormController(API, miqService) {
       description: vm.tenantModel.description,
       use_config_for_attributes: vm.tenantModel.use_config_for_attributes,
     };
-    var saveMsg = sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name);
+    var saveMsg = sprintf(__('%s "%s" has been successfully saved.'), vm.entity, vm.tenantModel.name);
     vm.saveWithAPI('put', '/api/tenants/' + vm.recordId, saveObject, saveMsg);
   };
 
@@ -58,7 +58,7 @@ function tenantFormController(API, miqService) {
       divisible: vm.divisible,
       parent: { id: vm.tenantModel.ancestry },
     };
-    var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name);
+    var saveMsg = sprintf(__('%s "%s" has been successfully added.'), vm.entity, vm.tenantModel.name);
     vm.saveWithAPI('post', '/api/tenants/', saveObject, saveMsg);
   };
 
@@ -83,7 +83,7 @@ function tenantFormController(API, miqService) {
     if (vm.newRecord) {
       miqService.redirectBack(sprintf(__('Creation of new %s was canceled by the user.'), vm.entity), 'warning', vm.redirectUrl);
     } else {
-      miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.tenantModel.name), 'warning', vm.redirectUrl);
+      miqService.redirectBack(sprintf(__('Edit of %s "%s" was canceled by the user.'), vm.entity, vm.tenantModel.name), 'warning', vm.redirectUrl);
     }
   };
 
