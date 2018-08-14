@@ -1,5 +1,5 @@
 describe AnsibleTowerJobTemplateDialogService do
-  let(:template) { FactoryGirl.create(:configuration_script) }
+  let(:template) { FactoryGirl.create(:ansible_configuration_script) }
 
   describe "#create_dialog" do
     it "creates a dialog from a job template" do
@@ -54,8 +54,9 @@ describe AnsibleTowerJobTemplateDialogService do
   def assert_option_group(group)
     expect(group).to have_attributes(:label => "Options", :display => "edit")
     fields = group.dialog_fields
-    expect(fields.size).to eq(1)
-    expect(fields[0]).to have_attributes(:label => "Limit", :name => "limit", :required => false, :data_type => 'string')
+    expect(fields.size).to eq(2)
+    expect(fields[0]).to have_attributes(:label => "Service Name", :name => "service_name", :required => false, :data_type => 'string')
+    expect(fields[1]).to have_attributes(:label => "Limit", :name => "limit", :required => false, :data_type => 'string')
   end
 
   def assert_field(field, clss, attributes)
