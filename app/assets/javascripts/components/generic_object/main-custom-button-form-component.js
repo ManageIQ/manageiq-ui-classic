@@ -109,7 +109,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     if (vm.newRecord) {
       miqService.redirectBack(sprintf(__('Creation of new %s was canceled by the user.'), vm.entity), 'warning', vm.redirectUrl);
     } else {
-      miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.customButtonModel.name), 'warning', vm.redirectUrl);
+      miqService.redirectBack(sprintf(__('Edit of %s "%s" was canceled by the user.'), vm.entity, vm.customButtonModel.name), 'warning', vm.redirectUrl);
     }
   };
 
@@ -125,12 +125,12 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
   };
 
   vm.saveClicked = function() {
-    var saveMsg = sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.customButtonModel.name);
+    var saveMsg = sprintf(__('%s "%s" has been successfully saved.'), vm.entity, vm.customButtonModel.name);
     vm.saveWithAPI('put', '/api/custom_buttons/' + vm.customButtonRecordId, vm.prepSaveObject(), saveMsg);
   };
 
   vm.addClicked = function() {
-    var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.customButtonModel.name);
+    var saveMsg = sprintf(__('%s "%s" has been successfully added.'), vm.entity, vm.customButtonModel.name);
     vm.saveWithAPI('post', '/api/custom_buttons/', vm.prepSaveObject(), saveMsg);
   };
 
@@ -189,7 +189,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
     if (vm.customButtonGroupRecordId) {
       var saveCustomButtonPromise = API[method](url, saveObject);
-      var saveMsgBtnInGrp = sprintf(__('%s \"%s\" has been successfully added under the selected button group.'), vm.entity, vm.customButtonModel.name);
+      var saveMsgBtnInGrp = sprintf(__('%s "%s" has been successfully added under the selected button group.'), vm.entity, vm.customButtonModel.name);
 
       saveCustomButtonPromise.then(function(response) {
         $http.post('/generic_object_definition/add_button_in_group/' + vm.customButtonGroupRecordId + '?button_id=' + response.results[0].id)
