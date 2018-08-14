@@ -2,6 +2,7 @@ require 'miq_bulk_import'
 class ConfigurationController < ApplicationController
   include StartUrl
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   logo_dir = File.expand_path(Rails.root.join('public', 'upload'))
   Dir.mkdir(logo_dir) unless File.exist?(logo_dir)
@@ -609,6 +610,14 @@ class ConfigurationController < ApplicationController
     s[:views].delete(:dashboards)           # :dashboards is obsolete now
 
     s
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("My Settings")},
+      ],
+    }
   end
 
   menu_section :set

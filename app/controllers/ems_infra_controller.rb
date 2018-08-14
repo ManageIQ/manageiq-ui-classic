@@ -4,6 +4,7 @@ class EmsInfraController < ApplicationController
   include Mixins::EmsCommon # common methods for EmsInfra/Cloud controllers
   include Mixins::EmsCommon::Angular
   include Mixins::DashboardViewMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -318,6 +319,18 @@ class EmsInfraController < ApplicationController
 
   def get_hosts_to_scaledown_from_ids(host_ids)
     host_ids.map { |host_id| find_record_with_rbac(Host, host_id) }
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Infrastructure")},
+        {:title => _("Providers")},
+        {:url   => controller_url, :title => _("Infrastructure Providers")},
+      ],
+      :record_info => @ems,
+    }.compact
   end
 
   menu_section :inf

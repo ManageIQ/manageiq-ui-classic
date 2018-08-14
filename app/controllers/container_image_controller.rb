@@ -1,5 +1,6 @@
 class ContainerImageController < ApplicationController
   include ContainersCommonMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -43,6 +44,17 @@ class ContainerImageController < ApplicationController
   end
 
   menu_section :cnt
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Containers")},
+        {:title => _("Images")},
+        {:url   => controller_url, :title => _("Container Images")},
+      ],
+    }
+  end
 
   has_custom_buttons
 end

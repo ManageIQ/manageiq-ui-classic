@@ -3,6 +3,7 @@ class PhysicalServerController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
   include Mixins::MoreShowActions
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :session_data
@@ -130,5 +131,16 @@ class PhysicalServerController < ApplicationController
     else
       initiate_wait_for_task(:task_id => task_id)
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Physical Infrastructure")},
+        {:title => _("Servers")},
+        {:url   => controller_url, :title => _("Physical Servers")},
+      ],
+    }
   end
 end

@@ -9,6 +9,7 @@ class InfraNetworkingController < ApplicationController
   include Mixins::ExplorerPresenterMixin
   include Mixins::FindRecord
   include Mixins::CustomButtonDialogFormMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.model
     Switch
@@ -391,6 +392,8 @@ class InfraNetworkingController < ApplicationController
     presenter[:right_cell_text] = @right_cell_text
     presenter[:osf_node] = x_node # Open, select, and focus on this node
 
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+
     render :json => presenter.for_render
   end
 
@@ -614,6 +617,16 @@ class InfraNetworkingController < ApplicationController
 
   def title
     _("Networking")
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Infrastructure")},
+        {:title => _("Networking")},
+      ],
+    }
   end
 
   menu_section :inf

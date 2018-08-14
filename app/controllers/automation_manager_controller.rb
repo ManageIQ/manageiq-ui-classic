@@ -10,6 +10,7 @@ class AutomationManagerController < ApplicationController
   include Mixins::ExplorerPresenterMixin
   include Mixins::EmsCommon::Core
   include Mixins::EmsCommon::PauseResume
+  include Mixins::BreadcrumbsMixin
 
   menu_section :at
 
@@ -421,6 +422,7 @@ class AutomationManagerController < ApplicationController
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
     replace_search_box(presenter)
   end
 
@@ -505,5 +507,16 @@ class AutomationManagerController < ApplicationController
       @edit = @record = nil
       replace_right_cell
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs  => [
+        {:title => _("Automation")},
+        {:title => _("Ansible Tower")},
+        {:title => _("Explorer")},
+      ],
+      :record_title => :hostname,
+    }
   end
 end

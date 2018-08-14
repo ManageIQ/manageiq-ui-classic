@@ -3,6 +3,7 @@ class MiqAeClassController < ApplicationController
   include MiqAeClassHelper
   include AutomateTreeHelper
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -343,6 +344,8 @@ class MiqAeClassController < ApplicationController
     presenter[:record_id] = determine_record_id_for_presenter
     presenter[:osf_node] = x_node
     presenter.show_miq_buttons if @changed
+
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
 
     render :json => presenter.for_render
   end
@@ -2756,5 +2759,23 @@ class MiqAeClassController < ApplicationController
       add_flash(_("%{model} \"%{name}\": Error during delete: %{error_msg}") %
                {:model => model_name, :name => record_name, :error_msg => bang.message}, :error)
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Automation")},
+        {:title => _("Automate")},
+        {:title => _("Explorer")},
+      ],
+    }
+  end
+
+  def accord_name
+    features.find { |f| f.accord_name == x_active_accord.to_s }.try(:title)
+  end
+
+  def accord_container
+    features.find { |f| f.accord_name == x_active_accord.to_s }.try(:container)
   end
 end

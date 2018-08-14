@@ -9,6 +9,7 @@ class NetworkRouterController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericFormMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.display_methods
     %w(instances cloud_subnets floating_ips security_groups custom_button_events)
@@ -427,6 +428,16 @@ class NetworkRouterController < ApplicationController
                    "Delete initiated for %{number} Network Routers.",
                    routers.length) % {:number => routers.length})
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Networks")},
+        {:title => _("Network Routers"), :url => controller_url},
+      ],
+      :record_info => @router,
+    }
   end
 
   menu_section :net

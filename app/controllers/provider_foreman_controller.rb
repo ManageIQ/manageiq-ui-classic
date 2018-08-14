@@ -10,6 +10,7 @@ class ProviderForemanController < ApplicationController
   include Mixins::ExplorerPresenterMixin
   include Mixins::EmsCommon::Core
   include Mixins::EmsCommon::PauseResume
+  include Mixins::BreadcrumbsMixin
 
   def self.model
     ManageIQ::Providers::ConfigurationManager
@@ -379,6 +380,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def update_partials(record_showing, presenter)
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
@@ -508,6 +510,16 @@ class ProviderForemanController < ApplicationController
     options.merge!(update_options(options))
     process_show_list_options(options)
     super
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs  => [
+        {:title => _("Configuration")},
+        {:title => _("Management")},
+      ],
+      :record_title => :hostname,
+    }
   end
 
   menu_section :conf

@@ -2,6 +2,7 @@ class VmInfraController < ApplicationController
   include VmCommon # common methods for vm controllers
   include VmRemote # methods for VM remote access
   include VmShowMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -72,6 +73,17 @@ class VmInfraController < ApplicationController
 
   def skip_breadcrumb?
     breadcrumb_prohibited_for_action?
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs    => [
+        {:title => _("Compute")},
+        {:title => _("Infrastructure")},
+        {:title => _("Virtual Machines")},
+      ],
+      :include_record => (!@settings[:display][:display_vms]),
+    }
   end
 
   menu_section :inf

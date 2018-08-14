@@ -8,6 +8,7 @@ class LoadBalancerController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.display_methods
     %w(instances network_ports floating_ips security_groups custom_button_events)
@@ -19,6 +20,15 @@ class LoadBalancerController < ApplicationController
     [%i(properties relationships), %i(tags)]
   end
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Networks")},
+        {:title => _("Load Balancers"), :url => controller_url},
+      ],
+    }
+  end
 
   menu_section :net
 

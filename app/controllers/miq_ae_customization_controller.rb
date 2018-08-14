@@ -6,6 +6,7 @@ class MiqAeCustomizationController < ApplicationController
 
   helper ApplicationHelper::ImportExportHelper
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -224,6 +225,8 @@ class MiqAeCustomizationController < ApplicationController
     setup_dialog_sample_buttons(nodetype, presenter)
     set_miq_record_id(presenter)
 
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+
     render :json => presenter.for_render
   end
 
@@ -428,4 +431,14 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   menu_section :automate
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Automation")},
+        {:title => _("Automate")},
+        {:title => _("Customization")},
+      ],
+    }
+  end
 end

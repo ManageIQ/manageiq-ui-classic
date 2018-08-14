@@ -1,6 +1,7 @@
 class CatalogController < ApplicationController
   include AutomateTreeHelper
   include ServiceDialogCreationMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -2107,6 +2108,8 @@ class CatalogController < ApplicationController
     presenter.reset_changes
     presenter.reset_one_trans
 
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+
     render :json => presenter.for_render
   end
 
@@ -2194,6 +2197,15 @@ class CatalogController < ApplicationController
     @right_cell_text = _("Editing %{model} Tags for \"%{name}\"") % {:name  => ui_lookup(:models => @tagging),
                                                                      :model => current_tenant.name}
     replace_right_cell(:action => @sb[:action])
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Services")},
+        {:title => _("Catalogs")},
+      ],
+    }
   end
 
   menu_section :svc

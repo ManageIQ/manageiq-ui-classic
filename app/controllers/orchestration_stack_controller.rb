@@ -6,6 +6,7 @@ class OrchestrationStackController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.table_name
     @table_name ||= "orchestration_stack"
@@ -240,6 +241,22 @@ class OrchestrationStackController < ApplicationController
 
   def title
     _("Stack")
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Clouds")},
+        {:title => _("Stacks")},
+        {:url   => controller_url, :title => _("Orchestration Stacks")},
+      ],
+      :record_info => (
+        unless @retireitems.nil? || @retireitems.length != 1
+          @retireitems[0]
+        end
+      ),
+    }
   end
 
   menu_section :clo

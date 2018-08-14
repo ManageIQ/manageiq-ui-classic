@@ -6,6 +6,7 @@ class EmsContainerController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::DashboardViewMixin
   include ContainersExternalLoggingSupportMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -145,6 +146,18 @@ class EmsContainerController < ApplicationController
     true
   end
   public :restful?
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Containers")},
+        {:title => _("Providers")},
+        {:url   => controller_url, :title => _("Container Providers")},
+      ],
+      :record_info => @ems,
+    }.compact
+  end
 
   menu_section :cnt
 

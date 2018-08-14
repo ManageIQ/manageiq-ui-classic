@@ -9,6 +9,7 @@ class CloudNetworkController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericFormMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.display_methods
     %w(instances cloud_networks network_routers cloud_subnets floating_ips custom_button_events)
@@ -256,6 +257,16 @@ class CloudNetworkController < ApplicationController
                    "Delete initiated for %{number} Cloud Networks.",
                    networks.length) % {:number => networks.length})
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Networks")},
+        {:title => _("Networks")},
+        {:url   => controller_url, :title => _("Cloud Networks")},
+      ],
+    }
   end
 
   menu_section :net

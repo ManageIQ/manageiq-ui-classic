@@ -11,6 +11,7 @@ class PxeController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   PXE_X_BUTTON_ALLOWED_ACTIONS = {
     'pxe_image_edit'                => :pxe_image_edit,
@@ -247,6 +248,8 @@ class PxeController < ApplicationController
     presenter[:osf_node] = x_node
     presenter[:lock_sidebar] = @in_a_form && @edit
 
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+
     render :json => presenter.for_render
   end
 
@@ -258,6 +261,17 @@ class PxeController < ApplicationController
   def set_session_data
     super
     session[:pxe_current_page] = @current_page
+  end
+
+  def breadcrumbs_options
+    @right_cell_text = "editing" unless @edit.nil?
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Infrastructure")},
+        {:title => _("Networking")},
+      ],
+    }
   end
 
   menu_section :inf

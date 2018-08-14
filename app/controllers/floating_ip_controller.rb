@@ -9,6 +9,7 @@ class FloatingIpController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericFormMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.display_methods
     %w()
@@ -83,7 +84,7 @@ class FloatingIpController < ApplicationController
                                                                                 :details => task.message}, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show_list")
@@ -170,7 +171,7 @@ class FloatingIpController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => floating_ip_id)
@@ -215,5 +216,18 @@ class FloatingIpController < ApplicationController
                    "Delete initiated for %{number} Floating IPs.",
                    floating_ips.length) % {:number => floating_ips.length})
     end
+  end
+
+  def breadcrumbs_options
+    record_info = @record || @floating_id
+    record_name = :address
+    {
+      :breadcrumbs  => [
+        {:title => _("Networks")},
+        {:title => _("Floating IPs"), :url => controller_url},
+      ],
+      :record_info  => record_info,
+      :record_title => record_name,
+    }
   end
 end

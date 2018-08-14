@@ -8,6 +8,7 @@ class AuthKeyPairCloudController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericButtonMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.display_methods
     %w(instances)
@@ -208,6 +209,16 @@ class AuthKeyPairCloudController < ApplicationController
     [%i(properties relationships), %i(tags)]
   end
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Clouds")},
+        {:title => _("Key Pairs"), :url => controller_url},
+      ],
+    }
+  end
 
   menu_section :clo
 end

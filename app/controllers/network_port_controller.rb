@@ -8,6 +8,7 @@ class NetworkPortController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   def textual_group_list
     [%i(properties tags), %i(relationships)]
@@ -16,6 +17,16 @@ class NetworkPortController < ApplicationController
 
   def self.display_methods
     %w(cloud_subnets floating_ips security_groups)
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Networks")},
+        {:title => _("Network Ports"), :url => controller_url},
+      ],
+      :record_info => @router,
+    }.compact
   end
 
   menu_section :net

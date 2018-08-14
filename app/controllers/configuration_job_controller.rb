@@ -7,6 +7,7 @@ class ConfigurationJobController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.model
     ManageIQ::Providers::AnsibleTower::AutomationManager::Job
@@ -57,6 +58,17 @@ class ConfigurationJobController < ApplicationController
     [%i(properties relationships), %i(tags)]
   end
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Automation")},
+        {:title => _("Ansible Tower")},
+        {:title => _("Jobs")},
+        {:url   => controller_url, :title => _("Ansible Tower Jobs")},
+      ],
+    }
+  end
 
   menu_section :at
 end

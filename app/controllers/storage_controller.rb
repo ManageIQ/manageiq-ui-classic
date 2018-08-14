@@ -6,6 +6,7 @@ class StorageController < ApplicationController
   include Mixins::MoreShowActions
   include Mixins::ExplorerPresenterMixin
   include Mixins::FindRecord
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -388,6 +389,8 @@ class StorageController < ApplicationController
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     presenter[:osf_node] = x_node # Open, select, and focus on this node
 
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+
     render :json => presenter.for_render
   end
 
@@ -511,6 +514,17 @@ class StorageController < ApplicationController
 
   def custom_toolbar_explorer
     @record.present? ? Mixins::CustomButtons::Result.new(:single) : Mixins::CustomButtons::Result.new(:list)
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs    => [
+        {:title => _("Compute")},
+        {:title => _("Infrastructure")},
+        {:title => _("Datastores"), :url => File.join(controller_url, 'explorer')},
+      ],
+      :include_record => true,
+    }
   end
 
   menu_section :inf

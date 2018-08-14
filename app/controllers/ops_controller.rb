@@ -6,6 +6,7 @@ class OpsController < ApplicationController
   include_concern 'Settings'
   include OpsHelper::MyServer
   include Mixins::CustomButtonDialogFormMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -563,6 +564,7 @@ class OpsController < ApplicationController
     extra_js_commands(presenter)
 
     presenter.replace(:flash_msg_div, r[:partial => "layouts/flash_msg"]) if @flash_array
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
 
     render :json => presenter.for_render
   end
@@ -819,6 +821,14 @@ class OpsController < ApplicationController
   def get_session_data
     @title         = _("Configuration")
     @layout        = "ops"
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Configuration")},
+      ],
+    }
   end
 
   menu_section :set
