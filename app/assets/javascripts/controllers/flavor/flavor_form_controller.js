@@ -58,7 +58,7 @@ ManageIQ.angular.app.controller('flavorFormController', ['$http', 'flavorId', 'm
 
   function nonError() {
     var url = '/flavor/show_list';
-    var message = sprintf(__('Add of Flavor \"%s\" was successfully initialized.'), vm.flavorModel.name);
+    var message = sprintf(__('Add of Flavor "%s" was successfully initialized.'), vm.flavorModel.name);
     miqService.redirectBack(message, 'success', url);
   }
 
