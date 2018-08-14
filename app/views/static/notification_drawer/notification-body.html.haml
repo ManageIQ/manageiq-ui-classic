@@ -4,15 +4,12 @@
     %button.btn.btn-link.dropdown-toggle{:type      => "button",
                                          "ng-click" => "customScope.clearNotification(notification, notificationGroup)"}
       %span.pficon.pficon-close
-  %span.pull-left{"ng-class" => "customScope.getNotficationStatusIconClass(notification)",
-                  "ng-click" => "customScope.markRead(notification, notificationGroup)"}
-  %span.drawer-pf-notification-message.notification-message{"ng-click"            => "customScope.markRead(notification, notificationGroup)",
-                                                            "tooltip-popup-delay" => "500",
+  %span.pull-left{"ng-class" => "customScope.getNotficationStatusIconClass(notification)"}
+  %span.drawer-pf-notification-message.notification-message{"tooltip-popup-delay" => "500",
                                                             "tooltip-placement"   => "bottom",
                                                             "uib-tooltip"         => "{{notification.data.message}}"}
     {{notification.data.message}}
-  .drawer-pf-notification-info{"ng-if"    => "!notification.data.inProgress",
-                               "ng-click" => "customScope.markRead(notification, notificationGroup)"}
+  .drawer-pf-notification-info{"ng-if" => "!notification.data.inProgress"}
     %span.date
       {{notification.timeStamp | date:'MM/dd/yyyy'}}
     %span.time
@@ -29,16 +26,14 @@
                                        "ng-click" => "customScope.markNotificationRead(notification, notificationGroup)"}
   .row
     .col-sm-6{"ng-class" => "{ 'col-md-4': notificationGroup.notificationType == 'task' }"}
-      %span.pull-left{"ng-class" => "customScope.getNotficationStatusIconClass(notification)",
-                      "ng-click" => "customScope.markRead(notification, notificationGroup)"}
-      %span.drawer-pf-notification-message.notification-message{"ng-click"               => "customScope.markRead(notification, notificationGroup)",
-                                                                "tooltip-append-to-body" => "true",
+      %span.pull-left{"ng-class" => "customScope.getNotficationStatusIconClass(notification)"}
+      %span.drawer-pf-notification-message.notification-message{"tooltip-append-to-body" => "true",
                                                                 "tooltip-popup-delay"    => "500",
                                                                 "tooltip-placement"      => "bottom",
                                                                 "uib-tooltip"            => "{{notification.data.message}}"}
         {{notification.data.message}}
     .col-md-4.col-sm-3{"ng-if" => "notificationGroup.notificationType == 'task'"}
-      .drawer-pf-notification-info.expanded-info{"ng-click" => "customScope.markRead(notification, notificationGroup)"}
+      .drawer-pf-notification-info.expanded-info
         %span.info-title
           = _("Started:")
         %span.date
@@ -49,7 +44,7 @@
         .progress-bar.progress-bar-info{"ng-style"    => "{ width: notification.data.percentComplete + '%' }",
                                         "uib-tooltip" => "{{notification.data.percentComplete}} #{_("% Complete")}"}
     .col-md-4.col-sm-3{"ng-if" => "notificationGroup.notificationType == 'task'"}
-      .drawer-pf-notification-info{"ng-click" => "customScope.markRead(notification, notificationGroup)"}
+      .drawer-pf-notification-info
         %span.info-title
           = _("Completed:")
         %span.date
@@ -57,7 +52,7 @@
         %span.time
           {{notification.data.endTime | date:'h:mm:ss a'}}
     .col-sm-6{"ng-if" => "notificationGroup.notificationType == 'event'"}
-      .drawer-pf-notification-info{"ng-click" => "customScope.markRead(notification, notificationGroup)"}
+      .drawer-pf-notification-info
         %span.date
           {{notification.data.timeStamp | date:'MM/dd/yyyy'}}
         %span.time
