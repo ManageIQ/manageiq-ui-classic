@@ -26,12 +26,14 @@
         - if %w(Compliance Control).include?(f)
           - model_name = f.split.first
           - click = f.downcase
+          - klass = f == 'Compliance' ? 'pficon pficon-history fa-fw' : 'fa fa-shield fa-fw'
         - else
           - model_name = f.split[0..-2].join.camelize(:lower)
           - type = f.split[-1].downcase
           - click = "#{type}_xx-#{type}-#{model_name}"
+          - klass = model_name.camelize.safe_constantize.try(:decorate).try(:fonticon)
         %tr{:onclick => "miqTreeActivateNode('policy_tree', 'xx-#{click}');", :title => _("Open Folder")}
           %td.table-view-pf-select
-            %i{:class => model_name.camelize.safe_constantize.try(:decorate).try(:fonticon)}
+            %i{:class => klass}
           %td
             = folders_i18n[f]
