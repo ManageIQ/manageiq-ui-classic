@@ -4,9 +4,6 @@
                                'form-changed'                        => 'true',
                                'model'                               => 'vm.logCollectionModel',
                                'model-copy'                          => 'vm.modelCopy',
-                               'data-log-collection-form-fields-url' => "/#{controller_name}/log_collection_form_fields/",
-                               'data-save-url'                       => "/#{controller_name}/log_depot_edit/",
-                               'data-log-protocol-changed-url'       => "/#{controller_name}/log_protocol_changed/",
                                :novalidate                           => 1}
   = render :partial => "layouts/flash_msg"
 
@@ -36,15 +33,15 @@
                                     :ng_readonly         => "vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
                                     :uri_prefix_display  =>  "{{vm.logCollectionModel.uri_prefix}}://"}
 
-  %auth-credentials{'ng-if'                          => 'vm.miqDBBackupService.credsProtocol(vm.logCollectionModel)',
-                    'form-model'                     => 'vm.logCollectionModel',
-                    'model-copy'                     => 'vm.modelCopy',
-                    'prefix'                         => '{{vm.prefix}}',
-                    'user-required'                  => true,
-                    'password-required'              => true,
-                    'enable-valid-button'            => 'vm.canValidateBasicInfo()',
-                    'validate'                       => 'vm.validateClicked',
-                    'new-record'                     => 'vm.newRecord'}
+  %auth-credentials{'ng-if'               => 'vm.miqDBBackupService.credsProtocol(vm.logCollectionModel)',
+                    'form-model'          => 'vm.logCollectionModel',
+                    'model-copy'          => 'vm.modelCopy',
+                    'prefix'              => '{{vm.prefix}}',
+                    'user-required'       => true,
+                    'password-required'   => true,
+                    'enable-valid-button' => 'vm.canValidateBasicInfo()',
+                    'validate'            => 'vm.validateClicked',
+                    'new-record'          => 'vm.newRecord'}
 
   = render :partial => "layouts/angular/generic_form_buttons"
 

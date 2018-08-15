@@ -1,16 +1,19 @@
-ManageIQ.angular.app.component('logCollectionFormComponent', {
+ManageIQ.angular.app.component('logCollectionForm', {
   controllerAs: 'vm',
   controller: logCollectionFormController,
-  templateUrl: "/static/ops/logcollection/log_collection.html.haml",
+  templateUrl: "/static/ops/log_collection/log_collection.html.haml",
   bindings: {
-    'serverId': '@',
+    'recordId': '@',
     'selectOptions': '<',
+    'logCollectionFormFieldsUrl': '@',
+    'saveUrl': '@',
+    'logProtocolChangedUrl': '@',
   },
 
 });
 
-logCollectionFormController.$inject = ['$http', '$scope',  '$attrs', 'miqService', 'miqDBBackupService'];
-function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBackupService) {
+logCollectionFormController.$inject = ['$http', '$scope', 'miqService', 'miqDBBackupService'];
+function logCollectionFormController($http, $scope, miqService, miqDBBackupService) {
   var vm = this;
   var init = function() {
     vm.logCollectionModel = {
@@ -24,15 +27,15 @@ function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBac
     vm.saveable = miqService.saveable;
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.logCollectionModel );
-    vm.logCollectionFormFieldsUrl = $attrs.logCollectionFormFieldsUrl;
-    vm.logProtocolChangedUrl = $attrs.logProtocolChangedUrl;
-    vm.saveUrl = $attrs.saveUrl;
+    vm.logCollectionFormFieldsUrl = vm.logCollectionFormFieldsUrl;
+    vm.logProtocolChangedUrl = vm.logProtocolChangedUrl;
+    vm.saveUrl = vm.saveUrl;
     vm.prefix = 'log';
     vm.model = 'logCollectionModel';
     vm.miqDBBackupService = miqDBBackupService;
     ManageIQ.angular.scope = vm;
 
-    if (vm.serverId == 'new') {
+    if (vm.recordId == 'new') {
       vm.logCollectionModel.depot_name = '';
       vm.logCollectionModel.uri = '';
       vm.logCollectionModel.uri_prefix = '';
@@ -46,7 +49,7 @@ function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBac
       miqService.sparkleOn();
 
       var url = vm.logCollectionFormFieldsUrl;
-      $http.get(url + vm.serverId)
+      $http.get(url + vm.recordId)
         .then(getLogCollectionFormData)
         .catch(miqService.handleFailure);
     }
@@ -61,7 +64,7 @@ function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBac
     if (miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) == -1 &&
        vm.logCollectionModel.log_protocol != '') {
       var url = vm.logProtocolChangedUrl;
-      $http.get(url + vm.serverId + '?log_protocol=' + vm.logCollectionModel.log_protocol)
+      $http.get(url + vm.recordId + '?log_protocol=' + vm.logCollectionModel.log_protocol)
         .then(getLogProtocolData)
         .catch(miqService.handleFailure);
     }
@@ -77,7 +80,7 @@ function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBac
 
   vm.saveClicked = function() {
     miqService.sparkleOn();
-    var url = vm.saveUrl + vm.serverId + '?button=save';
+    var url = vm.saveUrl + vm.recordId + '?button=save';
     var moreUrlParams = $.param(miqService.serializeModel(vm.logCollectionModel));
     if (moreUrlParams) {
       url += '&' + decodeURIComponent(moreUrlParams);
@@ -85,16 +88,16 @@ function logCollectionFormController($http, $scope, $attrs, miqService, miqDBBac
     miqService.miqAjaxButton(url, false);
   };
 
-  vm.resetClicked = function() {
+  vm.resetClicked = function(angularForm) {
     $scope.$broadcast('resetClicked');
     vm.logCollectionModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
+    angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   vm.cancelClicked = function() {
     miqService.sparkleOn();
-    var url = vm.saveUrl + vm.serverId + '?button=cancel';
+    var url = vm.saveUrl + vm.recordId + '?button=cancel';
     miqService.miqAjaxButton(url, true);
   };
 
