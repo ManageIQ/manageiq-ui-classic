@@ -1,7 +1,9 @@
+// shims & polyfills first
+//= require es6-shim
+//= require array-includes
+//= require whatwg-fetch/fetch.js
+
 //= require ./miq_global
-//= require bower_components/es6-shim/es6-shim
-//= require bower_components/array-includes/array-includes
-//= require bower_components/fetch/fetch
 //= require jquery/dist/jquery.js
 //= require ./jquery_overrides
 //= require ./i18n
