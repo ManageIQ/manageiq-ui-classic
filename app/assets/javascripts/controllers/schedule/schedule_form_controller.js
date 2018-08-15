@@ -1,5 +1,6 @@
 ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 'scheduleFormId', 'oneMonthAgo', 'miqService', 'timerOptionService', function($http, $scope, scheduleFormId, oneMonthAgo, miqService, timerOptionService) {
   var init = function() {
+    console.log('schedule');
     $scope.scheduleModel = {
       action_typ: '',
       depot_name: '',
