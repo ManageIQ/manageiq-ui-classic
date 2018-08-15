@@ -23,7 +23,7 @@
     };
 
     vm.saveClicked = function() {
-      var saveMsg = sprintf(__('Requested password change for the %s \"%s\".'), vm.entity, vm.recordName);
+      var saveMsg = sprintf(__('Requested password change for the %s "%s".'), vm.entity, vm.recordName);
       vm.saveWithAPI('post', '/api/providers/' + vm.recordId, vm.model, saveMsg);
     };
 
@@ -42,7 +42,7 @@
 
     vm.cancelClicked = function() {
       miqService.sparkleOn();
-      miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.recordName), 'warning', vm.redirectUrl);
+      miqService.redirectBack(sprintf(__('Edit of %s "%s" was canceled by the user.'), vm.entity, vm.recordName), 'warning', vm.redirectUrl);
     };
 
     vm.current_and_new_password_are_equals = function() {

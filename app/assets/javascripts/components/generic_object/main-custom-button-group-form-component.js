@@ -48,7 +48,7 @@ function mainCustomButtonGroupFormController(API, miqService) {
     if (vm.newRecord) {
       miqService.redirectBack(sprintf(__('Creation of new %s was canceled by the user.'), vm.entity), 'warning', vm.redirectUrl);
     } else {
-      miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.customButtonGroupModel.name), 'warning', vm.redirectUrl);
+      miqService.redirectBack(sprintf(__('Edit of %s "%s" was canceled by the user.'), vm.entity, vm.customButtonGroupModel.name), 'warning', vm.redirectUrl);
     }
   };
 
@@ -62,12 +62,12 @@ function mainCustomButtonGroupFormController(API, miqService) {
   };
 
   vm.saveClicked = function() {
-    var saveMsg = sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.customButtonGroupModel.name);
+    var saveMsg = sprintf(__('%s "%s" has been successfully saved.'), vm.entity, vm.customButtonGroupModel.name);
     vm.saveWithAPI('put', '/api/custom_button_sets/' + vm.customButtonGroupRecordId, vm.prepSaveObject(), saveMsg);
   };
 
   vm.addClicked = function() {
-    var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.customButtonGroupModel.name);
+    var saveMsg = sprintf(__('%s "%s" has been successfully added.'), vm.entity, vm.customButtonGroupModel.name);
     vm.saveWithAPI('post', '/api/custom_button_sets/', vm.prepSaveObject(), saveMsg);
   };
 

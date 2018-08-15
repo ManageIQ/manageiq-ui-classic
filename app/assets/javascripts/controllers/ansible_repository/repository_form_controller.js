@@ -44,7 +44,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
 
   vm.cancelClicked = function() {
     miqService.sparkleOn();
-    var message = vm.newRecord ? __('Add of Repository cancelled by user.') : sprintf(__('Edit of Repository \"%s\" cancelled by user.'), vm.repositoryModel.name);
+    var message = vm.newRecord ? __('Add of Repository cancelled by user.') : sprintf(__('Edit of Repository "%s" cancelled by user.'), vm.repositoryModel.name);
     var url = '/ansible_repository/show_list';
     miqFlashLater({
       message: message,
@@ -96,14 +96,14 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
       if (error) {
         message = __('Unable to add Repository ') +  vm.repositoryModel.name + ' .' +  response.results[0].message;
       } else {
-        message = sprintf(__('Add of Repository \"%s\" was successfully initiated.'), vm.repositoryModel.name);
+        message = sprintf(__('Add of Repository "%s" was successfully initiated.'), vm.repositoryModel.name);
       }
     } else {
       error = ! response.success;
       if (error) {
         message = __('Unable to edit Repository') +  vm.repositoryModel.name + ' .' +  response.message;
       } else {
-        message = sprintf(__('Edit of Repository \"%s\" was successfully initiated.'), vm.repositoryModel.name);
+        message = sprintf(__('Edit of Repository "%s" was successfully initiated.'), vm.repositoryModel.name);
       }
     }
 
