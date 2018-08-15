@@ -85,7 +85,7 @@ class HostAggregateController < ApplicationController
             page << "miqSetButtons(0, 'center_tb');"
             page.replace_html("main_div",
                               :partial => "layouts/gtl",
-                              :locals  => {:action_url => "show/#{@host_aggregate.id}"})
+                              :locals  => {:action_url => @breadcrumbs.last[:url]})
           else
             page.replace_html(@refresh_div, :partial => @refresh_partial)
           end
