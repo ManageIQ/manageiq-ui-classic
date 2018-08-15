@@ -67,36 +67,11 @@ module Mixins
           rename_get_form_vars
           case params[:button]
           when 'cancel'
-            msg = _("Rename of VM \"%{name}\" was cancelled by the user") % {:name => @record.name}
-            if @edit[:explorer]
-              add_flash(msg)
-              @record = @sb[:action] = nil
-              replace_right_cell
-            else
-              flash_to_session(msg)
-              javascript_redirect(previous_breadcrumb_url)
-            end
+            rename_cancel
           when 'save'
-            task_id = @record.rename_queue(session[:userid], @edit[:new][:name])
-            if task_id.kind_of?(Integer)
-              initiate_wait_for_task(:task_id => task_id, :action => "rename_finished")
-            else
-              add_flash(
-                :text        => _("VM rename: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
-                :severity    => :error,
-                :spinner_off => true
-              )
-            end
+            rename_save
           when 'reset'
-            vm_rename
-            add_flash(_('All changes have been reset'), :warning)
-            if @edit[:explorer]
-              @changed = session[:changed] = false
-              replace_right_cell
-            else
-              flash_to_session
-              javascript_redirect(:action => 'rename_vm', :controller => 'vm', :id => params[:id])
-            end
+            rename_reset
           else
             build_rename_screen
             if @edit[:explorer]
@@ -124,6 +99,45 @@ module Mixins
           else
             flash_to_session
             javascript_redirect(previous_breadcrumb_url)
+          end
+        end
+
+        private
+
+        def rename_cancel
+          msg = _("Rename of VM \"%{name}\" was cancelled by the user") % {:name => @record.name}
+          if @edit[:explorer]
+            add_flash(msg)
+            @record = @sb[:action] = nil
+            replace_right_cell
+          else
+            flash_to_session(msg)
+            javascript_redirect(previous_breadcrumb_url)
+          end
+        end
+
+        def rename_save
+          task_id = @record.rename_queue(session[:userid], @edit[:new][:name])
+          if task_id.kind_of?(Integer)
+            initiate_wait_for_task(:task_id => task_id, :action => 'rename_finished')
+          else
+            add_flash(
+              :text        => _("VM rename: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
+              :severity    => :error,
+              :spinner_off => true
+            )
+          end
+        end
+
+        def rename_reset
+          vm_rename
+          add_flash(_('All changes have been reset'), :warning)
+          if @edit[:explorer]
+            @changed = session[:changed] = false
+            replace_right_cell
+          else
+            flash_to_session
+            javascript_redirect(:action => 'rename_vm', :controller => 'vm', :id => params[:id])
           end
         end
       end
