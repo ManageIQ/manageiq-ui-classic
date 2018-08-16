@@ -115,6 +115,15 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
             :url   => "html5_console",
             :klass => ApplicationHelper::Button::VmVncConsole),
           included_class.button(
+            :vm_webmks_console,
+            'pficon pficon-screen fa-lg',
+            N_('Open a web-based WebMKS console for this VM'),
+            N_('VM Console'),
+            :url     => "console",
+            :confirm => N_("Open a WebMKS console for this VM"),
+            :klass   => ApplicationHelper::Button::VmWebmksConsole
+          ),
+          included_class.button(
             :cockpit_console,
             'pficon pficon-screen fa-lg',
             N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
