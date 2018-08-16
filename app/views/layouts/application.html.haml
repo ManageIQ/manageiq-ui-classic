@@ -19,7 +19,6 @@
     = csrf_meta_tag
     = render :partial => 'layouts/i18n_js'
     = javascript_common_packs
-    = javascript_pack_tag "manageiq-graphql/graphql-explorer" if Rails.env.development?
 
     :javascript
       ManageIQ.charts.provider = "#{Charting.backend}";
