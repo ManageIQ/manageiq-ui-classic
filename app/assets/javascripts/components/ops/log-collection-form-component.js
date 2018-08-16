@@ -27,15 +27,12 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
     vm.saveable = miqService.saveable;
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.logCollectionModel );
-    vm.logCollectionFormFieldsUrl = vm.logCollectionFormFieldsUrl;
-    vm.logProtocolChangedUrl = vm.logProtocolChangedUrl;
-    vm.saveUrl = vm.saveUrl;
     vm.prefix = 'log';
     vm.model = 'logCollectionModel';
     vm.miqDBBackupService = miqDBBackupService;
     ManageIQ.angular.scope = vm;
 
-    if (vm.recordId == 'new') {
+    if (vm.recordId === 'new') {
       vm.logCollectionModel.depot_name = '';
       vm.logCollectionModel.uri = '';
       vm.logCollectionModel.uri_prefix = '';
@@ -61,8 +58,8 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
 
   vm.logProtocolChanged = function() {
     miqService.sparkleOn();
-    if (miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) == -1 &&
-       vm.logCollectionModel.log_protocol != '') {
+    if (miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) === -1 &&
+       vm.logCollectionModel.log_protocol !== '') {
       var url = vm.logProtocolChangedUrl;
       $http.get(url + vm.recordId + '?log_protocol=' + vm.logCollectionModel.log_protocol)
         .then(getLogProtocolData)
@@ -108,11 +105,7 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
   function getLogCollectionFormData(response) {
     var data = response.data;
 
-    vm.logCollectionModel.log_protocol = data.log_protocol;
-    vm.logCollectionModel.depot_name = data.depot_name;
-    vm.logCollectionModel.uri = data.uri;
-    vm.logCollectionModel.uri_prefix = data.uri_prefix;
-    vm.logCollectionModel.log_userid = data.log_userid;
+    vm.logCollectionModel = angular.copy(data);
 
     if (vm.logCollectionModel.log_userid !== '') {
       vm.logCollectionModel.log_password = miqService.storedPasswordPlaceholder;
