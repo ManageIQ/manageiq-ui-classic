@@ -13,12 +13,14 @@
 src_files:
 - __spec__/helpers/i18n-test.js
 - assets/bower_components/phantomjs-polyfill/bind-polyfill
+- packs/runtime.js
+- packs/shims.js
+- packs/vendor.js
 - assets/application
 - assets/bower_components/jasmine-jquery/lib/jasmine-jquery
 - assets/angular-mocks
 - __spec__/helpers/fixtures-fix.js
 - __spec__/helpers/toolbar.js
-- packs/vendor.js
 - packs/manageiq-ui-classic/application-common.js
 - packs/manageiq-ui-classic/toolbar-actions-common.js
 
