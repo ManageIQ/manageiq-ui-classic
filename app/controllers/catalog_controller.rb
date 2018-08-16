@@ -1650,7 +1650,7 @@ class CatalogController < ApplicationController
           @group_changed = false
           @edit[:new][:rsc_groups].each_with_index do |groups, i|
             groups.each do |g|
-              if g[:id] == rid
+              if g[:id].to_i == rid.to_i
                 @edit[:new][:rsc_groups][val.to_i - 1].push(g)
                 @edit[:new][:rsc_groups][i].delete(g)
                 @group_changed = true

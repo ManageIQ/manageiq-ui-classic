@@ -63,36 +63,42 @@
                   - else
                     = select_tag("gidx_#{sr[:id]}",
                       options_for_select((1..@edit[:new][:rsc_groups].length).to_a, (i + 1).to_s),
-                      "data-miq_sparkle_on" => true,
-                      "data-miq_observe" => {:url => url}.to_json)
+                      "data-miq_sparkle_on" => true)
+                    :javascript
+                      miqSelectPickerEvent('gidx_#{sr[:id]}', '#{url}')
                 %td
                   - if @edit[:new][:selected_resources].length <= 1
                     = h(@edit[:new][:selected_resources].length)
                   - else
                     = select_tag("provision_index_#{i}_#{k}",
                       options_for_select((1..@edit[:new][:provision_order].length).to_a, (sr[:provision_index] + 1).to_s),
-                      "data-miq_sparkle_on" => true,
-                      "data-miq_observe" => {:url => url}.to_json)
+                      "data-miq_sparkle_on" => true)
+                    :javascript
+                      miqSelectPickerEvent('provision_index_#{i}_#{k}', '#{url}')
                 - start_action_values = [_('Do Nothing'), _('Power On')]
                 - stop_action_values = [_('Do Nothing'), _('Suspend'), _('Shutdown'), _('Power Off')]
                 - delay_values = [[_("None"), 0], [1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [10, 10], [20, 20], [30, 30], [40, 40], [50, 50], [60, 60]]
                 %td
                   = select_tag("start_action_#{i}_#{k}",
                     options_for_select(start_action_values, sr[:start_action]),
-                    "data-miq_sparkle_on" => true,
-                    "data-miq_observe" => {:url => url}.to_json)
+                    "data-miq_sparkle_on" => true)
+                  :javascript
+                    miqSelectPickerEvent('start_action_#{i}_#{k}', '#{url}')
                 %td
                   = select_tag("stop_action_#{i}_#{k}",
                     options_for_select(stop_action_values, sr[:stop_action]),
-                    "data-miq_sparkle_on" => true,
-                    "data-miq_observe" => {:url => url}.to_json)
+                    "data-miq_sparkle_on" => true)
+                  :javascript
+                    miqSelectPickerEvent('stop_action_#{i}_#{k}', '#{url}')
                 %td
                   = select_tag("start_delay_#{i}_#{k}",
                     options_for_select(delay_values, (sr[:start_delay] / 60).to_s),
-                    "data-miq_sparkle_on" => true,
-                    "data-miq_observe" => {:url => url}.to_json)
+                    "data-miq_sparkle_on" => true)
+                  :javascript
+                    miqSelectPickerEvent('start_delay_#{i}_#{k}', '#{url}')
                 %td
                   = select_tag("stop_delay_#{i}_#{k}",
                     options_for_select(delay_values, (sr[:stop_delay] / 60).to_s),
-                    "data-miq_sparkle_on" => true,
-                    "data-miq_observe" => {:url => url}.to_json)
+                    "data-miq_sparkle_on" => true)
+                  :javascript
+                    miqSelectPickerEvent('stop_delay_#{i}_#{k}', '#{url}')
