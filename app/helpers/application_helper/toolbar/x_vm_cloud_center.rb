@@ -208,35 +208,4 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
     ),
   ])
   include ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
-  button_group(
-    'vm_access',
-    [
-      select(
-        :vm_remote_access_choice,
-        'fa pficon-screen fa-lg',
-        N_('VM Remote Access'),
-        N_('Access'),
-        :items => [
-          button(
-            :vm_webmks_console,
-            'pficon pficon-screen fa-lg',
-            N_('Open a web-based WebMKS console for this VM'),
-            N_('VM Console'),
-            :url     => "console",
-            :confirm => N_("Open a WebMKS console for this VM"),
-            :klass   => ApplicationHelper::Button::VmWebmksConsole
-          ),
-          # TODO: remove cockpit button because backend isn't implemented yet.
-          button(
-            :cockpit_console,
-            'pficon pficon-screen fa-lg',
-            N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
-            N_('Web Console'),
-            :url   => "launch_cockpit",
-            :klass => ApplicationHelper::Button::CockpitConsole
-          )
-        ]
-      )
-    ]
-  )
 end
