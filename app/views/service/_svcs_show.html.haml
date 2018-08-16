@@ -41,7 +41,7 @@
       - if @record.type == "ServiceAnsibleTower"
         = miq_tab_content("tower_job", 'default', :class => 'cm-tab') do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_tower_job_group_list, :tab_id => "tower_job"}
-          - if job
+          - if job && job.respond_to?(:raw_stdout_via_worker)
             %ansible-raw-stdout#service_detail_ansible_tower_job{'task-id' => @record.job.raw_stdout_via_worker(nil, 'html')}
             :javascript
               miq_bootstrap('#service_detail_ansible_tower_job');

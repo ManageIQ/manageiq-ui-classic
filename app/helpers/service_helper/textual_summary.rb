@@ -67,6 +67,7 @@ module ServiceHelper::TextualSummary
 
   def textual_group_tower_job_plays
     return nil unless fetch_job
+    return nil unless @job.respond_to?(:job_plays)
     fetch_job_plays
   end
 
