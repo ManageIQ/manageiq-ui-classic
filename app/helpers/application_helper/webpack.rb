@@ -4,6 +4,7 @@ module ApplicationHelper
       packs = sorted_common_packs
 
       capture do
+        concat(javascript_pack_tag('runtime'))
         concat(javascript_pack_tag('shims'))
         concat(javascript_pack_tag('vendor'))
 

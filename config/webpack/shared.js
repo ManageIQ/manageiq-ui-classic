@@ -97,9 +97,7 @@ module.exports = {
   ],
 
   optimization: {
-    runtimeChunk: {
-      name: 'vendor',
-    },
+    runtimeChunk: 'single',
     splitChunks: {
       minChunks: 1,
       minSize: 0,
