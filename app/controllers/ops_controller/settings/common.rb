@@ -598,8 +598,9 @@ module OpsController::Settings::Common
   end
 
   def settings_server_validate
-    if @sb[:active_tab] == "settings_server" && @edit[:new][:server] && ((@edit[:new][:server][:custom_support_url].nil? || @edit[:new][:server][:custom_support_url].strip == "") && (!@edit[:new][:server][:custom_support_url_description].nil? && @edit[:new][:server][:custom_support_url_description].strip != "") ||
-        (@edit[:new][:server][:custom_support_url_description].nil? || @edit[:new][:server][:custom_support_url_description].strip == "") && (!@edit[:new][:server][:custom_support_url].nil? && @edit[:new][:server][:custom_support_url].strip != ""))
+    return unless @sb[:active_tab] == "settings_server" && @edit[:new][:server]
+    if @edit[:new][:server][:custom_support_url].present? && @edit[:new][:server][:custom_support_url_description].blank? ||
+       @edit[:new][:server][:custom_support_url].blank? && @edit[:new][:server][:custom_support_url_description].present?
       add_flash(_("Custom Support URL and Description both must be entered."), :error)
     end
   end
