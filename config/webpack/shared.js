@@ -39,14 +39,21 @@ Object.keys(engines).forEach(function(k) {
 })
 
 module.exports = {
-  entry: Object.keys(packPaths).reduce(
-    (map, pluginName) => {
-      packPaths[pluginName].forEach(function(entry) {
-        map[join(pluginName, basename(entry, extname(entry)))] = resolve(entry)
-      })
-      return map
-    }, {}
-  ),
+  entry: {
+    ...Object.keys(packPaths).reduce(
+      (map, pluginName) => {
+        packPaths[pluginName].forEach(function(entry) {
+          map[join(pluginName, basename(entry, extname(entry)))] = resolve(entry)
+        })
+        return map
+      }, {}
+    ),
+    'shims': [
+      'es6-shim',
+      'array-includes',
+      'whatwg-fetch',
+    ],
+  },
 
   output: {
     filename: '[name].js',
