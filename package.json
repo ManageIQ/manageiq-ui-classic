@@ -28,9 +28,11 @@
     "angular-gettext": "^2.4.1",
     "angular-sanitize": "~1.6.6",
     "angular.validators": "~4.4.2",
+    "array-includes": "~3.0.3",
     "base64-js": "~1.2.3",
     "bootstrap-switch": "~3.3.4",
     "connected-react-router": "^4.3.0",
+    "es6-shim": "~0.35.3",
     "graphiql": "^0.11.11",
     "graphql": "~0.12.0",
     "history": "^4.7.2",
@@ -54,6 +56,7 @@
     "sprintf-js": "~1.1.1",
     "text-encoder-lite": "git://github.com/coolaj86/TextEncoderLite.git#e1e031b",
     "ui-select": "0.19.8",
+    "whatwg-fetch": "~2.0.4",
     "xml_display": "~0.1.1"
   },
   "devDependencies": {
