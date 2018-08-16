@@ -4,8 +4,11 @@ module ApplicationHelper
     def javascript_essential_dependencies
       capture do
         concat(javascript_pack_tag('runtime'))
+        concat "\n"
         concat(javascript_pack_tag('shims'))
+        concat "\n"
         concat(javascript_pack_tag('vendor'))
+        concat "\n"
       end
     end
 
@@ -26,8 +29,8 @@ module ApplicationHelper
         return if Rails.env.test?
 
         packs.each do |pack|
-          concat(javascript_pack_tag(pack))
           concat "\n"
+          concat(javascript_pack_tag(pack))
         end
       end
     end
