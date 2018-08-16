@@ -634,7 +634,14 @@ function miqAjax(url, serialize_fields, options) {
     complete: true,
   };
 
-  miqJqueryRequest(url, _.extend(defaultOptions, options || {}, { data: data }))
+  // miqAjaxButton with { observeQueue: true } will queue the request instead of sending directly
+  var requestFn = miqJqueryRequest;
+  if (options && options.observeQueue) {
+    delete options.observeQueue;
+    requestFn = miqObserveRequest;
+  }
+
+  return requestFn(url, _.extend(defaultOptions, options || {}, { data: data }))
     .catch(function(err) {
       add_flash(__('Error requesting data from server'), 'error');
       console.log(err);

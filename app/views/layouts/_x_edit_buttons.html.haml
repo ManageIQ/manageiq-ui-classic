@@ -37,6 +37,8 @@
 - export_button ||= nil
 -# need to pass this as true if need to send up serialized form data when save is pressed
 - serialize ||= false
+-# use miqAjaxButton with observeQueue: true (waits for miq-observe inputs first)
+- observe_queue ||= false
 
 
 %div{:style => 'padding-top: 5px'}
@@ -47,7 +49,7 @@
           :class   => "btn btn-primary",
           :alt     => t,
           :title   => t,
-          :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :button => "add")}', #{serialize});")
+          :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :button => "add")}', #{serialize}, #{observe_queue ? '{ observeQueue: true }' : 'null'});")
       - else
         - if apply_button
           = link_to(_("Apply"),
@@ -95,13 +97,13 @@
               :class   => "btn btn-primary",
               :alt     => save_text,
               :title   => save_text,
-              :onclick => "if (confirm('#{save_confirm_text}')) miqAjaxButton('#{url_for_only_path(:action => action_url, :id => record_id, :button => "save")}', #{serialize});")
+              :onclick => "if (confirm('#{save_confirm_text}')) miqAjaxButton('#{url_for_only_path(:action => action_url, :id => record_id, :button => "save")}', #{serialize}, #{observe_queue ? '{ observeQueue: true }' : 'null'});")
           - else
             = button_tag(_('Save'),
               :class   => "btn btn-primary",
               :alt     => t = _("Save Changes"),
               :title   => t,
-              :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :id => record_id, :button => "save")}', #{serialize});")
+              :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :id => record_id, :button => "save")}', #{serialize}, #{observe_queue ? '{ observeQueue: true }' : 'null'});")
 
         - unless no_reset
           = button_tag(_('Reset'),
