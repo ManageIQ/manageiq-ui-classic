@@ -88,7 +88,7 @@ function eventNotifications($timeout, API) {
             type: resource.details.level,
             message: msg,
             data: {
-              message: msg,
+              link: _.get(resource.details, 'bindings.link'),
             },
             href: resource.href,
             timeStamp: resource.details.created_at,
@@ -327,7 +327,7 @@ function eventNotifications($timeout, API) {
   listenToRx(function(data) {
     if (data.notification) {
       var msg = miqFormatNotification(data.notification.text, data.notification.bindings);
-      _this.add('event', data.notification.level, msg, {message: msg}, data.notification.id);
+      _this.add('event', data.notification.level, msg, {link: _.get(data.notification, 'bindings.link')}, data.notification.id);
     }
   });
 }
