@@ -68,15 +68,15 @@ module ApplicationController::Timelines
       @events = @event_groups = @lvl_text_value = nil
     end
 
-    def event_groups
-      @event_groups ||= EmsEvent.event_groups
-    end
-
     def levels_text_and_value
       @lvl_text_value ||= group_levels.map { |level| [level.to_s.titleize, level] }
     end
 
     private
+
+    def event_groups
+      @event_groups ||= EmsEvent.event_groups
+    end
 
     def group_levels
       EmsEvent::GROUP_LEVELS
@@ -141,6 +141,10 @@ module ApplicationController::Timelines
 
     def event_set
       (policy_events? ? policy : management).event_set
+    end
+
+    def categories
+      (policy_events? ? policy : management).categories
     end
 
     def drop_cache

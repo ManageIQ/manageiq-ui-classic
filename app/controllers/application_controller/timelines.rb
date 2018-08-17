@@ -101,40 +101,32 @@ module ApplicationController::Timelines
         to_dt = create_time_in_utc("#{yy}-#{mm}-#{dd} 23:59:59", session[:user_tz]) # Get tz 11pm in user's time zone
       end
 
-      temp_clause = @tl_record.event_where_clause(@tl_options.evt_type)
+      rec_cond, *rec_params = @tl_record.event_where_clause(@tl_options.evt_type)
+      conditions = [rec_cond, "timestamp >= ?", "timestamp <= ?"]
+      parameters = rec_params + [from_dt, to_dt]
 
-      cond = "( "
-      cond = cond << temp_clause[0]
-      params = temp_clause.slice(1, temp_clause.length)
+      tl_add_event_type_conditions(conditions, parameters)
+      tl_add_policy_conditions(conditions, parameters) if @tl_options.policy_events?
 
-      event_set = @tl_options.event_set
-      if !event_set.empty?
-        if @tl_options.policy_events? && @tl_options.policy.result != "both"
-          where_clause = [") and (timestamp >= ? and timestamp <= ?) and (event_type in (?)) and (result = ?)",
-                          from_dt,
-                          to_dt,
-                          event_set.flatten,
-                          @tl_options.policy.result]
-        else
-          where_clause = [") and (timestamp >= ? and timestamp <= ?) and (event_type in (?))",
-                          from_dt,
-                          to_dt,
-                          event_set.flatten]
-        end
-      else
-        where_clause = [") and (timestamp >= ? and timestamp <= ?)",
-                        from_dt,
-                        to_dt]
-      end
-      cond << where_clause[0]
-
-      params2 = where_clause.slice(1, where_clause.length - 1)
-      params = params.concat(params2)
-      @report.where_clause = [cond, *params]
+      condition = conditions.join(") and (")
+      @report.where_clause = ["(#{condition})"] + parameters
       @report.rpt_options ||= {}
-      @report.rpt_options[:categories] =
-        @tl_options.management_events? ? @tl_options.management.categories : @tl_options.policy.categories
+      @report.rpt_options[:categories] = @tl_options.categories
       @title = @report.title
+    end
+  end
+
+  def tl_add_event_type_conditions(conditions, parameters)
+    unless @tl_options.event_set.empty?
+      conditions << "event_type in (?)"
+      parameters << @tl_options.event_set.flatten
+    end
+  end
+
+  def tl_add_policy_conditions(conditions, parameters)
+    if @tl_options.policy.result != "both"
+      conditions << "result = ?"
+      parameters << @tl_options.policy.result
     end
   end
 
