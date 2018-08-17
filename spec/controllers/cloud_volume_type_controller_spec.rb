@@ -87,7 +87,14 @@ describe CloudVolumeTypeController do
       end
 
       it "render view for list of volume types" do
-        is_expected.to render_template(:partial => "layouts/_gtl")
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+          :model_name      => 'CloudVolumeType',
+          :parent_id       => nil,
+          :explorer        => nil,
+          :gtl_type_string => "list"
+        )
+
+        get :show_list
       end
 
       it 'renders the correct toolbar' do
