@@ -70,4 +70,49 @@ describe MiqRequestController do
       controller.send(:prov_edit)
     end
   end
+
+  describe '#get_template_kls' do
+    before do
+      controller.instance_variable_set(:@_params, :controller => ctrl, :template_klass => kls)
+      allow(request).to receive(:parameters).and_return(:template_klass => kls, :controller => ctrl)
+    end
+
+    subject { controller.send(:get_template_kls) }
+
+    context 'provisioning VMs displayed through details page of infra provider, Cluster, Host, Resource Poll or Storage' do
+      let(:ctrl) { 'miq_request' }
+      let(:kls) { 'infra' }
+
+      it 'returns proper template klass' do
+        expect(subject).to eq(ManageIQ::Providers::InfraManager::Template)
+      end
+    end
+
+    context 'provisioning VMs displayed on VMs explorer screen' do
+      let(:ctrl) { 'vm_infra' }
+      let(:kls) { nil }
+
+      it 'returns proper template klass' do
+        expect(subject).to eq(ManageIQ::Providers::InfraManager::Template)
+      end
+    end
+
+    context 'provisioning instances displayed through details page of cloud provider' do
+      let(:ctrl) { 'miq_request' }
+      let(:kls) { 'cloud' }
+
+      it 'returns proper template klass' do
+        expect(subject).to eq(ManageIQ::Providers::CloudManager::Template)
+      end
+    end
+
+    context 'provisioning instances displayed on instances explorer screen' do
+      let(:ctrl) { 'vm_cloud' }
+      let(:kls) { nil }
+
+      it 'returns proper template klass' do
+        expect(subject).to eq(ManageIQ::Providers::CloudManager::Template)
+      end
+    end
+  end
 end

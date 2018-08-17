@@ -168,10 +168,9 @@ module ApplicationController::MiqRequestMethods
     # when clone/migrate buttons are pressed from a sub list view,
     # these buttons are only available on Infra side
     return ManageIQ::Providers::InfraManager::Template if params[:prov_type]
-    case request.parameters[:controller]
-    when "vm_cloud"
+    if request.parameters[:template_klass] == 'cloud' || request.parameters[:controller] == 'vm_cloud'
       return ManageIQ::Providers::CloudManager::Template
-    when "vm_infra"
+    elsif request.parameters[:template_klass] == 'infra' || request.parameters[:controller] == 'vm_infra'
       return ManageIQ::Providers::InfraManager::Template
     else
       return MiqTemplate

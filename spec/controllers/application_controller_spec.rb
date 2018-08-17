@@ -1,7 +1,7 @@
 require 'ostruct'
 
 describe ApplicationController do
-  context "#find_record_with_rbac" do
+  describe "#find_record_with_rbac" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       controller.instance_variable_set(:@sb, {})
@@ -25,7 +25,7 @@ describe ApplicationController do
     end
   end
 
-  context "#assert_privileges" do
+  describe "#assert_privileges" do
     before do
       EvmSpecHelper.seed_specific_product_features("host_new", "host_edit", "perf_reload")
       feature = MiqProductFeature.find_all_by_identifier(["host_new"])
@@ -46,7 +46,7 @@ describe ApplicationController do
     end
   end
 
-  context "#previous_breadcrumb_url" do
+  describe "#previous_breadcrumb_url" do
     it "should return url when 2 entries" do
       controller.instance_variable_set(:@breadcrumbs, [{:url => "test_url"}, 'placeholder'])
       expect(controller.send(:previous_breadcrumb_url)).to eq("test_url")
@@ -61,7 +61,7 @@ describe ApplicationController do
     end
   end
 
-  context "#find_checked_items" do
+  describe "#find_checked_items" do
     it "returns empty array when button is pressed from summary screen with params as symbol" do
       controller.instance_variable_set(:@_params, :id => "1")
       expect(controller.send(:find_checked_items)).to eq([])
@@ -78,7 +78,7 @@ describe ApplicationController do
     end
   end
 
-  context "#render_gtl_view_tb?" do
+  describe "#render_gtl_view_tb?" do
     before do
       controller.instance_variable_set(:@layout, "host")
       controller.instance_variable_set(:@gtl_type, "list")
@@ -100,7 +100,7 @@ describe ApplicationController do
     end
   end
 
-  context "#prov_redirect" do
+  describe "#prov_redirect" do
     let(:user) { FactoryGirl.create(:user, :features => "vm_migrate") }
     before do
       allow(User).to receive(:server_timezone).and_return("UTC")
@@ -133,7 +133,7 @@ describe ApplicationController do
     end
   end
 
-  context "#prov_redirect" do
+  describe "#prov_redirect" do
     before do
       login_as FactoryGirl.create(:user, :features => "image_miq_request_new")
       allow(User).to receive(:server_timezone).and_return("UTC")
@@ -177,9 +177,45 @@ describe ApplicationController do
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(assigns(:org_controller)).to eq("vm")
     end
+
+    context 'setting proper template klass type for various controllers' do
+      subject { controller.instance_variable_get(:@template_klass_type) }
+
+      %w(ems_cluster ems_infra host resource_pool storage vm_infra).each do |ctrl|
+        context "#{ctrl} controller" do
+          before do
+            allow(controller).to receive(:assert_privileges)
+            allow(controller).to receive(:performed?)
+            allow(controller).to receive(:template_types_for_controller).and_call_original
+            allow(request).to receive(:parameters).and_return(:controller => ctrl, :pressed => 'vm_miq_request_new')
+          end
+
+          it 'returns proper template type while provisioning VMs' do
+            controller.send(:prov_redirect)
+            expect(subject).to eq('infra')
+          end
+        end
+      end
+
+      %w(auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud).each do |ctrl|
+        context "#{ctrl} controller" do
+          before do
+            allow(controller).to receive(:assert_privileges)
+            allow(controller).to receive(:performed?)
+            allow(controller).to receive(:template_types_for_controller).and_call_original
+            allow(request).to receive(:parameters).and_return(:controller => ctrl, :pressed => 'vm_miq_request_new')
+          end
+
+          it 'returns proper template type while provisioning instances' do
+            controller.send(:prov_redirect)
+            expect(subject).to eq('cloud')
+          end
+        end
+      end
+    end
   end
 
-  context "#determine_record_id_for_presenter" do
+  describe "#determine_record_id_for_presenter" do
     context "when in a form" do
       before do
         controller.instance_variable_set(:@in_a_form, true)
@@ -219,7 +255,7 @@ describe ApplicationController do
       end
     end
 
-    context "#get_view" do
+    describe "#get_view" do
       it 'calculates grid hash condition' do
         controller.instance_variable_set(:@force_no_grid_xml, false)
         controller.instance_variable_set(:@force_grid_xml, true)
