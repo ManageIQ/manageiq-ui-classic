@@ -239,10 +239,13 @@ module OpsController::Settings::AnalysisProfiles
         return unless load_edit("ap_edit__#{id}", "replace_cell__explorer")
         @scan = ScanItemSet.find_by_id(@edit[:scan_id])
         ap_get_form_vars
-        if (@edit[:new]["category"].nil? || @edit[:new]["category"][:definition]["content"].length == 0) &&
-           (@edit[:new]["file"].nil? || @edit[:new]["file"][:definition]["stats"].length == 0) &&
-           (@edit[:new]["registry"].nil? || @edit[:new]["registry"][:definition]["content"].length == 0) &&
-           (@edit[:new]["nteventlog"].nil? || @edit[:new]["nteventlog"][:definition].nil? || @edit[:new]["nteventlog"][:definition]["content"].length == 0)
+
+        category, nteventlog, registry = %w(category nteventlog registry).map do |x|
+          @edit[:new].fetch_path(x, :definition, 'content')
+        end
+        file = @edit[:new].fetch_path('file', :definition, 'stats')
+
+        if [category, nteventlog, registry, file].all?(&:blank?)
           add_flash(_("At least one item must be entered to create Analysis Profile"), :error)
           @sb[:miq_tab] = @edit[:new][:scan_mode] == "Host" ? "edit_2" : "edit_1"
           @edit[:new] = ap_sort_array(@edit[:new])
