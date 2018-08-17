@@ -10,6 +10,7 @@ const { sync } = require('glob')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const extname = require('path-complete-extname')
 const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
+const { SplitChunksPlugin } = require('webpack').optimize;
 
 const { env, settings, output, engines } = require('./configuration.js')
 const loaders = require('./loaders.js')
@@ -38,15 +39,30 @@ Object.keys(engines).forEach(function(k) {
   packPaths[k] = sync(glob)
 })
 
+const nodeModulesNotShims = (module) => {
+  const inNodeModules = SplitChunksPlugin.checkTest(/node_modules/, module);
+  const inShims = SplitChunksPlugin.checkTest(/shims/, module);
+
+  return inNodeModules && ! inShims;
+};
+const notShims = (module) => (! SplitChunksPlugin.checkTest(/shims/, module));
+
 module.exports = {
-  entry: Object.keys(packPaths).reduce(
-    (map, pluginName) => {
-      packPaths[pluginName].forEach(function(entry) {
-        map[join(pluginName, basename(entry, extname(entry)))] = resolve(entry)
-      })
-      return map
-    }, {}
-  ),
+  entry: {
+    ...Object.keys(packPaths).reduce(
+      (map, pluginName) => {
+        packPaths[pluginName].forEach(function(entry) {
+          map[join(pluginName, basename(entry, extname(entry)))] = resolve(entry)
+        })
+        return map
+      }, {}
+    ),
+    'shims': [
+      'es6-shim',
+      'array-includes',
+      'whatwg-fetch',
+    ],
+  },
 
   output: {
     filename: '[name].js',
@@ -81,9 +97,7 @@ module.exports = {
   ],
 
   optimization: {
-    runtimeChunk: {
-      name: 'vendor',
-    },
+    runtimeChunk: 'single',
     splitChunks: {
       minChunks: 1,
       minSize: 0,
@@ -93,7 +107,7 @@ module.exports = {
           name: 'vendor',
           priority: -10,
           reuseExistingChunk: true,
-          test: /node_modules/,
+          test: nodeModulesNotShims,
         },
         default: {
           chunks: 'all',
@@ -101,6 +115,7 @@ module.exports = {
           name: 'vendor',
           priority: -20,
           reuseExistingChunk: true,
+          test: notShims,
         },
       },
     },

@@ -1,15 +1,35 @@
 module ApplicationHelper
   module Webpack
+    # the bare minimum needed anywhere using webpack
+    def javascript_essential_dependencies
+      capture do
+        concat(javascript_pack_tag('runtime'))
+        concat "\n"
+        concat(javascript_pack_tag('shims'))
+        concat "\n"
+        concat(javascript_pack_tag('vendor'))
+        concat "\n"
+      end
+    end
+
+    # all js dependencies excluding screen-specific packs
+    def javascript_dependencies
+      capture do
+        concat(javascript_essential_dependencies)
+        concat(javascript_include_tag('application'))
+        concat(javascript_common_packs)
+      end
+    end
+
     def javascript_common_packs
       packs = sorted_common_packs
 
       capture do
-        concat(javascript_pack_tag('vendor'))
-
         # FIXME: temporary fix for a webpacker issue - #1875
         return if Rails.env.test?
 
         packs.each do |pack|
+          concat "\n"
           concat(javascript_pack_tag(pack))
         end
       end

@@ -6,11 +6,10 @@
     = favicon_link_tag
     = stylesheet_link_tag 'application'
     = stylesheet_link_tag '/custom.css'
-    = javascript_include_tag 'application'
+    = javascript_dependencies
     - if Rails.env.development?
       = javascript_include_tag 'miq_debug'
       = stylesheet_link_tag 'miq_debug'
-    = javascript_common_packs
 
     = render :partial => 'layouts/i18n_js'
 

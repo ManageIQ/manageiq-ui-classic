@@ -7,8 +7,7 @@
     -# Mock the gettext calls in javascript
     :javascript
       window.__ = function (data) { return data };
-    = javascript_include_tag 'application', :media => 'all'
-    = javascript_common_packs
+    = javascript_dependencies
     %style
       @media all { @page { size: #{pdf_page_size_style}; } }
   %body
