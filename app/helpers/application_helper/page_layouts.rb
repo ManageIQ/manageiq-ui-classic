@@ -86,11 +86,7 @@ module ApplicationHelper::PageLayouts
   end
 
   def layout_uses_breadcrumbs?
-    !["dashboard",
-      "exception",
-      "support",
-      "configuration",
-      "rss"].include?(@layout)
+    !%w(dashboard exception support configuration rss).include?(@layout)
   end
 
   def dashboard_no_listnav?
