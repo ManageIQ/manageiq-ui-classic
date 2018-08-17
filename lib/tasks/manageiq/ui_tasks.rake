@@ -124,12 +124,36 @@ end
 require ManageIQ::UI::Classic::Engine.root.join('config/initializers/webpacker.rb')
 unless Rake::Task.task_defined?("webpacker")
   load 'tasks/webpacker.rake'
-  load 'tasks/webpacker/compile.rake'
   load 'tasks/webpacker/clobber.rake'
   load 'tasks/webpacker/verify_install.rake'         # needed by compile
   load 'tasks/webpacker/check_node.rake'             # needed by verify_install
   load 'tasks/webpacker/check_yarn.rake'             # needed by verify_install
   load 'tasks/webpacker/check_webpack_binstubs.rake' # needed by verify_install
+end
+
+# original webpacker:compile still gets autoloaded during bin/update
+if Rake::Task.task_defined?('webpacker:compile')
+  Rake::Task['webpacker:compile'].actions.clear
+end
+
+# the original webpack:compile fails to output errors, using system instead
+require "webpacker/env"
+require "webpacker/configuration"
+namespace :webpacker do
+  task :compile => ["webpacker:verify_install", :environment] do
+    asset_host = ActionController::Base.helpers.compute_asset_host
+    env = { "NODE_ENV" => Webpacker.env, "ASSET_HOST" => asset_host }.freeze
+
+    system(env, './bin/webpack')
+
+    if $?.success?
+      $stdout.puts "[Webpacker] Compiled digests for all packs in #{Webpacker::Configuration.entry_path}:"
+      $stdout.puts JSON.parse(File.read(Webpacker::Configuration.manifest_path))
+    else
+      $stderr.puts "[Webpacker] Compilation Failed"
+      exit!
+    end
+  end
 end
 
 def asset_engines
