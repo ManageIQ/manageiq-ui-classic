@@ -7,6 +7,10 @@
                                          'aria-expanded'       => 'false'}
       %span.fa.fa-ellipsis-v
     %ul.dropdown-menu.dropdown-menu-right{'aria-labelledby' => 'dropdownKebabRight-{{ notification.id }}'}
+      %li{:role => 'menuitem', 'ng-class' => "{'disabled': !notification.data.link}"}
+        %a.secondary-action{:title => _('View details'), 'ng-click' => 'customScope.viewSubjectDetails(notification)'}
+          = _('View details')
+      %li.divider{:role => 'separator'}
       %li{:role => 'menuitem', 'ng-class' => "{'disabled': !notification.unread}"}
         %a.secondary-action{:title => _('Mark as read'), 'ng-click' => 'customScope.markNotificationRead(notification, notificationGroup)'}
           = _('Mark as read')
