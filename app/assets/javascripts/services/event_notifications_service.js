@@ -129,7 +129,7 @@ function eventNotifications($timeout, API) {
       type: levelToType(type),
       message: message,
       data: notificationData,
-      href: id ? '/api/notifications/' + id : undefined,
+      href: id ? window.location.origin + '/api/notifications/' + id : undefined,
       timeStamp: (new Date()).getTime(),
     };
 
