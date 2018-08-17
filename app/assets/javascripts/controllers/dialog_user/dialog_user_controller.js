@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType) {
+ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'openUrl', '$http', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, openUrl, $http) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -35,6 +35,8 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
 
   vm.refreshField = refreshField;
   vm.setDialogData = setDialogData;
+  vm.openUrl = openUrl;
+  vm.targetId = targetId;
   vm.refreshUrl = '/api/service_dialogs/';
 
   vm.submitButtonClicked = submitButtonClicked;
@@ -69,8 +71,20 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     } else {
       apiData = vm.dialogData;
     }
-    return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
-      miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
+    return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]})
+      .then(function(response) {
+        if (vm.openUrl === "true") {
+          return API.wait_for_task(response.task_id)
+            .then(function(response) {
+              return $http.post("open_url_after_dialog", {targetId: vm.targetId})
+                .then(function(response) {
+                  window.open(response.data.open_url);
+                  miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
+                });
+            });
+        } else {
+          miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
+        }
     }).catch(function(err) {
       return Promise.reject(dialogUserSubmitErrorHandlerService.handleError(err));
     });
