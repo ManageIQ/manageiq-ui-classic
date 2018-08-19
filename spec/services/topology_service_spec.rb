@@ -67,6 +67,7 @@ describe TopologyService do
       expect(topology).to have_key(:relations)
       expect(topology).to have_key(:kinds)
       expect(topology).to have_key(:icons)
+      expect(topology).to have_key(:filter_properties)
     end
   end
 

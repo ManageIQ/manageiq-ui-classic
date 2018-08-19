@@ -11,7 +11,7 @@
  *= require ./miq_tree
  *= require bower_components/codemirror/lib/codemirror
  *= require bower_components/codemirror/theme/eclipse
- *= require bower_components/kubernetes-topology-graph/dist/topology-graph
+ *= require kubernetes-topology-graph/dist/topology-graph
  *= require ./wizard
  *= require ./timeline
  *= require ./topology

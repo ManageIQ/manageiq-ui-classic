@@ -8,8 +8,7 @@ kubernetes-topology-graph {
 }
 
 .topology .legend {
-  padding-top: 5px;
-  font-family: sans-serif;
+  font-family: "Open Sans", Open Sans, sans-serif;
   font-size: 15px;
   display: inline-block;
   vertical-align: middle;
@@ -26,19 +25,26 @@ kubernetes-topology-graph {
   margin-top: 15px;
 }
 
+kubernetes-topology-filter,
 kubernetes-topology-icon {
   opacity: 0.4;
-  padding-bottom: 0;
+  padding: 10px 10px;
 }
 
+kubernetes-topology-filter.active,
 kubernetes-topology-icon.active {
   opacity: 1;
 }
 
+kubernetes-topology-filter svg,
 kubernetes-topology-icon svg {
   width: 39px !important;
   height: 39px !important;
   display: inline-block;
+}
+
+.kube-topology g {
+  font-family: "Open Sans", Open Sans, sans-serif;
 }
 
 .kube-topology g text.attached-label {
@@ -57,6 +63,8 @@ kubernetes-topology-icon svg {
 
 .kube-topology g circle {
   stroke-width: 2px;
+  stroke: #aaa;
+  fill: #fff;
 }
 
 .kube-topology g circle.success {
@@ -122,4 +130,20 @@ kubernetes-topology-icon svg {
 line.PhysicalServerPhysicalSwitch {
   stroke : #3f9c35;
   stroke-dasharray: 5;
+}
+
+.topology-filter-group {
+  float: left;
+  padding: 0px 10px;
+  margin: 10px 0px;
+}
+
+.topology-filter-group > label {
+  vertical-align: middle;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+.topology-filter-group:not(:first-child) {
+  border-left: 1px solid #d1d1d1;
 }

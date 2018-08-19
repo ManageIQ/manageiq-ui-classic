@@ -29,7 +29,7 @@
 //= require bower_components/d3/d3
 //= require bower_components/c3/c3
 //= require bower_components/lodash/lodash
-//= require bower_components/kubernetes-topology-graph/dist/topology-graph
+//= require kubernetes-topology-graph/dist/topology-graph
 //= require ./miq_browser_detect
 //= require ./miq_application
 //= require ./miq_flash
