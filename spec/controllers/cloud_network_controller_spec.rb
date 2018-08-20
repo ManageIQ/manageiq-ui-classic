@@ -274,7 +274,7 @@ describe CloudNetworkController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as admin_user
-      controller.instance_variable_set(:@_params, {:id=> network.id, :pressed => 'cloud_network_delete'})
+      controller.instance_variable_set(:@_params, :id => network.id, :pressed => 'cloud_network_delete')
     end
 
     it "testing " do

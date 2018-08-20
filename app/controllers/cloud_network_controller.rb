@@ -92,7 +92,7 @@ class CloudNetworkController < ApplicationController
 
   def delete_networks
     assert_privileges("cloud_network_delete")
-	  networks = find_records_with_rbac(CloudNetwork, checked_or_params)
+    networks = find_records_with_rbac(CloudNetwork, checked_or_params)
     networks_to_delete = []
     networks.each do |network|
       if network.supports_delete?
@@ -241,7 +241,7 @@ class CloudNetworkController < ApplicationController
 
   # dispatches operations to multiple networks
   def process_cloud_networks(networks, operation)
-	  return if networks.empty?
+    return if networks.empty?
 
     if operation == "destroy"
       networks.each do |network|
