@@ -1,6 +1,7 @@
 ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqService', 'DialogEditor', 'DialogEditorHttp', 'DialogValidation', 'dialogIdAction', function($window, miqService, DialogEditor, DialogEditorHttp, DialogValidation, dialogIdAction) {
   var vm = this;
 
+  vm.saveButtonDisabled = false;
   vm.saveDialogDetails = saveDialogDetails;
   vm.dismissChanges = dismissChanges;
 
@@ -103,6 +104,8 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     var dialogData;
     var dialogId;
 
+    vm.saveButtonDisabled = true;
+
     // load dialog data
     if (requestDialogAction() === 'edit') {
       action = 'edit';
@@ -141,6 +144,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   }
 
   function saveFailure(response) {
+    vm.saveButtonDisabled = false;
     miqService.miqFlash(
       'error',
       __('There was an error editing this dialog: ') + response.data.error.message
