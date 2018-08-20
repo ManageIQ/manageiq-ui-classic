@@ -7,8 +7,25 @@ require('whatwg-fetch');
 
 require('../app/assets/javascripts/miq_global');
 
+window.add_flash = (message, type) => {
+  console.log(`message: ${message}. Type: ${type}`);
+};
+window.miqFlashLater = () => { };
+
 import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
+ManageIQ.component = {};
 ManageIQ.angular.rxSubject = rxSubject;
+
+import { initializeStore } from '../app/javascript/miq-redux';
+import { history } from '../app/javascript/miq-component/react-history.ts';
+const store = initializeStore();
+
+ManageIQ.redux = {
+  store,
+  addReducer: store.injectReducers,
+  history,
+};
+
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
 

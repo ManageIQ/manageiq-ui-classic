@@ -1,0 +1,13 @@
+const prefix = '@@manageiq/ansibleCatalogItem/';
+export const LOAD_CATALOGS = `${prefix} Load catalogs`;
+export const LOAD_DIALOGS = `${prefix} Load dialogs`;
+export const LOAD_REPOS = `${prefix} LOAD_REPOS`;
+export const LOAD_PLAYBOOKS = `${prefix} LOAD_PLAYBOOKS`;
+export const LOAD_MACHINE_CREDENTIALS = `${prefix} LOAD_MACHINE_CREDENTIALS`;
+export const LOAD_CLOUD_TYPES = `${prefix} LOAD_CLOUD_TYPES`;
+export const LOAD_VAULT_CREDENTIALS = `${prefix} LOAD_VAULT_CREDENTIALS`;
+export const LOAD_CLOUD_CREDENTIALS = `${prefix} LOAD_CLOUD_CREDENTIALS`;
+export const LOAD_CATALOG_ITEM = `${prefix} LOAD_CATALOG_ITEM`;
+export const LOAD_CLOUD_CREDENTIAL = `${prefix} LOAD_CLOUD_CREDENTIAL`;
+export const CREATE_CATALOG_ITEM = `${prefix} Create catalog item`;
+export const DUPLICATE_DROPDOWNS = `${prefix} DUPLICATE_DROPDOWNS`;

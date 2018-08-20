@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExtraVarField component should render correctly 1`] = `
+<Component
+  field={
+    Object {
+      "fieldName": "key",
+      "isEditing": true,
+      "label": "Variable",
+      "name": "provision[0]",
+      "value": "2",
+    }
+  }
+>
+  <Field
+    format={[Function]}
+    inputColumnSize={12}
+    label=""
+    labelColumnSize={0}
+    name="provision[0].key"
+    parse={[Function]}
+    placeholder="Variable"
+    validate={[Function]}
+    validateOnMount={true}
+  >
+    <input
+      name="provision[0].key"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      type="hidden"
+      value=""
+    />
+  </Field>
+</Component>
+`;

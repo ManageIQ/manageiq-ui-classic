@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ansible catalog item form component should render correctly 1`] = `
+<div>
+  <div
+    id="flash_msg_div"
+  />
+  <ReactFinalForm
+    initialValues={
+      Object {
+        "description": "",
+        "dialogOption": "existing",
+        "dialog_id": "",
+        "display": false,
+        "long_description": "",
+        "name": "",
+        "provision_become_enabled": false,
+        "provision_cloud_credential_id": "",
+        "provision_cloud_type": "",
+        "provision_credential_id": "",
+        "provision_execution_ttl": "",
+        "provision_extra_vars": Array [],
+        "provision_hosts": "localhost",
+        "provision_log_output": "on_error",
+        "provision_playbook_id": "",
+        "provision_repository_id": "",
+        "provision_vault_credential_id": "",
+        "provision_verbosity": 0,
+        "remove_resources": "no_without_playbook",
+        "retirement_become_enabled": false,
+        "retirement_cloud_credential_id": "",
+        "retirement_cloud_type": "",
+        "retirement_credential_id": "",
+        "retirement_execution_ttl": "",
+        "retirement_extra_vars": Array [],
+        "retirement_hosts": "localhost",
+        "retirement_log_output": "on_error",
+        "retirement_playbook_id": "",
+        "retirement_repository_id": "",
+        "retirement_vault_credential_id": "",
+        "retirement_verbosity": 0,
+        "service_template_catalog_id": "",
+      }
+    }
+    mutators={
+      Object {
+        "copyValues": [Function],
+        "insert": [Function],
+        "move": [Function],
+        "pop": [Function],
+        "push": [Function],
+        "remove": [Function],
+        "shift": [Function],
+        "swap": [Function],
+        "unshift": [Function],
+        "update": [Function],
+      }
+    }
+    onSubmit={[Function]}
+    render={[Function]}
+  />
+</div>
+`;
