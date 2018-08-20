@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ansible catalog item reducer should duplicate drop downs 1`] = `
+Object {
+  "dropdowns": Object {
+    "provision_playbooks": Array [
+      Object {
+        "label": "playbook 1",
+        "value": 1,
+      },
+    ],
+    "retirement_playbooks": Array [
+      Object {
+        "label": "playbook 1",
+        "value": 1,
+      },
+    ],
+  },
+}
+`;
+
+exports[`Ansible catalog item reducer should load Cloud types list 1`] = `
+Object {
+  "dropdowns": Object {
+    "cloudTypes": Array [
+      Object {
+        "label": "test Credential type",
+        "value": "testCredentialType",
+      },
+    ],
+  },
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should load Playbooks 1`] = `
+Object {
+  "dropdowns": Object {
+    "provision_playbooks": Array [
+      Object {
+        "label": "test 1",
+        "value": 1,
+      },
+      Object {
+        "label": "test 2",
+        "value": 2,
+      },
+    ],
+  },
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should load a catalog 1`] = `
+Object {
+  "dropdowns": Object {
+    "catalogs": Array [
+      Object {
+        "label": "test",
+        "value": 1,
+      },
+      Object {
+        "label": "test 2",
+        "value": 2,
+      },
+    ],
+  },
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should load a catalog item 1`] = `
+Object {
+  "catalogItem": Object {
+    "id": 1,
+    "name": "test catalog item",
+  },
+  "dropdowns": Object {},
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should load a cloud credential 1`] = `
+Object {
+  "cloudCredential": Object {
+    "id": 1,
+    "name": "test cloud credential",
+  },
+  "dropdowns": Object {},
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should load a list of dialogs 1`] = `
+Object {
+  "dropdowns": Object {
+    "dialogs": Array [
+      Object {
+        "label": "Test 1",
+        "value": 1,
+      },
+      Object {
+        "label": "Test 2",
+        "value": 2,
+      },
+    ],
+  },
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should load cloud credentials 1`] = `
+Object {
+  "dropdowns": Object {
+    "provision_cloudCredentials": Array [
+      Object {
+        "label": "test 1",
+        "value": 1,
+      },
+      Object {
+        "label": "test 2",
+        "value": 2,
+      },
+    ],
+  },
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should load machine credentials 1`] = `
+Object {
+  "dropdowns": Object {
+    "machineCredentials": Array [
+      Object {
+        "label": "test 1",
+        "value": 1,
+      },
+      Object {
+        "label": "test 2",
+        "value": 2,
+      },
+    ],
+  },
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should load repos 1`] = `
+Object {
+  "dropdowns": Object {
+    "repos": Array [
+      Object {
+        "label": "test 1",
+        "value": 1,
+      },
+      Object {
+        "label": "test 2",
+        "value": 2,
+      },
+    ],
+  },
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should load vault credentials 1`] = `
+Object {
+  "dropdowns": Object {
+    "vaultCredentials": Array [
+      Object {
+        "label": "test 1",
+        "value": 1,
+      },
+      Object {
+        "label": "test 2",
+        "value": 2,
+      },
+    ],
+  },
+  "loading": false,
+}
+`;
+
+exports[`Ansible catalog item reducer should return the initial state 1`] = `
+Object {
+  "dropdowns": Object {},
+  "loading": false,
+}
+`;

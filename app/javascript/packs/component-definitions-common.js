@@ -8,6 +8,7 @@ import FormButtonsRedux from '../forms/form-buttons-redux';
 import MiqAboutModal from '../components/miq-about-modal';
 import CloudTennantForm from '../components/cloud-tenant-form/cloud-tenant-form';
 import ServiceForm from '../components/service-form';
+import AnsibleCatalogItemForm from '../react/ansibleCatalog';
 
 /**
 * Add component definitions to this file.
@@ -26,3 +27,4 @@ ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('CloudTennantForm', CloudTennantForm);
 ManageIQ.component.addReact('ServiceForm', ServiceForm);
+ManageIQ.component.addReact('AnsibleCatalogItemForm', AnsibleCatalogItemForm);

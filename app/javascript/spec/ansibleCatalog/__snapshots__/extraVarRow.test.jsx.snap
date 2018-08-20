@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExtraVarRow component should allow a button to be rendered 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="link"
+  disabled={false}
+  onClick={[MockFunction]}
+  type="button"
+>
+  <button
+    className="btn btn-link"
+    disabled={false}
+    onClick={[MockFunction]}
+    type="button"
+  >
+    <i
+      className="pficon pficon-edit"
+    />
+  </button>
+</Button>
+`;
+
+exports[`ExtraVarRow component should render correctly 1`] = `
+<ExtraVarRow
+  changeField={[MockFunction]}
+  extraVarsField="provisionExtraVars[0]"
+  fieldIndex={1}
+  fieldName="provisionExtraVars"
+  removeField={[MockFunction]}
+  values={
+    Array [
+      Object {
+        "default": "",
+        "key": "field1",
+      },
+      Object {
+        "default": "",
+        "key": "field2",
+      },
+    ]
+  }
+>
+  <tr>
+    <td
+      className=""
+      key="0"
+    >
+      <Component
+        field={
+          Object {
+            "fieldName": "key",
+            "isEditing": false,
+            "label": "Variable",
+            "name": "provisionExtraVars",
+            "value": "field2",
+          }
+        }
+      >
+        <div>
+          field2
+        </div>
+      </Component>
+    </td>
+    <td
+      className="has-error"
+      key="1"
+    >
+      <Component
+        field={
+          Object {
+            "fieldName": "default",
+            "isEditing": false,
+            "label": "Default",
+            "name": "provisionExtraVars",
+            "value": "",
+          }
+        }
+      >
+        <div />
+      </Component>
+    </td>
+    <td>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="link"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        <button
+          className="btn btn-link"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          <i
+            className="pficon pficon-edit"
+          />
+        </button>
+      </Button>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="link"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        <button
+          className="btn btn-link"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          <i
+            className="pficon pficon-delete"
+          />
+        </button>
+      </Button>
+    </td>
+  </tr>
+</ExtraVarRow>
+`;

@@ -1,3 +1,4 @@
+require('whatwg-fetch');
 window.angular = require('angular');
 window.Rx = require('rxjs');
 window.$ = require('jquery');
@@ -18,11 +19,32 @@ require('../app/assets/javascripts/miq_application');
 require('../app/assets/javascripts/miq_api');
 require('../app/assets/javascripts/miq_angular_application');
 
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16'
+Enzyme.configure({ adapter: new Adapter() })
+
 import { API } from '../app/javascript/http_api';
 window.vanillaJsAPI = API;
 
+window.add_flash = (message, type) => {
+    console.log(`message: ${message}. Type: ${type}`);
+ };
+window.miqFlashLater = () => { };
+
 import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
+ManageIQ.component = {};
 ManageIQ.angular.rxSubject = rxSubject;
+
+import { initializeStore } from '../app/javascript/miq-redux';
+import { history } from '../app/javascript/miq-component/react-history.ts';
+const store = initializeStore();
+
+ManageIQ.redux = {
+    store,
+    addReducer: store.injectReducers,
+    history,
+  };
+
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
 
