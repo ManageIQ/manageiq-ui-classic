@@ -1362,9 +1362,7 @@ module ApplicationHelper
   end
 
   def plugin_name(engine)
-    start_marker = "ManageIQ::"
-    end_marker = "::Engine"
-    engine.to_s[/#{Regexp.escape(start_marker)}(.*?)#{Regexp.escape(end_marker)}/m, 1]
+    engine.respond_to?(:plugin_name) ? engine.plugin_name : engine.to_s.gsub(/ManageIQ::|::Engine/, '')
   end
 
   def vmdb_plugins_sha
