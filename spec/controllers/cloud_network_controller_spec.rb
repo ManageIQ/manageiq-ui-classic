@@ -267,4 +267,19 @@ describe CloudNetworkController do
       end
     end
   end
+
+  describe "#delete_networks" do
+    let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+    let(:network) { FactoryGirl.create(:cloud_network) }
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as admin_user
+      controller.instance_variable_set(:@_params, :id => network.id, :pressed => 'cloud_network_delete')
+    end
+
+    it "testing " do
+      allow(controller).to receive(:process_cloud_networks).with([network], "destroy")
+      controller.send(:delete_networks)
+    end
+  end
 end
