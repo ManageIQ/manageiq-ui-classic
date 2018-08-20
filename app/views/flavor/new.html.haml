@@ -1,2 +1,5 @@
 #main_div
-  = render :partial => 'flavor_form', :locals => {:newRecord => true}
+  %flavor-form-component{ 'flavorId' => @id || "new"}
+:javascript
+  ManageIQ.angular.app.value('flavorId', '#{@id || "new"}');
+  miq_bootstrap('flavor-form-component')
