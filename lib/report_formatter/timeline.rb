@@ -34,14 +34,23 @@ module ReportFormatter
       # some of the OOTB reports have db as EventStream or PolicyEvent,
       # those do not have event categories, so need to go thru else block for such reports.
       if (mri.db == "EventStream" || mri.db == "PolicyEvent") && mri.rpt_options.try(:[], :categories)
-        mri.rpt_options[:categories].each do |_, options|
+        event_map = mri.table.data.each_with_object({}) do |event, buckets|
+          bucket_name = mri.rpt_options[:categories].detect do |_, options|
+            options[:include_set].include?(event.event_type)
+          end&.last.try(:[], :display_name)
+
+          bucket_name ||= mri.rpt_options[:categories].detect do |_, options|
+            options[:regexes].any? { |regex| regex.match(event.event_type) }
+          end.last[:display_name]
+
+          buckets[bucket_name] ||= []
+          buckets[bucket_name] << event
+        end
+
+        event_map.each do |name, events|
           @events_data = []
-          all_events = mri.table.data.select { |e| options[:event_groups].include?(e.event_type) }
-          all_events.each do |row|
-            tl_event(row, col) # Add this row to the tl event xml
-          end
-          @events.push(:name => options[:display_name],
-                       :data => [@events_data])
+          events.each { |row| tl_event(row, col) }
+          @events.push(:name => name, :data => [@events_data])
         end
       else
         mri.table.data.each_with_index do |row, _d_idx|

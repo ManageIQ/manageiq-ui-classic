@@ -126,9 +126,11 @@ describe ReportFormatter::TimelineMessage do
                                    :headers   => %w(id name event_type timestamp),
                                    :timeline  => {:field => "EmsEvent-timestamp", :position => "Last"})
       @report.rpt_options = {:categories => {:power    => {:display_name => "Power Activity",
-                                                           :event_groups => %w(VmPoweredOffEvent VmPoweredOnEvent)},
+                                                           :include_set  => %w(VmPoweredOffEvent VmPoweredOnEvent),
+                                                           :regexes      => []},
                                              :snapshot => {:display_name => "Snapshot Activity",
-                                                           :event_groups => %w(AlarmCreatedEvent AlarmRemovedEvent)}}}
+                                                           :include_set  => %w(AlarmCreatedEvent AlarmRemovedEvent),
+                                                           :regexes      => []}}}
 
       data = []
       30.times do
@@ -172,6 +174,87 @@ describe ReportFormatter::TimelineMessage do
       expect(JSON.parse(events)[0]["data"][0].length).to eq(45)
     end
   end
+
+  describe '#events count for regex categories' do
+    def stub_ems_event(event_type)
+      ems = FactoryGirl.create(:ems_redhat)
+      EventStream.create!(:event_type => event_type, :ems_id => ems.id)
+    end
+
+    before do
+      @report = FactoryGirl.create(
+        :miq_report,
+        :db        => "EventStream",
+        :col_order => %w(id name event_type timestamp),
+        :headers   => %w(id name event_type timestamp),
+        :timeline  => {:field => "EmsEvent-timestamp", :position => "Last"}
+      )
+      @report.rpt_options = {
+        :categories => {
+          :power    => {
+            :display_name => "Power Activity",
+            :include_set  => [],
+            :regexes      => [/Event$/]
+          },
+          :snapshot => {
+            :display_name => "Snapshot Activity",
+            :include_set  => %w(AlarmCreatedEvent AlarmRemovedEvent),
+            :regexes      => []
+          }
+        }
+      }
+
+      data = []
+      (1..5).each do |n|
+        event_type = "VmPower#{n}Event"
+        data.push(
+          Ruport::Data::Record.new(
+            "id"         => stub_ems_event(event_type).id,
+            "name"       => "Baz",
+            "event_type" => event_type,
+            "timestamp"  => Time.zone.now
+          )
+        )
+      end
+
+      7.times do
+        data.push(
+          Ruport::Data::Record.new(
+            "id"         => stub_ems_event("AlarmRemovedEvent").id,
+            "name"       => "Baz",
+            "event_type" => "AlarmRemovedEvent",
+            "timestamp"  => Time.zone.now
+          )
+        )
+      end
+
+      @report.table = Ruport::Data::Table.new(
+        :column_names => %w(id name event_type timestamp),
+        :data         => data
+      )
+    end
+
+    it 'shows correct count of timeline events based on categories' do
+      allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
+      events = ReportFormatter::ReportTimeline.new.build_document_body
+      expect(JSON.parse(events)[0]["data"][0].length).to eq(5)
+      expect(JSON.parse(events)[1]["data"][0].length).to eq(7)
+    end
+
+    it 'shows correct count of timeline events together for report object with no categories' do
+      @report.rpt_options = {}
+      allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
+      events = ReportFormatter::ReportTimeline.new.build_document_body
+      expect(JSON.parse(events)[0]["data"][0].length).to eq(12)
+    end
+
+    it 'shows correct count of timeline events for timeline based report when rpt_options is nil' do
+      @report.rpt_options = nil
+      allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
+      events = ReportFormatter::ReportTimeline.new.build_document_body
+      expect(JSON.parse(events)[0]["data"][0].length).to eq(12)
+    end
+  end
 end
 
 describe '#set data for headers that exist in col headers' do
@@ -188,9 +271,11 @@ describe '#set data for headers that exist in col headers' do
                                  :headers   => %w(id name event_type timestamp vm_location),
                                  :timeline  => {:field => "EmsEvent-timestamp", :position => "Last"})
     @report.rpt_options = {:categories => {:power    => {:display_name => "Power Activity",
-                                                         :event_groups => %w(VmPoweredOffEvent VmPoweredOnEvent)},
+                                                         :include_set  => %w(VmPoweredOffEvent VmPoweredOnEvent),
+                                                         :regexes      => []},
                                            :snapshot => {:display_name => "Snapshot Activity",
-                                                         :event_groups => %w(AlarmCreatedEvent AlarmRemovedEvent)}}}
+                                                         :include_set  => %w(AlarmCreatedEvent AlarmRemovedEvent),
+                                                         :regexes      => []}}}
 
     data = [Ruport::Data::Record.new("id"          => stub_ems_event("VmPoweredOffEvent").id,
                                      "name"        => "Baz",
