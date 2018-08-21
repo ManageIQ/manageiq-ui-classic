@@ -42,8 +42,9 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
 
       function getOwnershipFormData(response) {
         var data = response.data;
-        vm.ownershipModel.user = data.user;
-        vm.ownershipModel.group = data.group;
+        // if value null change it to empty string to match with values in select
+        vm.ownershipModel.user = data.user === null ? '' : data.user;
+        vm.ownershipModel.group = data.group === null ? '' : data.group;
         vm.afterGet = true;
         vm.modelCopy = angular.copy( vm.ownershipModel );
         miqService.sparkleOff();
