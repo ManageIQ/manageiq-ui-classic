@@ -150,9 +150,6 @@ module ApplicationController::MiqRequestMethods
     }
 
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
-
-    templates = Rbac.filtered(@edit[:template_kls].eligible_for_provisioning).sort_by { |a| a.name.downcase }
-    build_vm_grid(templates, @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
     render :update do |page|
       page << javascript_prologue
       page.replace("pre_prov_div", :partial => "miq_request/pre_prov")
@@ -188,8 +185,6 @@ module ApplicationController::MiqRequestMethods
       @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
 
       @edit[:template_kls] = get_template_kls
-      templates = Rbac.filtered(@edit[:template_kls].eligible_for_provisioning)
-      build_vm_grid(templates, @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
     end
     session[:changed] = false # Turn off the submit button
     @edit[:explorer] = true if @explorer
