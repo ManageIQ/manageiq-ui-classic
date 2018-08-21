@@ -2,11 +2,15 @@ if [ "$TEST_SUITE" = "spec" ]; then
   bundle exec codeclimate-test-reporter;
 fi
 
-# Collapse Travis output https://github.com/travis-ci/travis-ci/issues/2158
-echo "travis_fold:start:GEMFILE_LOCK"
-bundle show
-echo "travis_fold:end:GEMFILE_LOCK"
+if [ "$TEST_SUITE" = "spec:compile" ]; then
+  # Collapse Travis output https://github.com/travis-ci/travis-ci/issues/2158
+  echo "travis_fold:start:GEMFILE_LOCK"
+  bundle show
+  echo "travis_fold:end:GEMFILE_LOCK"
+fi
 
-echo "travis_fold:start:YARN_LOCK"
-yarn list
-echo "travis_fold:end:YARN_LOCK"
+if [ "$TEST_SUITE" = "spec:javascript" ]; then
+  echo "travis_fold:start:YARN_LOCK"
+  yarn list
+  echo "travis_fold:end:YARN_LOCK"
+fi
