@@ -8,8 +8,5 @@ unless gem_root.join("spec/manageiq").exist?
   system "git clone https://github.com/ManageIQ/manageiq.git --branch master --depth 1 spec/manageiq"
 end
 
-# ensure a log dir always exists
-system "mkdir -p spec/manageiq/log"
-
 require gem_root.join("spec/manageiq/lib/manageiq/environment").to_s
 ManageIQ::Environment.manageiq_plugin_setup
