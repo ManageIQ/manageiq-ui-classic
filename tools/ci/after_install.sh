@@ -6,3 +6,7 @@ fi
 echo "travis_fold:start:GEMFILE_LOCK"
 bundle show
 echo "travis_fold:end:GEMFILE_LOCK"
+
+echo "travis_fold:start:YARN_LOCK"
+cat yarn.lock
+echo "travis_fold:end:YARN_LOCK"
