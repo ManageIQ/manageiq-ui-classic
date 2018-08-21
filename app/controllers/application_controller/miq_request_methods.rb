@@ -144,8 +144,8 @@ module ApplicationController::MiqRequestMethods
     report_scopes = [:eligible_for_provisioning]
     report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
     options = {
-      :model => @view.db,
-      :gtl_type => "table",
+      :model       => @view.db,
+      :gtl_type    => "table",
       :named_scope => report_scopes
     }
 
@@ -170,15 +170,15 @@ module ApplicationController::MiqRequestMethods
       path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", "ProvisionTemplates.yaml").to_s
       @view = MiqReport.new(YAML.load(File.open(path_to_report)))
       @view.db = get_template_kls.to_s
-      report_scopes = [:eligible_for_provisioning, :non_deprecated]
+      report_scopes = %i(eligible_for_provisioning non_deprecated)
       options = {
-        :model => @view.db,
-        :gtl_type => "table",
-        :named_scope => report_scopes,
+        :model          => @view.db,
+        :gtl_type       => "table",
+        :named_scope    => report_scopes,
         :path_to_report => path_to_report,
       }
       @custom_action = {
-        :url => "/miq_request/pre_prov/?sel_id=",
+        :url  => "/miq_request/pre_prov/?sel_id=",
         :type => 'provisioning'
       }
 

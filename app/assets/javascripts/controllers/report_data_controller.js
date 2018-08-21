@@ -87,8 +87,8 @@
         this.refreshData(event.data);
       } else if (event.setScope && event.setScope.name === CONTROLLER_NAME) {
         this.setScope(event.data);
-      } else if (event.type === 'GTL_CLICKED' && event.actionType === 'provisioning') {
-        this.gtlSetOneRowActive(event.payload.item);
+      } else if (event.type === 'gtlSetOneRowActive') {
+        this.gtlSetOneRowActive(event.item);
       }
 
       if (event.controller === CONTROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
