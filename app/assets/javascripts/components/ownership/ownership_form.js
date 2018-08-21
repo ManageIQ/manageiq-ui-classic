@@ -1,8 +1,8 @@
 ManageIQ.angular.app.component('ownershipFormComponent', {
   bindings: {
-    objectIds: '<',
-    optsUser: '<',
-    optsGroup: '<',
+    recordIds: '<',
+    optionsUser: '<',
+    optionsGroup: '<',
   },
 
   controllerAs: 'vm',
@@ -21,7 +21,7 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
         vm.saveable = miqService.saveable;
         ManageIQ.angular.scope = vm;
         miqService.sparkleOn();
-         $http.post('ownership_form_fields', {object_ids: vm.objectIds})
+        $http.post('ownership_form_fields', {object_ids: vm.recordIds})
           .then(getOwnershipFormData)
           .catch(miqService.handleFailure);
       };
@@ -33,7 +33,7 @@ ManageIQ.angular.app.component('ownershipFormComponent', {
           miqService.miqAjaxButton(url);
         } else {
           miqService.miqAjaxButton(url, {
-            objectIds: vm.objectIds,
+            objectIds: vm.recordIds,
             user: vm.ownershipModel.user,
             group: vm.ownershipModel.group,
           });
