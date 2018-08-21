@@ -5,7 +5,7 @@
 - optsUser += ownership_user_options.sort
 
 - if @ownershipitems.length > 1
-  - optsGroup = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No User Group')}>", '']] + @groups.sort
+  - optsGroup = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No User Group')}>", '']]
 - else
   - user_group = MiqGroup.find_by(:id => @group).tenant_group? ? @group : ''
   - optsGroup =  [["<#{_('No User Group')}>", user_group]]
@@ -15,9 +15,9 @@
   %strong
   = _('Note: Some items might be hidden due to the possibility of an ownership change')
 
-
-
-%ownership-form-component{'object-ids' => @ownershipitems.collect(&:id),'opts-user' => optsUser,'opts-group' => optsGroup}
+%ownership-form-component{'object-ids' => @ownershipitems.collect(&:id),
+                          'opts-user'  => optsUser,
+                          'opts-group' => optsGroup}
 
 - if @ownershipitems
   - @embedded = true
