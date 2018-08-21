@@ -1,5 +1,6 @@
 module VmHelper::TextualSummary
   include TextualMixins::TextualAdvancedSettings
+  include TextualMixins::TextualCustomButtonEvents
   include TextualMixins::TextualDescription
   include TextualMixins::TextualDrift
   include TextualMixins::TextualFilesystems
@@ -43,7 +44,7 @@ module VmHelper::TextualSummary
       _("Relationships"),
       %i(
         ems cluster host resource_pool storage service parent_vm genealogy drift scan_history
-        cloud_network cloud_subnet
+        cloud_network cloud_subnet custom_button_events
       )
     )
   end

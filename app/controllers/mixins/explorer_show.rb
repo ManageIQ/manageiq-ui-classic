@@ -159,6 +159,11 @@ module Mixins
       end
     end
 
+    def custom_button_events
+      @lastaction = "custom_button_events"
+      show_association('custom_button_events', _('Custom Button Events'), :custom_button_events, CustomButtonEvent)
+    end
+
     # show a single item from a detail list
     def show_item
       @showtype = "item"
@@ -192,6 +197,7 @@ module Mixins
                                :parent      => @record,
                                :association => association,
                                :named_scope => scopes,
+                               :clickable   => clickable_links?(db),
                                :dbname      => "#{@db}item")  # Get the records into a view & paginator
 
       if @explorer # In explorer?
@@ -216,6 +222,10 @@ module Mixins
       else
         render :action => "show"
       end
+    end
+
+    def clickable_links?(db)
+      db == CustomButtonEvent ? false : true
     end
   end
 end

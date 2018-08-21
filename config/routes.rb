@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # default routes for each controller
   default_routes = %w(
     report_data
+    custom_button_events
   )
 
   # grouped routes
@@ -1797,6 +1798,7 @@ Rails.application.routes.draw do
     :host                     => {
       :get  => %w(
         advanced_settings
+        custom_button_events
         dialog_load
         download_data
         download_summary_pdf
