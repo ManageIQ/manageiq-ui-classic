@@ -8,5 +8,5 @@ bundle show
 echo "travis_fold:end:GEMFILE_LOCK"
 
 echo "travis_fold:start:YARN_LOCK"
-cat yarn.lock
+yarn list
 echo "travis_fold:end:YARN_LOCK"
