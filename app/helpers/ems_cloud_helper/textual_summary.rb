@@ -7,7 +7,7 @@ module EmsCloudHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(provider_region hostname ipaddress type port guid region keystone_v3_domain_id)
+      %i(description hostname ipaddress type port guid region keystone_v3_domain_id)
     )
   end
 
@@ -38,9 +38,9 @@ module EmsCloudHelper::TextualSummary
   #
   # Items
   #
-  def textual_provider_region
-    return nil if @record.provider_region.nil?
-    {:label => _("Region"), :value => @record.description}
+  def textual_description
+    return nil if @record.description.blank?
+    {:label => _("Description"), :value => @record.description}
   end
 
   def textual_region
