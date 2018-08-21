@@ -16,7 +16,6 @@
               - @categories.delete(cat_key)
           = select_tag("tag_cat",
             options_for_select(@categories, @edit[:cat].name),
-            "data-miq_observe"     => {:url => url}.to_json,
             "data-live-search"     => "true",
             "data-container"       => "body",
             "class"                => "selectpicker")
