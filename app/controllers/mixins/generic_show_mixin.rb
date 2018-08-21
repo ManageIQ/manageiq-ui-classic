@@ -154,6 +154,11 @@ module Mixins
       nested_list(Vm, :breadcrumb_title => _("Direct VMs"))
     end
 
+    def display_custom_button_events
+      @no_checkboxes = true # FIXME: move this to a parameter below and handle with ReportDataAdditionalOptions
+      nested_list(CustomButtonEvent, :breadcrumb_title => _('Custom Button Events'), :clickable => false, :parent_method => 'custom_button_events')
+    end
+
     def display_resource_pools
       nested_list(ResourcePool)
     end
