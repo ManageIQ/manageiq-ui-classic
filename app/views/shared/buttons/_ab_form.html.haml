@@ -1,6 +1,6 @@
 #ab_form
   #policy_bar
-    - if @resolve[:uri] && Hash[*@resolve[:target_classes].flatten].invert[@resolve[:new][:target_class]] == @edit[:new][:target_class]
+    - if session[:resolve_object].present?
       = link_to({:action => "resolve", :button => "paste"},
         "data-miq_sparkle_on"  => true,
         "data-miq_sparkle_off" => true,
