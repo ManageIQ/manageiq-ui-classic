@@ -28,7 +28,7 @@ ManageIQ.angular.app.component('ownershipForm', {
 
       var ownershipEditButtonClicked = function(buttonName, serializeFields) {
         miqService.sparkleOn();
-        var url = 'ownership_update/' + '?button=' + buttonName;
+        var url = 'ownership_update/?button=' + buttonName;
         if (serializeFields === undefined) {
           miqService.miqAjaxButton(url);
         } else {
@@ -60,20 +60,15 @@ ManageIQ.angular.app.component('ownershipForm', {
         $scope.angularForm.$setPristine(true);
       };
 
-      vm.resetClicked = function() {
+      vm.resetClicked = function(angularForm) {
         vm.ownershipModel = angular.copy( vm.modelCopy );
-        $scope.angularForm.$setPristine(true);
+        angularForm.$setPristine(true);
         miqService.miqFlash("warn", __("All changes have been reset"));
       };
 
       vm.saveClicked = function() {
         ownershipEditButtonClicked('save', true);
       };
-
-      vm.addClicked = function() {
-        vm.saveClicked();
-      };
-
   }],
 
   templateUrl: '/static/shared/ownership.html.haml',
