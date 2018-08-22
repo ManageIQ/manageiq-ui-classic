@@ -265,7 +265,7 @@ module Mixins
                      "Delete initiated for %{count} Providers",
                      providers.length) % {:count => providers.length})
       end
-      replace_right_cell(:replace_trees => [x_active_accord])
+      replace_right_cell
     end
 
     def refresh
