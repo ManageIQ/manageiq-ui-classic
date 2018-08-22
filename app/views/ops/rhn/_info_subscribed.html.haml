@@ -33,6 +33,12 @@
     .col-md-10
       %p.form-control-static
         = @customer.update_repo_name
+  .form-group
+    %label.control-label.col-md-2
+      = _("HTTP Proxy")
+    .col-md-10
+      %p.form-control-static
+        = @customer.registration_http_proxy_server.presence || _("Not Available")
 
 -#
   to be enabled later
