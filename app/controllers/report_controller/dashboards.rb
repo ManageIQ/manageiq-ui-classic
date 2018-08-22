@@ -318,7 +318,7 @@ module ReportController::Dashboards
       return
     end
     # no need to check this for default dashboard, it doesn't belong to any group
-    if @sb[:nodes][2] != "d"
+    if @sb[:nodes][1] == "g_g"
       ws = MiqWidgetSet.where(:owner_id => @sb[:nodes][2])
       # make sure description is unique within group
       ws.each do |w|
