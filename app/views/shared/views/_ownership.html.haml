@@ -15,9 +15,9 @@
   %strong
   = _('Note: Some items might be hidden due to the possibility of an ownership change')
 
-%ownership-form-component{'record-ids'    => @ownershipitems.collect(&:id),
-                          'options-user'  => options_user,
-                          'options-group' => options_group}
+%ownership-form{'record-ids'    => @ownershipitems.collect(&:id),
+                'options-user'  => options_user,
+                'options-group' => options_group}
 
 - if @ownershipitems
   - @embedded = true
@@ -26,7 +26,4 @@
   = render :partial => "layouts/gtl"
 
 :javascript
-  miq_bootstrap('ownership-form-component')
-
-
-
+  miq_bootstrap('ownership-form')

@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('ownershipFormComponent', {
+ManageIQ.angular.app.component('ownershipForm', {
   bindings: {
     recordIds: '<',
     optionsUser: '<',
