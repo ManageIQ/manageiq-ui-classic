@@ -27,10 +27,8 @@ class PlanningController < ApplicationController
     @layout = "miq_capacity_planning"
 
     vm_opts = VimPerformancePlanning.vm_default_options(@sb[:options][:vm_mode])
-    if (vm_opts[:cpu] && @sb[:options][:trend_cpu]) || # Check that at least one required metric is checked
-       (vm_opts[:vcpus] && @sb[:options][:trend_vcpus]) ||
-       (vm_opts[:memory] && @sb[:options][:trend_memory]) ||
-       (vm_opts[:storage] && @sb[:options][:trend_storage])
+    # Check that at least one required metric is checked
+    if [%i(cpu trend_cpu), %i(vcpus trend_vcpus), %i(memory trend_memory), %i(storage trend_storage)].any? { |x, y| vm_opts[x] && @sb[:options][y] }
       perf_planning_gen_data
       @sb[:options][:submitted_vm_mode] = @sb[:options][:vm_mode] # Save for display
       if @sb[:rpt]
