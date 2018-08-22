@@ -52,17 +52,17 @@ class OrchestrationStackController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                          # Restore @edit for adv search box
+    @edit = session[:edit] # Restore @edit for adv search box
 
-    params[:display] = @display if ["instances"].include?(@display)  # Were we displaying vms/hosts/storages
-    params[:page] = @current_page if @current_page.nil?   # Save current page for list refresh
+    params[:display] = @display if ["instances"].include?(@display) # Were we displaying vms/hosts/storages
+    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
 
     if params[:pressed] == "custom_button"
       custom_buttons
       return
     end
 
-    if params[:pressed].starts_with?("instance_")        # Handle buttons from sub-items screen
+    if params[:pressed].starts_with?("instance_") # Handle buttons from sub-items screen
       pfx = pfx_for_vm_button_pressed(params[:pressed])
       process_vm_buttons(pfx)
 
@@ -77,7 +77,7 @@ class OrchestrationStackController < ApplicationController
               "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
         @refresh_div = "main_div"
         @refresh_partial = "layouts/gtl"
-        show                                                        # Handle VMs buttons
+        show # Handle VMs buttons
       end
     elsif params[:pressed] == "make_ot_orderable"
       make_ot_orderable
@@ -89,7 +89,7 @@ class OrchestrationStackController < ApplicationController
       orchestration_templates_view
       return
     else
-      params[:page] = @current_page if @current_page.nil?                     # Save current page for list refresh
+      params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
       @refresh_div = "main_div" # Default div for button.rjs to refresh
       case params[:pressed]
       when "orchestration_stack_delete"
@@ -116,12 +116,10 @@ class OrchestrationStackController < ApplicationController
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                    "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
       render_or_redirect_partial(pfx)
+    elsif @refresh_div == "main_div" && @lastaction == "show_list"
+      replace_gtl_main_div
     else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      render_flash
     end
   end
 
