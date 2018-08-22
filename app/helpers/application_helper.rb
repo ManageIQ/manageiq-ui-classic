@@ -163,6 +163,7 @@ module ApplicationHelper
   }.freeze
 
   HAS_ASSOCATION = {
+    "CustomButtonEvent" => "custom_button_events",
     "groups"           => "groups",
     "users"            => "users",
     "event_logs"       => "event_logs",
@@ -382,6 +383,7 @@ module ApplicationHelper
 
   def view_to_association(view, parent)
     case view.db
+    when "CustomButtonEvent"           then "custom_button_events"
     when "OrchestrationStackOutput"    then "outputs"
     when "OrchestrationStackParameter" then "parameters"
     when "OrchestrationStackResource"  then "resources"
