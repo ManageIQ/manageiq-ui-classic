@@ -90,14 +90,15 @@ module OpsController::Settings::RHN
     db = MiqDatabase.first
     username, = db.auth_user_pwd(:registration)
     MiqHashStruct.new(
-      :registered        => !username.blank?,
-      :registration_type => db.registration_type,
-      :user_name         => username,
-      :server            => db.registration_server,
-      :company_name      => db.registration_organization_name,
-      :subscription      => rhn_subscription_map[db.registration_type] || 'None',
-      :update_repo_name  => db.update_repo_name,
-      :version_available => db.cfme_version_available
+      :registered                     => !username.blank?,
+      :registration_type              => db.registration_type,
+      :user_name                      => username,
+      :server                         => db.registration_server,
+      :company_name                   => db.registration_organization_name,
+      :subscription                   => rhn_subscription_map[db.registration_type] || 'None',
+      :update_repo_name               => db.update_repo_name,
+      :version_available              => db.cfme_version_available,
+      :registration_http_proxy_server => db.registration_http_proxy_server
     )
   end
 
