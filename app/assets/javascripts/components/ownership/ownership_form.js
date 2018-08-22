@@ -57,7 +57,6 @@ ManageIQ.angular.app.component('ownershipForm', {
 
       vm.cancelClicked = function() {
         ownershipEditButtonClicked('cancel');
-        $scope.angularForm.$setPristine(true);
       };
 
       vm.resetClicked = function(angularForm) {
@@ -72,5 +71,4 @@ ManageIQ.angular.app.component('ownershipForm', {
   }],
 
   templateUrl: '/static/shared/ownership.html.haml',
-
 });
