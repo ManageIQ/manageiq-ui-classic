@@ -307,14 +307,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   $scope.isBasicInfoValid = function() {
     if(($scope.currentTab == "default" && $scope.emsCommonModel.emstype != "azure") &&
       ($scope.emsCommonModel.emstype == "ec2" ||
-       $scope.emsCommonModel.emstype == "openstack" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "scvmm" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "openstack_infra" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "nuage_network"  && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "rhevm" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype === "kubevirt" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "vmwarews" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "vmware_cloud" && $scope.emsCommonModel.default_hostname) &&
+       ['kubevirt', 'nuage_network', 'openstack', 'openstack_infra', 'rhevm', 'scvmm', 'vmwarews', 'vmware_cloud'].includes($scope.emsCommonModel.emstype) &&
+       $scope.emsCommonModel.default_hostname) &&
       ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
        $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
       return true;
