@@ -10,18 +10,15 @@ describe('ownershipForm', function() {
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
     $scope = $rootScope.$new();
-    $scope.ownershipModel = {
-      owner: '',
-      group: '',
-    };
     $httpBackend = _$httpBackend_;
+    $componentController = _$componentController_;
 
     var bindings = {
       recordIds: [1000000000001,1000000000003],
-      optionsUser: 'testUser',
-      optionsGroup: 'testGroup'
+      optionsUser: [["No User User", '']],
+      optionsGroup: [["No User Group", '']]
     };
-    vm = _$componentController_('ownershipForm', null, bindings);
+    vm = $componentController('ownershipForm', null, bindings);
     var response = {user: null, group: null};
     $httpBackend.whenPOST('ownership_form_fields', {object_ids: bindings.recordIds}).respond(response);
 
@@ -33,16 +30,64 @@ describe('ownershipForm', function() {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
+
   describe('#init', function() {
     var expectedModel = {
-      owner: '',
+      user: '',
       group: '',
     };
+
     it('sets the vmCloudModel correctly', function(){
       expect(vm.ownershipModel).toEqual(expectedModel);
     });
+
     it('sets the modelCopy correctly', function(){
       expect(vm.modelCopy).toEqual(expectedModel);
-    })
+    });
+  });
+
+  describe('#cancelClicked', function() {
+    beforeEach(function(){
+      vm.cancelClicked();
+    });
+    it('miqService.miqAjaxButton is called', function(){
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith("ownership_update/?button=cancel");
+    });
+  });
+
+  describe('#resetClicked', function() {
+    beforeEach(function(){
+      vm.ownershipModel = {
+        user: 'changed value',
+        group: 'changed value',
+      };
+
+      $scope.angularForm = {
+        $setPristine: function(value) {},
+      };
+
+      vm.resetClicked($scope.angularForm);
+    });
+
+    it('model is reset to original value', function(){
+      expect(vm.modelCopy).toEqual(vm.ownershipModel);
+    });
+
+    it('sets flash message to be a warning with correct message', function() {
+      expect(miqService.miqFlash).toHaveBeenCalledWith("warn", "All changes have been reset");
+    });
+  });
+
+  describe('#saveClicked', function() {
+    beforeEach(function(){
+      vm.ownershipModel = {
+        user: 'changed value',
+        group: 'changed value',
+      };
+      vm.saveClicked();
+    });
+    it('miqService.miqAjaxButton is called', function(){
+        expect(miqService.miqAjaxButton).toHaveBeenCalledWith("ownership_update/?button=save",{ objectIds: vm.recordIds, user: 'changed value', group: 'changed value' });
+    });
   });
 });
