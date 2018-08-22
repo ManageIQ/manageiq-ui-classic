@@ -122,7 +122,7 @@
     %label.control-label.col-md-2
       = _('Group by')
     .col-md-8
-      - opts = [["#{_('Date')}", "date"], ["#{_(@edit[:new][:cb_model])}", "vm"]]
+      - opts = [["#{_('Date')}", "date"], ["#{_('Date Only')}", "date-only"], ["#{_(@edit[:new][:cb_model])}", "vm"]]
       - opts += [["#{_('Tag')}", "tag"]] unless @edit[:new][:model] == "ChargebackContainerImage"
       - opts += [["#{_('Project')}", "project"]] if @edit[:new][:model] == "ChargebackContainerImage"
       = select_tag("cb_groupby",
