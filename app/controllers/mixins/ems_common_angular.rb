@@ -433,7 +433,7 @@ module Mixins
                         :kubevirt_tls_ca_certs         => kubevirt_tls_ca_certs,
                         :kubevirt_auth_status          => kubevirt_auth_status,
                         :kubevirt_password             => kubevirt_password,
-                        :kubevirt_password_exists      => @ems.authentication_token(:kubevirt).nil? ? false : true,
+                        :kubevirt_password_exists      => !@ems.authentication_token(:kubevirt).nil?,
       } if controller_name == "ems_infra"
 
       if controller_name == "ems_container"
@@ -455,7 +455,7 @@ module Mixins
                          :provider_region                     => @ems.provider_region,
                          :default_userid                      => @ems.authentication_userid.to_s,
                          :service_account                     => service_account.to_s,
-                         :bearer_token_exists                 => @ems.authentication_token(:bearer).nil? ? false : true,
+                         :bearer_token_exists                 => !@ems.authentication_token(:bearer).nil?,
                          :ems_controller                      => controller_name,
                          :default_auth_status                 => default_auth_status,
                          :metrics_auth_status                 => metrics_auth_status.nil? ? false : metrics_auth_status,
@@ -473,7 +473,7 @@ module Mixins
                          :kubevirt_tls_ca_certs               => kubevirt_tls_ca_certs,
                          :kubevirt_auth_status                => kubevirt_auth_status,
                          :kubevirt_password                   => kubevirt_password,
-                         :kubevirt_password_exists            => @ems.authentication_token(:kubevirt).nil? ? false : true,
+                         :kubevirt_password_exists            => !@ems.authentication_token(:kubevirt).nil?,
                          :virtualization_selection            => retrieve_virtualization_selection}
       end
 
