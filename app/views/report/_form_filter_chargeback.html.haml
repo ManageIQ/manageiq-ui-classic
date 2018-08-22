@@ -152,13 +152,12 @@
     %label.control-label.col-md-2
       = _('Group by')
     .col-md-8
-      - opts = [["#{_('Date')}", "date"],["#{_('Date Only')}", "date-only"], ["#{_(@edit[:new][:cb_model])}", "vm"]]
+      - opts = [[(_("Date and %{chargeback_model}")  % {:chargeback_model => @edit[:new][:cb_model]} ), "date"], ["#{_('Date Only')}", "date-only"]]
       - opts += [["#{_('Tag')}", "tag"]] unless @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
       - opts += [["#{_('Project')}", "project"], [_('Label'), 'label']] if @edit[:new][:model] == "ChargebackContainerImage" || @edit[:new][:model] == "MeteringContainerImage"
       - opts += [["#{_('Tenant')}", "tenant"]] if %w(ChargebackVm MeteringVm).include?(@edit[:new][:model])
-      = select_tag("cb_groupby",
-        options_for_select(opts, @edit[:new][:cb_groupby]),
-        :class                 => "selectpicker")
+      - selected_group_by_option = @edit[:new][:cb_groupby] == 'vm' ? 'date' : @edit[:new][:cb_groupby] # legacy reports can have 'vm', TODO: remove after migration
+      = select_tag("cb_groupby", options_for_select(opts, selected_group_by_option), :class => "selectpicker")
       :javascript
         miqInitSelectPicker();
         miqSelectPickerEvent('cb_groupby', '#{url}', {beforeSend: true, complete: true});
