@@ -24,6 +24,10 @@ class OrchestrationStackController < ApplicationController
                     :url  => show_link(@record, :display => @display))
   end
 
+  def display_children
+    show_association('children', _('Children'), :children, OrchestrationStack)
+  end
+
   def show_list
     process_show_list(
       :named_scope => [[:without_type, 'ManageIQ::Providers::AnsibleTower::AutomationManager::Job']]
