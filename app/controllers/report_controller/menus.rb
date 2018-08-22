@@ -369,12 +369,12 @@ module ReportController::Menus
         if params[:selected_reports].include?(nf)         # See if this col was selected to move
           field = nf.split('* ')
           r = MiqReport.find_by_name(field.length == 1 ? field[0].strip : field[1].strip)
-          if !user.admin_user? && r.miq_group_id.to_i != user.current_group.id.to_i && flg == 0
+          if !user.report_admin_user? && r.miq_group_id.to_i != user.current_group.id.to_i && flg == 0
             flg = 1
             # only show this flash message once for all reports
             add_flash(_("One or more selected reports are not owned by your group, they cannot be moved"), :warning)
           end
-          if user.admin_user? || r.miq_group_id.to_i == user.current_group.id.to_i
+          if user.report_admin_user? || r.miq_group_id.to_i == user.current_group.id.to_i
             @edit[:available_reports].push(nf) if @edit[:user_typ] || r.miq_group_id.to_i == user.current_group.id.to_i             # Add to the available fields list
             @edit[:selected_reports].delete(nf)
           end
@@ -526,7 +526,7 @@ module ReportController::Menus
     @edit[:current] = []
     @edit[:new] = @rpt_menu unless @rpt_menu.nil?
     user = current_user
-    @edit[:user_typ] = user.admin_user?
+    @edit[:user_typ] = user.report_admin_user?
     @edit[:user_group] = user.current_group.id
     @edit[:group_reports] = []
     menu_set_reports_for_group
