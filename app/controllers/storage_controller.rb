@@ -222,7 +222,6 @@ class StorageController < ApplicationController
     self.x_node        = params[:id]
 
     load_or_clear_adv_search
-    apply_node_search_text if x_active_tree == :storage_tree
     replace_right_cell(:nodetype => x_node)
   end
 
@@ -399,23 +398,6 @@ class StorageController < ApplicationController
   def search_text_type(node)
     return "storage" if storage_record?(node)
     node
-  end
-
-  def apply_node_search_text
-    setup_search_text_for_node
-    previous_nodetype = search_text_type(@sb[:storage_search_text][:previous_node])
-    current_nodetype = search_text_type(@sb[:storage_search_text][:current_node])
-
-    @sb[:storage_search_text]["#{previous_nodetype}_search_text"] = @search_text
-    @search_text = @sb[:storage_search_text]["#{current_nodetype}_search_text"] || @sb[:search_text]
-    @sb[:storage_search_text]["#{x_active_accord}_search_text"] = @search_text
-  end
-
-  def setup_search_text_for_node
-    @sb[:storage_search_text] ||= {}
-    @sb[:storage_search_text][:current_node] ||= x_node
-    @sb[:storage_search_text][:previous_node] = @sb[:storage_search_text][:current_node]
-    @sb[:storage_search_text][:current_node] = x_node
   end
 
   def update_partials(record_showing, presenter)
