@@ -47,7 +47,8 @@ class DialogLocalService
       :api_submit_endpoint    => api_submit_endpoint,
       :api_action             => "order",
       :finish_submit_endpoint => finish_submit_endpoint,
-      :cancel_endpoint        => "/catalog/explorer"
+      :cancel_endpoint        => "/catalog/explorer",
+      :open_url               => false
     }
   end
 
@@ -67,7 +68,8 @@ class DialogLocalService
       :api_submit_endpoint    => submit_endpoint,
       :api_action             => button_name,
       :finish_submit_endpoint => cancel_endpoint,
-      :cancel_endpoint        => cancel_endpoint
+      :cancel_endpoint        => cancel_endpoint,
+      :open_url               => false
     )
 
     dialog_locals

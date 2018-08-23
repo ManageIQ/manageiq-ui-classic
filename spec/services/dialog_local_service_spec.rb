@@ -19,7 +19,8 @@ describe DialogLocalService do
         :api_submit_endpoint    => "/api/service_catalogs/123/service_templates/321",
         :api_action             => "order",
         :finish_submit_endpoint => "finishsubmitendpoint",
-        :cancel_endpoint        => "/catalog/explorer"
+        :cancel_endpoint        => "/catalog/explorer",
+        :open_url               => false
       )
     end
 
@@ -33,7 +34,8 @@ describe DialogLocalService do
                                                                                                                                        :api_submit_endpoint    => "/api/service_catalogs/798/service_templates/987",
                                                                                                                                        :api_action             => "order",
                                                                                                                                        :finish_submit_endpoint => "finishsubmitendpoint",
-                                                                                                                                       :cancel_endpoint        => "/catalog/explorer")
+                                                                                                                                       :cancel_endpoint        => "/catalog/explorer",
+                                                                                                                                       :open_url               => false)
     end
   end
 
@@ -55,7 +57,8 @@ describe DialogLocalService do
             :api_submit_endpoint    => "/api/#{collection_name}/123",
             :api_action             => "custom-button-name",
             :finish_submit_endpoint => finish_endpoint,
-            :cancel_endpoint        => finish_endpoint
+            :cancel_endpoint        => finish_endpoint,
+            :open_url               => false,
           )
       end
     end
