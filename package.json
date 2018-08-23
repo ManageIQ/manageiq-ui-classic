@@ -118,6 +118,7 @@
     "eslint-plugin-promise": "~3.3.0",
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-standard": "~2.0.1",
+    "fetch-mock": "^6.5.2",
     "file-loader": "~1.1.11",
     "glob": "~7.1.1",
     "imports-loader": "~0.8.0",

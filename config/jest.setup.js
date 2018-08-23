@@ -1,3 +1,4 @@
+require('whatwg-fetch');
 window.angular = require('angular');
 window.Rx = require('rxjs');
 window.$ = require('jquery');

@@ -1,0 +1,13 @@
+const prefix = '@@manageiq/users/'
+export const LOAD_DATA = `${prefix}Load users data`;
+export const SELECT_USERS = `${prefix}Select users from list`;
+export const SAVE_USER = `${prefix}Save user`;
+export const FETCH_DATA = `${prefix}Fetch data`;
+export const FETCH_SUCESFULL = `${prefix}Fetch sucesfull`;
+export const REQUEST_FAILED = `${prefix}Request failed`;
+export const DELETE_USER = `${prefix}Delete user`;
+export const LOAD_GROUPS = `${prefix}Load user groups`;
+export const STORE_GROUPS = `${prefix}Store user groups`;
+export const STORE_USERS_TREE = `${prefix}Store users tree`;
+export const EDIT_USER = `${prefix}Edit user`;
+export const STORE_TAG_CATEGORIES = `${prefix}Store tag categories`;
