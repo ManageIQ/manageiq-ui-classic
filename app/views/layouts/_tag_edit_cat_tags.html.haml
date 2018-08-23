@@ -4,10 +4,9 @@
   - options = @entries.empty? ? [[_("<All values are assigned>"), "select"]] : [[_("<Select a value to assign>"), "select"]] + tags
   = select_tag("tag_add",
     options_for_select(options, "select"),
-    "data-miq_observe" => {:url => url}.to_json,
     "data-live-search" => "true",
     "data-container"   => "body",
     "class"            => "selectpicker")
   :javascript
     miqInitSelectPicker();
-    miqSelectPickerEvent("tag_add", "#{url}", {beforeSend: true, complete: true});
+    miqSelectPickerEvent("tag_add", "#{url}", {beforeSend: true});

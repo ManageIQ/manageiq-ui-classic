@@ -59,7 +59,7 @@ module ApplicationController::Tags
       if params[:tag_add]
         page << jquery_pulsate_element("#{j_str(params[:tag_add])}_tr")
       end
-      page << set_spinner_off if params[:tag_cat]
+      page << set_spinner_off if params[:tag_cat] || params[:tag_add]
     end
   end
 
