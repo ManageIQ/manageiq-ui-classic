@@ -227,7 +227,8 @@ class ChargebackController < ApplicationController
     cb_assign_get_form_vars
     render :update do |page|
       page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
+      except = %i(cbshow_typ cbtag_cat cblabel_key)
+      changed = (@edit[:new].except(*except) != @edit[:current].except(*except))
       page.replace("cb_assignment_div", :partial => "cb_assignments") if params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
       page << javascript_for_miq_button_visibility(changed)
     end

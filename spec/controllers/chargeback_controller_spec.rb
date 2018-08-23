@@ -6,7 +6,7 @@ describe ChargebackController do
     let(:tag)      { FactoryGirl.create(:classification, :parent_id => category.id) }
     let(:entry)    { FactoryGirl.create(:classification, :parent_id => tag.id) }
 
-    context "#get_tags_all" do
+    describe "#get_tags_all" do
       before { entry }
 
       it "returns the classification entry record" do
@@ -19,7 +19,7 @@ describe ChargebackController do
       end
     end
 
-    context "#cb_assign_set_form_vars" do
+    describe "#cb_assign_set_form_vars" do
       before do
         cbr = FactoryGirl.create(:chargeback_rate, :rate_type => "Storage")
         ChargebackRate.set_assignments(:Storage, [{:cb_rate => cbr, :tag => [tag, "vm"]}])
@@ -110,7 +110,7 @@ describe ChargebackController do
     end
   end
 
-  context "#explorer" do
+  describe "#explorer" do
     render_views
 
     it "can be rendered" do
@@ -121,7 +121,7 @@ describe ChargebackController do
     end
   end
 
-  context "#process_cb_rates" do
+  describe "#process_cb_rates" do
     it "delete unassigned" do
       cbr = FactoryGirl.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
 
@@ -149,7 +149,7 @@ describe ChargebackController do
     end
   end
 
-  context "#get_cis_all" do
+  describe "#get_cis_all" do
     let!(:storage) { FactoryGirl.create(:storage) }
     let!(:miq_enterprise) { FactoryGirl.create(:miq_enterprise) }
 
@@ -616,7 +616,7 @@ describe ChargebackController do
     end
   end
 
-  context "#replace_right_cell" do
+  describe "#replace_right_cell" do
     it "Can build the :cb_rates tree" do
       seed_session_trees('chargeback', :cb_rates, 'root')
       session_to_sb
@@ -732,6 +732,63 @@ describe ChargebackController do
         expect(controller.session[:chargeback_lastaction]).to eq(lastaction)
         expect(controller.session[:chargeback_display]).to eq(display)
         expect(controller.session[:chargeback_current_page]).to eq(current_page)
+      end
+    end
+  end
+
+  describe '#cb_assign_field_changed' do
+    let(:edit) do
+      {
+        :cb_assign => {
+          :cats => {
+            '1' => 'Category1',
+            '2' => 'Category2'
+          },
+          :tags => {
+            1 => {
+              '2' => 'Tag1',
+              '3' => 'Tag2',
+              '4' => 'Tag3'
+            },
+            2 => {}
+          }
+        },
+        :current   => {
+          :cbshow_typ       => 'storage-tags',
+          :cbtag_cat        => '1',
+          'storage-tags__2' => '3'
+        },
+        :new       => {
+          :cbshow_typ       => 'storage-tags',
+          :cbtag_cat        => '1',
+          'storage-tags__2' => '3'
+        }
+      }
+    end
+
+    before do
+      allow(controller).to receive(:load_edit).and_return(true)
+      controller.instance_variable_set(:@edit, edit)
+    end
+
+    context 'changing Tag Category for assignments' do
+      it 'hides buttons as no change has been made' do
+        post :cb_assign_field_changed, :params => {:cbtag_cat => '2'}
+        expect(response.body).to include("miqButtons('hide');")
+      end
+    end
+
+    context 'changing Assigned To, for assignments' do
+      it 'hides buttons as no change has been made' do
+        post :cb_assign_field_changed, :params => {:cbshow_typ => 'storage'}
+        expect(response.body).to include("miqButtons('hide');")
+      end
+    end
+
+    context 'changing item under Selections, for assignments' do
+      it 'shows buttons as a change in Selections has been made' do
+        post :cb_assign_field_changed, :params => {'storage-tags__3' => '4'}
+        expect(response.body).to include("miqButtons('show');")
       end
     end
   end
