@@ -194,7 +194,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
 
   def review_import
     @import_file_upload_id = params[:import_file_upload_id]
-    @message = params[:message]
+    @message = @flash_array.first.to_json
   end
 
   def retrieve_git_datastore
