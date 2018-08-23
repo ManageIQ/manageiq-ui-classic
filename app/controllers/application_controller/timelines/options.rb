@@ -2,26 +2,23 @@ module ApplicationController::Timelines
   SELECT_EVENT_TYPE = [[N_('Management Events'), 'timeline'], [N_('Policy Events'), 'policy_timeline']].freeze
 
   DateOptions = Struct.new(
-    :daily,
+    :end_date,
     :days,
     :end,
-    :hourly,
     :start,
     :typ
   ) do
     def update_from_params(params)
       self.typ = params[:tl_typ] if params[:tl_typ]
       self.days = params[:tl_days] if params[:tl_days]
-      self.hourly = params[:miq_date_1] || params[:miq_date] if (params[:miq_date_1] || params[:miq_date]) && typ == 'Hourly'
-      self.daily = params[:miq_date_1] || params[:miq_date] if (params[:miq_date_1] || params[:miq_date]) && typ == 'Daily'
+      self.end_date = params[:miq_date_1] || params[:miq_date]
     end
 
     def update_start_end(sdate, edate)
       if !sdate.nil? && !edate.nil?
         self.start = [sdate.year.to_s, (sdate.month - 1).to_s, sdate.day.to_s].join(", ")
         self.end = [edate.year.to_s, (edate.month - 1).to_s, edate.day.to_s].join(", ")
-        self.hourly ||= [edate.month, edate.day, edate.year].join("/")
-        self.daily ||= [edate.month, edate.day, edate.year].join("/")
+        self.end_date ||= [edate.month, edate.day, edate.year].join("/")
       else
         self.start = self.end = nil
       end
