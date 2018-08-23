@@ -54,12 +54,10 @@ class EmsDashboardService < DashboardService
     to_char_args = [db_table[:created_on], Arel::Nodes::SqlLiteral.new("'YYYY-MM-DD'")]
     group_by_sql = Arel::Nodes::NamedFunction.new("to_char", to_char_args)
 
-    sql = model.where(:ems_id => @ems.id)
-               .where(db_table[:created_on].gt(30.days.ago.utc))
-               .group(group_by_sql.to_sql)
-    sql = sql.includes(:resource => [:ext_management_system]) if @ems.blank?
-
-    sql.count
+    model.where(:ems_id => @ems.id)
+         .where(db_table[:created_on].gt(30.days.ago.utc))
+         .group(group_by_sql.to_sql)
+         .count
   end
 
   def format_data(ems_type, attributes, attr_icon, attr_url, attr_hsh)
