@@ -54,7 +54,7 @@ function processData(o) {
   }
 
   // fetch supports more types but we aren't using any of those yet..
-  console.warning('Unknown type for request data - please provide a plain object or a string', o);
+  console.warn('Unknown type for request data - please provide a plain object or a string', o);
   return null;
 }
 
