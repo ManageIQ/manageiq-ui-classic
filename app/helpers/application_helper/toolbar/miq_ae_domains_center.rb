@@ -15,8 +15,8 @@ class ApplicationHelper::Toolbar::MiqAeDomainsCenter < ApplicationHelper::Toolba
         button(
           :miq_ae_domain_edit,
           'pficon pficon-edit fa-lg',
-          N_('Select a single Domains to edit'),
-          N_('Edit Selected Domains'),
+          N_('Select a single Domain to edit'),
+          N_('Edit Selected Domain'),
           :url_parms    => "main_div",
           :send_checked => true,
           :enabled      => false,
