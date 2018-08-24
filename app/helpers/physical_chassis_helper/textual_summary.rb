@@ -6,7 +6,7 @@ module PhysicalChassisHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name product_name manufacturer serial_number part_number health_state uid_ems description)
+      %i(name product_name manufacturer serial_number part_number health_state uid_ems description location_led_state)
     )
   end
 
@@ -64,6 +64,10 @@ module PhysicalChassisHelper::TextualSummary
 
   def textual_description
     {:label => _("Description"), :value => @record.asset_detail["description"]}
+  end
+
+  def textual_location_led_state
+    {:label => _("Identify LED State"), :value => @record.asset_detail['location_led_state']}
   end
 
   #

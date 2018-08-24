@@ -156,7 +156,7 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_loc_led_state
-    {:label => _("Identify LED State"), :value => @record.location_led_state}
+    {:label => _("Identify LED State"), :value => @record.asset_detail['location_led_state']}
   end
 
   def textual_support_contact
