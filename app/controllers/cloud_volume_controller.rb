@@ -551,7 +551,7 @@ class CloudVolumeController < ApplicationController
 
   def form_params
     options = copy_params_if_set({}, params, %i(name size cloud_tenant_id vm_id device_path))
-    options[:volume_type] = params[:aws_volume_type] if params[:aws_volume_type]
+    options[:volume_type] = params[:volume_type] if params[:volume_type]
     # Only set IOPS if io1 (provisioned IOPS) and IOPS available
     options[:iops] = params[:aws_iops] if options[:volume_type] == 'io1' && params[:aws_iops]
     options
@@ -575,6 +575,7 @@ class CloudVolumeController < ApplicationController
   def cinder_manager_options
     options = {}
     cloud_tenant_id = params[:cloud_tenant_id] if params[:cloud_tenant_id]
+    options[:volume_type] = params[:volume_type] if params[:volume_type]
     cloud_tenant = find_record_with_rbac(CloudTenant, cloud_tenant_id)
     options[:cloud_tenant] = cloud_tenant
     options[:ems] = cloud_tenant.ext_management_system
@@ -583,7 +584,7 @@ class CloudVolumeController < ApplicationController
 
   def aws_ebs_options
     options = {}
-    options[:volume_type] = params[:aws_volume_type] if params[:aws_volume_type]
+    options[:volume_type] = params[:volume_type] if params[:volume_type]
     # Only set IOPS if io1 (provisioned IOPS) and IOPS available
     options[:iops] = params[:aws_iops] if options[:volume_type] == 'io1' && params[:aws_iops]
     options[:availability_zone] = params[:aws_availability_zone_id] if params[:aws_availability_zone_id]
