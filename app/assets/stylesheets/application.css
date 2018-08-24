@@ -25,4 +25,5 @@
  *= require ./remote_console
  *= require graphiql/graphiql.css
  *= require piecharts
+ *= require @manageiq/react-ui-components/dist/textual_summary
 */
