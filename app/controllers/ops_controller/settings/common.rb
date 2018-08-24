@@ -1050,25 +1050,25 @@ module OpsController::Settings::Common
     w = qwb[:ems_refresh_worker][:defaults]
     w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEmsRefreshWorker, %i(defaults memory_threshold)) || 400.megabytes
     @sb[:ems_refresh_threshold] = []
-    (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-    (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
+    (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
 
     wb = @edit[:current].config[:workers][:worker_base]
     w = (wb[:event_catcher] ||= {})
     w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEventCatcher, :memory_threshold) || 1.gigabytes
     @sb[:event_catcher_threshold] = []
-    (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
-    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
+    (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
 
     w = (wb[:vim_broker_worker] ||= {})
     w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
     @sb[:vim_broker_threshold] = []
-    (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
-    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
+    (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
 
     w = (wb[:ui_worker] ||= {})
     w[:count] = @edit[:current].get_raw_worker_setting(:MiqUiWorker, :count) || 2
