@@ -45,7 +45,7 @@ describe EmsCloudHelper::TextualSummary do
       orchestration_stacks
       storage_managers
     )
-    include_examples "textual_group", "Properties", %i(provider_region hostname ipaddress type port guid region keystone_v3_domain_id)
+    include_examples "textual_group", "Properties", %i(description hostname ipaddress type port guid region keystone_v3_domain_id)
 
     include_examples "textual_group", "Status", %i(refresh_status refresh_date)
 
