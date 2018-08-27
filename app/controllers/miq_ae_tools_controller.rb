@@ -264,13 +264,6 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
     end
   end
 
-  def review_git_import
-    @message = params[:message]
-    @git_branches = params[:git_branches]
-    @git_tags = params[:git_tags]
-    @git_repo_id = params[:git_repo_id]
-  end
-
   # Import classes
   def upload
     if params[:upload] && !params[:upload][:datastore].blank?

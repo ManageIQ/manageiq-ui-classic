@@ -2171,7 +2171,6 @@ Rails.application.routes.draw do
         import_export
         log
         resolve
-        review_git_import
         review_import
       ),
       :post => %w(
