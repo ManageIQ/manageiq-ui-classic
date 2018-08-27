@@ -13,16 +13,16 @@ class AlertController < ApplicationController
     # Removed inactive "E-mail" tab - Sprint 34
     @lastaction = "show_list"
     @listtype = "rss_list"
+    @rss_roles = {"<#{_('All')}>" => 'all'}
+    RssFeed.roles.sort.each { |r| @rss_roles[r.titleize] = r }
     fetch_rss_feeds
-    @rss_roles = ["<All>"]
-    RssFeed.roles.sort.each { |r| @rss_roles.push(r.titleize) }
     @breadcrumbs = []
     if params[:role].nil?
-      @rss_role = "<All>"
+      @rss_role = 'all'
       drop_breadcrumb(:name => _("All RSS Feeds"), :url => "/alert/show_list")
     else
       @rss_role = params[:role]
-      drop_breadcrumb(:name => _("%{name} RSS Feeds") % {:name => @rss_role}, :url => "/alert/show_list")
+      drop_breadcrumb(:name => _("%{name} RSS Feeds") % {:name => @rss_roles.invert[@rss_role]}, :url => "/alert/show_list")
     end
   end
 
@@ -51,10 +51,10 @@ class AlertController < ApplicationController
 
   # fetch rss feed records
   def fetch_rss_feeds
-    @rss_feeds = if params[:role].nil? || params[:role] == "<All>"
+    @rss_feeds = if params[:role].nil? || params[:role] == 'all'
                    RssFeed.order("title")
                  else
-                   RssFeed.find_tagged_with(:any => [params[:role].split.join("_").downcase], :ns => "/managed", :cat => "roles").order("title")
+                   RssFeed.find_tagged_with(:any => [params[:role]], :ns => "/managed", :cat => "roles").order("title")
                  end
   end
 
