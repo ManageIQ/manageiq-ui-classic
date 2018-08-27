@@ -1,5 +1,5 @@
 - if @breadcrumbs && @breadcrumbs.length > 1
-  %ol.breadcrumb
+  %ol.breadcrumb{:style => "display: none;"}
     - @breadcrumbs[0...-1].each do |breadcrumbs|
       %li
         %a{:href => breadcrumbs[:url], :onclick => "return miqCheckForChanges()"}

@@ -1,13 +1,4 @@
 .container-fluid.container-tiles-pf.containers-dashboard.miq-dashboard-view.miq-alerts-center{"ng-controller" => "alertsOverviewController as vm"}
-  %span
-    %ol.breadcrumb
-      %li
-        = _("Monitor")
-      %li
-        = _("Alerts")
-      %li.active
-        %strong
-          = _("Overview")
   .row.init-hidden{"ng-class" => "{'initialized': vm.loadingDone}"}
     %div{"pf-toolbar" => "", "config" => "vm.toolbarConfig"}
       %actions.group-toolbar-actions
