@@ -1,13 +1,13 @@
 import { API } from '../http_api';
 
-export function showMessage(messages, labels = {single: '', multiple: ''}) {
+export function showMessage(messages, labels = { single: '', multiple: '' }) {
   Object.keys(messages).forEach((msgStatus) => {
     const statusKey = msgStatus === 'true';
+    const label = messages[statusKey] === 1 ? labels.single : labels.multiple;
+
     if (statusKey && messages[statusKey] > 0) {
-      const label = messages[statusKey] === 1 ? labels.single : labels.multiple;
       add_flash(sprintf(__('Delete initiated for %s %s.'), messages[statusKey], label), 'success');
     } else if (messages[statusKey] > 0) {
-      const label = messages[statusKey] === 1 ? labels.single : labels.multiple;
       add_flash(sprintf(__('Failed to delete %s %s.'), messages[statusKey], label), 'error');
     }
   });
