@@ -292,9 +292,9 @@ module ApplicationController::Buttons
   def custom_buttons_invoke(button, objs)
     if objs.length > 1 &&
        (button.options && button.options.key?(:submit_how) && button.options[:submit_how].to_s == 'all')
-      button.invoke(objs)
+      button.invoke(objs, 'UI')
     else
-      objs.each { |obj| button.invoke(obj) }
+      objs.each { |obj| button.invoke(obj, 'UI') }
     end
   end
 
@@ -349,7 +349,7 @@ module ApplicationController::Buttons
 
     elsif button.options.present? && button.options.fetch_path(:open_url)
       # not supported for objs: cannot do wait for task for multiple tasks
-      task_id = button.invoke_async(obj)
+      task_id = button.invoke_async(obj, 'UI')
       initiate_wait_for_task(:task_id => task_id, :action => :custom_button_done)
 
     else
