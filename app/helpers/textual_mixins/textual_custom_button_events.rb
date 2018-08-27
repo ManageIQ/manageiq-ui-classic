@@ -7,7 +7,7 @@ module TextualMixins::TextualCustomButtonEvents
       :value    => num = @record.number_of(:custom_button_events),
       :link     => num.positive? ? url_for_only_path(:action => 'show', :id => @record, :display => 'custom_button_events') : nil,
       :icon     => CustomButtonEvent.decorate.fonticon,
-      :explorer => false
+      :explorer => @explorer
     }
   end
 end

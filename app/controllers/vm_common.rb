@@ -217,6 +217,12 @@ module VmCommon
     elsif @display == "devices"
       drop_breadcrumb(:name => @record.name + _(" (Devices)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
+    elsif @display == "custom_button_events"
+      drop_breadcrumb(:name => @record.name + _(" (Custom Button Events)"),
+                      :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
+      @no_checkboxes = true # FIXME: move this to a parameter below and handle with ReportDataAdditionalOptions
+      @showtype = "details"
+      get_view(CustomButtonEvent, :parent => @record, :parent_method => 'custom_button_events', :clickable => false)
     elsif @display == "vmtree_info"
       drop_breadcrumb({:name => @record.name, :url => "/#{rec_cls}/show/#{@record.id}"}, true)
       drop_breadcrumb(:name => @record.name + _(" (Genealogy)"),
