@@ -231,29 +231,6 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
                             vm.reconfigureModel.vmRemoveNetworkAdapters.length > 0;
   };
 
-  vm.updateCDRomsConnectDisconnect = function() {
-    vm.reconfigureModel.vmConnectCDRoms    = [];
-    vm.reconfigureModel.vmDisconnectCDRoms    = [];
-
-    angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
-      if (cdRom.connect_disconnect === 'disconnect') {
-        vm.reconfigureModel.vmDisconnectCDRoms.push({
-          name: cdRom.hdFilename,
-        });
-      }
-      if (cdRom.connect_disconnect === 'connect') {
-        vm.reconfigureModel.vmConnectCDRoms.push({
-          name: cdRom.name,
-          filename: cdRom.filename,
-          storage_id: cdRom.storage_id,
-        });
-      }
-    });
-    vm.cb_cdRoms = vm.reconfigureModel.vmConnectCDRoms.length > 0 ||
-                   vm.reconfigureModel.vmDisconnectCDRoms.length > 0;
-  };
-
-
   vm.resetAddValues = function() {
     vm.reconfigureModel.hdType = vm.disk_default_type;
     vm.reconfigureModel.hdMode = 'persistent';
@@ -441,8 +418,13 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       vm.cancelAddRemoveDisk(disk);
     });
 
+    angular.forEach(vm.reconfigureModel.vmCDRoms, function(cd) {
+      vm.cancelCDRomConnectDisconnect(cd);
+    });
+
     $scope.angularForm.$setPristine(true);
     vm.updateDisksAddRemove();
+    vm.updateCDRomsConnectDisconnect();
 
     miqService.miqFlash('warn', __('All changes have been reset'));
   };
@@ -527,7 +509,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     angular.forEach(vm.reconfigureModel.vmCDRoms, function(cdRom) {
       if (cdRom.connect_disconnect === 'connect') {
         vm.reconfigureModel.vmConnectCDRoms.push(
-          { name: cdRom.name,
+          { device_name: cdRom.device_name,
             filename: cdRom.filename,
             storage_id: cdRom.storage_id,
           }
@@ -535,7 +517,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       }
       if (cdRom.connect_disconnect === 'disconnect') {
         vm.reconfigureModel.vmDisconnectCDRoms.push(
-          { name: cdRom.name });
+          { device_name: cdRom.device_name });
       }
     });
     vm.cb_cdRoms = vm.reconfigureModel.vmConnectCDRoms.length > 0  ||
@@ -568,12 +550,9 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
 
   vm.cancelCDRomConnectDisconnect = function(vmCDRom) {
     var index = vm.reconfigureModel.vmCDRoms.indexOf(vmCDRom);
-    if (vmCDRom.connect_disconnect === "disconnect") {
-      vmCDRom.filename = vmCDRom.orgFilename;
-    }
+    vmCDRom.filename = vmCDRom.orgFilename;
     vmCDRom.connect_disconnect = '';
     vm.reconfigureModel.vmCDRoms[index].connect_disconnect = '';
-    vm.updateCDRomsConnectDisconnect();
   };
 
   init();

@@ -18,7 +18,7 @@ describe('reconfigureFormController', function() {
       cores_per_socket_count: '3',
       disks:                 [{hdFilename: "test_disk.vmdk", hdType: "thick", hdMode: "persistent", new_controller_type: "VirtualLsiLogicController", hdSize: "0", hdUnit: "MB", add_remove: ""}],
       network_adapters:      [{name: "Network adapter 1", vlan: "test_network", mac: "00:00:00:00:00:00", add_remove: ""}],
-      cdroms:                [{name: "CDROM 1", filename: "test_filename.iso", storage_id: '5', connect_disconnect: ""}],
+      cdroms:                [{device_name: "CDROM 1", filename: "test_filename.iso", storage_id: '5', connect_disconnect: ""}],
       vm_vendor:              'vm-vendor',
       vm_type:                'vm-type',
       disk_default_type:      'disk-default-type'};

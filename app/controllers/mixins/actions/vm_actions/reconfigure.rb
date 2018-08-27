@@ -191,20 +191,20 @@ module Mixins
           connect_disconnect = ''
           cdroms.map do |cd|
             id = cd.id
-            name = cd.device_name
+            device_name = cd.device_name
             type = cd.device_type
             filename = cd.filename
             storage_id = cd.storage_id
-            if cd.filename && @req.options[:cdrom_disconnect]&.find { |d_cd| d_cd[:name] == cd.device_name }
+            if cd.filename && @req.options[:cdrom_disconnect]&.find { |d_cd| d_cd[:device_name] == cd.device_name }
               filename = ''
               connect_disconnect = 'disconnect'
             end
-            conn_cd = @req.options[:cdrom_connect]&.find { |c_cd| c_cd[:name] == cd.device_name }
+            conn_cd = @req.options[:cdrom_connect]&.find { |c_cd| c_cd[:device_name] == cd.device_name }
             if cd.filename && conn_cd
               filename = conn_cd[:filename]
               connect_disconnect = 'connect'
             end
-            vmcdroms << {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id, :connect_disconnect => connect_disconnect}
+            vmcdroms << {:id => id, :device_name => device_name, :filename => filename, :type => type, :storage_id => storage_id, :connect_disconnect => connect_disconnect}
           end
           vmcdroms
         end
@@ -322,17 +322,21 @@ module Mixins
           network_adapters
         end
 
+        def filename_string(name)
+          name.blank? || name == '[]' ? '' : name.to_s
+        end
+
         def build_vmcdrom_list(vm)
           vmcdroms = []
           cdroms = vm.hardware.cdroms
           if cdroms.present?
             cdroms.map do |cd|
               id = cd.id
-              name = cd.device_name
+              device_name = cd.device_name
               type = cd.device_type
-              filename = cd.filename
-              storage_id = cd.storage_id
-              vmcdroms <<  {:id => id, :name => name, :filename => filename, :type => type, :storage_id => storage_id}
+              filename = filename_string(cd.filename)
+              storage_id = cd.storage_id || ''
+              vmcdroms << {:id => id, :device_name => device_name, :filename => filename, :type => type, :storage_id => storage_id}
             end
             vmcdroms
           end
