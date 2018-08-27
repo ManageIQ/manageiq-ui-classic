@@ -52,7 +52,7 @@ describe ApplicationController do
 
       it "Vm button" do
         controller.instance_variable_set(:@_params, :id => vm.id, :button_id => button.id)
-        expect_any_instance_of(CustomButton).to receive(:invoke_async).with(vm)
+        expect_any_instance_of(CustomButton).to receive(:invoke_async).with(vm, 'UI')
 
         controller.send(:custom_buttons)
         expect(assigns(:right_cell_text)).to include(vm.name)
@@ -68,7 +68,7 @@ describe ApplicationController do
 
       it "Vm button" do
         controller.instance_variable_set(:@_params, :id => vm.id, :button_id => button.id)
-        expect_any_instance_of(CustomButton).to receive(:invoke).with(vm)
+        expect_any_instance_of(CustomButton).to receive(:invoke).with(vm, 'UI')
 
         controller.send(:custom_buttons)
         expect(assigns(:right_cell_text)).to include(vm.name)
@@ -79,7 +79,7 @@ describe ApplicationController do
         button.applies_to = host
         button.save
         controller.instance_variable_set(:@_params, :id => host.id, :button_id => button.id)
-        expect_any_instance_of(CustomButton).to receive(:invoke).with(host)
+        expect_any_instance_of(CustomButton).to receive(:invoke).with(host, 'UI')
 
         controller.send(:custom_buttons)
         expect(assigns(:right_cell_text)).to include(host.name)
@@ -90,7 +90,7 @@ describe ApplicationController do
         button.applies_to = ServiceTemplate
         button.save
         controller.instance_variable_set(:@_params, :id => service.id, :button_id => button.id)
-        expect_any_instance_of(CustomButton).to receive(:invoke).with(service)
+        expect_any_instance_of(CustomButton).to receive(:invoke).with(service, 'UI')
 
         controller.send(:custom_buttons)
         expect(assigns(:right_cell_text)).to include(service.name)
