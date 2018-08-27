@@ -31,7 +31,7 @@ end
 if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../Gemfile", __FILE__)
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
-  require './jasmine_overrides'
+  require './config/jasmine_overrides'
 end
 
 namespace :spec do
