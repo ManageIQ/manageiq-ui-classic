@@ -21,5 +21,6 @@ describe CloudSubnetHelper::TextualSummary do
     parent_subnet
     managed_subnets
     network_ports
+    security_groups
   )
 end

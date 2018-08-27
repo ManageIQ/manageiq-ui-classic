@@ -11,7 +11,7 @@ class CloudSubnetController < ApplicationController
   include Mixins::GenericFormMixin
 
   def self.display_methods
-    %w(instances cloud_subnets network_ports)
+    %w(instances cloud_subnets network_ports security_groups)
   end
 
   def button
