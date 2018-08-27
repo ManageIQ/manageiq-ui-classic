@@ -235,6 +235,9 @@ module EmsCommon
       when "ems_cluster_protect"              then assign_policies(EmsCluster)
       when "ems_cluster_scan"                 then scanclusters
       when "ems_cluster_tag"                  then tag(EmsCluster)
+      # Flavor
+      when 'flavor_create'                    then javascript_redirect(:action => 'new')
+      when 'flavor_delete'                    then delete_flavors
       # Hosts
       when "host_analyze_check_compliance"    then analyze_check_compliance_hosts
       when "host_check_compliance"            then check_compliance_hosts
@@ -293,7 +296,7 @@ module EmsCommon
                   @flash_array.nil?
 
         unless ["host_edit", "#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-                "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename'].include?(params[:pressed])
+                "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename', 'flavor_create', 'flavor_delete'].include?(params[:pressed])
           @refresh_div = "main_div"
           @refresh_partial = "layouts/gtl"
           show                                                        # Handle EMS buttons

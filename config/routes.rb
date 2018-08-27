@@ -142,26 +142,34 @@ Rails.application.routes.draw do
         download_summary_pdf
         index
         new
+        protect
         show
         show_list
         tagging_edit
         tag_edit_form_field_changed
         ems_form_choices
         download_private_key
-      ),
+      ) +
+        compare_get,
       :post => %w(
         button
         create
         dynamic_checkbox_refresh
         form_field_changed
         listnav_search_selected
+        protect
         quick_search
+        sections_field_changed
         show
         show_list
         tagging_edit
         tag_edit_form_field_changed
         wait_for_task
-      ) + adv_search_post + exp_post + save_post
+      ) +
+        adv_search_post +
+        compare_post +
+        exp_post +
+        save_post
     },
 
     :automation_manager => {
@@ -218,7 +226,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
+      ) +
+        compare_get,
       :post => %w(
         button
         listnav_search_selected
@@ -231,7 +240,13 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         tl_chooser
         wait_for_task
-      ) + adv_search_post + exp_post + perf_post + save_post + dialog_runner_post
+      ) +
+        adv_search_post +
+        compare_post +
+        dialog_runner_post +
+        exp_post +
+        perf_post +
+        save_post
     },
 
     :host_aggregate           => {
@@ -244,17 +259,20 @@ Rails.application.routes.draw do
         index
         new
         perf_top_chart
+        protect
         remove_host_select
         show
         show_list
         tagging_edit
-      ),
+      ) +
+        compare_get,
       :post => %w(
         add_host
         add_host_select
         button
         listnav_search_selected
         create
+        protect
         quick_search
         remove_host
         remove_host_select
@@ -266,7 +284,12 @@ Rails.application.routes.draw do
         tl_chooser
         update
         wait_for_task
-      ) + adv_search_post + exp_post + perf_post + save_post
+      ) +
+        adv_search_post +
+        compare_post +
+        exp_post +
+        perf_post +
+        save_post
     },
 
     :catalog                  => {
@@ -444,7 +467,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
+      ) +
+        compare_get,
       :post => %w(
         button
         listnav_search_selected
@@ -458,7 +482,12 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         update
         wait_for_task
-      ) + adv_search_post + exp_post + save_post + dialog_runner_post
+      ) +
+        adv_search_post +
+        compare_post +
+        dialog_runner_post +
+        exp_post +
+        save_post
     },
 
     :cloud_object_store_object => {
@@ -1149,7 +1178,8 @@ Rails.application.routes.draw do
         show_list
         sync_users
         tagging_edit
-      ),
+      ) +
+        compare_get,
       :post => %w(
         button
         create
@@ -1174,6 +1204,7 @@ Rails.application.routes.draw do
         squash_toggle
       ) +
                adv_search_post +
+               compare_post +
                dialog_runner_post +
                discover_get_post +
                exp_post +
@@ -1773,15 +1804,18 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         index
+        protect
         show
         show_list
         new
         tagging_edit
         ems_list
-      ),
+      ) +
+        compare_get,
       :post => %w(
         button
         listnav_search_selected
+        protect
         quick_search
         sections_field_changed
         show
@@ -1790,6 +1824,7 @@ Rails.application.routes.draw do
         tagging_edit
       ) +
                adv_search_post +
+               compare_post +
                exp_post +
                save_post
     },
@@ -2571,7 +2606,8 @@ Rails.application.routes.draw do
         stacks_ot_info
         tagging_edit
         protect
-      ),
+      ) +
+        compare_get,
       :post => %w(
         button
         cloud_networks
@@ -2590,6 +2626,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
       ) +
                adv_search_post +
+               compare_post +
                exp_post +
                save_post +
                dialog_runner_post
