@@ -1058,3 +1058,25 @@ table.table-compressed tr td .piechart {
 /// ===================================================================
 /// end misc styling
 /// ===================================================================
+
+/************ Breadcrumbs ************/
+
+.breadcrumbs {
+  margin-bottom: 0px;
+  padding-bottom: 8px;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+
+  a {
+    cursor: pointer;
+  }
+}
+
+.miq-toolbar-actions {
+  margin-top: -20px !important;
+}
+
+/// ===================================================================
+/// end breadcrumbs styling
+/// ===================================================================
