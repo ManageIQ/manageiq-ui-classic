@@ -22,7 +22,7 @@
                 = session_info[1]
           %strong
             = _("Plugins")
-          %ul.list-unstyled{:style => "height: 40px;overflow: auto"}
+          %ul.list-unstyled.about-visible-scrollbar.about-visible-scrollbar-thumb.about-visible-scrollbar-track.about-visible-scrollbar-hover{:style => "height: 40px;overflow: auto"}
             - vmdb_plugins_sha.each do |engine, sha|
               %div
                 = "#{plugin_name(engine)} #{sha}"
