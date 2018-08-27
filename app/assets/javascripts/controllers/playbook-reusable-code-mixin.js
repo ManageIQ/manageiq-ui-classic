@@ -112,6 +112,17 @@ function playbookReusableCodeMixin(API, $q, miqService) {
     );
   };
 
+  var formOptsCatalogTenants = function(catalogs) {
+    var allCatalogs = [];
+    for (var i = 0; i < catalogs.length; i++) {
+      var cat = {};
+      cat.name = catalogs[i][0];
+      cat.id = catalogs[i][1].toString();
+      allCatalogs.push(cat);
+    }
+    return allCatalogs;
+  };
+
   // list of service catalogs
   var formOptions = function(vm) {
     miqService.sparkleOn();
@@ -119,6 +130,10 @@ function playbookReusableCodeMixin(API, $q, miqService) {
       allApiPromises.push(API.get('/api/service_catalogs/?expand=resources&attributes=id,name' + sortOptions)
         .then(function(data) {
           vm.catalogs = data.resources;
+          // edit the name of each catalog to get all tenant ancestors in the name if they exist
+          for (var i = 0; i < vm.catalogs.length; i++) {
+            vm.catalogs[i].name = _.find(formOptsCatalogTenants(vm.allCatalogs), {id: vm.catalogs[i].id}).name;
+          }
           vm.catalogs.unshift({"href": "", "id": "", "name": "<Unassigned>"});
           vm._catalog = _.find(vm.catalogs, {id: vm[vm.model].catalog_id});
         })

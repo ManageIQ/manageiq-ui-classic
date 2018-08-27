@@ -826,9 +826,25 @@ class CatalogController < ApplicationController
     prov_type = params[:st_prov_type] ? params[:st_prov_type] : @record.prov_type
     ansible_playbook = prov_type == "generic_ansible_playbook"
     @current_region = MiqRegion.my_region.region if ansible_playbook
+    @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     ansible_playbook
   end
   helper_method :ansible_playbook?
+
+  # Get all the available Catalogs
+  def available_catalogs
+    Rbac.filtered(ServiceTemplateCatalog.all).collect do |sc|
+      if sc.tenant.present?
+        tenant_names = []
+        sc.tenant.ancestor_ids.map do |t|
+          tenant_names.push(Tenant.find_by(:id => t).name)
+        end
+        tenant_names.push(sc.tenant.name)
+        tenant_names = tenant_names.join("/")
+      end
+      [tenant_names.present? ? "#{tenant_names}/" + sc.name : sc.name, sc.id]
+    end
+  end
 
   def remove_resources_display(remove_resources)
     case remove_resources
