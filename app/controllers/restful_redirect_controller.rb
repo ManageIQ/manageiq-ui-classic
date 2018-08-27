@@ -3,6 +3,9 @@ class RestfulRedirectController < ApplicationController
 
   def index
     case params[:model]
+    when 'ServiceTemplateTransformationPlanRequest'
+      req = ServiceTemplateTransformationPlanRequest.select(:source_id).find(params[:id])
+      redirect_to :controller => 'migration', :action => 'index', :anchor => "plan/#{req.source_id}"
     when 'MiqRequest'
       redirect_to :controller => 'miq_request', :action => 'show', :id => params[:id]
     when 'VmOrTemplate'
