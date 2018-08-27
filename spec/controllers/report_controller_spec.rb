@@ -1,6 +1,8 @@
 require ManageIQ::UI::Classic::Engine.root.join("spec/helpers/report_helper_spec.rb")
 
 describe ReportController do
+  before { allow(controller).to receive(:data_for_breadcrumbs).and_return({}) }
+
   context "Get form variables" do
     context "press col buttons" do
       it "moves columns left" do
@@ -1262,6 +1264,7 @@ describe ReportController do
         seed_session_trees('report', :reports_tree, "xx-0_xx-0-1_rep-#{rpt.id}")
         session[:sandboxes]["report"][:rep_tree_build_time] = rpt.created_on
         session[:sandboxes]["report"][:active_accord] = :reports
+        allow(controller).to receive(:data_for_breadcrumbs).and_return([{:title => "title", :action => "action", :key => "key"}])
       end
 
       it "runs report and calls GTL generation" do

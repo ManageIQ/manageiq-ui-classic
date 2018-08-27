@@ -3,6 +3,7 @@ describe ProviderForemanController do
 
   let(:tags) { ["/managed/quota_max_memory/2048"] }
   before do
+    allow(controller).to receive(:data_for_breadcrumbs).and_return({})
     @zone = EvmSpecHelper.local_miq_server.zone
     Tag.find_or_create_by(:name => tags.first)
 

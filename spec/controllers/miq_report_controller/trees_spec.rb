@@ -4,6 +4,7 @@ describe ReportController do
   before do
     login_as user
     EvmSpecHelper.create_guid_miq_server_zone
+    allow(controller).to receive(:data_for_breadcrumbs).and_return({})
   end
 
   context 'Reports #tree_select' do
