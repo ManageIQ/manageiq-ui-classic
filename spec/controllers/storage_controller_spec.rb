@@ -271,6 +271,7 @@ describe StorageController do
 
         before do
           allow(controller).to receive(:render).and_return(true)
+          allow(controller).to receive(:build_accordions_and_trees)
 
           controller.instance_variable_set(:@record, datastore)
           controller.instance_variable_set(:@sb, :active_tree => :storage_tree)
