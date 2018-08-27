@@ -53,7 +53,7 @@ class AlertController < ApplicationController
   def fetch_rss_feeds
     @rss_feeds = if params[:role].nil? || params[:role] == 'all'
                    RssFeed.order("title")
-                 else
+                 elsif @rss_roles.values.include?(params[:role])
                    RssFeed.find_tagged_with(:any => [params[:role]], :ns => "/managed", :cat => "roles").order("title")
                  end
   end
