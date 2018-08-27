@@ -219,9 +219,10 @@ describe MiqAeToolsController do
   describe "#review_import" do
     include_context "valid session"
 
-    let(:params) { {:import_file_upload_id => "123", :message => "the message"} }
+    let(:params) { {:import_file_upload_id => "123"} }
 
     before do
+      session[:flash_msgs] = [{:message => 'the message'}]
       bypass_rescue
     end
 
@@ -232,7 +233,7 @@ describe MiqAeToolsController do
 
     it "assigns the message" do
       get :review_import, :params => params
-      expect(assigns(:message)).to eq("the message")
+      expect(assigns(:message)).to include("the message")
     end
   end
 
