@@ -3,6 +3,7 @@ module OrchestrationStackHelper::TextualSummary
   include TextualMixins::TextualEmsCloud
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #

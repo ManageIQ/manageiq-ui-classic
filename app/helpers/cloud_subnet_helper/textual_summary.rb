@@ -2,6 +2,7 @@ module CloudSubnetHelper::TextualSummary
   include TextualMixins::TextualEmsNetwork
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -18,7 +19,7 @@ module CloudSubnetHelper::TextualSummary
       _("Relationships"),
       %i(
         parent_ems_cloud ems_network cloud_tenant availability_zone instances cloud_network
-        network_router parent_subnet managed_subnets network_ports security_groups
+        network_router parent_subnet managed_subnets network_ports security_groups custom_button_events
       )
     )
   end

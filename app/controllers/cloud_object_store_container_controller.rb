@@ -36,7 +36,7 @@ class CloudObjectStoreContainerController < ApplicationController
   end
 
   def self.display_methods
-    %w(cloud_object_store_objects)
+    %w(cloud_object_store_objects custom_button_events)
   end
 
   def new

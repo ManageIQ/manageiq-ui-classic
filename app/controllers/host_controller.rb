@@ -10,7 +10,7 @@ class HostController < ApplicationController
   include Mixins::MoreShowActions
 
   def self.display_methods
-    %w(hv_info os_info devices network storage_adapters performance timeline storages resource_pools vms miq_templates compliance_history)
+    %w(hv_info os_info devices network storage_adapters performance timeline storages resource_pools vms miq_templates compliance_history custom_button_events)
   end
 
   def display_config_info

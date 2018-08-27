@@ -2,6 +2,7 @@ module NetworkRouterHelper::TextualSummary
   include TextualMixins::TextualEmsNetwork
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -15,7 +16,7 @@ module NetworkRouterHelper::TextualSummary
       _("Relationships"),
       %i(
         parent_ems_cloud ems_network cloud_tenant instances cloud_subnets external_gateway floating_ips
-        security_groups
+        security_groups custom_button_events
       )
     )
   end

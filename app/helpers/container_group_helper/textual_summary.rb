@@ -2,6 +2,7 @@ module ContainerGroupHelper::TextualSummary
   #
   # Groups
   #
+  include TextualMixins::TextualCustomButtonEvents
 
   def textual_group_properties
     TextualGroup.new(
@@ -16,7 +17,7 @@ module ContainerGroupHelper::TextualSummary
       _("Relationships"),
       %i(
         ems container_project container_services container_replicator containers container_node
-        lives_on container_images persistent_volumes
+        lives_on container_images persistent_volumes custom_button_events
       )
     )
   end

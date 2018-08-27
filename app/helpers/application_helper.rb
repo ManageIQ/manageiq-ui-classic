@@ -1178,7 +1178,7 @@ module ApplicationHelper
   def render_gtl_view_tb?
     GTL_VIEW_LAYOUTS.include?(@layout) && @gtl_type && !@tagitems &&
       !@ownershipitems && !@retireitems && !@politems && !@in_a_form &&
-      %w(show show_list).include?(params[:action])
+      %w(show show_list).include?(params[:action]) && @display != "custom_button_events"
   end
 
   def update_paging_url_parms(action_url, parameter_to_update = {}, post = false)

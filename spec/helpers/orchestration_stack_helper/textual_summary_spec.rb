@@ -2,7 +2,7 @@ describe OrchestrationStackHelper::TextualSummary do
   before { @record = FactoryGirl.build(:orchestration_stack) }
 
   it "#textual_group_lifecycle includes retirement_date" do
-    expect(textual_group_lifecycle.items).to eq([:retirement_date])
+    expect(textual_group_lifecycle.items).to eq(%i(retirement_date custom_button_events))
   end
 
   describe "#textual_retirement_date value" do

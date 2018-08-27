@@ -1,6 +1,7 @@
 module CloudTenantHelper::TextualSummary
   include TextualMixins::TextualEmsCloud
   include TextualMixins::TextualGroupTags
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -16,6 +17,7 @@ module CloudTenantHelper::TextualSummary
         ems_cloud instances images cloud_object_store_containers
         cloud_volumes cloud_volume_snapshots cloud_networks cloud_subnets
         network_routers security_groups floating_ips network_ports
+        custom_button_events
       )
     )
   end
