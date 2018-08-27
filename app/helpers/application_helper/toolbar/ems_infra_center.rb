@@ -23,8 +23,9 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Register Nodes'),
           t,
-          :url   => "/register_nodes",
-          :klass => ApplicationHelper::Button::HostRegisterNodes),
+          :url     => "/register_nodes",
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
+          :options => {:feature => :add_host}),
         separator,
         button(
           :ems_infra_edit,
