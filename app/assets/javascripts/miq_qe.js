@@ -250,8 +250,8 @@ ManageIQ.qe.gtl = {
       },
       'is_displayed': function(identificator) {
         var foundItem = queryItem(identificator, 'name', this.gtlData.rows, false);
-        ManageIQ.qe.gtl.result = foundItem.id ? true : false;
-        return foundItem.id ? true : false;
+        ManageIQ.qe.gtl.result = Boolean(foundItem && foundItem.id);
+        return ManageIQ.qe.gtl.result;
       },
       'pagination_range': function() {
         ManageIQ.qe.gtl.result = {
