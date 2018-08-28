@@ -292,11 +292,12 @@ module OpsController::Settings::AnalysisProfiles
           end
         end
       when "reset", nil
-        @obj = find_checked_ids_with_rbac(ScanItemSet)
-        @obj[0] = params[:id] if @obj.blank? && params[:id] && (params[:button] == "reset" || ["ap_copy", "ap_edit"].include?(@sb[:action]))
+        if params[:button] == "reset" || %w(ap_copy ap_edit).include?(@sb[:action])
+          obj = find_record_with_rbac(ScanItemSet, checked_or_params)
+        end
         if !params[:tab] && params[:typ] != "copy" # if tab was not changed
           if !params[:typ] || params[:button] == "reset"
-            @scan = ScanItemSet.find(@obj[0])           # Get existing or new record
+            @scan = obj
             @sb[:miq_tab] = @scan.mode == "Host" ? "edit_2" : "edit_1"
             if @scan.read_only
               add_flash(_("Sample Analysis Profile \"%{name}\" can not be edited") % {:name => @scan.name}, :error)
@@ -313,7 +314,7 @@ module OpsController::Settings::AnalysisProfiles
         end
         if params[:typ] == "copy"
           session[:set_copy] = "copy"
-          scanitemset = ScanItemSet.find(@obj[0])
+          scanitemset = obj
           @scan = ScanItemSet.new
           @scan.name = "Copy of " + scanitemset.name
           @scan.description = scanitemset.description
@@ -378,51 +379,21 @@ module OpsController::Settings::AnalysisProfiles
   # Delete all selected or single displayed scanitemset(s)
   def ap_delete
     assert_privileges("ap_delete")
-    scanitemsets = []
-    if !params[:id] # showing a list
-      scanitemsets = find_checked_ids_with_rbac(ScanItemSet)
-      if scanitemsets.empty?
-        add_flash(_("No Analysis Profiles were selected for deletion"), :error)
+    @single_delete = true if params[:id]
+    scanitemsets = find_records_with_rbac(ScanItemSet, checked_or_params)
+    scanitemsets.each do |scan_item_set|
+      if scan_item_set.read_only
+        scanitemsets.delete(scan_item_set)
+        add_flash(_("Default Analysis Profile \"%{name}\" can not be deleted") % {:name => scan_item_set.name}, :error)
       else
-        to_delete = []
-        scanitemsets.each do |s|
-          scan = ScanItemSet.find(s)
-          if scan.read_only
-            to_delete.push(s)
-            add_flash(_("Default Analysis Profile \"%{name}\" can not be deleted") % {:name => scan.name}, :error)
-          end
-        end
-        # deleting elements in temporary array, had to create temp array to hold id's to be delete, .each gets confused if i deleted them in above loop
-        to_delete.each do |a|
-          scanitemsets.delete(a)
-        end
-      end
-      @flash_error = true  if scanitemsets.empty?
-      scanitemsets.each do |id|
-        itemset = ScanItemSet.find(id)
-        mems = itemset.members
-        mems_to_delete = []
-        mems.each do |m|
-          mems_to_delete.push(m)
-        end
-        ap_deletescanitems(mems_to_delete)
-        # resetting flash_array to prevent from showing message from deleting each scanitem under scanitemset
-        @flash_array = []
-        itemset.remove_all_members
-      end
-      ap_process_scanitemsets(scanitemsets, "destroy")  unless scanitemsets.empty?
-    else # showing 1 scanitemset, delete it
-      if params[:id].nil? || ScanItemSet.find_by_id(params[:id]).nil?
-        add_flash(_("Analysis Profile no longer exists"), :error)
-      else
-        scanitemsets.push(params[:id])
-      end
-      @single_delete = true
-      ap_process_scanitemsets(scanitemsets, "destroy")  unless scanitemsets.empty?
-      if @flash_array.nil?
-        add_flash(_("The selected Analysis Profile was deleted"))
+        tmp_flash_array = @flash_array
+        ap_deletescanitems(scan_item_set.members)
+        @flash_array = tmp_flash_array
+        scan_item_set.remove_all_members
       end
     end
+    @flash_error = true if scanitemsets.empty?
+    ap_process_scanitemsets(scanitemsets, "destroy") unless scanitemsets.empty?
     self.x_node = "xx-sis"
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:settings])
