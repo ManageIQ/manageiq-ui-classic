@@ -17,6 +17,7 @@ function cloudVolumeBackupFormController(miqService, $http) {
 
     vm.cloudVolumeBackupModel = {
       volume: '',
+      name: '',
     };
 
     vm.model = 'cloudVolumeBackupModel';

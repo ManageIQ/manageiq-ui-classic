@@ -41,7 +41,10 @@ class CloudVolumeBackupController < ApplicationController
       cancel_action(_("Restore to Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @backup.name})
 
     when "restore"
-      task_id = @backup.restore_queue(session[:userid], params[:volume][:ems_ref])
+      # volume_id to restore to is optional
+      volume_id = params[:volume].try(:fetch, :ems_ref, nil)
+      new_volume_name = params[:name]
+      task_id = @backup.restore_queue(session[:userid], volume_id, new_volume_name)
 
       if task_id.kind_of?(Integer)
         initiate_wait_for_task(:task_id => task_id, :action => "backup_restore_finished")
