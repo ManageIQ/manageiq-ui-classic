@@ -14,7 +14,7 @@ module EmsInfraHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud network_manager)
+      %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud network_manager custom_button_events)
     )
   end
 
@@ -184,5 +184,16 @@ module EmsInfraHelper::TextualSummary
      :icon  => "pficon pficon-topology",
      :link  => url_for_only_path(:controller => '/infra_topology', :action => 'show', :id => @record.id),
      :title => _("Show topology")}
+  end
+
+  def textual_custom_button_events
+    return nil unless User.current_user.super_admin_user? || User.current_user.admin?
+
+    {
+      :title => _('Custom Button Events'),
+      :value => num = @record.number_of(:custom_button_events),
+      :link  => num.positive? ? ems_infra_path(:id => @record, :display => 'custom_button_events') : nil,
+      :icon  => CustomButtonEvent.decorate.fonticon,
+    }
   end
 end

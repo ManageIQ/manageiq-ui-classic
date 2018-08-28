@@ -1,5 +1,6 @@
 module EmsPhysicalInfraHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -14,7 +15,10 @@ module EmsPhysicalInfraHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(datastores physical_chassis physical_racks physical_servers physical_servers_with_host physical_storages physical_switches vms)
+      %i(
+        datastores physical_chassis physical_racks physical_servers physical_servers_with_host
+        physical_storages physical_switches vms custom_button_events
+      )
     )
   end
 

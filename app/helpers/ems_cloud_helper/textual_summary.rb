@@ -1,5 +1,6 @@
 module EmsCloudHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -16,7 +17,7 @@ module EmsCloudHelper::TextualSummary
       _("Relationships"),
       %i(
         ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
-        security_groups instances images orchestration_stacks storage_managers
+        security_groups instances images orchestration_stacks storage_managers custom_button_events
       )
     )
   end
