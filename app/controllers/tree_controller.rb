@@ -14,6 +14,11 @@ class TreeController < ApplicationController
     render :body => json, :content_type => 'application/json'
   end
 
+  def ops_rbac
+    json = fetch_tree(TreeBuilderOpsRbac, :rbac, params[:id])
+    render :body => json, :content_type => 'application/json'
+  end
+
   private
 
   def fetch_tree(klass, name, node_id = nil)

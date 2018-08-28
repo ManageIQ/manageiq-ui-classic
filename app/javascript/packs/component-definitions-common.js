@@ -1,11 +1,13 @@
 import React from 'react';
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
+import { AmazonSecurityGroupForm } from '@manageiq/react-ui-components/dist/amazon-security-form-group';
 import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import TableListViewWrapper from '../react/table_list_view_wrapper';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import MiqAboutModal from '../components/miq-about-modal';
+import RbacModule from '../components/rbac-user-module';
 
 /**
 * Add component definitions to this file.
@@ -22,3 +24,5 @@ ManageIQ.component.addReact('TextualSummaryWrapper', TextualSummaryWrapper);
 ManageIQ.component.addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
 ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
+ManageIQ.component.addReact('RbacModule', RbacModule);
+ManageIQ.component.addReact('AmazonSecurityGroupForm', AmazonSecurityGroupForm);

@@ -89,8 +89,8 @@ export const handleUpdateUsersTree = () => dispatch =>
 export const saveUser = user => (dispatch) => {
   dispatch(fetchData(actionTypes.SAVE_USER));
   return API.post(endpoints.modifyUserUrl(), user)
-    .then(() => dispatch(requestUsers))
-    .then(() => dispatch(handleUpdateUsersTree))
+    .then(() => dispatch(requestUsers()))
+    .then(() => dispatch(handleUpdateUsersTree()))
     .then(() => dispatch(navigate('/')))
     .catch(() => dispatch(fetchFailed));
 };

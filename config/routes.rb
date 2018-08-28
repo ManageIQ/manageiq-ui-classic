@@ -3371,6 +3371,7 @@ Rails.application.routes.draw do
   # API-like JSON trees
   get '/tree/automate_entrypoint', :to => 'tree#automate_entrypoint'
   get '/tree/automate_inline_methods', :to => 'tree#automate_inline_methods'
+  get '/tree/ops_rbac', :to => 'tree#ops_rbac'
 
   # pure-angular templates
   get '/static/*id' => 'static#show', :format => false
