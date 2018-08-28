@@ -328,12 +328,12 @@ class StorageController < ApplicationController
 
   def get_node_info(node, _show_list = true)
     node = valid_active_node(node)
+    session_reset # Reset session to same values as first time in
     case x_active_tree
     when :storage_tree     then storage_get_node_info(node)
     when :storage_pod_tree then storage_pod_get_node_info(node)
     end
-    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present?
-    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :storage && @edit && @edit[:adv_search_applied]
+    set_right_cell_text
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
       x_history_add_item(:id     => x_node,
@@ -492,6 +492,18 @@ class StorageController < ApplicationController
   end
 
   private
+
+  def session_reset
+    if @record
+      session[:edit] = @edit = nil
+      session[:adv_search]['Storage'] = nil if session[:adv_search]
+    end
+  end
+
+  def set_right_cell_text
+    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && @nodetype != 'ds'
+    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :storage && @edit && @edit[:adv_search_applied]
+  end
 
   def textual_group_list
     [
