@@ -43,6 +43,11 @@ class RbacModule extends Component {
       ...user,
       state: { selected: user.key === `u-${this.props.pathname.replace(/^\D+/g, '')}` },
     }))).then(data => setTimeout( this.sendTreeUpdate({ nodes: [...data], state: { selected: this.props.pathname === '/' } }) , 2000)); // have to w8 for the tree to initialize first...
+
+    const toolbarUrl = `/ops/update_toolbar?toolbar_name=user${this.props.pathname === '/' ? 's' : ''}_center_tb${this.props.pathname.match(/\/preview\/[0-9]+/)
+      ? `&id=${this.props.pathname.replace(/^\D+/g, '')}`
+      : ''}`;
+    http.get(toolbarUrl).then(data => sendDataWithRx({ redrawToolbar: [data.toolbar] }));
   }
 
   componentWillUnmount() {

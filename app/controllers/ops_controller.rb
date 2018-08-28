@@ -113,7 +113,7 @@ class OpsController < ApplicationController
 
   def update_toolbar
     case params[:toolbar_name]
-    when "users_center_tb"
+    when "user_center_tb"
       @record = User.find(params[:id]) if params[:id]
     end
     toolbar = build_toolbar(params[:toolbar_name])

@@ -11,7 +11,7 @@
     vm.reactRouting = false;
 
     listenToRx(function(payload) {
-      if (payload.type = 'init-react-routing' && !vm.reactRouting) {
+      if (payload.type === 'init-react-routing' && !vm.reactRouting) {
         vm.reactRouting = !!payload.reactRouting;
         vm.$scope.$apply;
       }
