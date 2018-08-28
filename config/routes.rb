@@ -2522,6 +2522,7 @@ Rails.application.routes.draw do
         show_product_update
         tenant_quotas_form_fields
         tenant_form_fields
+        update_toolbar
       ),
       :post => %w(
         accordion_select

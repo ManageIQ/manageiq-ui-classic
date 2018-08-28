@@ -103,13 +103,22 @@ class OpsController < ApplicationController
   end
 
   def get_category_entries_multi
-  category_entries = {}
-  params[:ids].map { |category_id|
-    cat = Classification.find_by_id(category_id)
-    category_entries[category_id] = cat.entries.map { |entry| { :value => entry[:tag_id], :label => entry[:description], :name => entry.tag[:name] } }
-  }
-  render :json => category_entries
-end
+    category_entries = {}
+    params[:ids].map { |category_id|
+      cat = Classification.find_by_id(category_id)
+      category_entries[category_id] = cat.entries.map { |entry| { :value => entry[:tag_id], :label => entry[:description], :name => entry.tag[:name] } }
+    }
+    render :json => category_entries
+  end
+
+  def update_toolbar
+    case params[:toolbar_name]
+    when "users_center_tb"
+      @record = User.find(params[:id]) if params[:id]
+    end
+    toolbar = build_toolbar(params[:toolbar_name])
+    render :json => {:toolbar => toolbar, :id => params[:id]}
+  end
 
   def button
     custom_buttons if params[:pressed] == 'custom_button'
