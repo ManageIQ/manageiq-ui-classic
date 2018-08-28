@@ -1,0 +1,32 @@
+%div{"ng-show" => "vm.show"}
+  .form-group{"ng-class" => "{'has-error': angularForm.depot_name.$invalid}"}
+    %label.col-md-2.control-label{"for" => "depot_name"}
+      = _("Depot Name")
+    .col-md-8
+      %input.form-control{"type"        => "text",
+                          "id"          => "depot_name",
+                          "ng-required" => "vm.requestedDepotName",
+                          "name"        => "depot_name",
+                          "ng-model"    => "vm.modelDepotName",
+                          "ng-readonly" => "vm.readonlySet",
+                          "ng-change" => "vm.nameChanged()",
+                          "auto-focus"  => "reactiveFocus"}
+      %span.help-block{"ng-show" => "angularForm.depot_name.$invalid"}
+        = _("Required")
+  .form-group{"ng-class" => "{'has-error': angularForm.uri.$invalid}"}
+    %label.col-md-2.control-label{"for" => "uri"}
+      = _("URI")
+    .col-md-8
+      .input-group
+        %span.input-group-addon
+          = "{{vm.uriPrefixDisplay}}"
+        %input.uri-input.form-control{"type"        => "text",
+                                      "id"          => "uri",
+                                      "ng-required" => "vm.requestedUri",
+                                      "name"        => "uri",
+                                      "ng-model"    => "vm.modelUri",
+                                      "ng-readonly" => "vm.readonlySet",
+                                      "ng-change" => "vm.uriChanged()"}
+      %span.help-block{"ng-show" => "angularForm.uri.$invalid"}
+        = _("Required")
+      %input{"type" => "hidden", "name" => "uri_prefix", "ng-value" => "vm.modelUriPrefix"}

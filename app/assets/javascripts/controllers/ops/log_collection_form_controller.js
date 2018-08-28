@@ -88,7 +88,11 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
 
   vm.canValidateBasicInfo = function () {
     return vm.isBasicInfoValid();
-  }
+  };
+
+  vm.readonlyMode = function() {
+    return vm.logCollectionModel.log_protocol == 'Red Hat Dropbox';
+  };
 
   function getLogCollectionFormData(response) {
     var data = response.data;
@@ -117,6 +121,13 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     vm.logCollectionModel.uri_prefix = data.uri_prefix;
     miqService.sparkleOff();
   }
+
+  vm.nameChanged = function(value) {
+    vm.logCollectionModel.depot_name = value;
+  };
+  vm.uriChanged = function(value) {
+    vm.logCollectionModel.uri = value;
+  };
 
   init();
 }]);

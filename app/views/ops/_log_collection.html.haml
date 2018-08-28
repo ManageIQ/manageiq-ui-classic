@@ -30,15 +30,16 @@
       :javascript
         miqInitSelectPicker();
 
-  = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
-                       :locals  => {:ng_show             => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel)",
-                                    :ng_reqd_depot_name  => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.depot_name)",
-                                    :ng_model_depot_name => "vm.logCollectionModel.depot_name",
-                                    :ng_reqd_uri         => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.uri)",
-                                    :ng_model_uri        => "vm.logCollectionModel.uri",
-                                    :ng_model_uri_prefix => "vm.logCollectionModel.uri_prefix",
-                                    :ng_readonly         => "vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
-                                    :uri_prefix_display  =>  "{{vm.logCollectionModel.uri_prefix}}://"}
+  %log-depot-settings{:show                => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel)",
+                                "requered-depot-name" => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.depot_name)",
+                                "model-depot-name"    => "{{vm.logCollectionModel.depot_name}}",
+                                "requered-uri"        => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.uri)",
+                                "model-uri"           => "{{vm.logCollectionModel.uri}}",
+                                "model-uri-prefix"    => "{{vm.logCollectionModel.uri_prefix}}",
+                                "readonly-set"        => "vm.readonlyMode()",
+                                "uri-prefix-display"  =>  "{{vm.logCollectionModel.uri_prefix}}://",
+                                "name-change-value" => "vm.nameChanged",
+                                "uri-change-value"  => 'vm.uriChanged'}
 
   %auth-credentials{'ng-if'                          => 'vm.miqDBBackupService.credsProtocol(vm.logCollectionModel)',
                     'form-model'                     => 'vm.logCollectionModel',
