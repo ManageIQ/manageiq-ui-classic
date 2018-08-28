@@ -14,7 +14,7 @@ module StorageHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(hosts managed_vms managed_miq_templates registered_vms unregistered_vms unmanaged_vms)
+      %i(hosts managed_vms managed_miq_templates registered_vms unregistered_vms unmanaged_vms custom_button_events)
     )
   end
 
@@ -226,5 +226,16 @@ module StorageHelper::TextualSummary
       h[:link]  = url_for_only_path(:action => 'debris_files', :id => @record)
     end
     h
+  end
+
+  def textual_custom_button_events
+    return nil unless User.current_user.super_admin_user? || User.current_user.admin?
+
+    {
+      :label => _('Custom Button Events'),
+      :value => num = @record.number_of(:custom_button_events),
+      :link  => num.positive? ? url_for_only_path(:action => 'show', :id => @record, :display => 'custom_button_events') : nil,
+      :icon  => CustomButtonEvent.decorate.fonticon
+    }
   end
 end
