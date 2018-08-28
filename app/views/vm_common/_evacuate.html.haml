@@ -1,14 +1,14 @@
 - message = n_("1 Instance to be Evacuated", "%{amount} Instances to be Evacuated", @evacuate_items.length) % {:amount => @evacuate_items.length}
 - form_id = @evacuate_items.length == 1 ? @evacuate_items[0].id : ''
-
-%vm-cloud-evacuate-form{'record-id' => form_id, 'message' => message}
-
-
-- if @evacuate_items
-  - @embedded = true
-  - @quadicon_no_url = true
-  = render :partial => "layouts/gtl"
-
+%vm-cloud-evacuate-form{'record-id' => form_id}
+%hr
+  %div
+    %h3
+      = message
+    - if @evacuate_items
+      - @embedded = true
+      - @quadicon_no_url = true
+      = render :partial => "layouts/gtl"
 - unless @explorer
   %table{:width => '100%'}
     %tr

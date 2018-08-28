@@ -4,7 +4,6 @@ ManageIQ.angular.app.component('vmCloudEvacuateForm', {
   templateUrl: '/static/evacuate-form.html.haml',
   bindings: {
     'recordId': '@',
-    'message': '@',
   },
 });
 

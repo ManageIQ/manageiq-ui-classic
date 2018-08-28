@@ -13,7 +13,7 @@ describe('vmCloudEvacuateForm', function() {
     $scope.vm = {};
 
     var bindings = {
-      recordId: 42,
+      recordId: "42",
       message: "1 Instance to be Evacuated",
     };
     vm = _$componentController_('vmCloudEvacuateForm', null, bindings);
