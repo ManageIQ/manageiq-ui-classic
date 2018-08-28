@@ -42,7 +42,7 @@ class RbacModule extends Component {
     http.get(treeUrl).then(users => users.map(user => ({
       ...user,
       state: { selected: user.key === `u-${this.props.pathname.replace(/^\D+/g, '')}` },
-    }))).then(data => setTimeout( this.sendTreeUpdate({ nodes: [...data], state: { selected: false } }) , 2000)); // have to wa8 for the tree to initialize first...
+    }))).then(data => setTimeout( this.sendTreeUpdate({ nodes: [...data], state: { selected: this.props.pathname === '/' } }) , 2000)); // have to w8 for the tree to initialize first...
   }
 
   componentWillUnmount() {
