@@ -108,12 +108,11 @@ export const editUser = (user, userId) => (dispatch) => {
   dispatch(fetchData(actionTypes.EDIT_USER));
   return API.put(endpoints.modifyUserUrl(userId), user)
     .then(
-      () => dispatch(() => navigate('/')),
+      () => dispatch(navigate('/')),
       (err) => { throw err; },
     )
-    .then(() => dispatch(requestUsers))
-    .then(() => handleUpdateUsersTree())
-    .then(response => dispatch(storeUsersTree(response)))
+    .then(() => dispatch(requestUsers()))
+    .then(() => dispatch(handleUpdateUsersTree()))
     .catch(() => dispatch(fetchFailed()));
 };
 
