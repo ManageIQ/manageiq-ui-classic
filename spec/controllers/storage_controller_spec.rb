@@ -397,17 +397,54 @@ describe StorageController do
   end
 
   describe '#get_node_info' do
-    before do
-      controller.instance_variable_set(:@right_cell_text, "")
-      controller.instance_variable_set(:@search_text, search)
+    context 'resetting session' do
+      let(:datastore) { FactoryGirl.create(:storage, :name => 'storage_name') }
+
+      before do
+        allow(controller).to receive(:session).and_return(:edit => {}, :adv_search => {'Storage' => {}})
+        controller.instance_variable_set(:@edit, {})
+        controller.instance_variable_set(:@record, datastore)
+      end
+
+      it 'calls session_reset method' do
+        expect(controller).to receive(:session_reset)
+        controller.send(:get_node_info, 'root')
+      end
+
+      it 'resets session to same values as first time in' do
+        controller.send(:session_reset)
+        expect(controller.instance_variable_get(:@edit)).to be(nil)
+        expect(controller.session).to eq(:edit => nil, :adv_search => {'Storage' => nil})
+      end
     end
 
-    context 'searching text' do
-      let(:search) { "Datastore" }
+    context 'setting right cell text' do
+      before do
+        controller.instance_variable_set(:@right_cell_text, 'All Datastores')
+      end
 
-      it 'updates right cell text according to search text' do
-        controller.send(:get_node_info, "root")
-        expect(controller.instance_variable_get(:@right_cell_text)).to eq(" (Names with \"#{search}\")")
+      context 'searching text' do
+        before do
+          controller.instance_variable_set(:@search_text, 'Datastore')
+        end
+
+        it 'updates right cell text according to search text' do
+          controller.send(:get_node_info, 'root')
+          expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Datastores (Names with \"Datastore\")")
+        end
+      end
+
+      context 'using Advanced Search' do
+        before do
+          allow(controller).to receive(:x_tree).and_return(:type => :storage)
+          allow(controller).to receive(:valid_active_node).and_return('ms-1')
+          controller.instance_variable_set(:@edit, :adv_search_applied => {:text => " - Filtered by \"Filter1\""})
+        end
+
+        it 'updates right cell text according to chosen filter' do
+          controller.send(:get_node_info, 'ms-1')
+          expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Datastores - Filtered by \"Filter1\"")
+        end
       end
     end
   end
