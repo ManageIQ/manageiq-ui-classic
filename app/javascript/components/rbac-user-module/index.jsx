@@ -10,6 +10,7 @@ import usersReducer from './redux/users-reducer';
 import RbacUsersList from './components/users-list';
 import UserDetail from './components/user-detail';
 import UserAdd from './components/user-add';
+import TagAssignment from './components/tagg-assignment';
 
 class RbacModule extends Component {
   constructor(props) {
@@ -37,6 +38,8 @@ class RbacModule extends Component {
             <Route exact path="/" component={RbacUsersList} />
             <Route path="/preview/:userId" component={UserDetail} />
             <Route path="/add/:copy?" component={UserAdd} />
+            <Route path="/edit/:userId" component={UserAdd} />
+            <Route path="/assign-company-tags" component={TagAssignment} />
           </div>
         </ConnectedRouter>
         <hr />
