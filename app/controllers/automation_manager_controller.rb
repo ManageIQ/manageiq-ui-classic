@@ -144,9 +144,6 @@ class AutomationManagerController < ApplicationController
       return
     end
 
-    if @record.kind_of?(ConfiguredSystem)
-      rec_cls = "#{model_to_type_name(@record.ext_management_system.class.to_s)}_configured_system"
-    end
     return unless @display == 'main'
   end
 
