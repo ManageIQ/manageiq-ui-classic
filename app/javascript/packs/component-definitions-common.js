@@ -25,4 +25,3 @@ ManageIQ.component.addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
 ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('RbacModule', RbacModule);
-ManageIQ.component.addReact('AmazonSecurityGroupForm', AmazonSecurityGroupForm);

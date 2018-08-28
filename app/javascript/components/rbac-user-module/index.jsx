@@ -16,13 +16,48 @@ class RbacModule extends Component {
   constructor(props) {
     super(props);
     ManageIQ.redux.addReducer(combineReducers({ usersReducer }));
+    this.historyUnlisten = ManageIQ.redux.history.listen(({ pathname }, action) => {
+      const toolbarUrl = `/ops/update_toolbar?toolbar_name=user${pathname === '/' ? 's' : ''}_center_tb${pathname.match(/\/preview\/[0-9]+/)
+        ? `&id=${pathname.replace(/^\D+/g, '')}`
+        : ''}`;
+      http.get(toolbarUrl).then(data => sendDataWithRx({ redrawToolbar: [data.toolbar] }));
+      const treeUrl = '/tree/ops_rbac?id=xx-u';
+      if (pathname === '/' && action === "POP") {
+        http.get(treeUrl).then(() => this.sendTreeUpdate({ state: { selected: true } }));
+      } else if (action === "POP") {
+        http.get(treeUrl).then(users => users.map(user => ({
+          ...user,
+          state: { selected: user.key === `u-${pathname.replace(/^\D+/g, '')}` },
+        }))).then(data => this.sendTreeUpdate({ nodes: [...data], state: { selected: false } }));
+      }
+    });
+    window.magix = this;
   }
   
   componentDidMount() {
     if (!this.props.rows) {
       this.props.requestUsers();
     }
+    const treeUrl = '/tree/ops_rbac?id=xx-u';
+    http.get(treeUrl).then(users => users.map(user => ({
+      ...user,
+      state: { selected: user.key === `u-${this.props.pathname.replace(/^\D+/g, '')}` },
+    }))).then(data => setTimeout( this.sendTreeUpdate({ nodes: [...data], state: { selected: false } }) , 2000)); // have to wa8 for the tree to initialize first...
   }
+
+  componentWillUnmount() {
+    this.historyUnlisten();
+  }
+
+  sendTreeUpdate = (data) => 
+    sendDataWithRx({
+      updateTreeNode: {
+        tree: 'rbac_tree',
+        key: 'xx-u',
+        data,
+      },
+    });
+
   render() {
     const {
       isLoaded
@@ -48,8 +83,9 @@ class RbacModule extends Component {
   }
 }
 
-const mapStateToProps = ({ usersReducer }) => ({
-    isLoaded: !!usersReducer && usersReducer.rows,
+const mapStateToProps = ({ usersReducer, router: { location: { pathname } } }) => ({
+    isLoaded: !!usersReducer && !!usersReducer.rows,
+    pathname,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

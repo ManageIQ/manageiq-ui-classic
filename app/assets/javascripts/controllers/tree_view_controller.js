@@ -8,8 +8,13 @@
     vm.$scope = $scope;
     vm.selectedNodes = {};
     vm.data = {};
+    vm.reactRouting = false;
 
     listenToRx(function(payload) {
+      if (payload.type = 'init-react-routing' && !vm.reactRouting) {
+        vm.reactRouting = !!payload.reactRouting;
+        vm.$scope.$apply;
+      }
       if (payload.reloadTrees && _.isObject(payload.reloadTrees) && Object.keys(payload.reloadTrees).length > 0) {
         _.forEach(payload.reloadTrees, function(value, key) {
           vm.data[key] = value;
@@ -44,8 +49,8 @@
           if (vm.nodePath !== undefined) {
             Object.keys(data.data).forEach(function(key) {
               _.set(vm.data, data.tree + vm.nodePath + '.' + key, data.data[key]);
-              vm.nodePath = undefined;
             });
+            vm.nodePath = undefined;
             vm.data = angular.copy(vm.data);
           }
         });
@@ -101,6 +106,24 @@
 
     vm.nodeSelect = function(node, path) {
       var url = path + '?id=' + encodeURIComponent(node.key.split('__')[0]);
+      if (vm.reactRouting && (node.key.match(/^u-[0-9]+$/) || node.key.match(/xx-u/))) {
+        // routing inside react module
+        ManageIQ.redux.push(node.key.match(/xx-u/) ? '/' : '/preview/' + node.key.substring(2));
+        vm.reactRouting = true;
+        return;
+      } else if (!vm.reactRouting && (node.key.match(/^u-[0-9]+$/) || node.key.match(/xx-u/))) {
+        // routing while entering react module
+        vm.reactRouting = true;
+        ManageIQ.redux.push(node.key.match(/xx-u/) ? '/' : '/preview/' + node.key.substring(2));
+        miqJqueryRequest(url, {beforeSend: true});
+        return;
+      } else if (vm.reactRouting) {
+        // routing while exitting react module
+        vm.reactRouting = false;
+        ManageIQ.redux.push('/');
+        // remove react module from Virual DOM
+        ManageIQ.component.getComponentInstances('RbacModule')[0].destroy();
+      }
       miqJqueryRequest(url, {beforeSend: true});
     };
   };

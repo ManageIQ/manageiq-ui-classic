@@ -158,6 +158,7 @@ const sendTreeUpdate = (data) => {
       tree: 'rbac_tree',
       key: 'xx-u',
       data: {
+        state: { selected: false },
         nodes: [...data],
       },
     },
