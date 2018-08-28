@@ -5,7 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-4
+## Gaprindashvili-5
+
+### Added
+- Added Max Retries text field on Instance screen [(#3562)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3562)
+- Increase upper limit of the range for daily chargeback report to 5 weeks [(#4283)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4283)
+- Add new Cumulative Rate Calculation checkbox to Report editing screen [(#4112)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4112)
+- Update gettext catalogs [(#4213)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4213)
+- Support all service types for dialog buttons [(#4419)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4419)
+- Update json catalogs [(#4457)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4457)
+
+### Fixed
+- Correct positioning of dialog form buttons [(#3668)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3668)
+- Reload classifications when adding or editing the tag expression for groups [(#3977)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3977)
+- Fixed Automate import domain from git repository to use current user [(#4170)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4170)
+- Don't show Add Flavor in sublist view [(#4180)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4180)
+- Make policy assignment, simulation and tagging quads non-clickable [(#4179)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4179)
+- Escape special chars in tooltip & text of TreeBuilder's root [(#4225)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4225)
+- Use onchange as well as onfocus for radio buttons [(#4252)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4252)
+- Fixes page header when displaying Cloud Networks list [(#4256)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4256)
+- Pass correct credential parameters depending on the credential type [(#3913)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3913)
+- Fix date/time display on request screen [(#4282)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4282)
+- Add angular gettext and make translation directive working [(#4323)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4323)
+- Load new dialog for ServiceContainerTemplate type services [(#4404)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4404)
+- Changes to exclude service templates marked as service_type = internal [(#4274)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4274)
+- Allow to save multiple tag categories in chargeback controller [(#4310)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4310)
+- Support all service types for dialog buttons [(#44180)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4418)
+- Fix selection of container images label in Chargeback assignments [(#4311)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4311)
+- Fix saving of multiple container images label in Chargeback assignments [(#4416)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4416)
+- Fix multi saving tag categories in chargeback assigments [(#4427)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4427)
+- Added spinner after Category is selected on tagging screen [(#4452)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4452)
+- Added missing 'public_service_templates' scope [(#4473)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4473)
+- Fix the setting for the retirement_remove_resources flag [(#3510)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3510)
+- Removed `data-miq_observe` from drop down [(#4499)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4499)
+- Added spinner after Value is selected on tagging screen [(#4533)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4533)
+- 
+
+### Removed
+- Remove VM Transform buttons [(#4336)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4336)
+
+## Gaprindashvili-4 - Released 2018-07-16
 
 ### Added
 - Menu pluggability improvements [(#3347)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3347)
@@ -51,7 +90,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Faster report result index pages [(#4143)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4143)
 - Change reconfigure setup to include values configured with originally [(#4226)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4226)
 
-## Gaprindashvili-3
+## Gaprindashvili-3 - Released 2018-05-15
 
 ### Added
 - Added column 'status' to replication screen [(#3370)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3370)
