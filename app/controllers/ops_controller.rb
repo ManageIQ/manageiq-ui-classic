@@ -91,6 +91,26 @@ class OpsController < ApplicationController
     generic_x_button(OPS_X_BUTTON_ALLOWED_ACTIONS)
   end
 
+  def load_tags_categories
+    cats = Classification.categories.select(&:show).sort_by { |t| t.description.try(:downcase) } # Get the categories, sort by description
+    cats.delete_if { |c| c.read_only? || c.entries.length == 0 }
+    render :json => cats
+  end
+
+  def get_category_entries
+    x = Classification.find_by_id(params[:cat_id])
+    render :json => x.entries.map { |entry| { :value => entry[:id], :label => entry[:description], :name => entry.tag[:name] } }
+  end
+
+  def get_category_entries_multi
+  category_entries = {}
+  params[:ids].map { |category_id|
+    cat = Classification.find_by_id(category_id)
+    category_entries[category_id] = cat.entries.map { |entry| { :value => entry[:tag_id], :label => entry[:description], :name => entry.tag[:name] } }
+  }
+  render :json => category_entries
+end
+
   def button
     custom_buttons if params[:pressed] == 'custom_button'
   end

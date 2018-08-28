@@ -2513,6 +2513,8 @@ Rails.application.routes.draw do
         fetch_build
         fetch_log
         fetch_production_log
+        get_category_entries
+        get_category_entries_multi
         log_collection_form_fields
         log_protocol_changed
         pglogical_subscriptions_form_fields
