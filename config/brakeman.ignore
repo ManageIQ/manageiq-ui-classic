@@ -1,0 +1,26 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "8a7b0e4f8eeddc00c0c1ea8c0e602577ea1af6b5c2f0db6b130e6456def740a1",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/controllers/alert_controller.rb",
+      "line": 51,
+      "link": "http://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => RssFeed.find_by(:name => params[:feed]).generate(request.host_with_port, local, session[:req_protocol]), {})",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "AlertController",
+        "method": "rss"
+      },
+      "user_input": "params[:feed]",
+      "confidence": "Weak",
+      "note": ""
+    }
+  ],
+  "updated": "2018-08-28 15:45:50 +0200",
+  "brakeman_version": "3.7.2"
+}
