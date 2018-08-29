@@ -395,7 +395,7 @@
         %tr{"ng-repeat" => "cdRom in vm.reconfigureModel.vmCDRoms",
             "ng-class"  => "{'danger': cdRom.connected_status == 'disconnected', 'active': cdRom.connected_status == 'connected'}"}
           %td
-            {{cdRom.name}}
+            {{cdRom.device_name}}
           %td{"ng-if" => "cdRom.connect_disconnect != 'connecting'"}
             {{cdRom.filename}}
           %td{"ng-if" => "cdRom.connect_disconnect == 'connecting'"}
