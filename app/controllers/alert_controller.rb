@@ -44,9 +44,7 @@ class AlertController < ApplicationController
     proto = nil unless [nil, "http", "https"].include?(proto)    # Make sure it's http or https
     proto ||= session[:req_protocol]                             # If nil, use previously discovered value
     session[:req_protocol] ||= proto                             # Save protocol in session
-    feed_data = feed_record.generate(request.host_with_port, false, proto)
-
-    render feed_data
+    render :text => feed_record.generate(request.host_with_port, proto), :content_type => Mime[:rss]
   end
 
   private ###########################
