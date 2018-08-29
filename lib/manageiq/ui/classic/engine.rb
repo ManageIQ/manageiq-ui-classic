@@ -56,6 +56,10 @@ module ManageIQ
         def vmdb_plugin?
           true
         end
+
+        def self.plugin_name
+          _('Classic UI')
+        end
       end
     end
   end
