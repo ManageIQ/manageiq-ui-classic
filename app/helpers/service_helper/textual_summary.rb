@@ -2,6 +2,7 @@ module ServiceHelper::TextualSummary
   include TextualMixins::TextualDescription
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
+  include TextualMixins::TextualCustomButtonEvents
   include GenericObjectHelper::TextualSummary
 
   # Groups
@@ -87,7 +88,7 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(catalog_item parent_service orchestration_stack job))
+    TextualGroup.new(_("Relationships"), %i(catalog_item parent_service orchestration_stack job custom_button_events))
   end
 
   def textual_group_miq_custom_attributes
@@ -276,6 +277,17 @@ module ServiceHelper::TextualSummary
                :title => _('Show Generic Object Instances for this Service'))
     end
     h
+  end
+
+  def textual_custom_button_events
+    return nil unless User.current_user.super_admin_user? || User.current_user.admin?
+
+    {
+      :label => _('Custom Button Events'),
+      :value => num = @record.number_of(:custom_button_events),
+      :link  => num.positive? ? url_for_only_path(:action => 'show', :id => @record, :display => 'custom_button_events') : nil,
+      :icon  => CustomButtonEvent.decorate.fonticon,
+    }
   end
 
   def credential(credential, label)

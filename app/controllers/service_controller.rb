@@ -51,8 +51,12 @@ class ServiceController < ApplicationController
 
     set_display
 
-    if @display == 'generic_objects'
+    case @display
+    when 'generic_objects'
       show_generic_object
+      return
+    when 'custom_button_events'
+      display_nested_list(@display)
       return
     end
 
@@ -189,7 +193,7 @@ class ServiceController < ApplicationController
   end
 
   def self.display_methods
-    %w(generic_objects)
+    %w(generic_objects custom_button_events)
   end
 
   def display_generic_objects

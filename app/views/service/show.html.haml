@@ -1,5 +1,5 @@
 #main_div
-  - if %w(generic_objects).include?(@display)
+  - if %w(generic_objects custom_button_events).include?(@display)
     - if @lastaction == 'generic_object' && @item
       = render :partial => 'layouts/textual_groups_generic'
     - else
