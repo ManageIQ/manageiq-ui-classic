@@ -610,6 +610,28 @@ Rails.application.routes.draw do
       ) + adv_search_post + exp_post + save_post
     },
 
+    :cloud_volume_type        => {
+      :get  => %w(
+        download_data
+        index
+        show
+        show_list
+        tagging_edit
+        tag_edit_form_field_changed
+      ),
+      :post => %w(
+        button
+        dynamic_checkbox_refresh
+        listnav_search_selected
+        quick_search
+        show
+        show_list
+        tagging_edit
+        tag_edit_form_field_changed
+        wait_for_task
+      ) + adv_search_post + exp_post + save_post
+    },
+
     :configuration            => {
       # TODO: routes for new/edit/copy buttons need to be revisited
       # TODO: so they can be changed to send up POST request instead of GET

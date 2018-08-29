@@ -105,7 +105,7 @@ describe Menu::DefaultMenu do
 
     it "shows correct content for Block Storage submenu" do
       menu = Menu::DefaultMenu.block_storage_menu_section.items.map(&:name)
-      result = ["Managers", "Volumes", "Volume Snapshots", "Volume Backups"]
+      result = ["Managers", "Volumes", "Volume Snapshots", "Volume Backups", "Volume Types"]
       expect(menu).to eq(result)
     end
   end

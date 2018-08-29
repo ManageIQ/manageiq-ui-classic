@@ -171,6 +171,11 @@ module Menu
                                            'cloud_volume_backup',
                                            {:feature => 'cloud_volume_backup_show_list'},
                                            '/cloud_volume_backup'),
+                            Menu::Item.new('cloud_volume_type',
+                                           N_('Volume Types'),
+                                           'cloud_volume_type',
+                                           {:feature => 'cloud_volume_type_show_list'},
+                                           '/cloud_volume_type'),
                           ])
       end
 

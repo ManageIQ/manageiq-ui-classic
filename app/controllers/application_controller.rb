@@ -124,6 +124,7 @@ class ApplicationController < ActionController::Base
       :cloudvolume                                                            => "list",
       :cloudvolumebackup                                                      => "list",
       :cloudvolumesnapshot                                                    => "list",
+      :cloudvolumetype                                                        => "list",
       :drift                                                                  => "expanded",
       :drift_mode                                                             => "details",
       :emscluster                                                             => "grid",
