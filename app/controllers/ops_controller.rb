@@ -120,6 +120,14 @@ class OpsController < ApplicationController
     render :json => {:toolbar => toolbar, :id => params[:id]}
   end
 
+  def get_user_tags
+    user_id = params[:user_id]
+    user = User.find(user_id)
+    entries = Classification.find_assigned_entries(user)
+    tags = entries.map { |tag| {:name => tag.parent.description, :value => tag.description } }
+    render :json => { :tags => tags, :tenant => current_tenant.name }
+  end
+
   def button
     custom_buttons if params[:pressed] == 'custom_button'
   end
