@@ -1940,6 +1940,7 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
+        custom_button_events
         explorer
         hosts
         listnav_search_selected

@@ -147,6 +147,15 @@ class InfraNetworkingController < ApplicationController
     end
   end
 
+  def custom_button_events
+    return unless init_show_variables('switch')
+
+    @lastaction = "custom_button_events"
+    drop_breadcrumb(:name => _("%{name} (Custom Button Events)") % {:name => @record.name},
+                    :url  => "/infra_networking/custom_button_events/#{@record.id}")
+    show_details(CustomButtonEvent, :association => "custom_button_events", :clickable => false)
+  end
+
   private
 
   def textual_group_list
@@ -478,6 +487,7 @@ class InfraNetworkingController < ApplicationController
   def show_details(db, options = {}) # Pass in the db, parent vm is in @vm
     association = options[:association]
     conditions  = options[:conditions]
+    clickable   = options[:clickable].nil?
     @showtype      = "details"
     @display       = "main"
     @no_checkboxes = @no_checkboxes.nil? || @no_checkboxes
@@ -487,6 +497,7 @@ class InfraNetworkingController < ApplicationController
                              :parent      => @record,
                              :association => association,
                              :conditions  => conditions,
+                             :clickable   => clickable,
                              :dbname      => "#{@db}item") # Get the records into a view & paginator
 
     if @explorer # In explorer?
