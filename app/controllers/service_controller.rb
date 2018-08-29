@@ -218,7 +218,7 @@ class ServiceController < ApplicationController
 
   def textual_group_list
     if @item && @item.kind_of?(GenericObject)
-      [%i(go_properties attribute_details_list methods)]
+      [%i(go_properties attribute_details_list methods go_relationships)]
     elsif %w(ServiceAnsiblePlaybook ServiceAnsibleTower).include?(@record.type)
       [%i(properties miq_custom_attributes), %i(lifecycle tags generic_objects)]
     else
