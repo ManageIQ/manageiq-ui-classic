@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { combineReducers } from 'redux';
 import { connect } from 'react-redux';
-import { Spinner } from'patternfly-react';
+import { Spinner, Grid, Row, Col } from'patternfly-react';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route } from 'react-router-dom';
 import { requestUsers, navigate, deleteMultipleusers, deleteUser } from './redux/actions';
@@ -98,19 +98,22 @@ class RbacModule extends Component {
       return <div><Spinner loading size="lg" /></div>;
     }
     return (
-      <div>
-        <h1>Rbac module</h1>
-        <ConnectedRouter history={ManageIQ.redux.history}>
-          <div>
-            <Route exact path="/" component={RbacUsersList} />
-            <Route path="/preview/:userId" component={UserDetail} />
-            <Route path="/add/:copy?" component={UserAdd} />
-            <Route path="/edit/:userId" component={UserAdd} />
-            <Route path="/assign-company-tags" component={TagAssignment} />
-          </div>
-        </ConnectedRouter>
-        <hr />
-      </div>
+      <Grid fluid>
+        <Row>
+          <Col xs={12}>
+            <h1>Rbac module</h1>
+            <ConnectedRouter history={ManageIQ.redux.history}>
+              <div>
+                <Route exact path="/" component={RbacUsersList} />
+                <Route path="/preview/:userId" component={UserDetail} />
+                <Route path="/add/:copy?" component={UserAdd} />
+                <Route path="/edit/:userId" component={UserAdd} />
+                <Route path="/assign-company-tags" component={TagAssignment} />
+              </div>
+            </ConnectedRouter>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
