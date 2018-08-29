@@ -22,10 +22,4 @@ describe 'routes for AlertController' do
       expect(post('/alert/role_selected')).to route_to('alert#role_selected')
     end
   end
-
-  describe '#start_rss' do
-    it 'routes' do
-      expect(post('/alert/start_rss')).to route_to('alert#start_rss')
-    end
-  end
 end

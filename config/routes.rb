@@ -132,7 +132,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         role_selected
-        start_rss
       ),
     },
 
