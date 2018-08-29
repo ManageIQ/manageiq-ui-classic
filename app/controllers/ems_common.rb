@@ -470,10 +470,7 @@ module EmsCommon
 
   def check_compliance(model)
     showlist = @lastaction == "show_list"
-    ids = showlist ? find_checked_ids_with_rbac(model) : find_id_with_rbac(model, [params[:id]])
-    if ids.blank?
-      add_flash(_("No %{model} were selected for Compliance Check") % {:model => ui_lookup(:models => model.to_s)}, :error)
-    end
+    ids = find_records_with_rbac(model, checked_or_params).ids
     process_emss(ids, "check_compliance")
     params[:display] = "main"
     return if @display == 'dashboard'
@@ -485,15 +482,8 @@ module EmsCommon
   # Check compliance of Last Known Configuration for items displayed in nested lists
   def check_compliance_nested(model)
     assert_privileges("#{model.name.underscore}_check_compliance")
-    ids = find_checked_ids_with_rbac(model)
-
-    if ids.empty?
-      add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:models => model.to_s),
-                                                              :task  => "Compliance Check"}, :error)
-    else
-      process_check_compliance(model, ids)
-    end
-
+    ids = find_records_with_rbac(model, checked_or_params).ids
+    process_check_compliance(model, ids)
     show_list
     ids.count
   end
