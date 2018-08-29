@@ -83,7 +83,7 @@
         fmt += '0';
       }
     }
-    return numeral(val).format(fmt + ' b');
+    return numeral(val).format(fmt + ' ib');
   };
 
   function mhz_to_human_size(val, precision) {

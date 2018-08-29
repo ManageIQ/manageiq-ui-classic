@@ -144,7 +144,7 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(1234, options)).toEqual('1.21 KB');
+      expect(fn(1234, options)).toEqual('1.21 KiB');
     });
   });
 
@@ -157,7 +157,7 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(234, options)).toEqual('234 KB');
+      expect(fn(234, options)).toEqual('234 KiB');
     });
   });
 
@@ -170,7 +170,7 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(234.09, options)).toEqual('234.1 KB');
+      expect(fn(234.09, options)).toEqual('234.1 KiB');
     });
   });
 
@@ -183,20 +183,7 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(2, options)).toEqual('2 MB');
-    });
-  });
-
-  describe('.mbytes_to_human_size', function() {
-    it('Suffixed Megabytes (MB, GB)', function() {
-      var options = {
-        description: 'Suffixed Megabytes (MB, GB)',
-        name: 'mbytes_to_human_size',
-        precision: 2,
-      };
-      var fn = ManageIQ.charts.formatters[options.name];
-
-      expect(fn(2, options)).toEqual('2 MB');
+      expect(fn(2, options)).toEqual('2 MiB');
     });
   });
 
@@ -209,7 +196,20 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(2.12, options)).toEqual('2.12 MB');
+      expect(fn(2, options)).toEqual('2 MiB');
+    });
+  });
+
+  describe('.mbytes_to_human_size', function() {
+    it('Suffixed Megabytes (MB, GB)', function() {
+      var options = {
+        description: 'Suffixed Megabytes (MB, GB)',
+        name: 'mbytes_to_human_size',
+        precision: 2,
+      };
+      var fn = ManageIQ.charts.formatters[options.name];
+
+      expect(fn(2.12, options)).toEqual('2.12 MiB');
     });
   });
 
@@ -222,7 +222,7 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(0.1, options)).toEqual('102.4 MB');
+      expect(fn(0.1, options)).toEqual('102.4 MiB');
     });
   });
 
@@ -235,7 +235,7 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(1.19, options)).toEqual('1.2 GB');
+      expect(fn(1.19, options)).toEqual('1.2 GiB');
     });
   });
 
