@@ -101,7 +101,7 @@
           .col-md-10
             %p.form-control-static
               - if @widget.resource
-                = h(@widget.resource.name)
+                = h(@widget.resource.title)
               - else
                 %span{:style => "color: red;"}
                   = "*** %s ***" % _("RSS Feed no longer exists")
