@@ -10,14 +10,14 @@ describe EmsPhysicalInfraHelper::TextualSummary do
   include_examples "textual_group", "Overview", %i(topology), "topology"
 
   include_examples "textual_group", "Relationships", %i(
-    physical_racks
-    physical_chassis
-    physical_switches
-    physical_storages
-    physical_servers
     datastores
-    vms
+    physical_chassis
+    physical_racks
+    physical_servers
     physical_servers_with_host
+    physical_storages
+    physical_switches
+    vms
   )
 
   include_examples "textual_group_smart_management", %i(zone)

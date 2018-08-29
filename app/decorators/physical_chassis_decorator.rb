@@ -1,6 +1,6 @@
 class PhysicalChassisDecorator < MiqDecorator
   def self.fonticon
-    'pficon pficon-cluster'
+    'pficon pficon-template'
   end
 
   def quadicon
