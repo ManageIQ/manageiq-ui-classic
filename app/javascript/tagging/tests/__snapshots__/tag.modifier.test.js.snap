@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tagging modifier match snapshot 1`] = `
-<React.Fragment>
+<Fragment>
   <Row
     bsClass="row"
     componentClass="div"
@@ -80,5 +80,5 @@ exports[`Tagging modifier match snapshot 1`] = `
       }
     />
   </Form>
-</React.Fragment>
+</Fragment>
 `;
