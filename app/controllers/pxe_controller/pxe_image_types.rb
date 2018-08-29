@@ -74,34 +74,16 @@ module PxeController::PxeImageTypes
 
   # Common VM button handler routines
   def pxe_image_type_button_operation(method, display_name)
-    pxes = []
-    if !params[:id]
-      # Either a list or coming from a different controller (eg from host screen, go to its vms)
-      pxes = find_checked_ids_with_rbac(PxeImageType)
-      if pxes.empty?
-        add_flash(_("No System Image Types were selected to %{button}") % {:button => display_name}, :error)
-      else
-        process_pxe_image_type(pxes, method)
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => "root", :replace_trees => %i(pxe_image_types customization_templates))
-    elsif params[:id].nil? || find_id_with_rbac(PxeImageType, params[:id]).nil?
-      # showing 1 vm
-      add_flash(_("System Image Type no longer exists"), :error)
-      pxe_image_type_list
-      @refresh_partial = "layouts/x_gtl"
-    else
-      pxes.push(find_id_with_rbac(PxeImageType, params[:id]))
-      process_pxe_image_type(pxes, method) unless pxes.empty?
-      # TODO: tells callers to go back to show_list because this record may be gone
-      # Should be refactored into calling show_list right here
-      if method == 'destroy'
-        self.x_node = "root"
-        @single_delete = true unless flash_errors?
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node, :replace_trees => %i(pxe_image_types customization_templates))
+    pxes = find_records_with_rbac(PxeImageType, checked_or_params)
+    process_pxe_image_type(pxes.ids, method)
+    if params[:id] && method == 'destroy'
+      self.x_node = "root"
+      @single_delete = true unless flash_errors?
     end
+    get_node_info(x_node)
+    replace_right_cell(
+      :nodetype => params[:id] ? x_node : "root",
+      :replace_trees => %i(pxe_image_types customization_templates))
     pxes.count
   end
 
