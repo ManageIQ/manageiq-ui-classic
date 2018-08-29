@@ -29,6 +29,11 @@ class RbacModule extends Component {
     super(props);
     ManageIQ.redux.addReducer(combineReducers({ usersReducer }));
     this.historyUnlisten = ManageIQ.redux.history.listen(({ pathname }, action) => {
+      if (pathname === '/add' || pathname === '/add/copy' || pathname === '/assign-company-tags' || pathname.match(/^\/edit\/[0-9]+$/)) {
+        // hide toolbar when adding or editing
+        sendDataWithRx({ redrawToolbar: [null, null] });
+        return;
+      }
       const toolbarUrl = `/ops/update_toolbar?toolbar_name=user${pathname === '/' ? 's' : ''}_center_tb${pathname.match(/\/preview\/[0-9]+/)
         ? `&id=${pathname.replace(/^\D+/g, '')}`
         : ''}`;
