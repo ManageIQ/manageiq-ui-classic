@@ -383,7 +383,7 @@ module OpsController::Settings::AnalysisProfiles
     scanitemsets = find_records_with_rbac(ScanItemSet, checked_or_params)
     scanitemsets.each do |scan_item_set|
       if scan_item_set.read_only
-        scanitemsets.delete(scan_item_set)
+        scanitemsets -= [scan_item_set]
         add_flash(_("Default Analysis Profile \"%{name}\" can not be deleted") % {:name => scan_item_set.name}, :error)
       else
         tmp_flash_array = @flash_array
