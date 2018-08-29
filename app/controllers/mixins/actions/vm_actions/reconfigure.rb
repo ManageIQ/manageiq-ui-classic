@@ -323,6 +323,7 @@ module Mixins
         end
 
         def filename_string(name)
+          # an empty cdrom filename can be in the form of a string containing a pair of square brackets
           name.blank? || name == '[]' ? '' : name.to_s
         end
 
