@@ -67,7 +67,7 @@ module EmsPhysicalInfraHelper::TextualSummary
 
   def textual_physical_servers
     available = @record.number_of(:physical_servers) > 0
-    h = {:label => _("Physical Servers"), :icon => "pficon pficon-server", :value => @record.number_of(:physical_servers)}
+    h = {:label => _("Physical Servers"), :icon => PhysicalServerDecorator.fonticon, :value => @record.number_of(:physical_servers)}
     if available
       h[:link] = "/ems_physical_infra/#{@record.id}?display=physical_servers"
     end
@@ -76,7 +76,7 @@ module EmsPhysicalInfraHelper::TextualSummary
 
   def textual_physical_servers_with_host
     count_of_host_relationships = (@record.physical_servers.select { |server| !server.host.nil? }).length
-    h = {:label => _("Physical Servers with Host"), :icon => "pficon pficon-server", :value => count_of_host_relationships}
+    h = {:label => _("Physical Servers with Host"), :icon => PhysicalServerDecorator.fonticon, :value => count_of_host_relationships}
     if count_of_host_relationships > 0
       h[:link] = "/ems_physical_infra/#{@record.id}?display=physical_servers_with_host"
     end

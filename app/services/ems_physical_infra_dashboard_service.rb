@@ -34,16 +34,14 @@ class EmsPhysicalInfraDashboardService < DashboardService
   end
 
   def attributes_data
-    attributes = %i(physical_servers physical_switches physical_racks physical_storages)
-
-    attr_icon = {
-      :physical_servers  => 'pficon pficon-cluster',
-      :physical_switches => 'pficon ff ff-network-switch',
-      :physical_racks    => 'pficon pficon-enterprise',
-      :physical_storages => 'pficon pficon-container-node',
-    }
+    attributes = %i(physical_chassis
+                    physical_servers
+                    physical_switches
+                    physical_racks
+                    physical_storages)
 
     attr_url = {
+      :physical_chassis  => 'physical_chassis',
       :physical_servers  => 'physical_servers',
       :physical_switches => 'physical_switches',
       :physical_racks    => 'physical_racks',
@@ -51,6 +49,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
     }
 
     attr_hsh = {
+      :physical_chassis  => _('Chassis'),
       :physical_servers  => _('Servers'),
       :physical_switches => _('Switches'),
       :physical_racks    => _('Racks'),
@@ -62,7 +61,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
       ems_attr = @ems.send(attr)
       attr_data.push(
         :id           => attr_hsh[attr] + '_' + @ems_id,
-        :iconClass    => attr_icon[attr],
+        :iconClass    => attr.to_s.camelize.safe_constantize.try(:decorate).try(:fonticon),
         :title        => attr_hsh[attr],
         :count        => ems_attr.length,
         :href         => get_url(@ems_id, attr_url[attr]),

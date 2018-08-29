@@ -24,7 +24,7 @@ module UiServiceMixin
       :NetworkRouter           => {:type => "glyph", :class => 'pficon pficon-route'},
       :PhysicalChassis         => {:type => "glyph", :class => 'pficon pficon-cluster'},
       :PhysicalRack            => {:type => "glyph", :class => 'pficon pficon-enterprise'},
-      :PhysicalServer          => {:type => "glyph", :class => 'pficon pficon-server-group'},
+      :PhysicalServer          => {:type => "glyph", :class => PhysicalServerDecorator.fonticon},
       :PhysicalSwitch          => {:type => "glyph", :class => 'ff ff-network-switch'},
       :PhysicalStorage         => {:type => "glyph", :class => 'pficon-container-node'},
       :SecurityGroup           => {:type => "glyph", :class => 'pficon pficon-cloud-security'},
