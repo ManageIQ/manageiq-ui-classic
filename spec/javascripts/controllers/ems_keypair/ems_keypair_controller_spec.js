@@ -72,6 +72,10 @@ describe('emsKeypairController', function() {
 
   describe('#showValidate', function() {
     var combinations = [
+      { emstype: 'openstack', newRecord: true, tab: 'ssh_keypair', value: false },
+      { emstype: 'openstack', newRecord: true, tab: 'other_tab', value: true },
+      { emstype: 'openstack', newRecord: false, tab: 'tab', value: true },
+
       { emstype: 'openstack_infra', newRecord: true, tab: 'ssh_keypair', value: false },
       { emstype: 'openstack_infra', newRecord: true, tab: 'other_tab', value: true },
       { emstype: 'openstack_infra', newRecord: false, tab: 'tab', value: true },
