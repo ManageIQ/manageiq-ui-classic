@@ -42,7 +42,15 @@ const fetchFailed = () => ({
 const storeUsersTree = usersTree => ({
   type: actionTypes.STORE_USERS_TREE,
   usersTree,
-});
+}); 
+
+const disableTreeReactRouting = () => sendDataWithRx({ type: 'disable-react-routing' });
+const handleUserDetailLinkAction = url => dispatch => {
+  disableTreeReactRouting();
+  dispatch(navigate('/'));
+  miqOnClickSelectRbacTreeNode(url);
+  ManageIQ.component.getComponentInstances('RbacModule')[0].destroy();
+}
 
 export const requestUsers = () => (dispatch) => {
   dispatch(fetchData(actionTypes.FETCH_DATA));
@@ -51,11 +59,11 @@ export const requestUsers = () => (dispatch) => {
       ...item,
       current_group: {
         label: item.current_group.description,
-        onClick: () => console.log('current group click: ', item.current_group),
+        onClick: () => dispatch(handleUserDetailLinkAction(`g-${item.current_group.id}`)),
       },
       role: {
         label: item.current_group.miq_user_role.name,
-        onClick: () => console.log('role click: ', item.current_group.miq_user_role),
+        onClick: () => dispatch(handleUserDetailLinkAction(`ur-${item.current_group.miq_user_role.id}`)),
       },
       miq_groups: item.miq_groups.map(group => group.id),
       groups: item.miq_groups.map(group => ({
@@ -63,7 +71,7 @@ export const requestUsers = () => (dispatch) => {
         icon: 'group',
         groupId: group.id,
         value: group.id,
-        onClick: () => console.log('one of many groups: ', group),
+        onClick: () => dispatch(handleUserDetailLinkAction(`g-${group.id}`)),
       })),
     })))
     .then(data => dispatch(loadUsersData({ rows: data })))

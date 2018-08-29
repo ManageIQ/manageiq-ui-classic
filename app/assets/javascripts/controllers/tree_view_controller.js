@@ -15,6 +15,9 @@
         vm.reactRouting = !!payload.reactRouting;
         vm.$scope.$apply;
       }
+      if (payload.type === 'disable-react-routing') {
+        vm.reactRouting = false;
+      }
       if (payload.reloadTrees && _.isObject(payload.reloadTrees) && Object.keys(payload.reloadTrees).length > 0) {
         _.forEach(payload.reloadTrees, function(value, key) {
           vm.data[key] = value;
