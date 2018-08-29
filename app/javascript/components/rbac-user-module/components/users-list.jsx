@@ -6,6 +6,11 @@ import { rowClicked, selectUsers } from '../redux/actions';
 import { sendDataWithRx } from '../../../miq_observable';
 
 class RbacUsersList extends Component {
+  
+  componentWillMount() {
+    this.props.selectUsers(undefined);
+  }
+  
 
   handleSelectUser = (selectedUsers, currentUser) => {
     this.props.selectUsers(selectedUsers);
@@ -31,7 +36,7 @@ class RbacUsersList extends Component {
         <h1>{__('Access Control EVM Users')}</h1>
         <GenericPreviewTable
           rowClick={rowClicked}
-          rowSelect={this.handleSelectUser}
+          rowSelect={(rows, lastUser) => this.handleSelectUser(rows.length > 0 ? rows : undefined, lastUser)}
           showIcon
           showSelect
           icon={{ type: 'pf', name: 'user' }}

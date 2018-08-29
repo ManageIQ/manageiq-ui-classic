@@ -140,11 +140,10 @@ export const deleteMultipleusers = users => (dispatch) => {
     action: 'delete',
     resources: users.map(user => ({ id: user.id })),
   }).then(
-    () => dispatch(requestUsers),
+    () => dispatch(requestUsers()),
     (error) => { throw error; },
   )
-    .then(() => dispatch(handleUpdateUsersTree))
-    .then(groups => dispatch(storeUserGroups(groups)))
+    .then(() => dispatch(handleUpdateUsersTree()))
     .then(() => {
       resetSelectedToolbarItems();
       return dispatch(fetchSucesfull);

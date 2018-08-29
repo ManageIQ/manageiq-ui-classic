@@ -5,12 +5,24 @@ import { connect } from 'react-redux';
 import { Spinner } from'patternfly-react';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route } from 'react-router-dom';
-import { requestUsers } from './redux/actions';
+import { requestUsers, navigate, deleteMultipleusers, deleteUser } from './redux/actions';
 import usersReducer from './redux/users-reducer';
 import RbacUsersList from './components/users-list';
 import UserDetail from './components/user-detail';
 import UserAdd from './components/user-add';
 import TagAssignment from './components/tagg-assignment';
+import { listenToRx } from '../../miq_observable';
+import { 
+  RBAC_USER_EDIT,
+  RBAC_USER_COPY,
+  RBAC_USER_TAGS,
+  RBAC_USER_DELETE,
+  RBAC_USER_LIST_ADD,
+  RBAC_USER_LIST_EDIT,
+  RBAC_USER_LIST_COPY,
+  RBAC_USER_LIST_TAGS,
+  RBAC_USER_LIST_DELETE,
+} from './rx-routing';
 
 class RbacModule extends Component {
   constructor(props) {
@@ -31,7 +43,9 @@ class RbacModule extends Component {
         }))).then(data => this.sendTreeUpdate({ nodes: [...data], state: { selected: false } }));
       }
     });
-    window.magix = this;
+    this.rxSubscription = listenToRx(({ rbacRouting }) => {
+      if (rbacRouting) this.chooseRoute(rbacRouting.type)();
+    });
   }
   
   componentDidMount() {
@@ -53,6 +67,19 @@ class RbacModule extends Component {
   componentWillUnmount() {
     this.historyUnlisten();
   }
+
+  chooseRoute = (type = 'default') => ({
+    [RBAC_USER_EDIT]: () => this.props.navigate(`/edit/${this.props.editUserId}`),
+    [RBAC_USER_COPY]: () => this.props.navigate('/add/copy'),
+    [RBAC_USER_TAGS]: () => this.props.navigate('/assign-company-tags'),
+    [RBAC_USER_DELETE]: () => this.props.deleteUser(this.props.editUserId),
+    [RBAC_USER_LIST_ADD]: () => this.props.navigate('/add'),
+    [RBAC_USER_LIST_EDIT]: () => this.props.navigate(`/edit/${this.props.editUserId}`),
+    [RBAC_USER_LIST_COPY]: () => this.props.navigate('/add/copy'),
+    [RBAC_USER_LIST_TAGS]: () => this.props.navigate('/assign-company-tags'),
+    [RBAC_USER_LIST_DELETE]: () => this.props.deleteMultipleusers(this.props.selectedUsers),
+    'default': () => {},
+  })[type];
 
   sendTreeUpdate = (data) => 
     sendDataWithRx({
@@ -90,11 +117,16 @@ class RbacModule extends Component {
 
 const mapStateToProps = ({ usersReducer, router: { location: { pathname } } }) => ({
     isLoaded: !!usersReducer && !!usersReducer.rows,
+    selectedUsers: !!usersReducer && usersReducer.selectedUsers,
+    editUserId:  !!usersReducer && usersReducer.selectedUsers ? usersReducer.selectedUsers[0].id : undefined,
     pathname,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   requestUsers,
+  navigate,
+  deleteMultipleusers,
+  deleteUser,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(RbacModule);

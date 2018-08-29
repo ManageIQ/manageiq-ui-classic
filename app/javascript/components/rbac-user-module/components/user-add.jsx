@@ -28,31 +28,33 @@ class UserAdd extends Component {
     }
   }
   render() {
-    const { groups, goBack, saveUser, isEditing, editUser, user } = this.props;
-    if (isEditing && !user) return <Redirect to="/add" />
+    const { groups, goBack, saveUser, isEditing, editUser, user, copy } = this.props;
+    if (isEditing && !user) return <Redirect to="/add" />;
+    if (copy && !user) return <Redirect to="/add" />;
     if (!groups) return <div><Spinner loading size="lg" /></div>;
     return (
       <div>
         <h1>User add</h1>
         <RbacUserForm
           groups={groups}
-          newRecord={!isEditing}
+          newRecord={!isEditing && !copy}
           initialValues={user ? {...user, groups: user.groups.map(({ groupId }) => groupId)} : undefined}
           onCancel={goBack}
-          onSave={values => isEditing ? editUser(parseUserValues(values), user.id) : saveUser(parseUserValues(values))}
+          onSave={values => isEditing || copy ? editUser(parseUserValues(values), user.id) : saveUser(parseUserValues(values))}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ usersReducer: { groups, rows } }, { match : { url, params: { userId } } }) => {
+const mapStateToProps = ({ usersReducer: { groups, rows, selectedUsers } }, { match : { url, params: { userId, copy } } }) => {
   const isEditing = url.match(/^\/edit\/[0-9]+$/) && userId;
-  const user = isEditing ? rows.find(({ id }) => id === userId) : undefined;
+  const user = isEditing ? rows.find(({ id }) => id === userId) : copy && selectedUsers ? selectedUsers[0]  : undefined;
   return {
     groups,
     isEditing,
     user,
+    copy,
   }
 };
 

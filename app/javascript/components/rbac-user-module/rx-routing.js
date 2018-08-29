@@ -1,0 +1,9 @@
+export const RBAC_USER_EDIT = 'rbac-user-edit';
+export const RBAC_USER_COPY = 'rbac-user-copy';
+export const RBAC_USER_TAGS = 'rbac-user-tags';
+export const RBAC_USER_DELETE = 'rbac-user-delete';
+export const RBAC_USER_LIST_ADD = 'rbac-user-list-add';
+export const RBAC_USER_LIST_EDIT = 'rbac-user-list-edit';
+export const RBAC_USER_LIST_COPY = 'rbac-user-list-copy';
+export const RBAC_USER_LIST_TAGS = 'rbac-user-list-tags';
+export const RBAC_USER_LIST_DELETE = 'rbac-user-list-delete';
