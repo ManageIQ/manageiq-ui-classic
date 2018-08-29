@@ -34,8 +34,7 @@ class AlertController < ApplicationController
     end
   end
 
-  # Render an RSS feed back to either a local or non-local reader
-  def rss(feed = nil, local = false)
+  def rss
     feed = params[:feed] if params[:feed]
     feed_record = RssFeed.find_by(:name => feed)
     if feed_record.nil?
@@ -45,10 +44,9 @@ class AlertController < ApplicationController
     proto = nil unless [nil, "http", "https"].include?(proto)    # Make sure it's http or https
     proto ||= session[:req_protocol]                             # If nil, use previously discovered value
     session[:req_protocol] ||= proto                             # Save protocol in session
-    feed_data = feed_record.generate(request.host_with_port, local, proto)
+    feed_data = feed_record.generate(request.host_with_port, false, proto)
 
-    return feed_data if local
-    render feed_data unless local
+    render feed_data
   end
 
   private ###########################
