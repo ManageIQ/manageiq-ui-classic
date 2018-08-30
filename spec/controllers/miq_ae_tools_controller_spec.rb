@@ -237,38 +237,6 @@ describe MiqAeToolsController do
     end
   end
 
-  describe "#review_git_import" do
-    include_context "valid session"
-
-    let(:params) do
-      {:git_branches => "git_branches", :git_tags => "git_tags", :git_repo_id => "123", :message => "the message"}
-    end
-
-    before do
-      bypass_rescue
-    end
-
-    it "assigns the git repo id" do
-      get :review_git_import, :params => params
-      expect(assigns(:git_repo_id)).to eq("123")
-    end
-
-    it "assigns the git branches" do
-      get :review_git_import, :params => params
-      expect(assigns(:git_branches)).to eq("git_branches")
-    end
-
-    it "assigns the git tags" do
-      get :review_git_import, :params => params
-      expect(assigns(:git_tags)).to eq("git_tags")
-    end
-
-    it "assigns the message" do
-      get :review_git_import, :params => params
-      expect(assigns(:message)).to eq("the message")
-    end
-  end
-
   describe "#retrieve_git_datastore" do
     include_context "valid session"
 
