@@ -1,9 +1,9 @@
 angular.module('miq.notifications')
   .service('eventNotifications', eventNotifications);
 
-eventNotifications.$inject = ['$timeout', 'API'];
+eventNotifications.$inject = ['$timeout', '$window', '$httpParamSerializerJQLike', 'API'];
 
-function eventNotifications($timeout, API) {
+function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) {
   if (! ManageIQ.angular.eventNotificationsData) {
     ManageIQ.angular.eventNotificationsData = {
       state: {
@@ -88,7 +88,7 @@ function eventNotifications($timeout, API) {
             type: resource.details.level,
             message: msg,
             data: {
-              message: msg,
+              link: _.get(resource.details, 'bindings.link'),
             },
             href: resource.href,
             timeStamp: resource.details.created_at,
@@ -129,6 +129,8 @@ function eventNotifications($timeout, API) {
       type: levelToType(type),
       message: message,
       data: notificationData,
+      actionTitle: notificationData.link ? __('View details') : undefined,
+      actionCallback: notificationData.link ? this.viewDetails : undefined,
       href: id ? window.location.origin + '/api/notifications/' + id : undefined,
       timeStamp: (new Date()).getTime(),
     };
@@ -200,6 +202,10 @@ function eventNotifications($timeout, API) {
       });
     }
     notifyObservers();
+  };
+
+  this.viewDetails = function(notification) {
+    $window.location.href = '/restful_redirect?' + $httpParamSerializerJQLike(notification.data.link);
   };
 
   this.markUnread = function(notification, group) {
@@ -327,7 +333,7 @@ function eventNotifications($timeout, API) {
   listenToRx(function(data) {
     if (data.notification) {
       var msg = miqFormatNotification(data.notification.text, data.notification.bindings);
-      _this.add('event', data.notification.level, msg, {message: msg}, data.notification.id);
+      _this.add('event', data.notification.level, msg, {link: _.get(data.notification, 'bindings.link')}, data.notification.id);
     }
   });
 }

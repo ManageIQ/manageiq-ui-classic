@@ -1,4 +1,6 @@
 class RestfulRedirectController < ApplicationController
+  before_action :check_privileges
+
   def index
     case params[:model]
     when 'MiqRequest'
@@ -12,8 +14,8 @@ class RestfulRedirectController < ApplicationController
                    end
       redirect_to :controller => controller, :action => 'show', :id => params[:id]
     else
-      flash_to_session(_("Could not find %{model}[id=%{id}]") % {:model => params[:model], :id => params[:id]})
-      redirect_to(:controller => 'dashboard')
+      flash_to_session(_("Could not find the given \"%{model}\" record.") % {:model => ui_lookup(:model => params[:model])}, :error)
+      redirect_to(:controller => 'dashboard', :action => 'show')
     end
   end
 end
