@@ -379,7 +379,7 @@ module OpsController::Settings::AnalysisProfiles
   # Delete all selected or single displayed scanitemset(s)
   def ap_delete
     assert_privileges("ap_delete")
-    @single_delete = true if params[:id]
+    @single_delete = params[:id].present?
     scanitemsets = find_records_with_rbac(ScanItemSet, checked_or_params)
     scanitemsets.each do |scan_item_set|
       if scan_item_set.read_only
@@ -392,7 +392,7 @@ module OpsController::Settings::AnalysisProfiles
         scan_item_set.remove_all_members
       end
     end
-    @flash_error = true if scanitemsets.empty?
+    @flash_error = scanitemsets.empty?
     ap_process_scanitemsets(scanitemsets, "destroy") unless scanitemsets.empty?
     self.x_node = "xx-sis"
     get_node_info(x_node)
