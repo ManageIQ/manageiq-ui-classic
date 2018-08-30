@@ -161,7 +161,7 @@ class BottlenecksController < ApplicationController
           end
         end
       else
-        @tl_groups_hash.each do |_name, fltr|
+        @tl_groups_hash.each_value do |fltr|
           fltr.each do |f|
             event_set.push(f) unless event_set.include?(f)
           end
@@ -169,10 +169,10 @@ class BottlenecksController < ApplicationController
       end
 
       @sb[:report].where_clause = if @sb[:objects_where_clause]
-                                                  "(#{@sb[:objects_where_clause]}) AND (#{BottleneckEvent.send(:sanitize_sql_for_conditions, ["event_type in (?)", event_set])})"
-                                                else
-                                                  BottleneckEvent.send(:sanitize_sql_for_conditions, ["event_type in (?)", event_set])
-                                                end
+                                    "(#{@sb[:objects_where_clause]}) AND (#{BottleneckEvent.send(:sanitize_sql_for_conditions, ["event_type in (?)", event_set])})"
+                                  else
+                                    BottleneckEvent.send(:sanitize_sql_for_conditions, ["event_type in (?)", event_set])
+                                  end
 
       # Don't include Host resource types based on option - exclude host and storage nodes
       unless @sb[:tl_options][:hosts] ||
