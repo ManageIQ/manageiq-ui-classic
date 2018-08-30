@@ -1,6 +1,5 @@
 import React from 'react';
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
-import { AmazonSecurityGroupForm } from '@manageiq/react-ui-components/dist/amazon-security-form-group';
 import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import TableListViewWrapper from '../react/table_list_view_wrapper';
 import GenericGroupWrapper from '../react/generic_group_wrapper';

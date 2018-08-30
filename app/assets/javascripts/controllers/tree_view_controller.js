@@ -13,7 +13,7 @@
     listenToRx(function(payload) {
       if (payload.type === 'init-react-routing' && !vm.reactRouting) {
         vm.reactRouting = !!payload.reactRouting;
-        vm.$scope.$apply;
+        vm.$scope.$apply();
       }
       if (payload.type === 'disable-react-routing') {
         vm.reactRouting = false;

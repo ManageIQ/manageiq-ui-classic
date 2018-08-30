@@ -28,6 +28,7 @@ const usersReducer = (state = {
   isFetching: false,
   isValid: true,
   columns,
+  flashMessages: [],
 }, action) => {
   let newState = {};
   switch (action.type) {
@@ -55,6 +56,10 @@ const usersReducer = (state = {
       return { ...state, usersTree: action.usersTree };
     case actionTypes.STORE_TAG_CATEGORIES:
       return { ...state, categories: action.categories };
+    case actionTypes.ADD_FLASH_MESSAGE:
+      return { ...state, flashMessages: [...state.flashMessages, action.flashMessage] }
+    case actionTypes.REMOVE_FLASH_MESSAGE:
+      return { ...state, flashMessages: state.flashMessages.filter(({ flashId }) =>  flashId !== action.flashMessage.flashId) }
     default:
       return { ...state };
   }

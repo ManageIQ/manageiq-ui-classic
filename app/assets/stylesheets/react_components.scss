@@ -1,0 +1,15 @@
+// TO-DO move this to separate file after we have css in webpack
+
+@keyframes FadeAnimation {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.react-fading-flash {
+  animation: FadeAnimation 1s ease-out 4s forwards;
+}

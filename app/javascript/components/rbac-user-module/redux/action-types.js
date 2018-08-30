@@ -11,3 +11,5 @@ export const STORE_GROUPS = `${prefix}Store user groups`;
 export const STORE_USERS_TREE = `${prefix}Store users tree`;
 export const EDIT_USER = `${prefix}Edit user`;
 export const STORE_TAG_CATEGORIES = `${prefix}Store tag categories`;
+export const ADD_FLASH_MESSAGE = `${prefix}Add flash message`;
+export const REMOVE_FLASH_MESSAGE = `${prefix}Remove flash message;`;

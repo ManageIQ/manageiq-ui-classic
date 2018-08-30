@@ -96,20 +96,31 @@ export const handleUpdateUsersTree = () => dispatch =>
 
 export const saveUser = user => (dispatch) => {
   dispatch(fetchData(actionTypes.SAVE_USER));
-  return API.post(endpoints.modifyUserUrl(), user)
-    .then(() => dispatch(requestUsers()))
+  return API.post(endpoints.modifyUserUrl(), user, { skipErrors: [400] })
+    .then(
+      () => dispatch(requestUsers()),
+      (error) => { throw error })
     .then(() => dispatch(handleUpdateUsersTree()))
+    .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was saved'), user.name), 'success')))
     .then(() => dispatch(navigate('/')))
-    .catch(() => dispatch(fetchFailed));
+    .catch((error) => {
+      dispatch(createFlashMessage(error.data.error.message, 'error'));
+      dispatch(fetchFailed);
+    });
 };
 
-export const deleteUser = userId => (dispatch) => {
+export const deleteUser = userId => (dispatch, getState) => {
   dispatch(fetchData(actionTypes.DELETE_USER));
   dispatch(navigate('/'));
+  const name = getState().usersReducer.rows.find(({ id }) => id === userId);
   return API.delete(endpoints.modifyUserUrl(userId))
+    .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was deleted'), name), 'success')))
     .then(() => dispatch(requestUsers()))
     .then(() => dispatch(handleUpdateUsersTree()))
-    .catch(() => dispatch(fetchFailed()));
+    .catch((error) => {
+      dispatch(fetchFailed());
+      console.log(error);
+    });
 };
 
 export const editUser = (user, userId) => (dispatch) => {
@@ -119,6 +130,7 @@ export const editUser = (user, userId) => (dispatch) => {
       () => dispatch(navigate('/')),
       (err) => { throw err; },
     )
+    .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was saved'), user.name), 'success')))
     .then(() => dispatch(requestUsers()))
     .then(() => dispatch(handleUpdateUsersTree()))
     .catch(() => dispatch(fetchFailed()));
@@ -147,7 +159,9 @@ export const deleteMultipleusers = users => (dispatch) => {
   return API.post(endpoints.modifyUserUrl(), {
     action: 'delete',
     resources: users.map(user => ({ id: user.id })),
-  }).then(
+  })
+    .then(() => users.map(({ name }) => dispatch(createFlashMessage(sprintf(__('User "%s" was deleted'), name), 'success'))))
+    .then(
     () => dispatch(requestUsers()),
     (error) => { throw error; },
   )
@@ -228,3 +242,17 @@ export const loadTagsCategories = () => dispatch => API.get(endpoints.getTagCate
   return (dispatch(fetchFailed));
 };
 */
+
+export const createFlashMessage = (text, type) => ({
+  type: actionTypes.ADD_FLASH_MESSAGE,
+  flashMessage: {
+    text,
+    type,
+    flashId: Date.now(),
+  }
+})
+
+export const removeFlashMessage = flashMessage => ({
+  type: actionTypes.REMOVE_FLASH_MESSAGE,
+  flashMessage,
+})

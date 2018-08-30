@@ -10,6 +10,7 @@ import usersReducer from './redux/users-reducer';
 import RbacUsersList from './components/users-list';
 import UserDetail from './components/user-detail';
 import UserAdd from './components/user-add';
+import FlashMessages from './components/flash-messages';
 import TagAssignment from './components/tagg-assignment';
 import { listenToRx } from '../../miq_observable';
 import { 
@@ -105,6 +106,9 @@ class RbacModule extends Component {
     return (
       <Grid fluid>
         <Row>
+          <Col xs={12}>
+            <FlashMessages />
+          </Col>
           <Col xs={12}>
             <h1>Rbac module</h1>
             <ConnectedRouter history={ManageIQ.redux.history}>
