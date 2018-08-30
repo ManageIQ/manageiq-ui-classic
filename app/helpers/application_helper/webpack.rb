@@ -16,6 +16,10 @@ module ApplicationHelper
     def javascript_dependencies
       capture do
         concat(javascript_essential_dependencies)
+
+        concat(javascript_pack_tag('manageiq-ui-classic/globals.js'))
+        concat "\n"
+
         concat(javascript_include_tag('application'))
         concat(javascript_common_packs)
       end

@@ -1,5 +1,4 @@
 //= require ./miq_global
-//= require jquery/dist/jquery.js
 //= require ./jquery_overrides
 //= require ./i18n
 //= require patternfly
