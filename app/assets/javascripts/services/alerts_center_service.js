@@ -564,8 +564,9 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
       if (newTypes.indexOf(objectType) == -1) {
         newTypes.push(objectType);
       }
-
-      alerts.push(convertAlert(item, objectName, objectClassifiedType, objectType, retrievalTime));
+      if (item.resource) {
+        alerts.push(convertAlert(item, objectName, objectClassifiedType, objectType, retrievalTime));
+      }
     });
 
     newTypes.sort();
