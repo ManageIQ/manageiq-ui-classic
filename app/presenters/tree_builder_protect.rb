@@ -39,26 +39,7 @@ class TreeBuilderProtect < TreeBuilder
 
   def x_get_tree_hash_kids(parent, count_only)
     nodes = parent[:nodes].map do |policy|
-      icon = case policy.towhat
-             when 'Host'
-               'pficon pficon-container-node'
-             when 'Vm'
-               'pficon pficon-virtual-machine'
-             when 'ContainerReplicator'
-               'pficon pficon-replicator'
-             when 'ContainerGroup'
-               'fa fa-cubes'
-             when 'ContainerNode'
-               'pficon pficon-container-node'
-             when 'ContainerImage'
-               'pficon pficon-image'
-             when 'ContainerProject'
-               'pficon pficon-project'
-             when 'ExtManagementSystem'
-               'pficon pficon-server'
-             when 'PhysicalServer'
-               'pficon pficon-enterprise'
-             end
+      icon = policy.towhat.safe_constantize.try(:decorate).try(:fonticon)
       {
         :id           => "policy_#{policy.id}",
         :text         => prefixed_title("#{ui_lookup(:model => policy.towhat)} #{policy.mode.capitalize}", policy.description),

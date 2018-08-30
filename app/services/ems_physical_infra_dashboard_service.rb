@@ -61,7 +61,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
       ems_attr = @ems.send(attr)
       attr_data.push(
         :id           => attr_hsh[attr] + '_' + @ems_id,
-        :iconClass    => attr.to_s.camelize.safe_constantize.try(:decorate).try(:fonticon),
+        :iconClass    => attr.to_s.classify.safe_constantize.try(:decorate).try(:fonticon),
         :title        => attr_hsh[attr],
         :count        => ems_attr.length,
         :href         => get_url(@ems_id, attr_url[attr]),

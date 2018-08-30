@@ -20,26 +20,7 @@ class TreeBuilderCondition < TreeBuilder
 
   # not using decorators for now because there are some inconsistencies
   def self.folder_icon(klassname)
-    case klassname
-    when 'Host'
-      'pficon pficon-container-node'
-    when 'Vm'
-      'pficon pficon-virtual-machine'
-    when 'ContainerReplicator'
-      'pficon pficon-replicator'
-    when 'ContainerGroup'
-      'fa fa-cubes'
-    when 'ContainerNode'
-      'pficon pficon-container-node'
-    when 'ContainerImage'
-      'pficon pficon-image'
-    when 'ContainerProject'
-      'pficon pficon-project'
-    when 'ExtManagementSystem'
-      'pficon pficon-server'
-    when 'PhysicalServer'
-      'pficon pficon-enterprise'
-    end
+    klassname.safe_constantize.try(:decorate).try(:fonticon)
   end
 
   # level 1 - host / vm

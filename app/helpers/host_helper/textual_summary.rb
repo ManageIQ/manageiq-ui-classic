@@ -240,9 +240,14 @@ module HostHelper::TextualSummary
 
   def textual_physical_server
     if @record.physical_server_id.nil?
-      {:label => _("Physical Server"), :value => _("None"), :icon => "pficon pficon-server"}
+      {:label => _("Physical Server"), :value => _("None"), :icon => PhysicalServer.decorate.fonticon}
     else
-      {:label => _("Physical Server"), :value => @record.physical_server.try(:name), :icon => "pficon pficon-server", :link => url_for(:controller => 'physical_server', :action => 'show', :id => @record.physical_server_id)}
+      {
+        :label => _("Physical Server"),
+        :value => @record.physical_server.try(:name),
+        :icon  => PhysicalServer.decorate.fonticon,
+        :link  => url_for(:controller => 'physical_server', :action => 'show', :id => @record.physical_server_id)
+      }
     end
   end
 
