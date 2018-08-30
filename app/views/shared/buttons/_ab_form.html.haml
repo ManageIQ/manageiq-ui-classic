@@ -1,14 +1,20 @@
 #ab_form
   #policy_bar
     - if session[:resolve_object].present?
-      = link_to({:action => "resolve", :button => "paste"},
-        "data-miq_sparkle_on"  => true,
-        "data-miq_sparkle_off" => true,
-        :remote                => true,
-        "data-method"          => :post,
-        :class                 => 'btn btn-default',
-        :title                 => _("Paste object details for use in a Button.")) do
-        %i.fa.fa-clipboard
+      - copied_target_class = Hash[*@resolve[:target_classes].flatten].invert[session[:resolve_object][:new][:target_class]]
+      - current_target_class =  @edit[:new][:target_class]
+      - if copied_target_class == current_target_class
+        = link_to({:action => "resolve", :button => "paste"},
+          "data-miq_sparkle_on"  => true,
+          "data-miq_sparkle_off" => true,
+          :remote                => true,
+          "data-method"          => :post,
+          :class                 => 'btn btn-default',
+          :title                 => _("Paste object details for use in a Button.")) do
+          %i.fa.fa-clipboard
+      - else
+        %button.btn.btn-default.disabled{:title => _("Paste is not available, target class differs from the target class of the object copied from the Simulation screen")}
+          %i.fa.fa-clipboard
     - else
       %button.btn.btn-default.disabled{:title => _("Paste is not available, no object information has been copied from the Simulation screen")}
         %i.fa.fa-clipboard
