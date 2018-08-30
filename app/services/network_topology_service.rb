@@ -27,13 +27,23 @@ class NetworkTopologyService < TopologyService
           :floating_ips => :writable_classification_tags
         ]
       ]
+    ],
+    :cloud_tenants      => [
+      :network_routers => [
+        :floating_ips,
+        :security_groups,
+        :cloud_subnets
+      ],
+      :cloud_subnets   => [
+        :security_groups
+      ]
     ]
   ]
 
   @kinds = %i(NetworkRouter CloudSubnet Vm NetworkManager FloatingIp CloudNetwork NetworkPort CloudTenant SecurityGroup LoadBalancer Tag AvailabilityZone)
 
   def entity_type(entity)
-    if entity.kind_of?(CloudNetwork)
+    if entity.kind_of?(CloudNetwork) || entity.kind_of?(CloudSubnet)
       entity.class.base_class.name.demodulize
     else
       super
