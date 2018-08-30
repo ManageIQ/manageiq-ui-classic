@@ -13,7 +13,7 @@ class AlertController < ApplicationController
     # Removed inactive "E-mail" tab - Sprint 34
     @lastaction = "show_list"
     @listtype = "rss_list"
-    @rss_roles = {"<#{_('All')}>" => 'all'}
+    @rss_roles = {_('All') => 'all'}
     RssFeed.roles.sort.each { |r| @rss_roles[r.titleize] = r }
     fetch_rss_feeds
     @breadcrumbs = []
