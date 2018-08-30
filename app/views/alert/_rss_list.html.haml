@@ -6,16 +6,23 @@
         %span.pficon.pficon-warning-exclamation
       %strong= _('No RSS Feeds Found')
   - else
-    %table.table.table-striped.table-bordered.table-hover
-      %thead
-        %tr
-          %th{:colspan => 4}
-            = _('Admin Role Filter:')
+    .form-horizontal
+      %form
+        .form-group
+          %label.col-md-2
+            = _('Admin Role Filter')
+          .col-md-2
             = select_tag('role',
                          options_for_select(@rss_roles, @rss_role),
-                         :multiple => false,
+                         :multiple          => false,
+                         "class"            => "selectpicker",
                          "data-miq_observe" => {:url => url_for_only_path(:action => 'role_selected')}.to_json)
-            = javascript_tag(javascript_focus('role'))
+            :javascript
+              miqInitSelectPicker();
+              $('#role').data('selectpicker').$button.focus();
+
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
         %tr
           %th.table-view-pf-select
           %th= _('Title')
