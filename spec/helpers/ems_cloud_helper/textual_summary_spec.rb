@@ -44,6 +44,7 @@ describe EmsCloudHelper::TextualSummary do
       images
       orchestration_stacks
       storage_managers
+      custom_button_events
     )
     include_examples "textual_group", "Properties", %i(description hostname ipaddress type port guid region keystone_v3_domain_id)
 

@@ -8,6 +8,7 @@ describe ContainerNodeHelper::TextualSummary do
     containers
     lives_on
     container_images
+    custom_button_events
   )
   include_examples "textual_group", "Properties", %i(
     name

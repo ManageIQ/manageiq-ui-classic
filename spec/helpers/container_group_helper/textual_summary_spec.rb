@@ -9,6 +9,7 @@ describe ContainerGroupHelper::TextualSummary do
     lives_on
     container_images
     persistent_volumes
+    custom_button_events
   )
 
   include_examples "textual_group", "Properties", %i(

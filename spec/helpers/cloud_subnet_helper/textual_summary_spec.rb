@@ -22,5 +22,6 @@ describe CloudSubnetHelper::TextualSummary do
     managed_subnets
     network_ports
     security_groups
+    custom_button_events
   )
 end

@@ -56,6 +56,7 @@ describe VmHelper::TextualSummary do
     scan_history
     cloud_network
     cloud_subnet
+    custom_button_events
   )
 
   include_examples "textual_group", "Relationships", %i(
@@ -82,9 +83,10 @@ describe VmHelper::TextualSummary do
     network_ports
     load_balancers
     cloud_volumes
+    custom_button_events
   ), "vm_cloud_relationships"
 
-  include_examples "textual_group", "Relationships", %i(ems parent_vm genealogy drift scan_history cloud_tenant),
+  include_examples "textual_group", "Relationships", %i(ems parent_vm genealogy drift scan_history cloud_tenant custom_button_events),
                    "template_cloud_relationships"
 
   include_examples "textual_group", "Security", %i(users groups patches)

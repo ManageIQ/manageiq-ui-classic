@@ -10,5 +10,6 @@ describe NetworkRouterHelper::TextualSummary do
     external_gateway
     floating_ips
     security_groups
+    custom_button_events
   )
 end

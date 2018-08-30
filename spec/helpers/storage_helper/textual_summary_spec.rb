@@ -92,6 +92,7 @@ describe StorageHelper do
     registered_vms
     unregistered_vms
     unmanaged_vms
+    custom_button_events
   )
 
   include_examples "textual_group_smart_management"

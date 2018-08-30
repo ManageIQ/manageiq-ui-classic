@@ -7,6 +7,7 @@ describe CloudNetworkHelper::TextualSummary do
     cloud_subnets
     network_routers
     floating_ips
+    custom_button_events
   )
   include_examples "textual_group", "Properties", %i(name type status ems_ref)
 end

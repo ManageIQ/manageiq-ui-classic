@@ -15,6 +15,7 @@ describe EmsInfraHelper::TextualSummary do
     orchestration_stacks
     ems_cloud
     network_manager
+    custom_button_events
   )
 
   include_examples "textual_group", "Properties", %i(

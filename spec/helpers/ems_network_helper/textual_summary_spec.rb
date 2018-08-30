@@ -16,6 +16,7 @@ describe EmsNetworkHelper::TextualSummary do
     floating_ips
     network_ports
     load_balancers
+    custom_button_events
   )
 
   include_examples "textual_group", "Status", %i(refresh_status refresh_date)

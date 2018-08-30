@@ -13,6 +13,7 @@ describe EmsStorageHelper::TextualSummary do
     cloud_volume_backups
     cloud_object_store_containers
     cloud_volume_types
+    custom_button_events
   )
 
   include_examples "textual_group", "Status", %i(refresh_status refresh_date)

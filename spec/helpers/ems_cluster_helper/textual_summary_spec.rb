@@ -19,6 +19,7 @@ describe EmsClusterHelper::TextualSummary do
     total_vms
     rps_size
     states_size
+    custom_button_events
   )
   include_examples "textual_group", "Totals for VMs", %i(aggregate_vm_memory aggregate_vm_cpus), 'vm_totals'
   include_examples "textual_group", "Totals for 101", %i(

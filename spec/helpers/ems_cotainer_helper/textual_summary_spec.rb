@@ -37,6 +37,7 @@ describe EmsContainerHelper::TextualSummary do
       volumes
       container_builds
       container_templates
+      custom_button_events
     )
     include_examples "textual_group", "Status", %i(authentications_status metrics_status refresh_status refresh_date data_collection_state)
     include_examples "textual_group_smart_management", %i(zone)

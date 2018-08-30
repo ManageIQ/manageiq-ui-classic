@@ -19,6 +19,7 @@ describe CloudTenantHelper::TextualSummary do
     security_groups
     floating_ips
     network_ports
+    custom_button_events
   )
 
   include_examples "textual_group", "Quotas", []

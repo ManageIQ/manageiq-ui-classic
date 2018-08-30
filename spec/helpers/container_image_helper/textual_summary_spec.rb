@@ -6,6 +6,7 @@ describe ContainerImageHelper::TextualSummary do
     container_groups
     containers
     container_nodes
+    custom_button_events
   )
   include_examples "textual_group", "Properties", %i(
     name

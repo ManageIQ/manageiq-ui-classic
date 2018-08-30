@@ -33,7 +33,7 @@ describe PersistentVolumeHelper::TextualSummary do
       allow(@record).to receive(:persistent_volume_claim).and_return(true)
     end
 
-    include_examples "textual_group", "Relationships", %i(parent pods_using_persistent_volume)
+    include_examples "textual_group", "Relationships", %i(parent pods_using_persistent_volume custom_button_events)
 
     include_examples "textual_group_smart_management"
 
