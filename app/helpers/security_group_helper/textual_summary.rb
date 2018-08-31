@@ -13,7 +13,10 @@ module SecurityGroupHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_ems_cloud ems_network cloud_tenant instances orchestration_stack network_ports)
+      %i(
+        parent_ems_cloud ems_network cloud_tenant instances orchestration_stack network_ports network_router
+        cloud_subnet
+      )
     )
   end
 
@@ -68,6 +71,14 @@ module SecurityGroupHelper::TextualSummary
 
   def textual_network_ports
     @record.network_ports
+  end
+
+  def textual_network_router
+    @record.network_router
+  end
+
+  def textual_cloud_subnet
+    @record.cloud_subnet
   end
 
   def port_range_helper(rule)

@@ -24,5 +24,7 @@ describe SecurityGroupHelper::TextualSummary do
     instances
     orchestration_stack
     network_ports
+    network_router
+    cloud_subnet
   )
 end

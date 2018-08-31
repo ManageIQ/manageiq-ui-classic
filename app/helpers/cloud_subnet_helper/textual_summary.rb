@@ -18,7 +18,7 @@ module CloudSubnetHelper::TextualSummary
       _("Relationships"),
       %i(
         parent_ems_cloud ems_network cloud_tenant availability_zone instances cloud_network
-        network_router parent_subnet managed_subnets network_ports
+        network_router parent_subnet managed_subnets network_ports security_groups
       )
     )
   end
@@ -109,5 +109,9 @@ module CloudSubnetHelper::TextualSummary
 
   def textual_network_ports
     textual_link(@record.network_ports, :label => _('Network Ports'))
+  end
+
+  def textual_security_groups
+    textual_link(@record.security_groups, :label => _('Security Groups'))
   end
 end

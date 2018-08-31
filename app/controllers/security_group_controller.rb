@@ -10,7 +10,7 @@ class SecurityGroupController < ApplicationController
   include Mixins::GenericShowMixin
 
   def self.display_methods
-    %w(instances network_ports)
+    %w(instances network_ports network_routers cloud_subnets)
   end
 
   menu_section :net

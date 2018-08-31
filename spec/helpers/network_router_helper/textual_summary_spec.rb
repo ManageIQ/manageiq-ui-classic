@@ -9,5 +9,6 @@ describe NetworkRouterHelper::TextualSummary do
     cloud_subnets
     external_gateway
     floating_ips
+    security_groups
   )
 end
