@@ -132,7 +132,7 @@ function playbookReusableCodeMixin(API, $q, miqService) {
           vm.catalogs = data.resources;
           // edit the name of each catalog to get all tenant ancestors in the name if they exist
           for (var i = 0; i < vm.catalogs.length; i++) {
-            vm.catalogs[i].name = _.find(formOptsCatalogTenants(vm.allCatalogs), {id: vm.catalogs[i].id}).name;
+            vm.catalogs[i].name = _.find(formOptsCatalogTenants(vm.all_catalogs), {id: vm.catalogs[i].id}).name;
           }
           vm.catalogs.unshift({"href": "", "id": "", "name": "<Unassigned>"});
           vm._catalog = _.find(vm.catalogs, {id: vm[vm.model].catalog_id});
