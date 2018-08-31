@@ -446,7 +446,7 @@ module ReportController::Widgets
         @edit[:new][:txt_url] = @widget.options[:url] if @edit[:new][:url].blank?
       end
       @edit[:new][:row_count]   = @widget.row_count
-      @edit[:new][:rss_feed_id] = @widget.resource_id         if @widget.resource_id && @widget.resource_type == "RssFeed"
+      @edit[:new][:rss_feed_id] = @widget.resource_type == "RssFeed" ? @widget.resource_id : @edit[:rss_feeds].first.second
     end
     @edit[:current] = copy_hash(@edit[:new])
   end
