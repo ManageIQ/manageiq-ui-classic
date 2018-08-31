@@ -49,12 +49,12 @@ module ReportController::Widgets
     @widget.title = widget.title
     @widget.description = widget.description
     @widget.resource = widget.resource
-    @widget.miq_schedule = widget.miq_schedule  # Need original sched to get options for copy
+    @widget.miq_schedule = widget.miq_schedule # Need original sched to get options for copy
     @widget.options = widget.options
     @widget.visibility = widget.visibility
     @widget.enabled = widget.enabled
     @widget.content_type = widget.content_type
-    widget.miq_widget_shortcuts.each do |ws|  # Need to make new widget_shortcuts to leave the originals alone
+    widget.miq_widget_shortcuts.each do |ws| # Need to make new widget_shortcuts to leave the originals alone
       new_ws = MiqWidgetShortcut.new(:sequence => ws.sequence, :description => ws.description, :miq_shortcut_id => ws.miq_shortcut_id)
       @widget.miq_widget_shortcuts.push(new_ws)
     end
@@ -72,7 +72,7 @@ module ReportController::Widgets
   def widget_edit
     case params[:button]
     when "cancel"
-      @widget = MiqWidget.find_by_id(session[:edit][:widget_id]) if session[:edit] && session[:edit][:widget_id]
+      @widget = MiqWidget.find(session[:edit][:widget_id]) if session[:edit] && session[:edit][:widget_id]
       if !@widget || @widget.id.blank?
         add_flash(_("Add of new Widget was cancelled by the user"))
       else
@@ -80,7 +80,7 @@ module ReportController::Widgets
       end
       get_node_info
       @widget = nil
-      @edit = session[:edit] = nil  # clean out the saved info
+      @edit = session[:edit] = nil # clean out the saved info
       replace_right_cell
     when "add", "save"
       assert_privileges("widget_#{params[:id] ? "edit" : "new"}")
@@ -91,13 +91,13 @@ module ReportController::Widgets
       if widget_validate_entries && @widget.save_with_shortcuts(@edit[:new][:shortcuts].to_a)
         AuditEvent.success(build_saved_audit(@widget, @edit))
         add_flash(_("Widget \"%{name}\" was saved") % {:name => get_record_display_name(@widget)})
-        params[:id] = @widget.id.to_s   # reset id in params for show
+        params[:id] = @widget.id.to_s # reset id in params for show
         # Build the filter expression and attach widget to schedule filter
         exp = {}
         exp["="] = {"field" => "MiqWidget-id", "value" => @widget.id}
         @edit[:schedule].filter = MiqExpression.new(exp)
         @edit[:schedule].save
-        @edit = session[:edit] = nil    # clean out the saved info
+        @edit = session[:edit] = nil # clean out the saved info
         # @schedule = nil
         replace_right_cell(:replace_trees => [:widgets])
       else
@@ -109,8 +109,8 @@ module ReportController::Widgets
       end
     else
       add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
-      @widget = params[:id] && params[:id] != "new" ? MiqWidget.find_by_id(params[:id]) :
-          MiqWidget.new # Get existing or new record
+      # Get existing or new record
+      @widget = params[:id] && params[:id] != "new" ? MiqWidget.find(params[:id]) : MiqWidget.new
       widget_set_form_vars
       session[:changed] = false
       @in_a_form = true
@@ -122,12 +122,12 @@ module ReportController::Widgets
   def widget_delete
     assert_privileges("widget_delete")
     widgets = find_checked_items
-    if !params[:id].nil? && MiqWidget.find_by_id(params[:id]).nil?
+    if params[:id].present? && !MiqWidget.exists?(params[:id])
       add_flash(_("Widget no longer exists"), :error)
-    else
-      widgets.push(params[:id]) if params[:id]
+    elsif params[:id]
+      widgets.push(params[:id])
     end
-    w = MiqWidget.find_by_id(widgets[0])        # temp var to determine the parent node of deleted items
+    w = MiqWidget.find(widgets[0]) # temp var to determine the parent node of deleted items
     process_elements(widgets, MiqWidget, "destroy") unless widgets.empty?
     nodes = x_node.split('-')
     self.x_node = "#{nodes[0]}-#{WIDGET_CONTENT_TYPE.invert[w.content_type]}"
@@ -136,7 +136,7 @@ module ReportController::Widgets
 
   def widget_generate_content
     assert_privileges("widget_generate_content")
-    w = MiqWidget.find_by_id(params[:id])
+    w = MiqWidget.find(params[:id])
     begin
       w.queue_generate_content
     rescue => bang
@@ -177,7 +177,7 @@ module ReportController::Widgets
       javascript_for_timer_type(params[:timer_typ]).each { |js| page << js }
 
       if params[:time_zone]
-        page << "ManageIQ.calendar.calDateFrom = new Date(#{(Time.zone.now - 1.month).in_time_zone(@edit[:tz]).strftime("%Y,%m,%d")});"
+        page << "ManageIQ.calendar.calDateFrom = new Date(#{(Time.zone.now - 1.month).in_time_zone(@edit[:tz]).strftime("%Y, %m, %d")});"
         page << "miqBuildCalendar();"
         page << "$('#miq_date_1').val('#{@edit[:new][:timer].start_date}');"
         page << "$('#start_hour').val('#{@edit[:new][:timer].start_hour.to_i}');"
@@ -195,7 +195,7 @@ module ReportController::Widgets
     new_hash = {}
     params[:col1].each { |sc| new_hash[sc.to_i] = @edit[:new][:shortcuts][sc.to_i] }
     @edit[:new][:shortcuts] = new_hash
-    @edit[:new][:shortcut_keys] = @edit[:new][:shortcuts].keys  # Save the keys array so we can compare the hash order
+    @edit[:new][:shortcut_keys] = @edit[:new][:shortcuts].keys # Save the keys array so we can compare the hash order
     render :update do |page|
       page << javascript_prologue
       changed = (@edit[:new] != @edit[:current])
@@ -206,9 +206,9 @@ module ReportController::Widgets
   # Shortcut was removed
   def widget_shortcut_remove
     return unless load_edit("widget_edit__#{params[:id]}", "replace_cell__explorer")
-    @widget = @edit[:widget_id] ? MiqWidget.find_by_id(@edit[:widget_id]) : MiqWidget.new
+    @widget = @edit[:widget_id] ? MiqWidget.find(@edit[:widget_id]) : MiqWidget.new
     @edit[:new][:shortcuts].delete(params[:shortcut].to_i)
-    @edit[:new][:shortcut_keys] = @edit[:new][:shortcuts].keys  # Save the keys array so we can compare the hash order
+    @edit[:new][:shortcut_keys] = @edit[:new][:shortcuts].keys # Save the keys array so we can compare the hash order
     @edit[:avail_shortcuts] = widget_build_avail_shortcuts
     render :update do |page|
       page << javascript_prologue
@@ -223,8 +223,8 @@ module ReportController::Widgets
   # Shortcut text reset
   def widget_shortcut_reset
     return unless load_edit("widget_edit__#{params[:id]}", "replace_cell__explorer")
-    @widget = @edit[:widget_id] ? MiqWidget.find_by_id(@edit[:widget_id]) : MiqWidget.new
-    @edit[:new][:shortcuts][params[:shortcut].to_i] = MiqShortcut.find_by_id(params[:shortcut].to_i).description
+    @widget = @edit[:widget_id] ? MiqWidget.find(@edit[:widget_id]) : MiqWidget.new
+    @edit[:new][:shortcuts][params[:shortcut].to_i] = MiqShortcut.find(params[:shortcut].to_i).description
     render :update do |page|
       page << javascript_prologue
       page.replace("form_filter_div", :partial => "widget_form_filter")
@@ -250,19 +250,17 @@ module ReportController::Widgets
     if nodeid.nil? && rep_id.nil?
       # show all widgets
       @view, @pages = get_view(MiqWidget, :association => "all")
-    else
+    elsif !rep_id
       # show only specific type
-      if !rep_id
-        @view, @pages = get_view(MiqWidget, :named_scope => [[:with_content_type, nodeid]])
-      else
-        # get all widgets for passed in report id
-        @widget_nodes = MiqWidget.where(:content_type => "report", :resource_id => rep_id)
-      end
+      @view, @pages = get_view(MiqWidget, :named_scope => [[:with_content_type, nodeid]])
+    else
+      # get all widgets for passed in report id
+      @widget_nodes = MiqWidget.where(:content_type => "report", :resource_id => rep_id)
     end
 
     if x_active_tree == :widgets_tree
       # dont need to set these for report show screen
-      @right_cell_div     = "widget_list"
+      @right_cell_div = "widget_list"
       @right_cell_text ||= _("All Widgets")
     end
 
@@ -285,8 +283,8 @@ module ReportController::Widgets
       @right_cell_div  = "widget_list"
       @right_cell_text = _("%{typ} Widgets") % {:typ => _(SINGULAR_WIDGET_TYPES[@sb[:nodes][1]])}
     else
-      @record = @widget = MiqWidget.find_by_id(@sb[:nodes].last)
-      @widget_running = true if ["running", "queued"].include?(@widget.status.downcase)
+      @record = @widget = MiqWidget.find(@sb[:nodes].last)
+      @widget_running = true if %w(running queued).include?(@widget.status.downcase)
       typ = WIDGET_CONTENT_TYPE.invert[@widget.content_type]
       content_type = _(SINGULAR_WIDGET_TYPES[typ])
       @right_cell_text = _("%{typ} Widget \"%{name}\"") % {:typ => content_type, :name => @widget.title}
@@ -328,11 +326,11 @@ module ReportController::Widgets
 
     # Remember how this edit started
     @edit[:type] = @widget.id ? "widget_edit" : "widget_new"
-    if !@edit[:widget_id] && params[:pressed] != "widget_copy"
-      @sb[:wtype] = @sb[:nodes][1]
-    else
-      @sb[:wtype] = WIDGET_CONTENT_TYPE.invert[@widget.content_type]
-    end
+    @sb[:wtype] = if !@edit[:widget_id] && params[:pressed] != "widget_copy"
+                    @sb[:nodes][1]
+                  else
+                    WIDGET_CONTENT_TYPE.invert[@widget.content_type]
+                  end
 
     @edit[:key]               = @widget.id ? "widget_edit__#{@widget.id}" : "widget_edit__new"
     @edit[:new]               = {}
@@ -361,55 +359,55 @@ module ReportController::Widgets
     end
     @edit[:sorted_user_roles] =
       Rbac.filtered(MiqUserRole).sort_by { |r| r.name.downcase }
-      .collect { |r| {r.name => r.id} }
+          .collect { |r| {r.name => r.id} }
 
     @edit[:sorted_groups] =
       Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).sort_by { |g| g.description.downcase }
-      .collect { |g| {g.description => g.id} }
+          .collect { |g| {g.description => g.id} }
 
     # Schedule Box - create new sched for copy/new, use existing for edit
-    @edit[:schedule] = @widget.id && !@widget.miq_schedule.nil? ?
-                          find_record_with_rbac(MiqSchedule, @widget.miq_schedule.id) :
-                          MiqSchedule.new
+    @edit[:schedule] = if @widget.id && @widget.miq_schedule.present?
+                         find_record_with_rbac(MiqSchedule, @widget.miq_schedule.id)
+                       else
+                         MiqSchedule.new
+                       end
 
     if @widget.resource_id && @widget.resource_type == "MiqReport"
       @edit[:schedule].name = @widget.resource.name
       @edit[:schedule].description = @widget.resource.title
-      @edit[:rpt] = MiqReport.find_by_id(@widget.resource_id)
+      @edit[:rpt] = MiqReport.find(@widget.resource_id)
       @menu = get_reports_menu
       if @sb[:wtype] == "r"
         @menu.each do |m|
           m[1].each do |f|
             f.each do |r|
-              if r.class != String
-                r.each do |rep|
-                  if rep == @edit[:rpt].name
-                    @edit[:new][:filter] = m[0]
-                    @edit[:new][:subfilter] = f[0]
-                  end
-                end
+              next if r.class == String
+              r.each do |rep|
+                next if rep != @edit[:rpt].name
+                @edit[:new][:filter] = m[0]
+                @edit[:new][:subfilter] = f[0]
               end
             end
           end
         end
-        report_selection_menus          # to build sub folders
+        report_selection_menus # to build sub folders
       else
-        widget_graph_menus      # to build report pulldown with only reports with grpahs
+        widget_graph_menus # to build report pulldown with only reports with grpahs
       end
       @edit[:new][:repfilter] = @edit[:rpt].id
-    elsif ["r", "c"].include?(@sb[:wtype])
+    elsif %w(r c).include?(@sb[:wtype])
       @menu = get_reports_menu
       if @sb[:nodes][1] == "c"
-        widget_graph_menus      # to build report pulldown with only reports with grpahs
+        widget_graph_menus # to build report pulldown with only reports with grpahs
       else
-        report_selection_menus          # to build sub folders
+        report_selection_menus # to build sub folders
       end
     elsif ["m"].include?(@sb[:wtype])
       @edit[:new][:shortcuts] = {}
       @widget.miq_widget_shortcuts.sort_by(&:sequence).each do |ws|
         @edit[:new][:shortcuts][ws.miq_shortcut.id] = ws.description
       end
-      @edit[:new][:shortcut_keys] = @edit[:new][:shortcuts].keys  # Save the keys array so we can compare the hash order
+      @edit[:new][:shortcut_keys] = @edit[:new][:shortcuts].keys # Save the keys array so we can compare the hash order
       @edit[:avail_shortcuts] = widget_build_avail_shortcuts
     end
     @edit[:new][:timer] = ReportHelper::Timer.new
@@ -473,13 +471,10 @@ module ReportController::Widgets
         subfolder.each_line do |s|
           @reps ||= []
           reps.each do |rep|
-            temp_arr = []
-            rec = MiqReport.find_by_name(rep.strip)
-            if rec && rec.graph       # dont need to add rpt with no graph for widget editor, chart options box
-              temp_arr.push("#{r[0]}/#{s}/#{rep}")
-              temp_arr.push(rec.id)
-              @reps.push(temp_arr) unless @reps.include?(temp_arr)
-            end
+            rec = MiqReport.find_by(:name => rep.strip)
+            next unless rec&.graph # dont need to add rpt with no graph for widget editor, chart options box
+            temp_arr = ["#{r[0]}/#{s}/#{rep}", rec.id]
+            @reps.push(temp_arr) unless @reps.include?(temp_arr)
           end
         end
       end
@@ -492,7 +487,7 @@ module ReportController::Widgets
     rpt.col_order.each_with_index do |col, idx|
       field_key = col
       field_value = rpt.headers[idx]
-      fields.push([field_value, field_key])               # Add to fields array
+      fields.push([field_value, field_key]) # Add to fields array
     end
     @edit[:new][:fields] = fields
   end
@@ -504,7 +499,7 @@ module ReportController::Widgets
 
   # Get variables from edit form
   def widget_get_form_vars
-    @widget = @edit[:widget_id] ? MiqWidget.find_by_id(@edit[:widget_id]) : MiqWidget.new
+    @widget = @edit[:widget_id] ? MiqWidget.find(@edit[:widget_id]) : MiqWidget.new
 
     copy_params_if_set(@edit[:new], params, %i(title description))
     @edit[:new][:filter]  = params[:filter_typ]       if params[:filter_typ]
@@ -534,10 +529,10 @@ module ReportController::Widgets
       @edit[:new][:repfilter] = "" if params[:repfilter_typ] == "<Choose>"
     elsif @sb[:wtype] == "m"
       if params[:add_shortcut]
-        s = MiqShortcut.find_by_id(params[:add_shortcut].to_i)
+        s = MiqShortcut.find(params[:add_shortcut].to_i)
         @edit[:avail_shortcuts].delete_if { |as| as.last == s.id }
         @edit[:new][:shortcuts][s.id] = s.description
-        @edit[:new][:shortcut_keys] = @edit[:new][:shortcuts].keys  # Save the keys array so we can compare the hash order
+        @edit[:new][:shortcut_keys] = @edit[:new][:shortcuts].keys # Save the keys array so we can compare the hash order
         @replace_filter_div = true
       end
       params.each do |k, v|
@@ -563,14 +558,18 @@ module ReportController::Widgets
 
       if @edit[:new][:filter]
         @folders ||= []
-        report_selection_menus          # to build sub folders
-        rpt = @edit[:new][:repfilter] ? @edit[:new][:repfilter] : (@widget.resource_id && @widget.resource_type == "MiqReport" ? @widget.resource_id : nil)
+        report_selection_menus # to build sub folders
+        rpt = if @edit[:new][:repfilter]
+                @edit[:new][:repfilter]
+              elsif @widget.resource_id && @widget.resource_type == "MiqReport"
+                @widget.resource_id
+              end
         widget_set_column_vars(rpt)
       end
       @edit[:new][:pivot].options = @edit[:new][:fields].dup
       @pivot = @edit[:new][:pivot]
     elsif @sb[:wtype] == "c"
-      widget_graph_menus      # to build report pulldown with only reports with grpahs
+      widget_graph_menus # to build report pulldown with only reports with grpahs
     elsif @sb[:wtype] == "rf"
       @edit[:new][:feed_type]   = params[:feed_type] if params[:feed_type]
       @edit[:new][:url]         = params[:rss_url]   if params[:rss_url]
@@ -595,28 +594,28 @@ module ReportController::Widgets
     end
     widget.options[:col_order] = [] if @edit[:new][:pivot]
     @edit[:new][:pivot] ||= ReportController::PivotOptions.new
-    widget.options[:col_order].push(@edit[:new][:pivot].by1) if !@edit[:new][:pivot].by1.blank? && @edit[:new][:pivot].by1 != ReportHelper::NOTHING_STRING
-    widget.options[:col_order].push(@edit[:new][:pivot].by2) if !@edit[:new][:pivot].by2.blank? && @edit[:new][:pivot].by2 != ReportHelper::NOTHING_STRING
-    widget.options[:col_order].push(@edit[:new][:pivot].by3) if !@edit[:new][:pivot].by3.blank? && @edit[:new][:pivot].by3 != ReportHelper::NOTHING_STRING
-    widget.options[:col_order].push(@edit[:new][:pivot].by4) if !@edit[:new][:pivot].by4.blank? && @edit[:new][:pivot].by4 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by1) if @edit[:new][:pivot].by1.present? && @edit[:new][:pivot].by1 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by2) if @edit[:new][:pivot].by2.present? && @edit[:new][:pivot].by2 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by3) if @edit[:new][:pivot].by3.present? && @edit[:new][:pivot].by3 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by4) if @edit[:new][:pivot].by4.present? && @edit[:new][:pivot].by4 != ReportHelper::NOTHING_STRING
     widget.content_type = WIDGET_CONTENT_TYPE[@sb[:wtype]]
     widget.visibility ||= {}
     if @edit[:new][:visibility_typ] == "group"
       groups = []
       @edit[:new][:groups].each do |g|
-        group = MiqGroup.find_by_id(g)
+        group = MiqGroup.find(g)
         groups.push(group.description) if g == group.id
       end
-      widget.visibility[:groups] =  groups
+      widget.visibility[:groups] = groups
       widget.visibility.delete(:roles) if widget.visibility[:roles]
     else
       if @edit[:new][:visibility_typ] == "role"
         roles = []
         @edit[:new][:roles].each do |r|
-          role = MiqUserRole.find_by_id(r)
+          role = MiqUserRole.find(r)
           roles.push(role.name) if r == role.id
         end
-        widget.visibility[:roles] =  roles
+        widget.visibility[:roles] = roles
       else
         widget.visibility[:roles] = ["_ALL_"]
       end
@@ -634,10 +633,10 @@ module ReportController::Widgets
 
   # Validate widget entries before updating record
   def widget_validate_entries
-    if ["r", "c"].include?(@sb[:wtype]) && (!@edit[:new][:repfilter] || @edit[:new][:repfilter] == "")
+    if %w(r c).include?(@sb[:wtype]) && (!@edit[:new][:repfilter] || @edit[:new][:repfilter] == "")
       add_flash(_("A Report must be selected"), :error)
     end
-    if %w(role group).include? @edit[:new][:visibility_typ]
+    if %w(role group).include?(@edit[:new][:visibility_typ])
       typ = @edit[:new][:visibility_typ]
       if @edit[:new][typ.pluralize.to_sym].blank?
         add_flash(_("A %{type} must be selected") % {:type => typ.titleize}, :error)
