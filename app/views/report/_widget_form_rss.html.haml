@@ -23,7 +23,7 @@
         = _('Internal RSS Feed')
       .col-md-8
         = select_tag("rss_feed",
-          options_for_select(@edit[:rss_feeds].sort, @edit[:new][:rss_feed_id]),
+          options_for_select(@edit[:rss_feeds], @edit[:new][:rss_feed_id]),
           :disabled => @edit[:read_only],
           :class    => "selectpicker")
         :javascript
