@@ -36,26 +36,7 @@ class TreeBuilderPolicy < TreeBuilder
 
     MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[mode.to_sym][model.name.to_sym]
-      icon = case model.to_s
-             when 'Host'
-               'pficon pficon-container-node'
-             when 'Vm'
-               'pficon pficon-virtual-machine'
-             when 'ContainerReplicator'
-               'pficon pficon-replicator'
-             when 'ContainerGroup'
-               'fa fa-cubes'
-             when 'ContainerNode'
-               'pficon pficon-container-node'
-             when 'ContainerImage'
-               'pficon pficon-image'
-             when 'ContainerProject'
-               'pficon pficon-project'
-             when 'ExtManagementSystem'
-               'pficon pficon-server'
-             when 'PhysicalServer'
-               'pficon pficon-enterprise'
-             end
+      icon = model.to_s.safe_constantize.try(:decorate).try(:fonticon)
       {
         :id   => "#{mode}-#{model.name.camelize(:lower)}",
         :icon => icon,
