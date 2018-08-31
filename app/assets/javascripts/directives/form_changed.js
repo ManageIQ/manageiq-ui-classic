@@ -21,7 +21,7 @@ ManageIQ.angular.app.directive('formChanged', function() {
             copy[k] = undefined;
           });
         }
-        // don't compare ng stuff TODO remove in Angular 2/4
+        // don't compare ng stuff
         if (key !== undefined && key[0] === '$') {
           return true;
         }
@@ -33,8 +33,7 @@ ManageIQ.angular.app.directive('formChanged', function() {
       };
 
       var updateDirty = function() {
-        // TODO in lodash 4 it's _.isEqualWith
-        if (_.isEqual(model(), modelCopy(), compare)) {
+        if (_.isEqualWith(model(), modelCopy(), compare)) {
           ctrl.$setPristine();
         } else {
           ctrl.$setDirty();

@@ -63,16 +63,8 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$scope', 'floating
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
-  // FIXME: in lodash4, this is _.pick(vm.floatingIpModel, vm.fields)
   vm.filteredModel = function() {
-    var model = vm.floatingIpModel;
-    var ret = {};
-
-    vm.fields.forEach(function (key) {
-      _.set(ret, key, _.result(model, key));
-    });
-
-    return ret;
+    return _.pick(vm.floatingIpModel, vm.fields);
   };
 
   vm.filterNetworkManagerChanged = function(id) {
