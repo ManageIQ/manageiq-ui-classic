@@ -65,7 +65,7 @@ module.exports = {
   },
 
   output: {
-    filename: '[name].js',
+    filename: '[name]-[chunkhash].js',
     path: output.path,
     publicPath: output.publicPath
   },

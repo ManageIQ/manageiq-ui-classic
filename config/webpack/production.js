@@ -9,7 +9,6 @@ const sharedConfig = require('./shared.js')
 
 module.exports = merge(sharedConfig, {
   mode: 'production',
-  output: { filename: '[name]-[chunkhash].js' },
   devtool: 'source-map',
   stats: 'normal',
 
