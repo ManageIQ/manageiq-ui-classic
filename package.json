@@ -38,7 +38,7 @@
     "history": "^4.7.2",
     "jquery": "~2.2.4",
     "kubernetes-topology-graph": "~0.0.25",
-    "lodash": "^4.17.4",
+    "lodash": "~4.17.10",
     "numeral": "~2.0.6",
     "patternfly": "~3.54.1",
     "patternfly-react": "2.10.1",

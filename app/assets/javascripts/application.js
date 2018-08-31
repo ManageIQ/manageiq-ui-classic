@@ -26,7 +26,6 @@
 //= require_tree ./services/
 //= require bower_components/d3/d3
 //= require bower_components/c3/c3
-//= require bower_components/lodash/lodash
 //= require kubernetes-topology-graph/dist/topology-graph
 //= require ./miq_browser_detect
 //= require ./miq_application
