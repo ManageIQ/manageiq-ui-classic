@@ -65,7 +65,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
         :title        => attr_hsh[attr],
         :count        => ems_attr.length,
         :href         => get_url(@ems_id, attr_url[attr]),
-        :notification => notification_data(ems_attr)
+        :notification => notification_data(ems_attr, attr_hsh[attr])
       )
     end
     attr_data
@@ -100,39 +100,46 @@ class EmsPhysicalInfraDashboardService < DashboardService
     }
   end
 
-  def notification_data(attrs)
-    valid = 0
-    warning = 0
-    critical = 0
-    attrs.each do |attr|
-      next unless attr.respond_to?(:health_state)
-      case attr.health_state&.downcase
-      when 'critical'
-        critical += 1
-      when 'warning'
-        warning += 1
-      when 'valid'
-        valid += 1
-      end
-    end
-    if critical.positive?
-      icon_class = 'pficon pficon-error-circle-o'
-      count = critical
-    elsif warning.positive?
-      icon_class = 'pficon pficon-warning-triangle-o'
-      count = warning
-    elsif valid.positive?
-      icon_class = 'pficon pficon-ok'
-      count = valid
-    else
-      icon_class = 'pficon pficon-error-circle-o'
+  def notification_data(components, component_type)
+    if components&.first.respond_to?(:health_state)
       count = 0
-    end
+      health_states = components.group('lower(health_state)').count
+      health_states.default = 0
+      critical_count = health_states["critical"]
+      warning_count = health_states["warning"]
 
-    {
-      :iconClass => icon_class,
-      :count     => count,
+      if critical_count.positive?
+        icon_class = 'pficon pficon-error-circle-o'
+        count = critical_count
+        health_state = 'critical'
+      elsif warning_count.positive?
+        icon_class = 'pficon pficon-warning-triangle-o'
+        count = warning_count
+        health_state = 'warning'
+      else
+        health_state = 'valid'
+        icon_class = 'pficon pficon-ok'
+      end
+      tooltip_count = count.positive? ? count : components.count
+      {
+        :count     => count,
+        :iconClass => icon_class,
+        :tooltip   => format_tooltip(health_state, component_type.downcase, tooltip_count),
+      }
+    end
+  end
+
+  def format_tooltip(health_state, component_type, count)
+    tooltip_data = {
+      :count          => count,
+      :component_type => count > 1 ? component_type : component_type.singularize,
+      :health_state   => health_state,
     }
+    n_(
+      "%{count} %{component_type} is in %{health_state} state.",
+      "%{count} %{component_type} are in %{health_state} state.",
+      count
+    ) % tooltip_data
   end
 
   def servers_group
