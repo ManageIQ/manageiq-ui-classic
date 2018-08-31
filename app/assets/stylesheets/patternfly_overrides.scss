@@ -201,6 +201,55 @@ body#dashboard .blank-slate-pf {
   color: #9c9c9c;
 }
 
+/// styles the aggregate-status-card to add suppport to font-fabulous
+/// icons that are not yet supported by PF
+
+.card-pf-aggregate-status-notifications {
+  .ff {
+    font-size: ($font-size-base * 1.5); // 18px
+    margin-right: 7px;
+  }
+}
+
+.card-pf-title {
+  .card-pf-aggregate-status & {
+    .ff
+    {
+      color: $card-pf-aggregate-status-title-icon-color;
+      font-size: $font-size-h3;
+      margin-right: 7px;
+    }
+  }
+  .card-pf-aggregate-status-mini & {
+    .ff {
+      font-size: ($font-size-base * 2 + 2); // 26px
+      margin-right: 0;
+      min-width: ($font-size-base * 2 + 2); // 26px
+      position: absolute;
+      left: ($grid-gutter-width / 2);
+      text-align: center;
+      top: 15px;
+    }
+  }
+}
+
+.card-pf-link-with-icon {
+  .ff {
+    font-size: 16px;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+}
+
+.card-pf-footer {
+  a > {
+    .ff {
+      margin-right: 5px;
+    }
+  }
+}
+
 /// styling for object card on angular dashboards
 
 @media (min-width: $screen-md) {
@@ -286,10 +335,10 @@ table.table.table-summary-screen tbody td img {
   table.table-expanded thead tr th div.quadicon_grid {
     bottom: 0;
     height: 80px;
-    left: 0; 
+    left: 0;
     margin-left: auto;
     position: absolute;
-    right: 0; 
+    right: 0;
   }
 
   table.table-compressed thead th,
