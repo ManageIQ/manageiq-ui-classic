@@ -2516,6 +2516,7 @@ Rails.application.routes.draw do
         get_category_entries
         get_category_entries_multi
         get_user_tags
+        load_tags_categories
         log_collection_form_fields
         log_protocol_changed
         pglogical_subscriptions_form_fields

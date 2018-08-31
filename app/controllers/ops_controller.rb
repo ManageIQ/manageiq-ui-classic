@@ -92,9 +92,9 @@ class OpsController < ApplicationController
   end
 
   def load_tags_categories
-    cats = Classification.categories.select(&:show).sort_by { |t| t.description.try(:downcase) } # Get the categories, sort by description
-    cats.delete_if { |c| c.read_only? || c.entries.length == 0 }
-    render :json => cats
+    cats = Classification.eager_load(:tag).visible.writeable.categories.delete_if { |c| c.entries.length == 0 } # Get the categories, sort by description
+    data = cats.map{ |c| {:id =>c.id.to_s, :name => c.name, :description => c.description, :tag_id => c.tag_id.to_s } }
+    render :json => data
   end
 
   def get_category_entries

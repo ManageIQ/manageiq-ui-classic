@@ -211,8 +211,8 @@ const storeTagCategories = categories => ({
   type: actionTypes.STORE_TAG_CATEGORIES,
   categories,
 });
-export const loadTagsCategories = () => dispatch => API.get(endpoints.getTagCategoriesUrl)
-  .then(data => data.resources.map(category =>
+export const loadTagsCategories = () => dispatch => http.get(endpoints.getTagCategoriesUrl)
+  .then(data => data.map(category =>
     ({ value: category.id, label: category.description, name: category.name })))
   .then(categories => categories.sort((a, b) => a.label.localeCompare(b.label)))
   .then(categories => dispatch(storeTagCategories(categories)));
