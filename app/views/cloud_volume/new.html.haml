@@ -11,5 +11,6 @@
 
 :javascript
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id || "new"}');
-  ManageIQ.angular.app.value('storageManagerId', #{@storage_manager.try(:id) || "undefined"});
+  ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager.try(:id).to_s || "undefined"}');
+  ManageIQ.angular.app.value('cloudVolumeFormOperation', 'NEW');
   miq_bootstrap('#form_div');
