@@ -56,8 +56,9 @@ class CloudNetworkController < ApplicationController
       if CloudNetwork.class_by_ems(ems).supports_create?
         options.delete(:ems_id)
         task_id = ems.create_cloud_network_queue(session[:userid], options)
-        add_flash(_("Cloud Network creation failed: Task start failed: ID [%{id}]") %
-        {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+        unless task_id.kind_of?(Integer)
+          add_flash(_("Cloud Network creation failed: Task start failed: ID [%{id}]") % {:id => task_id.to_s}, :error)
+        end
         if @flash_array
           javascript_flash(:spinner_off => true)
         else
@@ -66,7 +67,7 @@ class CloudNetworkController < ApplicationController
       else
         @in_a_form = true
         add_flash(_(CloudNetwork.unsupported_reason(:create)), :error)
-        drop_breadcrumb(:name => _("Add New Cloud Network "), :url  => "/cloud_network/new")
+        drop_breadcrumb(:name => _("Add New Cloud Network "), :url => "/cloud_network/new")
         javascript_flash
       end
     end
@@ -77,14 +78,13 @@ class CloudNetworkController < ApplicationController
     network_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Network \"%{name}\" created") % {:name  => network_name })
+      add_flash(_("Cloud Network \"%{name}\" created") % {:name => network_name })
     else
-      add_flash(
-        _("Unable to create Cloud Network \"%{name}\": %{details}") % { :name    => network_name,
-                                                                        :details => task.message }, :error)
+      add_flash(_("Unable to create Cloud Network \"%{name}\": %{details}") % { :name    => network_name,
+                                                                                :details => task.message }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect :action => "show_list"
@@ -122,7 +122,7 @@ class CloudNetworkController < ApplicationController
   end
 
   def edit
-    params[:id] = checked_item_id unless params[:id].present?
+    params[:id] = checked_item_id if params[:id].blank?
     assert_privileges("cloud_network_edit")
     @network = find_record_with_rbac(CloudNetwork, params[:id])
     @in_a_form = true
@@ -149,13 +149,14 @@ class CloudNetworkController < ApplicationController
     options = edit_form_params
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Cloud Network \"%{name}\" was cancelled by the user") % { :name  => @network.name })
+      cancel_action(_("Edit of Cloud Network \"%{name}\" was cancelled by the user") % {:name => @network.name})
 
     when "save"
       if @network.supports_update?
         task_id = @network.update_cloud_network_queue(session[:userid], options)
-        add_flash(_("Cloud Network update failed: Task start failed: ID [%{id}]") %
-        {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+        unless task_id.kind_of?(Integer)
+          add_flash(_("Cloud Network update failed: Task start failed: ID [%{id}]") % {:id => task_id.to_s}, :error)
+        end
         if @flash_array
           javascript_flash(:spinner_off => true)
         else
@@ -175,11 +176,10 @@ class CloudNetworkController < ApplicationController
     cloud_network_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Network \"%{name}\" updated") % { :name  => cloud_network_name })
+      add_flash(_("Cloud Network \"%{name}\" updated") % {:name => cloud_network_name})
     else
-      add_flash(
-        _("Unable to update Cloud Network \"%{name}\": %{details}") % { :name    => cloud_network_name,
-                                                                        :details => task.message }, :error)
+      add_flash(_("Unable to update Cloud Network \"%{name}\": %{details}") % {:name    => cloud_network_name,
+                                                                               :details => task.message}, :error)
     end
 
     session[:edit] = nil
@@ -195,15 +195,14 @@ class CloudNetworkController < ApplicationController
   helper_method :textual_group_list
 
   def switch_to_bol(option)
-    return true if option && option =~ /on|true/i
-    return false
+    option && option =~ /on|true/i ? true : false
   end
 
   def edit_form_params
     options = {}
     # True by default
     params[:enabled] = false unless params[:enabled]
-    options[:name] = params[:name] if params[:name] unless @network.name == params[:name]
+    options[:name] = params[:name] if params[:name] && params[:name] != @network.name
     options[:admin_state_up] = switch_to_bol(params[:enabled]) unless @network.enabled == switch_to_bol(params[:enabled])
     options[:shared] = switch_to_bol(params[:shared]) unless @network.shared == switch_to_bol(params[:shared])
     unless @network.external_facing == switch_to_bol(params[:external_facing])
@@ -229,9 +228,7 @@ class CloudNetworkController < ApplicationController
     # TODO: uncomment once form contains this field
     # options[:port_security_enabled] = params[:port_security_enabled] if params[:port_security_enabled]
     options[:qos_policy_id] = params[:qos_policy_id] if params[:qos_policy_id]
-    if params[:provider_network_type] && !params[:provider_network_type].empty?
-      options[:provider_network_type] = params[:provider_network_type]
-    end
+    options[:provider_network_type] = params[:provider_network_type] if params[:provider_network_type].present?
     options[:provider_physical_network] = params[:provider_physical_network] if params[:provider_physical_network]
     options[:provider_segmentation_id] = params[:provider_segmentation_id] if params[:provider_segmentation_id]
     cloud_tenant = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params[:cloud_tenant][:id]
