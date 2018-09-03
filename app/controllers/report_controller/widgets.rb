@@ -435,11 +435,7 @@ module ReportController::Widgets
       @edit[:new][:pivot].options = @edit[:new][:fields].dup
       @edit[:new][:row_count] = @widget.row_count
     elsif @sb[:wtype] == "rf"
-      @edit[:rss_feeds] = {}
-      rss_feeds = RssFeed.all
-      rss_feeds.each do |rf|
-        @edit[:rss_feeds][rf.title] = rf.id
-      end
+      @edit[:rss_feeds] = RssFeed.pluck(:title, :id).sort.to_h
       @edit[:new][:feed_type] = @widget.options && @widget.options[:url] ? "external" : "internal"
       if @widget.options && @widget.options[:url]
         self.class::RSS_FEEDS.each do |r|
@@ -450,7 +446,7 @@ module ReportController::Widgets
         @edit[:new][:txt_url] = @widget.options[:url] if @edit[:new][:url].blank?
       end
       @edit[:new][:row_count]   = @widget.row_count
-      @edit[:new][:rss_feed_id] = @widget.resource_id         if @widget.resource_id && @widget.resource_type == "RssFeed"
+      @edit[:new][:rss_feed_id] = @widget.resource_type == "RssFeed" ? @widget.resource_id : @edit[:rss_feeds].first.second
     end
     @edit[:current] = copy_hash(@edit[:new])
   end
