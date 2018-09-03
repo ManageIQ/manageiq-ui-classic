@@ -4,5 +4,6 @@
 
 window.$ = window.jQuery = require('jquery');
 
+window._ = require('lodash');
 window.numeral = require('numeral');
 window.sprintf = require('sprintf-js').sprintf;

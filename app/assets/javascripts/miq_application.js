@@ -1242,7 +1242,7 @@ function miqInitCodemirror(options) {
 function miqSelectPickerEvent(element, url, options) {
   options = options || {};
   options.no_encoding = true;
-  var firstarg = ! _.contains(url, '?');
+  var firstarg = ! url.includes('?');
 
   $('#' + element).on('change', _.debounce(function() {
     var selected = $(this).val();
@@ -1289,7 +1289,7 @@ function miqInitBootstrapSwitch(element, url, options) {
     options = typeof options !== 'undefined' ? options : {};
     options['no_encoding'] = true;
 
-    var firstarg = ! _.contains(url, '?');
+    var firstarg = ! url.includes('?');
     miqObserveRequest(url + (firstarg ? '?' : '&') + element + '=' + state, options);
 
     return true;

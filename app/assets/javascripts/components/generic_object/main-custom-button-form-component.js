@@ -164,7 +164,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     };
 
     if (vm.customButtonModel.current_visibility === 'role') {
-      vm.customButtonModel.roles = _.pluck(_.filter(vm.customButtonModel.available_roles, function(role) {
+      vm.customButtonModel.roles = _.map(_.filter(vm.customButtonModel.available_roles, function(role) {
         return role.value === true;
       }), 'name');
     }

@@ -74,7 +74,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     vm.DialogEditor = DialogEditor;
   }
 
-  var beingCloned = null; // hack that solves recursion problem for cloneDeep
+  var beingCloned = null; // hack that solves recursion problem for cloneDeepWith
   function customizer(value) {
     var keysToDelete = ['active', '$$hashKey', 'href', 'dynamicFieldList', 'id'];
     var useCustomizer =
@@ -89,7 +89,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     }
 
     beingCloned = value;
-    var copy = _.cloneDeep(value, customizer);
+    var copy = _.cloneDeepWith(value, customizer);
     beingCloned = null;
 
     // remove unnecessary attributes
@@ -117,9 +117,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
           dialog_tabs: [],
         },
       };
-      // once we start using lodash 4.17.4, change to 'cloneDeepWith'
-      // https://lodash.com/docs/4.17.4#cloneDeepWith
-      dialogData.content.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
+      dialogData.content.dialog_tabs = _.cloneDeepWith(DialogEditor.getDialogTabs(), customizer);
     } else {
       action = 'create';
       dialogId = '';
@@ -129,7 +127,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
         buttons: 'submit,cancel',
         dialog_tabs: [],
       };
-      dialogData.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
+      dialogData.dialog_tabs = _.cloneDeepWith(DialogEditor.getDialogTabs(), customizer);
     }
 
     DialogEditorHttp.saveDialog(dialogId, action, dialogData).then(saveSuccess, saveFailure);
