@@ -12,7 +12,6 @@
 #
 src_files:
 - __spec__/helpers/i18n-test.js
-- assets/bower_components/phantomjs-polyfill/bind-polyfill
 - packs/runtime.js
 - packs/shims.js
 - packs/vendor.js
