@@ -63,7 +63,7 @@
     this.$scope = $scope;
     this.$location = $location;
     initEndpoints(this.MiQEndpointsService);
-    this.isList = _.contains(location.pathname, 'show_list');
+    this.isList = location.pathname.includes('show_list');
   };
 
   /**
