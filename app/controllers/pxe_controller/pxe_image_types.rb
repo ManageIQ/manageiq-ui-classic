@@ -73,7 +73,7 @@ module PxeController::PxeImageTypes
   end
 
   # Common VM button handler routines
-  def pxe_image_type_button_operation(method, display_name)
+  def pxe_image_type_button_operation(method)
     pxes = find_records_with_rbac(PxeImageType, checked_or_params)
     process_pxe_image_type(pxes.ids, method)
     if params[:id] && method == 'destroy'
@@ -81,15 +81,14 @@ module PxeController::PxeImageTypes
       @single_delete = true unless flash_errors?
     end
     get_node_info(x_node)
-    replace_right_cell(
-      :nodetype => params[:id] ? x_node : "root",
-      :replace_trees => %i(pxe_image_types customization_templates))
+    replace_right_cell(:nodetype      => params[:id] ? x_node : "root",
+                       :replace_trees => %i(pxe_image_types customization_templates))
     pxes.count
   end
 
   def pxe_image_type_delete
     assert_privileges("pxe_image_type_delete")
-    pxe_image_type_button_operation('destroy', 'Delete')
+    pxe_image_type_button_operation('destroy')
   end
 
   def pxe_image_type_list
