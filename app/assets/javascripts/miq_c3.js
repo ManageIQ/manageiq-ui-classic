@@ -140,7 +140,7 @@ function getMinMaxFromChart(chart) {
 
   var max = _.max(_.filter(data, function(o) { return o !== null; }));
   var min = _.min(_.filter(data, function(o) { return o !== null; }));
-  if (max === -Infinity || min === Infinity) {
+  if (max === undefined || min === undefined) {
     return false;
   }
   return [min, max];
