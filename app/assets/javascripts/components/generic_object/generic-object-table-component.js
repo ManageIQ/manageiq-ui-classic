@@ -120,7 +120,7 @@ function genericObjectTableController($timeout) {
 
   function checkIfTableChanged() {
     if (vm.values && ! angular.equals(_.zipObject(vm.keys, vm.values), vm.origKeysValues)
-      || ! vm.values && _.difference(vm.keys, vm.origKeysValues, _.isEqual).length > 0) {
+      || ! vm.values && _.difference(vm.keys, vm.origKeysValues).length > 0) {
       vm.tableChanged = true;
     } else {
       vm.tableChanged = false;
