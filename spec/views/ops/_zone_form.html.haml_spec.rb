@@ -50,6 +50,7 @@ describe "ops/_zone_form.html.haml" do
       @edit[:current][:name] = 'Test Zone'
       @zone.name = 'Test Zone'
       @zone.id = nil
+      @editing = true
       render :partial => "ops/zone_form"
       expect(response.body).to include('<input type="text" name="name" id="name" maxlength="50" disabled="disabled" class="form-control" data-miq_observe="{&quot;interval&quot;:&quot;.5&quot;,&quot;url&quot;:&quot;/ops/zone_field_changed/new&quot;}" />')
     end

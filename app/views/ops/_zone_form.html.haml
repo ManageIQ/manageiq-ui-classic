@@ -1,5 +1,6 @@
 - url = url_for_only_path(:action => 'zone_field_changed', :id => (@zone.id || "new"))
-- disabled_name = !@zone.name.nil? && !@edit[:current][:name].nil?
+- unless @editing
+  = render :partial => "layouts/flash_msg"
 %h3
   = _("Zone Information")
 .form-horizontal
@@ -10,7 +11,7 @@
       = text_field_tag("name",
                         @edit[:new][:name],
                         :maxlength => 50,
-                        :disabled => disabled_name,
+                        :disabled => @editing,
                         :class => "form-control",
                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
       - unless @zone.id
