@@ -117,7 +117,7 @@ function mainCustomButtonGroupFormController(API, miqService) {
 
   function getCustomButtonSetGroupIndex(response) {
     vm.afterGet = true;
-    var currentGroupIndex = _.filter(_.pluck(response.resources, 'set_data'), function(setData) {
+    var currentGroupIndex = _.filter(_.map(response.resources, 'set_data'), function(setData) {
       return setData.applies_to_class === 'GenericObject';
     }).length;
     vm.customButtonGroupModel.group_index = currentGroupIndex + 1;
