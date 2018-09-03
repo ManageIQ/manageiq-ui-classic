@@ -63,6 +63,7 @@ describe('toolbarController', function () {
         .each(function(item) {
           expect(item.hasOwnProperty('eventFunction')).toBeTruthy();
         })
+        .value();
      })
    })
 
