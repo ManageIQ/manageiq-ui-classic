@@ -5,6 +5,20 @@ import { API, http } from '../../../http_api';
 
 const { sendDataWithRx } = window;
 
+export const createFlashMessage = (text, type) => ({
+  type: actionTypes.ADD_FLASH_MESSAGE,
+  flashMessage: {
+    text,
+    type,
+    flashId: Date.now(),
+  },
+});
+
+export const removeFlashMessage = flashMessage => ({
+  type: actionTypes.REMOVE_FLASH_MESSAGE,
+  flashMessage,
+});
+
 export const navigate = where => (dispatch, getState) => {
   const { pathname } = getState().router.location;
   if (pathname !== where) {
@@ -47,15 +61,15 @@ const fetchFailed = () => ({
 const storeUsersTree = usersTree => ({
   type: actionTypes.STORE_USERS_TREE,
   usersTree,
-}); 
+});
 
 const disableTreeReactRouting = () => sendDataWithRx({ type: 'disable-react-routing' });
-const handleUserDetailLinkAction = url => dispatch => {
+const handleUserDetailLinkAction = url => (dispatch) => {
   disableTreeReactRouting();
   dispatch(navigate('/'));
-  miqOnClickSelectRbacTreeNode(url);
   ManageIQ.component.getComponentInstances('RbacModule')[0].destroy();
-}
+  window.miqOnClickSelectRbacTreeNode(url);
+};
 
 export const requestUsers = () => (dispatch) => {
   dispatch(fetchData(actionTypes.FETCH_DATA));
@@ -83,8 +97,8 @@ export const requestUsers = () => (dispatch) => {
     })))
     .then(data => dispatch(loadUsersData({ rows: data })))
     .then(() => dispatch(fetchSucesfull()))
-    .catch(error => {
-      console.log('Fetch users error: ', error)
+    .catch((error) => {
+      console.log('Fetch users error: ', error);
       dispatch(fetchFailed());
     });
 };
@@ -109,16 +123,17 @@ export const saveUser = user => (dispatch) => {
   return API.post(endpoints.modifyUserUrl(), user, { skipErrors: [400] })
     .then(
       () => dispatch(requestUsers()),
-      (error) => { throw error })
+      (error) => { throw error; },
+    )
     .then(() => dispatch(handleUpdateUsersTree()))
     .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was saved'), user.name), 'success')))
     .then(() => dispatch(navigate('/')))
     .catch((error) => {
-      if(!error.data) {
+      if (!error.data) {
         error.data = {
-          error: { message: `User could not be saved, ${error.message}` }
-        }
-      };
+          error: { message: `User could not be saved, ${error.message}` },
+        };
+      }
       dispatch(createFlashMessage(error.data.error.message, 'error'));
       dispatch(fetchFailed);
     });
@@ -148,7 +163,7 @@ export const editUser = (user, userId) => (dispatch) => {
     .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was saved'), user.name), 'success')))
     .then(() => dispatch(requestUsers()))
     .then(() => dispatch(handleUpdateUsersTree()))
-    .catch(error => {
+    .catch((error) => {
       console.log('edit user error: ', error);
       dispatch(fetchFailed());
     });
@@ -180,9 +195,9 @@ export const deleteMultipleusers = users => (dispatch) => {
   })
     .then(() => users.map(({ name }) => dispatch(createFlashMessage(sprintf(__('User "%s" was deleted'), name), 'success'))))
     .then(
-    () => dispatch(requestUsers()),
-    (error) => { throw error; },
-  )
+      () => dispatch(requestUsers()),
+      (error) => { throw error; },
+    )
     .then(() => dispatch(handleUpdateUsersTree()))
     .then(() => {
       resetSelectedToolbarItems();
@@ -236,30 +251,15 @@ export const loadTagsCategories = () => dispatch => http.get(endpoints.getTagCat
   .then(categories => categories.sort((a, b) => a.label.localeCompare(b.label)))
   .then(categories => dispatch(storeTagCategories(categories)));
 
-export const editUserTags = (unAssignPayload, assignPayload) => dispatch => {
-  return API.post(endpoints.modifyUserUrl(), unAssignPayload)
+export const editUserTags = (unAssignPayload, assignPayload) =>
+  dispatch => API.post(endpoints.modifyUserUrl(), unAssignPayload)
     .then(
       () => API.post(endpoints.modifyUserUrl(), assignPayload),
-      error => { throw error },
+      (error) => { throw error; },
     ).then(() => dispatch(navigate('/')))
-    .then(() => dispatch(createFlashMessage(__("Tag edits were successfully saved"), 'success')))
+    .then(() => dispatch(createFlashMessage(__('Tag edits were successfully saved'), 'success')))
     .then(dispatch(fetchSucesfull))
-    .catch(error => {
+    .catch((error) => {
       console.log('tags error: ', error);
       dispatch(createFlashMessage(error, 'error'));
     });
-};
-
-export const createFlashMessage = (text, type) => ({
-  type: actionTypes.ADD_FLASH_MESSAGE,
-  flashMessage: {
-    text,
-    type,
-    flashId: Date.now(),
-  }
-})
-
-export const removeFlashMessage = flashMessage => ({
-  type: actionTypes.REMOVE_FLASH_MESSAGE,
-  flashMessage,
-})

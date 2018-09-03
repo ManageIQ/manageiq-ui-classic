@@ -23,7 +23,8 @@ const columns = [{
   label: 'Last Logoff',
 }];
 
-const handleSelectUser = (users = [], user) => user.selected ? [ ...users, user] : users.filter(({ id }) => id !== user.id);
+const handleSelectUser = (users = [], user) =>
+  (user.selected ? [...users, user] : users.filter(({ id }) => id !== user.id));
 
 const usersReducer = (state = {
   isLoaded: false,
@@ -51,7 +52,10 @@ const usersReducer = (state = {
       };
       return { ...newState };
     case actionTypes.SELECT_USERS:
-      return { ...state, selectedUsers: handleSelectUser(state.selectedUsers, action.selectedUser) };
+      return {
+        ...state,
+        selectedUsers: handleSelectUser(state.selectedUsers, action.selectedUser),
+      };
     case actionTypes.RESET_SELECTED_USERS:
       return { ...state, selectedUsers: action.selectedUsers };
     case actionTypes.STORE_GROUPS:
@@ -61,13 +65,15 @@ const usersReducer = (state = {
     case actionTypes.STORE_TAG_CATEGORIES:
       return { ...state, categories: action.categories };
     case actionTypes.ADD_FLASH_MESSAGE:
-      return { ...state, flashMessages: [...state.flashMessages, action.flashMessage] }
+      return { ...state, flashMessages: [...state.flashMessages, action.flashMessage] };
     case actionTypes.REMOVE_FLASH_MESSAGE:
-      return { ...state, flashMessages: state.flashMessages.filter(({ flashId }) =>  flashId !== action.flashMessage.flashId) }
+      return {
+        ...state,
+        flashMessages: state.flashMessages.filter(({ flashId }) =>
+          flashId !== action.flashMessage.flashId),
+      };
     default:
       return { ...state };
   }
 };
 export default usersReducer;
-
-

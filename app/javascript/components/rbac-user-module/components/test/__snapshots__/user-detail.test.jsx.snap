@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User detail component should render spinner if no tags exists 1`] = `
+<div>
+  <Spinner
+    className=""
+    inline={false}
+    inverse={false}
+    loading={true}
+    size="lg"
+  />
+</div>
+`;
+
+exports[`User detail component should render user with tags 1`] = `
+<div>
+  <RbacUserPreview
+    user={
+      Object {
+        "id": "1",
+        "name": "foo",
+        "userid": "admin",
+      }
+    }
+  />
+  <hr />
+  <RbacUserTagsList
+    tags={Array []}
+    tenant="foo"
+  />
+</div>
+`;

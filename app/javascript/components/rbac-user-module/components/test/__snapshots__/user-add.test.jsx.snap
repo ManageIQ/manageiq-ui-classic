@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User add component should render form for user adding 1`] = `
+<div>
+  <h1>
+    User add
+  </h1>
+  <RbacUserForm
+    editDisabled={false}
+    groups={
+      Array [
+        Object {
+          "label": "Group 111",
+          "value": "111",
+        },
+      ]
+    }
+    newRecord={true}
+    onCancel={[Function]}
+    onSave={[Function]}
+  />
+</div>
+`;
+
+exports[`User add component should render form for user editing 1`] = `
+<div>
+  <h1>
+    User add
+  </h1>
+  <RbacUserForm
+    editDisabled={false}
+    groups={
+      Array [
+        Object {
+          "label": "Group 111",
+          "value": "111",
+        },
+      ]
+    }
+    initialValues={
+      Object {
+        "groups": Array [
+          "1",
+        ],
+        "id": "123",
+        "name": "foo",
+      }
+    }
+    newRecord={false}
+    onCancel={[Function]}
+    onSave={[Function]}
+  />
+</div>
+`;
+
+exports[`User add component should render form form user copying 1`] = `
+<div>
+  <h1>
+    User add
+  </h1>
+  <RbacUserForm
+    editDisabled={false}
+    groups={
+      Array [
+        Object {
+          "label": "Group 111",
+          "value": "111",
+        },
+      ]
+    }
+    initialValues={
+      Object {
+        "groups": Array [
+          "1",
+        ],
+        "id": "123",
+        "name": "foo",
+        "userid": undefined,
+      }
+    }
+    newRecord={true}
+    onCancel={[Function]}
+    onSave={[Function]}
+  />
+</div>
+`;
+
+exports[`User add component should render spinner 1`] = `
+<div>
+  <Spinner
+    className=""
+    inline={false}
+    inverse={false}
+    loading={true}
+    size="lg"
+  />
+</div>
+`;

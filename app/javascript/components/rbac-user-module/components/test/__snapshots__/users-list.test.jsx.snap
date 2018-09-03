@@ -1,0 +1,1026 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Users list component should render correctly 1`] = `
+<div>
+  <h1>
+    Access Control EVM Users
+  </h1>
+  <GenericPreviewTable
+    columns={
+      Array [
+        Object {
+          "label": "Full Name",
+          "property": "name",
+        },
+        Object {
+          "label": "Username",
+          "property": "userid",
+        },
+        Object {
+          "label": "E-mail",
+          "property": "email",
+        },
+        Object {
+          "label": "Current Group",
+          "property": "current_group",
+        },
+        Object {
+          "label": "Role",
+          "property": "role",
+        },
+        Object {
+          "label": "Last Logon",
+          "property": "lastlogon",
+        },
+        Object {
+          "label": "Last Logoff",
+          "property": "lastlogoff",
+        },
+      ]
+    }
+    customSort={[Function]}
+    icon={
+      Object {
+        "name": "user",
+        "type": "pf",
+      }
+    }
+    rowClick={[Function]}
+    rowKey="id"
+    rowSelect={[Function]}
+    rows={
+      Array [
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000001",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000001",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000001",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000001",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000001",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000001",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-06-01T02:47:54Z",
+          "current_group": "EvmGroup-super_administrator",
+          "current_group_id": "10000000000002",
+          "email": "jmarc@redhat.com",
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000002",
+              "icon": "group",
+              "label": "EvmGroup-super_administrator",
+              "onClick": [MockFunction],
+              "value": "10000000000002",
+            },
+            Object {
+              "groupId": "10000000000003",
+              "icon": "group",
+              "label": "EvmGroup-operator",
+              "onClick": [MockFunction],
+              "value": "10000000000003",
+            },
+            Object {
+              "groupId": "10000000000008",
+              "icon": "group",
+              "label": "EvmGroup-support",
+              "onClick": [MockFunction],
+              "value": "10000000000008",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000001",
+          "icon": null,
+          "id": "10000000000001",
+          "last_name": null,
+          "lastlogoff": "2018-04-09T08:00:29Z",
+          "lastlogon": "2018-08-23T08:43:48Z",
+          "miq_groups": Array [
+            "10000000000002",
+            "10000000000003",
+            "10000000000008",
+          ],
+          "name": "Administrator",
+          "role": "EvmRole-super_administrator",
+          "selected": false,
+          "settings": Object {
+            "default_search": null,
+            "display": Object {
+              "bg_color": "#c00",
+              "display_vms": false,
+              "hostcompare": "Compressed",
+              "locale": "en",
+              "nav_style": "vertical",
+              "quad_truncate": "m",
+              "reporttheme": "default",
+              "startpage": "/dashboard/show",
+              "taskbartext": true,
+              "theme": "red",
+              "timezone": "UTC",
+            },
+            "perpage": Object {
+              "grid": 20,
+              "list": 20,
+              "reports": 20,
+              "tile": 20,
+            },
+            "quadicons": Object {
+              "cloud_manager": true,
+              "container_manager": true,
+              "ems_cloud": true,
+              "ems_container": true,
+              "ems_infra": true,
+              "ems_network": true,
+              "ems_physical_infra": true,
+              "ems_storage": true,
+              "host": true,
+              "infra_manager": true,
+              "miq_template": true,
+              "network_manager": true,
+              "physical_infra_manager": true,
+              "physical_rack": true,
+              "physical_server": true,
+              "physical_switch": true,
+              "service": true,
+              "storage": true,
+              "storage_manager": true,
+              "vm": true,
+            },
+            "topology": Object {
+              "containers_max_items": 100,
+              "containers_max_objects": 0,
+            },
+            "ui_service": Object {
+              "display": Object {
+                "locale": null,
+              },
+            },
+            "views": Object {
+              "authkeypaircloud": "list",
+              "availabilityzone": "list",
+              "catalog": "list",
+              "cloudobjectstorecontainer": "list",
+              "cloudobjectstoreobject": "list",
+              "cloudtenant": "list",
+              "cloudvolume": "list",
+              "cloudvolumebackup": "list",
+              "cloudvolumesnapshot": "list",
+              "cm_configuration_profiles": "list",
+              "cm_configured_systems": "list",
+              "cm_providers": "list",
+              "compare": "expanded",
+              "compare_mode": "details",
+              "condition": "list",
+              "container": "list",
+              "containerbuild": "list",
+              "containergroup": "list",
+              "containerimage": "list",
+              "containerimageregistry": "list",
+              "containernode": "list",
+              "containerproject": "list",
+              "containerreplicator": "list",
+              "containerroute": "list",
+              "containerservice": "list",
+              "containertemplate": "list",
+              "drift": "expanded",
+              "drift_mode": "details",
+              "emscluster": "grid",
+              "emscontainer": "grid",
+              "filesystem": "list",
+              "flavor": "list",
+              "guestdevice": "list",
+              "host": "grid",
+              "hostaggregate": "list",
+              "job": "list",
+              "manageiq_providers_cloudmanager": "grid",
+              "manageiq_providers_cloudmanager_template": "list",
+              "manageiq_providers_cloudmanager_vm": "grid",
+              "manageiq_providers_containermanager": "grid",
+              "manageiq_providers_embeddedansible_automationmanager_playbook": "list",
+              "manageiq_providers_embeddedautomationmanager_authentication": "list",
+              "manageiq_providers_embeddedautomationmanager_configurationscriptsource": "list",
+              "manageiq_providers_inframanager": "grid",
+              "manageiq_providers_inframanager_template": "list",
+              "manageiq_providers_inframanager_vm": "grid",
+              "manageiq_providers_middlewaremanager": "grid",
+              "manageiq_providers_physicalinframanager": "list",
+              "manageiq_providers_storagemanager": "list",
+              "middlewaredatasource": "list",
+              "middlewaredeployment": "list",
+              "middlewaredomain": "list",
+              "middlewaremessaging": "list",
+              "middlewareserver": "list",
+              "middlewareservergroup": "list",
+              "miqaction": "list",
+              "miqaeclass": "list",
+              "miqaeinstance": "list",
+              "miqevent": "list",
+              "miqpolicy": "list",
+              "miqpolicyset": "list",
+              "miqreportresult": "list",
+              "miqrequest": "list",
+              "miqtask": "list",
+              "miqtemplate": "list",
+              "ms": "grid",
+              "orchestrationstack": "list",
+              "orchestrationtemplate": "list",
+              "persistentvolume": "list",
+              "physicalserver": "list",
+              "policy": "list",
+              "policyset": "grid",
+              "registryitems": "list",
+              "resourcepool": "grid",
+              "scanhistory": "list",
+              "serverbuild": "list",
+              "service": "grid",
+              "servicetemplate": "list",
+              "storage": "grid",
+              "storage_files": "list",
+              "storagemanager": "list",
+              "summary_mode": "textual",
+              "tagging": "grid",
+              "treesize": "20",
+              "vm": "grid",
+              "vmcompare": "compressed",
+              "vmortemplate": "grid",
+            },
+          },
+          "tags": Array [
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000092",
+              "id": "10000000000092",
+              "name": "/managed/prov_max_cpu/5",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000190",
+              "id": "10000000000190",
+              "name": "/managed/application/acl_2_2_51",
+            },
+          ],
+          "updated_on": "2018-08-23T08:43:48Z",
+          "userid": "admin",
+        },
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000003",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000003",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000003",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000003",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000003",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000003",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-06-05T11:32:30Z",
+          "current_group": "EvmGroup-administrator",
+          "current_group_id": "10000000000005",
+          "email": "jmarc@redhat.com",
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000005",
+              "icon": "group",
+              "label": "EvmGroup-administrator",
+              "onClick": [MockFunction],
+              "value": "10000000000005",
+            },
+            Object {
+              "groupId": "10000000000026",
+              "icon": "group",
+              "label": "Cloud-Users",
+              "onClick": [MockFunction],
+              "value": "10000000000026",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000003",
+          "icon": null,
+          "id": "10000000000003",
+          "last_name": null,
+          "lastlogoff": null,
+          "lastlogon": "2017-09-28T21:17:13Z",
+          "miq_groups": Array [
+            "10000000000005",
+            "10000000000026",
+          ],
+          "name": "Ansible Tower ",
+          "role": "EvmRole-administrator",
+          "selected": false,
+          "settings": Object {},
+          "tags": Array [],
+          "updated_on": "2017-09-28T21:17:13Z",
+          "userid": "ansible",
+        },
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000008",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000008",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000008",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000008",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000008",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000008",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-07-09T13:34:01Z",
+          "current_group": "ckeller",
+          "current_group_id": "10000000000029",
+          "email": "ckeller@redhat.com",
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000029",
+              "icon": "group",
+              "label": "ckeller",
+              "onClick": [MockFunction],
+              "value": "10000000000029",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000008",
+          "icon": null,
+          "id": "10000000000008",
+          "last_name": null,
+          "lastlogoff": "2017-09-25T19:50:54Z",
+          "lastlogon": "2017-09-25T12:47:34Z",
+          "miq_groups": Array [
+            "10000000000029",
+          ],
+          "name": "Chris Keller",
+          "role": "EvmRole-super_administrator",
+          "selected": false,
+          "settings": Object {},
+          "tags": Array [
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000110",
+              "id": "10000000000110",
+              "name": "/managed/prov_max_memory/2048",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000188",
+              "id": "10000000000188",
+              "name": "/managed/application/abrt_2_0_8",
+            },
+          ],
+          "updated_on": "2017-09-25T19:50:54Z",
+          "userid": "ckeller",
+        },
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000004",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000004",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000004",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000004",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000004",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000004",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-06-05T11:33:09Z",
+          "current_group": "Cloud-Operators",
+          "current_group_id": "10000000000025",
+          "email": "jmarc@redhat.com",
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000025",
+              "icon": "group",
+              "label": "Cloud-Operators",
+              "onClick": [MockFunction],
+              "value": "10000000000025",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000004",
+          "icon": null,
+          "id": "10000000000004",
+          "last_name": null,
+          "lastlogoff": "2017-09-30T01:02:07Z",
+          "lastlogon": "2017-09-29T18:27:29Z",
+          "miq_groups": Array [
+            "10000000000025",
+          ],
+          "name": "Cloud Operators",
+          "role": "Cloud-Operators",
+          "selected": false,
+          "settings": Object {
+            "ui_service": Object {
+              "display": Object {
+                "locale": "en",
+              },
+            },
+          },
+          "tags": Array [
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000188",
+              "id": "10000000000188",
+              "name": "/managed/application/abrt_2_0_8",
+            },
+          ],
+          "updated_on": "2017-09-30T01:02:07Z",
+          "userid": "cloudops",
+        },
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000005",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000005",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000005",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000005",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000005",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000005",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-06-05T11:33:34Z",
+          "current_group": "Cloud-Users",
+          "current_group_id": "10000000000026",
+          "email": "jmarc@redhat.com",
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000026",
+              "icon": "group",
+              "label": "Cloud-Users",
+              "onClick": [MockFunction],
+              "value": "10000000000026",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000005",
+          "icon": null,
+          "id": "10000000000005",
+          "last_name": null,
+          "lastlogoff": "2017-09-30T01:02:07Z",
+          "lastlogon": "2017-09-29T17:16:22Z",
+          "miq_groups": Array [
+            "10000000000026",
+          ],
+          "name": "Cloud User",
+          "role": "Cloud-Users",
+          "selected": false,
+          "settings": Object {
+            "ui_service": Object {
+              "display": Object {
+                "locale": "en",
+              },
+            },
+          },
+          "tags": Array [
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000125",
+              "id": "10000000000125",
+              "name": "/managed/prov_max_retirement_days/180",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000188",
+              "id": "10000000000188",
+              "name": "/managed/application/abrt_2_0_8",
+            },
+          ],
+          "updated_on": "2017-09-30T01:02:07Z",
+          "userid": "clouduser",
+        },
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000007",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000007",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000007",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000007",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000007",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000007",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-06-29T22:56:48Z",
+          "current_group": "Cloud-Users",
+          "current_group_id": "10000000000026",
+          "email": "jmarc@redhat.com",
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000026",
+              "icon": "group",
+              "label": "Cloud-Users",
+              "onClick": [MockFunction],
+              "value": "10000000000026",
+            },
+            Object {
+              "groupId": "10000000000025",
+              "icon": "group",
+              "label": "Cloud-Operators",
+              "onClick": [MockFunction],
+              "value": "10000000000025",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000007",
+          "icon": null,
+          "id": "10000000000007",
+          "last_name": null,
+          "lastlogoff": null,
+          "lastlogon": "2017-07-18T19:48:42Z",
+          "miq_groups": Array [
+            "10000000000026",
+            "10000000000025",
+          ],
+          "name": "Cloud User1",
+          "role": "Cloud-Users",
+          "selected": false,
+          "settings": Object {},
+          "tags": Array [
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000125",
+              "id": "10000000000125",
+              "name": "/managed/prov_max_retirement_days/180",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000188",
+              "id": "10000000000188",
+              "name": "/managed/application/abrt_2_0_8",
+            },
+          ],
+          "updated_on": "2017-07-18T19:48:42Z",
+          "userid": "clouduser1",
+        },
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000002",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000002",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000002",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000002",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000002",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000002",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-06-04T12:13:27Z",
+          "current_group": "EvmGroup-user",
+          "current_group_id": "10000000000004",
+          "email": null,
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000004",
+              "icon": "group",
+              "label": "EvmGroup-user",
+              "onClick": [MockFunction],
+              "value": "10000000000004",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000002",
+          "icon": null,
+          "id": "10000000000002",
+          "last_name": null,
+          "lastlogoff": "2017-06-04T12:13:51Z",
+          "lastlogon": "2017-06-04T12:13:43Z",
+          "miq_groups": Array [
+            "10000000000004",
+          ],
+          "name": "Demo Guy",
+          "role": "EvmRole-user",
+          "selected": false,
+          "settings": Object {},
+          "tags": Array [],
+          "updated_on": "2017-06-04T12:13:51Z",
+          "userid": "demo",
+        },
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000006",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000006",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000006",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000006",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000006",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000006",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-06-07T15:35:12Z",
+          "current_group": "EvmGroup-user",
+          "current_group_id": "10000000000004",
+          "email": null,
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000004",
+              "icon": "group",
+              "label": "EvmGroup-user",
+              "onClick": [MockFunction],
+              "value": "10000000000004",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000006",
+          "icon": null,
+          "id": "10000000000006",
+          "last_name": null,
+          "lastlogoff": null,
+          "lastlogon": null,
+          "miq_groups": Array [
+            "10000000000004",
+          ],
+          "name": "fisherprice",
+          "role": "EvmRole-user",
+          "selected": false,
+          "settings": Object {},
+          "tags": Array [
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000109",
+              "id": "10000000000109",
+              "name": "/managed/prov_max_memory/1024",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000125",
+              "id": "10000000000125",
+              "name": "/managed/prov_max_retirement_days/180",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000188",
+              "id": "10000000000188",
+              "name": "/managed/application/abrt_2_0_8",
+            },
+          ],
+          "updated_on": "2017-06-07T15:35:12Z",
+          "userid": "fisherprice",
+        },
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000010",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000010",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000010",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000010",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000010",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000010",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-09-04T19:51:52Z",
+          "current_group": "EvmGroup-user_self_service",
+          "current_group_id": "10000000000012",
+          "email": "lavenel@redhat.com",
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000012",
+              "icon": "group",
+              "label": "EvmGroup-user_self_service",
+              "onClick": [MockFunction],
+              "value": "10000000000012",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000010",
+          "icon": null,
+          "id": "10000000000010",
+          "last_name": null,
+          "lastlogoff": null,
+          "lastlogon": null,
+          "miq_groups": Array [
+            "10000000000012",
+          ],
+          "name": "loic",
+          "role": "EvmRole-user_self_service",
+          "selected": false,
+          "settings": Object {},
+          "tags": Array [
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000109",
+              "id": "10000000000109",
+              "name": "/managed/prov_max_memory/1024",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000125",
+              "id": "10000000000125",
+              "name": "/managed/prov_max_retirement_days/180",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000188",
+              "id": "10000000000188",
+              "name": "/managed/application/abrt_2_0_8",
+            },
+          ],
+          "updated_on": "2017-09-04T19:51:52Z",
+          "userid": "loic",
+        },
+        Object {
+          "actions": Array [
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000011",
+              "method": "post",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000011",
+              "method": "patch",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000011",
+              "method": "put",
+              "name": "edit",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000011",
+              "method": "post",
+              "name": "delete",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000011",
+              "method": "post",
+              "name": "set_current_group",
+            },
+            Object {
+              "href": "http://localhost:3000/api/users/10000000000011",
+              "method": "delete",
+              "name": "delete",
+            },
+          ],
+          "created_on": "2017-09-21T20:26:42Z",
+          "current_group": "loic Group",
+          "current_group_id": "10000000000034",
+          "email": "email@loic.com",
+          "first_name": null,
+          "groups": Array [
+            Object {
+              "groupId": "10000000000034",
+              "icon": "group",
+              "label": "loic Group",
+              "onClick": [MockFunction],
+              "value": "10000000000034",
+            },
+          ],
+          "href": "http://localhost:3000/api/users/10000000000011",
+          "icon": null,
+          "id": "10000000000011",
+          "last_name": null,
+          "lastlogoff": null,
+          "lastlogon": null,
+          "miq_groups": Array [
+            "10000000000034",
+          ],
+          "name": "Loic Avenel",
+          "role": "Loic Role",
+          "selected": false,
+          "settings": Object {},
+          "tags": Array [
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000109",
+              "id": "10000000000109",
+              "name": "/managed/prov_max_memory/1024",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000125",
+              "id": "10000000000125",
+              "name": "/managed/prov_max_retirement_days/180",
+            },
+            Object {
+              "href": "http://localhost:3000/api/tags/10000000000188",
+              "id": "10000000000188",
+              "name": "/managed/application/abrt_2_0_8",
+            },
+          ],
+          "updated_on": "2017-09-21T20:26:42Z",
+          "userid": "loic2",
+        },
+      ]
+    }
+    showIcon={true}
+    showSelect={true}
+  />
+  <PaginationRow
+    amountOfPages={1}
+    baseClassName="content-view-pf-pagination"
+    className=""
+    dropdownButtonId="pagination-row-dropdown"
+    itemCount={10}
+    itemsEnd={10}
+    itemsStart={1}
+    messages={
+      Object {
+        "currentPage": "Current Page",
+        "firstPage": "First Page",
+        "lastPage": "Last Page",
+        "nextPage": "Next Page",
+        "of": "of",
+        "perPage": "per page",
+        "previousPage": "Previous Page",
+      }
+    }
+    onFirstPage={[Function]}
+    onLastPage={[Function]}
+    onNextPage={[Function]}
+    onPageInput={[Function]}
+    onPerPageSelect={[Function]}
+    onPreviousPage={[Function]}
+    onSubmit={[Function]}
+    pageInputValue={1}
+    pageSizeDropUp={true}
+    pagination={
+      Object {
+        "page": 1,
+        "perPage": 10,
+        "perPageOptions": Array [
+          5,
+          10,
+          20,
+          50,
+          100,
+          1000,
+        ],
+      }
+    }
+    viewType="table"
+  />
+</div>
+`;

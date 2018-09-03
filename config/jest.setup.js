@@ -12,6 +12,10 @@ require('../app/assets/javascripts/miq_application');
 require('../app/assets/javascripts/miq_api');
 require('../app/assets/javascripts/miq_angular_application');
 
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16'
+Enzyme.configure({ adapter: new Adapter() })
+
 import { API } from '../app/javascript/http_api';
 window.vanillaJsAPI = API;
 

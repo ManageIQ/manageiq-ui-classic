@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Alert } from 'patternfly-react';
+import PropTypes from 'prop-types';
 import { removeFlashMessage } from '../redux/actions';
 
 class FlashMessage extends Component {
@@ -25,9 +26,17 @@ class FlashMessage extends Component {
   }
 }
 
+FlashMessage.propTypes = {
+  message: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
+  onDismiss: PropTypes.func.isRequired,
+};
+
 const FlashMessages = ({ flashMessages, removeFlashMessage }) =>
   flashMessages.map(message =>
-    <FlashMessage key={message.flashId} message={message} onDismiss={removeFlashMessage}/>);
+    <FlashMessage key={message.flashId} message={message} onDismiss={removeFlashMessage} />);
 
 const mapStateToProps = ({ usersReducer: { flashMessages } }) => ({
   flashMessages,
@@ -35,6 +44,15 @@ const mapStateToProps = ({ usersReducer: { flashMessages } }) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   removeFlashMessage,
-}, dispatch)
+}, dispatch);
+
+FlashMessages.propTypes = {
+  flashMessages: PropTypes.arrayOf(PropTypes.shape({
+    flashId: PropTypes.number.isRequired,
+    type: PropTypes.oneOf(['success', 'info', 'warning', 'error']).isRequired,
+    text: PropTypes.string.isRequired,
+  })).isRequired,
+  removeFlashMessage: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(FlashMessages);

@@ -34,7 +34,7 @@ describe('Users reducer', () => {
       isFetching: false,
       isValid: true,
       flashMessages: [],
-      columns: columns,
+      columns,
     });
   });
 
@@ -43,7 +43,7 @@ describe('Users reducer', () => {
       flashMessages: [{
         flashId: 555,
       }],
-    }
+    };
     const expectedState = { flashMessages: [] };
     expect(usersReducer(initialState, {
       type: actionTypes.REMOVE_FLASH_MESSAGE,
@@ -61,7 +61,7 @@ describe('Users reducer', () => {
     expect(usersReducer(initialState, {
       type: actionTypes.ADD_FLASH_MESSAGE,
       flashMessage: { flashId: 555 },
-    }));
+    })).toEqual(expectedState);
   });
 
   it('should store tag categories', () => {
@@ -73,10 +73,10 @@ describe('Users reducer', () => {
       label: 'bar',
     }, {
       id: 3,
-      label: 'pedro'
-    }]
+      label: 'pedro',
+    }];
     const initialState = {};
-    const expectedState = {categories: [...actionPayload]};
+    const expectedState = { categories: [...actionPayload] };
     expect(usersReducer(initialState, {
       type: actionTypes.STORE_TAG_CATEGORIES,
       categories: [...actionPayload],
@@ -92,10 +92,10 @@ describe('Users reducer', () => {
       label: 'bar',
     }, {
       id: 3,
-      label: 'pedro'
-    }]
+      label: 'pedro',
+    }];
     const initialState = {};
-    const expectedState = {usersTree: [...actionPayload]};
+    const expectedState = { usersTree: [...actionPayload] };
     expect(usersReducer(initialState, {
       type: actionTypes.STORE_USERS_TREE,
       usersTree: [...actionPayload],
@@ -111,10 +111,10 @@ describe('Users reducer', () => {
       label: 'bar',
     }, {
       id: 3,
-      label: 'pedro'
-    }]
+      label: 'pedro',
+    }];
     const initialState = {};
-    const expectedState = {groups: [...actionPayload]};
+    const expectedState = { groups: [...actionPayload] };
     expect(usersReducer(initialState, {
       type: actionTypes.STORE_GROUPS,
       groups: [...actionPayload],
@@ -144,7 +144,7 @@ describe('Users reducer', () => {
     const expectedState = { selectedUsers: [1, 2, 3] };
     expect(usersReducer(initialState, {
       type: actionTypes.RESET_SELECTED_USERS,
-      selectedUsers: [1, 2, 3]
+      selectedUsers: [1, 2, 3],
     })).toEqual(expectedState);
   });
 
@@ -154,11 +154,11 @@ describe('Users reducer', () => {
     };
     const expectedState = {
       selectedUsers: [{ id: 'foo' }, { id: 'bar' }, { id: 'new user', selected: true }],
-    }
+    };
     expect(usersReducer(initialState, {
       type: actionTypes.SELECT_USERS,
-      selectedUser: { id: 'new user', selected: true }
-    })).toEqual(expectedState)
+      selectedUser: { id: 'new user', selected: true },
+    })).toEqual(expectedState);
   });
 
   it('should remove user to selected users', () => {
@@ -167,11 +167,11 @@ describe('Users reducer', () => {
     };
     const expectedState = {
       selectedUsers: [{ id: 'foo' }, { id: 'bar' }],
-    }
+    };
     expect(usersReducer(initialState, {
       type: actionTypes.SELECT_USERS,
-      selectedUser: { id: 'new user', selected: false }
-    })).toEqual(expectedState)
+      selectedUser: { id: 'new user', selected: false },
+    })).toEqual(expectedState);
   });
 
   it('should store users data', () => {
@@ -180,21 +180,21 @@ describe('Users reducer', () => {
       isFetching: false,
       isValid: true,
       flashMessages: [],
-      columns: columns,
+      columns,
     };
     const payload = {
       data: {
         rows: [{ id: 1 }, { id: 2 }, { id: 3 }],
-      }
-    }
+      },
+    };
     const expectedState = {
       isLoaded: true,
       isFetching: false,
       isValid: true,
       flashMessages: [],
-      columns: columns,
+      columns,
       rows: [{ id: 1 }, { id: 2 }, { id: 3 }],
-    }
+    };
     expect(usersReducer(initialState, {
       type: actionTypes.LOAD_DATA,
       ...payload,
@@ -202,13 +202,13 @@ describe('Users reducer', () => {
   });
 
   it('should set fething to false', () => {
-    let initialState  = { isFetching: false };
+    let initialState = { isFetching: false };
     let expectedState = { isFetching: true };
     expect(usersReducer(initialState, {
       type: actionTypes.SAVE_USER,
     })).toEqual(expectedState);
 
-    initialState  = { isFetching: false };
+    initialState = { isFetching: false };
     expectedState = { isFetching: true };
     expect(usersReducer(initialState, {
       type: actionTypes.FETCH_DATA,
@@ -219,7 +219,7 @@ describe('Users reducer', () => {
     const initialState = { isValid: false, isFetching: true };
     const expectedState = { isValid: true, isFetching: false };
     expect(usersReducer(initialState, {
-      type: actionTypes.FETCH_SUCESFULL
+      type: actionTypes.FETCH_SUCESFULL,
     })).toEqual(expectedState);
   });
 

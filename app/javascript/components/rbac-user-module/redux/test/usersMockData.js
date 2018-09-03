@@ -439,3 +439,26 @@ export const categoriesMock = [{
 }, {
   href: 'http://localhost:3000/api/categories/10000000000198', id: '10000000000198', description: 'Transformation Status', icon: null, read_only: false, syntax: 'string', single_value: true, example_text: 'VM has been migrated.', tag_id: '10000000000223', parent_id: '0', show: true, default: true, perf_by_tag: null, name: 'transformation_status', actions: [{ name: 'edit', method: 'post', href: 'http://localhost:3000/api/categories/10000000000198' }, { name: 'delete', method: 'post', href: 'http://localhost:3000/api/categories/10000000000198' }, { name: 'delete', method: 'delete', href: 'http://localhost:3000/api/categories/10000000000198' }],
 }];
+
+export const columns = [{
+  property: 'name',
+  label: 'Full Name',
+}, {
+  property: 'userid',
+  label: 'Username',
+}, {
+  property: 'email',
+  label: 'E-mail',
+}, {
+  property: 'current_group',
+  label: 'Current Group',
+}, {
+  property: 'role',
+  label: 'Role',
+}, {
+  property: 'lastlogon',
+  label: 'Last Logon',
+}, {
+  property: 'lastlogoff',
+  label: 'Last Logoff',
+}];

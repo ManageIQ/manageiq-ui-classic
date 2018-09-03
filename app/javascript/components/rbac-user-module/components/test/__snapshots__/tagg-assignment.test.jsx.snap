@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tag assignment component should redirect to root if no users are selected 1`] = `
+<Redirect
+  push={false}
+  to="/"
+/>
+`;
+
+exports[`Tag assignment component should render spinner 1`] = `
+<div>
+  <Spinner
+    className=""
+    inline={false}
+    inverse={false}
+    loading={true}
+    size="lg"
+  />
+</div>
+`;
+
+exports[`Tag assignment component should render tags assignment component 1`] = `
+<RbacAssignCompanyTags
+  categories={
+    Array [
+      Object {
+        "label": "foo",
+        "name": "foo",
+        "value": "123",
+      },
+    ]
+  }
+  columns={
+    Array [
+      Object {
+        "label": "Full Name",
+        "property": "name",
+      },
+    ]
+  }
+  handleCancel={[Function]}
+  handleSave={[Function]}
+  loadCategoryEntry={[Function]}
+  loadMultipleEntries={[Function]}
+  users={
+    Array [
+      Object {
+        "current_group": "foo group",
+        "id": "1",
+        "name": "foo",
+        "role": "foo role",
+        "selected": false,
+        "tags": Array [],
+      },
+    ]
+  }
+/>
+`;

@@ -14,6 +14,7 @@ module.exports = {
     }],
     "no-use-before-define": ["error", { "functions": false, "classes": false }],
     "no-underscore-dangle": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    'no-shadow': 'off'
   },
 };

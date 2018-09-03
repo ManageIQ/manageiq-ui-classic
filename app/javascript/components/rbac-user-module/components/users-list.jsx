@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { GenericPreviewTable } from '@manageiq/react-ui-components/dist/table';
 import { PaginationRow, paginate, PAGINATION_VIEW } from 'patternfly-react';
 import { rowClicked, selectUser, resetSelectedUsers } from '../redux/actions';
 import { sendDataWithRx } from '../../../miq_observable';
 
-class RbacUsersList extends Component {
+export class RbacUsersList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,13 +19,30 @@ class RbacUsersList extends Component {
       pageChangeValue: 1,
       sortableColumnPropery: null,
       sortOrderAsc: true,
-    }
+    };
   }
-  
+
   componentWillMount() {
     this.props.resetSelectedUsers();
   }
-  
+
+  onPerPageSelect = perPage =>
+    this.setState(({ pagination }) =>
+      ({ pagination: { ...pagination, perPage, page: 1 }, pageChangeValue: 1 }));
+  onNextPage = () =>
+    this.setState(({ pagination }) => ({
+      pagination: { ...pagination, page: pagination.page + 1 },
+      pageChangeValue: pagination.page + 1,
+    }));
+  onPreviousPage = () =>
+    this.setState(({ pagination }) => ({
+      pagination: { ...pagination, page: pagination.page - 1 },
+      pageChangeValue: pagination.page - 1,
+    }));
+  onLastPage = () => this.setState(({ pagination }) => ({
+    pagination: { ...pagination, page: this.totalPages(this.props.users, pagination.perPage) },
+    pageChangeValue: this.totalPages(this.props.users, pagination.perPage),
+  }));
 
   handleSelectUser = (selectedUsers, currentUser) => {
     this.props.selectUser(currentUser);
@@ -41,24 +59,17 @@ class RbacUsersList extends Component {
 
   totalPages = (rows, perPage) => Math.ceil(rows.length / perPage);
 
-  onPerPageSelect = perPage => this.setState(({ pagination }) => ({ pagination: { ...pagination, perPage, page: 1  }, pageChangeValue: 1 }));
-  onNextPage = () => this.setState(({ pagination }) => ({ pagination: { ...pagination, page: pagination.page + 1}, pageChangeValue: pagination.page + 1 }));
-  onPreviousPage = () => this.setState(({ pagination }) => ({ pagination: { ...pagination, page: pagination.page - 1}, pageChangeValue: pagination.page - 1 }));
-  onLastPage = () => this.setState(({ pagination }) =>({
-    pagination: { ...pagination, page: this.totalPages(this.props.users, pagination.perPage) },
-    pageChangeValue: this.totalPages(this.props.users, pagination.perPage)
-  }));
-
-  handlePageInputChange = value => {
+  handlePageInputChange = (value) => {
     const page = Number(value);
     if (!Number.isNaN(value) && value !== '' && page > 0 && page <= this.totalPages(this.props.users, this.state.pagination.perPage)) {
-      this.setState(prevState => ({ pagination: { ...prevState.pagination, page }, pageChangeValue: page }));
+      this.setState(prevState =>
+        ({ pagination: { ...prevState.pagination, page }, pageChangeValue: page }));
     }
   }
 
-  handleSortColumn = property => this.setState((prevState) => ({
+  handleSortColumn = property => this.setState(prevState => ({
     sortableColumnPropery: property,
-    sortOrderAsc: prevState.sortableColumnPropery === property ? !prevState.sortOrderAsc : true
+    sortOrderAsc: prevState.sortableColumnPropery === property ? !prevState.sortOrderAsc : true,
   }));
 
   sortUsers = (users, asc, property) => {
@@ -66,7 +77,9 @@ class RbacUsersList extends Component {
       return users.sort((a, b) => {
         if (!a[property]) return true;
         if (!b[property]) return true;
-        return asc ? a[property].toLowerCase() > b[property].toLowerCase() : a[property].toLowerCase() < b[property].toLowerCase();
+        return asc
+          ? a[property].toLowerCase() > b[property].toLowerCase()
+          : a[property].toLowerCase() < b[property].toLowerCase();
       });
     }
     return users;
@@ -79,8 +92,12 @@ class RbacUsersList extends Component {
       rowClicked,
       selectedUsers,
     } = this.props;
-    const { pagination, pageChangeValue, sortOrderAsc, sortableColumnPropery } = this.state;
-    const { amountOfPages, itemCount, itemsStart, itemsEnd, rows } = paginate(pagination)(this.sortUsers(users.map(user => ({
+    const {
+      pagination, pageChangeValue, sortOrderAsc, sortableColumnPropery,
+    } = this.state;
+    const {
+      amountOfPages, itemCount, itemsStart, itemsEnd, rows,
+    } = paginate(pagination)(this.sortUsers(users.map(user => ({
       ...user,
       selected: !!selectedUsers.find(({ id }) => id === user.id),
     })), sortOrderAsc, sortableColumnPropery));
@@ -89,7 +106,8 @@ class RbacUsersList extends Component {
         <h1>{__('Access Control EVM Users')}</h1>
         <GenericPreviewTable
           rowClick={rowClicked}
-          rowSelect={(rows, lastUser) => this.handleSelectUser(rows.length > 0 ? rows : undefined, lastUser)}
+          rowSelect={(rows, lastUser) =>
+            this.handleSelectUser(rows.length > 0 ? rows : undefined, lastUser)}
           showIcon
           showSelect
           icon={{ type: 'pf', name: 'user' }}
@@ -109,7 +127,8 @@ class RbacUsersList extends Component {
           onPerPageSelect={this.onPerPageSelect}
           onPreviousPage={this.onPreviousPage}
           onNextPage={this.onNextPage}
-          onFirstPage={() => this.setState(({ pagination }) => ({ pagination: {...pagination, page: 1}, pageChangeValue: 1 }))}
+          onFirstPage={() => this.setState(({ pagination }) =>
+            ({ pagination: { ...pagination, page: 1 }, pageChangeValue: 1 }))}
           onLastPage={this.onLastPage}
           onPageInput={({ target: { value } }) => this.setState({ pageChangeValue: value })}
           onSubmit={() => this.handlePageInputChange(pageChangeValue)}
@@ -120,11 +139,11 @@ class RbacUsersList extends Component {
 }
 
 const mapStateToProps = ({ usersReducer: { rows, columns, selectedUsers = [] } }) => ({
-  users: rows.map(({ role, current_group, ...rest }) => ({
+  users: rows.map(({ role, current_group, ...rest }) => ({ // eslint-disable-line camelcase
     role: role.label,
     current_group: current_group.label,
     ...rest,
-  })) ,
+  })),
   columns,
   selectedUsers,
 });
@@ -134,5 +153,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   selectUser,
   resetSelectedUsers,
 }, dispatch);
+
+RbacUsersList.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  resetSelectedUsers: PropTypes.func.isRequired,
+  rowClicked: PropTypes.func.isRequired,
+  selectUser: PropTypes.func.isRequired,
+  selectedUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RbacUsersList);

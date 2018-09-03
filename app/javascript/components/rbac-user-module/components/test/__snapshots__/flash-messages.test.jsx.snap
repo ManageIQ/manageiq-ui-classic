@@ -1,0 +1,419 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flash messages should render correctly with flash messages 1`] = `
+<Connect(FlashMessages)
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <FlashMessages
+    flashMessages={
+      Array [
+        Object {
+          "flashId": 1,
+          "text": "Sucessful flash message",
+          "type": "success",
+        },
+        Object {
+          "flashId": 2,
+          "text": "Warn flash message",
+          "type": "warning",
+        },
+        Object {
+          "flashId": 3,
+          "text": "Info flash message",
+          "type": "info",
+        },
+        Object {
+          "flashId": 4,
+          "text": "Error flash message",
+          "type": "error",
+        },
+      ]
+    }
+    removeFlashMessage={[Function]}
+    store={
+      Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    }
+    storeSubscription={
+      Subscription {
+        "listeners": Object {
+          "clear": [Function],
+          "get": [Function],
+          "notify": [Function],
+          "subscribe": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": [Function],
+      }
+    }
+  >
+    <FlashMessage
+      key="1"
+      message={
+        Object {
+          "flashId": 1,
+          "text": "Sucessful flash message",
+          "type": "success",
+        }
+      }
+      onDismiss={[Function]}
+    >
+      <div
+        className="react-fading-flash"
+      >
+        <Alert
+          className=""
+          onDismiss={[Function]}
+          type="success"
+        >
+          <div
+            className="alert alert-success alert-dismissable"
+          >
+            <Button
+              active={false}
+              aria-hidden="true"
+              block={false}
+              bsClass="close"
+              bsStyle="default"
+              disabled={false}
+              onClick={[Function]}
+            >
+              <button
+                aria-hidden="true"
+                className="close close-default"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                <Icon
+                  name="close"
+                  type="pf"
+                >
+                  <PatternflyIcon
+                    className=""
+                    name="close"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="pficon pficon-close"
+                    />
+                  </PatternflyIcon>
+                </Icon>
+              </button>
+            </Button>
+            <Icon
+              name="ok"
+              type="pf"
+            >
+              <PatternflyIcon
+                className=""
+                name="ok"
+              >
+                <span
+                  aria-hidden="true"
+                  className="pficon pficon-ok"
+                />
+              </PatternflyIcon>
+            </Icon>
+            Sucessful flash message
+          </div>
+        </Alert>
+      </div>
+    </FlashMessage>
+    <FlashMessage
+      key="2"
+      message={
+        Object {
+          "flashId": 2,
+          "text": "Warn flash message",
+          "type": "warning",
+        }
+      }
+      onDismiss={[Function]}
+    >
+      <div
+        className="react-fading-flash"
+      >
+        <Alert
+          className=""
+          onDismiss={[Function]}
+          type="warning"
+        >
+          <div
+            className="alert alert-warning alert-dismissable"
+          >
+            <Button
+              active={false}
+              aria-hidden="true"
+              block={false}
+              bsClass="close"
+              bsStyle="default"
+              disabled={false}
+              onClick={[Function]}
+            >
+              <button
+                aria-hidden="true"
+                className="close close-default"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                <Icon
+                  name="close"
+                  type="pf"
+                >
+                  <PatternflyIcon
+                    className=""
+                    name="close"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="pficon pficon-close"
+                    />
+                  </PatternflyIcon>
+                </Icon>
+              </button>
+            </Button>
+            <Icon
+              name="warning-triangle-o"
+              type="pf"
+            >
+              <PatternflyIcon
+                className=""
+                name="warning-triangle-o"
+              >
+                <span
+                  aria-hidden="true"
+                  className="pficon pficon-warning-triangle-o"
+                />
+              </PatternflyIcon>
+            </Icon>
+            Warn flash message
+          </div>
+        </Alert>
+      </div>
+    </FlashMessage>
+    <FlashMessage
+      key="3"
+      message={
+        Object {
+          "flashId": 3,
+          "text": "Info flash message",
+          "type": "info",
+        }
+      }
+      onDismiss={[Function]}
+    >
+      <div
+        className="react-fading-flash"
+      >
+        <Alert
+          className=""
+          onDismiss={[Function]}
+          type="info"
+        >
+          <div
+            className="alert alert-info alert-dismissable"
+          >
+            <Button
+              active={false}
+              aria-hidden="true"
+              block={false}
+              bsClass="close"
+              bsStyle="default"
+              disabled={false}
+              onClick={[Function]}
+            >
+              <button
+                aria-hidden="true"
+                className="close close-default"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                <Icon
+                  name="close"
+                  type="pf"
+                >
+                  <PatternflyIcon
+                    className=""
+                    name="close"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="pficon pficon-close"
+                    />
+                  </PatternflyIcon>
+                </Icon>
+              </button>
+            </Button>
+            <Icon
+              name="info"
+              type="pf"
+            >
+              <PatternflyIcon
+                className=""
+                name="info"
+              >
+                <span
+                  aria-hidden="true"
+                  className="pficon pficon-info"
+                />
+              </PatternflyIcon>
+            </Icon>
+            Info flash message
+          </div>
+        </Alert>
+      </div>
+    </FlashMessage>
+    <FlashMessage
+      key="4"
+      message={
+        Object {
+          "flashId": 4,
+          "text": "Error flash message",
+          "type": "error",
+        }
+      }
+      onDismiss={[Function]}
+    >
+      <div
+        className=""
+      >
+        <Alert
+          className=""
+          onDismiss={[Function]}
+          type="error"
+        >
+          <div
+            className="alert alert-danger alert-dismissable"
+          >
+            <Button
+              active={false}
+              aria-hidden="true"
+              block={false}
+              bsClass="close"
+              bsStyle="default"
+              disabled={false}
+              onClick={[Function]}
+            >
+              <button
+                aria-hidden="true"
+                className="close close-default"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                <Icon
+                  name="close"
+                  type="pf"
+                >
+                  <PatternflyIcon
+                    className=""
+                    name="close"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="pficon pficon-close"
+                    />
+                  </PatternflyIcon>
+                </Icon>
+              </button>
+            </Button>
+            <Icon
+              name="error-circle-o"
+              type="pf"
+            >
+              <PatternflyIcon
+                className=""
+                name="error-circle-o"
+              >
+                <span
+                  aria-hidden="true"
+                  className="pficon pficon-error-circle-o"
+                />
+              </PatternflyIcon>
+            </Icon>
+            Error flash message
+          </div>
+        </Alert>
+      </div>
+    </FlashMessage>
+  </FlashMessages>
+</Connect(FlashMessages)>
+`;
+
+exports[`Flash messages should render empty correctly 1`] = `
+<Connect(FlashMessages)
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <FlashMessages
+    flashMessages={Array []}
+    removeFlashMessage={[Function]}
+    store={
+      Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    }
+    storeSubscription={
+      Subscription {
+        "listeners": Object {
+          "clear": [Function],
+          "get": [Function],
+          "notify": [Function],
+          "subscribe": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": [Function],
+      }
+    }
+  />
+</Connect(FlashMessages)>
+`;

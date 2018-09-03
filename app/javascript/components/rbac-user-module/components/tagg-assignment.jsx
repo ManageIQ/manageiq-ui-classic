@@ -5,14 +5,15 @@ import { Redirect } from 'react-router-dom';
 import { goBack } from 'connected-react-router';
 import { Spinner } from 'patternfly-react';
 import { RbacAssignCompanyTags } from '@manageiq/react-ui-components/dist/rbac-forms';
-import { loadTagsCategories, createFlashMessage, editUserTags, selectUsers } from '../redux/actions';
+import PropTypes from 'prop-types';
+import { loadTagsCategories, createFlashMessage, editUserTags } from '../redux/actions';
 import { http } from '../../../http_api';
 
 const categoryEntryEndpoint = categoryId => `/ops/get_category_entries?cat_id=${categoryId}`;
 
-class TagAssignment extends Component {
+export class TagAssignment extends Component {
   componentDidMount() {
-    if (!this.props.categories) this.props.loadTagsCategories()
+    if (!this.props.categories) this.props.loadTagsCategories();
   }
 
   handleCancelClicked = () => {
@@ -25,24 +26,24 @@ class TagAssignment extends Component {
     http.get(`/ops/get_category_entries_multi?ids[]=${categories.join('&ids[]=')}`);
 
   handleSaveTags = (selectedTags, initialTags, users) => {
-    let deletedCatgeoryKeys = Object.keys(initialTags).filter(tagKey => !selectedTags[tagKey]);
-    const unAssignedTags = deletedCatgeoryKeys.map(categoryKey => {
-      const [ name, category ] = initialTags[categoryKey].name.split('/').reverse();
-      return { category, name }
+    const deletedCatgeoryKeys = Object.keys(initialTags).filter(tagKey => !selectedTags[tagKey]);
+    const unAssignedTags = deletedCatgeoryKeys.map((categoryKey) => {
+      const [name, category] = initialTags[categoryKey].name.split('/').reverse();
+      return { category, name };
     });
-    const assignedTags = Object.keys(selectedTags).map(categoryKey => {
-      const [ name, category ] = selectedTags[categoryKey].name.split('/').reverse();
-      return { category, name }
+    const assignedTags = Object.keys(selectedTags).map((categoryKey) => {
+      const [name, category] = selectedTags[categoryKey].name.split('/').reverse();
+      return { category, name };
     });
 
     const unAssignPayload = {
       action: 'unassign_tags',
       resources: users.map(({ href }) => ({ href, tags: unAssignedTags })),
-    }
+    };
     const assignPayload = {
       action: 'assign_tags',
       resources: users.map(({ href }) => ({ href, tags: assignedTags })),
-    }
+    };
     this.props.editUserTags(unAssignPayload, assignPayload);
   }
 
@@ -53,7 +54,9 @@ class TagAssignment extends Component {
     return (
       <RbacAssignCompanyTags
         categories={categories}
-        users={selectedUsers.map(user => ({ ...user, selected: false, current_group: user.current_group.label, role: user.role.label }))}
+        users={selectedUsers.map(user => ({
+ ...user, selected: false, current_group: user.current_group.label, role: user.role.label,
+}))}
         columns={columns}
         loadCategoryEntry={categoryId => http.get(categoryEntryEndpoint(categoryId))}
         loadMultipleEntries={this.handleLoadMultipleEntries}
@@ -76,5 +79,20 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createFlashMessage,
   editUserTags,
 }, dispatch);
+
+TagAssignment.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.object),
+  loadTagsCategories: PropTypes.func.isRequired,
+  goBack: PropTypes.func.isRequired,
+  createFlashMessage: PropTypes.func.isRequired,
+  editUserTags: PropTypes.func.isRequired,
+  selectedUsers: PropTypes.arrayOf(PropTypes.object),
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+TagAssignment.defaultProps = {
+  categories: undefined,
+  selectedUsers: undefined,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagAssignment);
