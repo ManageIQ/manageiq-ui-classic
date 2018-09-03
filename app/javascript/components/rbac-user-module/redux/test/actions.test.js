@@ -1,10 +1,12 @@
 import fetchMock from 'fetch-mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { combineReducers } from 'redux';
 import * as actions from '../actions';
 import * as actionTypes from '../action-types';
 import * as endpoints from '../endpoints';
 import { usersMock, categoriesMock } from './usersMockData';
+import usersReducer from '../users-reducer';
 
 describe('Rbac user redux actions', () => {
   it('should create loadUsersData action', () => {
@@ -25,13 +27,13 @@ describe('Rbac user redux actions', () => {
     expect(actions.storeUserGroups(groups)).toEqual(expectedAction);
   });
 
-  it('should create selectusers action', () => {
-    const users = ['foo, bar'];
+  it('should create selectuser action', () => {
+    const user = { foo: 'bar' };
     const expectedAction = {
       type: actionTypes.SELECT_USERS,
-      selectedUsers: users,
+      selectedUser: user,
     };
-    expect(actions.selectUsers(users)).toEqual(expectedAction);
+    expect(actions.selectUser(user)).toEqual(expectedAction);
   });
 });
 
@@ -108,7 +110,11 @@ describe('Rbac user async actions', () => {
   });
 
   it('saveUser action should succes and redirect to index page route', () => {
-    const store = mockStore({});
+    const store = mockStore({
+      router: {
+        location: {},
+      },
+    });
     fetchMock
       .getOnce(endpoints.updateMiqUserTreeUrl, ['test']);
     fetchMock
@@ -117,8 +123,53 @@ describe('Rbac user async actions', () => {
       .getOnce(endpoints.getUsersUrl, { resources: [...usersMock] });
     const expectedActions = [{
       type: actionTypes.SAVE_USER,
+    }, {
+      type: actionTypes.FETCH_DATA,
+    }, {
+      data: {
+        rows: expect.any(Array),
+      },
+      type: actionTypes.LOAD_DATA,
+    }, {
+      type: actionTypes.FETCH_SUCESFULL,
+    }, {
+      type: actionTypes.STORE_USERS_TREE,
+      usersTree: ['test'],
+    }, {
+      flashMessage: expect.objectContaining({
+        flashId: expect.any(Number),
+        type: 'success',
+      }),
+      type: actionTypes.ADD_FLASH_MESSAGE,
+    }, expect.objectContaining({
+      type: '@@router/CALL_HISTORY_METHOD',
+      payload: expect.objectContaining({
+        args: [`/`],
+      }),
+    })];
+    return store.dispatch(actions.saveUser({ foo: 'bar' })).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it('saveUser action should fail', () => {
+    const store = mockStore({
+      router: {
+        location: {},
+      }
+    });
+    fetchMock
+      .postOnce(endpoints.modifyUserUrl(), { status: 500 }, { error: { message: 'foo' } });
+    const expectedActions = [{
+      type: actionTypes.SAVE_USER,
+    }, {
+      flashMessage: expect.objectContaining({
+        flashId: expect.any(Number),
+        type: 'error',
+      }),
+      type: actionTypes.ADD_FLASH_MESSAGE,
     }];
-    store.dispatch(actions.saveUser({ foo: 'bar' })).then(() => {
+    return store.dispatch(actions.saveUser({ foo: 'bar' })).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
@@ -126,7 +177,7 @@ describe('Rbac user async actions', () => {
   it('loadTagsCategories should update tag categories', () => {
     const store = mockStore({});
     fetchMock
-      .getOnce(endpoints.getTagCategoriesUrl, { resources: categoriesMock });
+      .getOnce(endpoints.getTagCategoriesUrl, categoriesMock);
     const expectedActions = [{
       type: actionTypes.STORE_TAG_CATEGORIES,
       categories: expect.arrayContaining(categoriesMock.map(cat => ({
@@ -201,7 +252,27 @@ describe('Rbac user async actions', () => {
     const expectedActions = [{
       type: actionTypes.DELETE_USER,
     }, expect.objectContaining({
-      type: actionTypes.STORE_GROUPS,
+      flashMessage: expect.objectContaining({
+        flashId: expect.any(Number),
+        type: 'success',
+      }),
+      type: actionTypes.ADD_FLASH_MESSAGE,
+    }), expect.objectContaining({
+      flashMessage: expect.objectContaining({
+        flashId: expect.any(Number),
+        type: 'success',
+      }),
+      type: actionTypes.ADD_FLASH_MESSAGE,
+    }), {
+      type: actionTypes.FETCH_DATA,
+    }, {
+      type: actionTypes.LOAD_DATA,
+      data: { rows: [] },
+    }, {
+      type: actionTypes.FETCH_SUCESFULL,
+    }, expect.objectContaining({
+      type: actionTypes.STORE_USERS_TREE,
+      usersTree: [],
     })];
     return store.dispatch(actions.deleteMultipleusers([{ id: 1 }, { id: 2 }])).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
@@ -262,14 +333,38 @@ describe('Rbac user async actions', () => {
   });
 
   it('editUser should succes and dispatch correct actions', () => {
-    const store = mockStore({});
+    const store = mockStore({
+      router: {
+        location: {},
+      },
+    });
     const userId = 123;
     fetchMock
       .putOnce(endpoints.modifyUserUrl(123), {});
     fetchMock
-      .getOnce(endpoints.updateMiqUserTreeUrl, { resources: [] });
+      .getOnce(endpoints.updateMiqUserTreeUrl, []);
+    fetchMock
+      .getOnce(endpoints.getUsersUrl, { resources: [] });
     const expectedActions = [{
       type: actionTypes.EDIT_USER,
+    }, expect.objectContaining({
+      type: '@@router/CALL_HISTORY_METHOD',
+      payload: expect.objectContaining({
+        args: ['/'],
+      }),
+    }), expect.objectContaining({
+      flashMessage: expect.objectContaining({
+        flashId: expect.any(Number),
+        type: 'success',
+      }),
+      type: actionTypes.ADD_FLASH_MESSAGE,
+    }), {
+      type: actionTypes.FETCH_DATA
+    }, {
+      data: { rows: [] },
+      type: actionTypes.LOAD_DATA,
+    }, {
+      type: actionTypes.FETCH_SUCESFULL,
     }, expect.objectContaining({
       type: actionTypes.STORE_USERS_TREE,
     })];
@@ -294,12 +389,15 @@ describe('Rbac user async actions', () => {
   });
 
   it('deleteUser should succes and dispatch correct actions', () => {
+    const userId = 123;
     const store = mockStore({
       router: {
         location: {},
       },
+      usersReducer: {
+        rows: [{ id : userId }],
+      },
     });
-    const userId = 123;
     fetchMock
       .deleteOnce(endpoints.modifyUserUrl(userId), {});
     fetchMock
@@ -313,6 +411,12 @@ describe('Rbac user async actions', () => {
       payload: expect.objectContaining({
         args: ['/'],
       }),
+    }), expect.objectContaining({
+      flashMessage: expect.objectContaining({
+        flashId: expect.any(Number),
+        type: 'success' ,
+      }),
+      type: actionTypes.ADD_FLASH_MESSAGE,
     }), {
       type: actionTypes.FETCH_DATA,
     }, {
@@ -330,12 +434,15 @@ describe('Rbac user async actions', () => {
   });
 
   it('deleteUser should fail', () => {
+    const userId = 123;
     const store = mockStore({
       router: {
         location: {},
       },
+      usersReducer: {
+        rows: [{ id : userId }],
+      },
     });
-    const userId = 123;
     fetchMock
       .deleteOnce(endpoints.modifyUserUrl(userId), { status: 500 });
     const expectedActions = [{
@@ -351,5 +458,111 @@ describe('Rbac user async actions', () => {
     return store.dispatch(actions.deleteUser(userId)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
+  });
+
+  it('editUserTags should sucess and dispatch correct actions', () => {
+    const store = mockStore({
+      router: {
+        location: {},
+      }});
+    fetchMock
+      .post(endpoints.modifyUserUrl(), {});
+    const expectedActions = [expect.objectContaining({
+      type: '@@router/CALL_HISTORY_METHOD',
+      payload: expect.objectContaining({
+        args: ['/'],
+      }),
+    }), {
+      flashMessage: expect.objectContaining({
+        flashId: expect.any(Number),
+        type: 'success',
+      }),
+      type: actionTypes.ADD_FLASH_MESSAGE,
+    }]
+    return store.dispatch(actions.editUserTags({}, {})).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    })
+  });
+
+  it('editUserTags should fail', () => {
+    const store = mockStore({});
+    fetchMock
+      .postOnce(endpoints.modifyUserUrl(), { status: 500 });
+    const expectedActions = [{
+        flashMessage: expect.objectContaining({
+          flashId: expect.any(Number),
+          type: 'error',
+        }),
+        type: actionTypes.ADD_FLASH_MESSAGE,
+      }];
+    return store.dispatch(actions.editUserTags({ action: 'unassign_tags' }, { action: 'assign_tags' })).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    })
+  });
+
+  it('should call user on click events', () => {
+    fetchMock
+      .getOnce(endpoints.getUsersUrl, {
+        resources: [...usersMock],
+      });
+    const store = mockStore({
+      router: { location: {} }
+    });
+    const selectRbacTreeNode = jest.fn();
+    const destroy = jest.fn();
+    global.ManageIQ.component.getComponentInstances = () => [{ destroy: destroy }];
+    global.miqOnClickSelectRbacTreeNode = selectRbacTreeNode;
+    return store.dispatch(actions.requestUsers()).then(() => {
+      const createdActions = store.getActions();
+      const users = createdActions[1].data.rows;
+      store.clearActions();
+      // test user current group action click
+      users[0].current_group.onClick();
+      expect(selectRbacTreeNode).toHaveBeenCalledWith(`g-${users[0].current_group.id}`);
+      expect(destroy).toHaveBeenCalled();
+      expect(store.getActions()).toEqual([expect.objectContaining({
+        type: '@@router/CALL_HISTORY_METHOD',
+        payload: expect.objectContaining({
+          args: ['/'],
+        }),
+      })]);
+
+      selectRbacTreeNode.mockClear();
+      destroy.mockClear();
+      store.clearActions();
+      // test user one of group click
+      users[0].groups[0].onClick();
+      expect(selectRbacTreeNode).toHaveBeenCalledWith(`g-${users[0].groups[0].groupId}`);
+      expect(destroy).toHaveBeenCalled();
+      expect(store.getActions()).toEqual([expect.objectContaining({
+        type: '@@router/CALL_HISTORY_METHOD',
+        payload: expect.objectContaining({
+          args: ['/'],
+        }),
+      })]);
+
+      selectRbacTreeNode.mockClear();
+      destroy.mockClear();
+      store.clearActions();
+      // test user role click
+      users[0].role.onClick();
+      expect(selectRbacTreeNode).toHaveBeenCalledWith(`ur-${users[0].role.id}`);
+      expect(destroy).toHaveBeenCalled();
+      expect(store.getActions()).toEqual([expect.objectContaining({
+        type: '@@router/CALL_HISTORY_METHOD',
+        payload: expect.objectContaining({
+          args: ['/'],
+        }),
+      })]);
+    });
+  });
+  it('should not navigate to the same pathname', () => {
+    const store = mockStore({
+      router: { location: {
+        pathname: '/foo'
+      } }
+    })
+    store.dispatch(actions.navigate('/foo'));
+    expect(store.getActions()).toEqual([]);
   });
 });

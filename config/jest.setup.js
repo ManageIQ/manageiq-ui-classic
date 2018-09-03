@@ -17,6 +17,7 @@ window.vanillaJsAPI = API;
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
 ManageIQ.angular.rxSubject = rxSubject;
+ManageIQ.component = {};
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
 

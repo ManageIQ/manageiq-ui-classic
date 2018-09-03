@@ -64,10 +64,12 @@ export const requestUsers = () => (dispatch) => {
       ...item,
       current_group: {
         label: item.current_group.description,
+        id: item.current_group.id,
         onClick: () => dispatch(handleUserDetailLinkAction(`g-${item.current_group.id}`)),
       },
       role: {
         label: item.current_group.miq_user_role.name,
+        id: item.current_group.miq_user_role.id,
         onClick: () => dispatch(handleUserDetailLinkAction(`ur-${item.current_group.miq_user_role.id}`)),
       },
       miq_groups: item.miq_groups.map(group => group.id),
@@ -81,7 +83,10 @@ export const requestUsers = () => (dispatch) => {
     })))
     .then(data => dispatch(loadUsersData({ rows: data })))
     .then(() => dispatch(fetchSucesfull()))
-    .catch(() => dispatch(fetchFailed()));
+    .catch(error => {
+      console.log('Fetch users error: ', error)
+      dispatch(fetchFailed());
+    });
 };
 
 export const handleUpdateUsersTree = () => dispatch =>
@@ -109,6 +114,11 @@ export const saveUser = user => (dispatch) => {
     .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was saved'), user.name), 'success')))
     .then(() => dispatch(navigate('/')))
     .catch((error) => {
+      if(!error.data) {
+        error.data = {
+          error: { message: `User could not be saved, ${error.message}` }
+        }
+      };
       dispatch(createFlashMessage(error.data.error.message, 'error'));
       dispatch(fetchFailed);
     });
@@ -138,7 +148,10 @@ export const editUser = (user, userId) => (dispatch) => {
     .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was saved'), user.name), 'success')))
     .then(() => dispatch(requestUsers()))
     .then(() => dispatch(handleUpdateUsersTree()))
-    .catch(() => dispatch(fetchFailed()));
+    .catch(error => {
+      console.log('edit user error: ', error);
+      dispatch(fetchFailed());
+    });
 };
 
 export const loadGroups = () => (dispatch) => {
@@ -224,14 +237,17 @@ export const loadTagsCategories = () => dispatch => http.get(endpoints.getTagCat
   .then(categories => dispatch(storeTagCategories(categories)));
 
 export const editUserTags = (unAssignPayload, assignPayload) => dispatch => {
-  API.post(endpoints.modifyUserUrl(), unAssignPayload)
+  return API.post(endpoints.modifyUserUrl(), unAssignPayload)
     .then(
       () => API.post(endpoints.modifyUserUrl(), assignPayload),
       error => { throw error },
     ).then(() => dispatch(navigate('/')))
     .then(() => dispatch(createFlashMessage(__("Tag edits were successfully saved"), 'success')))
     .then(dispatch(fetchSucesfull))
-    .catch(error => this.createFlashMessage(error, 'error'));
+    .catch(error => {
+      console.log('tags error: ', error);
+      dispatch(createFlashMessage(error, 'error'));
+    });
 };
 
 export const createFlashMessage = (text, type) => ({
