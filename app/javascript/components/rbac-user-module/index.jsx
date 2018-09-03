@@ -130,7 +130,7 @@ class RbacModule extends Component {
 const mapStateToProps = ({ usersReducer, router: { location: { pathname } } }) => ({
     isLoaded: !!usersReducer && !!usersReducer.rows,
     selectedUsers: !!usersReducer && usersReducer.selectedUsers,
-    editUserId:  !!usersReducer && usersReducer.selectedUsers ? usersReducer.selectedUsers[0].id : undefined,
+    editUserId:  !!usersReducer && usersReducer.selectedUsers && usersReducer.selectedUsers.length > 0 ? usersReducer.selectedUsers[0].id : undefined,
     pathname,
 });
 

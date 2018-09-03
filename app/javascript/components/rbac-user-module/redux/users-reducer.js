@@ -23,6 +23,8 @@ const columns = [{
   label: 'Last Logoff',
 }];
 
+const handleSelectUser = (users = [], user) => user.selected ? [ ...users, user] : users.filter(({ id }) => id !== user.id);
+
 const usersReducer = (state = {
   isLoaded: false,
   isFetching: false,
@@ -49,6 +51,8 @@ const usersReducer = (state = {
       };
       return { ...newState };
     case actionTypes.SELECT_USERS:
+      return { ...state, selectedUsers: handleSelectUser(state.selectedUsers, action.selectedUser) };
+    case actionTypes.RESET_SELECTED_USERS:
       return { ...state, selectedUsers: action.selectedUsers };
     case actionTypes.STORE_GROUPS:
       return { ...state, groups: action.groups };
@@ -65,3 +69,5 @@ const usersReducer = (state = {
   }
 };
 export default usersReducer;
+
+

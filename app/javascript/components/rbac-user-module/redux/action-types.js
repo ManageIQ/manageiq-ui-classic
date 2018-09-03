@@ -13,3 +13,4 @@ export const EDIT_USER = `${prefix}Edit user`;
 export const STORE_TAG_CATEGORIES = `${prefix}Store tag categories`;
 export const ADD_FLASH_MESSAGE = `${prefix}Add flash message`;
 export const REMOVE_FLASH_MESSAGE = `${prefix}Remove flash message;`;
+export const RESET_SELECTED_USERS = `${prefix}Reset selected users`;

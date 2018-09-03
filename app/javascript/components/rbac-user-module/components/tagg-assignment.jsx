@@ -50,19 +50,16 @@ class TagAssignment extends Component {
     const { categories, selectedUsers, columns } = this.props;
     if (!selectedUsers) return <Redirect to="/" />;
     if (!categories) return <div><Spinner loading size="lg" /></div>;
-    console.log('users: ', selectUsers);
     return (
-      <div>
-        <RbacAssignCompanyTags
-          categories={categories}
-          users={selectedUsers.map(user => ({ ...user, selected: false, current_group: user.current_group.label, role: user.role.label }))}
-          columns={columns}
-          loadCategoryEntry={categoryId => http.get(categoryEntryEndpoint(categoryId))}
-          loadMultipleEntries={this.handleLoadMultipleEntries}
-          handleCancel={this.handleCancelClicked}
-          handleSave={this.handleSaveTags}
-        />
-      </div>
+      <RbacAssignCompanyTags
+        categories={categories}
+        users={selectedUsers.map(user => ({ ...user, selected: false, current_group: user.current_group.label, role: user.role.label }))}
+        columns={columns}
+        loadCategoryEntry={categoryId => http.get(categoryEntryEndpoint(categoryId))}
+        loadMultipleEntries={this.handleLoadMultipleEntries}
+        handleCancel={this.handleCancelClicked}
+        handleSave={this.handleSaveTags}
+      />
     );
   }
 }

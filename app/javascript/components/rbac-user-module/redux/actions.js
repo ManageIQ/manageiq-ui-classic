@@ -22,9 +22,14 @@ export const storeUserGroups = groups => ({
   groups,
 });
 
-export const selectUsers = users => ({
+export const selectUser = user => ({
   type: actionTypes.SELECT_USERS,
-  selectedUsers: users,
+  selectedUser: user,
+});
+
+export const resetSelectedUsers = selectedUsers => ({
+  type: actionTypes.RESET_SELECTED_USERS,
+  selectedUsers,
 });
 
 const fetchData = type => ({

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RbacUserPreview, RbacUserTagsList } from '@manageiq/react-ui-components/dist/rbac-forms';
 import { Spinner } from 'patternfly-react';
-import { selectUsers } from '../redux/actions';
+import { resetSelectedUsers } from '../redux/actions';
 import { http } from '../../../http_api';
 
 class UserDetail extends Component {
@@ -13,13 +13,13 @@ class UserDetail extends Component {
   }
   
   componentDidMount() {
-    this.props.selectUsers([this.props.user]);
+    this.props.resetSelectedUsers([this.props.user]);
     this.handleLoadUserTags(this.props.user.id);
   }
 
   componentDidUpdate({ user: { id } }) {
     if (id !== this.props.user.id) {
-      this.props.selectUsers([this.props.user]);
+      this.props.resetSelectedUsers([this.props.user]);
       this.handleLoadUserTags(this.props.user.id);
     }
   }
@@ -44,7 +44,7 @@ const mapStateToProps = ({ usersReducer: { rows } }, { match: { params: { userId
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  selectUsers,
+  resetSelectedUsers,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
