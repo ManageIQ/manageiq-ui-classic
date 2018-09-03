@@ -392,13 +392,13 @@ module ReportController::Widgets
         end
         report_selection_menus # to build sub folders
       else
-        widget_graph_menus # to build report pulldown with only reports with grpahs
+        widget_graph_menus # to build report pulldown with only reports with graphs
       end
       @edit[:new][:repfilter] = @edit[:rpt].id
     elsif %w(r c).include?(@sb[:wtype])
       @menu = get_reports_menu
       if @sb[:nodes][1] == "c"
-        widget_graph_menus # to build report pulldown with only reports with grpahs
+        widget_graph_menus # to build report pulldown with only reports with graphs
       else
         report_selection_menus # to build sub folders
       end
@@ -569,7 +569,7 @@ module ReportController::Widgets
       @edit[:new][:pivot].options = @edit[:new][:fields].dup
       @pivot = @edit[:new][:pivot]
     elsif @sb[:wtype] == "c"
-      widget_graph_menus # to build report pulldown with only reports with grpahs
+      widget_graph_menus # to build report pulldown with only reports with graphs
     elsif @sb[:wtype] == "rf"
       @edit[:new][:feed_type]   = params[:feed_type] if params[:feed_type]
       @edit[:new][:url]         = params[:rss_url]   if params[:rss_url]
