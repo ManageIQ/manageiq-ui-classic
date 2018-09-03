@@ -10,7 +10,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
     "projects": __("Projects"),
     "pods": __("Pods"),
     "services": __("Services"),
-    "images": _("Images"),
+    "images": __("Images"),
     "routes": __("Routes"),
   };
 
