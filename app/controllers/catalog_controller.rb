@@ -928,18 +928,16 @@ class CatalogController < ApplicationController
     dialog_catalog_check
 
     # Check the validity of the entry points
-    %w(fqname reconfigure_fqname retire_fqname).each do |fqname|
-      if @edit[:new][fqname.to_sym].present? &&
-         MiqAeClass.find_homonymic_instances_across_domains(current_user, @edit[:new][fqname.to_sym]).empty?
-        level = :error
-        msg = _('Please correct invalid %{adjective} Entry Point prior to saving')
+    %i(fqname reconfigure_fqname retire_fqname).each do |fqname|
+      if @edit[:new][fqname].present? &&
+         MiqAeClass.find_homonymic_instances_across_domains(current_user, @edit[:new][fqname]).empty?
         case fqname
-        when 'fqname'
-          add_flash(msg % {:adjective => _("Provisioning")}, level)
-        when 'reconfigure_fqname'
-          add_flash(msg % {:adjective => _("Reconfigure")}, level)
-        when 'retire_fqname'
-          add_flash(msg % {:adjective => _("Retirement")}, level)
+        when :fqname
+          add_flash('Please correct invalid Provisioning Entry Point prior to saving', :error)
+        when :reconfigure_fqname
+          add_flash('Please correct invalid Reconfigure Entry Point prior to saving', :error)
+        when :retire_fqname
+          add_flash('Please correct invalid Retirement Entry Point prior to saving', :error)
         end
       end
     end
