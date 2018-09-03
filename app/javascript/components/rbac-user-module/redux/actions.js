@@ -211,37 +211,23 @@ const storeTagCategories = categories => ({
   type: actionTypes.STORE_TAG_CATEGORIES,
   categories,
 });
+
 export const loadTagsCategories = () => dispatch => http.get(endpoints.getTagCategoriesUrl)
   .then(data => data.map(category =>
     ({ value: category.id, label: category.description, name: category.name })))
   .then(categories => categories.sort((a, b) => a.label.localeCompare(b.label)))
   .then(categories => dispatch(storeTagCategories(categories)));
-/**
- * export const editUserTags = ({ unAssignPayloads, assignPayloads }) => (dispatch) => {
-  dispatch(fetchData('update tags'));
-  if (unAssignPayloads && unAssignPayloads.length > 0) {
-    return Promise.all(unAssignPayloads.map(({ id, ...rest }) =>
-      API.post(endpoints.updateUserTagsUrl(id), rest)))
-      .then(() => { // eslint-disable-line
-        if (assignPayloads && assignPayloads.length > 0) {
-          return Promise.all(assignPayloads.map(({ id, ...rest }) =>
-            API.post(endpoints.updateUserTagsUrl(id), rest)));
-        }
-      })
-      .then(() => dispatch(requestUsers()))
-      .then(() => dispatch(navigate('/')))
-      .then(() => dispatch(fetchSucesfull));
-  }
-  if (assignPayloads && assignPayloads.length > 0) {
-    return Promise.all(assignPayloads.map(({ id, ...rest }) =>
-      API.post(endpoints.updateUserTagsUrl(id), rest)))
-      .then(() => dispatch(requestUsers()))
-      .then(() => dispatch(navigate('/')))
-      .then(() => dispatch(fetchSucesfull));
-  }
-  return (dispatch(fetchFailed));
+
+export const editUserTags = (unAssignPayload, assignPayload) => dispatch => {
+  API.post(endpoints.modifyUserUrl(), unAssignPayload)
+    .then(
+      () => API.post(endpoints.modifyUserUrl(), assignPayload),
+      error => { throw error },
+    ).then(() => dispatch(navigate('/')))
+    .then(() => dispatch(createFlashMessage(__("Tag edits were successfully saved"), 'success')))
+    .then(dispatch(fetchSucesfull))
+    .catch(error => this.createFlashMessage(error, 'error'));
 };
-*/
 
 export const createFlashMessage = (text, type) => ({
   type: actionTypes.ADD_FLASH_MESSAGE,
