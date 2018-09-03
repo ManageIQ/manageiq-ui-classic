@@ -931,14 +931,13 @@ class CatalogController < ApplicationController
     %w(fqname reconfigure_fqname retire_fqname).each do |fqname|
       if @edit[:new][fqname.to_sym].present? &&
          MiqAeClass.find_homonymic_instances_across_domains(current_user, @edit[:new][fqname.to_sym]).empty?
-        level = :error
         case fqname
         when 'fqname'
-          add_flash('Please correct invalid Provisioning Entry Point prior to saving', level)
+          add_flash('Please correct invalid Provisioning Entry Point prior to saving', :error)
         when 'reconfigure_fqname'
-          add_flash('Please correct invalid Reconfigure Entry Point prior to saving', level)
+          add_flash('Please correct invalid Reconfigure Entry Point prior to saving', :error)
         when 'retire_fqname'
-          add_flash('Please correct invalid Retirement Entry Point prior to saving', level)
+          add_flash('Please correct invalid Retirement Entry Point prior to saving', :error)
         end
       end
     end
