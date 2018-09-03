@@ -56,5 +56,6 @@
 
 :javascript
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id}');
-  ManageIQ.angular.app.value('storageManagerId', #{@volume.ext_management_system.id});
+  ManageIQ.angular.app.value('storageManagerId', '#{@volume.ext_management_system.id.to_s}');
+  ManageIQ.angular.app.value('cloudVolumeFormOperation', 'ATTACH');
   miq_bootstrap('#form_div');

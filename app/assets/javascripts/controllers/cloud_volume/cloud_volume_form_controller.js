@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'storageManagerId', '$timeout', function(miqService, API, cloudVolumeFormId, storageManagerId, $timeout) {
+ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'cloudVolumeFormOperation', 'storageManagerId', '$timeout', '$q', function(miqService, API, cloudVolumeFormId, cloudVolumeFormOperation, storageManagerId, $timeout, $q) {
   var vm = this;
 
   var init = function() {
@@ -21,19 +21,32 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.newRecord = cloudVolumeFormId === 'new';
 
     miqService.sparkleOn();
-    API.get('/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true')
-      .then(getStorageManagers)
-      .catch(miqService.handleFailure);
 
-    if (cloudVolumeFormId !== 'new') {
-      // Fetch cloud volume data before showing the form.
-      API.get('/api/cloud_volumes/' + cloudVolumeFormId + '?attributes=ext_management_system.type,availability_zone.ems_ref,base_snapshot.ems_ref')
-        .then(getCloudVolumeFormData)
-        .catch(miqService.handleFailure);
-    } else {
-      // Initialise the form immediately when creating a new volume.
-      setForm();
+    // Load initial API data depending on what form we're displaying. Do as little requests as possible
+    // to support fine-grained API permissions.
+    var apiPromises = [];
+    switch (cloudVolumeFormOperation) {
+      case 'EDIT':
+        // Fetch relevant StorageManager, just enough to populate the disabled drop-down.
+        apiPromises.push(API.get('/api/providers/' + storageManagerId + '?attributes=id,name')
+          .then(getStorageManagers));
+        // Limit form options as permitted by this StorageManager.
+        apiPromises.push(vm.storageManagerChanged(storageManagerId));
+        // Fetch the volume.
+        apiPromises.push(loadVolume(cloudVolumeFormId));
+        break;
+      case 'NEW':
+        // Fetch StorageManagers that we can even create the new volume for.
+        apiPromises.push(API.get('/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true')
+          .then(getStorageManagers));
+        break;
+      default:
+        // Fetch the volume.
+        apiPromises.push(loadVolume(cloudVolumeFormId));
     }
+
+    // After all the API data is at hand we show the form.
+    $q.all(apiPromises).then(setForm).catch(miqService.handleFailure);
   };
 
   vm.addClicked = function() {
@@ -115,7 +128,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   vm.storageManagerChanged = function(id) {
     miqService.sparkleOn();
-    API.get('/api/providers/' + id + '?attributes=type,parent_manager.availability_zones,parent_manager.cloud_tenants,parent_manager.cloud_volume_snapshots')
+    return API.get('/api/providers/' + id + '?attributes=type,parent_manager.availability_zones,parent_manager.cloud_tenants,parent_manager.cloud_volume_snapshots')
       .then(getStorageManagerFormData)
       .catch(miqService.handleFailure);
   };
@@ -193,6 +206,11 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     miqService.sparkleOff();
   }
 
+  var loadVolume = function(id) {
+    return API.get('/api/cloud_volumes/' + id + '?attributes=ext_management_system.type,availability_zone.ems_ref,base_snapshot.ems_ref')
+      .then(getCloudVolumeFormData)
+  };
+
   var loadEBSVolumeTypes = function() {
     // This ia a fixed list of available cloud volume types for Amazon EBS.
     vm.awsVolumeTypes = [
@@ -212,13 +230,8 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   };
 
   var getStorageManagers = function(data) {
-    vm.storageManagers = data.resources;
-
-    // If storage manager ID was provided, we need to refresh the form and show
-    // corresponding form fields.
-    if (storageManagerId) {
-      vm.storageManagerChanged(vm.cloudVolumeModel.storage_manager_id);
-    }
+    // Can handle list of all managers or a single manager.
+    vm.storageManagers = data.resources ? data.resources : [data];
   };
 
   var getCloudVolumeFormData = function(data) {
@@ -243,8 +256,6 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     if (angular.isUndefined(vm.cloudVolumeModel.aws_iops)) {
       vm.sizeChanged(vm.cloudVolumeModel.size);
     }
-
-    setForm();
   };
 
   var getStorageManagerFormData = function(data) {
