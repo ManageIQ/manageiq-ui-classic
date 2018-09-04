@@ -122,8 +122,7 @@ class PhysicalServerController < ApplicationController
     record = find_record_with_rbac(ManageIQ::Providers::PhysicalInfraManager::PhysicalServer, params[:id])
     task_id = record.remote_console_acquire_resource_queue(session[:userid])
     unless task_id.kind_of?(Integer)
-      add_flash(_("Console access failed: Task start failed: ID [%{id}]") %
-                  {:id => task_id.to_s}, :error)
+      add_flash(_("Console access failed: Task start failed"), :error)
     end
 
     if @flash_array
