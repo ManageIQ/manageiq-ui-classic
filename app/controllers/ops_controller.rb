@@ -607,6 +607,7 @@ class OpsController < ApplicationController
         @right_cell_text = _("Adding a new Zone")
       else
         partial_div = :settings_evm_servers
+        @editing = !!@edit
         @right_cell_text = @edit ?
           _("Editing Zone \"%{name}\"") % {:name => @zone.description} :
           _("Zone \"%{name}\"") % {:name => @zone.description}
