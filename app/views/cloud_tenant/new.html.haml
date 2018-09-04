@@ -14,9 +14,9 @@
       .col-md-8
         = select_tag("ems_id",
           options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
-                      "ng-model"  => "vm.cloudTenantModel.ems_id",
-                      "required"  => "",
-                      "pf-select" => "")
+                      "ng-model"   => "vm.cloudTenantModel.ems_id",
+                      "required"   => "",
+                      "miq-select" => "")
   .form-horizontal
     .form-group
       %label.col-md-2.control-label

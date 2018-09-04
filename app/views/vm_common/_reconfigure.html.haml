@@ -359,7 +359,7 @@
             %select{'name'                    => 'adapterNetwork',
                 'ng-model'                    => 'vm.reconfigureModel.adapterNetwork',
                 'ng-options'                  => 'network for network in vm.reconfigureModel.availableAdapterNetworks',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'selectpicker-for-select-tag' => ''}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"

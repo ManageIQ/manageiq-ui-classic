@@ -15,10 +15,10 @@
       .col-md-8
         = select_tag("vm_id",
                       options_for_select([["<#{_('Choose')}>", nil]] + @vm_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
-                      "ng-model"   => "vm.cloudVolumeModel.vm_id",
-                      "required"   => true,
-                      :checkchange => true,
-                      "pf-select"  => true)
+                      "ng-model"    => "vm.cloudVolumeModel.vm_id",
+                      "required"    => true,
+                      :checkchange  => true,
+                      "miq-select"  => true)
 
   .clearfix
   .pull-right.button-group.edit_buttons

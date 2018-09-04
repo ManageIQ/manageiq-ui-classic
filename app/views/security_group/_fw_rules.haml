@@ -27,20 +27,20 @@
           %select{"name"                        => "direction",
                   "ng-model"                    => "vm.securityGroupModel.firewall_rules[$index].direction",
                   "ng-options"                  => "direction for direction in vm.directions",
-                  'pf-select'                   => true,
+                  'miq-select'                  => true,
                   "required"                    => ""}
         %td
           %select{"name"                        => "network_protocol",
                   "ng-model"                    => "vm.securityGroupModel.firewall_rules[$index].network_protocol",
                   "ng-options"                  => "network_protocol for network_protocol in vm.networkProtocols",
-                  'pf-select'                   => true}
+                  'miq-select'                  => true}
             %option{"value" => ""}
               = "<#{_('Choose')}>"
         %td
           %select{"name"                        => "host_protocol",
                   "ng-model"                    => "vm.securityGroupModel.firewall_rules[$index].host_protocol",
                   "ng-options"                  => "host_protocol for host_protocol in vm.hostProtocols",
-                  'pf-select'                   => true}
+                  'miq-select'                  => true}
             %option{"value" => ""}
               = "<#{_('Choose')}>"
         %td
@@ -48,7 +48,7 @@
                   "ng-model"                    => "vm.securityGroupModel.firewall_rules[$index].source_security_group_id",
                   "ng-options"                  => "sg.id as sg.name + ' - ' + sg.ems_ref for sg in vm.security_groups_list",
                   "ng-change"                   => "vm.securityGroupModel.firewall_rules[$index].source_ip_range = null",
-                  'pf-select'                   => true}
+                  'miq-select'                  => true}
             %option{"value" => ""}
               = "<#{_('Choose')}>"
         %td

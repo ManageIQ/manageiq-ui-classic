@@ -13,16 +13,16 @@
       %actions.group-toolbar-actions
         %span
           = _("Group By")
-        %select{"pf-select" => "true",
-                "ng-model" => "vm.category",
+        %select{"miq-select" => "true",
+                "ng-model"   => "vm.category",
                 "ng-options" => "o as o for o in vm.categories",
-                "ng-change" => "vm.filterChange()"}
+                "ng-change"  => "vm.filterChange()"}
         %span
           = _("Display")
-        %select{"pf-select" => "true",
-                "ng-model" => "vm.displayFilter",
+        %select{"miq-select" => "true",
+                "ng-model"   => "vm.displayFilter",
                 "ng-options" => "o as o for o in vm.displayFilters",
-                "ng-change" => "vm.filterChange()"}
+                "ng-change"  => "vm.filterChange()"}
   .row.row-tile-pf.init-hidden{"ng-class" => "{'initialized': vm.loadingDone}"}
     %ul.list-group
       %li.list-group-item.alerts-group-item{"ng-repeat" => "group in vm.groups track by $index"}

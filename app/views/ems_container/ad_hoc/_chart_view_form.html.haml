@@ -17,7 +17,7 @@
         %button.btn.btn-default.bootstrap-touchspin-up{"ng-click" => "dash.countIncrement()",
                                                        "type"     => "button"} +
 
-    %select.pull-left{"pf-select"  => "",
+    %select.pull-left{"miq-select" => "",
                       "id"         => "timeRange",
                       "ng-model"   => "dash.timeFilter.time_range",
                       "ng-options" => "range.value as range.title for range in dash.timeRanges"}

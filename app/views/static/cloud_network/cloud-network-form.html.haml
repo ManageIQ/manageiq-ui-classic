@@ -18,7 +18,7 @@
                 'ng-change'                   => "vm.filterNetworkManagerChanged(vm.cloudNetworkModel.ems_id)",
                 'ng-model'                    => "vm.cloudNetworkModel.ems_id",
                 'ng-options'                  => 'ems.id as ems.name for ems in vm.ems',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => ""}
           %option{'value' => ""}
             = "<#{_('Choose')}>"
@@ -41,7 +41,7 @@
         %select{'name'                        => "cloud_tenant_id",
                 'ng-model'                    => "vm.cloudNetworkModel.cloud_tenant.id",
                 'ng-options'                  => "tenant.id as tenant.name for tenant in vm.available_tenants",
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => "",
                 'selectpicker-for-select-tag' => ""}
           %option{'value' => ""}
@@ -65,7 +65,7 @@
                 'ng-disabled'                 => "!vm.newRecord",
                 'ng-model'                    => "vm.cloudNetworkModel.provider_network_type",
                 'ng-options'                  => "type as key for (key, type) in vm.providers_network_types",
-                "pf-select"                   => true,
+                "miq-select"                  => true,
                 "selectpicker-for-select-tag" => ""}
     .form-group{'ng-if' => "vm.cloudNetworkModel.provider_network_type"}
       %label.control-label.col-md-2

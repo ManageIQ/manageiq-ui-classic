@@ -13,8 +13,8 @@
       .col-md-4{"ng-init" => "formMode = 'date'"}
         = select_tag("formMode",
                      options_for_select(_("Specific Date and Time") => 'date', _("Time Delay from Now") => 'delay'),
-                     "ng-model"  => "formMode",
-                     "pf-select" => true)
+                     "ng-model"   => "formMode",
+                     "miq-select" => true)
     .form-group{"ng-if" => "formMode == 'date'"}
       %label.col-md-3.control-label
         = _('Retirement Date and Time')
@@ -44,7 +44,7 @@
                      "ng-options"  => "item.value as item.label for item in #{select_options.to_json.gsub('"', '\'')}",
                      "ng-model"    => "vm.retirementInfo.retirementWarning",
                      "ng-disabled" => "!vm.retirementInfo.retirementDate",
-                     "pf-select"   => true)
+                     "miq-select"  => true)
         :javascript
           miqInitSelectPicker();
   %div{"ng-if" => "formMode == 'date'"}

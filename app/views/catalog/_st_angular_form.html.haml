@@ -64,7 +64,7 @@
                   "name"             => "catalog_id",
                   'ng-options'       => 'catalog as catalog.name for catalog in vm.catalogs',
                   "data-live-search" => "true",
-                  'pf-select'        => true}
+                  'miq-select'        => true}
 
     = render :partial => "layouts/angular/multi_tab_ansible_form_options",
             :locals  => {:record => @record, :ng_model => "vm.catalogItemModel"}

@@ -42,7 +42,7 @@
                   "ng-options"                  => "valueOption.id as valueOption.name for valueOption in vm.valueOptions",
                   "data-live-search"            => "true",
                   "selectpicker-for-select-tag" => "",
-                  "pf-select"                   => true,}
+                  "miq-select"                  => true,}
             %option{"value" => "", "disabled" => ""}
               = "<#{_('Choose')}>"
         %td.form-group{"ng-if" => "vm.addValueColumn", "ng-class" => "{'has-error': vm.angularForm['Value_{{vm.keyType}}{{$index}}'].$invalid}"}

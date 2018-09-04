@@ -13,10 +13,10 @@
       .col-md-8
         = select_tag("backup_id",
           options_for_select([["<#{_('Choose')}>", nil]] + @backup_choices.sort),
-                      "ng-model"   => "vm.cloudVolumeModel.backup_id",
-                      "required"   => "",
-                      :checkchange => true,
-                      "pf-select"  => true)
+                      "ng-model"    => "vm.cloudVolumeModel.backup_id",
+                      "required"    => "",
+                      :checkchange  => true,
+                      "miq-select"  => true)
 
   .clearfix
   .pull-right.button-group.edit_buttons

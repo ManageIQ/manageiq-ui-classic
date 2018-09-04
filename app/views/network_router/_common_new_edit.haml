@@ -22,7 +22,7 @@
                 'ng-change'  => 'vm.filterNetworkManagerChanged(vm.networkRouterModel.ems_id)',
                 'ng-model'   => 'vm.networkRouterModel.ems_id',
                 'ng-options' => 'ems.id as ems.name for ems in vm.ems',
-                'pf-select'  => true,
+                'miq-select' => true,
                 'required'   => ''}
           %option{:value => ''}
             = "<#{_('Choose')}>"
@@ -43,7 +43,7 @@
         %select{'name'                        => 'cloud_tenant_id',
                 'ng-model'                    => 'vm.networkRouterModel.cloud_tenant.id',
                 'ng-options'                  => 'tenant.id as tenant.name for tenant in vm.available_tenants',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => '',
                 'selectpicker-for-select-tag' => ''}
           %option{'value' => ''}
@@ -113,7 +113,7 @@
                 'ng-model'                    => 'vm.networkRouterModel.cloud_network_id',
                 'ng-options'                  => 'network.id as network.name for network in vm.available_networks',
                 'ng-change'                   => 'vm.getCloudSubnetsByNetworkID(vm.networkRouterModel.cloud_network_id)',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'ng-selected'                 => 'vm.networkRouterModel.cloud_network_id',
                 'selectpicker-for-select-tag' => ''}
           %option{'value' => ''}
@@ -128,7 +128,7 @@
         %select{'name'                        => 'cloud_subnet_id',
                 'ng-model'                    => 'vm.networkRouterModel.cloud_subnet_id',
                 'ng-options'                  => 'subnet.id as subnet.name for subnet in vm.available_subnets',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'ng-selected'                 => 'vm.networkRouterModel.cloud_subnet_id',
                 'selectpicker-for-select-tag' => ''}
           %option{'value' => ''}

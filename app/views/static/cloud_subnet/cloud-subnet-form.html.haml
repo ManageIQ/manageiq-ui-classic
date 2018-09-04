@@ -17,7 +17,7 @@
                 'ng-change'                   => 'vm.filterNetworkManagerChanged(vm.cloudSubnetModel.ems_id)',
                 'ng-model'                    => 'vm.cloudSubnetModel.ems_id',
                 'ng-options'                  => 'ems.id as ems.name for ems in vm.available_ems',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => '',
                 'selectpicker-for-select-tag' => ''}
           %option{'value' => ''}
@@ -38,7 +38,7 @@
         %select{'name'                        => 'cloud_tenant_id',
                 'ng-model'                    => 'vm.cloudSubnetModel.cloud_tenant.id',
                 'ng-options'                  => 'tenant.id as tenant.name for tenant in vm.available_tenants',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => '',
                 'selectpicker-for-select-tag' => ''}
           %option{'value' => ''}
@@ -61,7 +61,7 @@
         %select{'name'                        => 'network_id',
                 'ng-model'                    => 'vm.cloudSubnetModel.network_id',
                 'ng-options'                  => 'network.ems_ref as network.name for network in vm.available_networks',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => '',
                 'selectpicker-for-select-tag' => ''}
           %option{'value' => ''}
@@ -108,7 +108,7 @@
                 'ng-model'                    => 'vm.cloudSubnetModel.network_protocol',
                 'ng-disabled'                 => '!vm.newRecord',
                 'ng-options'                  => 'protocol as protocol for protocol in vm.networkProtocols',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => '',
                 'selectpicker-for-select-tag' => ''}
         %span.help-block{'ng-show' => 'angularForm.network_protocol.$error.required'}

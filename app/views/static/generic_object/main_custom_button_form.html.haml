@@ -15,7 +15,7 @@
               "ng-options"                  => "button_type.id as button_type.name for button_type in vm.button_types",
               "required"                    => "",
               "selectpicker-for-select-tag" => "",
-              "pf-select"                   => true,}
+              "miq-select"                  => true,}
         %option{"value" => "", "disabled" => ""}
           = "<#{_('Choose')}>"
       %span.help-block{"ng-show" => "angularForm.button_type.$error.required"}
@@ -31,7 +31,7 @@
               "ng-options"                  => "dialog.id as dialog.label for dialog in vm.dialogs",
               "data-live-search"            => "true",
               "selectpicker-for-select-tag" => "",
-              "pf-select"                   => true,}
+              "miq-select"                  => true,}
         %option{"value" => "", "disabled" => ""}
           = "<#{_('Choose')}>"
       %span.help-block{"ng-show" => "angularForm.dialog_id.$error.required"}
@@ -56,7 +56,7 @@
               "ng-model"                    => "vm.customButtonModel.display_for",
               "ng-options"                  => "display_for.id as display_for.name for display_for in vm.display_for",
               "selectpicker-for-select-tag" => "",
-              "pf-select"                   => true,}
+              "miq-select"                  => true,}
         %option{"value" => "", "disabled" => ""}
           = "<#{_('Choose')}>"
       %span.help-block{"ng-show" => "angularForm.display_for.$error.required"}
@@ -69,7 +69,7 @@
               "ng-model"                    => "vm.customButtonModel.submit_how",
               "ng-options"                  => "submit_how.id as submit_how.name for submit_how in vm.submit_how",
               "selectpicker-for-select-tag" => "",
-              "pf-select"                   => true,}
+              "miq-select"                  => true,}
         %option{"value" => "", "disabled" => ""}
           = "<#{_('Choose')}>"
       %span.help-block{"ng-show" => "angularForm.submit_how.$error.required"}
@@ -82,7 +82,7 @@
               "ng-model"                    => "vm.customButtonModel.ae_instance",
               "ng-options"                  => "ae_instance.id as ae_instance.name for ae_instance in vm.ae_instances",
               "selectpicker-for-select-tag" => "",
-              "pf-select"                   => true,}
+              "miq-select"                  => true,}
         %option{"value" => "", "disabled" => ""}
           = "<#{_('Choose')}>"
       %span.help-block{"ng-show" => "angularForm.ae_instance.$error.required"}
@@ -136,7 +136,7 @@
               "ng-model"                    => "vm.customButtonModel.current_visibility",
               "ng-options"                  => "visibility.id as visibility.name for visibility in vm.visibilities",
               "selectpicker-for-select-tag" => "",
-              "pf-select"                   => true,}
+              "miq-select"                  => true,}
       %span.help-block{"ng-show" => "angularForm.visibility.$error.required"}
         = _("Required")
   %br

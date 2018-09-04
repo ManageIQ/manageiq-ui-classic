@@ -20,7 +20,7 @@
       "pf-label-class" => "miq-input-label-class miq-input-label-class-lg", :required => ""}
         %select#masterCreationTemplate{"ng-change" => "applyMasterTemplate()",
         "ng-model" => "data.masterCreationTemplateId",
-        "ng-options" => "template.id as template.name for template in data.nodeCreationTemplates", "pf-select" => ""}
+        "ng-options" => "template.id as template.name for template in data.nodeCreationTemplates", "miq-select" => ""}
       %div{"pf-form-group" => "", "pf-input-class" => "miq-input-class", "pf-label" => _("Memory"),
       "pf-label-class" => "miq-input-label-class miq-input-label-class-lg", :required => ""}
         %input{"ng-blur" => "updateNodesLikeMaster()", "ng-change" => "validateForm()",
@@ -56,7 +56,7 @@
       "pf-label-class" => "miq-input-label-class miq-input-label-class-lg", :required => ""}
         %select#nodeCreationTemplate{"ng-change" => "applyNodeTemplate()",
         "ng-disabled" => "data.createNodesLikeMasters", "ng-model" => "data.nodeCreationTemplateId",
-        "ng-options" => "template.id as template.name for template in data.nodeCreationTemplates", "pf-select" => ""}
+        "ng-options" => "template.id as template.name for template in data.nodeCreationTemplates", "miq-select" => ""}
       %div{"pf-form-group" => "", "pf-input-class" => "miq-input-class", "pf-label" => _("Memory"),
       "pf-label-class" => "miq-input-label-class miq-input-label-class-lg", :required => ""}
         %input{"ng-change" => "validateForm()", "ng-disabled" => "data.createNodesLikeMasters",

@@ -18,7 +18,7 @@
                 "required"    => "",
                 "disabled"    => !@storage_manager.nil?,
                 :checkchange  => true,
-                "pf-select"   => true}
+                "miq-select"  => true}
           %option{"value" => "", "disabled" => ""}
             = "<#{_('Choose')}>"
         %span.help-block{"ng-show" => "angularForm.storage_manager_id.$error.required"}

@@ -22,13 +22,13 @@
             = _("Use existing VMs from an existing provider")
         .form-group.sub-group
           %select#exitingProviderType{"ng-disabled" => "data.provisionOn != 'existingVms'",
-          "ng-model" => "data.existingProviderId", "ng-options" => "provider.id as provider.name for provider in existingProviders", "pf-select" => ""}
+          "ng-model" => "data.existingProviderId", "ng-options" => "provider.id as provider.name for provider in existingProviders", "miq-select" => ""}
         %label.radio
           %input{"ng-model" => "data.provisionOn", :type => "radio", :value => "newVms"}
             = _("Create new VMs on provider")
         .form-group.sub-group
           %select#newVmProviders{"ng-disabled" => "data.provisionOn != 'newVms'", "ng-model" => "data.newVmProviderId",
-           "ng-options" => "provider.id as provider.name for provider in newVmProviders", "pf-select" => ""}
+           "ng-options" => "provider.id as provider.name for provider in newVmProviders", "miq-select" => ""}
         %label.radio
           %input{"ng-model" => "data.provisionOn", :type => "radio", :value => "noProvider"}
             = _("Specify a list of machines to deploy on (No existing provider)")

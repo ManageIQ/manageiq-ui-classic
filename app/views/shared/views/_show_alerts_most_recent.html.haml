@@ -14,10 +14,10 @@
         %actions.recent-toolbar-actions
           %span
             = _("Show")
-          %select{"pf-select" => "true",
-                  "ng-model" => "vm.showCount",
+          %select{"miq-select" => "true",
+                  "ng-model"   => "vm.showCount",
                   "ng-options" => "o as o for o in vm.showCounts",
-                  "ng-change" => "vm.filterChange()"}
+                  "ng-change"  => "vm.filterChange()"}
           %span
             = _("alerts")
     = render :partial => "shared/views/alerts_list"
