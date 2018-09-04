@@ -20,21 +20,38 @@
                 %strong
                   = session_info[0]
                 = session_info[1]
+        %a#collapsePluginsHandle{"role" => "button", "data-toggle" => "collapse", :href => "#collapsePlugins", "aria-expanded" => "false", "aria-controls" => "collapsePlugins", :style => "color: white" }
           %strong
+            %span.fa.fa-angle-right
             = _("Plugins")
-          %ul.list-unstyled.about-visible-scrollbar.about-visible-scrollbar-thumb.about-visible-scrollbar-track.about-visible-scrollbar-hover{:style => "height: 40px;overflow: auto"}
+        .collapse#collapsePlugins
+          %ul.list-unstyled.about-visible-scrollbar{:style => "height: 200px;overflow: auto"}
             - vmdb_plugins_sha.each do |engine, sha|
-              %div
-                = "#{plugin_name(engine)} #{sha}"
-
+              %li
+                %strong
+                  = plugin_name(engine)
+                &nbsp;
+                = sha
+        .spacer
         .trademark-pf
           = I18n.t("product.copyright")
       .modal-footer
         %img{:src => ::Settings.server.custom_logo ? '/upload/custom_logo.png' : image_path("layout/login-screen-logo.png")}
+
 :javascript
   $(function(){
     $("button[data-dismiss='modal']").off('click');
     $("button[data-dismiss='modal']").on('click', function(){
       $('#aboutModal').modal("hide")
+    });
+
+    $('#collapsePlugins.collapse').on('show.bs.collapse', function() {
+      $('#collapsePluginsHandle span').removeClass('fa-angle-right');
+      $('#collapsePluginsHandle span').addClass('fa-angle-down');
+    });
+
+    $('#collapsePlugins.collapse').on('hide.bs.collapse', function() {
+      $('#collapsePluginsHandle span').removeClass('fa-angle-down');
+      $('#collapsePluginsHandle span').addClass('fa-angle-right');
     });
   });
