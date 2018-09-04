@@ -61,7 +61,7 @@ describe Mixins::Actions::VmActions::Rename do
       before { allow(vm).to receive(:rename_queue).with('admin', 'new_vm_name').and_return(nil) }
 
       it 'adds flash message about failing task start' do
-        expect(controller).to receive(:add_flash).with(:text        => _("VM rename: Task start failed: ID []") % {:id => nil},
+        expect(controller).to receive(:add_flash).with(:text        => _("VM rename: Task start failed"),
                                                        :severity    => :error,
                                                        :spinner_off => true)
         controller.send(:rename_save)
