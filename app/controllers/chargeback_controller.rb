@@ -510,6 +510,7 @@ class ChargebackController < ApplicationController
 
     rate_details.each_with_index do |detail, detail_index|
       temp = detail.slice(*ChargebackRateDetail::FORM_ATTRIBUTES)
+      temp[:report_column_name] = Dictionary.gettext(detail.chargeable_field.metric_key, :type => :column, :notfound => :titleize)
       temp[:group] = detail.chargeable_field.group
       temp[:per_time] ||= "hourly"
 

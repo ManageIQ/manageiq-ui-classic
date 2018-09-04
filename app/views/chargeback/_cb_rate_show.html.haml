@@ -5,6 +5,8 @@
   .form-group
     %label.col-md-2.control-label
       = _('Description')
+      %br
+      = _('(Column Name in Report)')
     .col-md-8
       %p.form-control-static
         = h(@record.description)
@@ -41,6 +43,8 @@
           = h(rate_detail_group(detail.chargeable_field[:group]))
         %td{:rowspan => num_tiers}
           = detail.chargeable_field[:description]
+          %br
+          = Dictionary.gettext(detail.chargeable_field.metric_key, :type => :column, :notfound => :titleize)
           - if breakdown_present
             %td{:rowspan => num_tiers}
               - if detail.sub_metrics.present?
