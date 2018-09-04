@@ -12,6 +12,7 @@ module VmHelper::TextualSummary
   include TextualMixins::TextualRegion
   include TextualMixins::TextualScanHistory
   include TextualMixins::TextualDevices
+  include TextualMixins::TextualCustomButtonEvents
   include TextualMixins::TextualVmmInfo
   include TextualMixins::VmCommon
   # TODO: Determine if DoNav + url_for + :title is the right way to do links, or should it be link_to with :title
@@ -43,7 +44,7 @@ module VmHelper::TextualSummary
       _("Relationships"),
       %i(
         ems cluster host resource_pool storage service parent_vm genealogy drift scan_history
-        cloud_network cloud_subnet
+        cloud_network cloud_subnet custom_button_events
       )
     )
   end
@@ -54,13 +55,13 @@ module VmHelper::TextualSummary
       %i(
         ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service genealogy
         cloud_network cloud_subnet orchestration_stack cloud_networks cloud_subnets network_routers security_groups
-        floating_ips network_ports load_balancers cloud_volumes
+        floating_ips network_ports load_balancers cloud_volumes custom_button_events
       )
     )
   end
 
   def textual_group_template_cloud_relationships
-    TextualGroup.new(_("Relationships"), %i(ems parent_vm genealogy drift scan_history cloud_tenant))
+    TextualGroup.new(_("Relationships"), %i(ems parent_vm genealogy drift scan_history cloud_tenant custom_button_events))
   end
 
   def textual_group_security

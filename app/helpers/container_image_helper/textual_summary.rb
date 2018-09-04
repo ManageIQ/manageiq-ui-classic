@@ -1,5 +1,6 @@
 module ContainerImageHelper
   module TextualSummary
+    include TextualMixins::TextualCustomButtonEvents
     #
     # Groups
     #
@@ -17,7 +18,7 @@ module ContainerImageHelper
     def textual_group_relationships
       TextualGroup.new(
         _("Relationships"),
-        %i(ems container_image_registry container_projects container_groups containers container_nodes)
+        %i(ems container_image_registry container_projects container_groups containers container_nodes custom_button_events)
       )
     end
 

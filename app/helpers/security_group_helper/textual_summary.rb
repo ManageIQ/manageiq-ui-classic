@@ -2,6 +2,7 @@ module SecurityGroupHelper::TextualSummary
   include TextualMixins::TextualDescription
   include TextualMixins::TextualEmsNetwork
   include TextualMixins::TextualGroupTags
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -15,7 +16,7 @@ module SecurityGroupHelper::TextualSummary
       _("Relationships"),
       %i(
         parent_ems_cloud ems_network cloud_tenant instances orchestration_stack network_ports network_router
-        cloud_subnet
+        cloud_subnet custom_button_events
       )
     )
   end

@@ -51,8 +51,12 @@ class ServiceController < ApplicationController
 
     set_display
 
-    if @display == 'generic_objects'
+    case @display
+    when 'generic_objects'
       show_generic_object
+      return
+    when 'custom_button_events'
+      display_nested_list(@display)
       return
     end
 
@@ -189,7 +193,7 @@ class ServiceController < ApplicationController
   end
 
   def self.display_methods
-    %w(generic_objects)
+    %w(generic_objects custom_button_events)
   end
 
   def display_generic_objects
@@ -214,7 +218,7 @@ class ServiceController < ApplicationController
 
   def textual_group_list
     if @item && @item.kind_of?(GenericObject)
-      [%i(go_properties attribute_details_list methods)]
+      [%i(go_properties attribute_details_list methods go_relationships)]
     elsif %w(ServiceAnsiblePlaybook ServiceAnsibleTower).include?(@record.type)
       [%i(properties miq_custom_attributes), %i(lifecycle tags generic_objects)]
     else

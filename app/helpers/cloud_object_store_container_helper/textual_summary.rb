@@ -1,13 +1,14 @@
 module CloudObjectStoreContainerHelper::TextualSummary
   include TextualMixins::TextualDescription
   include TextualMixins::TextualGroupTags
+  include TextualMixins::TextualCustomButtonEvents
 
   def textual_group_properties
     TextualGroup.new(_("Properties"), %i(key size))
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems cloud_tenant cloud_object_store_objects))
+    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems cloud_tenant cloud_object_store_objects custom_button_events))
   end
 
   def textual_parent_ems_cloud

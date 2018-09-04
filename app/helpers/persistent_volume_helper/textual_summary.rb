@@ -1,5 +1,6 @@
 module PersistentVolumeHelper::TextualSummary
   include TextualMixins::TextualName
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -23,7 +24,7 @@ module PersistentVolumeHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent pods_using_persistent_volume))
+    TextualGroup.new(_("Relationships"), %i(parent pods_using_persistent_volume custom_button_events))
   end
 
   def textual_group_smart_management

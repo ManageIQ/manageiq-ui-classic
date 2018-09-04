@@ -190,7 +190,7 @@ module ContainersCommonMixin
       %w(
         container_groups containers container_services container_routes container_replicators
         container_projects container_images container_image_registries container_nodes
-        persistent_volumes container_builds container_templates
+        persistent_volumes container_builds container_templates custom_button_events
       )
     end
   end

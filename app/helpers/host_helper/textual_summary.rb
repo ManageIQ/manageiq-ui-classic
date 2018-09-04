@@ -1,4 +1,5 @@
 module HostHelper::TextualSummary
+  include TextualMixins::TextualCustomButtonEvents
   include TextualMixins::TextualDevices
   include TextualMixins::TextualOsInfo
   include TextualMixins::TextualVmmInfo
@@ -23,7 +24,10 @@ module HostHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history physical_server network_manager)
+      %i(
+        ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history
+        physical_server network_manager custom_button_events
+      )
     )
   end
 

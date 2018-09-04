@@ -2,6 +2,7 @@ module ContainerProjectHelper::TextualSummary
   #
   # Groups
   #
+  include TextualMixins::TextualCustomButtonEvents
 
   def textual_group_properties
     TextualGroup.new(_("Properties"), %i(name display_name creation_timestamp resource_version))
@@ -12,7 +13,7 @@ module ContainerProjectHelper::TextualSummary
       _("Relationships"),
       %i(
         ems container_routes container_services container_replicators container_groups
-        container_nodes container_images container_templates
+        container_nodes container_images container_templates custom_button_events
       )
     )
   end

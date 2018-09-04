@@ -18,6 +18,7 @@ describe EmsPhysicalInfraHelper::TextualSummary do
     physical_storages
     physical_switches
     vms
+    custom_button_events
   )
 
   include_examples "textual_group_smart_management", %i(zone)

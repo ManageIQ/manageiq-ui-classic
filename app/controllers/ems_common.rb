@@ -103,6 +103,7 @@ module EmsCommon
         containers
         container_services
         container_templates
+        custom_button_events
         ems_clusters
         flavors
         floating_ips

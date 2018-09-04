@@ -1,5 +1,6 @@
 module EmsClusterHelper::TextualSummary
   include TextualMixins::TextualGroupTags
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -23,7 +24,7 @@ module EmsClusterHelper::TextualSummary
       _("Relationships"),
       %i(
         ems parent_datacenter total_hosts total_direct_vms allvms_size total_miq_templates
-        total_vms rps_size states_size
+        total_vms rps_size states_size custom_button_events
       )
     )
   end

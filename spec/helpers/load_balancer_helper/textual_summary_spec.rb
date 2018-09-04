@@ -9,5 +9,6 @@ describe LoadBalancerHelper::TextualSummary do
     network_ports
     floating_ips
     security_groups
+    custom_button_events
   )
 end

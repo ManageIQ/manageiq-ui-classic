@@ -10,7 +10,7 @@ class LoadBalancerController < ApplicationController
   include Mixins::GenericShowMixin
 
   def self.display_methods
-    %w(instances network_ports floating_ips security_groups)
+    %w(instances network_ports floating_ips security_groups custom_button_events)
   end
 
   private

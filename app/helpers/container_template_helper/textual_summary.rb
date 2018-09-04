@@ -2,13 +2,14 @@ module ContainerTemplateHelper::TextualSummary
   #
   # Groups
   #
+  include TextualMixins::TextualCustomButtonEvents
 
   def textual_group_properties
     TextualGroup.new(_("Properties"), %i(name creation_timestamp resource_version))
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems container_project))
+    TextualGroup.new(_("Relationships"), %i(ems container_project custom_button_events))
   end
 
   def textual_group_smart_management

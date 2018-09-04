@@ -16,7 +16,7 @@ class OrchestrationStackController < ApplicationController
   end
 
   def self.display_methods
-    %w(instances children security_groups stack_orchestration_template)
+    %w(instances children security_groups stack_orchestration_template custom_button_events)
   end
 
   def display_stack_orchestration_template

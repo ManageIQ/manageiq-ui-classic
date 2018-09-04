@@ -3,6 +3,7 @@ module EmsContainerHelper::TextualSummary
   include TextualMixins::TextualAuthenticationsStatus
   include TextualMixins::TextualMetricsStatus
   include TextualMixins::TextualDataCollectionState
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -17,7 +18,8 @@ module EmsContainerHelper::TextualSummary
     items.concat(%i(container_projects))
     items.concat(%i(container_routes)) if @record.respond_to?(:container_routes)
     items.concat(%i(container_services container_replicators container_groups containers container_nodes
-                    container_image_registries container_images volumes container_builds container_templates))
+                    container_image_registries container_images volumes container_builds container_templates
+                    custom_button_events))
     TextualGroup.new(_("Relationships"), items)
   end
 

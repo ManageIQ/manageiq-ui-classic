@@ -137,7 +137,7 @@ describe ServiceHelper::TextualSummary do
 
   include_examples "textual_group", "Lifecycle", %i(retirement_date retirement_state owner group created)
 
-  include_examples "textual_group", "Relationships", %i(catalog_item parent_service orchestration_stack job)
+  include_examples "textual_group", "Relationships", %i(catalog_item parent_service orchestration_stack job custom_button_events)
 
   include_examples "textual_group", "Custom Attributes", [], "miq_custom_attributes"
 

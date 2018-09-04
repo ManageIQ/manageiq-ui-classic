@@ -1,12 +1,13 @@
 module AvailabilityZoneHelper::TextualSummary
   include TextualMixins::TextualEmsCloud
   include TextualMixins::TextualGroupTags
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems_cloud instances cloud_volumes))
+    TextualGroup.new(_("Relationships"), %i(ems_cloud instances cloud_volumes custom_button_events))
   end
 
   def textual_group_availability_zone_totals

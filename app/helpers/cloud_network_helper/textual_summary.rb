@@ -2,6 +2,7 @@ module CloudNetworkHelper::TextualSummary
   include TextualMixins::TextualEmsNetwork
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -13,7 +14,7 @@ module CloudNetworkHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_ems_cloud ems_network cloud_tenant instances cloud_subnets network_routers floating_ips)
+      %i(parent_ems_cloud ems_network cloud_tenant instances cloud_subnets network_routers floating_ips custom_button_events)
     )
   end
 

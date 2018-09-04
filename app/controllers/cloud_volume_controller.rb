@@ -11,7 +11,7 @@ class CloudVolumeController < ApplicationController
   include Mixins::GenericButtonMixin
 
   def self.display_methods
-    %w(cloud_volume_snapshots cloud_volume_backups instances)
+    %w(cloud_volume_snapshots cloud_volume_backups instances custom_button_events)
   end
 
   def specific_buttons(pressed)

@@ -13,7 +13,7 @@ class StorageController < ApplicationController
   after_action :set_session_data
 
   def self.display_methods
-    %w(all_vms hosts all_miq_templates registered_vms unregistered_vms)
+    %w(all_vms hosts all_miq_templates registered_vms unregistered_vms custom_button_events)
   end
 
   def self.custom_display_method

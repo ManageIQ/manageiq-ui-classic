@@ -18,7 +18,7 @@ class GenericObjectController < ApplicationController
   end
 
   def self.display_methods
-    []
+    %w(custom_button_events)
   end
 
   def display_methods(record)
@@ -33,7 +33,7 @@ class GenericObjectController < ApplicationController
   private
 
   def textual_group_list
-    [%i(go_properties attribute_details_list associations methods)]
+    [%i(go_properties attribute_details_list associations methods go_relationships)]
   end
 
   helper_method :textual_group_list

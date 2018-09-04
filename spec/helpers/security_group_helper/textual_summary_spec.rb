@@ -26,5 +26,6 @@ describe SecurityGroupHelper::TextualSummary do
     network_ports
     network_router
     cloud_subnet
+    custom_button_events
   )
 end

@@ -449,6 +449,7 @@ class ApplicationHelper::ToolbarChooser
       elsif to_display_center.include?(@display)
         return "#{@display}_center"
       elsif @layout == 'ems_container'
+        return nil if @display == 'custom_button_events'
         return "#{@display}_center"
       end
     elsif @display == 'generic_objects'

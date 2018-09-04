@@ -2,6 +2,7 @@ module LoadBalancerHelper::TextualSummary
   include TextualMixins::TextualEmsNetwork
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -13,7 +14,7 @@ module LoadBalancerHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_ems_cloud ems_network cloud_tenant instances network_ports floating_ips security_groups)
+      %i(parent_ems_cloud ems_network cloud_tenant instances network_ports floating_ips security_groups custom_button_events)
     )
   end
 

@@ -1,5 +1,6 @@
 module EmsNetworkHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -13,7 +14,7 @@ module EmsNetworkHelper::TextualSummary
       _("Relationships"),
       %i(
         parent_ems_cloud cloud_tenants cloud_networks cloud_subnets network_routers security_groups floating_ips
-        network_ports load_balancers
+        network_ports load_balancers custom_button_events
       )
     )
   end
