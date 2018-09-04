@@ -11,6 +11,7 @@ class PhysicalInfraTopologyService < TopologyService
     ),
     :physical_chassis  => %i(
       writable_classification_tags
+      child_physical_chassis
       physical_servers
     ),
     :physical_servers  => [

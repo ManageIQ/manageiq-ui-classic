@@ -6,7 +6,9 @@ describe PhysicalInfraTopologyService do
   #       - Server A
   #     - Server B
   #   - Chassis B
-  #     - Server C
+  #     - Chassis C
+  #       - Chassis D
+  #         - Server C
   #   - Server D
 
   let(:server_a) { FactoryGirl.create(:physical_server, :name => 'Server A', :health_state => 'Error') }
@@ -23,9 +25,23 @@ describe PhysicalInfraTopologyService do
 
   let(:chassis_b) do
     FactoryGirl.create(:physical_chassis,
-                       :name             => 'Chassis B',
-                       :health_state     => 'Error',
-                       :physical_servers => [server_c])
+                       :name         => 'Chassis B',
+                       :health_state => 'Error')
+  end
+
+  let(:chassis_c) do
+    FactoryGirl.create(:physical_chassis,
+                       :name                    => 'Chassis C',
+                       :health_state            => 'Valid',
+                       :parent_physical_chassis => chassis_b)
+  end
+
+  let(:chassis_d) do
+    FactoryGirl.create(:physical_chassis,
+                       :name                    => 'Chassis D',
+                       :health_state            => 'Warning',
+                       :parent_physical_chassis => chassis_c,
+                       :physical_servers        => [server_c])
   end
 
   let(:rack_a) do
@@ -50,7 +66,7 @@ describe PhysicalInfraTopologyService do
                              :ipaddress => '1.2.3.4')
     ems.authentications = [auth]
     ems.physical_racks = [rack_a]
-    ems.physical_chassis = [chassis_a, chassis_b]
+    ems.physical_chassis = [chassis_a, chassis_b, chassis_c, chassis_d]
     ems.physical_servers = [server_a, server_b, server_c, server_d]
     ems
   end
@@ -108,6 +124,26 @@ describe PhysicalInfraTopologyService do
           :model        => chassis_b.class.name,
           :key          => "PhysicalChassis" + chassis_b.id.to_s
         },
+        "PhysicalChassis" + chassis_c.id.to_s => {
+          :name         => chassis_c.name,
+          :kind         => "PhysicalChassis",
+          :miq_id       => chassis_c.id,
+          :status       => "Valid",
+          :display_kind => "PhysicalChassis",
+          :provider     => ems.name,
+          :model        => chassis_c.class.name,
+          :key          => "PhysicalChassis" + chassis_c.id.to_s
+        },
+        "PhysicalChassis" + chassis_d.id.to_s => {
+          :name         => chassis_d.name,
+          :kind         => "PhysicalChassis",
+          :miq_id       => chassis_d.id,
+          :status       => "Warning",
+          :display_kind => "PhysicalChassis",
+          :provider     => ems.name,
+          :model        => chassis_d.class.name,
+          :key          => "PhysicalChassis" + chassis_d.id.to_s
+        },
         "PhysicalServer" + server_a.id.to_s   => {
           :name         => server_a.name,
           :kind         => "PhysicalServer",
@@ -150,14 +186,16 @@ describe PhysicalInfraTopologyService do
         }
       )
 
-      expect(subject[:relations].size).to eq(7)
+      expect(subject[:relations].size).to eq(9)
       expect(subject[:relations]).to include(
         {:source => "PhysicalInfraManager" + ems.id.to_s, :target => "PhysicalRack" + rack_a.id.to_s},
         {:source => "PhysicalRack" + rack_a.id.to_s, :target => "PhysicalChassis" + chassis_a.id.to_s},
         {:source => "PhysicalChassis" + chassis_a.id.to_s, :target => "PhysicalServer" + server_a.id.to_s},
         {:source => "PhysicalRack" + rack_a.id.to_s, :target => "PhysicalServer" + server_b.id.to_s},
         {:source => "PhysicalInfraManager" + ems.id.to_s, :target => "PhysicalChassis" + chassis_b.id.to_s},
-        {:source => "PhysicalChassis" + chassis_b.id.to_s, :target => "PhysicalServer" + server_c.id.to_s},
+        {:source => "PhysicalChassis" + chassis_b.id.to_s, :target => "PhysicalChassis" + chassis_c.id.to_s},
+        {:source => "PhysicalChassis" + chassis_c.id.to_s, :target => "PhysicalChassis" + chassis_d.id.to_s},
+        {:source => "PhysicalChassis" + chassis_d.id.to_s, :target => "PhysicalServer" + server_c.id.to_s},
         {:source => "PhysicalInfraManager" + ems.id.to_s, :target => "PhysicalServer" + server_d.id.to_s},
       )
     end
