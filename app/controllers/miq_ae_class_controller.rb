@@ -634,6 +634,7 @@ class MiqAeClassController < ApplicationController
         AuditEvent.success(build_created_audit(add_aeinst, @edit))
         add_flash(_("Automate Instance \"%{name}\" was added") % {:name => add_aeinst.name})
         @in_a_form = false
+        add_active_node_to_open_nodes
         replace_right_cell(:replace_trees => [:ae])
         return
       end
@@ -1251,6 +1252,7 @@ class MiqAeClassController < ApplicationController
       else
         add_flash(_("Automate Class \"%{name}\" was added") % {:name => add_aeclass.fqname})
         @in_a_form = false
+        add_active_node_to_open_nodes
         replace_right_cell(:replace_trees => [:ae])
       end
     else
@@ -1302,6 +1304,7 @@ class MiqAeClassController < ApplicationController
     else
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
       @sb[:form_vars_set] = false
+      add_active_node_to_open_nodes
       replace_right_cell(:replace_trees => [:ae])
     end
   end
@@ -1318,6 +1321,7 @@ class MiqAeClassController < ApplicationController
     if add_ae_ns.valid? && !flash_errors? && add_ae_ns.save
       add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => add_ae_ns.class.name), :name => get_record_display_name(add_ae_ns)})
       @in_a_form = false
+      add_active_node_to_open_nodes
       replace_right_cell(:replace_trees => [:ae])
     else
       add_ae_ns.errors.each do |field, msg|
@@ -2727,6 +2731,11 @@ class MiqAeClassController < ApplicationController
     am_obj.errors.each do |field, msg|
       add_flash("#{field.to_s.capitalize} #{msg}", :error)
     end
+  end
+
+  def add_active_node_to_open_nodes
+    return unless @sb.dig('trees') && @sb.dig('trees').dig('ae_tree') && @sb.dig('trees').dig('ae_tree').dig('open_nodes')
+    @sb['trees']['ae_tree']['open_nodes'].push( @sb['trees']['ae_tree']['active_node']).uniq!
   end
 
   menu_section :automate
