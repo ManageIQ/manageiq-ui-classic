@@ -73,8 +73,7 @@ class NetworkRouterController < ApplicationController
       ems = ExtManagementSystem.find(params[:ems_id])
       task_id = ems.create_network_router_queue(session[:userid], options)
 
-      add_flash(_("Network Router creation failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      add_flash(_("Network Router creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
       if @flash_array
         javascript_flash(:spinner_off => true)
@@ -160,8 +159,7 @@ class NetworkRouterController < ApplicationController
       end
       task_id = @router.update_network_router_queue(session[:userid], options)
 
-      add_flash(_("Router update failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      add_flash(_("Router update failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
       if @flash_array
         javascript_flash(:spinner_off => true)
@@ -233,9 +231,8 @@ class NetworkRouterController < ApplicationController
         task_id = @router.add_interface_queue(session[:userid], cloud_subnet)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Add Interface on Subnet to Router \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+          add_flash(_("Add Interface on Subnet to Router \"%{name}\" failed: Task start failed") % {
             :name => @router.name,
-            :id   => task_id.inspect
           }, :error)
         end
 
@@ -327,9 +324,8 @@ class NetworkRouterController < ApplicationController
         task_id = @router.remove_interface_queue(session[:userid], cloud_subnet)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Remove Interface on Subnet from Router \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+          add_flash(_("Remove Interface on Subnet from Router \"%{name}\" failed: Task start failed") % {
             :name => @router.name,
-            :id   => task_id.inspect
           }, :error)
         end
 
