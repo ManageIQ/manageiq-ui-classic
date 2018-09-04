@@ -69,8 +69,7 @@ class SecurityGroupController < ApplicationController
         options.delete(:ems_id)
         task_id = ems.create_security_group_queue(session[:userid], options)
 
-        add_flash(_("Security Group creation: Task start failed: ID [%{id}]") %
-                  {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+        add_flash(_("Security Group creation: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
         if @flash_array
           javascript_flash(:spinner_off => true)
@@ -275,7 +274,7 @@ class SecurityGroupController < ApplicationController
 
   def task_started(task_id, message)
     unless task_id.kind_of?(Integer)
-      add_flash(_("%{message}: Task start failed: ID [%{id}]") % {:message => message, :id => task_id.to_s}, :error)
+      add_flash(_("%{message}: Task start failed") % {:message => message}, :error)
       return nil
     end
     true
