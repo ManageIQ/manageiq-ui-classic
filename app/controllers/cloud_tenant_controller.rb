@@ -85,8 +85,7 @@ class CloudTenantController < ApplicationController
 
       task_id = CloudTenant.create_cloud_tenant_queue(session[:userid], ems, options)
 
-      add_flash(_("Cloud tenant creation failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      add_flash(_("Cloud tenant creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
       if @flash_array
         javascript_flash(:spinner_off => true)
@@ -141,8 +140,7 @@ class CloudTenantController < ApplicationController
       options = form_params
       task_id = @tenant.update_cloud_tenant_queue(session[:userid], options)
 
-      add_flash(_("Cloud tenant creation failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      add_flash(_("Cloud tenant creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
       if @flash_array
         javascript_flash(:spinner_off => true)
