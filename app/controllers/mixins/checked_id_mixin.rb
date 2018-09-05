@@ -32,22 +32,6 @@ module Mixins
     # Params:
     #   klass - class of accessed objects
     # Returns:
-    #   array of checked items. If user does not have rigts for it,
-    #   raises exception
-    def find_checked_ids_with_rbac(klass, prefix = nil)
-      items = find_checked_items(prefix)
-      assert_rbac(klass, items)
-      items
-    end
-
-    # !============================================!
-    # PLEASE PREFER find_records_with_rbac OVER THIS
-    # !============================================!
-    #
-    # Test RBAC on every item checked
-    # Params:
-    #   klass - class of accessed objects
-    # Returns:
     #   array of records. If user does not have rigts for it,
     #   raises exception
     def find_checked_records_with_rbac(klass, ids = nil)

@@ -252,7 +252,6 @@ describe NetworkRouterController do
                                          :id      => @router.id)
         controller.instance_variable_set(:@lastaction, "show")
         controller.instance_variable_set(:@layout, "network_router")
-        allow(controller).to receive(:find_checked_ids_with_rbac).and_return([@router])
         allow(controller).to receive(:find_id_with_rbac).and_return([@router])
         controller.instance_variable_set(:@breadcrumbs, [{:name => "foo", :url => "network_router/show_list"}, {:name => "bar", :url => "network_router/show"}])
         expect(controller).to receive(:render)
