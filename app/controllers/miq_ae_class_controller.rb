@@ -2734,8 +2734,8 @@ class MiqAeClassController < ApplicationController
   end
 
   def add_active_node_to_open_nodes
-    return unless @sb.dig('trees') && @sb.dig('trees').dig('ae_tree') && @sb.dig('trees').dig('ae_tree').dig('open_nodes')
-    @sb['trees']['ae_tree']['open_nodes'].push( @sb['trees']['ae_tree']['active_node']).uniq!
+    return unless @sb.dig('trees', 'ae_tree', 'open_nodes')
+    @sb['trees']['ae_tree']['open_nodes'].push(@sb['trees']['ae_tree']['active_node']).uniq!
   end
 
   menu_section :automate
