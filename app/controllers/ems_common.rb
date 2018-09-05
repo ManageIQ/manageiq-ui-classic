@@ -253,6 +253,13 @@ module EmsCommon
       when "host_manageable"                  then sethoststomanageable
       when "host_introspect"                  then introspecthosts
       when "host_provide"                     then providehosts
+      # Host Aggregates
+      when 'host_aggregate_new'               then javascript_redirect(:action => 'new')
+      when 'host_aggregate_edit'              then javascript_redirect(:action => 'edit', :id => checked_item_id)
+      when 'host_aggregate_delete'            then delete_host_aggregates
+      when 'host_aggregate_add_host'          then javascript_redirect(:action => 'add_host_select', :id => checked_item_id)
+      when 'host_aggregate_remove_host'       then javascript_redirect(:action => 'remove_host_select', :id => checked_item_id)
+      when 'host_aggregate_tag'               then tag(HostAggregate)
       # Storages
       when "storage_delete"                   then deletestorages
       when "storage_scan"                     then scanstorage
