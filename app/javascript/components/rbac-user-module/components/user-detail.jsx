@@ -14,18 +14,20 @@ export class UserDetail extends Component {
   }
 
   componentDidMount() {
-    this.props.resetSelectedUsers([this.props.user]);
-    this.handleLoadUserTags(this.props.user.id);
+    this.updateUserTags();
   }
 
   componentDidUpdate({ user: { id } }) {
     if (id !== this.props.user.id) {
-      this.props.resetSelectedUsers([this.props.user]);
-      this.handleLoadUserTags(this.props.user.id);
+      this.updateUserTags();
     }
   }
 
-  handleLoadUserTags = userId => http.get(`/ops/get_user_tags?user_id=${userId}`).then(data => this.setState({ ...data }));
+  handleLoadUserTags = userId => http.get(`/ops/user_tags?user_id=${userId}`).then(data => this.setState({ ...data }));
+  updateUserTags = () => {
+    this.props.resetSelectedUsers([this.props.user]);
+    this.handleLoadUserTags(this.props.user.id);
+  }
 
   render() {
     const { tenant, tags } = this.state;

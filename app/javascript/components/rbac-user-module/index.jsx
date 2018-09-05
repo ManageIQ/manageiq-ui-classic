@@ -70,6 +70,7 @@ class RbacModule extends Component {
 
   componentWillUnmount() {
     this.historyUnlisten();
+    this.rxSubscription.unsubscribe();
   }
 
   chooseRoute = (type = 'default') => ({
@@ -95,12 +96,7 @@ class RbacModule extends Component {
     });
 
   render() {
-    const {
-      isLoaded,
-    } = this.props;
-    if (!isLoaded) {
-      return <div><Spinner loading size="lg" /></div>;
-    }
+    if (!this.props.isLoaded) return <div><Spinner loading size="lg" /></div>;
     return (
       <Grid fluid>
         <Row>
@@ -108,7 +104,6 @@ class RbacModule extends Component {
             <FlashMessages />
           </Col>
           <Col xs={12}>
-            <h1>Rbac module</h1>
             <ConnectedRouter history={ManageIQ.redux.history}>
               <div>
                 <Route exact path="/" component={RbacUsersList} />
@@ -148,13 +143,13 @@ RbacModule.propTypes = {
   editUserId: PropTypes.string,
   deleteUser: PropTypes.func.isRequired,
   deleteMultipleusers: PropTypes.func.isRequired,
-  selectedUsers: PropTypes.arrayOf(PropTypes.object),
+  selectedUsers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.bool]),
   isLoaded: PropTypes.bool.isRequired,
 };
 
 RbacModule.defaultProps = {
   editUserId: undefined,
-  selectedUsers: undefined,
+  selectedUsers: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RbacModule);

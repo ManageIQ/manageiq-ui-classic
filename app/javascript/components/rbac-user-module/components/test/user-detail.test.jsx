@@ -35,12 +35,12 @@ describe('User detail component', () => {
 
   it('should render user with tags', () => {
     fetchMock
-      .getOnce('/ops/get_user_tags?user_id=1', []);
+      .getOnce('/ops/user_tags?user_id=1', []);
     const wrapper = shallow(<UsersDetail store={store} {...initialProps} />).dive();
     wrapper.setState({ tenant: 'foo', tags: [] });
     wrapper.update();
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(fetchMock._allCalls).toHaveLength(1); // eslint-disable-line no-underscore-dangle
-    expect(fetchMock._allCalls[0][0]).toEqual('/ops/get_user_tags?user_id=1'); // eslint-disable-line no-underscore-dangle
+    expect(fetchMock._allCalls[0][0]).toEqual('/ops/user_tags?user_id=1'); // eslint-disable-line no-underscore-dangle
   });
 });

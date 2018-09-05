@@ -97,10 +97,7 @@ export const requestUsers = () => (dispatch) => {
     })))
     .then(data => dispatch(loadUsersData({ rows: data })))
     .then(() => dispatch(fetchSucesfull()))
-    .catch((error) => {
-      console.log('Fetch users error: ', error);
-      dispatch(fetchFailed());
-    });
+    .catch(() => dispatch(fetchFailed()));
 };
 
 export const handleUpdateUsersTree = () => dispatch =>
@@ -130,7 +127,7 @@ export const saveUser = user => (dispatch) => {
     .then(() => dispatch(navigate('/')))
     .catch((error) => {
       if (!error.data) {
-        error.data = {
+        error.data = { // eslint-disable-line no-param-reassign
           error: { message: `User could not be saved, ${error.message}` },
         };
       }
@@ -147,15 +144,12 @@ export const deleteUser = userId => (dispatch, getState) => {
     .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was deleted'), name), 'success')))
     .then(() => dispatch(requestUsers()))
     .then(() => dispatch(handleUpdateUsersTree()))
-    .catch((error) => {
-      dispatch(fetchFailed());
-      console.log(error);
-    });
+    .catch(() => dispatch(fetchFailed()));
 };
 
 export const editUser = (user, userId) => (dispatch) => {
   dispatch(fetchData(actionTypes.EDIT_USER));
-  return API.put(endpoints.modifyUserUrl(userId), user)
+  return API.put(endpoints.modifyUserUrl(userId), user, { skipErrors: [500] })
     .then(
       () => dispatch(navigate('/')),
       (err) => { throw err; },
@@ -164,8 +158,13 @@ export const editUser = (user, userId) => (dispatch) => {
     .then(() => dispatch(requestUsers()))
     .then(() => dispatch(handleUpdateUsersTree()))
     .catch((error) => {
-      console.log('edit user error: ', error);
-      dispatch(fetchFailed());
+      if (!error.data) {
+        error.data = { // eslint-disable-line no-param-reassign
+          error: { message: `User could not be saved, ${error.message}` },
+        };
+      }
+      dispatch(createFlashMessage(error.data.error.message, 'error'));
+      dispatch(fetchFailed);
     });
 };
 
@@ -259,7 +258,4 @@ export const editUserTags = (unAssignPayload, assignPayload) =>
     ).then(() => dispatch(navigate('/')))
     .then(() => dispatch(createFlashMessage(__('Tag edits were successfully saved'), 'success')))
     .then(dispatch(fetchSucesfull))
-    .catch((error) => {
-      console.log('tags error: ', error);
-      dispatch(createFlashMessage(error, 'error'));
-    });
+    .catch(error => dispatch(createFlashMessage(error, 'error')));

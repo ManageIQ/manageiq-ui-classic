@@ -12,19 +12,21 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
           t = N_('Edit this User'),
           t,
           :data => {
-            'function' => 'sendDataWithRx',
-            'function-data' => { rbacRouting: { "type": "rbac-user-edit" } }
-          }),
+            'function'      => 'sendDataWithRx',
+            'function-data' => { :rbacRouting => { :type => "rbac-user-edit" } }
+          }
+        ),
         button(
           :rbac_user_copy,
           'fa fa-files-o fa-lg',
           t = N_('Copy this User to a new User'),
           t,
           :klass => ApplicationHelper::Button::RbacUserCopy,
-          :data => {
-            'function' => 'sendDataWithRx',
-            'function-data' => { rbacRouting: { "type": "rbac-user-copy" } }
-          }),
+          :data  => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => { :rbacRouting => { :type => "rbac-user-copy" } }
+          }
+        ),
         button(
           :rbac_user_delete,
           'pficon pficon-delete fa-lg',
@@ -33,10 +35,11 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
           :url_parms => "&refresh=y",
           :confirm   => N_("Are you sure you want to delete this User?"),
           :klass     => ApplicationHelper::Button::RbacUserDelete,
-          :data => {
-            'function' => 'sendDataWithRx',
-            'function-data' => { rbacRouting: { "type": "rbac-user-delete" } }
-          }),
+          :data      => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => { :rbacRouting => { :type => "rbac-user-delete" } }
+          }
+        ),
       ]
     ),
   ])
@@ -55,9 +58,10 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
           end,
           t,
           :data => {
-            'function' => 'sendDataWithRx',
-            'function-data' => { rbacRouting: { "type": "rbac-user-tags" } }
-          }),
+            'function'      => 'sendDataWithRx',
+            'function-data' => { :rbacRouting => { :type => "rbac-user-tags" } }
+          }
+        ),
       ]
     ),
   ])

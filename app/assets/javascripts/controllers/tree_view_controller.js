@@ -11,8 +11,8 @@
     vm.reactRouting = false;
 
     listenToRx(function(payload) {
-      if (payload.type === 'init-react-routing' && !vm.reactRouting) {
-        vm.reactRouting = !!payload.reactRouting;
+      if (payload.type === 'init-react-routing' && ! vm.reactRouting) {
+        vm.reactRouting = !! payload.reactRouting;
         vm.$scope.$apply();
       }
       if (payload.type === 'disable-react-routing') {
@@ -107,17 +107,24 @@
       });
     };
 
+    vm.matchReactRoute = function(node) {
+      return node.key.match(/^u-[0-9]+$/) || node.key.match(/xx-u/);
+    };
+
+    vm.resolveReactRoute = function(node) {
+      ManageIQ.redux.push(node.key.match(/xx-u/) ? '/' : '/preview/' + node.key.substring(2));
+      vm.reactRouting = true;
+    };
+
     vm.nodeSelect = function(node, path) {
       var url = path + '?id=' + encodeURIComponent(node.key.split('__')[0]);
-      if (vm.reactRouting && (node.key.match(/^u-[0-9]+$/) || node.key.match(/xx-u/))) {
+      if (vm .reactRouting && vm.matchReactRoute(node)) {
         // routing inside react module
-        ManageIQ.redux.push(node.key.match(/xx-u/) ? '/' : '/preview/' + node.key.substring(2));
-        vm.reactRouting = true;
+        vm.resolveReactRoute(node);
         return;
-      } else if (!vm.reactRouting && (node.key.match(/^u-[0-9]+$/) || node.key.match(/xx-u/))) {
+      } else if (! vm.reactRouting && vm.matchReactRoute(node)) {
         // routing while entering react module
-        vm.reactRouting = true;
-        ManageIQ.redux.push(node.key.match(/xx-u/) ? '/' : '/preview/' + node.key.substring(2));
+        vm.resolveReactRoute(node);
         miqJqueryRequest(url, {beforeSend: true});
         return;
       } else if (vm.reactRouting) {

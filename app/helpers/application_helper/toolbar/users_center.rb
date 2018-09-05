@@ -12,9 +12,10 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           t = N_('Add a new User'),
           t,
           :data => {
-            'function' => 'sendDataWithRx',
-            'function-data' => { rbacRouting: { "type": "rbac-user-list-add" } }
-          }),
+            'function'      => 'sendDataWithRx',
+            'function-data' => { :rbacRouting => { :type => "rbac-user-list-add" } }
+          }
+        ),
         button(
           :rbac_user_edit,
           'pficon pficon-edit fa-lg',
@@ -23,10 +24,11 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1",
-          :data => {
-            'function' => 'sendDataWithRx',
-            'function-data' => { rbacRouting: { "type": "rbac-user-list-edit" } }
-          }),
+          :data         => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => { :rbacRouting => { :type => "rbac-user-list-edit" } }
+          }
+        ),
         button(
           :rbac_user_copy,
           'fa fa-files-o fa-lg',
@@ -35,10 +37,11 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1",
-          :data => {
-            'function' => 'sendDataWithRx',
-            'function-data' => { rbacRouting: { "type": "rbac-user-list-copy" } }
-          }),
+          :data         => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => { :rbacRouting => { :type => "rbac-user-list-copy" } }
+          }
+        ),
         button(
           :rbac_user_delete,
           'pficon pficon-delete fa-lg',
@@ -48,10 +51,11 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           :confirm      => N_("Delete all selected Users?"),
           :enabled      => false,
           :onwhen       => "1+",
-          :data => {
-            'function' => 'sendDataWithRx',
-            'function-data' => { rbacRouting: { "type": "rbac-user-list-delete" } }
-          }),
+          :data         => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => { :rbacRouting => { :type => "rbac-user-list-delete" } }
+          }
+        ),
       ]
     ),
   ])
@@ -74,10 +78,11 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1+",
-          :data => {
-            'function' => 'sendDataWithRx',
-            'function-data' => { rbacRouting: { "type": "rbac-user-list-tags" } }
-          }),
+          :data         => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => { :rbacRouting => { :type => "rbac-user-list-tags" } }
+          }
+        ),
       ]
     ),
   ])

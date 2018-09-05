@@ -6,7 +6,6 @@ exports[`User add component should render form for user adding 1`] = `
     User add
   </h1>
   <RbacUserForm
-    editDisabled={false}
     groups={
       Array [
         Object {
@@ -28,7 +27,6 @@ exports[`User add component should render form for user editing 1`] = `
     User add
   </h1>
   <RbacUserForm
-    editDisabled={false}
     groups={
       Array [
         Object {
@@ -59,7 +57,6 @@ exports[`User add component should render form form user copying 1`] = `
     User add
   </h1>
   <RbacUserForm
-    editDisabled={false}
     groups={
       Array [
         Object {

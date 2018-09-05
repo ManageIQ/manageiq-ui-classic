@@ -8,6 +8,13 @@ import TagsAssignment, { TagAssignment as NotConnectedTagAssignment } from '../t
 
 describe('Tag assignment component', () => {
   const mockStore = configureStore([thunk]);
+  const selectedUsersMock = [{
+    id: '1',
+    name: 'foo',
+    current_group: { label: 'foo group', value: 1 },
+    role: { label: 'foo role', value: 1 },
+    tags: [],
+  }];
   let store;
   let filledStore;
   let initialProps;
@@ -24,13 +31,7 @@ describe('Tag assignment component', () => {
           property: 'name',
           label: 'Full Name',
         }],
-        selectedUsers: [{
-          id: '1',
-          name: 'foo',
-          current_group: { label: 'foo group', value: 1 },
-          role: { label: 'foo role', value: 1 },
-          tags: [],
-        }],
+        selectedUsers: selectedUsersMock,
         categories: [{ value: '123', label: 'foo', name: 'foo' }],
       },
     });
@@ -41,13 +42,7 @@ describe('Tag assignment component', () => {
       createFlashMessage: jest.fn(),
       editUserTags: jest.fn(),
       columns: [{ property: 'name', label: 'Full Name' }],
-      selectedUsers: [{
-        id: '1',
-        name: 'foo',
-        current_group: { label: 'foo group', value: 1 },
-        role: { label: 'foo role', value: 1 },
-        tags: [],
-      }],
+      selectedUsers: selectedUsersMock,
       loadTagsCategories: jest.fn(),
     };
   });

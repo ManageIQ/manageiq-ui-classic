@@ -1,4 +1,4 @@
-const prefix = '@@manageiq/users/'
+const prefix = '@@manageiq/users/';
 export const LOAD_DATA = `${prefix}Load users data`;
 export const SELECT_USERS = `${prefix}Select users from list`;
 export const SAVE_USER = `${prefix}Save user`;

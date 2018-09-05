@@ -92,22 +92,22 @@ class OpsController < ApplicationController
   end
 
   def load_tags_categories
-    cats = Classification.eager_load(:tag).visible.writeable.categories.delete_if { |c| c.entries.length == 0 } # Get the categories, sort by description
-    data = cats.map{ |c| {:id =>c.id.to_s, :name => c.name, :description => c.description, :tag_id => c.tag_id.to_s } }
+    cats = Classification.eager_load(:tag).visible.writeable.categories.delete_if { |c| c.entries.length.zero? }
+    data = cats.map { |c| {:id => c.id.to_s, :name => c.name, :description => c.description, :tag_id => c.tag_id.to_s } }
     render :json => data
   end
 
-  def get_category_entries
-    x = Classification.find_by_id(params[:cat_id])
+  def category_entries
+    x = Classification.find_by(:id => params[:cat_id])
     render :json => x.entries.map { |entry| { :value => entry[:id], :label => entry[:description], :name => entry.tag[:name] } }
   end
 
-  def get_category_entries_multi
+  def category_entries_multi
     category_entries = {}
-    params[:ids].map { |category_id|
-      cat = Classification.find_by_id(category_id)
+    params[:ids].map do |category_id|
+      cat = Classification.find_by(:id => category_id)
       category_entries[category_id] = cat.entries.map { |entry| { :value => entry[:tag_id], :label => entry[:description], :name => entry.tag[:name] } }
-    }
+    end
     render :json => category_entries
   end
 
@@ -120,7 +120,7 @@ class OpsController < ApplicationController
     render :json => {:toolbar => toolbar, :id => params[:id]}
   end
 
-  def get_user_tags
+  def user_tags
     user_id = params[:user_id]
     user = User.find(user_id)
     entries = Classification.find_assigned_entries(user)

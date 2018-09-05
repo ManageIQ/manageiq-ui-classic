@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { loadTagsCategories, createFlashMessage, editUserTags } from '../redux/actions';
 import { http } from '../../../http_api';
 
-const categoryEntryEndpoint = categoryId => `/ops/get_category_entries?cat_id=${categoryId}`;
+const categoryEntryEndpoint = categoryId => `/ops/category_entries?cat_id=${categoryId}`;
 
 export class TagAssignment extends Component {
   componentDidMount() {
@@ -23,7 +23,12 @@ export class TagAssignment extends Component {
   };
 
   handleLoadMultipleEntries = categories =>
-    http.get(`/ops/get_category_entries_multi?ids[]=${categories.join('&ids[]=')}`);
+    http.get(`/ops/category_entries_multi?ids[]=${categories.join('&ids[]=')}`);
+
+  createResourcePayload = (action, users, tags) => ({
+    action,
+    resources: users.map(({ href }) => ({ href, tags })),
+  });
 
   handleSaveTags = (selectedTags, initialTags, users) => {
     const deletedCatgeoryKeys = Object.keys(initialTags).filter(tagKey => !selectedTags[tagKey]);
@@ -36,14 +41,8 @@ export class TagAssignment extends Component {
       return { category, name };
     });
 
-    const unAssignPayload = {
-      action: 'unassign_tags',
-      resources: users.map(({ href }) => ({ href, tags: unAssignedTags })),
-    };
-    const assignPayload = {
-      action: 'assign_tags',
-      resources: users.map(({ href }) => ({ href, tags: assignedTags })),
-    };
+    const unAssignPayload = this.createResourcePayload('unassign_tags', users, unAssignedTags);
+    const assignPayload = this.createResourcePayload('assign_tags', users, assignedTags);
     this.props.editUserTags(unAssignPayload, assignPayload);
   }
 

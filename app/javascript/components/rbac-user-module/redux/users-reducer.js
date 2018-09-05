@@ -1,27 +1,5 @@
 import * as actionTypes from './action-types';
-
-const columns = [{
-  property: 'name',
-  label: 'Full Name',
-}, {
-  property: 'userid',
-  label: 'Username',
-}, {
-  property: 'email',
-  label: 'E-mail',
-}, {
-  property: 'current_group',
-  label: 'Current Group',
-}, {
-  property: 'role',
-  label: 'Role',
-}, {
-  property: 'lastlogon',
-  label: 'Last Logon',
-}, {
-  property: 'lastlogoff',
-  label: 'Last Logoff',
-}];
+import columns from './users-table-columns';
 
 const handleSelectUser = (users = [], user) =>
   (user.selected ? [...users, user] : users.filter(({ id }) => id !== user.id));

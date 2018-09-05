@@ -36,10 +36,12 @@ class UserAdd extends Component {
 
   render() {
     const {
-      groups, saveUser, isEditing, editUser, user, copy,
+      groups,
+      isEditing,
+      user,
+      copy,
     } = this.props;
-    if (isEditing && !user) return <Redirect to="/add" />;
-    if (copy && !user) return <Redirect to="/add" />;
+    if ((isEditing && !user) || (copy && !user)) return <Redirect to="/add" />;
     if (!groups) return <div><Spinner loading size="lg" /></div>;
     const initialValues = copy ? { ...user, userid: undefined } : user;
     return (
@@ -53,8 +55,8 @@ class UserAdd extends Component {
             : undefined}
           onCancel={this.handleCancelClicked}
           onSave={values => (isEditing
-            ? editUser(parseUserValues(values), user.id)
-            : saveUser(parseUserValues(values)))}
+            ? this.props.editUser(parseUserValues(values), user.id)
+            : this.props.saveUser(parseUserValues(values)))}
         />
       </div>
     );

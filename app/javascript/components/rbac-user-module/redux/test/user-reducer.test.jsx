@@ -1,31 +1,25 @@
 import usersReducer from '../users-reducer';
 import * as actionTypes from '../action-types';
+import usersColumns from '../users-table-columns';
 
 describe('Users reducer', () => {
   let columns;
+  const testPayload = [{
+    id: 1,
+    label: 'foo',
+  }, {
+    id: 2,
+    label: 'bar',
+  }, {
+    id: 3,
+    label: 'pedro',
+  }];
+  const selectedUsersMock = [{
+    label: 'foo',
+    id: 'bar',
+  }];
   beforeAll(() => {
-    columns = [{
-      property: 'name',
-      label: 'Full Name',
-    }, {
-      property: 'userid',
-      label: 'Username',
-    }, {
-      property: 'email',
-      label: 'E-mail',
-    }, {
-      property: 'current_group',
-      label: 'Current Group',
-    }, {
-      property: 'role',
-      label: 'Role',
-    }, {
-      property: 'lastlogon',
-      label: 'Last Logon',
-    }, {
-      property: 'lastlogoff',
-      label: 'Last Logoff',
-    }];
+    columns = [...usersColumns];
   });
 
   it('should return initial state', () => {
@@ -65,16 +59,7 @@ describe('Users reducer', () => {
   });
 
   it('should store tag categories', () => {
-    const actionPayload = [{
-      id: 1,
-      label: 'foo',
-    }, {
-      id: 2,
-      label: 'bar',
-    }, {
-      id: 3,
-      label: 'pedro',
-    }];
+    const actionPayload = testPayload;
     const initialState = {};
     const expectedState = { categories: [...actionPayload] };
     expect(usersReducer(initialState, {
@@ -84,16 +69,7 @@ describe('Users reducer', () => {
   });
 
   it('should store users tree', () => {
-    const actionPayload = [{
-      id: 1,
-      label: 'foo',
-    }, {
-      id: 2,
-      label: 'bar',
-    }, {
-      id: 3,
-      label: 'pedro',
-    }];
+    const actionPayload = testPayload;
     const initialState = {};
     const expectedState = { usersTree: [...actionPayload] };
     expect(usersReducer(initialState, {
@@ -103,16 +79,7 @@ describe('Users reducer', () => {
   });
 
   it('should store users groups', () => {
-    const actionPayload = [{
-      id: 1,
-      label: 'foo',
-    }, {
-      id: 2,
-      label: 'bar',
-    }, {
-      id: 3,
-      label: 'pedro',
-    }];
+    const actionPayload = testPayload;
     const initialState = {};
     const expectedState = { groups: [...actionPayload] };
     expect(usersReducer(initialState, {
@@ -121,26 +88,16 @@ describe('Users reducer', () => {
     })).toEqual(expectedState);
   });
 
-  it('should reset sected users to undefined', () => {
-    const initialState = {
-      selectedUsers: [{
-        label: 'foo',
-        id: 'bar',
-      }],
-    };
+  it('should reset selected users to undefined', () => {
+    const initialState = { selectedUsers: selectedUsersMock };
     const expectedState = { selectedUsers: undefined };
     expect(usersReducer(initialState, {
       type: actionTypes.RESET_SELECTED_USERS,
     })).toEqual(expectedState);
   });
 
-  it('should reset sected users to action payload', () => {
-    const initialState = {
-      selectedUsers: [{
-        label: 'foo',
-        id: 'bar',
-      }],
-    };
+  it('should reset selected users to action payload', () => {
+    const initialState = { selectedUsers: selectedUsersMock };
     const expectedState = { selectedUsers: [1, 2, 3] };
     expect(usersReducer(initialState, {
       type: actionTypes.RESET_SELECTED_USERS,
@@ -149,11 +106,9 @@ describe('Users reducer', () => {
   });
 
   it('should add user to selected users', () => {
-    const initialState = {
-      selectedUsers: [{ id: 'foo' }, { id: 'bar' }],
-    };
+    const initialState = { selectedUsers: selectedUsersMock };
     const expectedState = {
-      selectedUsers: [{ id: 'foo' }, { id: 'bar' }, { id: 'new user', selected: true }],
+      selectedUsers: [...selectedUsersMock, { id: 'new user', selected: true }],
     };
     expect(usersReducer(initialState, {
       type: actionTypes.SELECT_USERS,
@@ -162,12 +117,8 @@ describe('Users reducer', () => {
   });
 
   it('should remove user to selected users', () => {
-    const initialState = {
-      selectedUsers: [{ id: 'foo' }, { id: 'bar' }, { id: 'new user' }],
-    };
-    const expectedState = {
-      selectedUsers: [{ id: 'foo' }, { id: 'bar' }],
-    };
+    const initialState = { selectedUsers: [...selectedUsersMock, { id: 'new user' }] };
+    const expectedState = { selectedUsers: selectedUsersMock };
     expect(usersReducer(initialState, {
       type: actionTypes.SELECT_USERS,
       selectedUser: { id: 'new user', selected: false },

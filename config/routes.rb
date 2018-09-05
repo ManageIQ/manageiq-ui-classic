@@ -2513,9 +2513,9 @@ Rails.application.routes.draw do
         fetch_build
         fetch_log
         fetch_production_log
-        get_category_entries
-        get_category_entries_multi
-        get_user_tags
+        category_entries
+        category_entries_multi
+        user_tags
         load_tags_categories
         log_collection_form_fields
         log_protocol_changed
