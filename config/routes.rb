@@ -2591,8 +2591,6 @@ Rails.application.routes.draw do
         rbac_tenant_edit
         rbac_tenants_list
         rbac_tenant_manage_quotas
-        rbac_user_edit
-        rbac_user_field_changed
         rbac_users_list
         region_edit
         region_form_field_changed

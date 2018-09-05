@@ -36,11 +36,6 @@ class OpsController < ApplicationController
     'rbac_role_edit'            => :rbac_role_edit,
     'rbac_role_copy'            => :rbac_role_copy,
     'rbac_role_delete'          => :rbac_role_delete,
-    'rbac_user_add'             => :rbac_user_add,
-    'rbac_user_edit'            => :rbac_user_edit,
-    'rbac_user_copy'            => :rbac_user_copy,
-    'rbac_user_delete'          => :rbac_user_delete,
-    'rbac_user_tags_edit'       => :rbac_tags_edit,
     'rbac_tenant_add'           => :rbac_tenant_add,
     'rbac_project_add'          => :rbac_tenant_add,
     'rbac_tenant_delete'        => :rbac_tenant_delete,
@@ -498,16 +493,13 @@ class OpsController < ApplicationController
         locals[:serialize] = true if @sb[:active_tab] == "settings_advanced"
       end
     elsif x_active_tree == :rbac_tree
-      if %w(rbac_user_add rbac_user_copy rbac_user_edit).include?(@sb[:action])
-        action_url = "rbac_user_edit"
-        record_id = @edit[:user_id] ? @edit[:user_id] : nil
-      elsif %w(rbac_role_add rbac_role_copy rbac_role_edit).include?(@sb[:action])
+      if %w(rbac_role_add rbac_role_copy rbac_role_edit).include?(@sb[:action])
         action_url = "rbac_role_edit"
         record_id = @edit[:role_id] ? @edit[:role_id] : nil
       elsif %w(rbac_group_add rbac_group_edit).include?(@sb[:action])
         action_url = "rbac_group_edit"
         record_id = @edit[:group_id] ? @edit[:group_id] : nil
-      elsif %w(rbac_group_tags_edit rbac_user_tags_edit rbac_tenant_tags_edit).include?(@sb[:action])
+      elsif %w(rbac_group_tags_edit rbac_tenant_tags_edit).include?(@sb[:action])
         action_url = "rbac_tags_edit"
         locals[:multi_record] = true    # need save/cancel buttons on edit screen even tho @record.id is not there
         record_id = @edit[:object_ids][0]

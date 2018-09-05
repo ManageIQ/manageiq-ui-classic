@@ -542,17 +542,6 @@ describe OpsController do
 
     subject { controller.instance_variable_get(:@edit)[:new][:group] }
 
-    context 'editing/adding a new user' do
-      let(:rec_type) { "user" }
-      let(:params) { {:name => "new_user", :id => "new", :chosen_group => "12,34"} }
-      let(:edit) { {:new => {:name => nil, :group => []}} }
-
-      it 'sets list of selected groups' do
-        controller.send(:rbac_field_changed, rec_type)
-        expect(subject.count).to eq(2)
-      end
-    end
-
     context 'editing/adding a new group' do
       let(:rec_type) { "group" }
       let(:params) { {:description => "new_group", :id => "new"} }

@@ -20,44 +20,12 @@ module OpsController::OpsRbac
       nodes = x_node.split('-')
       tagging = if nodes.first == "g" || nodes.last == "g"
                   'MiqGroup'
-                elsif nodes.first == "u" || nodes.last == "u"
-                  'User'
                 elsif nodes.first == "tn" || nodes.last == "tn"
                   'Tenant'
                 else
                   params[:tagging]
                 end
       rbac_edit_tags_reset(tagging)
-    end
-  end
-
-  def rbac_user_add
-    assert_privileges("rbac_user_add")
-    rbac_edit_reset('new', 'user', User)
-  end
-
-  def rbac_user_copy
-    # get users id either from gtl check or detail id
-    user_id = params[:miq_grid_checks].present? ? params[:miq_grid_checks] : params[:id]
-    user = User.find(user_id)
-    # check if it is allowed to copy the user
-    if rbac_user_copy_restriction?(user)
-      rbac_restricted_user_copy_flash(user)
-    end
-    if @flash_array
-      javascript_flash
-      return
-    end
-    assert_privileges("rbac_user_copy")
-    rbac_edit_reset('copy', 'user', User)
-  end
-
-  def rbac_user_edit
-    assert_privileges("rbac_user_edit")
-    case params[:button]
-    when 'cancel'      then rbac_edit_cancel('user')
-    when 'save', 'add' then rbac_edit_save_or_add('user')
-    when 'reset', nil  then rbac_edit_reset(params[:typ], 'user', User) # Reset or first time in
     end
   end
 
@@ -181,7 +149,7 @@ module OpsController::OpsRbac
     }
   end
 
-  # Edit user or group tags
+  # Edit group or tags
   def rbac_tenant_tags_edit
     case params[:button]
     when "cancel"
@@ -195,61 +163,12 @@ module OpsController::OpsRbac
   end
 
   # AJAX driven routines to check for changes in ANY field on the form
-  def rbac_user_field_changed
-    rbac_field_changed("user")
-  end
-
   def rbac_group_field_changed
     rbac_field_changed("group")
   end
 
   def rbac_role_field_changed
     rbac_field_changed("role")
-  end
-
-  def rbac_user_delete
-    assert_privileges("rbac_user_delete")
-    users = []
-    if params[:id] # showing a list
-      if params[:id].nil? || !User.exists?(params[:id])
-        add_flash(_("User no longer exists"), :error)
-      else
-        user = User.find(params[:id])
-        if rbac_user_delete_restriction?(user)
-          rbac_restricted_user_delete_flash(user)
-        else
-          users.push(params[:id])
-        end
-      end
-      if @flash_array
-        javascript_flash
-        return
-      end
-      process_users(users, "destroy") unless users.empty?
-      self.x_node = "xx-u" # reset node to show list
-    else # showing 1 user, delete it
-      ids = find_checked_items.collect { |r| r.to_s.split("-").last }
-      users = User.where(:id => ids).compact
-      if users.empty?
-        add_flash(_("Default EVM User \"Administrator\" cannot be deleted"), :error)
-        javascript_flash
-        return
-      else
-        restricted_users = []
-        users.each do |u|
-          user = User.find(u)
-          restricted_users.push(user) if rbac_user_delete_restriction?(user)
-        end
-        # deleting elements in temporary array, had to create temp array to hold id's to be delete, .each gets confused if i deleted them in above loop
-        restricted_users.each do |u|
-          rbac_restricted_user_delete_flash(u)
-          users.delete(u)
-        end
-      end
-      process_users(users, "destroy") unless users.empty?
-    end
-    get_node_info(x_node)
-    replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
   end
 
   def rbac_role_delete
@@ -496,26 +415,6 @@ module OpsController::OpsRbac
 
   # super administrator user with `userid` == "admin" can not be deleted
   # and user can not delete himself
-  def rbac_user_delete_restriction?(user)
-    ["admin", session[:userid]].include?(user.userid)
-  end
-
-  def rbac_user_copy_restriction?(user)
-    user.super_admin_user?
-  end
-
-  def rbac_restricted_user_delete_flash(user)
-    msg = if user.super_admin_user?
-            _("Default EVM User \"%{name}\" cannot be deleted")
-          else
-            _("Current EVM User \"%{name}\" cannot be deleted")
-          end
-    add_flash(msg % {:name => user.name}, :error)
-  end
-
-  def rbac_restricted_user_copy_flash(user)
-    add_flash(_("Default EVM User \"%{name}\" cannot be copied") % {:name => user.name}, :error)
-  end
 
   def rbac_edit_tags_reset(tagging)
     @object_ids = find_records_with_rbac(tagging.constantize, checked_or_params).ids
@@ -562,8 +461,6 @@ module OpsController::OpsRbac
       record_id = @edit[:role_id]
     when :group
       record_id = @edit[:group_id]
-    when :user
-      record_id = @edit[:user_id]
     when :tenant
       record_id = id
     end
@@ -605,8 +502,6 @@ module OpsController::OpsRbac
       # copy existing record
       @record = record.clone
       case key
-      when :user
-        @record.current_group = record.current_group
       when :group
         @record.miq_user_role = record.miq_user_role
       when :role
@@ -621,7 +516,6 @@ module OpsController::OpsRbac
 
     # set form fields according to what is copied
     case key
-    when :user  then rbac_user_set_form_vars
     when :group then rbac_group_set_form_vars
     when :role  then rbac_role_set_form_vars
     end
@@ -641,10 +535,6 @@ module OpsController::OpsRbac
     return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
 
     case key
-    when :user
-      record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
-      validated = rbac_user_validate?
-      rbac_user_set_record_vars(record)
     when :group then
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
@@ -667,7 +557,6 @@ module OpsController::OpsRbac
         suffix = case rbac_suffix
                  when "group"         then "g"
                  when "miq_user_role" then "ur"
-                 when "user"          then "u"
                  end
         self.x_node = "xx-#{suffix}" # reset node to show list
         send("rbac_#{what.pluralize}_list")
@@ -726,7 +615,6 @@ module OpsController::OpsRbac
     return unless load_edit("rbac_#{rec_type}_edit__#{id}", "replace_cell__explorer")
 
     case rec_type
-    when "user"  then rbac_user_get_form_vars
     when "group" then rbac_group_get_form_vars
     when "role"  then rbac_role_get_form_vars
     end
@@ -748,11 +636,6 @@ module OpsController::OpsRbac
         end
         bad = false
       else
-        # only do following for user (adding/editing a user)
-        if x_node.split("-").first == "u" || x_node == "xx-u"
-          page.replace("group_selected",
-                       :partial => "ops/rbac_group_selected")
-        end
         # only do following for groups
         page.replace(@refresh_div,
                      :partial => @refresh_partial,
@@ -773,11 +656,6 @@ module OpsController::OpsRbac
   # Common User button handler routine
   def process_groups(groups, task)
     process_elements(groups, MiqGroup, task)
-  end
-
-  # Common User button handler routine
-  def process_users(users, task)
-    process_elements(users, User, task)
   end
 
   # Common Role button handler routine
@@ -801,7 +679,6 @@ module OpsController::OpsRbac
     when "xx"
       case id
       when "u"
-        @right_cell_text = _("Access Control EVM Users")
         rbac_users_list
       when "g"
         @right_cell_text = _("Access Control EVM Groups")
@@ -813,9 +690,6 @@ module OpsController::OpsRbac
         @right_cell_text = _("Access Control Tenants")
         rbac_tenants_list
       end
-    when "u"
-      @right_cell_text = _("EVM User \"%{name}\"") % {:name => User.find(id).name}
-      rbac_user_get_details(id)
     when "g"
       @right_cell_text = _("EVM Group \"%{name}\"") % {:name => MiqGroup.find(id).description}
       @edit = nil
@@ -835,12 +709,6 @@ module OpsController::OpsRbac
       @roles_count   = Rbac.filtered(MiqUserRole).count
       @tenants_count = Rbac.filtered(Tenant.in_my_region).count
     end
-  end
-
-  def rbac_user_get_details(id)
-    @edit = nil
-    @record = @user = User.find(id)
-    get_tagdata(@user)
   end
 
   def rbac_tenant_get_details(id)
@@ -914,54 +782,6 @@ module OpsController::OpsRbac
     TreeBuilderOpsRbacFeatures.new("features_tree", "features", @sb, true, :role => @role, :editable => @edit.present?)
   end
 
-  # Set form variables for role edit
-  def rbac_user_set_form_vars
-    copy = @sb[:typ] == "copy"
-    # save a shadow copy of the record if record is being copied
-    @user = copy ? @record.dup : @record
-    @user.miq_groups = @record.miq_groups if copy
-    @edit = {:new => {}, :current => {}}
-    @edit[:user_id] = @record.id unless copy
-    @edit[:key] = "rbac_user_edit__#{@edit[:user_id] || "new"}"
-    # prefill form fields for edit and copy action
-    @edit[:new].merge!(:name  => @user.name,
-                       :email => @user.email,
-                       :group => @user.miq_groups ? @user.miq_groups.map(&:id) : nil)
-    unless copy
-      @edit[:new].merge!(:userid   => @user.userid,
-                         :password => @user.password,
-                         :verify   => @user.password)
-    end
-    # load all user groups, filter available for tenant
-    @edit[:groups] = Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).sort_by { |g| g.description.downcase }.collect { |g| [g.description, g.id] }
-    # store current state of the new users information
-    @edit[:current] = copy_hash(@edit[:new])
-    @right_cell_text = if @edit[:user_id]
-                         _("Editing User \"%{name}\"") % {:name => @record.name}
-                       else
-                         _('Adding a new User')
-                       end
-  end
-
-  # Get variables from user edit form
-  def rbac_user_get_form_vars
-    @edit[:new][:name] = params[:name].presence if params[:name]
-    @edit[:new][:userid] = params[:userid].strip.presence if params[:userid]
-    @edit[:new][:email] = params[:email].strip.presence if params[:email]
-    @edit[:new][:group] = params[:chosen_group] if params[:chosen_group]
-
-    @edit[:new][:password] = params[:password].presence if params[:password]
-    @edit[:new][:verify] = params[:verify].presence if params[:verify] # Confirm Password form
-  end
-
-  # Set user record variables to new values
-  def rbac_user_set_record_vars(user)
-    user.name       = @edit[:new][:name]
-    user.userid     = @edit[:new][:userid]
-    user.email      = @edit[:new][:email]
-    user.password   = @edit[:new][:password] if @edit[:new][:password]
-  end
-
   # Get array of group ids
   def rbac_user_get_group_ids
     case @edit[:new][:group]
@@ -972,27 +792,6 @@ module OpsController::OpsRbac
     when Array
       @edit[:new][:group].sort
     end
-  end
-
-  # Validate some of the user fields
-  def rbac_user_validate?
-    valid = true
-    if @edit[:new][:password] != @edit[:new][:verify]
-      add_flash(_("Password/Verify Password do not match"), :error)
-      valid = false
-    end
-
-    new_group_ids = rbac_user_get_group_ids
-    new_groups = new_group_ids.present? && MiqGroup.find(new_group_ids).present? ? MiqGroup.find(new_group_ids) : []
-
-    if new_group_ids.blank?
-      add_flash(_("A User must be assigned to a Group"), :error)
-      valid = false
-    elsif Rbac.filtered(new_groups).count != new_group_ids.count
-      add_flash(_("A User must be assigned to an allowed Group"), :error)
-      valid = false
-    end
-    valid
   end
 
   def valid_tenant?(tenant_id)

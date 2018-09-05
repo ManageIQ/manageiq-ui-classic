@@ -49,6 +49,7 @@ class UserAdd extends Component {
         <h1>User add</h1>
         <RbacUserForm
           groups={groups}
+          editDisabled={isEditing && initialValues.userid === 'admin'}
           newRecord={!isEditing}
           initialValues={initialValues
             ? { ...initialValues, groups: user.groups.map(({ groupId }) => groupId) }

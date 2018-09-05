@@ -269,7 +269,9 @@ describe('Rbac user async actions', () => {
       type: actionTypes.STORE_USERS_TREE,
       usersTree: [],
     })];
-    return store.dispatch(actions.deleteMultipleusers([{ id: 1 }, { id: 2 }])).then(() => {
+    return store.dispatch(actions.deleteMultipleusers([
+      { id: 1, miq_groups: [] },
+      { id: 2, miq_groups: [] }])).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
@@ -387,7 +389,7 @@ describe('Rbac user async actions', () => {
         location: {},
       },
       usersReducer: {
-        rows: [{ id: userId }],
+        rows: [{ id: userId, miq_groups: [] }],
       },
     });
     fetchMock
@@ -424,7 +426,7 @@ describe('Rbac user async actions', () => {
         location: {},
       },
       usersReducer: {
-        rows: [{ id: userId }],
+        rows: [{ id: userId, miq_groups: [] }],
       },
     });
     fetchMock

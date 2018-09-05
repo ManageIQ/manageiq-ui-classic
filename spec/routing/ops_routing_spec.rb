@@ -77,8 +77,6 @@ describe "routing for OpsController" do
     rbac_roles_list
     rbac_tags_edit
     rbac_tenants_list
-    rbac_user_edit
-    rbac_user_field_changed
     rbac_users_list
     region_edit
     region_form_field_changed

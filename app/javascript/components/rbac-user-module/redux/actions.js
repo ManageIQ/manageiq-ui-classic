@@ -4,6 +4,8 @@ import * as endpoints from './endpoints';
 import { API, http } from '../../../http_api';
 
 const { sendDataWithRx } = window;
+const seuperAdminGroupId = '10000000000002';
+const nonDeletableName = 'admin';
 
 export const createFlashMessage = (text, type) => ({
   type: actionTypes.ADD_FLASH_MESSAGE,
@@ -136,10 +138,21 @@ export const saveUser = user => (dispatch) => {
     });
 };
 
+const checkNonDeletable = (name, userid, groups) => {
+  if (userid === nonDeletableName) return { message: sprintf(__('Default EVM User %s cannot be deleted'), name) };
+  if (groups.find(groupId => groupId === seuperAdminGroupId)) return { message: sprintf(__('Administrator User %s cannot be deleted'), name) };
+  return undefined;
+};
+
 export const deleteUser = userId => (dispatch, getState) => {
+  const { name, miq_groups, userid } = getState() // eslint-disable-line camelcase
+    .usersReducer.rows.find(({ id }) => id === userId);
+  const errors = checkNonDeletable(name, userid, miq_groups);
+  if (errors) {
+    return dispatch(createFlashMessage(errors.message, 'error'));
+  }
   dispatch(fetchData(actionTypes.DELETE_USER));
   dispatch(navigate('/'));
-  const name = getState().usersReducer.rows.find(({ id }) => id === userId);
   return API.delete(endpoints.modifyUserUrl(userId))
     .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was deleted'), name), 'success')))
     .then(() => dispatch(requestUsers()))
@@ -188,6 +201,15 @@ const resetSelectedToolbarItems = () => sendDataWithRx({
 
 export const deleteMultipleusers = users => (dispatch) => {
   dispatch(fetchData(actionTypes.DELETE_USER));
+  const adminUsers = users.filter(({
+    name,
+    userid,
+    miq_groups, // eslint-disable-line camelcase
+  }) => checkNonDeletable(name, userid, miq_groups));
+  if (adminUsers.length > 0) {
+    adminUsers.forEach(({ name }) => dispatch(createFlashMessage(sprintf(__('Administrator User %s cannot be deleted'), name), 'error')));
+    return false;
+  }
   return API.post(endpoints.modifyUserUrl(), {
     action: 'delete',
     resources: users.map(user => ({ id: user.id })),
