@@ -4,7 +4,10 @@
   %thead
     %tr
       %th{:rowspan => "2"}= _('Group')
-      %th{:rowspan => "2"}= _('Description')
+      %th{:rowspan => "2"}
+        = _('Description')
+        %br
+        = _('(Column Name in Report)')
       - if breakdown_present
         %th{:rowspan => '2'}= _('Sub Metric')
       %th{:rowspan => "2"}= _('Per Time')
@@ -33,6 +36,8 @@
           = h(rate_detail_group(detail[:group]))
         %td{:rowspan => num_tiers}
           = detail[:description]
+          %br
+          = "(#{detail[:report_column_name]})"
         - if breakdown_present
           %td{:rowspan => num_tiers}
             - sub_metrics = detail[:sub_metrics]
