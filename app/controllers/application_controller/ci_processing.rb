@@ -237,14 +237,6 @@ module ApplicationController::CiProcessing
     ui_lookup(:models => self.class.model.name)
   end
 
-  def check_non_empty(items, display_name)
-    if items.blank?
-      add_flash(_("No items were selected for %{task}") % {:task => display_name}, :error)
-      return false
-    end
-    true
-  end
-
   def process_cloud_object_storage_buttons(pressed)
     assert_privileges(pressed)
 
@@ -256,49 +248,21 @@ module ApplicationController::CiProcessing
     cloud_object_store_button_operation(klass, task)
   end
 
-  def check_supports_task(items, klass, task, display_name)
-    if klass.find(items).any? { |item| !item.supports?(task) }
-
+  def cloud_object_store_button_operation(klass, task)
+    display_name = _(task.capitalize)
+    method = "#{klass.name.underscore.to_sym}_#{task}"
+    task = method unless task == 'delete'
+    items = find_records_with_rbac(klass, checked_or_params)
+    unless records_support_feature?(items, task)
       message = if items.length == 1
                   _("%{task} does not apply to this item")
                 else
                   _("%{task} does not apply to at least one of the selected items")
                 end
-
       add_flash(message % {:task => display_name}, :error)
-      return false
+      return
     end
-    true
-  end
-
-  def cloud_object_store_button_operation(klass, task)
-    display_name = _(task.capitalize)
-    method = "#{klass.name.underscore.to_sym}_#{task}"
-    task = method unless task == 'delete'
-
-    items = []
-    # Either a list or coming from a different controller
-    if @lastaction == "show_list" || %w(cloud_object_store_containers cloud_object_store_objects).include?(@display)
-      # FIXME retrieving vms from DB two times
-      items = find_checked_ids_with_rbac(klass)
-
-      return unless check_non_empty(items, display_name)
-      return unless check_supports_task(items, klass, task, display_name)
-
-      process_objects(items, method, display_name)
-    else
-      items = [find_id_with_rbac_no_exception(klass, params[:id])].compact
-
-      unless check_non_empty(items, display_name)
-        show_list unless @explorer
-        @refresh_partial = "layouts/gtl"
-        return
-      end
-
-      return unless check_supports_task(items, klass, task, display_name)
-
-      process_objects(items, method, display_name) unless items.empty?
-    end
+    process_objects(items.ids, method, display_name)
   end
 
   def get_rec_cls
@@ -865,38 +829,19 @@ module ApplicationController::CiProcessing
   # Delete all selected or single displayed datastore(s)
   def deletestorages
     assert_privileges("storage_delete")
-    storages = find_checked_ids_with_rbac(Storage)
-    unless Storage.batch_operation_supported?('delete', storages)
-      add_flash(_("Only storage without VMs and Hosts can be removed"), :error)
-      return
+    storages = find_records_with_rbac(Storage, checked_or_params)
+    return unless records_support_feature?(storages, 'delete')
+    storages.each do |storage|
+      if storage.vms_and_templates.length.positive? || storage.hosts.length.positive?
+        storages -= [storage]
+        add_flash(_("\"%{datastore_name}\": cannot be removed, has vms or hosts") %
+          {:datastore_name => storage.name}, :warning)
+      end
     end
-
-    datastores = []
-    if %w(show_list storage_list storage_pod_list).include?(@lastaction) || (@lastaction == "show" && @layout != "storage") # showing a list, scan all selected hosts
-      datastores = storages
-      if datastores.empty?
-        add_flash(_("No Datastores were selected for %{task}") % {:task => display_name}, :error)
-      end
-      ds_to_delete = []
-      datastores.each do |s|
-        ds = Storage.find(s)
-        if ds.vms_and_templates.length <= 0 && ds.hosts.length <= 0
-          ds_to_delete.push(s)
-        else
-          add_flash(_("\"%{datastore_name}\": cannot be removed, has vms or hosts") %
-            {:datastore_name => ds.name}, :warning)
-        end
-      end
-      process_storage(ds_to_delete, "destroy")  unless ds_to_delete.empty?
-    else # showing 1 datastore, delete it
-      if params[:id].nil? || !Storage.exists?(params[:id])
-        add_flash(_("Datastore no longer exists"), :error)
-      else
-        datastores.push(find_id_with_rbac(Storage, params[:id]))
-      end
-      process_storage(datastores, "destroy")  unless datastores.empty?
-      @single_delete = true unless flash_errors?
-      add_flash(_("The selected Datastore was deleted")) if @flash_array.nil?
+    process_storage(storages.ids, 'destroy') unless storages.empty?
+    if !%w(show_list storage_list storage_pod_list).include?(@lastaction) ||
+        (@lastaction == "show" && @layout != "storage")
+      @single_delete = !flash_errors?
     end
     if @lastaction == "show_list"
       show_list
@@ -905,15 +850,10 @@ module ApplicationController::CiProcessing
   end
 
   def delete_elements(model_class, destroy_method, model_name = nil)
-    elements = []
     model_name ||= model_class.table_name
+    elements = find_records_with_rbac(model_class, checked_or_params)
     if params[:miq_grid_checks].present? || @lastaction == "show_list" || (@lastaction == "show" && @layout != model_name.singularize) # showing a list
-      elements = find_checked_ids_with_rbac(model_class)
-      if elements.empty?
-        add_flash(_("No %{model} were selected for deletion") %
-          {:model => ui_lookup(:tables => model_name)}, :error)
-      end
-      send(destroy_method, elements, "destroy") unless elements.empty?
+      send(destroy_method, elements.ids, "destroy")
       add_flash(n_("Delete initiated for %{count} %{model} from the %{product} Database",
                    "Delete initiated for %{count} %{models} from the %{product} Database", elements.length) %
         {:count   => elements.length,
@@ -921,12 +861,7 @@ module ApplicationController::CiProcessing
          :model   => ui_lookup(:table => model_name),
          :models  => ui_lookup(:tables => model_name)}) unless flash_errors?
     else # showing 1 element, delete it
-      if params[:id].nil? || !model_class.exists?(params[:id])
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => model_name)}, :error)
-      else
-        elements.push(find_id_with_rbac(model_class, params[:id]))
-      end
-      send(destroy_method, elements, "destroy") unless elements.empty?
+      send(destroy_method, elements.ids, "destroy")
       @single_delete = true unless flash_errors?
       add_flash(_("The selected %{record} was deleted") %
         {:record => ui_lookup(:table => model_name)}) if @flash_array.nil?
