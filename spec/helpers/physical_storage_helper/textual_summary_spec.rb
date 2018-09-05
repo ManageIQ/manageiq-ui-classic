@@ -24,24 +24,6 @@ describe PhysicalStorageHelper::TextualSummary do
                        :description      => 'S2200 used to test dh-storage-irm')
   end
 
-  let(:network) do
-    FactoryGirl.build(:network, :ipaddress => '10.243.5.64')
-  end
-
-  let(:guest_device) do
-    FactoryGirl.build(:guest_device,
-                      :device_type => 'management',
-                      :network     => network)
-  end
-
-  let(:hardware) do
-    FactoryGirl.build(:hardware, :guest_devices => [guest_device])
-  end
-
-  let(:computer_system) do
-    FactoryGirl.build(:computer_system, :hardware => hardware)
-  end
-
   let(:physical_rack) do
     FactoryGirl.create(:physical_rack, :name => 'Rack XYZ')
   end
@@ -58,7 +40,6 @@ describe PhysicalStorageHelper::TextualSummary do
                        :enclosures           => 1,
                        :canister_slots       => 2,
                        :asset_detail         => asset_detail,
-                       :computer_system      => computer_system,
                        :physical_rack        => physical_rack)
   end
 
