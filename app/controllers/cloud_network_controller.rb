@@ -57,7 +57,7 @@ class CloudNetworkController < ApplicationController
         options.delete(:ems_id)
         task_id = ems.create_cloud_network_queue(session[:userid], options)
         unless task_id.kind_of?(Integer)
-          add_flash(_("Cloud Network creation failed: Task start failed: ID [%{id}]") % {:id => task_id.to_s}, :error)
+          add_flash(_("Cloud Network creation failed: Task start failed"), :error)
         end
         if @flash_array
           javascript_flash(:spinner_off => true)
@@ -155,7 +155,7 @@ class CloudNetworkController < ApplicationController
       if @network.supports_update?
         task_id = @network.update_cloud_network_queue(session[:userid], options)
         unless task_id.kind_of?(Integer)
-          add_flash(_("Cloud Network update failed: Task start failed: ID [%{id}]") % {:id => task_id.to_s}, :error)
+          add_flash(_("Cloud Network update failed: Task start failed"), :error)
         end
         if @flash_array
           javascript_flash(:spinner_off => true)

@@ -130,8 +130,7 @@ class HostAggregateController < ApplicationController
       if ext_management_system.supports?(:create_host_aggregate)
         task_id = ext_management_system.create_host_aggregate_queue(session[:userid], options)
 
-        add_flash(_("Host Aggregate creation failed: Task start failed: ID [%{id}]") %
-                  {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+        add_flash(_("Host Aggregate creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
         if @flash_array
           javascript_flash(:spinner_off => true)
@@ -193,9 +192,8 @@ class HostAggregateController < ApplicationController
         task_id = @host_aggregate.update_aggregate_queue(session[:userid], options)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Edit of Host Aggregate \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+          add_flash(_("Edit of Host Aggregate \"%{name}\" failed: Task start failed") % {
             :name => @host_aggregate.name,
-            :id   => task_id.to_s
           }, :error)
         end
 
@@ -327,9 +325,8 @@ class HostAggregateController < ApplicationController
         task_id = @host_aggregate.add_host_queue(session[:userid], host)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Add Host to Host Aggregate \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+          add_flash(_("Add Host to Host Aggregate \"%{name}\" failed: Task start failed") % {
             :name => @host_aggregate.name,
-            :id   => task_id.to_s
           }, :error)
         end
 
@@ -421,9 +418,8 @@ class HostAggregateController < ApplicationController
         task_id = @host_aggregate.remove_host_queue(session[:userid], host)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Remove Host to Host Aggregate \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+          add_flash(_("Remove Host to Host Aggregate \"%{name}\" failed: Task start failed") % {
             :name => @host_aggregate.name,
-            :id   => task_id.to_s
           }, :error)
         end
 

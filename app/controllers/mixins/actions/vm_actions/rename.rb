@@ -122,7 +122,7 @@ module Mixins
             initiate_wait_for_task(:task_id => task_id, :action => 'rename_finished')
           else
             add_flash(
-              :text        => _("VM rename: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
+              :text        => _("VM rename: Task start failed"),
               :severity    => :error,
               :spinner_off => true
             )

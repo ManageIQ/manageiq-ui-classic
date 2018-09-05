@@ -70,7 +70,7 @@ class CloudSubnetController < ApplicationController
           initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
         else
           javascript_flash(
-            :text        => _("Cloud Subnet creation: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
+            :text        => _("Cloud Subnet creation: Task start failed"),
             :severity    => :error,
             :spinner_off => true
           )
@@ -162,7 +162,7 @@ class CloudSubnetController < ApplicationController
           initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
         else
           javascript_flash(
-            :text        => _("Cloud Subnet update failed: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
+            :text        => _("Cloud Subnet update failed: Task start failed"),
             :severity    => :error,
             :spinner_off => true
           )

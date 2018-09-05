@@ -95,8 +95,7 @@ module VmRemote
 
     task_id = record.remote_console_acquire_ticket_queue(ticket_type, session[:userid])
     unless task_id.kind_of?(Integer)
-      add_flash(_("Console access failed: Task start failed: ID [%{id}]") %
-                  {:id => task_id.to_s}, :error)
+      add_flash(_("Console access failed: Task start failed"), :error)
     end
 
     if @flash_array

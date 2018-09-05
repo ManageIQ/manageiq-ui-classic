@@ -46,9 +46,7 @@ class CloudVolumeBackupController < ApplicationController
       if task_id.kind_of?(Integer)
         initiate_wait_for_task(:task_id => task_id, :action => "backup_restore_finished")
       else
-        add_flash(_("Cloud volume restore failed: Task start failed: ID [%{id}]") %
-        {:id => task_id.to_s}, :error)
-
+        add_flash(_("Cloud volume restore failed: Task start failed"), :error)
         javascript_flash(:spinner_off => true)
       end
     end

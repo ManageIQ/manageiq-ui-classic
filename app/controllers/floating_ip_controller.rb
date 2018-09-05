@@ -56,8 +56,7 @@ class FloatingIpController < ApplicationController
         task_id = ems.create_floating_ip_queue(session[:userid], options)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Floating IP creation failed: Task start failed: ID [%{id}]") %
-            {:id => task_id.to_s}, :error)
+          add_flash(_("Floating IP creation failed: Task start failed"), :error)
         end
 
         if @flash_array
@@ -143,8 +142,7 @@ class FloatingIpController < ApplicationController
         task_id = @floating_ip.update_floating_ip_queue(session[:userid], options)
 
         unless task_id.kind_of?(Integer)
-          add_flash(_("Floating IP update failed: Task start failed: ID [%{id}]") %
-            {:id => task_id.to_s}, :error)
+          add_flash(_("Floating IP update failed: Task start failed"), :error)
         end
 
         if @flash_array
