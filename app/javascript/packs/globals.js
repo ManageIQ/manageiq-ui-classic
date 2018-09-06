@@ -7,3 +7,8 @@ window.$ = window.jQuery = require('jquery');
 window._ = require('lodash');
 window.numeral = require('numeral');
 window.sprintf = require('sprintf-js').sprintf;
+
+window.moment = require('moment');
+require("moment-strftime");
+require("moment-timezone");
+require("moment-duration-format")(window.moment);

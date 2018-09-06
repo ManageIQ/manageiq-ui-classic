@@ -11,10 +11,6 @@
 //= require bower_components/angular-bootstrap/ui-bootstrap-tpls
 //= require angular-sanitize
 //= require angular.validators/angular.validators
-//= require bower_components/moment/moment
-//= require bower_components/moment-strftime/lib/moment-strftime
-//= require bower_components/moment-timezone/moment-timezone
-//= require bower_components/moment-duration-format/lib/moment-duration-format
 //= require ./cable
 //= require ./gettextCatalog
 //= require ./miq_api
