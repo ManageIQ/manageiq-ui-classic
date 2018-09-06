@@ -1,7 +1,7 @@
 module TextualMixins::TextualPowerState
   def textual_power_state_whitelisted(state)
     state = state.blank? ? 'unknown' : state.downcase
-    quad_icon = QuadiconHelper::MACHINE_STATE_QUADRANT[state]
+    quad_icon = QuadiconHelper.machine_state(state)
 
     {
       :label      => _('Power State'),
