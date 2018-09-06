@@ -847,6 +847,7 @@ class ReportController < ApplicationController
       end
       presenter.show(:paging_div)
     else
+      presenter.hide(:form_buttons_div)
       presenter.hide(:paging_div)
     end
     if (@sb[:active_tab] == 'report_info' && x_node.split('-').length == 5 && !@in_a_form) || %w(xx-exportwidgets xx-exportcustomreports).include?(x_node)
