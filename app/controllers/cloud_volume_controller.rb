@@ -120,10 +120,10 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => volume_id
+    javascript_redirect(:action => "show", :id => volume_id)
   end
 
   def detach_volume
@@ -175,10 +175,10 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => volume_id
+    javascript_redirect(:action => "show", :id => volume_id)
   end
 
   def new
@@ -257,7 +257,7 @@ class CloudVolumeController < ApplicationController
 
     session[:edit] = nil
     flash_to_session
-    javascript_redirect previous_breadcrumb_url
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   def edit
@@ -323,10 +323,10 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => volume_id
+    javascript_redirect(:action => "show", :id => volume_id)
   end
 
   # delete selected volumes
@@ -339,16 +339,16 @@ class CloudVolumeController < ApplicationController
       if volume.nil?
         add_flash(_("Cloud Volume no longer exists."), :error)
       elsif !volume.attachments.empty?
-        add_flash(_("Cloud Volume \"%{name}\" cannot be removed because it is attached to one or more Instances") % {
-          :name => volume.name}, :warning)
+        add_flash(_("Cloud Volume \"%{name}\" cannot be removed because it is attached to one or more Instances") %
+          {:name => volume.name}, :warning)
       else
         valid_delete = volume.validate_delete_volume
         if valid_delete[:available]
           volumes_to_delete.push(volume)
         else
-          add_flash(_("Couldn't initiate deletion of Cloud Volume \"%{name}\": %{details}") % {
-            :name    => volume.name,
-            :details => valid_delete[:message]}, :error)
+          add_flash(_("Couldn't initiate deletion of Cloud Volume \"%{name}\": %{details}") %
+            {:name    => volume.name,
+             :details => valid_delete[:message]}, :error)
         end
       end
     end
@@ -420,10 +420,10 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => @volume.id
+    javascript_redirect(:action => "show", :id => @volume.id)
   end
 
   def backup_select
@@ -452,8 +452,10 @@ class CloudVolumeController < ApplicationController
       @backup = find_record_with_rbac(CloudVolumeBackup, params[:backup_id])
       task_id = @volume.backup_restore_queue(session[:userid], @backup.ems_ref)
 
-      add_flash(_("Cloud volume restore failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      unless task_id.kind_of?(Integer)
+        add_flash(_("Cloud volume restore failed: Task start failed: ID [%{id}]") %
+                  {:id => task_id.to_s}, :error)
+      end
 
       if @flash_array
         javascript_flash(:spinner_off => true)
@@ -477,10 +479,10 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => @volume.id
+    javascript_redirect(:action => "show", :id => @volume.id)
   end
 
   def snapshot_new
@@ -507,8 +509,10 @@ class CloudVolumeController < ApplicationController
       options = {}
       options[:name] = params[:snapshot_name] if params[:snapshot_name]
       task_id = @volume.create_volume_snapshot_queue(session[:userid], options)
-      add_flash(_("Cloud volume snapshot creation failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      unless task_id.kind_of?(Integer)
+        add_flash(_("Cloud volume snapshot creation failed: Task start failed: ID [%{id}]") %
+                  {:id => task_id.to_s}, :error)
+      end
       if @flash_array
         javascript_flash(:spinner_off => true)
       else
@@ -532,10 +536,10 @@ class CloudVolumeController < ApplicationController
         :details => task.message
       }, :error)
     end
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => @volume.id
+    javascript_redirect(:action => "show", :id => @volume.id)
   end
 
   private
