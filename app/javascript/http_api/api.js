@@ -57,7 +57,7 @@ API.login = function(login, password) {
     headers: {
       'Authorization': 'Basic ' + base64encode([login, password].join(':')),
     },
-    skipErrors: [401],
+    skipErrors: [401, 503],
     skipLoginRedirect: true,
   })
     .then(function(response) {

@@ -727,9 +727,14 @@ function miqAjaxAuth(url) {
 
     // TODO vanillaJsAPI.autorenew is called on (non-login) page load - when?
   })
-  .then(null, function() {
+  .then(null, function(err) {
+    var message = __('Incorrect username or password');
+    if (err && err.status && err.status !== 200 && err.statusText) {
+      message = __('Login failed:') + ' ' + err.statusText;
+    }
+
     clearFlash();
-    add_flash(__('Incorrect username or password'), 'error', { id: 'auth_failed' });
+    add_flash(message, 'error', { id: 'auth_failed' });
 
     miqClearLoginFields();
     miqEnableLoginFields(true);
