@@ -1823,7 +1823,7 @@ class MiqAeClassController < ApplicationController
     self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{@record.id}"
     @in_a_form = @changed = session[:changed] = false
     @sb[:action] = @edit = session[:edit] = nil
-    replace_right_cell
+    replace_right_cell(:replace_trees => [:ae])
   end
 
   def copy_reset(typ, ids, button_pressed)
