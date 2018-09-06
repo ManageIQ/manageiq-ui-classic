@@ -667,7 +667,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
           _this.displayFilters.push(summaryItem.displayType);
         }
 
-        if (item.severity === undefined) {
+        if (! item.severity) {
           item.severity = 'info';
         }
         summaryItem[item.severity].push(item);
