@@ -7,9 +7,9 @@
       = _("Requester:")
     .col-md-8.requester
       %select{'ng-if' => "$ctrl.options.users.length > 1", 'name' => 'user_choice',
-        'ng-options' => "user.value as user.label for user in $ctrl.options.users",
-        'ng-model' => '$ctrl.options.selectedUser',
-        'pf-select' => ''}
+        'ng-options'  => "user.value as user.label for user in $ctrl.options.users",
+        'ng-model'    => '$ctrl.options.selectedUser',
+        'miq-select'  => ''}
       %div{'ng-if' => "$ctrl.options.users.length === 1"}
         {{$ctrl.options.users[0].label}}
       %div{'ng-if' => "$ctrl.options.users.length === 0"}
@@ -28,17 +28,17 @@
       %span{'ng-if' => '$ctrl.options.types.length === 1'}
         {{$ctrl.options.types[0].label}}
       %select{'ng-if' => '$ctrl.options.types.length > 1', :name => 'type_choice',
-        'ng-options' => 'type.value as type.label for type in $ctrl.options.types',
-        'ng-model' => '$ctrl.options.selectedType',
-        'pf-select' => ''}
+        'ng-options'  => 'type.value as type.label for type in $ctrl.options.types',
+        'ng-model'    => '$ctrl.options.selectedType',
+        'miq-select'  => ''}
   .form-group
     %label.col-md-2.control-label
       = _("Request Date:")
     .col-md-8
-      %select{:name => 'time_period',
+      %select{:name  => 'time_period',
         'ng-options' => 'period.value as period.label for period in $ctrl.options.timePeriods',
-        'ng-model' => '$ctrl.options.selectedPeriod',
-        'pf-select' => ''}
+        'ng-model'   => '$ctrl.options.selectedPeriod',
+        'miq-select' => ''}
   .form-group
     %label.col-md-2.control-label
       = _("Reason:")

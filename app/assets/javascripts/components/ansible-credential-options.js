@@ -46,7 +46,7 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
          '<a href="" ng-switch-when="password" ng-hide="!vm[name] || vm.newRecord" ng-click="vm.cancelPassword(name)">{{__("Cancel")}}</a>',
          // select
          '<div ng-switch-when="choice" class="col-md-8">',
-            '<select id="{{name}}" pf-select ng-options="opt as opt for opt in attr.choices" class="form-control" ng-model="vm.model[name]" />',
+            '<select id="{{name}}" miq-select ng-options="opt as opt for opt in attr.choices" class="form-control" ng-model="vm.model[name]" />',
           '</div>',
          // text
          '<div ng-switch-when="string" class="col-md-8">',

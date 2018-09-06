@@ -22,7 +22,7 @@
                 'ng-change'                   => 'vm.filterNetworkManagerChanged(vm.floatingIpModel.ems_id)',
                 'ng-model'                    => 'vm.floatingIpModel.ems_id',
                 'ng-options'                  => 'ems.id as ems.name for ems in vm.ems',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => ''}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
@@ -44,7 +44,7 @@
         %select{'name'                        => 'cloud_network_id',
                 'ng-model'                    => 'vm.floatingIpModel.cloud_network_id',
                 'ng-options'                  => 'network.id as network.name for network in vm.available_networks',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => '',
                 'selectpicker-for-select-tag' => ''}
           %option{"value" => ""}
@@ -67,7 +67,7 @@
         %select{'name'                        => 'cloud_tenant_id',
                 'ng-model'                    => 'vm.floatingIpModel.cloud_tenant_id',
                 'ng-options'                  => 'tenant.id as tenant.name for tenant in vm.available_tenants',
-                'pf-select'                   => true,
+                'miq-select'                  => true,
                 'required'                    => '',
                 'selectpicker-for-select-tag' => ''}
           %option{"value" => ""}

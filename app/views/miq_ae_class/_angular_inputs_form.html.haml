@@ -18,7 +18,7 @@
                   "name"       => "#{prefix}_type",
                   'ng-options' => "v as v for v in #{ng_model}.available_datatypes",
                   'ng-change'  => '',
-                  "pf-select"  => true}
+                  "miq-select" => true}
         %td
           %input{:type         => "text",
                  'ng-model'    => "#{ng_model}.#{prefix}_value",
@@ -70,7 +70,7 @@
                                      "name"       => "key_type",
                                      'ng-options' => "v as v for v in #{ng_model}.available_datatypes",
                                      "ng-change"  => '',
-                                     "pf-select"  => true}
+                                     "miq-select" => true}
               %td{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)"}
                 {{arr[2] == 'password' ? '******' : arr[1]}}
               %td{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}

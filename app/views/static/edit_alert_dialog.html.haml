@@ -16,10 +16,10 @@
         %label.col-sm-2.control-label
           = _("Owner")
         .col-sm-5
-          %select#assign-select{"ng-if" => "vm.editData.showAssign",
+          %select#assign-select{"ng-if"      => "vm.editData.showAssign",
                                 "ng-model"   => "vm.editData.owner",
                                 "ng-options" => "user as user.name for user in vm.editData.existingUsers",
-                                "pf-select"  => ""}
+                                "miq-select" => ""}
           %label{"ng-if" => "!vm.editData.showAssign && vm.editData.owner"}
             {{vm.editData.owner.name}}
           %label{"ng-if" => "!vm.editData.showAssign && !vm.editData.owner"}

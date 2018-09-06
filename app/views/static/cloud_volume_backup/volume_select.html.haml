@@ -13,9 +13,9 @@
       .col-md-8
         = select_tag('volume_id',
                 '',
-                'ng-model'                   => 'vm.cloudVolumeBackupModel.volume',
-                'ng-options'                 => 'volume.name for volume in vm.volume_choices track by volume.id',
-                :required                    => '',
-                'pf-select'                  => true)
+                'ng-model'   => 'vm.cloudVolumeBackupModel.volume',
+                'ng-options' => 'volume.name for volume in vm.volume_choices track by volume.id',
+                :required    => '',
+                'miq-select' => true)
 
   = render :partial => 'layouts/angular/generic_form_buttons'

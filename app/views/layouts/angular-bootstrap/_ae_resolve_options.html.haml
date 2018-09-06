@@ -5,11 +5,11 @@
       %label.col-md-2.control-label{"for" => "instance_name"}
         = _("System/Process")
       .col-md-8
-        %select#instance_name{"ng-model"      => "scheduleModel.instance_name",
+        %select#instance_name{"ng-model"    => "scheduleModel.instance_name",
                               "name"        => "instance_name",
                               "ng-options"  => "instance for instance in scheduleModel.instance_names",
                               "checkchange" => "",
-                              "pf-select" => true}
+                              "miq-select " => true}
 
     .form-group
       %label.col-md-2.control-label{"for" => "object_message"}
@@ -45,7 +45,7 @@
                              "ng-options"  => "target_class[1] as target_class[0]  for target_class in scheduleModel.target_classes",
                              "ng-change"   => "targetClassChanged()",
                              "checkchange" => "",
-                             "pf-select"   => true}
+                             "miq-select"  => true}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
     .form-group{"ng-class" => "{'has-error': angularForm.target_id.$invalid}", "ng-show" => "scheduleModel.target_class"}
@@ -57,7 +57,7 @@
                           "ng-options"  => "target[1] as target[0] for target in scheduleModel.targets",
                           "ng-required" => "scheduleModel.target_class",
                           "checkchange" => "",
-                          "pf-select"   => true}
+                          "miq-select"  => true}
           %option{"disabled" => "", "value" => ""} &lt;Choose&gt;
         %span.help-block{"ng-show" => "angularForm.target_id.$error.miqrequired"}
           = _("Required")

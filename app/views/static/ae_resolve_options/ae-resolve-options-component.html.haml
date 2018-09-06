@@ -9,7 +9,7 @@
                             'name'       => 'instance_name',
                             'ng-options' => 'instance for instance in $ctrl.instanceOptions',
                             'ng-change'  => '$ctrl.instanceNameChange({instanceName: $ctrl.instanceName})',
-                            'pf-select'  => true}
+                            'miq-select' => true}
 
   .form-group{'ng-class' => '{"has-error": aeResolveOptionsForm.object_message.$invalid}'}
     %label.col-md-2.control-label{'for' => 'object_message'}
@@ -48,7 +48,7 @@
                              'ng-options'     => 'target_class[1] as target_class[0]  for target_class in $ctrl.targetClassOptions',
                              'ng-change'      => '$ctrl.targetClassChange({targetClass: $ctrl.targetClass})',
                              'data-container' => 'body',
-                             'pf-select'      => true}
+                             'miq-select'     => true}
           %option{'value' => ''}
             = "<#{_('Choose')}>"
     .form-group{'ng-class' => "{'has-error': aeResolveOptionsForm.target_id.$invalid}",
@@ -61,7 +61,7 @@
                           'ng-options'  => 'target[1] as target[0] for target in $ctrl.targetIdOptions',
                           'ng-required' => '$ctrl.targetClass',
                           'ng-change'   => '$ctrl.targetIdChange({targetId: $ctrl.targetId})',
-                          'pf-select'   => true}
+                          'miq-select'  => true}
           %option{'disabled' => '', 'value' => ''} &lt;Choose&gt;
         %span.help-block{'ng-show' => 'aeResolveOptionsForm.target_id.$error.miqrequired'}
           = _('Required')

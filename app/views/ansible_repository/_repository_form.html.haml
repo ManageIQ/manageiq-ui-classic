@@ -41,7 +41,7 @@
                      options_for_select([[_("GIT"), "git"]], 'git'),
                      "ng-model"   => "vm.repositoryModel.scm_type",
                      :disabled    => true,
-                     'pf-select'  => true)
+                     'miq-select' => true)
     .form-group{"ng-class" => "{'has-error': angularForm.scm_url.$error.required || angularForm.scm_url.$error.urlValidation}"}
       %label.col-md-2.control-label
         = _('URL')
@@ -65,7 +65,7 @@
                 'ng-model'    => 'vm.repositoryModel.authentication_id',
                 'ng-options'  => 'scm_credential.value as scm_credential.name for scm_credential in vm.scm_credentials',
                 'ng-disabled' => 'vm.repositoryModel.manager_resource === null',
-                'pf-select'   => true}
+                'miq-select'  => true}
     .form-group
       %label.col-md-2.control-label
         = _('SCM Branch')

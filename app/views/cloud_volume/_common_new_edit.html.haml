@@ -9,7 +9,7 @@
             "required"    => "",
             "disabled"    => !@storage_manager.nil? || !@volume.id.nil?,
             :checkchange  => true,
-            "pf-select"   => true}
+            "miq-select"  => true}
       %option{"value" => "", "disabled" => ""}
         = "<#{_('Choose')}>"
     %span.help-block{"ng-show" => "angularForm.storage_manager_id.$error.required"}
@@ -26,7 +26,7 @@
             "ng-disabled" => "!vm.newRecord",
             "required"    => "",
             :checkchange  => true,
-            "pf-select"   => true}
+            "miq-select"  => true}
       %option{"value" => "", "disabled" => ""}
         = "<#{_('Choose')}>"
     %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
@@ -43,7 +43,7 @@
             "required"    => "",
             "ng-disabled" => "!vm.newRecord",
             :checkchange  => true,
-            "pf-select"   => true}
+            "miq-select"  => true}
       %option{"value" => "", "disabled" => ""}
         = "<#{_('Choose')}>"
     %span.help-block{"ng-show" => "angularForm.aws_availability_zone_id.$error.required"}
@@ -74,7 +74,7 @@
             "ng-disabled" => "!vm.newRecord && vm.cloudVolumeModel.aws_volume_type == 'standard'",
             "required"    => "",
             :checkchange  => true,
-            "pf-select"   => true}
+            "miq-select"  => true}
       %option{"value" => "", "disabled" => ""}
         = "<#{_('Choose')}>"
     %span.help-block{"ng-show" => "angularForm.aws_volume_type.$error.required"}
@@ -121,7 +121,7 @@
             "ng-disabled"      => "!vm.newRecord",
             :checkchange       => true,
             "data-live-search" => "true",
-            "pf-select"        => true}
+            "miq-select"       => true}
       %option{"value" => "", "enabled" => ""}
         = _('No snapshot')
 
