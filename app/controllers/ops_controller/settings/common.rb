@@ -190,48 +190,24 @@ module OpsController::Settings::Common
   end
 
   def pglogical_save_subscriptions
-    replication_type = valid_replication_type
-    if replication_type == :global
-      MiqRegion.replication_type = replication_type
-      subscriptions_to_save = []
-      params[:subscriptions].each do |_, subscription_params|
-        subscription = find_or_new_subscription(subscription_params['id'])
-        if subscription.id && subscription_params['remove'] == "true"
-          subscription.delete
-        else
-          set_subscription_attributes(subscription, subscription_params)
-          subscriptions_to_save.push(subscription)
-        end
-      end
-      begin
-        PglogicalSubscription.save_all!(subscriptions_to_save)
-      rescue StandardError => bang
-        add_flash(_("Error during replication configuration save: %{message}") %
-                    {:message => bang}, :error)
-      else
-        add_flash(_("Replication configuration save was successful"))
-      end
+    errors = case params[:replication_type]
+             when "global"
+               subscriptions_to_save, subsciptions_to_remove = prepare_subscriptions_for_saving
+               MiqPglogical.save_global_region(subscriptions_to_save, subsciptions_to_remove)
+             when "remote"
+               MiqPglogical.save_remote_region(params[:exclusion_list])
+             when "none"
+               MiqPglogical.save_replication_type(:none)
+             end
+    if errors.empty?
+      msg = _("Replication configuration save was successful")
+      level = :info
     else
-      begin
-        MiqRegion.replication_type = replication_type
-      rescue => bang
-        add_flash(_("Error during replication configuration save: %{message}") %
-                    {:message => bang.message}, :error)
-      else
-        if replication_type == :remote && !params[:exclusion_list].empty?
-          begin
-            MiqPglogical.refresh_excludes_queue(YAML.safe_load(params[:exclusion_list]))
-          rescue => bang
-            add_flash(_("Error saving the excluded tables list: %{message}") %
-                        {:message => bang}, :error)
-          else
-            add_flash(_("Replication configuration save was successful"))
-          end
-        else
-          add_flash(_("Replication configuration save was successful"))
-        end
-      end
+      msg = _("Error during replication configuration save: %{message}") % {:message => errors.join("\n")}
+      level = :error
     end
+
+    add_flash(msg, level)
     javascript_flash(:spinner_off => true)
   end
 
@@ -251,6 +227,21 @@ module OpsController::Settings::Common
   private
 
   PASSWORD_MASK = '●●●●●●●●'.freeze
+
+  def prepare_subscriptions_for_saving
+    to_save = []
+    to_remove = []
+    params[:subscriptions].each_value do |_, subscription_params|
+      subscription = find_or_new_subscription(subscription_params['id'])
+      if subscription.id && subscription_params['remove'] == "true"
+        to_remove << subscription
+      else
+        set_subscription_attributes(subscription, subscription_params)
+        to_save << subscription
+      end
+    end
+    return to_save, to_remove
+  end
 
   def fetch_advanced_settings(resource)
     @edit = {}
@@ -308,10 +299,6 @@ module OpsController::Settings::Common
         :status          => sub.status
       }
     end
-  end
-
-  def valid_replication_type
-    return params[:replication_type].to_sym if %w(global none remote).include?(params[:replication_type])
   end
 
   def settings_update_ldap_verify
