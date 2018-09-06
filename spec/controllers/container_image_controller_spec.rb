@@ -15,10 +15,8 @@ describe ContainerImageController do
   it "when Check Compliance is pressed with no images" do
     ApplicationController.handle_exceptions = true
 
-    expect(controller).to receive(:check_compliance).and_call_original
-    expect(controller).to receive(:add_flash).with("No Container Images were selected for Compliance Check", :error)
-    expect(controller).to receive(:add_flash).with("Container Image no longer exists", :error)
     post :button, :params => { :pressed => 'container_image_check_compliance', :format => :js }
+    expect(response.body).to match(/Can.+t access records without an id/)
   end
 
   it 'renders edit container image tags' do
