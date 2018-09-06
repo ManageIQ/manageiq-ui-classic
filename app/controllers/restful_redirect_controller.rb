@@ -5,9 +5,9 @@ class RestfulRedirectController < ApplicationController
     case params[:model]
     when 'ServiceTemplateTransformationPlanRequest'
       req = ServiceTemplateTransformationPlanRequest.select(:source_id).find(params[:id])
-      redirect_to :controller => 'migration', :action => 'index', :anchor => "plan/#{req.source_id}"
+      redirect_to(:controller => 'migration', :action => 'index', :anchor => "plan/#{req.source_id}")
     when 'MiqRequest'
-      redirect_to :controller => 'miq_request', :action => 'show', :id => params[:id]
+      redirect_to(:controller => 'miq_request', :action => 'show', :id => params[:id])
     when 'VmOrTemplate'
       klass = VmOrTemplate.select(:id, :type).find(params[:id]).try(:class)
       controller = if klass && (VmCloud > klass || TemplateCloud > klass)
@@ -15,7 +15,7 @@ class RestfulRedirectController < ApplicationController
                    else
                      'vm_infra'
                    end
-      redirect_to :controller => controller, :action => 'show', :id => params[:id]
+      redirect_to(:controller => controller, :action => 'show', :id => params[:id])
     else
       flash_to_session(_("Could not find the given \"%{model}\" record.") % {:model => ui_lookup(:model => params[:model])}, :error)
       redirect_to(:controller => 'dashboard', :action => 'show')
