@@ -34,8 +34,7 @@
     "moment-strftime": "~0.2.0",
     "moment-timezone": "~0.4.1",
     "patternfly-bootstrap-treeview": "~2.1.5",
-    "patternfly-timeline": "~1.0.5",
-    "qs": "~0.3.10"
+    "patternfly-timeline": "~1.0.5"
   },
   "resolutions": {
     "d3": "~3.5.0",
