@@ -65,7 +65,7 @@ class CloudVolumeBackupController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => @backup.id)
