@@ -1740,32 +1740,11 @@ class ApplicationController < ActionController::Base
     # non-explorer screens will perform render in their respective button method
     return if flash_errors?
     @in_a_form = true
-    if request.parameters[:pressed].starts_with?("host_")       # need host id for host prov
-      @org_controller = "host"                                  # request originated from controller
-      klass = Host
-      @refresh_partial = "prov_edit"
-      if params[:id]
-        @prov_id = find_id_with_rbac(Host, params[:id])
-      else
-        @prov_id = find_checked_ids_with_rbac(Host).map(&:to_i).uniq
-        res = Host.ready_for_provisioning?(@prov_id)
-        if res != true
-          res.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
-          end
-          @redirect_controller = "host"
-          @refresh_partial = "show_list"
-        end
-      end
-    else
-      @template_klass_type = template_types_for_controller
-      @org_controller = "vm" # request originated from controller
-      klass = VmOrTemplate
-      @refresh_partial = typ ? "prov_edit" : "pre_prov"
-    end
+    @template_klass_type = template_types_for_controller
+    @org_controller = "vm" # request originated from controller
+    @refresh_partial = typ ? "prov_edit" : "pre_prov"
     if typ
-      vms = find_checked_ids_with_rbac(klass)
-      @prov_id = vms.empty? ? find_id_with_rbac(klass, params[:id]) : vms[0]
+      @prov_id = find_record_with_rbac(VmOrTemplate, checked_or_params).id
       case typ
       when "clone"
         @prov_type = "clone_to_vm"
@@ -1787,8 +1766,7 @@ class ApplicationController < ActionController::Base
         if %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
           # skip pre prov grid
           set_pre_prov_vars
-          template = find_checked_records_with_rbac(VmOrTemplate).first
-          template = find_record_with_rbac(VmOrTemplate, params[:id]) if template.nil?
+          template = find_record_with_rbac(VmOrTemplate, checked_or_params)
 
           render_flash_not_applicable_to_model("provisioning") unless template.supports_provisioning?
           return if performed?
