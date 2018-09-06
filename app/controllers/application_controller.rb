@@ -1740,27 +1740,11 @@ class ApplicationController < ActionController::Base
     # non-explorer screens will perform render in their respective button method
     return if flash_errors?
     @in_a_form = true
-    if request.parameters[:pressed].starts_with?("host_")       # need host id for host prov
-      @org_controller = "host"                                  # request originated from controller
-      klass = Host
-      @refresh_partial = "prov_edit"
-      @prov_id = find_records_with_rbac(Host, checked_or_params).ids
-      res = Host.ready_for_provisioning(@prov_id)
-      unless res.empty?
-        res.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        @redirect_controller = "host"
-        @refresh_partial = "show_list"
-      end
-    else
-      @template_klass_type = template_types_for_controller
-      @org_controller = "vm" # request originated from controller
-      klass = VmOrTemplate
-      @refresh_partial = typ ? "prov_edit" : "pre_prov"
-    end
+    @template_klass_type = template_types_for_controller
+    @org_controller = "vm" # request originated from controller
+    @refresh_partial = typ ? "prov_edit" : "pre_prov"
     if typ
-      @prov_id = find_record_with_rbac(klass, checked_or_params).id
+      @prov_id = find_record_with_rbac(VmOrTemplate, checked_or_params).id
       case typ
       when "clone"
         @prov_type = "clone_to_vm"
