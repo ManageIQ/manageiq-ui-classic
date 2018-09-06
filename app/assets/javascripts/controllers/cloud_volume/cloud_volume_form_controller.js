@@ -215,6 +215,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   var getStorageManagers = function(data) {
     // Can handle list of all managers or a single manager.
     vm.storageManagers = data.resources ? data.resources : [data];
+    vm.storageManagers.forEach(function(manager) { manager.id = idFromHref(manager.href) });
   };
 
   var getCloudVolumeFormData = function(data) {
@@ -238,6 +239,13 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.availabilityZoneChoices = data.parent_manager.availability_zones;
 
     miqService.sparkleOff();
+  };
+
+  var idFromHref = function(href) {
+    // Explicitly compare to undefined because 0 could potentially be a valid ID.
+    if(href === undefined) return 'undefined';
+    // Parse ID from href, e.g. http://172.16.117.189:3000/api/providers/123000000000001.
+    return href.toString().replace(/\/$/, '').split('/').slice(-1)[0];
   };
 
   init();
