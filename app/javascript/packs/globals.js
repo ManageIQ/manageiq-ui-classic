@@ -3,6 +3,7 @@
 // and the only pack loaded before the asset pipeline
 
 window.$ = window.jQuery = require('jquery');
+require('jquery-ui');
 require('jquery-ujs');
 require('jquery.observe_field');
 
