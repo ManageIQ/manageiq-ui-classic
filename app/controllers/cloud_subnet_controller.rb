@@ -27,12 +27,12 @@ class CloudSubnetController < ApplicationController
     when 'cloud_subnet_delete'
       delete_subnets
     when "cloud_subnet_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
+      javascript_redirect(:action => "edit", :id => checked_item_id)
     when "custom_button"
       custom_buttons
     else
       if params[:pressed] == "cloud_subnet_new"
-        javascript_redirect :action => "new"
+        javascript_redirect(:action => "new")
       elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
         replace_gtl_main_div
       else
@@ -55,8 +55,8 @@ class CloudSubnetController < ApplicationController
     assert_privileges("cloud_subnet_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Creation of a Cloud Subnet was cancelled by the user")
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _("Creation of a Cloud Subnet was cancelled by the user"))
 
     when "add"
       @subnet = CloudSubnet.new
@@ -89,16 +89,16 @@ class CloudSubnetController < ApplicationController
     subnet_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Subnet \"%{name}\" created") % { :name  => subnet_name })
+      add_flash(_("Cloud Subnet \"%{name}\" created") % {:name => subnet_name})
     else
       add_flash(_("Unable to create Cloud Subnet: %{details}") %
                 { :name => subnet_name, :details => task.message }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show_list"
+    javascript_redirect(:action => "show_list")
   end
 
   def delete_subnets
@@ -129,14 +129,14 @@ class CloudSubnetController < ApplicationController
       flash_to_session
       javascript_redirect(:action => 'show_list')
     else
-      drop_breadcrumb(:name => 'dummy', :url  => " ") # missing a bc to get correctly back so here's a dummy
+      drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
       flash_to_session
       redirect_to(previous_breadcrumb_url)
     end
   end
 
   def edit
-    params[:id] = checked_item_id unless params[:id].present?
+    params[:id] = checked_item_id if params[:id].blank?
     assert_privileges("cloud_subnet_edit")
     @subnet = find_record_with_rbac(CloudSubnet, params[:id])
     @in_a_form = true
@@ -151,7 +151,7 @@ class CloudSubnetController < ApplicationController
     @subnet = find_record_with_rbac(CloudSubnet, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Subnet \"%{name}\" was cancelled by the user") % {:name  => @subnet.name})
+      cancel_action(_("Edit of Subnet \"%{name}\" was cancelled by the user") % {:name => @subnet.name})
 
     when "save"
       if @subnet.supports_create?
@@ -181,16 +181,15 @@ class CloudSubnetController < ApplicationController
     subnet_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Subnet \"%{name}\" updated") % {:name  => subnet_name })
+      add_flash(_("Cloud Subnet \"%{name}\" updated") % {:name => subnet_name })
     else
-      add_flash(
-        _("Unable to update Cloud Subnet \"%{name}\": %{details}") % { :name    => subnet_name,
-                                                                       :details => task.message }, :error)
+      add_flash(_("Unable to update Cloud Subnet \"%{name}\": %{details}") % {:name    => subnet_name,
+                                                                              :details => task.message}, :error)
     end
 
     session[:edit] = nil
     flash_to_session
-    javascript_redirect previous_breadcrumb_url
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   private
@@ -215,7 +214,7 @@ class CloudSubnetController < ApplicationController
 
     # Provider to automatically assign gateway address unless provided
     unless @subnet.gateway == params[:gateway]
-      options[:gateway_ip] = params[:gateway].blank? ? nil : params[:gateway]
+      options[:gateway_ip] = params[:gateway].presence
     end
 
     unless @subnet.dhcp_enabled == switch_to_bol(params[:dhcp_enabled])
@@ -234,7 +233,7 @@ class CloudSubnetController < ApplicationController
     options[:cidr] = params[:cidr] if params[:cidr]
     # Provider to automatically assign gateway address unless provided
     if params[:gateway]
-      options[:gateway_ip] = params[:gateway].blank? ? nil : params[:gateway]
+      options[:gateway_ip] = params[:gateway].presence
     end
     options[:ip_version] = params[:network_protocol] =~ /4/ ? 4 : 6
     options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params.fetch_path(:cloud_tenant, :id)
@@ -256,7 +255,6 @@ class CloudSubnetController < ApplicationController
     return if subnets.empty?
 
     if operation == "destroy"
-      deleted_subnets = 0
       subnets.each do |subnet|
         audit = {
           :event        => "cloud_subnet_record_delete_initiated",
