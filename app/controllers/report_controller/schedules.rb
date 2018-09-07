@@ -223,11 +223,10 @@ module ReportController::Schedules
         # ensure we land in the right accordion with the right tree and
         # with the listing opened even when entering 'add' from the reports
         # menu
-
+        @_params[:accord] = "schedules" unless x_active_accord == :schedules
         self.x_active_tree   = "schedules_tree"
         self.x_active_accord = "schedules"
         self.x_node = "msc-#{schedule.id}"
-        @_params[:accord] = "schedules"
         replace_right_cell(:replace_trees => [:schedules])
       else
         schedule.errors.each do |field, msg|
