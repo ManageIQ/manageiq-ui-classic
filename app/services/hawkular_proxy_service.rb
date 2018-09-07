@@ -1,6 +1,4 @@
 class HawkularProxyService
-  include UiServiceMixin
-
   TENANT_LABEL_MAX_LEN = 25
   TENANT_LABEL_SPECIAL_CASES = {
     "_system"                      => _("System"),

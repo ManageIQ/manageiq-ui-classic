@@ -1,5 +1,4 @@
 class ContainerProjectDashboardService < DashboardService
-  include UiServiceMixin
   include ContainerServiceMixin
   include Mixins::CheckedIdMixin
 
