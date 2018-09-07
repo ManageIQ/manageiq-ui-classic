@@ -11,6 +11,7 @@ window.angular = require('angular');
 require('angular-gettext');
 require('angular-sanitize');
 require('angular.validators/angular.validators');
+require('angular-ui-codemirror');
 
 window._ = require('lodash');
 window.numeral = require('numeral');

@@ -36,7 +36,6 @@
 //= require bootstrap-switch/dist/js/bootstrap-switch
 //= require bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin
 //= require angular-bootstrap-switch/dist/angular-bootstrap-switch
-//= require bower_components/angular-ui-codemirror/ui-codemirror
 //= require bower_components/patternfly-bootstrap-treeview/dist/bootstrap-treeview
 //= require ./miq_ujs_bindings
 //= require ./miq_tree
