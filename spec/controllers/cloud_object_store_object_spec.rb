@@ -117,10 +117,7 @@ describe CloudObjectStoreObjectController do
         :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
       }
 
-      expect(assigns(:flash_array).first[:message]).to include(
-        "No items were selected for Delete"
-      )
-      expect(response.status).to eq(200)
+      expect(response.body).to match(/throw "error"/)
     end
   end
 

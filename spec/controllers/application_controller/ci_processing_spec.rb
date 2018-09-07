@@ -161,18 +161,9 @@ describe ApplicationController do
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
       end
 
-      it "does not invoke process_tasks overall when nothing selected" do
+      it "raises an error when nothing selected" do
         controller.params[:miq_grid_checks] = ''
-        expect(CloudObjectStoreContainer).not_to receive(:process_tasks)
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
-      end
-
-      it "flash - nothing selected" do
-        controller.params[:miq_grid_checks] = ''
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "No items were selected for Delete"
-        )
+        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete") }.to raise_error("Can't access records without an id")
       end
 
       it "flash - task not supported" do
@@ -238,10 +229,7 @@ describe ApplicationController do
       end
 
       it "flash - container no longer exists" do
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "No items were selected for Delete"
-        )
+        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete") }.to raise_error("Can't access records without an id")
       end
 
       it "flash - task not supported" do
@@ -321,15 +309,12 @@ describe ApplicationController do
       it "does not invoke process_tasks overall when nothing selected" do
         controller.params[:miq_grid_checks] = ""
         expect(CloudObjectStoreObject).not_to receive(:process_tasks)
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete") }.to raise_error("Can't access records without an id")
       end
 
       it "flash - nothing selected" do
         controller.params[:miq_grid_checks] = ""
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "No items were selected for Delete"
-        )
+        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete") }.to raise_error("Can't access records without an id")
       end
 
       it "flash - task not supported" do
@@ -368,7 +353,7 @@ describe ApplicationController do
       it "invokes process_objects" do
         controller.params[:id] = object.id.to_s
         expect(controller).to receive(:process_objects).with(
-          [object.id.to_s],
+          [object.id],
           "cloud_object_store_object_delete",
           "Delete"
         )
@@ -388,7 +373,7 @@ describe ApplicationController do
       it "invokes process_tasks overall" do
         controller.params[:id] = object.id.to_s
         expect(CloudObjectStoreObject).to receive(:process_tasks).with(
-          :ids    => [object.id.to_s],
+          :ids    => [object.id],
           :task   => "cloud_object_store_object_delete",
           :userid => anything
         )
@@ -397,10 +382,7 @@ describe ApplicationController do
 
       it "flash - container no longer exists" do
         object.destroy
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "No items were selected for Delete"
-        )
+        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete") }.to raise_error("Can't access records without an id")
       end
 
       it "flash - task not supported" do
@@ -510,15 +492,12 @@ describe ApplicationController do
       it "does not invoke process_tasks overall when nothing selected" do
         controller.params[:miq_grid_checks] = ''
         expect(CloudObjectStoreContainer).not_to receive(:process_tasks)
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear") }.to raise_error("Can't access records without an id")
       end
 
       it "flash - nothing selected" do
         controller.params[:miq_grid_checks] = ''
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "No items were selected for Clear"
-        )
+        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear") }.to raise_error("Can't access records without an id")
       end
 
       it "flash - task not supported" do
@@ -584,10 +563,7 @@ describe ApplicationController do
       end
 
       it "flash - container no longer exists" do
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "No items were selected for Clear"
-        )
+        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear") }.to raise_error("Can't access records without an id")
       end
 
       it "flash - task not supported" do
@@ -1071,7 +1047,7 @@ describe OrchestrationStackController do
       expect(controller).to receive(:show_list)
       controller.send('orchestration_stack_delete')
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first).to eq(:message => "Error during deletion: Unauthorized object or action",
+      expect(flash_messages.first).to eq(:message => "Error during deletion: Can't access selected records",
                                          :level   => :error)
     end
 
