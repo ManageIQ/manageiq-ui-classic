@@ -2,14 +2,10 @@
 //= require ./jquery_overrides
 //= require ./i18n
 //= require patternfly
-//= require angular
-//= require angular-gettext/dist/angular-gettext.min.js
 //= require bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists
 //= require bower_components/angular-patternfly/dist/angular-patternfly
 //= require bower_components/angular-bootstrap/ui-bootstrap
 //= require bower_components/angular-bootstrap/ui-bootstrap-tpls
-//= require angular-sanitize
-//= require angular.validators/angular.validators
 //= require ./cable
 //= require ./gettextCatalog
 //= require ./miq_api
