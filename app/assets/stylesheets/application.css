@@ -9,8 +9,8 @@
  *= require bower_components/angular-patternfly/dist/styles/angular-patternfly
  *= require ./schedule_editor
  *= require ./miq_tree
- *= require bower_components/codemirror/lib/codemirror
- *= require bower_components/codemirror/theme/eclipse
+ *= require codemirror/lib/codemirror
+ *= require codemirror/theme/eclipse
  *= require kubernetes-topology-graph/dist/topology-graph
  *= require ./wizard
  *= require ./timeline

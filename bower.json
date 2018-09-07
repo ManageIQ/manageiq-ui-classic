@@ -23,7 +23,6 @@
     "angular-ui-sortable": "~0.16.1",
     "bootstrap-filestyle": "~1.2.1",
     "bootstrap-hover-dropdown": "~2.2.1",
-    "codemirror": "~5.19.0",
     "manageiq-ui-components": "bower-dev",
     "patternfly-bootstrap-treeview": "~2.1.5",
     "patternfly-timeline": "~1.0.5"
