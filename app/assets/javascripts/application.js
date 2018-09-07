@@ -2,7 +2,6 @@
 //= require ./jquery_overrides
 //= require ./i18n
 //= require patternfly
-//= require bower_components/jquery-ujs/src/rails
 //= require angular
 //= require angular-gettext/dist/angular-gettext.min.js
 //= require bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists
@@ -44,7 +43,6 @@
 //= require angular-bootstrap-switch/dist/angular-bootstrap-switch
 //= require bower_components/angular-ui-codemirror/ui-codemirror
 //= require bower_components/patternfly-bootstrap-treeview/dist/bootstrap-treeview
-//= require bower_components/jquery.observe_field/jquery.observe_field
 //= require ./miq_ujs_bindings
 //= require ./miq_tree
 //= require bower_components/codemirror/lib/codemirror
