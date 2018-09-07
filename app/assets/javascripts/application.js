@@ -61,7 +61,6 @@
 //= require ./resizable_sidebar
 //= require ./miq_c3
 //= require ./miq_explorer
-//= require bower_components/qs/dist/qs.min
 //= require ./miq_timeline
 //= require bower_components/angular-ui-sortable/sortable
 //= require bower_components/angular-dragdrop/src/angular-dragdrop

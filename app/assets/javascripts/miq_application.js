@@ -1,4 +1,4 @@
-/* global add_flash dialogFieldRefresh getChartColumnDataValues getChartFormatedValue QS miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqGridCheckAll miqGridGetCheckedRows miqLoadTL miqMenu miqTreeObject miqValueStylePrefill performFiltering recalculateChartYAxisLabels */
+/* global add_flash dialogFieldRefresh getChartColumnDataValues getChartFormatedValue miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqGridCheckAll miqGridGetCheckedRows miqLoadTL miqMenu miqTreeObject miqValueStylePrefill performFiltering recalculateChartYAxisLabels */
 
 // MIQ specific JS functions
 
@@ -1721,8 +1721,6 @@ function miqScrollToSelected(div_name) {
     $('#' + div_name).scrollTop(rowpos.top);
   }
 }
-
-function queryParam(name) { return QS(window.location.href).get(name); }
 
 function miqFormatNotification(text, bindings) {
   if (! text) {
