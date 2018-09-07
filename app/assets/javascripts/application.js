@@ -27,7 +27,6 @@
 //= require ./automate_import_export
 //= require ./dialog_field_refresh
 //= require ./miq_c3_config
-//= require bower_components/jquery-ui/jquery-ui
 //= require bower_components/bootstrap/dist/js/bootstrap
 //= require bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker
 //= require bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
