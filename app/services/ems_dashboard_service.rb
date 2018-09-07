@@ -1,5 +1,4 @@
 class EmsDashboardService < DashboardService
-  include UiServiceMixin
   include Mixins::CheckedIdMixin
 
   def initialize(ems_id, controller, klass)
