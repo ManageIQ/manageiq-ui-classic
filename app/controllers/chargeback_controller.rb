@@ -84,7 +84,7 @@ class ChargebackController < ApplicationController
 
     @view, @pages = get_view(ChargebackRate, :named_scope => [[:with_rate_type, x_node.split('-').last]]) # Get the records (into a view) and the paginator
 
-    @current_page = @pages[:current] unless @pages.nil?  # save the current page number
+    @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:rates_sortcol] = @sortcol
     session[:rates_sortdir] = @sortdir
 
@@ -95,12 +95,13 @@ class ChargebackController < ApplicationController
     assert_privileges(params[:pressed]) if params[:pressed]
     case params[:button]
     when "cancel"
-      add_flash(params[:id] ?
-        _("Edit of Chargeback Rate \"%{name}\" was cancelled by the user") %
-          {:name => session[:edit][:new][:description]} :
-        _("Add of new Chargeback Rate was cancelled by the user"))
+      if params[:id]
+        add_flash(_("Edit of Chargeback Rate \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:description]})
+      else
+        add_flash(_("Add of new Chargeback Rate was cancelled by the user"))
+      end
       get_node_info(x_node)
-      @edit = session[:edit] = nil  # clean out the saved info
+      @edit = session[:edit] = nil # clean out the saved info
       session[:changed] = false
       replace_right_cell
     when "save", "add"
@@ -123,7 +124,7 @@ class ChargebackController < ApplicationController
         @rate_details[i].save_tiers(@rate_tiers[i])
       end
 
-      tiers_valid &&= @rate_details.all?{ |rate_detail| rate_detail.errors.messages.blank? }
+      tiers_valid &&= @rate_details.all? { |rate_detail| rate_detail.errors.messages.blank? }
 
       if tiers_valid && @rate.save
         if params[:button] == "add"
@@ -133,7 +134,7 @@ class ChargebackController < ApplicationController
           AuditEvent.success(build_saved_audit(@rate, @edit))
           add_flash(_("Chargeback Rate \"%{name}\" was saved") % {:name => @rate.description})
         end
-        @edit = session[:edit] = nil  # clean out the saved info
+        @edit = session[:edit] = nil # clean out the saved info
         session[:changed] = @changed = false
         get_node_info(x_node)
         replace_right_cell(:replace_trees => [:cb_rates])
@@ -243,7 +244,7 @@ class ChargebackController < ApplicationController
     detail = @edit[:new][:details][ii]
 
     @edit[:new][:num_tiers][ii] = detail[:chargeback_tiers].to_a.length if detail[:chargeback_tiers]
-    @edit[:new][:num_tiers][ii] = 1 unless @edit[:new][:num_tiers][ii] || @edit[:new][:num_tiers][ii] == 0
+    @edit[:new][:num_tiers][ii] = 1 unless @edit[:new][:num_tiers][ii] || @edit[:new][:num_tiers][ii].zero?
     @edit[:new][:num_tiers][ii] += 1
 
     tier_index = @edit[:new][:num_tiers][ii] - 1
@@ -318,8 +319,7 @@ class ChargebackController < ApplicationController
 
      {:role  => "chargeback_assignments",
       :name  => :cb_assignments,
-      :title => _("Assignments")},
-    ].map do |hsh|
+      :title => _("Assignments")}].map do |hsh|
       ApplicationController::Feature.new_with_hash(hsh)
     end
   end
@@ -336,8 +336,8 @@ class ChargebackController < ApplicationController
   end
 
   def cb_rpts_fetch_saved_report(id)
-    rr = MiqReportResult.for_user(current_user).find_by_id(id.to_s.split('-').last)
-    if rr.nil?  # Saved report no longer exists
+    rr = MiqReportResult.for_user(current_user).find(id.to_s.split('-').last)
+    if rr.nil? # Saved report no longer exists
       @report = nil
       return
     end
@@ -348,20 +348,13 @@ class ChargebackController < ApplicationController
       return
     else
       @report_result_id = session[:report_result_id] = rr.id
-      session[:report_result_runtime]  = rr.last_run_on
+      session[:report_result_runtime] = rr.last_run_on
       if rr.status.downcase == "complete"
         session[:rpt_task_id] = nil
-        unless rr.valid_report_column?
-          @saved_reports = cb_rpts_get_all_reps(rr.miq_report_id.to_s)
-          rep = MiqReport.find_by_id(rr.miq_report_id)
-          if x_active_tree == :cb_reports_tree
-            self.x_node = "reports-#{rep.id}"
-          end
-          return
-        else
+        if rr.valid_report_column?
           if rr.contains_records?
             @html = report_first_page(rr) # Get the first page of the results
-            unless @report.graph.blank?
+            if @report.graph.present?
               @render_chart = true
               @ght_type = "hybrid"
             else
@@ -372,6 +365,13 @@ class ChargebackController < ApplicationController
           else
             add_flash(_("No records found for this report"), :warning)
           end
+        else
+          @saved_reports = cb_rpts_get_all_reps(rr.miq_report_id.to_s)
+          rep = MiqReport.find(rr.miq_report_id)
+          if x_active_tree == :cb_reports_tree
+            self.x_node = "reports-#{rep.id}"
+          end
+          return
         end
       end
     end
@@ -424,7 +424,7 @@ class ChargebackController < ApplicationController
         # On a saved report node
         cb_rpts_show_saved_report
         if @report
-          s = MiqReportResult.for_user(current_user).find_by_id(nodes.last.split('-').last)
+          s = MiqReportResult.for_user(current_user).find(nodes.last.split('-').last)
 
           @right_cell_div = "reports_list_div"
           @right_cell_text = _("Saved Chargeback Report \"%{last_run_on}\"") % {:last_run_on => format_timezone(s.last_run_on, Time.zone, "gtl")}
@@ -437,12 +437,12 @@ class ChargebackController < ApplicationController
       else
         # saved reports under report node on saved report accordion
         @saved_reports = cb_rpts_get_all_reps(nodes[0].split('-')[1])
-        unless @saved_reports.empty?
+        if @saved_reports.present?
           @sb[:sel_saved_rep_id] = nodes[1]
           @right_cell_div = "reports_list_div"
           miq_report = MiqReport.for_user(current_user).find(@sb[:miq_report_id])
           @right_cell_text = _("Saved Chargeback Reports \"%{report_name}\"") % {:report_name => miq_report.name}
-          @sb[:parent_reports] = nil  unless @sb[:saved_reports].blank?    # setting it to nil so saved reports can be displayed, unless all saved reports were deleted
+          @sb[:parent_reports] = nil if @sb[:saved_reports].present? # setting it to nil so saved reports can be displayed, unless all saved reports were deleted
         else
           add_flash(_("Selected Chargeback Report no longer exists"), :warning)
           self.x_node = nodes[0]
@@ -573,7 +573,7 @@ class ChargebackController < ApplicationController
       # Save tiers into @edit
       (0..@edit[:new][:num_tiers][detail_index].to_i - 1).each do |tier_index|
         tier = @edit[:new][:tiers][detail_index][tier_index] || {}
-        %i{fixed_rate variable_rate start finish}.each do |field|
+        %i(fixed_rate variable_rate start finish).each do |field|
           key = "#{field}_#{detail_index}_#{tier_index}".to_sym
           tier[field] = params[key] if params[key]
         end
@@ -610,50 +610,45 @@ class ChargebackController < ApplicationController
 
   # Set record vars for save
   def cb_assign_set_record_vars
+    @edit[:set_assignments] = []
     if @edit[:new][:cbshow_typ].ends_with?("-tags")
-      @edit[:set_assignments] = []
       assigned_rates_from_all_categories = @edit[:cb_assign][:tags].values.reduce({}, :merge)
       assigned_rates_from_all_categories.each_key do |id|
         key = "#{@edit[:new][:cbshow_typ]}__#{id}"
-        if !@edit[:new][key].nil? && @edit[:new][key] != "nil"
-          temp = {
-            :cb_rate => ChargebackRate.find(@edit[:new][key]),
-            :tag     => [Classification.find_by_id(id)],
-          }
-          temp[:tag].push(@edit[:new][:cbshow_typ].split("-").first)
-          @edit[:set_assignments].push(temp)
-        end
+        next if @edit[:new][key].nil? || @edit[:new][key] == "nil"
+        temp = {
+          :cb_rate => ChargebackRate.find(@edit[:new][key]),
+          :tag     => [Classification.find(id)],
+        }
+        temp[:tag].push(@edit[:new][:cbshow_typ].split("-").first)
+        @edit[:set_assignments].push(temp)
       end
     elsif @edit[:new][:cbshow_typ].ends_with?("-labels")
-      @edit[:set_assignments] = []
       @edit[:cb_assign][:docker_label_values_saved].each_key do |id|
         key = "#{@edit[:new][:cbshow_typ]}__#{id}"
-        if !@edit[:new][key].nil? && @edit[:new][key] != "nil"
-          temp = {
-            :cb_rate => ChargebackRate.find(@edit[:new][key]),
-            :label   => [CustomAttribute.find(id)]
-          }
-          temp[:label].push(@edit[:new][:cbshow_typ].split("-").first)
-          @edit[:set_assignments].push(temp)
-        end
+        next if @edit[:new][key].nil? || @edit[:new][key] == "nil"
+        temp = {
+          :cb_rate => ChargebackRate.find(@edit[:new][key]),
+          :label   => [CustomAttribute.find(id)]
+        }
+        temp[:label].push(@edit[:new][:cbshow_typ].split("-").first)
+        @edit[:set_assignments].push(temp)
       end
     else
-      @edit[:set_assignments] = []
-      @edit[:cb_assign][:cis].each do |id, _ci|
+      @edit[:cb_assign][:cis].each_key do |id|
         key = "#{@edit[:new][:cbshow_typ]}__#{id}"
-        if !@edit[:new][key].nil? && @edit[:new][key] != "nil"
-          temp = {:cb_rate => ChargebackRate.find(@edit[:new][key])}
-          model = if @edit[:new][:cbshow_typ] == "enterprise"
-                    MiqEnterprise
-                  elsif @edit[:new][:cbshow_typ] == "ems_container"
-                    ExtManagementSystem
-                  else
-                    Object.const_get(@edit[:new][:cbshow_typ].camelize) rescue nil
-                  end
+        next if @edit[:new][key].nil? || @edit[:new][key] == "nil"
+        temp = {:cb_rate => ChargebackRate.find(@edit[:new][key])}
+        model = if @edit[:new][:cbshow_typ] == "enterprise"
+                  MiqEnterprise
+                elsif @edit[:new][:cbshow_typ] == "ems_container"
+                  ExtManagementSystem
+                else
+                  Object.const_get(@edit[:new][:cbshow_typ].camelize) rescue nil
+                end
 
-          temp[:object] = model.find_by_id(id) unless model.nil?
-          @edit[:set_assignments].push(temp)
-        end
+        temp[:object] = model.find(id) unless model.nil?
+        @edit[:set_assignments].push(temp)
       end
     end
   end
@@ -674,24 +669,24 @@ class ChargebackController < ApplicationController
     @edit[:current] = HashWithIndifferentAccess.new
     @edit[:current_assignment] = ChargebackRate.get_assignments(x_node.split('-').last)
     unless @edit[:current_assignment].empty?
-      @edit[:new][:cbshow_typ] =  case @edit[:current_assignment][0][:object]
-                                  when EmsCluster
-                                    "ems_cluster"
-                                  when ExtManagementSystem, ManageIQ::Providers::ContainerManager
-                                    "ext_management_system"
-                                  when MiqEnterprise
-                                    "enterprise"
-                                  when NilClass
-                                    if @edit[:current_assignment][0][:tag]
-                                      "#{@edit[:current_assignment][0][:tag][1]}-tags"
-                                    else
-                                      "#{@edit[:current_assignment][0][:label][1]}-labels"
-                                    end
-                                  else
-                                    @edit[:current_assignment][0][:object].class.name.downcase
-                                  end
+      @edit[:new][:cbshow_typ] = case @edit[:current_assignment][0][:object]
+                                 when EmsCluster
+                                   "ems_cluster"
+                                 when ExtManagementSystem, ManageIQ::Providers::ContainerManager
+                                   "ext_management_system"
+                                 when MiqEnterprise
+                                   "enterprise"
+                                 when NilClass
+                                   if @edit[:current_assignment][0][:tag]
+                                     "#{@edit[:current_assignment][0][:tag][1]}-tags"
+                                   else
+                                     "#{@edit[:current_assignment][0][:label][1]}-labels"
+                                   end
+                                 else
+                                   @edit[:current_assignment][0][:object].class.name.downcase
+                                 end
     end
-    if @edit[:new][:cbshow_typ] && @edit[:new][:cbshow_typ].ends_with?("-tags")
+    if @edit[:new][:cbshow_typ]&.ends_with?("-tags")
       get_categories_all
       tag = @edit[:current_assignment][0][:tag][0]
       if tag
@@ -700,7 +695,7 @@ class ChargebackController < ApplicationController
       else
         @edit[:current_assignment] = []
       end
-    elsif @edit[:new][:cbshow_typ] && @edit[:new][:cbshow_typ].ends_with?("-labels")
+    elsif @edit[:new][:cbshow_typ]&.ends_with?("-labels")
       get_docker_labels_all_keys
       assigned_label = @edit[:current_assignment][0][:label][0]
       if assigned_label
@@ -828,7 +823,7 @@ class ChargebackController < ApplicationController
   # Get variables from edit form
   def cb_assign_get_form_vars
     @edit[:new][:cbshow_typ] = params[:cbshow_typ] if params[:cbshow_typ]
-    @edit[:new][:cbtag_cat] = nil if params[:cbshow_typ]                  # Reset categories pull down if assign to selection is changed
+    @edit[:new][:cbtag_cat] = nil if params[:cbshow_typ] # Reset categories pull down if assign to selection is changed
     @edit[:new][:cbtag_cat] = params[:cbtag_cat].to_s if params[:cbtag_cat]
     @edit[:new][:cblabel_key] = nil if params[:cbshow_typ]
     @edit[:new][:cblabel_key] = params[:cblabel_key].to_s if params[:cblabel_key]
@@ -850,7 +845,7 @@ class ChargebackController < ApplicationController
 
   def replace_right_cell(options = {})
     replace_trees = Array(options[:replace_trees])
-    replace_trees = @replace_trees if @replace_trees  # get_node_info might set this
+    replace_trees = @replace_trees if @replace_trees # get_node_info might set this
     @explorer = true
     c_tb = build_toolbar(center_toolbar_filename)
 
@@ -895,8 +890,8 @@ class ChargebackController < ApplicationController
 
     if @record || @in_a_form ||
        (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0))
-      if ["chargeback_rates_copy", "chargeback_rates_edit", "chargeback_rates_new"].include?(@sb[:action]) ||
-         (x_active_tree == :cb_assignments_tree && ["Compute", "Storage"].include?(x_node.split('-').last))
+      if %w(chargeback_rates_copy chargeback_rates_edit chargeback_rates_new).include?(@sb[:action]) ||
+         (x_active_tree == :cb_assignments_tree && %w(Compute Storage).include?(x_node.split('-').last))
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.show(:paging_div, :form_buttons_div).remove_paging
