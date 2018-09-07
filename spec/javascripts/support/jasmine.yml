@@ -17,7 +17,7 @@ src_files:
 - packs/vendor.js
 - packs/manageiq-ui-classic/globals.js
 - assets/application
-- assets/bower_components/jasmine-jquery/lib/jasmine-jquery
+- assets/jasmine-jquery/lib/jasmine-jquery
 - assets/angular-mocks
 - __spec__/helpers/fixtures-fix.js
 - __spec__/helpers/toolbar.js

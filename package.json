@@ -108,6 +108,7 @@
     "eslint-plugin-standard": "~2.0.1",
     "file-loader": "~1.1.11",
     "glob": "~7.1.1",
+    "jasmine-jquery": "~2.1.1",
     "jest": "^22.0.6",
     "jest-cli": "^22.0.0",
     "js-yaml": "~3.8.3",
