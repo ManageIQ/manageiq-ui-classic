@@ -31,7 +31,7 @@
         - else
           %tr
             %td
-              %button.btn.btn-default#accept{:type => 'submit', :name => 'accept', :title => _("Add this entry")}
+              %button.btn.btn-default{:type => 'submit', :name => 'accept', :title => _("Add this entry")}
                 %i.pficon.pficon-import
             %td
               = text_field("user_proxies", "ldaphost", "maxlength" => 50)
@@ -51,7 +51,7 @@
           - if entry != nil && entry != "new" && entry[:ldaphost] == forest[:ldaphost]
             %tr
               %td
-                %button.btn.btn-default#accept{:type => :submit, :name => 'accept', :title => _("Update this entry")}
+                %button.btn.btn-default{:type => :submit, :name => 'accept', :title => _("Update this entry")}
                   %i.pficon.pficon-import
               %td
                 = text_field("user_proxies", "ldaphost", "maxlength" => 50, "value" => entry[:ldaphost])
