@@ -79,14 +79,13 @@
                   "ng-change"                      => "vm.logProtocolChanged(vm.diagnosticsDatabaseModel)",
                   "ng-required"                    => "vm.logProtocolNotSelected(vm.diagnosticsDatabaseModel)",
                   "selectpicker-for-select-tag"    => "")
-  = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
-                 :locals  => {:ng_show             => "vm.logProtocolSelected()",
-                              :ng_reqd_depot_name  => true,
-                              :ng_model_depot_name => "vm.diagnosticsDatabaseModel.depot_name",
-                              :ng_reqd_uri         => true,
-                              :ng_model_uri        => "vm.diagnosticsDatabaseModel.uri",
-                              :ng_model_uri_prefix => "vm.diagnosticsDatabaseModel.uri_prefix",
-                              :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
+  %log-depot-settings{:show                => "vm.logProtocolSelected()",
+                      :requered_depot_name => true,
+                      :model_depot_name    => "vm.diagnosticsDatabaseModel.depot_name",
+                      :requered_uri        => true,
+                      :model_uri           => "{{vm.diagnosticsDatabaseModel.uri}}",
+                      :model_uri_prefix    => "vm.diagnosticsDatabaseModel.uri_prefix",
+                      :uri_prefix_display  => "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
 
   %region{'ng-if' => 'vm.regionSelect()'}
     .form-group{"ng-class" => "{'has-error': angularForm.log_aws_region.$invalid}"}
