@@ -190,25 +190,35 @@ module OpsController::Settings::Common
   end
 
   def pglogical_save_subscriptions
-    errors = case params[:replication_type]
-             when "global"
-               subscriptions_to_save, subsciptions_to_remove = prepare_subscriptions_for_saving
-               MiqPglogical.save_global_region(subscriptions_to_save, subsciptions_to_remove)
-             when "remote"
-               MiqPglogical.save_remote_region(params[:exclusion_list])
-             when "none"
-               MiqPglogical.save_replication_type(:none)
-             end
-    if errors.empty?
-      msg = _("Replication configuration save was successful")
-      level = :info
-    else
-      msg = _("Error during replication configuration save: %{message}") % {:message => errors.join("\n")}
-      level = :error
+    case params[:replication_type]
+    when "global"
+      subscriptions_to_save, subsciptions_to_remove = prepare_subscriptions_for_saving
+      task_opts  = {:action => "Save subscriptions for global region", :userid => session[:userid]}
+      queue_opts = {:class_name => "MiqPglogical", :method_name => "save_global_region",
+                    :args       => [subscriptions_to_save, subsciptions_to_remove]}
+    when "remote"
+      task_opts  = {:action => "Save list of table excluded from replication for remote region",
+                    :userid => session[:userid]}
+      queue_opts = {:class_name => "MiqPglogical", :method_name => "save_remote_region",
+                    :args       => [params[:exclusion_list]]}
+    when "none"
+      task_opts  = {:action => "Set replication type to none", :userid => session[:userid]}
+      queue_opts = {:class_name => "MiqRegion", :method_name => "replication_type=", :args => [:none]}
     end
+    task_id = MiqTask.generic_action_with_callback(task_opts, queue_opts)
+    initiate_wait_for_task(:task_id => task_id, :action => "pglogical_save_finished")
+  end
 
-    add_flash(msg, level)
-    javascript_flash(:spinner_off => true)
+  def pglogical_save_finished
+    task = MiqTask.find(session[:async][:params][:task_id])
+    if task.nil?
+      add_flash(_("Unknown result of saving replication configuration: task not found"), :error)
+    elsif MiqTask.status_ok?(task.status)
+      add_flash(_("Replication configuration save was successful"))
+    else
+      add_flash(_("Error during replication configuration save: %{message}") % {:message => task.message }, :error)
+    end
+    javascript_flash
   end
 
   def pglogical_validate_subscription
@@ -231,7 +241,7 @@ module OpsController::Settings::Common
   def prepare_subscriptions_for_saving
     to_save = []
     to_remove = []
-    params[:subscriptions].each_value do |_, subscription_params|
+    params[:subscriptions].each_value do |subscription_params|
       subscription = find_or_new_subscription(subscription_params['id'])
       if subscription.id && subscription_params['remove'] == "true"
         to_remove << subscription
