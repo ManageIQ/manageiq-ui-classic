@@ -358,8 +358,8 @@ module ApplicationController::Filter
       end
 
       # Check for suffixes changed
-      self.val1_suffix = MiqExpression::BYTE_FORMAT_WHITELIST[params[:choosen_suffix]] if params[:choosen_suffix]
-      self.val2_suffix = MiqExpression::BYTE_FORMAT_WHITELIST[params[:choosen_suffix2]] if params[:choosen_suffix2]
+      self.val1_suffix = MiqExpression::BYTE_FORMAT_WHITELIST[params[:chosen_suffix]] if params[:chosen_suffix]
+      self.val2_suffix = MiqExpression::BYTE_FORMAT_WHITELIST[params[:chosen_suffix2]] if params[:chosen_suffix2]
     end
 
     def update_from_exp_tree(exp)
