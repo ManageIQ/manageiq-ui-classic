@@ -30,7 +30,6 @@
 //= require bower_components/bootstrap/dist/js/bootstrap
 //= require bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker
 //= require bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
-//= require bower_components/bootstrap-filestyle/src/bootstrap-filestyle
 //= require bower_components/bootstrap-select/js/bootstrap-select
 //= require bower_components/bootstrap-hover-dropdown/bootstrap-hover-dropdown
 //= require bootstrap-switch/dist/js/bootstrap-switch

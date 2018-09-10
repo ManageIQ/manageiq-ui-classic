@@ -21,7 +21,6 @@
     "angular-dragdrop": "~1.0.13",
     "angular-patternfly": "~3.26.0",
     "angular-ui-sortable": "~0.16.1",
-    "bootstrap-filestyle": "~1.2.1",
     "bootstrap-hover-dropdown": "~2.2.1",
     "manageiq-ui-components": "bower-dev",
     "patternfly-bootstrap-treeview": "~2.1.5",

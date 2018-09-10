@@ -31,6 +31,7 @@
     "angular.validators": "~4.4.2",
     "array-includes": "~3.0.3",
     "base64-js": "~1.2.3",
+    "bootstrap-filestyle": "~1.2.1",
     "bootstrap-switch": "~3.3.4",
     "codemirror": "~5.19.0",
     "connected-react-router": "^4.3.0",
