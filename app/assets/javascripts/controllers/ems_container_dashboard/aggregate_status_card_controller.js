@@ -48,7 +48,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
         "largeIcon": true,
         "notifications":[
           {
-            "iconImage": providers_info[0].statusIcon,
+            "iconClass": providers_info[0].statusIcon,
           },
         ],
       };

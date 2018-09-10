@@ -1,5 +1,4 @@
 class ContainerDashboardService < DashboardService
-  include UiServiceMixin
   include ContainerServiceMixin
   include Mixins::CheckedIdMixin
 
@@ -155,18 +154,15 @@ class ContainerDashboardService < DashboardService
   end
 
   def build_provider_status(provider_type)
-    provider_status_icon = if @ems.present?
-                             if @ems.enabled?
-                               icons[:StatusOn][:icon]
-                             else
-                               icons[:StatusPaused][:icon]
-                             end
-                           end
+    if @ems.present?
+      provider_status_icon = QuadiconHelper.provider_status("Valid", @ems.enabled?)[:fonticon]
+      provider_fileicon = @ems.decorate.try(:fileicon)
+    end
 
     {
       :count      => 0,
       :typeName   => _(provider_type.to_s),
-      :iconImage  => icons[provider_type][:icon],
+      :iconImage  => provider_fileicon ? ActionController::Base.helpers.image_path(provider_fileicon) : nil,
       :statusIcon => provider_status_icon
     }
   end
