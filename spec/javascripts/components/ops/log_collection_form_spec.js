@@ -14,7 +14,7 @@ describe('logCollectionForm', function() {
     $httpBackend = _$httpBackend_;
 
     var bindings = {
-      recordId:  123456,
+      recordId:  "123456",
       selectOptions: ["some value"],
       logCollectionFormFieldsUrl: "/ops/log_collection_form_fields/",
       saveUrl: "/ops/log_depot_edit/",
