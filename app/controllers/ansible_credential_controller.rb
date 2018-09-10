@@ -27,9 +27,9 @@ class AnsibleCredentialController < ApplicationController
   def button
     case params[:pressed]
     when 'embedded_automation_manager_credentials_add'
-      javascript_redirect :action => 'new'
+      javascript_redirect(:action => 'new')
     when 'embedded_automation_manager_credentials_edit'
-      javascript_redirect :action => 'edit', :id => params[:miq_grid_checks]
+      javascript_redirect(:action => 'edit', :id => params[:miq_grid_checks])
     when 'embedded_automation_manager_credentials_delete'
       delete_credentials
     when 'ansible_credential_tag'
@@ -79,6 +79,6 @@ class AnsibleCredentialController < ApplicationController
       end
     end
     session[:flash_msgs] = @flash_array
-    javascript_redirect :action => 'show_list'
+    javascript_redirect(:action => 'show_list')
   end
 end
