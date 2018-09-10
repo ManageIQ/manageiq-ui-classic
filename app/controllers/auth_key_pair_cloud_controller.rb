@@ -149,7 +149,7 @@ class AuthKeyPairCloudController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show_list")
@@ -158,13 +158,11 @@ class AuthKeyPairCloudController < ApplicationController
   # delete selected auth key pairs
   def delete_auth_key_pairs
     assert_privileges("auth_key_pair_cloud_delete")
-    key_pairs = []
-
-    if @lastaction == "show_list" || (@lastaction == "show" && @layout != "auth_key_pair_cloud")
-      key_pairs = find_checked_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair)
-    else
-      key_pairs = [find_record_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, params[:id])]
-    end
+    key_pairs = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "auth_key_pair_cloud")
+                  find_checked_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair)
+                else
+                  [find_record_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, params[:id])]
+                end
 
     add_flash(_("No Key Pairs were selected for deletion"), :error) if key_pairs.empty?
 
