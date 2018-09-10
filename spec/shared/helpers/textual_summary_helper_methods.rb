@@ -30,3 +30,11 @@ shared_examples_for 'textual_group' do |title, items, suffix = nil|
     end
   end
 end
+
+shared_examples_for 'textual_description' do |value|
+  describe "#textual_description" do
+    subject { send("textual_description") }
+
+    it { is_expected.to eq(value) }
+  end
+end
