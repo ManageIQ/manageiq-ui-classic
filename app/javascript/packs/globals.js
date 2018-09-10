@@ -6,6 +6,7 @@ window.$ = window.jQuery = require('jquery');
 require('jquery-ui');
 require('jquery-ujs');
 require('jquery.observe_field');
+require('bootstrap-filestyle');
 
 window.angular = require('angular');
 require('angular-gettext');
