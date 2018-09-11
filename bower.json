@@ -19,7 +19,6 @@
   ],
   "dependencies": {
     "angular-patternfly": "~3.26.0",
-    "angular-ui-sortable": "~0.16.1",
     "manageiq-ui-components": "bower-dev",
     "patternfly-bootstrap-treeview": "~2.1.5",
     "patternfly-timeline": "~1.0.5"
