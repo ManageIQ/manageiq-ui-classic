@@ -129,7 +129,7 @@ module ApplicationController::AdvancedSearch
     @edit[:adv_search_applied][:exp] = {}
     adv_search_set_text # Set search text filter suffix
     @edit[:selected] = true
-    @edit[:adv_search_applied][:exp] = @edit[:new][@expkey]   # Save the expression to be applied
+    @edit[:adv_search_applied][:exp] = copy_hash(@edit[:new][@expkey]) # Save the expression to be applied
     @edit[@expkey].exp_token = nil                            # Remove any existing atom being edited
     @edit[:adv_search_open] = false                           # Close the adv search box
     if MiqExpression.quick_search?(@edit[:adv_search_applied][:exp])
