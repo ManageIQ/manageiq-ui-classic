@@ -55,7 +55,6 @@
 //= require ./miq_explorer
 //= require ./miq_timeline
 //= require bower_components/angular-ui-sortable/sortable
-//= require bower_components/angular-dragdrop/src/angular-dragdrop
 //= require bower_components/manageiq-ui-components/dist/js/ui-components
 //= require bower_components/patternfly-timeline/dist/timeline
 //= require ui-select/dist/select
