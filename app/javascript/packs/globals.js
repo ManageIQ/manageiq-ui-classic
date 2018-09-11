@@ -11,8 +11,10 @@ require('jquery-ujs');
 require('jquery.observe_field');
 require('bootstrap-filestyle');
 require('patternfly-bootstrap-treeview');
+require('patternfly/dist/js/patternfly.min');
 
 window.angular = require('angular');
+require('angular-ui-bootstrap');
 require('angular-gettext');
 require('angular-sanitize');
 require('angular.validators');
