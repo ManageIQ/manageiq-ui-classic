@@ -5,7 +5,13 @@
       = _('%{product_name} WebMKS Remote Console') % {:product_name => Vmdb::Appliance.PRODUCT_NAME}
     = favicon_link_tag
     = stylesheet_link_tag '/webmks/css/wmks-all.css', 'application'
-    = javascript_include_tag 'jquery/dist/jquery.js', 'bower_components/jquery-ui/jquery-ui.js', '/webmks/wmks.min.js', 'remote_console'
+    = javascript_include_tag 'jquery/dist/jquery.js',
+                             'jquery-ui/ui/unique-id.js',
+                             'jquery-ui/ui/widget.js',
+                             'jquery-ui/ui/widgets/dialog.js',
+                             'jquery-ui/ui/widgets/button.js',
+                             '/webmks/wmks.min.js',
+                             'remote_console'
     :javascript
       $(function () {
         var mksOpts = {};

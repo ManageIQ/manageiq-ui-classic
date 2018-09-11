@@ -11,7 +11,8 @@ Rails.application.config.assets.precompile += %w(
   codemirror/theme/*.css
 
   jquery/dist/jquery.js
-  bower_components/jquery-ui/jquery-ui.js
+  jquery-ui/ui/*.js
+  jquery-ui/ui/widgets/*.js
 
   jquery_overrides.js
   remote_consoles/*.js
