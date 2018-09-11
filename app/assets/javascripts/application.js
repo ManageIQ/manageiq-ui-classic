@@ -3,7 +3,6 @@
 //= require ./i18n
 //= require patternfly
 //= require bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists
-//= require bower_components/angular-patternfly/dist/angular-patternfly
 //= require bower_components/angular-bootstrap/ui-bootstrap
 //= require bower_components/angular-bootstrap/ui-bootstrap-tpls
 //= require ./cable

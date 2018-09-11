@@ -6,7 +6,7 @@
  *= require ./dialog_fields
  *= require angular
  *= require ./notifications
- *= require bower_components/angular-patternfly/dist/styles/angular-patternfly
+ *= require angular-patternfly/dist/styles/angular-patternfly
  *= require ./schedule_editor
  *= require ./miq_tree
  *= require codemirror/lib/codemirror

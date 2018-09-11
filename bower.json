@@ -18,7 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular-patternfly": "~3.26.0",
     "manageiq-ui-components": "bower-dev",
     "patternfly-timeline": "~1.0.5"
   },
