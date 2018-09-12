@@ -217,6 +217,7 @@ module ApplicationController::AdvancedSearch
        svcs_tree
        storage_tree
        templates_filter_tree
+       templates_images_filter_tree
        vms_filter_tree
        vms_instances_filter_tree).include?(x_active_tree.to_s)
   end
