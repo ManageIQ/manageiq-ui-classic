@@ -832,15 +832,15 @@ module ApplicationController::CiProcessing
     storages = find_records_with_rbac(Storage, checked_or_params)
     return unless records_support_feature?(storages, 'delete')
     storages.each do |storage|
-      if storage.vms_and_templates.length.positive? || storage.hosts.length.positive?
-        storages -= [storage]
-        add_flash(_("\"%{datastore_name}\": cannot be removed, has vms or hosts") %
-          {:datastore_name => storage.name}, :warning)
-      end
+      next if !storage.vms_and_templates.length.positive? &&
+              !storage.hosts.length.positive?
+      storages -= [storage]
+      add_flash(_("\"%{datastore_name}\": cannot be removed, has vms or hosts") %
+        {:datastore_name => storage.name}, :warning)
     end
     process_storage(storages.ids, 'destroy') unless storages.empty?
     if !%w(show_list storage_list storage_pod_list).include?(@lastaction) ||
-        (@lastaction == "show" && @layout != "storage")
+       (@lastaction == "show" && @layout != "storage")
       @single_delete = !flash_errors?
     end
     if @lastaction == "show_list"
@@ -852,8 +852,8 @@ module ApplicationController::CiProcessing
   def delete_elements(model_class, destroy_method, model_name = nil)
     model_name ||= model_class.table_name
     elements = find_records_with_rbac(model_class, checked_or_params)
+    send(destroy_method, elements.ids, 'destroy')
     if params[:miq_grid_checks].present? || @lastaction == "show_list" || (@lastaction == "show" && @layout != model_name.singularize) # showing a list
-      send(destroy_method, elements.ids, "destroy")
       add_flash(n_("Delete initiated for %{count} %{model} from the %{product} Database",
                    "Delete initiated for %{count} %{models} from the %{product} Database", elements.length) %
         {:count   => elements.length,
@@ -861,7 +861,6 @@ module ApplicationController::CiProcessing
          :model   => ui_lookup(:table => model_name),
          :models  => ui_lookup(:tables => model_name)}) unless flash_errors?
     else # showing 1 element, delete it
-      send(destroy_method, elements.ids, "destroy")
       @single_delete = true unless flash_errors?
       add_flash(_("The selected %{record} was deleted") %
         {:record => ui_lookup(:table => model_name)}) if @flash_array.nil?
