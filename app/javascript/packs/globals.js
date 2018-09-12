@@ -10,6 +10,7 @@ require('jquery-ui/ui/widgets/sortable');
 require('jquery-ujs');
 require('jquery.observe_field');
 require('bootstrap-filestyle');
+require('patternfly-bootstrap-treeview');
 
 window.angular = require('angular');
 require('angular-gettext');
