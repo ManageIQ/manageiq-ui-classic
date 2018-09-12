@@ -13,6 +13,7 @@ cols:
 - name
 - type
 - health_state
+- asset_detail.location_led_state
 - asset_detail.product_name
 - asset_detail.manufacturer
 
@@ -30,6 +31,7 @@ col_order:
 - name
 - type
 - health_state
+- asset_detail.location_led_state
 - asset_detail.product_name
 - asset_detail.manufacturer
 
@@ -41,6 +43,7 @@ headers:
 - Name
 - Type
 - Health State
+- LED State
 - Product Name
 - Manufacturer
 

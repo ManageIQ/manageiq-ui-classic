@@ -14,7 +14,6 @@ cols:
 - type
 - health_state
 - power_state
-- location_led_state
 - hostname
 - asset_detail
 
@@ -33,7 +32,7 @@ col_order:
 - type
 - health_state
 - power_state
-- location_led_state
+- asset_detail.location_led_state
 - hostname
 - asset_detail.product_name
 - asset_detail.manufacturer

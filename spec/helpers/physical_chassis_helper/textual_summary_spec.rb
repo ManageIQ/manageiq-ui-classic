@@ -11,11 +11,12 @@ describe PhysicalChassisHelper::TextualSummary do
 
   let(:asset_detail) do
     FactoryGirl.create(:asset_detail,
-                       :product_name  => 'Lenovo XYZ Chassis x1000',
-                       :manufacturer  => 'Lenovo',
-                       :serial_number => 'A1B2C3D4E5F6',
-                       :part_number   => 'XXX18',
-                       :description   => 'Physical Chassis used inside site A')
+                       :product_name       => 'Lenovo XYZ Chassis x1000',
+                       :manufacturer       => 'Lenovo',
+                       :serial_number      => 'A1B2C3D4E5F6',
+                       :part_number        => 'XXX18',
+                       :description        => 'Physical Chassis used inside site A',
+                       :location_led_state => 'Off')
   end
 
   let(:network) do
@@ -89,7 +90,7 @@ describe PhysicalChassisHelper::TextualSummary do
 
     it 'shows 8 fields' do
       expect(subject.items).to be_kind_of(Array)
-      expect(subject.items.size).to eq(8)
+      expect(subject.items.size).to eq(9)
     end
 
     it 'shows main properties' do
@@ -101,7 +102,8 @@ describe PhysicalChassisHelper::TextualSummary do
         :part_number,
         :health_state,
         :uid_ems,
-        :description
+        :description,
+        :location_led_state
       )
     end
   end
@@ -224,6 +226,14 @@ describe PhysicalChassisHelper::TextualSummary do
 
     it 'show the chassis description' do
       expect(subject).to eq(:label => 'Description', :value => 'Physical Chassis used inside site A')
+    end
+  end
+
+  describe '.textual_location_led_state' do
+    subject { textual_location_led_state }
+
+    it 'show the chassis location LED state' do
+      expect(subject).to eq(:label => 'Identify LED State', :value => 'Off')
     end
   end
 
