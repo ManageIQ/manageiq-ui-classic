@@ -830,7 +830,10 @@ module ApplicationController::CiProcessing
   def deletestorages
     assert_privileges("storage_delete")
     storages = find_records_with_rbac(Storage, checked_or_params)
-    return unless records_support_feature?(storages, 'delete')
+    unless records_support_feature?(storages, 'delete')
+      add_flash(_("Only storage without VMs and Hosts can be removed"), :error)
+      return
+    end
     storages.each do |storage|
       next if !storage.vms_and_templates.length.positive? &&
               !storage.hosts.length.positive?
