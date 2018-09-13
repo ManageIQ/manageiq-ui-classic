@@ -158,12 +158,7 @@ class AuthKeyPairCloudController < ApplicationController
   # delete selected auth key pairs
   def delete_auth_key_pairs
     assert_privileges("auth_key_pair_cloud_delete")
-    key_pairs = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "auth_key_pair_cloud")
-                  find_checked_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair)
-                else
-                  [find_record_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, params[:id])]
-                end
-
+    key_pairs = find_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, checked_or_params)
     add_flash(_("No Key Pairs were selected for deletion"), :error) if key_pairs.empty?
 
     key_pairs_to_delete = []
