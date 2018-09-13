@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
 
   before_action :reset_toolbar
   before_action :set_session_tenant
-  before_action :get_global_session_data, :except => [:resize_layout, :authenticate]
+  before_action :get_global_session_data, :except => %i(resize_layout authenticate)
   before_action :set_user_time_zone
   before_action :set_gettext_locale
   before_action :allow_websocket
@@ -257,7 +257,7 @@ class ApplicationController < ActionController::Base
   def error_handler(e)
     raise e unless ApplicationController.handle_exceptions?
 
-    logger.fatal "Error caught: [#{e.class.name}] #{e.message}\n#{e.backtrace.join("\n")}"
+    logger.fatal("Error caught: [#{e.class.name}] #{e.message}\n#{e.backtrace.join("\n")}")
 
     msg = case e
           when ::ActionController::RoutingError
@@ -515,7 +515,8 @@ class ApplicationController < ActionController::Base
   end
 
   # moved this method here so it can be accessed from pxe_server controller as well
-  def log_depot_validate # this is a terrible name, it doesn't validate log_depots
+  # this is a terrible name, it doesn't validate log_depots
+  def log_depot_validate
     @schedule = nil # setting to nil, since we are using same view for both db_back and log_depot edit
     # if zone is selected in tree replace tab#3
     pfx = if x_active_tree == :diagnostics_tree
@@ -523,7 +524,7 @@ class ApplicationController < ActionController::Base
               # coming from diagnostics/database tab
               "dbbackup"
             end
-          elsif session[:edit] && session[:edit].key?(:pxe_id)
+          elsif session[:edit]&.key?(:pxe_id)
             # add/edit pxe server
             "pxe"
           else
@@ -568,7 +569,7 @@ class ApplicationController < ActionController::Base
 
   def filesystem_download
     fs = identify_record(params[:id], Filesystem)
-    send_data fs.contents, :filename => fs.name
+    send_data(fs.contents, :filename => fs.name)
   end
 
   def adv_search_text_clear
@@ -594,7 +595,7 @@ class ApplicationController < ActionController::Base
     flds = direction == "right" ? "available_fields" : "selected_fields"
     edit_fields = direction == "right" ? "available_fields" : "fields"
     sort_fields = direction == "right" ? "fields" : "available_fields"
-    if !params[flds.to_sym] || params[flds.to_sym].empty? || params[flds.to_sym][0] == ""
+    if params[flds.to_sym].blank? || params[flds.to_sym][0] == ""
       lr_messages = {
         "left"  => _("No fields were selected to move left"),
         "right" => _("No fields were selected to move right")
@@ -650,14 +651,14 @@ class ApplicationController < ActionController::Base
 
   # moved this method here so it can be accessed from pxe_server controller as well
   def log_depot_set_verify_status
-    if (@edit[:new][:log_password] == @edit[:new][:log_verify]) && @edit[:new][:uri_prefix] != "nfs" &&
-       (!@edit[:new][:uri].blank? && !@edit[:new][:log_userid].blank? && !@edit[:new][:log_password].blank? && !@edit[:new][:log_verify].blank?)
-      @edit[:log_verify_status] = true
-    elsif @edit[:new][:uri_prefix] == "nfs" && !@edit[:new][:uri].blank?
-      @edit[:log_verify_status] = true
-    else
-      @edit[:log_verify_status] = false
-    end
+    @edit[:log_verify_status] = if (@edit[:new][:log_password] == @edit[:new][:log_verify]) && @edit[:new][:uri_prefix] != "nfs" &&
+                                   (@edit[:new][:uri].present? && @edit[:new][:log_userid].present? && @edit[:new][:log_password].present? && @edit[:new][:log_verify].present?)
+                                  true
+                                elsif @edit[:new][:uri_prefix] == "nfs" && @edit[:new][:uri].present?
+                                  true
+                                else
+                                  false
+                                end
   end
 
   # Build an audit object when configuration is changed in configuration and ops controllers
@@ -676,7 +677,7 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  PASSWORD_FIELDS = [:password, :_pwd, :amazon_secret, :token].freeze
+  PASSWORD_FIELDS = %i(password _pwd amazon_secret token).freeze
 
   def filter_config(data)
     @parameter_filter ||=
@@ -703,20 +704,16 @@ class ApplicationController < ActionController::Base
           current[k] = {} if !current.nil? && current[k].nil?
           #   process keys of the current and new hashes
           (new[k].keys | (current.nil? ? [] : current[k].keys)).each do |hk|
-            if current.nil? || (new[k][hk] != current[k][hk])
-              if password_field?(hk) # Asterisk out password fields
-                msg_arr << "#{hk}:[*]#{' to [*]' unless current.nil?}"
-              else
-                msg_arr << "#{hk}:[" +
-                  (current.nil? ? "" : "#{filter_config(current[k][hk])}] to [") +
-                  "#{filter_config(new[k][hk])}]"
-              end
-            end
+            next if current.present? && (new[k][hk] == current[k][hk])
+            msg_arr << if password_field?(hk) # Asterisk out password fields
+                         "#{hk}:[*]#{' to [*]' unless current.nil?}"
+                       else
+                         "#{hk}:[" + (current.nil? ? "" : "#{filter_config(current[k][hk])}] to [") +
+                         "#{filter_config(new[k][hk])}]"
+                       end
           end
         else
-          msg_arr << "#{k}:[" +
-            (current.nil? ? "" : "#{filter_config(current[k])}] to [") +
-            "#{filter_config(new[k])}]"
+          msg_arr << "#{k}:[" + (current.nil? ? "" : "#{filter_config(current[k])}] to [") + "#{filter_config(new[k])}]"
         end
       end
     end
@@ -739,7 +736,7 @@ class ApplicationController < ActionController::Base
 
   # Common method enable/disable schedules
   def schedule_enable_disable(schedules, enabled)
-    schedules.select { |schedule| schedule.enabled != enabled }
+    schedules.reject { |schedule| schedule.enabled == enabled }
              .sort_by { |e| e.name.downcase }.each do |schedule|
       schedule.enabled = enabled
       schedule.save!
@@ -811,7 +808,7 @@ class ApplicationController < ActionController::Base
       }
       javascript_redirect(javascript_process_redirect_args(js_args))
     else
-      redirect_to :action => lastaction, :id => params[:id], :escape => false
+      redirect_to(:action => lastaction, :id => params[:id], :escape => false)
     end
   end
 
@@ -839,7 +836,7 @@ class ApplicationController < ActionController::Base
     tp = TimeProfile.profile_for_user_tz(session[:userid], session[:user_tz])
     tp = TimeProfile.default_time_profile if tp.nil?
 
-    if tp.nil? && !session[:time_profiles].blank?
+    if tp.nil? && session[:time_profiles].present?
       first_id_in_hash = Array(session[:time_profiles].invert).min_by(&:first).last
       tp = TimeProfile.find_by(:id => first_id_in_hash)
     end
@@ -867,7 +864,7 @@ class ApplicationController < ActionController::Base
 
   def populate_reports_menu(hide_custom = false)
     # checking to see if group (used to be role) was selected in menu editor tree, or came in from reports/timeline tree calls
-    group = !session[:role_choice].blank? ? MiqGroup.find_by(:description => session[:role_choice]) : current_group
+    group = session[:role_choice].present? ? MiqGroup.find_by(:description => session[:role_choice]) : current_group
     @sb[:rpt_menu] = get_reports_menu(hide_custom, group)
   end
 
@@ -920,7 +917,7 @@ class ApplicationController < ActionController::Base
   # Render the view data to a Hash structure for the list view
   def view_to_hash(view, fetch_data = false)
     # Get the time zone in effect for this view
-    tz = (view.db.downcase == 'miqschedule') ? server_timezone : Time.zone
+    tz = view.db.downcase == 'miqschedule' ? server_timezone : Time.zone
 
     root = {:head => [], :rows => []}
 
@@ -938,7 +935,7 @@ class ApplicationController < ActionController::Base
       col = view.col_order[i]
       next if view.column_is_hidden?(col)
 
-      align = [:fixnum, :integer, :Fixnum, :float].include?(column_type(view.db, view.col_order[i])) ? 'right' : 'left'
+      align = %i(fixnum integer Fixnum float).include?(column_type(view.db, view.col_order[i])) ? 'right' : 'left'
 
       root[:head] << {:text    => h,
                       :sort    => 'str',
@@ -1101,12 +1098,13 @@ class ApplicationController < ActionController::Base
   helper_method(:flash_errors?)
 
   # Handle the breadcrumb array by either adding, or resetting to, the passed in breadcrumb
-  def drop_breadcrumb(new_bc, onlyreplace = false) # if replace = true, only add this bc if it was already there
+  # if replace = true, only add this bc if it was already there
+  def drop_breadcrumb(new_bc, onlyreplace = false)
     # if the breadcrumb is in the array, remove it and all below by counting how many to pop
     return if skip_breadcrumb?
     remove = 0
     @breadcrumbs.each do |bc|
-      if remove > 0 # already found a match,
+      if remove.positive? # already found a match,
         remove += 1 #   increment pop counter
 
       # Check for a name match BEFORE the first left paren "(" or a url match BEFORE the last slash "/"
@@ -1117,16 +1115,16 @@ class ApplicationController < ActionController::Base
     end
     remove.times { @breadcrumbs.pop } # remove found element and any lower elements
     if onlyreplace
-      @breadcrumbs.push(new_bc) if remove > 0 # only add it if something was removed
+      @breadcrumbs.push(new_bc) if remove.positive? # only add it if something was removed
     else
       @breadcrumbs.push(new_bc)
     end
     @breadcrumbs.push(new_bc) if onlyreplace && @breadcrumbs.empty?
-    if (@lastaction == "registry_items" || @lastaction == "filesystems" || @lastaction == "files") && new_bc[:name].length > 50
-      @title = new_bc [:name].slice(0..50) + "..." # Set the title to be the new breadcrumb
-    else
-      @title = new_bc [:name] # Set the title to be the new breadcrumb
-    end
+    @title = if (@lastaction == "registry_items" || @lastaction == "filesystems" || @lastaction == "files") && new_bc[:name].length > 50
+               new_bc [:name].slice(0..50) + "..." # Set the title to be the new breadcrumb
+             else
+               new_bc [:name] # Set the title to be the new breadcrumb
+             end
 
     # add @search_text to title for gtl screens only
     if @search_text.present? && @display.nil?
@@ -1192,7 +1190,7 @@ class ApplicationController < ActionController::Base
   def handle_generic_rbac(pass)
     unless pass
       if request.xml_http_request?
-        javascript_redirect :controller => 'dashboard', :action => 'auth_error'
+        javascript_redirect(:controller => 'dashboard', :action => 'auth_error')
       else
         redirect_to(:controller => 'dashboard', :action => 'auth_error')
       end
@@ -1221,11 +1219,11 @@ class ApplicationController < ActionController::Base
   # get the sort column that was clicked on, else use the current one
   def get_sort_col
     unless params[:sortby].nil?
-      if @sortcol == params[:sortby].to_i # if same column was selected
-        @sortdir = flip_sort_direction(@sortdir)
-      else
-        @sortdir = "ASC"
-      end
+      @sortdir = if @sortcol == params[:sortby].to_i # if same column was selected
+                   flip_sort_direction(@sortdir)
+                 else
+                   "ASC"
+                 end
       @sortcol = params[:sortby].to_i
     end
     # in case sort column is not set, set the defaults
@@ -1261,11 +1259,11 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    if success_count > 0
+    if success_count.positive?
       add_flash(n_("Successfully deleted Saved Report from the %{product} Database",
                    "Successfully deleted Saved Reports from the %{product} Database", success_count) % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
-    if failure_count > 0
+    if failure_count.positive?
       add_flash(n_("Error during Saved Report delete from the %{product} Database",
                    "Error during Saved Reports delete from the %{product} Database", failure_count) % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
@@ -1330,14 +1328,12 @@ class ApplicationController < ActionController::Base
     return nil if session[:menu_click]
 
     # Build sub_filter where clause from search text
-    if (!@parent && @lastaction == "show_list") ||  # This part is for the Hosts screen.
-       @explorer                                    # In explorer screens we have search (that includes vm_infra and
-                                                    # Control/Explorer/Policies)
+    # This part is for the Hosts screen. In explorer screens we have search (that includes vm_infra and Control/Explorer/Policies)
+    if (!@parent && @lastaction == "show_list") || @explorer
+      stxt = @search_text.gsub("_", "`_") # Escape underscores
+      stxt.gsub!("%", "`%") # and percents
 
-      stxt = @search_text.gsub("_", "`_")                 # Escape underscores
-      stxt.gsub!("%", "`%")                               #   and percents
-
-      stxt = if stxt.starts_with?("*") && stxt.ends_with?("*")  # Replace beginning/ending * chars with % for SQL
+      stxt = if stxt.starts_with?("*") && stxt.ends_with?("*") # Replace beginning/ending * chars with % for SQL
                "%#{stxt[1..-2]}%"
              elsif stxt.starts_with?("*")
                "%#{stxt[1..-1]}"
@@ -1388,7 +1384,7 @@ class ApplicationController < ActionController::Base
       refresh_view = true
       # Creating a new view, remember if came from a menu_click
       session[:menu_click] = params[:menu_click] || options[:menu_click]
-      session[:bc]         = params[:bc]              # Remember incoming breadcrumb as well
+      session[:bc]         = params[:bc] # Remember incoming breadcrumb as well
     end
 
     # Build the advanced search @edit hash
@@ -1444,7 +1440,7 @@ class ApplicationController < ActionController::Base
     view.ascending = @sortdir.to_s.downcase != "desc"
 
     @items_per_page = controller_name.downcase == "miq_policy" ? ONE_MILLION : get_view_pages_perpage(dbname)
-    @items_per_page = ONE_MILLION if 'vm' == db_sym.to_s && controller_name == 'service'
+    @items_per_page = ONE_MILLION if db_sym.to_s == 'vm' && controller_name == 'service'
 
     @current_page = options[:page] || (params[:page].to_i < 1 ? 1 : params[:page].to_i)
 
@@ -1567,29 +1563,29 @@ class ApplicationController < ActionController::Base
         if flash_errors?
           javascript_flash
         else
-          javascript_redirect :controller => @redirect_controller,
+          javascript_redirect(:controller => @redirect_controller,
                               :action     => @refresh_partial,
                               :id         => @redirect_id,
                               :prov_type  => @prov_type,
-                              :prov_id    => @prov_id
+                              :prov_id    => @prov_id)
         end
       else
         javascript_redirect(:controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id, :template_klass => @template_klass_type)
       end
     elsif params[:pressed] == "ems_cloud_edit" && params[:id]
-      javascript_redirect edit_ems_cloud_path(params[:id])
+      javascript_redirect(edit_ems_cloud_path(params[:id]))
     elsif params[:pressed] == "ems_infra_edit" && params[:id]
-      javascript_redirect edit_ems_infra_path(params[:id])
+      javascript_redirect(edit_ems_infra_path(params[:id]))
     elsif params[:pressed] == "ems_container_edit" && params[:id]
-      javascript_redirect edit_ems_container_path(params[:id])
+      javascript_redirect(edit_ems_container_path(params[:id]))
     elsif params[:pressed] == "ems_middleware_edit" && params[:id]
-      javascript_redirect edit_ems_middleware_path(params[:id])
+      javascript_redirect(edit_ems_middleware_path(params[:id]))
     elsif params[:pressed] == "ems_network_edit" && params[:id]
-      javascript_redirect edit_ems_network_path(params[:id])
+      javascript_redirect(edit_ems_network_path(params[:id]))
     elsif params[:pressed] == "ems_physical_infra_edit" && params[:id]
-      javascript_redirect edit_ems_physical_infra_path(params[:id])
+      javascript_redirect(edit_ems_physical_infra_path(params[:id]))
     else
-      javascript_redirect :action => @refresh_partial, :id => @redirect_id
+      javascript_redirect(:action => @refresh_partial, :id => @redirect_id)
     end
   end
 
@@ -1943,10 +1939,10 @@ class ApplicationController < ActionController::Base
       when "host"
         session[:tab_bc][:inf] = @breadcrumbs.dup if %w(show show_list log_viewer).include?(action_name)
       when "miq_request"
-        if @layout == "miq_request_vm"
-          session[:tab_bc][:vms] = @breadcrumbs.dup if %w(show show_list).include?(action_name)
-        else
-          session[:tab_bc][:inf] = @breadcrumbs.dup if %w(show show_list).include?(action_name)
+        if @layout == "miq_request_vm" && %w(show show_list).include?(action_name)
+          session[:tab_bc][:vms] = @breadcrumbs.dup
+        elsif %w(show show_list).include?(action_name)
+          session[:tab_bc][:inf] = @breadcrumbs.dup
         end
       when "vm"
         session[:tab_bc][:vms] = @breadcrumbs.dup if %w(
@@ -2015,9 +2011,9 @@ class ApplicationController < ActionController::Base
     # Clearing out session objects that are no longer needed
     session[:hac_tree] = session[:vat_tree] = nil if controller_name != "ops"
     session[:ch_tree] = nil if !["compliance_history"].include?(params[:display]) && params[:action] != "squash_toggle"
-    session[:vm_tree] = nil if !["vmtree_info"].include?(params[:display])
+    session[:vm_tree] = nil unless ["vmtree_info"].include?(params[:display])
     session[:policy_tree] = nil if params[:action] != "policies" && params[:pressed] != "vm_protect"
-    session[:resolve] = session[:resolve_object] = nil unless ["catalog", "miq_ae_customization", "miq_ae_tools"].include?(request.parameters[:controller])
+    session[:resolve] = session[:resolve_object] = nil unless %w(catalog miq_ae_customization miq_ae_tools).include?(request.parameters[:controller])
     session[:report_menu] = session[:report_folders] = session[:menu_roles_tree] = nil if controller_name != "report"
     if session.class != Hash
       session_hash = session.respond_to?(:to_hash) ? session.to_hash : session.data
@@ -2085,8 +2081,9 @@ class ApplicationController < ActionController::Base
   end
 
   def assert_privileges(feature)
-    raise MiqException::RbacPrivilegeException,
-          _("The user is not authorized for this task or item.") unless role_allows?(:feature => feature)
+    unless role_allows?(:feature => feature)
+      raise MiqException::RbacPrivilegeException, _('The user is not authorized for this task or item.')
+    end
   end
 
   # Method tests, whether the user has rights to access records sent in request
@@ -2127,7 +2124,7 @@ class ApplicationController < ActionController::Base
 
   def reload_trees_by_presenter(presenter, trees)
     trees.each do |tree|
-      next unless tree.present?
+      next if tree.blank?
       presenter.reload_tree(tree.name, tree.locals_for_render[:bs_tree])
     end
   end
