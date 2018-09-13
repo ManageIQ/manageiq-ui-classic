@@ -5,9 +5,7 @@ describe ProviderForemanController, "::AdvancedSearch" do
   end
 
   describe "#adv_search_redraw_left_div" do
-    before do
-      controller.instance_variable_set(:@sb, :active_tree => :configuration_manager_cs_filter_tree)
-    end
+    before { controller.instance_variable_set(:@sb, :active_tree => :configuration_manager_cs_filter_tree) }
 
     it "calls build_configuration_manager_cs_filter_tree method in Config Mgmt Configured Systems when saving a filter" do
       allow(controller).to receive(:adv_search_redraw_listnav_and_main)
@@ -55,6 +53,32 @@ describe StorageController, "::AdvancedSearch" do
           controller.send(:adv_search_build, model)
           expect(subject).not_to be_nil
         end
+      end
+    end
+  end
+end
+
+describe VmOrTemplateController, "::AdvancedSearch" do
+  before { stub_user(:features => :all) }
+
+  describe "#adv_search_redraw_left_div" do
+    before do
+      allow(controller).to receive(:adv_search_redraw_listnav_and_main)
+      controller.instance_variable_set(:@edit, :in_explorer => true)
+      controller.instance_variable_set(:@sb, sb)
+    end
+
+    context 'Templates & Images accordion' do
+      let(:sb) { {:active_tree => :templates_images_filter_tree} }
+
+      it 'calls build_accordions_and_trees method when saving a filter' do
+        expect(controller).to receive(:build_accordions_and_trees)
+        controller.send(:adv_search_redraw_left_div)
+      end
+
+      it 'sets @explorer to true' do
+        controller.send(:adv_search_redraw_left_div)
+        expect(controller.instance_variable_get(:@explorer)).to be(true)
       end
     end
   end
