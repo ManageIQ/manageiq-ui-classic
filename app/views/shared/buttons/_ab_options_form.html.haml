@@ -82,6 +82,9 @@
         = select_tag("display_for",
                      options_for_select([[_('Single entity'), 'single'], [_('List'), 'list'], [_('Single and list'), 'both']], @edit[:new][:display_for]),
                      "data-miq_sparkle_on" => true)
+        .note
+          = _("Expressions (next tab) can only be configured for buttons with \"Display for\" set to \"Single\"")
+
     .form-group
       %label.control-label.col-md-2
         = _('Submit')
