@@ -52,4 +52,21 @@ describe EmsCloudHelper::TextualSummary do
 
     include_examples "textual_group_smart_management", %i(zone)
   end
+
+  describe '#textual_description' do
+    let(:ems) { FactoryGirl.create(:ems_cloud) }
+
+    before do
+      instance_variable_set(:@record, ems)
+    end
+
+    context "EMS instance doesn't support :description" do
+      include_examples 'textual_description', nil
+    end
+
+    context "EMS instance has :description" do
+      before { allow(ems).to receive(:description).and_return('EmsCloud instance description') }
+      include_examples 'textual_description', :label => _("Description"), :value => 'EmsCloud instance description'
+    end
+  end
 end

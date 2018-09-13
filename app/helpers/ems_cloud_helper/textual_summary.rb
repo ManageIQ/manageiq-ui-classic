@@ -40,7 +40,7 @@ module EmsCloudHelper::TextualSummary
   # Items
   #
   def textual_description
-    return nil if @record.description.blank?
+    return nil if @record.try(:description).blank?
     {:label => _("Description"), :value => @record.description}
   end
 
