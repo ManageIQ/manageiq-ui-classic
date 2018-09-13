@@ -2,25 +2,34 @@
 #ab_form
   %h3
     = _('Advanced Options')
-  .form-horizontal
-    %h3
-      = _('Enablement')
-    = render(:partial => "layouts/role_enablement_expression",
-           :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
+  - if @edit[:new][:display_for] == "single"
+    .form-horizontal
+      %h3
+        = _('Enablement')
+      = render(:partial => "layouts/role_enablement_expression",
+             :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
 
-    .form-group
-      %label.control-label.col-md-2
-        = _('Disabled Button Text')
-      .col-md-8
-        = text_field_tag("disabled_text", @edit[:new][:disabled_text],
-                              :maxlength         => 50,
-                              :class             => "form-control",
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-  %hr
-  %h3
-    = _('Visibility')
-  = render(:partial => "layouts/role_visibility_expression",
-           :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
+      .form-group
+        %label.control-label.col-md-2
+          = _('Disabled Button Text')
+        .col-md-8
+          = text_field_tag("disabled_text", @edit[:new][:disabled_text],
+                                :maxlength         => 50,
+                                :class             => "form-control",
+                                "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+    %hr
+    %h3
+      = _('Visibility')
+    = render(:partial => "layouts/role_visibility_expression",
+             :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
+
+  - if @edit[:new][:display_for]
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+        .col-md-8
+          .note
+            = _("Enablement and Visibility expressions can only be configured for buttons with \"Display for\" (previous tab) set to \"Single\"")
 
 
   = render(:partial => "layouts/ae_resolve_options",
