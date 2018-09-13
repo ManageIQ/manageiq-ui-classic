@@ -20,13 +20,5 @@
   "dependencies": {
     "manageiq-ui-components": "bower-dev",
     "patternfly-timeline": "~1.0.5"
-  },
-  "resolutions": {
-    "d3": "~3.5.0",
-    "jquery": "~2.2.4",
-    "bootstrap-select": "~1.12.2",
-    "font-awesome-sass": "~4.7.0",
-    "angular": "1.6.9",
-    "bootstrap-switch": "~3.3.4"
   }
 }
