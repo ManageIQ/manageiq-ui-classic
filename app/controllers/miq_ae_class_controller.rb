@@ -1943,13 +1943,13 @@ class MiqAeClassController < ApplicationController
   # Delete all selected or single displayed aeclasses(s)
   def deleteinstances
     assert_privileges('miq_ae_instance_delete')
-    if (@sb[:row_selected] = find_checked_items).present?
-      ids = @sb[:row_selected].map do |item|
-        item.split('-')[1]
-      end
-    else
-      ids = Array.wrap(x_node.split('-')[1])
-    end
+    ids = if (@sb[:row_selected] = find_checked_items).present?
+            @sb[:row_selected].map do |item|
+              item.split('-')[1]
+            end
+          else
+            Array.wrap(x_node.split('-')[1])
+          end
     instances = find_records_with_rbac(MiqAeInstance, ids)
     self.x_node = "aec-#{instances.first.class_id}" if @sb[:row_selected].nil?
     process_aeinstances(instances.ids, 'destroy')
@@ -1964,13 +1964,13 @@ class MiqAeClassController < ApplicationController
   # Delete all selected or single displayed aeclasses(s)
   def deletemethods
     assert_privileges('miq_ae_method_delete')
-    if (@sb[:row_selected] = find_checked_items).present?
-      ids = @sb[:row_selected].map do |item|
-        item.split('-')[1]
-      end
-    else
-      ids = Array.wrap(x_node.split('-')[1])
-    end
+    ids = if (@sb[:row_selected] = find_checked_items).present?
+            @sb[:row_selected].map do |item|
+              item.split('-')[1]
+            end
+          else
+            Array.wrap(x_node.split('-')[1])
+          end
     methods = find_records_with_rbac(MiqAeMethod, ids)
     self.x_node = "aec-#{methods.first.class_id}" if @sb[:row_selected].nil?
     process_aemethods(methods.ids, 'destroy')
