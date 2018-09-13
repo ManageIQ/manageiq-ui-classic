@@ -29,6 +29,7 @@
           %image{"ng-if" => "notification.iconImage", "ng-src" => "{{notification.iconImage}}", :alt => "", :class => "card-pf-icon-image"}
           %span{:class => "{{notification.iconClass}}"}
           {{ notification.count }}
+    %pf-empty-chart{'ng-if' => "$ctrl.status.notifications[0].dataAvailable === false"}
 
 %div{"ng-if" => "$ctrl.isMiniLayout", :class => "card-pf card-pf-aggregate-status card-pf-aggregate-status-mini", "ng-class" => "{'card-pf-accented': $ctrl.shouldShowTopBorder}"}
   %h2{:class => "card-pf-title"}
@@ -47,7 +48,7 @@
   %div{:class => "card-pf-body"}
     %p{"ng-if" => "$ctrl.status.notification.iconImage || $ctrl.status.notification.iconClass || $ctrl.status.notification.count", :class => "card-pf-aggregate-status-notifications"}
       %span{:class => "card-pf-aggregate-status-notification", :title => "{{$ctrl.status.notification.tooltip}}" }
-        %a{"ng-if" => "$ctrl.status.notification.href", :href => "{{$ctrl$ctrl.status.notification.href}}"}
+        %a{"ng-if" => "$ctrl.status.notification.href && !$ctrl.status.notification.count", :href => "{{$ctrl$ctrl.status.notification.href}}"}
           %image{"ng-if" => "$ctrl.status.notification.iconImage", "ng-src" => "{{$ctrl.status.notification.iconImage}}", :alt => "", :class => "card-pf-icon-image"}
           %span{"ng-if" => "$ctrl.status.notification.iconClass", :class => "{{$ctrl.status.notification.iconClass}}"}
           %span{"ng-if" => "$ctrl.status.notification.count"}

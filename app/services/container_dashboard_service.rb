@@ -141,6 +141,8 @@ class ContainerDashboardService < DashboardService
     warnings_struct = warnings > 0 ? {:iconClass => "pficon pficon-warning-triangle-o", :count => warnings} : nil
     notifications = if (errors + warnings) > 0
                       [errors_struct, warnings_struct].compact
+                    elsif alerts_status == [nil, nil]
+                      [{}]
                     else
                       [{:iconClass => "pficon-large pficon-ok"}]
                     end

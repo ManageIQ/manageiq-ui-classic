@@ -68,10 +68,6 @@ class EmsDashboardService < DashboardService
         :title        => attr_hsh[attr],
         :count        => @ems.send(attr).count,
         :href         => get_url(ems_type, @ems_id, attr_url[attr]),
-        :notification => {
-          :iconClass => 'pficon pficon-error-circle-o',
-          :count     => 0,
-        },
       )
     end
     attr_data

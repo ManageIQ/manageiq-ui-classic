@@ -67,6 +67,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
             "iconClass": data.alerts.notifications[0].iconClass,
             "href": data.alerts.href,
             "count": data.alerts.notifications[0].count,
+            "dataAvailable": data.alerts.dataAvailable,
           },
         ],
       };
@@ -80,10 +81,6 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
           "title": attrHsh[attributes[i]],
           "count": dataStatus.count,
           "href": dataStatus.href,
-          "notification": {
-            "iconClass": "pficon pficon-error-circle-o",
-            "count": 0,
-          },
         });
       }
       vm.loadingDone = true;

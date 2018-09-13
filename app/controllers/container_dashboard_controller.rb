@@ -13,6 +13,7 @@ class ContainerDashboardController < ApplicationController
     if params[:id].nil?
       @breadcrumbs.clear
     end
+    @title = title
   end
 
   def index
