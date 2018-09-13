@@ -22,13 +22,6 @@
 //= require ./automate_import_export
 //= require ./dialog_field_refresh
 //= require ./miq_c3_config
-//= require bower_components/bootstrap/dist/js/bootstrap
-//= require bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker
-//= require bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
-//= require bower_components/bootstrap-select/js/bootstrap-select
-//= require bootstrap-switch/dist/js/bootstrap-switch
-//= require bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin
-//= require angular-bootstrap-switch/dist/angular-bootstrap-switch
 //= require ./miq_ujs_bindings
 //= require ./miq_tree
 //= require codemirror/lib/codemirror
