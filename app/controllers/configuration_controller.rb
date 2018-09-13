@@ -431,6 +431,10 @@ class ConfigurationController < ApplicationController
     }
   end
 
+  def self.session_key_prefix
+    "configuration"
+  end
+
   private
 
   # copy single selected Object
@@ -569,10 +573,6 @@ class ConfigurationController < ApplicationController
       @edit[:new][:display][:compare] = params[:display][:compare] if !params[:display].nil? && !params[:display][:compare].nil?
       @edit[:new][:display][:drift] = params[:display][:drift] if !params[:display].nil? && !params[:display][:drift].nil?
     end
-  end
-
-  def self.session_key_prefix
-    "configuration"
   end
 
   def get_session_data
