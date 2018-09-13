@@ -987,10 +987,17 @@ class ApplicationController < ActionController::Base
       icon, icon2, image = fonticon_or_fileicon(item)
       # FIXME: adding exceptions here is a wrong approach
       icon = nil if params[:controller] == 'pxe'
-      new_row[:cells] << {:title => _('View this item'),
-                          :image   => ActionController::Base.helpers.image_path(image.to_s),
-                          :icon    => icon,
-                          :icon2   => icon2}
+
+      # Clickable should be false only when it's explicitly set to false
+      not_clickable = if params
+                        (params.fetch_path(:additional_options, :clickable) == false)
+                      else
+                        false
+                      end
+      new_row[:cells] << {:title => not_clickable ? nil : _('View this item'),
+                          :image => ActionController::Base.helpers.image_path(image.to_s),
+                          :icon  => icon,
+                          :icon2 => icon2}.compact
 
       view.col_order.each_with_index do |col, col_idx|
         next if view.column_is_hidden?(col)
