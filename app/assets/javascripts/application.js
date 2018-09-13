@@ -1,7 +1,6 @@
 //= require ./miq_global
 //= require ./jquery_overrides
 //= require ./i18n
-//= require bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists
 //= require ./cable
 //= require ./gettextCatalog
 //= require ./miq_api
