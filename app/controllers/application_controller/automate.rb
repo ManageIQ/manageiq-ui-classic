@@ -4,10 +4,10 @@ module ApplicationController::Automate
   def resolve_button_throw
     if valid_resolve_object?
       add_flash(_("Automation Simulation has been run"))
-      @sb[:name] = @resolve[:new][:instance_name].blank? ? @resolve[:new][:other_name] : @resolve[:new][:instance_name]
+      @sb[:name] = @resolve[:new][:instance_name].presence || @resolve[:new][:other_name]
       @sb[:attrs] = {}
       @resolve[:new][:attrs].each do |a|
-        @sb[:attrs][a[0].to_sym] = a[1] unless a[0].blank?
+        @sb[:attrs][a[0].to_sym] = a[1] if a[0].present?
       end
       @sb[:obj] = if @resolve[:new][:target_id] && @resolve[:new][:target_class]
                     @resolve[:new][:target_class].constantize.find(@resolve[:new][:target_id])
@@ -23,7 +23,7 @@ module ApplicationController::Automate
     end
     # IE7 doesn't redraw the tree until the screen is clicked, so redirect back to this method for a refresh
     if is_browser_ie? && browser_info(:version) == "7"
-      javascript_redirect :action => 'resolve'
+      javascript_redirect(:action => 'resolve')
     else
       render :update do |page|
         page << javascript_prologue
@@ -37,13 +37,15 @@ module ApplicationController::Automate
   end
   private :resolve_button_throw
 
-  def resolve_button_copy # Copy current URI as an automate button
+  # Copy current URI as an automate button
+  def resolve_button_copy
     session[:resolve_object] = copy_hash(@resolve)
     head :ok
   end
   private :resolve_button_copy
 
-  def resolve_button_paste # Copy current URI as an automate button
+  # Copy current URI as an automate button
+  def resolve_button_paste
     @resolve = copy_hash(session[:resolve_object])
     @edit = session[:edit]
     @custom_button = @edit[:custom_button]
@@ -65,7 +67,8 @@ module ApplicationController::Automate
   end
   private :resolve_button_paste
 
-  def resolve_button_simulate # Copy current URI as an automate button
+  # Copy current URI as an automate button
+  def resolve_button_simulate
     @edit = copy_hash(session[:resolve])
     @resolve[:new][:attrs] = []
     if @edit[:new][:attrs]
@@ -93,11 +96,12 @@ module ApplicationController::Automate
     end
 
     # workaround to get "Simulate button" work from customization explorer
-    javascript_redirect :action => 'resolve', :controller => "miq_ae_tools", :simulate => "simulate", :escape => false
+    javascript_redirect(:action => 'resolve', :controller => "miq_ae_tools", :simulate => "simulate", :escape => false)
   end
   private :resolve_button_simulate
 
-  def resolve_button_reset_or_none # Reset or first time in
+  # Reset or first time in
+  def resolve_button_reset_or_none
     @accords = [{:name => "resolve", :title => _("Options"), :container => "resolve_form_div"}]
 
     if params[:simulate] == "simulate"
@@ -167,7 +171,7 @@ module ApplicationController::Automate
   end
 
   def ready_to_throw
-    @resolve[:new][:target_class].blank? || !@resolve[:new][:target_id].blank?
+    @resolve[:new][:target_class].blank? || @resolve[:new][:target_id].present?
   end
 
   def resolve_reset
