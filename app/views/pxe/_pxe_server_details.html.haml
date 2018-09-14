@@ -60,8 +60,7 @@
         = render(:partial => "pxe_img_form")
       - else
         = render(:partial => "layouts/flash_msg")
-        = render :partial => "shared/summary/textual",
-          :locals  => {:title => _("Basic Information"), :items => textual_pxe_img_basicinfo}
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_pxe_img_basicinfo), @record)
 
   -# Windows Image is selected
   - if @wimg
@@ -70,5 +69,4 @@
         = render(:partial => "pxe_wimg_form")
       - else
         = render(:partial => "layouts/flash_msg")
-        = render :partial => "shared/summary/textual",
-          :locals  => {:title => _("Basic Information"), :items => textual_win_img_basicinfo}
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_win_img_basicinfo), @record)
