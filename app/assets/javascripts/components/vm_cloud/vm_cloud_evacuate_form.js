@@ -26,6 +26,7 @@ function vmCloudEvacuateFormController($http, $scope, miqService) {
     $scope.saveable = miqService.saveable;
 
     if (vm.recordId) {
+      miqService.sparkleOn();
       $http.get('/vm_cloud/evacuate_form_fields/' + vm.recordId)
         .then(getEvacuateFormData)
         .catch(miqService.handleFailure);
