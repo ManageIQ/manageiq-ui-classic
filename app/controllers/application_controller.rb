@@ -649,18 +649,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # moved this method here so it can be accessed from pxe_server controller as well
-  def log_depot_set_verify_status
-    @edit[:log_verify_status] = if (@edit[:new][:log_password] == @edit[:new][:log_verify]) && @edit[:new][:uri_prefix] != "nfs" &&
-                                   (@edit[:new][:uri].present? && @edit[:new][:log_userid].present? && @edit[:new][:log_password].present? && @edit[:new][:log_verify].present?)
-                                  true
-                                elsif @edit[:new][:uri_prefix] == "nfs" && @edit[:new][:uri].present?
-                                  true
-                                else
-                                  false
-                                end
-  end
-
   # Build an audit object when configuration is changed in configuration and ops controllers
   def build_config_audit(new, current)
     if controller_name == "ops" && @sb[:active_tab] == "settings_server"
