@@ -199,21 +199,45 @@ describe OpsController do
       end
     end
 
-    context "#update_exclude_tables_for_remote_region" do
-      render_views
+    describe "#pglogical_save_subscriptions" do
+      before { allow(controller).to receive(:initiate_wait_for_task) }
 
-      before do
-        EvmSpecHelper.local_miq_server(:zone => Zone.seed)
-        FactoryGirl.create(:miq_region, :region => 10, :description => "The 10th region")
+      context "remote" do
+        let(:to_exlude) { "---\n- vmdb_databases\n- vmdb_indexes" }
+        let(:params)    { {:replication_type => "remote", :exclusion_list => to_exlude} }
+
+        it "queues operation to updates exclude tables for the remote region" do
+          controller.instance_variable_set(:@_params, params)
+          controller.send(:pglogical_save_subscriptions)
+          queue_item = MiqQueue.find_by(:method_name => "save_remote_region")
+          expect(queue_item.args).to eq([to_exlude])
+        end
       end
 
-      it "updates the exclude tables for the remote region" do
-        allow(MiqRegion).to receive(:replication_type).and_return(:remote)
-        allow(controller).to receive(:javascript_flash)
-        params = {:replication_type => "remote", :exclusion_list => "table1", :button => "save", :id => "new"}
-        controller.instance_variable_set(:@_params, params)
-        controller.send(:pglogical_save_subscriptions)
-        expect(assigns(:flash_array).first[:message]).to include("Replication configuration save was successful")
+      context "global" do
+        let(:db_save)       { "DbName_For_Subscription_To_Save" }
+        let(:db_remove)     { "DbName_For_Subscription_To_Remove" }
+        let(:subscriptions) { {"0" => {"dbname" => db_save}, "1" => {'remove' => "true", "dbname" => db_remove}} }
+        let(:params)        { {:replication_type => "global", :subscriptions => subscriptions} }
+
+        it "queues operation to save and/or remove subscriptions settings for the global region" do
+          controller.instance_variable_set(:@_params, params)
+          controller.send(:pglogical_save_subscriptions)
+          queue_item = MiqQueue.find_by(:method_name => "save_global_region")
+          expect(queue_item.args[0][0].dbname).to eq(db_save)
+          expect(queue_item.args[0][1].dbname).to eq(db_remove)
+        end
+      end
+
+      context "none" do
+        let(:params) { {:replication_type => "none"} }
+
+        it "queues operations to set replication to none" do
+          controller.instance_variable_set(:@_params, params)
+          controller.send(:pglogical_save_subscriptions)
+          queue_item = MiqQueue.find_by(:method_name => "replication_type=")
+          expect(queue_item.args[0]).to eq(:none)
+        end
       end
     end
 

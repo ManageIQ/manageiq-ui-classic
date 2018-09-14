@@ -190,49 +190,35 @@ module OpsController::Settings::Common
   end
 
   def pglogical_save_subscriptions
-    replication_type = valid_replication_type
-    if replication_type == :global
-      MiqRegion.replication_type = replication_type
-      subscriptions_to_save = []
-      params[:subscriptions].each do |_, subscription_params|
-        subscription = find_or_new_subscription(subscription_params['id'])
-        if subscription.id && subscription_params['remove'] == "true"
-          subscription.delete
-        else
-          set_subscription_attributes(subscription, subscription_params)
-          subscriptions_to_save.push(subscription)
-        end
-      end
-      begin
-        PglogicalSubscription.save_all!(subscriptions_to_save)
-      rescue StandardError => bang
-        add_flash(_("Error during replication configuration save: %{message}") %
-                    {:message => bang}, :error)
-      else
-        add_flash(_("Replication configuration save was successful"))
-      end
-    else
-      begin
-        MiqRegion.replication_type = replication_type
-      rescue => bang
-        add_flash(_("Error during replication configuration save: %{message}") %
-                    {:message => bang.message}, :error)
-      else
-        if replication_type == :remote && !params[:exclusion_list].empty?
-          begin
-            MiqPglogical.refresh_excludes_queue(YAML.safe_load(params[:exclusion_list]))
-          rescue => bang
-            add_flash(_("Error saving the excluded tables list: %{message}") %
-                        {:message => bang}, :error)
-          else
-            add_flash(_("Replication configuration save was successful"))
-          end
-        else
-          add_flash(_("Replication configuration save was successful"))
-        end
-      end
+    case params[:replication_type]
+    when "global"
+      subscriptions_to_save, subsciptions_to_remove = prepare_subscriptions_for_saving
+      task_opts  = {:action => "Save subscriptions for global region", :userid => session[:userid]}
+      queue_opts = {:class_name => "MiqPglogical", :method_name => "save_global_region",
+                    :args       => [subscriptions_to_save, subsciptions_to_remove]}
+    when "remote"
+      task_opts  = {:action => "Save list of table excluded from replication for remote region",
+                    :userid => session[:userid]}
+      queue_opts = {:class_name => "MiqPglogical", :method_name => "save_remote_region",
+                    :args       => [params[:exclusion_list]]}
+    when "none"
+      task_opts  = {:action => "Set replication type to none", :userid => session[:userid]}
+      queue_opts = {:class_name => "MiqRegion", :method_name => "replication_type=", :args => [:none]}
     end
-    javascript_flash(:spinner_off => true)
+    task_id = MiqTask.generic_action_with_callback(task_opts, queue_opts)
+    initiate_wait_for_task(:task_id => task_id, :action => "pglogical_save_finished")
+  end
+
+  def pglogical_save_finished
+    task = MiqTask.find(session[:async][:params][:task_id])
+    if task.nil?
+      add_flash(_("Unknown result of saving replication configuration: task not found"), :error)
+    elsif MiqTask.status_ok?(task.status)
+      add_flash(_("Replication configuration save was successful"))
+    else
+      add_flash(_("Error during replication configuration save: %{message}") % {:message => task.message }, :error)
+    end
+    javascript_flash
   end
 
   def pglogical_validate_subscription
@@ -251,6 +237,21 @@ module OpsController::Settings::Common
   private
 
   PASSWORD_MASK = '●●●●●●●●'.freeze
+
+  def prepare_subscriptions_for_saving
+    to_save = []
+    to_remove = []
+    params[:subscriptions].each_value do |subscription_params|
+      subscription = find_or_new_subscription(subscription_params['id'])
+      if subscription.id && subscription_params['remove'] == "true"
+        to_remove << subscription
+      else
+        set_subscription_attributes(subscription, subscription_params)
+        to_save << subscription
+      end
+    end
+    return to_save, to_remove
+  end
 
   def fetch_advanced_settings(resource)
     @edit = {}
@@ -308,10 +309,6 @@ module OpsController::Settings::Common
         :status          => sub.status
       }
     end
-  end
-
-  def valid_replication_type
-    return params[:replication_type].to_sym if %w(global none remote).include?(params[:replication_type])
   end
 
   def settings_update_ldap_verify
