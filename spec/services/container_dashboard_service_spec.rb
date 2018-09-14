@@ -9,9 +9,9 @@ describe ContainerDashboardService do
 
   context "providers" do
     it "filters containers providers with zero entity count and sorts providers by type correctly" do
-      FactoryGirl.create(:ems_openshift, :hostname => "test2.com")
+      ems = FactoryGirl.create(:ems_openshift, :hostname => "test2.com")
 
-      providers_data = ContainerDashboardService.new(nil, nil).providers[0]
+      providers_data = ContainerDashboardService.new(ems.id, nil).providers[0]
 
       # Kubernetes should not appear
       providers_data.each do |p|

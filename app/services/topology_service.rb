@@ -1,6 +1,4 @@
 class TopologyService
-  include UiServiceMixin
-
   def initialize(provider_id = nil)
     provider_class = self.class.instance_variable_get(:@provider_class)
     # If the provider ID is not set, the topology needs to be generated for all the providers
@@ -18,6 +16,25 @@ class TopologyService
   def build_kinds
     kinds = self.class.instance_variable_get(:@kinds)
     kinds.each_with_object({}) { |kind, h| h[kind] = true }
+  end
+
+  def build_icons
+    kinds = self.class.instance_variable_get(:@kinds)
+    kind_icons = kinds.each_with_object({}) do |kind, h|
+      klass = kind.to_s.safe_constantize
+
+      next if klass.nil?
+
+      h[kind] = {:type => 'glyph', :class => klass.decorate.fonticon}
+    end
+
+    @providers.uniq(&:class).each_with_object(kind_icons) do |provider, h|
+      fileicon = provider.decorate.try(:fileicon)
+
+      next if fileicon.nil?
+
+      h[entity_display_type(provider)] = {:type => 'image', :icon => ActionController::Base.helpers.image_path(fileicon)}
+    end
   end
 
   def entity_id(entity)
@@ -95,7 +112,7 @@ class TopologyService
       :relations         => filtered_edges,
       :kinds             => build_kinds,
       :filter_properties => filter_properties,
-      :icons             => icons
+      :icons             => build_icons
     }
   end
 
