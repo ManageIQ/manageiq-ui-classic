@@ -23,6 +23,7 @@ require('angular-ui-sortable'); // ui.sortable, used by ui-components
 window._ = require('lodash');
 window.numeral = require('numeral');
 window.sprintf = require('sprintf-js').sprintf;
+window.validator = require('validator'); // used by angular.validators
 
 window.moment = require('moment');
 require("moment-strftime");

@@ -71,6 +71,7 @@
     "sprintf-js": "~1.1.1",
     "text-encoder-lite": "git://github.com/coolaj86/TextEncoderLite.git#e1e031b",
     "ui-select": "0.19.8",
+    "validator": "~10.7.1",
     "whatwg-fetch": "~2.0.4",
     "xml_display": "~0.1.1"
   },
