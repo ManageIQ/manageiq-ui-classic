@@ -686,7 +686,7 @@ class ApplicationController < ActionController::Base
       if !k.to_s.ends_with?("password2", "verify") &&
          (current.nil? || (new[k] != current[k]))
         if password_field?(k) # Asterisk out password fields
-          msg_arr << "#{k}:[*]#{' to [*]' unless current.nil?}"
+          msg_arr << "#{k}:[*]" + (current.nil? ? '' : ' to [*]')
         elsif new[k].kind_of?(Hash) # If the field is a hash,
           # Make current a blank hash for following comparisons
           current[k] = {} if !current.nil? && current[k].nil?
@@ -694,7 +694,7 @@ class ApplicationController < ActionController::Base
           (new[k].keys | (current.nil? ? [] : current[k].keys)).each do |hk|
             next if current.present? && (new[k][hk] == current[k][hk])
             msg_arr << if password_field?(hk) # Asterisk out password fields
-                         "#{hk}:[*]#{' to [*]' unless current.nil?}"
+                         "#{hk}:[*]" + (current.nil? ? '' :  ' to [*]')
                        else
                          "#{hk}:[" + (current.nil? ? "" : "#{filter_config(current[k][hk])}] to [") +
                          "#{filter_config(new[k][hk])}]"
