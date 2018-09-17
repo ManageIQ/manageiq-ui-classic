@@ -4,13 +4,13 @@ describe "shared/views/ems_common/show" do
     TestSetup.new(:ems_openstack, EmsCloudHelper::TextualSummary),
     TestSetup.new(:ems_vmware,    EmsInfraHelper::TextualSummary),
   ].each do |setup|
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
     let(:zone) { FactoryGirl.create(:zone) }
     let(:ems) { FactoryGirl.create(setup.ems_type, :hostname => '1.1.1.1', :zone => zone) }
     let(:action) { 'index' }
 
     before do
       view.extend setup.helper
-      allow(MiqServer).to receive(:my_zone).and_return("default")
       allow(controller).to receive(:controller_name).and_return("ems_cloud")
       creds = {}
       creds[:amqp] = {:userid => "amqp_user", :password => "amqp_password"}

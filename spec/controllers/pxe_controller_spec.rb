@@ -23,6 +23,9 @@ describe PxeController do
   end
 
   describe 'x_button' do
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+    let(:zone) { FactoryGirl.create(:zone) }
+
     before do
       ApplicationController.handle_exceptions = true
     end
@@ -42,7 +45,6 @@ describe PxeController do
 
     it "Pressing Refresh button should show display name in the flash message" do
       pxe = FactoryGirl.create(:pxe_server)
-      allow(MiqServer).to receive(:my_zone).and_return("default")
       controller.instance_variable_set(:@_params, :id => pxe.id)
       controller.instance_variable_set(:@sb,
                                        :trees       => {
