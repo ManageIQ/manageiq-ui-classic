@@ -1350,10 +1350,7 @@ class CatalogController < ApplicationController
     @edit[:new][:catalog_id] = @record.service_template_catalog.try(:id)
     @edit[:new][:st_prov_type] ||= @record.prov_type
     @edit[:new][:generic_subtype] = @record.generic_subtype || "custom" if @edit[:new][:st_prov_type] == 'generic'
-    @edit[:new][:available_catalogs] = Rbac.filtered(ServiceTemplateCatalog.all).collect do |stc|
-      [stc.tenant.present? && stc.tenant.ancestors.present? ? stc.name + " (#{stc.tenant.name})" : stc.name, stc.id]
-    end
-    @edit[:new][:available_catalogs] = @edit[:new][:available_catalogs].sort
+    @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
     available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower)
     available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
