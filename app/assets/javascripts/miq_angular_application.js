@@ -1,6 +1,6 @@
 ManageIQ.angular.app = angular.module('ManageIQ', [
   'ManageIQ.fonticonPicker',
-  'angular.validators',
+  'angular.validators', // FIXME: require('angular.validators'),
   'frapontillo.bootstrap-switch',
   'gettext', // FIXME: require('angular-gettext'),
   'kubernetesUI',

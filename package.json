@@ -30,7 +30,7 @@
     "angular-sanitize": "~1.6.6",
     "angular-ui-codemirror": "~0.3.0",
     "angular-ui-sortable": "~0.16.1",
-    "angular.validators": "~4.4.2",
+    "angular.validators": "~4.4.3",
     "array-includes": "~3.0.3",
     "base64-js": "~1.2.3",
     "bootstrap-filestyle": "~1.2.1",
