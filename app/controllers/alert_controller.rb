@@ -5,7 +5,7 @@ class AlertController < ApplicationController
   after_action :set_session_data
 
   def index
-    redirect_to :action => 'show_list'
+    redirect_to(:action => 'show_list')
   end
 
   def show_list

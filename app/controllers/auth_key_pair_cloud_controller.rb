@@ -35,7 +35,7 @@ class AuthKeyPairCloudController < ApplicationController
       delete_auth_key_pairs
       false
     when 'auth_key_pair_cloud_new'
-      javascript_redirect :action => 'new'
+      javascript_redirect(:action => 'new')
       true
     end
   end
@@ -98,8 +98,8 @@ class AuthKeyPairCloudController < ApplicationController
 
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Key Pair was cancelled by the user")
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _("Add of new Key Pair was cancelled by the user"))
     when "save"
       ext_management_system = find_record_with_rbac(ManageIQ::Providers::CloudManager, options[:ems_id])
       kls = kls.class_by_ems(ext_management_system)
@@ -149,23 +149,16 @@ class AuthKeyPairCloudController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show_list"
+    javascript_redirect(:action => "show_list")
   end
 
   # delete selected auth key pairs
   def delete_auth_key_pairs
     assert_privileges("auth_key_pair_cloud_delete")
-    key_pairs = []
-
-    if @lastaction == "show_list" || (@lastaction == "show" && @layout != "auth_key_pair_cloud")
-      key_pairs = find_checked_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair)
-    else
-      key_pairs = [find_record_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, params[:id])]
-    end
-
+    key_pairs = find_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, checked_or_params)
     add_flash(_("No Key Pairs were selected for deletion"), :error) if key_pairs.empty?
 
     key_pairs_to_delete = []

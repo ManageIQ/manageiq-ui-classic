@@ -32,9 +32,9 @@ class AnsibleRepositoryController < ApplicationController
     case params[:pressed]
     when "embedded_configuration_script_source_edit"
       id = params[:miq_grid_checks]
-      javascript_redirect :action => 'edit', :id => id
+      javascript_redirect(:action => 'edit', :id => id)
     when "embedded_configuration_script_source_add"
-      javascript_redirect :action => 'new'
+      javascript_redirect(:action => 'new')
     when "embedded_configuration_script_source_delete"
       delete_repositories
     when "ansible_repositories_reload"
@@ -80,7 +80,7 @@ class AnsibleRepositoryController < ApplicationController
       end
     end
     session[:flash_msgs] = @flash_array
-    javascript_redirect :action => 'show_list'
+    javascript_redirect(:action => 'show_list')
   end
 
   def edit
