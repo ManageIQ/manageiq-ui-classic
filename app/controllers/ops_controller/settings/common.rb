@@ -401,48 +401,48 @@ module OpsController::Settings::Common
       @changed = (@edit[:new] != @edit[:current])
       qwb = @edit[:new][:workers][:worker_base][:queue_worker_base]
       w = qwb[:generic_worker]
-      @edit[:new].set_worker_setting!(:MiqGenericWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqGenericWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqGenericWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqGenericWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:priority_worker]
-      @edit[:new].set_worker_setting!(:MiqPriorityWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqPriorityWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqPriorityWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqPriorityWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_metrics_collector_worker][:defaults]
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsCollectorWorker, [:defaults, :count], w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsCollectorWorker, %i(defaults memory_threshold), w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqEmsMetricsCollectorWorker, :defaults, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqEmsMetricsCollectorWorker, :defaults, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_metrics_processor_worker]
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsProcessorWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsProcessorWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqEmsMetricsProcessorWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqEmsMetricsProcessorWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_refresh_worker][:defaults]
-      @edit[:new].set_worker_setting!(:MiqEmsRefreshWorker, %i(defaults memory_threshold), w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqEmsRefreshWorker, :defaults, :memory_threshold, w[:memory_threshold])
 
       wb = @edit[:new][:workers][:worker_base]
       w = wb[:event_catcher]
-      @edit[:new].set_worker_setting!(:MiqEventCatcher, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqEventCatcher, :memory_threshold, w[:memory_threshold])
 
       w = wb[:vim_broker_worker]
-      @edit[:new].set_worker_setting!(:MiqVimBrokerWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqVimBrokerWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:smart_proxy_worker]
-      @edit[:new].set_worker_setting!(:MiqSmartProxyWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqSmartProxyWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqSmartProxyWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqSmartProxyWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:ui_worker]
-      @edit[:new].set_worker_setting!(:MiqUiWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqUiWorker, :count, w[:count].to_i)
 
       w = qwb[:reporting_worker]
-      @edit[:new].set_worker_setting!(:MiqReportingWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqReportingWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqReportingWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqReportingWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:web_service_worker]
-      @edit[:new].set_worker_setting!(:MiqWebServiceWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqWebServiceWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqWebServiceWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqWebServiceWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:websocket_worker]
-      @edit[:new].set_worker_setting!(:MiqWebsocketWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqWebsocketWorker, :count, w[:count].to_i)
 
       @update = MiqServer.find(@sb[:selected_server_id]).settings
     when "settings_custom_logos"                                      # Custom Logo tab
@@ -550,6 +550,10 @@ module OpsController::Settings::Common
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype)
     end
+  end
+
+  private def set_worker_setting(config, klass, *path, value)
+    config.store_path(klass.config_settings_path + path, value)
   end
 
   private def new_ntp_servers
@@ -986,7 +990,6 @@ module OpsController::Settings::Common
 
   def settings_set_form_vars_workers
     # getting value in "1.megabytes" bytes from backend, converting it into "1 MB" to display in UI, and then later convert it into "1.megabytes" to before saving it back into config.
-    # need to create two copies of config new/current set_worker_setting! is a instance method, need @edit[:new] to be config class to set count/memory_threshold, can't run method against hash
     @edit = {}
     @edit[:new] = {}
     @edit[:current] = {}
