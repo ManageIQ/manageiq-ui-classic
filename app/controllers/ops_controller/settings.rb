@@ -88,7 +88,7 @@ module OpsController::Settings
       idx = i if f[:ldaphost] == params[:ldaphost_id]
     end
     @edit[:new][:authentication][:user_proxies].delete_at(idx) unless idx.nil?
-    @changed = (@edit[:new] != @edit[:current].config)
+    @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
@@ -124,7 +124,7 @@ module OpsController::Settings
         end
       end
     end
-    @changed = (@edit[:new] != @edit[:current].config)
+    @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
       page << javascript_for_miq_button_visibility(@changed)

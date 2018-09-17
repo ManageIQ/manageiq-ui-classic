@@ -5,8 +5,8 @@ module OpsController::Settings::HelpMenu
     return unless load_edit('customize_help_menu')
 
     begin
-      konfig.config = Vmdb::Settings.decrypt_passwords!(Settings.to_hash)
-      konfig.config[:help_menu].merge!(@edit[:new])
+      konfig = Vmdb::Settings.decrypt_passwords!(Settings.to_hash)
+      konfig[:help_menu].merge!(@edit[:new])
       konfig.validate
     rescue Psych::SyntaxError, StandardError
       add_flash(_('Invalid configuration parameters.'), :error)
