@@ -3,9 +3,8 @@ class ConfigurationController < ApplicationController
   include StartUrl
   include Mixins::GenericSessionMixin
 
-  logo_dir = File.expand_path(Rails.root.join("public/upload"))
+  logo_dir = File.expand_path(Rails.root.join('public', 'upload'))
   Dir.mkdir(logo_dir) unless File.exist?(logo_dir)
-  @@logo_file = File.join(logo_dir, "custom_logo.png")
 
   VIEW_RESOURCES = DEFAULT_SETTINGS[:views].keys.each_with_object({}) { |value, acc| acc[value.to_s] = value }.freeze
 
@@ -129,7 +128,7 @@ class ConfigurationController < ApplicationController
     @changed = session[:changed]
     render :update do |page|
       page << javascript_prologue
-      page.replace 'tab_div', :partial => "ui_1"
+      page.replace('tab_div', :partial => 'ui_1')
     end
   end
 
@@ -310,15 +309,15 @@ class ConfigurationController < ApplicationController
     changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      page.replace('timeprofile_days_hours_div',
-                   :partial => "timeprofile_days_hours",
-                   :locals  => {:disabled => false}) if @redraw
+      if @redraw
+        page.replace('timeprofile_days_hours_div', :partial => "timeprofile_days_hours", :locals => {:disabled => false})
+      end
       if params.key?(:profile_tz) && report_admin_user?
-        if params[:profile_tz].blank?
-          page << javascript_hide("rollup_daily_tr")
-        else
-          page << javascript_show("rollup_daily_tr")
-        end
+        page << if params[:profile_tz].blank?
+                  javascript_hide("rollup_daily_tr")
+                else
+                  javascript_show("rollup_daily_tr")
+                end
       end
       if changed != session[:changed]
         session[:changed] = changed
@@ -350,7 +349,7 @@ class ConfigurationController < ApplicationController
     if params[:button] == "cancel"
       params[:id] = @timeprofile.id.to_s
       flash_to_session(_("Edit of Time Profile \"%{name}\" was cancelled by the user") % {:name => @timeprofile.description})
-      javascript_redirect :action => 'change_tab', :typ => "timeprofiles", 'uib-tab' => 4, :id => @timeprofile.id.to_s
+      javascript_redirect(:action => 'change_tab', :typ => "timeprofiles", 'uib-tab' => 4, :id => @timeprofile.id.to_s)
     elsif params[:button] == "save"
       days = if params[:all_days] == 'true'
                (0..6).to_a
@@ -402,13 +401,13 @@ class ConfigurationController < ApplicationController
     days = params[:days] ? params[:days].collect(&:to_i) : []
     hours = params[:hours] ? params[:hours].collect(&:to_i) : []
     @edit[:new] = {
-        :description          => params[:description],
-        :profile_key          => params[:profile_type] == "user" ? session[:userid] : nil,
-        :profile_type         => params[:profile_type],
-        :profile              => {:days  => days,
-                                  :hours => hours,
-                                  :tz    => params[:profile_tz] == "" ? nil : params[:profile_tz]},
-        :rollup_daily_metrics => params[:rollup_daily]
+      :description          => params[:description],
+      :profile_key          => params[:profile_type] == "user" ? session[:userid] : nil,
+      :profile_type         => params[:profile_type],
+      :profile              => {:days  => days,
+                                :hours => hours,
+                                :tz    => params[:profile_tz] == "" ? nil : params[:profile_tz]},
+      :rollup_daily_metrics => params[:rollup_daily]
     }
   end
 
@@ -430,6 +429,10 @@ class ConfigurationController < ApplicationController
       :hours                   => Array(@timeprofile.hours).uniq.sort,
       :miq_reports_count       => @timeprofile.miq_reports.count
     }
+  end
+
+  def self.session_key_prefix
+    "configuration"
   end
 
   private
@@ -570,10 +573,6 @@ class ConfigurationController < ApplicationController
       @edit[:new][:display][:compare] = params[:display][:compare] if !params[:display].nil? && !params[:display][:compare].nil?
       @edit[:new][:display][:drift] = params[:display][:drift] if !params[:display].nil? && !params[:display][:drift].nil?
     end
-  end
-
-  def self.session_key_prefix
-    "configuration"
   end
 
   def get_session_data
