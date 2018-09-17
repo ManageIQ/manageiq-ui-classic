@@ -355,7 +355,6 @@ module ApplicationController::Buttons
     else
       begin
         custom_buttons_invoke(button, objs)
-
       rescue StandardError => bang
         add_flash(_("Error executing: \"%{task_description}\" %{error_message}") %
           {:task_description => params[:desc], :error_message => bang.message}, :error)
@@ -479,8 +478,7 @@ module ApplicationController::Buttons
 
   def group_create_update(typ)
     @edit = session[:edit]
-    @record = @custom_button_set = @edit[:custom_button_set_id] ?
-        CustomButtonSet.find(@edit[:custom_button_set_id]) : CustomButtonSet.new
+    @record = @custom_button_set = @edit[:custom_button_set_id] ? CustomButtonSet.find(@edit[:custom_button_set_id]) : CustomButtonSet.new
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when 'cancel'      then group_button_cancel(typ)
@@ -528,7 +526,7 @@ module ApplicationController::Buttons
     assert_privileges("ab_button_new")
     @sb[:active_tab] = "ab_options_tab"
     @resolve = session[:resolve]
-    name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
+    name = @edit[:new][:instance_name].presence || @edit[:new][:other_name]
 
     unless button_valid?
       @breadcrumbs = []
@@ -676,9 +674,7 @@ module ApplicationController::Buttons
   end
 
   def group_new_edit(typ)
-    @record = @custom_button_set = typ == "new" ?
-        CustomButtonSet.new :
-        CustomButtonSet.find(params[:id])
+    @record = @custom_button_set = typ == "new" ? CustomButtonSet.new : CustomButtonSet.find(params[:id])
     if typ == "edit" && x_node.split('_').last == "ub"
       add_flash(_("'Unassigned Button Group' can not be edited"), :error)
       get_node_info
@@ -706,9 +702,7 @@ module ApplicationController::Buttons
   end
 
   def button_new_edit(typ)
-    @record = @custom_button = typ == "new" ?
-        CustomButton.new :
-        CustomButton.find(params[:id])
+    @record = @custom_button = typ == "new" ? CustomButton.new : CustomButton.find(params[:id])
     @sb[:active_tab] = "ab_options_tab"
     button_set_form_vars
     @in_a_form = true
@@ -795,7 +789,7 @@ module ApplicationController::Buttons
     if !consecutive
       add_flash(_("Select only one or consecutive fields to move to the top"), :error)
     else
-      if first_idx > 0
+      if first_idx.positive?
         @edit[:new][:fields][first_idx..last_idx].reverse_each do |field|
           pulled = @edit[:new][:fields].delete(field)
           @edit[:new][:fields].unshift(pulled)
@@ -1011,9 +1005,8 @@ module ApplicationController::Buttons
     elsif x_node.starts_with?("_xx-ab")
       @resolve[:target_class] = @sb[:target_classes].invert[x_node.split('_')[1]]
     else
-      @resolve[:target_class] = @sb[:target_classes].invert[x_node.split('-')[1] == "ub" ?
-                                                                x_node.split('-')[2].split('_')[0] :
-                                                                x_node.split('-')[1].split('_')[1]]
+      sp = x_node.split('-')
+      @resolve[:target_class] = @sb[:target_classes].invert[sp[1] == "ub" ? sp[2].split('_')[0] : sp[1].split('_')[1]]
     end
     @record = @edit[:custom_button] = @custom_button
     @edit[:instance_names] = Array(@resolve[:instance_names])
@@ -1212,7 +1205,7 @@ module ApplicationController::Buttons
     matching_instances = MiqAeClass.find_distinct_instances_across_domains(current_user, @resolve[:new][:starting_object])
     if matching_instances.any?
       @resolve[:instance_names] = matching_instances.collect(&:name)
-      instance_name = @custom_button && @custom_button.uri_object_name
+      instance_name = @custom_button&.uri_object_name
       @resolve[:new][:instance_name] = instance_name || @resolve[:new][:instance_name] || "Request"
       @resolve[:new][:object_message] = @custom_button.try(:uri_message) || @resolve[:new][:object_message] || "create"
       @resolve[:target_class] = nil
@@ -1241,7 +1234,7 @@ module ApplicationController::Buttons
     if !consecutive
       add_flash(_("Select only one or consecutive fields to move up"), :error)
     else
-      if first_idx > 0
+      if first_idx.positive?
         @edit[:new][:fields][first_idx..last_idx].reverse_each do |field|
           pulled = @edit[:new][:fields].delete(field)
           @edit[:new][:fields].insert(first_idx - 1, pulled)
