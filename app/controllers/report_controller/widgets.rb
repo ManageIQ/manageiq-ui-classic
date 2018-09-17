@@ -17,11 +17,11 @@ module ReportController::Widgets
     "Vmware RSS Feeds"           => "http://vmware.simplefeed.net/rss?f=995b0290-01dc-11dc-3032-0019bbc54f6f"
   }.freeze
 
-  SINGULAR_WIDGET_TYPES = {
-    "r"  => N_('Report'),
-    "c"  => N_('Chart'),
-    "rf" => N_('RSS Feed'),
-    "m"  => N_('Menu')
+  RIGHT_CELL_TEXTS = {
+    "r"  => [N_('Report Widgets'),   N_('Report Widget "%{name}"')],
+    "c"  => [N_('Chart Widgets'),    N_('Chart Widget "%{name}"')],
+    "rf" => [N_('RSS Feed Widgets'), N_('RSS Feed Widget "%{name}"')],
+    "m"  => [N_('Menu Widgets'),     N_('Menu Widget "%{name}"')]
   }.freeze
 
   # Need this for mapping with MiqWidget record content_type field
@@ -281,13 +281,11 @@ module ReportController::Widgets
       # If a folder node is selected
       get_all_widgets(WIDGET_CONTENT_TYPE[@sb[:nodes][1]])
       @right_cell_div  = "widget_list"
-      @right_cell_text = _("%{typ} Widgets") % {:typ => _(SINGULAR_WIDGET_TYPES[@sb[:nodes][1]])}
+      @right_cell_text = _(RIGHT_CELL_TEXTS[@sb[:nodes][1]].first)
     else
       @record = @widget = MiqWidget.find(@sb[:nodes].last)
       @widget_running = true if %w(running queued).include?(@widget.status.downcase)
-      typ = WIDGET_CONTENT_TYPE.invert[@widget.content_type]
-      content_type = _(SINGULAR_WIDGET_TYPES[typ])
-      @right_cell_text = _("%{typ} Widget \"%{name}\"") % {:typ => content_type, :name => @widget.title}
+      @right_cell_text = _(RIGHT_CELL_TEXTS[WIDGET_CONTENT_TYPE.invert[@widget.content_type]].second) % {:name => @widget.title}
       @right_cell_div  = "widget_list"
       @sb[:wtype] = WIDGET_CONTENT_TYPE.invert[@widget.content_type]
       @sb[:col_order] = []
