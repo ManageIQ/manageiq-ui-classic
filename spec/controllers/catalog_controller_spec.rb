@@ -1240,4 +1240,32 @@ describe CatalogController do
       end
     end
   end
+
+  describe '#set_form_vars' do
+    before do
+      allow(controller).to receive(:build_ae_tree)
+      controller.instance_variable_set(:@edit, :new => {})
+      controller.instance_variable_set(:@record, FactoryGirl.create(:service_template))
+    end
+
+    context 'getting all available catalogs with tenants and ancestors' do
+      it 'sets @available_catalogs' do
+        controller.send(:set_form_vars)
+        expect(controller.instance_variable_get(:@available_catalogs)).not_to be_nil
+      end
+    end
+  end
+
+  describe '#get_form_vars' do
+    before do
+      controller.instance_variable_set(:@edit, :new => {})
+    end
+
+    context 'getting all available catalogs with tenants and ancestors' do
+      it 'sets @available_catalogs' do
+        controller.send(:get_form_vars)
+        expect(controller.instance_variable_get(:@available_catalogs)).not_to be_nil
+      end
+    end
+  end
 end
