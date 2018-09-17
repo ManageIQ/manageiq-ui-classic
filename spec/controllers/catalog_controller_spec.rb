@@ -1,5 +1,5 @@
 describe CatalogController do
-  describe "tests that needs all rbac features access" do
+  context "tests that needs all rbac features access" do
     let(:user)                { FactoryGirl.create(:user_with_group) }
     let(:admin_user)          { FactoryGirl.create(:user, :role => "super_administrator") }
     let(:root_tenant)         { user.current_tenant }
@@ -56,7 +56,7 @@ describe CatalogController do
       controller.send(:x_edit_tags_reset, "ServiceTemplate")
     end
 
-    context 'get_view' do
+    describe '#get_view' do
       it "returns all catalog items related to current tenant and root tenant when non-self service user is logged" do
         login_as child_tenant_user
         view, _pages = controller.send(:get_view, ServiceTemplate, {:named_scope => :public_service_templates}, true)
@@ -85,12 +85,12 @@ describe CatalogController do
       end.to raise_error AbstractController::ActionNotFound
     end
 
-    describe 'x_button' do
+    describe '#x_button' do
       before do
         ApplicationController.handle_exceptions = true
       end
 
-      describe 'corresponding methods are called for allowed actions' do
+      context 'corresponding methods are called for allowed actions' do
         CatalogController::CATALOG_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, actual_method|
           it "calls the appropriate method: '#{actual_method}' for action '#{action_name}'" do
             expect(controller).to receive(actual_method)
@@ -105,7 +105,7 @@ describe CatalogController do
       end
     end
 
-    context "#atomic_form_field_changed" do
+    describe "#atomic_form_field_changed" do
       before :each do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@record, ServiceTemplate.new(:prov_type => "generic"))
@@ -135,7 +135,7 @@ describe CatalogController do
       end
     end
 
-    describe 'replace_right_cell' do
+    describe '#replace_right_cell' do
       it "Can build all the trees" do
         seed_session_trees('catalog', :sandt_tree, '-Unassigned')
         session_to_sb
@@ -153,7 +153,7 @@ describe CatalogController do
       end
     end
 
-    context "#atomic_st_edit" do
+    describe "#atomic_st_edit" do
       it "Atomic Service Template and its valid Resource Actions are saved" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "save")
@@ -221,7 +221,7 @@ describe CatalogController do
       end
     end
 
-    context "#x_button catalogitem_edit" do
+    describe "#x_button catalogitem_edit" do
       before do
         vm = FactoryGirl.create(:vm_vmware,
                                 :ext_management_system => FactoryGirl.create(:ems_vmware),
@@ -245,7 +245,7 @@ describe CatalogController do
       end
     end
 
-    context "#st_edit" do
+    describe "#st_edit" do
       it "@record is cleared out after Service Template is added" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "add")
@@ -269,7 +269,7 @@ describe CatalogController do
       end
     end
 
-    context "#st_upload_image" do
+    describe "#st_upload_image" do
       before do
         ApplicationController.handle_exceptions = true
 
@@ -318,7 +318,7 @@ describe CatalogController do
       end
     end
 
-    context "#ot_edit" do
+    describe "#ot_edit" do
       before(:each) do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "save")
@@ -418,7 +418,7 @@ describe CatalogController do
       end
     end
 
-    context "#ot_copy" do
+    describe "#ot_copy" do
       before(:each) do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "add")
@@ -459,7 +459,7 @@ describe CatalogController do
       end
     end
 
-    context "#ot_copy" do
+    describe "#ot_copy" do
       it "Orchestration Template is copied but name is changed" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
@@ -495,7 +495,7 @@ describe CatalogController do
       end
     end
 
-    context "#ot_delete" do
+    describe "#ot_delete" do
       before(:each) do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :pressed => "orchestration_template_remove")
@@ -526,7 +526,7 @@ describe CatalogController do
       end
     end
 
-    context "#ot_create" do
+    describe "#ot_create" do
       before(:each) do
         @new_name = "New Name"
         new_description = "New Description"
@@ -640,7 +640,7 @@ describe CatalogController do
       end
     end
 
-    context "#service_dialog_create_from_ot" do
+    describe "#service_dialog_create_from_ot" do
       before(:each) do
         @ot = FactoryGirl.create(:orchestration_template_amazon_in_json)
         @dialog_label = "New Dialog 01"
@@ -668,7 +668,7 @@ describe CatalogController do
       end
     end
 
-    context "#ot_rendering" do
+    describe "#ot_rendering" do
       render_views
       before(:each) do
         EvmSpecHelper.create_guid_miq_server_zone
@@ -718,7 +718,7 @@ describe CatalogController do
       end
     end
 
-    context "#set_resource_action" do
+    describe "#set_resource_action" do
       before do
         @st = FactoryGirl.create(:service_template)
         dialog = FactoryGirl.create(:dialog,
@@ -752,7 +752,7 @@ describe CatalogController do
       end
     end
 
-    context "#st_set_record_vars" do
+    describe "#st_set_record_vars" do
       before do
         @st = FactoryGirl.create(:service_template)
         @catalog = FactoryGirl.create(:service_template_catalog,
@@ -776,7 +776,7 @@ describe CatalogController do
       end
     end
 
-    context "#st_set_form_vars" do
+    describe "#st_set_form_vars" do
       before do
         bundle = FactoryGirl.create(:service_template)
         controller.instance_variable_set(:@record, bundle)
@@ -789,7 +789,7 @@ describe CatalogController do
       end
     end
 
-    context "#st_catalog_new" do
+    describe "#st_catalog_new" do
       it "renders views successfully after button is pressed" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :pressed => 'st_catalog_new', :action => 'x_button')
@@ -809,7 +809,7 @@ describe CatalogController do
       end
     end
 
-    context "#need_ansible_locals?" do
+    describe "#need_ansible_locals?" do
       before do
         controller.instance_variable_set(:@nodetype, 'st')
         st = FactoryGirl.create(:service_template,
@@ -849,7 +849,7 @@ describe CatalogController do
       end
     end
 
-    context "#get_available_resources" do
+    describe "#get_available_resources" do
       it "list of available resources should not include Ansible Playbook Service Templates" do
         FactoryGirl.create(:service_template, :type => "ServiceTemplateAnsiblePlaybook")
         controller.instance_variable_set(:@edit, :new => {:selected_resources => []})
@@ -905,7 +905,7 @@ describe CatalogController do
       end
     end
 
-    context "#fetch_playbook_details" do
+    describe "#fetch_playbook_details" do
       let(:auth) { FactoryGirl.create(:authentication, :name => "machine_cred", :manager_ref => 6, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential") }
       let(:repository) { FactoryGirl.create(:configuration_script_source, :manager => ems, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource") }
       let(:inventory_root_group) { FactoryGirl.create(:inventory_root_group, :name => 'Demo Inventory') }
@@ -1035,7 +1035,7 @@ describe CatalogController do
       end
     end
 
-    context "#atomic_req_submit" do
+    describe "#atomic_req_submit" do
       let(:ems) { FactoryGirl.create(:ems_openshift) }
       let(:container_template) do
         FactoryGirl.create(:container_template,
@@ -1077,7 +1077,7 @@ describe CatalogController do
       end
     end
 
-    context "#fetch_ct_details" do
+    describe "#fetch_ct_details" do
       let(:ems) { FactoryGirl.create(:ems_openshift) }
       let(:container_template) do
         FactoryGirl.create(:container_template,
@@ -1179,8 +1179,8 @@ describe CatalogController do
     end
   end
 
-  describe "tests that need only specific rbac feature access" do
-    context "#st_tags_edit" do
+  context "tests that need only specific rbac feature access" do
+    describe "#st_tags_edit" do
       before(:each) do
         user = FactoryGirl.create(:user, :features => "catalogitem_tag")
         login_as user
