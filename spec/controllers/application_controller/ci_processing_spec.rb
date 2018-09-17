@@ -1,4 +1,7 @@
 describe ApplicationController do
+  let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+  let(:zone) { FactoryGirl.create(:zone) }
+
   before do
     EvmSpecHelper.local_miq_server
     login_as FactoryGirl.create(:user, :features => "everything")
@@ -744,14 +747,12 @@ describe ApplicationController do
   context "#process_elements" do
     it "shows passed in display name in flash message" do
       pxe = FactoryGirl.create(:pxe_server)
-      allow(MiqServer).to receive(:my_zone).and_return("default")
       controller.send(:process_elements, [pxe.id], PxeServer, 'synchronize_advertised_images_queue', 'Refresh Relationships')
       expect(assigns(:flash_array).first[:message]).to include("Refresh Relationships successfully initiated")
     end
 
     it "shows task name in flash message when display name is not passed in" do
       pxe = FactoryGirl.create(:pxe_server)
-      allow(MiqServer).to receive(:my_zone).and_return("default")
       controller.send(:process_elements, [pxe.id], PxeServer, 'synchronize_advertised_images_queue')
       expect(assigns(:flash_array).first[:message])
         .to include("synchronize_advertised_images_queue successfully initiated")
@@ -820,6 +821,9 @@ describe ApplicationController do
 end
 
 describe HostController do
+  let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+  let(:zone) { FactoryGirl.create(:zone) }
+
   context "#show_association" do
     before(:each) do
       stub_user(:features => :all)
@@ -883,7 +887,6 @@ describe HostController do
       @host1 = FactoryGirl.create(:host)
       @host2 = FactoryGirl.create(:host)
       allow(controller).to receive(:filter_ids_in_region).and_return([[@host1, @host2], nil])
-      allow(MiqServer).to receive(:my_zone).and_return("default")
     end
 
     it "initiates host destroy" do

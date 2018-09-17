@@ -42,9 +42,10 @@ describe Mixins::Actions::VmActions::Rename do
 
   describe '#rename_save' do
     let(:controller) { VmInfraController.new }
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+    let(:zone) { FactoryGirl.create(:zone) }
 
     before do
-      allow(MiqServer).to receive(:my_zone).and_return('default')
       allow(controller).to receive(:session).and_return(:userid => 'admin')
       controller.instance_variable_set(:@record, vm)
       controller.instance_variable_set(:@edit, :new => {:name => 'new_vm_name'})

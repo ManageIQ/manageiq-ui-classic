@@ -1,8 +1,10 @@
 describe ApplicationController do
   context "#perf_planning_gen_data" do
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+    let(:zone) { FactoryGirl.create(:zone) }
+
     it "should not get nil error when submitting up Manual Input data" do
       _enterprise = FactoryGirl.create(:miq_enterprise)
-      allow(MiqServer).to receive(:my_zone).and_return("default")
       sb = {
         :options => {
           :target_typ => "EmsCluster",
