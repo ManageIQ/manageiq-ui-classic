@@ -171,7 +171,7 @@ describe OpsController do
                            :basedn   => 'cn=groups,cn=accounts,dc=miq',
                            :bind_dn  => 'uid=admin,cn=users,cn=accounts,dc=miq,dc=e',
                            :bind_pwd => '******'}
-          @vmdb = VMDB::Config.new('vmdb')
+          @vmdb = ::Settings.to_hash
           expect(controller).to receive(:render)
         end
 

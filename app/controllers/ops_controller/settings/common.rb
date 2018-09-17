@@ -317,7 +317,7 @@ module OpsController::Settings::Common
   def settings_update_ldap_verify
     settings_get_form_vars
     return unless @edit
-    server_config = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
+    server_config = MiqServer.find(@sb[:selected_server_id]).settings
     server_config.config.each_key do |category|
       server_config.config[category] = @edit[:new][category].dup
     end
@@ -337,7 +337,7 @@ module OpsController::Settings::Common
   def settings_update_amazon_verify
     settings_get_form_vars
     return unless @edit
-    server_config = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
+    server_config = MiqServer.find(@sb[:selected_server_id]).settings
     server_config.config.each_key do |category|
       server_config.config[category] = @edit[:new][category].dup
     end
@@ -396,7 +396,7 @@ module OpsController::Settings::Common
         server.zone = zone
         server.save
       end
-      @update = server.get_config("vmdb")
+      @update = server.settings
     when "settings_workers"                                   # Workers Settings
       @changed = (@edit[:new] != @edit[:current].config)
       qwb = @edit[:new].config[:workers][:worker_base][:queue_worker_base]
@@ -444,10 +444,10 @@ module OpsController::Settings::Common
       w = wb[:websocket_worker]
       @edit[:new].set_worker_setting!(:MiqWebsocketWorker, :count, w[:count].to_i)
 
-      @update = MiqServer.find(@sb[:selected_server_id]).get_config
+      @update = MiqServer.find(@sb[:selected_server_id]).settings
     when "settings_custom_logos"                                      # Custom Logo tab
       @changed = (@edit[:new] != @edit[:current].config)
-      @update = VMDB::Config.new("vmdb")                    # Get the settings object to update it
+      @update = ::Settings.to_hash
     when "settings_advanced" # Advanced manual yaml editor tab
       nodes = x_node.downcase.split("-")
       resource = if selected?(x_node, "z")
@@ -940,7 +940,7 @@ module OpsController::Settings::Common
   def settings_set_form_vars_server
     @edit = {
       :new     => {},
-      :current => MiqServer.find(@sb[:selected_server_id]).get_config("vmdb"),
+      :current => MiqServer.find(@sb[:selected_server_id]).settings,
       :key     => "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}",
     }
     @sb[:new_to] = nil
@@ -964,7 +964,7 @@ module OpsController::Settings::Common
     @edit[:new] = {}
     @edit[:current] = {}
     @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
+    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).settings
     # Avoid thinking roles change when not yet set
     @edit[:current].config[:authentication][:ldap_role] ||= false
     @edit[:current].config[:authentication][:amazon_role] ||= false
@@ -990,8 +990,8 @@ module OpsController::Settings::Common
     @edit = {}
     @edit[:new] = {}
     @edit[:current] = {}
-    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config
-    @edit[:new] = MiqServer.find(@sb[:selected_server_id]).get_config
+    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).settings
+    @edit[:new] = MiqServer.find(@sb[:selected_server_id]).settings
     @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
     @sb[:threshold] = []
     (200.megabytes...550.megabytes).step(50.megabytes) do |x|
@@ -1092,8 +1092,7 @@ module OpsController::Settings::Common
   def settings_set_form_vars_logos
     @edit = {}
     @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:current] = VMDB::Config.new("vmdb") # Get the vmdb configuration settings
+    @edit[:current] = ::Settings.to_hash
     @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
     if @edit[:current].config[:server][:custom_logo].nil?
       @edit[:current].config[:server][:custom_logo] = false # Set default custom_logo flag

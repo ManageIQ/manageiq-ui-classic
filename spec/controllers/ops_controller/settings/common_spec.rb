@@ -167,7 +167,7 @@ describe OpsController do
     context "#settings_get_form_vars" do
       before do
         miq_server = FactoryGirl.create(:miq_server)
-        current = VMDB::Config.new("vmdb")
+        current = ::Settings.to_hash
         current.config[:authentication] = {:ldap_role => true,
                                            :mode      => 'ldap'}
         edit = {:current => current,
@@ -385,8 +385,8 @@ describe OpsController do
                                            :selected_server_id => @miq_server.id)
           controller.instance_variable_set(:@_params,
                                            :id => 'server')
-          @current = VMDB::Config.new("vmdb")
-          @new = @current.config
+          @current = ::Settings.to_hash
+          @new = ::Settings.to_hash
           @new[:server][:name] = ''
           controller.instance_variable_set(:@edit,
                                            :new     => @new,

@@ -4,8 +4,6 @@ module OpsController::Settings::HelpMenu
   def settings_update_help_menu
     return unless load_edit('customize_help_menu')
 
-    konfig = VMDB::Config.new("vmdb")
-
     begin
       konfig.config = Vmdb::Settings.decrypt_passwords!(Settings.to_hash)
       konfig.config[:help_menu].merge!(@edit[:new])
