@@ -78,7 +78,7 @@ module PxeController::PxeServers
     return unless load_edit("pxe_edit__#{params[:id]}", "replace_cell__explorer")
     @edit[:prev_protocol] = @edit[:new][:protocol]
     pxe_server_get_form_vars
-    log_depot_set_verify_status
+    @edit[:log_verify_status] = log_depot_verify_status
     render :update do |page|
       page << javascript_prologue
       page.replace("form_div", :partial => "pxe_form") if @edit[:new][:protocol] != @edit[:prev_protocol]
@@ -419,7 +419,7 @@ module PxeController::PxeServers
     @edit[:new][:log_verify]      = @ps.has_authentication_type?(:default) ? @ps.authentication_password(:default).to_s : ""
 
     @edit[:current] = copy_hash(@edit[:new])
-    log_depot_set_verify_status
+    @edit[:log_verify_status] = log_depot_verify_status
     session[:edit] = @edit
   end
 
@@ -458,6 +458,17 @@ module PxeController::PxeServers
   def restore_password
     if params[:log_password]
       @edit[:new][:log_password] = @edit[:new][:log_verify] = @ps.authentication_password(:default).to_s
+    end
+  end
+
+  def log_depot_verify_status
+    if @edit[:new][:uri_prefix] == "nfs" && @edit[:new][:uri].present?
+      true
+    elsif @edit[:new][:uri_prefix] != "nfs" && (@edit[:new][:log_password] == @edit[:new][:log_verify]) &&
+          %i(uri log_userid log_password log_verify).all? { |field| @edit[:new][field].present? }
+      true
+    else
+      false
     end
   end
 end
