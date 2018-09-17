@@ -3,7 +3,7 @@ module ApplicationController::AdvancedSearch
 
   def adv_search_clear_default_search_if_cant_be_seen
     # default search doesnt exist or if it is marked as hidden
-    if @edit && @edit[:expression] && !@edit[:expression][:selected].blank?
+    if @edit && @edit[:expression] && @edit[:expression][:selected].present?
       s = MiqSearch.find_by(:id => @edit[:expression][:selected][:id])
       clear_default_search if s.nil? || s.search_key == "_hidden_"
     end
@@ -53,7 +53,7 @@ module ApplicationController::AdvancedSearch
       if s.save
         add_flash(_("%{model} search \"%{name}\" was saved") %
           {:model => ui_lookup(:model => @edit[@expkey][:exp_model]),
-           :name => @edit[:new_search_name]})
+           :name  => @edit[:new_search_name]})
         @edit[@expkey].select_filter(s)
         @edit[:new_search_name] = @edit[:adv_search_name] = @edit[@expkey][:exp_last_loaded][:description] unless @edit[@expkey][:exp_last_loaded].nil?
         @edit[@expkey][:expression] = copy_hash(@edit[:new][@expkey])
@@ -144,7 +144,7 @@ module ApplicationController::AdvancedSearch
       self.x_node = "root" # Position on root node
       replace_right_cell
     else
-      javascript_redirect :action => 'show_list' # redirect to build the list screen
+      javascript_redirect(:action => 'show_list') # redirect to build the list screen
     end
   end
 
