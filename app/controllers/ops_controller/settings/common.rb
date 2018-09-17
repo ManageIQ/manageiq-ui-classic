@@ -399,44 +399,44 @@ module OpsController::Settings::Common
       qwb = @edit[:new].config[:workers][:worker_base][:queue_worker_base]
       w = qwb[:generic_worker]
       @edit[:new].set_worker_setting!(:MiqGenericWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqGenericWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqGenericWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:priority_worker]
       @edit[:new].set_worker_setting!(:MiqPriorityWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqPriorityWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqPriorityWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_metrics_collector_worker][:defaults]
       @edit[:new].set_worker_setting!(:MiqEmsMetricsCollectorWorker, [:defaults, :count], w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsCollectorWorker, [:defaults, :memory_threshold], human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqEmsMetricsCollectorWorker, %i(defaults memory_threshold), w[:memory_threshold])
 
       w = qwb[:ems_metrics_processor_worker]
       @edit[:new].set_worker_setting!(:MiqEmsMetricsProcessorWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsProcessorWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqEmsMetricsProcessorWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_refresh_worker][:defaults]
-      @edit[:new].set_worker_setting!(:MiqEmsRefreshWorker, [:defaults, :memory_threshold], human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqEmsRefreshWorker, %i(defaults memory_threshold), w[:memory_threshold])
 
       wb = @edit[:new].config[:workers][:worker_base]
       w = wb[:event_catcher]
-      @edit[:new].set_worker_setting!(:MiqEventCatcher, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqEventCatcher, :memory_threshold, w[:memory_threshold])
 
       w = wb[:vim_broker_worker]
-      @edit[:new].set_worker_setting!(:MiqVimBrokerWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqVimBrokerWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:smart_proxy_worker]
       @edit[:new].set_worker_setting!(:MiqSmartProxyWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqSmartProxyWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqSmartProxyWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:ui_worker]
       @edit[:new].set_worker_setting!(:MiqUiWorker, :count, w[:count].to_i)
 
       w = qwb[:reporting_worker]
       @edit[:new].set_worker_setting!(:MiqReportingWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqReportingWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqReportingWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:web_service_worker]
       @edit[:new].set_worker_setting!(:MiqWebServiceWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqWebServiceWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      @edit[:new].set_worker_setting!(:MiqWebServiceWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:websocket_worker]
       @edit[:new].set_worker_setting!(:MiqWebsocketWorker, :count, w[:count].to_i)
@@ -832,43 +832,43 @@ module OpsController::Settings::Common
 
       w = qwb[:generic_worker]
       w[:count] = params[:generic_worker_count].to_i if params[:generic_worker_count]
-      w[:memory_threshold] = params[:generic_worker_threshold] if params[:generic_worker_threshold]
+      w[:memory_threshold] = params[:generic_worker_threshold].to_i if params[:generic_worker_threshold]
 
       w = qwb[:priority_worker]
       w[:count] = params[:priority_worker_count].to_i if params[:priority_worker_count]
-      w[:memory_threshold] = params[:priority_worker_threshold] if params[:priority_worker_threshold]
+      w[:memory_threshold] = params[:priority_worker_threshold].to_i if params[:priority_worker_threshold]
 
       w = qwb[:ems_metrics_collector_worker][:defaults]
       w[:count] = params[:ems_metrics_collector_worker_count].to_i if params[:ems_metrics_collector_worker_count]
-      w[:memory_threshold] = params[:ems_metrics_collector_worker_threshold] if params[:ems_metrics_collector_worker_threshold]
+      w[:memory_threshold] = params[:ems_metrics_collector_worker_threshold].to_i if params[:ems_metrics_collector_worker_threshold]
 
       w = qwb[:ems_metrics_processor_worker]
       w[:count] = params[:ems_metrics_processor_worker_count].to_i if params[:ems_metrics_processor_worker_count]
-      w[:memory_threshold] = params[:ems_metrics_processor_worker_threshold] if params[:ems_metrics_processor_worker_threshold]
+      w[:memory_threshold] = params[:ems_metrics_processor_worker_threshold].to_i if params[:ems_metrics_processor_worker_threshold]
 
       w = qwb[:ems_refresh_worker][:defaults]
-      w[:memory_threshold] = params[:ems_refresh_worker_threshold] if params[:ems_refresh_worker_threshold]
+      w[:memory_threshold] = params[:ems_refresh_worker_threshold].to_i if params[:ems_refresh_worker_threshold]
 
       w = wb[:event_catcher]
-      w[:memory_threshold] = params[:event_catcher_threshold] if params[:event_catcher_threshold]
+      w[:memory_threshold] = params[:event_catcher_threshold].to_i if params[:event_catcher_threshold]
 
       w = wb[:vim_broker_worker]
-      w[:memory_threshold] = params[:vim_broker_worker_threshold] if params[:vim_broker_worker_threshold]
+      w[:memory_threshold] = params[:vim_broker_worker_threshold].to_i if params[:vim_broker_worker_threshold]
 
       w = qwb[:smart_proxy_worker]
       w[:count] = params[:proxy_worker_count].to_i if params[:proxy_worker_count]
-      w[:memory_threshold] = params[:proxy_worker_threshold] if params[:proxy_worker_threshold]
+      w[:memory_threshold] = params[:proxy_worker_threshold].to_i if params[:proxy_worker_threshold]
 
       w = wb[:ui_worker]
       w[:count] = params[:ui_worker_count].to_i if params[:ui_worker_count]
 
       w = qwb[:reporting_worker]
       w[:count] = params[:reporting_worker_count].to_i if params[:reporting_worker_count]
-      w[:memory_threshold] = params[:reporting_worker_threshold] if params[:reporting_worker_threshold]
+      w[:memory_threshold] = params[:reporting_worker_threshold].to_i if params[:reporting_worker_threshold]
 
       w = wb[:web_service_worker]
       w[:count] = params[:web_service_worker_count].to_i if params[:web_service_worker_count]
-      w[:memory_threshold] = params[:web_service_worker_threshold] if params[:web_service_worker_threshold]
+      w[:memory_threshold] = params[:web_service_worker_threshold].to_i if params[:web_service_worker_threshold]
 
       w = wb[:websocket_worker]
       w[:count] = params[:websocket_worker_count].to_i if params[:websocket_worker_count]
