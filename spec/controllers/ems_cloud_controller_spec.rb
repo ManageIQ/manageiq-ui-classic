@@ -92,7 +92,7 @@ describe EmsCloudController do
         "name"             => "foo_ec2",
         "emstype"          => "ec2",
         "provider_region"  => "ap-southeast-1",
-        "zone"             => "default",
+        "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
       }
