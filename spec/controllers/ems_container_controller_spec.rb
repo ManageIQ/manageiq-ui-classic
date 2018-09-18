@@ -65,11 +65,86 @@ describe EmsContainerController do
     let(:hawkular_route) { RecursiveOpenStruct.new(:spec => {:host => "myhawkularroute.com"}) }
     let(:mock_client) { double('kubeclient') }
 
-    before(:each) do
-      EvmSpecHelper.create_guid_miq_server_zone
+    context "with route set" do
+      before(:each) do
+        EvmSpecHelper.create_guid_miq_server_zone
+        # set kubeclient to return a mock route.
+        allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
+        expect(mock_client).to receive(:discover)
+      end
+
+      it "detects openshift hawkular metric route" do
+        controller.instance_variable_set(:@_params,
+                                         :id                => openshift_manager.id,
+                                         :current_tab       => "metrics",
+                                         :metrics_selection => 'hawkular')
+        controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
+
+        expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
+                                 .and_return(hawkular_route)
+
+        ret = JSON.parse(controller.send(:update_ems_button_detect))
+
+        expect(ret["hostname"]).to eq("myhawkularroute.com")
+        expect(controller.send(:flash_errors?)).to be_falsey
+        expect(assigns(:flash_array).first[:message]).to eq('Route Detection: success')
+      end
+
+      it "detects openshift prometheus metric route" do
+        controller.instance_variable_set(:@_params,
+                                         :id                => openshift_manager.id,
+                                         :current_tab       => "metrics",
+                                         :metrics_selection => 'prometheus')
+        controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
+
+        expect(mock_client).to receive(:get_route).with('prometheus', 'openshift-metrics')
+                                 .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-metrics.example.com"}))
+
+        ret = JSON.parse(controller.send(:update_ems_button_detect))
+
+        expect(ret["hostname"]).to eq("prometheus-metrics.example.com")
+        expect(controller.send(:flash_errors?)).to be_falsey
+        expect(assigns(:flash_array).first[:message]).to eq('Route Detection: success')
+      end
+
+      it "detects openshift prometheus alert route" do
+        require 'kubeclient'
+        controller.instance_variable_set(:@_params,
+                                         :id          => openshift_manager.id,
+                                         :current_tab => "alerts")
+        controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
+
+        expect(mock_client).to receive(:get_route).with('alerts', 'openshift-metrics')
+                                 .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-alerts.example.com"}))
+
+        ret = JSON.parse(controller.send(:update_ems_button_detect))
+
+        expect(ret["hostname"]).to eq("prometheus-alerts.example.com")
+        expect(controller.send(:flash_errors?)).to be_falsey
+        expect(assigns(:flash_array).first[:message]).to eq('Route Detection: success')
+      end
+
+      it "tolerates detection exceptions" do
+        controller.instance_variable_set(:@_params,
+                                         :id                => openshift_manager.id,
+                                         :current_tab       => "metrics",
+                                         :metrics_selection => 'hawkular')
+        controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
+
+        expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
+                                 .and_raise(StandardError, "message")
+
+        controller.send(:update_ems_button_detect)
+
+        expect(controller.send(:flash_errors?)).to be_truthy
+        expect(assigns(:flash_array).first[:message]).to include(
+                                                           'Route Detection: failure [message]'
+                                                         )
+      end
     end
 
     it "errors on kubernetes detection" do
+      EvmSpecHelper.create_guid_miq_server_zone
       controller.instance_variable_set(:@_params, :id => kubernetes_manager.id)
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
 
@@ -78,83 +153,6 @@ describe EmsContainerController do
       expect(controller.send(:flash_errors?)).to be_truthy
       expect(assigns(:flash_array).first[:message]).to eq(
         'Route Detection: failure [Route detection not applicable for provider type]'
-      )
-    end
-
-    it "detects openshift hawkular metric route" do
-      controller.instance_variable_set(:@_params,
-                                       :id                => openshift_manager.id,
-                                       :current_tab       => "metrics",
-                                       :metrics_selection => 'hawkular')
-      controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-
-      # set kubeclient to return a mock route.
-      allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
-      expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
-                                                .and_return(hawkular_route)
-
-      ret = JSON.parse(controller.send(:update_ems_button_detect))
-
-      expect(ret["hostname"]).to eq("myhawkularroute.com")
-      expect(controller.send(:flash_errors?)).to be_falsey
-      expect(assigns(:flash_array).first[:message]).to eq('Route Detection: success')
-    end
-
-    it "detects openshift prometheus metric route" do
-      controller.instance_variable_set(:@_params,
-                                       :id                => openshift_manager.id,
-                                       :current_tab       => "metrics",
-                                       :metrics_selection => 'prometheus')
-      controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-
-      # set kubeclient to return a mock route.
-      allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
-      expect(mock_client).to receive(:get_route).with('prometheus', 'openshift-metrics')
-                                                .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-metrics.example.com"}))
-
-      ret = JSON.parse(controller.send(:update_ems_button_detect))
-
-      expect(ret["hostname"]).to eq("prometheus-metrics.example.com")
-      expect(controller.send(:flash_errors?)).to be_falsey
-      expect(assigns(:flash_array).first[:message]).to eq('Route Detection: success')
-    end
-
-    it "detects openshift prometheus alert route" do
-      require 'kubeclient'
-      controller.instance_variable_set(:@_params,
-                                       :id          => openshift_manager.id,
-                                       :current_tab => "alerts")
-      controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-
-      # set kubeclient to return a mock route.
-      allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
-      expect(mock_client).to receive(:get_route).with('alerts', 'openshift-metrics')
-                                                .and_return(RecursiveOpenStruct.new(:spec => {:host => "prometheus-alerts.example.com"}))
-
-      ret = JSON.parse(controller.send(:update_ems_button_detect))
-
-      expect(ret["hostname"]).to eq("prometheus-alerts.example.com")
-      expect(controller.send(:flash_errors?)).to be_falsey
-      expect(assigns(:flash_array).first[:message]).to eq('Route Detection: success')
-    end
-
-    it "tolerates detection exceptions" do
-      controller.instance_variable_set(:@_params,
-                                       :id                => openshift_manager.id,
-                                       :current_tab       => "metrics",
-                                       :metrics_selection => 'hawkular')
-      controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-
-      # set kubeclient to return a mock route.
-      allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
-      expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
-                                                .and_raise(StandardError, "message")
-
-      controller.send(:update_ems_button_detect)
-
-      expect(controller.send(:flash_errors?)).to be_truthy
-      expect(assigns(:flash_array).first[:message]).to include(
-        'Route Detection: failure [message]'
       )
     end
   end
