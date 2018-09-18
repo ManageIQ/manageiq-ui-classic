@@ -1,23 +1,11 @@
 - message = n_("1 Instance to be Live Migrated", "%{amount} Instances to be Live Migrated", @live_migrate_items.length) % {:amount => @live_migrate_items.length}
 - record_id = @live_migrate_items.length == 1 ? @live_migrate_items[0].id : ''
 
-%vm-cloud-live-migrate-form{'message' => message, 'record-id' => record_id}
-
-- unless @explorer
-  %table{:width => '100%'}
-    %tr
-      %td{:align => 'right'}
-        #buttons_on
-          = button_tag(t = _('Submit'),
-            :class   => "btn btn-primary",
-            :alt     => t,
-            :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "live_migrate_vm", :button => "submit")}');")
-          = button_tag(t = _('Cancel'),
-            :class   => "btn btn-default",
-            :alt     => t,
-            :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "live_migrate_vm", :button => "cancel")}');")
+%vm-cloud-live-migrate-form{'record-id' => record_id}
+%hr
+  %div
+    %h3
+      = message
 - if @live_migrate_items
   - @embedded = true
   - @quadicon_no_url = true

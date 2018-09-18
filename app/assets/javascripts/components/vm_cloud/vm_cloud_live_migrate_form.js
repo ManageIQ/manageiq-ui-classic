@@ -4,7 +4,6 @@ ManageIQ.angular.app.component('vmCloudLiveMigrateForm', {
   templateUrl: '/static/vm_cloud/live_migrate.html.haml',
   bindings: {
     'recordId': '@',
-    'message': '@',
   },
 });
 
@@ -30,6 +29,7 @@ function vmCloudLiveMigrateFormController($http, $scope, miqService) {
     ManageIQ.angular.scope = vm;
 
     if (vm.recordId) {
+      miqService.sparkleOn();
       $http.get('/vm_cloud/live_migrate_form_fields/' + vm.recordId)
         .then(getLiveMigrateFormData)
         .catch(miqService.handleFailure);
@@ -59,7 +59,7 @@ function vmCloudLiveMigrateFormController($http, $scope, miqService) {
     Object.assign(vm, data);
     vm.modelCopy = angular.copy(vm.vmCloudModel);
     miqService.sparkleOff();
-  };
+  }
 
   vm.$onInit = init;
 }

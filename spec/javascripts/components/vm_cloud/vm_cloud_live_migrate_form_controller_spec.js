@@ -11,7 +11,7 @@ describe('vmCloudLiveMigrateForm', function() {
 
     $scope = $rootScope.$new();
 
-    var bindings = { recordId: 1000000000001, message: "1 Instance to be Live Migrated" };
+    var bindings = { recordId: "1000000000001", message: "1 Instance to be Live Migrated" };
     vm = _$componentController_('vmCloudLiveMigrateForm', null, bindings);
     var response = { clusters: ["some cluster"], hosts: ["some host"] };
     $httpBackend.whenGET('/vm_cloud/live_migrate_form_fields/1000000000001').respond(response);
