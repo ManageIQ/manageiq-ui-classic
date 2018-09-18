@@ -820,7 +820,6 @@ class CatalogController < ApplicationController
     prov_type = params[:st_prov_type] ? params[:st_prov_type] : @record.prov_type
     ansible_playbook = prov_type == "generic_ansible_playbook"
     @current_region = MiqRegion.my_region.region if ansible_playbook
-    @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     ansible_playbook
   end
   helper_method :ansible_playbook?
@@ -1351,10 +1350,7 @@ class CatalogController < ApplicationController
     @edit[:new][:catalog_id] = @record.service_template_catalog.try(:id)
     @edit[:new][:st_prov_type] ||= @record.prov_type
     @edit[:new][:generic_subtype] = @record.generic_subtype || "custom" if @edit[:new][:st_prov_type] == 'generic'
-    @edit[:new][:available_catalogs] = Rbac.filtered(ServiceTemplateCatalog.all).collect do |stc|
-      [stc.tenant.present? && stc.tenant.ancestors.present? ? stc.name + " (#{stc.tenant.name})" : stc.name, stc.id]
-    end
-    @edit[:new][:available_catalogs] = @edit[:new][:available_catalogs].sort
+    @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
     available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower)
     available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
@@ -1491,6 +1487,7 @@ class CatalogController < ApplicationController
     @edit[:st_prov_type] = @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
 
+    @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w(generic_ansible_tower generic_container_template).include?(@edit[:new][:st_prov_type])
   end
