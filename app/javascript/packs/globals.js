@@ -15,7 +15,7 @@ require('patternfly-bootstrap-treeview');
 window.angular = require('angular');
 require('angular-gettext');
 require('angular-sanitize');
-require('imports-loader?module=>undefined,exports=>undefined,define=>undefined!angular.validators/angular.validators');
+require('angular.validators');
 require('ng-annotate-loader!angular-ui-codemirror');
 require('angular-dragdrop');  // ngDragDrop, used by ui-components
 require('angular-ui-sortable'); // ui.sortable, used by ui-components
