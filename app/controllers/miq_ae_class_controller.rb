@@ -1942,23 +1942,17 @@ class MiqAeClassController < ApplicationController
 
   # Delete all selected or single displayed aeclasses(s)
   def deleteinstances
-    assert_privileges("miq_ae_instance_delete")
-    aeinstances = []
-    @sb[:row_selected] = find_checked_items
-    if @sb[:row_selected]
-      @sb[:row_selected].each do |items|
-        item = items.split('-')
-        item = find_id_with_rbac(MiqAeInstance, item[1])
-        aeinstances.push(item) if item
-      end
-    else
-      node = x_node.split('-')
-      aeinstances.push(node[1])
-      inst = find_record_with_rbac(MiqAeInstance, node[1])
-      self.x_node = "aec-#{inst.class_id}"
-    end
-
-    process_aeinstances(aeinstances, "destroy") unless aeinstances.empty?
+    assert_privileges('miq_ae_instance_delete')
+    ids = if (@sb[:row_selected] = find_checked_items).present?
+            @sb[:row_selected].map do |item|
+              item.split('-')[1]
+            end
+          else
+            Array.wrap(x_node.split('-')[1])
+          end
+    instances = find_records_with_rbac(MiqAeInstance, ids)
+    self.x_node = "aec-#{instances.first.class_id}" if @sb[:row_selected].nil?
+    process_aeinstances(instances.ids, 'destroy')
     replace_right_cell(:replace_trees => [:ae])
   end
 
@@ -1969,23 +1963,17 @@ class MiqAeClassController < ApplicationController
 
   # Delete all selected or single displayed aeclasses(s)
   def deletemethods
-    assert_privileges("miq_ae_method_delete")
-    aemethods = []
-    @sb[:row_selected] = find_checked_items
-    if @sb[:row_selected]
-      @sb[:row_selected].each do |items|
-        item = items.split('-')
-        item = find_id_with_rbac(MiqAeMethod, item[1])
-        aemethods.push(item) if item
-      end
-    else
-      node = x_node.split('-')
-      aemethods.push(node[1])
-      inst = find_record_with_rbac(MiqAeMethod, node[1])
-      self.x_node = "aec-#{inst.class_id}"
-    end
-
-    process_aemethods(aemethods, "destroy") unless aemethods.empty?
+    assert_privileges('miq_ae_method_delete')
+    ids = if (@sb[:row_selected] = find_checked_items).present?
+            @sb[:row_selected].map do |item|
+              item.split('-')[1]
+            end
+          else
+            Array.wrap(x_node.split('-')[1])
+          end
+    methods = find_records_with_rbac(MiqAeMethod, ids)
+    self.x_node = "aec-#{methods.first.class_id}" if @sb[:row_selected].nil?
+    process_aemethods(methods.ids, 'destroy')
     replace_right_cell(:replace_trees => [:ae])
   end
 
