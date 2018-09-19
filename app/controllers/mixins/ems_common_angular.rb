@@ -92,8 +92,7 @@ module Mixins
       result, details = if %w(ems_cloud ems_infra).include?(params[:controller]) && session[:selected_roles].try(:include?, 'user_interface')
                           realtime_raw_connect(ems_type)
                         elsif %w(ems_cloud ems_infra).include?(params[:controller])
-                          method_name = params[:cred_type] == 'amqp' ? 'raw_event_connect?' : 'raw_connect?'
-                          ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone], method_name)
+                          ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
                         else
                           realtime_authentication_check(ems_type.new)
                         end
