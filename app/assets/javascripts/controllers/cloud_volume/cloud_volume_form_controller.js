@@ -128,7 +128,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   vm.storageManagerChanged = function(id) {
     miqService.sparkleOn();
-    return API.get('/api/providers/' + id + '?attributes=type,parent_manager.availability_zones,parent_manager.cloud_tenants,parent_manager.cloud_volume_snapshots,parent_manager.cloud_volume_types')
+    return API.get('/api/providers/' + id + '?attributes=type,supports_cinder_volume_types,parent_manager.availability_zones,parent_manager.cloud_tenants,parent_manager.cloud_volume_snapshots,parent_manager.cloud_volume_types')
       .then(getStorageManagerFormData)
       .catch(miqService.handleFailure);
   };
@@ -267,7 +267,8 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.cloudTenantChoices = data.parent_manager.cloud_tenants;
     vm.availabilityZoneChoices = data.parent_manager.availability_zones;
     vm.baseSnapshotChoices = data.parent_manager.cloud_volume_snapshots;
-    if (vm.cloudVolumeModel.emstype !== 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {
+    vm.supportsCinderVolumeTypes = data.supports_cinder_volume_types;
+    if (vm.supportsCinderVolumeTypes) {
       vm.volumeTypes = data.parent_manager.cloud_volume_types;
     }
     miqService.sparkleOff();
