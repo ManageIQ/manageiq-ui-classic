@@ -281,6 +281,7 @@ module OpsController::Settings::Common
   end
 
   def set_subscription_attributes(subscription, params)
+    params['password'] = MiqPassword.encrypt(params['password'])
     params_for_connection_validation(params).each do |k, v|
       subscription.send("#{k}=".to_sym, v)
     end

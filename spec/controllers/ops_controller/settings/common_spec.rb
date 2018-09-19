@@ -227,6 +227,17 @@ describe OpsController do
           expect(queue_item.args[0][0].dbname).to eq(db_save)
           expect(queue_item.args[0][1].dbname).to eq(db_remove)
         end
+
+        it "encrypts subscription's password before queuing save operation" do
+          password = "some_password"
+          subscriptions["0"] = {"password" => password}
+          controller.instance_variable_set(:@_params, params)
+          controller.send(:pglogical_save_subscriptions)
+          queue_item = MiqQueue.find_by(:method_name => "save_global_region")
+          queued_password = queue_item.args[0][0].password
+          expect(MiqPassword.encrypted?(queued_password)).to be(true)
+          expect(MiqPassword.decrypt(queued_password)).to eq(password)
+        end
       end
 
       context "none" do
