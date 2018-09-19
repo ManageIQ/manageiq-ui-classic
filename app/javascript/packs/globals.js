@@ -4,9 +4,9 @@
 
 window.$ = window.jQuery = require('jquery');
 require('bootstrap');
-require('imports-loader?exports=>undefined,define=>undefined!bootstrap-datepicker');
+require('bootstrap-datepicker');
 require('bootstrap-filestyle');
-require('imports-loader?module=>undefined,define=>undefined,this=>window!bootstrap-select');
+require('bootstrap-select');
 require('bootstrap-switch');
 require('bootstrap-touchspin');
 require('eonasdan-bootstrap-datetimepicker');

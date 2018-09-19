@@ -21,6 +21,15 @@ module.exports = [
   }),
 
   {
+    test: require.resolve('bootstrap-datepicker'),
+    use: 'imports-loader?exports=>undefined,define=>undefined',
+  },
+  {
+    test: require.resolve('bootstrap-select'),
+    use: 'imports-loader?module=>undefined,define=>undefined,this=>window',
+  },
+
+  {
     test: /\.(ts|tsx)$/,
     loader: 'awesome-typescript-loader',
   },
