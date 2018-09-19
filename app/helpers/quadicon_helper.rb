@@ -7,7 +7,7 @@ module QuadiconHelper
   }.freeze
 
   MACHINE_STATE_QUADRANT = {
-    'archived'                  => {:text => 'A', :background => '#336699'},
+    'archived'                  => {:fonticon => 'fa fa-archive', :background => '#336699'},
     'orphaned'                  => {:text => 'O', :background => '#336699'},
     'retired'                   => {:text => 'R', :background => '#336699'},
     'unknown'                   => {:fonticon => 'pficon pficon-unknown', :background => '#336699'},

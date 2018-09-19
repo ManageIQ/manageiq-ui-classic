@@ -22,7 +22,7 @@ describe TreeNode::VmOrTemplate do
       let(:object) { FactoryGirl.create(factory, :name => "template", :template => true) }
 
       include_examples 'TreeNode::Node#key prefix', 't-'
-      include_examples 'TreeNode::Node#image', 'svg/currentstate-archived.svg'
+      include_examples 'TreeNode::Node#icon', 'fa fa-archive'
 
       describe '#tooltip' do
         it 'returns with nil' do
@@ -53,7 +53,7 @@ describe TreeNode::VmOrTemplate do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'v-'
-      include_examples 'TreeNode::Node#image', 'svg/currentstate-archived.svg'
+      include_examples 'TreeNode::Node#icon', 'fa fa-archive'
 
       describe '#tooltip' do
         it 'returns with the correct prefix and suffix' do
