@@ -14,3 +14,4 @@ export const STORE_TAG_CATEGORIES = `${prefix}Store tag categories`;
 export const ADD_FLASH_MESSAGE = `${prefix}Add flash message`;
 export const REMOVE_FLASH_MESSAGE = `${prefix}Remove flash message;`;
 export const RESET_SELECTED_USERS = `${prefix}Reset selected users`;
+export const STORE_USER_CUSTOM_EVENTS = `${prefix}Store user custom events`;

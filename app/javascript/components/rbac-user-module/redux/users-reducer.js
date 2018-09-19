@@ -10,6 +10,7 @@ const usersReducer = (state = {
   isValid: true,
   columns,
   flashMessages: [],
+  userCustomEvents: {},
 }, action) => {
   let newState = {};
   switch (action.type) {
@@ -50,6 +51,8 @@ const usersReducer = (state = {
         flashMessages: state.flashMessages.filter(({ flashId }) =>
           flashId !== action.flashMessage.flashId),
       };
+    case actionTypes.STORE_USER_CUSTOM_EVENTS:
+      return { ...state, userCustomEvents: { ...state.userCustomEvents, [action.userId]: action.customEvents } };
     default:
       return { ...state };
   }

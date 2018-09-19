@@ -12,6 +12,7 @@ import UserDetail from './components/user-detail';
 import UserAdd from './components/user-add';
 import FlashMessages from './components/flash-messages';
 import TagAssignment from './components/tagg-assignment';
+import CustomEventsTable from './components/custom-events-table';
 import { listenToRx } from '../../miq_observable';
 import {
   RBAC_USER_EDIT,
@@ -107,7 +108,8 @@ class RbacModule extends Component {
             <ConnectedRouter history={ManageIQ.redux.history}>
               <div>
                 <Route exact path="/" component={RbacUsersList} />
-                <Route path="/preview/:userId" component={UserDetail} />
+                <Route exact path="/preview/:userId" component={UserDetail} />
+                <Route path="/preview/:userId/custom-button-events" component={CustomEventsTable} />
                 <Route path="/add/:copy?" component={UserAdd} />
                 <Route path="/edit/:userId" component={UserAdd} />
                 <Route path="/assign-company-tags" component={TagAssignment} />

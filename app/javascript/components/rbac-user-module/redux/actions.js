@@ -281,3 +281,19 @@ export const editUserTags = (unAssignPayload, assignPayload) =>
     .then(() => dispatch(createFlashMessage(__('Tag edits were successfully saved'), 'success')))
     .then(dispatch(fetchSucesfull))
     .catch(error => dispatch(createFlashMessage(error, 'error')));
+
+const storeUserCustomEvents = (userId, customEvents) => ({
+  type: actionTypes.STORE_USER_CUSTOM_EVENTS,
+  userId,
+  customEvents,
+});
+
+const loadUserCustomEvents = userid => dispatch => 
+  API.get(endpoints.getUserCustomButtons(userid))
+    .then(({ resources }) => dispatch(storeUserCustomEvents(userid, resources)))
+
+export const fetchCustomEventsIfNeeded = userid => (dispatch, getState) => {
+  const { usersReducer: { userCustomEvents } } = getState();
+  if (!userCustomEvents[userid]) return dispatch(loadUserCustomEvents(userid));
+  return Promise.resolve();
+}
