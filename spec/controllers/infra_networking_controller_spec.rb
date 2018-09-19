@@ -1,20 +1,68 @@
 describe InfraNetworkingController do
-  let(:zone) { FactoryGirl.build(:zone) }
-  let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+  let!(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'true') }
+  let(:classification) { FactoryGirl.create(:classification, :name => "department", :description => "Department") }
+  let(:tag1) { FactoryGirl.create(:classification_tag, :name   => "tag1", :parent => classification) }
+  let(:tag2) { FactoryGirl.create(:classification_tag, :name   => "tag2", :parent => classification) }
+  let(:ems) { FactoryGirl.create(:ems_vmware) }
+  let(:cluster) { FactoryGirl.create(:ems_cluster, :ems_id => ems.id) }
 
-  before { stub_user(:features => :all) }
+  before do
+    stub_user(:features => :all)
+    FactoryGirl.create(:tagging, :tag => tag1.tag, :taggable => switch)
+    FactoryGirl.create(:tagging, :tag => tag2.tag, :taggable => switch)
+  end
 
-  describe '#tree_select' do
+  describe 'render_views' do
     render_views
 
-    context 'switch' do
-      let(:ems) { FactoryGirl.create(:ems_vmware) }
-      let(:cluster) { FactoryGirl.create(:ems_cluster, :ems_id => ems.id) }
-      let(:host) { FactoryGirl.create(:host_vmware, :ems_id => ems.id, :ems_cluster => cluster) }
-      let(:switch) do
-        sw = FactoryGirl.create(:switch_vmware, :ems_id => ems.id)
-        FactoryGirl.create(:host_switch, :host => host, :switch => sw)
-        sw
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    describe '#explorer' do
+      before do
+        session[:settings] = {:views => {}, :perpage => {:list => 5}}
+        session[:sb] = {:active_accord => :infra_networking_accord}
+        seed_session_trees('switch', :infra_networking_tree, 'root')
+      end
+
+      it 'can render the explorer' do
+        get :explorer
+
+        expect(response.status).to eq(200)
+        expect(response.body).to_not be_empty
+      end
+
+      it 'shows a switch in the list' do
+        get :explorer
+
+        expect(response.body).to include("modelName: 'Switch'")
+        expect(response.body).to include("activeTree: 'infra_networking_tree'")
+        expect(response.body).to include("gtlType: 'list'")
+        expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
+        expect(response.body).to include("showUrl: '/infra_networking/x_show/'")
+      end
+    end
+
+    describe "#tree_select" do
+      before do
+        session[:settings] = {}
+        seed_session_trees('infra_networking', :infra_networking_tree)
+      end
+
+      it "renders list of All Distributed Switches for infra_networking_tree root node" do
+        post :tree_select, :params => { :id => 'root', :format => :js }
+
+        expect(response.status).to eq(200)
+      end
+
+      it "renders textual summary for an infrastructure switch" do
+        post :tree_select, :params => { :id => "sw-#{switch.id}", :tree => :infra_networking_tree, :format => :js }
+
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Department')
+        expect(response.body).to include(tag1.description)
+        expect(response.body).to include(tag2.description)
       end
 
       it 'renders the network switch center toolbar' do
@@ -22,6 +70,40 @@ describe InfraNetworkingController do
         expect(ApplicationHelper::Toolbar::InfraNetworkingCenter).to receive(:definition).and_call_original.at_least(:once)
         post :tree_select, :params => { :id => nodeid }
       end
+    end
+  end
+
+  describe "#tags_edit" do
+    before do
+      session[:tag_db] = "Switch"
+      session[:edit] = {
+        :key            => "Switch_edit_tags__#{switch.id}",
+        :tagging        => "Switch",
+        :object_iswitch => [switch.id],
+        :current        => {:assignments => []},
+        :new            => {:assignments => [tag1.id, tag2.id]}
+      }
+      session[:breadcrumbs] = [{:url => "infra_networking/show/#{switch.id}"}, 'placeholder']
+    end
+
+    it "build switch tagging screen" do
+      post :x_button, :params => { :pressed => "infra_networking_tag", :format => :js, :id => switch.id }
+      expect(assigns(:flash_array)).to be_nil
+      expect(response.status).to eq(200)
+    end
+
+    it "cancels tags edit" do
+      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => switch.id }
+      expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
+      expect(assigns(:edit)).to be_nil
+      expect(response.status).to eq(200)
+    end
+
+    it "save tags" do
+      post :tagging_edit, :params => { :button => "save", :format => :js, :id => switch.id }
+      expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
+      expect(assigns(:edit)).to be_nil
+      expect(response.status).to eq(200)
     end
   end
 end
