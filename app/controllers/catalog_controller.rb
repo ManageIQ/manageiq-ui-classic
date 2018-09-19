@@ -1298,7 +1298,7 @@ class CatalogController < ApplicationController
     st.long_description = @edit[:new][:display] ? @edit[:new][:long_description] : nil
     st.provision_cost = @edit[:new][:provision_cost]
     st.display = @edit[:new][:display]
-    st.service_template_catalog = if @edit[:new][:catalog_id].nil?
+    st.service_template_catalog = if @edit[:new][:catalog_id].blank?
                                     nil
                                   else
                                     ServiceTemplateCatalog.find(@edit[:new][:catalog_id])
