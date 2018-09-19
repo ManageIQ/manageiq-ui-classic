@@ -88,6 +88,20 @@
                               :ng_model_uri_prefix => "vm.diagnosticsDatabaseModel.uri_prefix",
                               :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
 
+  / %apiversion{'ng-if' => 'vm.swiftSecurityProtocolSelect()'}
+  %apiversion{'ng-if' => true}
+    .form-group{"ng-class" => "{'has-error': angularForm.keystone_api_version.$invalid}"}
+      %label.col-md-2.control-label
+        = _("API Version")
+      .col-md-8
+        = select_tag('keystone_api_version', options_for_select(@api_versions_options_for_select),
+                     "ng-model"                    => "vm.scheduleModel.keystone_api_version",
+                     "ng-required"                 => "vm.swiftSecurityProtocolRequired()",
+                     "checkchange"                 => "",
+                     "selectpicker-for-select-tag" => "")
+        %span.help-block{"ng-show" => "angularForm.keystone_api_version.$invalid"}
+          = _("Required")
+
   %region{'ng-if' => 'vm.regionSelect()'}
     .form-group{"ng-class" => "{'has-error': angularForm.log_aws_region.$invalid}"}
       %label.col-md-2.control-label
@@ -99,6 +113,18 @@
                      "ng-required"                 => "vm.regionRequired()",
                      "selectpicker-for-select-tag" => "")
         %span.help-block{"ng-show" => "angularForm.log_aws_region.$invalid"}
+          = _("Required")
+  %protocol{'ng-if' => 'vm.swiftSecurityProtocolSelect()'}
+    .form-group{"ng-class" => "{'has-error': angularForm.security_protocol.$invalid}"}
+      %label.col-md-2.control-label
+        = _("Security Protocol")
+      .col-md-8
+        - default_option = [_("<Choose>"), '']
+        = select_tag('security_protocol', options_for_select([default_option] + @security_protocols_options_for_select),
+                     "ng-model"                    => "vm.diagnosticsDatabaseModel.security_protocol",
+                     "ng-required"                 => "vm.swiftSecurityProtocolRequired()",
+                     "selectpicker-for-select-tag" => "")
+        %span.help-block{"ng-show" => "angularForm.security_protocol.$invalid"}
           = _("Required")
   %auth-credentials{'ng-if'                => 'vm.credsProtocol()',
                     'form-model'           => 'vm.diagnosticsDatabaseModel',

@@ -11,6 +11,11 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       log_userid: '',
       log_password: '',
       log_aws_region: '',
+      openstack_region: '',
+      keystone_api_version: '',
+      v3_domain_ident: '',
+      swift_api_port: '',
+      security_protocol: '',
     };
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.diagnosticsDatabaseModel );
@@ -36,6 +41,11 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       vm.diagnosticsDatabaseModel.log_password = '';
       vm.diagnosticsDatabaseModel.log_protocol = '';
       vm.diagnosticsDatabaseModel.log_aws_region = '';
+      vm.diagnosticsDatabaseModel.openstack_region = '';
+      vm.diagnosticsDatabaseModel.keystone_api_version = '';
+      vm.diagnosticsDatabaseModel.v3_domain_ident = '';
+      vm.diagnosticsDatabaseModel.swift_api_port = '';
+      vm.diagnosticsDatabaseModel.security_protocol = '';
       return;
     }
 
@@ -98,6 +108,24 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       (vm.diagnosticsDatabaseModel.log_aws_region === '' || typeof vm.diagnosticsDatabaseModel.log_aws_region === 'undefined'));
   };
 
+  vm.keystoneApiSelect = function() {
+    return vm.diagnosticsDatabaseModel.log_protocol === "OpenStack Swift";
+  };
+
+  vm.keystoneApiRequired = function() {
+    return (vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift' &&
+      (vm.diagnosticsDatabaseModel.keystone_api_version === '' || typeof vm.diagnosticsDatabaseModel.keystone_api_version === 'undefined'));
+  };
+
+  vm.securityProtocolSelect = function() {
+    return vm.diagnosticsDatabaseModel.log_protocol === "OpenStack Swift";
+  };
+
+  vm.securityProtocolRequired = function() {
+    return (vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift' &&
+      (vm.diagnosticsDatabaseModel.security_protocol === '' || typeof vm.diagnosticsDatabaseModel.security_protocol === 'undefined'));
+  };
+
   vm.credsProtocol = function() {
     return miqDBBackupService.credsProtocol(vm.diagnosticsDatabaseModel);
   };
@@ -126,6 +154,12 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     } else if (vm.diagnosticsDatabaseModel.uri_prefix === 's3') {
       vm.diagnosticsDatabaseModel.log_protocol = 'AWS S3';
       vm.diagnosticsDatabaseModel.log_aws_region = data.log_aws_region;
+    } else if (vm.diagnosticsDatabaseModel.uri_prefix === 'swift') {
+      vm.diagnosticsDatabaseModel.log_protocol = 'OpenStack Swift';
+      vm.diagnosticsDatabaseModel.openstack_region     = data.openstack_region;
+      vm.diagnosticsDatabaseModel.keystone_api_version = data.keystone_api_version;
+      vm.diagnosticsDatabaseModel.v3_domain_ident      = data.v3_domain_ident;
+      vm.diagnosticsDatabaseModel.security_protocol    = data.security_protocol
     }
 
     vm.diagnosticsDatabaseModel.action_typ = 'db_backup';
