@@ -187,6 +187,7 @@ module ApplicationHelper::PageLayouts
       host
       host_aggregate
       load_balancer
+      manageiq/providers/cloud_manager/template
       middleware_deployment
       middleware_domain
       middleware_server

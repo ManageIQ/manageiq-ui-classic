@@ -460,6 +460,8 @@ class ApplicationHelper::ToolbarChooser
       return "drifts_center_tb"
     elsif @lastaction == "drift"
       return "drift_center_tb"
+    elsif @layout == 'manageiq/providers/cloud_manager/template'
+      return "templates_center_tb"
     else
       return nil if @in_a_form
 

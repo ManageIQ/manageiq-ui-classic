@@ -224,6 +224,7 @@ module EmsCommon
                                      "miq_template_",
                                      "network_port_",
                                      "network_router_",
+                                     "template_",
                                      "orchestration_stack_",
                                      "security_group_",
                                      "storage_",
@@ -270,6 +271,8 @@ module EmsCommon
       when "network_router_tag"               then tag(NetworkRouter)
       when "orchestration_stack_tag"          then tag(OrchestrationStack)
       when "security_group_tag"               then tag(SecurityGroup)
+      # TemplateCloud
+      when 'template_delete'                  then delete_templates
 
       when "physical_server_protect"          then assign_policies(PhysicalServer)
       when "physical_server_tag"              then tag(PhysicalServer)
@@ -298,7 +301,7 @@ module EmsCommon
                   @flash_array.nil?
 
         unless ["host_edit", "#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-                "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename', 'flavor_create', 'flavor_delete'].include?(params[:pressed])
+                "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename', 'flavor_create', 'flavor_delete', 'template_delete'].include?(params[:pressed])
           @refresh_div = "main_div"
           @refresh_partial = "layouts/gtl"
           show                                                        # Handle EMS buttons
