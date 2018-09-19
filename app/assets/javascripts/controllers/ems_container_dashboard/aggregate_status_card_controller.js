@@ -43,15 +43,19 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
       // icon/notifications and other info for providers
       var providers_info = data.providers[0];
 
-      vm.status = {
-        "iconImage": providers_info[0].iconImage,
-        "largeIcon": true,
-        "notifications":[
-          {
-            "iconClass": providers_info[0].statusIcon,
-          },
-        ],
-      };
+      if (typeof providers_info[0] === 'undefined') {
+        vm.status = {};
+      } else {
+        vm.status = {
+          "iconImage": providers_info[0].iconImage,
+          "largeIcon": true,
+          "notifications": [
+            {
+              "iconClass": providers_info[0].statusIcon,
+            },
+          ],
+        };
+      }
 
       // show total providers count and link on Containers dashboard only
       if(all_providers_info !== null && typeof all_providers_info.href !== 'undefined') {
