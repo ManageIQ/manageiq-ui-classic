@@ -34,10 +34,10 @@ describe TreeBuilderImages do
   it 'sets providers nodes correctly' do
     providers = @images_tree.x_get_tree_roots(false, nil)
     expect(providers).to eq([@template_cloud_with_az.ext_management_system,
-                             {:id    => "arch",
-                              :text  => "<Archived>",
-                              :image => "svg/currentstate-archived.svg",
-                              :tip   => "Archived Images"},
+                             {:id   => "arch",
+                              :text => "<Archived>",
+                              :icon => "fa fa-archive",
+                              :tip  => "Archived Images"},
                              {:id    => "orph",
                               :text  => "<Orphaned>",
                               :image => "svg/currentstate-orphaned.svg",
