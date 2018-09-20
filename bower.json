@@ -18,7 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "manageiq-ui-components": "bower-dev",
-    "patternfly-timeline": "~1.0.5"
+    "manageiq-ui-components": "bower-dev"
   }
 }
