@@ -14,7 +14,19 @@ class CustomizeFieldsVisibilityService
         :hostname,
         :ip_addr,
         :root_password,
-        :subnet_mask
+        :subnet_mask,
+        :sysprep_admin_password,
+        :sysprep_computer_name,
+        :sysprep_domain_name,
+        :sysprep_domain_password,
+        :sysprep_locale_input,
+        :sysprep_locale_system,
+        :sysprep_locale_ui,
+        :sysprep_locale_user,
+        :sysprep_machine_object_ou,
+        :sysprep_product_key,
+        :sysprep_timezone,
+        :sysprep_domain_admin
       ]
     else
       exclude_list = [
@@ -24,7 +36,6 @@ class CustomizeFieldsVisibilityService
         :sysprep_upload_file,
         :sysprep_upload_text,
         :linux_host_name,
-        :sysprep_computer_name,
         :ip_addr,
         :subnet_mask,
         :gateway,
