@@ -7,6 +7,9 @@ const babelrc = require('../../.babelrc.js');
 let base = {};
 if (env.WEBPACK_EXCLUDE_NODE_MODULES) {
   base.exclude = /node_modules/;
+} else {
+  // FIXME: won't be needed with d3 4+
+  base.exclude = /node_modules\/d3/;
 }
 
 module.exports = [
