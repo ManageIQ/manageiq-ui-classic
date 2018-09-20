@@ -1268,4 +1268,31 @@ describe CatalogController do
       end
     end
   end
+
+  describe '#common_st_record_vars' do
+    let(:st) { FactoryGirl.create(:service_template) }
+
+    before { controller.instance_variable_set(:@edit, edit) }
+
+    context 'Service Catalog Item without any Catalog' do
+      let(:edit) { {:new => {:catalog_id => ""}} }
+
+      it 'sets service_template_catalog for Service Catalog Item to nil' do
+        controller.send(:common_st_record_vars, st)
+
+        expect(st.service_template_catalog).to be_nil
+      end
+    end
+
+    context 'Service Catalog Item with Catalog' do
+      let(:edit) { {:new => {:catalog_id => stc.id}} }
+      let(:stc) { FactoryGirl.create(:service_template_catalog) }
+
+      it 'sets service_template_catalog for Service Catalog Item to nil' do
+        controller.send(:common_st_record_vars, st)
+
+        expect(st.service_template_catalog).to eq(stc)
+      end
+    end
+  end
 end
