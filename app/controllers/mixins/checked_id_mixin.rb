@@ -24,23 +24,6 @@ module Mixins
       end
     end
 
-    # !============================================!
-    # PLEASE PREFER find_records_with_rbac OVER THIS
-    # !============================================!
-    #
-    # Test RBAC on every item checked
-    # Params:
-    #   klass - class of accessed objects
-    # Returns:
-    #   array of records. If user does not have rigts for it,
-    #   raises exception
-    def find_checked_records_with_rbac(klass, ids = nil)
-      ids ||= find_checked_items
-      filtered = Rbac.filtered(klass.where(:id => ids))
-      raise _("Can't access selected records") unless ids.length == filtered.length
-      filtered
-    end
-
     # Find a record by model and id and test it with RBAC
     #
     # Wrapper for find_records_with_rbac method for case when only a single

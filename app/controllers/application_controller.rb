@@ -1693,8 +1693,7 @@ class ApplicationController < ActionController::Base
   end
 
   def task_supported?(typ)
-    vms = find_checked_records_with_rbac(VmOrTemplate)
-
+    vms = find_records_with_rbac(VmOrTemplate, checked_or_params)
     if %w(migrate publish).include?(typ) && vms.any?(&:template?)
       render_flash_not_applicable_to_model(typ, ui_lookup(:table => "miq_template"))
       return

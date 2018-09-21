@@ -104,9 +104,7 @@ module OpsController::OpsRbac
   alias_method :rbac_project_add, :rbac_tenant_add
 
   def rbac_tenant_edit_reset
-    obj = find_checked_items
-    obj[0] = params[:id] if obj.blank? && params[:id]
-    @tenant = params[:typ] == "new" ? Tenant.new : find_checked_records_with_rbac(Tenant, obj).first # Get existing or new record
+    @tenant = params[:typ] == "new" ? Tenant.new : find_record_with_rbac(Tenant, checked_or_params)
 
     # This is only because ops_controller tries to set form locals, otherwise we should not use the @edit variable
     @edit = {:tenant_id => @tenant.id}
@@ -153,9 +151,7 @@ module OpsController::OpsRbac
   end
 
   def rbac_tenant_manage_quotas_reset
-    obj = find_checked_items
-    obj[0] = params[:id] if obj.blank? && params[:id]
-    @tenant = find_checked_records_with_rbac(Tenant, obj).first # Get existing or new record
+    @tenant = find_record_with_rbac(Tenant, checked_or_params)
     # This is only because ops_controller tries to set form locals, otherwise we should not use the @edit variable
     @edit = {:tenant_id => @tenant.id}
     session[:edit] = {:key => "tenant_manage_quotas__#{@tenant.id}"}
