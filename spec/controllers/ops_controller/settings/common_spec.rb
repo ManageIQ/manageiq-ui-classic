@@ -1,3 +1,4 @@
+require "util/miq-hash_struct"
 describe OpsController do
   context "OpsController::Settings::Common" do
     context "SmartProxy Affinity" do
@@ -220,7 +221,10 @@ describe OpsController do
     end
 
     describe '#settings_get_info' do
-      before { MiqRegion.seed }
+      before do
+        MiqRegion.seed
+        EvmSpecHelper.local_miq_server(:zone => Zone.seed)
+      end
 
       let(:edit) { controller.instance_variable_get(:@edit) }
 
