@@ -76,8 +76,9 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/cloud_tenants/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/cloud_tenant",
-          :cancel_endpoint        => "/cloud_tenant"
-        )
+          :cancel_endpoint        => "/cloud_tenant",
+          :open_url               => false,
+         )
       end
     end
 
@@ -94,7 +95,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/cloud_volumes/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/cloud_volume",
-          :cancel_endpoint        => "/cloud_volume"
+          :cancel_endpoint        => "/cloud_volume",
+          :open_url               => false,
         )
       end
     end
@@ -112,7 +114,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/container_nodes/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/container_node",
-          :cancel_endpoint        => "/container_node"
+          :cancel_endpoint        => "/container_node",
+          :open_url               => false,
         )
       end
     end
@@ -130,7 +133,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/clusters/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/ems_cluster",
-          :cancel_endpoint        => "/ems_cluster"
+          :cancel_endpoint        => "/ems_cluster",
+          :open_url               => false,
         )
       end
     end
@@ -148,7 +152,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/generic_objects/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/service/explorer",
-          :cancel_endpoint        => "/service/explorer"
+          :cancel_endpoint        => "/service/explorer",
+          :open_url               => false,
         )
       end
     end
@@ -166,8 +171,9 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/hosts/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/host",
-          :cancel_endpoint        => "/host"
-        )
+          :cancel_endpoint        => "/host",
+          :open_url               => false,
+       )
       end
     end
 
@@ -184,7 +190,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/providers/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/ems_infra",
-          :cancel_endpoint        => "/ems_infra"
+          :cancel_endpoint        => "/ems_infra",
+          :open_url               => false,
         )
       end
     end
@@ -202,7 +209,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/templates/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/vm_or_template/explorer",
-          :cancel_endpoint        => "/vm_or_template/explorer"
+          :cancel_endpoint        => "/vm_or_template/explorer",
+          :open_url               => false,
         )
       end
     end
@@ -220,7 +228,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/services/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/service/explorer",
-          :cancel_endpoint        => "/service/explorer"
+          :cancel_endpoint        => "/service/explorer",
+          :open_url               => false,
         )
       end
     end
@@ -238,7 +247,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/services/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/service/explorer",
-          :cancel_endpoint        => "/service/explorer"
+          :cancel_endpoint        => "/service/explorer",
+          :open_url               => false,
         )
       end
     end
@@ -263,7 +273,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/services/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/service/explorer",
-          :cancel_endpoint        => "/service/explorer"
+          :cancel_endpoint        => "/service/explorer",
+          :open_url               => false,
         )
       end
     end
@@ -295,7 +306,8 @@ describe DialogLocalService do
           :api_submit_endpoint    => "/api/datastores/123",
           :api_action             => "custom-button-name",
           :finish_submit_endpoint => "/storage/explorer",
-          :cancel_endpoint        => "/storage/explorer"
+          :cancel_endpoint        => "/storage/explorer",
+          :open_url               => false,
         )
       end
     end
@@ -315,7 +327,8 @@ describe DialogLocalService do
             :api_submit_endpoint    => "/api/vms/123",
             :api_action             => "custom-button-name",
             :finish_submit_endpoint => "/vm_cloud/explorer",
-            :cancel_endpoint        => "/vm_cloud/explorer"
+            :cancel_endpoint        => "/vm_cloud/explorer",
+            :open_url               => false,
           )
         end
       end
@@ -333,7 +346,8 @@ describe DialogLocalService do
             :api_submit_endpoint    => "/api/vms/123",
             :api_action             => "custom-button-name",
             :finish_submit_endpoint => "/vm_infra/explorer",
-            :cancel_endpoint        => "/vm_infra/explorer"
+            :cancel_endpoint        => "/vm_infra/explorer",
+            :open_url               => false,
           )
         end
       end
