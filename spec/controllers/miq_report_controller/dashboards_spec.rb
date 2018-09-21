@@ -1,7 +1,8 @@
 describe ReportController do
   context "::Dashboards" do
+    let(:user) { FactoryGirl.create(:user, :features => "db_edit") }
+
     context "#db_edit" do
-      let(:user) { FactoryGirl.create(:user, :features => "db_edit") }
       before :each do
         login_as user
         @db = FactoryGirl.create(:miq_widget_set,
