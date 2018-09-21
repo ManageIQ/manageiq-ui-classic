@@ -8,7 +8,7 @@
       %span.fa.fa-ellipsis-v
     %ul.dropdown-menu.dropdown-menu-right{'aria-labelledby' => 'dropdownKebabRight-{{ notification.id }}'}
       %li{:role => 'menuitem', 'ng-class' => "{'disabled': !notification.data.link}"}
-        %a.secondary-action{:title => _('View details'), 'ng-click' => 'notification.actionCallback(notification)'}
+        %a.secondary-action{:title => _('View details'), 'ng-click' => 'customScope.viewNotificationDetails(notification)'}
           = _('View details')
       %li.divider{:role => 'separator'}
       %li{:role => 'menuitem', 'ng-class' => "{'disabled': !notification.unread}"}

@@ -116,6 +116,12 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
     eventNotifications.markRead(notification, group);
   };
 
+  vm.customScope.viewNotificationDetails = function(notification, group) {
+    if (notification.data.link) {
+      eventNotifications.viewDetails(notification, group);
+    }
+  };
+
   vm.customScope.clearNotification = function(notification, group) {
     eventNotifications.clear(notification, group);
   };
