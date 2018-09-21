@@ -42,27 +42,6 @@ module Mixins
     end
 
     # !============================================!
-    # PLEASE PREFER find_records_with_rbac OVER THIS
-    # !============================================!
-    #
-    # Test RBAC in case there is only one record
-    # Params:
-    #   klass - class of accessed object
-    #   id    - accessed object id
-    # Returns:
-    #   id of checked item. If user does not have rights for it,
-    #   raises an exception
-    def find_id_with_rbac(klass, id)
-      assert_rbac(klass, Array.wrap(id))
-      id
-    end
-
-    def find_id_with_rbac_no_exception(klass, id)
-      record = Rbac.filtered(klass.where(:id => id))
-      record.present? ? id : nil
-    end
-
-    # !============================================!
     # PLEASE PREFER checked_or_params OVER THIS
     # !============================================!
     #

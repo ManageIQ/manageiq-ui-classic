@@ -232,7 +232,6 @@ describe CloudNetworkController do
         controller.instance_variable_set(:@_params,
                                          :pressed => "cloud_network_delete",
                                          :id      => @network.id)
-        allow(controller).to receive(:find_id_with_rbac).and_return([@network])
         controller.instance_variable_set(:@breadcrumbs, [{:url => "cloud_network/show_list"}, 'placeholder'])
         expect(controller).to receive(:render)
         controller.send(:button)
