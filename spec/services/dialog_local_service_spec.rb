@@ -78,7 +78,7 @@ describe DialogLocalService do
           :finish_submit_endpoint => "/cloud_tenant",
           :cancel_endpoint        => "/cloud_tenant",
           :open_url               => false,
-         )
+        )
       end
     end
 
@@ -173,7 +173,7 @@ describe DialogLocalService do
           :finish_submit_endpoint => "/host",
           :cancel_endpoint        => "/host",
           :open_url               => false,
-       )
+        )
       end
     end
 
