@@ -45,6 +45,8 @@ describe HostHelper::TextualSummary do
     physical_server
     network_manager
     custom_button_events
+    cloud_networks
+    cloud_subnets
   )
 
   include_examples "textual_group", "Security", %i(users groups patches firewall_rules ssh_root)

@@ -26,7 +26,7 @@ module HostHelper::TextualSummary
       _("Relationships"),
       %i(
         ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history
-        physical_server network_manager custom_button_events
+        physical_server network_manager custom_button_events cloud_networks cloud_subnets
       )
     )
   end
@@ -199,6 +199,18 @@ module HostHelper::TextualSummary
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'network')
     end
     h
+  end
+
+  def textual_cloud_networks
+    return nil unless @record.ext_management_system.respond_to?(:cloud_networks)
+
+    textual_link(@record.cloud_networks)
+  end
+
+  def textual_cloud_subnets
+    return nil unless @record.ext_management_system.respond_to?(:cloud_subnets)
+
+    textual_link(@record.cloud_subnets)
   end
 
   def textual_num_cpu
