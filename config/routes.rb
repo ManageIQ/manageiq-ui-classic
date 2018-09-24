@@ -1105,6 +1105,12 @@ Rails.application.routes.draw do
       )
     },
 
+    :physical_infra_overview => {
+      :get => %w(
+        show
+      )
+    },
+
     :container_dashboard      => {
       :get => %w(
         show

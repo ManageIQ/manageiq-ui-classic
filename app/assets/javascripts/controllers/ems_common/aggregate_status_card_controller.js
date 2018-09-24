@@ -4,13 +4,19 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', 
   var vm = this;
 
   var init = function() {
-    var url = '/' + $scope.providerType + '_dashboard/aggregate_status_data/' + $scope.providerId;
+    var url = '/' + $scope.providerType + '_dashboard/aggregate_status_data/';
+    if ($scope.providerId) {
+      url += $scope.providerId;
+    }
     $http.get(url)
       .then(function(response) {
         var aggStatusData = response.data.data.aggStatus;
 
         vm.status = aggStatusData.status;
         vm.AggStatus = aggStatusData.attrData;
+        vm.showTopBorder = aggStatusData.showTopBorder;
+        vm.aggregateLayout = aggStatusData.aggregateLayout;
+        vm.aggregateClass = aggStatusData.aggregateClass;
       })
       .catch(miqService.handleFailure);
   };
@@ -23,7 +29,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', 
       providerId: '@',
       providerType: '@',
     },
-    templateUrl: function(elem, attr) {
+    templateUrl: function() {
       return '/static/ems_common/aggregate-status-card.html.haml';
     },
   };

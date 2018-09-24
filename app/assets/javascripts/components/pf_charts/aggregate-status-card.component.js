@@ -9,10 +9,17 @@ angular.module( 'patternfly.card' ).component('pfAggregateStatusCard', {
   controller: function() {
     'use strict';
     var vm = this;
-    vm.$onInit = function() {
-      vm.shouldShowTopBorder = (vm.showTopBorder === 'true');
-      vm.isAltLayout = (vm.altLayout === 'true' || vm.layout === 'tall');
-      vm.isMiniLayout = (vm.layout === 'mini');
+    vm.$onChanges = function(changes) {
+      if (changes.showTopBorder) {
+        vm.shouldShowTopBorder = (changes.showTopBorder.currentValue === 'true');
+      }
+      if (changes.altLayout) {
+        vm.isAltLayout = (changes.altLayout.currentValue === 'true');
+      }
+      if (changes.layout) {
+        vm.isAltLayout = (changes.layout.currentValue === 'tall');
+        vm.isMiniLayout = (changes.layout.currentValue === 'mini');
+      }
     };
   },
 });

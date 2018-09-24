@@ -52,7 +52,6 @@ describe('serverHealthPieChartController', function() {
     it('and it loads successfully', function(done) {
       Promise.resolve(
         $controller('serverHealthPieChartController', {
-          providerId: 10000001,
           miqService: miqService,
           chartsMixin: chartsMixin,
           $http: $http

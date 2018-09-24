@@ -27,6 +27,7 @@ module ApplicationHelper::PageLayouts
       monitor_alerts_most_recent
       my_tasks
       ops
+      physical_infra_overview
       physical_infra_topology
       physical_network_port
       pxe
@@ -69,7 +70,7 @@ module ApplicationHelper::PageLayouts
     return false if %w(login authenticate auth_error).include?(controller.action_name)
 
     layout = case @layout
-             when 'container_dashboard', 'dashboard', 'ems_infra_dashboard', 'exception',
+             when 'container_dashboard', 'dashboard', 'ems_infra_dashboard', 'exception', 'physical_infra_overview',
                   'monitor_alerts_list', 'monitor_alerts_most_recent', 'monitor_alerts_overview'
                false
              when 'report'
