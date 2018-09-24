@@ -46,7 +46,7 @@ module ReportController::Reports::Editor
   def miq_report_new
     assert_privileges("miq_report_new")
     @_params.delete :id # incase add button was pressed from report show screen.
-    miq_report_edit
+    miq_report_add_edit
   end
 
   def miq_report_copy
@@ -65,7 +65,7 @@ module ReportController::Reports::Editor
   end
 
   def miq_report_edit
-    assert_privileges("miq_report_edit")
+    assert_privileges(params[:id] || (@edit && @edit[:rpt_id]) ? "miq_report_edit" : "miq_report_new")
     case params[:button]
     when "cancel"
       @edit[:rpt_id] ?
@@ -121,29 +121,30 @@ module ReportController::Reports::Editor
         replace_right_cell
       end
     else
-      add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
-      @in_a_form = true
-      @report = nil     # Clear any saved report object
-      if params[:tab] # Came in to change the tab
-        @rpt = @edit[:rpt_id] ? MiqReport.for_user(current_user).find(@edit[:rpt_id]) :
-            MiqReport.new
-        check_tabs
-      else
-        @sb[:miq_tab] = "edit_1"
-        @rpt = params[:id] && params[:id] != "new" ? MiqReport.for_user(current_user).find(params[:id]) :
-                MiqReport.new
-        if @rpt.rpt_type == "Default"
-          flash_to_session(_('Default reports can not be edited'), :error)
-          redirect_to(:action => "show", :id => @rpt.id)
-          return
-        end
-        set_form_vars
-      end
-      build_edit_screen
-      @changed          = (@edit[:new] != @edit[:current])
-      session[:changed] = @changed
-      replace_right_cell
+      miq_report_add_edit
     end
+  end
+
+  def miq_report_add_edit
+    add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
+    @in_a_form = true
+    @report = nil # Clear any saved report object
+    if params[:tab] # Came in to change the tab
+      @rpt = @edit[:rpt_id] ? MiqReport.for_user(current_user).find(@edit[:rpt_id]) : MiqReport.new
+      check_tabs
+    else
+      @sb[:miq_tab] = "edit_1"
+      @rpt = params[:id] && params[:id] != "new" ? MiqReport.for_user(current_user).find(params[:id]) : MiqReport.new
+      if @rpt.rpt_type == "Default"
+        flash_to_session(_('Default reports can not be edited'), :error)
+        redirect_to(:action => "show", :id => @rpt.id)
+        return
+      end
+      set_form_vars
+    end
+    build_edit_screen
+    session[:changed] = @changed = (@edit[:new] != @edit[:current])
+    replace_right_cell
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
