@@ -41,22 +41,6 @@ module Mixins
       filtered
     end
 
-    # !============================================!
-    # PLEASE PREFER checked_or_params OVER THIS
-    # !============================================!
-    #
-    # Tries to load a single checked item on from params.
-    # If there's none, takes the id sent in params[:id].
-    #
-    # Returns:
-    #   id of the item as a Fixnum
-    #
-    def checked_or_params_id
-      objs = find_checked_items
-      obj = objs.blank? && params[:id].present? ? params[:id] : objs[0]
-      obj
-    end
-
     # Find a record by model and id and test it with RBAC
     #
     # Wrapper for find_records_with_rbac method for case when only a single
