@@ -52,7 +52,7 @@ module PxeController::PxeImageTypes
     else
       # first time in or reset
       add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
-      @pxe_image_type = @record = find_record_with_rbac(PxeImageType, @_params[:id] = checked_or_params_id)
+      @pxe_image_type = @record = find_record_with_rbac(PxeImageType, @_params[:id] = checked_or_params.first)
       pxe_image_type_set_form_vars
       @in_a_form = true
       session[:changed] = false

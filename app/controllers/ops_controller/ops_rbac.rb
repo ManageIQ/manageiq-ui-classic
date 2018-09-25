@@ -585,7 +585,7 @@ module OpsController::OpsRbac
   def rbac_edit_reset(operation, what, klass)
     key = what.to_sym
     if operation != "new"
-      record = find_record_with_rbac(klass, checked_or_params_id)
+      record = find_record_with_rbac(klass, checked_or_params)
       if %i(group role).include?(key) && record && record.read_only && operation != 'copy'
         model, name = if key == :role
                         [_('Role'), record.name]
