@@ -13,10 +13,10 @@ describe TreeBuilderArchived do
                           :text => "<Archived>",
                           :icon => "fa fa-archive",
                           :tip  => "Archived VMs/Templates"},
-                         {:id    => "orph",
-                          :text  => "<Orphaned>",
-                          :image => "svg/currentstate-orphaned.svg",
-                          :tip   => "Orphaned VMs/Templates"}])
+                         {:id   => "orph",
+                          :text => "<Orphaned>",
+                          :icon => "ff ff-orphaned",
+                          :tip  => "Orphaned VMs/Templates"}])
   end
 
   it '#x_get_tree_custom_kids with hidden Infra VMs returns empty Array' do

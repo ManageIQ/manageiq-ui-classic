@@ -38,10 +38,10 @@ describe TreeBuilderImages do
                               :text => "<Archived>",
                               :icon => "fa fa-archive",
                               :tip  => "Archived Images"},
-                             {:id    => "orph",
-                              :text  => "<Orphaned>",
-                              :image => "svg/currentstate-orphaned.svg",
-                              :tip   => "Orphaned Images"}])
+                             {:id   => "orph",
+                              :text => "<Orphaned>",
+                              :icon => "ff ff-orphaned",
+                              :tip  => "Orphaned Images"}])
   end
 
   it 'sets Templates nodes to empty Array if VMs/Templates are hidden' do
