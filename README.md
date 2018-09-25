@@ -1,10 +1,10 @@
 # ManageIQ::UI::Classic
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-ui-classic.svg)](http://badge.fury.io/rb/manageiq-ui-classic)
-[![Build Status](https://travis-ci.org/ManageIQ/manageiq-ui-classic.svg)](https://travis-ci.org/ManageIQ/manageiq-ui-classic)
+[![Build Status](https://travis-ci.org/ManageIQ/manageiq-ui-classic.svg?branch=hammer)](https://travis-ci.org/ManageIQ/manageiq-ui-classic)
 [![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic.svg)](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic)
 [![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic/coverage)
-[![Security](https://hakiri.io/github/ManageIQ/manageiq-ui-classic/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-ui-classic/master)
+[![Security](https://hakiri.io/github/ManageIQ/manageiq-ui-classic/hammer.svg)](https://hakiri.io/github/ManageIQ/manageiq-ui-classic/hammer)
 [![Scrutinizer](https://scrutinizer-ci.com/g/ManageIQ/manageiq-ui-classic/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ManageIQ/manageiq-ui-classic/?branch=master)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq/ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
