@@ -32,22 +32,6 @@ module Mixins
     # Params:
     #   klass - class of accessed objects
     # Returns:
-    #   array of checked items. If user does not have rigts for it,
-    #   raises exception
-    def find_checked_ids_with_rbac(klass, prefix = nil)
-      items = find_checked_items(prefix)
-      assert_rbac(klass, items)
-      items
-    end
-
-    # !============================================!
-    # PLEASE PREFER find_records_with_rbac OVER THIS
-    # !============================================!
-    #
-    # Test RBAC on every item checked
-    # Params:
-    #   klass - class of accessed objects
-    # Returns:
     #   array of records. If user does not have rigts for it,
     #   raises exception
     def find_checked_records_with_rbac(klass, ids = nil)
@@ -55,27 +39,6 @@ module Mixins
       filtered = Rbac.filtered(klass.where(:id => ids))
       raise _("Can't access selected records") unless ids.length == filtered.length
       filtered
-    end
-
-    # !============================================!
-    # PLEASE PREFER find_records_with_rbac OVER THIS
-    # !============================================!
-    #
-    # Test RBAC in case there is only one record
-    # Params:
-    #   klass - class of accessed object
-    #   id    - accessed object id
-    # Returns:
-    #   id of checked item. If user does not have rights for it,
-    #   raises an exception
-    def find_id_with_rbac(klass, id)
-      assert_rbac(klass, Array.wrap(id))
-      id
-    end
-
-    def find_id_with_rbac_no_exception(klass, id)
-      record = Rbac.filtered(klass.where(:id => id))
-      record.present? ? id : nil
     end
 
     # !============================================!
