@@ -1,6 +1,6 @@
 module TreeNode
   class AssignedServerRole < Node
-    set_attributes(:text, :image, :klass) do
+    set_attributes(:text, :icon, :icon_background, :klass) do
       text = ViewHelper.content_tag(:strong) do
         if @options[:tree] == :servers_by_role_tree
           "#{_('Server')}: #{@object.name} [#{@object.id}]"
@@ -20,14 +20,14 @@ module TreeNode
                    end
       end
       if @object.active? && @object.miq_server.started?
-        image = 'svg/currentstate-on.svg'
+        state = QuadiconHelper.machine_state('on')
         text += _(" (%{priority}active, PID=%{number})") % {:priority => priority, :number => @object.miq_server.pid}
       else
         if @object.miq_server.started?
-          image = 'svg/currentstate-suspended.svg'
+          state = QuadiconHelper.machine_state('suspended')
           text += _(" (%{priority}available, PID=%{number})") % {:priority => priority, :number => @object.miq_server.pid}
         else
-          image = 'svg/currentstate-off.svg'
+          state = QuadiconHelper.machine_state('off')
           text += _(" (%{priority}unavailable)") % {:priority => priority}
         end
         klass = "red" if @object.priority == 1
@@ -36,7 +36,9 @@ module TreeNode
         klass = "opacity"
       end
 
-      [text, image, klass]
+      icon, bg = state.values_at(:fonticon, :background)
+
+      [text, icon, bg, klass]
     end
   end
 end
