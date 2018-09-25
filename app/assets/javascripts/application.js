@@ -1,11 +1,6 @@
 //= require ./miq_global
 //= require ./jquery_overrides
 //= require ./i18n
-//= require patternfly
-//= require bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists
-//= require bower_components/angular-patternfly/dist/angular-patternfly
-//= require bower_components/angular-bootstrap/ui-bootstrap
-//= require bower_components/angular-bootstrap/ui-bootstrap-tpls
 //= require ./cable
 //= require ./gettextCatalog
 //= require ./miq_api
@@ -15,8 +10,6 @@
 //= require_tree ./directives/
 //= require_tree ./components/
 //= require_tree ./services/
-//= require bower_components/d3/d3
-//= require bower_components/c3/c3
 //= require kubernetes-topology-graph/dist/topology-graph
 //= require ./miq_browser_detect
 //= require ./miq_application
@@ -27,13 +20,6 @@
 //= require ./automate_import_export
 //= require ./dialog_field_refresh
 //= require ./miq_c3_config
-//= require bower_components/bootstrap/dist/js/bootstrap
-//= require bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker
-//= require bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
-//= require bower_components/bootstrap-select/js/bootstrap-select
-//= require bootstrap-switch/dist/js/bootstrap-switch
-//= require bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin
-//= require angular-bootstrap-switch/dist/angular-bootstrap-switch
 //= require ./miq_ujs_bindings
 //= require ./miq_tree
 //= require codemirror/lib/codemirror

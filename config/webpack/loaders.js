@@ -7,6 +7,9 @@ const babelrc = require('../../.babelrc.js');
 let base = {};
 if (env.WEBPACK_EXCLUDE_NODE_MODULES) {
   base.exclude = /node_modules/;
+} else {
+  // FIXME: won't be needed with d3 4+
+  base.exclude = /node_modules\/d3/;
 }
 
 module.exports = [
@@ -19,6 +22,15 @@ module.exports = [
       }),
     }],
   }),
+
+  {
+    test: require.resolve('bootstrap-datepicker'),
+    use: 'imports-loader?exports=>undefined,define=>undefined',
+  },
+  {
+    test: require.resolve('bootstrap-select'),
+    use: 'imports-loader?module=>undefined,define=>undefined,this=>window',
+  },
 
   {
     test: /\.(ts|tsx)$/,
