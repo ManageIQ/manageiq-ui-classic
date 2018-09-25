@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 95 ending 2018-09-24
+
+### Added
+- Queue operations for pglogical replication set-up [(#4628)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4628)
+- Allow nesting physical chassis [(#4594)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4594)
+- Showing Location LED state for physical chassis [(#4535)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4535)
+- Add sysprep support for ovirt [(#4211)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4211)
+- Add links to networks and subnets for infra nodes [(#4003)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4003)
+
+### Fixed
+- Fix the view details link on notifications that were retrieved via API [(#4692)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4692)
+- Fix adding a new Service Catalog Item [(#4681)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4681)
+- Use fa-archive as an icon indicating archived machine state [(#4678)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4678)
+- Fixed to show 0 Provider in aggregate status card [(#4675)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4675)
+- Display Provider dropdown while creating Orchestration Catalog Item [(#4668)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4668)
+- Add React textual summary for PXE images [(#4662)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4662)
+- Fixed some inconsistencies on provider dashboards. [(#4659)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4659)
+- Do not show tooltip on listicons in GTLs when they're not clickable [(#4653)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4653)
+- Don't use string math in right cell text [(#4652)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4652)
+- Do not invoke view details callback on notifications without links [(#4651)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4651)
+- Make filters saved in Templates & Images screen displayed in accordion [(#4649)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4649)
+- Fixing Physical Network Port page [(#4647)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4647)
+- Enable selectpicker on all dropdowns when editing a custom button [(#4646)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4646)
+- Fix applying filter from Advanced Search in My Services [(#4645)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4645)
+- Fix ems_cloud description textual summary [(#4638)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4638)
+- Worker Settings: save memory threshold as an integer [(#4633)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4633)
+- Custom Buttons with expressions are only visible on summary screen [(#4629)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4629)
+- Fix toolbar buttons for Hosts displayed thru Host Aggregate's details page [(#4603)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4603)
+
 ## Unreleased as of Sprint 94 ending 2018-09-10
 
 ### Added
