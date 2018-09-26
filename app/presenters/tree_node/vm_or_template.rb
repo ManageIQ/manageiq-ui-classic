@@ -1,6 +1,8 @@
 module TreeNode
   class VmOrTemplate < Node
-    set_attribute(:icon) { QuadiconHelper.machine_state(@object.normalized_state)[:fonticon] }
+    set_attributes(:icon, :icon_background) do
+      QuadiconHelper.machine_state(@object.normalized_state).values_at(:fonticon, :background)
+    end
 
     set_attribute(:tooltip) do
       unless @object.template?

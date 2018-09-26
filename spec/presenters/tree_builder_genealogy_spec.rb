@@ -35,9 +35,10 @@ describe TreeBuilderGenealogy do
 
   describe '#root_options' do
     it 'sets root to empty one' do
-      expect(subject.send(:root_options)).to eq(:text    => record.name,
-                                                :tooltip => "VM: %{name} (Click to view)" % {:name => record.name},
-                                                :image   => "svg/currentstate-#{record.current_state.downcase}.svg")
+      expect(subject.send(:root_options)).to eq(:text           => record.name,
+                                                :tooltip        => "VM: %{name} (Click to view)" % {:name => record.name},
+                                                :icon           => QuadiconHelper.machine_state(record.normalized_state)[:fonticon],
+                                                :iconBackground => QuadiconHelper.machine_state(record.normalized_state)[:background])
     end
   end
 
