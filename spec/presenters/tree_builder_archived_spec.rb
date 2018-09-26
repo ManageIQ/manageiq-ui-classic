@@ -9,14 +9,16 @@ describe TreeBuilderArchived do
 
   it '#x_get_tree_arch_orph_nodes' do
     nodes = archived.x_get_tree_arch_orph_nodes('VMs/Templates')
-    expect(nodes).to eq([{:id   => "arch",
-                          :text => "<Archived>",
-                          :icon => "fa fa-archive",
-                          :tip  => "Archived VMs/Templates"},
-                         {:id   => "orph",
-                          :text => "<Orphaned>",
-                          :icon => "ff ff-orphaned",
-                          :tip  => "Orphaned VMs/Templates"}])
+    expect(nodes).to eq([{:id              => "arch",
+                          :text            => "<Archived>",
+                          :icon            => "fa fa-archive",
+                          :icon_background => "#336699",
+                          :tip             => "Archived VMs/Templates"},
+                         {:id              => "orph",
+                          :text            => "<Orphaned>",
+                          :icon            => "ff ff-orphaned",
+                          :icon_background => "#336699",
+                          :tip             => "Orphaned VMs/Templates"}])
   end
 
   it '#x_get_tree_custom_kids with hidden Infra VMs returns empty Array' do
