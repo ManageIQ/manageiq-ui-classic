@@ -35,13 +35,8 @@ class TreeBuilderGenealogy < TreeBuilder
   end
 
   def vm_icon_image(vm)
-    if vm.template?
-      {:icon => "pficon pficon-template"}
-    elsif vm.retired
-      {:image => 'svg/currentstate-retired.svg'}
-    else
-      {:image => "svg/currentstate-#{vm.current_state.downcase}.svg"}
-    end
+    state = QuadiconHelper.machine_state(vm.normalized_state)
+    {:icon => state[:fonticon], :iconBackground => state[:background]}
   end
 
   def root_options

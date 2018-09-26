@@ -22,6 +22,10 @@ module TreeNode
       @object.try(:decorate).try(:fonticon)
     end
 
+    def icon_background
+      nil
+    end
+
     def klass
       nil
     end
@@ -73,17 +77,18 @@ module TreeNode
 
     def to_h
       node = {
-        :key          => key,
-        :text         => escape(text),
-        :tooltip      => escape(tooltip),
-        :icon         => icon,
-        :iconColor    => color,
-        :expand       => expand,
-        :hideCheckbox => hide_checkbox ? hide_checkbox : nil,
-        :addClass     => klass,
-        :selectable   => selectable,
-        :select       => selected,
-        :checkable    => checkable ? nil : false,
+        :key            => key,
+        :text           => escape(text),
+        :tooltip        => escape(tooltip),
+        :icon           => icon,
+        :iconBackground => icon_background,
+        :iconColor      => color,
+        :expand         => expand,
+        :hideCheckbox   => hide_checkbox ? hide_checkbox : nil,
+        :addClass       => klass,
+        :selectable     => selectable,
+        :select         => selected,
+        :checkable      => checkable ? nil : false,
       }
 
       node[:image] = if !image
