@@ -18,4 +18,3 @@ build:
           -
             command: rubocop-run
             use_website_config: false
-          - js-scrutinizer-run
