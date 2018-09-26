@@ -288,12 +288,13 @@ const storeUserCustomEvents = (userId, customEvents) => ({
   customEvents,
 });
 
-const loadUserCustomEvents = userid => dispatch => 
+const loadUserCustomEvents = userid => dispatch =>
   API.get(endpoints.getUserCustomButtons(userid))
-    .then(({ resources }) => dispatch(storeUserCustomEvents(userid, resources)))
+    .then(({ resources }) => dispatch(storeUserCustomEvents(userid, resources)));
 
 export const fetchCustomEventsIfNeeded = userid => (dispatch, getState) => {
   const { usersReducer: { userCustomEvents } } = getState();
   if (!userCustomEvents[userid]) return dispatch(loadUserCustomEvents(userid));
   return Promise.resolve();
-}
+};
+

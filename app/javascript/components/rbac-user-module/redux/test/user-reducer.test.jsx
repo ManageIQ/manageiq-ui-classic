@@ -29,6 +29,7 @@ describe('Users reducer', () => {
       isValid: true,
       flashMessages: [],
       columns,
+      userCustomEvents: {},
     });
   });
 

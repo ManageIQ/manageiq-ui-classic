@@ -23,6 +23,40 @@ exports[`User detail component should render user with tags 1`] = `
       }
     }
   />
+  <div
+    className="form-horizontal rbac-user-preview"
+  >
+    <Grid
+      bsClass="container"
+      componentClass="div"
+      fluid={true}
+    >
+      <Row
+        bsClass="row"
+        componentClass="div"
+      >
+        <FormGroup
+          bsClass="form-group"
+        >
+          <Col
+            bsClass="col"
+            className="control-label"
+            componentClass="label"
+            md={2}
+          >
+            Custom button events
+          </Col>
+          <Col
+            bsClass="col"
+            componentClass="div"
+            md={8}
+          >
+            None
+          </Col>
+        </FormGroup>
+      </Row>
+    </Grid>
+  </div>
   <hr />
   <RbacUserTagsList
     tags={Array []}

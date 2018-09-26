@@ -3,14 +3,15 @@ import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import configureStore from 'redux-mock-store';
 import fetchMock from 'fetch-mock';
+import thunk from 'redux-thunk';
 import UsersDetail from '../user-detail';
 
 describe('User detail component', () => {
-  const mockStore = configureStore();
+  const mockStore = configureStore([thunk]);
   let store;
   let initialProps;
   beforeEach(() => {
-    store = mockStore({ usersReducer: { rows: [{ id: '1', name: 'foo', userid: 'admin' }] } });
+    store = mockStore({ usersReducer: { userCustomEvents: { 1: [] }, rows: [{ id: '1', name: 'foo', userid: 'admin' }] } });
     initialProps = {
       match: {
         params: {
