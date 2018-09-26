@@ -262,7 +262,7 @@ module ApplicationController::CiProcessing
       add_flash(message % {:task => display_name}, :error)
       return
     end
-    process_objects(items.ids, method, display_name)
+    process_objects(items.ids.sort, method, display_name)
   end
 
   def get_rec_cls
