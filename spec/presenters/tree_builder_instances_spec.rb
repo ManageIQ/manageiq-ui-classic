@@ -44,10 +44,10 @@ describe TreeBuilderInstances do
                               :text => "<Archived>",
                               :icon => "fa fa-archive",
                               :tip  => "Archived Instances"},
-                             {:id    => "orph",
-                              :text  => "<Orphaned>",
-                              :image => "svg/currentstate-orphaned.svg",
-                              :tip   => "Orphaned Instances"}])
+                             {:id   => "orph",
+                              :text => "<Orphaned>",
+                              :icon => "ff ff-orphaned",
+                              :tip  => "Orphaned Instances"}])
   end
 
   it 'sets availability zones correctly if vms are hidden' do
