@@ -40,6 +40,7 @@ describe('dialogUserController', function() {
       resourceActionId: '789',
       targetId: '987',
       targetType: 'targettype',
+      openUrl: false,
     });
   }));
 
@@ -119,6 +120,7 @@ describe('dialogUserController', function() {
           targetId: '987',
           targetType: 'targettype',
           saveable: true,
+          openUrl: false,
         });
 
         $controller.setDialogData({data: {field1: 'field1'}, validations: { isValid : true}});
@@ -152,6 +154,7 @@ describe('dialogUserController', function() {
           targetId: '987',
           targetType: 'targettype',
           saveable: true,
+          openUrl: false,
         });
 
         $controller.setDialogData({data: {field1: 'field1'}, validations: { isValid : true}});
@@ -200,7 +203,7 @@ describe('dialogUserController', function() {
         $controller.submitButtonClicked();
         setTimeout(function() {
           expect(miqService.redirectBack).toHaveBeenCalledWith(
-            'Order Request was Submitted', 'info', 'finish submit endpoint'
+            'Order Request was Submitted', 'success', 'finish submit endpoint'
           );
           done();
         });
