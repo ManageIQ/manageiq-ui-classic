@@ -285,7 +285,7 @@ module OpsController::Diagnostics
       :log_openstack_region => depot.try(:openstack_region),
       :keystone_api_version => depot.try(:keystone_api_version),
       :v3_domain_ident      => depot.try(:v3_domain_ident),
-      :swift_api_port       => port ? port : '',
+      :swift_api_port       => port ? port : 5000,
       :security_protocol    => depot.try(:security_protocol)
     }
   end

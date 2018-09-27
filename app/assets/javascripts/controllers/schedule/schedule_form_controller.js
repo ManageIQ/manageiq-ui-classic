@@ -9,7 +9,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       openstack_region: '',
       keystone_api_version: '',
       v3_domain_ident: '',
-      swift_api_port: '',
+      swift_api_port: 5000,
       security_protocol: '',
       log_protocol: '',
       description: '',

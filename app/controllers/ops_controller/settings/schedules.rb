@@ -174,7 +174,7 @@ module OpsController::Settings::Schedules
       :openstack_region     => openstack_region ? openstack_region : "",
       :keystone_api_version => keystone_api_version,
       :v3_domain_ident      => v3_domain_ident ? v3_domain_ident : "",
-      :swift_api_port       => swift_api_port ? swift_api_port : "",
+      :swift_api_port       => swift_api_port ? swift_api_port : 5000,
       :security_protocol    => security_protocol ? security_protocol : ""
     }
 

@@ -14,7 +14,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       openstack_region: '',
       keystone_api_version: '',
       v3_domain_ident: '',
-      swift_api_port: '',
+      swift_api_port: 5000,
       security_protocol: '',
     };
     vm.afterGet = true;
@@ -44,7 +44,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       vm.diagnosticsDatabaseModel.openstack_region = '';
       vm.diagnosticsDatabaseModel.keystone_api_version = '';
       vm.diagnosticsDatabaseModel.v3_domain_ident = '';
-      vm.diagnosticsDatabaseModel.swift_api_port = '';
+      vm.diagnosticsDatabaseModel.swift_api_port = 5000;
       vm.diagnosticsDatabaseModel.security_protocol = '';
       return;
     }
@@ -108,23 +108,22 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       (vm.diagnosticsDatabaseModel.log_aws_region === '' || typeof vm.diagnosticsDatabaseModel.log_aws_region === 'undefined'));
   };
 
-  vm.keystoneApiSelect = function() {
-    return vm.diagnosticsDatabaseModel.log_protocol === "OpenStack Swift";
-  };
-
-  vm.keystoneApiRequired = function() {
-    return (vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift' &&
-      (vm.diagnosticsDatabaseModel.keystone_api_version === '' || typeof vm.diagnosticsDatabaseModel.keystone_api_version === 'undefined'));
-  };
-
   vm.securityProtocolSelect = function() {
     return vm.diagnosticsDatabaseModel.log_protocol === "OpenStack Swift";
   };
 
-  vm.securityProtocolRequired = function() {
-    return (vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift' &&
-      (vm.diagnosticsDatabaseModel.security_protocol === '' || typeof vm.diagnosticsDatabaseModel.security_protocol === 'undefined'));
+  vm.swiftSecurityProtocolSelect = function() {
+    return vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift';
   };
+
+  vm.swiftSecurityProtocolRequired = function() {
+    return (miqDBBackupService.swiftBackup(vm.diagnosticsDatabaseModel) &&
+      (vm.diagnosticsDatabaseModel.security_protocol === null || vm.diagnosticsDatabaseModel.security_protocol === '' || typeof vm.diagnosticsDatabaseModel.security_protocol === 'undefined'));
+  }
+
+  vm.swiftRequired = function(value) {
+    return miqDBBackupService.swiftBackup(vm.diagnosticsDatabaseModel) && ! value;
+  }
 
   vm.credsProtocol = function() {
     return miqDBBackupService.credsProtocol(vm.diagnosticsDatabaseModel);

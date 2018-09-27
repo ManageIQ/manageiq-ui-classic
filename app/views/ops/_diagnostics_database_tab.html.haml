@@ -88,8 +88,7 @@
                               :ng_model_uri_prefix => "vm.diagnosticsDatabaseModel.uri_prefix",
                               :uri_prefix_display  =>  "{{vm.diagnosticsDatabaseModel.uri_prefix}}://"}
 
-  / %apiversion{'ng-if' => 'vm.swiftSecurityProtocolSelect()'}
-  %apiversion{'ng-if' => true}
+  %apiversion{'ng-if' => 'vm.swiftSecurityProtocolSelect()'}
     .form-group{"ng-class" => "{'has-error': angularForm.keystone_api_version.$invalid}"}
       %label.col-md-2.control-label
         = _("API Version")
@@ -126,6 +125,29 @@
                      "selectpicker-for-select-tag" => "")
         %span.help-block{"ng-show" => "angularForm.security_protocol.$invalid"}
           = _("Required")
+  %apiport{"ng-if" => 'vm.swiftSecurityProtocolSelect()'}
+    .form-group{"ng-class" => "{'has-error': angularForm.swift_api_port.$invalid}"}
+      %label.col-md-2.control-label{"for" => "swift_api_port"}
+        = _('API Port')
+      .col-md-2
+        %input.form-control{"type"                        => "text",
+                                  "id"                          => "swift_api_port",
+                                  "name"                        => "swift_api_port",
+                                  "ng-show"                     => "vm.credsProtocol()",
+                                  "ng-model"                    => "diagnosticsDatabaseModel.swift_api_port",
+                                  "maxlength"                   => 15,
+                                  "ng-required"                 => true,
+                                  "checkchange"                 => "",
+                                  "ng-trim"                     => false,
+                                  "detect-spaces"               => "",
+                                  "pattern"                     => "^[1-9]\\d*$"}
+        %span.help-block{"ng-show" => "angularForm.swift_api_port.$error.pattern"}
+          = _("Must be a number (greater than 0)")
+        %span.help-block{"ng-show" => "angularForm.swift_api_port.$error.required"}
+          = _("Required")
+        %span.help-block{"ng-show" => "angularForm.swift_api_port.$error.detectedSpaces"}
+          = _("Spaces are prohibited")
+
   %auth-credentials{'ng-if'                => 'vm.credsProtocol()',
                     'form-model'           => 'vm.diagnosticsDatabaseModel',
                     'model-copy'           => 'vm.modelCopy',
