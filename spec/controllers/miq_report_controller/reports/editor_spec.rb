@@ -118,10 +118,9 @@ describe ReportController do
     end
 
     context "#miq_report_edit" do
-      let(:user) { stub_user(:features => :all) }
-      before { user.save! }
-
       it "should build tabs with correct tab id after reset button is pressed to prevent error when changing tabs" do
+        user = stub_user(:features => :all)
+        user.save!
         ApplicationController.handle_exceptions = true
 
         rep = FactoryGirl.create(
@@ -160,6 +159,45 @@ describe ReportController do
         expect(assigns(:sb)[:miq_tab]).to eq("edit_1")
         expect(assigns(:tabs)).to include(["edit_1", "Columns"])
         expect(assigns(:active_tab)).to eq("edit_1")
+      end
+
+      it "should allow user with miq_report_edit access to edit a report" do
+        user = FactoryGirl.create(:user, :features => %w(miq_report_edit))
+        login_as user
+        EvmSpecHelper.seed_specific_product_features(%w(miq_report_edit))
+        ApplicationController.handle_exceptions = true
+
+        rep = FactoryGirl.create(
+          :miq_report,
+          :rpt_type   => "Custom",
+          :miq_group  => user.current_group,
+          :db         => "Host",
+          :name       => 'name',
+          :title      => 'title',
+          :db_options => {},
+          :col_order  => ["name"],
+          :headers    => ["Name"],
+          :tz         => nil
+        )
+        allow(controller).to receive(:load_edit).and_return(true)
+        allow(controller).to receive(:replace_right_cell)
+        controller.instance_variable_set(:@sb, {})
+        controller.instance_variable_set(:@_params, :id => rep.id)
+        controller.send(:miq_report_edit)
+        expect(response.status).to eq(200)
+      end
+
+      it "should allow user with miq_report_new access to add a new report" do
+        login_as FactoryGirl.create(:user, :features => %w(miq_report_new))
+        EvmSpecHelper.seed_specific_product_features(%w(miq_report_new))
+        ApplicationController.handle_exceptions = true
+
+        allow(controller).to receive(:load_edit).and_return(true)
+        allow(controller).to receive(:replace_right_cell)
+        controller.instance_variable_set(:@sb, {})
+        controller.instance_variable_set(:@_params, :pressed => 'miq_report_new')
+        controller.send(:miq_report_edit)
+        expect(response.status).to eq(200)
       end
     end
 
