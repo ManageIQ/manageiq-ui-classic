@@ -793,6 +793,11 @@ module ApplicationController::MiqRequestMethods
         end
         @options[:wf] = options[:wf]
       end
+    elsif @miq_request.resource_type == 'ServiceRetireRequest'
+      @view, @pages = nil
+      if (service_id = @miq_request.options[:src_ids].first) && (service = Service.find_by(:id => service_id)) && Rbac.filtered_object(service)
+        @view, @pages = get_view(Vm, :parent => service, :view_suffix => 'OrchestrationStackRetireRequest')
+      end
     else
       @options = @miq_request.options
       @options[:memory], @options[:mem_typ] = reconfigure_calculations(@options[:vm_memory][0]) if @options[:vm_memory]
