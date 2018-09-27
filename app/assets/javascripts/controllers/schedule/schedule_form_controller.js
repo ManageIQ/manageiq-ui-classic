@@ -398,9 +398,12 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return $scope.scheduleModel.log_protocol === 'AWS S3';
   };
 
+  $scope.undefinedScheduleField = function(value)
+    return (value === '' || typeof value === 'undefined');
+  };
+
   $scope.regionRequired = function() {
-    return ($scope.s3Backup() &&
-      ($scope.scheduleModel.log_aws_region === '' || typeof $scope.scheduleModel.log_aws_region === 'undefined'));
+    return ($scope.s3Backup() && $scope.undefinedScheduleField($scope.scheduleModel.log_aws_region))
   };
 
   $scope.swiftSecurityProtocolSelect = function() {
@@ -408,8 +411,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.swiftSecurityProtocolRequired = function() {
-    return ($scope.swiftBackup() &&
-      ($scope.scheduleModel.security_protocol === '' || typeof $scope.scheduleModel.security_protocol === 'undefined'));
+    return ($scope.swiftBackup() && $scope.undefinedScheduleField($scope.scheduleModel.security_protocol))
   };
 
   $scope.s3Required = function(value) {
