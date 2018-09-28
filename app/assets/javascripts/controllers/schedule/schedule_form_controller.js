@@ -398,7 +398,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return $scope.scheduleModel.log_protocol === 'AWS S3';
   };
 
-  $scope.undefinedScheduleField = function(value)
+  $scope.undefinedScheduleField = function(value) {
     return (value === '' || typeof value === 'undefined');
   };
 
