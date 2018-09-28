@@ -200,7 +200,7 @@ describe OpsController do
     end
 
     describe "#pglogical_save_subscriptions" do
-      before { allow(controller).to receive(:initiate_wait_for_task) }
+      before { allow(controller).to receive(:javascript_flash) }
 
       context "remote" do
         let(:to_exlude) { "---\n- vmdb_databases\n- vmdb_indexes" }
