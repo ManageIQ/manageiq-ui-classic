@@ -79,11 +79,11 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
               return $http.post("open_url_after_dialog", {targetId: vm.targetId})
                 .then(function(response) {
                   window.open(response.data.open_url);
-                  miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
+                  miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
                 });
             });
         } else {
-          miqService.redirectBack(__('Order Request was Submitted'), 'info', finishSubmitEndpoint);
+          miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
         }
     }).catch(function(err) {
       return Promise.reject(dialogUserSubmitErrorHandlerService.handleError(err));

@@ -203,7 +203,7 @@ describe('dialogUserController', function() {
         $controller.submitButtonClicked();
         setTimeout(function() {
           expect(miqService.redirectBack).toHaveBeenCalledWith(
-            'Order Request was Submitted', 'info', 'finish submit endpoint'
+            'Order Request was Submitted', 'success', 'finish submit endpoint'
           );
           done();
         });
