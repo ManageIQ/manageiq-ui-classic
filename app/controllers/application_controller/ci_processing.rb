@@ -679,7 +679,9 @@ module ApplicationController::CiProcessing
   def action_to_feature(action)
     feature_aliases = {
       "scan" => :smartstate_analysis,
-      "retire_now" => :retire }
+      "retire_now" => :retire,
+      "vm_destroy" => :terminate
+    }
     feature_aliases[action] || action.to_sym
   end
 
