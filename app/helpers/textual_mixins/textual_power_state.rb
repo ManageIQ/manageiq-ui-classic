@@ -12,6 +12,6 @@ module TextualMixins::TextualPowerState
   end
 
   def textual_power_state_whitelisted_with_template
-    textual_power_state_whitelisted(@record.template? ? 'template' : @record.current_state)
+    textual_power_state_whitelisted(@record.normalized_state)
   end
 end
