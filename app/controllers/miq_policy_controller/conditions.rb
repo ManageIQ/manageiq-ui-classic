@@ -40,7 +40,6 @@ module MiqPolicyController::Conditions
       condition = adding ? Condition.new : Condition.find(@condition.id)  # Get new or existing record
       condition.description = @edit[:new][:description]
       condition.notes = @edit[:new][:notes]
-      condition.modifier = @edit[:new][:modifier]
       condition.towhat = @edit[:new][:towhat] if adding # Set the proper model if adding a record
       exp_remove_tokens(@edit[:new][:expression])
       condition.expression = MiqExpression.new(@edit[:new][:expression])
@@ -173,7 +172,6 @@ module MiqPolicyController::Conditions
     @edit[:condition_id] = @condition.id
     @edit[:new][:description] = @condition.description
     @edit[:new][:notes] = @condition.notes
-    @edit[:new][:modifier] = @condition.modifier.nil? ? "allow" : @condition.modifier
 
     @edit[:new][:expression] = @condition.expression.kind_of?(MiqExpression) ? @condition.expression.exp : nil
     @edit[:new][:applies_to_exp] = @condition.applies_to_exp.kind_of?(MiqExpression) ? @condition.applies_to_exp.exp : nil
