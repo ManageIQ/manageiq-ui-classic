@@ -383,7 +383,6 @@
   %hr
 
   - if supports_reconfigure_cdroms?
-    %hr
     %div
       %h3
         = _('CD/DVD Drives')
@@ -429,7 +428,7 @@
                                                      "ng-if"    => "cdRom.connect_disconnect == 'disconnect'",
                                                      "ng-click" => "vm.cancelCDRomConnectDisconnect(cdRom)"}= _('Cancel Disconnect')
 
-  %hr
+    %hr
 
 
   %table{:width => "100%", :align => "bottom"}
