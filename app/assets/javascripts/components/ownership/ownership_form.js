@@ -55,17 +55,17 @@ ManageIQ.angular.app.component('ownershipForm', {
               ($scope.angularForm.group && $scope.angularForm.group.$valid);
       };
 
-      vm.cancelClicked = function() {
+      vm.cancelClicked = $scope.cancelClicked = function() {
         ownershipEditButtonClicked('cancel');
       };
 
-      vm.resetClicked = function(angularForm) {
+      vm.resetClicked = $scope.resetClicked = function(angularForm) {
         vm.ownershipModel = angular.copy( vm.modelCopy );
-        angularForm.$setPristine(true);
+        $scope.angularForm.$setPristine(true);
         miqService.miqFlash("warn", __("All changes have been reset"));
       };
 
-      vm.saveClicked = function() {
+      vm.saveClicked = $scope.saveClicked = function() {
         ownershipEditButtonClicked('save', true);
       };
   }],

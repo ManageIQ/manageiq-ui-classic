@@ -11,13 +11,16 @@
   - options_group =  [["<#{_('No User Group')}>", user_group]]
 - options_group += @groups.sort
 
-- if @origin_ownership_items.count != @ownershipitems.count
-  %strong
-  = _('Note: Some items might be hidden due to the possibility of an ownership change')
-
 %ownership-form{'record-ids'    => @ownershipitems.collect(&:id),
                 'options-user'  => options_user,
                 'options-group' => options_group}
+%hr
+  %h3
+    = _('Affected Items')
+
+- if @origin_ownership_items.count != @ownershipitems.count
+  %strong
+  = _('Note: Some items might be hidden due to the possibility of an ownership change')
 
 - if @ownershipitems
   - @embedded = true
