@@ -566,6 +566,10 @@ table.table td:not(.table-view-pf-select) {
   word-break: break-all;
 }
 
+table.table td .bootstrap-switch {
+  word-break: keep-all;
+}
+
 #gtl_div table.table td {
   // Enable word wrapping
   word-break: normal !important;
