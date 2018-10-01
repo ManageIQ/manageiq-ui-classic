@@ -935,75 +935,76 @@ module ApplicationController::Compare
 
   def drift_record_data_cols(view, section, record)
     row = {}
-    basval = "" # Init base value
+    last_value = false # Init base value
     match = 0
     view.ids.each_with_index do |id, idx| # Go thru all of the objects
-      val = view.results[id][section[:name]].include?(record) ? "Found" : "Missing" # Get the value for current object
+      value_found = view.results[id][section[:name]].include?(record) # Get the value for current object
       match = view.results[id][section[:name]][record][:_match_] if view.results[id][section[:name]][record]
       if idx.zero? # On the base?
-        row.merge!(drift_add_same_image(idx, val))
+        row.merge!(drift_add_same_image(idx, value_found))
       elsif @compressed # Compressed, just check if it matches base
-        row.merge!(drift_record_compressed(idx, match, val, basval))
+        row.merge!(drift_record_compressed(idx, match, value_found, last_value))
       else
-        row.merge!(drift_record_expanded(idx, match, val, basval))
+        row.merge!(drift_record_expanded(idx, match, value_found, last_value))
       end
-      basval = val # Save this record's val as the new base val
+      last_value = value_found # Save this record's val as the new base val
     end
     row
   end
 
-  def drift_record_compressed(idx, match, val, basval)
-    if val != basval || match != 100
+  def drift_record_compressed(idx, match, value_found, last_value)
+    if value_found != last_value || match != 100
       @same = false
     end
-    drift_add_diff_image(idx, val)
+    text = value_found ? _("Found") : _("Missing")
+    drift_add_diff_image(idx, text)
   end
 
-  def drift_record_expanded(idx, match, val, basval)
+  def drift_record_expanded(idx, match, value_found, last_value)
     if !@exists_mode
-      drift_record_nonexistmode(idx, match, val, basval)
+      drift_record_nonexistmode(idx, match, value_found, last_value)
     else
-      drift_record_existmode(idx, val, basval)
+      drift_record_existmode(idx, value_found, last_value)
     end
   end
 
-  def drift_record_nonexistmode(idx, match, val, basval)
-    if val == "Found"                                             # This object has the record
-      if basval == "Found" && match == 100
-        drift_add_same_image(idx, val)
+  def drift_record_nonexistmode(idx, match, value_found, last_value)
+    text = value_found ? _("Found") : _("Missing")
+    if value_found # This object has the record
+      if last_value && match == 100
+        drift_add_same_image(idx, text)
       else                                                        # Base doesn't have the record
         @same = false
-        drift_add_diff_image(idx, val)
+        drift_add_diff_image(idx, text)
       end
-    else                                                          # Record is missing from this object
-      if basval == "Found"                                        # Base has the record, no match
+    elsif last_value # Record is missing from this object. Base has the record, no match
         @same = false
-        drift_add_diff_image(idx, val)
-      else
-        img_src = "fa fa-plus" # Base doesn't have the record, match
-        img_bkg = ""
-        drift_add_image_col(idx, img_src, img_bkg, val)
-      end
+        drift_add_diff_image(idx, text)
+    else
+      img_src = "fa fa-plus" # Base doesn't have the record, match
+      img_bkg = ""
+      drift_add_image_col(idx, img_src, img_bkg, text)
     end
   end
 
-  def drift_record_existmode(idx, val, basval)
-    if val == "Found"                                             # This object has the record
-      if basval == "Found"                                        # Base has the record
+  def drift_record_existmode(idx, value_found, last_value)
+    text = value_found ? _("Found") : _("Missing")
+    if value_found # This object has the record
+      if last_value # Base has the record
         img_bkg = ''
       else                                                        # Base doesn't have the record
         @same = false
         img_bkg = 'orange'
       end
-      drift_add_image_col(idx, 'fa fa-plus', img_bkg, val)
+      drift_add_image_col(idx, 'fa fa-plus', img_bkg, text)
     else                                                          # Record is missing from this object
-      if basval == "Found"                                        # Base has the record, no match
+      if last_value # Base has the record, no match
         @same = false
         img_bkg = 'orange'
       else                                                        # Base doesn't have the record, match
         img_bkg = ''
       end
-      drift_add_image_col(idx, 'fa fa-minus', img_bkg, val)
+      drift_add_image_col(idx, 'fa fa-minus', img_bkg, text)
     end
   end
 
@@ -1035,7 +1036,7 @@ module ApplicationController::Compare
         val = view.results[id][section[:name]][record][field[:name]][:_value_].to_s
         row.merge!(drift_record_field_exists_compressed(idx, match_condition, val))
       else
-        val = view.results[id][section[:name]].include?(record) ? "Found" : "Missing"
+        val = view.results[id][section[:name]].include?(record) ? _("Found") : _("Missing")
         basval = val if idx == 0       # On base object, # Hang on to base value
         row.merge!(drift_add_same_image(idx, val))
       end
@@ -1161,21 +1162,21 @@ module ApplicationController::Compare
     row
   end
 
-  def drift_add_same_image(idx, val)
+  def drift_add_same_image(idx, value_found)
     img_src = "compare-same"
     img_bkg = "cell-stripe"
-    drift_add_image_col(idx, img_src, img_bkg, val)
+    drift_add_image_col(idx, img_src, img_bkg, value_found)
   end
 
-  def drift_add_diff_image(idx, val)
+  def drift_add_diff_image(idx, value_found)
     img_src = "drift-delta"
     img_bkg = "cell-plain"
-    drift_add_image_col(idx, img_src, img_bkg, val)
+    drift_add_image_col(idx, img_src, img_bkg, value_found)
   end
 
-  def drift_add_image_col(idx, img_src, img_bkg, val)
+  def drift_add_image_col(idx, img_src, img_bkg, value_found)
     html = ViewHelper.content_tag(:div, :class => img_bkg) do
-      ViewHelper.content_tag(:i, nil, :class => img_src, :title => val)
+      ViewHelper.content_tag(:i, nil, :class => img_src, :title => value_found)
     end
     {"col#{idx + 1}".to_sym => html}
   end
@@ -1459,19 +1460,17 @@ module ApplicationController::Compare
   def comp_record_data_cols(view, section, record)
     row = {}
     base_rec = view.results.fetch_path(view.ids[0], section[:name], record)
-    basval = base_rec ? "Found" : "Missing"
     match = 0
 
     view.ids.each_with_index do |id, idx|                              # Go thru all of the objects
       rec = view.results.fetch_path(id, section[:name], record)
-      rec_found = rec ? "Found" : "Missing"
-      val = rec_found
+      value_found = rec.present?
 
       match = view.results[id][section[:name]][record][:_match_] if view.results[id][section[:name]][record]
       if @compressed  # Compressed, just show passed with hover value
-        row.merge!(comp_record_data_compressed(idx, match, val, basval))
+        row.merge!(comp_record_data_compressed(idx, match, base_rec, value_found))
       else
-        row.merge!(comp_record_data_expanded(idx, match, val, basval))
+        row.merge!(comp_record_data_expanded(idx, match, base_rec, value_found))
       end
     end
     row
@@ -1485,26 +1484,27 @@ module ApplicationController::Compare
     end
   end
 
-  def comp_record_data_compressed_existsmode(idx, _match, val, basval)
+  def comp_record_data_compressed_existsmode(idx, _match, value_found)
     row = {}
+    text = value_found ? _("Found") : _("Missing")
     if idx == 0                                                     # On the base?
-      row.merge!(drift_add_image_col(idx, "", "cell-stripe", val)) # no icon
+      row.merge!(drift_add_image_col(idx, "", "cell-stripe", text)) # no icon
     else
       if val == basval  # Compare this object's value to the base
-        row.merge!(compare_add_same_image(idx, val))
+        row.merge!(compare_add_same_image(idx, text))
       else
         unset_same_flag
-        row.merge!(compare_add_diff_image(idx, val))
+        row.merge!(compare_add_diff_image(idx, text))
       end
     end
     row
   end
 
-  def comp_record_data_nonexistsmode(idx, match, val, basval)
+  def comp_record_data_nonexistsmode(idx, match, value_found, last_value)
     if idx.zero?
       compare_add_txt_col(idx, "%:")
-    elsif val == "Found" # This object has the record
-      if basval == "Found" # Base has the record
+    elsif value_found # This object has the record
+      if last_value # Base has the record
         img_src = calculate_match_img(match)
         unset_same_flag(match)
         compare_add_piechart_image(idx, "#{match}% matched", img_src, "")
@@ -1512,7 +1512,7 @@ module ApplicationController::Compare
         unset_same_flag
         compare_add_piechart_image(idx, "0% matched", "0", "")
       end
-    elsif basval == "Found"
+    elsif last_value
       unset_same_flag
       compare_add_piechart_image(idx, "0% matched", "0", "")
     else
@@ -1536,26 +1536,27 @@ module ApplicationController::Compare
     end
   end
 
-  def comp_record_data_expanded_existsmode(idx, _match, val, basval)
+  def comp_record_data_expanded_existsmode(idx, _match, value_found, last_value)
+    text = value_found ? _("Found") : _("Missing")
     if idx.zero?                                                  # On the base?
-      if val == "Found"                                           # Base has the record
-        drift_add_image_col(idx, "fa fa-plus", "cell-stripe", val)
+      if value_found # Base has the record
+        drift_add_image_col(idx, "fa fa-plus", "cell-stripe", text)
       else                                                        # Base doesn't have the record
         unset_same_flag
-        drift_add_image_col(idx, "fa fa-minus", "cell-stripe", val)
+        drift_add_image_col(idx, "fa fa-minus", "cell-stripe", text)
       end
-    elsif val == "Found"                                          # This object has the record
-      if basval == "Found"                                        # Base has the record
-        drift_add_image_col(idx, "fa fa-plus", "green", val)
+    elsif value_found # This object has the record
+      if last_value # Base has the record
+        drift_add_image_col(idx, "fa fa-plus", "green", text)
       else                                                        # Base doesn't have the record
         unset_same_flag
-        drift_add_image_col(idx, "fa fa-plus", "red", val)
+        drift_add_image_col(idx, "fa fa-plus", "red", text)
       end
-    elsif basval == "Found"                                       # Record is missing from this object
+    elsif last_value # Record is missing from this object
       unset_same_flag                                             # Base has the record, no match
-      drift_add_image_col(idx, "fa fa-minus", "red", val)
+      drift_add_image_col(idx, "fa fa-minus", "red", text)
     else                                                          # Base doesn't have the record, match
-      drift_add_image_col(idx, "fa fa-minus", "green", val)
+      drift_add_image_col(idx, "fa fa-minus", "green", text)
     end
   end
 
@@ -1592,7 +1593,7 @@ module ApplicationController::Compare
 
     view.ids.each_with_index do |id, idx|
       rec = view.results.fetch_path(id, section[:name], record)
-      rec_found = rec ? "Found" : "Missing"
+      rec_found = rec.present?
       fld = rec.nil? ? nil : rec[field[:name]]
 
       if fld.nil?
@@ -1615,12 +1616,13 @@ module ApplicationController::Compare
       failed_img = "compare-diff"
     end
 
-    base_rec_found = base_rec ? "Found" : "Missing"
+    base_rec_found = base_rec.present?
+    text = val ? _("Found") : _("Missing")
 
     if idx.zero? # On base object
-      drift_add_same_image(idx, val)
+      drift_add_same_image(idx, text)
     else # Not on base object
-      drift_add_image_col(idx, base_rec_found == val ? passed_img : failed_img, "", val)
+      drift_add_image_col(idx, base_rec_found == val ? passed_img : failed_img, "", text)
     end
   end
 
