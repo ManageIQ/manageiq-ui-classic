@@ -256,7 +256,7 @@ module VmHelper::TextualSummary
       main = @record.storage
       h[:value] = storages.sort_by { |s| s.name.downcase }.collect do |s|
         {:icon  => "fa fa-database",
-         :value => "#{s.name}#{" (main)" if s == main}",
+         :value => s.name + (s == main ? ' (main)' : ''),
          :title => _("Show this VM's Datastores"),
          :link  => url_for_only_path(:controller => 'storage', :action => 'show', :id => s)}
       end
