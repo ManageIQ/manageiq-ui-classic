@@ -398,26 +398,6 @@ function miqUpdateButtons(obj, button_div) {
   miqSetButtons(count, button_div);
 }
 
-// Set button enabled or disabled according to the number of selected items
-function miqButtonOnWhen(button, onwhen, count) {
-  if (typeof onwhen != 'undefined') {
-    var toggle = true;
-    switch (onwhen) {
-      case 1:
-      case '1':
-        toggle = count == 1;
-        break;
-      case '1+':
-        toggle = count >= 1;
-        break;
-      case '2+':
-        toggle = count >= 2;
-        break;
-    }
-    button.toggleClass('disabled', ! toggle);
-  }
-}
-
 // Set the buttons in a div based on the count of checked items passed in
 function miqSetButtons(count, button_div) {
   if (button_div.match('_tb$') && count === 0) {
