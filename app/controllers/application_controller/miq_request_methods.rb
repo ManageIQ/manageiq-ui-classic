@@ -27,7 +27,7 @@ module ApplicationController::MiqRequestMethods
       changed = (@edit[:new] != @edit[:current])
       @record = if @edit[:new][:src_configured_system_ids].present?
                   PhysicalServer.find(@edit[:new][:src_configured_system_ids].first)
-                else
+                elsif @edit[:new][:src_vm_id].first.present?
                   MiqTemplate.find(@edit[:new][:src_vm_id].first)
                 end
       render :update do |page|
