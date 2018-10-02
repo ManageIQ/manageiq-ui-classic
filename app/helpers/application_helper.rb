@@ -844,6 +844,7 @@ module ApplicationHelper
        host
        host_aggregate
        load_balancer
+       manageiq/providers/cloud_manager/template
        middleware_deployment
        middleware_domain
        middleware_server
@@ -1139,6 +1140,7 @@ module ApplicationHelper
                         host
                         host_aggregate
                         load_balancer
+                        manageiq/providers/cloud_manager/template
                         manageiq/providers/embedded_ansible/automation_manager/playbook
                         manageiq/providers/embedded_automation_manager/authentication
                         manageiq/providers/embedded_automation_manager/configuration_script_source

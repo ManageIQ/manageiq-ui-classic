@@ -1731,6 +1731,34 @@ Rails.application.routes.draw do
         dialog_runner_post
     },
 
+    :template_cloud            => {
+      :get  => %w(
+        download_data
+        download_summary_pdf
+        index
+        protect
+        show
+        show_list
+        tagging_edit
+      ) +
+        compare_get,
+      :post => %w(
+        button
+        listnav_search_selected
+        protect
+        quick_search
+        sections_field_changed
+        show
+        show_list
+        tag_edit_form_field_changed
+        tagging_edit
+      ) +
+               adv_search_post +
+               compare_post +
+               exp_post +
+               save_post
+    },
+
     :network_port             => {
       :get  => %w(
         download_data
