@@ -201,9 +201,13 @@ module ApplicationController::Tags
   def tag_edit_build_screen
     @showlinks = true
 
-    cats = Classification.categories.select(&:show).sort_by { |t| t.description.try(:downcase) } # Get the categories, sort by description
+    cats = Classification.categories.select(&:show) # Get the categories
     @categories = {}    # Classifications array for first chooser
+
+    mapped_categories = cats.select { |c| ContainerLabelTagMapping::TAG_PREFIXES.any? { |pattern| c.tag.name.include?(pattern) } }
     cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
+    cats += mapped_categories
+    cats = cats.sort_by { |t| t.description.try(:downcase) } # sort by description
     cats.each do |c|
       if c.single_value?
         @categories[c.description + " *"] = c.id
@@ -234,7 +238,7 @@ module ApplicationController::Tags
 
     # Start with the first items assignments
     @edit[:new][:assignments] =
-      Classification.find_assigned_entries(@tagitems[0]).collect { |e| e.id unless e.parent.read_only? }
+      Classification.find_assigned_entries(@tagitems[0]).select { |e| !e.parent.read_only? || ContainerLabelTagMapping::TAG_PREFIXES.any? { |pattern| e.parent.tag.name.include?(pattern) } }.map(&:id)
     @tagitems.each do |item|
       itemassign = Classification.find_assigned_entries(item).collect(&:id) # Get each items assignments
       @edit[:new][:assignments].delete_if { |a| !itemassign.include?(a) } # Remove any assignments that are not in the new items assignments
