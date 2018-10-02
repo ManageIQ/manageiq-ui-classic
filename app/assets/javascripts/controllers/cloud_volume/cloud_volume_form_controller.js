@@ -128,20 +128,22 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   vm.storageManagerChanged = function(id) {
     miqService.sparkleOn();
-    return API.get('/api/providers/' + id + '?attributes=type,parent_manager.availability_zones,parent_manager.cloud_tenants,parent_manager.cloud_volume_snapshots')
+    return API.get('/api/providers/' + id + '?attributes=type,supports_cinder_volume_types,parent_manager.availability_zones,parent_manager.cloud_tenants,parent_manager.cloud_volume_snapshots,parent_manager.cloud_volume_types')
       .then(getStorageManagerFormData)
       .catch(miqService.handleFailure);
   };
 
   vm.sizeChanged = function(size) {
-    // Dynamically update the AWS IOPS only if GP2 volume type is selected.
-    if (vm.cloudVolumeModel.aws_volume_type === 'gp2') {
-      var volumeSize = parseInt(size, 10);
+    if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {
+      // Dynamically update the AWS IOPS only if GP2 volume type is selected.
+      if (vm.cloudVolumeModel.volume_type === 'gp2') {
+        var volumeSize = parseInt(size, 10);
 
-      if (isNaN(volumeSize)) {
-        vm.cloudVolumeModel.aws_iops = null;
-      } else {
-        vm.cloudVolumeModel.aws_iops = Math.max(100, Math.min(volumeSize * 3, 10000));
+        if (isNaN(volumeSize)) {
+          vm.cloudVolumeModel.aws_iops = null;
+        } else {
+          vm.cloudVolumeModel.aws_iops = Math.max(100, Math.min(volumeSize * 3, 10000));
+        }
       }
     }
   };
@@ -179,7 +181,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     // can be resized on the fly).
     return vm.newRecord ||
       (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs' &&
-        vm.cloudVolumeModel.aws_volume_type !== 'standard');
+        vm.cloudVolumeModel.volume_type !== 'standard');
   };
 
   vm.awsBaseSnapshotChanged = function(baseSnapshotId) {
@@ -199,7 +201,9 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   };
 
   function setForm() {
-    loadEBSVolumeTypes();
+    if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {
+      loadEBSVolumeTypes();
+    }
 
     vm.modelCopy = angular.copy(vm.cloudVolumeModel);
     vm.afterGet = true;
@@ -213,7 +217,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   var loadEBSVolumeTypes = function() {
     // This ia a fixed list of available cloud volume types for Amazon EBS.
-    vm.awsVolumeTypes = [
+    vm.volumeTypes = [
       { type: 'gp2', name: __('General Purpose SSD (GP2)') },
       { type: 'io1', name: __('Provisioned IOPS SSD (IO1)') },
       { type: 'st1', name: __('Throughput Optimized HDD (ST1)') },
@@ -224,8 +228,8 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     // an existing standard volume. In the latter case, it is only available so
     // that the "Magnetic (standard)" option can be picked in the select that is
     // otherwise disabled.
-    if (vm.newRecord || vm.cloudVolumeModel.aws_volume_type === 'standard') {
-      vm.awsVolumeTypes.push({ type: 'standard', name: __('Magnetic') });
+    if (vm.newRecord || vm.cloudVolumeModel.volume_type === 'standard') {
+      vm.volumeTypes.push({ type: 'standard', name: __('Magnetic') });
     }
   };
 
@@ -240,9 +244,9 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     // We have to display size in GB.
     vm.cloudVolumeModel.size = data.size / 1073741824;
     vm.cloudVolumeModel.cloud_tenant_id = data.cloud_tenant_id;
+    vm.cloudVolumeModel.volume_type = data.volume_type;
     // Currently, this is only relevant for AWS volumes so we are prefixing the
     // model attribute with AWS.
-    vm.cloudVolumeModel.aws_volume_type = data.volume_type;
     vm.cloudVolumeModel.aws_availability_zone_id = data.availability_zone.ems_ref;
     vm.cloudVolumeModel.aws_encryption = data.encrypted;
     vm.cloudVolumeModel.aws_iops = data.iops;
@@ -263,7 +267,10 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.cloudTenantChoices = data.parent_manager.cloud_tenants;
     vm.availabilityZoneChoices = data.parent_manager.availability_zones;
     vm.baseSnapshotChoices = data.parent_manager.cloud_volume_snapshots;
-
+    vm.supportsCinderVolumeTypes = data.supports_cinder_volume_types;
+    if (vm.supportsCinderVolumeTypes) {
+      vm.volumeTypes = data.parent_manager.cloud_volume_types;
+    }
     miqService.sparkleOff();
   };
 

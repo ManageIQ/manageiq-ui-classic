@@ -271,7 +271,7 @@ describe CloudVolumeController do
       context "for volume type 'gp2'" do
         before do
           # 'gp2' volume type requires only the type
-          @form_params[:aws_volume_type] = "gp2"
+          @form_params[:volume_type] = "gp2"
           @aws_options[:volume_type] = "gp2"
           @aws_options[:encrypted] = nil
         end
@@ -282,7 +282,7 @@ describe CloudVolumeController do
       context "for volume type 'io1'" do
         before do
           # 'io1' volume type requires the IOPS as well.
-          @form_params[:aws_volume_type] = "io1"
+          @form_params[:volume_type] = "io1"
           @form_params[:aws_iops] = "100"
 
           @aws_options[:volume_type] = "io1"
@@ -296,7 +296,7 @@ describe CloudVolumeController do
       context "for encrypted volume" do
         before do
           # 'gp2' volume type requires only the type
-          @form_params[:aws_volume_type] = "gp2"
+          @form_params[:volume_type] = "gp2"
           @form_params[:aws_encryption] = "true"
           @aws_options[:volume_type] = "gp2"
           @aws_options[:encrypted] = "true"
