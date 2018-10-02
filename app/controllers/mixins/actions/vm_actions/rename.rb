@@ -35,7 +35,6 @@ module Mixins
           @changed = changed = session[:changed] = @edit[:new] != @edit[:current]
           render :update do |page|
             page << javascript_prologue
-            page.replace_html('main_div', :partial => 'vm_common/rename')
             page << javascript_for_miq_button_visibility(changed)
             page << "miqSparkle(false);"
           end
