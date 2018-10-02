@@ -1692,7 +1692,8 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def task_supported?(typ)
+  # renders a flash message in case the records do not support the task
+  def task_supported(typ)
     vms = find_records_with_rbac(VmOrTemplate, checked_or_params)
     if %w(migrate publish).include?(typ) && vms.any?(&:template?)
       render_flash_not_applicable_to_model(typ, ui_lookup(:table => "miq_template"))
@@ -1723,7 +1724,7 @@ class ApplicationController < ActionController::Base
     assert_privileges(params[:pressed])
     # we need to do this check before doing anything to prevent
     # history being updated
-    task_supported?(typ) if typ
+    task_supported(typ) if typ
     return if performed?
 
     @redirect_controller = "miq_request"
