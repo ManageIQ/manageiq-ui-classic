@@ -1869,11 +1869,12 @@ class ApplicationController < ActionController::Base
     @panels["tag_filters"] = true if @panels["tag_filters"].nil?  # Default tag filters panels to be open
     @panels["sections"] = true if @panels["sections"].nil?        # Default sections(compare) panel to be open
 
-    #   if params[:flash_msgs] && session[:flash_msgs]    # Incoming flash msg array is present
-    if session[:flash_msgs]       # Incoming flash msg array is present
+    # Incoming flash msg array is present
+    if session[:flash_msgs]
       @flash_array = session[:flash_msgs].dup
       session[:flash_msgs] = nil
-    elsif params[:flash_msg]      # Add incoming flash msg, with/without error flag
+    # Add incoming flash msg, with/without error flag
+    elsif params[:flash_msg]
       # params coming in from redirect are strings and being sent up even when value is false
       if params[:flash_error] == "true"
         add_flash(params[:flash_msg], :error)
