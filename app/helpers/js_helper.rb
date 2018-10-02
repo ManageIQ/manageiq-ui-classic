@@ -83,6 +83,7 @@ miqBuildCalendar();
 EOD
   end
 
+  # JSONP request access prevention
   def javascript_prologue
     'throw "error";'
   end

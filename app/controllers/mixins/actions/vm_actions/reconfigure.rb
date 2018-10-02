@@ -398,54 +398,19 @@ module Mixins
           end
 
           # set the disk_add and disk_remove options
-          if params[:vmAddDisks]
-            params[:vmAddDisks].each_value do |p|
-              p.transform_values! { |v| eval_if_bool_string(v) }
-            end
-            options[:disk_add] = params[:vmAddDisks].values
-          end
-
-          if params[:vmResizeDisks]
-            params[:vmResizeDisks].each_value do |p|
-              p.transform_values! { |v| eval_if_bool_string(v) }
-            end
-            options[:disk_resize] = params[:vmResizeDisks].values
-          end
-
-          if params[:vmRemoveDisks]
-            params[:vmRemoveDisks].each_value do |p|
-              p.transform_values! { |v| eval_if_bool_string(v) }
-            end
-            options[:disk_remove] = params[:vmRemoveDisks].values
-          end
-
-          if params[:vmAddNetworkAdapters]
-            params[:vmAddNetworkAdapters].each_value do |p|
-              p.transform_values! { |v| eval_if_bool_string(v) }
-            end
-            options[:network_adapter_add] = params[:vmAddNetworkAdapters].values
-          end
-
-          if params[:vmRemoveNetworkAdapters]
-            params[:vmRemoveNetworkAdapters].each_value do |p|
-              p.transform_values! { |v| eval_if_bool_string(v) }
-            end
-            options[:network_adapter_remove] = params[:vmRemoveNetworkAdapters].values
-          end
-
-          if params[:vmConnectCDRoms]
-            params[:vmConnectCDRoms].each_value do |p|
-              p.transform_values! { |v| eval_if_bool_string(v) }
-            end
-            options[:cdrom_connect] = params[:vmConnectCDRoms].values
-          end
-
-          if params[:vmDisconnectCDRoms]
-            params[:vmDisconnectCDRoms].each_value do |p|
-              p.transform_values! { |v| eval_if_bool_string(v) }
-            end
-            options[:cdrom_disconnect] = params[:vmDisconnectCDRoms].values
-          end
+          [%i(vmAddDisks disk_add),
+           %i(vmResizeDisks disk_resize),
+           %i(vmRemoveDisks disk_remove),
+           %i(vmAddNetworkAdapters network_adapter_add),
+           %i(vmRemoveNetworkAdapters network_adapter_remove),
+           %i(vmConnectCDRoms cdrom_connect),
+           %i(vmDisconnectCDRoms cdrom_disconnect)].each do |params_key, options_key|
+             next if params[params_key].blank?
+             params[params_key].each_value do |p|
+               p.transform_values! { |v| eval_if_bool_string(v) }
+             end
+             options[options_key] = params[params_key].values
+           end
 
           if params[:id] && params[:id] != 'new'
             @request_id = params[:id]
