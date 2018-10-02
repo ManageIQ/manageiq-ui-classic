@@ -146,15 +146,10 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     vm.diagnosticsDatabaseModel.uri_prefix = data.uri_prefix;
     vm.diagnosticsDatabaseModel.log_userid = data.log_userid;
 
-    if (vm.diagnosticsDatabaseModel.uri_prefix === 'nfs') {
-      vm.diagnosticsDatabaseModel.log_protocol = 'Network File System';
-    } else if (vm.diagnosticsDatabaseModel.uri_prefix === 'smb') {
-      vm.diagnosticsDatabaseModel.log_protocol = 'Samba';
-    } else if (vm.diagnosticsDatabaseModel.uri_prefix === 's3') {
-      vm.diagnosticsDatabaseModel.log_protocol = 'AWS S3';
+    vm.diagnosticsDatabaseModel.log_protocol = diagnosticsLogProtocol(vm.diagnosticsDatabaseModel.uri_prefix);
+    if (vm.diagnosticsDatabaseModel.uri_prefix === 's3') {
       vm.diagnosticsDatabaseModel.log_aws_region = data.log_aws_region;
     } else if (vm.diagnosticsDatabaseModel.uri_prefix === 'swift') {
-      vm.diagnosticsDatabaseModel.log_protocol = 'OpenStack Swift';
       vm.diagnosticsDatabaseModel.openstack_region     = data.openstack_region;
       vm.diagnosticsDatabaseModel.keystone_api_version = data.keystone_api_version;
       vm.diagnosticsDatabaseModel.v3_domain_ident      = data.v3_domain_ident;
@@ -172,6 +167,19 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       userIdValue: vm.diagnosticsDatabaseModel.log_userid });
 
     miqService.sparkleOff();
+  }
+
+  function diagnosticsLogProtocol(prefix) {
+    if (prefix === 'nfs') {
+      return 'Network File System';
+    } else if (prefix === 'smb') {
+      return 'Samba';
+    } else if (prefix === 's3') {
+      return 'AWS S3';
+    } else if (prefix === 'swift') {
+      return 'OpenStack Swift';
+    }
+    return '';
   }
 
   init();
