@@ -282,8 +282,7 @@ module Menu
             :href  => I18n.t("product.support_website").html_safe
           },
           :about         => {
-            :title => N_('About'),
-            :href  => '#aboutModal'
+            :title => N_('About')
           }
         }.map do |key, value|
           Menu::Item.new(key,
