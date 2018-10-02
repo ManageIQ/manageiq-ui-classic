@@ -205,19 +205,9 @@ module OpsController::Settings::Common
       task_opts  = {:action => "Set replication type to none", :userid => session[:userid]}
       queue_opts = {:class_name => "MiqRegion", :method_name => "replication_type=", :args => [:none]}
     end
-    task_id = MiqTask.generic_action_with_callback(task_opts, queue_opts)
-    initiate_wait_for_task(:task_id => task_id, :action => "pglogical_save_finished")
-  end
-
-  def pglogical_save_finished
-    task = MiqTask.find(session[:async][:params][:task_id])
-    if task.nil?
-      add_flash(_("Unknown result of saving replication configuration: task not found"), :error)
-    elsif MiqTask.status_ok?(task.status)
-      add_flash(_("Replication configuration save was successful"))
-    else
-      add_flash(_("Error during replication configuration save: %{message}") % {:message => task.message }, :error)
-    end
+    MiqTask.generic_action_with_callback(task_opts, queue_opts)
+    add_flash(_("Replication configuration save initiated. Check status of task \"%{task_name}\" on MyTasks screen") %
+                {:task_name => task_opts[:action]})
     javascript_flash
   end
 
