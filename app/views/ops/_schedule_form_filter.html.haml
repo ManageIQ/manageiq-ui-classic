@@ -82,7 +82,7 @@
                                  "ng-required"                => "!automateRequest() && filterValueRequired(scheduleModel.filter_value)",
                                  "checkchange"                => ""}
               %option{"disabled" => "", "value" => ""} &lt;Choose&gt;
-        
+
         %ae-resolve-options{"ng-if"                 => "automateRequest()",
                             "instance-name"         => "scheduleModel.instance_name",
                             "instance-options"      => "scheduleModel.instance_names",
@@ -111,7 +111,7 @@
                            "selectpicker-for-select-tag" => "")
               %span.help-block{"ng-show" => "angularForm.keystone_api_version.$invalid"}
 
-        .form-group{"ng-class" => "{'has-error': angularForm.keystone_domain_id.$invalid}", "ng-if" => "scheduleModel.keystone_api_version == 'v3'"}
+        .form-group{"ng-class" => "{'has-error': angularForm.v3_domain_ident.$invalid}", "ng-if" => "scheduleModel.keystone_api_version == 'v3'"}
           %label.col-md-2.control-label{"for" => "v3_domain_ident"}
             = _('Keystone V3 Domain ID')
           .col-md-4
@@ -121,7 +121,8 @@
                                 "ng-model"    => "scheduleModel.v3_domain_ident",
                                 "required"    => true,
                                 "checkchange" => ""}
-              = _("Required")
+            %span.help-block{"ng-show" => "angularForm.v3_domain_ident.$invalid"}
+	      = _("Required")
 
         = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
                  :locals  => {:ng_show             => "dbBackup()",
@@ -141,7 +142,9 @@
                                 "id"                      => "openstack_region",
                                 "name"                    => "openstack_region",
                                 "ng-model"                => "scheduleModel.openstack_region",
+                                "required"                => true,
                                 "checkchange"             => ""}
+            %span.help-block{"ng-show" => "angularForm.openstack_region.$invalid"}
               = _("Required")
 
         %region{'ng-if' => 'regionSelect()'}
