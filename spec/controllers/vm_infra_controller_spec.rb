@@ -365,13 +365,14 @@ describe VmInfraController do
   end
 
   it 'can migrate selected items' do
+    vm_vmware_migrateable = FactoryGirl.create(:vm_vmware, :ems_id => 1, :storage_id => 1)
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
 
     post :explorer
     expect(response.status).to eq(200)
 
-    post :x_button, :params => {:pressed => 'vm_migrate', :id => vm_vmware.id}
+    post :x_button, :params => {:pressed => 'vm_migrate', :id => vm_vmware_migrateable.id}
     expect(response).to render_template('layouts/_x_edit_buttons')
     expect(response.status).to eq(200)
   end
