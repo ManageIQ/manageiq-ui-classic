@@ -236,6 +236,18 @@ module OpsController::Settings::Common
 
   private
 
+  def update_server_name(server)
+    return if @edit[:new][:server][:name] == server.name # appliance name was modified
+    begin
+      server.name = @edit[:new][:server][:name]
+      server.save!
+    rescue => bang
+      add_flash(_("Error when saving new server name: %{message}") % {:message => bang.message}, :error)
+      javascript_flash
+      return
+    end
+  end
+
   PASSWORD_MASK = '●●●●●●●●'.freeze
 
   def prepare_subscriptions_for_saving
@@ -470,16 +482,7 @@ module OpsController::Settings::Common
         if ["settings_server", "settings_authentication"].include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
           server.set_config(@update)
-          if @update.config[:server][:name] != server.name # appliance name was modified
-            begin
-              server.name = @update.config[:server][:name]
-              server.save!
-            rescue => bang
-              add_flash(_("Error when saving new server name: %{message}") % {:message => bang.message}, :error)
-              javascript_flash
-              return
-            end
-          end
+          update_server_name(server)
         else
           @update.save                                              # Save other settings for current server
         end
@@ -598,6 +601,9 @@ module OpsController::Settings::Common
 
   def settings_server_validate
     return unless @sb[:active_tab] == "settings_server" && @edit[:new][:server]
+    if @edit[:new][:server][:name].blank?
+      add_flash(_("Appliance name must be entered."), :error)
+    end
     if @edit[:new][:server][:custom_support_url].present? && @edit[:new][:server][:custom_support_url_description].blank? ||
        @edit[:new][:server][:custom_support_url].blank? && @edit[:new][:server][:custom_support_url_description].present?
       add_flash(_("Custom Support URL and Description both must be entered."), :error)
@@ -734,9 +740,9 @@ module OpsController::Settings::Common
       end
       @sb[:roles] = new[:server][:role].split(",")
       params.each do |var, val|
-        if var.starts_with?("server_roles_") && val.to_s == "true"
+        if var.to_s.starts_with?("server_roles_") && val.to_s == "true"
           @sb[:roles].push(var.split("server_roles_").last) unless @sb[:roles].include?(var.split("server_roles_").last)
-        elsif var.starts_with?("server_roles_") && val.downcase == "false"
+        elsif var.to_s.starts_with?("server_roles_") && val.downcase == "false"
           @sb[:roles].delete(var.split("server_roles_").last)
         end
         server_role = @sb[:roles].sort.join(",")
