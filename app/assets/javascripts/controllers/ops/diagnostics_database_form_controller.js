@@ -108,21 +108,13 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       (vm.diagnosticsDatabaseModel.log_aws_region === '' || typeof vm.diagnosticsDatabaseModel.log_aws_region === 'undefined'));
   };
 
-  vm.securityProtocolSelect = function() {
-    return vm.diagnosticsDatabaseModel.log_protocol === "OpenStack Swift";
-  };
-
   vm.swiftSecurityProtocolSelect = function() {
-    return vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift';
+    return vm.diagnosticsDatabaseModel.action_typ == "db_backup" && vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift';
   };
 
   vm.swiftSecurityProtocolRequired = function() {
     return (miqDBBackupService.swiftBackup(vm.diagnosticsDatabaseModel) &&
-      (vm.diagnosticsDatabaseModel.security_protocol === null || vm.diagnosticsDatabaseModel.security_protocol === '' || typeof vm.diagnosticsDatabaseModel.security_protocol === 'undefined'));
-  }
-
-  vm.swiftRequired = function(value) {
-    return miqDBBackupService.swiftBackup(vm.diagnosticsDatabaseModel) && ! value;
+      !vm.diagnosticsDatabaseModel.security_protocol)
   }
 
   vm.credsProtocol = function() {

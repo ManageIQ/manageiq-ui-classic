@@ -64,19 +64,6 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
            (this.isModelValueNil(value));
   };
 
-  this.swiftSecurityProtocolNotSelected = function(model) {
-    return model.security_protocol === '' || model.security_protocol === undefined;
-  };
-
-  this.swiftSecurityProtocolSelected = function(model) {
-    return model.security_protocol !== '' && model.security_protocol !== undefined;
-  };
-
-  this.badswiftSecurityProtocolRequired = function(model, value) {
-    return this.swiftBackup(model) &&
-           (this.isModelValueNil(value));
-  };
-
   this.swiftSecurityProtocolRequired = function(model, value) {
     return model.log_protocol === 'OpenStack Swift' &&
            (this.isModelValueNil(value));

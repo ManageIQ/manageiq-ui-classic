@@ -407,7 +407,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.swiftSecurityProtocolSelect = function() {
-    return $scope.scheduleModel.log_protocol === 'OpenStack Swift';
+    return $scope.scheduleModel.action_typ === "db_backup" && $scope.scheduleModel.log_protocol === 'OpenStack Swift';
   };
 
   $scope.swiftSecurityProtocolRequired = function() {
@@ -416,10 +416,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
   $scope.s3Required = function(value) {
     return $scope.s3Backup() && !value;
-  };
-
-  $scope.swiftRequired = function(value) {
-    return $scope.swiftBackup() && !value;
   };
 
   $scope.isBasicInfoValid = function() {
