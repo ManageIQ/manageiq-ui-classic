@@ -1837,6 +1837,7 @@ Rails.application.routes.draw do
         new
         tagging_edit
         ems_list
+        cloud_tenants
       ) +
         compare_get,
       :post => %w(

@@ -31,6 +31,12 @@ class FlavorController < ApplicationController
     render :json => {:ems_list => ems_list}
   end
 
+  def cloud_tenants
+    assert_privileges('flavor_create')
+    cloud_tenants = Rbac::Filterer.filtered(CloudTenant)
+    render :json => {:cloud_tenants => cloud_tenants}
+  end
+
   private
 
   def textual_group_list

@@ -13,10 +13,13 @@ ManageIQ.angular.app.controller('flavorFormController', ['$http', 'flavorId', 'm
       rxtx_factor: '1.0',
       is_public: true,
       ems_id: '',
+      cloud_tenant_refs: [],
     };
 
     vm.model = 'flavorModel';
     vm.ems_list = [];
+    vm.cloudTenants = [];
+    vm.selectedCloudTenants = [];
 
     vm.newRecord = flavorId === 'new';
     vm.saveable = miqService.saveable;
@@ -25,6 +28,10 @@ ManageIQ.angular.app.controller('flavorFormController', ['$http', 'flavorId', 'm
 
     $http.get('/flavor/ems_list')
       .then(getEmsFormDataComplete)
+      .catch(miqService.handleFailure);
+
+    $http.get('/flavor/cloud_tenants')
+      .then(getCloudTenantFormDataComplete)
       .catch(miqService.handleFailure);
 
     setForm();
@@ -39,6 +46,7 @@ ManageIQ.angular.app.controller('flavorFormController', ['$http', 'flavorId', 'm
 
   vm.addClicked = function() {
     miqService.sparkleOn();
+    setCloudTenantRefs();
     API.post('/api/providers/' + vm.flavorModel.ems.id + '/flavors', vm.flavorModel)
       .then(getBack)
       .catch(miqService.handleFailure);
@@ -79,6 +87,16 @@ ManageIQ.angular.app.controller('flavorFormController', ['$http', 'flavorId', 'm
     vm.ems_list = response.data.ems_list;
     if (foundEms()) {
       setEms();
+    }
+  }
+
+  function getCloudTenantFormDataComplete(response) {
+    vm.cloudTenants = response.data.cloud_tenants;
+  }
+
+  function setCloudTenantRefs() {
+    for (var i = 0; i < vm.selectedCloudTenants.length; i++) {
+      vm.flavorModel.cloud_tenant_refs.push(vm.selectedCloudTenants[i].ems_ref);
     }
   }
 
