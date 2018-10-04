@@ -609,7 +609,8 @@ module ApplicationController::CiProcessing
   #   options     - other optional parameters
   def generic_button_operation(action, action_name, operation, options = {})
     records = find_records_with_rbac(get_rec_cls, checked_or_params)
-    if testable_action(action) && !records_support_feature?(records, action_to_feature(action))
+    if (testable_action?(action) && !records_support_feature?(records, action_to_feature(action))) ||
+       !specific_requirements_fullfiled?(records, options[:specific_requirements])
       javascript_flash(
         :text       => _("%{action_name} action does not apply to selected items") % {:action_name => action_name},
         :severity   => :error,
@@ -620,6 +621,21 @@ module ApplicationController::CiProcessing
     operation.call(records.map(&:id), action, action_name)
     @single_delete = action == 'destroy' && !flash_errors?
     screen_redirection(options)
+  end
+
+  # Tests requirements specific for different providers that are not
+  # tested by SupportsFeatureMixin
+  #
+  # Params:
+  #   records             - selected records
+  #   requirements_method - symbol with a name of the method to be ran
+  # Returns:
+  #   boolean - true, if all the requirements are fullfilled (called method returns
+  #             true as well) or no requirements method is specified
+  #           - false if the requirements are not fullfilled
+  def specific_requirements_fullfiled?(records, requirements_method)
+    return true if requirements_method.nil?
+    method(requirements_method).call(records)
   end
 
   # Some of the tasks are not testable by SupportsFeatureMixin
@@ -634,7 +650,7 @@ module ApplicationController::CiProcessing
   #   boolean - true, if the action should not skip the test for records
   #             support for the action
   #           - false otherwise
-  def testable_action(action)
+  def testable_action?(action)
     controller = params[:controller]
     vm_infra_untestable_actions = %w(
       reboot_guest stop start check_compliance_queue destroy
