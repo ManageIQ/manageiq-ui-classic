@@ -7,13 +7,13 @@ module OpsController::Settings::HelpMenu
     begin
       konfig = Vmdb::Settings.decrypt_passwords!(Settings.to_hash)
       konfig[:help_menu].merge!(@edit[:new])
-      konfig.validate
+      success, config_errors = Vmdb::Settings.validate(konfig)
     rescue Psych::SyntaxError, StandardError
       add_flash(_('Invalid configuration parameters.'), :error)
       success = false
     end
 
-    success = konfig.errors.blank? if success.nil?
+    success = config_errors.blank? if success.nil?
 
     if success
       konfig.save

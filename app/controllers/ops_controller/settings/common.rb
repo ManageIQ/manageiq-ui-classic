@@ -468,7 +468,8 @@ module OpsController::Settings::Common
 
       save_ntp_server_settings
 
-      if @update.validate                                           # Have VMDB class validate the settings
+      config_valid, config_errors = Vmdb::Settings.validate(@update)
+      if config_valid
         if ["settings_server", "settings_authentication"].include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
           server.set_config(@update)
@@ -504,7 +505,7 @@ module OpsController::Settings::Common
           replace_right_cell(:nodetype => @nodetype)
         end
       else
-        @update.errors.each do |field, msg|
+        config_errors.each do |field, msg|
           add_flash("#{field.titleize}: #{msg}", :error)
         end
         @changed = true
@@ -522,7 +523,8 @@ module OpsController::Settings::Common
       @update.each_key do |category|
         @update[category] = @edit[:new][category].dup
       end
-      if @update.validate                                           # Have VMDB class validate the settings
+      config_valid, config_errors = Vmdb::Settings.validate(@update)
+      if config_valid
         server = MiqServer.find(@sb[:selected_server_id])
         server.set_config(@update)
 
@@ -538,7 +540,7 @@ module OpsController::Settings::Common
         get_node_info(x_node)
         replace_right_cell(:nodetype => @nodetype)
       else
-        @update.errors.each do |field, msg|
+        config_errors.each do |field, msg|
           add_flash("#{field.titleize}: #{msg}", :error)
         end
         @changed = true
