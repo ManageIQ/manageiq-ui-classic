@@ -605,6 +605,12 @@ module ApplicationController::CiProcessing
   #   operation   - a block with a operation, specific to the type of action
   #                 on a record
   #   options     - other optional parameters
+  #               - :redirect => :controller
+  #                           => :action
+  #                 :refresh_partial
+  #                 used by #screen_redirection
+  #               - :specific_requirements
+  #                 used by #specific_requirements_fullfiled?
   def generic_button_operation(action, action_name, operation, options = {})
     records = find_records_with_rbac(get_rec_cls, checked_or_params)
     if (testable_action?(action) && !records_support_feature?(records, action_to_feature(action))) ||
