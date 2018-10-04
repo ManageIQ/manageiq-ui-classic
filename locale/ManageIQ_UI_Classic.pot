@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 14:35+0200\n"
-"PO-Revision-Date: 2018-06-26 14:35+0200\n"
+"POT-Creation-Date: 2018-08-03 11:52+0200\n"
+"PO-Revision-Date: 2018-08-03 11:52+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -94,7 +94,7 @@ msgstr ""
 msgid " (Latest Compliance Check)"
 msgstr ""
 
-#: ../app/controllers/service_controller.rb:331 ../app/controllers/provider_foreman_controller.rb:257 ../app/controllers/miq_policy_controller.rb:554 ../app/controllers/miq_policy_controller.rb:592 ../app/controllers/vm_common.rb:1178 ../app/controllers/automation_manager_controller.rb:245 ../app/controllers/storage_controller.rb:358 ../app/controllers/application_controller.rb:1202
+#: ../app/controllers/service_controller.rb:323 ../app/controllers/provider_foreman_controller.rb:257 ../app/controllers/miq_policy_controller.rb:554 ../app/controllers/miq_policy_controller.rb:592 ../app/controllers/vm_common.rb:1178 ../app/controllers/automation_manager_controller.rb:245 ../app/controllers/storage_controller.rb:358 ../app/controllers/application_controller.rb:1202
 msgid " (Names with \"%{search_text}\")"
 msgstr ""
 
@@ -546,7 +546,7 @@ msgstr ""
 msgid "%{missing_field_name} is required"
 msgstr ""
 
-#: ../app/controllers/service_controller.rb:312 ../app/controllers/provider_foreman_controller.rb:315 ../app/controllers/ops_controller.rb:669 ../app/controllers/ops_controller.rb:680 ../app/controllers/ops_controller.rb:691 ../app/controllers/ops_controller.rb:733 ../app/controllers/ops_controller.rb:741 ../app/controllers/vm_common.rb:1092 ../app/controllers/automation_manager_controller.rb:312 ../app/controllers/miq_policy_controller/policies.rb:268 ../app/controllers/catalog_controller.rb:1742 ../app/controllers/catalog_controller.rb:1767 ../app/controllers/catalog_controller.rb:1772 ../app/controllers/catalog_controller.rb:1816 ../app/controllers/infra_networking_controller.rb:194 ../app/controllers/mixins/manager_controller_mixin.rb:333 ../app/controllers/ops_controller/ops_rbac.rb:914
+#: ../app/controllers/service_controller.rb:304 ../app/controllers/provider_foreman_controller.rb:315 ../app/controllers/ops_controller.rb:669 ../app/controllers/ops_controller.rb:680 ../app/controllers/ops_controller.rb:691 ../app/controllers/ops_controller.rb:733 ../app/controllers/ops_controller.rb:741 ../app/controllers/vm_common.rb:1092 ../app/controllers/automation_manager_controller.rb:312 ../app/controllers/miq_policy_controller/policies.rb:268 ../app/controllers/catalog_controller.rb:1742 ../app/controllers/catalog_controller.rb:1767 ../app/controllers/catalog_controller.rb:1772 ../app/controllers/catalog_controller.rb:1816 ../app/controllers/infra_networking_controller.rb:194 ../app/controllers/mixins/manager_controller_mixin.rb:333 ../app/controllers/ops_controller/ops_rbac.rb:914
 msgid "%{model} \"%{name}\""
 msgstr ""
 
@@ -562,7 +562,7 @@ msgstr ""
 msgid "%{model} \"%{name}\" was added"
 msgstr ""
 
-#: ../app/controllers/vm_common.rb:807 ../app/controllers/miq_ae_class_controller.rb:1124 ../app/controllers/mixins/ems_common_angular.rb:42 ../app/controllers/mixins/ems_common_angular.rb:173 ../app/controllers/ops_controller/ops_rbac.rb:137 ../app/controllers/ops_controller/ops_rbac.rb:750
+#: ../app/controllers/vm_common.rb:807 ../app/controllers/miq_ae_class_controller.rb:1124 ../app/controllers/mixins/ems_common_angular.rb:43 ../app/controllers/mixins/ems_common_angular.rb:178 ../app/controllers/ops_controller/ops_rbac.rb:137 ../app/controllers/ops_controller/ops_rbac.rb:750
 msgid "%{model} \"%{name}\" was saved"
 msgstr ""
 
@@ -650,7 +650,7 @@ msgstr ""
 msgid "%{name} (All %{title})"
 msgstr ""
 
-#: ../app/controllers/service_controller.rb:189
+#: ../app/controllers/service_controller.rb:181
 msgid "%{name} (All Generic Objects)"
 msgstr ""
 
@@ -2042,7 +2042,7 @@ msgstr ""
 msgid "Accept"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:145 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:108 ../app/helpers/application_helper/toolbar/ems_physical_infra_center.rb:85 ../app/helpers/application_helper/toolbar/x_vm_center.rb:254 ../app/helpers/application_helper/toolbar/ems_infra_center.rb:123
+#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:145 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:108 ../app/helpers/application_helper/toolbar/ems_physical_infra_center.rb:85 ../app/helpers/application_helper/toolbar/x_vm_center.rb:247 ../app/helpers/application_helper/toolbar/ems_infra_center.rb:123
 msgid "Access"
 msgstr ""
 
@@ -2184,7 +2184,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: ../app/presenters/tree_builder_services.rb:42 ../app/controllers/service_controller.rb:321
+#: ../app/presenters/tree_builder_services.rb:42 ../app/controllers/service_controller.rb:313
 msgid "Active Services"
 msgstr ""
 
@@ -2316,7 +2316,7 @@ msgstr ""
 msgid "Add Network Adapters"
 msgstr ""
 
-#: ../app/controllers/mixins/ems_common_angular.rb:182
+#: ../app/controllers/mixins/ems_common_angular.rb:187
 msgid "Add New %{tables}"
 msgstr ""
 
@@ -2756,7 +2756,7 @@ msgstr ""
 msgid "Add new Time Profile"
 msgstr ""
 
-#: ../app/controllers/mixins/ems_common_angular.rb:190
+#: ../app/controllers/mixins/ems_common_angular.rb:195
 msgid "Add of %{model} was cancelled by the user"
 msgstr ""
 
@@ -3418,7 +3418,7 @@ msgstr ""
 msgid "All Ansible Tower Providers"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:52 ../app/controllers/chargeback_controller.rb:409
+#: ../app/controllers/chargeback_controller.rb:52 ../app/controllers/chargeback_controller.rb:408
 msgid "All Assignments"
 msgstr ""
 
@@ -3430,7 +3430,7 @@ msgstr ""
 msgid "All Catalogs"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:51 ../app/controllers/chargeback_controller.rb:384
+#: ../app/controllers/chargeback_controller.rb:51 ../app/controllers/chargeback_controller.rb:383
 msgid "All Chargeback Rates"
 msgstr ""
 
@@ -3586,11 +3586,11 @@ msgstr ""
 msgid "All Reports"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:53 ../app/controllers/chargeback_controller.rb:420
+#: ../app/controllers/chargeback_controller.rb:53 ../app/controllers/chargeback_controller.rb:419
 msgid "All Saved Chargeback Reports"
 msgstr ""
 
-#: ../app/presenters/tree_builder_report_saved_reports.rb:18 ../app/controllers/report_controller/saved_reports.rb:133
+#: ../app/presenters/tree_builder_report_saved_reports.rb:18 ../app/controllers/report_controller/saved_reports.rb:132
 msgid "All Saved Reports"
 msgstr ""
 
@@ -3602,7 +3602,7 @@ msgstr ""
 msgid "All Sections"
 msgstr ""
 
-#: ../app/presenters/tree_builder_service_catalog.rb:17 ../app/controllers/service_controller.rb:329
+#: ../app/presenters/tree_builder_service_catalog.rb:17 ../app/controllers/service_controller.rb:321
 msgid "All Services"
 msgstr ""
 
@@ -5298,7 +5298,7 @@ msgstr ""
 msgid "Can't access selected records"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_edit_view.rb:31 ../app/views/ems_cloud/sync_users.html.haml:50 ../app/views/ems_cloud/sync_users.html.haml:50 ../app/views/ems_cloud/discover.html.haml:39 ../app/views/ems_cloud/discover.html.haml:39 ../app/views/miq_policy/_export.html.haml:26 ../app/views/miq_policy/import.html.haml:47 ../app/views/vm_common/_live_migrate.html.haml:77 ../app/views/vm_common/_reconfigure.html.haml:400 ../app/views/vm_common/_evacuate.html.haml:75 ../app/views/vm_common/_resize.html.haml:38 ../app/views/vm_common/_add_to_service.html.haml:33 ../app/views/vm_common/_snap.html.haml:35 ../app/views/host_aggregate/edit.html.haml:30 ../app/views/host_aggregate/new.html.haml:61 ../app/views/miq_request/_prov_form_buttons.html.haml:10 ../app/views/miq_request/_prov_form_buttons.html.haml:36 ../app/views/middleware_shared/_deploy.html.haml:69 ../app/views/middleware_shared/_ops_params.html.haml:51 ../app/views/cloud_volume/attach.html.haml:51 ../app/views/cloud_volume/backup_new.html.haml:57 ../app/views/cloud_volume/backup_select.html.haml:34 ../app/views/cloud_volume/detach.html.haml:31 ../app/views/cloud_volume/snapshot_new.html.haml:34 ../app/views/shared/dialogs/_dialog_user.html.haml:15 ../app/views/shared/views/_retire.html.haml:74 ../app/views/shared/views/_retire.html.haml:74 ../app/views/report/_export_widgets.html.haml:31 ../app/views/static/deploy_containers_provider/deploy-provider-details-no-provider.html.haml:179 ../app/views/static/edit_alert_dialog.html.haml:39 ../app/views/ems_infra/scaledown.html.haml:46 ../app/views/ems_infra/scaledown.html.haml:46 ../app/views/ems_infra/register_nodes.html.haml:15 ../app/views/ems_infra/scaling.html.haml:32 ../app/views/ems_infra/scaling.html.haml:32 ../app/views/ems_physical_infra/discover.html.haml:75 ../app/views/ems_physical_infra/discover.html.haml:75 ../app/views/layouts/_ae_tree_select.html.haml:39 ../app/views/layouts/_ae_tree_select.html.haml:49 ../app/views/layouts/_user_input_filter.html.haml:100 ../app/views/layouts/_edit_buttons.html.haml:33 ../app/views/layouts/_edit_buttons.html.haml:33 ../app/views/layouts/_edit_buttons.html.haml:50 ../app/views/layouts/_edit_buttons.html.haml:50 ../app/views/layouts/angular/_custom_form_buttons_controller_as.html.haml:15 ../app/views/layouts/angular/_x_custom_form_buttons_angular.html.haml:16 ../app/views/layouts/angular/_x_edit_buttons_angular.html.haml:23 ../app/views/layouts/angular/_generic_form_buttons.html.haml:23 ../app/views/layouts/_edit_form_buttons.html.haml:108 ../app/views/layouts/_edit_form_buttons.html.haml:116 ../app/views/layouts/_edit_form_buttons.html.haml:140 ../app/views/layouts/_edit_form_buttons.html.haml:148 ../app/views/layouts/_adv_search_footer.html.haml:77 ../app/views/layouts/_adv_search_footer.html.haml:88 ../app/views/layouts/_x_dialog_buttons.html.haml:38 ../app/views/layouts/_x_dialog_buttons.html.haml:56 ../app/views/layouts/_discover.html.haml:70 ../app/views/layouts/_discover.html.haml:70 ../app/views/layouts/_x_edit_buttons.html.haml:119 ../app/views/layouts/_x_edit_buttons.html.haml:151 ../app/views/layouts/_x_edit_buttons.html.haml:169 ../app/views/layouts/_x_edit_buttons.html.haml:187 ../app/views/layouts/_form_buttons.html.haml:56 ../app/views/layouts/_form_buttons.html.haml:69 ../app/views/miq_ae_customization/editor.html.haml:40 ../app/views/miq_ae_customization/_dialog_import_export.html.haml:30 ../app/views/middleware_server/_choose_datasource.html.haml:32 ../app/views/middleware_server/_add_jdbc_driver.html.haml:132 ../app/views/middleware_server/_add_datasource_step2.html.haml:30 ../app/views/middleware_server/_add_datasource_step3.html.haml:92 ../app/views/middleware_server/_add_datasource_step1.html.haml:42 ../app/views/miq_ae_tools/_import_export.html.haml:112 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:32 ../app/views/catalog/_confirmation_modal.html.haml:30 ../app/assets/javascripts/components/ansible-credential-options.js:46 ../app/assets/javascripts/controllers/container_deployment/wizard/wizard-directive.js:46 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:10
+#: ../app/helpers/application_helper/toolbar/x_edit_view.rb:31 ../app/views/ems_cloud/sync_users.html.haml:50 ../app/views/ems_cloud/sync_users.html.haml:50 ../app/views/ems_cloud/discover.html.haml:39 ../app/views/ems_cloud/discover.html.haml:39 ../app/views/miq_policy/_export.html.haml:26 ../app/views/miq_policy/import.html.haml:47 ../app/views/vm_common/_live_migrate.html.haml:77 ../app/views/vm_common/_reconfigure.html.haml:400 ../app/views/vm_common/_evacuate.html.haml:75 ../app/views/vm_common/_resize.html.haml:38 ../app/views/vm_common/_add_to_service.html.haml:33 ../app/views/vm_common/_snap.html.haml:35 ../app/views/host_aggregate/edit.html.haml:30 ../app/views/host_aggregate/new.html.haml:61 ../app/views/miq_request/_prov_form_buttons.html.haml:10 ../app/views/miq_request/_prov_form_buttons.html.haml:36 ../app/views/middleware_shared/_deploy.html.haml:69 ../app/views/middleware_shared/_ops_params.html.haml:51 ../app/views/cloud_volume/attach.html.haml:51 ../app/views/cloud_volume/backup_new.html.haml:57 ../app/views/cloud_volume/backup_select.html.haml:34 ../app/views/cloud_volume/detach.html.haml:31 ../app/views/cloud_volume/snapshot_new.html.haml:34 ../app/views/shared/dialogs/_dialog_user.html.haml:15 ../app/views/shared/dialogs/_reconfigure_dialog.html.haml:16 ../app/views/shared/views/_retire.html.haml:74 ../app/views/shared/views/_retire.html.haml:74 ../app/views/report/_export_widgets.html.haml:31 ../app/views/static/deploy_containers_provider/deploy-provider-details-no-provider.html.haml:179 ../app/views/static/edit_alert_dialog.html.haml:39 ../app/views/ems_infra/scaledown.html.haml:46 ../app/views/ems_infra/scaledown.html.haml:46 ../app/views/ems_infra/register_nodes.html.haml:15 ../app/views/ems_infra/scaling.html.haml:32 ../app/views/ems_infra/scaling.html.haml:32 ../app/views/ems_physical_infra/discover.html.haml:75 ../app/views/ems_physical_infra/discover.html.haml:75 ../app/views/layouts/_ae_tree_select.html.haml:39 ../app/views/layouts/_ae_tree_select.html.haml:49 ../app/views/layouts/_user_input_filter.html.haml:100 ../app/views/layouts/_edit_buttons.html.haml:33 ../app/views/layouts/_edit_buttons.html.haml:33 ../app/views/layouts/_edit_buttons.html.haml:50 ../app/views/layouts/_edit_buttons.html.haml:50 ../app/views/layouts/angular/_custom_form_buttons_controller_as.html.haml:15 ../app/views/layouts/angular/_x_custom_form_buttons_angular.html.haml:16 ../app/views/layouts/angular/_x_edit_buttons_angular.html.haml:23 ../app/views/layouts/angular/_generic_form_buttons.html.haml:23 ../app/views/layouts/_edit_form_buttons.html.haml:108 ../app/views/layouts/_edit_form_buttons.html.haml:116 ../app/views/layouts/_edit_form_buttons.html.haml:140 ../app/views/layouts/_edit_form_buttons.html.haml:148 ../app/views/layouts/_adv_search_footer.html.haml:77 ../app/views/layouts/_adv_search_footer.html.haml:88 ../app/views/layouts/_x_dialog_buttons.html.haml:38 ../app/views/layouts/_x_dialog_buttons.html.haml:56 ../app/views/layouts/_discover.html.haml:70 ../app/views/layouts/_discover.html.haml:70 ../app/views/layouts/_x_edit_buttons.html.haml:119 ../app/views/layouts/_x_edit_buttons.html.haml:151 ../app/views/layouts/_x_edit_buttons.html.haml:169 ../app/views/layouts/_x_edit_buttons.html.haml:187 ../app/views/layouts/_form_buttons.html.haml:56 ../app/views/layouts/_form_buttons.html.haml:69 ../app/views/miq_ae_customization/editor.html.haml:40 ../app/views/miq_ae_customization/_dialog_import_export.html.haml:30 ../app/views/middleware_server/_choose_datasource.html.haml:32 ../app/views/middleware_server/_add_jdbc_driver.html.haml:132 ../app/views/middleware_server/_add_datasource_step2.html.haml:30 ../app/views/middleware_server/_add_datasource_step3.html.haml:92 ../app/views/middleware_server/_add_datasource_step1.html.haml:42 ../app/views/miq_ae_tools/_import_export.html.haml:112 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:32 ../app/views/catalog/_confirmation_modal.html.haml:30 ../app/assets/javascripts/components/ansible-credential-options.js:46 ../app/assets/javascripts/controllers/container_deployment/wizard/wizard-directive.js:46 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:10
 msgid "Cancel"
 msgstr ""
 
@@ -5642,7 +5642,7 @@ msgstr ""
 msgid "Changing to remote replication role will remove all current subscriptions"
 msgstr ""
 
-#: ../app/presenters/menu/default_menu.rb:26 ../app/helpers/application_helper/title.rb:41 ../app/controllers/chargeback_controller.rb:924
+#: ../app/presenters/menu/default_menu.rb:26 ../app/helpers/application_helper/title.rb:41 ../app/controllers/chargeback_controller.rb:923
 msgid "Chargeback"
 msgstr ""
 
@@ -5654,7 +5654,7 @@ msgstr ""
 msgid "Chargeback Interval"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:179
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:172
 msgid "Chargeback Preview"
 msgstr ""
 
@@ -6646,7 +6646,7 @@ msgstr ""
 msgid "Collapse All"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/diagnostics_zone_center.rb:72 ../app/helpers/application_helper/toolbar/diagnostics_server_center.rb:64 ../app/views/miq_ae_class/_instance_fields.html.haml:13 ../app/views/miq_ae_class/_instance_form.html.haml:49 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
+#: ../app/helpers/application_helper/toolbar/diagnostics_zone_center.rb:72 ../app/helpers/application_helper/toolbar/diagnostics_server_center.rb:64 ../app/views/miq_ae_class/_instance_fields.html.haml:16 ../app/views/miq_ae_class/_instance_form.html.haml:53 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
 msgid "Collect"
 msgstr ""
 
@@ -6798,7 +6798,7 @@ msgstr ""
 msgid "Compare selected Templates"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:344
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:337
 msgid "Compare selected VMs"
 msgstr ""
 
@@ -6842,11 +6842,11 @@ msgstr ""
 msgid "Compute"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:396
+#: ../app/controllers/chargeback_controller.rb:395
 msgid "Compute Chargeback Rate \"%{name}\""
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:388
+#: ../app/controllers/chargeback_controller.rb:387
 msgid "Compute Chargeback Rates"
 msgstr ""
 
@@ -6854,7 +6854,7 @@ msgstr ""
 msgid "Compute Profile"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:405
+#: ../app/controllers/chargeback_controller.rb:404
 msgid "Compute Rate Assignments"
 msgstr ""
 
@@ -7572,7 +7572,7 @@ msgstr ""
 msgid "Create a new snapshot for this Template"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:295
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:288
 msgid "Create a new snapshot for this VM"
 msgstr ""
 
@@ -7644,11 +7644,11 @@ msgstr ""
 msgid "Credential validation returned: %{message}"
 msgstr ""
 
-#: ../app/controllers/mixins/manager_controller_mixin.rb:86 ../app/controllers/mixins/ems_common_angular.rb:99
+#: ../app/controllers/mixins/manager_controller_mixin.rb:86 ../app/controllers/mixins/ems_common_angular.rb:100
 msgid "Credential validation was not successful: %{details}"
 msgstr ""
 
-#: ../app/controllers/host_controller.rb:178 ../app/controllers/host_controller.rb:304 ../app/controllers/mixins/manager_controller_mixin.rb:89 ../app/controllers/mixins/ems_common_angular.rb:97 ../app/controllers/ops_controller/settings/rhn.rb:176 ../app/controllers/ops_controller/settings/ldap.rb:140
+#: ../app/controllers/host_controller.rb:178 ../app/controllers/host_controller.rb:304 ../app/controllers/mixins/manager_controller_mixin.rb:89 ../app/controllers/mixins/ems_common_angular.rb:98 ../app/controllers/ops_controller/settings/rhn.rb:176 ../app/controllers/ops_controller/settings/ldap.rb:140
 msgid "Credential validation was successful"
 msgstr ""
 
@@ -7972,7 +7972,7 @@ msgstr ""
 msgid "Data Type"
 msgstr ""
 
-#: ../app/views/miq_ae_class/_instance_form.html.haml:60 ../app/views/miq_ae_class/_class_fields.html.haml:27
+#: ../app/views/miq_ae_class/_instance_form.html.haml:65 ../app/views/miq_ae_class/_class_fields.html.haml:27
 msgid "Data Type:"
 msgstr ""
 
@@ -7984,7 +7984,7 @@ msgstr ""
 msgid "Data column must be selected when chart mode is set to \"Values\""
 msgstr ""
 
-#: ../app/views/miq_ae_class/_instance_fields.html.haml:24
+#: ../app/views/miq_ae_class/_instance_fields.html.haml:25
 msgid "Data type: %{data_type}"
 msgstr ""
 
@@ -8313,7 +8313,7 @@ msgstr ""
 msgid "Delete All"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:151 ../app/helpers/application_helper/toolbar/x_vm_center.rb:319
+#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:151 ../app/helpers/application_helper/toolbar/x_vm_center.rb:312
 msgid "Delete All Existing Snapshots"
 msgstr ""
 
@@ -8349,7 +8349,7 @@ msgstr ""
 msgid "Delete Row"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:142 ../app/helpers/application_helper/toolbar/x_vm_center.rb:308
+#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:142 ../app/helpers/application_helper/toolbar/x_vm_center.rb:301
 msgid "Delete Selected Snapshot"
 msgstr ""
 
@@ -8361,7 +8361,7 @@ msgstr ""
 msgid "Delete Snapshot"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:136 ../app/helpers/application_helper/toolbar/x_vm_center.rb:302
+#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:136 ../app/helpers/application_helper/toolbar/x_vm_center.rb:295
 msgid "Delete Snapshots"
 msgstr ""
 
@@ -8381,7 +8381,7 @@ msgstr ""
 msgid "Delete all of this Templates existing snapshots?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:321
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:314
 msgid "Delete all of this VMs existing snapshots?"
 msgstr ""
 
@@ -8989,7 +8989,7 @@ msgstr ""
 msgid "Dialog \"%{name}\" was saved"
 msgstr ""
 
-#: ../app/assets/javascripts/controllers/dialog_user/dialog_user_controller.js:74
+#: ../app/assets/javascripts/controllers/dialog_user/dialog_user_reconfigure_controller.js:60 ../app/assets/javascripts/controllers/dialog_user/dialog_user_controller.js:66
 msgid "Dialog Cancelled"
 msgstr ""
 
@@ -9679,7 +9679,7 @@ msgstr ""
 msgid "Edit %{product} Server Relationship for %{vm_or_template} \"%{name}\""
 msgstr ""
 
-#: ../app/controllers/mixins/ems_common_angular.rb:55
+#: ../app/controllers/mixins/ems_common_angular.rb:56
 msgid "Edit %{table} '%{name}'"
 msgstr ""
 
@@ -9947,7 +9947,7 @@ msgstr ""
 msgid "Edit Tags for Datastore"
 msgstr ""
 
-#: ../app/controllers/service_controller.rb:382
+#: ../app/controllers/service_controller.rb:378
 msgid "Edit Tags for Service"
 msgstr ""
 
@@ -10343,7 +10343,7 @@ msgstr ""
 msgid "Edit Tags for this Template"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:91 ../app/helpers/application_helper/toolbar/x_vm_center.rb:339
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:91 ../app/helpers/application_helper/toolbar/x_vm_center.rb:332
 msgid "Edit Tags for this VM"
 msgstr ""
 
@@ -10383,7 +10383,7 @@ msgstr ""
 msgid "Edit of %s \\\"%s\\\" was canceled by the user."
 msgstr ""
 
-#: ../app/controllers/vm_common.rb:768 ../app/controllers/miq_ae_class_controller.rb:1110 ../app/controllers/mixins/ems_common_angular.rb:26 ../app/controllers/ops_controller/ops_rbac.rb:112
+#: ../app/controllers/vm_common.rb:768 ../app/controllers/miq_ae_class_controller.rb:1110 ../app/controllers/mixins/ems_common_angular.rb:27 ../app/controllers/ops_controller/ops_rbac.rb:112
 msgid "Edit of %{model} \"%{name}\" was cancelled by the user"
 msgstr ""
 
@@ -11123,7 +11123,7 @@ msgstr ""
 msgid "Editing Sequence of User Groups"
 msgstr ""
 
-#: ../app/controllers/service_controller.rb:378
+#: ../app/controllers/service_controller.rb:374
 msgid "Editing Service \"%{name}\""
 msgstr ""
 
@@ -14703,7 +14703,7 @@ msgstr ""
 msgid "Max Pods Capacity"
 msgstr ""
 
-#: ../app/views/miq_ae_class/_instance_fields.html.haml:14 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
+#: ../app/views/miq_ae_class/_instance_fields.html.haml:14 ../app/views/miq_ae_class/_instance_form.html.haml:51 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
 msgid "Max Retries"
 msgstr ""
 
@@ -14719,7 +14719,7 @@ msgstr ""
 msgid "Max TTL value must be numeric"
 msgstr ""
 
-#: ../app/views/miq_ae_class/_instance_fields.html.haml:15 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
+#: ../app/views/miq_ae_class/_instance_fields.html.haml:15 ../app/views/miq_ae_class/_instance_form.html.haml:52 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
 msgid "Max Time"
 msgstr ""
 
@@ -14819,7 +14819,7 @@ msgstr ""
 msgid "Menus"
 msgstr ""
 
-#: ../app/helpers/container_helper/textual_summary.rb:57 ../app/helpers/container_build_helper/textual_summary.rb:26 ../app/views/miq_policy/import.html.haml:11 ../app/views/ops/_schedule_show.html.haml:57 ../app/views/miq_request/_ae_prov_show.html.haml:12 ../app/views/shared/buttons/_ab_show.html.haml:78 ../app/views/miq_ae_class/_instance_fields.html.haml:16 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54 ../app/views/report/_widget_show.html.haml:45 ../app/views/static/edit_alert_dialog.html.haml:11 ../app/views/static/generic_object/main_custom_button_form.html.haml:92 ../app/views/layouts/_ae_resolve_options.html.haml:28 ../app/views/layouts/angular-bootstrap/_ae_resolve_options.html.haml:16
+#: ../app/helpers/container_helper/textual_summary.rb:57 ../app/helpers/container_build_helper/textual_summary.rb:26 ../app/views/miq_policy/import.html.haml:11 ../app/views/ops/_schedule_show.html.haml:57 ../app/views/miq_request/_ae_prov_show.html.haml:12 ../app/views/shared/buttons/_ab_show.html.haml:78 ../app/views/miq_ae_class/_instance_fields.html.haml:17 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54 ../app/views/report/_widget_show.html.haml:45 ../app/views/static/edit_alert_dialog.html.haml:11 ../app/views/static/generic_object/main_custom_button_form.html.haml:92 ../app/views/layouts/_ae_resolve_options.html.haml:28 ../app/views/layouts/angular-bootstrap/_ae_resolve_options.html.haml:16
 msgid "Message"
 msgstr ""
 
@@ -14963,7 +14963,7 @@ msgstr ""
 msgid "Monitor Alerts Overview"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:106 ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:116 ../app/helpers/application_helper/toolbar/container_replicator_center.rb:6 ../app/helpers/application_helper/toolbar/ems_network_center.rb:62 ../app/helpers/application_helper/toolbar/ems_physical_infra_center.rb:67 ../app/helpers/application_helper/toolbar/ems_container_center.rb:58 ../app/helpers/application_helper/toolbar/ems_storage_center.rb:55 ../app/helpers/application_helper/toolbar/host_center.rb:123 ../app/helpers/application_helper/toolbar/middleware_datasource_center.rb:6 ../app/helpers/application_helper/toolbar/x_vm_center.rb:158 ../app/helpers/application_helper/toolbar/ems_middleware_center.rb:36 ../app/helpers/application_helper/toolbar/container_node_center.rb:6 ../app/helpers/application_helper/toolbar/ems_cluster_center.rb:49 ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:178 ../app/helpers/application_helper/toolbar/container_project_center.rb:6 ../app/helpers/application_helper/toolbar/ems_cloud_center.rb:75 ../app/helpers/application_helper/toolbar/container_service_center.rb:6 ../app/helpers/application_helper/toolbar/availability_zone_center.rb:21 ../app/helpers/application_helper/toolbar/ems_datawarehouse_center.rb:36 ../app/helpers/application_helper/toolbar/container_group_center.rb:6 ../app/helpers/application_helper/toolbar/container_center.rb:6 ../app/helpers/application_helper/toolbar/physical_server_center.rb:227 ../app/helpers/application_helper/toolbar/middleware_server_center.rb:7 ../app/helpers/application_helper/toolbar/ems_infra_center.rb:88 ../app/helpers/application_helper/toolbar/storage_center.rb:48 ../app/helpers/application_helper/toolbar/middleware_messaging_center.rb:7
+#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:106 ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:116 ../app/helpers/application_helper/toolbar/container_replicator_center.rb:6 ../app/helpers/application_helper/toolbar/ems_network_center.rb:62 ../app/helpers/application_helper/toolbar/ems_physical_infra_center.rb:67 ../app/helpers/application_helper/toolbar/ems_container_center.rb:58 ../app/helpers/application_helper/toolbar/ems_storage_center.rb:55 ../app/helpers/application_helper/toolbar/host_center.rb:123 ../app/helpers/application_helper/toolbar/middleware_datasource_center.rb:6 ../app/helpers/application_helper/toolbar/x_vm_center.rb:151 ../app/helpers/application_helper/toolbar/ems_middleware_center.rb:36 ../app/helpers/application_helper/toolbar/container_node_center.rb:6 ../app/helpers/application_helper/toolbar/ems_cluster_center.rb:49 ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:178 ../app/helpers/application_helper/toolbar/container_project_center.rb:6 ../app/helpers/application_helper/toolbar/ems_cloud_center.rb:75 ../app/helpers/application_helper/toolbar/container_service_center.rb:6 ../app/helpers/application_helper/toolbar/availability_zone_center.rb:21 ../app/helpers/application_helper/toolbar/ems_datawarehouse_center.rb:36 ../app/helpers/application_helper/toolbar/container_group_center.rb:6 ../app/helpers/application_helper/toolbar/container_center.rb:6 ../app/helpers/application_helper/toolbar/physical_server_center.rb:227 ../app/helpers/application_helper/toolbar/middleware_server_center.rb:7 ../app/helpers/application_helper/toolbar/ems_infra_center.rb:88 ../app/helpers/application_helper/toolbar/storage_center.rb:48 ../app/helpers/application_helper/toolbar/middleware_messaging_center.rb:7
 msgid "Monitoring"
 msgstr ""
 
@@ -15195,7 +15195,7 @@ msgstr ""
 msgid "NTP Servers"
 msgstr ""
 
-#: ../app/helpers/container_image_helper/textual_summary.rb:130 ../app/helpers/container_group_helper/textual_summary.rb:25 ../app/helpers/container_group_helper/textual_summary.rb:65 ../app/helpers/container_helper/textual_summary.rb:134 ../app/helpers/container_template_helper/textual_summary.rb:25 ../app/helpers/container_service_helper/textual_summary.rb:14 ../app/helpers/container_build_helper/textual_summary.rb:25 ../app/helpers/container_project_helper/textual_summary.rb:27 ../app/helpers/container_project_helper/textual_summary.rb:49 ../app/helpers/provider_foreman_helper.rb:128 ../app/helpers/provider_foreman_helper.rb:210 ../app/helpers/provider_foreman_helper.rb:239 ../app/helpers/provider_foreman_helper.rb:285 ../app/helpers/persistent_volume_helper/textual_summary.rb:179 ../app/helpers/automation_manager_helper.rb:46 ../app/helpers/automation_manager_helper.rb:75 ../app/helpers/automation_manager_helper.rb:121 ../app/helpers/generic_object_helper/textual_summary.rb:37 ../app/helpers/pxe_helper/textual_summary.rb:48 ../app/helpers/pxe_helper/textual_summary.rb:72 ../app/helpers/pxe_helper/textual_summary.rb:96 ../app/helpers/pxe_helper/textual_summary.rb:116 ../app/helpers/pxe_helper/textual_summary.rb:140 ../app/helpers/service_helper/textual_summary.rb:291 ../app/helpers/generic_object_definition_helper/textual_summary.rb:9 ../app/helpers/generic_object_definition_helper/textual_summary.rb:37 ../app/helpers/generic_object_definition_helper/textual_summary.rb:43 ../app/helpers/generic_object_definition_helper/textual_summary.rb:59 ../app/helpers/container_node_helper/textual_summary.rb:31 ../app/helpers/ops_helper/textual_summary.rb:55 ../app/helpers/ops_helper/textual_summary.rb:120 ../app/helpers/ops_helper/textual_summary.rb:129 ../app/helpers/ops_helper/textual_summary.rb:138 ../app/helpers/ops_helper/textual_summary.rb:160 ../app/controllers/application_controller/miq_request_methods.rb:318 ../app/controllers/application_controller/miq_request_methods.rb:330 ../app/controllers/application_controller/miq_request_methods.rb:341 ../app/controllers/application_controller/miq_request_methods.rb:353 ../app/controllers/application_controller/miq_request_methods.rb:370 ../app/controllers/application_controller/miq_request_methods.rb:385 ../app/controllers/application_controller/miq_request_methods.rb:401 ../app/controllers/application_controller/miq_request_methods.rb:435 ../app/controllers/application_controller/miq_request_methods.rb:441 ../app/views/miq_policy/_action_details.html.haml:47 ../app/views/vm_common/_reconfigure.html.haml:129 ../app/views/vm_common/_reconfigure.html.haml:318 ../app/views/vm_common/_snap.html.haml:11 ../app/views/configuration/_timeprofile_form.html.haml:207 ../app/views/ansible_credential/_credential_form.html.haml:15 ../app/views/container_project/_show_dashboard.html.haml:89 ../app/views/ops/_ap_form_file.html.haml:8 ../app/views/ops/_classification_entries.html.haml:6 ../app/views/ops/_settings_co_categories_tab.html.haml:5 ../app/views/ops/_ldap_region_show.html.haml:9 ../app/views/ops/_ldap_region_show.html.haml:31 ../app/views/ops/_rbac_role_details.html.haml:12 ../app/views/ops/_category_form.html.haml:57 ../app/views/ops/_zone_form.html.haml:9 ../app/views/ops/_ap_show.html.haml:8 ../app/views/ops/_ap_show.html.haml:41 ../app/views/ops/_rbac_tenant_details.html.haml:9 ../app/views/ops/_rbac_tenant_details.html.haml:47 ../app/views/ops/_rbac_tenant_details.html.haml:61 ../app/views/ops/_ldap_domain_show.html.haml:8 ../app/views/ops/_ap_form.html.haml:10 ../app/views/ops/_ldap_region_form.html.haml:10 ../app/views/ops/_ldap_domain_form.html.haml:12 ../app/views/ops/_schedule_form.html.haml:13 ../app/views/ops/_db_info.html.haml:8 ../app/views/ops/_db_info.html.haml:49 ../app/views/ops/_db_info.html.haml:89 ../app/views/ops/_ap_form_nteventlog.html.haml:8 ../app/views/ops/_settings_evm_servers_tab.html.haml:8 ../app/views/shared/views/ems_common/angular/_form.html.haml:9 ../app/views/flavor/_flavor_form.html.haml:29 ../app/views/miq_ae_class/_instance_fields.html.haml:8 ../app/views/miq_ae_class/_instance_form.html.haml:13 ../app/views/miq_ae_class/_instance_form.html.haml:44 ../app/views/miq_ae_class/_ns_list.html.haml:11 ../app/views/miq_ae_class/_ns_list.html.haml:55 ../app/views/miq_ae_class/_inputs.html.haml:9 ../app/views/miq_ae_class/_class_props.html.haml:14 ../app/views/miq_ae_class/_angular_method_form.html.haml:28 ../app/views/miq_ae_class/_class_form.html.haml:13 ../app/views/miq_ae_class/_method_inputs.html.haml:17 ../app/views/miq_ae_class/_method_form.html.haml:35 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54 ../app/views/pxe/_template_form.html.haml:9 ../app/views/pxe/_pxe_form.html.haml:9 ../app/views/pxe/_iso_datastore_details.html.haml:17 ../app/views/pxe/_pxe_image_type_form.html.haml:9 ../app/views/pxe/_pxe_server_details.html.haml:21 ../app/views/pxe/_pxe_server_details.html.haml:42 ../app/views/orchestration_stack/_copy_orchestration_template.html.haml:11 ../app/views/orchestration_stack/_stack_orchestration_template.html.haml:9 ../app/views/report/_db_form.html.haml:12 ../app/views/report/_db_show.html.haml:6 ../app/views/report/_report_list.html.haml:26 ../app/views/report/_report_list.html.haml:45 ../app/views/report/_report_list.html.haml:61 ../app/views/report/_schedule_form.html.haml:9 ../app/views/report/_report_info.html.haml:58 ../app/views/chargeback/_cb_assignments.html.haml:57 ../app/views/chargeback/_cb_assignments.html.haml:90 ../app/views/chargeback/_cb_assignments.html.haml:109 ../app/views/chargeback/_cb_assignments.html.haml:128 ../app/views/chargeback/_reports_list.html.haml:32 ../app/views/static/ops/tenant/tenant.html.haml:10 ../app/views/static/deploy_containers_provider/deploy-provider-config-auth-settings.html.haml:30 ../app/views/static/deploy_containers_provider/deploy-provider-details-general.html.haml:6 ../app/views/static/generic_object/generic_object_definition.html.haml:11 ../app/views/ems_infra/_form.html.haml:9 ../app/views/configuration_manager/_shared_form.html.haml:16 ../app/views/ems_physical_infra/_form.html.haml:9 ../app/views/ems_datawarehouse/_form.html.haml:9 ../app/views/auth_key_pair_cloud/_form.html.haml:19 ../app/views/host/_form.html.haml:18 ../app/views/planning/_planning_summary.html.haml:31 ../app/views/miq_ae_customization/_dialog_field_form.html.haml:19 ../app/views/miq_ae_customization/_old_dialogs_form.html.haml:9 ../app/views/miq_ae_customization/_old_dialogs_details.html.haml:12 ../app/views/middleware_server/_specify_driver.html.haml:3 ../app/views/middleware_server/_add_datasource_step3.html.haml:76 ../app/views/middleware_server/_add_datasource_step1.html.haml:8 ../app/views/service/_service_form.html.haml:18 ../app/views/ems_container/_form.html.haml:9 ../app/views/ems_middleware/_form.html.haml:9 ../app/views/_ldap_domain_form.html.haml:12 ../app/views/ansible_repository/_repository_form.html.haml:16 ../app/views/catalog/_ot_add.html.haml:8 ../app/views/catalog/_ot_edit.html.haml:8 ../app/views/catalog/_form_resources_info.html.haml:32 ../app/views/catalog/_sandt_tree_show.html.haml:158 ../app/views/catalog/_st_angular_form.html.haml:14 ../app/views/catalog/_ot_tree_show.html.haml:5 ../app/views/catalog/_ot_copy.html.haml:11 ../app/views/catalog/_stcat_form.html.haml:11 ../app/views/catalog/_svccat_tree_show.html.haml:15 ../app/views/catalog/_stcat_tree_show.html.haml:6 ../app/assets/javascripts/components/generic_object/main-custom-button-form-component.js:57 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:23 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:24 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:25 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-master-nodes-controller.js:238 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-details-no-provider-controller.js:89 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-details-existing-vms-controller.js:20 ../app/assets/javascripts/controllers/alerts/alerts_overview_controller.js:54
+#: ../app/helpers/container_image_helper/textual_summary.rb:130 ../app/helpers/container_group_helper/textual_summary.rb:25 ../app/helpers/container_group_helper/textual_summary.rb:65 ../app/helpers/container_helper/textual_summary.rb:134 ../app/helpers/container_template_helper/textual_summary.rb:25 ../app/helpers/container_service_helper/textual_summary.rb:14 ../app/helpers/container_build_helper/textual_summary.rb:25 ../app/helpers/container_project_helper/textual_summary.rb:27 ../app/helpers/container_project_helper/textual_summary.rb:49 ../app/helpers/provider_foreman_helper.rb:128 ../app/helpers/provider_foreman_helper.rb:210 ../app/helpers/provider_foreman_helper.rb:239 ../app/helpers/provider_foreman_helper.rb:285 ../app/helpers/persistent_volume_helper/textual_summary.rb:179 ../app/helpers/automation_manager_helper.rb:46 ../app/helpers/automation_manager_helper.rb:75 ../app/helpers/automation_manager_helper.rb:121 ../app/helpers/generic_object_helper/textual_summary.rb:37 ../app/helpers/pxe_helper/textual_summary.rb:48 ../app/helpers/pxe_helper/textual_summary.rb:72 ../app/helpers/pxe_helper/textual_summary.rb:96 ../app/helpers/pxe_helper/textual_summary.rb:116 ../app/helpers/pxe_helper/textual_summary.rb:140 ../app/helpers/service_helper/textual_summary.rb:291 ../app/helpers/generic_object_definition_helper/textual_summary.rb:9 ../app/helpers/generic_object_definition_helper/textual_summary.rb:37 ../app/helpers/generic_object_definition_helper/textual_summary.rb:43 ../app/helpers/generic_object_definition_helper/textual_summary.rb:59 ../app/helpers/container_node_helper/textual_summary.rb:31 ../app/helpers/ops_helper/textual_summary.rb:55 ../app/helpers/ops_helper/textual_summary.rb:120 ../app/helpers/ops_helper/textual_summary.rb:129 ../app/helpers/ops_helper/textual_summary.rb:138 ../app/helpers/ops_helper/textual_summary.rb:160 ../app/controllers/application_controller/miq_request_methods.rb:318 ../app/controllers/application_controller/miq_request_methods.rb:330 ../app/controllers/application_controller/miq_request_methods.rb:341 ../app/controllers/application_controller/miq_request_methods.rb:353 ../app/controllers/application_controller/miq_request_methods.rb:370 ../app/controllers/application_controller/miq_request_methods.rb:385 ../app/controllers/application_controller/miq_request_methods.rb:401 ../app/controllers/application_controller/miq_request_methods.rb:435 ../app/controllers/application_controller/miq_request_methods.rb:441 ../app/views/miq_policy/_action_details.html.haml:47 ../app/views/vm_common/_reconfigure.html.haml:129 ../app/views/vm_common/_reconfigure.html.haml:318 ../app/views/vm_common/_snap.html.haml:11 ../app/views/configuration/_timeprofile_form.html.haml:207 ../app/views/ansible_credential/_credential_form.html.haml:15 ../app/views/container_project/_show_dashboard.html.haml:89 ../app/views/ops/_ap_form_file.html.haml:8 ../app/views/ops/_classification_entries.html.haml:6 ../app/views/ops/_settings_co_categories_tab.html.haml:5 ../app/views/ops/_ldap_region_show.html.haml:9 ../app/views/ops/_ldap_region_show.html.haml:31 ../app/views/ops/_rbac_role_details.html.haml:12 ../app/views/ops/_category_form.html.haml:57 ../app/views/ops/_zone_form.html.haml:9 ../app/views/ops/_ap_show.html.haml:8 ../app/views/ops/_ap_show.html.haml:41 ../app/views/ops/_rbac_tenant_details.html.haml:9 ../app/views/ops/_rbac_tenant_details.html.haml:47 ../app/views/ops/_rbac_tenant_details.html.haml:61 ../app/views/ops/_ldap_domain_show.html.haml:8 ../app/views/ops/_ap_form.html.haml:10 ../app/views/ops/_ldap_region_form.html.haml:10 ../app/views/ops/_ldap_domain_form.html.haml:12 ../app/views/ops/_schedule_form.html.haml:13 ../app/views/ops/_db_info.html.haml:8 ../app/views/ops/_db_info.html.haml:49 ../app/views/ops/_db_info.html.haml:89 ../app/views/ops/_ap_form_nteventlog.html.haml:8 ../app/views/ops/_settings_evm_servers_tab.html.haml:8 ../app/views/shared/views/ems_common/angular/_form.html.haml:9 ../app/views/flavor/_flavor_form.html.haml:29 ../app/views/miq_ae_class/_instance_fields.html.haml:8 ../app/views/miq_ae_class/_instance_form.html.haml:13 ../app/views/miq_ae_class/_instance_form.html.haml:45 ../app/views/miq_ae_class/_ns_list.html.haml:11 ../app/views/miq_ae_class/_ns_list.html.haml:55 ../app/views/miq_ae_class/_inputs.html.haml:9 ../app/views/miq_ae_class/_class_props.html.haml:14 ../app/views/miq_ae_class/_angular_method_form.html.haml:28 ../app/views/miq_ae_class/_class_form.html.haml:13 ../app/views/miq_ae_class/_method_inputs.html.haml:17 ../app/views/miq_ae_class/_method_form.html.haml:35 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54 ../app/views/pxe/_template_form.html.haml:9 ../app/views/pxe/_pxe_form.html.haml:9 ../app/views/pxe/_iso_datastore_details.html.haml:17 ../app/views/pxe/_pxe_image_type_form.html.haml:9 ../app/views/pxe/_pxe_server_details.html.haml:21 ../app/views/pxe/_pxe_server_details.html.haml:42 ../app/views/orchestration_stack/_copy_orchestration_template.html.haml:11 ../app/views/orchestration_stack/_stack_orchestration_template.html.haml:9 ../app/views/report/_db_form.html.haml:12 ../app/views/report/_db_show.html.haml:6 ../app/views/report/_report_list.html.haml:26 ../app/views/report/_report_list.html.haml:45 ../app/views/report/_report_list.html.haml:61 ../app/views/report/_schedule_form.html.haml:9 ../app/views/report/_report_info.html.haml:58 ../app/views/chargeback/_cb_assignments.html.haml:57 ../app/views/chargeback/_cb_assignments.html.haml:90 ../app/views/chargeback/_cb_assignments.html.haml:109 ../app/views/chargeback/_cb_assignments.html.haml:128 ../app/views/chargeback/_reports_list.html.haml:32 ../app/views/static/ops/tenant/tenant.html.haml:10 ../app/views/static/deploy_containers_provider/deploy-provider-config-auth-settings.html.haml:30 ../app/views/static/deploy_containers_provider/deploy-provider-details-general.html.haml:6 ../app/views/static/generic_object/generic_object_definition.html.haml:11 ../app/views/ems_infra/_form.html.haml:9 ../app/views/configuration_manager/_shared_form.html.haml:16 ../app/views/ems_physical_infra/_form.html.haml:9 ../app/views/ems_datawarehouse/_form.html.haml:9 ../app/views/auth_key_pair_cloud/_form.html.haml:19 ../app/views/host/_form.html.haml:18 ../app/views/planning/_planning_summary.html.haml:31 ../app/views/miq_ae_customization/_dialog_field_form.html.haml:19 ../app/views/miq_ae_customization/_old_dialogs_form.html.haml:9 ../app/views/miq_ae_customization/_old_dialogs_details.html.haml:12 ../app/views/middleware_server/_specify_driver.html.haml:3 ../app/views/middleware_server/_add_datasource_step3.html.haml:76 ../app/views/middleware_server/_add_datasource_step1.html.haml:8 ../app/views/service/_service_form.html.haml:18 ../app/views/ems_container/_form.html.haml:9 ../app/views/ems_middleware/_form.html.haml:9 ../app/views/_ldap_domain_form.html.haml:12 ../app/views/ansible_repository/_repository_form.html.haml:16 ../app/views/catalog/_ot_add.html.haml:8 ../app/views/catalog/_ot_edit.html.haml:8 ../app/views/catalog/_form_resources_info.html.haml:32 ../app/views/catalog/_sandt_tree_show.html.haml:158 ../app/views/catalog/_st_angular_form.html.haml:14 ../app/views/catalog/_ot_tree_show.html.haml:5 ../app/views/catalog/_ot_copy.html.haml:11 ../app/views/catalog/_stcat_form.html.haml:11 ../app/views/catalog/_svccat_tree_show.html.haml:15 ../app/views/catalog/_stcat_tree_show.html.haml:6 ../app/assets/javascripts/components/generic_object/main-custom-button-form-component.js:57 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:23 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:24 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:25 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-master-nodes-controller.js:238 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-details-no-provider-controller.js:89 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-details-existing-vms-controller.js:20 ../app/assets/javascripts/controllers/alerts/alerts_overview_controller.js:54
 msgid "Name"
 msgstr ""
 
@@ -15965,7 +15965,7 @@ msgstr ""
 msgid "No Service Catalog Items were selected for deletion"
 msgstr ""
 
-#: ../app/controllers/service_controller.rb:290
+#: ../app/controllers/service_controller.rb:282
 msgid "No Services were selected for deletion"
 msgstr ""
 
@@ -16287,7 +16287,7 @@ msgstr ""
 msgid "No providers were selected for %{task}"
 msgstr ""
 
-#: ../app/helpers/application_helper/button/report_only.rb:5 ../app/helpers/application_helper/button/utilization_download.rb:13 ../app/helpers/application_helper/button/chargeback_report_only.rb:3 ../app/helpers/application_helper/button/chargeback_download_choice.rb:3 ../app/helpers/application_helper/button/mixins/render_report_mixin.rb:3 ../app/controllers/chargeback_controller.rb:371 ../app/controllers/application_controller.rb:822 ../app/controllers/report_controller/saved_reports.rb:60 ../app/views/report/_report_list.html.haml:98
+#: ../app/helpers/application_helper/button/report_only.rb:5 ../app/helpers/application_helper/button/utilization_download.rb:13 ../app/helpers/application_helper/button/chargeback_report_only.rb:3 ../app/helpers/application_helper/button/chargeback_download_choice.rb:3 ../app/helpers/application_helper/button/mixins/render_report_mixin.rb:3 ../app/controllers/chargeback_controller.rb:370 ../app/controllers/application_controller.rb:822 ../app/controllers/report_controller/saved_reports.rb:59 ../app/views/report/_report_list.html.haml:98
 msgid "No records found for this report"
 msgstr ""
 
@@ -16783,15 +16783,15 @@ msgstr ""
 msgid "On"
 msgstr ""
 
-#: ../app/views/miq_ae_class/_instance_fields.html.haml:10 ../app/views/miq_ae_class/_instance_form.html.haml:46 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
+#: ../app/views/miq_ae_class/_instance_fields.html.haml:11 ../app/views/miq_ae_class/_instance_form.html.haml:48 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
 msgid "On Entry"
 msgstr ""
 
-#: ../app/helpers/view_helper.rb:131 ../app/views/miq_ae_class/_instance_fields.html.haml:12 ../app/views/miq_ae_class/_instance_form.html.haml:48 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54 ../app/assets/javascripts/controllers/playbook-reusable-code-mixin.js:36
+#: ../app/helpers/view_helper.rb:131 ../app/views/miq_ae_class/_instance_fields.html.haml:13 ../app/views/miq_ae_class/_instance_form.html.haml:50 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54 ../app/assets/javascripts/controllers/playbook-reusable-code-mixin.js:36
 msgid "On Error"
 msgstr ""
 
-#: ../app/views/miq_ae_class/_instance_fields.html.haml:11 ../app/views/miq_ae_class/_instance_form.html.haml:47 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
+#: ../app/views/miq_ae_class/_instance_fields.html.haml:12 ../app/views/miq_ae_class/_instance_form.html.haml:49 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54
 msgid "On Exit"
 msgstr ""
 
@@ -16871,11 +16871,11 @@ msgstr ""
 msgid "Open URL"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:153 ../app/helpers/application_helper/toolbar/x_vm_center.rb:262
+#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:153 ../app/helpers/application_helper/toolbar/x_vm_center.rb:255
 msgid "Open a WebMKS console for this VM"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:160 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:120 ../app/helpers/application_helper/toolbar/x_vm_center.rb:282 ../app/helpers/application_helper/toolbar/container_node_center.rb:78
+#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:160 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:120 ../app/helpers/application_helper/toolbar/x_vm_center.rb:275 ../app/helpers/application_helper/toolbar/container_node_center.rb:78
 msgid "Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM."
 msgstr ""
 
@@ -16883,15 +16883,15 @@ msgstr ""
 msgid "Open a new browser window with the External Logging Presentation UI. This requires the External Logging to be deployed on this Proider."
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:274
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:267
 msgid "Open a web-based VMRC console for this VM.  This requires that VMRC is pre-configured to work in your browser."
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:113 ../app/helpers/application_helper/toolbar/x_vm_center.rb:267
+#: ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:113 ../app/helpers/application_helper/toolbar/x_vm_center.rb:260
 msgid "Open a web-based VNC or SPICE console for this VM"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:150 ../app/helpers/application_helper/toolbar/x_vm_center.rb:259
+#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:150 ../app/helpers/application_helper/toolbar/x_vm_center.rb:252
 msgid "Open a web-based WebMKS console for this VM"
 msgstr ""
 
@@ -16951,7 +16951,7 @@ msgstr ""
 msgid "OpenStack Status"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:277
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:270
 msgid "Opening a VM web-based VMRC console requires that VMRC is pre-configured to work in your browser.  Are you sure?"
 msgstr ""
 
@@ -17071,7 +17071,7 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-#: ../app/controllers/application_controller/dialog_runner.rb:49 ../app/assets/javascripts/controllers/dialog_user/dialog_user_controller.js:59
+#: ../app/controllers/application_controller/dialog_runner.rb:49 ../app/assets/javascripts/controllers/dialog_user/dialog_user_reconfigure_controller.js:53 ../app/assets/javascripts/controllers/dialog_user/dialog_user_controller.js:59
 msgid "Order Request was Submitted"
 msgstr ""
 
@@ -17897,7 +17897,7 @@ msgstr ""
 msgid "Ports"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:8 ../app/helpers/application_helper/toolbar/vm_infras_center.rb:228 ../app/helpers/application_helper/toolbar/physical_servers_center.rb:46 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:189 ../app/helpers/application_helper/toolbar/host_center.rb:150 ../app/helpers/application_helper/toolbar/middleware_domain_center.rb:23 ../app/helpers/application_helper/toolbar/x_vm_center.rb:189 ../app/helpers/application_helper/toolbar/middleware_server_group_center.rb:23 ../app/helpers/application_helper/toolbar/physical_server_center.rb:42 ../app/helpers/application_helper/toolbar/hosts_center.rb:188 ../app/helpers/application_helper/toolbar/middleware_server_center.rb:51 ../app/helpers/application_helper/toolbar/middleware_servers_center.rb:47
+#: ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:8 ../app/helpers/application_helper/toolbar/vm_infras_center.rb:221 ../app/helpers/application_helper/toolbar/physical_servers_center.rb:46 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:189 ../app/helpers/application_helper/toolbar/host_center.rb:150 ../app/helpers/application_helper/toolbar/middleware_domain_center.rb:23 ../app/helpers/application_helper/toolbar/x_vm_center.rb:182 ../app/helpers/application_helper/toolbar/middleware_server_group_center.rb:23 ../app/helpers/application_helper/toolbar/physical_server_center.rb:42 ../app/helpers/application_helper/toolbar/hosts_center.rb:188 ../app/helpers/application_helper/toolbar/middleware_server_center.rb:51 ../app/helpers/application_helper/toolbar/middleware_servers_center.rb:47
 msgid "Power"
 msgstr ""
 
@@ -17909,7 +17909,7 @@ msgstr ""
 msgid "Power Management"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:270 ../app/helpers/application_helper/toolbar/physical_servers_center.rb:65 ../app/helpers/application_helper/toolbar/host_center.rb:211 ../app/helpers/application_helper/toolbar/x_vm_center.rb:223 ../app/helpers/application_helper/toolbar/physical_server_center.rb:59 ../app/helpers/application_helper/toolbar/hosts_center.rb:247 ../app/controllers/mixins/actions/host_actions/power.rb:9 ../app/views/catalog/_form_resources_info.html.haml:79
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:263 ../app/helpers/application_helper/toolbar/physical_servers_center.rb:65 ../app/helpers/application_helper/toolbar/host_center.rb:211 ../app/helpers/application_helper/toolbar/x_vm_center.rb:216 ../app/helpers/application_helper/toolbar/physical_server_center.rb:59 ../app/helpers/application_helper/toolbar/hosts_center.rb:247 ../app/controllers/mixins/actions/host_actions/power.rb:9 ../app/views/catalog/_form_resources_info.html.haml:79
 msgid "Power Off"
 msgstr ""
 
@@ -17917,19 +17917,19 @@ msgstr ""
 msgid "Power Off Immediately"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:269 ../app/helpers/application_helper/toolbar/hosts_center.rb:246
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:262 ../app/helpers/application_helper/toolbar/hosts_center.rb:246
 msgid "Power Off the selected items"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:274 ../app/helpers/application_helper/toolbar/hosts_center.rb:251
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:267 ../app/helpers/application_helper/toolbar/hosts_center.rb:251
 msgid "Power Off the selected items?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:222
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:215
 msgid "Power Off this VM"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:225
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:218
 msgid "Power Off this VM?"
 msgstr ""
 
@@ -17941,23 +17941,23 @@ msgstr ""
 msgid "Power Off this item?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:259 ../app/helpers/application_helper/toolbar/physical_servers_center.rb:52 ../app/helpers/application_helper/toolbar/host_center.rb:202 ../app/helpers/application_helper/toolbar/x_vm_center.rb:214 ../app/helpers/application_helper/toolbar/physical_server_center.rb:48 ../app/helpers/application_helper/toolbar/hosts_center.rb:236 ../app/controllers/mixins/actions/host_actions/power.rb:8 ../app/views/catalog/_form_resources_info.html.haml:78
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:252 ../app/helpers/application_helper/toolbar/physical_servers_center.rb:52 ../app/helpers/application_helper/toolbar/host_center.rb:202 ../app/helpers/application_helper/toolbar/x_vm_center.rb:207 ../app/helpers/application_helper/toolbar/physical_server_center.rb:48 ../app/helpers/application_helper/toolbar/hosts_center.rb:236 ../app/controllers/mixins/actions/host_actions/power.rb:8 ../app/views/catalog/_form_resources_info.html.haml:78
 msgid "Power On"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:258 ../app/helpers/application_helper/toolbar/hosts_center.rb:235
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:251 ../app/helpers/application_helper/toolbar/hosts_center.rb:235
 msgid "Power On the selected items"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:263 ../app/helpers/application_helper/toolbar/hosts_center.rb:240
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:256 ../app/helpers/application_helper/toolbar/hosts_center.rb:240
 msgid "Power On the selected items?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:213
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:206
 msgid "Power On this VM"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:216
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:209
 msgid "Power On this VM?"
 msgstr ""
 
@@ -17969,7 +17969,7 @@ msgstr ""
 msgid "Power On this item?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:227 ../app/helpers/application_helper/toolbar/physical_servers_center.rb:45 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:188 ../app/helpers/application_helper/toolbar/hosts_center.rb:187
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:220 ../app/helpers/application_helper/toolbar/physical_servers_center.rb:45 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:188 ../app/helpers/application_helper/toolbar/hosts_center.rb:187
 msgid "Power Operations"
 msgstr ""
 
@@ -18925,7 +18925,7 @@ msgstr ""
 msgid "Referenced by Actions"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/ansible_repositories_center.rb:7 ../app/helpers/application_helper/toolbar/miq_request_center.rb:29 ../app/helpers/application_helper/toolbar/tasks_center.rb:7 ../app/helpers/application_helper/toolbar/miq_requests_center.rb:7 ../app/helpers/application_helper/toolbar/ansible_repository_center.rb:7 ../app/controllers/application_controller/ci_processing.rb:880 ../app/controllers/mixins/actions/host_actions/misc.rb:171 ../app/controllers/mixins/manager_controller_mixin.rb:273 ../app/views/ops/_settings_workers_tab.html.haml:202 ../app/views/shared/dialogs/_dialog_field_text_box.html.haml:17 ../app/views/shared/dialogs/_dialog_field_check_box.html.haml:13 ../app/views/shared/dialogs/_dialog_field_date_and_date_time_control.html.haml:35 ../app/views/shared/dialogs/_dialog_field_text_area_box.html.haml:16 ../app/views/shared/dialogs/_dialog_field_drop_down_list.html.haml:26 ../app/views/shared/dialogs/_dialog_field_radio_button.html.haml:34 ../app/views/shared/_topology_header_toolbar.html.haml:11 ../app/views/miq_ae_customization/_dialog_sample.html.haml:70 ../app/views/ems_container/ad_hoc/_chart_view_form.html.haml:37
+#: ../app/helpers/application_helper/toolbar/ansible_repositories_center.rb:7 ../app/helpers/application_helper/toolbar/miq_request_center.rb:29 ../app/helpers/application_helper/toolbar/tasks_center.rb:7 ../app/helpers/application_helper/toolbar/miq_requests_center.rb:7 ../app/helpers/application_helper/toolbar/ansible_repository_center.rb:7 ../app/controllers/application_controller/ci_processing.rb:880 ../app/controllers/mixins/actions/host_actions/misc.rb:171 ../app/controllers/mixins/manager_controller_mixin.rb:273 ../app/views/ops/_settings_workers_tab.html.haml:202 ../app/views/shared/dialogs/_dialog_field_text_box.html.haml:17 ../app/views/shared/dialogs/_dialog_field_check_box.html.haml:13 ../app/views/shared/dialogs/_dialog_field_date_and_date_time_control.html.haml:36 ../app/views/shared/dialogs/_dialog_field_text_area_box.html.haml:16 ../app/views/shared/dialogs/_dialog_field_drop_down_list.html.haml:26 ../app/views/shared/dialogs/_dialog_field_radio_button.html.haml:34 ../app/views/shared/_topology_header_toolbar.html.haml:11 ../app/views/miq_ae_customization/_dialog_sample.html.haml:70 ../app/views/ems_container/ad_hoc/_chart_view_form.html.haml:37
 msgid "Refresh"
 msgstr ""
 
@@ -20197,7 +20197,7 @@ msgstr ""
 msgid "Report \"%{name}\": Error during 'miq_report_delete': %{message}"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:472
+#: ../app/controllers/chargeback_controller.rb:471
 msgid "Report \"%{report_name}\""
 msgstr ""
 
@@ -20477,7 +20477,7 @@ msgstr ""
 msgid "Reservation"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:292 ../app/helpers/application_helper/toolbar/host_center.rb:220 ../app/helpers/application_helper/toolbar/x_vm_center.rb:241 ../app/helpers/application_helper/toolbar/hosts_center.rb:258 ../app/helpers/application_helper/toolbar/x_edit_view.rb:22 ../app/controllers/application_controller/ci_processing.rb:600 ../app/views/miq_policy/_rsop_options.html.haml:16 ../app/views/miq_policy/_rsop_options.html.haml:30 ../app/views/vm_common/_reconfigure.html.haml:394 ../app/views/miq_task/_tasks_options.html.haml:82 ../app/views/miq_task/_tasks_options.html.haml:102 ../app/views/host_aggregate/edit.html.haml:25 ../app/views/host_aggregate/new.html.haml:56 ../app/views/ops/_settings_replication_tab.html.haml:201 ../app/views/miq_request/_prov_options.html.haml:65 ../app/views/miq_request/_prov_options.html.haml:85 ../app/views/cloud_volume/attach.html.haml:46 ../app/views/cloud_volume/backup_new.html.haml:52 ../app/views/cloud_volume/backup_select.html.haml:29 ../app/views/cloud_volume/snapshot_new.html.haml:29 ../app/views/layouts/_edit_buttons.html.haml:26 ../app/views/layouts/angular/_custom_form_buttons_controller_as.html.haml:9 ../app/views/layouts/angular/_x_custom_form_buttons_angular.html.haml:10 ../app/views/layouts/angular/_x_edit_buttons_angular.html.haml:17 ../app/views/layouts/angular/_generic_form_buttons.html.haml:17 ../app/views/layouts/_edit_form_buttons.html.haml:76 ../app/views/layouts/_edit_form_buttons.html.haml:90 ../app/views/layouts/_edit_form_buttons.html.haml:98 ../app/views/layouts/_edit_form_buttons.html.haml:130 ../app/views/layouts/_adv_search_footer.html.haml:55 ../app/views/layouts/_adv_search_footer.html.haml:60 ../app/views/layouts/_x_dialog_buttons.html.haml:32 ../app/views/layouts/_x_dialog_buttons.html.haml:54 ../app/views/layouts/_x_edit_buttons.html.haml:107 ../app/views/layouts/_x_edit_buttons.html.haml:141 ../app/views/layouts/_form_buttons.html.haml:42 ../app/views/layouts/_form_buttons.html.haml:48 ../app/views/layouts/_form_buttons.html.haml:66 ../app/views/planning/index.html.haml:15 ../app/views/planning/index.html.haml:28 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:21 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:42 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:8
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:285 ../app/helpers/application_helper/toolbar/host_center.rb:220 ../app/helpers/application_helper/toolbar/x_vm_center.rb:234 ../app/helpers/application_helper/toolbar/hosts_center.rb:258 ../app/helpers/application_helper/toolbar/x_edit_view.rb:22 ../app/controllers/application_controller/ci_processing.rb:600 ../app/views/miq_policy/_rsop_options.html.haml:16 ../app/views/miq_policy/_rsop_options.html.haml:30 ../app/views/vm_common/_reconfigure.html.haml:394 ../app/views/miq_task/_tasks_options.html.haml:82 ../app/views/miq_task/_tasks_options.html.haml:102 ../app/views/host_aggregate/edit.html.haml:25 ../app/views/host_aggregate/new.html.haml:56 ../app/views/ops/_settings_replication_tab.html.haml:201 ../app/views/miq_request/_prov_options.html.haml:65 ../app/views/miq_request/_prov_options.html.haml:85 ../app/views/cloud_volume/attach.html.haml:46 ../app/views/cloud_volume/backup_new.html.haml:52 ../app/views/cloud_volume/backup_select.html.haml:29 ../app/views/cloud_volume/snapshot_new.html.haml:29 ../app/views/layouts/_edit_buttons.html.haml:26 ../app/views/layouts/angular/_custom_form_buttons_controller_as.html.haml:9 ../app/views/layouts/angular/_x_custom_form_buttons_angular.html.haml:10 ../app/views/layouts/angular/_x_edit_buttons_angular.html.haml:17 ../app/views/layouts/angular/_generic_form_buttons.html.haml:17 ../app/views/layouts/_edit_form_buttons.html.haml:76 ../app/views/layouts/_edit_form_buttons.html.haml:90 ../app/views/layouts/_edit_form_buttons.html.haml:98 ../app/views/layouts/_edit_form_buttons.html.haml:130 ../app/views/layouts/_adv_search_footer.html.haml:55 ../app/views/layouts/_adv_search_footer.html.haml:60 ../app/views/layouts/_x_dialog_buttons.html.haml:32 ../app/views/layouts/_x_dialog_buttons.html.haml:54 ../app/views/layouts/_x_edit_buttons.html.haml:107 ../app/views/layouts/_x_edit_buttons.html.haml:141 ../app/views/layouts/_form_buttons.html.haml:42 ../app/views/layouts/_form_buttons.html.haml:48 ../app/views/layouts/_form_buttons.html.haml:66 ../app/views/planning/index.html.haml:15 ../app/views/planning/index.html.haml:28 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:21 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:42 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:8
 msgid "Reset"
 msgstr ""
 
@@ -20529,11 +20529,11 @@ msgstr ""
 msgid "Reset the filter"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:291 ../app/helpers/application_helper/toolbar/hosts_center.rb:257
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:284 ../app/helpers/application_helper/toolbar/hosts_center.rb:257
 msgid "Reset the selected items"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:296 ../app/helpers/application_helper/toolbar/hosts_center.rb:262
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:289 ../app/helpers/application_helper/toolbar/hosts_center.rb:262
 msgid "Reset the selected items?"
 msgstr ""
 
@@ -20541,11 +20541,11 @@ msgstr ""
 msgid "Reset this Shortcut's text"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:240
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:233
 msgid "Reset this VM"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:243
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:236
 msgid "Reset this VM?"
 msgstr ""
 
@@ -20635,7 +20635,7 @@ msgstr ""
 msgid "Restart"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:247 ../app/helpers/application_helper/toolbar/x_vm_center.rb:204 ../app/helpers/application_helper/tasks.rb:12 ../app/controllers/application_controller/ci_processing.rb:621
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:240 ../app/helpers/application_helper/toolbar/x_vm_center.rb:197 ../app/helpers/application_helper/tasks.rb:12 ../app/controllers/application_controller/ci_processing.rb:621
 msgid "Restart Guest"
 msgstr ""
 
@@ -20695,19 +20695,19 @@ msgstr ""
 msgid "Restart server"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:246
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:239
 msgid "Restart the Guest OS on the selected items"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:251
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:244
 msgid "Restart the Guest OS on the selected items?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:203
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:196
 msgid "Restart the Guest OS on this VM"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:206
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:199
 msgid "Restart the Guest OS on this VM?"
 msgstr ""
 
@@ -20887,7 +20887,7 @@ msgstr ""
 msgid "Retire selected Orchestration Stacks"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:213 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:158 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:25
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:206 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:158 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:25
 msgid "Retire selected items"
 msgstr ""
 
@@ -20895,11 +20895,11 @@ msgstr ""
 msgid "Retire the selected Orchestration Stacks?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:212 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:157 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:24
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:205 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:157 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:24
 msgid "Retire the selected items"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:216 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:161 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:28
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:209 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:161 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:28
 msgid "Retire the selected items?"
 msgstr ""
 
@@ -20923,15 +20923,15 @@ msgstr ""
 msgid "Retire this Service?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:147
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:140
 msgid "Retire this VM"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:149
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:142
 msgid "Retire this VM?"
 msgstr ""
 
-#: ../app/presenters/tree_builder_services.rb:43 ../app/controllers/service_controller.rb:324
+#: ../app/presenters/tree_builder_services.rb:43 ../app/controllers/service_controller.rb:316
 msgid "Retired Services"
 msgstr ""
 
@@ -20995,7 +20995,7 @@ msgstr ""
 msgid "Revert to a Snapshot"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:159 ../app/helpers/application_helper/toolbar/x_vm_center.rb:329
+#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:159 ../app/helpers/application_helper/toolbar/x_vm_center.rb:322
 msgid "Revert to selected snapshot"
 msgstr ""
 
@@ -21373,7 +21373,7 @@ msgstr ""
 msgid "Save this %{model} search as:"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:428
+#: ../app/controllers/chargeback_controller.rb:427
 msgid "Saved Chargeback Report \"%{last_run_on}\""
 msgstr ""
 
@@ -21385,7 +21385,7 @@ msgstr ""
 msgid "Saved Chargeback Reports"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:442
+#: ../app/controllers/chargeback_controller.rb:441
 msgid "Saved Chargeback Reports \"%{report_name}\""
 msgstr ""
 
@@ -21397,11 +21397,11 @@ msgstr ""
 msgid "Saved Report \"%{name}\""
 msgstr ""
 
-#: ../app/controllers/report_controller/saved_reports.rb:42
+#: ../app/controllers/report_controller/saved_reports.rb:41
 msgid "Saved Report \"%{time}\" not found, Schedule may have failed"
 msgstr ""
 
-#: ../app/controllers/report_controller/saved_reports.rb:97
+#: ../app/controllers/report_controller/saved_reports.rb:96
 msgid "Saved Report no longer exists"
 msgstr ""
 
@@ -21975,7 +21975,7 @@ msgstr ""
 msgid "Selected"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:445
+#: ../app/controllers/chargeback_controller.rb:444
 msgid "Selected Chargeback Report no longer exists"
 msgstr ""
 
@@ -22039,7 +22039,7 @@ msgstr ""
 msgid "Selected Resources"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:430
+#: ../app/controllers/chargeback_controller.rb:429
 msgid "Selected Saved Chargeback Report no longer exists"
 msgstr ""
 
@@ -22055,11 +22055,11 @@ msgstr ""
 msgid "Selected VM"
 msgstr ""
 
-#: ../app/services/git_based_domain_import_service.rb:98
+#: ../app/services/git_based_domain_import_service.rb:102
 msgid "Selected branch or tag contains more than one domain"
 msgstr ""
 
-#: ../app/services/git_based_domain_import_service.rb:100
+#: ../app/services/git_based_domain_import_service.rb:104
 msgid "Selected branch or tag does not contain a valid domain"
 msgstr ""
 
@@ -22269,7 +22269,7 @@ msgstr ""
 msgid "Service: %{name}"
 msgstr ""
 
-#: ../app/presenters/menu/default_menu.rb:39 ../app/helpers/application_helper/title.rb:65 ../app/helpers/host_helper/textual_summary.rb:385 ../app/controllers/service_controller.rb:246 ../app/controllers/service_controller.rb:311 ../app/controllers/host_controller.rb:71 ../app/controllers/ops_controller/settings/analysis_profiles.rb:6 ../app/views/configuration/_ui_2.html.haml:29 ../app/views/configuration/_ui_2.html.haml:46 ../app/views/container_topology/show.html.haml:21 ../app/views/layouts/listnav/_host.html.haml:169 ../app/assets/javascripts/controllers/container_dashboard/util/dashboard-utils-factory.js:58
+#: ../app/presenters/menu/default_menu.rb:39 ../app/helpers/application_helper/title.rb:65 ../app/helpers/host_helper/textual_summary.rb:385 ../app/controllers/service_controller.rb:238 ../app/controllers/service_controller.rb:303 ../app/controllers/host_controller.rb:71 ../app/controllers/ops_controller/settings/analysis_profiles.rb:6 ../app/views/configuration/_ui_2.html.haml:29 ../app/views/configuration/_ui_2.html.haml:46 ../app/views/container_topology/show.html.haml:21 ../app/views/layouts/listnav/_host.html.haml:169 ../app/assets/javascripts/controllers/container_dashboard/util/dashboard-utils-factory.js:58
 msgid "Services"
 msgstr ""
 
@@ -22317,7 +22317,7 @@ msgstr ""
 msgid "Set Ownership for %{vms_or_templates}"
 msgstr ""
 
-#: ../app/controllers/service_controller.rb:370
+#: ../app/controllers/service_controller.rb:362
 msgid "Set Ownership for Service"
 msgstr ""
 
@@ -22357,7 +22357,7 @@ msgstr ""
 msgid "Set Ownership was cancelled by the user"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:101 ../app/helpers/application_helper/toolbar/orchestration_stack_center.rb:45 ../app/helpers/application_helper/toolbar/x_vm_center.rb:142 ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:145
+#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:101 ../app/helpers/application_helper/toolbar/orchestration_stack_center.rb:45 ../app/helpers/application_helper/toolbar/x_vm_center.rb:135 ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:145
 msgid "Set Retirement Date"
 msgstr ""
 
@@ -22365,7 +22365,7 @@ msgstr ""
 msgid "Set Retirement Date does not apply to selected VM Template"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/orchestration_stacks_center.rb:56 ../app/helpers/application_helper/toolbar/vm_infras_center.rb:203 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:149 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:16
+#: ../app/helpers/application_helper/toolbar/orchestration_stacks_center.rb:56 ../app/helpers/application_helper/toolbar/vm_infras_center.rb:196 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:149 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:16
 msgid "Set Retirement Dates"
 msgstr ""
 
@@ -22373,7 +22373,7 @@ msgstr ""
 msgid "Set Retirement Dates for the selected Orchestration Stacks"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:202 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:148 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:15
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:195 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:148 ../app/helpers/application_helper/toolbar/service/lifecycle_mixin.rb:15
 msgid "Set Retirement Dates for the selected items"
 msgstr ""
 
@@ -22389,7 +22389,7 @@ msgstr ""
 msgid "Set Retirement Dates for this Service"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:141
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:134
 msgid "Set Retirement Dates for this VM"
 msgstr ""
 
@@ -22433,7 +22433,7 @@ msgstr ""
 msgid "Set/Remove retirement date for %{vm_or_template}"
 msgstr ""
 
-#: ../app/controllers/service_controller.rb:374
+#: ../app/controllers/service_controller.rb:366
 msgid "Set/Remove retirement date for Service"
 msgstr ""
 
@@ -22693,7 +22693,7 @@ msgstr ""
 msgid "Show Capacity & Utilization data for this Template"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:164
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:157
 msgid "Show Capacity & Utilization data for this VM"
 msgstr ""
 
@@ -22701,7 +22701,7 @@ msgstr ""
 msgid "Show Capacity & Utilization data for this item"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:178
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:171
 msgid "Show Chargeback preview"
 msgstr ""
 
@@ -22939,7 +22939,7 @@ msgstr ""
 msgid "Show Timelines for this Template"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:171
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:164
 msgid "Show Timelines for this VM"
 msgstr ""
 
@@ -23713,23 +23713,23 @@ msgstr ""
 msgid "Shutdown Domain"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:236 ../app/helpers/application_helper/toolbar/x_vm_center.rb:195 ../app/controllers/application_controller/ci_processing.rb:608
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:229 ../app/helpers/application_helper/toolbar/x_vm_center.rb:188 ../app/controllers/application_controller/ci_processing.rb:608
 msgid "Shutdown Guest"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:235
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:228
 msgid "Shutdown the Guest OS on the selected items"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:240
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:233
 msgid "Shutdown the Guest OS on the selected items?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:194
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:187
 msgid "Shutdown the Guest OS on this VM"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:197
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:190
 msgid "Shutdown the Guest OS on this VM?"
 msgstr ""
 
@@ -24311,11 +24311,11 @@ msgstr ""
 msgid "Storage Adapters"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:397
+#: ../app/controllers/chargeback_controller.rb:396
 msgid "Storage Chargeback Rate \"%{name}\""
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:389
+#: ../app/controllers/chargeback_controller.rb:388
 msgid "Storage Chargeback Rates"
 msgstr ""
 
@@ -24339,7 +24339,7 @@ msgstr ""
 msgid "Storage Profile"
 msgstr ""
 
-#: ../app/controllers/chargeback_controller.rb:406
+#: ../app/controllers/chargeback_controller.rb:405
 msgid "Storage Rate Assignments"
 msgstr ""
 
@@ -24395,7 +24395,7 @@ msgstr ""
 msgid "Sub-claim:"
 msgstr ""
 
-#: ../app/views/miq_policy/_rsop_options.html.haml:7 ../app/views/miq_policy/_rsop_options.html.haml:26 ../app/views/vm_common/_live_migrate.html.haml:72 ../app/views/vm_common/_reconfigure.html.haml:388 ../app/views/vm_common/_evacuate.html.haml:70 ../app/views/vm_common/_resize.html.haml:33 ../app/views/ops/_diagnostics_database_tab.html.haml:117 ../app/views/miq_request/_request.html.haml:115 ../app/views/miq_request/_prov_form_buttons.html.haml:13 ../app/views/miq_request/_prov_form_buttons.html.haml:33 ../app/views/shared/dialogs/_dialog_user.html.haml:9 ../app/views/shared/buttons/_ab_show.html.haml:62 ../app/views/shared/buttons/_ab_options_form.html.haml:87 ../app/views/static/generic_object/main_custom_button_form.html.haml:66 ../app/views/layouts/angular/_form_button_submit_angular.html.haml:7 ../app/views/layouts/_x_dialog_buttons.html.haml:20 ../app/views/layouts/_x_dialog_buttons.html.haml:50 ../app/views/layouts/_x_edit_buttons.html.haml:68 ../app/views/layouts/_x_edit_buttons.html.haml:132 ../app/views/planning/index.html.haml:6 ../app/views/planning/index.html.haml:25 ../app/views/miq_ae_tools/_import_export.html.haml:56 ../app/views/miq_ae_tools/_import_export.html.haml:111 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:4 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:39 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:6
+#: ../app/views/miq_policy/_rsop_options.html.haml:7 ../app/views/miq_policy/_rsop_options.html.haml:26 ../app/views/vm_common/_live_migrate.html.haml:72 ../app/views/vm_common/_reconfigure.html.haml:388 ../app/views/vm_common/_evacuate.html.haml:70 ../app/views/vm_common/_resize.html.haml:33 ../app/views/ops/_diagnostics_database_tab.html.haml:117 ../app/views/miq_request/_request.html.haml:115 ../app/views/miq_request/_prov_form_buttons.html.haml:13 ../app/views/miq_request/_prov_form_buttons.html.haml:33 ../app/views/shared/dialogs/_dialog_user.html.haml:9 ../app/views/shared/dialogs/_reconfigure_dialog.html.haml:10 ../app/views/shared/buttons/_ab_show.html.haml:62 ../app/views/shared/buttons/_ab_options_form.html.haml:87 ../app/views/static/generic_object/main_custom_button_form.html.haml:66 ../app/views/layouts/angular/_form_button_submit_angular.html.haml:7 ../app/views/layouts/_x_dialog_buttons.html.haml:20 ../app/views/layouts/_x_dialog_buttons.html.haml:50 ../app/views/layouts/_x_edit_buttons.html.haml:68 ../app/views/layouts/_x_edit_buttons.html.haml:132 ../app/views/planning/index.html.haml:6 ../app/views/planning/index.html.haml:25 ../app/views/miq_ae_tools/_import_export.html.haml:56 ../app/views/miq_ae_tools/_import_export.html.haml:111 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:4 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:39 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:6
 msgid "Submit"
 msgstr ""
 
@@ -24471,11 +24471,11 @@ msgstr ""
 msgid "Subscriptions"
 msgstr ""
 
-#: ../app/views/miq_ae_class/_instance_fields.html.haml:25
+#: ../app/views/miq_ae_class/_instance_fields.html.haml:26
 msgid "Substitute: %{substitute}"
 msgstr ""
 
-#: ../app/views/miq_ae_class/_instance_form.html.haml:64 ../app/views/miq_ae_class/_class_fields.html.haml:30
+#: ../app/views/miq_ae_class/_instance_form.html.haml:69 ../app/views/miq_ae_class/_class_fields.html.haml:30
 msgid "Substitution:"
 msgstr ""
 
@@ -24549,7 +24549,7 @@ msgstr ""
 msgid "Surveys"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:41 ../app/helpers/application_helper/toolbar/vm_infras_center.rb:281 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:230 ../app/helpers/application_helper/toolbar/x_vm_center.rb:232 ../app/controllers/middleware_server_group_controller.rb:17 ../app/controllers/middleware_server_controller.rb:27 ../app/controllers/application_controller/ci_processing.rb:553 ../app/views/catalog/_form_resources_info.html.haml:79
+#: ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:41 ../app/helpers/application_helper/toolbar/vm_infras_center.rb:274 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:230 ../app/helpers/application_helper/toolbar/x_vm_center.rb:225 ../app/controllers/middleware_server_group_controller.rb:17 ../app/controllers/middleware_server_controller.rb:27 ../app/controllers/application_controller/ci_processing.rb:553 ../app/views/catalog/_form_resources_info.html.haml:79
 msgid "Suspend"
 msgstr ""
 
@@ -24585,11 +24585,11 @@ msgstr ""
 msgid "Suspend the %{server_role_description} Role on Server %{server_name} [%{server_id}]?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:280 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:229
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:273 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:229
 msgid "Suspend the selected items"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:285 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:234
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:278 ../app/helpers/application_helper/toolbar/vm_clouds_center.rb:234
 msgid "Suspend the selected items?"
 msgstr ""
 
@@ -24601,11 +24601,11 @@ msgstr ""
 msgid "Suspend this Instance?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:231
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:224
 msgid "Suspend this VM"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:234
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:227
 msgid "Suspend this VM?"
 msgstr ""
 
@@ -25111,7 +25111,7 @@ msgstr ""
 msgid "The selected Router was deleted"
 msgstr ""
 
-#: ../app/controllers/report_controller/saved_reports.rb:104
+#: ../app/controllers/report_controller/saved_reports.rb:103
 msgid "The selected Saved Report was deleted"
 msgstr ""
 
@@ -25143,7 +25143,7 @@ msgstr ""
 msgid "The selected datasources removal was initiated"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:144 ../app/helpers/application_helper/toolbar/x_vm_center.rb:310
+#: ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:144 ../app/helpers/application_helper/toolbar/x_vm_center.rb:303
 msgid "The selected snapshot will be permanently deleted. Are you sure you want to delete the selected snapshot?"
 msgstr ""
 
@@ -25347,7 +25347,7 @@ msgstr ""
 msgid "This Template will revert to selected snapshot. Are you sure you want to revert to the selected snapshot?"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:331
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:324
 msgid "This VM will revert to selected snapshot. Are you sure you want to revert to the selected snapshot?"
 msgstr ""
 
@@ -25511,7 +25511,7 @@ msgstr ""
 msgid "Timeline tab is not available until at least 1 field has been selected"
 msgstr ""
 
-#: ../app/presenters/menu/default_menu.rb:27 ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:120 ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:130 ../app/helpers/application_helper/toolbar/container_replicator_center.rb:13 ../app/helpers/application_helper/toolbar/ems_network_center.rb:69 ../app/helpers/application_helper/toolbar/ems_physical_infra_center.rb:74 ../app/helpers/application_helper/toolbar/ems_container_center.rb:65 ../app/helpers/application_helper/toolbar/ems_storage_center.rb:62 ../app/helpers/application_helper/toolbar/host_center.rb:138 ../app/helpers/application_helper/toolbar/x_vm_center.rb:172 ../app/helpers/application_helper/toolbar/ems_middleware_center.rb:43 ../app/helpers/application_helper/toolbar/container_node_center.rb:13 ../app/helpers/application_helper/toolbar/ems_cluster_center.rb:64 ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:192 ../app/helpers/application_helper/toolbar/container_project_center.rb:13 ../app/helpers/application_helper/toolbar/ems_cloud_center.rb:82 ../app/helpers/application_helper/toolbar/availability_zone_center.rb:36 ../app/helpers/application_helper/toolbar/ems_datawarehouse_center.rb:43 ../app/helpers/application_helper/toolbar/container_group_center.rb:13 ../app/helpers/application_helper/toolbar/container_center.rb:13 ../app/helpers/application_helper/toolbar/physical_server_center.rb:234 ../app/helpers/application_helper/toolbar/ems_infra_center.rb:95 ../app/helpers/application_helper/title.rb:87 ../app/controllers/ems_common.rb:301 ../app/controllers/vm_common.rb:101 ../app/controllers/dashboard_controller.rb:571 ../app/controllers/dashboard_controller.rb:591 ../app/controllers/mixins/more_show_actions.rb:9 ../app/views/ops/_all_tabs.html.haml:147 ../app/views/layouts/listnav/_host.html.haml:61 ../app/views/layouts/listnav/_container_project.html.haml:27 ../app/views/layouts/listnav/_container.html.haml:29 ../app/views/layouts/listnav/_container_replicator.html.haml:27 ../app/views/layouts/listnav/_ems_physical_infra.html.haml:10 ../app/views/layouts/listnav/_container_node.html.haml:27 ../app/views/layouts/listnav/_ems_network.html.haml:12 ../app/views/layouts/listnav/_container_group.html.haml:27 ../app/views/layouts/listnav/_timeline.html.haml:3 ../app/views/layouts/listnav/_ems_cloud.html.haml:10 ../app/views/layouts/listnav/_ems_storage.html.haml:13 ../app/views/layouts/listnav/_ems_infra.html.haml:12 ../app/views/layouts/listnav/_ems_cluster.html.haml:26 ../app/views/layouts/listnav/_ems_container.html.haml:22 ../app/views/layouts/listnav/_ems_container.html.haml:26
+#: ../app/presenters/menu/default_menu.rb:27 ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:120 ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:130 ../app/helpers/application_helper/toolbar/container_replicator_center.rb:13 ../app/helpers/application_helper/toolbar/ems_network_center.rb:69 ../app/helpers/application_helper/toolbar/ems_physical_infra_center.rb:74 ../app/helpers/application_helper/toolbar/ems_container_center.rb:65 ../app/helpers/application_helper/toolbar/ems_storage_center.rb:62 ../app/helpers/application_helper/toolbar/host_center.rb:138 ../app/helpers/application_helper/toolbar/x_vm_center.rb:165 ../app/helpers/application_helper/toolbar/ems_middleware_center.rb:43 ../app/helpers/application_helper/toolbar/container_node_center.rb:13 ../app/helpers/application_helper/toolbar/ems_cluster_center.rb:64 ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:192 ../app/helpers/application_helper/toolbar/container_project_center.rb:13 ../app/helpers/application_helper/toolbar/ems_cloud_center.rb:82 ../app/helpers/application_helper/toolbar/availability_zone_center.rb:36 ../app/helpers/application_helper/toolbar/ems_datawarehouse_center.rb:43 ../app/helpers/application_helper/toolbar/container_group_center.rb:13 ../app/helpers/application_helper/toolbar/container_center.rb:13 ../app/helpers/application_helper/toolbar/physical_server_center.rb:234 ../app/helpers/application_helper/toolbar/ems_infra_center.rb:95 ../app/helpers/application_helper/title.rb:87 ../app/controllers/ems_common.rb:301 ../app/controllers/vm_common.rb:101 ../app/controllers/dashboard_controller.rb:571 ../app/controllers/dashboard_controller.rb:591 ../app/controllers/mixins/more_show_actions.rb:9 ../app/views/ops/_all_tabs.html.haml:147 ../app/views/layouts/listnav/_host.html.haml:61 ../app/views/layouts/listnav/_container_project.html.haml:27 ../app/views/layouts/listnav/_container.html.haml:29 ../app/views/layouts/listnav/_container_replicator.html.haml:27 ../app/views/layouts/listnav/_ems_physical_infra.html.haml:10 ../app/views/layouts/listnav/_container_node.html.haml:27 ../app/views/layouts/listnav/_ems_network.html.haml:12 ../app/views/layouts/listnav/_container_group.html.haml:27 ../app/views/layouts/listnav/_timeline.html.haml:3 ../app/views/layouts/listnav/_ems_cloud.html.haml:10 ../app/views/layouts/listnav/_ems_storage.html.haml:13 ../app/views/layouts/listnav/_ems_infra.html.haml:12 ../app/views/layouts/listnav/_ems_cluster.html.haml:26 ../app/views/layouts/listnav/_ems_container.html.haml:22 ../app/views/layouts/listnav/_ems_container.html.haml:26
 msgid "Timelines"
 msgstr ""
 
@@ -25783,14 +25783,6 @@ msgstr ""
 msgid "Transform VMs to RHV"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:195
-msgid "Transform tagged VMs to RHV"
-msgstr ""
-
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:134
-msgid "Transform this VM to RHV"
-msgstr ""
-
 #: ../app/views/miq_policy/_action_options.html.haml:205 ../app/views/miq_policy/_alert_snmp.html.haml:45 ../app/views/miq_policy/_alert_details.html.haml:227 ../app/views/miq_policy/_action_details.html.haml:167
 msgid "Trap Number"
 msgstr ""
@@ -25915,7 +25907,7 @@ msgstr ""
 msgid "Type missing for %{field}"
 msgstr ""
 
-#: ../app/views/miq_policy/_rsop_form.html.haml:10 ../app/views/miq_request/_prov_options.html.haml:32 ../app/views/miq_ae_class/_instance_form.html.haml:56 ../app/views/miq_ae_class/_class_fields.html.haml:23 ../app/views/static/deploy_containers_provider/deploy-provider-details-general-review.html.haml:9
+#: ../app/views/miq_policy/_rsop_form.html.haml:10 ../app/views/miq_request/_prov_options.html.haml:32 ../app/views/miq_ae_class/_instance_form.html.haml:61 ../app/views/miq_ae_class/_class_fields.html.haml:23 ../app/views/static/deploy_containers_provider/deploy-provider-details-general-review.html.haml:9
 msgid "Type:"
 msgstr ""
 
@@ -25923,7 +25915,7 @@ msgstr ""
 msgid "Type: "
 msgstr ""
 
-#: ../app/views/miq_ae_class/_instance_fields.html.haml:22
+#: ../app/views/miq_ae_class/_instance_fields.html.haml:23
 msgid "Type: %{automation_type}"
 msgstr ""
 
@@ -26701,7 +26693,7 @@ msgstr ""
 msgid "Users in this Group"
 msgstr ""
 
-#: ../app/presenters/menu/default_menu.rb:252 ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:113 ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:123 ../app/helpers/application_helper/toolbar/container_replicator_center.rb:22 ../app/helpers/application_helper/toolbar/ems_container_center.rb:73 ../app/helpers/application_helper/toolbar/host_center.rb:130 ../app/helpers/application_helper/toolbar/middleware_datasource_center.rb:13 ../app/helpers/application_helper/toolbar/x_vm_center.rb:165 ../app/helpers/application_helper/toolbar/container_node_center.rb:22 ../app/helpers/application_helper/toolbar/ems_cluster_center.rb:56 ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:185 ../app/helpers/application_helper/toolbar/container_project_center.rb:22 ../app/helpers/application_helper/toolbar/container_service_center.rb:13 ../app/helpers/application_helper/toolbar/availability_zone_center.rb:28 ../app/helpers/application_helper/toolbar/container_group_center.rb:22 ../app/helpers/application_helper/toolbar/container_center.rb:23 ../app/helpers/application_helper/toolbar/middleware_server_center.rb:14 ../app/helpers/application_helper/toolbar/storage_center.rb:55 ../app/helpers/application_helper/toolbar/middleware_messaging_center.rb:14 ../app/helpers/application_helper/title.rb:101 ../app/controllers/utilization_controller.rb:119 ../app/controllers/utilization_controller.rb:126 ../app/controllers/application_controller.rb:559 ../app/views/ops/_all_tabs.html.haml:145 ../app/views/ops/_all_tabs.html.haml:220
+#: ../app/presenters/menu/default_menu.rb:252 ../app/helpers/application_helper/toolbar/x_miq_template_center.rb:113 ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:123 ../app/helpers/application_helper/toolbar/container_replicator_center.rb:22 ../app/helpers/application_helper/toolbar/ems_container_center.rb:73 ../app/helpers/application_helper/toolbar/host_center.rb:130 ../app/helpers/application_helper/toolbar/middleware_datasource_center.rb:13 ../app/helpers/application_helper/toolbar/x_vm_center.rb:158 ../app/helpers/application_helper/toolbar/container_node_center.rb:22 ../app/helpers/application_helper/toolbar/ems_cluster_center.rb:56 ../app/helpers/application_helper/toolbar/openstack_vm_cloud_center.rb:185 ../app/helpers/application_helper/toolbar/container_project_center.rb:22 ../app/helpers/application_helper/toolbar/container_service_center.rb:13 ../app/helpers/application_helper/toolbar/availability_zone_center.rb:28 ../app/helpers/application_helper/toolbar/container_group_center.rb:22 ../app/helpers/application_helper/toolbar/container_center.rb:23 ../app/helpers/application_helper/toolbar/middleware_server_center.rb:14 ../app/helpers/application_helper/toolbar/storage_center.rb:55 ../app/helpers/application_helper/toolbar/middleware_messaging_center.rb:14 ../app/helpers/application_helper/title.rb:101 ../app/controllers/utilization_controller.rb:119 ../app/controllers/utilization_controller.rb:126 ../app/controllers/application_controller.rb:559 ../app/views/ops/_all_tabs.html.haml:145 ../app/views/ops/_all_tabs.html.haml:220
 msgid "Utilization"
 msgstr ""
 
@@ -26749,7 +26741,7 @@ msgstr ""
 msgid "VM Configuration"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:151 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:114 ../app/helpers/application_helper/toolbar/x_vm_center.rb:260 ../app/helpers/application_helper/toolbar/x_vm_center.rb:268 ../app/helpers/application_helper/toolbar/x_vm_center.rb:275
+#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:151 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:114 ../app/helpers/application_helper/toolbar/x_vm_center.rb:253 ../app/helpers/application_helper/toolbar/x_vm_center.rb:261 ../app/helpers/application_helper/toolbar/x_vm_center.rb:268
 msgid "VM Console"
 msgstr ""
 
@@ -26781,7 +26773,7 @@ msgstr ""
 msgid "VM Options"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:188
+#: ../app/helpers/application_helper/toolbar/x_vm_center.rb:181
 msgid "VM Power Functions"
 msgstr ""
 
@@ -26797,7 +26789,7 @@ msgstr ""
 msgid "VM Reconfigure Request was saved"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:144 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:107 ../app/helpers/application_helper/toolbar/x_vm_center.rb:253
+#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:144 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:107 ../app/helpers/application_helper/toolbar/x_vm_center.rb:246
 msgid "VM Remote Access"
 msgstr ""
 
@@ -27009,7 +27001,7 @@ msgstr ""
 msgid "Validator Type"
 msgstr ""
 
-#: ../app/helpers/container_image_helper/textual_summary.rb:130 ../app/helpers/container_group_helper/textual_summary.rb:65 ../app/helpers/container_helper/textual_summary.rb:134 ../app/helpers/container_helper/textual_summary.rb:148 ../app/helpers/container_template_helper/textual_summary.rb:25 ../app/helpers/provider_foreman_helper.rb:285 ../app/helpers/automation_manager_helper.rb:121 ../app/helpers/generic_object_helper/textual_summary.rb:37 ../app/controllers/utilization_controller.rb:68 ../app/views/miq_policy/_action_options.html.haml:225 ../app/views/miq_policy/_alert_snmp.html.haml:61 ../app/views/miq_policy/_alert_details.html.haml:238 ../app/views/miq_policy/_action_details.html.haml:184 ../app/views/ops/_tenant_quota_form.html.haml:18 ../app/views/miq_ae_class/_instance_fields.html.haml:9 ../app/views/miq_ae_class/_instance_form.html.haml:45 ../app/views/report/_form_columns_trend.html.haml:34 ../app/views/miq_ae_customization/_tag_field_values.html.haml:6 ../app/views/miq_ae_customization/_dialog_field_form_non_dynamic_options.html.haml:132 ../app/views/miq_ae_customization/_dialog_field_form_non_dynamic_options.html.haml:182 ../app/views/miq_ae_customization/_dialog_field_form_overridable_dynamic_options.html.haml:19 ../app/views/miq_ae_customization/_field_values.html.haml:12 ../app/views/middleware_server/_add_datasource_step3.html.haml:81 ../app/assets/javascripts/components/generic_object/main-custom-button-form-component.js:57
+#: ../app/helpers/container_image_helper/textual_summary.rb:130 ../app/helpers/container_group_helper/textual_summary.rb:65 ../app/helpers/container_helper/textual_summary.rb:134 ../app/helpers/container_helper/textual_summary.rb:148 ../app/helpers/container_template_helper/textual_summary.rb:25 ../app/helpers/provider_foreman_helper.rb:285 ../app/helpers/automation_manager_helper.rb:121 ../app/helpers/generic_object_helper/textual_summary.rb:37 ../app/controllers/utilization_controller.rb:68 ../app/views/miq_policy/_action_options.html.haml:225 ../app/views/miq_policy/_alert_snmp.html.haml:61 ../app/views/miq_policy/_alert_details.html.haml:238 ../app/views/miq_policy/_action_details.html.haml:184 ../app/views/ops/_tenant_quota_form.html.haml:18 ../app/views/miq_ae_class/_instance_fields.html.haml:9 ../app/views/miq_ae_class/_instance_form.html.haml:46 ../app/views/report/_form_columns_trend.html.haml:34 ../app/views/miq_ae_customization/_tag_field_values.html.haml:6 ../app/views/miq_ae_customization/_dialog_field_form_non_dynamic_options.html.haml:132 ../app/views/miq_ae_customization/_dialog_field_form_non_dynamic_options.html.haml:182 ../app/views/miq_ae_customization/_dialog_field_form_overridable_dynamic_options.html.haml:19 ../app/views/miq_ae_customization/_field_values.html.haml:12 ../app/views/middleware_server/_add_datasource_step3.html.haml:81 ../app/assets/javascripts/components/generic_object/main-custom-button-form-component.js:57
 msgid "Value"
 msgstr ""
 
@@ -27857,7 +27849,7 @@ msgstr ""
 msgid "Wasted"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:161 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:121 ../app/helpers/application_helper/toolbar/x_vm_center.rb:283 ../app/helpers/application_helper/toolbar/container_node_center.rb:79
+#: ../app/helpers/application_helper/toolbar/x_vm_cloud_center.rb:161 ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:121 ../app/helpers/application_helper/toolbar/x_vm_center.rb:276 ../app/helpers/application_helper/toolbar/container_node_center.rb:79
 msgid "Web Console"
 msgstr ""
 
@@ -28255,7 +28247,7 @@ msgstr ""
 msgid "map a new label to tag"
 msgstr ""
 
-#: ../app/services/git_based_domain_import_service.rb:97
+#: ../app/services/git_based_domain_import_service.rb:101
 msgid "multiple domains"
 msgstr ""
 
