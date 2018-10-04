@@ -472,10 +472,10 @@ module OpsController::Settings::Common
       if config_valid
         if ["settings_server", "settings_authentication"].include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
-          server.set_config(@update)
+          server.add_settings_for_resource(@update)
           update_server_name(server)
         else
-          @update.save                                              # Save other settings for current server
+          MiqServer.my_server.add_settings_for_resource(@update)
         end
         AuditEvent.success(build_config_audit(@edit[:new], @edit[:current]))
         if @sb[:active_tab] == "settings_server"
@@ -526,7 +526,7 @@ module OpsController::Settings::Common
       config_valid, config_errors = Vmdb::Settings.validate(@update)
       if config_valid
         server = MiqServer.find(@sb[:selected_server_id])
-        server.set_config(@update)
+        server.add_settings_for_resource(@update)
 
         AuditEvent.success(build_config_audit(@edit[:new], @edit[:current]))
         add_flash(_("Configuration settings saved for %{product} Server \"%{name} [%{server_id}]\" in Zone \"%{zone}\"") %

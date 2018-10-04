@@ -16,7 +16,7 @@ module OpsController::Settings::HelpMenu
     success = config_errors.blank? if success.nil?
 
     if success
-      konfig.save
+      MiqServer.my_server.add_settings_for_resource(konfig)
       session.delete(:edit)
       add_flash(_('Help menu customization changes successfully stored.'), :success)
     else
