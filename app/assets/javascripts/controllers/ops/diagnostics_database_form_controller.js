@@ -109,12 +109,12 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
   };
 
   vm.swiftSecurityProtocolSelect = function() {
-    return vm.diagnosticsDatabaseModel.action_typ == "db_backup" && vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift';
+    return vm.diagnosticsDatabaseModel.action_typ === "db_backup" && vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift';
   };
 
   vm.swiftSecurityProtocolRequired = function() {
     return (miqDBBackupService.swiftBackup(vm.diagnosticsDatabaseModel) &&
-      !vm.diagnosticsDatabaseModel.security_protocol)
+      ! vm.diagnosticsDatabaseModel.security_protocol)
   }
 
   vm.credsProtocol = function() {
@@ -162,16 +162,17 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
   }
 
   function diagnosticsLogProtocol(prefix) {
+    var protocol = "";
     if (prefix === 'nfs') {
-      return 'Network File System';
+      protocol = 'Network File System';
     } else if (prefix === 'smb') {
-      return 'Samba';
+      protocol = 'Samba';
     } else if (prefix === 's3') {
-      return 'AWS S3';
+      protocol = 'AWS S3';
     } else if (prefix === 'swift') {
-      return 'OpenStack Swift';
+      protocol = 'OpenStack Swift';
     }
-    return '';
+    return protocol;
   }
 
   init();
