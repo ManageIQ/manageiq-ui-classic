@@ -2,7 +2,7 @@
 /// begin layout styling
 /// ===================================================================
 
-/// this media query makes the left column and the main area independently 
+/// this media query makes the left column and the main area independently
 /// scrollable and sets the paging_div at the bottom of the column
 
 @media (min-width: $screen-sm) {
@@ -262,7 +262,7 @@ body#dashboard .blank-slate-pf {
 }
 
 table.table-summary-screen i { /* font icon styling in table view (equivalent to fa-lg) */
-  display: inline-block; 
+  display: inline-block;
   font-size: 1.333em;
   line-height: 0.75em;
   text-align:center;
@@ -405,12 +405,12 @@ table.table.table-summary-screen tbody td img {
 }
 
 .flobj { position: absolute;z-index: auto;width: 72px;}
-.flobj p { margin: 5px 0 0 0;padding: 0;color: #e3e4e4;vertical-align: middle;text-align:center;text-transform: none;text-shadow: 0 0 3px #000;font: normal 16px OpenSansSemibold,Arial,Helvetica,sans-serif;}
-.a72 { padding: 3px  0 0 5px; width: 28px; height: 28px;font-size: 1.3em;line-height: 1.8em;}
-.b72 { padding: 3px 0 0 37px; font-size: 1.3em;line-height: 1.8em;}
+.flobj p { margin: 5px 0 0 0;padding: 0;color: #e3e4e4;white-space: nowrap;vertical-align: middle;text-align:center;text-transform: none;text-shadow: 0 0 3px #000;font: normal 16px OpenSansSemibold,Arial,Helvetica,sans-serif;}
+.a72 { padding: 4px  0 0 4px; width: 28px; height: 28px;font-size: 1.3em;line-height: 1.8em;}
+.b72 { padding: 4px 0 0 37px; font-size: 1.3em;line-height: 1.8em;}
 .c72 { padding: 38px 0 0 5px; width: 31px; height: 31px;font-size: 1.3em;line-height: 1.7em;}
-.d72 { padding: 38px 0 0 39px; font-size: 1.3em;line-height: 1.7em;}
-.e72 { padding: 6px  0 0 6px; width: 35px; height: 35px;font-size: 1.3em;line-height: 2em;}
+.d72 { padding: 38px 0 0 37px; font-size: 1.3em;line-height: 1.7em;}
+.e72 { padding: 4px  0 0 4px; width: 35px; height: 35px;font-size: 1.3em;line-height: 2em;}
 .f72 { padding: 22px 0 0 24px; width: 24px; height: 24px;}
 .g72 { padding: 16px 0 0 19px; width: 24px; height: 24px;}
 .b72 img {margin-top: -3px; width: 34px; height: 34px;}
@@ -494,7 +494,7 @@ table.table td:not(.table-view-pf-select) { //Force word break but prevent bs-sw
   word-break: break-all
 }
 
-#gtl_div table.table td { // Enable word wrapping 
+#gtl_div table.table td { // Enable word wrapping
   word-break: normal !important;
 }
 
@@ -568,7 +568,7 @@ table.table tbody td img {
   border: none;
 }
 
-// override font-weight for dropdowns within table headers 
+// override font-weight for dropdowns within table headers
 
 .table thead th select {
   font-weight: normal
@@ -721,7 +721,7 @@ td.action > .btn.btn-default {
   overflow-x: hidden;
 }
 
-/// error modal 
+/// error modal
 
 .error-modal-miq {
   & .error-icon {
