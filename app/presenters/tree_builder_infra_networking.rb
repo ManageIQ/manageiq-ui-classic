@@ -10,7 +10,6 @@ class TreeBuilderInfraNetworking < TreeBuilder
     {
       :leaf     => "Switch",
       :open_all => true,
-      :full_ids => true
     }
   end
 
