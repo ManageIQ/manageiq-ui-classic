@@ -383,12 +383,32 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def scanvms
     assert_privileges(params[:pressed])
-    generic_button_operation('scan', _('Analysis'), vm_button_action)
+    generic_button_operation('scan', _('Analysis'), vm_button_action,
+                             :specific_requirements => :scanvms_vmware_requirements?)
   end
   alias_method :image_scan, :scanvms
   alias_method :instance_scan, :scanvms
   alias_method :vm_scan, :scanvms
   alias_method :miq_template_scan, :scanvms
+
+  # Method tests requirements specific for Vmware provider.
+  #
+  # All the selected records are tested whether they are an instance of
+  # VMWare provider and fullfill the requirements for SmartState Analysis
+  # (tested by method #has_active_proxy?).
+  #
+  # Params:
+  #   records - records selected for SmartState Analysis
+  # Returns:
+  #   boolean - true, if all the records are instances of VMware provider and
+  #             fullfill the requirements or are instances of any other
+  #             provider
+  #           - false otherwise
+  def scanvms_vmware_requirements?(records)
+    records.all? do |record|
+      !record.instance_of?(ManageIQ::Providers::Vmware::InfraManager::Vm) || record.has_active_proxy?
+    end
+  end
 
   # Immediately retire items
   def retirevms_now
