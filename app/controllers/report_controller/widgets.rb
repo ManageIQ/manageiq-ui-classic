@@ -121,16 +121,10 @@ module ReportController::Widgets
   # Delete all selected or single displayed action(s)
   def widget_delete
     assert_privileges("widget_delete")
-    widgets = find_checked_items
-    if params[:id].present? && !MiqWidget.exists?(params[:id])
-      add_flash(_("Widget no longer exists"), :error)
-    elsif params[:id]
-      widgets.push(params[:id])
-    end
-    w = MiqWidget.find(widgets[0]) # temp var to determine the parent node of deleted items
-    process_elements(widgets, MiqWidget, "destroy") unless widgets.empty?
+    widget = find_record_with_rbac(MiqWidget, params[:id])
+    process_elements(widget.id, MiqWidget, "destroy")
     nodes = x_node.split('-')
-    self.x_node = "#{nodes[0]}-#{WIDGET_CONTENT_TYPE.invert[w.content_type]}"
+    self.x_node = "#{nodes[0]}-#{WIDGET_CONTENT_TYPE.invert[widget.content_type]}"
     replace_right_cell(:replace_trees => [:widgets])
   end
 
