@@ -24,12 +24,13 @@ module ApplicationController::WaitForTask
     end
   end
 
-  def browser_refresh_task(task_id)
+  def browser_refresh_task(task_id, should_flash = false)
     session[:async][:interval] += 250 if session[:async][:interval] < 5000 # Slowly move up to 5 second retries
     render :update do |page|
       page << javascript_prologue
       ajax_call = remote_function(:url => {:action => 'wait_for_task', :task_id => task_id})
       page << "setTimeout(\"#{ajax_call}\", #{session[:async][:interval]});"
+      page.replace("flash_msg_div", :partial => "layouts/flash_msg") if should_flash
     end
   end
   private :browser_refresh_task
@@ -38,6 +39,7 @@ module ApplicationController::WaitForTask
   # :task_id => id of task to wait for
   # :action  => 'action_to_call' -- action to be called when the task finishes
   # :rx_action => 'method_to_call' -- a method to create a RxJs message
+  # :flash => true|false -- output queued flash messages *while waiting*
   #
   def initiate_wait_for_task(options = {})
     task_id = options[:task_id]
@@ -58,7 +60,7 @@ module ApplicationController::WaitForTask
       session[:async][:params][:rx_action] = options[:rx_action]
     end
 
-    browser_refresh_task(task_id)
+    browser_refresh_task(task_id, !!options[:flash])
   end
   private :initiate_wait_for_task
 
