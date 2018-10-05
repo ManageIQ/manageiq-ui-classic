@@ -150,7 +150,7 @@ module VmHelper::TextualSummary
         else
           ""
         end
-      cpus = n_('CPU', 'CPUs', @record.cpu_total_cores)
+      cpus = n_("%{cpu} CPU", "%{cpu} CPUs", @record.cpu_total_cores) % {:cpu => @record.cpu_total_cores}
       h[:value] = "#{vendor}: #{cpus}#{cpu_details}, #{@record.mem_cpu} MB"
     end
     h
