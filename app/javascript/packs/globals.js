@@ -40,3 +40,5 @@ window.moment = require('moment');
 require("moment-strftime");
 require("moment-timezone");
 require("moment-duration-format")(window.moment);
+
+require('@pf3/timeline');

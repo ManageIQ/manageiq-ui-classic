@@ -40,5 +40,4 @@
 //= require ./miq_explorer
 //= require ./miq_timeline
 //= require bower_components/manageiq-ui-components/dist/js/ui-components
-//= require bower_components/patternfly-timeline/dist/timeline
 //= require ui-select/dist/select
