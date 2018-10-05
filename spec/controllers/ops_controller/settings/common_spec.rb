@@ -167,11 +167,10 @@ describe OpsController do
     context "#settings_get_form_vars" do
       before do
         miq_server = FactoryGirl.create(:miq_server)
-        current = VMDB::Config.new("vmdb")
-        current.config[:authentication] = {:ldap_role => true,
-                                           :mode      => 'ldap'}
+        current = ::Settings.to_hash
+        current[:authentication] = { :ldap_role => true, :mode => 'ldap' }
         edit = {:current => current,
-                :new     => copy_hash(current.config),
+                :new     => copy_hash(current),
                 :key     => "settings_authentication_edit__#{miq_server.id}"}
         controller.instance_variable_set(:@edit, edit)
         session[:edit] = edit
@@ -385,8 +384,8 @@ describe OpsController do
                                            :selected_server_id => @miq_server.id)
           controller.instance_variable_set(:@_params,
                                            :id => 'server')
-          @current = VMDB::Config.new("vmdb")
-          @new = @current.config
+          @current = ::Settings.to_hash
+          @new = ::Settings.to_hash
           @new[:server][:name] = ''
           controller.instance_variable_set(:@edit,
                                            :new     => @new,
@@ -418,7 +417,7 @@ describe OpsController do
           controller.instance_variable_set(:@sb, :selected_server_id => server.id)
           controller.send(:settings_set_form_vars_server)
           edit_current = assigns(:edit)
-          expect(edit_current[:current].config[:server][:zone]).to eq(zone.name)
+          expect(edit_current[:current][:server][:zone]).to eq(zone.name)
         end
 
         it 'for server in default zone' do
@@ -426,7 +425,7 @@ describe OpsController do
           controller.instance_variable_set(:@sb, :selected_server_id => server.id)
           controller.send(:settings_set_form_vars_server)
           edit_current = assigns(:edit)
-          expect(edit_current[:current].config[:server][:zone]).to eq("default")
+          expect(edit_current[:current][:server][:zone]).to eq("default")
         end
 
         it 'sets the server name' do
@@ -435,7 +434,7 @@ describe OpsController do
           controller.instance_variable_set(:@sb, :selected_server_id => server.id)
           controller.send(:settings_set_form_vars_server)
           edit_current = assigns(:edit)
-          expect(edit_current[:current].config[:server][:name]).to eq(server.name)
+          expect(edit_current[:current][:server][:name]).to eq(server.name)
         end
       end
     end

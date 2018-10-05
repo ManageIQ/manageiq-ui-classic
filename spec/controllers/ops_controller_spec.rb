@@ -205,21 +205,19 @@ describe OpsController do
     end
 
     it "should set session[:changed] as false when config is same" do
-      vmdb = VMDB::Config.new("vmdb")
-      # edit_changed? expects current to be VMDB::Config
       edit = {
-        :new     => vmdb.config,
-        :current => vmdb
+        :new     => ::Settings.to_hash,
+        :current => ::Settings.to_hash
       }
       controller.instance_variable_set(:@edit, edit)
       controller.send(:edit_changed?)
       expect(session[:changed]).to eq(false)
     end
 
-    it "should set session[:changed] as true when config is sadifferentme" do
+    it "should set session[:changed] as true when config is different" do
       edit = {
         :new     => {:workers => 2},
-        :current => VMDB::Config.new("vmdb")
+        :current => ::Settings.to_hash
       }
       controller.instance_variable_set(:@edit, edit)
       controller.send(:edit_changed?)

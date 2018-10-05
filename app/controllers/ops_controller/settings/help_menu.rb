@@ -4,21 +4,19 @@ module OpsController::Settings::HelpMenu
   def settings_update_help_menu
     return unless load_edit('customize_help_menu')
 
-    konfig = VMDB::Config.new("vmdb")
-
     begin
-      konfig.config = Vmdb::Settings.decrypt_passwords!(Settings.to_hash)
-      konfig.config[:help_menu].merge!(@edit[:new])
-      konfig.validate
+      konfig = Vmdb::Settings.decrypt_passwords!(Settings.to_hash)
+      konfig[:help_menu].merge!(@edit[:new])
+      success, config_errors = Vmdb::Settings.validate(konfig)
     rescue Psych::SyntaxError, StandardError
       add_flash(_('Invalid configuration parameters.'), :error)
       success = false
     end
 
-    success = konfig.errors.blank? if success.nil?
+    success = config_errors.blank? if success.nil?
 
     if success
-      konfig.save
+      MiqServer.my_server.add_settings_for_resource(konfig)
       session.delete(:edit)
       add_flash(_('Help menu customization changes successfully stored.'), :success)
     else

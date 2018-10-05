@@ -22,7 +22,7 @@ module OpsController::Settings::Common
     case @sb[:active_tab] # Server, DB edit forms
     when 'settings_server', 'settings_authentication',
          'settings_custom_logos'
-      @changed = (@edit[:new] != @edit[:current].config)
+      @changed = (@edit[:new] != @edit[:current])
       if params[:console_type]
         @refresh_div     = 'settings_server'              # Replace main area
         @refresh_partial = 'settings_server_tab'
@@ -36,8 +36,8 @@ module OpsController::Settings::Common
       end
       @changed = false unless rhn_save_enabled?
     when 'settings_workers'
-      @changed = (@edit[:new].config != @edit[:current].config)
-      if @edit[:new].config[:workers][:worker_base][:ui_worker][:count] != @edit[:current].config[:workers][:worker_base][:ui_worker][:count]
+      @changed = (@edit[:new] != @edit[:current])
+      if @edit[:new][:workers][:worker_base][:ui_worker][:count] != @edit[:current][:workers][:worker_base][:ui_worker][:count]
         add_flash(_("Changing the UI Workers Count will immediately restart the webserver"), :warning)
       end
     when 'settings_advanced'                                # Advanced yaml edit
@@ -147,7 +147,7 @@ module OpsController::Settings::Common
           end
         end
       when 'settings_workers'
-        if @edit[:new].config[:workers][:worker_base][:ui_worker][:count] != @edit[:current].config[:workers][:worker_base][:ui_worker][:count]
+        if @edit[:new][:workers][:worker_base][:ui_worker][:count] != @edit[:current][:workers][:worker_base][:ui_worker][:count]
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         end
       end
@@ -317,12 +317,12 @@ module OpsController::Settings::Common
   def settings_update_ldap_verify
     settings_get_form_vars
     return unless @edit
-    server_config = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
-    server_config.config.each_key do |category|
-      server_config.config[category] = @edit[:new][category].dup
+    server_config = MiqServer.find(@sb[:selected_server_id]).settings
+    server_config.each_key do |category|
+      server_config[category] = @edit[:new][category].dup
     end
 
-    valid, errors = MiqLdap.validate_connection(server_config.config)
+    valid, errors = MiqLdap.validate_connection(server_config)
     if valid
       add_flash(_("LDAP Settings validation was successful"))
     else
@@ -337,12 +337,12 @@ module OpsController::Settings::Common
   def settings_update_amazon_verify
     settings_get_form_vars
     return unless @edit
-    server_config = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
-    server_config.config.each_key do |category|
-      server_config.config[category] = @edit[:new][category].dup
+    server_config = MiqServer.find(@sb[:selected_server_id]).settings
+    server_config.each_key do |category|
+      server_config[category] = @edit[:new][category].dup
     end
 
-    valid, errors = Authenticator::Amazon.validate_connection(server_config.config)
+    valid, errors = Authenticator::Amazon.validate_connection(server_config)
     if valid
       add_flash(_("Amazon Settings validation was successful"))
     else
@@ -389,65 +389,65 @@ module OpsController::Settings::Common
         return
       end
       @edit[:new][:authentication][:ldaphost].reject!(&:blank?) if @edit[:new][:authentication][:ldaphost]
-      @changed = (@edit[:new] != @edit[:current].config)
+      @changed = (@edit[:new] != @edit[:current])
       server = MiqServer.find(@sb[:selected_server_id])
       zone = Zone.find_by_name(@edit[:new][:server][:zone])
       unless zone.nil? || server.zone == zone
         server.zone = zone
         server.save
       end
-      @update = server.get_config("vmdb")
+      @update = server.settings
     when "settings_workers"                                   # Workers Settings
-      @changed = (@edit[:new] != @edit[:current].config)
-      qwb = @edit[:new].config[:workers][:worker_base][:queue_worker_base]
+      @changed = (@edit[:new] != @edit[:current])
+      qwb = @edit[:new][:workers][:worker_base][:queue_worker_base]
       w = qwb[:generic_worker]
-      @edit[:new].set_worker_setting!(:MiqGenericWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqGenericWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqGenericWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqGenericWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:priority_worker]
-      @edit[:new].set_worker_setting!(:MiqPriorityWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqPriorityWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqPriorityWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqPriorityWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_metrics_collector_worker][:defaults]
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsCollectorWorker, [:defaults, :count], w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsCollectorWorker, %i(defaults memory_threshold), w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqEmsMetricsCollectorWorker, :defaults, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqEmsMetricsCollectorWorker, :defaults, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_metrics_processor_worker]
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsProcessorWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsProcessorWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqEmsMetricsProcessorWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqEmsMetricsProcessorWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_refresh_worker][:defaults]
-      @edit[:new].set_worker_setting!(:MiqEmsRefreshWorker, %i(defaults memory_threshold), w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqEmsRefreshWorker, :defaults, :memory_threshold, w[:memory_threshold])
 
-      wb = @edit[:new].config[:workers][:worker_base]
+      wb = @edit[:new][:workers][:worker_base]
       w = wb[:event_catcher]
-      @edit[:new].set_worker_setting!(:MiqEventCatcher, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqEventCatcher, :memory_threshold, w[:memory_threshold])
 
       w = wb[:vim_broker_worker]
-      @edit[:new].set_worker_setting!(:MiqVimBrokerWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqVimBrokerWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:smart_proxy_worker]
-      @edit[:new].set_worker_setting!(:MiqSmartProxyWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqSmartProxyWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqSmartProxyWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqSmartProxyWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:ui_worker]
-      @edit[:new].set_worker_setting!(:MiqUiWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqUiWorker, :count, w[:count].to_i)
 
       w = qwb[:reporting_worker]
-      @edit[:new].set_worker_setting!(:MiqReportingWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqReportingWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqReportingWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqReportingWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:web_service_worker]
-      @edit[:new].set_worker_setting!(:MiqWebServiceWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqWebServiceWorker, :memory_threshold, w[:memory_threshold])
+      set_worker_setting(@edit[:new], MiqWebServiceWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqWebServiceWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:websocket_worker]
-      @edit[:new].set_worker_setting!(:MiqWebsocketWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqWebsocketWorker, :count, w[:count].to_i)
 
-      @update = MiqServer.find(@sb[:selected_server_id]).get_config
+      @update = MiqServer.find(@sb[:selected_server_id]).settings
     when "settings_custom_logos"                                      # Custom Logo tab
-      @changed = (@edit[:new] != @edit[:current].config)
-      @update = VMDB::Config.new("vmdb")                    # Get the settings object to update it
+      @changed = (@edit[:new] != @edit[:current])
+      @update = ::Settings.to_hash
     when "settings_advanced" # Advanced manual yaml editor tab
       nodes = x_node.downcase.split("-")
       resource = if selected?(x_node, "z")
@@ -462,21 +462,22 @@ module OpsController::Settings::Common
     end
     if !%w(settings_advanced settings_rhn_edit settings_workers).include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
-      @update.config.each_key do |category|
-        @update.config[category] = @edit[:new][category].dup
+      @update.each_key do |category|
+        @update[category] = @edit[:new][category].dup
       end
 
       save_ntp_server_settings
 
-      if @update.validate                                           # Have VMDB class validate the settings
+      config_valid, config_errors = Vmdb::Settings.validate(@update)
+      if config_valid
         if ["settings_server", "settings_authentication"].include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
-          server.set_config(@update)
+          server.add_settings_for_resource(@update)
           update_server_name(server)
         else
-          @update.save                                              # Save other settings for current server
+          MiqServer.my_server.add_settings_for_resource(@update)
         end
-        AuditEvent.success(build_config_audit(@edit[:new], @edit[:current].config))
+        AuditEvent.success(build_config_audit(@edit[:new], @edit[:current]))
         if @sb[:active_tab] == "settings_server"
           add_flash(_("Configuration settings saved for %{product} Server \"%{name} [%{server_id}]\" in Zone \"%{zone}\"") %
                       {:name => server.name, :server_id => server.id, :zone => server.my_zone, :product => Vmdb::Appliance.PRODUCT_NAME})
@@ -487,8 +488,8 @@ module OpsController::Settings::Common
           add_flash(_("Configuration settings saved"))
         end
         if @sb[:active_tab] == "settings_server" && @sb[:selected_server_id] == MiqServer.my_server.id  # Reset session variables for names fields, if editing current server config
-          session[:customer_name] = @update.config[:server][:company]
-          session[:vmdb_name] = @update.config[:server][:name]
+          session[:customer_name] = @update[:server][:company]
+          session[:vmdb_name] = @update[:server][:name]
         end
         set_user_time_zone if @sb[:active_tab] == "settings_server"
         # settings_set_form_vars
@@ -504,7 +505,7 @@ module OpsController::Settings::Common
           replace_right_cell(:nodetype => @nodetype)
         end
       else
-        @update.errors.each do |field, msg|
+        config_errors.each do |field, msg|
           add_flash("#{field.titleize}: #{msg}", :error)
         end
         @changed = true
@@ -519,26 +520,27 @@ module OpsController::Settings::Common
         javascript_flash
         return
       end
-      @update.config.each_key do |category|
-        @update.config[category] = @edit[:new].config[category].dup
+      @update.each_key do |category|
+        @update[category] = @edit[:new][category].dup
       end
-      if @update.validate                                           # Have VMDB class validate the settings
+      config_valid, config_errors = Vmdb::Settings.validate(@update)
+      if config_valid
         server = MiqServer.find(@sb[:selected_server_id])
-        server.set_config(@update)
+        server.add_settings_for_resource(@update)
 
-        AuditEvent.success(build_config_audit(@edit[:new].config, @edit[:current].config))
+        AuditEvent.success(build_config_audit(@edit[:new], @edit[:current]))
         add_flash(_("Configuration settings saved for %{product} Server \"%{name} [%{server_id}]\" in Zone \"%{zone}\"") %
                     {:name => server.name, :server_id => @sb[:selected_server_id], :zone => server.my_zone, :product => Vmdb::Appliance.PRODUCT_NAME})
 
         if @sb[:active_tab] == "settings_workers" && @sb[:selected_server_id] == MiqServer.my_server.id  # Reset session variables for names fields, if editing current server config
-          session[:customer_name] = @update.config[:server][:company]
-          session[:vmdb_name] = @update.config[:server][:name]
+          session[:customer_name] = @update[:server][:company]
+          session[:vmdb_name] = @update[:server][:name]
         end
         @changed = false
         get_node_info(x_node)
         replace_right_cell(:nodetype => @nodetype)
       else
-        @update.errors.each do |field, msg|
+        config_errors.each do |field, msg|
           add_flash("#{field.titleize}: #{msg}", :error)
         end
         @changed = true
@@ -552,6 +554,10 @@ module OpsController::Settings::Common
     end
   end
 
+  private def set_worker_setting(config, klass, *path, value)
+    config.store_path(klass.config_settings_path + path, value)
+  end
+
   private def new_ntp_servers
     old_ntp_servers = @edit[:new][:ntp][:server] || []
     [1, 2, 3].collect.with_index do |i, position|
@@ -562,9 +568,9 @@ module OpsController::Settings::Common
 
   private def save_ntp_server_settings
     if (new_servers = new_ntp_servers).present?
-      @update.config[:ntp] = {:server => new_servers}
+      @update[:ntp] = {:server => new_servers}
     else
-      @update.config.delete(:ntp)
+      @update.delete(:ntp)
       MiqServer.find(@sb[:selected_server_id]).remove_settings_path_for_resource(:ntp)
     end
   end
@@ -693,7 +699,7 @@ module OpsController::Settings::Common
     # WTF? here we can have a Zone or a MiqServer, what about Region? --> rescue from exception
     @selected_server = (cls.find(nodes.last) rescue nil)
 
-    case @sb[:active_tab]                                               # No @edit[:current].config for Filters since there is no config file
+    case @sb[:active_tab] # No @edit[:current] for Filters since there is no config file
     when 'settings_rhn_edit'
       [:proxy_address, :use_proxy, :proxy_userid, :proxy_password, :proxy_verify, :register_to, :server_url, :repo_name,
        :customer_org, :customer_org_display, :customer_userid, :customer_password, :customer_verify].each do |key|
@@ -779,11 +785,11 @@ module OpsController::Settings::Common
       if params[:authentication_mode] && params[:authentication_mode] != auth[:mode]
         if params[:authentication_mode] == "ldap"
           params[:authentication_ldapport] = "389"
-          @sb[:newrole] = auth[:ldap_role] = @edit[:current].config[:authentication][:ldap_role]
+          @sb[:newrole] = auth[:ldap_role] = @edit[:current][:authentication][:ldap_role]
           @authldapport_reset = true
         elsif params[:authentication_mode] == "ldaps"
           params[:authentication_ldapport] = "636"
-          @sb[:newrole] = auth[:ldap_role] = @edit[:current].config[:authentication][:ldap_role]
+          @sb[:newrole] = auth[:ldap_role] = @edit[:current][:authentication][:ldap_role]
           @authldapport_reset = true
         else
           @sb[:newrole] = auth[:ldap_role] = false    # setting it to false if database was selected to hide user_proxies box
@@ -824,7 +830,7 @@ module OpsController::Settings::Common
       auth[:default_group_for_users] = params[:authentication_default_group_for_users] if params[:authentication_default_group_for_users]
 
     when "settings_workers"                                       # Workers Settings tab
-      wb  = new.config[:workers][:worker_base]
+      wb  = new[:workers][:worker_base]
       qwb = wb[:queue_worker_base]
 
       w = qwb[:generic_worker]
@@ -876,7 +882,7 @@ module OpsController::Settings::Common
       new[:server][:use_custom_login_text] = (params[:server_uselogintext] == "true") if params[:server_uselogintext]
       if params[:login_text]
         new[:server][:custom_login_text] = params[:login_text]
-        @login_text_changed = new[:server][:custom_login_text] != @edit[:current].config[:server][:custom_login_text].to_s
+        @login_text_changed = new[:server][:custom_login_text] != @edit[:current][:server][:custom_login_text].to_s
       end
     when "settings_smartproxy"                                        # SmartProxy Defaults tab
       @sb[:form_vars][:agent_heartbeat_frequency_mins] = params[:agent_heartbeat_frequency_mins] if params[:agent_heartbeat_frequency_mins]
@@ -900,8 +906,8 @@ module OpsController::Settings::Common
 
     # This section scoops up the config second level keys changed in the UI
     unless %w(settings_advanced settings_rhn_edit settings_smartproxy_affinity).include?(@sb[:active_tab])
-      @edit[:current].config.each_key do |category|
-        @edit[:current].config[category].symbolize_keys.each_key do |key|
+      @edit[:current].each_key do |category|
+        @edit[:current][category].symbolize_keys.each_key do |key|
           if category == :smtp && key == :enable_starttls_auto  # Checkbox is handled differently
             new[category][key] = params["#{category}_#{key}"] == "true" if params.key?("#{category}_#{key}")
           else
@@ -940,21 +946,21 @@ module OpsController::Settings::Common
   def settings_set_form_vars_server
     @edit = {
       :new     => {},
-      :current => MiqServer.find(@sb[:selected_server_id]).get_config("vmdb"),
+      :current => MiqServer.find(@sb[:selected_server_id]).settings,
       :key     => "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}",
     }
     @sb[:new_to] = nil
     @sb[:newrole] = false
 
-    @edit[:current].config[:server][:role] = @edit[:current].config[:server][:role] ? @edit[:current].config[:server][:role].split(",").sort.join(",") : ""
-    @edit[:current].config[:server][:timezone] = "UTC" if @edit[:current].config[:server][:timezone].blank?
-    @edit[:current].config[:server][:locale] = "default" if @edit[:current].config[:server][:locale].blank?
-    @edit[:current].config[:server][:remote_console_type] ||= "VNC"
-    @edit[:current].config[:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current].config[:smtp][:enable_starttls_auto].nil?
-    @edit[:current].config[:smtp][:openssl_verify_mode] ||= "none"
-    @edit[:current].config[:ntp] ||= {}
-    @edit[:current].config[:server][:zone] = MiqServer.find(@sb[:selected_server_id]).zone.name
-    @edit[:current].config[:server][:name] = MiqServer.find(@sb[:selected_server_id]).name
+    @edit[:current][:server][:role] = @edit[:current][:server][:role] ? @edit[:current][:server][:role].split(",").sort.join(",") : ""
+    @edit[:current][:server][:timezone] = "UTC" if @edit[:current][:server][:timezone].blank?
+    @edit[:current][:server][:locale] = "default" if @edit[:current][:server][:locale].blank?
+    @edit[:current][:server][:remote_console_type] ||= "VNC"
+    @edit[:current][:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current][:smtp][:enable_starttls_auto].nil?
+    @edit[:current][:smtp][:openssl_verify_mode] ||= "none"
+    @edit[:current][:ntp] ||= {}
+    @edit[:current][:server][:zone] = MiqServer.find(@sb[:selected_server_id]).zone.name
+    @edit[:current][:server][:name] = MiqServer.find(@sb[:selected_server_id]).name
 
     @in_a_form = true
   end
@@ -964,34 +970,33 @@ module OpsController::Settings::Common
     @edit[:new] = {}
     @edit[:current] = {}
     @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
+    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).settings
     # Avoid thinking roles change when not yet set
-    @edit[:current].config[:authentication][:ldap_role] ||= false
-    @edit[:current].config[:authentication][:amazon_role] ||= false
-    @edit[:current].config[:authentication][:httpd_role] ||= false
+    @edit[:current][:authentication][:ldap_role] ||= false
+    @edit[:current][:authentication][:amazon_role] ||= false
+    @edit[:current][:authentication][:httpd_role] ||= false
     @sb[:form_vars] = {}
-    @sb[:form_vars][:session_timeout_hours] = @edit[:current].config[:session][:timeout] / 3600
-    @sb[:form_vars][:session_timeout_mins] = (@edit[:current].config[:session][:timeout] % 3600) / 60
-    @edit[:current].config[:authentication][:ldaphost] = @edit[:current].config[:authentication][:ldaphost].to_miq_a
-    @edit[:current].config[:authentication][:user_proxies] ||= [{}]
-    @edit[:current].config[:authentication][:follow_referrals] ||= false
-    @edit[:current].config[:authentication][:sso_enabled] ||= false
-    @edit[:current].config[:authentication][:provider_type] ||= "none"
-    @edit[:current].config[:authentication][:local_login_disabled] ||= false
-    @sb[:newrole] = @edit[:current].config[:authentication][:ldap_role]
-    @sb[:new_amazon_role] = @edit[:current].config[:authentication][:amazon_role]
-    @sb[:new_httpd_role] = @edit[:current].config[:authentication][:httpd_role]
+    @sb[:form_vars][:session_timeout_hours] = @edit[:current][:session][:timeout] / 3600
+    @sb[:form_vars][:session_timeout_mins] = (@edit[:current][:session][:timeout] % 3600) / 60
+    @edit[:current][:authentication][:ldaphost] = @edit[:current][:authentication][:ldaphost].to_miq_a
+    @edit[:current][:authentication][:user_proxies] ||= [{}]
+    @edit[:current][:authentication][:follow_referrals] ||= false
+    @edit[:current][:authentication][:sso_enabled] ||= false
+    @edit[:current][:authentication][:provider_type] ||= "none"
+    @edit[:current][:authentication][:local_login_disabled] ||= false
+    @sb[:newrole] = @edit[:current][:authentication][:ldap_role]
+    @sb[:new_amazon_role] = @edit[:current][:authentication][:amazon_role]
+    @sb[:new_httpd_role] = @edit[:current][:authentication][:httpd_role]
     @in_a_form = true
   end
 
   def settings_set_form_vars_workers
     # getting value in "1.megabytes" bytes from backend, converting it into "1 MB" to display in UI, and then later convert it into "1.megabytes" to before saving it back into config.
-    # need to create two copies of config new/current set_worker_setting! is a instance method, need @edit[:new] to be config class to set count/memory_threshold, can't run method against hash
     @edit = {}
     @edit[:new] = {}
     @edit[:current] = {}
-    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config
-    @edit[:new] = MiqServer.find(@sb[:selected_server_id]).get_config
+    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).settings
+    @edit[:new] = MiqServer.find(@sb[:selected_server_id]).settings
     @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
     @sb[:threshold] = []
     (200.megabytes...550.megabytes).step(50.megabytes) do |x|
@@ -1006,107 +1011,111 @@ module OpsController::Settings::Common
       @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
     end
 
-    cwb = @edit[:current].config[:workers][:worker_base] ||= {}
+    cwb = @edit[:current][:workers][:worker_base] ||= {}
     qwb = (cwb[:queue_worker_base] ||= {})
     w = (qwb[:generic_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqGenericWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqGenericWorker, :memory_threshold) || 400.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqGenericWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqGenericWorker, :memory_threshold) || 400.megabytes
     @sb[:generic_threshold] = []
     @sb[:generic_threshold] = copy_array(@sb[:threshold])
 
     w = (qwb[:priority_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :memory_threshold) || 200.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqPriorityWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqPriorityWorker, :memory_threshold) || 200.megabytes
     @sb[:priority_threshold] = []
     @sb[:priority_threshold] = copy_array(@sb[:threshold])
 
     qwb[:ems_metrics_collector_worker] ||= {}
     qwb[:ems_metrics_collector_worker][:defaults] ||= {}
     w = qwb[:ems_metrics_collector_worker][:defaults]
-    raw = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsCollectorWorker)
+    raw = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker)
     w[:count] = raw[:defaults][:count] || 2
     w[:memory_threshold] = raw[:defaults][:memory_threshold] || 400.megabytes
     @sb[:ems_metrics_collector_threshold] = []
     @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
 
     w = (qwb[:ems_metrics_processor_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :memory_threshold) || 200.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :memory_threshold) || 200.megabytes
     @sb[:ems_metrics_processor_threshold] = []
     @sb[:ems_metrics_processor_threshold] = copy_array(@sb[:threshold])
 
     w = (qwb[:smart_proxy_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :count) || 3
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :memory_threshold) || 400.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :count) || 3
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :memory_threshold) || 400.megabytes
     @sb[:smart_proxy_threshold] = []
     @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
 
     qwb[:ems_refresh_worker] ||= {}
     qwb[:ems_refresh_worker][:defaults] ||= {}
     w = qwb[:ems_refresh_worker][:defaults]
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEmsRefreshWorker, %i(defaults memory_threshold)) || 400.megabytes
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsRefreshWorker, :defaults, :memory_threshold) || 400.megabytes
     @sb[:ems_refresh_threshold] = []
     (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
     (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
     (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
     (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
 
-    wb = @edit[:current].config[:workers][:worker_base]
+    wb = @edit[:current][:workers][:worker_base]
     w = (wb[:event_catcher] ||= {})
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEventCatcher, :memory_threshold) || 1.gigabytes
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEventCatcher, :memory_threshold) || 1.gigabytes
     @sb[:event_catcher_threshold] = []
     (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
     (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
     (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
 
     w = (wb[:vim_broker_worker] ||= {})
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
     @sb[:vim_broker_threshold] = []
     (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
     (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
     (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
 
     w = (wb[:ui_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqUiWorker, :count) || 2
+    w[:count] = get_worker_setting(@edit[:current], MiqUiWorker, :count) || 2
 
     w = (qwb[:reporting_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqReportingWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqReportingWorker, :memory_threshold) || 400.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqReportingWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqReportingWorker, :memory_threshold) || 400.megabytes
     @sb[:reporting_threshold] = []
     @sb[:reporting_threshold] = copy_array(@sb[:threshold])
 
     w = (wb[:web_service_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :memory_threshold) || 400.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :memory_threshold) || 400.megabytes
     @sb[:web_service_threshold] = []
     @sb[:web_service_threshold] = copy_array(@sb[:threshold])
 
     w = (wb[:websocket_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebsocketWorker, :count) || 2
+    w[:count] = get_worker_setting(@edit[:current], MiqWebsocketWorker, :count) || 2
 
-    @edit[:new].config = copy_hash(@edit[:current].config)
+    @edit[:new] = copy_hash(@edit[:current])
     session[:log_depot_default_verify_status] = true
     @in_a_form = true
+  end
+
+  private def get_worker_setting(config, klass, *setting)
+    settings = klass.worker_settings(:config => config, :raw => true)
+    setting.empty? ? settings : settings.fetch_path(setting)
   end
 
   def settings_set_form_vars_logos
     @edit = {}
     @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:current] = VMDB::Config.new("vmdb") # Get the vmdb configuration settings
+    @edit[:current] = ::Settings.to_hash
     @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-    if @edit[:current].config[:server][:custom_logo].nil?
-      @edit[:current].config[:server][:custom_logo] = false # Set default custom_logo flag
+    if @edit[:current][:server][:custom_logo].nil?
+      @edit[:current][:server][:custom_logo] = false # Set default custom_logo flag
     end
-    if @edit[:current].config[:server][:custom_login_logo].nil?
-      @edit[:current].config[:server][:custom_login_logo] = false # Set default custom_logo flag
+    if @edit[:current][:server][:custom_login_logo].nil?
+      @edit[:current][:server][:custom_login_logo] = false # Set default custom_logo flag
     end
-    if @edit[:current].config[:server][:custom_brand].nil?
-      @edit[:current].config[:server][:custom_brand] = false # Set default custom_brand flag
+    if @edit[:current][:server][:custom_brand].nil?
+      @edit[:current][:server][:custom_brand] = false # Set default custom_brand flag
     end
 
-    if @edit[:current].config[:server][:use_custom_login_text].nil?
-      @edit[:current].config[:server][:use_custom_login_text] = false # Set default custom_login_text flag
+    if @edit[:current][:server][:use_custom_login_text].nil?
+      @edit[:current][:server][:use_custom_login_text] = false # Set default custom_login_text flag
     end
     @logo_file = @@logo_file
     @login_logo_file = @@login_logo_file
@@ -1144,8 +1153,8 @@ module OpsController::Settings::Common
     end
     if %w(settings_server settings_authentication settings_custom_logos).include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
-      @edit[:current].config.each_key do |category|
-        @edit[:new][category] = copy_hash(@edit[:current].config[category])
+      @edit[:current].each_key do |category|
+        @edit[:new][category] = copy_hash(@edit[:current][category])
       end
       if @sb[:active_tab] == "settings_server"
         session[:selected_roles] = @edit[:new][:server][:role].split(",") if !@edit[:new][:server].nil? && !@edit[:new][:server][:role].nil?

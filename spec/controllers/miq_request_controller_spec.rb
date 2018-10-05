@@ -331,7 +331,7 @@ describe MiqRequestController do
   context '#miq_request_initial_options user choice' do
     before(:each) do
       EvmSpecHelper.local_miq_server
-      stub_server_configuration(:server => {}, :session => {})
+      stub_settings(:server => {}, :session => {})
 
       # Create users
       @admin = FactoryGirl.create(:user, :role => "super_administrator")
@@ -371,7 +371,7 @@ describe MiqRequestController do
   context "requester_label" do
     before(:each) do
       EvmSpecHelper.local_miq_server
-      stub_server_configuration(:server => {}, :session => {})
+      stub_settings(:server => {}, :session => {})
 
       # Create user
       @approver = FactoryGirl.create(:user, :role => "approver")
