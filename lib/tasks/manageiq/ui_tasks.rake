@@ -1,10 +1,4 @@
 namespace :update do
-  task :bower do
-    Dir.chdir ManageIQ::UI::Classic::Engine.root do
-      system("bower update --allow-root -F --config.analytics=false") || abort("\n== bower install failed ==")
-    end
-  end
-
   task :yarn do
     asset_engines.each do |engine|
       Dir.chdir engine.path do
@@ -15,8 +9,10 @@ namespace :update do
   end
 
   task :clean do
-    # clean up old bower install to prevent it from winning over npm
+    # clean up old bower packages
+    # FIXME: remove 2018-11 or so, hammer/no
     FileUtils.rm_rf(ManageIQ::UI::Classic::Engine.root.join('vendor', 'assets', 'bower_components'))
+    FileUtils.rm_rf(ManageIQ::UI::Classic::Engine.root.join('vendor', 'assets', 'bower'))
 
     # clean up old webpack packs to prevent stale packs now that we're hashing the filenames
     FileUtils.rm_rf(Rails.root.join('public', 'packs'))
@@ -33,7 +29,7 @@ namespace :update do
     puts
   end
 
-  task :actual_ui => ['update:clean', 'update:bower', 'update:yarn', 'webpack:compile', 'update:print_engines']
+  task :actual_ui => ['update:clean', 'update:yarn', 'webpack:compile', 'update:print_engines']
 
   task :ui do
     # when running update:ui from ui-classic, asset_engines won't see the other engines
