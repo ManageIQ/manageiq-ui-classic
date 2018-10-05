@@ -46,4 +46,12 @@ describe('packs/global.js', function() {
       expect(angular.module('ui.bootstrap')).toBeDefined();
     });
   });
+
+  context('d3 plugins', function() {
+    it('loads patternfly-timeline', function() {
+      expect(d3.chart.timeline).toBeDefined();
+      expect(d3.chart.timeline().start).toBeDefined();
+      expect(d3.chart.timeline().end).toBeDefined();
+    });
+  });
 });
