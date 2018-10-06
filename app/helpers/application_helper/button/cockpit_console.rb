@@ -4,7 +4,9 @@ class ApplicationHelper::Button::CockpitConsole < ApplicationHelper::Button::Bas
   def visible?
     # disabled for Openstack as discussed in https://github.com/ManageIQ/manageiq-ui-classic/pull/4212
     # FIXME: there should be some supports_? based check instead.
-    !@record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)
+    # Click2Cloud: Added telefonica cloudmanager condition
+    !@record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm) ||
+    !@record.kind_of?(ManageIQ::Providers::Telefonica::CloudManager::Vm)
   end
 
   def disabled?

@@ -185,7 +185,8 @@ module VmHelper::TextualSummary
   end
 
   def textual_retirement_date
-    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Template)
+    # Click2Cloud: Added telefonica cloudmanager template condition
+    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Template) || @record.kind_of?(ManageIQ::Providers::Telefonica::CloudManager::Template)
     {:label => _("Retirement Date"),
      :icon  => "fa fa-clock-o",
      :value => @record.retires_on.nil? ? _("Never") : format_timezone(@record.retires_on)}

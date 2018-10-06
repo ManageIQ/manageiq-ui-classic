@@ -11,7 +11,7 @@ describe ApplicationHelper::Button::VmVncConsole do
     end
     context 'when record.vendor != vmware' do
       context 'and VNC is a supported console' do
-        it_behaves_like 'vm_console_record_types', :vm_openstack => true, :vm_redhat => true
+        it_behaves_like 'vm_console_record_types', :vm_openstack => true, :vm_redhat => true, :vm_telefonica => true
       end
       context 'and VNC is not a supported console' do
         it_behaves_like 'vm_console_record_types', :vm_amazon => false

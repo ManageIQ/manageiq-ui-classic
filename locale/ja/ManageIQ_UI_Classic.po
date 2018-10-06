@@ -1029,6 +1029,9 @@ msgstr "* このページの日付/時間は、タイムゾーン %{time_zone} �
 msgid "* Disk space not supported for OpenStack providers"
 msgstr "* ディスク領域は OpenStack プロバイダーの場合はサポートされていません"
 
+msgid "* Disk space not supported for Telefonica providers"
+msgstr "* ディスク領域は Telefonica プロバイダーの場合はサポートされていません"
+
 msgid "* Enter Policy Simulation options on the left and press Submit"
 msgstr "* 左側のポリシーシミュレーションのオプションを入力して「送信」を押してください"
 
@@ -11094,8 +11097,8 @@ msgstr ""
 msgid "Note:"
 msgstr "注:"
 
-msgid "Note: Collect for All %{clusters} must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Amazon EC2"
-msgstr "注: Red Hat OpenStack または Amazon EC2 などのクラウドプロバイダーから C & U データを収集できるようにすべての %{clusters} の収集をチェックする必要があります。"
+msgid "Note: Collect for All %{clusters} must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Telefonica or Amazon EC2"
+msgstr "注: Red Hat OpenStack または Telefonica または Amazon EC2 などのクラウドプロバイダーから C & U データを収集できるようにすべての %{clusters} の収集をチェックする必要があります。"
 
 msgid "Note: Fields marked with * are required."
 msgstr "注* 印のついたフィールドは必須です。"
@@ -11377,6 +11380,12 @@ msgstr "OpenStack サービスのステータス"
 msgid "OpenStack Status"
 msgstr "OpenStack ステータス"
 
+msgid "Telefonica Service Status"
+msgstr "Telefonica サービスのステータス"
+
+msgid "Telefonica Status"
+msgstr "Telefonica ステータス"
+
 msgid "Opening a VM web-based VMRC console requires that VMRC is pre-configured to work in your browser.  Are you sure?"
 msgstr "仮想マシンの web ベースの VMRC コンソールを開くには、VMRC がブラウザーで動作するように事前に設定しておく必要があります。実行してもよいですか?"
 
@@ -11394,6 +11403,18 @@ msgstr "Openstack インフラプロバイダー"
 
 msgid "Openstack Nova Scheduler"
 msgstr "Openstack Nova Scheduler"
+
+msgid "Telefonica Hardware"
+msgstr "Telefonica ハードウェア"
+
+msgid "Telefonica Infra Provider"
+msgstr "Telefonica インフラプロバイダー"
+
+msgid "Telefonica Infra provider"
+msgstr "Telefonica インフラプロバイダー"
+
+msgid "Telefonica Nova Scheduler"
+msgstr "Telefonica Nova Scheduler"
 
 msgid "Operating System"
 msgstr "オペレーティングシステム"
@@ -17757,6 +17778,9 @@ msgstr "プロバイダーに対するサービスアカウントの認証に使
 
 msgid "Used to authenticate with OpenStack AMQP Messaging Bus for event handling. Configure AMQP if eventing is not enabled on Ceilometer."
 msgstr "OpenStack AMQP メッセージングバスで認証してイベント処理を行うために使用されます。イベントが Ceilometer で有効でない場合は AMQP を設定します。"
+
+msgid "Used to authenticate with Telefonica AMQP Messaging Bus for event handling. Configure AMQP if eventing is not enabled on Ceilometer."
+msgstr "Telefonica AMQP メッセージングバスで認証してイベント処理を行うために使用されます。イベントが Ceilometer で有効でない場合は AMQP を設定します。"
 
 msgid "Used to gather Capacity & Utilization metrics."
 msgstr "容量 & 使用率メトリックの収集に使用されます。"

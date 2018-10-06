@@ -34,8 +34,10 @@
           = select_tag("type",
                        options_for_select({"Amazon CloudFormation" => "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate",
                                            "OpenStack Heat"        => "ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate",
+                                           "Telefonica Heat"        => "ManageIQ::Providers::Telefonica::CloudManager::OrchestrationTemplate",
                                            "Microsoft Azure"       => "ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate",
                                            "VNF"                   => "ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate",
+                                           "Telefonica VNF"        => "ManageIQ::Providers::Telefonica::CloudManager::VnfdTemplate",
                                            "VMWare vApp"           => "ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate"},
                                           @edit[:new][:type]),
                        :class => "selectpicker")

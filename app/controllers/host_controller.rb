@@ -433,12 +433,14 @@ class HostController < ApplicationController
 
   private
 
+  # Click2Cloud: Added telefonica hardware and service status in textual group list
   def textual_group_list
     [
       %i(properties relationships),
       %i(
         compliance security configuration diagnostics smart_management miq_custom_attributes
         ems_custom_attributes authentications cloud_services openstack_hardware_status openstack_service_status
+        telefonica_hardware_status telefonica_service_status
       )
     ]
   end

@@ -45,11 +45,12 @@ describe GenericObjectHelper::TextualSummary do
     it "displays the GO Associations when Associations exist" do
       vm1 = FactoryGirl.create(:vm_vmware)
       vm2 = FactoryGirl.create(:vm_openstack)
+      vm3 = FactoryGirl.create(:vm_telefonica)
       ems = FactoryGirl.create(:ems_cloud)
       @record = FactoryGirl.create(:generic_object,
                                    :generic_object_definition_id => @generic_obj_defn.id,
                                    :cp                           => [ems],
-                                   :vms                          => [vm1, vm2])
+                                   :vms                          => [vm1, vm2, vm3])
 
       expected = TextualGroup.new("Associations", %i(cp vms))
 
