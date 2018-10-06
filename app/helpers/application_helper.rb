@@ -1207,10 +1207,12 @@ module ApplicationHelper
 
   def title_for_host_record(record)
     record.openstack_host? ? _("Node") : _("Host")
+    record.telefonica_host? ? _("Node") : _("Host")
   end
 
   def title_for_cluster_record(record)
     record.openstack_cluster? ? _("Deployment Role") : _("Cluster")
+    record.telefonica_cluster? ? _("Deployment Role") : _("Cluster")
   end
 
   def miq_tab_header(id, active = nil, options = {}, &_block)

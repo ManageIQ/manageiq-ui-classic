@@ -11,6 +11,7 @@ describe TreeNode::VmOrTemplate do
     template_azure
     template_google
     template_openstack
+    template_telefonica
     template_vmware_cloud
     template_microsoft
     template_redhat
@@ -42,6 +43,7 @@ describe TreeNode::VmOrTemplate do
     vm_azure
     vm_google
     vm_openstack
+    vm_telefonica
     vm_vmware_cloud
     vm_microsoft
     vm_redhat

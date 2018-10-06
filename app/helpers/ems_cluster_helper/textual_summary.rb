@@ -31,7 +31,7 @@ module EmsClusterHelper::TextualSummary
 
   def textual_group_configuration
     return nil if @record.ha_enabled.nil? && @record.ha_admit_control.nil? && @record.drs_enabled.nil? &&
-                  @record.drs_automation_level.nil? && @record.drs_migration_threshold.nil?
+      @record.drs_automation_level.nil? && @record.drs_migration_threshold.nil?
     TextualGroup.new(
       _("Configuration"),
       %i(ha_enabled ha_admit_control drs_enabled drs_automation_level drs_migration_threshold)
@@ -89,6 +89,54 @@ module EmsClusterHelper::TextualSummary
                                  :id                      => @record,
                                  :host_service_group_name => x.name,
                                  :status                  => :all)
+                       end}
+
+      sub_items = [running, failed, all]
+
+      {:value => x.name, :sub_items => sub_items}
+    end
+  end
+
+  def textual_generate_telefonica_status
+    @record.service_group_names.collect do |x|
+      running_count = @record.host_ids_with_running_service_group(x.name).count
+      failed_count  = @record.host_ids_with_failed_service_group(x.name).count
+      all_count     = @record.host_ids_with_service_group(x.name).count
+
+      running = {:title => _("Show list of hosts with running %{name}") % {:name => x.name},
+                 :value => _("Running (%{number})") % {:number => running_count},
+                 :icon  => failed_count == 0 && running_count > 0 ? 'pficon pficon-ok' : nil,
+                 :link  => if running_count > 0
+                             url_for_only_path(:controller              => controller.controller_name,
+                                               :action                  => 'show',
+                                               :id                      => @record,
+                                               :display                 => 'hosts',
+                                               :host_service_group_name => x.name,
+                                               :status                  => :running)
+                           end}
+
+      failed = {:title => _("Show list of hosts with failed %{name}") % {:name => x.name},
+                :value => _("Failed (%{number})") % {:number => failed_count},
+                :icon  => failed_count > 0 ? 'pficon pficon-error-circle-o' : nil,
+                :link  => if failed_count > 0
+                            url_for_only_path(:controller              => controller.controller_name,
+                                              :action                  => 'show',
+                                              :id                      => @record,
+                                              :display                 => 'hosts',
+                                              :host_service_group_name => x.name,
+                                              :status                  => :failed)
+                          end}
+
+      all = {:title => _("Show list of hosts with %{name}") % {:name => x.name},
+             :value => _("All (%{number})") % {:number => all_count},
+             :icon  => 'pficon pficon-container-node',
+             :link  => if all_count > 0
+                         url_for_only_path(:controller              => controller.controller_name,
+                                           :action                  => 'show',
+                                           :display                 => 'hosts',
+                                           :id                      => @record,
+                                           :host_service_group_name => x.name,
+                                           :status                  => :all)
                        end}
 
       sub_items = [running, failed, all]

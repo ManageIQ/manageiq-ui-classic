@@ -96,10 +96,11 @@ class EmsClusterController < ApplicationController
 
   private
 
+  # Click2Cloud: Added telefonica status in textual group list
   def textual_group_list
     [
       %i(relationships),
-      %i(host_totals vm_totals configuration tags openstack_status)
+      %i(host_totals vm_totals configuration tags openstack_status telefonica_status)
     ]
   end
   helper_method :textual_group_list

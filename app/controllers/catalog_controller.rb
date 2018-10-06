@@ -46,11 +46,14 @@ class CatalogController < ApplicationController
     'st_catalog_new'                => :st_catalog_edit,
   }.freeze
 
+# Click2Cloud: Added telefonica orchestration and vnfd template
   ORCHESTRATION_TEMPLATES_NODES = {
     'ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate'    => "otcfn",
     'ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate' => "othot",
+    'ManageIQ::Providers::Telefonica::CloudManager::OrchestrationTemplate' => "otthot",
     'ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate'     => "otazu",
     'ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate'          => "otvnf",
+    'ManageIQ::Providers::Telefonica::CloudManager::VnfdTemplate'          => "ottvnf",
     'ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate'    => "otvap"
   }.freeze
 
@@ -1134,9 +1137,11 @@ class CatalogController < ApplicationController
     load_edit("ot_add__new", "replace_cell__explorer")
     template_types = %w(
       ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate
+      ManageIQ::Providers::Telefonica::CloudManager::OrchestrationTemplate
       ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate
       ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate
       ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate
+      ManageIQ::Providers::Telefonica::CloudManager::VnfdTemplate
       ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate
     )
     if !template_types.include?(@edit[:new][:type])

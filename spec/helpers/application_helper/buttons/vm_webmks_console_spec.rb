@@ -11,7 +11,7 @@ describe ApplicationHelper::Button::VmWebmksConsole do
     end
     context 'when record.vendor != vmware' do
       context 'and WebMKS is not a supported console' do
-        it_behaves_like 'vm_console_record_types', :vm_openstack => nil, :vm_redhat => nil
+        it_behaves_like 'vm_console_record_types', :vm_openstack => nil, :vm_redhat => nil, :vm_telefonica => nil
       end
     end
   end

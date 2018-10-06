@@ -1036,6 +1036,9 @@ msgstr "* Las fechas/horas en esta página se basan en la zona horaria: %{time_z
 msgid "* Disk space not supported for OpenStack providers"
 msgstr "* El espacio de disco no está soportado para proveedores de OpenStack "
 
+msgid "* Disk space not supported for Telefonica providers"
+msgstr "* El espacio de disco no está soportado para proveedores de Telefonica "
+
 msgid "* Enter Policy Simulation options on the left and press Submit"
 msgstr "* Introduzca las opciones de simulación de políticas a la izquierda y presione Enviar"
 
@@ -11101,8 +11104,8 @@ msgstr ""
 msgid "Note:"
 msgstr "Nota:"
 
-msgid "Note: Collect for All %{clusters} must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Amazon EC2"
-msgstr "Nota: Se debe seleccionar Recopilar para todos los %{clusters} para poder recopilar los datos sobre capacidad y utilización de los proveedores de nube, como Red Hat OpenStack o Amazon EC2"
+msgid "Note: Collect for All %{clusters} must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Telefonica or Amazon EC2"
+msgstr "Nota: Se debe seleccionar Recopilar para todos los %{clusters} para poder recopilar los datos sobre capacidad y utilización de los proveedores de nube, como Red Hat OpenStack o Telefonica o Amazon EC2"
 
 msgid "Note: Fields marked with * are required."
 msgstr "Nota: Los campos marcados con * son necesarios."
@@ -11384,6 +11387,12 @@ msgstr "Estado de servicio de OpenStack"
 msgid "OpenStack Status"
 msgstr "Estado de OpenStack"
 
+msgid "Telefonica Service Status"
+msgstr "Estado de servicio de Telefonica"
+
+msgid "Telefonica Status"
+msgstr "Estado de Telefonica"
+
 msgid "Opening a VM web-based VMRC console requires that VMRC is pre-configured to work in your browser.  Are you sure?"
 msgstr "Abrir una consola VMRC basada en la Web para máquinas virtuales requiere que VMRC se configure previamente para que funcione en su navegador. ¿Está seguro?"
 
@@ -11401,6 +11410,18 @@ msgstr "Proveedor de infraestuctura de Openstack"
 
 msgid "Openstack Nova Scheduler"
 msgstr "Programador de Nova de OpenStack"
+
+msgid "Telefonica Hardware"
+msgstr "Hardware de Telefonica"
+
+msgid "Telefonica Infra Provider"
+msgstr "Proveedor de infraestuctura de Telefonica"
+
+msgid "Telefonica Infra provider"
+msgstr "Proveedor de infraestuctura de Telefonica"
+
+msgid "Telefonica Nova Scheduler"
+msgstr "Programador de Nova de Telefonica"
 
 msgid "Operating System"
 msgstr "Sistema operativo"
@@ -17764,6 +17785,9 @@ msgstr "Utilizado para autenticar como una cuenta de servicio contra su proveedo
 
 msgid "Used to authenticate with OpenStack AMQP Messaging Bus for event handling. Configure AMQP if eventing is not enabled on Ceilometer."
 msgstr "Utilizado para autenticar con OpenStack AMQP Messaging Bus para manipulación de eventos. Configurar AMQP si el creador de eventos no está habilitado en el ceilómetro."
+
+msgid "Used to authenticate with Telefonica AMQP Messaging Bus for event handling. Configure AMQP if eventing is not enabled on Ceilometer."
+msgstr "Utilizado para autenticar con Telefonica AMQP Messaging Bus para manipulación de eventos. Configurar AMQP si el creador de eventos no está habilitado en el ceilómetro."
 
 msgid "Used to gather Capacity & Utilization metrics."
 msgstr "Usado para reunir las métricas de Capacidad y Utilización."

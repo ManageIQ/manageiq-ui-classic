@@ -1016,6 +1016,9 @@ msgstr "* 这个页面上的日期/时间是基于时区 %{time_zone} 的。"
 msgid "* Disk space not supported for OpenStack providers"
 msgstr "* 磁盘空间不支持 OpenStack 供应商"
 
+msgid "* Disk space not supported for Telefonica providers"
+msgstr "* 磁盘空间不支持 Telefonica 供应商"
+
 msgid "* Enter Policy Simulation options on the left and press Submit"
 msgstr "* 在左侧输入策略模拟选项并按“提交”"
 
@@ -11046,8 +11049,8 @@ msgstr ""
 msgid "Note:"
 msgstr "注意："
 
-msgid "Note: Collect for All %{clusters} must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Amazon EC2"
-msgstr "注: 必须选中采集所有 %{clusters}，以便以从云供应商采集容量和使用率数据， 例如 Red Hat OpenStack 或 Amazon EC2"
+msgid "Note: Collect for All %{clusters} must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Telefonica or Amazon EC2"
+msgstr "注: 必须选中采集所有 %{clusters}，以便以从云供应商采集容量和使用率数据， 例如 Red Hat OpenStack 或 Telefonica 或 Amazon EC2"
 
 msgid "Note: Fields marked with * are required."
 msgstr "注：用 * 标记的字段是必需的。"
@@ -11327,6 +11330,12 @@ msgstr "OpenStack 服务状态"
 msgid "OpenStack Status"
 msgstr "OpenStack 状态"
 
+msgid "Telefonica Service Status"
+msgstr "Telefonica 服务状态"
+
+msgid "Telefonica Status"
+msgstr "Telefonica 状态"
+
 msgid "Opening a VM web-based VMRC console requires that VMRC is pre-configured to work in your browser.  Are you sure?"
 msgstr "打开基于 Web 的 VMRC 控制台要求您对 VMRC 进行预配置以在浏览器里使用它，您确定吗？"
 
@@ -11344,6 +11353,18 @@ msgstr "Openstack Infra 供应商"
 
 msgid "Openstack Nova Scheduler"
 msgstr "Openstack Nova 调度器"
+
+msgid "Telefonica Hardware"
+msgstr "Telefonica 硬件"
+
+msgid "Telefonica Infra Provider"
+msgstr "Telefonica Infra 供应商"
+
+msgid "Telefonica Infra provider"
+msgstr "Telefonica Infra 供应商"
+
+msgid "Telefonica Nova Scheduler"
+msgstr "Telefonica Nova 调度器"
 
 msgid "Operating System"
 msgstr "操作系统"
@@ -17676,6 +17697,9 @@ msgstr "用来作为服务帐号来在您的供应商中进行验证"
 
 msgid "Used to authenticate with OpenStack AMQP Messaging Bus for event handling. Configure AMQP if eventing is not enabled on Ceilometer."
 msgstr "用来与 OpenStack AMQP 消息总线进行验证来处理事件。如果事件没有在 Ceilometer 中启用，配置 AMQP。"
+
+msgid "Used to authenticate with Telefonica AMQP Messaging Bus for event handling. Configure AMQP if eventing is not enabled on Ceilometer."
+msgstr "用来与 Telefonica AMQP 消息总线进行验证来处理事件。如果事件没有在 Ceilometer 中启用，配置 AMQP。"
 
 msgid "Used to gather Capacity & Utilization metrics."
 msgstr "用于收集容量和利用率度量。"

@@ -517,6 +517,7 @@ class TreeBuilder
     :vmdb                            => "TreeBuilderOpsVmdb",
   }.freeze
 
+  # Click2Cloud: Added telefonica cloudmanager templates prefix
   # Tree node prefixes for generic explorers
   X_TREE_NODE_PREFIXES = {
     "a"    => "MiqAction",
@@ -561,6 +562,7 @@ class TreeBuilder
     "god"  => "GenericObjectDefinition",
     "h"    => "Host",
     "hot"  => "ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate",
+    "thot"  => "ManageIQ::Providers::Telefonica::CloudManager::OrchestrationTemplate",
     "isd"  => "IsoDatastore",
     "isi"  => "IsoImage",
     "l"    => "Lan",
@@ -600,6 +602,7 @@ class TreeBuilder
     "v"    => "Vm",
     "vap"  => "ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate",
     "vnf"  => "ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate",
+    "tvnf"  => "ManageIQ::Providers::Telefonica::CloudManager::VnfdTemplate",
     "wi"   => "WindowsImage",
     "xx"   => "Hash", # For custom (non-CI) nodes, specific to each tree
     "z"    => "Zone"

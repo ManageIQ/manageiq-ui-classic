@@ -8,6 +8,7 @@ describe ApplicationHelper::Toolbar::EmsNetworkCenter do
     let(:button)        { button_klass.new(nil, nil, {}, {}) }
     let(:ems_nuage)     { FactoryGirl.create(:ems_nuage_network) }
     let(:ems_openstack) { FactoryGirl.create(:ems_openstack) }
+    let(:ems_telefonica) { FactoryGirl.create(:ems_telefonica) }
 
     it 'appropriate button class' do
       expect(button_klass).to eq(ApplicationHelper::Button::EmsNetwork)
@@ -20,6 +21,11 @@ describe ApplicationHelper::Toolbar::EmsNetworkCenter do
 
     it 'not visible for openstack provider' do
       button.instance_variable_set(:@record, ems_openstack)
+      expect(button.visible?).to eq(false)
+    end
+
+    it 'not visible for telefonica provider' do
+      button.instance_variable_set(:@record, ems_telefonica)
       expect(button.visible?).to eq(false)
     end
   end
