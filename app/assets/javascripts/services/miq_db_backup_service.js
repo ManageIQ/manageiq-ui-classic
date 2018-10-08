@@ -23,7 +23,7 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
   };
 
   this.credsProtocol = function(model) {
-    return (model.log_protocol === 'Samba' || model.log_protocol === 'AWS S3');
+    return (model.log_protocol === 'Samba' || model.log_protocol === 'AWS S3' || model.log_protocol === 'FTP');
   };
 
   this.s3Backup = function(model) {
