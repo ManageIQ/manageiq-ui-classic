@@ -1270,6 +1270,20 @@ function miqSelectPickerEvent(element, url, options) {
 }
 
 function miqAccordSelect(e) {
+  /**
+   * clean lingering React components from virtual DOM and reset routing
+   */
+  ManageIQ.component.cleanVirtualDom();
+  var historyReducer = ManageIQ.redux.store.getState().historyReducer;
+  if (historyReducer && historyReducer.activeController) {
+    /**
+     * store last React router action to history reducer
+     */
+    ManageIQ.redux.storeLastRoute({ route: ManageIQ.redux.history.location.pathname });
+    ManageIQ.redux.push('/');
+    ManageIQ.redux.registerController({ controller: null });
+  }
+
   if (ManageIQ.noCollapseEvent) { // implicitly return true when the noCollapseEvent is set
     return true;
   }

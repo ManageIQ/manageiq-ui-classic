@@ -2,7 +2,7 @@
 (function() {
   var CONTROLLER_NAME = 'treeViewController';
 
-  var TreeViewController = function($http, $scope) {
+  var TreeViewController = function($http, $scope, $timeout) {
     var vm = this;
     vm.$http = $http;
     vm.$scope = $scope;
@@ -26,7 +26,9 @@
       }
 
       if (payload.updateTreeNode && _.isObject(payload.updateTreeNode) && Object.keys(payload.updateTreeNode).length > 0) {
-        vm.updateTreeNode(payload.updateTreeNode);
+        $timeout(function() {
+          vm.updateTreeNode(payload.updateTreeNode);
+        })
         vm.$scope.$apply();
       }
     });
@@ -91,11 +93,15 @@
     };
 
     vm.initData = function(tree, data, selected) {
+      sendDataWithRx({ treeInit: { type: 'tree-initialized', tree: tree, selected: selected, data: data } }); // TO DO delete if not necesarry
       vm.data[tree] = vm.data[tree] || data;
       vm.selectedNodes[tree] = vm.selectedNodes[tree] || { key: selected };
     };
 
     vm.lazyLoad = function(node, name, url) {
+      if (!vm.reactRouting && node.key === 'xx-u') {
+        return;
+      }
       return new Promise(function(resolve) {
         vm.$http.post(url, {
           id: node.key,
@@ -138,6 +144,6 @@
     };
   };
 
-  TreeViewController.$inject = ['$http', '$scope'];
+  TreeViewController.$inject = ['$http', '$scope', '$timeout'];
   window.miqHttpInject(angular.module('ManageIQ.treeView')).controller(CONTROLLER_NAME, TreeViewController);
 })();

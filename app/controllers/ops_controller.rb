@@ -111,8 +111,8 @@ class OpsController < ApplicationController
     when "user_center_tb"
       @record = User.find(params[:id]) if params[:id]
     end
-    toolbar = build_toolbar(params[:toolbar_name])
-    render :json => {:toolbar => toolbar, :id => params[:id]}
+    @explorer = true
+    render :json => {:toolbar => toolbar_from_hash, :id => params[:id]}
   end
 
   def user_tags

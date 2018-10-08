@@ -83,7 +83,7 @@
           - if role_allows?(:feature => "rbac_user_show")
             - @group.users.sort_by { |a| a.name.downcase }.each do |u|
               - params = {:class => "pointer",
-                          :onclick => "miqOnClickSelectRbacTreeNode('u-#{u.id}'); ManageIQ.redux.push('/preview/#{u.id}')",
+                          :onclick => "miqOnClickSelectRbacTreeNode('u-#{u.id}');ManageIQ.redux.push('/preview/#{u.id}');ManageIQ.redux.storeLastRoute({route: '/preview/#{u.id}'})",
                           :title => _("View this User")}
               %i.pficon.pficon-user{params}
               = link_to(u.name, "#", params)

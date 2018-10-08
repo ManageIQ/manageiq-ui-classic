@@ -575,7 +575,7 @@ function miqInitTree(options, tree) {
       miqTreeState(options.cookie_id, node.key, false);
     },
     lazyLoad: function(node, display) {
-      if (options.autoload) {
+      if (options.autoload && node.key !== 'xx-u') {
         $.ajax({
           url: '/' + options.controller + '/tree_autoload',
           type: 'post',

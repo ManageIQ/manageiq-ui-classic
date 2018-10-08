@@ -766,6 +766,7 @@ module ApplicationHelper
   # keys are toolbar <div> names and values are toobar identifiers (now YAML files)
   #
   def calculate_toolbars
+    controller = try(:controller) || self unless defined?(controller) && controller.present?
     toolbars = {}
     if inner_layout_present? # x_taskbar branch
       toolbars['history_tb'] = history_toolbar_filename

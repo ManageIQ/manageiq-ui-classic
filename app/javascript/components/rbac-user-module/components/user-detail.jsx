@@ -39,22 +39,25 @@ export class UserDetail extends Component {
     return (
       <div>
         <RbacUserPreview user={this.props.user} />
-        <div className="form-horizontal rbac-user-preview">
-          <Grid fluid>
-            <Row>
-              <FormGroup>
-                <Col md={2} componentClass="label" className="control-label">
-                  Custom button events
-                </Col>
-                <Col md={8}>
-                  { customEvents && customEvents.length > 0
-                    ? <Fragment><Icon type="fa" name="star" />&nbsp;<Link to={`${this.props.match.url}/custom-button-events`}>{customEvents.length}</Link></Fragment>
-                    : customEvents && customEvents.length === 0 ? 'None' : <Spinner inline loading size="sm" />}
-                </Col>
-              </FormGroup>
-            </Row>
-          </Grid>
-        </div>
+        { customEvents && customEvents.length > 0 &&
+          <div className="form-horizontal rbac-user-preview">
+            <Grid fluid>
+              <Row>
+                <FormGroup>
+                  <Col md={2} componentClass="label" className="control-label">
+                    Custom button events
+                  </Col>
+                  <Col md={8}>
+                    <Fragment>
+                      <Icon type="fa" name="star" />&nbsp;
+                      <Link to={`${this.props.match.url}/custom-button-events`}>{customEvents.length}</Link>
+                    </Fragment>
+                  </Col>
+                </FormGroup>
+              </Row>
+            </Grid>
+          </div>
+        }
         <hr />
         <RbacUserTagsList tags={tags} tenant={tenant} />
       </div>

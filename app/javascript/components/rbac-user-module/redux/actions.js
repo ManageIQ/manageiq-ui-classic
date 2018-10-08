@@ -1,4 +1,4 @@
-import { push } from 'connected-react-router';
+import { push, goBack } from 'connected-react-router';
 import * as actionTypes from './action-types';
 import * as endpoints from './endpoints';
 import { API, http } from '../../../http_api';
@@ -95,7 +95,16 @@ export const requestUsers = () => (dispatch) => {
         groupId: group.id,
         value: group.id,
         onClick: () => dispatch(handleUserDetailLinkAction(`g-${group.id}`)),
-      })),
+      })).sort((a, b) => {
+        const firstValue = a.label.toLowerCase();
+        const secondValue = b.label.toLowerCase();
+        if (firstValue < secondValue) {
+          return -1;
+        } else if (firstValue > secondValue) {
+          return 1;
+        }
+        return 0;
+      }),
     })))
     .then(data => dispatch(loadUsersData({ rows: data })))
     .then(() => dispatch(fetchSucesfull()))
@@ -164,7 +173,7 @@ export const editUser = (user, userId) => (dispatch) => {
   dispatch(fetchData(actionTypes.EDIT_USER));
   return API.put(endpoints.modifyUserUrl(userId), user, { skipErrors: [500] })
     .then(
-      () => dispatch(navigate('/')),
+      () => dispatch(goBack()),
       (err) => { throw err; },
     )
     .then(() => dispatch(createFlashMessage(sprintf(__('User "%s" was saved'), user.name), 'success')))
@@ -294,6 +303,7 @@ const loadUserCustomEvents = userid => dispatch =>
 
 export const fetchCustomEventsIfNeeded = userid => (dispatch, getState) => {
   const { usersReducer: { userCustomEvents } } = getState();
+  if (!JSON.parse(localStorage.userFeatures).includes('everything')) return;
   if (!userCustomEvents[userid]) return dispatch(loadUserCustomEvents(userid));
   return Promise.resolve();
 };

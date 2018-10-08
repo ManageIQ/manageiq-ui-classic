@@ -344,7 +344,13 @@ describe('Rbac user async actions', () => {
       .getOnce(endpoints.getUsersUrl, { resources: [] });
     const expectedActions = [{
       type: actionTypes.EDIT_USER,
-    }, routeToRootAction, expect.objectContaining({
+    }, {
+      type: '@@router/CALL_HISTORY_METHOD',
+      payload: expect.objectContaining({
+        args: [],
+        method: 'goBack',
+      }),
+    }, expect.objectContaining({
       flashMessage: sucesfullFlashMessage,
       type: actionTypes.ADD_FLASH_MESSAGE,
     }), {

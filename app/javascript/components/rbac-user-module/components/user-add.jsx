@@ -48,7 +48,17 @@ class UserAdd extends Component {
       <div>
         <h1>User add</h1>
         <RbacUserForm
-          groups={groups}
+          groups={groups.sort((first, second) => {
+            const firstLabel = first.label.toUpperCase();
+            const secondLabel = second.label.toUpperCase();
+            if (firstLabel < secondLabel) {
+              return -1;
+            }
+            if (firstLabel > secondLabel) {
+              return 1;
+            }
+            return 0;
+          })}
           editDisabled={isEditing && initialValues.userid === 'admin'}
           newRecord={!isEditing}
           initialValues={initialValues

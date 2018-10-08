@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bindActionCreators, combineReducers } from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Spinner, Grid, Row, Col } from 'patternfly-react';
 import { ConnectedRouter } from 'connected-react-router';
@@ -25,11 +25,13 @@ import {
   RBAC_USER_LIST_TAGS,
   RBAC_USER_LIST_DELETE,
 } from './rx-routing';
+import historyReducer from '../../miq-redux/history-reducer';
 
 class RbacModule extends Component {
   constructor(props) {
     super(props);
-    ManageIQ.redux.addReducer(combineReducers({ usersReducer }));
+    ManageIQ.redux.addReducer({ usersReducer, historyReducer });
+    ManageIQ.redux.registerController({ controller: 'configurationRbac' });
     this.historyUnlisten = ManageIQ.redux.history.listen(({ pathname }, action) => {
       if (pathname === '/add' || pathname === '/add/copy' || pathname === '/assign-company-tags' || pathname.match(/^\/edit\/[0-9]+$/)) {
         // hide toolbar when adding or editing
@@ -39,19 +41,24 @@ class RbacModule extends Component {
       const toolbarUrl = `/ops/update_toolbar?toolbar_name=user${pathname === '/' ? 's' : ''}_center_tb${pathname.match(/\/preview\/[0-9]+/)
         ? `&id=${pathname.replace(/^\D+/g, '')}`
         : ''}`;
-      http.get(toolbarUrl).then(data => sendDataWithRx({ redrawToolbar: [data.toolbar] }));
+      http.get(toolbarUrl).then(data => sendDataWithRx({ redrawToolbar: data.toolbar.filter(item => item !== null) }));
       const treeUrl = '/tree/ops_rbac?id=xx-u';
       if (pathname === '/' && action === 'POP') {
         http.get(treeUrl).then(() => this.sendTreeUpdate({ state: { selected: true } }));
-      } else if (action === 'POP') {
+      } else {
         http.get(treeUrl).then(users => users.map(user => ({
           ...user,
           state: { selected: user.key === `u-${pathname.replace(/^\D+/g, '')}` },
         }))).then(data => this.sendTreeUpdate({ nodes: [...data], state: { selected: false } }));
       }
     });
-    this.rxSubscription = listenToRx(({ rbacRouting }) => {
+    this.rxSubscription = listenToRx(({ rbacRouting, treeInit }) => {
       if (rbacRouting) this.chooseRoute(rbacRouting.type)();
+      if (treeInit && treeInit.tree === 'rbac_tree') {
+        if (ManageIQ.redux.history.location.pathname === '/' && treeInit.selected.match(/^u-[0-9]+$/)) {
+          this.props.navigate(`/preview/${treeInit.selected.split('-').pop()}`);
+        }
+      }
     });
   }
 
@@ -61,12 +68,18 @@ class RbacModule extends Component {
     http.get(treeUrl).then(users => users.map(user => ({
       ...user,
       state: { selected: user.key === `u-${this.props.pathname.replace(/^\D+/g, '')}` },
-    }))).then(data => setTimeout(this.sendTreeUpdate({ nodes: [...data], state: { selected: this.props.pathname === '/' } }), 2000)); // have to w8 for the tree to initialize first...
+    }))).then((data) => {
+      setTimeout(this.sendTreeUpdate({ nodes: [...data], state: { selected: this.props.pathname === '/' } }), 2000);
+    }); // have to w8 for the tree to initialize first...
 
     const toolbarUrl = `/ops/update_toolbar?toolbar_name=user${this.props.pathname === '/' ? 's' : ''}_center_tb${this.props.pathname.match(/\/preview\/[0-9]+/)
       ? `&id=${this.props.pathname.replace(/^\D+/g, '')}`
       : ''}`;
-    http.get(toolbarUrl).then(data => sendDataWithRx({ redrawToolbar: [data.toolbar] }));
+    http.get(toolbarUrl).then(data => sendDataWithRx({ redrawToolbar: data.toolbar.filter(item => item !== null) }));
+
+    if (this.props.lastAction) {
+      this.props.navigate(this.props.lastAction);
+    }
   }
 
   componentWillUnmount() {
@@ -122,13 +135,14 @@ class RbacModule extends Component {
   }
 }
 
-const mapStateToProps = ({ usersReducer, router: { location: { pathname } } }) => ({
+const mapStateToProps = ({ historyReducer, usersReducer, router: { location: { pathname } } }) => ({
   isLoaded: !!usersReducer && !!usersReducer.rows,
   selectedUsers: !!usersReducer && usersReducer.selectedUsers,
   editUserId: !!usersReducer && usersReducer.selectedUsers && usersReducer.selectedUsers.length > 0
     ? usersReducer.selectedUsers[0].id
     : undefined,
   pathname,
+  lastAction: pathname === '/' && historyReducer && historyReducer.configurationRbac,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -147,11 +161,13 @@ RbacModule.propTypes = {
   deleteMultipleusers: PropTypes.func.isRequired,
   selectedUsers: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.bool]),
   isLoaded: PropTypes.bool.isRequired,
+  lastAction: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 RbacModule.defaultProps = {
   editUserId: undefined,
   selectedUsers: false,
+  lastAction: undefined,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RbacModule);

@@ -27,3 +27,10 @@ window.listenToRx = listenToRx;
 
 import getJSONFixture from '../app/javascript/spec/helpers/getJSONFixtures';
 window.getJSONFixture = getJSONFixture;
+ManageIQ.redux = {
+  history: {
+    location: {
+      pathname: '/'
+    }
+  }
+}
