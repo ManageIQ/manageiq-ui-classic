@@ -18,6 +18,5 @@
     "tests"
   ],
   "dependencies": {
-    "manageiq-ui-components": "bower-dev"
   }
 }
