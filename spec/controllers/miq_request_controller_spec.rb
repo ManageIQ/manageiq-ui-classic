@@ -266,6 +266,61 @@ describe MiqRequestController do
     end
   end
 
+  context 'showing details of a retirement task' do
+    before do
+      @user = stub_admin
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    let(:vm1)     { FactoryGirl.create(:vm_cloud) }
+    let(:vm2)     { FactoryGirl.create(:vm_cloud) } # not part of the stack
+    let(:stack)   { FactoryGirl.create(:orchestration_stack).tap { |stack| stack.direct_vms = [vm1] } }
+    let(:service) { FactoryGirl.create(:service_orchestration).tap { |service| service.add_resource!(stack) } }
+    let(:request) do
+      FactoryGirl.create(:service_retire_request,
+                         :type      => 'ServiceRetireRequest',
+                         :requester => @user,
+                         :options   => {:src_ids => [service.id]})
+    end
+    # let(:request) { FactoryGirl.create(:miq_service_retirement_request, :options => {:src_ids => [service.id]}) }
+
+    let(:payload) { { :model_name => 'Vm', :parent_id => service.id.to_s, additional_key => additional_val } }
+    let(:additional_val) do
+      {
+        :model             => 'Vm',
+        :parent_id         => service.id.to_s,
+        :parent_class_name => 'ServiceOrchestration',
+        :view_suffix       => 'OrchestrationStackRetireRequest',
+        :display           => 'main',
+        :gtl_type          => 'list'
+      }
+    end
+
+    context 'angular for grid with affected VMs is properly initialized' do
+      let(:additional_key) { :report_data_additional_options }
+      it do
+        expect(controller).to receive(:prov_set_show_vars).once.and_call_original
+
+        # Verify Rails correctly initializes Angular which will then perform POST /report_data to fetch the VMs.
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(**payload)
+
+        get :show, :params => {:id => request.id}
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'angular for grid with affected VMs gets the correct VMs with XHR call' do
+      let(:additional_key) { :additional_options }
+      it do
+        post :report_data, :params => payload
+        expect(response.status).to eq(200)
+
+        # Verify Angular got correct VMs when sending the payload as set by previous test.
+        expect(JSON.parse(response.body).dig('data', 'rows').map { |row| row['id'] }).to eq([vm1.id.to_s])
+      end
+    end
+  end
+
   context "#edit_button" do
     before do
       stub_user(:features => :all)

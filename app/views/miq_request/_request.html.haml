@@ -123,6 +123,8 @@
     = render :partial => "st_prov_show"
   - elsif @miq_request.type == 'ServiceReconfigureRequest'
     = render :partial => "service_reconfigure_show"
+  - elsif @miq_request.type == "ServiceRetireRequest"
+    = render :partial => "service_retire_show"
   - elsif @miq_request.type == "AutomationRequest"
     = render :partial => "ae_prov_show"
   - else
