@@ -162,17 +162,12 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
   }
 
   function diagnosticsLogProtocol(prefix) {
-    var protocol = "";
-    if (prefix === 'nfs') {
-      protocol = 'Network File System';
-    } else if (prefix === 'smb') {
-      protocol = 'Samba';
-    } else if (prefix === 's3') {
-      protocol = 'AWS S3';
-    } else if (prefix === 'swift') {
-      protocol = 'OpenStack Swift';
-    }
-    return protocol;
+    return {
+      nfs: 'Network File System',
+      smb: 'Samba',
+      s3: 'AWS S3',
+      swift: 'OpenStack Swift',
+    }[prefix] || '';
   }
 
   init();

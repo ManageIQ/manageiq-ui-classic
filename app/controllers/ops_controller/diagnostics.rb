@@ -1,4 +1,4 @@
-# Diagnostics Accordion methods included in OpsController.rb
+# Diagnosticsapiversion Accordion methods included in OpsController.rb
 module OpsController::Diagnostics
   extend ActiveSupport::Concern
 
@@ -276,13 +276,11 @@ module OpsController::Diagnostics
     port         = URI(depot.try(:uri)).port
     render :json => {
       :depot_name           => depot.try(:name),
-      # :uri                  => uri_settings[1],
-      # :uri_prefix           => uri_settings[0],
       :uri                  => uri,
       :uri_prefix           => uri_prefix,
       :log_userid           => depot.try(:authentication_userid),
       :log_aws_region       => depot.try(:aws_region),
-      :log_openstack_region => depot.try(:openstack_region),
+      :openstack_region     => depot.try(:openstack_region),
       :keystone_api_version => depot.try(:keystone_api_version),
       :v3_domain_ident      => depot.try(:v3_domain_ident),
       :swift_api_port       => port ? port : 5000,
