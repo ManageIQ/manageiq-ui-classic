@@ -271,13 +271,13 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       it "does delayed translation of text title and confirm strings" do
         %i(text title confirm).each do |key|
           @input[key] = proc do
-            _("Add New %{model}") % {:model => 'Model'}
+            _("Add New %{table}") % {:table => 'Table'}
           end
         end
         FastGettext.locale = 'ja'
         toolbar_builder.apply_common_props(@button, @input)
         %i(text title confirm).each do |key|
-          expect(@button[key]).not_to match('Add New Model')
+          expect(@button[key]).not_to match('Add New Table')
         end
         FastGettext.locale = 'en'
       end
