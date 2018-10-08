@@ -37,8 +37,8 @@ class EmsCloudDashboardService < EmsDashboardService
     attr_url = {
       :flavors            => "flavors",
       :cloud_tenants      => "cloud_tenants",
-      :miq_templates      => "miq_templates",
-      :vms                => "vms",
+      :miq_templates      => "images",
+      :vms                => "instances",
       :availability_zones => "availability_zones",
       :security_groups    => "security_groups",
       :cloud_networks     => "cloud_networks",
