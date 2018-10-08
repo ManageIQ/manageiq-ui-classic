@@ -3,7 +3,6 @@ app/assets/javascripts/locale/**/*.js
 
 # not ours or already processed or not javascript
 node_modules/
-vendor/assets/bower_components/
 public/
 tmp/
 db/

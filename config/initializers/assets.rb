@@ -1,4 +1,3 @@
-Rails.application.config.assets.paths << ManageIQ::UI::Classic::Engine.root.join('vendor', 'assets', 'bower') # all bower deps need to be prefixed by bower_components/, but vendor/assets/* can't be removed from paths :(
 Rails.application.config.assets.paths << ManageIQ::UI::Classic::Engine.root.join('node_modules')
 
 Rails.application.config.assets.precompile << proc do |filename, path|
