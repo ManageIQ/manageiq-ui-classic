@@ -22,12 +22,15 @@ module HostHelper::TextualSummary
   end
 
   def textual_group_relationships
+    additions = []
+    additions.push(:cloud_networks) if @record.respond_to?(:cloud_networks)
+    additions.push(:cloud_subnets) if @record.respond_to?(:cloud_subnets)
     TextualGroup.new(
       _("Relationships"),
       %i(
         ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history
-        physical_server network_manager custom_button_events cloud_networks cloud_subnets
-      )
+        physical_server network_manager custom_button_events
+      ) + additions
     )
   end
 
