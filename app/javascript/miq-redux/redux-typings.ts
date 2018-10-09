@@ -17,7 +17,7 @@ export type AppState = object;
  * - return new state if `action` was acted upon, otherwise return
  *   original state.
  */
-export type AppReducer = Reducer<AppState>;
+export type AppReducer = { [key: string]: Function };
 
 /**
  * Redux action object.
@@ -40,5 +40,5 @@ export type ReduxStore = Store<AppState>;
  */
 export interface ReduxApi {
   store: ReduxStore;
-  addReducer(appReducer: AppReducer): Unsubscribe;
+  addReducer(appReducer: AppReducer);
 }

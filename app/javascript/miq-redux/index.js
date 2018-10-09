@@ -1,2 +1,1 @@
-export { store } from './store';
-export { addReducer } from './reducer';
+export { default as initializeStore } from './store';
