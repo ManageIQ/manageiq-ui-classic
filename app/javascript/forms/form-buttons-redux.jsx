@@ -60,7 +60,7 @@ function initReducer() {
   };
 
 
-  ManageIQ.redux.addReducer(combineReducers({
+  ManageIQ.redux.addReducer({
     FormButtons: function FormButtonsReducer(state = initialState, action) {
 
       if (actions[action.type]) {
@@ -71,5 +71,5 @@ function initReducer() {
 
       return state;
     },
-  }));
+  });
 }
