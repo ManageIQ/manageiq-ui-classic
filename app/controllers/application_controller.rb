@@ -1343,7 +1343,14 @@ class ApplicationController < ActionController::Base
   end
 
   def perpage_key(dbname)
-    %w(job miqtask).include?(dbname) ? :job_task : PERPAGE_TYPES[@gtl_type]
+    case dbname
+    when "miqreportresult"
+      :reports
+    when "job", "miqtask"
+      :job_task
+    else
+      PERPAGE_TYPES[dbname]
+    end
   end
 
   # Create view and paginator for a DB records with/without tags
