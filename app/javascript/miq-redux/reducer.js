@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 /**
  * Root reducer, used when creating the Redux store.
  *
- * Now its is only a dymmy reducer, since Redux needs some initial reducer co configure store
- * Should replaced by global initial reducer, once it is required
+ * Now its is only a dummy reducer, since Redux needs some initial reducer co configure store
+ * Should be replaced by global initial reducers, once it is required
  *
  * @returns New application state.
  */
