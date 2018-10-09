@@ -17,7 +17,6 @@ angular.module('patternfly.charts').component('pfHeatmapLegend', {
 
     vm.updateAll = function() {
       var items = [];
-      var index;
 
       // Allow overriding of defaults
       if (! vm.legendColors) {
@@ -26,10 +25,10 @@ angular.module('patternfly.charts').component('pfHeatmapLegend', {
       if (! vm.legend) {
         vm.legend = legendLabelDefaults;
       }
-      for (index = vm.legend.length - 1; index >= 0; index--) {
+      for (var i = vm.legend.length - 1; i >= 0; i--) {
         items.push({
-          text: vm.legend[index],
-          color: vm.legendColors[index],
+          text: vm.legend[i],
+          color: vm.legendColors[i],
         });
       }
       vm.legendItems = items;

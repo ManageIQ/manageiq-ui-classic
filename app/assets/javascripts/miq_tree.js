@@ -459,12 +459,12 @@ function miqTreeClearState(tree) {
   if (tree === undefined) {
     // Clear all tree state objects
     var to_remove = [];
-    for (i = 0; i < sessionStorage.length; i++) {
+    for (var i = 0; i < sessionStorage.length; i++) {
       if (sessionStorage.key(i).match('^tree_state_')) {
         to_remove.push(sessionStorage.key(i));
       }
     }
-    for (i = 0; i < to_remove.length; i++) {
+    for (var i = 0; i < to_remove.length; i++) {
       sessionStorage.removeItem(to_remove[i]);
     }
   } else {
