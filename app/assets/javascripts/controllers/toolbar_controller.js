@@ -44,9 +44,7 @@
   */
   function initEndpoints(MiQEndpointsService) {
     var urlPrefix = '/' + location.pathname.split('/')[1];
-    if (urlPrefix) {
-      MiQEndpointsService.rootPoint = urlPrefix;
-    }
+    MiQEndpointsService.rootPoint = urlPrefix;
   }
 
   /**
