@@ -47,7 +47,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
   };
 
   vm.getDaysValues = function() {
-    for(i = 0; i < 7; i++) {
+    for (var i = 0; i < 7; i++) {
       if (vm.timeProfileModel.days.indexOf(i) > -1) {
         vm.timeProfileModel.dayValues.push(true);
       } else {
@@ -59,7 +59,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
   vm.dayValuesChanged = function() {
     var tempDays = [];
 
-    for(var i = 0; i < 7; i++) {
+    for (var i = 0; i < 7; i++) {
       if (vm.timeProfileModel.dayValues[i] === true) {
         tempDays.push(i);
       }
@@ -68,28 +68,28 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
   };
 
   vm.getHoursValues = function() {
-    for(i = 0; i < 6; i++) {
+    for (var i = 0; i < 6; i++) {
       if (vm.timeProfileModel.hours.indexOf(i) > -1) {
         vm.timeProfileModel.hourValuesAMFirstHalf.push(true);
       } else {
         vm.timeProfileModel.hourValuesAMFirstHalf.push(false);
       }
     }
-    for(i = 6; i < 12; i++) {
+    for (var i = 6; i < 12; i++) {
       if (vm.timeProfileModel.hours.indexOf(i) > -1) {
         vm.timeProfileModel.hourValuesAMSecondHalf.push(true);
       } else {
         vm.timeProfileModel.hourValuesAMSecondHalf.push(false);
       }
     }
-    for(i = 12; i < 18; i++) {
+    for  (var i = 12; i < 18; i++) {
       if (vm.timeProfileModel.hours.indexOf(i) > -1) {
         vm.timeProfileModel.hourValuesPMFirstHalf.push(true);
       } else {
         vm.timeProfileModel.hourValuesPMFirstHalf.push(false);
       }
     }
-    for(i = 18; i < 24; i++) {
+    for (var i = 18; i < 24; i++) {
       if (vm.timeProfileModel.hours.indexOf(i) > -1) {
         vm.timeProfileModel.hourValuesPMSecondHalf.push(true);
       } else {
@@ -102,22 +102,22 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
   vm.hourValuesChanged = function() {
     var tempHours = [];
 
-    for(var i = 0; i < 6; i++) {
+    for (var i = 0; i < 6; i++) {
       if (vm.timeProfileModel.hourValuesAMFirstHalf[i] === true) {
         tempHours.push(i);
       }
     }
-    for(var i = 0, j = 6; i < 6, j < 12; i++, j++) {
+    for (var i = 0, j = 6; i < 6, j < 12; i++, j++) {
       if (vm.timeProfileModel.hourValuesAMSecondHalf[i] === true) {
         tempHours.push(j);
       }
     }
-    for(var i = 0, j = 12; i < 6, j < 18; i++, j++) {
+    for (var i = 0, j = 12; i < 6, j < 18; i++, j++) {
       if (vm.timeProfileModel.hourValuesPMFirstHalf[i] === true) {
         tempHours.push(j);
       }
     }
-    for(var i = 0, j = 18; i < 6, j < 24; i++, j++) {
+    for (var i = 0, j = 18; i < 6, j < 24; i++, j++) {
       if (vm.timeProfileModel.hourValuesPMSecondHalf[i] === true) {
         tempHours.push(j);
       }

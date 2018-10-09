@@ -414,8 +414,6 @@ function miqSetButtons(count, button_div) {
   if (miqDomElementExists(button_div) && button_div.match('_buttons$')) { // Handle buttons that are not part of miq toolbars
     if (count === 0) {
       $('#' + button_div + ' button[id$=on_1]').prop('disabled', true);
-    } else if (count === 1) {
-      $('#' + button_div + ' button[id$=on_1]').prop('disabled', false);
     } else {
       $('#' + button_div + ' button[id$=on_1]').prop('disabled', false);
     }

@@ -27,10 +27,8 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
     };
 
     $scope.updateNewVMs = function () {
-      var i;
-
       $scope.nodeData.newVMs = [];
-      for (i = 0; i < $scope.data.createMastersCount; i++) {
+      for (var i = 0; i < $scope.data.createMastersCount; i++) {
         $scope.nodeData.newVMs.push(
           {
             vmName: $scope.data.createMastersBaseName + (i + 1),
@@ -48,7 +46,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
           }
         );
       }
-      for (i = 0; i < $scope.data.createNodesCount; i++) {
+      for (var i = 0; i < $scope.data.createNodesCount; i++) {
         $scope.nodeData.newVMs.push(
           {
             vmName: $scope.data.createNodesBaseName + (i + 1),
