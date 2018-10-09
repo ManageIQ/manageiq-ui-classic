@@ -16,17 +16,6 @@ class ApplicationHelper::Toolbar::SavedReportsCenter < ApplicationHelper::Toolba
       t,
       :items => [
         button(
-          :report_only,
-          'fa fa-file-text-o fa-lg',
-          t = N_('Show full screen Report'),
-          t,
-          :enabled => false,
-          :onwhen  => "1",
-          :url     => "/report_only",
-          :popup   => true,
-          :confirm => N_("This will show the entire report (all rows) in your browser.  Do you want to proceed?")
-        ),
-        button(
           :saved_report_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Delete selected Saved Reports'),
