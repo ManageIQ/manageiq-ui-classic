@@ -103,9 +103,9 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
       .catch(options.handleFailure);
   };
 
-  this.validateWithAjax = function(url) {
+  this.validateWithAjax = function(url, model) {
     miqSparkleOn();
-    miqAjaxButton(url, true);
+    miqAjaxButton(url, model || true);
   };
 
   this.validateWithREST = function($event, credType, url, formSubmit) {

@@ -53,7 +53,7 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
   };
 
   vm.validateClicked = function() {
-    miqService.validateWithAjax(vm.saveUrl + '?button=validate&type=' + vm.prefix);
+    miqService.validateWithAjax(vm.saveUrl + '?button=validate&type=' + vm.prefix, vm.logCollectionModel);
   };
 
   vm.logProtocolChanged = function() {
