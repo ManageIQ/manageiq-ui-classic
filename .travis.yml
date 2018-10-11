@@ -8,7 +8,7 @@ cache:
   directories:
   - vendor/assets/bower_components
 addons:
-  postgresql: '9.4'
+  postgresql: '9.5'
 env:
   matrix:
   - TEST_SUITE=spec
