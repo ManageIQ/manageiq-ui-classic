@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 96 ending 2018-10-08
+
+### Added
+- initiate_wait_for_task - support :flash => true to flash while waiting [(#4732)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4732)
+- Change flash after submit to have green color [(#4700)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4700)
+
+### Fixed
+- Fixed links for vm/templates to instances/images on cloud dashboard [(#4739)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4739)
+- Fixed CPU value display on VM summary [(#4737)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4737)
+- Add validation for cloud_networks and subnets [(#4736)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4736)
+- Fixes disabled 'Show full screen report' button on Saved Reports page [(#4734)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4734)
+- Made changes to save server name only if it is not blank [(#4730)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4730)
+- Remove full_ids from infra networking tree to fix error in selection [(#4727)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4727)
+- Corrected flash message rendering after submitting VM reconfigure request [(#4722)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4722)
+- Fix losing focus of the form while renaming a VM [(#4721)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4721)
+- Fix wrapping switch [(#4718)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4718)
+- Show acknowledgement when saving replication settings [(#4714)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4714)
+- Removed reference to condition modifier [(#4713)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4713)
+- Put background under archived/orphaned tree node icons in VMs [(#4711)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4711)
+- Show correct VMs upon Service retirement [(#4710)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4710)
+- Removed extra horizontal line [(#4709)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4709)
+- Pass normalized_state into textual summaries for consistency [(#4706)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4706)
+- Add Physical Chassis link to default menu [(#4705)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4705)
+- Fixed code to check for correct RBAC feature when adding/editing report [(#4699)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4699)
+- Use bool instead of a string that needs to be translated [(#4688)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4688)
+- Fix FTP credentials for log depot [(#4682)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4682)
+- check terminate feature for vm_destroy action [(#4679)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4679)
+- Fix variable name and extra semicolon in VMDB summary view [(#4677)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4677)
+- Fix UI error when migrating virtual machine [(#4672)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4672)
+- Use the new powerstate icons in treeview for VMs [(#4616)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4616)
+- Fix the way that switch card is being displayed on the dashboard [(#4580)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4580)
+- Allow selecting an optional volume type when creating an Openstack cloud volume [(#4536)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4536)
+- Add multiple select for cloud tenants when creating a flavor [(#4469)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4469)
+
+### Removed
+- Delete obsolete power state images [(#4707)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4707)
+
 ## Unreleased as of Sprint 95 ending 2018-09-24
 
 ### Added
