@@ -83,10 +83,7 @@
                                              options_for_select(val.collect(&:reverse), field.default_value),
                                              drop_down_options(field, "someURL"))
                                 :javascript
-                                  dialogFieldRefresh.initializeDialogSelectPicker('#{field.name}',
-                                                                                  '#{field.id}',
-                                                                                  undefined,
-                                                                                  '#{field.trigger_auto_refresh}');
+                                  miqInitSelectPicker();
 
                             - else
                               - val.each_with_index do |rb, i|
