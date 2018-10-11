@@ -1,4 +1,4 @@
-# Diagnostics Accordion methods included in OpsController.rb
+# Diagnosticsapiversion Accordion methods included in OpsController.rb
 module OpsController::Diagnostics
   extend ActiveSupport::Concern
 
@@ -267,15 +267,24 @@ module OpsController::Diagnostics
   end
 
   def db_backup_form_field_changed
+    require 'uri'
     schedule     = MiqSchedule.find_by_id(params[:id])
     depot        = schedule.file_depot
-    uri_settings = depot.try(:[], :uri).to_s.split("://")
+    full_uri, _query = depot.try(:uri)&.split('?')
+    uri_prefix, uri  = full_uri.to_s.split('://')
+    # uri_settings = depot.try(:[], :uri).to_s.split("://")
+    port         = URI(depot.try(:uri)).port
     render :json => {
-      :depot_name     => depot.try(:name),
-      :uri            => uri_settings[1],
-      :uri_prefix     => uri_settings[0],
-      :log_userid     => depot.try(:authentication_userid),
-      :log_aws_region => depot.try(:aws_region)
+      :depot_name           => depot.try(:name),
+      :uri                  => uri,
+      :uri_prefix           => uri_prefix,
+      :log_userid           => depot.try(:authentication_userid),
+      :log_aws_region       => depot.try(:aws_region),
+      :openstack_region     => depot.try(:openstack_region),
+      :keystone_api_version => depot.try(:keystone_api_version),
+      :v3_domain_ident      => depot.try(:v3_domain_ident),
+      :swift_api_port       => port ? port : 5000,
+      :security_protocol    => depot.try(:security_protocol)
     }
   end
 
@@ -360,7 +369,9 @@ module OpsController::Diagnostics
 
   def log_protocol_changed
     depot = FileDepot.depot_description_to_class(params[:log_protocol]).new
-    uri_prefix, uri = depot.uri ? depot.uri.split('://') : nil
+    # uri_prefix, uri = depot.uri ? depot.uri.split('://') : nil
+    full_uri, _query = depot.try(:uri)&.split('?')
+    uri_prefix, uri  = full_uri.to_s.split('://')
 
     log_depot_json = {:depot_name => depot.name,
                       :uri_prefix => uri_prefix,

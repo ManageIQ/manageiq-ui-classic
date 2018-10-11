@@ -83,6 +83,7 @@ module OpsController::Settings::Schedules
         replace_right_cell(:nodetype => "root", :replace_trees => [:settings])
       end
     when "reset", nil # Reset or first time in
+      require 'uri'
       obj = find_checked_items
       obj[0] = params[:id] if obj.blank? && params[:id]
       @schedule = params[:typ] == "new" ? MiqSchedule.new(:userid => session[:userid]) : MiqSchedule.find(obj[0])          # Get existing or new record
@@ -90,12 +91,18 @@ module OpsController::Settings::Schedules
       # This is only because ops_controller tries to set form locals, otherwise we should not use the @edit variable
       @edit = {:sched_id => @schedule.id}
 
-      depot             = @schedule.file_depot
-      @uri_prefix, @uri = depot.try(:uri).to_s.split('://')
-      @protocol         = DatabaseBackup.supported_depots[@uri_prefix]
-      @log_userid       = depot.try(:authentication_userid)
-      @log_password     = depot.try(:authentication_password)
-      @log_aws_region   = depot.try(:aws_region)
+      depot                 = @schedule.file_depot
+      full_uri, _query      = depot.try(:uri)&.split('?')
+      @uri_prefix, @uri     = full_uri.to_s.split('://')
+      @protocol             = DatabaseBackup.supported_depots[@uri_prefix]
+      @log_userid           = depot.try(:authentication_userid)
+      @log_password         = depot.try(:authentication_password)
+      @log_aws_region       = depot.try(:aws_region)
+      @openstack_region     = depot.try(:openstack_region)
+      @keystone_api_version = depot.try(:keystone_api_version)
+      @v3_domain_ident      = depot.try(:v3_domain_ident)
+      @swift_api_port       = full_uri.blank? ? nil : URI(full_uri).port
+      @security_protocol    = depot.try(:security_protocol)
 
       # This is a hack to trick the controller into thinking we loaded an edit variable
       session[:edit] = {:key => "schedule_edit__#{@schedule.id || 'new'}"}
@@ -115,13 +122,20 @@ module OpsController::Settings::Schedules
     if schedule_check_compliance?(schedule)
       action_type = schedule.towhat.underscore + "_" + schedule.sched_action[:method]
     elsif schedule_db_backup?(schedule)
-      action_type     = schedule.sched_action[:method]
-      depot           = schedule.file_depot
-      uri_prefix, uri = depot.try(:uri).to_s.split('://')
-      protocol        = DatabaseBackup.supported_depots[uri_prefix]
-      depot_name      = depot.try(:name)
-      log_userid      = depot.try(:authentication_userid)
-      log_aws_region  = depot.try(:aws_region)
+      require 'uri'
+      action_type          = schedule.sched_action[:method]
+      depot                = schedule.file_depot
+      full_uri, _query     = depot.try(:uri).split('?')
+      uri_prefix, uri      = full_uri.to_s.split('://')
+      protocol             = DatabaseBackup.supported_depots[uri_prefix]
+      depot_name           = depot.try(:name)
+      log_userid           = depot.try(:authentication_userid)
+      log_aws_region       = depot.try(:aws_region)
+      openstack_region     = depot.try(:openstack_region)
+      keystone_api_version = depot.try(:keystone_api_version)
+      v3_domain_ident      = depot.try(:v3_domain_ident)
+      swift_api_port       = full_uri.blank? ? 5000 : URI(full_uri).port
+      security_protocol    = depot.try(:security_protocol)
     elsif schedule_automation_request?(schedule)
       action_type = schedule.sched_action[:method]
       automate_request = fetch_automate_request_vars(schedule)
@@ -156,7 +170,12 @@ module OpsController::Settings::Schedules
       :schedule_timer_value => schedule.run_at[:interval][:value].to_i,
       :uri                  => uri,
       :uri_prefix           => uri_prefix,
-      :log_aws_region       => log_aws_region ? log_aws_region : ""
+      :log_aws_region       => log_aws_region ? log_aws_region : "",
+      :openstack_region     => openstack_region ? openstack_region : "",
+      :keystone_api_version => keystone_api_version,
+      :v3_domain_ident      => v3_domain_ident ? v3_domain_ident : "",
+      :swift_api_port       => swift_api_port ? swift_api_port : 5000,
+      :security_protocol    => security_protocol ? security_protocol : ""
     }
 
     if schedule.sched_action[:method] == "automation_request"
@@ -660,10 +679,20 @@ module OpsController::Settings::Schedules
     DatabaseBackup.supported_depots.each { |depot| @protocols_arr.push(depot[1]) }
     @database_backup_options_for_select = @protocols_arr.sort
     @regions_options_for_select = retrieve_aws_regions
+    @api_versions_options_for_select = retrieve_openstack_api_versions
+    @security_protocols_options_for_select = retrieve_security_protocols
   end
 
   def retrieve_aws_regions
     ManageIQ::Providers::Amazon::Regions::REGIONS.collect { |region| [region[1][:name]] }
+  end
+
+  def retrieve_openstack_api_versions
+    [['Keystone v2', 'v2'], ['Keystone v3', 'v3']]
+  end
+
+  def retrieve_security_protocols
+    [[_('SSL without validation'), 'ssl'], [_('SSL'), 'ssl-with-validation'], [_('Non-SSL'), 'non-ssl']]
   end
 
   def schedule_set_basic_record_vars(schedule)
@@ -698,10 +727,15 @@ module OpsController::Settings::Schedules
       log_password = params[:log_password] ? params[:log_password] : file_depot.try(:authentication_password)
       uri_settings = {:username => params[:log_userid], :password => log_password}
     end
-    uri_settings[:uri] = "#{params[:uri_prefix]}://#{params[:uri]}"
-    uri_settings[:uri_prefix] = params[:uri_prefix]
-    uri_settings[:log_protocol] = params[:log_protocol]
-    uri_settings[:aws_region] = params[:log_aws_region]
+    uri_settings[:uri]                  = "#{params[:uri_prefix]}://#{params[:uri]}"
+    uri_settings[:uri_prefix]           = params[:uri_prefix]
+    uri_settings[:log_protocol]         = params[:log_protocol]
+    uri_settings[:aws_region]           = params[:log_aws_region]
+    uri_settings[:openstack_region]     = params[:openstack_region]
+    uri_settings[:keystone_api_version] = params[:keystone_api_version]
+    uri_settings[:v3_domain_ident]      = params[:v3_domain_ident]
+    uri_settings[:security_protocol]    = params[:security_protocol]
+    uri_settings[:swift_api_port]       = params[:swift_api_port]
     uri_settings[:type] = type
     uri_settings
   end

@@ -19,15 +19,21 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
       model.uri_prefix = 'ftp';
     } else if (model.log_protocol === 'AWS S3') {
       model.uri_prefix = 's3';
+    } else if (model.log_protocol === 'OpenStack Swift') {
+      model.uri_prefix = 'swift';
     }
   };
 
   this.credsProtocol = function(model) {
-    return (model.log_protocol === 'Samba' || model.log_protocol === 'AWS S3' || model.log_protocol === 'FTP');
+    return (model.log_protocol === 'Samba' || model.log_protocol === 'AWS S3' || model.log_protocol === 'FTP' || model.log_protocol === 'OpenStack Swift');
   };
 
   this.s3Backup = function(model) {
     return (model.log_protocol === 'AWS S3');
+  };
+
+  this.swiftBackup = function(model) {
+    return (model.log_protocol === 'OpenStack Swift');
   };
 
   this.dbRequired = function(model, value) {
@@ -58,6 +64,11 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
            (this.isModelValueNil(value));
   };
 
+  this.swiftSecurityProtocolRequired = function(model, value) {
+    return model.log_protocol === 'OpenStack Swift' &&
+           (this.isModelValueNil(value));
+  };
+
   this.isModelValueNil = function(value) {
     return value === undefined || value === null || value === '';
   };
@@ -68,5 +79,10 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
     model.uri_prefix = null;
     model.depot_name = null;
     model.uri = null;
+    model.aws_region = null;
+    model.openstack_region = null;
+    model.keystone_api_version = null;
+    model.security_protocol = null;
+    model.v3_domain_ident = null;
   };
 });
