@@ -856,9 +856,10 @@ end
 
 describe ServiceController do
   context "#vm_button_operation" do
+    let(:zone) { FactoryGirl.create(:zone) }
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+
     before do
-      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      allow(MiqServer).to receive(:my_zone).and_return("default")
       controller.instance_variable_set(:@lastaction, "show_list")
     end
 
@@ -908,9 +909,10 @@ end
 
 describe VmOrTemplateController do
   context "#vm_button_operation" do
+    let(:zone) { FactoryGirl.create(:zone) }
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+
     before do
-      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      allow(MiqServer).to receive(:my_zone).and_return("default")
       controller.instance_variable_set(:@lastaction, "show_list")
     end
 
