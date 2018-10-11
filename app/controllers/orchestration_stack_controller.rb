@@ -25,7 +25,7 @@ class OrchestrationStackController < ApplicationController
   end
 
   def display_children
-    show_association('children', _('Children'), :children, OrchestrationStack)
+    show_association('children', _('Children'), 'orchestration_stack', :children, OrchestrationStack)
   end
 
   def show_list
