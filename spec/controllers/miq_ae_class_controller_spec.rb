@@ -1029,4 +1029,40 @@ describe MiqAeClassController do
       expect(controller.x_node).to eq("aec-#{@ae_class.id}")
     end
   end
+
+  describe '#edit_method' do
+    let(:method) do
+      ns = FactoryBot.create(:miq_ae_namespace)
+      cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
+      cls.ae_fields << FactoryBot.create(:miq_ae_field, :name => 'fred', :class_id => cls.id, :priority => 1)
+      cls.save
+      @method = FactoryBot.create(:miq_ae_method,
+                                  :name     => "method01",
+                                  :scope    => "class",
+                                  :language => "ruby",
+                                  :class_id => cls.id,
+                                  :data     => "exit MIQ_OK",
+                                  :location => "inline")
+    end
+
+    it 'builds the regex for selectable methods' do
+      stub_user(:features => :all)
+      allow(controller).to receive(:x_node).and_return("aem-#{method.id}")
+      allow(controller).to receive(:set_method_form_vars)
+      allow(controller).to receive(:replace_right_cell)
+      expect(controller).to receive(:embedded_method_regex)
+      controller.send(:edit_method)
+    end
+  end
+
+  describe '#embedded_method_regex' do
+    let(:one) { OpenStruct.new(:id => 1) }
+    let(:two) { OpenStruct.new(:id => 2) }
+    let(:three) { OpenStruct.new(:id => 3) }
+
+    it 'wraps ids in parentheses and joins them with pipes' do
+      allow(MiqAeMethod).to receive(:get_homonymic_across_domains).and_return([one, two, three])
+      expect(controller.send(:embedded_method_regex, 'foo')).to eq("(1)|(2)|(3)")
+    end
+  end
 end
