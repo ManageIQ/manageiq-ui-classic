@@ -50,21 +50,21 @@ module Menu
           Menu::Item.new('services',       N_('My Services'), 'service',     {:feature => 'service', :any => true},     '/service/explorer'),
           Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
           Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer'),
-          Menu::Item.new('miq_request_vm', N_('Requests'),    'miq_request', {:feature => 'miq_request_show_list'},     '/miq_request?typ=service')
+          Menu::Item.new('miq_request_vm', N_('Requests'),    'miq_request', {:feature => 'miq_request_show_list'},     '/miq_request/show_list?typ=service')
         ])
       end
 
       def clouds_menu_section
         Menu::Section.new(:clo, N_("Clouds"), 'fa fa-plus', [
-          Menu::Item.new('ems_cloud',           N_('Providers'),          'ems_cloud',           {:feature => 'ems_cloud_show_list'},             '/ems_cloud'),
-          Menu::Item.new('availability_zone',   N_('Availability Zones'), 'availability_zone',   {:feature => 'availability_zone_show_list'},     '/availability_zone'),
-          Menu::Item.new('host_aggregate',      N_('Host Aggregates'),    'host_aggregate',      {:feature => 'host_aggregate_show_list'},        '/host_aggregate'),
-          Menu::Item.new('cloud_tenant',        N_('Tenants'),            'cloud_tenant',        {:feature => 'cloud_tenant_show_list'},          '/cloud_tenant'),
-          Menu::Item.new('flavor',              N_('Flavors'),            'flavor',              {:feature => 'flavor_show_list'},                '/flavor'),
+          Menu::Item.new('ems_cloud',           N_('Providers'),          'ems_cloud',           {:feature => 'ems_cloud_show_list'},             '/ems_cloud/show_list'),
+          Menu::Item.new('availability_zone',   N_('Availability Zones'), 'availability_zone',   {:feature => 'availability_zone_show_list'},     '/availability_zone/show_list'),
+          Menu::Item.new('host_aggregate',      N_('Host Aggregates'),    'host_aggregate',      {:feature => 'host_aggregate_show_list'},        '/host_aggregate/show_list'),
+          Menu::Item.new('cloud_tenant',        N_('Tenants'),            'cloud_tenant',        {:feature => 'cloud_tenant_show_list'},          '/cloud_tenant/show_list'),
+          Menu::Item.new('flavor',              N_('Flavors'),            'flavor',              {:feature => 'flavor_show_list'},                '/flavor/show_list'),
           Menu::Item.new('vm_cloud',            N_('Instances'),          'vm_cloud_explorer',   {:feature => 'vm_cloud_explorer', :any => true}, '/vm_cloud/explorer'),
-          Menu::Item.new('orchestration_stack', N_('Stacks'),             'orchestration_stack', {:feature => 'orchestration_stack_show_list'},   '/orchestration_stack'),
-          Menu::Item.new('auth_key_pair_cloud', N_('Key Pairs'),          'auth_key_pair_cloud', {:feature => 'auth_key_pair_cloud_show_list'},   '/auth_key_pair_cloud'),
-          Menu::Item.new('cloud_topology',      N_('Topology'),           'cloud_topology',      {:feature => 'cloud_topology'},                  '/cloud_topology'),
+          Menu::Item.new('orchestration_stack', N_('Stacks'),             'orchestration_stack', {:feature => 'orchestration_stack_show_list'},   '/orchestration_stack/show_list'),
+          Menu::Item.new('auth_key_pair_cloud', N_('Key Pairs'),          'auth_key_pair_cloud', {:feature => 'auth_key_pair_cloud_show_list'},   '/auth_key_pair_cloud/show_list'),
+          Menu::Item.new('cloud_topology',      N_('Topology'),           'cloud_topology',      {:feature => 'cloud_topology'},                  '/cloud_topology/show'),
         ])
       end
 
@@ -73,28 +73,28 @@ module Menu
         clusters_name = hybrid_name(EmsCluster, N_("Clusters"), N_("Deployment Roles"), N_("Clusters / Deployment Roles"))
 
         Menu::Section.new(:inf, N_("Infrastructure"), 'fa fa-plus', [
-          Menu::Item.new('ems_infra',        N_('Providers'),        'ems_infra',                  {:feature => 'ems_infra_show_list'},             '/ems_infra'),
-          Menu::Item.new('ems_cluster',      clusters_name,          'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster'),
-          Menu::Item.new('host',             hosts_name,             'host',                       {:feature => 'host_show_list'},                  '/host'),
+          Menu::Item.new('ems_infra',        N_('Providers'),        'ems_infra',                  {:feature => 'ems_infra_show_list'},             '/ems_infra/show_list'),
+          Menu::Item.new('ems_cluster',      clusters_name,          'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster/show_list'),
+          Menu::Item.new('host',             hosts_name,             'host',                       {:feature => 'host_show_list'},                  '/host/show_list'),
           Menu::Item.new('vm_infra',         N_('Virtual Machines'), 'vm_infra_explorer',          {:feature => 'vm_infra_explorer', :any => true}, '/vm_infra/explorer'),
-          Menu::Item.new('resource_pool',    N_('Resource Pools'),   'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool'),
+          Menu::Item.new('resource_pool',    N_('Resource Pools'),   'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool/show_list'),
           Menu::Item.new('storage',          N_('Datastores'),       'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
           Menu::Item.new('pxe',              N_('PXE'),              'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
           Menu::Item.new('switch',           N_('Networking'),       'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
-          Menu::Item.new('infra_topology',   N_('Topology'), 'infra_topology',                     {:feature => 'infra_topology', :any => true},    '/infra_topology')
+          Menu::Item.new('infra_topology',   N_('Topology'), 'infra_topology',                     {:feature => 'infra_topology', :any => true},    '/infra_topology/show')
         ])
       end
 
       def physical_infrastructure_menu_section
         Menu::Section.new(:phy, N_("Physical Infrastructure"), 'fa fa-plus fa-2x', [
-          Menu::Item.new('physical_infra_overview', N_('Overview'),  'physical_infra_overview', {:feature => 'physical_infra_overview'},               '/physical_infra_overview'),
-          Menu::Item.new('ems_physical_infra',      N_('Providers'), 'ems_physical_infra',      {:feature => 'ems_physical_infra_show_list'},          '/ems_physical_infra'),
-          Menu::Item.new('physical_chassis',        N_('Chassis'),   'physical_chassis',        {:feature => 'physical_chassis_show_list'},            '/physical_chassis'),
-          Menu::Item.new('physical_rack',           N_('Racks'),     'physical_rack',           {:feature => 'physical_rack_show_list'},               '/physical_rack'),
-          Menu::Item.new('physical_server',         N_('Servers'),   'physical_server',         {:feature => 'physical_server_show_list'},             '/physical_server'),
-          Menu::Item.new('physical_storage',        N_('Storages'),  'physical_storage',        {:feature => 'physical_storage_show_list'},            '/physical_storage'),
-          Menu::Item.new('physical_switch',         N_('Switches'),  'physical_switch',         {:feature => 'physical_switch_show_list'},             '/physical_switch'),
-          Menu::Item.new('physical_infra_topology', N_('Topology'),  'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology'),
+          Menu::Item.new('physical_infra_overview', N_('Overview'),  'physical_infra_overview', {:feature => 'physical_infra_overview'},               '/physical_infra_overview/show'),
+          Menu::Item.new('ems_physical_infra',      N_('Providers'), 'ems_physical_infra',      {:feature => 'ems_physical_infra_show_list'},          '/ems_physical_infra/show_list'),
+          Menu::Item.new('physical_chassis',        N_('Chassis'),   'physical_chassis',        {:feature => 'physical_chassis_show_list'},            '/physical_chassis/show_list'),
+          Menu::Item.new('physical_rack',           N_('Racks'),     'physical_rack',           {:feature => 'physical_rack_show_list'},               '/physical_rack/show_list'),
+          Menu::Item.new('physical_server',         N_('Servers'),   'physical_server',         {:feature => 'physical_server_show_list'},             '/physical_server/show_list'),
+          Menu::Item.new('physical_storage',        N_('Storages'),  'physical_storage',        {:feature => 'physical_storage_show_list'},            '/physical_storage/show_list'),
+          Menu::Item.new('physical_switch',         N_('Switches'),  'physical_switch',         {:feature => 'physical_switch_show_list'},             '/physical_switch/show_list'),
+          Menu::Item.new('physical_infra_topology', N_('Topology'),  'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology/show'),
         ])
       end
 
@@ -111,35 +111,35 @@ module Menu
 
       def container_menu_section
         Menu::Section.new(:cnt, N_("Containers"), 'fa fa-plus', [
-          Menu::Item.new('container_dashboard',      N_('Overview'),            'container_dashboard',      {:feature => 'container_dashboard'},                       '/container_dashboard'),
-          Menu::Item.new('ems_container',            N_('Providers'),           'ems_container',            {:feature => 'ems_container_show_list'},                   '/ems_container'),
-          Menu::Item.new('container_project',        N_('Projects'),            'container_project',        {:feature => 'container_project_show_list'},               '/container_project'),
-          Menu::Item.new('container_route',          N_('Routes'),              'container_route',          {:feature => 'container_route_show_list'},                 '/container_route'),
-          Menu::Item.new('container_service',        N_('Container Services'),  'container_service',        {:feature => 'container_service_show_list'},               '/container_service'),
-          Menu::Item.new('container_replicator',     N_('Replicators'),         'container_replicator',     {:feature => 'container_replicator_show_list'},            '/container_replicator'),
-          Menu::Item.new('container_group',          N_('Pods'),                'container_group',          {:feature => 'container_group_show_list'},                 '/container_group'),
-          Menu::Item.new('container',                N_('Containers'),          'container',                {:feature => 'container_show_list'},                       '/container'),
-          Menu::Item.new('container_node',           N_('Container Nodes'),     'container_node',           {:feature => 'container_node_show_list'},                  '/container_node'),
-          Menu::Item.new('persistent_volume',        N_('Volumes'),             'persistent_volume',        {:feature => 'persistent_volume_show_list', :any => true}, '/persistent_volume'),
-          Menu::Item.new('container_build',          N_('Container Builds'),    'container_build',          {:feature => 'container_build_show_list'},                 '/container_build'),
-          Menu::Item.new('container_image_registry', N_('Image Registries'),    'container_image_registry', {:feature => 'container_image_registry_show_list'},        '/container_image_registry'),
-          Menu::Item.new('container_image',          N_('Container Images'),    'container_image',          {:feature => 'container_image_show_list'},                 '/container_image'),
-          Menu::Item.new('container_template',       N_('Container Templates'), 'container_template',       {:feature => 'container_template_show_list'},              '/container_template'),
-          Menu::Item.new('container_topology',       N_('Topology'),            'container_topology',       {:feature => 'container_topology', :any => true},          '/container_topology')
+          Menu::Item.new('container_dashboard',      N_('Overview'),            'container_dashboard',      {:feature => 'container_dashboard'},                       '/container_dashboard/show'),
+          Menu::Item.new('ems_container',            N_('Providers'),           'ems_container',            {:feature => 'ems_container_show_list'},                   '/ems_container/show_list'),
+          Menu::Item.new('container_project',        N_('Projects'),            'container_project',        {:feature => 'container_project_show_list'},               '/container_project/show_list'),
+          Menu::Item.new('container_route',          N_('Routes'),              'container_route',          {:feature => 'container_route_show_list'},                 '/container_route/show_list'),
+          Menu::Item.new('container_service',        N_('Container Services'),  'container_service',        {:feature => 'container_service_show_list'},               '/container_service/show_list'),
+          Menu::Item.new('container_replicator',     N_('Replicators'),         'container_replicator',     {:feature => 'container_replicator_show_list'},            '/container_replicator/show_list'),
+          Menu::Item.new('container_group',          N_('Pods'),                'container_group',          {:feature => 'container_group_show_list'},                 '/container_group/show_list'),
+          Menu::Item.new('container',                N_('Containers'),          'container',                {:feature => 'container_show_list'},                       '/container/show_list'),
+          Menu::Item.new('container_node',           N_('Container Nodes'),     'container_node',           {:feature => 'container_node_show_list'},                  '/container_node/show_list'),
+          Menu::Item.new('persistent_volume',        N_('Volumes'),             'persistent_volume',        {:feature => 'persistent_volume_show_list', :any => true}, '/persistent_volume/show_list'),
+          Menu::Item.new('container_build',          N_('Container Builds'),    'container_build',          {:feature => 'container_build_show_list'},                 '/container_build/show_list'),
+          Menu::Item.new('container_image_registry', N_('Image Registries'),    'container_image_registry', {:feature => 'container_image_registry_show_list'},        '/container_image_registry/show_list'),
+          Menu::Item.new('container_image',          N_('Container Images'),    'container_image',          {:feature => 'container_image_show_list'},                 '/container_image/show_list'),
+          Menu::Item.new('container_template',       N_('Container Templates'), 'container_template',       {:feature => 'container_template_show_list'},              '/container_template/show_list'),
+          Menu::Item.new('container_topology',       N_('Topology'),            'container_topology',       {:feature => 'container_topology', :any => true},          '/container_topology/show')
         ])
       end
 
       def network_menu_section
         Menu::Section.new(:net, N_("Networks"), 'pficon pficon-network', [
-          Menu::Item.new('ems_network',      N_('Providers'),       'ems_network',      {:feature => 'ems_network_show_list'},    '/ems_network'),
-          Menu::Item.new('cloud_network',    N_('Networks'),        'cloud_network',    {:feature => 'cloud_network_show_list'},  '/cloud_network'),
-          Menu::Item.new('cloud_subnet',     N_('Subnets'),         'cloud_subnet',     {:feature => 'cloud_subnet_show_list'},   '/cloud_subnet'),
-          Menu::Item.new('network_router',   N_('Network Routers'), 'network_router',   {:feature => 'network_router_show_list'}, '/network_router'),
-          Menu::Item.new('security_group',   N_('Security Groups'), 'security_group',   {:feature => 'security_group_show_list'}, '/security_group'),
-          Menu::Item.new('floating_ip',      N_('Floating IPs'),    'floating_ip',      {:feature => 'floating_ip_show_list'},    '/floating_ip'),
-          Menu::Item.new('network_port',     N_('Network Ports'),   'network_port',     {:feature => 'network_port_show_list'},   '/network_port'),
-          Menu::Item.new('load_balancer',    N_('Load Balancers'),  'load_balancer',    {:feature => 'load_balancer_show_list'},  '/load_balancer'),
-          Menu::Item.new('network_topology', N_('Topology'),        'network_topology', {:feature => 'network_topology'},         '/network_topology'),
+          Menu::Item.new('ems_network',      N_('Providers'),       'ems_network',      {:feature => 'ems_network_show_list'},    '/ems_network/show_list'),
+          Menu::Item.new('cloud_network',    N_('Networks'),        'cloud_network',    {:feature => 'cloud_network_show_list'},  '/cloud_network/show_list'),
+          Menu::Item.new('cloud_subnet',     N_('Subnets'),         'cloud_subnet',     {:feature => 'cloud_subnet_show_list'},   '/cloud_subnet/show_list'),
+          Menu::Item.new('network_router',   N_('Network Routers'), 'network_router',   {:feature => 'network_router_show_list'}, '/network_router/show_list'),
+          Menu::Item.new('security_group',   N_('Security Groups'), 'security_group',   {:feature => 'security_group_show_list'}, '/security_group/show_list'),
+          Menu::Item.new('floating_ip',      N_('Floating IPs'),    'floating_ip',      {:feature => 'floating_ip_show_list'},    '/floating_ip/show_list'),
+          Menu::Item.new('network_port',     N_('Network Ports'),   'network_port',     {:feature => 'network_port_show_list'},   '/network_port/show_list'),
+          Menu::Item.new('load_balancer',    N_('Load Balancers'),  'load_balancer',    {:feature => 'load_balancer_show_list'},  '/load_balancer/show_list'),
+          Menu::Item.new('network_topology', N_('Topology'),        'network_topology', {:feature => 'network_topology'},         '/network_topology/show'),
         ])
       end
 
@@ -156,27 +156,27 @@ module Menu
                                            N_('Managers'),
                                            'ems_block_storage',
                                            {:feature => 'ems_block_storage_show_list'},
-                                           '/ems_block_storage'),
+                                           '/ems_block_storage/show_list'),
                             Menu::Item.new('cloud_volume',
                                            N_('Volumes'),
                                            'cloud_volume',
                                            {:feature => 'cloud_volume_show_list'},
-                                           '/cloud_volume'),
+                                           '/cloud_volume/show_list'),
                             Menu::Item.new('cloud_volume_snapshot',
                                            N_('Volume Snapshots'),
                                            'cloud_volume_snapshot',
                                            {:feature => 'cloud_volume_snapshot_show_list'},
-                                           '/cloud_volume_snapshot'),
+                                           '/cloud_volume_snapshot/show_list'),
                             Menu::Item.new('cloud_volume_backup',
                                            N_('Volume Backups'),
                                            'cloud_volume_backup',
                                            {:feature => 'cloud_volume_backup_show_list'},
-                                           '/cloud_volume_backup'),
+                                           '/cloud_volume_backup/show_list'),
                             Menu::Item.new('cloud_volume_type',
                                            N_('Volume Types'),
                                            'cloud_volume_type',
                                            {:feature => 'cloud_volume_type_show_list'},
-                                           '/cloud_volume_type'),
+                                           '/cloud_volume_type/show_list'),
                           ])
       end
 
@@ -186,17 +186,17 @@ module Menu
                                            N_('Managers'),
                                            'ems_object_storage',
                                            {:feature => 'ems_object_storage_show_list'},
-                                           '/ems_object_storage'),
+                                           '/ems_object_storage/show_list'),
                             Menu::Item.new('cloud_object_store_container',
                                            N_('Object Store Containers'),
                                            'cloud_object_store_container',
                                            {:feature => 'cloud_object_store_container_show_list'},
-                                           '/cloud_object_store_container'),
+                                           '/cloud_object_store_container/show_list'),
                             Menu::Item.new('cloud_object_store_object',
                                            N_('Object Store Objects'),
                                            'cloud_object_store_object',
                                            {:feature => 'cloud_object_store_object_show_list'},
-                                           '/cloud_object_store_object'),
+                                           '/cloud_object_store_object/show_list'),
                           ])
       end
 
@@ -220,15 +220,15 @@ module Menu
       def automation_manager_menu_section
         Menu::Section.new(:at, N_("Ansible Tower"), 'fa fa-cog', [
           Menu::Item.new('automation_manager', N_('Explorer'), 'automation_manager', {:feature => 'automation_manager', :any => true}, '/automation_manager/explorer'),
-          Menu::Item.new('configuration_job',  N_('Jobs'),     'configuration_job',  {:feature => 'configuration_job_show_list'},      '/configuration_job')
+          Menu::Item.new('configuration_job',  N_('Jobs'),     'configuration_job',  {:feature => 'configuration_job_show_list'},      '/configuration_job/show_list')
         ])
       end
 
       def ansible_menu_section
         Menu::Section.new(:ansible, N_("Ansible"), 'pficon pficon-automation', [
-          Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload', :any => true}, '/ansible_playbook'),
-          Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source', :any => true}, '/ansible_repository'),
-          Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential'),
+          Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload', :any => true}, '/ansible_playbook/show_list'),
+          Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source', :any => true}, '/ansible_repository/show_list'),
+          Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential/show_list'),
         ])
       end
 
@@ -237,10 +237,10 @@ module Menu
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
           Menu::Item.new('miq_ae_tools',         N_('Simulation'),      'miq_ae_class_simulation',       {:feature => 'miq_ae_class_simulation'},       '/miq_ae_tools/resolve'),
           Menu::Item.new('miq_ae_customization', N_('Customization'),   'miq_ae_customization_explorer', {:feature => 'miq_ae_customization_explorer'}, '/miq_ae_customization/explorer'),
-          Menu::Item.new('generic_object_definition', N_('Generic Objects'), 'generic_object_definition', {:feature => 'generic_object_definition'},   '/generic_object_definition'),
+          Menu::Item.new('generic_object_definition', N_('Generic Objects'), 'generic_object_definition', {:feature => 'generic_object_definition'},   '/generic_object_definition/show_list'),
           Menu::Item.new('miq_ae_export',        N_('Import / Export'), 'miq_ae_class_import_export',    {:feature => 'miq_ae_class_import_export'},    '/miq_ae_tools/import_export'),
           Menu::Item.new('miq_ae_logs',          N_('Log'),             'miq_ae_class_log',              {:feature => 'miq_ae_class_log'},              '/miq_ae_tools/log'),
-          Menu::Item.new('miq_request_ae',       N_('Requests'),        'ae_miq_request',                {:feature => 'ae_miq_request_show_list'},      '/miq_request?typ=ae')
+          Menu::Item.new('miq_request_ae',       N_('Requests'),        'ae_miq_request',                {:feature => 'ae_miq_request_show_list'},      '/miq_request/show_list?typ=ae')
         ].compact)
       end
 
@@ -254,8 +254,8 @@ module Menu
 
       def alerts_menu_section
         Menu::Section.new(:monitor_alerts, N_("Alerts"), 'fa fa-bullhorn-o fa-2x', [
-                            Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview'),
-                            Menu::Item.new('monitor_alerts_list', N_('All Alerts'), 'monitor_alerts_list', {:feature => 'monitor_alerts_list', :any => true}, '/alerts_list'),
+                            Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview/show'),
+                            Menu::Item.new('monitor_alerts_list', N_('All Alerts'), 'monitor_alerts_list', {:feature => 'monitor_alerts_list', :any => true}, '/alerts_list/show'),
                           ])
       end
 
