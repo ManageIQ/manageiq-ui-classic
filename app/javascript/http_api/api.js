@@ -70,6 +70,8 @@ API.ws_destroy = function() {
 };
 
 API.logout = function() {
+  // delete user allowed features data from local storage
+  delete localStorage.userFeatures;
   if (localStorage.miq_token) {
     API.delete('/api/auth', {
       skipErrors: [401],
