@@ -7,7 +7,7 @@ cache:
   bundler: true
   yarn: true
 addons:
-  postgresql: '9.4'
+  postgresql: '9.5'
 env:
   matrix:
   - TEST_SUITE=spec
