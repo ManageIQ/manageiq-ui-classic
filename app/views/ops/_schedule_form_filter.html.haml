@@ -82,7 +82,7 @@
                                  "ng-required"                => "!automateRequest() && filterValueRequired(scheduleModel.filter_value)",
                                  "checkchange"                => ""}
               %option{"disabled" => "", "value" => ""} &lt;Choose&gt;
-        
+
         %ae-resolve-options{"ng-if"                 => "automateRequest()",
                             "instance-name"         => "scheduleModel.instance_name",
                             "instance-options"      => "scheduleModel.instance_names",
@@ -99,6 +99,32 @@
                             "target-id-change"      => "setTargetId(targetId)",
                             "ui-attrs"              => "scheduleModel.ui_attrs"}
 
+        %apiversion{'ng-if' => 'swiftSecurityProtocolSelect()'}
+          .form-group{"ng-class" => "{'has-error': angularForm.keystone_api_version.$invalid}"}
+            %label.col-md-2.control-label
+              = _("API Version")
+            .col-md-8
+              = select_tag('keystone_api_version', options_for_select(@api_versions_options_for_select),
+                           "ng-model"                    => "scheduleModel.keystone_api_version",
+                           "ng-required"                 => "swiftSecurityProtocolRequired()",
+                           "checkchange"                 => "",
+                           "selectpicker-for-select-tag" => "")
+              %span.help-block{"ng-show" => "angularForm.keystone_api_version.$invalid"}
+
+        %domainid{'ng-if' => 'swiftSecurityProtocolSelect()'}
+          .form-group{"ng-class" => "{'has-error': angularForm.v3_domain_ident.$invalid}", "ng-if" => "scheduleModel.keystone_api_version == 'v3'"}
+            %label.col-md-2.control-label{"for" => "v3_domain_ident"}
+              = _('Keystone V3 Domain ID')
+            .col-md-4
+              %input.form-control{"type"        => "text",
+                                  "id"          => "v3_domain_ident",
+                                  "name"        => "v3_domain_ident",
+                                  "ng-model"    => "scheduleModel.v3_domain_ident",
+                                  "required"    => true,
+                                  "checkchange" => ""}
+              %span.help-block{"ng-show" => "angularForm.v3_domain_ident.$invalid"}
+                = _("Required")
+
         = render :partial => "layouts/angular-bootstrap/edit_log_depot_settings_angular_bootstrap",
                  :locals  => {:ng_show             => "dbBackup()",
                               :ng_reqd_depot_name  => "dbRequired(scheduleModel.depot_name)",
@@ -107,6 +133,20 @@
                               :ng_model_uri        => "scheduleModel.uri",
                               :ng_model_uri_prefix => "scheduleModel.uri_prefix",
                               :uri_prefix_display  =>  "{{scheduleModel.uri_prefix}}://"}
+
+        .form-group{"ng-class" => "{'has-error': angularForm.openstack_region.$invalid}",
+                    "ng-if"    => 'swiftSecurityProtocolSelect()'}
+          %label.col-md-2.control-label{"for" => "ems_region_input"}
+            = _('Region')
+          .col-md-4
+            %input.form-control{"type"                    => "text",
+                                "id"                      => "openstack_region",
+                                "name"                    => "openstack_region",
+                                "ng-model"                => "scheduleModel.openstack_region",
+                                "required"                => true,
+                                "checkchange"             => ""}
+            %span.help-block{"ng-show" => "angularForm.openstack_region.$invalid"}
+              = _("Required")
 
         %region{'ng-if' => 'regionSelect()'}
           .form-group{"ng-class" => "{'has-error': angularForm.log_aws_region.$invalid}"}
@@ -120,6 +160,43 @@
                            "selectpicker-for-select-tag" => "")
               %span.help-block{"ng-show" => "angularForm.log_aws_region.$invalid"}
                 = _("Required")
+
+        %protocol{'ng-if' => 'swiftSecurityProtocolSelect()'}
+          .form-group{"ng-class" => "{'has-error': angularForm.security_protocol.$invalid}"}
+            %label.col-md-2.control-label
+              = _("Security Protocol")
+            .col-md-8
+              - default_option = [_("<Choose>"), '']
+              = select_tag('security_protocol', options_for_select([default_option] + @security_protocols_options_for_select),
+                           "ng-model"                    => "scheduleModel.security_protocol",
+                           "ng-required"                 => "swiftSecurityProtocolRequired()",
+                           "selectpicker-for-select-tag" => "")
+              %span.help-block{"ng-show" => "angularForm.security_protocol.$invalid"}
+                = _("Required")
+
+        %apiport{"ng-if" => 'swiftSecurityProtocolSelect()'}
+          .form-group{"ng-class" => "{'has-error': angularForm.swift_api_port.$invalid}"}
+            %label.col-md-2.control-label{"for" => "swift_api_port"}
+              = _('API Port')
+            .col-md-2
+              %input.form-control{"type"                        => "text",
+                                  "id"                          => "swift_api_port",
+                                  "name"                        => "swift_api_port",
+                                  "ng-show"                     => "credsProtocol()",
+                                  "ng-model"                    => "scheduleModel.swift_api_port",
+                                  "maxlength"                   => 15,
+                                  "ng-required"                 => true,
+                                  "checkchange"                 => "",
+                                  "ng-trim"                     => false,
+                                  "detect-spaces"               => "",
+                                  "pattern"                     => "^[1-9]\\d*$"}
+              %span.help-block{"ng-show" => "angularForm.swift_api_port.$error.pattern"}
+                = _("Must be a number (greater than 0)")
+              %span.help-block{"ng-show" => "angularForm.swift_api_port.$error.required"}
+                = _("Required")
+              %span.help-block{"ng-show" => "angularForm.swift_api_port.$error.detectedSpaces"}
+                = _("Spaces are prohibited")
+
 
         = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
                  :locals  => {:ng_show           => "credsProtocol()",

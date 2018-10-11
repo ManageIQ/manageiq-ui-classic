@@ -6,6 +6,11 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       filter_typ: '',
       log_userid: '',
       log_aws_region: '',
+      openstack_region: '',
+      keystone_api_version: '',
+      v3_domain_ident: '',
+      swift_api_port: 5000,
+      security_protocol: '',
       log_protocol: '',
       description: '',
       enabled: '',
@@ -82,7 +87,12 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.scheduleModel.target_class    = data.target_class;
       $scope.scheduleModel.target_id       = data.target_id;
       $scope.scheduleModel.ui_attrs        = data.ui_attrs;
-      $scope.scheduleModel.log_aws_region  = data.log_aws_region;
+      $scope.scheduleModel.log_aws_region       = data.log_aws_region;
+      $scope.scheduleModel.openstack_region     = data.openstack_region;
+      $scope.scheduleModel.keystone_api_version = data.keystone_api_version;
+      $scope.scheduleModel.v3_domain_ident      = data.v3_domain_ident;
+      $scope.scheduleModel.swift_api_port       = data.swift_api_port;
+      $scope.scheduleModel.security_protocol    = data.security_protocol;
 
       $scope.setTimerType();
 
@@ -98,7 +108,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       }
 
       if (data.filter_type === null &&
-        (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba' && data.protocol !== 'AWS S3')) {
+        (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba' && data.protocol !== 'AWS S3' && data.protocol !== 'OpenStack Swift')) {
         $scope.scheduleModel.filter_typ = 'all';
       }
 
@@ -203,11 +213,15 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.credsProtocol = function() {
-    return $scope.dbBackup() && ($scope.scheduleModel.log_protocol === 'Samba' || $scope.scheduleModel.log_protocol === 'AWS S3');
+    return $scope.dbBackup() && ($scope.scheduleModel.log_protocol === 'Samba' || $scope.scheduleModel.log_protocol === 'AWS S3' || $scope.scheduleModel.log_protocol === 'OpenStack Swift');
   };
 
   $scope.s3Backup = function() {
     return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'AWS S3';
+  };
+
+  $scope.swiftBackup = function() {
+    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'OpenStack Swift';
   };
 
   $scope.actionTypeChanged = function() {
@@ -297,6 +311,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     if ($scope.scheduleModel.log_protocol === "AWS S3") {
       $scope.updateLogProtocol("s3");
     }
+    if ($scope.scheduleModel.log_protocol === "OpenStack Swift") {
+      $scope.updateLogProtocol("swift");
+    }
   };
 
   $scope.updateLogProtocol = function(prefix) {
@@ -382,8 +399,15 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.regionRequired = function() {
-    return ($scope.s3Backup() &&
-      ($scope.scheduleModel.log_aws_region === '' || typeof $scope.scheduleModel.log_aws_region === 'undefined'));
+    return ($scope.s3Backup() && $scope.scheduleModel.log_aws_region === "");
+  };
+
+  $scope.swiftSecurityProtocolSelect = function() {
+    return $scope.scheduleModel.action_typ === "db_backup" && $scope.scheduleModel.log_protocol === 'OpenStack Swift';
+  };
+
+  $scope.swiftSecurityProtocolRequired = function() {
+    return ($scope.swiftBackup() && $scope.scheduleModel.security_protocol === "");
   };
 
   $scope.s3Required = function(value) {
