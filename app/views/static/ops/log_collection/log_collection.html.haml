@@ -1,0 +1,68 @@
+%form.form-horizontal#form_div{:name                                 => "angularForm",
+                               'ng-show'                             => "vm.afterGet",
+                               'miq-form'                            => 'true',
+                               'form-changed'                        => 'true',
+                               'model'                               => 'vm.logCollectionModel',
+                               'model-copy'                          => 'vm.modelCopy',
+                               :novalidate                           => 1}
+  = render :partial => "layouts/flash_msg"
+
+  %h3
+    {{vm.message}}
+
+  .form-group
+    %label.control-label.col-md-2
+      = _("Type")
+    .col-md-8
+      = select_tag("log_protocol",
+                   "",
+                   "ng-options" => "choice for choice in vm.selectOptions",
+                   "ng-model"   => "vm.logCollectionModel.log_protocol",
+                   "ng-change"  => "vm.logProtocolChanged()",
+                   "pf-select"  => true)
+  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel)"}
+    .form-group{"ng-class" => "{'has-error': angularForm.depot_name.$invalid}"}
+      %label.col-md-2.control-label{"for" => "depot_name"}
+        = _("Depot Name")
+      .col-md-8
+        %input.form-control{"type"        => "text",
+                            "id"          => "depot_name",
+                            "ng-required" => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.depot_name)",
+                            "name"        => "depot_name",
+                            "ng-model"    => "vm.logCollectionModel.depot_name",
+                            "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
+                            "checkchange" => "",
+                            "auto-focus"  => "reactiveFocus"}
+        %span.help-block{"ng-show" => "angularForm.depot_name.$invalid"}
+          = _("Required")
+  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel)"}
+    .form-group{"ng-class" => "{'has-error': angularForm.uri.$invalid}"}
+      %label.col-md-2.control-label{"for" => "uri"}
+        = _("URI")
+      .col-md-8
+        .input-group
+          %span.input-group-addon
+            = "{{vm.logCollectionModel.uri_prefix}}://"
+          %input.uri-input.form-control{"type"        => "text",
+                                        "id"          => "uri",
+                                        "ng-required" => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.uri)",
+                                        "name"        => "uri",
+                                        "ng-model"    => "vm.logCollectionModel.uri",
+                                        "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
+                                        "checkchange" => ""}
+        %span.help-block{"ng-show" => "angularForm.uri.$invalid"}
+          = _("Required")
+        %input{"type" => "hidden", "name" => "uri_prefix", "ng-value" => "vm.logCollectionModel.uri_prefix"}
+
+  %auth-credentials{'ng-if'               => 'vm.miqDBBackupService.credsProtocol(vm.logCollectionModel)',
+                    'form-model'          => 'vm.logCollectionModel',
+                    'model-copy'          => 'vm.modelCopy',
+                    'prefix'              => '{{vm.prefix}}',
+                    'user-required'       => true,
+                    'password-required'   => true,
+                    'enable-valid-button' => 'vm.canValidateBasicInfo()',
+                    'validate'            => 'vm.validateClicked',
+                    'new-record'          => 'vm.newRecord'}
+
+  = render :partial => "layouts/angular/generic_form_buttons"
+

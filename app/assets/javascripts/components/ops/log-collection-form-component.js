@@ -1,4 +1,19 @@
-ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope', 'serverId', '$attrs', 'miqService', 'miqDBBackupService', function($http, $scope, serverId, $attrs, miqService, miqDBBackupService) {
+ManageIQ.angular.app.component('logCollectionForm', {
+  controllerAs: 'vm',
+  controller: logCollectionFormController,
+  templateUrl: "/static/ops/log_collection/log_collection.html.haml",
+  bindings: {
+    'recordId': '@',
+    'selectOptions': '<',
+    'logCollectionFormFieldsUrl': '@',
+    'saveUrl': '@',
+    'logProtocolChangedUrl': '@',
+  },
+
+});
+
+logCollectionFormController.$inject = ['$http', '$scope', 'miqService', 'miqDBBackupService'];
+function logCollectionFormController($http, $scope, miqService, miqDBBackupService) {
   var vm = this;
   var init = function() {
     vm.logCollectionModel = {
@@ -12,15 +27,12 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     vm.saveable = miqService.saveable;
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.logCollectionModel );
-    vm.logCollectionFormFieldsUrl = $attrs.logCollectionFormFieldsUrl;
-    vm.logProtocolChangedUrl = $attrs.logProtocolChangedUrl;
-    vm.saveUrl = $attrs.saveUrl;
     vm.prefix = 'log';
     vm.model = 'logCollectionModel';
     vm.miqDBBackupService = miqDBBackupService;
     ManageIQ.angular.scope = vm;
 
-    if (serverId == 'new') {
+    if (vm.recordId === 'new') {
       vm.logCollectionModel.depot_name = '';
       vm.logCollectionModel.uri = '';
       vm.logCollectionModel.uri_prefix = '';
@@ -34,22 +46,22 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
       miqService.sparkleOn();
 
       var url = vm.logCollectionFormFieldsUrl;
-      $http.get(url + serverId)
+      $http.get(url + vm.recordId)
         .then(getLogCollectionFormData)
         .catch(miqService.handleFailure);
     }
   };
 
   vm.validateClicked = function() {
-    miqService.validateWithAjax(vm.saveUrl + '?button=validate&type=' + vm.prefix);
-  }
+    miqService.validateWithAjax(vm.saveUrl + '?button=validate&type=' + vm.prefix, vm.logCollectionModel);
+  };
 
   vm.logProtocolChanged = function() {
     miqService.sparkleOn();
-    if(miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) == -1 &&
-       vm.logCollectionModel.log_protocol != '') {
+    if (miqDBBackupService.knownProtocolsList.indexOf(vm.logCollectionModel.log_protocol) === -1 &&
+       vm.logCollectionModel.log_protocol !== '') {
       var url = vm.logProtocolChangedUrl;
-      $http.get(url + serverId + '?log_protocol=' + vm.logCollectionModel.log_protocol)
+      $http.get(url + vm.recordId + '?log_protocol=' + vm.logCollectionModel.log_protocol)
         .then(getLogProtocolData)
         .catch(miqService.handleFailure);
     }
@@ -60,12 +72,12 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
 
   vm.isBasicInfoValid = function() {
     return $scope.angularForm.depot_name.$valid &&
-      $scope.angularForm.uri.$valid
+      $scope.angularForm.uri.$valid;
   };
 
   vm.saveClicked = function() {
     miqService.sparkleOn();
-    var url = vm.saveUrl + serverId + '?button=save';
+    var url = vm.saveUrl + vm.recordId + '?button=save';
     var moreUrlParams = $.param(miqService.serializeModel(vm.logCollectionModel));
     if (moreUrlParams) {
       url += '&' + decodeURIComponent(moreUrlParams);
@@ -73,31 +85,27 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     miqService.miqAjaxButton(url, false);
   };
 
-  vm.resetClicked = function() {
+  vm.resetClicked = function(angularForm) {
     $scope.$broadcast('resetClicked');
     vm.logCollectionModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
+    angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   vm.cancelClicked = function() {
     miqService.sparkleOn();
-    var url = vm.saveUrl + serverId + '?button=cancel';
+    var url = vm.saveUrl + vm.recordId + '?button=cancel';
     miqService.miqAjaxButton(url, true);
   };
 
-  vm.canValidateBasicInfo = function () {
+  vm.canValidateBasicInfo = function() {
     return vm.isBasicInfoValid();
-  }
+  };
 
   function getLogCollectionFormData(response) {
     var data = response.data;
 
-    vm.logCollectionModel.log_protocol = data.log_protocol;
-    vm.logCollectionModel.depot_name = data.depot_name;
-    vm.logCollectionModel.uri = data.uri;
-    vm.logCollectionModel.uri_prefix = data.uri_prefix;
-    vm.logCollectionModel.log_userid = data.log_userid;
+    vm.logCollectionModel = angular.copy(data);
 
     if (vm.logCollectionModel.log_userid !== '') {
       vm.logCollectionModel.log_password = miqService.storedPasswordPlaceholder;
@@ -118,5 +126,5 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     miqService.sparkleOff();
   }
 
-  init();
-}]);
+  vm.$onInit = init;
+}
