@@ -20,29 +20,29 @@ module ApplicationController::Explorer
 
   # Historical tree item selected
   def x_history
-    @hist = x_tree_history[params[:item].to_i]  # Set instance var so we know hist button was pressed
+    @hist = x_tree_history[params[:item].to_i] # Set instance var so we know hist button was pressed
     # remove id that is used in replace_right_cell method in vm_common
     @sb[@sb[:active_accord]] = nil if @sb.fetch_path(@sb[:active_accord]) && @sb[@sb[:active_accord]] != @hist[:id]
-    if @hist[:button]         # Button press from show screen
+    if @hist[:button] # Button press from show screen
       self.x_node = @hist[:id]
       params[:id] = parse_nodetype_and_id(x_node).last
       params[:x_show] = @hist[:item]
       params[:pressed] = @hist[:button] # Look like we came in with this action
       params[:display] = @hist[:display]
       x_button
-    elsif @hist[:display]           # Display link from show screen
+    elsif @hist[:display] # Display link from show screen
       self.x_node = @hist[:id]
       params[:id] = parse_nodetype_and_id(x_node).last
       params[:display] = @hist[:display]
       show
-    elsif @hist[:action]          # Action link from show screen
+    elsif @hist[:action] # Action link from show screen
       self.x_node = @hist[:id]
       params[:id] = parse_nodetype_and_id(x_node).last
       params[:x_show] = @hist[:item]
-      params[:action] = @hist[:action]  # Look like we came in with this action
+      params[:action] = @hist[:action] # Look like we came in with this action
       session[:view] = @hist[:view] if @hist[:view]
       send(@hist[:action])
-    else                        # Normal explorer tree/link click
+    else # Normal explorer tree/link click
       params[:id] = @hist[:id]
       tree_select
     end
@@ -108,7 +108,7 @@ module ApplicationController::Explorer
             associate_floating_ip disassociate_floating_ip).include?(action)
         @_params[:id] = (params[:id] ? [params[:id]] : find_checked_items)[0]
       end
-      if ['protect', 'tag'].include?(action)
+      if %w(protect tag).include?(action)
         case model
         when 'storage'
           send(method, Storage)
@@ -149,8 +149,7 @@ module ApplicationController::Explorer
       # no need to render anything when download_pdf button is pressed on summary screen
       replace_right_cell unless action == 'download_pdf'
     else
-      add_flash(_("Button not yet implemented %{model}:%{action}") %
-        {:model => model, :action => action}, :error) unless @flash_array
+      add_flash(_("Button not yet implemented %{model}:%{action}") % {:model => model, :action => action}, :error) unless @flash_array
       javascript_flash
     end
   end
@@ -158,7 +157,7 @@ module ApplicationController::Explorer
   # Handle name searches typed into list view explorer screens
   def x_search_by_name
     @explorer = true
-    params[:id] = x_node  # Get the current tree node id
+    params[:id] = x_node # Get the current tree node id
     tree_select
   end
 
@@ -180,7 +179,7 @@ module ApplicationController::Explorer
   def accordion_select(node_info = false)
     @lastaction = "explorer"
     self.x_active_accord = params[:id].sub(/_accord$/, '')
-    self.x_active_tree   = "#{self.x_active_accord}_tree"
+    self.x_active_tree   = "#{x_active_accord}_tree"
     if node_info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
@@ -208,7 +207,7 @@ module ApplicationController::Explorer
     respond_to do |format|
       format.js do # AJAX, select the node
         unless @record
-          redirect_to :action => "explorer"
+          redirect_to(:action => "explorer")
           return
         end
         params[:id] = x_build_node_id(@record, x_node_build_options)
@@ -226,7 +225,7 @@ module ApplicationController::Explorer
   # Add an item to the tree history array
   def x_history_add_item(options)
     x_tree_history.delete_if do |item|
-      ![:id, :action, :button, :display, :item].find { |key| item[key] != options[key] }
+      !%i(id action button display item).find { |key| item[key] != options[key] }
     end
     x_tree_history.unshift(options).slice!(11..-1)
   end
