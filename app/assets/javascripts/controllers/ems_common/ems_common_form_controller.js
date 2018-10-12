@@ -674,9 +674,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     }
   };
 
-  $scope.validateClicked = function($event, authType, formSubmit) {
-    $scope.authType = authType;
-    miqService.validateWithREST($event, authType, $scope.actionUrl, formSubmit)
+  $scope.validateClicked = function($event, _authType, formSubmit) {
+    miqService.validateWithREST($event, $scope.currentTab, $scope.actionUrl, formSubmit)
       .then(function success(data) {
         // check if data object is a JSON, otherwise (recieved JS or HTML) output a warning to the user.
         if (data === Object(data)) {
@@ -699,7 +698,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.updateAuthStatus = function(updatedValue) {
-    $scope.angularForm[$scope.authType + '_auth_status'].$setViewValue(updatedValue);
+    $scope.angularForm[$scope.currentTab + '_auth_status'].$setViewValue(updatedValue);
   };
 
   $scope.updateHostname = function(value) {
