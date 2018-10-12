@@ -19,7 +19,7 @@ module ApplicationController::ExpressionHtml
         ViewHelper.content_tag(:strong, " #{operation.upcase} ")
       end
 
-      ViewHelper.concat ViewHelper.safe_join(exps, glue)
+      ViewHelper.concat(ViewHelper.safe_join(exps, glue))
 
       ViewHelper.concat_tag(:font, :color => color) do
         ViewHelper.content_tag(:strong, ')')
