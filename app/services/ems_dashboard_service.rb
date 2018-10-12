@@ -59,7 +59,7 @@ class EmsDashboardService < DashboardService
          .count
   end
 
-  def format_data(ems_type, attributes, attr_icon, attr_url, attr_hsh)
+  def format_data(resource, attributes, attr_icon, attr_url, attr_hsh)
     attr_data = []
     attributes.each do |attr|
       attr_data.push(
@@ -67,7 +67,7 @@ class EmsDashboardService < DashboardService
         :iconClass    => attr_icon[attr],
         :title        => attr_hsh[attr],
         :count        => @ems.send(attr).count,
-        :href         => get_url(ems_type, @ems_id, attr_url[attr]),
+        :href         => get_url(resource, @ems_id, attr_url[attr]),
       )
     end
     attr_data
@@ -80,7 +80,7 @@ class EmsDashboardService < DashboardService
     }
   end
 
-  def get_url(ems_type, ems_id, attr_url)
-    "/#{ems_type}/#{ems_id}?display=#{attr_url}"
+  def get_url(resource, ems_id, attr_url)
+    "/#{resource}/#{ems_id}?display=#{attr_url}"
   end
 end

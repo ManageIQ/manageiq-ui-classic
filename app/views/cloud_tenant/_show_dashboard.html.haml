@@ -1,0 +1,12 @@
+= render :partial => "layouts/flash_msg"
+.container-fluid.container-tiles-pf.cloud-tenant-dashboard
+  .row.row-tile-pf
+    %aggregate-status-card{:provider_id => @record.id, :provider_type => "cloud_tenant"}
+  .row.row-tile-pf
+    .col-xs-12.col-sm-12.col-md-6
+      = render :partial => "recent-instances-line-chart"
+    .col-xs-12.col-sm-12.col-md-6
+      = render :partial => "recent-images-line-chart"
+  :javascript
+    ManageIQ.angular.app.value('#{@record.id}');
+    miq_bootstrap('.cloud-tenant-dashboard');
