@@ -14,7 +14,7 @@ class AuthKeyPairCloudController < ApplicationController
   end
 
   def show_list
-    process_show_list(:dbname => :authkeypaircloud, :gtl_dbname => :authkeypaircloud)
+    process_show_list(:dbname => :authkeypaircloud, :gtl_dbname => :authkeypaircloud, :named_scope => :filter_key_pairs)
   end
 
   def breadcrumb_name(_model)
