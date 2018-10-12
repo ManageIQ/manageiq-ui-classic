@@ -12,6 +12,7 @@ describe('emsCommonFormController', function() {
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
     spyOn(API, 'options').and.callFake(function(url){ return Promise.resolve({}); });
+    spyOn(miqService, 'validateWithREST').and.callFake(function(url){ return Promise.resolve({}); });
     $scope = $rootScope.$new();
 
     var emsCommonFormResponse = {
@@ -366,6 +367,23 @@ describe('emsCommonFormController', function() {
 
     it('delegates to miqService.restAjaxButton', function() {
       expect(miqService.restAjaxButton).toHaveBeenCalledWith('/ems_cloud?button=cancel', $.Event.target);
+    });
+  });
+
+  describe('#validateClicked', function() {
+    beforeEach(function() {
+      $httpBackend.flush();
+      $scope.currentTab = "console";
+      $scope.actionUrl = "/xyz";
+      $scope.validateClicked($.Event, "default", true);
+    });
+
+    it('turns the spinner on via the miqService', function() {
+      expect(miqService.sparkleOn).toHaveBeenCalled();
+    });
+
+    it('delegates to miqService.validateClicked', function() {
+      expect(miqService.validateWithREST).toHaveBeenCalledWith($.Event, "console", "/xyz", true);
     });
   });
 
