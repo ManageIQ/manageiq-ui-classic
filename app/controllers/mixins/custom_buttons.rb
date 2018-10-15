@@ -1,5 +1,6 @@
 module Mixins::CustomButtons
   extend ActiveSupport::Concern
+  include ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
 
   def custom_toolbar
     return nil unless self.class.instance_eval { @custom_buttons }
@@ -23,6 +24,8 @@ module Mixins::CustomButtons
     if @record && %w(show show_dashboard).include?(@lastaction) && %w(dashboard main).include?(@display)
       Mixins::CustomButtons::Result.new(:single)
     elsif @lastaction == "show_list"
+      Mixins::CustomButtons::Result.new(:list)
+    elsif relationship_table_screen?
       Mixins::CustomButtons::Result.new(:list)
     elsif @display == 'generic_objects'
       @lastaction == 'generic_object' ? Mixins::CustomButtons::Result.new(:single) : Mixins::CustomButtons::Result.new(:list)

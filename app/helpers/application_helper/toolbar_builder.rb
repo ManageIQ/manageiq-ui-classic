@@ -1,6 +1,7 @@
 class ApplicationHelper::ToolbarBuilder
   include MiqAeClassHelper
   include RestfulControllerMixin
+  include ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
 
   def call(toolbar_name)
     build_toolbar(toolbar_name)
@@ -323,6 +324,8 @@ class ApplicationHelper::ToolbarBuilder
     if @display == 'generic_objects'
       model = GenericObjectDefinition
       record = GenericObject.find_by(:id => @sb[:rec_id])
+    elsif relationship_table_screen?
+      model = @display.camelize.singularize.constantize
     else
       model = @record ? @record.class : model_for_custom_toolbar
     end
