@@ -70,15 +70,6 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     return form.$valid && form.$dirty;
   };
 
-  this.dynamicAutoFocus = function(element) {
-    $timeout(function() {
-      var queryResult = $document[0].getElementById(element);
-      if (queryResult) {
-        queryResult.focus();
-      }
-    }, 200);
-  };
-
   this.detectWithRest = function($event, url) {
     angular.element('#button_name').val('detect');
     miqSparkleOn();

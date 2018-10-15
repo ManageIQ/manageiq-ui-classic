@@ -37,13 +37,6 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           :url   => "/new",
           :klass => ApplicationHelper::Button::ButtonNewDiscover),
         button(
-          :ems_container_deployment,
-          'pficon pficon-add-circle-o fa-lg',
-          t = N_('Create Containers Provider'),
-          t,
-          :data   => {'function' => 'sendDataWithRx', 'function-data' => '{ "name": "showListener", "controller": "containers.deployProviderController" }'},
-          :hidden => ContainerDeploymentService.hide_deployment_wizard?),
-        button(
           :ems_container_edit,
           'pficon pficon-edit fa-lg',
           N_('Select a single Containers Provider to edit'),
