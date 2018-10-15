@@ -77,15 +77,12 @@ module MiqAeCustomizationController::CustomButtons
       end
       @sb[:user_roles] = []
       if @custom_button.visibility && @custom_button.visibility[:roles] && @custom_button.visibility[:roles][0] != "_ALL_"
-        #         User.roles.sort_by(&:name).each do |r|
-        #           @sb[:user_roles].push(r.description) if @custom_button.visibility[:roles].include?(r.name) && !@sb[:user_roles].include?(r.description)
         MiqUserRole.all.sort_by(&:name).each do |r|
           @sb[:user_roles].push(r.name) if @custom_button.visibility[:roles].include?(r.name)
         end
       end
       dialog_id = @custom_button.resource_action.dialog_id
       @sb[:dialog_label] = dialog_id ? Dialog.find_by_id(dialog_id).label : ""
-      #       @sb[:user_roles].sort!
       if @nodetype[0].starts_with?("-ub-")
         # selected button is under unassigned folder
         @resolve[:new][:target_class] = @sb[:target_classes].invert[@nodetype[0].split('-').last]
