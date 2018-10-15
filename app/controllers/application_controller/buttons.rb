@@ -1033,8 +1033,6 @@ module ApplicationController::Buttons
         end
       end
     end
-    # ApplicationController::AE_MAX_RESOLUTION_FIELDS.times{@edit[:new][:attrs].push(Array.new)} if @edit[:new][:attrs].empty?
-    # num = ApplicationController::AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length
     (ApplicationController::AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
     @edit[:new][:starting_object] ||= "SYSTEM/PROCESS"
     @edit[:new][:instance_name] ||= "Request"
@@ -1177,13 +1175,10 @@ module ApplicationController::Buttons
       end
       @sb[:user_roles] = []
       if @custom_button.visibility && @custom_button.visibility[:roles] && @custom_button.visibility[:roles][0] != "_ALL_"
-        #         User.roles.sort_by(&:name).each do |r|
-        #           @sb[:user_roles].push(r.description) if @custom_button.visibility[:roles].include?(r.name) && !@sb[:user_roles].include?(r.description)
         MiqUserRole.all.sort_by(&:name).each do |r|
           @sb[:user_roles].push(r.name) if @custom_button.visibility[:roles].include?(r.name)
         end
       end
-      #       @sb[:user_roles].sort!
       @resolve[:new][:target_class] = @sb[:target_classes].invert["ServiceTemplate"]
       dialog_id = @custom_button.resource_action.dialog_id
       @sb[:dialog_label] = dialog_id ? Dialog.find(dialog_id).label : _("No Dialog")
