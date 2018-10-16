@@ -1,5 +1,5 @@
 class ApplicationController
-  Feature = Struct.new :role, :role_any, :name, :accord_name, :tree_name, :title, :container, :listn_name do
+  Feature = Struct.new(:role, :role_any, :name, :accord_name, :tree_name, :title, :container, :listn_name) do
     def self.new_with_hash(hash)
       feature = new(*members.collect { |m| hash[m] })
       feature.autocomplete
