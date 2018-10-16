@@ -1,5 +1,4 @@
 class CloudTenantController < ApplicationController
-  include Mixins::GenericShowMixin
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -9,6 +8,8 @@ class CloudTenantController < ApplicationController
   include Mixins::GenericButtonMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericSessionMixin
+  include Mixins::DashboardViewMixin
+  include Mixins::GenericShowMixin
 
   # handle buttons pressed on the button bar
   def button

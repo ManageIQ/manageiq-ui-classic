@@ -489,6 +489,16 @@ Rails.application.routes.draw do
         save_post
     },
 
+    :cloud_tenant_dashboard      => {
+      :get => %w(
+        show
+        data
+        recent_instances_data
+        recent_images_data
+        aggregate_status_data
+      )
+    },
+
     :cloud_object_store_object => {
       :get => %w(
         download_data
