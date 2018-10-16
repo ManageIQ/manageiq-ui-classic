@@ -40,8 +40,8 @@ module ApplicationController::Performance
       self.hourly_date = params[:miq_date_1]        if params[:miq_date_1] && typ == 'Hourly'
       self.daily_date  = params[:miq_date_1]        if params[:miq_date_1] && typ == 'Daily'
       self.index       = params[:chart_idx] == 'clear' ? nil : params[:chart_idx] if params[:chart_idx]
-      self.parent      = params[:compare_to].blank? ? nil : params[:compare_to] if params.key?(:compare_to)
-      self.compare_vm  = params[:compare_vm].blank? ? nil : params[:compare_vm] if params.key?(:compare_vm)
+      self.parent      = params[:compare_to].presence if params.key?(:compare_to)
+      self.compare_vm  = params[:compare_vm].presence if params.key?(:compare_vm)
       self.vmtype      = params[:perf_vmtype] == '<All>' ? nil : params[:perf_vmtype] if params[:perf_vmtype]
       if params[:perf_cat]
         self.cat_model, self.cat = if params[:perf_cat] == '<None>'
@@ -105,7 +105,8 @@ module ApplicationController::Performance
       end
     end
 
-    def cats # category pulldown for tag charts
+    # category pulldown for tag charts
+    def cats
       return unless %w(EmsCluster Host Storage AvailabilityZone HostAggregate).include?(model)
       self[:cats] ||=
         begin
@@ -124,7 +125,7 @@ module ApplicationController::Performance
     end
 
     def vmtypes
-      if 'Storage' == model && typ == 'Daily'
+      if model == 'Storage' && typ == 'Daily'
         [['<All>', '<All>'],
          ['Managed/Registered', 'registered'],
          ['Managed/Unregistered', 'unregistered'],
