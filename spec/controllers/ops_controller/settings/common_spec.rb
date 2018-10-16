@@ -438,5 +438,25 @@ describe OpsController do
         end
       end
     end
+
+    context '#settings_form_field_changed' do
+      it '@changed should be true when server zone is changed' do
+        server = FactoryGirl.create(:miq_server, :zone => Zone.find_by(:name => "default"))
+        current = ::Settings.to_hash
+        new = ::Settings.to_hash
+        controller.instance_variable_set(:@edit,
+                                         :new     => new,
+                                         :current => current,
+                                         :key     => "settings_server_edit__#{server.id}")
+        controller.instance_variable_set(:@sb, :selected_server_id => server.id, :active_tab => "settings_server")
+        controller.instance_variable_set(:@_params,
+                                         :id => 'server', :server_zone => "foo_zone")
+        allow(controller).to receive(:x_node).and_return("svr-#{server.id}")
+        session[:edit] = assigns(:edit)
+        expect(controller).to receive(:render)
+        controller.send(:settings_form_field_changed)
+        expect(assigns[:changed]).to be_truthy
+      end
+    end
   end
 end
