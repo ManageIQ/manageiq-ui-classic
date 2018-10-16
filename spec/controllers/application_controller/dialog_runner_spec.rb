@@ -11,7 +11,7 @@ describe CatalogController do
     let(:session) { {:edit => {:rec_id => 123, :wf => wf, :key => "dialog_edit__123"}} }
 
     before do
-      allow(Dialog).to receive(:find_by_id).with(123).and_return(dialog)
+      allow(Dialog).to receive(:find).with(123).and_return(dialog)
       allow(dialog).to receive(:field)
       allow(dialog).to receive(:field).with("test").and_return(dialog_field)
       allow(dialog).to receive(:field_name_exist?).and_return(false)
@@ -108,7 +108,7 @@ describe CatalogController do
       allow(dialog).to receive(:dialog_fields) { [Struct.new(:name, :type).new("name", "DialogFieldDateTimeControl")] }
       allow(wf).to receive(:value).with("name") { dialog_field.value }
       allow(wf).to receive(:set_value) { |_, val| dialog_field.instance_variable_set(:@value, val) }
-      allow(Dialog).to receive(:find_by_id).and_return(dialog)
+      allow(Dialog).to receive(:find).and_return(dialog)
 
       dialog_field.instance_variable_set(:@value, "04/05/2015 14:52")
       controller.instance_variable_set(:@edit, :rec_id => nil, :wf => wf)
