@@ -11,9 +11,7 @@ describe PhysicalSwitchHelper::TextualSummary do
     description
   )
 
-  include_examples "textual_group", "Relationships", %i(ext_management_system)
+  include_examples "textual_group", "Relationships", %i(ext_management_system connected_physical_servers)
 
   include_examples "textual_group", "Power Management", %i(power_state), "power_management"
-
-  include_examples "textual_group", "Connected Components", %i(connected_physical_servers), "connected_components"
 end
