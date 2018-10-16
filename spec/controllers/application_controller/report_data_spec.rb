@@ -39,5 +39,12 @@ describe ApplicationController do
       expect(controller).to receive(:view_to_hash)
       controller.report_data
     end
+
+    it "should have default number of perpage records set for reports" do
+      controller.instance_variable_set(:@_params, :model_name => "MiqReportResult")
+      allow(controller).to receive(:settings_default).with(10, :perpage, :reports).and_return(5)
+      report_data = JSON.parse(controller.report_data)
+      expect(report_data["settings"]["perpage"]).to eql(5)
+    end
   end
 end
