@@ -1,7 +1,6 @@
-/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn
-add_flash miqFlashLater miqFlashSaved */
+/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn add_flash miqFlashLater miqFlashSaved */
 
-ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API', '$window', function($timeout, $document, $q, API, $window) {
+ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q, API, $window) {
   var miqService = this;
 
   this.storedPasswordPlaceholder = '●●●●●●●●';
