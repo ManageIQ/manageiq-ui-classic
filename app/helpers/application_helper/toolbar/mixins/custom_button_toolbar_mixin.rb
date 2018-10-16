@@ -3,7 +3,7 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
                                     GenericObject GenericObjectDefinition Host LoadBalancer
-                                    MiqGroup MiqTemp MiqTemplate NetworkRouter OrchestrationStack SecurityGroup Service
+                                    MiqGroup MiqTemplate NetworkRouter OrchestrationStack SecurityGroup Service
                                     ServiceTemplate Storage Switch Tenant User Vm VmOrTemplate).freeze
 
   def custom_button_appliable_class?(model)
