@@ -12,7 +12,6 @@
  *= require codemirror/lib/codemirror
  *= require codemirror/theme/eclipse
  *= require kubernetes-topology-graph/dist/topology-graph
- *= require ./wizard
  *= require ./timeline
  *= require ./topology
  *= require ./container_topology
