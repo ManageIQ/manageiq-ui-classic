@@ -280,11 +280,13 @@ module ApplicationController::CiProcessing
 
     display_name ||= task.titleize
     case klass_str
-    when 'OrchestrationStack', 'Service', 'CloudObjectStoreContainer', 'CloudObjectStoreObject'
-      objs, _objs_out_reg = filter_ids_in_region(objs, klass.to_s)
+    when 'CloudObjectStoreContainer', 'CloudObjectStoreObject'
+      objs, _objs_out_reg = filter_ids_in_region(objs, klass_str)
     when 'VmOrTemplate'
       objs, _objs_out_reg = filter_ids_in_region(objs, "VM") unless VmOrTemplate::REMOTE_REGION_TASKS.include?(task)
       klass = Vm
+    when 'OrchestrationStack', 'Service'
+      objs, _objs_out_reg = filter_ids_in_region(objs, klass_str) unless task == "retire_now"
     end
     return if objs.empty?
 
