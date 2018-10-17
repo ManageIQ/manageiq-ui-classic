@@ -492,9 +492,6 @@
             this.initObject.showUrl = splitUrl.join('/');
           }
         }
-        gtlData.messages && gtlData.messages.forEach(function(oneMessage) {
-          add_flash(oneMessage.msg, oneMessage.level);
-        });
         // Apply gettext __() on column headers
         for (var i = 0;  i < gtlData.cols.length; i++) {
           var column = gtlData.cols[i];
