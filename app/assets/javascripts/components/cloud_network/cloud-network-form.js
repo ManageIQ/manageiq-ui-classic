@@ -27,6 +27,7 @@ function cloudNetworkFormController(API, miqService) {
 
     vm.ems = [];
     vm.network_types_for_segmentation = /vlan|vxlan|gre/;
+    vm.network_types_for_physical_network = /vlan|flat/;
     vm.formId = vm.cloudNetworkFormId;
     vm.model = "cloudNetworkModel";
     ManageIQ.angular.scope = vm;

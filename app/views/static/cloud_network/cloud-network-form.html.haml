@@ -67,7 +67,7 @@
                 'ng-options'                  => "type as key for (key, type) in vm.providers_network_types",
                 "miq-select"                  => true,
                 "selectpicker-for-select-tag" => ""}
-    .form-group{'ng-if' => "vm.cloudNetworkModel.provider_network_type"}
+    .form-group{'ng-if' => "vm.network_types_for_physical_network.test(vm.cloudNetworkModel.provider_network_type)"}
       %label.control-label.col-md-2
         = _('Physical Network')
       .col-md-8
