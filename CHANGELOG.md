@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer Beta-1
+## Hammer Beta-1 - Released 2018-10-12
 
 ### Added
 - Queue operations for pglogical replication set-up [(#4628)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4628)
@@ -175,6 +175,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - UI for create and delete flavors [(#1818)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1818)
 - Add the ability to edit options settings for providers [(#1652)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1652)
 - When available use Mistral workflows to scale stacks [(#1533)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1533)
+- Use the new powerstate icons in treeview for VMs [(#4616)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4616)
+- Put background under archived/orphaned tree node icons in VMs [(#4711)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4711)
+- Add multiple select for cloud tenants when creating a flavor [(#4469)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4469)
+- bower to npm: patternfly-timeline (@pf3/timeline) [(#4690)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4690)
+- bower to npm: manageiq-ui-components [(#4694)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4694)
+- Update i18n catalog for hammer [(#4729)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4729)
 
 ### Changed
 - Change @edit[:new][:timer_typ] to @edit[:new][:timer].typ [(#3870)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3870)
@@ -919,6 +925,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Provisioning: Use session to pass flash message. [(#2408)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2408)
 - Use Chargeable field for determining measure in rate editor [(#2407)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2407)
 - Storage: Enable attach/detach operations to storage manager [(#746)](https://github.com/ManageIQ/manageiq-ui-classic/pull/746)
+- Fix variable name and extra semicolon in VMDB summary view [(#4677)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4677)
+- Fix wrapping switch [(#4718)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4718)
+- Pass normalized_state into textual summaries for consistency [(#4706)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4706)
+- check terminate feature for vm_destroy action [(#4679)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4679)
+- Fixed code to check for correct RBAC feature when adding/editing report [(#4699)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4699)
+- Add Physical Chassis link to default menu [(#4705)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4705)
+- Show acknowledgement when saving replication settings [(#4714)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4714)
+- Fix losing focus of the form while renaming a VM [(#4721)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4721)
+- Corrected flash message rendering after submitting VM reconfigure request [(#4722)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4722)
+- Fix UI error when migrating virtual machine [(#4672)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4672)
+- Made changes to save server name only if it is not blank [(#4730)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4730)
+- Fixed CPU value display on VM summary [(#4737)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4737)
+- Show correct VMs upon Service retirement [(#4710)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4710)
+- Fixed links for vm/templates to instances/images on cloud dashboard [(#4739)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4739)
+- Add validation for cloud_networks and subnets [(#4736)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4736)
+- Fix delayed translation test [(#4740)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4740)
+- Fix FTP credentials for log depot [(#4682)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4682)
+- Fixes disabled 'Show full screen report' button on Saved Reports page [(#4734)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4734)
+- 
 
 ### Removed
 - Remove Snapshot field from EC2 Instance summary screen [(#4285)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4285)
@@ -935,6 +960,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Remove middeware topology [(#3141)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3141)
 - Remove middleware default view settings configuration [(#3118)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3118)
 - Removed unneeded :onwhen from summary screen toolbar [(#2630)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2630)
+- Delete obsolete power state images [(#4707)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4707)
+- Removed reference to condition modifier [(#4713)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4713)
+- Remove full_ids from infra networking tree to fix error in selection [(#4727)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4727)
+- Remove bower [(#4735)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4735)
+- Removing button for showing fullscreen report from list view [(#4741)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4741)
 
 ## Gaprindashvili-5 - Released 2018-09-07
 
