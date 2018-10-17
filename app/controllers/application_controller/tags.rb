@@ -95,7 +95,7 @@ module ApplicationController::Tags
 
   def get_tag_items
     record_ids = find_records_with_rbac(
-      (@tagging.instance_of? String) ? @tagging.safe_constantize : @tagging,
+      @tagging.instance_of?(String) ? @tagging.safe_constantize : @tagging,
       checked_or_params
     ).map(&:id)
     session[:tag_items] = record_ids
@@ -114,7 +114,7 @@ module ApplicationController::Tags
     end
     @in_a_form = true
     tagging_tags_set_form_vars
-    @display   = nil
+    @display = nil
     session[:changed] = false
     add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
     @title = _('Tag Assignment')
@@ -143,15 +143,14 @@ module ApplicationController::Tags
     id = params[:id]
     return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}")
     add_flash(_("Tag Edit was cancelled by the user"))
-    session[:tag_items] = nil                                 # reset tag_items in session
+    session[:tag_items] = nil # reset tag_items in session
+    @edit = nil # clean out the saved info
     if tagging_explorer_controller?
-      @edit = nil # clean out the saved info
       @sb[:action] = nil
       replace_right_cell
     else
-      @edit = nil                               # clean out the saved info
-      session[:flash_msgs] = @flash_array.dup   # Put msg in session for next transaction to display
-      javascript_redirect previous_breadcrumb_url
+      session[:flash_msgs] = @flash_array.dup # Put msg in session for next transaction to display
+      javascript_redirect(previous_breadcrumb_url)
     end
   end
 
@@ -161,14 +160,13 @@ module ApplicationController::Tags
 
     tagging_save_tags
 
+    @edit = nil # clean out the saved info
     if tagging_explorer_controller?
-      @edit = nil # clean out the saved info
       @sb[:action] = nil
       replace_right_cell
     else
-      @edit = nil
       flash_to_session
-      javascript_redirect previous_breadcrumb_url
+      javascript_redirect(previous_breadcrumb_url)
     end
   end
 
@@ -185,25 +183,23 @@ module ApplicationController::Tags
 
   # Add/remove tags in a single transaction
   def tagging_save_tags
-    Classification.bulk_reassignment({:model      => @edit[:tagging],
-                                      :object_ids => @edit[:object_ids],
-                                      :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
-                                      :delete_ids => @edit[:current][:assignments] - @edit[:new][:assignments]
-                                    })
+    Classification.bulk_reassignment(:model      => @edit[:tagging],
+                                     :object_ids => @edit[:object_ids],
+                                     :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
+                                     :delete_ids => @edit[:current][:assignments] - @edit[:new][:assignments])
   rescue => bang
     add_flash(_("Error during 'Save Tags': %{error_message}") % {:error_message => bang.message}, :error)
   else
     add_flash(_("Tag edits were successfully saved"))
   end
 
-
   # Build the @edit elements for the tag edit screen
   def tag_edit_build_screen
     @showlinks = true
 
     cats = Classification.categories.select(&:show).sort_by { |t| t.description.try(:downcase) } # Get the categories, sort by description
-    @categories = {}    # Classifications array for first chooser
-    cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
+    @categories = {} # Classifications array for first chooser
+    cats.delete_if { |c| c.read_only? || c.entries.empty? } # Remove categories that are read only or have no entries
     cats.each do |c|
       if c.single_value?
         @categories[c.description + " *"] = c.id
@@ -212,10 +208,10 @@ module ApplicationController::Tags
       end
     end
 
-    if ["User", "MiqGroup", "Tenant"].include?(@tagging)
-      session[:assigned_filters] = []  # No view filters used for user/groups/tenants, set as empty for later methods
+    if %w(User MiqGroup Tenant).include?(@tagging)
+      session[:assigned_filters] = [] # No view filters used for user/groups/tenants, set as empty for later methods
     else
-      cats.each do |cat_key|  # not needed for user/group tags since they are not filtered for viewing
+      cats.each do |cat_key| # not needed for user/group tags since they are not filtered for viewing
         if session[:assigned_filters].include?(cat_key.name.downcase)
           cats.delete(cat_key)
         end
@@ -225,7 +221,7 @@ module ApplicationController::Tags
     # Set to first category, if not already set
     @edit[:cat] ||= cats.first
 
-    unless @object_ids.blank?
+    if @object_ids.present?
       @tagitems = @tagging.constantize.where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }
     end
 
@@ -237,8 +233,8 @@ module ApplicationController::Tags
       Classification.find_assigned_entries(@tagitems[0]).collect { |e| e.id unless e.parent.read_only? }
     @tagitems.each do |item|
       itemassign = Classification.find_assigned_entries(item).collect(&:id) # Get each items assignments
-      @edit[:new][:assignments].delete_if { |a| !itemassign.include?(a) } # Remove any assignments that are not in the new items assignments
-      break if @edit[:new][:assignments].length == 0                      # Stop looking if no assignments are left
+      @edit[:new][:assignments].delete_if { |a| !itemassign.include?(a) }   # Remove any assignments that are not in the new items assignments
+      break if @edit[:new][:assignments].empty?                             # Stop looking if no assignments are left
     end
     @edit[:new][:assignments].sort!
     @assignments = Classification.find(@edit.fetch_path(:new, :assignments))
@@ -247,7 +243,7 @@ module ApplicationController::Tags
 
   # Build the second pulldown containing the entries for the selected category
   def tag_edit_build_entries_pulldown
-    @entries = {}                   # Create new entries hash (2nd pulldown)
+    @entries = {}                         # Create new entries hash (2nd pulldown)
     @edit[:cat].entries.each do |e|       # Get all of the entries for the current category
       @entries[e.description] = e.id      # Add it to the hash
     end
@@ -263,13 +259,13 @@ module ApplicationController::Tags
   # Tag selected db records
   def tag(db = nil)
     assert_privileges(params[:pressed])
-    @tagging = session[:tag_db] = db        # Remember the DB
+    @tagging = session[:tag_db] = db # Remember the DB
     get_tag_items
     drop_breadcrumb(:name => _("Tag Assignment"), :url => "/#{session[:controller]}/tagging_edit")
-    javascript_redirect :action => 'tagging_edit',
-                         :id     => params[:id],
-                         :db     => db,
-                         :escape => false
+    javascript_redirect(:action => 'tagging_edit',
+                        :id     => params[:id],
+                        :db     => db,
+                        :escape => false)
   end
 
   # Getting my company tags and my tags to display on summary screen
@@ -282,14 +278,13 @@ module ApplicationController::Tags
       array ||= session.store_path(path, [])
       array << a.description
     end
-    session[:mytags] = rec.tagged_with(:cat => session[:userid])    # Start with the first items tags
+    session[:mytags] = rec.tagged_with(:cat => session[:userid]) # Start with the first items tags
   end
 
   def locals_for_tagging
     {:action_url   => 'tagging',
      :multi_record => true,
-     :record_id    => @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]
-    }
+     :record_id    => @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]}
   end
 
   def update_tagging_partials(presenter)
