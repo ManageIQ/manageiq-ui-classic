@@ -310,30 +310,65 @@ describe ApplicationController do
   end
 
   context "#automate_button_field_changed" do
-    let(:resource_action) { FactoryGirl.create(:resource_action, :dialog_id => 1) }
-    let(:button)          { FactoryGirl.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
-    before do
-      controller.instance_variable_set(:@custom_button, button)
-      allow(controller).to receive(:render).and_return(nil)
-      edit = {
-        :new           => {},
-        :current       => {},
-        :custom_button => button
-      }
-      controller.instance_variable_set(:@edit, edit)
-      session[:edit] = edit
+    context 'sets dialog_id' do
+      let(:resource_action) { FactoryGirl.create(:resource_action, :dialog_id => 1) }
+      let(:button)          { FactoryGirl.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
+      before do
+        controller.instance_variable_set(:@custom_button, button)
+        allow(controller).to receive(:render).and_return(nil)
+        edit = {
+          :new           => {},
+          :current       => {},
+          :custom_button => button
+        }
+        controller.instance_variable_set(:@edit, edit)
+        session[:edit] = edit
+      end
+
+      it "to id of selected dialog" do
+        controller.instance_variable_set(:@_params, {:id => button.id, :dialog_id => 42}.with_indifferent_access)
+        controller.instance_variable_set(:@resolve, :target_class => "VM and Instance")
+        controller.send(:automate_button_field_changed)
+        expect(assigns(:edit)[:new][:dialog_id]).to eq(42)
+      end
+
+      it "to nil if no dialog selected" do
+        controller.instance_variable_set(:@_params, "id" => button.id, "dialog_id" => "")
+        controller.instance_variable_set(:@resolve, :target_class => "VM and Instance")
+        controller.send(:automate_button_field_changed)
+        expect(assigns(:edit)[:new][:dialog_id]).to eq(nil)
+      end
     end
 
-    it "sets dialog_id to id of selected dialog" do
-      controller.instance_variable_set(:@_params, {:id => button.id, :dialog_id => 42}.with_indifferent_access)
-      controller.send(:automate_button_field_changed)
-      expect(assigns(:edit)[:new][:dialog_id]).to eq(42)
-    end
+    context 'sets @edit[:new][:disabled_open_url]' do
+      let(:resource_action) { FactoryGirl.create(:resource_action, :dialog_id => 1) }
+      let(:button_for_vm) { FactoryGirl.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
+      let(:button_for_az) { FactoryGirl.create(:custom_button, :name => "My Button", :applies_to_class => "AvailabilityZone", :resource_action => resource_action) }
+      before do
+        allow(controller).to receive(:render).and_return(nil)
+        edit = {
+          :new           => {:display_for => 'single'},
+          :current       => {},
+          :custom_button => {}
+        }
+        controller.instance_variable_set(:@edit, edit)
+        session[:edit] = edit
+      end
+      it "to false for Vm and Template" do
+        controller.instance_variable_set(:@_params, "id" => button_for_vm.id, "dialog_id" => "")
+        controller.instance_variable_set(:@resolve, :target_class => "VM and Instance")
+        controller.instance_variable_set(:@custom_button, button_for_vm)
+        controller.send(:automate_button_field_changed)
+        expect(assigns(:edit)[:new][:disabled_open_url]).to be false
+      end
 
-    it "sets dialog_id to nil if no dialog selected" do
-      controller.instance_variable_set(:@_params, "id" => button.id, "dialog_id" => "")
-      controller.send(:automate_button_field_changed)
-      expect(assigns(:edit)[:new][:dialog_id]).to eq(nil)
+      it "to true for Availability Zone" do
+        controller.instance_variable_set(:@_params, "id" => button_for_az.id, "dialog_id" => "")
+        controller.instance_variable_set(:@resolve, :target_class => "Availability Zone")
+        controller.instance_variable_set(:@custom_button, button_for_az)
+        controller.send(:automate_button_field_changed)
+        expect(assigns(:edit)[:new][:disabled_open_url]).to be true
+      end
     end
   end
 end

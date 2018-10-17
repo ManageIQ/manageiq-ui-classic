@@ -89,7 +89,7 @@ module ApplicationController::Buttons
     group_create_update("update")
   end
 
-  MODEL_WITH_OPEN_URL = ["VM and Instance"]
+  MODEL_WITH_OPEN_URL = ["VM and Instance"].freeze
 
   def automate_button_field_changed
     unless params[:target_class]
