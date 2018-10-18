@@ -30,7 +30,9 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
   # Indicates, whether the user has came from providers relationship screen
   # or not
   #
-  # Used to indicate if the custom buttons should be rendered
+  # Used to
+  # - indicate if the custom buttons should be rendered
+  # - decide where to look for id of checked records
   def relationship_table_screen?
     return false if @display.nil?
     display_class = @display.camelize.singularize
