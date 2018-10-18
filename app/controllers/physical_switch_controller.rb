@@ -31,7 +31,7 @@ class PhysicalSwitchController < ApplicationController
   def textual_group_list
     [
       %i(properties management_networks relationships),
-      %i(power_management firmware_details connected_components),
+      %i(power_management firmware_details),
     ]
   end
   helper_method(:textual_group_list)

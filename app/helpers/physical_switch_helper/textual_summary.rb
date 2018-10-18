@@ -11,7 +11,7 @@ module PhysicalSwitchHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ext_management_system)
+      %i(ext_management_system connected_physical_servers)
     )
   end
 
@@ -28,13 +28,6 @@ module PhysicalSwitchHelper::TextualSummary
 
   def textual_group_firmware_details
     TextualTable.new(_("Firmwares"), firmware_details, [_("Name"), _("Version")])
-  end
-
-  def textual_group_connected_components
-    TextualGroup.new(
-      _("Connected Components"),
-      %i(connected_physical_servers)
-    )
   end
 
   def textual_ports
