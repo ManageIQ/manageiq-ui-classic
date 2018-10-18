@@ -247,6 +247,35 @@ describe OpsController do
           expect(assigns(:ntp_servers)).to eq("example1.com, example2.com")
         end
       end
+
+      describe '#settings_set_form_vars' do
+        context 'sets values correctly' do
+          it 'for server in non-current zone' do
+            zone = FactoryGirl.create(:zone, :name => 'Foo Zone')
+            server = FactoryGirl.create(:miq_server, :zone => zone)
+            allow(controller).to receive(:x_node).and_return("svr-#{server.id}")
+            controller.instance_variable_set(:@sb, :selected_server_id => server.id, :active_tab => "settings_server")
+            allow(MiqServer).to receive(:my_server).and_return(OpenStruct.new('id' => 0, :name => 'name'))
+            allow(MiqServer).to receive(:licensed_roles).and_return([])
+            controller.instance_variable_set(:@selected_server, server)
+            controller.send(:settings_set_form_vars)
+            edit_current = assigns(:edit)
+            expect(edit_current[:current].config[:server][:zone]).to eq(zone.name)
+          end
+
+          it 'for server in default zone' do
+            _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
+            allow(controller).to receive(:x_node).and_return("svr-#{@miq_server.id}")
+            allow(MiqServer).to receive(:my_server).and_return(OpenStruct.new('id' => 0, :name => 'name'))
+            controller.instance_variable_set(:@selected_server, @miq_server)
+            allow(MiqServer).to receive(:licensed_roles).and_return([])
+            controller.instance_variable_set(:@sb, :selected_server_id => @miq_server.id, :active_tab => "settings_server")
+            controller.send(:settings_set_form_vars)
+            edit_current = assigns(:edit)
+            expect(edit_current[:current].config[:server][:zone]).to eq(@zone.name)
+          end
+        end
+      end
     end
   end
 end
