@@ -304,14 +304,16 @@ module ApplicationController::Buttons
     button = CustomButton.find(params[:button_id])
     cls = custom_button_class_model(button.applies_to_class)
     @explorer = true if BASE_MODEL_EXPLORER_CLASSES.include?(cls)
-    ids ||= params[:id]
-    if ids.to_s == 'LIST'
-      objs = Rbac.filtered(cls.where(:id => find_checked_items))
-      obj = objs.first
-    else
-      obj = Rbac.filtered_object(cls.find(ids.to_i))
-      objs = [obj]
+    ids ||= params[:id] unless relationship_table_screen? && @record.nil?
+    ids = find_checked_items if ids == 'LIST' || ids.nil?
+
+    if ids.blank?
+      render_flash(_("Error executing custom button: No item was selected."), :error)
+      return
     end
+
+    objs = Rbac.filtered(cls.where(:id => ids))
+    obj = objs.first
 
     if objs.empty?
       render_flash(_("Error executing custom button: No item was selected."), :error)
