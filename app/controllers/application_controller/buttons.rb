@@ -89,6 +89,8 @@ module ApplicationController::Buttons
     group_create_update("update")
   end
 
+  MODEL_WITH_OPEN_URL = ["VM and Instance"].freeze
+
   def automate_button_field_changed
     unless params[:target_class]
       @edit = session[:edit]
@@ -105,7 +107,10 @@ module ApplicationController::Buttons
       end
       @edit[:new][:display] = params[:display] == "1" if params[:display]
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
+
       copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color disabled_text button_type inventory_type))
+      @edit[:new][:disabled_open_url] = !(MODEL_WITH_OPEN_URL.include?(@resolve[:target_class]) && @edit[:new][:display_for] == 'single')
+
       @edit[:new][:dialog_id] = params[:dialog_id] == "" ? nil : params[:dialog_id] if params.keys.include?("dialog_id")
       visibility_box_edit
 
@@ -1036,6 +1041,7 @@ module ApplicationController::Buttons
     (ApplicationController::AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
     @edit[:new][:starting_object] ||= "SYSTEM/PROCESS"
     @edit[:new][:instance_name] ||= "Request"
+    @edit[:new][:disabled_open_url] = !(MODEL_WITH_OPEN_URL.include?(@resolve[:target_class]) && @edit[:new][:display_for] == 'single')
 
     @edit[:new].update(
       :target_class   => @resolve[:target_class],
