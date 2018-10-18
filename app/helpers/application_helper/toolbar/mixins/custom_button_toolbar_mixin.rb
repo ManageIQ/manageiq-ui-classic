@@ -32,18 +32,17 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
   #
   # Used to indicate if the custom buttons should be rendered
   def relationship_table_screen?
-    return false if @display.nil? || @record.nil?
+    return false if @display.nil?
+    display_class = @display.camelize.singularize
+    return false unless custom_button_appliable_class?(display_class)
 
-    display_model = @display.camelize.singularize
-    providers = (EmsCloud.descendants +
-                 EmsInfra.descendants +
-                 EmsPhysicalInfra.descendants +
-                 ManageIQ::Providers::ContainerManager.descendants)
-
-    custom_button_model = custom_button_appliable_class?(display_model)
-    provider_screen = providers.any? { |provider| @record.instance_of?(provider) }
     show_action = @lastaction == "show"
+    display_model = display_class.constantize
+    # method is accessed twice from a different location - from toolbar builder
+    # and custom button mixin - and so controller class changes
+    ctrl = self.class == ApplicationHelper::ToolbarBuilder ? controller : self
+    controller_model = ctrl.class.model
 
-    custom_button_model && provider_screen && show_action
+    display_model != controller_model && show_action
   end
 end
