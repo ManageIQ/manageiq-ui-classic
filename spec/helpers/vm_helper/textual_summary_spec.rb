@@ -11,6 +11,7 @@ describe VmHelper::TextualSummary do
   end
 
   include_examples "textual_group", "Properties", %i(
+    id
     name
     region
     server
