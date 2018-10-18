@@ -260,10 +260,20 @@ describe DialogLocalService do
     end
 
     context "when the object is a Template" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Template, :id => 123) }
+      context "when there is a cancel endpoint in the display options" do
+        let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Template, :id => 123) }
+        let(:display_options) { {:cancel_endpoint => "/vm_cloud/explorer"} }
 
-      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "miq_template", "templates", "/vm_or_template/explorer"
+        include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                         "miq_template", "templates", "/vm_cloud/explorer"
+      end
+
+      context "when there is not a cancel endpoint in the display options" do
+        let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Template, :id => 123) }
+
+        include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                         "miq_template", "templates", "/vm_or_template/explorer"
+      end
     end
 
     context "when the object is a Vm" do
