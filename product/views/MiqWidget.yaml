@@ -19,6 +19,7 @@ db: MiqWidget
 
 # Columns to fetch from the main table
 cols:
+- id
 - queued_at
 - last_run_on
 - title
@@ -32,6 +33,7 @@ include:
 
 # Order of columns (from all tables)
 col_order:
+- id
 - queued_at
 - last_run_on
 - title
@@ -41,6 +43,7 @@ col_order:
 
 # Column titles, in order
 headers:
+- ID
 - Queued At
 - Run At
 - Title

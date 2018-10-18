@@ -1331,11 +1331,16 @@ class ApplicationController < ActionController::Base
                "%#{stxt}%"
              end
 
+      id = @search_text if @search_text =~ /^\d+$/
       return (
-        if ::Settings.server.case_sensitive_name_search
-          ["#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt]
+        if id
+          ["#{view.db_class.table_name}.id = ?", id]
         else
-          ["lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase]
+          if ::Settings.server.case_sensitive_name_search
+            ["#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt]
+          else
+            ["lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase]
+          end
         end
       )
     end
