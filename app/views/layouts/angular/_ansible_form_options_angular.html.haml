@@ -194,21 +194,24 @@
     .form-group
       %label.col-md-3.control-label
         = _("Variables & Default Values")
-      .col-md-9
-        %input{:type         => "text",
+      .col-md-4
+        %input.form-control{:type         => "text",
                'ng-model'    => "#{ng_model}.#{prefix}_key",
                :name         => "#{prefix}_key",
                "placeholder" => _("Variable"),
                "checkchange" => ""}
         %span.help-block{"ng-show" => "(#{ng_model}.#{prefix}_key === '' && #{ng_model}.#{prefix}_value !== '')"}
           = _("Required")
-        %input{:type         => "text",
+
+      .col-md-4
+        %input.form-control{:type         => "text",
                'ng-model'    => "#{ng_model}.#{prefix}_value",
                :name         => "#{prefix}_value",
                "placeholder" => _("Default value"),
                "checkchange" => ""}
         %span.help-block{"ng-show" => "(#{ng_model}.#{prefix}_key !== '' && #{ng_model}.#{prefix}_value === '')"}
           = _("Required")
+      .col-md-1{:style     => "padding-left: 0"}
         %button{:class     => "btn btn-link",
                 :type      => "button",
                 "ng-click" => "vm.addKeyValue('#{prefix}')",
