@@ -275,6 +275,11 @@ class ApplicationHelper::ToolbarBuilder
     }
     button[:text] = button_name if input[:text_display]
     button[:onwhen] = '1+' if cb_enabled_for_nested
+    if record_id == 'LIST' ||
+       (@display.present? &&
+        custom_button_appliable_class?(@display.camelize.singularize))
+      button[:send_checked] = true
+    end
     button
   end
 
