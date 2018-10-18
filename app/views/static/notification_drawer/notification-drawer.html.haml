@@ -46,5 +46,17 @@
             %a.btn.btn-link.btn-block{'ng-click' => "actionButtonCallback(notificationGroup)"}
               {{actionButtonTitle}}
 
-          %div{'ng-if'      => "notificationFooterInclude",
-               'ng-include' => "notificationFooterInclude"}
+          %div
+            .drawer-pf-action.footer-actions
+              .footer-button-left
+                %a.btn.btn-link{"role" => "button",
+                                "ng-class" => "{'disabled': !notificationGroup.notifications || notificationGroup.notifications.length === 0}",
+                                "ng-click" => "customScope.markAllRead(notificationGroup)"}
+                  %span
+                    = _('Mark All Read')
+              .footer-button-right
+                %a.btn.btn-link{"role" => "button",
+                                "ng-class" => "{'disabled': !notificationGroup.notifications || notificationGroup.notifications.length === 0}",
+                                "ng-click" => "customScope.clearAllNotifications(notificationGroup)"}
+                  %span
+                    = _('Clear All')

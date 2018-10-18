@@ -14,7 +14,6 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window
       headingInclude: '@',
       subheadingInclude: '@',
       notificationBodyInclude: '@',
-      notificationFooterInclude: '@',
       customScope: '=?',
     },
     templateUrl: '/static/notification_drawer/notification-drawer.html',
