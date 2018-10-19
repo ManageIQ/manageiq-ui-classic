@@ -6,8 +6,8 @@ module EmsCommonHelper
       :model       => _(table_name.humanize),
       :models      => _(table_name.humanize.pluralize)
     }
-    add_flash(n_("%<action_name>s initiated for one %<model>s",
-                 "%<action_name>s initiated for %<count>d %<models>s", emss.length) % msg_params)
+    add_flash(n_("%{action_name} initiated for one %{model}",
+                 "%{action_name} initiated for %{count} %{models}", emss.length) % msg_params)
   end
 
   def add_success_audit(emss, task)
@@ -16,8 +16,8 @@ module EmsCommonHelper
       :model  => _(table_name.humanize),
       :models => _(table_name.humanize.pluralize),
     }
-    msg = n_("'%<task>s' successfully initiated for %<model>s",
-             "'%<task>s' successfully initiated for %<models>s", emss.length) % msg_params
+    msg = n_("'%{task}' successfully initiated for %{model}",
+             "'%{task}' successfully initiated for %{models}", emss.length) % msg_params
     audit = {
       :userid       => session[:userid],
       :event        => "#{table_name}_#{task}",
@@ -34,7 +34,7 @@ module EmsCommonHelper
         :model       => _(table_name.humanize),
         :action_name => action_name
       }
-      add_flash(_("No %<model>s were selected for %<action_name>s") % msg_params, :error)
+      add_flash(_("No %{model} were selected for %{action_name}") % msg_params, :error)
       return
     end
 
@@ -44,7 +44,7 @@ module EmsCommonHelper
   def find_single_ems_for_action
     ems = find_record_with_rbac(model, params[:id])
     if ems.nil?
-      add_flash(_("%<record>s no longer exists") % { :record => _(table_name.humanize) }, :error)
+      add_flash(_("%{record} no longer exists") % { :record => _(table_name.humanize) }, :error)
       return
     end
 
