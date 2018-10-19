@@ -1,7 +1,7 @@
 class EmsCloudController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
-  include EmsCommon        # common methods for EmsInfra/Cloud controllers
+  include EmsCommon # common methods for EmsInfra/Cloud controllers
   include Mixins::EmsCommonAngular
   include Mixins::GenericSessionMixin
   include Mixins::DashboardViewMixin
@@ -77,7 +77,7 @@ class EmsCloudController < ApplicationController
         render_sync_page(ems, selected_admin_role, selected_member_role, selected_password, selected_verify)
       else
         password_digest = nil
-        password_digest = BCrypt::Password.create(selected_password) unless selected_password.blank?
+        password_digest = BCrypt::Password.create(selected_password) if selected_password.present?
         ems.sync_users_queue(session[:userid], selected_admin_role, selected_member_role, password_digest)
 
         flash_to_session(_("Sync users queued."))
