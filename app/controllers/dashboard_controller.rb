@@ -16,7 +16,7 @@ class DashboardController < ApplicationController
   after_action :cleanup_action,    :except => %i(csp_report)
 
   def index
-    redirect_to :action => 'show'
+    redirect_to(:action => 'show')
   end
 
   def dialog_definition
@@ -442,7 +442,7 @@ class DashboardController < ApplicationController
   # Methods to handle login/authenticate/logout functions
   def login
     if ext_auth?(:saml_enabled) && ext_auth?(:local_login_disabled)
-      redirect_to saml_protected_page
+      redirect_to(saml_protected_page)
       return
     end
 
