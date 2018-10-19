@@ -24,8 +24,8 @@ class EmsClusterController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    params[:display] = @display if ["all_vms", "vms", "hosts", "resource_pools"].include?(@display)  # Were we displaying sub-items
+    @edit = session[:edit] # Restore @edit for adv search box
+    params[:display] = @display if %w(all_vms vms hosts resource_pools).include?(@display) # Were we displaying sub-items
 
     if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
                                      "miq_template_",
@@ -39,8 +39,8 @@ class EmsClusterController < ApplicationController
       refreshhosts if params[:pressed] == "host_refresh"
       tag(Host) if params[:pressed] == "host_tag"
       assign_policies(Host) if params[:pressed] == "host_protect"
-      comparemiq  if params[:pressed] == "host_compare"
-      edit_record  if params[:pressed] == "host_edit"
+      comparemiq if params[:pressed] == "host_compare"
+      edit_record if params[:pressed] == "host_edit"
       deletehosts if params[:pressed] == "host_delete"
 
       tag(ResourcePool) if params[:pressed] == "rp_tag"
@@ -55,7 +55,7 @@ class EmsClusterController < ApplicationController
                    "host_compare", "#{pfx}_compare", "#{pfx}_drift", "#{pfx}_tag", "#{pfx}_retire",
                    "#{pfx}_protect", "#{pfx}_ownership", "#{pfx}_right_size",
                    "#{pfx}_reconfigure", "rp_tag"].include?(params[:pressed]) &&
-                  @flash_array.nil?   # Some other screen is showing, so return
+                  @flash_array.nil? # Some other screen is showing, so return
 
         unless ["host_edit", "#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename'].include?(params[:pressed])
           @refresh_div = "main_div"
@@ -74,8 +74,8 @@ class EmsClusterController < ApplicationController
       custom_buttons if params[:pressed] == "custom_button"
     end
 
-    return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
-    return if ["ems_cluster_tag", "ems_cluster_compare", "common_drift", "ems_cluster_protect"].include?(params[:pressed]) && @flash_array.nil?   # Tag screen showing, so return
+    return if ["custom_button"].include?(params[:pressed]) # custom button screen, so return, let custom_buttons method handle everything
+    return if %w(ems_cluster_tag ems_cluster_compare common_drift ems_cluster_protect).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
 
     check_if_button_is_implemented
 
@@ -85,12 +85,10 @@ class EmsClusterController < ApplicationController
           ["#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
           params[:pressed] == 'vm_rename' && @flash_array.nil?
       render_or_redirect_partial(pfx)
+    elsif @refresh_div == "main_div" && @lastaction == "show_list"
+      replace_gtl_main_div
     else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      render_flash
     end
   end
 
