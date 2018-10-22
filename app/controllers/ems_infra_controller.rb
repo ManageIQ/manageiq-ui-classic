@@ -1,7 +1,7 @@
 class EmsInfraController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
-  include EmsCommon        # common methods for EmsInfra/Cloud controllers
+  include EmsCommon # common methods for EmsInfra/Cloud controllers
   include Mixins::EmsCommonAngular
   include Mixins::DashboardViewMixin
 
@@ -32,11 +32,11 @@ class EmsInfraController < ApplicationController
   end
 
   def index
-    redirect_to :action => 'show_list'
+    redirect_to(:action => 'show_list')
   end
 
   def new
-    @disabled_ems_infra_types = [['KubeVirt', 'kubevirt']]
+    @disabled_ems_infra_types = [%w(KubeVirt kubevirt)]
     super
   end
 
@@ -46,7 +46,7 @@ class EmsInfraController < ApplicationController
     # Hiding the toolbars
     @in_a_form = true
 
-    redirect_to ems_infra_path(params[:id]) if params[:cancel]
+    redirect_to(ems_infra_path(params[:id])) if params[:cancel]
 
     drop_breadcrumb(:name => _("Scale Infrastructure Provider"), :url => "/ems_infra/scaling")
     @infra = get_infra_provider(params[:id])
@@ -73,15 +73,14 @@ class EmsInfraController < ApplicationController
     else
       scale_parameters_formatted = {}
       return_message = _("Scaling")
+      if @count_parameters.any? { |p| scale_parameters[p.name].present? && scale_parameters[p.name].to_s < p.value.to_s }
+        add_flash(_("Scaling down is not supported. New value for %{name} %{new_value} is lower than current value %{current_value}.") % {:name => p.name, :new_value => scale_parameters[p.name], :current_value => p.value}, :error)
+        return
+      end
       @count_parameters.each do |p|
-        if !scale_parameters[p.name].nil? && scale_parameters[p.name] != p.value
-          if scale_parameters[p.name].to_s < p.value.to_s
-            add_flash(_("Scaling down is not supported. New value for %{name} %{new_value} is lower than current value %{current_value}.") % {:name => p.name, :new_value => scale_parameters[p.name], :current_value => p.value}, :error)
-            return
-          end
-          return_message += _(" %{name} from %{value} to %{parameters} ") % {:name => p.name, :value => p.value, :parameters => scale_parameters[p.name]}
-          scale_parameters_formatted[p.name] = scale_parameters[p.name]
-        end
+        next if scale_parameters[p.name].nil? || scale_parameters[p.name] == p.value
+        return_message += _(" %{name} from %{value} to %{parameters} ") % {:name => p.name, :value => p.value, :parameters => scale_parameters[p.name]}
+        scale_parameters_formatted[p.name] = scale_parameters[p.name]
       end
 
       update_stack_up(@stack, scale_parameters_formatted, params[:id], return_message)
@@ -90,7 +89,7 @@ class EmsInfraController < ApplicationController
 
   def scaledown
     assert_privileges("ems_infra_scale")
-    redirect_to ems_infra_path(params[:id]) if params[:cancel]
+    redirect_to(ems_infra_path(params[:id])) if params[:cancel]
 
     # Hiding the toolbars
     @in_a_form = true
@@ -131,7 +130,7 @@ class EmsInfraController < ApplicationController
 
   def register_nodes
     assert_privileges("host_register_nodes")
-    redirect_to ems_infra_path(params[:id], :display => "hosts") if params[:cancel]
+    redirect_to(ems_infra_path(params[:id], :display => "hosts")) if params[:cancel]
 
     # Hiding the toolbars
     @in_a_form = true
@@ -169,9 +168,9 @@ class EmsInfraController < ApplicationController
           return
         end
         if state == "SUCCESS"
-          redirect_to ems_infra_path(params[:id],
+          redirect_to(ems_infra_path(params[:id],
                                      :display   => "hosts",
-                                     :flash_msg => _("Nodes were added successfully. Refresh queued."))
+                                     :flash_msg => _("Nodes were added successfully. Refresh queued.")))
         else
           add_flash(_("Unable to add nodes: %{error}") % {:error => response}, :error)
         end
@@ -262,7 +261,7 @@ class EmsInfraController < ApplicationController
         error_return_message += _(" %{host_uid_ems} needs to be in maintenance mode before it can be removed ") %
                                 {:host_uid_ems => host.uid_ems}
       end
-      if host.number_of(:vms) > 0
+      if host.number_of(:vms).positive?
         has_invalid_nodes = true
         error_return_message += _(" %{host_uid_ems} needs to be evacuated before it can be removed ") %
                                 {:host_uid_ems => host.uid_ems}
