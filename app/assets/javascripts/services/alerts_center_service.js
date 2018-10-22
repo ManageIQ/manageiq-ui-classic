@@ -501,7 +501,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
       objectName: objectName,
       objectType: objectType,
       objectTypeImg: _this.icons[objectClassifiedType],
-      objectLink: '/ems_container/' + alertData.ems_id,
+      objectLink: '/restful_redirect/index?model=ExtManagementSystem&id=' + alertData.ems_id,
       sopLink: alertData.url,
       evaluated_on: convertApiTime(alertData.evaluated_on),
       severity: alertData.severity,
@@ -531,7 +531,6 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
     }
 
     updateAlertStatus(newAlert);
-
     return newAlert;
   }
 
