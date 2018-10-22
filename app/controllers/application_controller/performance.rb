@@ -34,11 +34,6 @@ module ApplicationController::Performance
                   "candu"  => @chart_data,
                   "parent" => @parent_chart_data
                 }.to_json + ';'
-              elsif @compare_vm_chart_data
-                'ManageIQ.charts.chartData = ' + {
-                  "candu"     => @chart_data,
-                  "comparevm" => @compare_vm_chart_data
-                }.to_json + ';'
               else
                 'ManageIQ.charts.chartData = ' + {
                   "candu" => @chart_data
@@ -330,7 +325,6 @@ module ApplicationController::Performance
   def timeline_current(chart_click_data, ts)
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-    @perf_record = VmOrTemplate.find(@perf_options[:compare_vm]) unless @perf_options[:compare_vm].nil?
     new_opts = tl_session_data(request.parameters["controller"]) || ApplicationController::Timelines::Options.new
     new_opts[:model] = @perf_record.class.base_class.to_s
     new_opts.date.typ = chart_click_data.type
@@ -429,11 +423,6 @@ module ApplicationController::Performance
                 'ManageIQ.charts.chartData = ' + {
                   "candu"  => @chart_data,
                   "parent" => @parent_chart_data
-                }.to_json + ';'
-              elsif @parent_chart_data
-                'ManageIQ.charts.chartData = ' + {
-                  "candu"      => @chart_data,
-                  "compare_vm" => @compare_vm_chart_data
                 }.to_json + ';'
               else
                 'ManageIQ.charts.chartData = ' + {

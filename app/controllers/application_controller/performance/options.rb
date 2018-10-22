@@ -25,7 +25,6 @@ module ApplicationController::Performance
     :top_ts,
     :top_ids,
     :vmtype,            # selected vmtype
-    :compare_vm,        # id of Vm to compare with
     :skip_days,         # which days to skip, based on time_profile_days
     :time_profile,
     :time_profile_days,
@@ -41,7 +40,6 @@ module ApplicationController::Performance
       self.daily_date  = params[:miq_date_1]        if params[:miq_date_1] && typ == 'Daily'
       self.index       = params[:chart_idx] == 'clear' ? nil : params[:chart_idx] if params[:chart_idx]
       self.parent      = params[:compare_to].presence if params.key?(:compare_to)
-      self.compare_vm  = params[:compare_vm].presence if params.key?(:compare_vm)
       self.vmtype      = params[:perf_vmtype] == '<All>' ? nil : params[:perf_vmtype] if params[:perf_vmtype]
       if params[:perf_cat]
         self.cat_model, self.cat = if params[:perf_cat] == '<None>'
