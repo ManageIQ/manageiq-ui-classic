@@ -136,7 +136,7 @@ module ApplicationController::ReportDownloads
 
   private
 
-  RENDER_TYPES = {'txt' => :txt, 'csv' => :csv, 'pdf' => :pdf}
+  RENDER_TYPES = {'txt' => :txt, 'csv' => :csv, 'pdf' => :pdf}.freeze
 
   def download_txt(view)
     disable_client_cache
