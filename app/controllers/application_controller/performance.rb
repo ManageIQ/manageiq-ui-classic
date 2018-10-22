@@ -34,11 +34,6 @@ module ApplicationController::Performance
                   "candu"  => @chart_data,
                   "parent" => @parent_chart_data
                 }.to_json + ';'
-              elsif @compare_vm_chart_data
-                'ManageIQ.charts.chartData = ' + {
-                  "candu"     => @chart_data,
-                  "comparevm" => @compare_vm_chart_data
-                }.to_json + ';'
               else
                 'ManageIQ.charts.chartData = ' + {
                   "candu" => @chart_data
@@ -429,11 +424,6 @@ module ApplicationController::Performance
                 'ManageIQ.charts.chartData = ' + {
                   "candu"  => @chart_data,
                   "parent" => @parent_chart_data
-                }.to_json + ';'
-              elsif @parent_chart_data
-                'ManageIQ.charts.chartData = ' + {
-                  "candu"      => @chart_data,
-                  "compare_vm" => @compare_vm_chart_data
                 }.to_json + ';'
               else
                 'ManageIQ.charts.chartData = ' + {
