@@ -325,7 +325,6 @@ module ApplicationController::Performance
   def timeline_current(chart_click_data, ts)
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-    @perf_record = VmOrTemplate.find(@perf_options[:compare_vm]) unless @perf_options[:compare_vm].nil?
     new_opts = tl_session_data(request.parameters["controller"]) || ApplicationController::Timelines::Options.new
     new_opts[:model] = @perf_record.class.base_class.to_s
     new_opts.date.typ = chart_click_data.type
