@@ -22,7 +22,7 @@ class GenericObjectController < ApplicationController
   end
 
   def display_methods(record)
-    record.property_associations.keys()
+    record.property_associations.keys
   end
 
   def display_nested_generic(display)
