@@ -14,8 +14,8 @@ module ApplicationController::Timelines
       @tl_options.policy.update_from_params(params)
     end
 
-    if (@tl_options.management_events? && !@tl_options.management.categories.blank?) ||
-       (@tl_options.policy_events? && !@tl_options.policy.categories.blank?)
+    if (@tl_options.management_events? && @tl_options.management.categories.present?) ||
+       (@tl_options.policy_events? && @tl_options.policy.categories.present?)
       tl_gen_timeline_data(refresh = "n")
       return unless @timeline
     end
@@ -149,29 +149,29 @@ module ApplicationController::Timelines
   end
 
   def tl_build_timeline(refresh = nil)
-    tl_build_init_options(refresh)                # Intialize options(refresh) if !@report
+    tl_build_init_options(refresh) # Intialize options(refresh) if !@report
     @ajax_action = "tl_chooser"
   end
 
   def tl_gen_timeline_data(refresh = nil)
     tl_build_timeline(refresh)
     tl_build_timeline_report_options
-    @timeline = true unless @report         # need to set this incase @report is not there, when switching between Management/Policy events
+    @timeline = true unless @report # need to set this incase @report is not there, when switching between Management/Policy events
     if @report
-      unless params[:task_id]                                     # First time thru, kick off the report generate task
+      unless params[:task_id] # First time thru, kick off the report generate task
         initiate_wait_for_task(:task_id => @report.async_generate_table(:userid => session[:userid]))
         return
       end
 
       @timeline = true
-      miq_task = MiqTask.find(params[:task_id])     # Not first time, read the task record
+      miq_task = MiqTask.find(params[:task_id]) # Not first time, read the task record
       @report = miq_task.task_results
 
       if !miq_task.results_ready?
         add_flash(_("Error building timeline %{error_message}") % {:error_message => miq_task.message}, :error)
       else
         @timeline = @timeline_filter = true
-        if @report.table.data.length == 0
+        if @report.table.data.length.zero?
           add_flash(_("No records found for this timeline"), :warning)
         else
           @report.extras[:browser_name] = browser_info(:name)
