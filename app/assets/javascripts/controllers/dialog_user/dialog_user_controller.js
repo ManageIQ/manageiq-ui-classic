@@ -79,8 +79,13 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
               return $http.post("open_url_after_dialog", {targetId: vm.targetId});
             })
             .then(function(response) {
-              window.open(response.data.open_url);
-              miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
+              if (response.data.open_url) {
+                window.open(response.data.open_url);
+                miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
+              } else {
+                miqService.miqFlash('error', __('Automate failed to obtain URL.'));
+                miqService.sparkleOff();
+              };
             })
             .catch(function() {
               return Promise.reject({data: {error: {message: '-'.concat(__('Automate failed to obtain URL.')) }}});
