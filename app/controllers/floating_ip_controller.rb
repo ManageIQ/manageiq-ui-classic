@@ -29,9 +29,9 @@ class FloatingIpController < ApplicationController
     when 'floating_ip_delete'
       delete_floating_ips
     when "floating_ip_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id(params)
+      javascript_redirect(:action => "edit", :id => checked_item_id(params))
     when "floating_ip_new"
-      javascript_redirect :action => "new"
+      javascript_redirect(:action => "new")
     else
       if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
         replace_gtl_main_div
@@ -45,8 +45,7 @@ class FloatingIpController < ApplicationController
     assert_privileges("floating_ip_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Floating IP was cancelled by the user")
+      javascript_redirect(:action => 'show_list', :flash_msg => _("Add of new Floating IP was cancelled by the user"))
     when "add"
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
@@ -80,15 +79,14 @@ class FloatingIpController < ApplicationController
     if MiqTask.status_ok?(task.status)
       add_flash(_("Floating IP \"%{address}\" created") % { :address => floating_ip_address })
     else
-      add_flash(
-        _("Unable to create Floating IP \"%{address}\": %{details}") % { :address => floating_ip_address,
-                                                                         :details => task.message }, :error)
+      add_flash(_("Unable to create Floating IP \"%{address}\": %{details}") % {:address => floating_ip_address,
+                                                                                :details => task.message}, :error)
     end
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show_list"
+    javascript_redirect(:action => "show_list")
   end
 
   def delete_floating_ips
@@ -115,9 +113,8 @@ class FloatingIpController < ApplicationController
     assert_privileges("floating_ip_edit")
     @floating_ip = find_record_with_rbac(FloatingIp, params[:id])
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Associate Floating IP \"%{address}\"") % { :address => @floating_ip.address },
-      :url  => "/floating_ip/edit/#{@floating_ip.id}")
+    drop_breadcrumb(:name => _("Associate Floating IP \"%{address}\"") % { :address => @floating_ip.address },
+                    :url  => "/floating_ip/edit/#{@floating_ip.id}")
   end
 
   def new
@@ -169,13 +166,14 @@ class FloatingIpController < ApplicationController
     else
       add_flash(_("Unable to update Floating IP \"%{address}\": %{details}") % {
         :address => floating_ip_address,
-        :details => task.message }, :error)
+        :details => task.message
+      }, :error)
     end
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => floating_ip_id
+    javascript_redirect(:action => "show", :id => floating_ip_id)
   end
 
   private
