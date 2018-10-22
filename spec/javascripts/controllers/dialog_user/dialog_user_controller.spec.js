@@ -220,7 +220,6 @@ describe('dialogUserController', function() {
 
       it('delegates to the dialogUserSubmitErrorHandlerService', function(done) {
         $controller.submitButtonClicked();
-
         setTimeout(function() {
           expect(dialogUserSubmitErrorHandlerService.handleError).toHaveBeenCalledWith(rejectionData);
           done();
