@@ -76,18 +76,27 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
         if (vm.openUrl === "true") {
           return API.wait_for_task(response.task_id)
             .then(function(response) {
-              return $http.post("open_url_after_dialog", {targetId: vm.targetId})
-                .then(function(response) {
-                  window.open(response.data.open_url);
-                  miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
-                });
+              return $http.post("open_url_after_dialog", {targetId: vm.targetId});
+            })
+            .then(function(response) {
+              if (response.data.open_url) {
+                window.open(response.data.open_url);
+                miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
+              } else {
+                miqService.miqFlash('error', __('Automate failed to obtain URL.'));
+                miqService.sparkleOff();
+              };
+            })
+            .catch(function() {
+              return Promise.reject({data: {error: {message: '-'.concat(__('Automate failed to obtain URL.')) }}});
             });
         } else {
           miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
         }
-    }).catch(function(err) {
-      return Promise.reject(dialogUserSubmitErrorHandlerService.handleError(err));
-    });
+      })
+      .catch(function(err) {
+        dialogUserSubmitErrorHandlerService.handleError(err);
+      });
   }
 
   function cancelClicked(_event) {
