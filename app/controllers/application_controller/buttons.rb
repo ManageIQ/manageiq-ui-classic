@@ -254,7 +254,8 @@ module ApplicationController::Buttons
   end
 
   def open_url_after_dialog
-    url = SystemConsole.find_by(:vm_id => params[:targetId]).url
+    system_console = SystemConsole.find_by(:vm_id => params[:targetId])
+    url = system_console.try(:url)
     render :json => {:open_url => url}
   end
 
