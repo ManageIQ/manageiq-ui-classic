@@ -16,7 +16,7 @@ class GenericObjectDefinitionController < ApplicationController
 
   def index
     self.x_node = 'root'
-    redirect_to :action => "show_list"
+    redirect_to(:action => "show_list")
   end
 
   def show_list
@@ -33,7 +33,7 @@ class GenericObjectDefinitionController < ApplicationController
       super
     else
       @breadcrumbs = []
-      redirect_to :action => "show_list"
+      redirect_to(:action => "show_list")
     end
   end
 
