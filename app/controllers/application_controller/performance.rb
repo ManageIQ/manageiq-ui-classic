@@ -86,11 +86,11 @@ module ApplicationController::Performance
       chart_click_data = parse_chart_click(params[:menu_choice])
       report = @sb[:chart_reports].kind_of?(Array) ? @sb[:chart_reports][chart_click_data.chart_index] : @sb[:chart_reports]
       data_row = report.table.data[chart_click_data.data_index]
-      if @perf_options[:cat]
-        top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data.legend_index]}"][chart_click_data.model.downcase.to_sym][:on]
-      else
-        top_ids = data_row["assoc_ids"][chart_click_data.model.downcase.to_sym][:on]
-      end
+      top_ids = if @perf_options[:cat]
+                  data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data.legend_index]}"][chart_click_data.model.downcase.to_sym][:on]
+                else
+                  data_row["assoc_ids"][chart_click_data.model.downcase.to_sym][:on]
+                end
       @perf_options[:top_model] = chart_click_data.model.singularize.capitalize
       @perf_options[:top_type] = chart_click_data.type # day or hour
       @perf_options[:top_ts] = data_row["timestamp"].utc
@@ -275,10 +275,10 @@ module ApplicationController::Performance
     # Record needs to exist and user must have rights to access it
     record = find_record_with_rbac(data_row["resource_type"].constantize, data_row["resource_id"])
 
-    javascript_redirect :controller => data_row["resource_type"].underscore,
+    javascript_redirect(:controller => data_row["resource_type"].underscore,
                         :action     => "show",
                         :id         => record.id,
-                        :escape     => false
+                        :escape     => false)
     [true, nil]
   end
 
@@ -287,8 +287,7 @@ module ApplicationController::Performance
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data.legend_index]}"][chart_click_data.model.downcase.to_sym][:on]
     bc_tag = breadcrumb_tag(report, chart_click_data.legend_index)
     if top_ids.blank?
-      message = _("No %{tag} %{model} were running %{time}") %
-        {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(chart_click_data.type, ts)}
+      message = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(chart_click_data.type, ts)}
       return [false, message]
     else
       bc = if request.parameters["controller"] == "storage"
@@ -298,12 +297,12 @@ module ApplicationController::Performance
              _("%{model} (%{tag} running %{time})") %
                {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(chart_click_data.type, ts)}
            end
-      javascript_redirect :controller    => chart_click_data.model.downcase.singularize,
+      javascript_redirect(:controller    => chart_click_data.model.downcase.singularize,
                           :action        => "show_list",
                           :menu_click    => params[:menu_click],
                           :sb_controller => request.parameters["controller"],
                           :bc            => bc,
-                          :escape        => false
+                          :escape        => false)
       return [true, nil]
     end
   end
@@ -317,12 +316,12 @@ module ApplicationController::Performance
       return [false, message]
     else
       bc = request.parameters["controller"] == "storage" ? "#{bc_model} #{dt}" : "#{bc_model} #{state} #{dt}"
-      javascript_redirect :controller    => chart_click_data.model.downcase.singularize,
+      javascript_redirect(:controller    => chart_click_data.model.downcase.singularize,
                           :action        => "show_list",
                           :menu_click    => params[:menu_click],
                           :sb_controller => request.parameters["controller"],
                           :bc            => bc,
-                          :escape        => false
+                          :escape        => false)
       return [true, nil]
     end
   end
@@ -356,12 +355,12 @@ module ApplicationController::Performance
         @_params[:refresh] = "n"
         show_timeline
       else
-        javascript_redirect :id         => @perf_record.id,
+        javascript_redirect(:id         => @perf_record.id,
                             :action     => "show",
                             :display    => "timeline",
                             :controller => model_to_controller(@perf_record),
                             :refresh    => "n",
-                            :escape     => false
+                            :escape     => false)
       end
       return [true, nil]
     end
@@ -426,21 +425,21 @@ module ApplicationController::Performance
 
     render :update do |page|
       page << javascript_prologue
-      if @parent_chart_data
-        page << 'ManageIQ.charts.chartData = ' + {
-          "candu"  => @chart_data,
-          "parent" => @parent_chart_data
-        }.to_json + ';'
-      elsif @parent_chart_data
-        page << 'ManageIQ.charts.chartData = ' + {
-          "candu"      => @chart_data,
-          "compare_vm" => @compare_vm_chart_data
-        }.to_json + ';'
-      else
-        page << 'ManageIQ.charts.chartData = ' + {
-          "candu" => @chart_data
-        }.to_json + ';'
-      end
+      page << if @parent_chart_data
+                'ManageIQ.charts.chartData = ' + {
+                  "candu"  => @chart_data,
+                  "parent" => @parent_chart_data
+                }.to_json + ';'
+              elsif @parent_chart_data
+                'ManageIQ.charts.chartData = ' + {
+                  "candu"      => @chart_data,
+                  "compare_vm" => @compare_vm_chart_data
+                }.to_json + ';'
+              else
+                'ManageIQ.charts.chartData = ' + {
+                  "candu" => @chart_data
+                }.to_json + ';'
+              end
       page.replace("perf_options_div", :partial => "layouts/perf_options")
       page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
       page << js_build_calendar(@perf_options.to_calendar)
@@ -461,16 +460,16 @@ module ApplicationController::Performance
 
     render :update do |page|
       page << javascript_prologue
-      if @parent_chart_data
-        page << 'ManageIQ.charts.chartData = ' + {
-          "candu"  => @chart_data,
-          "parent" => @parent_chart_data
-        }.to_json + ';'
-      else
-        page << 'ManageIQ.charts.chartData = ' + {
-          "candu" => @chart_data
-        }.to_json + ';'
-      end
+      page << if @parent_chart_data
+                'ManageIQ.charts.chartData = ' + {
+                  "candu"  => @chart_data,
+                  "parent" => @parent_chart_data
+                }.to_json + ';'
+              else
+                'ManageIQ.charts.chartData = ' + {
+                  "candu" => @chart_data
+                }.to_json + ';'
+              end
       page.replace("perf_options_div", :partial => "layouts/perf_options")
       page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
       page << js_build_calendar(@perf_options.to_calendar)
@@ -507,15 +506,15 @@ module ApplicationController::Performance
       prefix = TreeBuilder.get_prefix_for_model(@record.class.base_model)
       tree_node_id = "#{prefix}-#{@record.id}" # Build the tree node id
       session[:exp_parms] = {:display => "performance", :refresh => "n", :id => tree_node_id}
-      javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
-                          :action     => "explorer"
+      javascript_redirect(:controller => data_row["resource_type"].underscore.downcase.singularize,
+                          :action     => "explorer")
     else
-      javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+      javascript_redirect(:controller => data_row["resource_type"].underscore.downcase.singularize,
                           :action     => "show",
                           :id         => data_row["resource_id"],
                           :display    => "performance",
                           :refresh    => "n",
-                          :escape     => false
+                          :escape     => false)
     end
     [true, nil]
   end
@@ -527,15 +526,14 @@ module ApplicationController::Performance
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data.legend_index]}"][chart_click_data.model.downcase.to_sym][:on]
     bc_tag = breadcrumb_tag(report, chart_click_data.legend_index)
     if top_ids.blank?
-      message = _("No %{tag} %{model}  were running %{time}") %
-                          {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(chart_click_data.type, ts)}
+      message = _("No %{tag} %{model}  were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(chart_click_data.type, ts)}
       return [false, message]
     else
-      javascript_redirect :id          => @perf_record.id,
+      javascript_redirect(:id          => @perf_record.id,
                           :action      => "perf_top_chart",
                           :menu_choice => params[:menu_click],
                           :bc          => "#{@perf_record.name} top #{bc_model} (#{bc_tag} #{date_time_running_msg(chart_click_data.type, ts)})",
-                          :escape      => false
+                          :escape      => false)
       return [true, nil]
     end
   end
@@ -546,15 +544,14 @@ module ApplicationController::Performance
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     top_ids = data_row["assoc_ids"][chart_click_data.model.downcase.to_sym][:on]
     if top_ids.blank?
-      message = _("No %{model} were running %{time}") %
-        {:model => chart_click_data.model, :time => date_time_running_msg(chart_click_data.type, ts)}
+      message = _("No %{model} were running %{time}") % {:model => chart_click_data.model, :time => date_time_running_msg(chart_click_data.type, ts)}
       return [false, message]
     else
-      javascript_redirect :id          => @perf_record.id,
+      javascript_redirect(:id          => @perf_record.id,
                           :action      => "perf_top_chart",
                           :menu_choice => params[:menu_click],
                           :bc          => "#{@perf_record.name} top #{bc_model} (#{date_time_running_msg(chart_click_data.type, ts)})",
-                          :escape      => false
+                          :escape      => false)
       return [true, nil]
     end
   end
@@ -811,12 +808,10 @@ module ApplicationController::Performance
                           from_dt,
                           to_dt]
     end
-    initiate_wait_for_task(:task_id => rpt.async_generate_table(
-      :userid     => session[:userid],
-      :session_id => request.session_options[:id],
-      :cat_model  => @perf_options[:cat_model],
-      :mode       => "charts")
-                          )
+    initiate_wait_for_task(:task_id => rpt.async_generate_table(:userid     => session[:userid],
+                                                                :session_id => request.session_options[:id],
+                                                                :cat_model  => @perf_options[:cat_model],
+                                                                :mode       => "charts"))
   end
 
   def prepare_perf_tag_chart(chart, rpt, cat_desc)
@@ -960,10 +955,9 @@ module ApplicationController::Performance
       end
     end
     if rpts.length == 1
-      initiate_wait_for_task(:task_id => rpts.first.async_generate_table(
-        :userid     => session[:userid],
-        :session_id => request.session_options[:id],
-        :mode       => "charts"))
+      initiate_wait_for_task(:task_id => rpts.first.async_generate_table(:userid     => session[:userid],
+                                                                         :session_id => request.session_options[:id],
+                                                                         :mode       => "charts"))
     else
       initiate_wait_for_task(:task_id => MiqReport.async_generate_tables(:reports => rpts, :userid => session[:userid]))
     end
@@ -994,8 +988,7 @@ module ApplicationController::Performance
     chart_layouts = perf_get_chart_layout(layout_name, cont_plus_model)
 
     if @perf_options[:index]
-      chart_index = @perf_options[:index].to_i
-      chart = chart_layouts[chart_index]
+      chart = chart_layouts[@perf_options[:index].to_i]
       @chart_data.push(gen_perf_chart(chart, rpt, nil, 'perf_top_chart'))
       @chart_reports.push(rpt)
       @charts.push(chart)
@@ -1154,11 +1147,7 @@ module ApplicationController::Performance
 
       if @sb[:options][:vm_mode] == :manual # Set the manually entered values
         @sb[:options][:values].each do |k, v|
-          if k.to_sym == :storage
-            rpt.db_options[:options][:vm_options][k.to_sym][:value] = v * 1.gigabyte
-          else
-            rpt.db_options[:options][:vm_options][k.to_sym][:value] = v
-          end
+          rpt.db_options[:options][:vm_options][k.to_sym][:value] = k.to_sym == :storage ? v * 1.gigabyte : v
         end
       end
 
@@ -1209,17 +1198,15 @@ module ApplicationController::Performance
 
       # Remove columns not checked in options
       %i(cpu vcpus memory storage).each do |k|
-        if @sb[:vm_opts][k].nil? || !@sb[:options]["trend_#{k}".to_sym]
-          i = rpt.col_order.index("#{k}_vm_count")
-          rpt.col_order.delete_at(i)
-          rpt.headers.delete_at(i)
-        end
+        next if @sb[:vm_opts][k].present? && @sb[:options]["trend_#{k}".to_sym]
+        i = rpt.col_order.index("#{k}_vm_count")
+        rpt.col_order.delete_at(i)
+        rpt.headers.delete_at(i)
       end
 
-      initiate_wait_for_task(:task_id => rpt.async_generate_table(
-        :userid     => session[:userid],
-        :session_id => request.session_options[:id],
-        :mode       => "charts"))
+      initiate_wait_for_task(:task_id => rpt.async_generate_table(:userid     => session[:userid],
+                                                                  :session_id => request.session_options[:id],
+                                                                  :mode       => "charts"))
       return
     end
 
