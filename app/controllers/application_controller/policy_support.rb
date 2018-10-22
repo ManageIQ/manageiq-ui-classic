@@ -8,10 +8,10 @@ module ApplicationController::PolicySupport
     @edit      = session[:edit]
     profile_id = params[:id].to_i
 
-    if params[:check]                            # Item was checked/unchecked
+    if params[:check] # Item was checked/unchecked
       @in_a_form = true
       if params[:check] == "0"
-        @edit[:new].delete(profile_id)        # Unchecked, remove from new hash
+        @edit[:new].delete(profile_id) # Unchecked, remove from new hash
       else
         @edit[:new][profile_id] = session[:pol_items].length # Added, set to all checked
       end
@@ -24,7 +24,7 @@ module ApplicationController::PolicySupport
         end
       end
 
-    elsif params[:button]                           # Button was pressed
+    elsif params[:button] # Button was pressed
       session[:changed] = false
       if params[:button] == "cancel"
         add_flash(_("Edit policy assignments was cancelled by the user"))
@@ -44,15 +44,14 @@ module ApplicationController::PolicySupport
       elsif params[:button] == "save"
         ppids = @edit[:new].keys + @edit[:current].keys # Get union of policy profile ids
         ppids.uniq.each do |ppid|
-          unless @edit[:new][ppid] == @edit[:current][ppid] # Only process changes
-            pp = MiqPolicySet.find(ppid)                    # Get the pol prof record
-            if @edit[:new][ppid] == 0                   # Remove if new count is zero
-              pp.remove_from(session[:pol_items], session[:pol_db])
-              AuditEvent.success(protect_audit(pp, "remove_from", session[:pol_db], session[:pol_items]))
-            else                                        # else add
-              pp.add_to(session[:pol_items], session[:pol_db])
-              AuditEvent.success(protect_audit(pp, "add_to", session[:pol_db], session[:pol_items]))
-            end
+          next if @edit[:new][ppid] == @edit[:current][ppid] # Only process changes
+          pp = MiqPolicySet.find(ppid) # Get the pol prof record
+          if @edit[:new][ppid].zero? # Remove if new count is zero
+            pp.remove_from(session[:pol_items], session[:pol_db])
+            AuditEvent.success(protect_audit(pp, "remove_from", session[:pol_db], session[:pol_items]))
+          else # else add
+            pp.add_to(session[:pol_items], session[:pol_db])
+            AuditEvent.success(protect_audit(pp, "add_to", session[:pol_db], session[:pol_items]))
           end
         end
         add_flash(_("Policy assignments successfully changed"))
@@ -75,16 +74,16 @@ module ApplicationController::PolicySupport
 
   # Perform policy simulation for a set of objects
   def policy_sim(records = [])
-    if request.xml_http_request?  # Ajax request means in explorer
+    if request.xml_http_request? # Ajax request means in explorer
       @explorer = true
       @edit ||= {}
-      @edit[:explorer] = true       # since there is no @edit, create @edit and save explorer to use while building url for vms in policy sim grid
+      @edit[:explorer] = true # since there is no @edit, create @edit and save explorer to use while building url for vms in policy sim grid
       session[:edit] = @edit
     end
     @lastaction = "policy_sim"
     drop_breadcrumb(:name => _("Policy Simulation"),
                     :url  => "/#{request.parameters["controller"]}/policy_sim?continue=true")
-    session[:policies] = {} unless params[:continue]  # Clear current policies, unless continuing previous simulation
+    session[:policies] = {} unless params[:continue] # Clear current policies, unless continuing previous simulation
     records = session[:tag_items] if records.empty? && session[:tag_items].present?
     session[:tag_items] = records
     policy_sim_build_screen(records)
@@ -105,11 +104,11 @@ module ApplicationController::PolicySupport
     @explorer = @edit[:explorer]
     # Profile was selected
     if params[:profile_id] != "<select>"
-      prof = MiqPolicySet.find(params[:profile_id])               # Go thru all the profiles
-      session[:policies][prof.id] = prof.description            # Add it to the list
+      prof = MiqPolicySet.find(params[:profile_id]) # Go thru all the profiles
+      session[:policies][prof.id] = prof.description # Add it to the list
     end
     policy_sim_build_screen
-    replace_main_div :partial => "layouts/policy_sim"
+    replace_main_div(:partial => "layouts/policy_sim")
   end
 
   # Remove selected policy from the simulation
@@ -117,7 +116,7 @@ module ApplicationController::PolicySupport
     @edit = session[:edit]
     session[:policies].delete(params[:del_pol].to_i)
     policy_sim_build_screen
-    replace_main_div :partial => "layouts/policy_sim"
+    replace_main_div(:partial => "layouts/policy_sim")
   end
 
   def profile_build
@@ -141,7 +140,7 @@ module ApplicationController::PolicySupport
       protect
       @refresh_partial = "layouts/protect"
     else
-      javascript_redirect :action => 'protect', :db => db # redirect to build policy screen
+      javascript_redirect(:action => 'protect', :db => db) # redirect to build policy screen
     end
   end
   %w(image instance vm miq_template container container_replicator container_group
@@ -158,7 +157,7 @@ module ApplicationController::PolicySupport
       :url  => "/#{request.parameters["controller"]}/protecting"
     )
     # session[:pol_db] = session[:pol_db] == Vm ? VmOrTemplate : session[:pol_db]
-    @politems = session[:pol_db].find(session[:pol_items]).sort_by(&:name)  # Get the db records
+    @politems = session[:pol_db].find(session[:pol_items]).sort_by(&:name) # Get the db records
     @view = get_db_view(session[:pol_db], :clickable => false) # Instantiate the MIQ Report view object
     @view.table = ReportFormatter::Converter.records2table(@politems, @view.cols + ['id'])
 
@@ -188,7 +187,7 @@ module ApplicationController::PolicySupport
     msg = "[#{pp.name}] Policy Profile #{mode} (db:[#{db}]"
     msg += ", ids:[#{recs.sort_by(&:to_i).join(',')}])"
     event = "policyset_" + mode
-    audit = {:event => event, :target_id => pp.id, :target_class => pp.class.base_class.name, :userid => session[:userid], :message => msg}
+    {:event => event, :target_id => pp.id, :target_class => pp.class.base_class.name, :userid => session[:userid], :message => msg}
   end
 
   def assigned_filters
@@ -197,18 +196,17 @@ module ApplicationController::PolicySupport
     @get_filters = [current_user.get_managed_filters].flatten
     h = Hash[*@get_filters.collect { |v| [@get_filters.index(v), v] }.flatten]
     @get_filters = h.invert
-    h.invert.each do |val, _key|
+    h.each_value do |val|
       categories = Classification.categories.collect { |c| c if c.show }.compact
       categories.each do |category|
         entries = {}
         category.entries.each do |entry|
           entries[entry.description] = entry.tag.name # Get the fully qual tag name
-          if val == entry.tag.name
-            @get_filters[entry.tag.name] = "cats_#{category.description}:#{entry.description}"
-            assigned_filters.push(category.description.downcase)
-            session[category.description.downcase] = [] if session[category.description.downcase].nil?
-            session[category.description.downcase].push(entry.description) unless session[category.description.downcase].include?(entry.description)
-          end
+          next unless val == entry.tag.name
+          @get_filters[entry.tag.name] = "cats_#{category.description}:#{entry.description}"
+          assigned_filters.push(category.description.downcase)
+          session[category.description.downcase] = [] if session[category.description.downcase].nil?
+          session[category.description.downcase].push(entry.description) unless session[category.description.downcase].include?(entry.description)
         end
       end
     end
@@ -233,11 +231,11 @@ module ApplicationController::PolicySupport
         @all_profs[ps.id] = ps.description
       end
     end
-    if @all_profs.length > 0
-      @all_profs["<select>"] = ""
-    else
-      @all_profs["<select>"] = _("No Policy Profiles are available")
-    end
+    @all_profs["<select>"] = if @all_profs.length.positive?
+                               ""
+                             else
+                               _('No Policy Profiles are available')
+                             end
     @gtl_type = "grid"
     build_targets_hash(@tagitems)
   end
