@@ -15,9 +15,11 @@ const showModal = () => (dispatch, getState) => {
   }
 
   // Request the modal data from the API
-  return API.get('/api')
-    .then(data => dispatch({ type: LOAD_ABOUT_MODAL, data }))
-    .then(() => dispatch({ type: SHOW_ABOUT_MODAL }));
+  return API.get('/api').then(root =>
+    API.get(root.server_info.region_href).then(region =>
+      API.get(root.server_info.zone_href).then(zone => ({ ...root, region, zone })).then(data =>
+        dispatch({ type: LOAD_ABOUT_MODAL, data })).then(() =>
+        dispatch({ type: SHOW_ABOUT_MODAL }))));
 };
 
 const hideModal = () => ({ type: HIDE_ABOUT_MODAL });
@@ -83,6 +85,8 @@ class MiqAboutModal extends React.Component {
         <AboutModal.Versions>
           <AboutModal.VersionItem label={__('Version')} versionText={`${data.server_info.version}.${data.server_info.build}`} />
           <AboutModal.VersionItem label={__('Server Name')} versionText={data.server_info.appliance || ''} />
+          <AboutModal.VersionItem label={__('Region')} versionText={data.region.region.toString()} />
+          <AboutModal.VersionItem label={__('Zone')} versionText={data.zone.name || ''} />
           <AboutModal.VersionItem label={__('User Name')} versionText={data.identity.name} />
           <AboutModal.VersionItem label={__('User Role')} versionText={data.identity.role} />
           <AboutModal.VersionItem label={__('Browser')} versionText={browser.browser} />
