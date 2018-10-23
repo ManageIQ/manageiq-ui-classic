@@ -25,8 +25,8 @@
                                  'ng-if'    => "notificationGroup.open"}
           .panel-body
             .drawer-pf-notification{'ng-class'   => "{unread: notification.unread, 'expanded-notification': drawerExpanded}",
-                                    'ng-repeat'  => "notification in notificationGroup.notifications | limitTo:limit.notifications:(notificationGroup.notifications.length - limit.notifications)",
-                                    'ng-include' => "notificationBodyInclude"}
+                                    'ng-repeat'  => "notification in notificationGroup.notifications | limitTo:limit.notifications:(notificationGroup.notifications.length - limit.notifications)"}
+              = render :partial => 'static/notification_drawer/notification-body'
             .drawer-pf-notification.text-center{'ng-if' => 'notificationGroup.notifications.length > 100'}
               %div{'ng-if' => '!limit.notifications'}
                 %div

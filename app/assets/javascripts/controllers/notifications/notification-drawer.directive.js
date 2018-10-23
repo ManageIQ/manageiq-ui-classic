@@ -10,7 +10,6 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window
       notificationGroups: '=',
       actionButtonTitle: '@',
       actionButtonCallback: '=?',
-      notificationBodyInclude: '@',
       customScope: '=?',
     },
     templateUrl: '/static/notification_drawer/notification-drawer.html',
