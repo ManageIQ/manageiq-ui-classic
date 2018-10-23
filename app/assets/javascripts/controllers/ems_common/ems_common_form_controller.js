@@ -357,7 +357,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
        ($scope.currentTab === "alerts" &&
         $scope.emsCommonModel.prometheus_alerts_hostname !== '' &&
         $scope.emsCommonModel.prometheus_alerts_api_port !== '') ||
-       ($scope.currentTab === "virtualization" &&
+       ($scope.currentTab === "kubevirt" &&
         $scope.emsCommonModel.kubevirt_hostname !== '' &&
         $scope.emsCommonModel.kubevirt_password !== '' &&
         $scope.emsCommonModel.kubevirt_api_port !== '') ||
