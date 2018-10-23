@@ -279,7 +279,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     }
 
     if ($scope.emsCommonModel.metrics_selection === 'disabled') {
-      angular.element("#container_metrics_tab").hide();
+      angular.element("#metrics_tab").hide();
     }
 
     if ($scope.emsCommonModel.virtualization_selection === 'disabled') {
@@ -351,7 +351,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     } else if (($scope.emsCommonModel.ems_controller === "ems_container") &&
       ($scope.emsCommonModel.emstype) &&
       ($scope.emsCommonModel.default_password !== '' && $scope.angularForm.default_password.$valid) &&
-      (($scope.currentTab === "container_metrics" &&
+      (($scope.currentTab === "metrics" &&
         $scope.emsCommonModel.metrics_hostname !== '' &&
         $scope.emsCommonModel.metrics_api_port) ||
        ($scope.currentTab === "alerts" &&
@@ -458,7 +458,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.metricSelectionChanged = function() {
-    $scope.tabSelectionChanged("#container_metrics_tab", $scope.emsCommonModel.metrics_selection);
+    $scope.tabSelectionChanged("#metrics_tab", $scope.emsCommonModel.metrics_selection);
   };
 
   $scope.alertsSelectionChanged = function() {
