@@ -14,8 +14,9 @@
         .panel-heading
           %h4.panel-title
             %a{'ng-click'   => "toggleCollapse(notificationGroup)",
-               'ng-class'   => "{collapsed: !notificationGroup.open}",
-               'ng-include' => "headingInclude"}
+               'ng-class'   => "{collapsed: !notificationGroup.open}"}
+              %span.heading-class
+                {{notificationGroup.heading}}
           %span.panel-counter{'ng-include' => "subheadingInclude"}
 
         .panel-collapse.collapse{'ng-class' => "{in: notificationGroup.open}",
