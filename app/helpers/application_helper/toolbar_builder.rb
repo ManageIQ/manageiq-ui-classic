@@ -289,7 +289,7 @@ class ApplicationHelper::ToolbarBuilder
       model = GenericObjectDefinition
       record = GenericObject.find_by(:id => @sb[:rec_id])
     elsif relationship_table_screen?
-      model = @display.camelize.singularize.constantize
+      model = custom_button_class_model(@display.camelize.singularize)
     else
       model = @record ? @record.class : model_for_custom_toolbar
     end
