@@ -17,7 +17,9 @@
                'ng-class'   => "{collapsed: !notificationGroup.open}"}
               %span.heading-class
                 {{notificationGroup.heading}}
-          %span.panel-counter{'ng-include' => "subheadingInclude"}
+          %span.panel-counter
+            %span.subheading-class
+              {{customScope.unreadCountText(notificationGroup.unreadCount)}}
 
         .panel-collapse.collapse{'ng-class' => "{in: notificationGroup.open}",
                                  'ng-if'    => "notificationGroup.open"}
