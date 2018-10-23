@@ -17,10 +17,8 @@ class HostAggregateController < ApplicationController
   def host_aggregate_form_fields
     assert_privileges("host_aggregate_edit")
     host_aggregate = find_record_with_rbac(HostAggregate, params[:id])
-    render :json => {
-      :name    => host_aggregate.name,
-      :ems_id  => host_aggregate.ems_id
-    }
+    render :json => {:name   => host_aggregate.name,
+                     :ems_id => host_aggregate.ems_id}
   end
 
   def new
@@ -42,14 +40,13 @@ class HostAggregateController < ApplicationController
     assert_privileges("host_aggregate_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Creation of new Host Aggregate was cancelled by the user")
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _("Creation of new Host Aggregate was cancelled by the user"))
 
     when "add"
       @host_aggregate = HostAggregate.new
       options = form_params(params)
-      ext_management_system = find_record_with_rbac(ManageIQ::Providers::CloudManager,
-                                                  options[:ems_id])
+      ext_management_system = find_record_with_rbac(ManageIQ::Providers::CloudManager, options[:ems_id])
       if ext_management_system.supports?(:create_host_aggregate)
         task_id = ext_management_system.create_host_aggregate_queue(session[:userid], options)
 
@@ -85,7 +82,7 @@ class HostAggregateController < ApplicationController
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show_list"
+    javascript_redirect(:action => "show_list")
   end
 
   def edit
@@ -154,7 +151,7 @@ class HostAggregateController < ApplicationController
     session[:edit] = nil
     session[:flash_msgs] = @flash_array.dup if @flash_array
 
-    javascript_redirect :action => "show", :id => host_aggregate_id
+    javascript_redirect(:action => "show", :id => host_aggregate_id)
   end
 
   def delete_host_aggregates
@@ -176,9 +173,7 @@ class HostAggregateController < ApplicationController
       if host_aggregate.nil?
         add_flash(_("Host Aggregate no longer exists."), :error)
       elsif !host_aggregate.supports?(:delete_aggregate)
-        add_flash(_("Delete aggregate not supported by Host Aggregate \"%{name}\"") % {
-          :name  => host_aggregate.name
-        }, :error)
+        add_flash(_("Delete aggregate not supported by Host Aggregate \"%{name}\"") % {:name => host_aggregate.name}, :error)
       else
         host_aggregates_to_delete.push(host_aggregate)
       end
@@ -204,7 +199,7 @@ class HostAggregateController < ApplicationController
     @host_choices = {}
     ems_clusters = @host_aggregate.ext_management_system.provider.try(:infra_ems).try(:ems_clusters)
 
-    unless ems_clusters.blank?
+    if ems_clusters.present?
       ems_clusters.select(&:compute?).each do |ems_cluster|
         (ems_cluster.hosts - @host_aggregate.hosts).each do |host|
           @host_choices["#{host.name}: #{host.hostname}"] = host.id
@@ -292,7 +287,7 @@ class HostAggregateController < ApplicationController
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => host_aggregate_id
+    javascript_redirect(:action => "show", :id => host_aggregate_id)
   end
 
   def remove_host_select
@@ -385,16 +380,16 @@ class HostAggregateController < ApplicationController
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => host_aggregate_id
+    javascript_redirect(:action => "show", :id => host_aggregate_id)
   end
 
   def cancel_action(message)
     session[:edit] = nil
     @breadcrumbs.pop if @breadcrumbs
-    javascript_redirect :action    => @lastaction,
+    javascript_redirect(:action    => @lastaction,
                         :id        => @host_aggregate.id,
                         :display   => session[:host_aggregate_display],
-                        :flash_msg => message
+                        :flash_msg => message)
   end
 
   private
@@ -406,7 +401,7 @@ class HostAggregateController < ApplicationController
 
   def form_params(in_params)
     options = {}
-    [:name, :availability_zone, :ems_id, :host_id, :metadata].each do |param|
+    %i(name availability_zone ems_id host_id metadata).each do |param|
       options[param] = in_params[param] if in_params[param]
     end
     options
