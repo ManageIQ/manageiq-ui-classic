@@ -3,10 +3,14 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
                                     GenericObject GenericObjectDefinition Host LoadBalancer
-                                    MiqGroup MiqTemplate NetworkRouter OrchestrationStack SecurityGroup Service
+                                    MiqGroup MiqTemplate NetworkRouter OrchestrationStack
+                                    PersistentVolume SecurityGroup Service
                                     ServiceTemplate Storage Switch Tenant User Vm VmOrTemplate).freeze
 
   def custom_button_appliable_class?(model)
+    model = "MiqTemplate" if model == "Image"
+    model = "Vm" if model == "Instance"
+    model = "ExtManagementSystem" if model == "StorageManager"
     APPLIES_TO_CLASS_BASE_MODELS.include?(model)
   end
 
@@ -22,6 +26,12 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
       Service
     when "GenericObjectDefinition"
       GenericObject
+    when "Instance"
+      Vm
+    when "Image"
+      MiqTemplate
+    when "StorageManager"
+      ExtManagementSystem
     else
       applies_to_class.constantize
     end
@@ -39,7 +49,7 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
     return false unless custom_button_appliable_class?(display_class)
 
     show_action = @lastaction == "show"
-    display_model = display_class.constantize
+    display_model = custom_button_class_model(display_class)
     # method is accessed twice from a different location - from toolbar builder
     # and custom button mixin - and so controller class changes
     ctrl = self.class == ApplicationHelper::ToolbarBuilder ? controller : self
