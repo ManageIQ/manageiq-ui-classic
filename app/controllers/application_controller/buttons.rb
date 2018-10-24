@@ -1,6 +1,5 @@
 module ApplicationController::Buttons
   extend ActiveSupport::Concern
-  include ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
 
   included do
     include Mixins::PlaybookOptions

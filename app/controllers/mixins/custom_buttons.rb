@@ -1,6 +1,5 @@
 module Mixins::CustomButtons
   extend ActiveSupport::Concern
-  include ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
 
   def custom_toolbar
     return nil unless self.class.instance_eval { @custom_buttons }
