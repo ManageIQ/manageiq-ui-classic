@@ -34,16 +34,16 @@ module MiqAeCustomizationController::Dialogs
   def dialog_new_editor
     assert_privileges("dialog_new")
     @record = Dialog.new
-    javascript_redirect :controller => 'miq_ae_customization', :action => 'editor', :id => @record.id
+    javascript_redirect(:controller => 'miq_ae_customization', :action => 'editor', :id => @record.id)
   end
 
   # Edit dialog using the Dialog Editor
   def dialog_edit_editor
     assert_privileges("dialog_edit")
     @record = find_records_with_rbac(Dialog, checked_or_params)
-    javascript_redirect :controller => 'miq_ae_customization',
+    javascript_redirect(:controller => 'miq_ae_customization',
                         :action     => 'editor',
-                        :id         => Array.wrap(@record).first.id
+                        :id         => Array.wrap(@record).first.id)
   end
 
   # Copy dialog using the Dialog Editor
@@ -51,10 +51,10 @@ module MiqAeCustomizationController::Dialogs
     assert_privileges("dialog_copy_editor")
     record_to_copy = find_record_with_rbac(Dialog, checked_or_params)
     @record = Dialog.new
-    javascript_redirect :controller => 'miq_ae_customization',
+    javascript_redirect(:controller => 'miq_ae_customization',
                         :action     => 'editor',
                         :copy       => record_to_copy.id,
-                        :id         => @record.id
+                        :id         => @record.id)
   end
 
   def change_tab
