@@ -13,22 +13,22 @@ class MiqAeCustomizationController < ApplicationController
   after_action :set_session_data
 
   AE_CUSTOM_X_BUTTON_ALLOWED_ACTIONS = {
-    'dialog_edit_editor'     => :dialog_edit_editor,
-    'dialog_copy_editor'     => :dialog_copy_editor,
-    'dialog_delete'          => :dialog_delete,
-    'dialog_new_editor'      => :dialog_new_editor,
-    'old_dialogs_new'        => :old_dialogs_new,
-    'old_dialogs_edit'       => :old_dialogs_edit,
-    'old_dialogs_copy'       => :old_dialogs_copy,
-    'old_dialogs_delete'     => :old_dialogs_delete,
-    'ab_button_new'          => :ab_button_new,
-    'ab_button_edit'         => :ab_button_edit,
-    'ab_button_delete'       => :ab_button_delete,
-    'ab_button_simulate'     => :ab_button_simulate,
-    'ab_group_reorder'       => :ab_group_reorder,
-    'ab_group_edit'          => :ab_group_edit,
-    'ab_group_delete'        => :ab_group_delete,
-    'ab_group_new'           => :ab_group_new,
+    'dialog_edit_editor' => :dialog_edit_editor,
+    'dialog_copy_editor' => :dialog_copy_editor,
+    'dialog_delete'      => :dialog_delete,
+    'dialog_new_editor'  => :dialog_new_editor,
+    'old_dialogs_new'    => :old_dialogs_new,
+    'old_dialogs_edit'   => :old_dialogs_edit,
+    'old_dialogs_copy'   => :old_dialogs_copy,
+    'old_dialogs_delete' => :old_dialogs_delete,
+    'ab_button_new'      => :ab_button_new,
+    'ab_button_edit'     => :ab_button_edit,
+    'ab_button_delete'   => :ab_button_delete,
+    'ab_button_simulate' => :ab_button_simulate,
+    'ab_group_reorder'   => :ab_group_reorder,
+    'ab_group_edit'      => :ab_group_edit,
+    'ab_group_delete'    => :ab_group_delete,
+    'ab_group_new'       => :ab_group_new,
   }.freeze
 
   def x_button
@@ -62,8 +62,8 @@ class MiqAeCustomizationController < ApplicationController
     if params[:commit] == _('Commit')
       if params[:dialogs_to_import].blank?
         javascript_flash(:spinner_off => true,
-                         :text => _("At least one Service Dialog must be selected."),
-                         :severity => :error)
+                         :text        => _("At least one Service Dialog must be selected."),
+                         :severity    => :error)
         return
       end
 
@@ -92,7 +92,7 @@ class MiqAeCustomizationController < ApplicationController
     else
       add_flash(_("At least 1 item must be selected for export"), :error)
       @sb[:flash_msg] = @flash_array
-      redirect_to :action => :explorer
+      redirect_to(:action => :explorer)
     end
   end
 
@@ -113,7 +113,7 @@ class MiqAeCustomizationController < ApplicationController
 
   def explorer
     @trees = []
-    @flash_array = @sb[:flash_msg] unless @sb[:flash_msg].blank?
+    @flash_array = @sb[:flash_msg] if @sb[:flash_msg].present?
     @explorer = true
 
     build_resolve_screen
@@ -126,21 +126,19 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def editor
-    if params[:id].present?
-      @record = Dialog.find(params[:id])
-    elsif params[:copy].present?
-      @record = Dialog.find(params[:copy])
-    else
-      @record = Dialog.new
-    end
+    @record = if params[:id].present?
+                Dialog.find(params[:id])
+              elsif params[:copy].present?
+                Dialog.find(params[:copy])
+              else
+                Dialog.new
+              end
   end
 
   def tree_select
-    valid = true
     self.x_node = params[:id]
     get_node_info
     if @replace_tree
-
       # record being viewed and saved in @sb[:active_node] has been deleted outside UI from VMDB, need to refresh tree
       replace_right_cell(:nodetype => x_node, :replace_trees => [:dialogs])
     else
@@ -153,7 +151,7 @@ class MiqAeCustomizationController < ApplicationController
     @explorer = true
     klass = x_active_tree == :old_dialogs_tree ? MiqDialog : Dialog
     @record = identify_record(params[:id], klass)
-    params[:id] = x_build_node_id(@record)  # Get the tree node id
+    params[:id] = x_build_node_id(@record) # Get the tree node id
     tree_select
   end
 
@@ -165,9 +163,9 @@ class MiqAeCustomizationController < ApplicationController
     self.x_active_tree   = "#{x_active_accord}_tree"
     self.x_node = TreeBuilder.build_node_cid(record)
     get_node_info
-    redirect_to :controller => "miq_ae_customization",
+    redirect_to(:controller => "miq_ae_customization",
                 :action     => "explorer",
-                :id         => x_node
+                :id         => x_node)
   end
 
   private
@@ -188,10 +186,9 @@ class MiqAeCustomizationController < ApplicationController
       :name     => :ab,
       :title    => _("Buttons")},
 
-     {:role     => "miq_ae_class_import_export",
-      :name     => :dialog_import_export,
-      :title    => _("Import/Export")},
-    ].map do |hsh|
+     {:role  => "miq_ae_class_import_export",
+      :name  => :dialog_import_export,
+      :title => _("Import/Export")}].map do |hsh|
       ApplicationController::Feature.new_with_hash(hsh)
     end
   end
@@ -236,8 +233,8 @@ class MiqAeCustomizationController < ApplicationController
     sub_node == "xx" || !(sub_node == "" && node.split('_').length <= 2)
   end
 
-  def get_node_info(node = {}, show_list = true)
-    @show_list = show_list
+  def get_node_info
+    @show_list = true
     node = x_node
     node = valid_active_node(x_node) unless first_sub_node_is_a_folder?(node)
 
@@ -293,11 +290,11 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def no_items_selected?(field_name)
-    !params[field_name] || params[field_name].length == 0 || params[field_name][0] == ""
+    !params[field_name] || params[field_name].length.zero? || params[field_name][0] == ""
   end
 
   def rebuild_toolbars(presenter)
-    if !@in_a_form
+    unless @in_a_form
       c_tb = build_toolbar(center_toolbar_filename) if center_toolbar_filename
       h_tb = build_toolbar("x_history_tb") if x_active_tree != :dialogs_tree
     end
@@ -350,7 +347,7 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def right_cell_text_for_node(record, model_name)
-    if record && record.id
+    if record.try(:id)
       _("Editing %{model} \"%{name}\"") % {:name  => record.kind_of?(CustomButtonSet) ? record.name.split("|").first : record.name,
                                            :model => ui_lookup(:model => model_name)}
     else
@@ -375,7 +372,6 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def setup_presenter_for_dialogs_tree(nodetype, presenter)
-    nodes = nodetype.split("_")
     if nodetype == "root"
       presenter.update(:main_div, render_proc[:partial => "layouts/x_gtl"])
     else
@@ -396,15 +392,13 @@ class MiqAeCustomizationController < ApplicationController
       presenter.update(:main_div, render_proc[:partial => partial])
     else
       presenter.update(:main_div, render_proc[:partial => 'old_dialogs_details'])
-      if @dialog.id.blank? && !@dialog.dialog_type
-        @right_cell_text = _("Adding a new Dialog")
-      else
-        @right_cell_text = if @edit && params[:typ] == "copy"
-                             _("Copying Dialog \"%{name}\"") % {:name => @dialog.description}
-                           else
-                             _("Editing Dialog \"%{name}\"") % {:name => @dialog.description}
-                           end
-      end
+      @right_cell_text = if @dialog.id.blank? && !@dialog.dialog_type
+                           _("Adding a new Dialog")
+                         elsif @edit && params[:typ] == "copy"
+                           _("Copying Dialog \"%{name}\"") % {:name => @dialog.description}
+                         else
+                           _("Editing Dialog \"%{name}\"") % {:name => @dialog.description}
+                         end
 
       presenter.reset_one_trans
       presenter.one_trans_ie if %w(save reset).include?(params[:button]) && is_browser_ie?
