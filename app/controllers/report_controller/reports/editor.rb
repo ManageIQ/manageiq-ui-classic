@@ -95,7 +95,7 @@ module ReportController::Reports::Editor
       end
       if @rpt.save
         # update report name in menu if name is edited
-        menu_repname_update(@edit[:current][:name], @edit[:new][:name]) if @edit[:current][:name] != @edit[:new][:name]
+        menu_repname_update(@edit[:current][:name], @edit[:new][:name]) if @edit[:rpt_id] && @edit[:current][:name] != @edit[:new][:name]
         AuditEvent.success(build_saved_audit(@rpt, @edit))
         @edit[:rpt_id] ?
           add_flash(_("Report \"%{name}\" was saved") % {:name => @rpt.name}) :
