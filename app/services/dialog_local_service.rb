@@ -109,7 +109,7 @@ class DialogLocalService
     # ^ is necessary otherwise we match on ContainerTemplates
     when /^Template/
       api_collection_name = "templates"
-      cancel_endpoint = "/vm_or_template/explorer"
+      cancel_endpoint = display_options[:cancel_endpoint] || "/vm_or_template/explorer"
 
     # ^ is necessary otherwise we match CloudTenant
     when /^Tenant/
