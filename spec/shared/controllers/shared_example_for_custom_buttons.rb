@@ -88,3 +88,14 @@ shared_examples 'explorer controller with custom buttons' do
     expect(controller.custom_toolbar).to be_a_kind_of Mixins::CustomButtons::Result
   end
 end
+
+shared_examples 'relationship table screen with custom buttons' do |display|
+  context "displayed entity is #{display}" do
+    it "has custom toolbar when navigating through relationship table" do
+      controller.instance_variable_set(:@display, display)
+      controller.instance_variable_set(:@lastaction, 'show')
+      controller.instance_variable_set(:@record, true) # @record is the provider
+      expect(controller.custom_toolbar).to be_a_kind_of Mixins::CustomButtons::Result
+    end
+  end
+end

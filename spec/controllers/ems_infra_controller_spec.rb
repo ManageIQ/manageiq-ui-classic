@@ -281,6 +281,38 @@ describe EmsInfraController do
 
     subject { get :show, :params => {:id => @ems.id}.merge(url_params) }
 
+    context "display=hosts" do
+      it 'renders custom buttons for hosts accessed from relationship screen' do
+        custom_button = FactoryGirl.create(
+          :custom_button, :name => "My Button", :applies_to_class => "Host",
+          :visibility => {:roles => ["_ALL_"]},
+          :options => {:display => true, :open_url => false, :display_for => "both"}
+        )
+        custom_button_set = FactoryGirl.create(
+          :custom_button_set, :set_data => {
+            :applies_to_class => "Host", :button_order => [custom_button.id]
+          }
+        )
+        custom_button_set.add_member(custom_button)
+        controller.instance_variable_set(:@record, @ems)
+        allow(controller).to receive(:controller).and_return(controller)
+
+        # format js to avoid redirection (application_controller/explorer.rb#generic_x_show)
+        get :show, :params => {:id => @ems.id, :display => 'hosts', :format => :js}
+
+        toolbar = controller.send(:toolbar_from_hash)
+        toolbar_custom_button = toolbar.select do |button_group|
+          button_group&.map do |button|
+            button if button[:id].starts_with?("custom_")
+          end&.compact.present?
+        end.flatten.first
+
+        expect(toolbar_custom_button).not_to be_nil
+        expect(toolbar_custom_button[:items].count).to eql(1)
+        expect(response.status).to eq(200)
+      end
+    end
+
     context "display=timeline" do
       let(:url_params) { {:display => 'timeline'} }
       it { is_expected.to have_http_status 200 }

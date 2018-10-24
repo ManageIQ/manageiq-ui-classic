@@ -667,4 +667,8 @@ describe VmInfraController do
     controller.report_data
     expect(assigns(:edit)[:new]).to_not include(:expression)
   end
+
+  %w(ems_clusters hosts storages vms miq_templates).each do |custom_button_class|
+    include_examples "relationship table screen with custom buttons", custom_button_class
+  end
 end
