@@ -190,6 +190,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
       $scope.emsCommonModel.default_url                     = data.default_url;
 
+      $scope.currentTab                                     = data.non_default_current_tab || 'default';
+
       if ($scope.emsCommonModel.default_userid !== '') {
         $scope.emsCommonModel.default_password = miqService.storedPasswordPlaceholder;
       }
