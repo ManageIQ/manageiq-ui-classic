@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer Beta-2
+
+### Added
+- Adding back a Tag as a filter to the PhysicalInfra topology [(#4743)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4743)
+- Allow selecting an optional volume type when creating an Openstack cloud volume [(#4536)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4536)
+
+### Fixed
+- Make physical network visible only for FLAT and VLAN [(#4778)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4778)
+- Render the notification drawer footer synchronously, remove its haml [(#4793)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4793)
+- Display notifications in the expanded notification drawer [(#4792)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4792)
+- Fix error for Datastore custom button [(#4745)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4745)
+- Fix vm_cloud image custom button return and cancel endpoints [(#4795)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4795)
+- Allow Service retirement over Centralized Administration [(#4790)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4790)
+- Fix dynamic reducers [(#4744)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4744)
+- Fix adding a new Service Catalog Item for Vmware Catalog Item Type [(#4750)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4750)
+- Default menu - fix all menu items to use full url [(#4752)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4752)
+- Fix for javascript error when attempting to edit a service dialog based on orchestration template [(#4759)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4759)
+- Fix multi-tab endpoint credential validation by passing the right credential type when user hits "Enter" [(#4768)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4768)
+- Use report default options for Report screens [(#4749)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4749)
+
 ## Hammer Beta-1 - Released 2018-10-12
 
 ### Added
