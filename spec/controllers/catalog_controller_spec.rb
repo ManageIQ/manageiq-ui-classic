@@ -1295,4 +1295,22 @@ describe CatalogController do
       end
     end
   end
+
+  describe '#resource_delete' do
+    before do
+      allow(controller).to receive(:build_ae_tree)
+      allow(controller).to receive(:load_edit).and_return(true)
+      allow(controller).to receive(:rearrange_groups_array)
+      allow(controller).to receive(:render)
+      controller.instance_variable_set(:@edit, :new => {:rsc_groups => {1 => {}}, :current => {}})
+      controller.instance_variable_set(:@_params, :grp_id => 1, :id => 1)
+    end
+
+    context 'getting all available catalogs with tenants and ancestors' do
+      it 'sets @available_catalogs' do
+        controller.send(:resource_delete)
+        expect(controller.instance_variable_get(:@available_catalogs)).not_to be_nil
+      end
+    end
+  end
 end
