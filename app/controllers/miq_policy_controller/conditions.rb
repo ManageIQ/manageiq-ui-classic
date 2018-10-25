@@ -6,8 +6,8 @@ module MiqPolicyController::Conditions
     when "cancel"
       id = params[:id] ? params[:id] : "new"
       return unless load_edit("condition_edit__#{id}", "replace_cell__explorer")
-      @condition = @edit[:condition_id] ? Condition.find_by_id(@edit[:condition_id]) : Condition.new
-      if @condition && @condition.id
+      @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
+      if @condition.try(:id)
         add_flash(_("Edit of %{model} Condition \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat]), :name => @condition.description})
       else
         add_flash(_("Add of new %{model} Condition was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat])})
@@ -30,14 +30,14 @@ module MiqPolicyController::Conditions
     # Load @edit/vars for other buttons
     id = params[:id] || "new"
     return unless load_edit("condition_edit__#{params[:button] == "add" ? "new" : id}", "replace_cell__explorer")
-    @condition = @edit[:condition_id] ? Condition.find_by_id(@edit[:condition_id]) : Condition.new
+    @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
 
     case params[:button]
     when "save", "add"
       assert_privileges("condition_#{@condition.id ? "edit" : "new"}")
       policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]) unless x_active_tree == :condition_tree
       adding = @condition.id.blank?
-      condition = adding ? Condition.new : Condition.find(@condition.id)  # Get new or existing record
+      condition = adding ? Condition.new : Condition.find(@condition.id) # Get new or existing record
       condition.description = @edit[:new][:description]
       condition.notes = @edit[:new][:notes]
       condition.towhat = @edit[:new][:towhat] if adding # Set the proper model if adding a record
@@ -121,7 +121,7 @@ module MiqPolicyController::Conditions
     assert_privileges("condition_delete")
     conditions = []
     # showing 1 condition, delete it
-    con = Condition.find_by_id(params[:id])
+    con = Condition.find(params[:id])
     if params[:id].nil? || con.nil?
       add_flash(_("Condition no longer exists"), :error)
     else
@@ -135,10 +135,10 @@ module MiqPolicyController::Conditions
 
   def condition_field_changed
     return unless load_edit("condition_edit__#{params[:id]}", "replace_cell__explorer")
-    @condition = @edit[:condition_id] ? Condition.find_by_id(@edit[:condition_id]) : Condition.new
+    @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
 
-    @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
-    @edit[:new][:notes] = params[:notes].blank? ? nil : params[:notes] if params[:notes]
+    @edit[:new][:description] = params[:description].presence if params[:description]
+    @edit[:new][:notes] = params[:notes].presence if params[:notes]
 
     send_button_changes
   end
@@ -154,20 +154,20 @@ module MiqPolicyController::Conditions
     @edit[:new] = {}
     @edit[:current] = {}
 
-    if params[:copy]  # If copying, create a new condition based on the original
+    if params[:copy] # If copying, create a new condition based on the original
       cond = Condition.find(params[:id])
       @condition = cond.dup.tap { |c| c.name = nil }
     else
-      @condition = params[:id] && params[:typ] != "new" ? Condition.find(params[:id]) : Condition.new     # Get existing or new record
+      @condition = params[:id] && params[:typ] != "new" ? Condition.find(params[:id]) : Condition.new # Get existing or new record
     end
     @edit[:key] = "condition_edit__#{@condition.id || "new"}"
     @edit[:rec_id] = @condition.id || nil
 
-    if params[:id] && params[:typ] != "new"   # If editing existing condition, grab model
-      @edit[:new][:towhat] = Condition.find(params[:id]).towhat
-    else
-      @edit[:new][:towhat] = x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).towhat
-    end
+    @edit[:new][:towhat] = if params[:id] && params[:typ] != "new" # If editing existing condition, grab model
+                             Condition.find(params[:id]).towhat
+                           else
+                             x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).towhat
+                           end
 
     @edit[:condition_id] = @condition.id
     @edit[:new][:description] = @condition.description
@@ -178,42 +178,42 @@ module MiqPolicyController::Conditions
 
     # Populate exp editor fields for the expression column
     @edit[:expression] ||= ApplicationController::Filter::Expression.new
-    @edit[:expression][:expression] = []                         # Store exps in an array
+    @edit[:expression][:expression] = [] # Store exps in an array
     if @edit[:new][:expression].blank?
-      @edit[:expression][:expression] = {"???" => "???"}                  # Set as new exp element
-      @edit[:new][:expression] = copy_hash(@edit[:expression][:expression])   # Copy to new exp
+      @edit[:expression][:expression] = {"???" => "???"}                    # Set as new exp element
+      @edit[:new][:expression] = copy_hash(@edit[:expression][:expression]) # Copy to new exp
     else
       @edit[:expression][:expression] = copy_hash(@edit[:new][:expression])
     end
     @edit[:expression_table] = exp_build_table_or_nil(@edit[:expression][:expression])
 
-    @expkey = :expression                                               # Set expression key to expression
+    @expkey = :expression # Set expression key to expression
     @edit[@expkey].history.reset(@edit[:expression][:expression])
     @edit[:expression][:exp_table] = exp_build_table(@edit[:expression][:expression])
-    @edit[:expression][:exp_model] = @edit[:new][:towhat]               # Set model for the exp editor
+    @edit[:expression][:exp_model] = @edit[:new][:towhat] # Set model for the exp editor
 
     # Populate exp editor fields for the applies_to_exp column
     @edit[:applies_to_exp] ||= ApplicationController::Filter::Expression.new
-    @edit[:applies_to_exp][:expression] = []                       # Store exps in an array
+    @edit[:applies_to_exp][:expression] = [] # Store exps in an array
     if @edit[:new][:applies_to_exp].blank?
-      @edit[:applies_to_exp][:expression] = {"???" => "???"}                # Set as new exp element
+      @edit[:applies_to_exp][:expression] = {"???" => "???"}                        # Set as new exp element
       @edit[:new][:applies_to_exp] = copy_hash(@edit[:applies_to_exp][:expression]) # Copy to new exp
     else
       @edit[:applies_to_exp][:expression] = copy_hash(@edit[:new][:applies_to_exp])
     end
     @edit[:scope_table] = exp_build_table_or_nil(@edit[:applies_to_exp][:expression])
 
-    @expkey = :applies_to_exp                                             # Set temporarily while building applies_to_exp exp editor vars
+    @expkey = :applies_to_exp                                                       # Set temporarily while building applies_to_exp exp editor vars
     @edit[@expkey].history.reset(@edit[:applies_to_exp][:expression])
     @edit[:applies_to_exp][:exp_table] = exp_build_table(@edit[:applies_to_exp][:expression])
-    @expkey = :expression                                                 # Reset to default to editing the expression column
-    @edit[:applies_to_exp][:exp_model] = @edit[:new][:towhat]             # Set model for the exp editor
+    @expkey = :expression                                                           # Reset to default to editing the expression column
+    @edit[:applies_to_exp][:exp_model] = @edit[:new][:towhat]                       # Set model for the exp editor
 
     @edit[:current] = copy_hash(@edit[:new])
 
     @embedded = true
     @in_a_form = true
-    @edit[:current][:add] = true if @edit[:condition_id].nil?         # Force changed to be true if adding a record
+    @edit[:current][:add] = true if @edit[:condition_id].nil?                       # Force changed to be true if adding a record
     session[:changed] = (@edit[:new] != @edit[:current])
   end
 
