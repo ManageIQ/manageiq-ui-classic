@@ -86,7 +86,7 @@
           = text_field_tag("email",
                            @edit[:new][:email],
                            :autocomplete      => 'off',
-                           :maxlength         => 50,
+                           :maxlength         => 253,
                            :class => "form-control",
                            "data-miq_observe" => observe_url_json)
     - unless @edit
