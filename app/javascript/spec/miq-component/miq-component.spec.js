@@ -9,12 +9,12 @@ import {
   getComponentNames,
   getComponentInstances,
   clearRegistry
-} from './registry';
+} from '../../miq-component/registry.ts';
 
 import {
   writeProxy,
   lockInstanceProperties
-} from './utils';
+} from '../../miq-component/utils.ts';
 
 describe('Component API', () => {
   afterEach(() => {

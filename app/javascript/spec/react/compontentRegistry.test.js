@@ -1,7 +1,7 @@
 import React from 'react';
-import componentRegistry from './componentRegistry';
+import componentRegistry from '../../react/componentRegistry';
 
-jest.unmock('./componentRegistry');
+jest.unmock('../../react/componentRegistry');
 
 // eslint-disable-next-line react/prefer-stateless-function
 class FakeComponent extends React.Component {}
