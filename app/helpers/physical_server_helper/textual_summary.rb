@@ -62,7 +62,7 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_physical_switches
     physical_switches_count = @record.physical_switches.count
-    physical_switches = {:label => _("Physical Switches"), :value => physical_switches_count, :icon => PhysicalSwitchDecorator.fonticon}
+    physical_switches = {:label => _("Physical Switches"), :value => physical_switches_count, :icon => PhysicalSwitch.decorate.fonticon}
     if physical_switches_count.positive?
       physical_switches[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'physical_switches')
     end
