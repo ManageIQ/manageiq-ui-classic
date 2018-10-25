@@ -149,8 +149,8 @@ module MiqPolicyController::AlertProfiles
     return unless load_edit("alert_profile_edit__#{params[:id]}", "replace_cell__explorer")
     @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find(@edit[:alert_profile_id]) : MiqAlertSet.new
 
-    @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
-    @edit[:new][:notes] = params[:notes].blank? ? nil : params[:notes] if params[:notes]
+    @edit[:new][:description] = params[:description].presence
+    @edit[:new][:notes] = params[:notes].presence
 
     send_button_changes
   end
@@ -160,7 +160,7 @@ module MiqPolicyController::AlertProfiles
     @alert_profile = @assign[:alert_profile]
 
     if params.key?(:chosen_assign_to)
-      @assign[:new][:assign_to] = params[:chosen_assign_to].blank? ? nil : params[:chosen_assign_to]
+      @assign[:new][:assign_to] = params[:chosen_assign_to].presence
       @assign[:new][:cat] = nil # Clear chosen tag category
     end
 
@@ -318,7 +318,7 @@ module MiqPolicyController::AlertProfiles
   def alert_profile_get_all
     @alert_profiles = MiqAlertSet.all.sort_by { |as| as.description.downcase }
     set_search_text
-    @alert_profiles = apply_search_filter(@search_text, @alert_profiles) unless @search_text.blank?
+    @alert_profiles = apply_search_filter(@search_text, @alert_profiles) if @search_text.present?
     @right_cell_text = _("All Alert Profiles")
     @right_cell_div = "alert_profile_list"
   end
