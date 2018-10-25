@@ -831,9 +831,9 @@ module OpsController::OpsRbac
       @right_cell_text = _("Access Control Region \"%{name}\"") %
                          {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]"}
       @users_count   = Rbac.filtered(User.in_my_region).count
-      @groups_count  = Rbac.filtered(MiqGroup.non_tenant_groups).count
+      @groups_count  = Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).count
       @roles_count   = Rbac.filtered(MiqUserRole).count
-      @tenants_count = Rbac.filtered(Tenant).count
+      @tenants_count = Rbac.filtered(Tenant.in_my_region).count
     end
   end
 
