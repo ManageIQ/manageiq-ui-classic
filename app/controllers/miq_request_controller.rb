@@ -9,10 +9,8 @@ class MiqRequestController < ApplicationController
   helper ProvisionCustomizeHelper
 
   def index
-    #   show_list
-    #   render :action=>"show_list"
     @request_tab = params[:typ] if params[:typ] # set this to be used to identify which Requests subtab was clicked
-    redirect_to :action => 'show_list'
+    redirect_to(:action => 'show_list')
   end
 
   # handle buttons pressed on the button bar
@@ -115,10 +113,10 @@ class MiqRequestController < ApplicationController
         flash_to_session(_("Request denial was cancelled by the user"))
       end
       @edit = nil
-      javascript_redirect :action => @lastaction, :id => session[:edit][:request].id
+      javascript_redirect(:action => @lastaction, :id => session[:edit][:request].id)
     elsif params[:button] == "submit"
       return unless load_edit("stamp_edit__#{params[:id]}", "show")
-      stamp_request = MiqRequest.find(@edit[:request].id)         # Get the current request record
+      stamp_request = MiqRequest.find(@edit[:request].id) # Get the current request record
       if @edit[:stamp_typ] == "approve"
         stamp_request.approve(current_user, @edit[:reason])
       else
@@ -126,7 +124,7 @@ class MiqRequestController < ApplicationController
       end
       flash_to_session(_("Request \"%{name}\" was %{task}") % {:name => stamp_request.description, :task => (session[:edit] && session[:edit][:stamp_typ]) == "approve" ? "approved" : "denied"})
       @edit = nil
-      javascript_redirect :action => "show_list"
+      javascript_redirect(:action => "show_list")
     else # First time in, set up @edit hash
       identify_request
       @edit = {}
@@ -183,11 +181,11 @@ class MiqRequestController < ApplicationController
     if params[:button] == "continue" # Continue the request from the workflow with the new options
       id = params[:id] ? params[:id] : "new"
       return unless load_edit("prov_edit__#{id}", "show_list")
-      @edit[:wf].continue_request(@edit[:new])    # Continue the workflow with new field values based on options
-      @edit[:wf].init_from_dialog(@edit[:new])    # Create a new provision workflow for this edit session
+      @edit[:wf].continue_request(@edit[:new])           # Continue the workflow with new field values based on options
+      @edit[:wf].init_from_dialog(@edit[:new])           # Create a new provision workflow for this edit session
       @edit[:buttons] = @edit[:wf].get_buttons
-      @edit[:wf].get_dialog_order.each do |d|                           # Go thru all dialogs, in order that they are displayed
-        @edit[:wf].get_all_fields(d).each do |_f, field|                # Go thru all field
+      @edit[:wf].get_dialog_order.each do |d|            # Go thru all dialogs, in order that they are displayed
+        @edit[:wf].get_all_fields(d).each_key do |field| # Go thru all field
           if field[:error].present?
             @error_div ||= "#{d}_div"
             add_flash(field[:error], :error)
@@ -196,11 +194,10 @@ class MiqRequestController < ApplicationController
       end
       # setting active tab to first visible tab
       @edit[:wf].get_dialog_order.each do |d|
-        if @edit[:wf].get_dialog(d)[:display] == :show
-          @edit[:new][:current_tab_key] = d
-          @tabactive = d # Use JS to update the display
-          break
-        end
+        next unless @edit[:wf].get_dialog(d)[:display] == :show
+        @edit[:new][:current_tab_key] = d
+        @tabactive = d # Use JS to update the display
+        break
       end
       render :update do |page|
         page << javascript_prologue
@@ -304,13 +301,13 @@ class MiqRequestController < ApplicationController
   end
 
   def handle_request_edit_copy_redirect
-    javascript_redirect :controller     => @redirect_controller,
+    javascript_redirect(:controller     => @redirect_controller,
                         :action         => @refresh_partial,
                         :id             => @redirect_id,
                         :prov_type      => @prov_type,
                         :req_id         => @req_id,
                         :org_controller => @org_controller,
-                        :prov_id        => @prov_id
+                        :prov_id        => @prov_id)
   end
 
   def handle_request_reload
@@ -336,7 +333,7 @@ class MiqRequestController < ApplicationController
     # Request date (created since X days ago)
     scope << [:created_recently, opts[:time_period].to_i] if opts[:time_period].present?
     # Select requester user across regions
-    scope << [:with_requester, current_user.id] unless is_approver
+    scope << [:with_requester, current_user.id] unless approver?
     scope << [:with_requester, opts[:user_choice]] if opts[:user_choice] && opts[:user_choice] != "all"
 
     scope << [:with_approval_state, opts[:applied_states]] if opts[:applied_states].present?
@@ -370,10 +367,8 @@ class MiqRequestController < ApplicationController
   end
 
   def requesters_in_30_days
-    Rbac::Filterer.filtered(MiqRequest.where(
-      :type       => MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].keys,
-      :created_on => (30.days.ago.utc)..(Time.now.utc)
-    )).each_with_object({}) do |r, h|
+    Rbac::Filterer.filtered(MiqRequest.where(:type       => MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].keys,
+                                             :created_on => (30.days.ago.utc)..(Time.now.utc))).each_with_object({}) do |r, h|
       h[r.requester_id] = requester_label(r)
     end
   end
@@ -381,7 +376,7 @@ class MiqRequestController < ApplicationController
   def opts_users
     requesters = requesters_in_30_days
 
-    if is_approver
+    if approver?
       # list all requesters
       [label_value_hash_with_all(requesters), 'all']
     elsif requesters.value?(current_user.name)
@@ -411,7 +406,7 @@ class MiqRequestController < ApplicationController
       :reason_text    => nil,
       :applied_states => PROV_STATES.keys,
       :type_choice    => 'all',
-      :user_choice    => is_approver ? 'all' : current_user.id,
+      :user_choice    => approver? ? 'all' : current_user.id,
       :time_period    => 7,
     }
   end
@@ -452,7 +447,7 @@ class MiqRequestController < ApplicationController
     @miq_request = @record = identify_record(params[:id], klass)
   end
 
-  def is_approver
+  def approver?
     # TODO: this should be current_user
     User.current_user.role_allows?(:identifier => rbac_feature_id('miq_request_approval'))
   end
@@ -482,10 +477,9 @@ class MiqRequestController < ApplicationController
       end
     end
 
-
     if @flash_array.present?
       flash_to_session
-      javascript_redirect :action => 'show_list'
+      javascript_redirect(:action => 'show_list')
     else
       show_list
       replace_gtl
