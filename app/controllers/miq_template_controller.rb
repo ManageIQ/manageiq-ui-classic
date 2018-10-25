@@ -11,8 +11,8 @@ class MiqTemplateController < ApplicationController
 
   # Override method from Mixins::GenericListMixin
   def index
-    session[:miq_template_type] = nil             # Reset VM type if coming in from All tab
-    redirect_to :action => 'show_list'
+    session[:miq_template_type] = nil # Reset VM type if coming in from All tab
+    redirect_to(:action => 'show_list')
   end
 
   private
