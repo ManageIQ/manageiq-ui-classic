@@ -32,6 +32,10 @@ engines:
     enabled: false
   csslint:
     enabled: false
+  similar-code:
+    enabled: true
+    exclude_paths:
+      - "app/javascript/spec"
   duplication:
     enabled: true
     exclude_paths:
