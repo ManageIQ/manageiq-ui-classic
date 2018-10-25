@@ -552,7 +552,7 @@ class CatalogController < ApplicationController
       options[:dialog_locals] = DialogLocalService.new.determine_dialog_locals_for_svc_catalog_provision(
         ra, st, svc_catalog_provision_finish_submit_endpoint
       )
-
+      @in_a_form = true
       if Settings.product.old_dialog_user_ui
         dialog_initialize(ra, options)
       else
