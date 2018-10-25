@@ -22,7 +22,7 @@
   .drawer-pf-notification-content{'ng-click' => 'customScope.markNotificationRead(notification, notificationGroup)'}
     %span.drawer-pf-notification-message{'uib-tooltip-append'      => true,
                                          'uib-tooltip-popup-delay' => 500,
-                                         'uib-tooltip-placement'   => 'bottom',
+                                         'tooltip-placement'       => 'bottom',
                                          'uib-tooltip'             => '{{ notification.message }}'}
       {{ notification.message }}
     .drawer-pf-notification-info{'ng-click' => 'customScope.markNotificationRead(notification, notificationGroup)'}
