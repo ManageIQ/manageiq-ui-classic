@@ -144,7 +144,7 @@ class MiqPolicyController < ApplicationController
       redirect_options[:action] = 'export'
     end
 
-    redirect_to redirect_options
+    redirect_to(redirect_options)
   end
 
   def get_json
@@ -201,7 +201,7 @@ class MiqPolicyController < ApplicationController
     @sb[:new][:choices_chosen] = params[:choices_chosen] || []
     render :update do |page|
       page << javascript_prologue
-      if prev_dbtype != @sb[:dbtype]    # If any export db type has changed
+      if prev_dbtype != @sb[:dbtype] # If any export db type has changed
         page.replace_html("profile_export_div", :partial => "export")
       end
     end
@@ -473,7 +473,7 @@ class MiqPolicyController < ApplicationController
     trees = {}
     replace_trees.each do |name|
       tree = @trees["#{name}_tree".to_sym]
-      tree.reload! unless tree.nil?
+      tree.try(:reload!)
 
       if tree.nil?
         feature = features.find { |f| f.name == name }
@@ -1017,11 +1017,11 @@ class MiqPolicyController < ApplicationController
     end
     options[:variables].each_with_index do |var, _i|
       if var[:oid].blank? || var[:value].blank? || var[:var_type] == "<None>"
-        if !var[:oid].blank? && var[:var_type] != "<None>" && var[:var_type] != "Null" && var[:value].blank?
+        if var[:oid].present? && var[:var_type] != "<None>" && var[:var_type] != "Null" && var[:value].blank?
           add_flash(_("Value missing for %{field}") % {:field => var[:oid]}, :error)
         elsif var[:oid].blank? && var[:var_type] != "<None>" && var[:var_type] != "Null" && var[:value].present?
           add_flash(_("Object ID missing for %{field}") % {:field => var[:value]}, :error)
-        elsif !var[:oid].blank? && var[:var_type] == "<None>" && var[:value].blank?
+        elsif var[:oid].present? && var[:var_type] == "<None>" && var[:value].blank?
           add_flash(_("Type missing for %{field}") % {:field => var[:oid]}, :error)
           add_flash(_("Value missing for %{field}") % {:field => var[:oid]}, :error)
         elsif var[:oid].blank? && var[:var_type] == "Null" && var[:value].blank?
