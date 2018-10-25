@@ -964,42 +964,12 @@ fieldset {
 }
 
 /************ Hover Buttons ************/
-.rollover img,
-input.rollover {
-  display: block;
-}
-
-.rollover img:hover,
-img.rollover:hover,
-input.rollover:hover,
-i.rollover:hover {
-  background: #e4e4e4;
-}
 
 .dimmed {
   background: #f5f5f5;
   filter: alpha(opacity=40);
   filter: progid:dximagetransform.microsoft.alpha(Opacity=40);
   opacity: 0.4;
-}
-
-img.small,
-input.small {
-  border: 0;
-  float: left;
-  height: 24px;
-  margin: 0;
-  padding: 0;
-  width: 24px;
-}
-
-img.tiny {
-  border: 0;
-  height: 20px;
-  margin: 0;
-  padding: 0;
-  vertical-align: bottom;
-  width: 20px;
 }
 
 /************ Misc ************/
