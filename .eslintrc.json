@@ -197,7 +197,6 @@
     "no-use-before-define": [ "error", {
       "functions": false,
       "classes": true
-    }],
-    "max-lines-per-function": ["error", { "max": 50 }]
+    }]
   }
 }

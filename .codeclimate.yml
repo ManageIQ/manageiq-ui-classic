@@ -32,14 +32,11 @@ engines:
     enabled: false
   csslint:
     enabled: false
-  similar-code:
-    enabled: true
-    exclude_paths:
-      - "app/javascript/spec"
   duplication:
     enabled: true
     exclude_paths:
     - "app/decorators/"
+    - "app/javascript/spec/"
     config:
       concurrency: 1
       languages:
@@ -50,6 +47,9 @@ engines:
     enabled: true
     channel: "eslint-3"
     checks:
+      file-lines:
+        config:
+          threshold: 400
       no-undefined:
         enabled: false
       quotes:
