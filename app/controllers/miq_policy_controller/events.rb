@@ -23,13 +23,13 @@ module MiqPolicyController::Events
     # Reload @edit/vars for other buttons
     id = params[:id] ? params[:id] : "new"
     return unless load_edit("event_edit__#{id}", "replace_cell__explorer")
-    @event = @edit[:event_id] ? MiqEventDefinition.find_by_id(@edit[:event_id]) : MiqEventDefinition.new
+    @event = @edit[:event_id] ? MiqEventDefinition.find(@edit[:event_id]) : MiqEventDefinition.new
     policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"])
     @policy = policy
 
     case params[:button]
     when "save"
-      event = MiqEventDefinition.find(@event.id)                        # Get event record
+      event = MiqEventDefinition.find(@event.id) # Get event record
       action_list = @edit[:new][:actions_true].collect { |a| [MiqAction.find(a.last), {:qualifier => :success, :synchronous => a[1]}] } +
                     @edit[:new][:actions_false].collect { |a| [MiqAction.find(a.last), {:qualifier => :failure, :synchronous => a[1]}] }
       add_flash(_("At least one action must be selected to save this Policy Event"), :error) if action_list.blank?
@@ -63,9 +63,9 @@ module MiqPolicyController::Events
     @edit[:new] = {}
     @edit[:current] = {}
 
-    @event = MiqEventDefinition.find(params[:id])                                         # Get event record
+    @event = MiqEventDefinition.find(params[:id])                 # Get event record
     policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"])   # Get the policy above this event
-    @policy = policy                                 # Save for use in the view
+    @policy = policy                                              # Save for use in the view
     @edit[:key] = "event_edit__#{@event.id || "new"}"
     @edit[:rec_id] = @event.id || nil
 
@@ -78,39 +78,39 @@ module MiqPolicyController::Events
     end
 
     @edit[:new][:actions_false] = []
-    policy.actions_for_event(@event, :failure).each do |af|                     # Build false actions array
+    policy.actions_for_event(@event, :failure).each do |af| # Build false actions array
       sync = af.synchronous.nil? || af.synchronous
       @edit[:new][:actions_false].push([(sync ? "(S) " : "(A) ") + af.description, sync, af.id])
     end
 
-    @edit[:choices_true] = {}                         # Build a new choices list for true actions
-    MiqAction.all.each do |a|                          # Build a hash for the true choices
-      @edit[:choices_true][a.description] =  a.id
+    @edit[:choices_true] = {}                      # Build a new choices list for true actions
+    MiqAction.all.each do |a|                      # Build a hash for the true choices
+      @edit[:choices_true][a.description] = a.id
     end
     @edit[:new][:actions_true].each do |as|
-      @edit[:choices_true].delete(as[0].slice(4..-1))       # Remove any choices already in the list (desc is first element, but has "(x) " in front)
+      @edit[:choices_true].delete(as[0].slice(4..-1)) # Remove any choices already in the list (desc is first element, but has "(x) " in front)
     end
 
-    @edit[:choices_false] = {}                        # Build a new choices list for false actions
-    MiqAction.all.each do |a|                          # Build a hash for the false choices
-      @edit[:choices_false][a.description] =  a.id
+    @edit[:choices_false] = {}                      # Build a new choices list for false actions
+    MiqAction.all.each do |a|                       # Build a hash for the false choices
+      @edit[:choices_false][a.description] = a.id
     end
     @edit[:new][:actions_false].each do |as|
-      @edit[:choices_false].delete(as[0].slice(4..-1))      # Remove any choices already in the list (desc is first element, but has "(x) " in front)
+      @edit[:choices_false].delete(as[0].slice(4..-1)) # Remove any choices already in the list (desc is first element, but has "(x) " in front)
     end
 
     @edit[:current] = copy_hash(@edit[:new])
 
     @embedded = true
     @in_a_form = true
-    @edit[:current][:add] = true if @edit[:event_id].nil?                       # Force changed to be true if adding a record
+    @edit[:current][:add] = true if @edit[:event_id].nil? # Force changed to be true if adding a record
     session[:changed] = (@edit[:new] != @edit[:current])
   end
 
   def event_get_all
     @events = MiqPolicy.all_policy_events.sort_by { |e| e.description.downcase }
     set_search_text
-    @events = apply_search_filter(@search_text, @events) unless @search_text.blank?
+    @events = apply_search_filter(@search_text, @events) if @search_text.present?
     @right_cell_text = _("All Events")
     @right_cell_div = "event_list"
   end
