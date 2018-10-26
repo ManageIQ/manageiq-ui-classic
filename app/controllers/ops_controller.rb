@@ -736,7 +736,7 @@ class OpsController < ApplicationController
       elsif @lastaction == "show_list"
         Mixins::CustomButtons::Result.new(:list)
       elsif x_tree[:tree] == :rbac_tree
-        Mixins::CustomButtons::Result.new(:single)
+        @record ? Mixins::CustomButtons::Result.new(:single) : Mixins::CustomButtons::Result.new(:list)
       else
         'blank_view_tb'
       end
