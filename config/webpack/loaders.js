@@ -56,12 +56,6 @@ module.exports = [
           minimize: env.NODE_ENV === 'production',
         },
       },
-      {
-        loader: 'postcss-loader',
-        options: {
-          sourceMap: true,
-        },
-      },
       'resolve-url-loader',
       {
         loader: 'sass-loader',
