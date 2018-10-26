@@ -34,7 +34,8 @@ module Mixins
           else
             add_flash(_("Unable to reconfigure Instance \"%{name}\": %{details}") % {
               :name    => @record.name,
-              :details => @record.unsupported_reason(:resize)}, :error)
+              :details => @record.unsupported_reason(:resize)
+            }, :error)
           end
         end
 
@@ -79,16 +80,19 @@ module Mixins
                 add_flash(_("Reconfiguring Instance \"%{name}\" from %{old_flavor} to %{new_flavor}") % {
                   :name       => @record.name,
                   :old_flavor => old_flavor_name,
-                  :new_flavor => flavor.name})
+                  :new_flavor => flavor.name
+                })
               rescue => ex
                 add_flash(_("Unable to reconfigure Instance \"%{name}\": %{details}") % {
                   :name    => @record.name,
-                  :details => get_error_message_from_fog(ex.to_s)}, :error)
+                  :details => get_error_message_from_fog(ex.to_s)
+                }, :error)
               end
             else
               add_flash(_("Unable to reconfigure Instance \"%{name}\": %{details}") % {
                 :name    => @record.name,
-                :details => @record.unsupported_reason(:resize)}, :error)
+                :details => @record.unsupported_reason(:resize)
+              }, :error)
             end
             params[:id] = @record.id.to_s # reset id in params for show
             @record = nil
@@ -98,9 +102,8 @@ module Mixins
             replace_right_cell
           else
             flash_to_session
-            javascript_redirect previous_breadcrumb_url
+            javascript_redirect(previous_breadcrumb_url)
           end
-          return
         end
 
         def resize_form_fields
