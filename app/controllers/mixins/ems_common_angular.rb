@@ -437,6 +437,7 @@ module Mixins
                         :console_auth_status           => console_auth_status,
                         :metrics_auth_status           => metrics_auth_status.nil? ? true : metrics_auth_status,
                         :ssh_keypair_auth_status       => ssh_keypair_auth_status.nil? ? true : ssh_keypair_auth_status,
+                        :non_default_current_tab       => @ems.emstype == "kubevirt" ? "kubevirt" : nil,
                         :kubevirt_api_port             => kubevirt_api_port,
                         :kubevirt_hostname             => kubevirt_hostname,
                         :kubevirt_security_protocol    => kubevirt_security_protocol,

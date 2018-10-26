@@ -190,6 +190,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
       $scope.emsCommonModel.default_url                     = data.default_url;
 
+      $scope.currentTab                                     = data.non_default_current_tab || 'default';
+
       if ($scope.emsCommonModel.default_userid !== '') {
         $scope.emsCommonModel.default_password = miqService.storedPasswordPlaceholder;
       }
@@ -279,7 +281,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     }
 
     if ($scope.emsCommonModel.metrics_selection === 'disabled') {
-      angular.element("#container_metrics_tab").hide();
+      angular.element("#metrics_tab").hide();
     }
 
     if ($scope.emsCommonModel.virtualization_selection === 'disabled') {
@@ -351,13 +353,13 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     } else if (($scope.emsCommonModel.ems_controller === "ems_container") &&
       ($scope.emsCommonModel.emstype) &&
       ($scope.emsCommonModel.default_password !== '' && $scope.angularForm.default_password.$valid) &&
-      (($scope.currentTab === "container_metrics" &&
+      (($scope.currentTab === "metrics" &&
         $scope.emsCommonModel.metrics_hostname !== '' &&
         $scope.emsCommonModel.metrics_api_port) ||
        ($scope.currentTab === "alerts" &&
         $scope.emsCommonModel.prometheus_alerts_hostname !== '' &&
         $scope.emsCommonModel.prometheus_alerts_api_port !== '') ||
-       ($scope.currentTab === "virtualization" &&
+       ($scope.currentTab === "kubevirt" &&
         $scope.emsCommonModel.kubevirt_hostname !== '' &&
         $scope.emsCommonModel.kubevirt_password !== '' &&
         $scope.emsCommonModel.kubevirt_api_port !== '') ||
@@ -458,7 +460,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.metricSelectionChanged = function() {
-    $scope.tabSelectionChanged("#container_metrics_tab", $scope.emsCommonModel.metrics_selection);
+    $scope.tabSelectionChanged("#metrics_tab", $scope.emsCommonModel.metrics_selection);
   };
 
   $scope.alertsSelectionChanged = function() {
