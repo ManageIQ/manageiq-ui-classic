@@ -10,7 +10,7 @@ class PhysicalServerController < ApplicationController
   after_action :set_session_data
 
   def self.display_methods
-    %w(network_devices storage_devices)
+    %w(network_devices storage_devices physical_switches)
   end
 
   def display_network_devices

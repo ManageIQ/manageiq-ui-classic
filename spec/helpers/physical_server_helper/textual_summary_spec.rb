@@ -53,7 +53,7 @@ describe PhysicalServerHelper::TextualSummary do
     loc_led_state
   )
 
-  include_examples "textual_group", "Relationships", %i(host ext_management_system physical_rack physical_chassis)
+  include_examples "textual_group", "Relationships", %i(host ext_management_system physical_rack physical_chassis physical_switches)
 
   include_examples "textual_group", "Management Networks", %i(mac ipv4 ipv6), "management_networks"
 

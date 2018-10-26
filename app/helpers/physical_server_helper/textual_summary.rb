@@ -11,7 +11,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(host ext_management_system physical_rack physical_chassis)
+      %i(host ext_management_system physical_rack physical_chassis physical_switches)
     )
   end
 
@@ -58,6 +58,15 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_ext_management_system
     textual_link(ExtManagementSystem.find(@record.ems_id))
+  end
+
+  def textual_physical_switches
+    physical_switches_count = @record.physical_switches.count
+    physical_switches = {:label => _("Physical Switches"), :value => physical_switches_count, :icon => PhysicalSwitch.decorate.fonticon}
+    if physical_switches_count.positive?
+      physical_switches[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'physical_switches')
+    end
+    physical_switches
   end
 
   def textual_physical_rack
