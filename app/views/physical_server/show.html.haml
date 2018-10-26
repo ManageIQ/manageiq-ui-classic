@@ -1,5 +1,5 @@
 #main_div
-  - if %w(network_devices physical_servers storage_devices).include?(@display)
+  - if %w(network_devices physical_servers storage_devices physical_switches).include?(@display)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     - case @showtype
