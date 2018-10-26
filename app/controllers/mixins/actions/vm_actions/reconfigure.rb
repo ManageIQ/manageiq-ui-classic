@@ -13,7 +13,7 @@ module Mixins
 
           @reconfigitems = find_records_with_rbac(Vm, reconfigure_ids)
           build_targets_hash(@reconfigitems)
-          @force_no_grid_xml   = true
+          @force_no_grid_xml = true
           @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :selected_ids => reconfigure_ids) # Get the records (into a view) and the paginator
           get_reconfig_limits(reconfigure_ids)
 
@@ -37,7 +37,6 @@ module Mixins
         end
 
         def reconfigure_form_fields
-          request_data = ''
           @request_id, request_data = params[:id].split(/\s*,\s*/, 2)
           reconfigure_ids = request_data.split(/\s*,\s*/)
           request_hash = build_reconfigure_hash(reconfigure_ids)
@@ -56,7 +55,7 @@ module Mixins
             request_id = params[:id]
           end
 
-          if recs.length < 1
+          if recs.empty?
             add_flash(_("One or more %{model} must be selected to Reconfigure") %
               {:model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
             javascript_flash(:scroll_top => true)
@@ -77,14 +76,13 @@ module Mixins
           end
           if @explorer
             reconfigure(reconfigure_ids)
-            session[:changed] = true  # need to enable submit button when screen loads
+            session[:changed] = true # need to enable submit button when screen loads
             @refresh_partial = "vm_common/reconfigure"
+          elsif role_allows?(:feature => "vm_reconfigure")
+            # redirect to build the ownership screen
+            javascript_redirect(:controller => rec_cls.to_s, :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_ids, :escape => false)
           else
-            if role_allows?(:feature => "vm_reconfigure")
-              javascript_redirect :controller => rec_cls.to_s, :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_ids, :escape => false # redirect to build the ownership screen
-            else
-              head :ok
-            end
+            head :ok
           end
         end
 
@@ -121,7 +119,7 @@ module Mixins
           else
             @req = MiqRequest.find_by(:id => @request_id)
             @reconfig_values[:src_ids] = @req.options[:src_ids]
-            @reconfig_values[:memory], @reconfig_values[:memory_type] = @req.options[:vm_memory] ? reconfigure_calculations(@req.options[:vm_memory]) : ['','']
+            @reconfig_values[:memory], @reconfig_values[:memory_type] = @req.options[:vm_memory] ? reconfigure_calculations(@req.options[:vm_memory]) : ['', '']
             @reconfig_values[:cores_per_socket_count] = @req.options[:cores_per_socket] ? @req.options[:cores_per_socket].to_s : ''
             @reconfig_values[:socket_count] = @req.options[:number_of_sockets] ? @req.options[:number_of_sockets].to_s : ''
             # check if there is only one VM that supports disk reconfiguration
@@ -132,19 +130,17 @@ module Mixins
             @reconfig_values[:cdrom_disconnect] = @req.options[:cdrom_disconnect]
             vmdisks = []
             vmcdroms = []
-            if @req.options[:disk_add]
-              @req.options[:disk_add].each do |disk|
-                adsize, adunit = reconfigure_calculations(disk[:disk_size_in_mb])
-                vmdisks << {:hdFilename          => disk[:disk_name],
-                            :hdType              => disk[:thin_provisioned] ? 'thin' : 'thick',
-                            :hdMode              => disk[:persistent] ? 'persistent' : 'nonpersistent',
-                            :hdSize              => adsize.to_s,
-                            :hdUnit              => adunit,
-                            :new_controller_type => disk[:new_controller_type].to_s,
-                            :cb_dependent        => disk[:dependent],
-                            :cb_bootable         => disk[:bootable],
-                            :add_remove          => 'add'}
-              end
+            @req.options[:disk_add]&.each do |disk|
+              adsize, adunit = reconfigure_calculations(disk[:disk_size_in_mb])
+              vmdisks << {:hdFilename          => disk[:disk_name],
+                          :hdType              => disk[:thin_provisioned] ? 'thin' : 'thick',
+                          :hdMode              => disk[:persistent] ? 'persistent' : 'nonpersistent',
+                          :hdSize              => adsize.to_s,
+                          :hdUnit              => adunit,
+                          :new_controller_type => disk[:new_controller_type].to_s,
+                          :cb_dependent        => disk[:dependent],
+                          :cb_bootable         => disk[:bootable],
+                          :add_remove          => 'add'}
             end
 
             reconfig_item = Vm.find(reconfigure_ids)
@@ -181,8 +177,8 @@ module Mixins
             @reconfig_values[:cdroms] = vmcdroms
           end
 
-          @reconfig_values[:cb_memory] = !!(@req && @req.options[:vm_memory])       # default for checkbox is false for new request
-          @reconfig_values[:cb_cpu] =  !!(@req && ( @req.options[:number_of_sockets] || @req.options[:cores_per_socket]))     # default for checkbox is false for new request
+          @reconfig_values[:cb_memory] = !!(@req && @req.options[:vm_memory]) # default for checkbox is false for new request
+          @reconfig_values[:cb_cpu] = !!(@req && (@req.options[:number_of_sockets] || @req.options[:cores_per_socket])) # default for checkbox is false for new request
           @reconfig_values
         end
 
@@ -212,7 +208,7 @@ module Mixins
         def reconfigure_calculations(mbsize)
           humansize = mbsize
           fmt = "MB"
-          if mbsize.to_i > 1024 && mbsize.to_i % 1024 == 0
+          if mbsize.to_i > 1024 && (mbsize.to_i % 1024).zero?
             humansize = mbsize.to_i / 1024
             fmt = "GB"
           end
@@ -379,7 +375,7 @@ module Mixins
             replace_right_cell
           else
             session[:flash_msgs] = @flash_array
-            javascript_redirect previous_breadcrumb_url
+            javascript_redirect(previous_breadcrumb_url)
           end
         end
 
