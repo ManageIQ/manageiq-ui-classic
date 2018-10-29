@@ -107,6 +107,7 @@ module GtlHelper
     parent_id_escaped = (h(j_str(options[:parent_id])) unless options[:display].nil?)
 
     javascript_tag <<EOJ
+      ManageIQ.gtl.loading = true;
       sendDataWithRx({unsubscribe: 'reportDataController'});
       miq_bootstrap('#miq-gtl-view', 'ManageIQ.report_data');
       sendDataWithRx({initController: {

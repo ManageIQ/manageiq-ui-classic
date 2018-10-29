@@ -285,9 +285,21 @@
       this.initObject.showUrl = false;
     }
     this.gtlType = initObject.gtlType || DEFAULT_VIEW;
-    this.settings.isLoading = true;
+    this.loading();
     ManageIQ.gridChecks = [];
     this.$window.sendDataWithRx({setCount: 0});
+  };
+
+  ReportDataController.prototype.loading = function() {
+    this.$window.ManageIQ.gtl.loading = true;
+    this.settings.isLoading = true;
+    miqSparkleOn();
+  };
+
+  ReportDataController.prototype.loaded = function() {
+    this.$window.ManageIQ.gtl.loading = false;
+    this.settings.isLoading = false;
+    miqSparkleOff();
   };
 
   /**
@@ -307,8 +319,7 @@
   * @returns {Object} promise of fetched data.
   */
   ReportDataController.prototype.initController = function(initObject) {
-    this.$window.ManageIQ.gtl = this.$window.ManageIQ.gtl || {};
-    this.$window.ManageIQ.gtl.loading = true;
+    this.loading();
     initObject.modelName = decodeURIComponent(initObject.modelName);
     this.initObjects(initObject);
     this.setExtraClasses(initObject.gtlType);
@@ -336,7 +347,7 @@
         }
 
         this.$timeout(function() {
-          this.$window.ManageIQ.gtl.loading = false;
+          this.loaded();
           this.$window.ManageIQ.gtl.isFirst = this.settings.current === 1;
           this.$window.ManageIQ.gtl.isLast = this.settings.current === this.settings.total;
         }.bind(this));
@@ -355,7 +366,6 @@
   ReportDataController.prototype.setDefaults = function() {
     this.settings.selectAllTitle = __('Select All');
     this.settings.sortedByTitle = __('Sorted By');
-    this.settings.isLoading = false;
     this.settings.dropdownClass = ['dropup'];
     this.settings.translateTotalOf = function(start, end, total) {
       if (typeof start !== 'undefined' && typeof end !== 'undefined' && typeof total !== 'undefined') {
