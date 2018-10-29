@@ -111,4 +111,21 @@ describe ApplicationController do
       end
     end
   end
+
+  describe EmsInfraController do
+    before do
+      login_as FactoryGirl.create(:user, :features => %w(storage_tag))
+      controller.instance_variable_set(:@_params, params)
+      controller.instance_variable_set(:@display, "storages")
+    end
+
+    context 'check for correct feature id when tagging selected storage thru Provider relationship' do
+      let(:params) { {:db => "Storage", :id => "1"} }
+      it 'sets @tagging properly' do
+        allow(controller).to receive(:tagging_edit_tags_reset)
+        controller.send(:tagging_edit)
+        expect(controller.instance_variable_get(:@tagging)).not_to be_nil
+      end
+    end
+  end
 end
