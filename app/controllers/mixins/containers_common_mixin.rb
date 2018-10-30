@@ -3,9 +3,9 @@ module ContainersCommonMixin
   include ServiceDialogCreationMixin
 
   def button
-    @edit = session[:edit]                          # Restore @edit for adv search box
-    params[:display] = @display if ["#{params[:controller]}s"].include?(@display)  # displaying container_*
-    params[:page] = @current_page if @current_page.nil?   # Save current page for list refresh
+    @edit = session[:edit] # Restore @edit for adv search box
+    params[:display] = @display if ["#{params[:controller]}s"].include?(@display) # displaying container_*
+    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
 
     if params[:pressed] == "custom_button"
       custom_buttons
@@ -34,7 +34,7 @@ module ContainersCommonMixin
       if @lastaction == "show"
         javascript_flash
       else
-        replace_main_div :partial => "layouts/gtl"
+        replace_main_div(:partial => "layouts/gtl")
       end
     end
   end
@@ -68,9 +68,9 @@ module ContainersCommonMixin
   def create_service_dialog
     assert_privileges(params[:pressed])
     drop_breadcrumb(:name => _("Create Service Dialog"), :url => "/container_template/service_dialog_from_ct")
-    javascript_redirect :action => 'service_dialog_from_ct',
+    javascript_redirect(:action => 'service_dialog_from_ct',
                         :id     => params[:id],
-                        :escape => false
+                        :escape => false)
   end
 
   def service_dialog_from_ct_submit_cancel
@@ -78,7 +78,7 @@ module ContainersCommonMixin
     @in_a_form = false
     @edit = @record = nil
     flash_to_session
-    javascript_redirect previous_breadcrumb_url
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   def service_dialog_from_ct_submit_save
@@ -98,7 +98,7 @@ module ContainersCommonMixin
       @in_a_form = false
       @edit = @record = nil
       flash_to_session
-      javascript_redirect previous_breadcrumb_url
+      javascript_redirect(previous_breadcrumb_url)
     end
   end
 
