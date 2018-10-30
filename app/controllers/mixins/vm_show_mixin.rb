@@ -4,11 +4,11 @@ module VmShowMixin
   def explorer
     @explorer = true
     @lastaction = "explorer"
-    @timeline = @timeline_filter = true    # need to set these to load timelines on vm show screen
+    @timeline = @timeline_filter = true # need to set these to load timelines on vm show screen
     if params[:menu_click]              # Came in from a chart context menu click
       @_params[:id] = parse_nodetype_and_id(x_node_right_cell).last
       @explorer = true
-      perf_menu_click                    # Handle the menu action
+      perf_menu_click                   # Handle the menu action
       return
     end
     # if AJAX request, replace right cell, and return
@@ -28,7 +28,7 @@ module VmShowMixin
     # Build the Explorer screen from scratch
     allowed_features = build_accordions_and_trees_only
 
-    params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms]  # Grab any explorer parm overrides
+    params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms] # Grab any explorer parm overrides
     session.delete(:exp_parms)
 
     if params[:commit] == "Upload" && session.fetch_path(:edit, :new, :sysprep_enabled, 1) == "Sysprep Answer File"
@@ -50,15 +50,14 @@ module VmShowMixin
     _partial, action, @right_cell_text = set_right_cell_vars
     locals = {:submit_button => true,
               :no_reset      => true,
-              :action_url    => action
-             }
+              :action_url    => action}
     @x_edit_buttons_locals = locals
   end
 
   # VM or Template show selected, redirect to proper controller, to get links on tasks screen working
   def vm_show
-    record = VmOrTemplate.find_by_id(params[:id])
-    redirect_to :action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id
+    record = VmOrTemplate.find(params[:id])
+    redirect_to(:action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id)
   end
 
   private
@@ -85,8 +84,8 @@ module VmShowMixin
 
     if @record.nil?
       add_flash(_("Error: Record no longer exists in the database"), :error)
-      if request.xml_http_request? && params[:id]  # Is this an Ajax request clicking on a node that no longer exists?
-        @delete_node = params[:id]                  # Set node to be removed from the tree
+      if request.xml_http_request? && params[:id] # Is this an Ajax request clicking on a node that no longer exists?
+        @delete_node = params[:id]                # Set node to be removed from the tree
       end
       return
     end
@@ -122,7 +121,7 @@ module VmShowMixin
     @filters        = get_filters
     @catinfo        = session[:vm_catinfo]
     @display        = session[:vm_display]
-    @polArr         = session[:polArr] || ""          # current tags in effect
+    @polArr         = session[:polArr] || "" # current tags in effect
     @policy_options = session[:policy_options] || ""
   end
 
