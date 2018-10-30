@@ -1,7 +1,6 @@
 /* global add_flash camelizeQuadicon */
 (function() {
   var CONTROLLER_NAME = 'reportDataController';
-  var MAIN_CONTETN_ID = 'main-content';
   var EXPAND_TREES = ['savedreports_treebox', 'widgets_treebox'];
   var TREES_WITHOUT_PARENT = ['pxe', 'ops'];
   var TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
@@ -351,14 +350,12 @@
   *       selectAllTitle - String  => title for select all
   *       sortedByTitle  - String  => title for sort by
   *       isLoading      - Boolean => if loading has finished.
-  *       scrollElement  - String  => ID of scroll element.
   * @returns {undefined}
   */
   ReportDataController.prototype.setDefaults = function() {
     this.settings.selectAllTitle = __('Select All');
     this.settings.sortedByTitle = __('Sorted By');
     this.settings.isLoading = false;
-    this.settings.scrollElement = MAIN_CONTETN_ID;
     this.settings.dropdownClass = ['dropup'];
     this.settings.translateTotalOf = function(start, end, total) {
       if (typeof start !== 'undefined' && typeof end !== 'undefined' && typeof total !== 'undefined') {
@@ -370,18 +367,23 @@
   };
 
   ReportDataController.prototype.setExtraClasses = function(viewType) {
-    var mainContent = this.$document.getElementById(MAIN_CONTETN_ID);
-    if (mainContent) {
-      angular.element(mainContent).removeClass('miq-sand-paper');
-      angular.element(mainContent).removeClass('miq-list-content');
-      angular.element(this.$document.querySelector('#paging_div .miq-pagination')).css('display', 'none');
-      if (viewType && (viewType === 'grid' || viewType === 'tile')) {
-        angular.element(this.$document.querySelector('#paging_div .miq-pagination')).css('display', 'block');
-        angular.element(mainContent).addClass('miq-sand-paper');
-      } else if (viewType && viewType === 'list') {
-        angular.element(mainContent).addClass('miq-list-content');
-        angular.element(this.$document.querySelector('#paging_div .miq-pagination')).css('display', 'block');
-      }
+    var mainContent = this.$document.querySelector('#main-content');
+    var pagination = this.$document.querySelector('#paging_div .miq-pagination');
+
+    if (! mainContent) {
+      return;
+    }
+
+    angular.element(mainContent).removeClass('miq-sand-paper');
+    angular.element(mainContent).removeClass('miq-list-content');
+    angular.element(pagination).css('display', 'none');
+
+    if (viewType === 'grid' || viewType === 'tile') {
+      angular.element(mainContent).addClass('miq-sand-paper');
+      angular.element(pagination).css('display', 'block');
+    } else if (viewType === 'list') {
+      angular.element(mainContent).addClass('miq-list-content');
+      angular.element(pagination).css('display', 'block');
     }
   };
 
