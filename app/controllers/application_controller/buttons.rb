@@ -262,28 +262,6 @@ module ApplicationController::Buttons
   private
 
   BASE_MODEL_EXPLORER_CLASSES = [MiqGroup, MiqTemplate, Service, Switch, Tenant, User, Vm].freeze
-  APPLIES_TO_CLASS_BASE_MODELS = %w(AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
-                                    CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
-                                    ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
-                                    GenericObject GenericObjectDefinition Host LoadBalancer
-                                    MiqGroup MiqTemp MiqTemplate NetworkRouter OrchestrationStack SecurityGroup Service
-                                    ServiceTemplate Storage Switch Tenant User Vm VmOrTemplate).freeze
-  def applies_to_class_model(applies_to_class)
-    # TODO: Give a better name for this concept, including ServiceTemplate using Service
-    # This should probably live in the model once this concept is defined.
-    unless APPLIES_TO_CLASS_BASE_MODELS.include?(applies_to_class)
-      raise ArgumentError, "Received: #{applies_to_class}, expected one of #{APPLIES_TO_CLASS_BASE_MODELS}"
-    end
-
-    case applies_to_class
-    when "ServiceTemplate"
-      Service
-    when "GenericObjectDefinition"
-      GenericObject
-    else
-      applies_to_class.constantize
-    end
-  end
 
   def custom_button_done
     url = SystemConsole.find_by(:vm => params[:id]).try(:url)
@@ -321,16 +299,18 @@ module ApplicationController::Buttons
 
   def custom_buttons(ids = nil, display_options = {})
     button = CustomButton.find(params[:button_id])
-    cls = applies_to_class_model(button.applies_to_class)
+    cls = custom_button_class_model(button.applies_to_class)
     @explorer = true if BASE_MODEL_EXPLORER_CLASSES.include?(cls)
-    ids ||= params[:id]
-    if ids.to_s == 'LIST'
-      objs = Rbac.filtered(cls.where(:id => find_checked_items))
-      obj = objs.first
-    else
-      obj = Rbac.filtered_object(cls.find(ids.to_i))
-      objs = [obj]
+    ids ||= params[:id] unless relationship_table_screen? && @record.nil?
+    ids = find_checked_items if ids == 'LIST' || ids.nil?
+
+    if ids.blank?
+      render_flash(_("Error executing custom button: No item was selected."), :error)
+      return
     end
+
+    objs = Rbac.filtered(cls.where(:id => ids))
+    obj = objs.first
 
     if objs.empty?
       render_flash(_("Error executing custom button: No item was selected."), :error)
