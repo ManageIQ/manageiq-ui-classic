@@ -50,12 +50,12 @@ class HostController < ApplicationController
 
   def filesystems_subsets
     scope = nil
-    label     = _('Files')
+    label = _('Files')
 
     host_service_group = HostServiceGroup.where(:id => params['host_service_group']).first
     if host_service_group
       scope = [[:host_service_group_filesystems, host_service_group.id]]
-      label     = _("Configuration files of nova service")
+      label = _("Configuration files of nova service")
     end
 
     return label, scope
@@ -68,7 +68,7 @@ class HostController < ApplicationController
 
   def host_services_subsets
     scope = nil
-    label     = _('Services')
+    label = _('Services')
 
     host_service_group = HostServiceGroup.where(:id => params['host_service_group']).first
     if host_service_group
@@ -120,7 +120,7 @@ class HostController < ApplicationController
   end
 
   def start
-    redirect_to :action => 'show_list'
+    redirect_to(:action => 'show_list')
   end
 
   def new
@@ -134,8 +134,8 @@ class HostController < ApplicationController
     assert_privileges("host_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Host / Node was cancelled by the user")
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _("Add of new Host / Node was cancelled by the user"))
     when "add"
       @host = Host.new
       old_host_attributes = @host.attributes.clone
@@ -145,8 +145,7 @@ class HostController < ApplicationController
         set_record_vars(@host)                                 # Save the authentication records for this host
         AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, params[:button] == "add"))
         message = _("Host / Node \"%{name}\" was added") % {:name => @host.name}
-        javascript_redirect :action    => 'show_list',
-                            :flash_msg => message
+        javascript_redirect(:action => 'show_list', :flash_msg => message)
       else
         @in_a_form = true
         @errors.each { |msg| add_flash(msg, :error) }
@@ -179,24 +178,24 @@ class HostController < ApplicationController
       session[:changed] = false
       drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
       @title = _("Info/Settings")
-    else            # if editing credentials for multi host
+    else # if editing credentials for multi host
       @title = _("Credentials/Settings")
-      if params[:selected_host]
-        @host = find_record_with_rbac(Host, params[:selected_host])
-      else
-        @host = Host.new
-      end
+      @host = if params[:selected_host]
+                find_record_with_rbac(Host, params[:selected_host])
+              else
+                Host.new
+              end
       @changed = true
       @showlinks = true
       @in_a_form = true
       # Get the db records that are being tagged
-      hostitems = Host.find(session[:host_items]).sort { |a, b| a.name <=> b.name }
+      hostitems = Host.find(session[:host_items]).sort_by(&:name)
       @selected_hosts = {}
       hostitems.each do |h|
         @selected_hosts[h.id] = h.name
       end
       build_targets_hash(hostitems)
-      @view = get_db_view(Host)       # Instantiate the MIQ Report view object
+      @view = get_db_view(Host) # Instantiate the MIQ Report view object
       @view.table = ReportFormatter::Converter.records2table(hostitems, @view.cols + ['id'])
     end
   end
@@ -205,7 +204,7 @@ class HostController < ApplicationController
     assert_privileges("host_edit")
     case params[:button]
     when "cancel"
-      session[:edit] = nil  # clean out the saved info
+      session[:edit] = nil # clean out the saved info
       @breadcrumbs.pop if @breadcrumbs
       if !session[:host_items].nil?
         flash_to_session(_("Edit of credentials for selected Hosts / Nodes was cancelled by the user"))
@@ -221,15 +220,15 @@ class HostController < ApplicationController
         @host = find_record_with_rbac(Host, params[:id])
         old_host_attributes = @host.attributes.clone
         valid_host = find_record_with_rbac(Host, params[:id])
-        set_record_vars(valid_host, :validate)                      # Set the record variables, but don't save
+        set_record_vars(valid_host, :validate) # Set the record variables, but don't save
         if valid_record? && set_record_vars(@host) && @host.save
           flash_to_session(_("Host / Node \"%{name}\" was saved") % {:name => @host.name})
           @breadcrumbs.pop if @breadcrumbs
           AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, false))
           if @lastaction == 'show_list'
-            javascript_redirect :action => "show_list"
+            javascript_redirect(:action => "show_list")
           else
-            javascript_redirect :action => "show", :id => @host.id.to_s
+            javascript_redirect(:action => "show", :id => @host.id.to_s)
           end
           return
         else
@@ -242,9 +241,7 @@ class HostController < ApplicationController
           javascript_flash
         end
       else
-        valid_host = find_record_with_rbac(Host, !params[:validate_id].blank? ?
-                                               params[:validate_id] :
-                                               session[:host_items].first.to_i)
+        valid_host = find_record_with_rbac(Host, params[:validate_id].presence || session[:host_items].first.to_i)
         # Set the record variables, but don't save
         creds = set_credentials(valid_host, :validate)
         if valid_record?
@@ -260,10 +257,10 @@ class HostController < ApplicationController
         end
       end
     when "reset"
-      params[:edittype] = @edit[:edittype]    # remember the edit type
+      params[:edittype] = @edit[:edittype] # remember the edit type
       flash_to_session(_("All changes have been reset"), :warning)
       @in_a_form = true
-      javascript_redirect :action => 'edit', :id => @host.id.to_s
+      javascript_redirect(:action => 'edit', :id => @host.id.to_s)
     when "validate"
       verify_host = find_record_with_rbac(Host, params[:validate_id] ? params[:validate_id].to_i : params[:id])
       if session[:host_items].nil?
@@ -294,8 +291,8 @@ class HostController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    params[:display] = @display if ["vms", "storages"].include?(@display)  # Were we displaying vms/storages
+    @edit = session[:edit] # Restore @edit for adv search box
+    params[:display] = @display if %w(vms storages).include?(@display) # Were we displaying vms/storages
 
     if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
                                      "miq_template_",
@@ -319,39 +316,39 @@ class HostController < ApplicationController
         @refresh_partial = "layouts/gtl"
         show
       end
-    else                                                                        # Handle Host buttons
-      params[:page] = @current_page unless @current_page.nil?                     # Save current page for list refresh
+    else # Handle Host buttons
+      params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
       @refresh_div = "main_div" # Default div for button.rjs to refresh
-      drift_analysis if params[:pressed] == "common_drift"
-      redirect_to :action => "new" if params[:pressed] == "new"
-      deletehosts if params[:pressed] == "host_delete"
-      comparemiq if params[:pressed] == "host_compare"
-      refreshhosts if params[:pressed] == "host_refresh"
-      maintenancehosts if params[:pressed] == "host_toggle_maintenance"
-      scanhosts if params[:pressed] == "host_scan"
-      check_compliance_hosts if params[:pressed] == "host_check_compliance"
-      analyze_check_compliance_hosts if params[:pressed] == "host_analyze_check_compliance"
-      tag(Host) if params[:pressed] == "host_tag"
-      assign_policies(Host) if params[:pressed] == "host_protect"
-      edit_record if params[:pressed] == "host_edit"
-      custom_buttons if params[:pressed] == "custom_button"
-      toggleservicescheduling if params[:pressed] == "host_cloud_service_scheduling_toggle"
-      sethoststomanageable if params[:pressed] == "host_manageable"
-      introspecthosts if params[:pressed] == "host_introspect"
-      providehosts if params[:pressed] == "host_provide"
-
+      case params[:pressed]
+      when 'common_drift' then drift_analysis
+      when 'custom_button' then custom_buttons
+      when 'new' then redirect_to(:action => "new")
+      when 'host_analyze_check_compliance' then analyze_check_compliance_hosts
+      when 'host_check_compliance' then check_compliance_hosts
+      when 'host_cloud_service_scheduling_toggle' then toggleservicescheduling
+      when 'host_compare' then comparemiq
+      when 'host_delete' then deletehosts
+      when 'host_edit' then edit_record
+      when 'host_introspect' then introspecthosts
+      when 'host_manageable' then sethoststomanageable
+      when 'host_protect' then assign_policies(Host)
+      when 'host_provide' then providehosts
+      when 'host_refresh' then refreshhosts
+      when 'host_scan' then scanhosts
+      when 'host_tag' then tag(Host)
+      when 'host_toggle_maintenance' then maintenancehosts
+      end
       # Handle Host power buttons
-      if ["host_shutdown", "host_reboot", "host_standby", "host_enter_maint_mode", "host_exit_maint_mode",
-          "host_start", "host_stop", "host_reset"].include?(params[:pressed])
+      if %w(host_shutdown host_reboot host_standby host_enter_maint_mode host_exit_maint_mode host_start
+            host_stop host_reset).include?(params[:pressed])
         powerbutton_hosts(params[:pressed].split("_")[1..-1].join("_")) # Handle specific power button
       end
 
       perf_chart_chooser if params[:pressed] == "perf_reload"
       perf_refresh_data if params[:pressed] == "perf_refresh"
 
-      return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
-      return if ["host_tag", "host_compare", "common_drift",
-                 "host_protect", "perf_reload"].include?(params[:pressed]) &&
+      return if ["custom_button"].include?(params[:pressed]) # custom button screen, so return, let custom_buttons method handle everything
+      return if %w(host_tag host_compare common_drift host_protect perf_reload).include?(params[:pressed]) &&
                 @flash_array.nil? # Another screen showing, so return
 
       if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
@@ -377,41 +374,38 @@ class HostController < ApplicationController
       if @flash_array
         show_list
         replace_gtl_main_div
-      else
-        if @redirect_controller
-          if ["#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-            if flash_errors?
-              javascript_flash
-            else
-              javascript_redirect :controller     => @redirect_controller,
-                                  :action         => @refresh_partial,
-                                  :id             => @redirect_id,
-                                  :prov_type      => @prov_type,
-                                  :prov_id        => @prov_id,
-                                  :org_controller => @org_controller,
-                                  :escape         => false
-            end
+      elsif @redirect_controller
+        if ["#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
+          if flash_errors?
+            javascript_flash
           else
-            render_or_redirect_partial(pfx)
+            javascript_redirect(:controller     => @redirect_controller,
+                                :action         => @refresh_partial,
+                                :id             => @redirect_id,
+                                :prov_type      => @prov_type,
+                                :prov_id        => @prov_id,
+                                :org_controller => @org_controller,
+                                :escape         => false)
           end
         else
-          javascript_redirect :action => @refresh_partial, :id => @redirect_id
+          render_or_redirect_partial(pfx)
         end
-      end
-    else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
       else
-        render_flash
+        javascript_redirect(:action => @refresh_partial, :id => @redirect_id)
       end
+    elsif @refresh_div == "main_div" && @lastaction == "show_list"
+      replace_gtl_main_div
+    else
+      render_flash
     end
   end
 
   def host_form_fields
     assert_privileges("host_edit")
     host = find_record_with_rbac(Host, params[:id])
-    validate_against = session.fetch_path(:edit, :validate_against) &&
-                       params[:button] != "reset" ? session.fetch_path(:edit, :validate_against) : nil
+    validate_against = if session.fetch_path(:edit, :validate_against) && params[:button] != "reset"
+                         session.fetch_path(:edit, :validate_against)
+                       end
 
     host_hash = {
       :name             => host.name,
@@ -452,11 +446,11 @@ class HostController < ApplicationController
   def valid_record?
     valid = true
     @errors = []
-    if params[:ws_port] && !(params[:ws_port] =~ /^\d+$/)
+    if params[:ws_port] && (params[:ws_port] !~ /^\d+$/)
       @errors.push(_("Web Services Listen Port must be numeric"))
       valid = false
     end
-    if params[:log_wrapsize] && (!(params[:log_wrapsize] =~ /^\d+$/) || params[:log_wrapsize].to_i == 0)
+    if params[:log_wrapsize] && ((params[:log_wrapsize] !~ /^\d+$/) || params[:log_wrapsize].to_i.zero?)
       @errors.push(_("Log Wrap Size must be numeric and greater than zero"))
       valid = false
     end
@@ -512,7 +506,7 @@ class HostController < ApplicationController
 
   def get_session_data
     super
-    @drift_db   = "Host"
+    @drift_db = "Host"
   end
 
   def set_session_data
