@@ -71,26 +71,20 @@
           = _('User will input the value')
 
         .spacer
-        - t = _('Commit expression element changes')
-        %button.btn.btn-primary{"data-method" => :post,
-        "data-miq_sparkle_on" => true,
-        :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'commit')}');",
-        :remote               => true,
-        :title                => t}
+        %button.btn.btn-primary{:onclick => "miqAjax('#{url_for_only_path(:action => 'exp_button', :pressed => 'commit')}');",
+                                :title   => _('Commit expression element changes')}
           = _("Commit")
-        - t = _("Discard expression element changes")
-        %button.btn.btn-default{"data-method" => :post,
-        "data-miq_sparkle_on" => true,
-        :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'discard')}');",
-        :remote               => true,
-        :title                => t}
+        %button.btn.btn-default{:onclick => "miqAjax('#{url_for_only_path(:action => 'exp_button', :pressed => 'discard')}');",
+                                :title   => _("Discard expression element changes")}
           = _("Discard")
 
-  %script{:type => "text/javascript"}
-    -# Set the expression value prefill images and hover text
+  :javascript
+    // Set the expression value prefill images and hover text
     miqExpressionPrefill(ManageIQ.expEditor, true);
-    -# Clear the date from and to selection limiters
+
+    // Clear the date from and to selection limiters
     ManageIQ.calendar.calDateFrom = null;
     ManageIQ.calendar.calDateTo = null;
+
     miqInitSelectPicker();
     miqSelectPickerEvent('chosen_typ', '#{url}');
