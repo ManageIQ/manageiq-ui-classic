@@ -12,12 +12,12 @@ module Mixins
       params[:display] = klass.name
       # Ajax request means in explorer, or if current explorer is one of the explorer controllers
       @explorer = true if request.xml_http_request? && explorer_controller?
-      if @explorer  # Save vars for tree history array
+      if @explorer # Save vars for tree history array
         @x_show = params[:x_show]
         @sb[:action] = @lastaction = action
       end
       @record = identify_record(params[:id], controller_to_model)
-      @view = session[:view]                  # Restore the view from the session to get column names for the display
+      @view = session[:view] # Restore the view from the session to get column names for the display
       return if record_no_longer_exists?(@record, klass.to_s)
 
       @lastaction = action
@@ -181,7 +181,7 @@ module Mixins
     end
 
     # Build the vm detail gtl view
-    def show_details(db, options = {})  # Pass in the db, parent vm is in @vm
+    def show_details(db, options = {})
       association = options[:association]
       scopes = options[:scopes]
       @showtype      = "details"
@@ -192,7 +192,7 @@ module Mixins
                                :parent      => @record,
                                :association => association,
                                :named_scope => scopes,
-                               :dbname      => "#{@db}item")  # Get the records into a view & paginator
+                               :dbname      => "#{@db}item") # Get the records into a view & paginator
 
       if @explorer # In explorer?
         @refresh_partial = "vm_common/#{@showtype}"
