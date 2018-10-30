@@ -93,7 +93,11 @@ class MiqTaskController < ApplicationController
               elsif task.state.downcase == "finished"
                 _("Finished Task cannot be cancelled")
               else
-                task.process_cancel
+                begin
+                  task.process_cancel
+                rescue RuntimeError => e
+                  e.message
+                end
               end
     add_flash(message, :error)
     jobs
