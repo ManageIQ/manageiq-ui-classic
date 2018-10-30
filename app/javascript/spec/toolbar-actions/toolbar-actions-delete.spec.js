@@ -1,6 +1,6 @@
 import 'angular-mocks';
-import getGridChecks from '../packs/toolbar-actions-common';
-import * as deleteActions from '../toolbar-actions/delete';
+import getGridChecks from '../../packs/toolbar-actions-common';
+import * as deleteActions from '../../toolbar-actions/delete';
 
 describe('Toolbar actions', () => {
   beforeEach(() => {

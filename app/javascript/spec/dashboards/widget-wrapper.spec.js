@@ -1,6 +1,6 @@
 import { module, inject } from './mocks';
 
-describe('widget-wrapper', function () {
+describe('widget-wrapper', () => {
   let $scope;
   let element;
   let $compile;
@@ -8,14 +8,14 @@ describe('widget-wrapper', function () {
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function (_$compile_, $rootScope, $templateCache, $http) {
+  beforeEach(inject((_$compile_, $rootScope, $templateCache, $http) => {
     // FIXME: templateRequest is using $http to get the template, but angular-mocks prevents it
     $templateCache.put('/static/dropdown-menu.html.haml', '<div></div>');
 
     $scope = $rootScope;
 
     $compile = _$compile_;
-    spyOn($http, 'get').and.callFake(function (url) {
+    spyOn($http, 'get').and.callFake((url) => {
       if (url === '/static/dropdown-menu.html.haml') {
         return Promise.resolve({
           data: "<div></div>",
@@ -36,8 +36,8 @@ describe('widget-wrapper', function () {
     });
   }));
 
-  widgetTypes.forEach(function (widget) {
-    it(`renders widget-${widget} when widget-type is ${widget}`, function (done) {
+  widgetTypes.forEach((widget) => {
+    it(`renders widget-${widget} when widget-type is ${widget}`, (done) => {
       element = angular.element(
         '<form name="angularForm">' +
         '  <widget-wrapper widget-id="42" widget-blank=false widget-buttons="null" widget-type="' + widget + '"></widget-wrapper>' +
@@ -47,7 +47,7 @@ describe('widget-wrapper', function () {
       $scope.$digest();
 
       const $ctrl = element.find('widget-wrapper').find('div').scope().vm;
-      $ctrl.promise.catch(function () {}).then(function () {
+      $ctrl.promise.catch(() => null).then(() => {
         $scope.$digest();
 
         const widgetElement = element.find("widget-".concat(widget));
