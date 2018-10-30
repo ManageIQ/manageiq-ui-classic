@@ -8,7 +8,7 @@ module Mixins
     end
 
     def index
-      redirect_to :action => 'explorer'
+      redirect_to(:action => 'explorer')
     end
 
     def show_list
