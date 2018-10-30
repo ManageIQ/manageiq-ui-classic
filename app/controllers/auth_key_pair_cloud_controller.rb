@@ -106,11 +106,13 @@ class AuthKeyPairCloudController < ApplicationController
       if kls.is_available?(:create_key_pair, ext_management_system, options)
         task_id = kls.create_key_pair_queue(session[:userid], ext_management_system, options)
 
-        if task_id.kind_of?(Integer)
-          initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
-        else
+        unless task_id.kind_of?(Integer)
           add_flash(_("Key Pair creation failed: Task start failed"), :error)
+        end
+        if @flash_array
           javascript_flash(:spinner_off => true)
+        else
+          initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
         end
       else
         @in_a_form = true
