@@ -14,7 +14,7 @@ class MiqAeClassController < ApplicationController
   # GET /automation_classes
   # GET /automation_classes.xml
   def index
-    redirect_to :action => 'explorer'
+    redirect_to(:action => 'explorer')
   end
 
   def change_tab
@@ -72,7 +72,7 @@ class MiqAeClassController < ApplicationController
     # don't need right bottom cell
     @breadcrumbs = []
     bc_name = _("Explorer")
-    bc_name += _(" (filtered)") if @filters && (!@filters[:tags].blank? || !@filters[:cats].blank?)
+    bc_name += _(" (filtered)") if @filters && (@filters[:tags].present? || @filters[:cats].present?)
     drop_breadcrumb(:name => bc_name, :url => "/miq_ae_class/explorer")
     @lastaction = "replace_right_cell"
 
@@ -282,7 +282,7 @@ class MiqAeClassController < ApplicationController
       :add_nodes       => add_nodes,
     )
 
-    reload_trees_by_presenter(presenter, [build_ae_tree]) unless replace_trees.blank?
+    reload_trees_by_presenter(presenter, [build_ae_tree]) if replace_trees.present?
 
     if @sb[:action] == "miq_ae_field_seq"
       presenter.update(:class_fields_div, r[:partial => "fields_seq_form"])
@@ -326,7 +326,7 @@ class MiqAeClassController < ApplicationController
     presenter[:lock_sidebar] = @in_a_form && @edit
 
     if @record.kind_of?(MiqAeMethod) && !@in_a_form && !@angular_form
-      presenter.set_visibility(!@record.inputs.blank?, :params_div)
+      presenter.set_visibility(@record.inputs.present?, :params_div)
     end
 
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
@@ -475,7 +475,7 @@ class MiqAeClassController < ApplicationController
   def edit_instance
     assert_privileges("miq_ae_instance_edit")
     obj = find_checked_items
-    if !obj.blank?
+    if obj.present?
       @sb[:row_selected] = obj[0]
       id = @sb[:row_selected].split('-')
     else
@@ -491,7 +491,7 @@ class MiqAeClassController < ApplicationController
   def edit_method
     assert_privileges("miq_ae_method_edit")
     obj = find_checked_items
-    if !obj.blank?
+    if obj.present?
       @sb[:row_selected] = obj[0]
       id = @sb[:row_selected].split('-')
     else
@@ -800,7 +800,7 @@ class MiqAeClassController < ApplicationController
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       page << "var lineHeight = ta.clientHeight / ta.rows;"
       page << "ta.scrollTop = (#{line.to_i}-1) * lineHeight;"
-      if line > 0
+      if line.positive?
         if @sb[:row_selected]
           page << "$('#cls_method_data_lines').scrollTop(ta.scrollTop);"
           page << "$('#cls_method_data').scrollTop(ta.scrollTop);"
@@ -840,7 +840,7 @@ class MiqAeClassController < ApplicationController
           session[:field_data][:default_value] =
             @edit[:new_field][:default_value] = ''
         end
-        params.keys.each do |field|
+        params.each_key do |field|
           next unless field.to_s.starts_with?("fields_datatype")
 
           f = field.split('fields_datatype')
@@ -938,7 +938,7 @@ class MiqAeClassController < ApplicationController
           end
         end
 
-        params.keys.each do |field|
+        params.each_key do |field|
           if field.to_s.starts_with?("cls_fields_datatype_")
             f = field.split('cls_fields_datatype_')
             def_field = "cls_fields_value_" << f[1].to_s
@@ -1052,7 +1052,7 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
-      session[:edit] = nil  # clean out the saved info
+      session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of schema for Automate Class \"%{name}\" was cancelled by the user") % {:name => @ae_class.name})
       @in_a_form = false
       replace_right_cell
@@ -1064,7 +1064,7 @@ class MiqAeClassController < ApplicationController
           ae_class.ae_fields.destroy(MiqAeField.where(:id => @edit[:fields_to_delete]))
           ae_class.ae_fields.each { |fld| fld.default_value = nil if fld.default_value == "" }
           ae_class.save!
-        end  # end of transaction
+        end
       rescue => bang
         add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         session[:changed] = @changed = true
@@ -1072,7 +1072,7 @@ class MiqAeClassController < ApplicationController
       else
         add_flash(_("Schema for Automate Class \"%{name}\" was saved") % {:name => ae_class.name})
         AuditEvent.success(build_saved_audit(ae_class, @edit))
-        session[:edit] = nil  # clean out the saved info
+        session[:edit] = nil # clean out the saved info
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
         return
@@ -1415,11 +1415,11 @@ class MiqAeClassController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       page.replace_html(@refresh_div, :partial => @refresh_partial)
-      if row_selected_in_grid?
-        page << javascript_show("class_methods_div")
-      else
-        page << javascript_show("method_inputs_div")
-      end
+      page << if row_selected_in_grid?
+                javascript_show("class_methods_div")
+              else
+                javascript_show("method_inputs_div")
+              end
       page << javascript_for_miq_button_visibility(@changed)
       page << javascript_show("inputs_div")
       page << "miqSparkle(false);"
@@ -1442,11 +1442,11 @@ class MiqAeClassController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       page.replace_html(@refresh_div, :partial => @refresh_partial)
-      if row_selected_in_grid?
-        page << javascript_show("class_methods_div")
-      else
-        page << javascript_show("method_inputs_div")
-      end
+      page << if row_selected_in_grid?
+                javascript_show("class_methods_div")
+              else
+                javascript_show("method_inputs_div")
+              end
       page << javascript_for_miq_button_visibility(@changed)
       page << javascript_show("inputs_div")
       page << "miqSparkle(false);"
@@ -2067,16 +2067,16 @@ class MiqAeClassController < ApplicationController
   def get_form_vars
     @ae_class = MiqAeClass.find_by(:id => @edit[:ae_class_id])
     # for class add tab
-    @edit[:new][:name] = params[:name].blank? ? nil : params[:name] if params[:name]
-    @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
-    @edit[:new][:display_name] = params[:display_name].blank? ? nil : params[:display_name] if params[:display_name]
+    @edit[:new][:name] = params[:name].presence if params[:name]
+    @edit[:new][:description] = params[:description].presence if params[:description]
+    @edit[:new][:display_name] = params[:display_name].presence if params[:display_name]
     @edit[:new][:namespace] = params[:namespace] if params[:namespace]
     @edit[:new][:inherits] = params[:inherits_from] if params[:inherits_from]
 
     # for class edit tab
-    @edit[:new][:name] = params[:cls_name].blank? ? nil : params[:cls_name] if params[:cls_name]
-    @edit[:new][:description] = params[:cls_description].blank? ? nil : params[:cls_description] if params[:cls_description]
-    @edit[:new][:display_name] = params[:cls_display_name].blank? ? nil : params[:cls_display_name] if params[:cls_display_name]
+    @edit[:new][:name] = params[:cls_name].presence if params[:cls_name]
+    @edit[:new][:description] = params[:cls_description].presence if params[:cls_description]
+    @edit[:new][:display_name] = params[:cls_display_name].presence if params[:cls_display_name]
     @edit[:new][:namespace] = params[:cls_namespace] if params[:cls_namespace]
     @edit[:new][:inherits] = params[:cls_inherits_from] if params[:cls_inherits_from]
   end
@@ -2084,7 +2084,7 @@ class MiqAeClassController < ApplicationController
   # Common routine to find checked items on a page (checkbox ids are "check_xxx" where xxx is the item id or index)
   def find_checked_items(_prefix = nil)
     # AE can't use ApplicationController#find_checked_items because that one expects non-prefixed ids
-    params[:miq_grid_checks].split(",") unless params[:miq_grid_checks].blank?
+    params[:miq_grid_checks].split(",") if params[:miq_grid_checks].present?
   end
 
   def field_attributes
@@ -2176,8 +2176,8 @@ class MiqAeClassController < ApplicationController
     @in_a_form = true
     if params[:item].blank? && params[:button] != "accept" && params["action"] != "field_delete"
       # for method_inputs view
-      @edit[:new][:name] = params[:method_name].blank? ? nil : params[:method_name] if params[:method_name]
-      @edit[:new][:display_name] = params[:method_display_name].blank? ? nil : params[:method_display_name] if params[:method_display_name]
+      @edit[:new][:name] = params[:method_name].presence if params[:method_name]
+      @edit[:new][:display_name] = params[:method_display_name].presence if params[:method_display_name]
       @edit[:new][:location] = params[:method_location] if params[:method_location]
       @edit[:new][:location] ||= "inline"
       @edit[:new][:data] = params[:method_data] if params[:method_data]
@@ -2188,8 +2188,8 @@ class MiqAeClassController < ApplicationController
       session[:field_data][:default_value] = @edit[:new_field][:default_value] = params[:field_password_value] if params[:field_password_value]
 
       # for class_methods view
-      @edit[:new][:name] = params[:cls_method_name].blank? ? nil : params[:cls_method_name] if params[:cls_method_name]
-      @edit[:new][:display_name] = params[:cls_method_display_name].blank? ? nil : params[:cls_method_display_name] if params[:cls_method_display_name]
+      @edit[:new][:name] = params[:cls_method_name].presence if params[:cls_method_name]
+      @edit[:new][:display_name] = params[:cls_method_display_name].presence if params[:cls_method_display_name]
       @edit[:new][:location] = params[:cls_method_location] if params[:cls_method_location]
       @edit[:new][:location] ||= "inline"
       @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
@@ -2230,17 +2230,16 @@ class MiqAeClassController < ApplicationController
   def get_ns_form_vars
     @ae_ns = @edit[:typ].constantize.find_by(:id => @edit[:ae_ns_id])
     @edit[:new][:enabled] = params[:ns_enabled] == '1' if params[:ns_enabled]
-    [:ns_name, :ns_description].each do |field|
+    %i(ns_name ns_description).each do |field|
       next unless params[field]
-      @edit[:new][field] = params[field].blank? ? nil : params[field]
+      @edit[:new][field] = params[field].presence
     end
     @in_a_form = true
   end
 
   def get_instances_form_vars_for(prefix = nil)
     instance_column_names.each do |key|
-      @edit[:new][:ae_inst][key] =
-        params["#{prefix}inst_#{key}"].blank? ? nil : params["#{prefix}inst_#{key}"] if params["#{prefix}inst_#{key}"]
+      @edit[:new][:ae_inst][key] = params["#{prefix}inst_#{key}"].presence if params["#{prefix}inst_#{key}"]
     end
 
     @ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }.each_with_index do |_fld, i|
@@ -2271,7 +2270,7 @@ class MiqAeClassController < ApplicationController
 
   # Set record variables to new values
   def set_record_vars(miqaeclass)
-    miqaeclass.name = @edit[:new][:name].strip unless @edit[:new][:name].blank?
+    miqaeclass.name = @edit[:new][:name].strip if @edit[:new][:name].present?
     miqaeclass.display_name = @edit[:new][:display_name]
     miqaeclass.description = @edit[:new][:description]
     miqaeclass.inherits = @edit[:new][:inherits]
@@ -2285,7 +2284,7 @@ class MiqAeClassController < ApplicationController
 
   # Set record variables to new values
   def set_method_record_vars(miqaemethod)
-    miqaemethod.name = @edit[:new][:name].strip unless @edit[:new][:name].blank?
+    miqaemethod.name = @edit[:new][:name].strip if @edit[:new][:name].present?
     miqaemethod.display_name = @edit[:new][:display_name]
     miqaemethod.scope = @edit[:new][:scope]
     miqaemethod.location = @edit[:new][:location]
@@ -2405,7 +2404,7 @@ class MiqAeClassController < ApplicationController
     @selected = selected_fields
 
     if consecutive
-      if first_idx > 0
+      if first_idx.positive?
         available_fields[first_idx..last_idx].reverse_each do |field|
           pulled = available_fields.delete(field)
           available_fields.insert(first_idx - 1, pulled)
@@ -2444,7 +2443,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def no_items_selected?(field_name)
-    !field_name || field_name.empty? || field_name[0] == ""
+    field_name.blank? || field_name[0] == ""
   end
 
   def selected_consecutive?(available_fields, selected_fields)
