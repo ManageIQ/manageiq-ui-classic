@@ -274,6 +274,24 @@ describe ApplicationController do
     end
   end
 
+  describe "#get_view" do
+    before do
+      search = FactoryGirl.create(:miq_search, :name => 'sds')
+      user = FactoryGirl.create(:user_with_group, :settings => {:default_search => {:Host => search.id}})
+      login_as user
+      session[:settings] = {:default_search => {:Host => search.id},
+                            :views          => {:persistentvolume => 'list'},
+                            :perpage        => {:list => 10}}
+      controller.instance_variable_set(:@settings, :default_search => {:Host => search.id})
+    end
+
+    it "does not load default selected search on tagging screen" do
+      controller.instance_variable_set(:@edit, :tagging => "Host")
+      expect(controller).to_not receive(:load_default_search)
+      controller.send(:get_view, "Host", :gtl_dbname => :host)
+    end
+  end
+
   describe "#build_user_emails_for_edit" do
     before :each do
       EvmSpecHelper.local_miq_server
