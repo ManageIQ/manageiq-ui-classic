@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Gaprindashvili-6
+
+### Added
+- VM: associate only unused floating IPs [(#4357)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4357)
+- Add option Date Only for chargeback grouping [(#4523)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4523)
+
+### Fixed
+- Display browser local time in retirement form [(#3826)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3826)
+- Hide Driving Event field for Containers. [(#4324)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4324)
+- Fixed to use bootstrap select event instead of UJS observer [(#4488)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4488)
+- Fix rendering of child orchestration stacks [(#4464)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4464)
+- There is no need to check for tab title uniqueness for default dashboard [(#4515)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4515)
+- Unify grouping option date and vm in chargeback filter tab [(#4517)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4517)
+- Handle Alerts with no resources [(#4568)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4568)
+- Lazy load StorageManagers upon volume creation [(#4549)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4549)
+- Custom Buttons with expressions are only visible on summary screen [(#4629)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4629)
+- Worker Settings: save memory threshold as an integer [(#4633)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4633)
+- Send the tree data for explorer trees as an object instead of JSON [(#3785)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3785)
+- GTL onItemClicked - ignore clicks on td with checkbox [(#3207)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3207)
+- Fixed code to check for correct RBAC feature when adding/editing report [(#4699)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4699)
+- ansible-raw-stdout: parse task id as string, not number [(#4397)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4397)
+- Fix parent_id being a number, not string in JS [(#4399)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4399)
+- Show correct VMs upon Service retirement [(#4710)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4710)
+- Fix error for Datastore custom button [(#4745)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4745) 
+
 ## Gaprindashvili-5
 
 ### Added
