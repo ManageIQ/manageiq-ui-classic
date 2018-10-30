@@ -14,7 +14,7 @@ class MiqAeToolsController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
+    @edit = session[:edit] # Restore @edit for adv search box
     @refresh_div = "main_div" # Default div for button.rjs to refresh
     if params[:pressed] == "refresh_log"
       refresh_log
@@ -44,16 +44,15 @@ class MiqAeToolsController < ApplicationController
     assert_privileges("refresh_log")
     @log = $miq_ae_logger.contents if $miq_ae_logger
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
-    replace_main_div :partial => "layouts/log_viewer",
-                     :locals  => {:legend_text => _("Last 1000 lines from the Automation log")}
+    replace_main_div(:partial => "layouts/log_viewer",
+                     :locals  => {:legend_text => _("Last 1000 lines from the Automation log")})
   end
 
   # Send the log in text format
   def fetch_log
     assert_privileges("fetch_log")
     disable_client_cache
-    send_data($miq_ae_logger.contents(nil, nil),
-              :filename => "automation.log") if $miq_ae_logger
+    send_data($miq_ae_logger.contents(nil, nil), :filename => "automation.log") if $miq_ae_logger
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_automation_log",
                        :message => _("Automation log downloaded"))
@@ -189,7 +188,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
     end
 
     flash_to_session
-    redirect_to redirect_options
+    redirect_to(redirect_options)
   end
 
   def review_import
@@ -266,7 +265,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
 
   # Import classes
   def upload
-    if params[:upload] && !params[:upload][:datastore].blank?
+    if params[:upload] && params[:upload][:datastore].present?
       begin
         MiqAeDatastore.upload(params[:upload][:datastore])
         flash_to_session(_("Datastore import was successful.
@@ -304,7 +303,7 @@ Methods updated/added: %{method_stats}") % stat_options)
     session[:ae_id] = params[:id]
     session[:ae_task_id] = params[:task_id]
 
-    if miq_task.status != "Ok"  # Check to see if any results came back or status not Ok
+    if miq_task.status != "Ok" # Check to see if any results came back or status not Ok
       add_flash(_("Error during reset: Status [%{status}] Message [%{message}]") %
                   {:status => miq_task.status, :message => miq_task.message}, :error)
     else
@@ -371,7 +370,7 @@ Methods updated/added: %{method_stats}") % stat_options)
 
   def ws_text_from_xml(xml, depth = 0)
     txt = ""
-    if depth == 0
+    if depth.zero?
       txt += "<#{xml.root.name}>\n"
       xml.root.each_element do |e|
         txt += "  "
@@ -402,8 +401,8 @@ Methods updated/added: %{method_stats}") % stat_options)
     ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
       f = ("attribute_" + (i + 1).to_s)
       v = ("value_" + (i + 1).to_s)
-      add_flash(_("%{val} missing for %{field}") % {:val => f.titleize, :field => v.titleize}, :error) if @resolve[:new][:attrs][i][0].blank? && !@resolve[:new][:attrs][i][1].blank?
-      add_flash(_("%{val} missing for %{field}") % {:val => v.titleize, :field => f.titleize}, :error) if !@resolve[:new][:attrs][i][0].blank? && @resolve[:new][:attrs][i][1].blank?
+      add_flash(_("%{val} missing for %{field}") % {:val => f.titleize, :field => v.titleize}, :error) if @resolve[:new][:attrs][i][0].blank? && @resolve[:new][:attrs][i][1].present?
+      add_flash(_("%{val} missing for %{field}") % {:val => v.titleize, :field => f.titleize}, :error) if @resolve[:new][:attrs][i][0].present? && @resolve[:new][:attrs][i][1].blank?
     end
     !flash_errors?
   end
@@ -430,7 +429,7 @@ Methods updated/added: %{method_stats}") % stat_options)
     #   @resolve[:new][:target_attr_name] = params[:target_attr_name] if params.has_key?(:target_attr_name)
     if params.key?(:target_class)
       @resolve[:new][:target_class] = params[:target_class]
-      targets = Rbac.filtered(params[:target_class]).select(:id, :name) unless params[:target_class].blank?
+      targets = Rbac.filtered(params[:target_class]).select(:id, :name) if params[:target_class].present?
       unless targets.nil?
         @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
         @resolve[:new][:target_id] = nil
