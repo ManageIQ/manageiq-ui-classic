@@ -49,10 +49,10 @@ class MiqTaskController < ApplicationController
   end
 
   def build_jobs_tab
-    @pp_choices = PPCHOICES2  # Get special pp choices for jobs/tasks lists
-    @settings[:perpage][:job_task] ||= 50       # Default to 50 per page until changed
+    @pp_choices = PPCHOICES2 # Get special pp choices for jobs/tasks lists
+    @settings[:perpage][:job_task] ||= 50 # Default to 50 per page until changed
     @tasks_options = HashWithIndifferentAccess.new if @tasks_options.blank?
-    @tasks_options[:zones] = Zone.all.collect { |z| z.name unless z.miq_servers.blank? }.compact
+    @tasks_options[:zones] = Zone.all.collect { |z| z.name if z.miq_servers.present? }.compact
     tasks_set_default_options if @tasks_options[@tabform].blank?
 
     @tabs ||= []
@@ -141,14 +141,13 @@ class MiqTaskController < ApplicationController
     @refresh_partial = "layouts/tasks"
   end
 
-
-  TASK_X_BUTTON_ALLOWED_ACTIONS =  {
+  TASK_X_BUTTON_ALLOWED_ACTIONS = {
     "miq_task_delete"      => :delete_tasks,
     "miq_task_deleteall"   => :delete_all_tasks,
     "miq_task_deleteolder" => :delete_older_tasks,
     "miq_task_canceljob"   => :cancel_task,
     "miq_task_reload"      => :reload_tasks,
-  }
+  }.freeze
 
   # handle buttons pressed on the button bar
   def button
@@ -159,11 +158,10 @@ class MiqTaskController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       unless @refresh_partial.nil?
+        page << "miqSetButtons(0, 'center_tb');"
         if @refresh_div == "flash_msg_div"
-          page << "miqSetButtons(0, 'center_tb');"
           page.replace(@refresh_div, :partial => @refresh_partial)
         else
-          page << "miqSetButtons(0, 'center_tb');"
           page.replace_html("main_div", :partial => @refresh_partial)
         end
       end
@@ -202,12 +200,12 @@ class MiqTaskController < ApplicationController
     end
 
     list_jobs # Get the jobs based on the latest options
-    @pp_choices = PPCHOICES2                             # Get special pp choices for jobs/tasks lists
+    @pp_choices = PPCHOICES2 # Get special pp choices for jobs/tasks lists
 
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << "miqSetButtons(0, 'center_tb');"                             # Reset the center toolbar
+      page << "miqSetButtons(0, 'center_tb');" # Reset the center toolbar
       page.replace("main_div", :partial => "layouts/tasks")
       page << "miqSparkle(false);"
     end
@@ -244,7 +242,7 @@ class MiqTaskController < ApplicationController
     }
 
     @tasks_options[@tabform][:zone]        = "<all>"
-    @tasks_options[@tabform][:user_choice] = "all" if "tasks_2" == @tabform
+    @tasks_options[@tabform][:user_choice] = "all" if @tabform == 'tasks_2'
   end
 
   # Create a condition from the passed in options
@@ -279,7 +277,7 @@ class MiqTaskController < ApplicationController
 
   def build_query_for_userid(opts)
     sql = "miq_tasks.userid=?"
-    if "tasks_1" == @tabform
+    if @tabform == 'tasks_1'
       [sql, session[:userid]]
     elsif opts[:user_choice] && opts[:user_choice] != "all"
       [sql, opts[:user_choice]]
@@ -290,7 +288,7 @@ class MiqTaskController < ApplicationController
 
   def build_query_for_status(opts)
     cond = [[]]
-    [:queued, :ok, :error, :warn, :running].each do |st|
+    %i(queued ok error warn running).each do |st|
       cond = add_to_condition(cond, *send("build_query_for_" + st.to_s)) if opts[st]
     end
 
@@ -392,7 +390,7 @@ class MiqTaskController < ApplicationController
   def get_session_data
     super
     @layout = get_layout
-    @tabform       = session[:tabform]  if session[:tabform]
+    @tabform       = session[:tabform] if session[:tabform]
     @tasks_options = session[:tasks_options] || ""
   end
 
