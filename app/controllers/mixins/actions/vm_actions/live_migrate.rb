@@ -9,7 +9,7 @@ module Mixins
             live_migrate
             @refresh_partial = "vm_common/live_migrate"
           else
-            javascript_redirect :controller => 'vm', :action => 'live_migrate', :escape => false
+            javascript_redirect(:controller => 'vm', :action => 'live_migrate', :escape => false)
           end
         end
 
@@ -17,7 +17,7 @@ module Mixins
 
         def live_migrate
           assert_privileges("instance_live_migrate")
-          drop_breadcrumb(:name => _("Live Migrate Instances"), :url  => "/vm_cloud/live_migrate") unless @explorer
+          drop_breadcrumb(:name => _("Live Migrate Instances"), :url => "/vm_cloud/live_migrate") unless @explorer
           @sb[:explorer] = @explorer
           @in_a_form = true
           @live_migrate = true
@@ -87,7 +87,7 @@ module Mixins
             replace_right_cell
           else
             flash_to_session
-            javascript_redirect previous_breadcrumb_url
+            javascript_redirect(previous_breadcrumb_url)
           end
         end
       end

@@ -11,7 +11,7 @@ module Mixins
               add_security_group
               @refresh_partial = "vm_common/add_security_group"
             else
-              javascript_redirect :controller => 'vm', :action => 'add_security_group', :rec_id => @record.id, :escape => false
+              javascript_redirect(:controller => 'vm', :action => 'add_security_group', :rec_id => @record.id, :escape => false)
             end
           else
             add_flash(_("Unable to add Security Group to Instance \"%{name}\": %{details}") % {

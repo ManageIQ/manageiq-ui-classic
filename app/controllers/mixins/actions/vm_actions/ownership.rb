@@ -11,9 +11,9 @@ module Mixins
         def set_ownership
           assert_privileges(params[:pressed])
           # check to see if coming from show_list or drilled into vms from another CI
-          controller = if request.parameters[:controller] == "vm" || ["all_vms", "vms", "instances", "images"].include?(params[:display])
+          controller = if request.parameters[:controller] == "vm" || %w(all_vms vms instances images).include?(params[:display])
                          "vm"
-                       elsif ["miq_templates", "images"].include?(params[:display]) || params[:pressed].starts_with?("miq_template_")
+                       elsif %w(miq_templates images).include?(params[:display]) || params[:pressed].starts_with?("miq_template_")
                          "miq_template"
                        else
                          request.parameters[:controller]
@@ -26,7 +26,8 @@ module Mixins
           @edit[:object_ids] = recs
           if recs.empty?
             add_flash(_("One or more %{model} must be selected to Set Ownership") % {
-              :model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
+              :model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)
+            }, :error)
             @refresh_div = "flash_msg_div"
             @refresh_partial = "layouts/flash_msg"
             return
@@ -35,7 +36,7 @@ module Mixins
           @origin_ownership_items = recs.collect(&:to_i)
           @ownershipitems = filter_ownership_items(get_class_from_controller_param(controller), recs)
 
-          if @ownershipitems.nil? || @ownershipitems.empty?
+          if @ownershipitems.blank?
             add_flash(_('None of the selected items allow ownership changes'), :error)
             @refresh_div = "flash_msg_div"
             @refresh_partial = "layouts/flash_msg"
@@ -45,13 +46,12 @@ module Mixins
           if @explorer
             @sb[:explorer] = true
             ownership(@origin_ownership_items)
+          elsif role_allows?(:feature => "vm_ownership")
+            drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
+            # redirect to build the ownership screen
+            javascript_redirect(:controller => controller, :action => 'ownership', :rec_ids => @origin_ownership_items, :escape => false)
           else
-            if role_allows?(:feature => "vm_ownership")
-              drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
-              javascript_redirect :controller => controller, :action => 'ownership', :rec_ids => @origin_ownership_items, :escape => false # redirect to build the ownership screen
-            else
-              head :ok
-            end
+            head :ok
           end
         end
 
@@ -150,28 +150,27 @@ module Mixins
             replace_right_cell
           else
             session[:flash_msgs] = @flash_array
-            javascript_redirect previous_breadcrumb_url
+            javascript_redirect(previous_breadcrumb_url)
           end
         end
 
         def ownership_handle_save_button
           opts = {}
           opts[:owner] = unless params[:user] == 'dont-change'
-                           if params[:user].blank?     # to clear previously set user
+                           if params[:user].blank? # to clear previously set user
                              nil
                            elsif params[:user] != @user
-                            User.find(params[:user])
+                             User.find(params[:user])
                            end
                          end
 
           opts[:group] = unless params[:group] == 'dont-change'
-                           if params[:group].blank?    # to clear previously set group
+                           if params[:group].blank? # to clear previously set group
                              nil
                            elsif params[:group] != @group
                              MiqGroup.find(params[:group])
                            end
                          end
-
 
           klass = get_class_from_controller_param(request.parameters[:controller])
           param_ids = params[:objectIds].map(&:to_i)
@@ -188,11 +187,11 @@ module Mixins
               replace_right_cell
             else
               session[:flash_msgs] = @flash_array
-              javascript_redirect previous_breadcrumb_url
+              javascript_redirect(previous_breadcrumb_url)
             end
           else
-            result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
-            result["error_updating"].each { |msg| add_flash(msg, :error) } if result["error_updating"]
+            result["missing_ids"]&.each { |msg| add_flash(msg, :error) }
+            result["error_updating"]&.each { |msg| add_flash(msg, :error) }
             javascript_flash
           end
         end
@@ -204,10 +203,10 @@ module Mixins
             add_flash(_("All changes have been reset"), :warning)
             request.parameters[:controller] == "service" ? replace_right_cell(:nodetype => "ownership") : replace_right_cell
           else
-            javascript_redirect :action        => 'ownership',
+            javascript_redirect(:action        => 'ownership',
                                 :flash_msg     => _("All changes have been reset"),
                                 :flash_warning => true,
-                                :escape        => true
+                                :escape        => true)
           end
         end
 

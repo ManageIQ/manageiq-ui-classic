@@ -13,16 +13,17 @@ module Mixins
             else
               render :update do |page|
                 page << javascript_prologue
-                page.redirect_to :controller => 'vm',
+                page.redirect_to(:controller => 'vm',
                                  :action     => 'disassociate_floating_ip',
                                  :rec_id     => @record.id,
-                                 :escape     => false
+                                 :escape     => false)
               end
             end
           else
             add_flash(_("Unable to disassociate Floating IP from Instance \"%{name}\": %{details}") % {
               :name    => @record.name,
-              :details => @record.unsupported_reason(:disassociate_floating_ip)}, :error)
+              :details => @record.unsupported_reason(:disassociate_floating_ip)
+            }, :error)
           end
         end
 
@@ -31,10 +32,12 @@ module Mixins
         def disassociate_floating_ip
           assert_privileges("instance_disassociate_floating_ip")
           @record ||= find_record_with_rbac(VmCloud, params[:rec_id])
-          drop_breadcrumb(
-            :name => _("Disssociate Floating IP from Instance '%{name}'") % {:name => @record.name},
-            :url  => "/vm_cloud/disassociate_floating_ip"
-          ) unless @explorer
+          unless @explorer
+            drop_breadcrumb(
+              :name => _("Disssociate Floating IP from Instance '%{name}'") % {:name => @record.name},
+              :url  => "/vm_cloud/disassociate_floating_ip"
+            )
+          end
           @sb[:explorer] = @explorer
           @in_a_form = true
           @live_migrate = true
@@ -76,7 +79,7 @@ module Mixins
             flash_to_session
             render :update do |page|
               page << javascript_prologue
-              page.redirect_to previous_breadcrumb_url
+              page.redirect_to(previous_breadcrumb_url)
             end
           end
         end
@@ -112,7 +115,7 @@ module Mixins
             flash_to_session
             render :update do |page|
               page << javascript_prologue
-              page.redirect_to previous_breadcrumb_url
+              page.redirect_to(previous_breadcrumb_url)
             end
           end
         end

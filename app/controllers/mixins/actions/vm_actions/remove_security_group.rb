@@ -11,7 +11,7 @@ module Mixins
               remove_security_group
               @refresh_partial = "vm_common/remove_security_group"
             else
-              javascript_redirect :controller => 'vm', :action => 'remove_security_group', :rec_id => @record.id, :escape => false
+              javascript_redirect(:controller => 'vm', :action => 'remove_security_group', :rec_id => @record.id, :escape => false)
             end
           else
             add_flash(_("Unable to remove Security Group from Instance \"%{name}\": %{details}") % {

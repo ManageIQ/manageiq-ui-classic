@@ -4,7 +4,7 @@ module Mixins
       module Evacuate
         def evacuate
           assert_privileges("instance_evacuate")
-          drop_breadcrumb(:name => _("Evacuate Instances"), :url  => "/vm_cloud/evacuate") unless @explorer
+          drop_breadcrumb(:name => _("Evacuate Instances"), :url => "/vm_cloud/evacuate") unless @explorer
           @sb[:explorer] = @explorer
           @in_a_form = true
           @evacuate = true
@@ -24,7 +24,7 @@ module Mixins
             evacuate
             @refresh_partial = "vm_common/evacuate"
           else
-            javascript_redirect :controller => 'vm', :action => 'evacuate', :escape => false
+            javascript_redirect(:controller => 'vm', :action => 'evacuate', :escape => false)
           end
         end
 
@@ -43,7 +43,7 @@ module Mixins
             replace_right_cell
           else
             flash_to_session
-            javascript_redirect previous_breadcrumb_url
+            javascript_redirect(previous_breadcrumb_url)
           end
         end
 
