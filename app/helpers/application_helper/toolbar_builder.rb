@@ -1,6 +1,7 @@
 class ApplicationHelper::ToolbarBuilder
   include MiqAeClassHelper
   include RestfulControllerMixin
+  include ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
 
   def call(toolbar_name)
     build_toolbar(toolbar_name)
@@ -233,7 +234,11 @@ class ApplicationHelper::ToolbarBuilder
     }
     button[:text] = button_name if input[:text_display]
     button[:onwhen] = '1+' if cb_enabled_for_nested
-    button[:send_checked] = true if record_id == 'LIST'
+    if record_id == 'LIST' ||
+       (@display.present? &&
+        custom_button_appliable_class?(@display.camelize.singularize))
+      button[:send_checked] = true
+    end
     button
   end
 
@@ -283,6 +288,8 @@ class ApplicationHelper::ToolbarBuilder
     if @display == 'generic_objects'
       model = GenericObjectDefinition
       record = GenericObject.find_by(:id => @sb[:rec_id])
+    elsif relationship_table_screen?
+      model = custom_button_class_model(@display.camelize.singularize)
     else
       model = @record ? @record.class : model_for_custom_toolbar
     end

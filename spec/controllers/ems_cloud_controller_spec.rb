@@ -726,4 +726,9 @@ describe EmsCloudController do
       expect(response.body).not_to have_selector("button[title*='Select a filter to set it as my default']", :text => "Set Default")
     end
   end
+
+  %w(availability_zones cloud_tenants security_groups instances images
+     orchestration_stacks storage_managers).each do |custom_button_class|
+    include_examples "relationship table screen with custom buttons", custom_button_class
+  end
 end

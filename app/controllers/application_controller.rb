@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
   include Mixins::CustomButtons
   include Mixins::CheckedIdMixin
   include ParamsHelper
+  include ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
 
   helper ToolbarHelper
   helper JsHelper
