@@ -63,8 +63,8 @@ class NetworkRouterController < ApplicationController
     assert_privileges("network_router_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Network Router was cancelled by the user")
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _("Add of new Network Router was cancelled by the user"))
 
     when "add"
       options = form_params(params)
@@ -97,7 +97,7 @@ class NetworkRouterController < ApplicationController
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show_list"
+    javascript_redirect(:action => "show_list")
   end
 
   def delete_network_routers
@@ -131,7 +131,7 @@ class NetworkRouterController < ApplicationController
   end
 
   def edit
-    params[:id] = checked_item_id unless params[:id].present?
+    params[:id] = checked_item_id if params[:id].blank?
     assert_privileges("network_router_edit")
     @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
@@ -182,7 +182,7 @@ class NetworkRouterController < ApplicationController
 
     session[:edit] = nil
     flash_to_session
-    javascript_redirect previous_breadcrumb_url
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   def add_interface_select
@@ -275,7 +275,7 @@ class NetworkRouterController < ApplicationController
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => router_id
+    javascript_redirect(:action => "show", :id => router_id)
   end
 
   def remove_interface_select
@@ -368,7 +368,7 @@ class NetworkRouterController < ApplicationController
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show", :id => router_id
+    javascript_redirect(:action => "show", :id => router_id)
   end
 
   private
@@ -380,10 +380,10 @@ class NetworkRouterController < ApplicationController
 
   def form_external_gateway(params)
     options = {:external_gateway_info => {}}
-    if params[:cloud_network_id] && !params[:cloud_network_id].empty?
+    if params[:cloud_network_id].present?
       network = find_record_with_rbac(CloudNetwork, params[:cloud_network_id])
       options[:external_gateway_info][:network_id] = network.ems_ref
-      if params[:cloud_subnet_id] && !params[:cloud_subnet_id].empty?
+      if params[:cloud_subnet_id].present?
         subnet = find_record_with_rbac(CloudSubnet, params[:cloud_subnet_id])
         options[:external_gateway_info][:external_fixed_ips] = [{:subnet_id => subnet.ems_ref}]
       end
