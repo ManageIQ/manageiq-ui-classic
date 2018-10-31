@@ -26,6 +26,7 @@ cols:
 - last_scan_on
 - load_balancer_health_check_state
 - region_description
+- normalized_state
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -51,6 +52,7 @@ include_for_find:
 # Order of columns (from all tables)
 col_order:
 - name
+- normalized_state
 - ext_management_system.name
 - availability_zone.name
 - flavor.name
@@ -65,6 +67,7 @@ col_order:
 # Column titles, in order
 headers:
 - Name
+- Power State
 - Provider
 - Availability Zone
 - Flavor

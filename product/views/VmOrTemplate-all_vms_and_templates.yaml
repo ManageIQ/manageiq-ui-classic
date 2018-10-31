@@ -26,6 +26,7 @@ cols:
 - v_total_snapshots
 - allocated_disk_storage
 - last_scan_on
+- normalized_state
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -47,6 +48,7 @@ include_for_find:
 # Order of columns (from all tables)
 col_order:
 - name
+- normalized_state
 - ems_cluster_name
 - host.name
 - ipaddresses
@@ -59,6 +61,7 @@ col_order:
 # Column titles, in order
 headers:
 - Name
+- Power State
 - Cluster
 - Host
 - IP Addresses

@@ -26,6 +26,7 @@ cols:
 - mem_cpu
 - allocated_disk_storage
 - used_disk_storage
+- normalized_state
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -44,6 +45,7 @@ include_for_find:
 # Order of columns (from all tables)
 col_order:
 - name
+- normalized_state
 - ipaddresses
 - evm_owner.name
 - miq_group.description
@@ -56,6 +58,7 @@ col_order:
 # Column titles, in order
 headers:
 - Name
+- Power State
 - IP Addresses
 - Owner
 - Group
