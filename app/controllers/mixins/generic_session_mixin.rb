@@ -1,6 +1,5 @@
 module Mixins
   module GenericSessionMixin
-
     private
 
     def get_session_data

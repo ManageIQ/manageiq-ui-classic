@@ -3,7 +3,7 @@ module Mixins
     def cancel_action(message)
       session[:edit] = nil
       flash_to_session(message, :warning)
-      javascript_redirect previous_breadcrumb_url
+      javascript_redirect(previous_breadcrumb_url)
     end
 
     def delete_action

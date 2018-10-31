@@ -48,7 +48,8 @@ module Mixins
       else
         drop_breadcrumb(
           :name => _("%{name} (Compliance History - Last %{number} Checks)") % {:name => @record.name, :number => count},
-          :url  => "/#{controller_name}/show/#{@record.id}?display=#{@display}&refresh=n")
+          :url  => "/#{controller_name}/show/#{@record.id}?display=#{@display}&refresh=n"
+        )
       end
     end
   end
