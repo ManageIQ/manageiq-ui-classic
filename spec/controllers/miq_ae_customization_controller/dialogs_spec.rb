@@ -4,6 +4,7 @@ describe MiqAeCustomizationController do
       before do
         EvmSpecHelper.local_miq_server
         login_as FactoryGirl.create(:user, :features => "dialog_delete")
+        MiqProductFeature.seed
         allow(controller).to receive(:check_privileges).and_return(true)
       end
 
