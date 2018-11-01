@@ -41,7 +41,7 @@
   "rules": {
     // {{{ this section comes from eslint-config-airbnb-es5 1.0.9
     "strict": 0,
-    "no-shadow": 2,
+    "no-shadow": 0,
     "no-shadow-restricted-names": 2,
     "no-cond-assign": [2, "always"],
     "no-console": 1,
