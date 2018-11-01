@@ -51,6 +51,7 @@ engines:
     enabled: true
     channel: "eslint-3"
     config:
+      ignore_warnings: true
       config: '.eslintrc.json'
       no-undefined:
         enabled: false
