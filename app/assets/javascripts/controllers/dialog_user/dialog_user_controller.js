@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'openUrl', '$http', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, openUrl, $http) {
+ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'openUrl', '$http', '$window', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, openUrl, $http, $window) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -80,7 +80,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
             })
             .then(function(response) {
               if (response.data.open_url) {
-                window.open(response.data.open_url);
+                $window.open(response.data.open_url);
                 miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
               } else {
                 miqService.miqFlash('error', __('Automate failed to obtain URL.'));

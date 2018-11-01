@@ -1,6 +1,6 @@
 /* global miqFlashLater */
 
-ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'miqService', 'API', function(repositoryId, miqService, API) {
+ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'miqService', 'API', '$window', function(repositoryId, miqService, API, $window) {
   var vm = this;
 
   var init = function() {
@@ -50,7 +50,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
       message: message,
       level: 'warning',
     });
-    window.location.href = url;
+    $window.location.href = url;
   };
 
   vm.resetClicked = function(angularForm) {
@@ -113,7 +113,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
       miqService.sparkleOff();
     } else {
       miqFlashLater({ message: message });
-      window.location.href = url;
+      $window.location.href = url;
     }
   };
 

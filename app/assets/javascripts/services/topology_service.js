@@ -1,4 +1,4 @@
-ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqService', '$timeout', '$interval', function($location, $http, miqService, $timeout, $interval) {
+ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqService', '$timeout', '$interval', '$window', function($location, $http, miqService, $timeout, $interval, $window) {
   this.tooltip = function tooltip(d) {
     var status = [
       __('Name: ') + d.item.name,
@@ -93,7 +93,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       if (d.item.kind === 'Tag') {
         return false;
       }
-      window.location.assign(topologyService.geturl(d));
+      $window.location.assign(topologyService.geturl(d));
     };
 
     d3.select('body').on('click', function() {
@@ -313,7 +313,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
   };
 
   this.mixinTopology = function(vm, $scope) {
-    vm.d3 = window.d3;
+    vm.d3 = $window.d3;
     miqHideSearchClearButton();
     vm.checkboxModel = {
       value: false,
