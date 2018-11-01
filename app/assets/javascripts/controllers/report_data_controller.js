@@ -285,21 +285,15 @@
       this.initObject.showUrl = false;
     }
     this.gtlType = initObject.gtlType || DEFAULT_VIEW;
-    this.loading();
+    this.setLoading(true);
     ManageIQ.gridChecks = [];
     this.$window.sendDataWithRx({setCount: 0});
   };
 
-  ReportDataController.prototype.loading = function() {
-    this.$window.ManageIQ.gtl.loading = true;
-    this.settings.isLoading = true;
-    miqSparkleOn();
-  };
-
-  ReportDataController.prototype.loaded = function() {
-    this.$window.ManageIQ.gtl.loading = false;
-    this.settings.isLoading = false;
-    miqSparkleOff();
+  ReportDataController.prototype.setLoading = function(state) {
+    this.$window.ManageIQ.gtl.loading = state;
+    this.settings.isLoading = state;
+    state ? miqSparkleOn() : miqSparkleOff();
   };
 
   /**
@@ -319,7 +313,7 @@
   * @returns {Object} promise of fetched data.
   */
   ReportDataController.prototype.initController = function(initObject) {
-    this.loading();
+    this.setLoading(true);
     initObject.modelName = decodeURIComponent(initObject.modelName);
     this.initObjects(initObject);
     this.setExtraClasses(initObject.gtlType);
@@ -347,10 +341,11 @@
         }
 
         this.$timeout(function() {
-          this.loaded();
+          this.setLoading(false);
           this.$window.ManageIQ.gtl.isFirst = this.settings.current === 1;
           this.$window.ManageIQ.gtl.isLast = this.settings.current === this.settings.total;
         }.bind(this));
+
         return data;
       }.bind(this));
   };
