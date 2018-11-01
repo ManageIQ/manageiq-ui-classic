@@ -144,12 +144,13 @@ module ApplicationController::MiqRequestMethods
     report_scopes = [:eligible_for_provisioning]
     report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
     options = {
-      :model       => @view.db,
-      :gtl_type    => "table",
-      :named_scope => report_scopes
+      :model         => @view.db,
+      :gtl_type      => "table",
+      :named_scope   => report_scopes,
     }
 
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
+    @report_data_additional_options.with_no_checkboxes(true)
     render :update do |page|
       page << javascript_prologue
       page.replace("pre_prov_div", :partial => "miq_request/pre_prov")
@@ -183,6 +184,7 @@ module ApplicationController::MiqRequestMethods
       }
 
       @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
+      @report_data_additional_options.with_no_checkboxes(true)
 
       @edit[:template_kls] = get_template_kls
     end
