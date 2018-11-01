@@ -1,5 +1,6 @@
 (function() {
-  var element, timeline;
+  var element;
+  var timeline;
 
   function handlePopover(element) {
     var popover = '';
@@ -108,12 +109,12 @@
 
   ManageIQ.Timeline = {
     load: function(json, start, end) {
-      var data = [],
-        one_hour = 60 * 60 * 1000,
-        one_day = 24 * 60 * 60 * 1000,
-        one_week = one_day * 7,
-        one_month = one_day * 30,
-        dataHasName = false;
+      var data = [];
+      var one_hour = 60 * 60 * 1000;
+      var one_day = 24 * 60 * 60 * 1000;
+      var one_week = one_day * 7;
+      var one_month = one_day * 30;
+      var dataHasName = false;
       for (var x in json) {
         data[x] = {};
         if (json[x].name !== undefined && json[x].name !== '') {
@@ -172,7 +173,8 @@ function miqInitTimeline(json) {
 
   var parsed = JSON.parse(json);
 
-  var start, end;
+  var start;
+  var end;
   if (! ManageIQ.calendar.calDateFrom || ! ManageIQ.calendar.calDateTo) {
     end = new Date();
     start = new Date(end - 24 * 60 * 60 * 1000 * 7);

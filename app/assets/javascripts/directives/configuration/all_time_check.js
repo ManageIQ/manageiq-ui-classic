@@ -24,7 +24,8 @@ ManageIQ.angular.app.directive('allTimeCheck', function() {
           'hourValuesAMSecondHalf',
           'hourValuesPMFirstHalf',
           'hourValuesPMSecondHalf'];
-        var updatedHourArr, otherHourArrs = true;
+        var updatedHourArr;
+        var otherHourArrs = true;
         for (var j = 0; j < hoursArr.length; j++) {
           if (hoursArr[j] === name) {
             updatedHourArr = allQuarterArrHoursChecked(name, i, value);

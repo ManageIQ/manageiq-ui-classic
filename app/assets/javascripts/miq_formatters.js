@@ -20,7 +20,9 @@
 
   function number_with_delimiter(val, options) {
     options = _.extend({ delimiter: ',', separator: '.' }, options || {});
-    var intpart, floatpart, minus;
+    var intpart;
+    var floatpart;
+    var minus;
     if (_.isNumber(val)) {
       intpart = ~~val;
       floatpart = Math.abs(val - intpart);
@@ -204,7 +206,8 @@
       var sfx = a[1]; // The suffix (month, quarter, year) defines the range
 
       val = val.tz(get_time_zone('UTC'));
-      var stime, etime;
+      var stime;
+      var etime;
       if (_.includes(['day', 'week', 'month', 'quarter', 'year'], sfx)) {
         stime = val.clone().startOf(sfx);
         etime = val.clone().endOf(sfx);

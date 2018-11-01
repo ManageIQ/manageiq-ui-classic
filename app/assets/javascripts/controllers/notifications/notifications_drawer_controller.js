@@ -31,9 +31,9 @@ angular.module('miq.notifications').controller('notificationsDrawerController', 
   };
 
   var updatePosition = function() {
-    var hasVerticalScrollbar,
-      scrollContent = angular.element('#main-content'),
-      miqNotificationsDrawer = angular.element('#miq-notifications-drawer .drawer-pf');
+    var hasVerticalScrollbar;
+    var scrollContent = angular.element('#main-content');
+    var  miqNotificationsDrawer = angular.element('#miq-notifications-drawer .drawer-pf');
     if (scrollContent && scrollContent.length === 1 && miqNotificationsDrawer && miqNotificationsDrawer.length === 1) {
       hasVerticalScrollbar = scrollContent[0].scrollHeight > scrollContent[0].clientHeight;
       if (hasVerticalScrollbar) {

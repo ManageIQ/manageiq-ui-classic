@@ -200,7 +200,8 @@ var dialogFieldRefresh = {
   triggerAutoRefresh: function(autoRefreshOptions) {
     if (Boolean(autoRefreshOptions.trigger) === true) {
       var autoRefreshableIndicies = autoRefreshOptions.auto_refreshable_field_indicies;
-      var currentIndex, initializingIndex;
+      var currentIndex;
+      var initializingIndex;
 
       if (autoRefreshOptions.initial_trigger === true) {
         currentIndex = 0;

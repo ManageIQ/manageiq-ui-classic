@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('timelineOptionsController', ['$http', 'miqService', 'url', 'categories', function($http, miqService, url, categories) {
+ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url', 'categories', function(miqService, url, categories) {
   var vm = this;
   var init = function() {
     vm.reportModel = {
@@ -59,9 +59,9 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['$http', 'miqServi
       }
     }
 
-    var selectedDay = moment(vm.reportModel.tl_date),
-      startDay = selectedDay.clone(),
-      endDay = selectedDay.clone();
+    var selectedDay = moment(vm.reportModel.tl_date);
+    var startDay = selectedDay.clone();
+    var endDay = selectedDay.clone();
 
     if (vm.reportModel.tl_timepivot === 'starting') {
       endDay.add(vm.reportModel.tl_days, 'days').toDate();
