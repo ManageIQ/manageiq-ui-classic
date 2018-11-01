@@ -258,6 +258,11 @@ function miqSparkleOn() {
 }
 
 function miqSparkleOff() {
+  // this prevents ajax requests on GTL screens from disabling the spinner too early
+  if (ManageIQ.gtl.loading) {
+    return;
+  }
+
   miqSpinner(false);
   if (miqDomElementExists('searching_spinner_center')) {
     miqSearchSpinner(false);
