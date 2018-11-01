@@ -51,11 +51,11 @@ class ProviderForemanController < ApplicationController
     end
 
     if ConfiguredSystem.common_configuration_profiles_for_selected_configured_systems(provisioning_ids)
-      javascript_redirect :controller     => "miq_request",
+      javascript_redirect(:controller     => "miq_request",
                           :action         => "prov_edit",
                           :prov_id        => provisioning_ids,
                           :org_controller => "configured_system",
-                          :escape         => false
+                          :escape         => false)
     else
       add_flash(n_("No common configuration profiles available for the selected configured system",
                    "No common configuration profiles available for the selected configured systems",
@@ -122,7 +122,7 @@ class ProviderForemanController < ApplicationController
     elsif action_name == "tree_select"
       tree_select_unprovisioned_configured_system
     else
-      redirect_to :action => "explorer"
+      redirect_to(:action => "explorer")
     end
   end
 
@@ -131,7 +131,7 @@ class ProviderForemanController < ApplicationController
       params[:id] = "cs-#{params[:id]}"
       tree_select
     else
-      redirect_to :action => "explorer"
+      redirect_to(:action => "explorer")
     end
   end
 
@@ -297,11 +297,11 @@ class ProviderForemanController < ApplicationController
       get_node_info("root")
     else
       options = {:model => "ConfiguredSystem"}
-      if empty_configuration_profile_record?(@configuration_profile_record)
-        options[:named_scope] = [[:with_manager, id], [:without_configuration_profile_id]]
-      else
-        options[:named_scope] = [[:with_configuration_profile_id, @configuration_profile_record.id]]
-      end
+      options[:named_scope] = if empty_configuration_profile_record?(@configuration_profile_record)
+                                [[:with_manager, id], [:without_configuration_profile_id]]
+                              else
+                                [[:with_configuration_profile_id, @configuration_profile_record.id]]
+                              end
       @show_list ? process_show_list(options) : options.merge!(update_options)
       record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))
       if @sb[:active_tab] == 'configured_systems'
@@ -428,13 +428,13 @@ class ProviderForemanController < ApplicationController
   def configuration_profile_right_cell_text(model)
     record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))
     return if @sb[:active_tab] != 'configured_systems'
-    if valid_configuration_profile_record?(@configuration_profile_record)
-      @right_cell_text = _("Configured Systems under %{record_model} \"%{name}\"") %
-                         {:record_model => record_model,
-                          :name         => @configuration_profile_record.name}
-    else
-      @right_cell_text = _("Configured Systems under Unassigned Profiles Group")
-    end
+    @right_cell_text = if valid_configuration_profile_record?(@configuration_profile_record)
+                         _("Configured Systems under %{record_model} \"%{name}\"") %
+                           {:record_model => record_model,
+                            :name         => @configuration_profile_record.name}
+                       else
+                         _("Configured Systems under Unassigned Profiles Group")
+                       end
   end
 
   def add_unassigned_configuration_profile_record(provider_id)
