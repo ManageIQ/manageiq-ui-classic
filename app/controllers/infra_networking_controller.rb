@@ -361,8 +361,6 @@ class InfraNetworkingController < ApplicationController
       type, _id = parse_nodetype_and_id(x_node)
 
       record_showing = type && ["Switch"].include?(TreeBuilder.get_model_for_prefix(type))
-      build_toolbar(center_toolbar_filename)
-      build_toolbar("x_history_tb") unless @in_a_form
     end
 
     # Build presenter to render the JS command for the tree update
