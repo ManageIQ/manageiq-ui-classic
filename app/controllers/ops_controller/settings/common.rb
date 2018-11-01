@@ -3,7 +3,7 @@ module OpsController::Settings::Common
   include OpsHelper
 
   logo_dir = File.expand_path(File.join(Rails.root, "public/upload"))
-  Dir.mkdir logo_dir unless File.exist?(logo_dir)
+  Dir.mkdir(logo_dir) unless File.exist?(logo_dir)
   @@logo_file = File.join(logo_dir, "custom_logo.png")
   @@login_logo_file = File.join(logo_dir, "custom_login_logo.png")
   @@login_brand_file = File.join(logo_dir, "custom_brand.png")
@@ -24,11 +24,11 @@ module OpsController::Settings::Common
          'settings_custom_logos'
       @changed = (@edit[:new] != @edit[:current])
       if params[:console_type]
-        @refresh_div     = 'settings_server'              # Replace main area
+        @refresh_div     = 'settings_server' # Replace main area
         @refresh_partial = 'settings_server_tab'
       end
     when 'settings_rhn_edit'
-      if params[:use_proxy] || params[:register_to] || ['rhn_default_server', 'repo_default_name'].include?(params[:action])
+      if params[:use_proxy] || params[:register_to] || %w(rhn_default_server repo_default_name).include?(params[:action])
         @refresh_div     = 'settings_rhn'
         @refresh_partial = 'settings_rhn_edit_tab'
       else
@@ -40,7 +40,7 @@ module OpsController::Settings::Common
       if @edit[:new][:workers][:worker_base][:ui_worker][:count] != @edit[:current][:workers][:worker_base][:ui_worker][:count]
         add_flash(_("Changing the UI Workers Count will immediately restart the webserver"), :warning)
       end
-    when 'settings_advanced'                                # Advanced yaml edit
+    when 'settings_advanced' # Advanced yaml edit
       @changed = (@edit[:new] != @edit[:current])
     end
 
@@ -75,7 +75,7 @@ module OpsController::Settings::Common
         end
       when 'settings_authentication'
         if @authmode_changed
-          if ["ldap", "ldaps"].include?(@edit[:new][:authentication][:mode])
+          if %w(ldap ldaps).include?(@edit[:new][:authentication][:mode])
             page << javascript_show("ldap_div")
             page << javascript_show("ldap_role_div")
             page << javascript_show("ldap_role_div")
@@ -294,8 +294,7 @@ module OpsController::Settings::Common
      'port'     => subscription_params['port'],
      'user'     => subscription_params['user'],
      'dbname'   => subscription_params['dbname'],
-     'password' => subscription_params['password'] == PASSWORD_MASK ? nil : subscription_params['password']
-    }.delete_blanks
+     'password' => subscription_params['password'] == PASSWORD_MASK ? nil : subscription_params['password']}.delete_blanks
   end
 
   def get_subscriptions_array(subscriptions)
@@ -384,20 +383,20 @@ module OpsController::Settings::Common
     when "settings_server", "settings_authentication"
       # Server Settings
       settings_server_validate
-      unless @flash_array.blank?
+      if @flash_array.present?
         render_flash
         return
       end
       @edit[:new][:authentication][:ldaphost].reject!(&:blank?) if @edit[:new][:authentication][:ldaphost]
       @changed = (@edit[:new] != @edit[:current])
       server = MiqServer.find(@sb[:selected_server_id])
-      zone = Zone.find_by_name(@edit[:new][:server][:zone])
+      zone = Zone.find_by(:name => @edit[:new][:server][:zone])
       unless zone.nil? || server.zone == zone
         server.zone = zone
         server.save
       end
       @update = server.settings
-    when "settings_workers"                                   # Workers Settings
+    when "settings_workers" # Workers Settings
       @changed = (@edit[:new] != @edit[:current])
       qwb = @edit[:new][:workers][:worker_base][:queue_worker_base]
       w = qwb[:generic_worker]
@@ -445,7 +444,7 @@ module OpsController::Settings::Common
       set_worker_setting(@edit[:new], MiqWebsocketWorker, :count, w[:count].to_i)
 
       @update = MiqServer.find(@sb[:selected_server_id]).settings
-    when "settings_custom_logos"                                      # Custom Logo tab
+    when "settings_custom_logos" # Custom Logo tab
       @changed = (@edit[:new] != @edit[:current])
       @update = ::Settings.to_hash
     when "settings_advanced" # Advanced manual yaml editor tab
@@ -470,7 +469,7 @@ module OpsController::Settings::Common
 
       config_valid, config_errors = Vmdb::Settings.validate(@update)
       if config_valid
-        if ["settings_server", "settings_authentication"].include?(@sb[:active_tab])
+        if %w(settings_server settings_authentication).include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
           server.add_settings_for_resource(@update)
           update_server_name(server)
@@ -487,7 +486,7 @@ module OpsController::Settings::Common
         else
           add_flash(_("Configuration settings saved"))
         end
-        if @sb[:active_tab] == "settings_server" && @sb[:selected_server_id] == MiqServer.my_server.id  # Reset session variables for names fields, if editing current server config
+        if @sb[:active_tab] == "settings_server" && @sb[:selected_server_id] == MiqServer.my_server.id # Reset session variables for names fields, if editing current server config
           session[:customer_name] = @update[:server][:company]
           session[:vmdb_name] = @update[:server][:name]
         end
@@ -496,7 +495,7 @@ module OpsController::Settings::Common
         session[:changed] = @changed = false
         get_node_info(x_node)
         if @sb[:active_tab] == "settings_server"
-          replace_right_cell(:nodetype => @nodetype, :replace_trees => [:diagnostics, :settings])
+          replace_right_cell(:nodetype => @nodetype, :replace_trees => %i(diagnostics settings))
         elsif @sb[:active_tab] == "settings_custom_logos"
           flash_to_session
           javascript_redirect(:action => 'explorer', :escape => false) # redirect to build the server screen
@@ -532,21 +531,18 @@ module OpsController::Settings::Common
         add_flash(_("Configuration settings saved for %{product} Server \"%{name} [%{server_id}]\" in Zone \"%{zone}\"") %
                     {:name => server.name, :server_id => @sb[:selected_server_id], :zone => server.my_zone, :product => Vmdb::Appliance.PRODUCT_NAME})
 
-        if @sb[:active_tab] == "settings_workers" && @sb[:selected_server_id] == MiqServer.my_server.id  # Reset session variables for names fields, if editing current server config
+        if @sb[:active_tab] == "settings_workers" && @sb[:selected_server_id] == MiqServer.my_server.id # Reset session variables for names fields, if editing current server config
           session[:customer_name] = @update[:server][:company]
           session[:vmdb_name] = @update[:server][:name]
         end
         @changed = false
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => @nodetype)
       else
         config_errors.each do |field, msg|
           add_flash("#{field.titleize}: #{msg}", :error)
         end
         @changed = true
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => @nodetype)
       end
+      replace_right_cell(:nodetype => @nodetype)
     else
       @changed = false
       get_node_info(x_node)
@@ -629,13 +625,10 @@ module OpsController::Settings::Common
       else
         server[child_key] -= children_update
       end
+    elsif checked # a server was selected
+      all_children.each { |k, v| server[k] = Set.new(v) }
     else
-      # A server was selected
-      if checked
-        all_children.each { |k, v| server[k] = Set.new(v) }
-      else
-        server.each_value(&:clear)
-      end
+      server.each_value(&:clear)
     end
   end
 
@@ -675,7 +668,7 @@ module OpsController::Settings::Common
     MiqServer.transaction do
       @edit[:new][:servers].each do |svr_id, children|
         server = MiqServer.find(svr_id)
-        server.vm_scan_host_affinity = Host.where(:id =>  children[:hosts].to_a).to_a
+        server.vm_scan_host_affinity = Host.where(:id => children[:hosts].to_a).to_a
         server.vm_scan_storage_affinity = Storage.where(:id => children[:storages].to_a).to_a
       end
     end
@@ -701,8 +694,8 @@ module OpsController::Settings::Common
 
     case @sb[:active_tab] # No @edit[:current] for Filters since there is no config file
     when 'settings_rhn_edit'
-      [:proxy_address, :use_proxy, :proxy_userid, :proxy_password, :proxy_verify, :register_to, :server_url, :repo_name,
-       :customer_org, :customer_org_display, :customer_userid, :customer_password, :customer_verify].each do |key|
+      %i(proxy_address use_proxy proxy_userid proxy_password proxy_verify register_to server_url repo_name
+         customer_org customer_org_display customer_userid customer_password customer_verify).each do |key|
         new[key] = params[key] if params[key]
       end
       if params[:register_to] || params[:action] == "repo_default_name"
@@ -727,13 +720,8 @@ module OpsController::Settings::Common
       new[:smtp][:authentication] = params[:smtp_authentication] if params[:smtp_authentication]
       new[:server][:locale] = params[:locale] if params[:locale]
       @smtp_auth_none = (new[:smtp][:authentication] == "none")
-      if !new[:smtp][:host].blank? && !new[:smtp][:port].blank? && !new[:smtp][:domain].blank? &&
-         (!new[:smtp][:user_name].blank? || new[:smtp][:authentication] == "none") &&
-         !new[:smtp][:from].blank? && !@sb[:new_to].blank?
-        @test_email_button = true
-      else
-        @test_email_button = false
-      end
+      @test_email_button = %i(from host port domain).all? { |item| new[:smtp][item].present? } &&
+                           (new[:smtp][:user_name].present? || new[:smtp][:authentication] == "none") && @sb[:new_to].present?
       @sb[:roles] = new[:server][:role].split(",")
       params.each do |var, val|
         if var.to_s.starts_with?("server_roles_") && val.to_s == "true"
@@ -792,7 +780,7 @@ module OpsController::Settings::Common
           @sb[:newrole] = auth[:ldap_role] = @edit[:current][:authentication][:ldap_role]
           @authldapport_reset = true
         else
-          @sb[:newrole] = auth[:ldap_role] = false    # setting it to false if database was selected to hide user_proxies box
+          @sb[:newrole] = auth[:ldap_role] = false # setting it to false if database was selected to hide user_proxies box
         end
         @authmode_changed = true
       end
@@ -829,7 +817,7 @@ module OpsController::Settings::Common
       auth[:local_login_disabled] = (params[:local_login_disabled].to_s == "1") if params[:local_login_disabled]
       auth[:default_group_for_users] = params[:authentication_default_group_for_users] if params[:authentication_default_group_for_users]
 
-    when "settings_workers"                                       # Workers Settings tab
+    when "settings_workers" # Workers Settings tab
       wb  = new[:workers][:worker_base]
       qwb = wb[:queue_worker_base]
 
@@ -875,7 +863,7 @@ module OpsController::Settings::Common
 
       w = wb[:websocket_worker]
       w[:count] = params[:websocket_worker_count].to_i if params[:websocket_worker_count]
-    when "settings_custom_logos"                                            # Custom Logo tab
+    when "settings_custom_logos" # Custom Logo tab
       new[:server][:custom_logo] = (params[:server_uselogo] == "true") if params[:server_uselogo]
       new[:server][:custom_login_logo] = (params[:server_useloginlogo] == "true") if params[:server_useloginlogo]
       new[:server][:custom_brand] = (params[:server_usebrand] == "true") if params[:server_usebrand]
@@ -884,7 +872,7 @@ module OpsController::Settings::Common
         new[:server][:custom_login_text] = params[:login_text]
         @login_text_changed = new[:server][:custom_login_text] != @edit[:current][:server][:custom_login_text].to_s
       end
-    when "settings_smartproxy"                                        # SmartProxy Defaults tab
+    when "settings_smartproxy" # SmartProxy Defaults tab
       @sb[:form_vars][:agent_heartbeat_frequency_mins] = params[:agent_heartbeat_frequency_mins] if params[:agent_heartbeat_frequency_mins]
       @sb[:form_vars][:agent_heartbeat_frequency_secs] = params[:agent_heartbeat_frequency_secs] if params[:agent_heartbeat_frequency_secs]
       @sb[:form_vars][:agent_log_wraptime_days] = params[:agent_log_wraptime_days] if params[:agent_log_wraptime_days]
@@ -896,8 +884,8 @@ module OpsController::Settings::Common
       agent_log[:level] = params[:agent_log_level] if params[:agent_log_level]
       agent_log[:wrap_size] = params[:agent_log_wrapsize] if params[:agent_log_wrapsize]
       agent_log[:wrap_time] = @sb[:form_vars][:agent_log_wraptime_days].to_i * 3600 * 24 + @sb[:form_vars][:agent_log_wraptime_hours].to_i * 3600 if params[:agent_log_wraptime_days] || params[:agent_log_wraptime_hours]
-    when "settings_advanced"                                        # Advanced tab
-      if params[:file_data]                        # If save sent in the file data
+    when "settings_advanced"                          # Advanced tab
+      if params[:file_data]                           # If save sent in the file data
         new[:file_data] = params[:file_data]          # Put into @edit[:new] hash
       else
         new[:file_data] += "..."                      # Update the new data to simulate a change
@@ -908,10 +896,10 @@ module OpsController::Settings::Common
     unless %w(settings_advanced settings_rhn_edit settings_smartproxy_affinity).include?(@sb[:active_tab])
       @edit[:current].each_key do |category|
         @edit[:current][category].symbolize_keys.each_key do |key|
-          if category == :smtp && key == :enable_starttls_auto  # Checkbox is handled differently
+          if category == :smtp && key == :enable_starttls_auto # Checkbox is handled differently
             new[category][key] = params["#{category}_#{key}"] == "true" if params.key?("#{category}_#{key}")
-          else
-            new[category][key] = params["#{category}_#{key}"] if params["#{category}_#{key}"]
+          elsif params["#{category}_#{key}"]
+            new[category][key] = params["#{category}_#{key}"]
           end
         end
         auth[:user_proxies][0] = copy_hash(params[:user_proxies]) if params[:user_proxies] && category == :authentication
@@ -935,11 +923,9 @@ module OpsController::Settings::Common
       @prev_selected_svr = session[:edit][:new][:selected_server]
     elsif @sb[:active_tab] == 'settings_rhn_edit'
       return unless load_edit("#{@sb[:active_tab]}__#{params[:id]}", "replace_cell__explorer")
-    else
-      if %w(settings_server settings_authentication settings_workers
-            settings_custom_logos settings_advanced).include?(@sb[:active_tab])
-        return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
-      end
+    elsif %w(settings_server settings_authentication settings_workers
+             settings_custom_logos settings_advanced).include?(@sb[:active_tab])
+      return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
     end
   end
 
@@ -1125,17 +1111,21 @@ module OpsController::Settings::Common
 
   def settings_set_form_vars
     if x_node.split("-").first == "z"
-      @right_cell_text = my_zone_name == @selected_zone.name ?
-        _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
-                                                        :model => ui_lookup(:model => @selected_zone.class.to_s)} :
-        _("Settings %{model} \"%{name}\"") % {:name  => @selected_zone.description,
-                                              :model => ui_lookup(:model => @selected_zone.class.to_s)}
+      @right_cell_text = if my_zone_name == @selected_zone.name
+                           _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
+                                                                           :model => ui_lookup(:model => @selected_zone.class.to_s)}
+                         else
+                           _("Settings %{model} \"%{name}\"") % {:name  => @selected_zone.description,
+                                                                 :model => ui_lookup(:model => @selected_zone.class.to_s)}
+                         end
     else
-      @right_cell_text = my_server.id == @sb[:selected_server_id] ?
-        _("Settings %{model} \"%{name}\" (current)") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
-                                                        :model => ui_lookup(:model => @selected_server.class.to_s)} :
-        _("Settings %{model} \"%{name}\"") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
-                                              :model => ui_lookup(:model => @selected_server.class.to_s)}
+      @right_cell_text = if my_server.id == @sb[:selected_server_id]
+                           _("Settings %{model} \"%{name}\" (current)") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
+                                                                           :model => ui_lookup(:model => @selected_server.class.to_s)}
+                         else
+                           _("Settings %{model} \"%{name}\"") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
+                                                                 :model => ui_lookup(:model => @selected_server.class.to_s)}
+                         end
     end
     case @sb[:active_tab]
     when 'settings_server' # Server Settings tab
@@ -1180,7 +1170,7 @@ module OpsController::Settings::Common
       case @sb[:active_tab]
       when "settings_details"
         settings_set_view_vars
-      when "settings_cu_collection"                                 # C&U collection settings
+      when "settings_cu_collection" # C&U collection settings
         cu_build_edit_screen
         @in_a_form = true
       when "settings_tags"
@@ -1190,19 +1180,19 @@ module OpsController::Settings::Common
         when "settings_co_tags"
           # dont hide the disabled categories, so user can remove tags from the disabled ones
           cats = Classification.categories.sort_by(&:description)  # Get the categories, sort by name
-          @cats = {}                                        # Classifications array for first chooser
+          @cats = {}                                               # Classifications array for first chooser
           cats.each do |c|
-            @cats[c.description] = c.name unless c.read_only?    # Show the non-read_only categories
+            @cats[c.description] = c.name unless c.read_only?      # Show the non-read_only categories
           end
           @cat = cats.first
-          ce_build_screen                                         # Build the Classification Edit screen
+          ce_build_screen                                          # Build the Classification Edit screen
         when "settings_import_tags"
           @edit = {}
           @edit[:new] = {}
           @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
           add_flash(_("Locate and upload a file to start the import process"), :info)
           @in_a_form = true
-        when "settings_import"                                  # Import tab
+        when "settings_import" # Import tab
           @edit = {}
           @edit[:new] = {}
           @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
@@ -1262,13 +1252,14 @@ module OpsController::Settings::Common
     when "z"
       @servers = []
       @record = @zone = @selected_zone = Zone.find(nodes.last)
-      @ntp_servers = @selected_zone&.settings_for_resource&.ntp ?
-        @selected_zone.settings_for_resource.ntp.to_h[:server].join(", ") : ''
-      @right_cell_text = my_zone_name == @selected_zone.name ?
-          _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
-                                                          :model => ui_lookup(:model => @selected_zone.class.to_s)} :
-          _("Settings %{model} \"%{name}\"") % {:name  => @selected_zone.description,
-                                                :model => ui_lookup(:model => @selected_zone.class.to_s)}
+      @ntp_servers = @selected_zone&.settings_for_resource&.ntp ? @selected_zone.settings_for_resource.ntp.to_h[:server].join(", ") : ''
+      @right_cell_text = if my_zone_name == @selected_zone.name
+                           _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
+                                                                           :model => ui_lookup(:model => @selected_zone.class.to_s)}
+                         else
+                           _("Settings %{model} \"%{name}\"") % {:name  => @selected_zone.description,
+                                                                 :model => ui_lookup(:model => @selected_zone.class.to_s)}
+                         end
       MiqServer.all.each do |ms|
         if ms.zone_id == @selected_zone.id
           @servers.push(ms)
@@ -1290,7 +1281,7 @@ module OpsController::Settings::Common
       @scan_items = ScanItemSet.all
       @zones = Zone.in_my_region
       @miq_schedules = MiqSchedule.where("(prod_default != 'system' or prod_default is null) and adhoc IS NULL")
-                       .sort_by { |s| s.name.downcase }
+                                  .sort_by { |s| s.name.downcase }
     end
   end
 end
