@@ -65,10 +65,11 @@ function cloudNetworkFormController(API, miqService) {
   };
 
   vm.cancelClicked = function() {
+    var url;
     if (vm.newRecord) {
-      var url = '/cloud_network/create/new?button=cancel';
+      url = '/cloud_network/create/new?button=cancel';
     } else {
-      var url = '/cloud_network/update/' + vm.cloudNetworkFormId + '?button=cancel';
+      url = '/cloud_network/update/' + vm.cloudNetworkFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };

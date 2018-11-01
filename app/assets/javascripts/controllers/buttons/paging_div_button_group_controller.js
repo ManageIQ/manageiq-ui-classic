@@ -39,11 +39,12 @@ ManageIQ.angular.app.controller('pagingDivButtonGroupController', ['$scope', 'mi
       $scope.btnText = $scope.submitBtnText;
       $scope.btnClick = $scope.submitClicked;
     }
-
+    var enabledSaveHtml;
+    var compiledEnabledSave;
     if (buttonStateEnabled) {
-      var enabledSaveHtml = '<button name="button" id="save_enabled" type="submit" class="btn btn-primary" ' +
+      enabledSaveHtml = '<button name="button" id="save_enabled" type="submit" class="btn btn-primary" ' +
         'alt={{altText}} title={{altText}} ng-click="btnClick($event, true)">{{btnText}}</button>';
-      var compiledEnabledSave = $compile(enabledSaveHtml)($scope);
+      compiledEnabledSave = $compile(enabledSaveHtml)($scope);
 
       $timeout(function() {
         if (! miqDomElementExists('save_enabled')) {
@@ -56,10 +57,10 @@ ManageIQ.angular.app.controller('pagingDivButtonGroupController', ['$scope', 'mi
         'ng-show="!newRecord && !saveable(angularForm)">{{btnText}}</button>';
       var compiledDisabledSave = $compile(disabledSaveHtml)($scope);
 
-      var enabledSaveHtml = '<button name="button" id="save_enabled" type="submit" class="btn btn-primary ng-hide" ' +
+      enabledSaveHtml = '<button name="button" id="save_enabled" type="submit" class="btn btn-primary ng-hide" ' +
         'alt={{altText}} title={{altText}} ng-click="btnClick($event, true)" ' +
         'ng-show="!newRecord && saveable(angularForm)">{{btnText}}</button>';
-      var compiledEnabledSave = $compile(enabledSaveHtml)($scope);
+      compiledEnabledSave = $compile(enabledSaveHtml)($scope);
 
       $timeout(function() {
         if (! miqDomElementExists('save_disabled')) {

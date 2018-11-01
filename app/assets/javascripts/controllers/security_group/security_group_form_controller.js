@@ -78,10 +78,11 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
   };
 
   vm.cancelClicked = function() {
+    var url;
     if (vm.newRecord) {
-      var url = '/security_group/create/new?button=cancel';
+      url = '/security_group/create/new?button=cancel';
     } else {
-      var url = '/security_group/update/' + securityGroupFormId + '?button=cancel';
+      url = '/security_group/update/' + securityGroupFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };

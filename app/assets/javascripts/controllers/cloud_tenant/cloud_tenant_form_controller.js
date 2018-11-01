@@ -32,10 +32,11 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
   }
 
   vm.cancelClicked = function() {
+    var url;
     if (cloudTenantFormId === 'new') {
-      var url = '/cloud_tenant/create/new?button=cancel';
+      url = '/cloud_tenant/create/new?button=cancel';
     } else {
-      var url = '/cloud_tenant/update/' + cloudTenantFormId + '?button=cancel';
+      url = '/cloud_tenant/update/' + cloudTenantFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };

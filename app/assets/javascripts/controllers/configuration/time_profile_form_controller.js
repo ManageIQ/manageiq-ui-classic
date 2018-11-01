@@ -101,23 +101,24 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
 
   vm.hourValuesChanged = function() {
     var tempHours = [];
-
-    for (var i = 0; i < 6; i++) {
+    var i;
+    var j;
+    for (i = 0; i < 6; i++) {
       if (vm.timeProfileModel.hourValuesAMFirstHalf[i] === true) {
         tempHours.push(i);
       }
     }
-    for (var i = 0, j = 6; i < 6, j < 12; i++, j++) {
+    for (i = 0, j = 6; i < 6, j < 12; i++, j++) {
       if (vm.timeProfileModel.hourValuesAMSecondHalf[i] === true) {
         tempHours.push(j);
       }
     }
-    for (var i = 0, j = 12; i < 6, j < 18; i++, j++) {
+    for (i = 0, j = 12; i < 6, j < 18; i++, j++) {
       if (vm.timeProfileModel.hourValuesPMFirstHalf[i] === true) {
         tempHours.push(j);
       }
     }
-    for (var i = 0, j = 18; i < 6, j < 24; i++, j++) {
+    for (i = 0, j = 18; i < 6, j < 24; i++, j++) {
       if (vm.timeProfileModel.hourValuesPMSecondHalf[i] === true) {
         tempHours.push(j);
       }

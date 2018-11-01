@@ -449,8 +449,9 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
   function updateAlertStatus(updateAlert) {
     if (updateAlert && updateAlert.alert_actions && updateAlert.alert_actions.length > 0) {
       var actionUser;
+      var i;
 
-      for (var i = 0; i < updateAlert.alert_actions.length; i++) {
+      for (i = 0; i < updateAlert.alert_actions.length; i++) {
         updateAlert.alert_actions[i].created_at = convertApiTime(updateAlert.alert_actions[i].created_at);
         updateAlert.alert_actions[i].updated_at = convertApiTime(updateAlert.alert_actions[i].updated_at);
       }
@@ -465,7 +466,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
 
       // update each state
       updateAlert.numComments = 0;
-      for (var i = 0; i < updateAlert.alert_actions.length; i++) {
+      for (i = 0; i < updateAlert.alert_actions.length; i++) {
         actionUser = _this.getUserByIdOrUserId(updateAlert.alert_actions[i].user_id);
         updateAlert.alert_actions[i].username = actionUser !== undefined ? actionUser.name : '';
 

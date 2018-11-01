@@ -35,10 +35,11 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
+    var url;
     if (hostAggregateFormId === 'new') {
-      var url = '/host_aggregate/create/new' + '?button=cancel';
+      url = '/host_aggregate/create/new' + '?button=cancel';
     } else {
-      var url = '/host_aggregate/update/' + hostAggregateFormId + '?button=cancel';
+      url = '/host_aggregate/update/' + hostAggregateFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };

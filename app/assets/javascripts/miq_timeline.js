@@ -26,9 +26,10 @@
     });
 
     if (el.hasOwnProperty('events')) {
+      var i;
       table = table + '<thead>' + sprintf(__('This is a group of %s events starting on %s'), el.events.length, el.date.toLocaleString()) + '</thead><tbody>';
       table = table + '<tr><th>' + __('Date') + '</th><th>' + __('Event') + '</th></tr>';
-      for (var i = 0; i < el.events.length; i++) {
+      for (i = 0; i < el.events.length; i++) {
         table = table + '<tr><td>' + el.events[i].date.toLocaleString() + ' </td> ';
         for (var j in el.events[i].details) {
           table = table + '<td> ' + el.events[i].details[j] + ' </td> ';
@@ -38,7 +39,7 @@
       table = table + '</tbody>';
     } else {
       table = table + __('Date: ') + el.date.toLocaleString() + '<br>';
-      for (var i in el.details) {
+      for (i in el.details) {
         table = table + el.details[i] + '<br>';
       }
     }

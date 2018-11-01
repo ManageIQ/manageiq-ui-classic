@@ -249,15 +249,18 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   $scope.showChanged = function(idx, fieldName) {
     var original_values = $scope.modelCopy.subscriptions[idx];
+    var subscription;
     // if updating a record use form fields to compare
     if ($scope.pglogicalReplicationModel.updateEnabled) {
-      var subscription = {};
+      subscription = {};
       subscription.dbname  = $scope.pglogicalReplicationModel.dbname;
       subscription.host     = $scope.pglogicalReplicationModel.host;
       subscription.user     = $scope.pglogicalReplicationModel.user;
       subscription.password = $scope.pglogicalReplicationModel.password;
       subscription.port     = $scope.pglogicalReplicationModel.port;
-    } else {var subscription = $scope.pglogicalReplicationModel.subscriptions[idx];}
+    } else {
+      subscription = $scope.pglogicalReplicationModel.subscriptions[idx];
+    }
 
     if (typeof original_values !== 'undefined' && original_values[fieldName] !== subscription[fieldName]) {return true;}
     return false;
