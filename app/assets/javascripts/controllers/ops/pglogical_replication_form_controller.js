@@ -42,7 +42,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       }
     });
     var updated_exclusion_list = '';
-    if ($scope.pglogicalReplicationModel.replication_type == 'remote' && ! angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list) ) {
+    if ($scope.pglogicalReplicationModel.replication_type === 'remote' && ! angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list) ) {
       updated_exclusion_list = angular.copy($scope.pglogicalReplicationModel.exclusion_list);
     }
     pglogicalManageSubscriptionsButtonClicked('save', {
@@ -67,17 +67,17 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     miqService.miqFlashClear();
     var original_value = $scope.modelCopy.replication_type;
     var new_value      = $scope.pglogicalReplicationModel.replication_type;
-    if (original_value == 'none' && new_value == 'none') {miqService.miqFlash('warn', __('No replication role has been set'));} else if (original_value == 'remote' && new_value == 'none') {miqService.miqFlash('warn', __('Replication will be disabled for this region'));} else if (original_value == 'global' && new_value == 'none') {miqService.miqFlash('warn', __('All current subscriptions will be removed'));} else if (original_value == 'global' && new_value == 'remote') {miqService.miqFlash('warn', __('Changing to remote replication role will remove all current subscriptions'));}
+    if (original_value === 'none' && new_value === 'none') {miqService.miqFlash('warn', __('No replication role has been set'));} else if (original_value === 'remote' && new_value === 'none') {miqService.miqFlash('warn', __('Replication will be disabled for this region'));} else if (original_value === 'global' && new_value === 'none') {miqService.miqFlash('warn', __('All current subscriptions will be removed'));} else if (original_value === 'global' && new_value === 'remote') {miqService.miqFlash('warn', __('Changing to remote replication role will remove all current subscriptions'));}
 
-    if (new_value != 'global') {
+    if (new_value !== 'global') {
       $scope.pglogicalReplicationModel.subscriptions = [];
     }
 
-    if (new_value != 'remote') {
+    if (new_value !== 'remote') {
       $scope.pglogicalReplicationModel.exclusion_list = angular.copy($scope.modelCopy.exclusion_list);
     }
 
-    if (new_value == 'global' && original_value == 'global') {
+    if (new_value === 'global' && original_value === 'global') {
       $scope.pglogicalReplicationModel.subscriptions = angular.copy($scope.modelCopy.subscriptions);
     }
   };
@@ -117,7 +117,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   // add new subscription
   $scope.addSubscription = function(idx) {
-    if (typeof idx == 'undefined') {
+    if (typeof idx === 'undefined') {
       $scope.pglogicalReplicationModel.subscriptions.push({
         dbname: $scope.pglogicalReplicationModel.dbname,
         host: $scope.pglogicalReplicationModel.host,
@@ -148,7 +148,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   // discard new subscription add
   $scope.discardSubscription = function(idx) {
-    if (typeof idx == 'undefined') {
+    if (typeof idx === 'undefined') {
       $scope.pglogicalReplicationModel.dbname     = '';
       $scope.pglogicalReplicationModel.host       = '';
       $scope.pglogicalReplicationModel.user       = '';
@@ -169,17 +169,17 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   // validate subscription, all required fields should have data
   $scope.subscriptionValid = function() {
-    if (typeof $scope.pglogicalReplicationModel.dbname   != 'undefined' && $scope.pglogicalReplicationModel.dbname   !== '' &&
-        typeof $scope.pglogicalReplicationModel.host     != 'undefined' && $scope.pglogicalReplicationModel.host     !== '' &&
-        typeof $scope.pglogicalReplicationModel.user     != 'undefined' && $scope.pglogicalReplicationModel.user     !== '' &&
-        typeof $scope.pglogicalReplicationModel.password != 'undefined' && $scope.pglogicalReplicationModel.password !== ''
+    if (typeof $scope.pglogicalReplicationModel.dbname   !== 'undefined' && $scope.pglogicalReplicationModel.dbname   !== '' &&
+        typeof $scope.pglogicalReplicationModel.host     !== 'undefined' && $scope.pglogicalReplicationModel.host     !== '' &&
+        typeof $scope.pglogicalReplicationModel.user     !== 'undefined' && $scope.pglogicalReplicationModel.user     !== '' &&
+        typeof $scope.pglogicalReplicationModel.password !== 'undefined' && $scope.pglogicalReplicationModel.password !== ''
     ) {return true;}
     return false;
   };
 
   $scope.saveEnabled = function(form) {
     var saveable = false;
-    if ($scope.pglogicalReplicationModel.replication_type != 'remote') {
+    if ($scope.pglogicalReplicationModel.replication_type !== 'remote') {
       saveable = form.$dirty && form.$valid && ! $scope.pglogicalReplicationModel.addEnabled && ! $scope.pglogicalReplicationModel.updateEnabled;
       // also need to enable save button when an existing subscriptions was deleted
       var subscriptions_changed = angular.equals($scope.pglogicalReplicationModel.subscriptions, $scope.modelCopy.subscriptions);
@@ -190,7 +190,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
         return true;
       } else if (saveable &&
         $scope.pglogicalReplicationModel.replication_type !== 'global' &&
-        $scope.pglogicalReplicationModel.subscriptions.length == 0) {
+        $scope.pglogicalReplicationModel.subscriptions.length === 0) {
         return true;
       }
 
@@ -213,7 +213,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
   // validate new/existing subscription
   $scope.validateSubscription = function(idx) {
     var data = {};
-    if (typeof idx == 'undefined') {
+    if (typeof idx === 'undefined') {
       data.dbname = $scope.pglogicalReplicationModel.dbname;
       data.host     = $scope.pglogicalReplicationModel.host;
       data.user = $scope.pglogicalReplicationModel.user;
@@ -259,14 +259,14 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       subscription.port     = $scope.pglogicalReplicationModel.port;
     } else {var subscription = $scope.pglogicalReplicationModel.subscriptions[idx];}
 
-    if (typeof original_values != 'undefined' && original_values[fieldName] != subscription[fieldName]) {return true;}
+    if (typeof original_values !== 'undefined' && original_values[fieldName] !== subscription[fieldName]) {return true;}
     return false;
   };
 
   $scope.subscriptionInValidMessage = function() {
-    if ($scope.pglogicalReplicationModel.replication_type == 'global' &&
+    if ($scope.pglogicalReplicationModel.replication_type === 'global' &&
       ($scope.pglogicalReplicationModel.subscriptions.length === 0 ||
-      ($scope.pglogicalReplicationModel.subscriptions.length == 1 && $scope.pglogicalReplicationModel.subscriptions[0].remove === true))) {return true;}
+      ($scope.pglogicalReplicationModel.subscriptions.length === 1 && $scope.pglogicalReplicationModel.subscriptions[0].remove === true))) {return true;}
     return false;
   };
 

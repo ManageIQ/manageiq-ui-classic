@@ -13,7 +13,7 @@ ManageIQ.angular.app.directive('miqrequired', function() {
       });
 
       var setValidity = function(_scope, ctrl, value) {
-        if (value != '') {
+        if (value !== '') {
           ctrl.$setValidity('miqrequired', true);
         } else {
           ctrl.$setValidity('miqrequired', false);

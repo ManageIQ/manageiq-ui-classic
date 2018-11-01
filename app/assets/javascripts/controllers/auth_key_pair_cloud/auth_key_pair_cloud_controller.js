@@ -14,7 +14,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
     vm.model = 'keyPairModel';
     vm.ems_choices = [];
     vm.saveable = miqService.saveable;
-    vm.newRecord = keyPairFormId == 'new';
+    vm.newRecord = keyPairFormId === 'new';
 
     ManageIQ.angular.scope = vm;
 

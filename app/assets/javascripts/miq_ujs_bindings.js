@@ -20,7 +20,7 @@ $(document).ready(function() {
       options.complete = true;
     }
     var submit = el.attr('data-submit');
-    if (typeof submit != 'undefined') {miqJqueryRequest(url, {data: miqSerializeForm(submit)});} else {miqJqueryRequest(url, options);}
+    if (typeof submit !== 'undefined') {miqJqueryRequest(url, {data: miqSerializeForm(submit)});} else {miqJqueryRequest(url, options);}
 
     return false;
   });
@@ -82,7 +82,7 @@ $(document).ready(function() {
 
     el.observe_field(interval, function() {
       var oneTrans = this.getAttribute('data-miq_send_one_trans'); // Grab one trans URL, if present
-      if (typeof submit != 'undefined') {
+      if (typeof submit !== 'undefined') {
         // If submit element passed in
         miqObserveRequest(url, {
           data: miqSerializeForm(submit),
@@ -127,7 +127,7 @@ $(document).ready(function() {
     var el = $(this);
     var parms = $.parseJSON(el.attr('data-miq_observe'));
 
-    if (typeof parms.interval == 'undefined') {
+    if (typeof parms.interval === 'undefined') {
       observeOnChange(el, parms);
     } else {
       observeWithInterval(el, parms);

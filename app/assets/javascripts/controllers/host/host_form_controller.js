@@ -29,7 +29,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     $scope.model = 'hostModel';
     ManageIQ.angular.scope = $scope;
 
-    if (hostFormId == 'new') {
+    if (hostFormId === 'new') {
       $scope.newRecord = true;
       $scope.hostModel.name = '';
       $scope.hostModel.hostname = '';
@@ -48,7 +48,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       $scope.hostModel.ipmi_password = '';
       $scope.hostModel.validate_id = '';
       $scope.afterGet = true;
-    } else if (hostFormId.split(',').length == 1) {
+    } else if (hostFormId.split(',').length === 1) {
       miqService.sparkleOn();
       $http.get($scope.formFieldsUrl + hostFormId)
         .then(getHostFormDataComplete)
@@ -72,9 +72,9 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
-    if (hostFormId == 'new') {
+    if (hostFormId === 'new') {
       var url = $scope.createUrl + 'new?button=cancel';
-    } else if (hostFormId.split(',').length == 1) {
+    } else if (hostFormId.split(',').length === 1) {
       var url = $scope.updateUrl + hostFormId + '?button=cancel';
     } else if (hostFormId.split(',').length > 1) {
       var url = $scope.updateUrl + '?button=cancel';
@@ -101,24 +101,24 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
   };
 
   $scope.isBasicInfoValid = function() {
-    if (($scope.currentTab == 'default') &&
+    if (($scope.currentTab === 'default') &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
-      ($scope.hostModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
+      ($scope.hostModel.default_userid !== '' && $scope.angularForm.default_userid.$valid &&
       $scope.angularForm.default_password.$valid)) {
       return true;
-    } else if (($scope.currentTab == 'remote') &&
+    } else if (($scope.currentTab === 'remote') &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
-      ($scope.hostModel.remote_userid != '' && $scope.angularForm.remote_userid.$valid &&
+      ($scope.hostModel.remote_userid !== '' && $scope.angularForm.remote_userid.$valid &&
       $scope.angularForm.remote_password.$valid)) {
       return true;
-    } else if (($scope.currentTab == 'ws') &&
+    } else if (($scope.currentTab === 'ws') &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
-      ($scope.hostModel.ws_userid != '' && $scope.angularForm.ws_userid.$valid &&
+      ($scope.hostModel.ws_userid !== '' && $scope.angularForm.ws_userid.$valid &&
       $scope.angularForm.ws_password.$valid)) {
       return true;
-    } else if (($scope.currentTab == 'ipmi') &&
+    } else if (($scope.currentTab === 'ipmi') &&
       ($scope.hostModel.ipmi_address) &&
-      ($scope.hostModel.ipmi_userid != '' && $scope.angularForm.ipmi_userid.$valid &&
+      ($scope.hostModel.ipmi_userid !== '' && $scope.angularForm.ipmi_userid.$valid &&
       $scope.angularForm.ipmi_password.$valid)) {
       return true;
     } return false;
@@ -135,22 +135,22 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
   };
 
   $scope.validateFieldsDirty = function() {
-    if (($scope.currentTab == 'default') &&
+    if (($scope.currentTab === 'default') &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
       $scope.angularForm.default_userid.$dirty &&
       $scope.angularForm.default_password.$dirty)) {
       return true;
-    } else if (($scope.currentTab == 'remote') &&
+    } else if (($scope.currentTab === 'remote') &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
       $scope.angularForm.remote_userid.$dirty &&
       $scope.angularForm.remote_password.$dirty)) {
       return true;
-    } else if (($scope.currentTab == 'ws') &&
+    } else if (($scope.currentTab === 'ws') &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
       $scope.angularForm.ws_userid.$dirty &&
       $scope.angularForm.ws_password.$dirty)) {
       return true;
-    } else if (($scope.currentTab == 'ipmi') &&
+    } else if (($scope.currentTab === 'ipmi') &&
       ($scope.angularForm.ipmi_address.$dirty &&
       $scope.angularForm.ipmi_userid.$dirty &&
       $scope.angularForm.ipmi_password.$dirty)) {

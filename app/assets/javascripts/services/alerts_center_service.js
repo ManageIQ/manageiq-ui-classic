@@ -175,7 +175,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
     } else if (filter.id === 'assignee') {
       found = item.assignee_name && item.assignee_name.localeCompare(filter.value);
     } else if (filter.id === 'acknowledged') {
-      found = filter.value == __('Acknowledged') ? item.acknowledged : ! item.acknowledged;
+      found = filter.value === __('Acknowledged') ? item.acknowledged : ! item.acknowledged;
     } else if (filter.id === 'severityCount') {
       if (filter.value === _this.severityTitles[0]) {
         found = item.info.length > 0;
@@ -316,9 +316,9 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
     if (action.id === 'unassign') {
       action.isVisible = item.assigned;
     } else if (action.id === 'acknowledge') {
-      action.isVisible = (item.assignee_id == _this.currentUser.id) && item.acknowledged !== true;
+      action.isVisible = (item.assignee_id === _this.currentUser.id) && item.acknowledged !== true;
     } else if (action.id === 'unacknowledge') {
-      action.isVisible = (item.assignee_id == _this.currentUser.id) && item.acknowledged === true;
+      action.isVisible = (item.assignee_id === _this.currentUser.id) && item.acknowledged === true;
     } else {
       action.isVisbile = true;
     }
@@ -508,9 +508,9 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
       alert_actions: alertData.alert_actions,
     };
 
-    if (newAlert.severity == 'error') {
+    if (newAlert.severity === 'error') {
       newAlert.severityInfo = _this.severities.error;
-    } else if (newAlert.severity == 'warning') {
+    } else if (newAlert.severity === 'warning') {
       newAlert.severityInfo = _this.severities.warning;
     } else {
       newAlert.severityInfo = _this.severities.info;
@@ -559,7 +559,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
       }
 
       // Add filter for this object type
-      if (newTypes.indexOf(objectType) == -1) {
+      if (newTypes.indexOf(objectType) === -1) {
         newTypes.push(objectType);
       }
       if (item.resource) {
@@ -735,7 +735,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
   }
 
   function doAssign() {
-    if (_this.editItem.assignee_id != _this.owner.id) {
+    if (_this.editItem.assignee_id !== _this.owner.id) {
       if (_this.owner) {
         if (_this.currentAcknowledged !== _this.editItem.acknowledged) {
           _this.doAfterStateChange = _this.currentAcknowledged ? doAcknowledge : doUnacknowledge;

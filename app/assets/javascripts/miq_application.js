@@ -36,7 +36,7 @@ function miqOnLoad() {
   }
 
   // Run MIQ after onload code if present
-  if (typeof ManageIQ.afterOnload == 'string') {
+  if (typeof ManageIQ.afterOnload === 'string') {
     eval(ManageIQ.afterOnload);
   }
 
@@ -174,7 +174,7 @@ function miqCalendarDateConversion(server_offset) {
       }
     }
     if (found) {
-      if (typeof count == 'undefined') {
+      if (typeof count === 'undefined') {
         ManageIQ.reportEditor.prefillCount = 0;
         setTimeout(function() {
           miqValueStylePrefill(ManageIQ.reportEditor.prefillCount);
@@ -387,7 +387,7 @@ function miqUpdateButtons(obj, button_div) {
 
   sendDataWithRx({rowSelect: obj});
 
-  if (typeof obj.id != 'undefined') {
+  if (typeof obj.id !== 'undefined') {
     $("input[id^='check_']").each(function() {
       if (this.checked && ! this.disabled) {
         count++;
@@ -397,7 +397,7 @@ function miqUpdateButtons(obj, button_div) {
       }
     });
   // Check for number object, as passed from snapshot tree
-  } else if (typeof obj == 'number') {
+  } else if (typeof obj === 'number') {
     count = 1;
   }
   miqSetButtons(count, button_div);
@@ -455,7 +455,7 @@ function miqPassFields(url, args) {
 
 function miqChartLinkData(col, row, value, category, series, id, message) {
   // Create the context menu
-  if (typeof miqMenu != 'undefined') {
+  if (typeof miqMenu !== 'undefined') {
     miqMenu.hideContextMenu();
   }
   if (category.indexOf('<Other(') === 0) {
@@ -579,7 +579,7 @@ function miqRESTAjaxButton(url, button, dataType, data) {
 // Handle an ajax form button press (i.e. Submit) by starting the spinning Q,
 // then waiting for .7 seconds for observers to finish
 function miqAjaxButton(url, serialize_fields, options) {
-  if (typeof serialize_fields == 'undefined') {
+  if (typeof serialize_fields === 'undefined') {
     serialize_fields = false;
   }
   if (miqDomElementExists('notification')) {
@@ -924,7 +924,7 @@ function miq_tabs_init(id, url, parms) {
     if ($(e.target).parent().hasClass('disabled')) {
       e.preventDefault();
       return false;
-    } else if (typeof url != 'undefined') {
+    } else if (typeof url !== 'undefined') {
       // Load remote tab if an URL is specified
       var currTabTarget = $(e.target).attr('href').substring(1);
       var urlParams = _.reduce(parms || [], function(sum, value, key) {
@@ -942,7 +942,7 @@ function miq_tabs_init(id, url, parms) {
 
   $(id + ' > ul.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
     // Refresh CodeMirror when its tab is toggled
-    if ($($(e.target).attr('href')).hasClass('cm-tab') && typeof ManageIQ.editor != 'undefined') {
+    if ($($(e.target).attr('href')).hasClass('cm-tab') && typeof ManageIQ.editor !== 'undefined') {
       miq_refresh_code_mirror();
     }
   });
@@ -1249,9 +1249,9 @@ function miqSelectPickerEvent(element, url, options) {
     var selected = $(this).val();
     var finalUrl = url + (firstarg ? '?' : '&') + element + '=' + encodeURIComponent(selected);
 
-    if (typeof $(this).attr('data-miq_sparkle_on') != 'undefined') {options.beforeSend = $(this).attr('data-miq_sparkle_on') === 'true';}
+    if (typeof $(this).attr('data-miq_sparkle_on') !== 'undefined') {options.beforeSend = $(this).attr('data-miq_sparkle_on') === 'true';}
 
-    if (typeof $(this).attr('data-miq_sparkle_off') != 'undefined') {options.complete = $(this).attr('data-miq_sparkle_off') === 'true';}
+    if (typeof $(this).attr('data-miq_sparkle_off') !== 'undefined') {options.complete = $(this).attr('data-miq_sparkle_off') === 'true';}
 
     if (options.callback) {
       options.done = function() {
@@ -1401,7 +1401,7 @@ function miqToolbarOnClick(_e) {
     return false;
   } else {
     // No url specified, run standard button ajax transaction
-    if (typeof button.data('explorer') != 'undefined' && button.data('explorer')) {
+    if (typeof button.data('explorer') !== 'undefined' && button.data('explorer')) {
       // Use x_button method for explorer ajax
       tb_url = '/' + ManageIQ.controller + '/x_button';
     } else {
@@ -1411,7 +1411,7 @@ function miqToolbarOnClick(_e) {
       tb_url += '/' + ManageIQ.record.recordId;
     }
     tb_url += '?pressed=';
-    if (typeof button.data('pressed') == 'undefined' && button.data('click')) {
+    if (typeof button.data('pressed') === 'undefined' && button.data('click')) {
       tb_url += button.data('click').split('__').pop();
     } else {
       tb_url += button.data('pressed');

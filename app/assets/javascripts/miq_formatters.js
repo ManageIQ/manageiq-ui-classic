@@ -27,7 +27,7 @@
       minus = val < 0;
       intpart = Math.abs(intpart);
     } else {
-      minus = val[0] == '-';
+      minus = val[0] === '-';
       intpart = Math.abs(~~val);
       floatpart = (val.indexOf('.') < 0) ? '' : val.replace(/^.*\./, '');
     }
@@ -68,7 +68,7 @@
     }
     numstr = number_with_delimiter(numstr, options);
 
-    var fmt = (numstr[0] == '-') ? options.negative_format : options.format;
+    var fmt = (numstr[0] === '-') ? options.negative_format : options.format;
     return fmt.replace('%u', options.unit).replace('%n', numstr);
   }
 
@@ -258,7 +258,7 @@
       var sep    = '';
       values.forEach(function(val, i) {
         var sfx = names[sidx + i];
-        if (val > 1 || val == 0) {sfx += 's';}
+        if (val > 1 || val === 0) {sfx += 's';}
 
         result += sep;
         result += values[i];

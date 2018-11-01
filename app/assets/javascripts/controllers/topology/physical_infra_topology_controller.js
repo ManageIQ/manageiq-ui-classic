@@ -49,14 +49,14 @@ function physicalInfraTopologyCtrl($scope, topologyService) {
       })
       .attr('height', function(d) {
         var iconInfo = vm.getIcon(d);
-        if (iconInfo.type != 'image') {
+        if (iconInfo.type !== 'image') {
           return 0;
         }
         return 40;
       })
       .attr('width', function(d) {
         var iconInfo = vm.getIcon(d);
-        if (iconInfo.type != 'image') {
+        if (iconInfo.type !== 'image') {
           return 0;
         }
         return 40;

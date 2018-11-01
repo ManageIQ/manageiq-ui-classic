@@ -49,7 +49,7 @@ var ImportSetup = {
       var unencodedMessage = event.data.message.replace(/&quot;/g, '"');
       var messageData = JSON.parse(unencodedMessage);
 
-      if (messageData.level == 'warning') {
+      if (messageData.level === 'warning') {
         showWarningMessage(messageData.message);
       } else {
         showErrorMessage(messageData.message);
@@ -72,7 +72,7 @@ var setUpImportClickHandlers = function(url, grid, importCallback) {
 
     $.post(url, $('#import-form').serialize() + serializedDialogs, function(data) {
       var flashMessage = data[0];
-      if (flashMessage.level == 'error') {
+      if (flashMessage.level === 'error') {
         showErrorMessage(flashMessage.message);
       } else {
         showSuccessMessage(flashMessage.message);

@@ -59,7 +59,7 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
   vm.check_quotas_changed = function() {
     for (var key in vm.tenantQuotaModel.quotas) {
       if (vm.tenantQuotaModel.quotas.hasOwnProperty(key)) {
-        if (vm.tenantQuotaModel.quotas[key].value != vm.modelCopy.quotas[key].value) {return true;}
+        if (vm.tenantQuotaModel.quotas[key].value !== vm.modelCopy.quotas[key].value) {return true;}
       }
     }
     return false;
@@ -68,7 +68,7 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
   vm.enforcedChanged = function(name) {
     miqService.miqFlashClear();
     for ( var key in vm.tenantQuotaModel.quotas ) {
-      if (vm.tenantQuotaModel.quotas.hasOwnProperty(key) && (key == name)) {
+      if (vm.tenantQuotaModel.quotas.hasOwnProperty(key) && (key === name)) {
         if (! vm.tenantQuotaModel.quotas[key].enforced) {vm.tenantQuotaModel.quotas[key].value = null;} else
         if (vm.modelCopy.quotas[key].value) {vm.tenantQuotaModel.quotas[key].value = vm.modelCopy.quotas[key].value;} else {vm.tenantQuotaModel.quotas[key].value = 0;}
         if (! vm.check_quotas_changed()) {$scope.angularForm.$setPristine(true);}

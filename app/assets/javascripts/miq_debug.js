@@ -50,7 +50,7 @@ $(function() {
       return false;
     }
 
-    if (type == 'warn') {
+    if (type === 'warn') {
       type = 'warning';
     }
 
@@ -151,7 +151,7 @@ angular.module('miq.debug', [])
 
         if (_.isPlainObject(data)) {return JSON.stringify(data);}
 
-        if (_.isArray(data) && data.length == 1) {return sanitize(data[0]);}
+        if (_.isArray(data) && data.length === 1) {return sanitize(data[0]);}
 
         if (data.toString().substr(0, 8) === '[object ') {return 'Unknown error, please see the console for details';} // no i18n, devel mode only
 

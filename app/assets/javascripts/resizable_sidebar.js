@@ -17,7 +17,7 @@ $.fn.resizableSidebar = function() {
 
   var container = this;
   var columns = container.find('.resizable');
-  if (columns.length == 2) { // only if there are 2 resizable columns
+  if (columns.length === 2) { // only if there are 2 resizable columns
     var maindiv = columns.find('.resizer').parent();
     var sidebar = columns.not(maindiv);
     maindiv.find('.resizer-box .btn').click(function(_event) {

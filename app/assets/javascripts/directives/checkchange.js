@@ -20,7 +20,7 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
 
       if (modelCopy()) {
         scope.$watch(attr.ngModel, function() {
-          if (scope['elemType_' + ctrl.$name] == 'date' || _.isDate(ctrl.$modelValue)) {
+          if (scope['elemType_' + ctrl.$name] === 'date' || _.isDate(ctrl.$modelValue)) {
             viewModelDateComparison(scope, ctrl);
           } else {
             viewModelComparison(scope, ctrl);
@@ -32,7 +32,7 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
       ctrl.$parsers.push(function(value) {
         miqService.miqFlashClear();
 
-        if (value == modelCopy()[ctrl.$name]) {
+        if (value === modelCopy()[ctrl.$name]) {
           scope.angularForm[scope['formchange_' + ctrl.$name]].$setPristine();
         }
         if (scope.angularForm[scope['formchange_' + ctrl.$name]].$pristine) {
@@ -47,7 +47,7 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
       var viewModelComparison = function(scope, ctrl) {
         if ((Array.isArray(modelCopy()[ctrl.$name]) &&
           angular.equals(model()[ctrl.$name], modelCopy()[ctrl.$name])) ||
-          ctrl.$viewValue == modelCopy()[ctrl.$name]) {
+          ctrl.$viewValue === modelCopy()[ctrl.$name]) {
           scope.angularForm[scope['formchange_' + ctrl.$name]].$setPristine();
           scope.angularForm[scope['formchange_' + ctrl.$name]].$setUntouched();
           scope.angularForm.$pristine = true;

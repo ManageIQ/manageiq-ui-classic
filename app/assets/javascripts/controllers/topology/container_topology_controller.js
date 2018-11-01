@@ -91,7 +91,7 @@ function ContainerTopologyCtrl($scope, topologyService, topologyDetail) {
     added.append('text')
       .each(function(d) {
         var iconInfo = vm.getIcon(d);
-        if (iconInfo.type != 'glyph') {return;}
+        if (iconInfo.type !== 'glyph') {return;}
 
         /* global fontIconChar */
         var fonticon = fontIconChar(iconInfo.class);

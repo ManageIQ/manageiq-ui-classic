@@ -30,7 +30,7 @@
         // if all the checkboxes were checked, make checkall checked too,
         // if some aren't, make it unchecked => no trigger here
         $('input.checkall')
-          .prop('checked', checked.length == checkboxes.length);
+          .prop('checked', checked.length === checkboxes.length);
       });
 
       // Handle the click on the "Check all" checkbox

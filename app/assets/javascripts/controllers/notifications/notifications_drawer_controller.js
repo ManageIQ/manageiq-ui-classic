@@ -7,7 +7,7 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
   var vm = this;
   var cookieId = 'miq-notification-drawer';
   vm.notificationGroups = [];
-  vm.drawerExpanded = sessionStorage.getItem(cookieId + '-expanded') == 'true';
+  vm.drawerExpanded = sessionStorage.getItem(cookieId + '-expanded') === 'true';
   vm.notificationsDrawerShown = eventNotifications.state().drawerShown;
 
   var watchExpanded = $scope.$watch('vm.drawerExpanded', function() {
@@ -39,7 +39,7 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
     var hasVerticalScrollbar,
       scrollContent = angular.element('#main-content'),
       miqNotificationsDrawer = angular.element('#miq-notifications-drawer .drawer-pf');
-    if (scrollContent && scrollContent.length == 1 && miqNotificationsDrawer && miqNotificationsDrawer.length == 1) {
+    if (scrollContent && scrollContent.length === 1 && miqNotificationsDrawer && miqNotificationsDrawer.length === 1) {
       hasVerticalScrollbar = scrollContent[0].scrollHeight > scrollContent[0].clientHeight;
       if (hasVerticalScrollbar) {
         angular.element(miqNotificationsDrawer).addClass('vertical-scroll');
@@ -51,7 +51,7 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
 
   var watchPositioning = function() {
     var scrollContent = angular.element('#main-content');
-    if (scrollContent && scrollContent.length == 1) {
+    if (scrollContent && scrollContent.length === 1) {
       updatePosition();
       scrollContent.off('resize', updatePosition);
       scrollContent.on('resize', updatePosition);
@@ -63,7 +63,7 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
 
     vm.notificationGroups = eventNotifications.state().groups;
     angular.forEach($scope.notificationGroups, function(group) {
-      group.open = sessionStorage.getItem(cookieId + '-' + group.notificationType + '-open') == 'true';
+      group.open = sessionStorage.getItem(cookieId + '-' + group.notificationType + '-open') === 'true';
     });
 
     addGroupWatchers();
@@ -97,13 +97,13 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
   vm.customScope.getNotficationStatusIconClass = function(notification) {
     var retClass = '';
     if (notification && notification.type) {
-      if (notification.type == 'info') {
+      if (notification.type === 'info') {
         retClass = 'pficon pficon-info';
-      } else if ((notification.type == 'error') || (notification.type == 'danger')) {
+      } else if ((notification.type === 'error') || (notification.type === 'danger')) {
         retClass = 'pficon pficon-error-circle-o';
-      } else if (notification.type == 'warning') {
+      } else if (notification.type === 'warning') {
         retClass = 'pficon pficon-warning-triangle-o';
-      } else if ((notification.type == 'success') || (notification.type == 'ok')) {
+      } else if ((notification.type === 'success') || (notification.type === 'ok')) {
         retClass = 'pficon pficon-ok';
       }
     }

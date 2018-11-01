@@ -13,7 +13,7 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
 
   ManageIQ.angular.scope = $scope;
 
-  if (hostAggregateFormId == 'new') {
+  if (hostAggregateFormId === 'new') {
     $scope.hostAggregateModel.name = '';
     $scope.hostAggregateModel.ems_id = '';
     $scope.hostAggregateModel.availability_zone = '';
@@ -35,7 +35,7 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
-    if (hostAggregateFormId == 'new') {
+    if (hostAggregateFormId === 'new') {
       var url = '/host_aggregate/create/new' + '?button=cancel';
     } else {
       var url = '/host_aggregate/update/' + hostAggregateFormId + '?button=cancel';

@@ -39,8 +39,8 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
     } else {
       return API.get('/api/network_routers/' + networkRouterFormId + '?attributes=name,admin_state_up,cloud_network_id,cloud_tenant.name,ext_management_system.id,ext_management_system.name,extra_attributes').then(function(data) {
         Object.assign(vm.networkRouterModel, data);
-        vm.networkRouterModel.admin_state_up = vm.networkRouterModel.admin_state_up == 't' ? true : false;
-        if (vm.networkRouterModel.extra_attributes.external_gateway_info && vm.networkRouterModel.extra_attributes.external_gateway_info != {}) {
+        vm.networkRouterModel.admin_state_up = vm.networkRouterModel.admin_state_up === 't' ? true : false;
+        if (vm.networkRouterModel.extra_attributes.external_gateway_info && vm.networkRouterModel.extra_attributes.external_gateway_info !== {}) {
           vm.networkRouterModel.external_gateway = true;
           if (vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips) {
             var ref = vm.networkRouterModel.extra_attributes.external_gateway_info.external_fixed_ips[0].subnet_id;

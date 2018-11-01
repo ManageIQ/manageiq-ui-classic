@@ -8,7 +8,7 @@ function HeaderCtrl($scope, eventNotifications, $timeout) {
 
   var cookieId = 'miq-notification-drawer';
   vm.newNotifications = false;
-  vm.notificationsDrawerShown = sessionStorage.getItem(cookieId + '-shown') == 'true';
+  vm.notificationsDrawerShown = sessionStorage.getItem(cookieId + '-shown') === 'true';
   eventNotifications.setDrawerShown(vm.notificationsDrawerShown);
   updateTooltip();
 

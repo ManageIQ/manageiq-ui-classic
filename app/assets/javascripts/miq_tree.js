@@ -20,7 +20,7 @@ function miqTreeFindNodeByKey(tree, key) {
   }
 
   return tree.getNodes().find(function(node) {
-    return (node.key == key);
+    return (node.key === key);
   });
 }
 
@@ -67,7 +67,7 @@ function miqRemoveNodeChildren(treename, key) {
 
 function miqOnCheckMenuRoles(id) {
   var nid = id.split('__');
-  if (nid[0] != 'r') {
+  if (nid[0] !== 'r') {
     var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
     miqJqueryRequest(url, {beforeSend: true,
       complete: true,
@@ -362,7 +362,7 @@ function miqMenuChangeRow(action, elem) {
       }
 
       var selected_id = selected.children()[0].id.split('|-|');
-      if (selected_id.length == 1) {
+      if (selected_id.length === 1) {
         selected.remove();
       } else {
         // just show a flash message
@@ -556,7 +556,7 @@ function miqInitTree(options, tree) {
       if (options.onclick) {
         if (options.click_url) {
           miqTreeEventSafeEval(options.onclick)(node.key);
-        } else if (miqCheckForChanges() == false) {
+        } else if (miqCheckForChanges() === false) {
           node.$el.focus();
         } else {
           miqTreeEventSafeEval(options.onclick)(node.key);

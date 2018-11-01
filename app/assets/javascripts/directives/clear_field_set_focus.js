@@ -16,7 +16,7 @@ ManageIQ.angular.app.directive('clearFieldSetFocus', ['$timeout', 'miqService', 
         if (value) {
           $timeout(function() {
             model()[ctrl.$name] = '';
-            if (option != 'no-focus') {angular.element(scope['form_passwordfocus_' + ctrl.$name]).focus();}
+            if (option !== 'no-focus') {angular.element(scope['form_passwordfocus_' + ctrl.$name]).focus();}
           }, 0);
         }
       });

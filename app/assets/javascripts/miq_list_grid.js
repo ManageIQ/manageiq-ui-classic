@@ -73,7 +73,7 @@ function miqGetSortUrl(col_id) {
   var action = ManageIQ.actionUrl;
   var id = null;
 
-  if (action == 'sort_ds_grid') {
+  if (action === 'sort_ds_grid') {
     controller = 'miq_request';
   } else if (ManageIQ.record.parentId !== null) {
     controller = ManageIQ.record.parentClass;

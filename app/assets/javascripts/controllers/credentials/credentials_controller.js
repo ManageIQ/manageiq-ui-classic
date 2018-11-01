@@ -22,7 +22,7 @@ ManageIQ.angular.app.controller('CredentialsController', ['$scope', '$attrs', fu
     }
   });
 
-  if (vm.vmScope().formId == 'new') {
+  if (vm.vmScope().formId === 'new') {
     vm.newRecord = true;
   } else {
     vm.newRecord = false;
@@ -47,7 +47,7 @@ ManageIQ.angular.app.controller('CredentialsController', ['$scope', '$attrs', fu
   };
 
   vm.showChangePasswordLinks = function(userid) {
-    return ! vm.vmScope().newRecord && vm.vmScope().modelCopy[userid] != '';
+    return ! vm.vmScope().newRecord && vm.vmScope().modelCopy[userid] !== '';
   };
 
   vm.resetClicked = function() {

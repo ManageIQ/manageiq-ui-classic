@@ -101,7 +101,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
   vm.resetClicked = function(angularForm) {
     vm.securityGroupModel = _.cloneDeep(vm.modelCopy);
     for (var index = 0, len = vm.securityGroupModel.firewall_rules.length; index < len; index++) {
-      if (vm.securityGroupModel.firewall_rules[index] == undefined || vm.securityGroupModel.firewall_rules[index].deleted === true) {
+      if (vm.securityGroupModel.firewall_rules[index] === undefined || vm.securityGroupModel.firewall_rules[index].deleted === true) {
         vm.securityGroupModel.firewall_rules.splice(index, 1);
       }
     }

@@ -7,11 +7,11 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
   vm.modelCopy = angular.copy( vm.cloudTenantModel );
   vm.model = 'cloudTenantModel';
   vm.saveable = miqService.saveable;
-  vm.newRecord = cloudTenantFormId == 'new';
+  vm.newRecord = cloudTenantFormId === 'new';
 
   ManageIQ.angular.scope = $scope;
 
-  if (cloudTenantFormId == 'new') {
+  if (cloudTenantFormId === 'new') {
     vm.cloudTenantModel.name = '';
   } else {
     miqService.sparkleOn();
@@ -32,7 +32,7 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
   }
 
   vm.cancelClicked = function() {
-    if (cloudTenantFormId == 'new') {
+    if (cloudTenantFormId === 'new') {
       var url = '/cloud_tenant/create/new?button=cancel';
     } else {
       var url = '/cloud_tenant/update/' + cloudTenantFormId + '?button=cancel';

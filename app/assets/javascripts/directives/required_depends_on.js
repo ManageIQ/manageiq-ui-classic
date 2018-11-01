@@ -18,7 +18,7 @@ ManageIQ.angular.app.directive('requiredDependsOn', function() {
       });
 
       var setValidity = function(_scope, ctrl, value, dependsOnValue) {
-        if (value == '' && dependsOnValue != '') {
+        if (value === '' && dependsOnValue !== '') {
           ctrl.$setValidity('requiredDependsOn', false);
         } else {
           ctrl.$setValidity('requiredDependsOn', true);
@@ -26,7 +26,7 @@ ManageIQ.angular.app.directive('requiredDependsOn', function() {
       };
 
       var setValidityForModelValue = function(scope, ctrl, value, valueIfExists) {
-        if (value == '' && scope[scope.model][valueIfExists] != '') {
+        if (value === '' && scope[scope.model][valueIfExists] !== '') {
           ctrl.$setValidity('requiredDependsOn', false);
         } else {
           ctrl.$setValidity('requiredDependsOn', true);
