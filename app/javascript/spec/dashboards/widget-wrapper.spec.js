@@ -22,27 +22,27 @@ describe('widget-wrapper', () => {
           status: 200,
           statusText: 'OK',
         });
-      } else {
-        return Promise.resolve({
-          data: {
-            content: "<div></div>",
-            minimized: false,
-            shortcuts: [],
-          },
-          status: 200,
-          statusText: 'OK',
-        });
       }
+
+      return Promise.resolve({
+        data: {
+          content: "<div></div>",
+          minimized: false,
+          shortcuts: [],
+        },
+        status: 200,
+        statusText: 'OK',
+      });
     });
   }));
 
   widgetTypes.forEach((widget) => {
     it(`renders widget-${widget} when widget-type is ${widget}`, (done) => {
-      element = angular.element(
-        '<form name="angularForm">' +
-        '  <widget-wrapper widget-id="42" widget-blank=false widget-buttons="null" widget-type="' + widget + '"></widget-wrapper>' +
-        '</form>'
-      );
+      element = angular.element(`
+        <form name="angularForm">
+          <widget-wrapper widget-id="42" widget-blank="false" widget-buttons="null" widget-type="${widget}"></widget-wrapper>
+        </form>
+      `);
       element = $compile(element)($scope);
       $scope.$digest();
 
