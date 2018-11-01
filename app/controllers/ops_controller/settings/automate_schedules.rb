@@ -65,9 +65,13 @@ module OpsController::Settings::AutomateSchedules
   end
 
   def prebuild_automate_schedule(schedule)
-    schedule.filter && schedule.filter.kind_of?(Hash) ? schedule.filter : {:uri_parts  => {},
-                                                                           :ui         => { :ui_attrs  => [],
-                                                                                            :ui_object => {}},
-                                                                           :parameters => {}}
+    if schedule.filter && schedule.filter.kind_of?(Hash)
+      schedule.filter
+    else
+      {:uri_parts  => {},
+       :ui         => { :ui_attrs  => [],
+                        :ui_object => {}},
+       :parameters => {}}
+    end
   end
 end
