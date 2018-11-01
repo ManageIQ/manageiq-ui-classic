@@ -206,8 +206,7 @@ class InfraNetworkingController < ApplicationController
     [{:role     => "infra_networking",
       :role_any => true,
       :name     => :infra_networking,
-      :title    => _("Switches")},
-    ].map do |hsh|
+      :title    => _("Switches")}].map do |hsh|
       ApplicationController::Feature.new_with_hash(hsh)
     end
   end
@@ -240,7 +239,7 @@ class InfraNetworkingController < ApplicationController
 
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
 
-    if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
+    if @edit&.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
       x_history_add_item(:id     => x_node,
                          :qs_exp => @edit[:adv_search_applied][:qs_exp],
                          :text   => @right_cell_text)
@@ -362,8 +361,6 @@ class InfraNetworkingController < ApplicationController
       type, _id = parse_nodetype_and_id(x_node)
 
       record_showing = type && ["Switch"].include?(TreeBuilder.get_model_for_prefix(type))
-      c_tb = build_toolbar(center_toolbar_filename)
-      h_tb = build_toolbar("x_history_tb") unless @in_a_form
     end
 
     # Build presenter to render the JS command for the tree update
@@ -483,8 +480,8 @@ class InfraNetworkingController < ApplicationController
     end
   end
 
-  # Build the switch detail gtl view
-  def show_details(db, options = {}) # Pass in the db, parent vm is in @vm
+  # Build the switch detail gtl view. Pass in the db, parent vm is in @vm
+  def show_details(db, options = {})
     association = options[:association]
     conditions  = options[:conditions]
     clickable   = options[:clickable].nil?
