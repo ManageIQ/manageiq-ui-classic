@@ -420,7 +420,7 @@ module OpsController::Diagnostics
       zone = Zone.find_by_id(x_node.split("-").last)
       @view, @pages = get_view(MiqServer, :named_scope => [[:with_zone_id, zone.id]]) # Get the records (into a view) and the paginator
     else
-      @view, @pages = get_view(MiqServer) # Get the records (into a view) and the paginator
+      @view, @pages = get_view(MiqServer, :named_scope => [:in_my_region]) # Get the records (into a view) and the paginator
     end
     @no_checkboxes = @showlinks = true
     @items_per_page = ApplicationController::ONE_MILLION
