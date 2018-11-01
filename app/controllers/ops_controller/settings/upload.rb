@@ -34,11 +34,11 @@ module OpsController::Settings::Upload
   def upload_form_field_changed
     return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
     @edit[:new][:upload_type] = !params[:upload_type].nil? && params[:upload_type] != "" ? params[:upload_type] : nil
-    if !params[:upload_type].blank?
-      msg = _("Locate and upload a file to start the import process")
-    else
-      msg = _("Choose the type of custom variables to be imported")
-    end
+    msg = if params[:upload_type].present?
+            _("Locate and upload a file to start the import process")
+          else
+            _("Choose the type of custom variables to be imported")
+          end
     add_flash(msg, :info)
     @sb[:good] = nil
     render :update do |page|
@@ -72,7 +72,7 @@ module OpsController::Settings::Upload
           :good_record => n_("%{num} good record", "%{num} good records", imp.stats[:good]) % {:num => imp.stats[:good]},
           :bad_record  => n_("%{num} bad record", "%{num} bad records", imp.stats[:bad]) % {:num => imp.stats[:bad]}
         }, :warning)
-        if imp.stats[:good] == 0
+        if imp.stats[:good].zero?
           add_flash(_("No valid import records were found, please upload another file"), :error)
         else
           add_flash(_("Press the Apply button to import the good records into the %{product} database") % {:product => Vmdb::Appliance.PRODUCT_NAME})
@@ -83,7 +83,7 @@ module OpsController::Settings::Upload
     else
       add_flash(_("Use the Choose file button to locate CSV file"), :error)
     end
-    @sb[:show_button] = (@sb[:good] && @sb[:good] > 0)
+    @sb[:show_button] = @sb[:good].try(:positive?)
     flash_to_session
     session[:flash_msgs] = @flash_array.dup if @flash_array
     redirect_to(:action => 'explorer', :no_refresh => true)
