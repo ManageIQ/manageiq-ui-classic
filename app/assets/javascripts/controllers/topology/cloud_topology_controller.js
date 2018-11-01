@@ -1,7 +1,4 @@
-angular.module('ManageIQ').controller('cloudTopologyController', CloudTopologyCtrl);
-CloudTopologyCtrl.$inject = ['$scope', 'topologyService'];
-
-function CloudTopologyCtrl($scope, topologyService) {
+angular.module('ManageIQ').controller('cloudTopologyController', ['$scope', 'topologyService', function($scope, topologyService) {
   var vm = this;
   vm.vs = null;
   vm.icons = null;
@@ -136,4 +133,5 @@ function CloudTopologyCtrl($scope, topologyService) {
         return defaultDimensions;
     }
   };
-}
+}]);
+

@@ -1,9 +1,4 @@
-angular.module('miq.notifications')
-  .service('eventNotifications', eventNotifications);
-
-eventNotifications.$inject = ['$timeout', '$window', '$httpParamSerializerJQLike', 'API'];
-
-function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) {
+angular.module('miq.notifications').service('eventNotifications', ['$timeout', '$window', '$httpParamSerializerJQLike', 'API', function($timeout, $window, $httpParamSerializerJQLike, API) {
   if (! ManageIQ.angular.eventNotificationsData) {
     ManageIQ.angular.eventNotificationsData = {
       state: {
@@ -131,7 +126,7 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
       data: notificationData,
       actionTitle: notificationData.link ? __('View details') : undefined,
       actionCallback: notificationData.link ? this.viewDetails : undefined,
-      href: id ? window.location.origin + '/api/notifications/' + id : undefined,
+      href: id ? $window.location.origin + '/api/notifications/' + id : undefined,
       timeStamp: (new Date()).getTime(),
     };
 
@@ -336,4 +331,4 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
       _this.add('event', data.notification.level, msg, {link: _.get(data.notification, 'bindings.link')}, data.notification.id);
     }
   });
-}
+}]);

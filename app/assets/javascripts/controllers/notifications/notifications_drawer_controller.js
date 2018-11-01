@@ -1,9 +1,4 @@
-angular.module('miq.notifications')
-  .controller('notificationsDrawerController', NotificationsDrawerCtrl);
-
-NotificationsDrawerCtrl.$inject = ['$scope', 'eventNotifications', '$timeout'];
-
-function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
+angular.module('miq.notifications').controller('notificationsDrawerController', ['$scope', 'eventNotifications', '$timeout', function($scope, eventNotifications, $timeout) {
   var vm = this;
   var cookieId = 'miq-notification-drawer';
   vm.notificationGroups = [];
@@ -137,4 +132,5 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
   };
 
   refresh();
-}
+}]);
+

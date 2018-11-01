@@ -1,8 +1,4 @@
-angular.module('alertsCenter').service('alertsCenterService', alertsCenterService);
-
-alertsCenterService.$inject = ['API', '$q', '$timeout', '$document', '$uibModal', '$http'];
-
-function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
+angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$timeout', '$document', '$uibModal', '$http', function(API, $q, $timeout, $document, $uibModal, $http) {
   var _this = this;
   var providersURL = '/api/providers';
   var tagsURL = '/api/tags';
@@ -812,4 +808,4 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
         break;
     }
   }
-}
+}]);

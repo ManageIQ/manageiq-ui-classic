@@ -1,7 +1,4 @@
-angular.module('ManageIQ').controller('containerTopologyController', ContainerTopologyCtrl);
-ContainerTopologyCtrl.$inject = ['$scope', 'topologyService', 'topologyDetail'];
-
-function ContainerTopologyCtrl($scope, topologyService, topologyDetail) {
+angular.module('ManageIQ').controller('containerTopologyController', ['$scope', 'topologyService', 'topologyDetail', function($scope, topologyService, topologyDetail) {
   var vm = this;
   vm.dataUrl = topologyDetail ? '/container_project_topology/data' : '/container_topology/data';
   vm.vs = null;
@@ -153,4 +150,5 @@ function ContainerTopologyCtrl($scope, topologyService, topologyDetail) {
         return defaultDimensions;
     }
   };
-}
+}]);
+

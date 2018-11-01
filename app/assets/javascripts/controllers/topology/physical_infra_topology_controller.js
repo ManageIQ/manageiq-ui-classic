@@ -1,7 +1,4 @@
-angular.module('ManageIQ').controller('physicalInfraTopologyController', physicalInfraTopologyCtrl);
-physicalInfraTopologyCtrl.$inject = ['$scope', 'topologyService'];
-
-function physicalInfraTopologyCtrl($scope, topologyService) {
+angular.module('ManageIQ').controller('physicalInfraTopologyController', ['$scope', 'topologyService', function($scope, topologyService) {
   var vm = this;
   vm.vs = null;
   vm.icons = null;
@@ -132,4 +129,5 @@ function physicalInfraTopologyCtrl($scope, topologyService) {
         return defaultDimensions;
     }
   };
-}
+}]);
+

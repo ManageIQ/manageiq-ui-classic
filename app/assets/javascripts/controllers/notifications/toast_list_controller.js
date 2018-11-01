@@ -1,9 +1,4 @@
-angular.module('miq.notifications')
-  .controller('toastListController', ToastListCtrl);
-
-ToastListCtrl.$inject = ['$scope', 'eventNotifications', '$timeout'];
-
-function ToastListCtrl($scope, eventNotifications, $timeout) {
+angular.module('miq.notifications').controller('toastListController', ['$scope', 'eventNotifications', '$timeout', function($scope, eventNotifications, $timeout) {
   var vm = this;
   vm.toastNotifications = [];
 
@@ -31,4 +26,4 @@ function ToastListCtrl($scope, eventNotifications, $timeout) {
   $scope.$on('$destroy', destroy);
 
   refresh();
-}
+}]);

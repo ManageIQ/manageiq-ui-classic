@@ -1,7 +1,4 @@
-angular.module('ManageIQ').controller('infraTopologyController', InfraTopologyCtrl);
-InfraTopologyCtrl.$inject = ['$scope', 'topologyService'];
-
-function InfraTopologyCtrl($scope, topologyService) {
+angular.module('ManageIQ').controller('infraTopologyController', ['$scope', 'topologyService', function($scope, topologyService) {
   var vm = this;
   vm.dataUrl = '/infra_topology/data';
   vm.vs = null;
@@ -132,4 +129,6 @@ function InfraTopologyCtrl($scope, topologyService) {
         return defaultDimensions;
     }
   };
-}
+}]);
+
+

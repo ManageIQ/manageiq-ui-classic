@@ -1,7 +1,4 @@
-angular.module('ManageIQ').controller('networkTopologyController', NetworkTopologyCtrl);
-NetworkTopologyCtrl.$inject = ['$scope', 'topologyService'];
-
-function NetworkTopologyCtrl($scope, topologyService) {
+angular.module('ManageIQ').controller('networkTopologyController', ['$scope', 'topologyService', function($scope, topologyService) {
   var vm = this;
   vm.vs = null;
   vm.icons = null;
@@ -135,4 +132,6 @@ function NetworkTopologyCtrl($scope, topologyService) {
         return defaultDimensions;
     }
   };
-}
+}]);
+
+

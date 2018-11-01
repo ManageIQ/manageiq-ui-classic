@@ -1,9 +1,4 @@
-angular.module('miq.notifications')
-  .controller('headerController', HeaderCtrl);
-
-HeaderCtrl.$inject = ['$scope', 'eventNotifications', '$timeout'];
-
-function HeaderCtrl($scope, eventNotifications, $timeout) {
+angular.module('miq.notifications').controller('headerController', ['$scope', 'eventNotifications', '$timeout', function($scope, eventNotifications, $timeout) {
   var vm = this;
 
   var cookieId = 'miq-notification-drawer';
@@ -59,4 +54,5 @@ function HeaderCtrl($scope, eventNotifications, $timeout) {
   $scope.$on('$destroy', destroy);
 
   refresh();
-}
+}]);
+
