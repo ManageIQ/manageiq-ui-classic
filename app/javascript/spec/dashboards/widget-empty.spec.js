@@ -26,8 +26,8 @@ describe('widget-empty', () => {
     $scope.$digest();
 
     setTimeout(() => {
-      const widget = element.find("widget-empty");
-      expect(widget.length).toBe(1);
+      const widget = element.find('widget-empty');
+      expect(widget).toHaveLength(1);
 
       done();
     });

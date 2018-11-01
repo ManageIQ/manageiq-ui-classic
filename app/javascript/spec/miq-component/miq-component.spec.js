@@ -369,9 +369,7 @@ describe('Component API', () => {
     Object.keys(resultingInstance)
       .filter(propName => propName !== 'id')
       .forEach((propName) => {
-        expect(() => {
-          resultingInstance[propName];
-        }).toThrow();
+        expect(() => resultingInstance[propName]).toThrow();
         expect(() => {
           resultingInstance[propName] = ['1337'];
         }).toThrow();
@@ -425,7 +423,7 @@ describe('Component API', () => {
 
     testInstances.forEach((instance) => {
       expect(() => {
-        instance.id = 'second';
+        instance.id = 'second'; // eslint-disable-line no-param-reassign, param reassing this is expected to fail, therefore eslint rule here does not make sense
       }).toThrow();
     });
   });
@@ -481,9 +479,7 @@ describe('Component API', () => {
     expect(resultingInstance.id).toBe('first');
 
     ['bar', 'baz'].forEach((propName) => {
-      expect(() => {
-        resultingInstance[propName];
-      }).toThrow();
+      expect(() => resultingInstance[propName]).toThrow();
       expect(() => {
         resultingInstance[propName] = ['1337'];
       }).toThrow();

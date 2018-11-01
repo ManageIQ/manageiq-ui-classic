@@ -18,15 +18,14 @@ describe('widget-wrapper', () => {
     spyOn($http, 'get').and.callFake((url) => {
       if (url === '/static/dropdown-menu.html.haml') {
         return Promise.resolve({
-          data: "<div></div>",
+          data: '<div></div>',
           status: 200,
           statusText: 'OK',
         });
       }
-
       return Promise.resolve({
         data: {
-          content: "<div></div>",
+          content: '<div></div>',
           minimized: false,
           shortcuts: [],
         },
@@ -50,8 +49,8 @@ describe('widget-wrapper', () => {
       $ctrl.promise.catch(() => null).then(() => {
         $scope.$digest();
 
-        const widgetElement = element.find("widget-".concat(widget));
-        expect(widgetElement.length).toBe(1);
+        const widgetElement = element.find('widget-'.concat(widget));
+        expect(widgetElement).toHaveLength(1);
         done();
       });
     });

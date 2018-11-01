@@ -24,18 +24,16 @@ describe('Toolbar actions', () => {
   });
 
   describe('Generic action', () => {
-    let add_flash;
+    let add_flash; // eslint-disable-line camelcase
 
     beforeEach(() => {
-      spyOn(window.vanillaJsAPI, 'post').and.returnValue(
-        Promise.resolve({
-          results: [
-            { success: true, message: 'some' },
-          ],
-        }),
-      );
-      add_flash = jasmine.createSpy('add_flash');
-      window.add_flash = add_flash;
+      spyOn(window.vanillaJsAPI, 'post').and.returnValue(Promise.resolve({
+        results: [
+          { success: true, message: 'some' },
+        ],
+      }));
+      add_flash = jasmine.createSpy('add_flash'); // eslint-disable-line camelcase
+      window.add_flash = add_flash; // eslint-disable-line camelcase
     });
 
     test('should send correct data', () => {
@@ -45,10 +43,10 @@ describe('Toolbar actions', () => {
       };
       onCustomAction({ action: payload.action, entity: 'some-entity' }, payload.resources);
       expect(window.vanillaJsAPI.post)
-      .toHaveBeenCalledWith(
-        '/api/some-entity',
-        jasmine.objectContaining(payload),
-      );
+        .toHaveBeenCalledWith(
+          '/api/some-entity',
+          jasmine.objectContaining(payload),
+        );
     });
 
     test('should call correct functions', (done) => {
