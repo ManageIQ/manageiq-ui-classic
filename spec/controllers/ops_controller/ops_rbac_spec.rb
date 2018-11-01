@@ -575,4 +575,43 @@ describe OpsController do
       end
     end
   end
+
+  describe "#rbac_get_info" do
+    let!(:root_tenant) { FactoryGirl.create(:tenant) } # creates first root Tenant in active region
+    let(:group) { FactoryGirl.create(:miq_group) }
+    let(:inactive_region) { FactoryGirl.create(:miq_region) }
+    let!(:root_tenant_in_inactive_region) do
+      root_tenant_in_inactive_region = Tenant.root_tenant.dup
+      root_tenant_in_inactive_region.id = Tenant.id_in_region(Tenant.count + 1_000_000, inactive_region.region)
+      root_tenant_in_inactive_region.save!(:validate => false) # skip validation to create second root Tenant
+      root_tenant_in_inactive_region
+    end
+    let!(:group_in_inactive_region) do
+      group_in_inactive_region = group.dup
+      group_in_inactive_region.id = MiqGroup.id_in_region(MiqGroup.count + 1_000_000, inactive_region.region)
+      group_in_inactive_region.save!
+      group_in_inactive_region
+    end
+    let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+
+    before do
+      EvmSpecHelper.local_miq_server
+      login_as admin_user
+      MiqRegion.seed
+    end
+
+    it 'counts only Tenants in active region' do
+      allow(controller).to receive(:x_node).and_return('root')
+      controller.send(:rbac_get_info)
+      expect(controller.instance_variable_get(:@tenants_count)).to eq(Tenant.in_my_region.count)
+      expect(controller.instance_variable_get(:@tenants_count)).not_to eq(Tenant.count)
+    end
+
+    it 'counts only MiqGroups in active region' do
+      allow(controller).to receive(:x_node).and_return('root')
+      controller.send(:rbac_get_info)
+      expect(controller.instance_variable_get(:@groups_count)).to eq(MiqGroup.non_tenant_groups_in_my_region.count)
+      expect(controller.instance_variable_get(:@groups_count)).not_to eq(MiqGroup.count)
+    end
+  end
 end
