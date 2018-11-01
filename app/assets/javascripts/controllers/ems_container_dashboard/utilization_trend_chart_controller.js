@@ -18,7 +18,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainer
       vm.loadingDone = true;
     });
 
-    vm.title = __("Aggregated Node Utilization");
+    vm.title = __('Aggregated Node Utilization');
     vm.centerLabel = 'used';
     vm.custShowXAxis = false;
     vm.custShowYAxis = false;

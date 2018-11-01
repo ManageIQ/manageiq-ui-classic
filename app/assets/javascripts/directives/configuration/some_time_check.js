@@ -1,12 +1,12 @@
 ManageIQ.angular.app.directive('someTimeCheck', function() {
   return {
     require: 'ngModel',
-    link: function (scope, _elem, attrs, ctrl) {
-      ctrl.$validators.someTimeCheck = function (_modelValue, _viewValue) {
-        if (attrs.timeType === "day") {
-          return !allDaysUnchecked(scope);
-        } else if (attrs.timeType === "hour") {
-          return !allHoursUnchecked(scope);
+    link: function(scope, _elem, attrs, ctrl) {
+      ctrl.$validators.someTimeCheck = function(_modelValue, _viewValue) {
+        if (attrs.timeType === 'day') {
+          return ! allDaysUnchecked(scope);
+        } else if (attrs.timeType === 'hour') {
+          return ! allHoursUnchecked(scope);
         }
       };
 
@@ -19,6 +19,6 @@ ManageIQ.angular.app.directive('someTimeCheck', function() {
         var hourValues = _.times(24, _.constant(false));
         return angular.equals(scope.vm.timeProfileModel.hourValues, hourValues);
       };
-    }
-  }
+    },
+  };
 });

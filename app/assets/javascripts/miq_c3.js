@@ -3,13 +3,13 @@
 function load_c3_charts() {
   for (var set in ManageIQ.charts.chartData) {
     for (var i = 0; i < ManageIQ.charts.chartData[set].length; i++) {
-      var chart_id = "miq_chart_" + set + "_" + i.toString();
+      var chart_id = 'miq_chart_' + set + '_' + i.toString();
       var data = ManageIQ.charts.chartData[set][i];
       if (data != null) {
         load_c3_chart(data.data, chart_id);
 
-        chart_id += "_2";
-        if (typeof (data.data2) !== "undefined") {
+        chart_id += '_2';
+        if (typeof (data.data2) !== 'undefined') {
           data.data2.miq.flat_chart = true;
           load_c3_chart(data.data2, chart_id, 100);
         }
@@ -20,9 +20,9 @@ function load_c3_charts() {
 }
 
 function load_c3_chart(data, chart_id, height) {
-  if (typeof (data.miqChart) == "undefined") { data.miqChart = "Line"; }
+  if (typeof (data.miqChart) == 'undefined') { data.miqChart = 'Line'; }
 
-  var generate_args = chartData(data.miqChart, data, { bindto: "#" + chart_id, size: {height: height}});
+  var generate_args = chartData(data.miqChart, data, { bindto: '#' + chart_id, size: {height: height}});
 
   generate_args.data.onclick = function(data, _i) {
     var index = _.findIndex(generate_args.data.columns, function(col) { return col[0] == data.id; });

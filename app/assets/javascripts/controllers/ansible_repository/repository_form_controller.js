@@ -124,7 +124,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
   };
 
   var getManagerResource = function(response) {
-    if (!response.resources.length) {
+    if (! response.resources.length) {
       vm.repositoryModel.manager_resource = null;
       miqService.miqFlash('error', __('Embedded Ansible Provider not found.'));
     } else {

@@ -1,4 +1,4 @@
-ManageIQ.qe.get_debounce_index = function () {
+ManageIQ.qe.get_debounce_index = function() {
   if (ManageIQ.qe.debounce_counter > 30000) {
     ManageIQ.qe.debounce_counter = 0;
   }
@@ -33,7 +33,7 @@ if (typeof _ !== 'undefined' && typeof _.debounce !== 'undefined') {
 
 ManageIQ.qe.xpath = function(root, xpath) {
   if (root == null) {
-     root = document;
+    root = document;
   }
   return document.evaluate(xpath, root, null,
     XPathResult.ANY_UNORDERED_NODE_TYPE, null).singleNodeValue;
@@ -46,7 +46,7 @@ ManageIQ.qe.isHidden = function(el) {
   return el.offsetParent === null;
 };
 
-ManageIQ.qe.setAngularJsValue = function (el, value) {
+ManageIQ.qe.setAngularJsValue = function(el, value) {
   var angular_elem = angular.element(elem);
   var $parse = angular_elem.injector().get('$parse');
   var getter = $parse(elem.getAttribute('ng-model'));
@@ -65,8 +65,8 @@ ManageIQ.qe.anythingInFlight = function() {
 };
 
 ManageIQ.qe.spinnerPresent = function() {
-  return (!ManageIQ.qe.isHidden(document.getElementById("spinner_div"))) &&
-     ManageIQ.qe.isHidden(document.getElementById("lightbox_div"));
+  return (! ManageIQ.qe.isHidden(document.getElementById('spinner_div'))) &&
+     ManageIQ.qe.isHidden(document.getElementById('lightbox_div'));
 };
 
 ManageIQ.qe.debounceRunning = function() {
@@ -120,7 +120,7 @@ ManageIQ.qe.gtl = {
 
     var processItem = function(item) {
       return {
-        cells: item.cells.reduce(function(acc, value, index){
+        cells: item.cells.reduce(function(acc, value, index) {
           var colName = this.gtlData.cols[index].text || index;
           acc[colName] = value.text;
           return acc;
@@ -129,8 +129,8 @@ ManageIQ.qe.gtl = {
         id: item.id,
         long_id: item.long_id,
         quadicon: item.quadicon,
-        quad: item.quad
-      }
+        quad: item.quad,
+      };
     }.bind(this);
 
     var getItem = function(item) {
@@ -258,7 +258,7 @@ ManageIQ.qe.gtl = {
           total: this.settings.items,
           start: this.settings.startIndex + 1,
           end: this.settings.endIndex + 1,
-          pageCount: this.settings.total
+          pageCount: this.settings.total,
         };
         return ManageIQ.qe.gtl.result;
       },

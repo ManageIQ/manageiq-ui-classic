@@ -1,7 +1,7 @@
 ManageIQ.angular.app.directive('minTimeCheck', function() {
   return {
     require: 'ngModel',
-    link: function (scope, _elem, attrs, ctrl) {
+    link: function(scope, _elem, attrs, ctrl) {
       scope.$watch(attrs.ngModel, function() {
         if (ctrl.viewValue !== undefined) {
           setSomePeriodCheckedValidity(ctrl, attrs);
@@ -13,14 +13,14 @@ ManageIQ.angular.app.directive('minTimeCheck', function() {
       });
 
       var setSomePeriodCheckedValidity = function(ctrl, attrs) {
-        if (attrs.timeType === "day") {
+        if (attrs.timeType === 'day') {
           if (allDaysUnchecked(attrs.minTimeCheck)) {
             scope.vm.timeProfileModel.some_days_checked = false;
           } else {
             scope.vm.timeProfileModel.some_days_checked = true;
             scope.vm.timeProfileModel.all_days = false;
           }
-        } else if (attrs.timeType === "hour") {
+        } else if (attrs.timeType === 'hour') {
           if (allHoursUnchecked(attrs.minTimeCheck)) {
             scope.vm.timeProfileModel.some_hours_checked = false;
           } else {
@@ -40,7 +40,7 @@ ManageIQ.angular.app.directive('minTimeCheck', function() {
         return allFirstHalfAMHoursUnchecked(i) ||
                allSecondHalfAMHoursUnchecked(i) ||
                allFirstHalfPMHoursUnchecked(i) ||
-               allSecondHalfPMHoursUnchecked(i)
+               allSecondHalfPMHoursUnchecked(i);
       };
 
       var allFirstHalfAMHoursUnchecked = function(i) {
@@ -66,6 +66,6 @@ ManageIQ.angular.app.directive('minTimeCheck', function() {
         hourSecondHalfPMValues[i] = true;
         return angular.equals(scope.vm.timeProfileModel.hourValuesPMSecondHalf, hourSecondHalfPMValues);
       };
-    }
-  }
+    },
+  };
 });

@@ -1,8 +1,8 @@
 /* global miqHttpInject */
 angular.module( 'patternfly.charts' ).controller( 'recentPodsLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
   var vm = this;
-  vm.id = "recentPodsLineChart_" + providerId;
-  vm.lineChartId = vm.id
+  vm.id = 'recentPodsLineChart_' + providerId;
+  vm.lineChartId = vm.id;
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.loadingDone = false;
@@ -30,7 +30,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentPodsLineChartController
             return chartsMixin.parseDate(date);
           });
         }
-        vm.data = chartsMixin.processPodUtilizationData(vm.data.pod_metrics.xy_data, 'dates', __("Created"), __("Deleted"));
+        vm.data = chartsMixin.processPodUtilizationData(vm.data.pod_metrics.xy_data, 'dates', __('Created'), __('Deleted'));
       }
       vm.loadingDone = true;
     });

@@ -31,17 +31,17 @@ function donutPctChartController(pfUtils) {
   };
 
   vm.getStatusColor = function(used, thresholds) {
-    var threshold = "none";
+    var threshold = 'none';
     var color = pfUtils.colorPalette.blue;
 
     if (thresholds) {
-      threshold = "ok";
+      threshold = 'ok';
       color = pfUtils.colorPalette.green;
       if (used >= thresholds.error) {
-        threshold = "error";
+        threshold = 'error';
         color = pfUtils.colorPalette.red;
       } else if (used >= thresholds.warning) {
-        threshold = "warning";
+        threshold = 'warning';
         color = pfUtils.colorPalette.orange;
       }
     }

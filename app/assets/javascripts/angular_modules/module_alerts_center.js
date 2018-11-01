@@ -3,5 +3,5 @@ miqHttpInject(angular.module('alertsCenter', [
   'patternfly',
   'miq.util',
   'miq.api',
-  'miqStaticAssets.miqSelect'
+  'miqStaticAssets.miqSelect',
 ]));

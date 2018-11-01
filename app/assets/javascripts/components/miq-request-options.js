@@ -16,7 +16,7 @@ ManageIQ.angular.app.component('miqRequestOptions', {
     this.applyClick = function() {
       if (this.appliedStatesBlank()) {
         // fixme should we rather enable/disable the Apply button?
-        add_flash(__("At least one status must be selected"), 'warn');
+        add_flash(__('At least one status must be selected'), 'warn');
         return;
       }
       $http.post('/miq_request/filter/', this.options)
@@ -26,11 +26,11 @@ ManageIQ.angular.app.component('miqRequestOptions', {
 
     this.applyNewScope = function(response) {
       var data = response.data;
-      sendDataWithRx({setScope: {name: "reportDataController"}, data: data.data.scope});
+      sendDataWithRx({setScope: {name: 'reportDataController'}, data: data.data.scope});
     };
 
     this.resetClick = function() {
       this.options = _.cloneDeep(this.initValues);
     };
-  }]
+  }],
 });

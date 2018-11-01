@@ -30,7 +30,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
 
   vm.validateClicked = function() {
     miqService.validateWithAjax(vm.validateUrl);
-  }
+  };
 
   vm.backupScheduleTypeChanged = function() {
     if (vm.diagnosticsDatabaseModel.backup_schedule_type === '') {
@@ -109,13 +109,13 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
   };
 
   vm.swiftSecurityProtocolSelect = function() {
-    return vm.diagnosticsDatabaseModel.action_typ === "db_backup" && vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift';
+    return vm.diagnosticsDatabaseModel.action_typ === 'db_backup' && vm.diagnosticsDatabaseModel.log_protocol === 'OpenStack Swift';
   };
 
   vm.swiftSecurityProtocolRequired = function() {
     return (miqDBBackupService.swiftBackup(vm.diagnosticsDatabaseModel) &&
-      ! vm.diagnosticsDatabaseModel.security_protocol)
-  }
+      ! vm.diagnosticsDatabaseModel.security_protocol);
+  };
 
   vm.credsProtocol = function() {
     return miqDBBackupService.credsProtocol(vm.diagnosticsDatabaseModel);
@@ -145,7 +145,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       vm.diagnosticsDatabaseModel.openstack_region     = data.openstack_region;
       vm.diagnosticsDatabaseModel.keystone_api_version = data.keystone_api_version;
       vm.diagnosticsDatabaseModel.v3_domain_ident      = data.v3_domain_ident;
-      vm.diagnosticsDatabaseModel.security_protocol    = data.security_protocol
+      vm.diagnosticsDatabaseModel.security_protocol    = data.security_protocol;
     }
 
     vm.diagnosticsDatabaseModel.action_typ = 'db_backup';

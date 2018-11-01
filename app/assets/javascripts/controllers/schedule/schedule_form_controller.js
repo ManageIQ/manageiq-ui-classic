@@ -23,14 +23,14 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       time_zone: '',
       uri: '',
       uri_prefix: '',
-      filter_value: ''
+      filter_value: '',
     };
     $scope.date_from = new Date();
     $scope.formId = scheduleFormId;
     $scope.afterGet = false;
     $scope.validateClicked = miqService.validateWithAjax;
     $scope.modelCopy = angular.copy( $scope.scheduleModel );
-    $scope.model = "scheduleModel";
+    $scope.model = 'scheduleModel';
 
     ManageIQ.angular.scope = $scope;
 
@@ -163,7 +163,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     } else {
       if ($scope.scheduleModel.action_typ === 'automation_request') {
         // should ignore list of targets as this list can be really long no need to send that up to server
-        var moreUrlParams = $.param(miqService.serializeModelWithIgnoredFields($scope.scheduleModel, ["targets", "time_zone"]));
+        var moreUrlParams = $.param(miqService.serializeModelWithIgnoredFields($scope.scheduleModel, ['targets', 'time_zone']));
         if (moreUrlParams) {
           url += '&' + decodeURIComponent(moreUrlParams) + '&' + encodeURIComponent($scope.scheduleModel.time_zone);
         }
@@ -199,9 +199,8 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       return 'vm';
     } else if (isHostType()) {
       return 'host';
-    } else {
-      return $scope.scheduleModel.action_typ;
     }
+    return $scope.scheduleModel.action_typ;
   };
 
   $scope.dbBackup = function() {
@@ -300,19 +299,19 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.logProtocolChanged = function() {
-    if ($scope.scheduleModel.log_protocol === "Samba") {
-      $scope.scheduleModel.uri_prefix = "smb";
+    if ($scope.scheduleModel.log_protocol === 'Samba') {
+      $scope.scheduleModel.uri_prefix = 'smb';
     }
 
-    if ($scope.scheduleModel.log_protocol === "Network File System") {
-      $scope.updateLogProtocol("nfs");
+    if ($scope.scheduleModel.log_protocol === 'Network File System') {
+      $scope.updateLogProtocol('nfs');
     }
 
-    if ($scope.scheduleModel.log_protocol === "AWS S3") {
-      $scope.updateLogProtocol("s3");
+    if ($scope.scheduleModel.log_protocol === 'AWS S3') {
+      $scope.updateLogProtocol('s3');
     }
-    if ($scope.scheduleModel.log_protocol === "OpenStack Swift") {
-      $scope.updateLogProtocol("swift");
+    if ($scope.scheduleModel.log_protocol === 'OpenStack Swift') {
+      $scope.updateLogProtocol('swift');
     }
   };
 
@@ -355,12 +354,12 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     }
 
     var filter_touched = $scope.angularForm.action_typ.$touched || (typeof $scope.angularForm.filter_typ != 'undefined' && $scope.angularForm.filter_typ.$touched);
-    if (!$scope.dbBackup() && !$scope.automateRequest() && $scope.scheduleModel.filter_typ && !filter_touched) {
+    if (! $scope.dbBackup() && ! $scope.automateRequest() && $scope.scheduleModel.filter_typ && ! filter_touched) {
       // AJAX-less Reset
       $scope.toggleValueForWatch('filterValuesEmpty', false);
     }
 
-    if (!$scope.dbBackup() && !!$scope.automateRequest() && $scope.scheduleModel.filter_typ && filter_touched) {
+    if (! $scope.dbBackup() && !! $scope.automateRequest() && $scope.scheduleModel.filter_typ && filter_touched) {
       $scope.filterTypeChanged();
     }
 
@@ -371,7 +370,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   $scope.saveClicked = function() {
@@ -383,15 +382,15 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.filterValueRequired = function(value) {
-    return !$scope.filterValuesEmpty && !value;
+    return ! $scope.filterValuesEmpty && ! value;
   };
 
   $scope.dbRequired = function(value) {
-    return $scope.dbBackup() && !value;
+    return $scope.dbBackup() && ! value;
   };
 
   $scope.sambaRequired = function(value) {
-    return $scope.sambaBackup() && !value;
+    return $scope.sambaBackup() && ! value;
   };
 
   $scope.regionSelect = function() {
@@ -399,19 +398,19 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.regionRequired = function() {
-    return ($scope.s3Backup() && $scope.scheduleModel.log_aws_region === "");
+    return ($scope.s3Backup() && $scope.scheduleModel.log_aws_region === '');
   };
 
   $scope.swiftSecurityProtocolSelect = function() {
-    return $scope.scheduleModel.action_typ === "db_backup" && $scope.scheduleModel.log_protocol === 'OpenStack Swift';
+    return $scope.scheduleModel.action_typ === 'db_backup' && $scope.scheduleModel.log_protocol === 'OpenStack Swift';
   };
 
   $scope.swiftSecurityProtocolRequired = function() {
-    return ($scope.swiftBackup() && $scope.scheduleModel.security_protocol === "");
+    return ($scope.swiftBackup() && $scope.scheduleModel.security_protocol === '');
   };
 
   $scope.s3Required = function(value) {
-    return $scope.s3Backup() && !value;
+    return $scope.s3Backup() && ! value;
   };
 
   $scope.isBasicInfoValid = function() {
@@ -422,13 +421,13 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.setTimerType = function() {
-    $scope.timerTypeOnce = $scope.scheduleModel.timer_typ == "Once";
+    $scope.timerTypeOnce = $scope.scheduleModel.timer_typ == 'Once';
   };
 
   $scope.toggleValueForWatch = function(watchValue, initialValue) {
     if ($scope[watchValue] == initialValue) {
-      $scope[watchValue] = "NO-OP";
-    } else if ($scope[watchValue] == "NO-OP") {
+      $scope[watchValue] = 'NO-OP';
+    } else if ($scope[watchValue] == 'NO-OP') {
       $scope[watchValue] = initialValue;
     }
   };

@@ -183,7 +183,7 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
       headTitle: __('New Image Usage Trend'),
       timeFrame: __('Last 24 hours'),
       createdLabel: __('Images'),
-      tooltip     : {
+      tooltip: {
         contents: hourlyTimeTooltip,
         position: lineChartTooltipPositionFactory('imageUsageHourlyChart'),
       },
@@ -244,8 +244,7 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
       return { dataAvailable: false };
     }
     data.xData.unshift(xDataLabel);
-    if (data.yData !== undefined)
-      data.yData.unshift(yDataLabel);
+    if (data.yData !== undefined) {data.yData.unshift(yDataLabel);}
     return data;
   };
 

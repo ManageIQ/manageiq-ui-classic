@@ -18,7 +18,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
       vm.loadingDone = true;
     });
 
-    vm.title = __("Global Utilization");
+    vm.title = __('Global Utilization');
     vm.centerLabel = 'used';
     vm.custShowXAxis = false;
     vm.custShowYAxis = false;

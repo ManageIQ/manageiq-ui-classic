@@ -31,12 +31,12 @@ function ErrorModalController($timeout) {
   }
 
   $ctrl.show = function(err, source, backendName) {
-    if (!err || !_.isObject(err)) {
+    if (! err || ! _.isObject(err)) {
       return;
     }
 
     if (source === 'fetch') {
-      $ctrl.contentType = err.headers.get("content-type");
+      $ctrl.contentType = err.headers.get('content-type');
       $ctrl.url = err.url;
     } else if (source === '$http') {
       $ctrl.contentType = err.headers('content-type');
@@ -47,14 +47,14 @@ function ErrorModalController($timeout) {
     $ctrl.source = source;
     $ctrl.backendName = backendName;
     $ctrl.data = err.data;
-    $ctrl.isHtml = ($ctrl.contentType || "").match('text/html');
+    $ctrl.isHtml = ($ctrl.contentType || '').match('text/html');
 
     // special handling for our error screen
     if ($ctrl.isHtml && $ctrl.data) {
       $ctrl.data = findError($ctrl.data);
     }
 
-    $ctrl.status = (err.status !== -1) ? err.status + " " + err.statusText : "Server not responding";
+    $ctrl.status = (err.status !== -1) ? err.status + ' ' + err.statusText : 'Server not responding';
   };
 
   $ctrl.close = function() {
@@ -119,7 +119,7 @@ angular.module('miq.error', [])
       '    </div>',
       '  </div>',
       '</div>',
-    ].join("\n"),
+    ].join('\n'),
   });
 
 $(function() {

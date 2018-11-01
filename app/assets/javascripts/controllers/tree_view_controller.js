@@ -75,7 +75,7 @@
           vm.findNodePath(child, target, path + '.nodes[' + index + ']');
         });
       }
-    }
+    };
 
     vm.initSelected = function(tree, node) {
       vm.selectedNodes[tree] = vm.selectedNodes[tree] || { key: node };

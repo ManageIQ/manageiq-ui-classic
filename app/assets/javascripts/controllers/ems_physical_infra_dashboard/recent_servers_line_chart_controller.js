@@ -6,7 +6,7 @@ angular.module( 'patternfly.charts' ).component('recentServersLineChart', {
   templateUrl: '/static/ems_physical_infra/recent-servers-line-chart.html.haml',
   controller: ['$http', 'chartsMixin', 'miqService', function($http, chartsMixin, miqService) {
     var vm = this;
-    vm.id = "recentServersLineChartData";
+    vm.id = 'recentServersLineChartData';
     vm.$onInit = function() {
       vm.loadingDone = false;
       vm.config = chartsMixin.chartConfig.recentServersConfig;

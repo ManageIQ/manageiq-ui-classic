@@ -2,27 +2,27 @@
 
 angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerController', ['$q', 'providerId', '$http', 'miqService', function($q, providerId, $http, miqService) {
   var vm = this;
-  var attributes = ["nodes", "containers", "registries", "projects", "pods", "services", "images", "routes"];
+  var attributes = ['nodes', 'containers', 'registries', 'projects', 'pods', 'services', 'images', 'routes'];
   var attrHsh = {
-    "nodes": __("Nodes"),
-    "containers": __("Containers"),
-    "registries": __("Registries"),
-    "projects": __("Projects"),
-    "pods": __("Pods"),
-    "services": __("Services"),
-    "images": __("Images"),
-    "routes": __("Routes"),
+    'nodes': __('Nodes'),
+    'containers': __('Containers'),
+    'registries': __('Registries'),
+    'projects': __('Projects'),
+    'pods': __('Pods'),
+    'services': __('Services'),
+    'images': __('Images'),
+    'routes': __('Routes'),
   };
 
   var attrIconHsh = {
-    "nodes": "pficon pficon-container-node",
-    "containers": "fa fa-cube",
-    "registries": "pficon pficon-registry",
-    "projects": "pficon pficon-project",
-    "pods": "fa fa-cubes",
-    "services": "pficon pficon-service",
-    "images": "pficon pficon-image",
-    "routes": "pficon pficon-route",
+    'nodes': 'pficon pficon-container-node',
+    'containers': 'fa fa-cube',
+    'registries': 'pficon pficon-registry',
+    'projects': 'pficon pficon-project',
+    'pods': 'fa fa-cubes',
+    'services': 'pficon pficon-service',
+    'images': 'pficon pficon-image',
+    'routes': 'pficon pficon-route',
   };
 
   var init = function() {
@@ -47,31 +47,31 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
         vm.status = {};
       } else {
         vm.status = {
-          "iconImage": providers_info[0].iconImage,
-          "largeIcon": true,
-          "notifications": [
+          'iconImage': providers_info[0].iconImage,
+          'largeIcon': true,
+          'notifications': [
             {
-              "iconClass": providers_info[0].statusIcon,
+              'iconClass': providers_info[0].statusIcon,
             },
           ],
         };
       }
 
       // show total providers count and link on Containers dashboard only
-      if(all_providers_info !== null && typeof all_providers_info.href !== 'undefined') {
-        vm.status["title"] = __("Providers");
-        vm.status["count"] = all_providers_info.count;
-        vm.status["href"] = all_providers_info.href;
+      if (all_providers_info !== null && typeof all_providers_info.href !== 'undefined') {
+        vm.status.title = __('Providers');
+        vm.status.count = all_providers_info.count;
+        vm.status.href = all_providers_info.href;
       }
 
       vm.alertStatus = {
-        "title": __("Alerts"),
-        "notifications": [
+        'title': __('Alerts'),
+        'notifications': [
           {
-            "iconClass": data.alerts.notifications[0].iconClass,
-            "href": data.alerts.href,
-            "count": data.alerts.notifications[0].count,
-            "dataAvailable": data.alerts.dataAvailable,
+            'iconClass': data.alerts.notifications[0].iconClass,
+            'href': data.alerts.href,
+            'count': data.alerts.notifications[0].count,
+            'dataAvailable': data.alerts.dataAvailable,
           },
         ],
       };
@@ -80,11 +80,11 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
       for (var i = 0; i < attributes.length; i++) {
         var dataStatus = data.status[attributes[i]];
         vm.AggStatus.push({
-          "id": attributes[i] + '_' + providerId,
-          "iconClass": attrIconHsh[attributes[i]],
-          "title": attrHsh[attributes[i]],
-          "count": dataStatus.count,
-          "href": dataStatus.href,
+          'id': attributes[i] + '_' + providerId,
+          'iconClass': attrIconHsh[attributes[i]],
+          'title': attrHsh[attributes[i]],
+          'count': dataStatus.count,
+          'href': dataStatus.href,
         });
       }
       vm.loadingDone = true;

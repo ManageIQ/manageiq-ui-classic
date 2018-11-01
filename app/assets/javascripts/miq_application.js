@@ -5,7 +5,7 @@
 // Things to be done on page loads
 function miqOnLoad() {
   // controller to be used in url in miqDropComplete method
-  ManageIQ.widget.dashboardUrl = "dashboard/widget_dd_done";
+  ManageIQ.widget.dashboardUrl = 'dashboard/widget_dd_done';
 
   // Initialize the dashboard column sortables
   if (miqDomElementExists('col1')) {
@@ -116,13 +116,13 @@ function miqCalendarDateConversion(server_offset) {
     }
     if ($('#chosen_regkey[type=text]').length) {
       title = __('Registry Key');
-      $('#chosen_regkey').prop('placeholder', expressions['string']);
+      $('#chosen_regkey').prop('placeholder', expressions.string);
       $('#chosen_regkey').prop('title', title);
       $('#chosen_regkey').prop('alt', title);
     }
     if ($('#chosen_regval[type=text]').length) {
       title = __('Registry Key Value');
-      $('#chosen_regval').prop('placeholder', expressions['string']);
+      $('#chosen_regval').prop('placeholder', expressions.string);
       $('#chosen_regval').prop('title', title);
       $('#chosen_regval').prop('alt', title);
     }
@@ -520,18 +520,18 @@ function miqBuildChartMenuEx(col, row, _value, category, series, chart_set, char
       chart_index: chart_index,
     };
     for (var i = 0; i < chart_data[chart_index].menu.length; i++) {
-      row_col_chart_index['chart_name'] = chart_data[chart_index].menu[i].split(':')[0];
-      var pid = row_col_chart_index['chart_name'].split("-")[0];
+      row_col_chart_index.chart_name = chart_data[chart_index].menu[i].split(':')[0];
+      var pid = row_col_chart_index.chart_name.split('-')[0];
       if (chartmenu_el.find('#' + pid).length === 0) {
         chartmenu_el.append("<li class='dropdown-submenu'>" +
-          "<a tabindex='-1' href='#'>" + pid + "</a>" +
+          "<a tabindex='-1' href='#'>" + pid + '</a>' +
           "<ul id='" + pid + "' class='dropdown-menu'></ul></li>");
       }
 
       var menu_title = chart_data[chart_index].menu[i].split(':')[1];
       menu_title = menu_title.replace('<series>', series);
       menu_title = menu_title.replace('<category>', category);
-      $('#' + pid).append("<li><a id='"+btoa(JSON.stringify(row_col_chart_index))+"' href='#' onclick='miqChartMenuClick(this.id)'>" + menu_title + '</a></li>');
+      $('#' + pid).append("<li><a id='" + btoa(JSON.stringify(row_col_chart_index)) + "' href='#' onclick='miqChartMenuClick(this.id)'>" + menu_title + '</a></li>');
     }
 
     // chart menu has min-width: 160 a has two levels
@@ -708,34 +708,34 @@ function miqAjaxAuth(url) {
   };
 
   return vanillaJsAPI.login(credentials.login, credentials.password)
-  .then(function() {
-    return vanillaJsAPI.ws_init();
-  })
-  .then(function() {
-    return storeUserFeatures();
-  })
-  .then(function() {
+    .then(function() {
+      return vanillaJsAPI.ws_init();
+    })
+    .then(function() {
+      return storeUserFeatures();
+    })
+    .then(function() {
     // API login ok, now do the normal one
-    miqJqueryRequest(url || '/dashboard/authenticate', {
-      beforeSend: true,
-      data: credentials.serialized,
-    });
+      miqJqueryRequest(url || '/dashboard/authenticate', {
+        beforeSend: true,
+        data: credentials.serialized,
+      });
 
     // TODO vanillaJsAPI.autorenew is called on (non-login) page load - when?
-  })
-  .then(null, function(err) {
-    var message = __('Incorrect username or password');
-    if (err && err.status && err.status !== 200 && err.statusText) {
-      message = __('Login failed:') + ' ' + err.statusText;
-    }
+    })
+    .then(null, function(err) {
+      var message = __('Incorrect username or password');
+      if (err && err.status && err.status !== 200 && err.statusText) {
+        message = __('Login failed:') + ' ' + err.statusText;
+      }
 
-    clearFlash();
-    add_flash(message, 'error', { id: 'auth_failed' });
+      clearFlash();
+      add_flash(message, 'error', { id: 'auth_failed' });
 
-    miqClearLoginFields();
-    miqEnableLoginFields(true);
-    miqSparkleOff();
-  });
+      miqClearLoginFields();
+      miqEnableLoginFields(true);
+      miqSparkleOff();
+    });
 }
 
 // Send SSO login authentication via ajax
@@ -831,8 +831,8 @@ function miqInitDashboardCols() {
 function miqDropComplete(_event, _ui) {
   var el = $(this);
   var url = '/' + ManageIQ.widget.dashboardUrl + '?' + el.sortable(
-              'serialize', {key: el.attr('id') + '[]'}
-            ).toString();
+    'serialize', {key: el.attr('id') + '[]'}
+  ).toString();
   // Adding id of record being edited to be used by load_edit call
   if (ManageIQ.record.recordId !== null) {
     url += '&id=' + ManageIQ.record.recordId;
@@ -1085,15 +1085,15 @@ function miqProcessObserveQueue() {
   var request = ManageIQ.observe.queue.shift();
 
   miqJqueryRequest(request.url, request.options)
-  .then(function(arg) {
-    ManageIQ.observe.processing = false;
-    request.deferred.resolve(arg);
-  }, function(err) {
-    ManageIQ.observe.processing = false;
-    add_flash(__('Error requesting data from server'), 'error');
-    console.log(err);
-    request.deferred.reject(err);
-  });
+    .then(function(arg) {
+      ManageIQ.observe.processing = false;
+      request.deferred.resolve(arg);
+    }, function(err) {
+      ManageIQ.observe.processing = false;
+      add_flash(__('Error requesting data from server'), 'error');
+      console.log(err);
+      request.deferred.reject(err);
+    });
 }
 
 function miqDeferred() {
@@ -1131,7 +1131,7 @@ function miqJqueryRequest(url, options) {
     return new Promise(function(resolve, reject) {
       setTimeout(function() {
         miqJqueryRequest(url, options)
-        .then(resolve, reject);
+          .then(resolve, reject);
       }, 700);
     });
   }
@@ -1178,7 +1178,7 @@ function miqJqueryRequest(url, options) {
 
   return new Promise(function(resolve, reject) {
     $.ajax(options.no_encoding ? url : encodeURI(url), ajax_options)
-    .then(resolve, reject);
+      .then(resolve, reject);
   });
 }
 
@@ -1198,7 +1198,7 @@ function miqInitSelectPicker() {
   $('.selectpicker').selectpicker({
     size: 10,
     dropupAuto: false,
-    noneSelectedText: __('Nothing selected')
+    noneSelectedText: __('Nothing selected'),
   });
   $('.bootstrap-select > button[title]').not('.selectpicker').tooltip({container: 'none'});
 }
@@ -1222,7 +1222,7 @@ function miqInitCodemirror(options) {
   ManageIQ.editor.on('change', function(cm, change) {
     if (options.angular) {
       ManageIQ.editor.save();
-      $(textarea).trigger("change");
+      $(textarea).trigger('change');
     } else {
       miqSendOneTrans(options.url);
     }
@@ -1249,11 +1249,9 @@ function miqSelectPickerEvent(element, url, options) {
     var selected = $(this).val();
     var finalUrl = url + (firstarg ? '?' : '&') + element + '=' + encodeURIComponent(selected);
 
-    if (typeof $(this).attr('data-miq_sparkle_on') != 'undefined')
-      options.beforeSend = $(this).attr('data-miq_sparkle_on') === 'true';
+    if (typeof $(this).attr('data-miq_sparkle_on') != 'undefined') {options.beforeSend = $(this).attr('data-miq_sparkle_on') === 'true';}
 
-    if(typeof $(this).attr('data-miq_sparkle_off') != 'undefined')
-      options.complete = $(this).attr('data-miq_sparkle_off') === 'true';
+    if (typeof $(this).attr('data-miq_sparkle_off') != 'undefined') {options.complete = $(this).attr('data-miq_sparkle_off') === 'true';}
 
     if (options.callback) {
       options.done = function() {
@@ -1288,7 +1286,7 @@ function miqInitBootstrapSwitch(element, url, options) {
 
   $('#' + element).on('switchChange.bootstrapSwitch', function(_event, state) {
     options = typeof options !== 'undefined' ? options : {};
-    options['no_encoding'] = true;
+    options.no_encoding = true;
 
     var firstarg = ! url.includes('?');
     miqObserveRequest(url + (firstarg ? '?' : '&') + element + '=' + state, options);
@@ -1322,12 +1320,12 @@ function miqAccordionSwap(_collapse, expand) {
 
 // This function is called in miqOnLoad
 function miqInitToolbars() {
-  $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), '+
-  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, '+
+  $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), ' +
+  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, ' +
   '#toolbar:not(.miq-toolbar-menu) .toolbar-pf-view-selector > ul.list-inline > li > a'
   ).off('click');
   $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), ' +
-  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, '+
+  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, ' +
   '#toolbar:not(.miq-toolbar-menu) .toolbar-pf-view-selector > ul.list-inline > li > a'
   ).click(function() {
     miqToolbarOnClick.bind(this)();
@@ -1422,7 +1420,7 @@ function miqToolbarOnClick(_e) {
 
   if (button.data('prompt')) {
     tb_url = miqSupportCasePrompt(tb_url);
-    if (!tb_url) {
+    if (! tb_url) {
       return false;
     }
   }
@@ -1522,10 +1520,10 @@ function miqInitMainContent() {
   var height = 0;
   if (footer.find('*:visible').length > 0) {
     height += footer.outerHeight();
-  } else if (buttons.find("*:visible").length > 0) {
+  } else if (buttons.find('*:visible').length > 0) {
     height += buttons.outerHeight() + 5; // TODO: the styling of #form_buttons_div should be revisited
   }
-  if (toolbar.find("*:visible").length > 0) {
+  if (toolbar.find('*:visible').length > 0) {
     height += toolbar.outerHeight();
   }
 
@@ -1549,15 +1547,15 @@ function miqHideSearchClearButton(explorer) {
     $(this).prev('.form-control').val('').focus();
     $(this).hide();
     // Clear Search text values as well
-    var url = "/" + ManageIQ.controller + "/adv_search_text_clear" + "?in_explorer=" + explorer;
+    var url = '/' + ManageIQ.controller + '/adv_search_text_clear' + '?in_explorer=' + explorer;
     miqJqueryRequest(url);
   });
 }
 
 function toggle_expansion(link) {
   link = $(link);
-  link.find("i").toggleClass("fa-angle-right fa-angle-down");
-  link.closest('td').children(0).toggleClass("expanded");
+  link.find('i').toggleClass('fa-angle-right fa-angle-down');
+  link.closest('td').children(0).toggleClass('expanded');
 }
 
 function check_for_ellipsis() {
@@ -1648,15 +1646,15 @@ function validateChartAxis(axis) {
          _.isObject(axis.y) &&
          _.isObject(axis.y.tick) &&
          _.isObject(axis.y.tick.format) &&
-         axis.y.tick.format.function
+         axis.y.tick.format.function;
 }
 
 function emptyChart() {
   return {
-           data: {
-             columns: [],
-           },
-         };
+    data: {
+      columns: [],
+    },
+  };
 }
 
 function customizeChart(data) {
@@ -1755,5 +1753,5 @@ function camelizeQuadicon(quad) {
     var item = {};
     item[_.camelCase(key)] = current;
     return Object.assign(result, item);
-  }, {})
+  }, {});
 }

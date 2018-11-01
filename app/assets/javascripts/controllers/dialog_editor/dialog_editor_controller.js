@@ -29,7 +29,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
           'dialog_groups': [{
             'label': __('New section'),
             'position': 0,
-            'dialog_fields': []
+            'dialog_fields': [],
           }],
         }],
       }],

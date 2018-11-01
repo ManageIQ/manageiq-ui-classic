@@ -7,7 +7,7 @@ angular.module('patternfly.charts' ).component( 'serverHealthPieChart', {
 }).controller('serverHealthPieChartController',  ['$http', 'chartsMixin', 'miqService', function($http, chartsMixin, miqService) {
   'use strict';
   var vm = this;
-  vm.id = "serverHealthPieChartData";
+  vm.id = 'serverHealthPieChartData';
 
   var init = function() {
     vm.data = {};
@@ -25,7 +25,7 @@ angular.module('patternfly.charts' ).component( 'serverHealthPieChart', {
       })
       .catch(miqService.handleFailure);
 
-    vm.title = __("Servers Data");
+    vm.title = __('Servers Data');
     vm.dataAvailable = false;
     vm.timeframeLabel = __('Last 30 Days');
 
@@ -47,7 +47,7 @@ angular.module('patternfly.charts' ).component( 'serverHealthPieChart', {
           metricsDataStruct.data[keys[i]] = {
             'data': {dataAvailable: false},
             'config': {
-              'title':chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
+              'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
             },
           };
         } else {

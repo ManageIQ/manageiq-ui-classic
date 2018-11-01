@@ -8,8 +8,7 @@ ManageIQ.angular.app.directive('validateMultiple', function() {
         var minvalue = attrs.miqmin;
         var maxvalue = attrs.miqmax;
         var x = parseInt(modelValue, 10);
-        if(memtype == "GB")
-          x *= 1024;
+        if (memtype == 'GB') {x *= 1024;}
         if (x >= parseInt(minvalue, 10) && x <= parseInt(maxvalue, 10)) {
           ctrl.$setValidity('inrange', true);
         } else {
@@ -23,6 +22,6 @@ ManageIQ.angular.app.directive('validateMultiple', function() {
         return modelValue;
       }
       ctrl.$parsers.push(multipleValidator);
-    }
+    },
   };
 });

@@ -76,7 +76,7 @@
   */
   ToolbarController.prototype.defaultViewUrl = function() {
     this.dataViews.forEach(function(item) {
-      if (item.url === "") {
+      if (item.url === '') {
         var lastSlash = location.pathname.lastIndexOf('/');
         item.url = (lastSlash !== -1) ? location.pathname.substring(lastSlash) : '';
       }

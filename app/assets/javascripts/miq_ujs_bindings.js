@@ -2,13 +2,13 @@
 
 // MIQ unobtrusive javascript bindings run when document is fully loaded
 
-$(document).ready(function () {
+$(document).ready(function() {
   // Bind call to prompt if leaving an active edit
-  $(document).on('ajax:beforeSend', 'a[data-miq_check_for_changes]', function () {
+  $(document).on('ajax:beforeSend', 'a[data-miq_check_for_changes]', function() {
     return miqCheckForChanges();
   });
 
-  $(document).on('click', 'button[data-click_url]', function () {
+  $(document).on('click', 'button[data-click_url]', function() {
     var el = $(this);
     var parms = $.parseJSON(el.attr('data-click_url'));
     var url = parms.url;
@@ -20,26 +20,23 @@ $(document).ready(function () {
       options.complete = true;
     }
     var submit = el.attr('data-submit');
-    if (typeof submit != "undefined")
-      miqJqueryRequest(url, {data: miqSerializeForm(submit)});
-    else
-      miqJqueryRequest(url, options);
+    if (typeof submit != 'undefined') {miqJqueryRequest(url, {data: miqSerializeForm(submit)});} else {miqJqueryRequest(url, options);}
 
     return false;
   });
 
   // bind button click to call JS function to send up grid data
-  $(document).on('click', 'button[data-grid_submit]', function () {
+  $(document).on('click', 'button[data-grid_submit]', function() {
     return miqMenuChangeRow($(this).attr('data-grid_submit'), $(this));
   });
 
   // Bind call to check/display text area max length on keyup
-  $(document).on('keyup', 'textarea[data-miq_check_max_length]', function () {
+  $(document).on('keyup', 'textarea[data-miq_check_max_length]', function() {
     miqCheckMaxLength(this);
   });
 
   // Bind the MIQ spinning Q to configured links
-  $(document).on('ajax:beforeSend', 'a[data-miq_sparkle_on]', function () {
+  $(document).on('ajax:beforeSend', 'a[data-miq_sparkle_on]', function() {
     // Return only if data-miq_sparkle_on is set to false
     if ($(this).data('miq_sparkle_on') === false) {
       return;
@@ -48,7 +45,7 @@ $(document).ready(function () {
     // Call to miqSparkleOn since miqSparkle(true) checks XHR count, which is 0 before send
     miqSparkleOn();
   });
-  $(document).on('ajax:complete', 'a[data-miq_sparkle_off]', function () {
+  $(document).on('ajax:complete', 'a[data-miq_sparkle_off]', function() {
     // Return only if data-miq_sparkle_off is set to false
     if ($(this).data('miq_sparkle_off') === false) {
       return;
@@ -58,7 +55,7 @@ $(document).ready(function () {
   });
 
   // Handle data-submit - triggered by handleRemote from jquery-ujs
-  $(document).on('ajax:before', 'a[data-submit]', function () {
+  $(document).on('ajax:before', 'a[data-submit]', function() {
     var form_id = $(this).data('submit');
     // because handleRemote will send the element's data-params as the POST body
     $(this).data('params', miqSerializeForm(form_id));
@@ -83,9 +80,9 @@ $(document).ready(function () {
     var url = parms.url;
     var submit = parms.submit;
 
-    el.observe_field(interval, function () {
+    el.observe_field(interval, function() {
       var oneTrans = this.getAttribute('data-miq_send_one_trans'); // Grab one trans URL, if present
-      if (typeof submit != "undefined") {
+      if (typeof submit != 'undefined') {
         // If submit element passed in
         miqObserveRequest(url, {
           data: miqSerializeForm(submit),
@@ -126,11 +123,11 @@ $(document).ready(function () {
     }, 700, {leading: true, trailing: true}));
   };
 
-  $(document).on('focus', '[data-miq_observe]', function () {
+  $(document).on('focus', '[data-miq_observe]', function() {
     var el = $(this);
     var parms = $.parseJSON(el.attr('data-miq_observe'));
 
-    if (typeof parms.interval == "undefined") {
+    if (typeof parms.interval == 'undefined') {
       observeOnChange(el, parms);
     } else {
       observeWithInterval(el, parms);
@@ -138,7 +135,7 @@ $(document).ready(function () {
   });
 
   // Firefox on MacOs isn't firing onfocus events for radio buttons so onchange is used instead
-  $(document).on('change', '[data-miq_observe]', function () {
+  $(document).on('change', '[data-miq_observe]', function() {
     var el = $(this);
     var parms = $.parseJSON(el.attr('data-miq_observe'));
     var id = el.attr('id');
@@ -153,7 +150,7 @@ $(document).ready(function () {
     });
   });
 
-  $(document).on('change', '[data-miq_observe_checkbox]', function (event) {
+  $(document).on('change', '[data-miq_observe_checkbox]', function(event) {
     var el = $(this);
     var parms = $.parseJSON(el.attr('data-miq_observe_checkbox'));
     var url = parms.url;

@@ -1,18 +1,18 @@
 ManageIQ.angular.app.directive('updateDropdownForFilter', ['$timeout', function($timeout) {
   return {
     require: 'ngModel',
-    link: function (scope, elem, attr, ctrl) {
-      scope['form_' + ctrl.$name] = elem[0]
+    link: function(scope, elem, attr, ctrl) {
+      scope['form_' + ctrl.$name] = elem[0];
       scope['form_' + ctrl.$name + '_ngHide'] = attr.filterHide;
 
       scope['form_' + ctrl.$name + '_dropdownModel'] = attr.dropdownModel;
       scope['form_' + ctrl.$name + '_dropdownList'] = attr.dropdownList;
 
-      if(scope['form_' + ctrl.$name + '_ngHide'] != "") {
-        scope.$watch(scope['form_' + ctrl.$name + '_ngHide'], function () {
+      if (scope['form_' + ctrl.$name + '_ngHide'] != '') {
+        scope.$watch(scope['form_' + ctrl.$name + '_ngHide'], function() {
           if (scope[scope['form_' + ctrl.$name + '_ngHide']] === true) {
             angular.element(scope['form_' + ctrl.$name]).selectpicker('hide');
-          } else if (scope[scope['form_' + ctrl.$name + '_ngHide']] == "NO-OP" || scope[scope['form_' + ctrl.$name + '_ngHide']] == false) {
+          } else if (scope[scope['form_' + ctrl.$name + '_ngHide']] == 'NO-OP' || scope[scope['form_' + ctrl.$name + '_ngHide']] == false) {
             selectListElement(scope, $timeout, ctrl, true);
           }
         });
@@ -23,14 +23,14 @@ ManageIQ.angular.app.directive('updateDropdownForFilter', ['$timeout', function(
       });
 
       ctrl.$parsers.push(function(value) {
-        if(scope.invalidStyleSet) {
+        if (scope.invalidStyleSet) {
           angular.element(scope['form_' + ctrl.$name]).selectpicker('setStyle', 'btn-red-border', 'remove');
           angular.element(scope['form_' + ctrl.$name]).selectpicker('setStyle', 'btn-default');
         }
         return value;
       });
-    }
-  }
+    },
+  };
 }]);
 
 var selectListElement = function(scope, timeout, ctrl, refresh) {
@@ -41,7 +41,7 @@ var selectListElement = function(scope, timeout, ctrl, refresh) {
       } else {
         angular.element(scope['form_' + ctrl.$name]).selectpicker({
           dropupAuto: false,
-          noneSelectedText: __('Nothing selected')
+          noneSelectedText: __('Nothing selected'),
         });
         angular.element(scope['form_' + ctrl.$name]).selectpicker('show');
         angular.element(scope['form_' + ctrl.$name]).selectpicker('refresh');

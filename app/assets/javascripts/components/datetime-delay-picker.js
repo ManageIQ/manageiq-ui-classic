@@ -30,7 +30,7 @@ ManageIQ.angular.app.component('datetimeDelayPicker', {
     };
 
     this.$postLink = function() {
-      var commonAttrs = {min: 0, verticalbuttons: true, buttondown_class: "btn btn-link", buttonup_class: "btn btn-link"};
+      var commonAttrs = {min: 0, verticalbuttons: true, buttondown_class: 'btn btn-link', buttonup_class: 'btn btn-link'};
       var attrs = {months: __('Months'), weeks: __('Weeks'), days: __('Days'), hours: __('Hours')};
 
       for (var key in attrs) {

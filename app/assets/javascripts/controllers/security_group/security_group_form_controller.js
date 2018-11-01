@@ -4,19 +4,19 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
   var init = function() {
     vm.afterGet = false;
     vm.securityGroupModel = {
-      name: "",
-      description: "",
+      name: '',
+      description: '',
       firewall_rules: [],
     };
     vm.ems = [];
 
-    vm.hostProtocols = ["", "TCP", "UDP", "ICMP"];
-    vm.networkProtocols = ["IPV4", "IPV6"];
-    vm.directions = ["inbound", "outbound"];
+    vm.hostProtocols = ['', 'TCP', 'UDP', 'ICMP'];
+    vm.networkProtocols = ['IPV4', 'IPV6'];
+    vm.directions = ['inbound', 'outbound'];
 
     vm.formId = securityGroupFormId;
-    vm.model = "securityGroupModel";
-    vm.newRecord = securityGroupFormId === "new";
+    vm.model = 'securityGroupModel';
+    vm.newRecord = securityGroupFormId === 'new';
     vm.saveable = miqService.saveable;
 
     if (vm.newRecord) {
@@ -41,7 +41,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
   };
 
   function getSecurityGroup(id) {
-    return API.get("/api/security_groups/" + id + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules")
+    return API.get('/api/security_groups/' + id + '?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules')
       .then(function(data) {
         Object.assign(vm.securityGroupModel, data);
         vm.securityGroupModel.firewall_rules_delete = false;
@@ -49,7 +49,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
   }
 
   function getSecurityGroups() {
-    return API.get("/api/security_groups/?expand=resources&attributes=ems_ref,id,name")
+    return API.get('/api/security_groups/?expand=resources&attributes=ems_ref,id,name')
       .then(function(data) {
         vm.security_groups_list = data.resources;
       });
@@ -65,8 +65,8 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     vm.securityGroupModel.firewall_rules[index] = {
       id: null,
       resource_id: securityGroupFormId,
-      resource_type: "SecurityGroup",
-      direction: "inbound",
+      resource_type: 'SecurityGroup',
+      direction: 'inbound',
       ems_ref: null,
       end_port: null,
       host_protocol: null,
@@ -106,7 +106,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
       }
     }
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.filterNetworkManagerChanged = miqService.getProviderTenants(function(data) {

@@ -6,7 +6,7 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
     cluster_id:          null,
     destination_host_id: null,
     block_migration:     false,
-    disk_over_commit:    false
+    disk_over_commit:    false,
   };
   vm.clusters = [];
   vm.hosts = [];

@@ -7,13 +7,13 @@ function ToastListCtrl($scope, eventNotifications, $timeout) {
   var vm = this;
   vm.toastNotifications = [];
 
-  vm.handleCloseToast = function (notification) {
+  vm.handleCloseToast = function(notification) {
     eventNotifications.markRead(notification);
     eventNotifications.dismissToast(notification);
   };
 
-  vm.updateViewing = function (viewing, notification) {
-    eventNotifications.setViewingToast(notification, viewing)
+  vm.updateViewing = function(viewing, notification) {
+    eventNotifications.setViewingToast(notification, viewing);
   };
 
   var refresh = function() {

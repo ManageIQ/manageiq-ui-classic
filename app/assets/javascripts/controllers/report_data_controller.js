@@ -119,13 +119,13 @@
   * @returns {undefined}
   */
   var ReportDataController = function(MiQDataTableService,
-                                      MiQEndpointsService,
-                                      $filter,
-                                      $location,
-                                      $scope,
-                                      $document,
-                                      $timeout,
-                                      $window) {
+    MiQEndpointsService,
+    $filter,
+    $location,
+    $scope,
+    $document,
+    $timeout,
+    $window) {
     var vm = this;
     vm.settings = {};
     vm.MiQDataTableService = MiQDataTableService;
@@ -238,7 +238,7 @@
       $.post(url).always(function() {
         this.setExtraClasses();
       }.bind(this));
-    } else if (prefix !== "true") {
+    } else if (prefix !== 'true') {
       miqSparkleOn();
       var lastChar = prefix[prefix.length - 1];
       prefix = (lastChar !== '/' && lastChar !== '=') ? prefix + '/' : prefix;
@@ -318,12 +318,12 @@
     this.initObjects(initObject);
     this.setExtraClasses(initObject.gtlType);
     return this.getData(initObject.modelName,
-                        initObject.activeTree,
-                        initObject.parentId,
-                        initObject.isExplorer,
-                        this.settings,
-                        initObject.records,
-                        initObject.additionalOptions)
+      initObject.activeTree,
+      initObject.parentId,
+      initObject.isExplorer,
+      this.settings,
+      initObject.records,
+      initObject.additionalOptions)
       .then(function(data) {
         this.settings.hideSelect = initObject.hideSelect;
         var start = (this.settings.current - 1) * this.settings.perpage;
@@ -462,12 +462,12 @@
   * @returns {Object} promise of retriveRowsAndColumnsFromUrl of MiQDataTableService.
   */
   ReportDataController.prototype.getData = function(modelName,
-                                                    activeTree,
-                                                    parentId,
-                                                    isExplorer,
-                                                    settings,
-                                                    records,
-                                                    additionalOptions) {
+    activeTree,
+    parentId,
+    isExplorer,
+    settings,
+    records,
+    additionalOptions) {
     var basicSettings = {
       current: 1,
       perpage: 20,

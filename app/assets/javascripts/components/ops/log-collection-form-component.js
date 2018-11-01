@@ -1,7 +1,7 @@
 ManageIQ.angular.app.component('logCollectionForm', {
   controllerAs: 'vm',
   controller: logCollectionFormController,
-  templateUrl: "/static/ops/log_collection/log_collection.html.haml",
+  templateUrl: '/static/ops/log_collection/log_collection.html.haml',
   bindings: {
     'recordId': '@',
     'selectOptions': '<',
@@ -89,7 +89,7 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
     $scope.$broadcast('resetClicked');
     vm.logCollectionModel = angular.copy( vm.modelCopy );
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.cancelClicked = function() {

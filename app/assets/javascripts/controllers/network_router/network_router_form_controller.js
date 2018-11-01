@@ -6,12 +6,12 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
 
     vm.networkRouterModel = {
       cloud_tenant: {
-        id: null
+        id: null,
       },
       external_fixed_ips: [],
       external_gateway: false,
       extra_attributes: null,
-      //extra_attributes: { external_gateway_info: { enable_snat: true, external_fixed_ips: [], network_id: null }}
+      // extra_attributes: { external_gateway_info: { enable_snat: true, external_fixed_ips: [], network_id: null }}
     };
     vm.ems = [];
 
@@ -25,19 +25,19 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
     miqService.sparkleOn();
     if (vm.newRecord) {
       miqService.networkProviders()
-      .then(function(providers) {
-        vm.ems = providers;
+        .then(function(providers) {
+          vm.ems = providers;
 
-        vm.networkRouterModel.name = '';
-        vm.networkRouterModel.admin_state_up = true;
-        vm.networkRouterModel.cloud_subnet_id = null;
+          vm.networkRouterModel.name = '';
+          vm.networkRouterModel.admin_state_up = true;
+          vm.networkRouterModel.cloud_subnet_id = null;
 
-        vm.afterGet = true;
-        vm.modelCopy = angular.copy(vm.networkRouterModel);
-        miqService.sparkleOff();
-      });
+          vm.afterGet = true;
+          vm.modelCopy = angular.copy(vm.networkRouterModel);
+          miqService.sparkleOff();
+        });
     } else {
-      return API.get("/api/network_routers/" + networkRouterFormId + "?attributes=name,admin_state_up,cloud_network_id,cloud_tenant.name,ext_management_system.id,ext_management_system.name,extra_attributes").then(function(data) {
+      return API.get('/api/network_routers/' + networkRouterFormId + '?attributes=name,admin_state_up,cloud_network_id,cloud_tenant.name,ext_management_system.id,ext_management_system.name,extra_attributes').then(function(data) {
         Object.assign(vm.networkRouterModel, data);
         vm.networkRouterModel.admin_state_up = vm.networkRouterModel.admin_state_up == 't' ? true : false;
         if (vm.networkRouterModel.extra_attributes.external_gateway_info && vm.networkRouterModel.extra_attributes.external_gateway_info != {}) {
@@ -61,7 +61,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
 
   vm.getCloudNetworksByEms = function(id) {
     if (id) {
-      return API.get("/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=" + id).then(function(data) {
+      return API.get('/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=' + id).then(function(data) {
         vm.available_networks = data.resources;
       }).catch(miqService.handleFailure);
     }
@@ -69,7 +69,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
 
   vm.getCloudSubnetsByNetworkID = function(id) {
     if (id) {
-      return API.get("/api/cloud_subnets?expand=resources&attributes=name,ems_ref&filter[]=cloud_network_id=" + id).then(function(data) {
+      return API.get('/api/cloud_subnets?expand=resources&attributes=name,ems_ref&filter[]=cloud_network_id=' + id).then(function(data) {
         vm.available_subnets = data.resources;
       }).catch(miqService.handleFailure);
     }
@@ -77,7 +77,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
 
   vm.getSubnetByRef = function(ref) {
     if (ref) {
-      return API.get("/api/cloud_subnets?expand=resources&attributes=name&filter[]=ems_ref=" + ref).then(function(data) {
+      return API.get('/api/cloud_subnets?expand=resources&attributes=name&filter[]=ems_ref=' + ref).then(function(data) {
         vm.networkRouterModel.cloud_subnet_id = data.resources[0].id;
       }).catch(miqService.handleFailure);
     }
@@ -113,7 +113,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$scope', 'netwo
   vm.resetClicked = function() {
     vm.networkRouterModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash('warn', __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.filterNetworkManagerChanged = function(id) {

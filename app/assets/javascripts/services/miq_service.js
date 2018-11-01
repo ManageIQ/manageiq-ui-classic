@@ -152,7 +152,7 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
   this.handleFailure = function(e) {
     miqSparkleOff();
 
-    var message = __("Unknown error");
+    var message = __('Unknown error');
     if (e.data && e.data.error && e.data.error.message) {
       message = e.data.error.message;
     } else if (e.error && e.error.message) {
@@ -175,7 +175,7 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
       }
       miqService.sparkleOn();
 
-      API.get("/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=" + id)
+      API.get('/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=' + id)
         .then(getCloudNetworksByEmsData)
         .catch(miqService.handleFailure);
     };

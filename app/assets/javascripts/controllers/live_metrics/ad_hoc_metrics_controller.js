@@ -19,7 +19,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       // and set page config variables
       metricsParseUrlFactory(dash, $window);
       metricsConfigFactory(dash);
-    }
+    };
 
     var initialization = function() {
       dash.tenantChanged = false;
@@ -38,22 +38,22 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
       dash.page = 1;
       dash.pages = 1;
-      dash.pagesTitle = "";
+      dash.pagesTitle = '';
 
       dash.filterConfig = {
         fields: [],
         appliedFilters: [],
         resultsCount: 0,
-        onFilterChange: filterChange
+        onFilterChange: filterChange,
       };
 
       dash.toolbarConfig = {
         filterConfig: dash.filterConfig,
-        actionsConfig: dash.actionsConfig
+        actionsConfig: dash.actionsConfig,
       };
 
       dash.graphToolbarConfig = {
-        actionsConfig: dash.actionsConfig
+        actionsConfig: dash.actionsConfig,
       };
 
       if (dash.tenant.value) {
@@ -65,11 +65,11 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       }
 
       setAppliedFilters();
-    }
+    };
 
-    var filterChange = function (filters, addOnly) {
+    var filterChange = function(filters, addOnly) {
       dash.filterChanged = true;
-      dash.filtersText = "";
+      dash.filtersText = '';
       dash.tags = {};
 
       // prevent listing all metrics point
@@ -81,26 +81,26 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
         dash.items = [];
         dash.page = 1;
         dash.pages = 1;
-        dash.pagesTitle = "";
+        dash.pagesTitle = '';
         dash.filterConfig.resultsCount = 0;
         return;
       }
 
-      dash.filterConfig.appliedFilters.forEach(function (filter) {
+      dash.filterConfig.appliedFilters.forEach(function(filter) {
         if (filter.title && filter.value) {
-          dash.filtersText += filter.title + " : " + filter.value + "\n";
+          dash.filtersText += filter.title + ' : ' + filter.value + '\n';
           dash.tags[filter.id] = filter.value;
         }
       });
 
       // when change filter we automatically apply changes
-      if (!addOnly) {
+      if (! addOnly) {
         dash.itemSelected = false;
         dash.selectedItems = [];
         dash.items = [];
         dash.page = 1;
         dash.pages = 1;
-        dash.pagesTitle = "";
+        dash.pagesTitle = '';
         dash.filterChanged = false;
         dash.filterConfig.resultsCount = 0;
         dash.applyFilters();
@@ -109,7 +109,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
     dash.doAddFilter = function() {
       // if field is empty return
-      if ( !dash.filterConfig.currentValue ) return;
+      if ( ! dash.filterConfig.currentValue ) {return;}
       var filter = $('.filter-pf.filter-fields').scope().currentField;
 
       dash.filterConfig.appliedFilters.push({
@@ -117,7 +117,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
         title: filter.title,
         value: dash.filterConfig.currentValue}
       );
-      dash.filterConfig.currentValue = "";
+      dash.filterConfig.currentValue = '';
 
       // add a filter but only add (do not apply)
       filterChange(null, true);
@@ -125,7 +125,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
     var setAppliedFilters = function() {
       // if user did not send any tags, just exit
-      if (!dash.params.tags) return;
+      if (! dash.params.tags) {return;}
 
       // add the user defined tags as filters
       var tags = JSON.parse(dash.params.tags);
@@ -139,7 +139,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
       // apply the new filters
       filterChange();
-    }
+    };
 
     dash.applyFilters = function() {
       dash.applied = true;
@@ -169,5 +169,5 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
     // initialize page elemants
     initialization();
-  }
+  },
 ]);

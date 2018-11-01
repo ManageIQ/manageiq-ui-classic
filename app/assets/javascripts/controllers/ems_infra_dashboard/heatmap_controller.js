@@ -2,7 +2,7 @@
 
 angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'providerId', '$http', 'miqService', function($q, providerId, $http, miqService) {
   var vm = this;
-  vm.id = "heatmap_" + providerId;
+  vm.id = 'heatmap_' + providerId;
   vm.data = {};
 
   var init = function() {
@@ -30,8 +30,8 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'pr
   };
 
   var heatmapTitles = {
-    "clusterCpuUsage": __("CPU"),
-    "clusterMemoryUsage": __("Memory"),
+    'clusterCpuUsage': __('CPU'),
+    'clusterMemoryUsage': __('Memory'),
   };
 
   var processHeatmapData = function(heatmapsStruct, data) {
@@ -42,18 +42,18 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'pr
 
       var heatmapData = function(d) {
         var percent = -1;
-        var tooltip = __("Cluster: ") + d.node + "<br>" + __("Provider: ") + d.provider;
+        var tooltip = __('Cluster: ') + d.node + '<br>' + __('Provider: ') + d.provider;
         if (d.percent === null || d.total === null) {
-          tooltip += "<br> " + __("Usage: Unknown");
+          tooltip += '<br> ' + __('Usage: Unknown');
         } else {
           percent = d.percent;
-          tooltip += "<br>" + __("Usage: ") + sprintf(__("%d%% in use of %d %s total"), (percent * 100).toFixed(0),
-              d.total, d.unit);
+          tooltip += '<br>' + __('Usage: ') + sprintf(__('%d%% in use of %d %s total'), (percent * 100).toFixed(0),
+            d.total, d.unit);
         }
         return {
-          "id": keys[i] + '_' + d.id,
-          "tooltip": tooltip,
-          "value": percent,
+          'id': keys[i] + '_' + d.id,
+          'tooltip': tooltip,
+          'value': percent,
         };
       };
 

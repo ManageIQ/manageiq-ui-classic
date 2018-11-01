@@ -39,7 +39,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.currentRegion = currentRegion;
     vm.formId = aeMethodFormId;
     vm.afterGet = false;
-    vm.model = "aeMethodModel";
+    vm.model = 'aeMethodModel';
     vm.inventory_mode = 'localhost';
 
     ManageIQ.angular.scope = $scope;
@@ -113,7 +113,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     playbookReusableCodeMixin.checkFormDataRetrieval(vm);
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   var methodEditButtonClicked = function(buttonName) {
@@ -142,7 +142,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       class_id: configData.class_id,
       language: configData.language,
       scope: configData.scope,
-      location: "playbook",
+      location: 'playbook',
       repository_id: configData.provisioning_repository_id,
       playbook_id: configData.provisioning_playbook_id,
       credential_id: configData.provisioning_machine_credential_id,
@@ -197,9 +197,9 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
   });
 
   vm.addKeyValue = function() {
-    var valid = validateInputName(vm.aeMethodModel.provisioning_key, 0, "add");
+    var valid = validateInputName(vm.aeMethodModel.provisioning_key, 0, 'add');
     if (! valid) {
-      return miqService.miqFlash("error", __("Inputs name must be unique"));
+      return miqService.miqFlash('error', __('Inputs name must be unique'));
     }
     vm.aeMethodModel.provisioning_inputs.push(
       [vm.aeMethodModel.provisioning_key, vm.aeMethodModel.provisioning_value, vm.aeMethodModel.provisioning_type]);
@@ -238,9 +238,9 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
   };
 
   vm.saveKeyValue = function(index) {
-    var valid = validateInputName(vm.aeMethodModel.key, index, "edit");
+    var valid = validateInputName(vm.aeMethodModel.key, index, 'edit');
     if (! valid) {
-      return miqService.miqFlash("error", __("Input Name must be unique"));
+      return miqService.miqFlash('error', __('Input Name must be unique'));
     }
     vm.aeMethodModel.provisioning_editMode = false;
     vm.aeMethodModel.s_index = '';
@@ -255,7 +255,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel.provisioning_inputs.forEach(function(input, i) {
       // validate input name if input name is changed for current input parameter
       // or when new one is being added
-      if ((type === "add" && input[0] === inputName) || (type === "edit" && index !== i && input[0] === inputName)) {
+      if ((type === 'add' && input[0] === inputName) || (type === 'edit' && index !== i && input[0] === inputName)) {
         valid = false;
       }
     });
@@ -263,10 +263,10 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
   };
 
   // watch for all the drop downs on screen
-  "provisioning_playbook provisioning_machine_credential provisioning_vault_credential provisioning_network_credential provisioning_cloud_credential".split(" ").forEach(idWatch);
+  'provisioning_playbook provisioning_machine_credential provisioning_vault_credential provisioning_network_credential provisioning_cloud_credential'.split(' ').forEach(idWatch);
 
   function idWatch(name) {
-    var fieldName = "vm._" + name;
+    var fieldName = 'vm._' + name;
     $scope.$watch(fieldName, function(value) {
       vm.aeMethodModel[name + '_id'] = value ? value.id : '';
       playbookReusableCodeMixin.checkFormPristine(vm.aeMethodModel, vm.modelCopy, $scope.angularForm);

@@ -5,5 +5,5 @@ ManageIQ.angular.app.component('widgetSpinner', {
     '    <i class="fa fa-spin fa-spinner"></i>',
     '  </div>',
     '</div>',
-  ].join("\n"),
+  ].join('\n'),
 });

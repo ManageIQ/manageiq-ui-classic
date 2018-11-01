@@ -7,7 +7,7 @@ ManageIQ.angular.app.component('namespaceForm', {
     'descriptionReadonly': '<',
   },
   controllerAs: 'vm',
-  controller: ['$scope', '$http', 'miqService', "$window", function($scope, $http, miqService, $window) {
+  controller: ['$scope', '$http', 'miqService', '$window', function($scope, $http, miqService, $window) {
     $scope.__ = __;
     $scope.controllerName = 'vm';
 

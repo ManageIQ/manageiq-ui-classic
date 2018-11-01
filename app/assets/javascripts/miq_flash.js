@@ -24,11 +24,11 @@ function add_flash(msg, level, options) {
       cls.icon = 'pficon pficon-ok';
       break;
     default:
-      throw("add_flash: unknown level: " + level);
+      throw ('add_flash: unknown level: ' + level);
   }
 
   if (options.long_alert) {
-    cls.alert += " text-overflow-pf";
+    cls.alert += ' text-overflow-pf';
   }
 
   var iconSpan = $('<span class="' + cls.icon + '"></span>');
@@ -41,7 +41,7 @@ function add_flash(msg, level, options) {
 
   // if options.long alert is given than add a `See More` button to the alert div to allow user the get more details of the error/alert.
   if (options.long_alert) {
-    var detailsLinkTxt = __("View More");
+    var detailsLinkTxt = __('View More');
     var detailsLink = $('<div class="alert_expand_link"><strong><a href="#">' + detailsLinkTxt + '</a></strong></div>');
     var params = {clicked: false, alert_elem: alertDiv, link: detailsLink};
     detailsLink.on('click', function() {
@@ -88,8 +88,8 @@ function checkElipsis(element) {
 }
 
 function expandAlert(params) {
-  var viewMoreTxt = __("View More");
-  var viewLessTxt = __("View Less");
+  var viewMoreTxt = __('View More');
+  var viewLessTxt = __('View Less');
   if (! params.clicked) {
     params.clicked = true;
     params.alert_elem.removeClass('text-overflow-pf');

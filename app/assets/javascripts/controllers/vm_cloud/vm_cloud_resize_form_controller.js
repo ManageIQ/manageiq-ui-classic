@@ -38,11 +38,11 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
 
   function getResizeFormData(response) {
     var data = response.data;
-    vm.flavors = data.flavors
-    vm.vmCloudModel.flavor_id = data.flavor_id
+    vm.flavors = data.flavors;
+    vm.vmCloudModel.flavor_id = data.flavor_id;
     vm.modelCopy = angular.copy(vm.vmCloudModel);
     miqService.sparkleOff();
-  };
+  }
 
   init();
 }]);

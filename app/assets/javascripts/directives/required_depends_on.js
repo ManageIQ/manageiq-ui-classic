@@ -1,7 +1,7 @@
 ManageIQ.angular.app.directive('requiredDependsOn', function() {
   return {
     require: 'ngModel',
-    link: function (scope, _elem, attrs, ctrl) {
+    link: function(scope, _elem, attrs, ctrl) {
       scope.$watch(attrs.ngModel, function() {
         if ((ctrl.$modelValue != undefined)) {
           setValidityForModelValue(scope, ctrl, ctrl.$modelValue, attrs.requiredIfExists);
@@ -18,20 +18,20 @@ ManageIQ.angular.app.directive('requiredDependsOn', function() {
       });
 
       var setValidity = function(_scope, ctrl, value, dependsOnValue) {
-        if (value == "" && dependsOnValue != "") {
-          ctrl.$setValidity("requiredDependsOn", false);
+        if (value == '' && dependsOnValue != '') {
+          ctrl.$setValidity('requiredDependsOn', false);
         } else {
-          ctrl.$setValidity("requiredDependsOn", true);
+          ctrl.$setValidity('requiredDependsOn', true);
         }
       };
 
       var setValidityForModelValue = function(scope, ctrl, value, valueIfExists) {
-        if (value == "" && scope[scope.model][valueIfExists] != "") {
-          ctrl.$setValidity("requiredDependsOn", false);
+        if (value == '' && scope[scope.model][valueIfExists] != '') {
+          ctrl.$setValidity('requiredDependsOn', false);
         } else {
-          ctrl.$setValidity("requiredDependsOn", true);
+          ctrl.$setValidity('requiredDependsOn', true);
         }
       };
-    }
-  }
+    },
+  };
 });

@@ -17,23 +17,23 @@ function cloudNetworkFormController(API, miqService) {
 
     vm.cloudNetworkModel = { name: '' };
     vm.providers_network_types = {
-      "None": "",
-      "Local": "local",
-      "Flat": "flat",
-      "GRE": "gre",
-      "VLAN": "vlan",
-      "VXLAN": "vxlan",
+      'None': '',
+      'Local': 'local',
+      'Flat': 'flat',
+      'GRE': 'gre',
+      'VLAN': 'vlan',
+      'VXLAN': 'vxlan',
     };
 
     vm.ems = [];
     vm.network_types_for_segmentation = /vlan|vxlan|gre/;
     vm.network_types_for_physical_network = /vlan|flat/;
     vm.formId = vm.cloudNetworkFormId;
-    vm.model = "cloudNetworkModel";
+    vm.model = 'cloudNetworkModel';
     ManageIQ.angular.scope = vm;
     vm.saveable = miqService.saveable;
 
-    vm.newRecord = vm.cloudNetworkFormId === "new";
+    vm.newRecord = vm.cloudNetworkFormId === 'new';
 
     miqService.sparkleOn();
     if (vm.newRecord) {
@@ -50,7 +50,7 @@ function cloudNetworkFormController(API, miqService) {
           miqService.sparkleOff();
         });
     } else {
-      API.get("/api/cloud_networks/" + vm.cloudNetworkFormId + "?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name").then(function(data) {
+      API.get('/api/cloud_networks/' + vm.cloudNetworkFormId + '?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name').then(function(data) {
         Object.assign(vm.cloudNetworkModel, data);
         vm.afterGet = true;
         vm.modelCopy = angular.copy( vm.cloudNetworkModel );

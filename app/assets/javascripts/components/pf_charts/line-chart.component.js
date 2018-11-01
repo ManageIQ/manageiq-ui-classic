@@ -89,7 +89,7 @@ function lineChartController(pfUtils) {
    */
   vm.getLineData = function(chartData) {
     var lineData = {
-      type: vm.setAreaChart ? "area" : "line",
+      type: vm.setAreaChart ? 'area' : 'line',
     };
 
     if (chartData && chartData.dataAvailable !== false && chartData.xData) {

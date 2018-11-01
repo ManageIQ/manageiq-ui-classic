@@ -21,9 +21,9 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
       some_days_checked: true,
       some_hours_checked: true,
     };
-    vm.dayNames = [__("Sunday"), __("Monday"), __("Tuesday"), __("Wednesday"), __("Thursday"), __("Friday"), __("Saturday")];
-    vm.hourNamesFirstHalf = [__("12-1"), __("1-2"), __("2-3"), __("3-4"), __("4-5"), __("5-6")];
-    vm.hourNamesSecondHalf = [__("6-7"), __("7-8"), __("8-9"), __("9-10"), __("10-11"), __("11-12")];
+    vm.dayNames = [__('Sunday'), __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday')];
+    vm.hourNamesFirstHalf = [__('12-1'), __('1-2'), __('2-3'), __('3-4'), __('4-5'), __('5-6')];
+    vm.hourNamesSecondHalf = [__('6-7'), __('7-8'), __('8-9'), __('9-10'), __('10-11'), __('11-12')];
     vm.afterGet = false;
     vm.modelCopy = angular.copy( vm.timeProfileModel );
     vm.model = 'timeProfileModel';
@@ -42,7 +42,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
       vm.formId = timeProfileFormId;
     } else {
       vm.newRecord = true;
-      vm.formId = "new";
+      vm.formId = 'new';
     }
   };
 
@@ -180,7 +180,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
   vm.resetClicked = function(angularForm) {
     vm.timeProfileModel = angular.copy( vm.modelCopy );
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.saveClicked = function() {
@@ -197,7 +197,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
     vm.getDaysValues();
     vm.getHoursValues();
 
-    vm.note = sprintf(__("In use by %s reports, cannot be disabled"), vm.timeProfileModel.miq_reports_count);
+    vm.note = sprintf(__('In use by %s reports, cannot be disabled'), vm.timeProfileModel.miq_reports_count);
 
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.timeProfileModel );

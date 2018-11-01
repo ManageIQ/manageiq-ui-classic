@@ -7,29 +7,29 @@ $.fn.resizableSidebar = function() {
     var pos = arr.length - 1;
     arr[pos] = parseInt(arr[pos], 10) + add;
     return arr.join('-');
-  }
+  };
 
   // Helper to get the current column width
   var get_col = function(colstr) {
     var arr = colstr.split('-');
     return parseInt(arr[arr.length - 1], 10);
-  }
+  };
 
   var container = this;
   var columns = container.find('.resizable');
   if (columns.length == 2) { // only if there are 2 resizable columns
     var maindiv = columns.find('.resizer').parent();
     var sidebar = columns.not(maindiv);
-    maindiv.find('.resizer-box .btn').click(function (_event) {
-      if ($(this).hasClass('disabled')) return false;
+    maindiv.find('.resizer-box .btn').click(function(_event) {
+      if ($(this).hasClass('disabled')) {return false;}
       var left = $(this).hasClass('resize-left');
       var button = left ? $(this).next() : $(this);
       var ajax = 2; // the width of the sidebar which will be sent with an ajax request
       var left_class = [];
       var right_class = [];
-      $.each(sidebar.attr('class').split(/\s+/), function (_k, v) {
+      $.each(sidebar.attr('class').split(/\s+/), function(_k, v) {
         if (left) {
-          switch(v) {
+          switch (v) {
             case 'col-md-5':
             case 'col-md-4':
             case 'col-md-3':
@@ -55,7 +55,7 @@ $.fn.resizableSidebar = function() {
               left_class.push(v);
           }
         } else {
-          switch(v) {
+          switch (v) {
             case 'hidden-md':
             case 'hidden-lg':
               break; // when resizing to the right, remove hidden classes from sidebar
@@ -82,9 +82,9 @@ $.fn.resizableSidebar = function() {
           }
         }
       });
-      $.each(maindiv.attr('class').split(/\s+/), function (_k, v) {
+      $.each(maindiv.attr('class').split(/\s+/), function(_k, v) {
         if (left) {
-          switch(v) {
+          switch (v) {
             case 'col-md-10':
               right_class.push('col-md-12');
               break;
@@ -94,7 +94,7 @@ $.fn.resizableSidebar = function() {
               right_class.push(change_col(v, +1));
               break;
             case 'col-md-push-2':
-              right_class.push('col-md-push-0')
+              right_class.push('col-md-push-0');
               break;
             case 'col-md-push-3':
             case 'col-md-push-4':
@@ -105,7 +105,7 @@ $.fn.resizableSidebar = function() {
               right_class.push(v);
           }
         } else {
-          switch(v) {
+          switch (v) {
             case 'col-md-12':
               right_class.push('col-md-10');
               break;

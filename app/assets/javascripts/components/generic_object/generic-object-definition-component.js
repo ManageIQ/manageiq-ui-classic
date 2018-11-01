@@ -20,9 +20,9 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
 
     vm.pictureReset = false;
 
-    vm.attributeTableHeaders = [__("Name"), __("Type"), __("Actions")];
-    vm.associationTableHeaders = [__("Name"), __("Class"), __("Actions")];
-    vm.methodTableHeaders = [__("Name"), __("Actions")];
+    vm.attributeTableHeaders = [__('Name'), __('Type'), __('Actions')];
+    vm.associationTableHeaders = [__('Name'), __('Class'), __('Actions')];
+    vm.methodTableHeaders = [__('Name'), __('Actions')];
 
     vm.types = [];
     vm.classes = [];
@@ -140,17 +140,17 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
   vm.uniqueProperty = function(keyType) {
     var primaryArray;
     var secondaryArrays = [];
-    if (keyType === "Attributes") {
+    if (keyType === 'Attributes') {
       primaryArray = vm.genericObjectDefinitionModel.attribute_names;
       secondaryArrays.push(vm.genericObjectDefinitionModel.association_names);
       secondaryArrays.push(vm.genericObjectDefinitionModel.method_names);
     }
-    if (keyType === "Associations") {
+    if (keyType === 'Associations') {
       primaryArray = vm.genericObjectDefinitionModel.association_names;
       secondaryArrays.push(vm.genericObjectDefinitionModel.attribute_names);
       secondaryArrays.push(vm.genericObjectDefinitionModel.method_names);
     }
-    if (keyType === "Methods") {
+    if (keyType === 'Methods') {
       primaryArray = vm.genericObjectDefinitionModel.method_names;
       secondaryArrays.push(vm.genericObjectDefinitionModel.attribute_names);
       secondaryArrays.push(vm.genericObjectDefinitionModel.association_names);

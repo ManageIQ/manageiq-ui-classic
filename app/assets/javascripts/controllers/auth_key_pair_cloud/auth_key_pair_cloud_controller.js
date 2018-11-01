@@ -44,7 +44,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
   vm.resetClicked = function() {
     vm.keyPairModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.saveClicked = function() {

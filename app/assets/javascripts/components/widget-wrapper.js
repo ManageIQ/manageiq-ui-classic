@@ -23,7 +23,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
     vm.promise = deferred.promise;
 
     this.$onInit = function() {
-      vm.divId = "w_" + vm.widgetId;
+      vm.divId = 'w_' + vm.widgetId;
       vm.innerDivId = 'dd_w' + vm.widgetId + '_box';
       if (vm.widgetBlank === 'false') {
         $http.get(vm.widgetUrl())
@@ -46,9 +46,8 @@ ManageIQ.angular.app.component('widgetWrapper', {
     vm.widgetUrl  = function() {
       if (widgetTypeUrl.hasOwnProperty(vm.widgetType)) {
         return [widgetTypeUrl[vm.widgetType], vm.widgetId].join('/');
-      } else {
-        console.log('Something went wrong. There is no support for widget type of ', vm.widgetType);
       }
+      console.log('Something went wrong. There is no support for widget type of ', vm.widgetType);
     };
   }],
   template: [
@@ -59,7 +58,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
     '        <dropdown-menu widget-id="{{vm.widgetId}}" buttons-data="{{vm.widgetButtons}}">',
     '        </dropdown-menu>',
     '        <h2 class="card-pf-title sortable-handle ui-sortable-handle" style="cursor:move">',
-    "{{vm.widgetTitle}}",
+    '{{vm.widgetTitle}}',
     '        </h2>',
     '      </div>',
     '    </div>',
@@ -81,5 +80,5 @@ ManageIQ.angular.app.component('widgetWrapper', {
     '    </div>',
     '  </div>',
     '</div>',
-  ].join("\n"),
+  ].join('\n'),
 });

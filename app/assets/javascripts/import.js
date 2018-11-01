@@ -10,7 +10,7 @@ var ImportSetup = {
   },
 
   setUpUploadImportButton: function(button_id) {
-    if ($("#upload_file").val()){
+    if ($('#upload_file').val()) {
       $(button_id).prop('disabled', false);
     } else {
       $(button_id).prop('disabled', true);
@@ -55,7 +55,7 @@ var ImportSetup = {
         showErrorMessage(messageData.message);
       }
     }
-  }
+  },
 };
 
 var setUpImportClickHandlers = function(url, grid, importCallback) {

@@ -26,43 +26,43 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     $scope.formFieldsUrl = $attrs.formFieldsUrl;
     $scope.createUrl = $attrs.createUrl;
     $scope.updateUrl = $attrs.updateUrl;
-    $scope.model = "hostModel";
+    $scope.model = 'hostModel';
     ManageIQ.angular.scope = $scope;
 
     if (hostFormId == 'new') {
       $scope.newRecord = true;
-      $scope.hostModel.name = "";
-      $scope.hostModel.hostname = "";
-      $scope.hostModel.ipmi_address = "";
-      $scope.hostModel.custom_1 = "";
-      $scope.hostModel.user_assigned_os = "";
+      $scope.hostModel.name = '';
+      $scope.hostModel.hostname = '';
+      $scope.hostModel.ipmi_address = '';
+      $scope.hostModel.custom_1 = '';
+      $scope.hostModel.user_assigned_os = '';
       $scope.hostModel.operating_system = false;
-      $scope.hostModel.mac_address = "";
-      $scope.hostModel.default_userid = "";
-      $scope.hostModel.default_password = "";
-      $scope.hostModel.remote_userid = "";
-      $scope.hostModel.remote_password = "";
-      $scope.hostModel.ws_userid = "";
-      $scope.hostModel.ws_password = "";
-      $scope.hostModel.ipmi_userid = "";
-      $scope.hostModel.ipmi_password = "";
-      $scope.hostModel.validate_id = "";
+      $scope.hostModel.mac_address = '';
+      $scope.hostModel.default_userid = '';
+      $scope.hostModel.default_password = '';
+      $scope.hostModel.remote_userid = '';
+      $scope.hostModel.remote_password = '';
+      $scope.hostModel.ws_userid = '';
+      $scope.hostModel.ws_password = '';
+      $scope.hostModel.ipmi_userid = '';
+      $scope.hostModel.ipmi_password = '';
+      $scope.hostModel.validate_id = '';
       $scope.afterGet = true;
-    } else if (hostFormId.split(",").length == 1) {
-        miqService.sparkleOn();
-        $http.get($scope.formFieldsUrl + hostFormId)
-          .then(getHostFormDataComplete)
-          .catch(miqService.handleFailure);
-     } else if (hostFormId.split(",").length > 1) {
+    } else if (hostFormId.split(',').length == 1) {
+      miqService.sparkleOn();
+      $http.get($scope.formFieldsUrl + hostFormId)
+        .then(getHostFormDataComplete)
+        .catch(miqService.handleFailure);
+    } else if (hostFormId.split(',').length > 1) {
       $scope.afterGet = true;
     }
 
-     $scope.currentTab = "default";
+    $scope.currentTab = 'default';
   };
 
   $scope.changeAuthTab = function(id) {
     $scope.currentTab = id;
-  }
+  };
 
   $scope.addClicked = function() {
     miqService.sparkleOn();
@@ -74,9 +74,9 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     miqService.sparkleOn();
     if (hostFormId == 'new') {
       var url = $scope.createUrl + 'new?button=cancel';
-    } else if (hostFormId.split(",").length == 1) {
+    } else if (hostFormId.split(',').length == 1) {
       var url = $scope.updateUrl + hostFormId + '?button=cancel';
-    } else if (hostFormId.split(",").length > 1) {
+    } else if (hostFormId.split(',').length > 1) {
       var url = $scope.updateUrl + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
@@ -84,7 +84,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
 
   $scope.saveClicked = function() {
     miqService.sparkleOn();
-    if (hostFormId.split(",").length > 1) {
+    if (hostFormId.split(',').length > 1) {
       var url = $scope.updateUrl + '?button=save';
     } else {
       var url = $scope.updateUrl + hostFormId + '?button=save';
@@ -93,76 +93,70 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
   };
 
   $scope.resetClicked = function() {
-    $scope.$broadcast ('resetClicked');
+    $scope.$broadcast('resetClicked');
     $scope.hostModel = angular.copy( $scope.modelCopy );
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   $scope.isBasicInfoValid = function() {
-    if(($scope.currentTab == "default") &&
+    if (($scope.currentTab == 'default') &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
       ($scope.hostModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
       $scope.angularForm.default_password.$valid)) {
       return true;
-    } else if(($scope.currentTab == "remote") &&
+    } else if (($scope.currentTab == 'remote') &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
       ($scope.hostModel.remote_userid != '' && $scope.angularForm.remote_userid.$valid &&
       $scope.angularForm.remote_password.$valid)) {
       return true;
-    } else if(($scope.currentTab == "ws") &&
+    } else if (($scope.currentTab == 'ws') &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
       ($scope.hostModel.ws_userid != '' && $scope.angularForm.ws_userid.$valid &&
       $scope.angularForm.ws_password.$valid)) {
       return true;
-    } else if(($scope.currentTab == "ipmi") &&
+    } else if (($scope.currentTab == 'ipmi') &&
       ($scope.hostModel.ipmi_address) &&
       ($scope.hostModel.ipmi_userid != '' && $scope.angularForm.ipmi_userid.$valid &&
       $scope.angularForm.ipmi_password.$valid)) {
       return true;
-    } else
-      return false;
+    } return false;
   };
 
-  $scope.canValidate = function () {
-    if ($scope.isBasicInfoValid() && $scope.validateFieldsDirty())
-      return true;
-    else
-      return false;
-  }
+  $scope.canValidate = function() {
+    if ($scope.isBasicInfoValid() && $scope.validateFieldsDirty()) {return true;}
+    return false;
+  };
 
-  $scope.canValidateBasicInfo = function () {
-    if ($scope.isBasicInfoValid())
-      return true;
-    else
-      return false;
-  }
+  $scope.canValidateBasicInfo = function() {
+    if ($scope.isBasicInfoValid()) {return true;}
+    return false;
+  };
 
-  $scope.validateFieldsDirty = function () {
-    if(($scope.currentTab == "default") &&
+  $scope.validateFieldsDirty = function() {
+    if (($scope.currentTab == 'default') &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
       $scope.angularForm.default_userid.$dirty &&
       $scope.angularForm.default_password.$dirty)) {
       return true;
-    } else if(($scope.currentTab == "remote") &&
+    } else if (($scope.currentTab == 'remote') &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
       $scope.angularForm.remote_userid.$dirty &&
       $scope.angularForm.remote_password.$dirty)) {
       return true;
-    } else if(($scope.currentTab == "ws") &&
+    } else if (($scope.currentTab == 'ws') &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
       $scope.angularForm.ws_userid.$dirty &&
       $scope.angularForm.ws_password.$dirty)) {
       return true;
-    } else if(($scope.currentTab == "ipmi") &&
+    } else if (($scope.currentTab == 'ipmi') &&
       ($scope.angularForm.ipmi_address.$dirty &&
       $scope.angularForm.ipmi_userid.$dirty &&
       $scope.angularForm.ipmi_password.$dirty)) {
       return true;
-    } else
-      return false;
-  }
+    } return false;
+  };
 
   function getHostFormDataComplete(response) {
     var data = response.data;

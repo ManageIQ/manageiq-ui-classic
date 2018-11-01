@@ -29,7 +29,7 @@ function genericObjectTableController($timeout) {
 
   vm.$onInit = function() {
     vm.dupicatePropertyError = [];
-    vm.invalidKeyName = __("Invalid name");
+    vm.invalidKeyName = __('Invalid name');
     vm.tableRendered = true;
 
     if (vm.newRecord) {
@@ -75,7 +75,7 @@ function genericObjectTableController($timeout) {
 
   function recalibrateDupes() {
     if (vm.noOfRows === 0) {
-      vm.angularForm[vm.keyType + '0'].$setValidity("duplicateProperty", true);
+      vm.angularForm[vm.keyType + '0'].$setValidity('duplicateProperty', true);
     } else {
       _.times(vm.noOfRows, function(index) {
         setDuplicateKeyError(undefined, index);
@@ -100,9 +100,9 @@ function genericObjectTableController($timeout) {
     if (_.includes(vm.uniqueProperty(), possibleDupeKey)
       || _.includes(getCurrentUniqueArrayValues(possibleDupeKey), possibleDupeKey)) {
       vm.dupicatePropertyError[dupeErrorIndex] = sprintf(__('Property Name "%s" is not unique'), possibleDupeKey);
-      cellElement.$setValidity("duplicateProperty", false);
+      cellElement.$setValidity('duplicateProperty', false);
     } else {
-      cellElement.$setValidity("duplicateProperty", true);
+      cellElement.$setValidity('duplicateProperty', true);
     }
   }
 

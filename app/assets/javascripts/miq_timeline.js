@@ -1,10 +1,10 @@
-(function () {
+(function() {
   var element, timeline;
 
   function handlePopover(element) {
     var popover = '';
-    if (element.hasOwnProperty("events")) {
-      popover = sprintf(__("Group of %s events"), element.events.length);
+    if (element.hasOwnProperty('events')) {
+      popover = sprintf(__('Group of %s events'), element.events.length);
     } else {
       for (var i in element.details) {
         popover = popover + element.details[i];
@@ -20,19 +20,19 @@
 
     $(d3.event.target).popover('toggle');
 
-    $(d3.event.target).on('shown.bs.popover', { target: d3.event.target }, function (event) {
+    $(d3.event.target).on('shown.bs.popover', { target: d3.event.target }, function(event) {
       $(document).on('click', { target: event.data.target }, hidePopover);
     });
 
-    if (el.hasOwnProperty("events")) {
-      table = table + '<thead>' + sprintf(__("This is a group of %s events starting on %s"), el.events.length, el.date.toLocaleString()) + '</thead><tbody>';
-      table = table + '<tr><th>' + __("Date") + '</th><th>' + __("Event") + '</th></tr>'
+    if (el.hasOwnProperty('events')) {
+      table = table + '<thead>' + sprintf(__('This is a group of %s events starting on %s'), el.events.length, el.date.toLocaleString()) + '</thead><tbody>';
+      table = table + '<tr><th>' + __('Date') + '</th><th>' + __('Event') + '</th></tr>';
       for (var i = 0; i < el.events.length; i++) {
         table = table + '<tr><td>' + el.events[i].date.toLocaleString() + ' </td> ';
         for (var j in el.events[i].details) {
           table = table + '<td> ' + el.events[i].details[j] + ' </td> ';
         }
-        table = table + '</tr>'
+        table = table + '</tr>';
       }
       table = table + '</tbody>';
     } else {
@@ -58,7 +58,7 @@
       'container': '#tl_div',
       'trigger': 'manual',
       'placement': 'top',
-      'html': true
+      'html': true,
     });
   }
 
@@ -70,7 +70,7 @@
     var weight = {
       detail: 0,
       warning: 1,
-      critical: 2
+      critical: 2,
     };
     return (weight[severityX] > weight[severityY] ? severityX : severityY);
   }
@@ -79,7 +79,7 @@
     var colors = {
       detail: '#00659C',
       critical: '#C00019',
-      warning: '#E17B1C'
+      warning: '#E17B1C',
     };
 
     if (eventData.hasOwnProperty('events')) {
@@ -97,17 +97,17 @@
     var legendHTML = '';
     for (var property in eventData) {
       var value = eventData[property].value;
-      if (property === "group_level") {
+      if (property === 'group_level') {
         var color = eventColor({data: eventData});
-        value = "<text style='color:" + color + "'>" + capitalize(value) + "</text>";
+        value = "<text style='color:" + color + "'>" + capitalize(value) + '</text>';
       }
-      legendHTML += "<b>" + eventData[property].text + ":</b>&nbsp;" + value + "<br/>";
+      legendHTML += '<b>' + eventData[property].text + ':</b>&nbsp;' + value + '<br/>';
     }
     return legendHTML;
   }
 
   ManageIQ.Timeline = {
-    load: function (json, start, end) {
+    load: function(json, start, end) {
       var data = [],
         one_hour = 60 * 60 * 1000,
         one_day = 24 * 60 * 60 * 1000,
@@ -142,7 +142,7 @@
         .eventColor(eventColor)
         .eventPopover(handlePopover).eventClick(eventClick);
 
-      if(!dataHasName) {
+      if (! dataHasName) {
         timeline.labelWidth(60);
       }
 
@@ -155,25 +155,25 @@
         'container': '#tl_div',
         'trigger': 'manual',
         'placement': 'top',
-        'html': true
+        'html': true,
       });
 
       $('#chart_placeholder').append('<div id="legend"></div>');
 
       $(window).on('resize', createTooltip);
-    }
+    },
   };
 })(ManageIQ);
 
 function miqInitTimeline(json) {
-  if (!json) {
+  if (! json) {
     return;
   }
 
   var parsed = JSON.parse(json);
 
   var start, end;
-  if (!ManageIQ.calendar.calDateFrom || !ManageIQ.calendar.calDateTo) {
+  if (! ManageIQ.calendar.calDateFrom || ! ManageIQ.calendar.calDateTo) {
     end = new Date();
     start = new Date(end - 24 * 60 * 60 * 1000 * 7);
   } else {

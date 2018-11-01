@@ -422,9 +422,8 @@ function miqTreeEventSafeEval(func) {
 
   if (whitelist.includes(func)) {
     return window[func];
-  } else {
-    throw new Error('Function not in whitelist: ' + func);
   }
+  throw new Error('Function not in whitelist: ' + func);
 }
 
 function miqTreeOnNodeChecked(options, node) {
@@ -448,11 +447,10 @@ function miqTreeState(tree, node, state) {
   if (state === undefined) {
     // No third argument, return the stored value or undefined
     return persist[node];
-  } else {
-    // Save the third argument as the new node state
-    persist[node] = state;
-    sessionStorage.setItem('tree_state_' + tree, JSON.stringify(persist));
   }
+  // Save the third argument as the new node state
+  persist[node] = state;
+  sessionStorage.setItem('tree_state_' + tree, JSON.stringify(persist));
 }
 
 function miqTreeClearState(tree) {

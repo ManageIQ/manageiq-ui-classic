@@ -14,7 +14,7 @@
     });
 
     $scope.$on('setUserId', function(_event, args) {
-      if(args != undefined) {
+      if (args != undefined) {
         $scope.modelCopy[args.userIdName] = args.userIdValue;
       }
     });
@@ -49,12 +49,12 @@
 
   EmsKeypairController.prototype.inEditMode = function(userid) {
     return (this.newRecord
-            || !this.showChangePrivateKeyLinks(userid)
+            || ! this.showChangePrivateKeyLinks(userid)
             || this.changeKey);
   };
 
   EmsKeypairController.prototype.showChangePrivateKeyLinks = function(userid) {
-    return !this.newRecord && this.modelCopy[userid] != '';
+    return ! this.newRecord && this.modelCopy[userid] != '';
   };
 
   EmsKeypairController.prototype.resetClicked = function() {
@@ -69,6 +69,6 @@
     return ! ((openstackInfraAndNew || openstackCloud || rhevm) && tab === 'ssh_keypair');
   };
 
-  EmsKeypairController.$inject = ["$scope"];
+  EmsKeypairController.$inject = ['$scope'];
   ManageIQ.angular.app.controller('emsKeypairController', EmsKeypairController);
 })();

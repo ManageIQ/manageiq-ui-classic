@@ -19,7 +19,7 @@ function customImageComponentController($timeout) {
   var vm = this;
 
   vm.$onInit = function() {
-    vm.imageUploadStatus = "";
+    vm.imageUploadStatus = '';
     vm.changeImage = false;
   };
 
@@ -40,7 +40,7 @@ function customImageComponentController($timeout) {
     imageFile = angular.element('#generic_object_definition_image_file')[0].files[0];
 
     var reader = new FileReader();
-    vm.imageUploadStatus = "";
+    vm.imageUploadStatus = '';
 
     if (imageFile.type === 'image/png') {
       vm.picture.extension = 'png';
@@ -49,8 +49,8 @@ function customImageComponentController($timeout) {
     } else if (imageFile.type === 'image/svg') {
       vm.picture.extension = 'svg';
     } else {
-      vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", false);
-      vm.imageUploadStatus = __("Incompatible image type");
+      vm.angularForm.generic_object_definition_image_file_status.$setValidity('incompatibleFileType', false);
+      vm.imageUploadStatus = __('Incompatible image type');
       vm.pictureUploaded = true;
       return;
     }
@@ -59,8 +59,8 @@ function customImageComponentController($timeout) {
       vm.picture.content = btoa(event.target.result);
 
       $timeout(function() {
-        vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", true);
-        vm.imageUploadStatus = __("Image is ready to be uploaded");
+        vm.angularForm.generic_object_definition_image_file_status.$setValidity('incompatibleFileType', true);
+        vm.imageUploadStatus = __('Image is ready to be uploaded');
         vm.pictureUploaded = true;
       });
     };
@@ -83,9 +83,9 @@ function customImageComponentController($timeout) {
 
   function restoreOriginalStatus() {
     if (vm.angularForm.generic_object_definition_image_file_status) {
-      vm.angularForm.generic_object_definition_image_file_status.$setValidity("incompatibleFileType", true);
+      vm.angularForm.generic_object_definition_image_file_status.$setValidity('incompatibleFileType', true);
     }
-    vm.imageUploadStatus = "";
-    angular.element(":file").filestyle('clear');
+    vm.imageUploadStatus = '';
+    angular.element(':file').filestyle('clear');
   }
 }

@@ -55,9 +55,9 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
         var mousePosition = d3.mouse(canvas.node());
 
         var popup = canvas.append('div')
-            .attr('class', 'popup')
-            .style('left', mousePosition[0] + 'px')
-            .style('top', mousePosition[1] + 'px');
+          .attr('class', 'popup')
+          .style('left', mousePosition[0] + 'px')
+          .style('top', mousePosition[1] + 'px');
         popup.append('h5').text('Actions on ' + data.item.display_kind);
 
         if (data.item.kind !== 'Tag') {

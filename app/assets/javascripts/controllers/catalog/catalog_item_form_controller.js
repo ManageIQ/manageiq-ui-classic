@@ -153,7 +153,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     if (typeof extraVars !== 'undefined') {
       vm.catalogItemModel[variableName] = {};
       for (var key in extraVars) {
-        vm.catalogItemModel[variableName][key] = extraVars[key]['default'];
+        vm.catalogItemModel[variableName][key] = extraVars[key].default;
       }
     }
     playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
@@ -230,51 +230,47 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       },
     };
     if (vm.catalogItemModel.provisioning_execution_ttl !== undefined) {
-      catalog_item['config_info']['provision']['execution_ttl'] = configData.provisioning_execution_ttl;
+      catalog_item.config_info.provision.execution_ttl = configData.provisioning_execution_ttl;
     }
-    catalog_item['config_info']['provision']['become_enabled'] = configData.provisioning_become_enabled;
+    catalog_item.config_info.provision.become_enabled = configData.provisioning_become_enabled;
     if (configData.provisioning_vault_credential_id !== '') {
-      catalog_item['config_info']['provision']['vault_credential_id'] = configData.provisioning_vault_credential_id;
+      catalog_item.config_info.provision.vault_credential_id = configData.provisioning_vault_credential_id;
     }
     if (configData.provisioning_network_credential_id !== '') {
-      catalog_item['config_info']['provision']['network_credential_id'] = configData.provisioning_network_credential_id;
+      catalog_item.config_info.provision.network_credential_id = configData.provisioning_network_credential_id;
     }
     if (configData.provisioning_cloud_credential_id !== '') {
-      catalog_item['config_info']['provision']['cloud_credential_id'] = configData.provisioning_cloud_credential_id;
+      catalog_item.config_info.provision.cloud_credential_id = configData.provisioning_cloud_credential_id;
     }
     if (configData.provisioning_dialog_id !== undefined && configData.provisioning_dialog_id !== '') {
-      catalog_item['config_info']['provision']['dialog_id'] = configData.provisioning_dialog_id;
+      catalog_item.config_info.provision.dialog_id = configData.provisioning_dialog_id;
     } else if (configData.provisioning_dialog_name !== '') {
-      catalog_item['config_info']['provision']['new_dialog_name'] = configData.provisioning_dialog_name;
+      catalog_item.config_info.provision.new_dialog_name = configData.provisioning_dialog_name;
     }
 
-    catalog_item['config_info']['retirement'] = {
+    catalog_item.config_info.retirement = {
       remove_resources: configData.retirement_remove_resources,
       verbosity: configData.retirement_verbosity,
       log_output: configData.retirement_log_output,
     };
 
-    var retirement = catalog_item['config_info']['retirement'];
+    var retirement = catalog_item.config_info.retirement;
     if (vm.catalogItemModel.retirement_repository_id !== undefined && configData.retirement_repository_id !== '') {
-      retirement['repository_id'] = configData.retirement_repository_id;
-      retirement['playbook_id'] = configData.retirement_playbook_id;
-      retirement['credential_id'] = configData.retirement_machine_credential_id;
+      retirement.repository_id = configData.retirement_repository_id;
+      retirement.playbook_id = configData.retirement_playbook_id;
+      retirement.credential_id = configData.retirement_machine_credential_id;
     }
     if (vm.catalogItemModel.retirement_playbook_id !== undefined && configData.retirement_playbook_id !== '') {
-      if (vm.catalogItemModel.retirement_execution_ttl !== undefined)
-        retirement['execution_ttl'] = configData.retirement_execution_ttl;
-      retirement['hosts'] = configData.retirement_inventory;
-      retirement['extra_vars'] = formatExtraVars(configData.retirement_variables);
-      catalog_item['config_info']['retirement']['become_enabled'] = configData.retirement_become_enabled;
+      if (vm.catalogItemModel.retirement_execution_ttl !== undefined) {retirement.execution_ttl = configData.retirement_execution_ttl;}
+      retirement.hosts = configData.retirement_inventory;
+      retirement.extra_vars = formatExtraVars(configData.retirement_variables);
+      catalog_item.config_info.retirement.become_enabled = configData.retirement_become_enabled;
     }
-    if (configData.retirement_vault_credential_id !== '')
-      catalog_item['config_info']['retirement']['vault_credential_id'] = configData.retirement_vault_credential_id;
+    if (configData.retirement_vault_credential_id !== '') {catalog_item.config_info.retirement.vault_credential_id = configData.retirement_vault_credential_id;}
 
-    if (configData.retirement_network_credential_id !== '')
-      catalog_item['config_info']['retirement']['network_credential_id'] = configData.retirement_network_credential_id;
+    if (configData.retirement_network_credential_id !== '') {catalog_item.config_info.retirement.network_credential_id = configData.retirement_network_credential_id;}
 
-    if (configData.retirement_cloud_credential_id !== '')
-      catalog_item['config_info']['retirement']['cloud_credential_id'] = configData.retirement_cloud_credential_id;
+    if (configData.retirement_cloud_credential_id !== '') {catalog_item.config_info.retirement.cloud_credential_id = configData.retirement_cloud_credential_id;}
 
     return catalog_item;
   };
@@ -291,7 +287,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     if (value) {
       playbookReusableCodeMixin.repositoryChanged(vm, 'provisioning', value.id);
     } else {
-      vm.catalogItemModel['provisioning_repository_id'] = '';
+      vm.catalogItemModel.provisioning_repository_id = '';
     }
     playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
   });
@@ -300,8 +296,8 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     if (value) {
       playbookReusableCodeMixin.repositoryChanged(vm, 'retirement', value.id);
     } else {
-      vm.catalogItemModel['retirement_playbook_id'] = '';
-      vm.catalogItemModel['retirement_repository_id'] = '';
+      vm.catalogItemModel.retirement_playbook_id = '';
+      vm.catalogItemModel.retirement_repository_id = '';
       playbookReusableCodeMixin.getRemoveResourcesTypes(vm);
     }
     playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
@@ -309,9 +305,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   $scope.$watch('vm._retirement_playbook', function(value) {
     if (value) {
-      vm.catalogItemModel['retirement_playbook_id'] = value.id;
+      vm.catalogItemModel.retirement_playbook_id = value.id;
     } else {
-      vm.catalogItemModel['retirement_playbook_id'] = '';
+      vm.catalogItemModel.retirement_playbook_id = '';
     }
     playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
   });
@@ -333,7 +329,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   vm.addKeyValue = function(prefix) {
     if (vm.catalogItemModel[prefix + '_variables'].hasOwnProperty(vm.catalogItemModel[prefix + '_key'])) {
-      return miqService.miqFlash("error", __("Variable name must be unique"));
+      return miqService.miqFlash('error', __('Variable name must be unique'));
     }
     vm.catalogItemModel[prefix + '_variables'][vm.catalogItemModel[prefix + '_key']] =  vm.catalogItemModel[prefix + '_value'];
     vm.catalogItemModel[prefix + '_key'] = '';
@@ -378,7 +374,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   vm.saveKeyValue = function(prefix) {
     if (vm.catalogItemModel.key in vm.catalogItemModel[prefix + '_variables'] && vm.catalogItemModel.original_key_value === vm.catalogItemModel.key_value) {
-      return miqService.miqFlash("error", __("Variable name must be unique"));
+      return miqService.miqFlash('error', __('Variable name must be unique'));
     }
     vm.catalogItemModel[prefix + '_editMode'] = false;
     vm.catalogItemModel.s_index = '';

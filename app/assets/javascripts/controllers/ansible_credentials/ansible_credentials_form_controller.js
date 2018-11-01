@@ -36,7 +36,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
         .then(getCredentialFormData)
         .catch(miqService.handleFailure);
     } else {
-      vm.select_options.push({'label':__('<Choose>'), 'value': ''});
+      vm.select_options.push({'label': __('<Choose>'), 'value': ''});
       // credential creation requires manager_resource
       API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
         .then(setManagerResource)
@@ -52,7 +52,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
   vm.cancelClicked = function(angularForm) {
     if (credentialId === 'new') {
-      getBack(__("Creation of new Credential was canceled by the user."), true);
+      getBack(__('Creation of new Credential was canceled by the user.'), true);
     } else {
       getBack(sprintf(__('Edit of Credential "%s" was canceled by the user.'), vm.credentialModel.name), true);
     }
@@ -62,19 +62,19 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     vm.credentialModel = angular.copy( vm.modelCopy );
     angularForm.$setPristine(true);
     toggleResetFlag();
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.saveClicked = function(angularForm) {
     API.put('/api/authentications/' + credentialId, purgeModel())
-       .then(getBack.bind(vm, sprintf(__('Modification of Credential "%s" has been successfully queued.'), vm.credentialModel.name), false, false))
-       .catch(miqService.handleFailure);
+      .then(getBack.bind(vm, sprintf(__('Modification of Credential "%s" has been successfully queued.'), vm.credentialModel.name), false, false))
+      .catch(miqService.handleFailure);
   };
 
   vm.addClicked = function(angularForm) {
     API.post('/api/authentications/', vm.credentialModel)
-       .then(getBack.bind(vm, sprintf(__('Add of Credential "%s" has been successfully queued.'), vm.credentialModel.name), false, false))
-       .catch(miqService.handleFailure);
+      .then(getBack.bind(vm, sprintf(__('Add of Credential "%s" has been successfully queued.'), vm.credentialModel.name), false, false))
+      .catch(miqService.handleFailure);
   };
 
   function purgeModel() {
@@ -146,7 +146,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
   function setManagerResource(response) {
     if (response.resources.length > 0) {
-      vm.credentialModel.manager_resource = { "href": response.resources[0].href };
+      vm.credentialModel.manager_resource = { 'href': response.resources[0].href };
     } else {
       vm.credentialModel.manager_resource = null;
       miqService.miqFlash('error', __('Embedded Ansible service is not available.'));

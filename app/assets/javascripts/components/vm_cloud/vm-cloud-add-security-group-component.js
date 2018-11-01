@@ -27,14 +27,14 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
     var currentSecurityGroups;
 
     $q.all([
-      API.get("/api/instances/" + vm.recordId),
-      API.get("/api/instances/" + vm.recordId + "/security_groups?expand=resources&attributes=id,name"),
+      API.get('/api/instances/' + vm.recordId),
+      API.get('/api/instances/' + vm.recordId + '/security_groups?expand=resources&attributes=id,name'),
     ])
       .then(function(data) {
         var tenantId = data[0].cloud_tenant_id;
         currentSecurityGroups = data[1].resources;
 
-        return API.get("/api/cloud_tenants/" + tenantId + "/security_groups?expand=resources&attributes=id,name");
+        return API.get('/api/cloud_tenants/' + tenantId + '/security_groups?expand=resources&attributes=id,name');
       })
       .then(function(data) {
         vm.security_groups = data.resources.filter(function(securityGroup) {

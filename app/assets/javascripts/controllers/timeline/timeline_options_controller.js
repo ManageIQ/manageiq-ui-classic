@@ -8,14 +8,14 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['$http', 'miqServi
       tl_timepivot: 'ending',
       tl_result: 'success',
       tl_range_count: 1,
-      tl_date: new Date(ManageIQ.calendar.calDateTo)
+      tl_date: new Date(ManageIQ.calendar.calDateTo),
     };
 
     vm.afterGet  = true;
     vm.dateOptions = {
       autoclose: true,
       todayHighlight: true,
-      orientation: 'bottom'
+      orientation: 'bottom',
     };
     ManageIQ.angular.scope = vm;
     vm.availableCategories = categories;
@@ -63,16 +63,15 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['$http', 'miqServi
       startDay = selectedDay.clone(),
       endDay = selectedDay.clone();
 
-    if (vm.reportModel.tl_timepivot === "starting") {
+    if (vm.reportModel.tl_timepivot === 'starting') {
       endDay.add(vm.reportModel.tl_days, 'days').toDate();
       vm.reportModel.miq_date = endDay.format('MM/DD/YYYY');
-    } else if (vm.reportModel.tl_timepivot === "centered") {
-      var enddays = Math.ceil(vm.reportModel.tl_days/2);
+    } else if (vm.reportModel.tl_timepivot === 'centered') {
+      var enddays = Math.ceil(vm.reportModel.tl_days / 2);
       startDay.subtract(enddays, 'days').toDate();
       endDay.add(enddays, 'days').toDate();
       vm.reportModel.miq_date = endDay.format('MM/DD/YYYY');
-
-    }  else if (vm.reportModel.tl_timepivot === "ending") {
+    }  else if (vm.reportModel.tl_timepivot === 'ending') {
       startDay.subtract(vm.reportModel.tl_days, 'days');
       vm.reportModel.miq_date = endDay.format('MM/DD/YYYY');
     }

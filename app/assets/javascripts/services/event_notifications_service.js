@@ -78,26 +78,26 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
 
     if (seed) {
       API.get('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc&limit=100')
-      .then(function(data) {
-        data.resources.forEach(function(resource) {
-          var msg = miqFormatNotification(resource.details.text, resource.details.bindings);
-          events.notifications.push({
-            id: resource.id,
-            notificationType: _this.EVENT_NOTIFICATION,
-            unread: ! resource.seen,
-            type: resource.details.level,
-            message: msg,
-            data: {
-              link: _.get(resource.details, 'bindings.link'),
-            },
-            href: resource.href,
-            timeStamp: resource.details.created_at,
+        .then(function(data) {
+          data.resources.forEach(function(resource) {
+            var msg = miqFormatNotification(resource.details.text, resource.details.bindings);
+            events.notifications.push({
+              id: resource.id,
+              notificationType: _this.EVENT_NOTIFICATION,
+              unread: ! resource.seen,
+              type: resource.details.level,
+              message: msg,
+              data: {
+                link: _.get(resource.details, 'bindings.link'),
+              },
+              href: resource.href,
+              timeStamp: resource.details.created_at,
+            });
           });
-        });
 
-        updateUnreadCount(events);
-        notifyObservers();
-      });
+          updateUnreadCount(events);
+          notifyObservers();
+        });
     }
   };
 
