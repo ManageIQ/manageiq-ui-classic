@@ -13,8 +13,7 @@ module OpsController::Settings::Schedules
     return if record_no_longer_exists?(@selected_schedule)
 
     # Get configured tz, else use user's tz
-    @timezone = @selected_schedule.run_at && @selected_schedule.run_at[:tz] ?
-                  @selected_schedule.run_at[:tz] : session[:user_tz]
+    @timezone = @selected_schedule.run_at && @selected_schedule.run_at[:tz] ? @selected_schedule.run_at[:tz] : session[:user_tz]
 
     if @selected_schedule.sched_action[:method] == 'automation_request'
       params = @selected_schedule.filter[:ui][:ui_object]
@@ -37,7 +36,7 @@ module OpsController::Settings::Schedules
     assert_privileges("schedule_edit")
     case params[:button]
     when "cancel"
-      @schedule = MiqSchedule.find_by_id(params[:id])
+      @schedule = MiqSchedule.find(params[:id])
       if !@schedule || @schedule.id.blank?
         add_flash(_("Add of new Schedule was cancelled by the user"))
       else
@@ -47,19 +46,19 @@ module OpsController::Settings::Schedules
       @schedule = nil
       replace_right_cell(:nodetype => @nodetype)
     when "save", "add"
-      schedule = params[:id] != "new" ? MiqSchedule.find_by_id(params[:id]) : MiqSchedule.new(:userid => session[:userid])
+      schedule = params[:id] != "new" ? MiqSchedule.find(params[:id]) : MiqSchedule.new(:userid => session[:userid])
 
       # This should be changed to something like schedule.changed? and schedule.changes
       # when we have a version of Rails that supports detecting changes on serialized
       # fields
       old_schedule_attributes = schedule.attributes.clone
       old_schedule_attributes.merge("filter" => old_schedule_attributes["filter"].try(:to_human))
-      old_schedule_attributes.merge("run_at" => {:start_time => schedule.run_at[:start_time],
-                                                 :tz         => schedule.run_at[:tz],
-                                                 :interval   => {:unit  => schedule.run_at[:interval][:unit],
-                                                                 :value => schedule.run_at[:interval][:value]
-                                                                }
-                                                }) if schedule.run_at
+      if schedule.run_at
+        old_schedule_attributes.merge("run_at" => {:start_time => schedule.run_at[:start_time],
+                                                   :tz         => schedule.run_at[:tz],
+                                                   :interval   => {:unit  => schedule.run_at[:interval][:unit],
+                                                                   :value => schedule.run_at[:interval][:value]}})
+      end
       schedule_set_basic_record_vars(schedule)
       schedule_set_record_vars(schedule)
       schedule_set_timer_record_vars(schedule)
@@ -73,7 +72,7 @@ module OpsController::Settings::Schedules
         AuditEvent.success(build_saved_audit_hash_angular(old_schedule_attributes, schedule, params[:button] == "add"))
         add_flash(_("Schedule \"%{name}\" was saved") % {:name => schedule.name})
         if params[:button] == "add"
-          self.x_node  = "xx-msc"
+          self.x_node = "xx-msc"
           schedules_list
           settings_get_info("st")
         else
@@ -86,7 +85,7 @@ module OpsController::Settings::Schedules
       require 'uri'
       obj = find_checked_items
       obj[0] = params[:id] if obj.blank? && params[:id]
-      @schedule = params[:typ] == "new" ? MiqSchedule.new(:userid => session[:userid]) : MiqSchedule.find(obj[0])          # Get existing or new record
+      @schedule = params[:typ] == "new" ? MiqSchedule.new(:userid => session[:userid]) : MiqSchedule.find(obj[0]) # Get existing or new record
 
       # This is only because ops_controller tries to set form locals, otherwise we should not use the @edit variable
       @edit = {:sched_id => @schedule.id}
@@ -117,7 +116,7 @@ module OpsController::Settings::Schedules
   end
 
   def schedule_form_fields
-    schedule = MiqSchedule.find_by_id(params[:id])
+    schedule = MiqSchedule.find(params[:id])
 
     if schedule_check_compliance?(schedule)
       action_type = schedule.resource_type.underscore + "_" + schedule.sched_action[:method]
@@ -139,6 +138,8 @@ module OpsController::Settings::Schedules
     elsif schedule_automation_request?(schedule)
       action_type = schedule.sched_action[:method]
       automate_request = fetch_automate_request_vars(schedule)
+    elsif schedule.towhat.nil?
+      action_type = "vm"
     else
       if schedule.resource_type.nil?
         action_type = "vm"
@@ -216,7 +217,7 @@ module OpsController::Settings::Schedules
       settings_get_info("st")
       replace_right_cell(:nodetype => "root", :replace_trees => [:settings])
     else # showing 1 schedule, delete it
-      if params[:id].nil? || MiqSchedule.find_by_id(params[:id]).nil?
+      if params[:id].nil? || MiqSchedule.find(params[:id]).nil?
         add_flash(_("Schedule no longer exists"), :error)
         javascript_flash
       else
@@ -258,7 +259,7 @@ module OpsController::Settings::Schedules
       file_depot = FileDepot.new
     else
       id = params[:id] || params[:backup_schedule_type]
-      file_depot = MiqSchedule.find_by_id(id).file_depot
+      file_depot = MiqSchedule.find(id).file_depot
     end
     uri_settings = build_uri_settings(file_depot)
     begin
@@ -298,7 +299,7 @@ module OpsController::Settings::Schedules
 
   def schedule_method_from_params_action
     case params[:action_typ]
-    when "vm", "miq_template" then "vm_scan"  # Default to vm_scan method for now
+    when "vm", "miq_template" then "vm_scan" # Default to vm_scan method for now
     when /check_compliance\z/ then "check_compliance"
     when "db_backup"          then "db_backup"
     when "automation_request" then "automation_request"
@@ -318,12 +319,12 @@ module OpsController::Settings::Schedules
     when "container_image"
       filtered_item_list = find_filtered(ContainerImage).sort_by { |ci| ci.name.downcase }.collect(&:name).uniq
     when "ems"
-      if %w(emscluster host host_check_compliance storage).include?(action_type)
-        filtered_item_list = find_filtered(ExtManagementSystem).collect { |ems| ems.name if ems.number_of(:hosts) > 0 }
+      filtered_item_list = if %w(emscluster host host_check_compliance storage).include?(action_type)
+                             find_filtered(ExtManagementSystem).collect { |ems| ems.name if ems.number_of(:hosts).positive? }
                                                                .delete_if(&:blank?).sort_by(&:downcase)
-      else
-        filtered_item_list = find_filtered(ExtManagementSystem).sort_by { |vm| vm.name.downcase }.collect(&:name).uniq
-      end
+                           else
+                             find_filtered(ExtManagementSystem).sort_by { |vm| vm.name.downcase }.collect(&:name).uniq
+                           end
     when "cluster"
       filtered_item_list = find_filtered(EmsCluster).collect do |cluster|
         [cluster.name + "__" + cluster.v_parent_datacenter, cluster.v_qualified_desc]
@@ -331,13 +332,13 @@ module OpsController::Settings::Schedules
     when "storage"
       filtered_item_list = find_filtered(Storage).sort_by { |ds| ds.name.downcase }.collect(&:name).uniq
     when "global"
-      if action_type == "miq_template"
-        action_type = action_type.camelize
-      else
-        action_type = action_type.split("_").first.capitalize
-      end
+      action_type = if action_type == "miq_template"
+                      action_type.camelize
+                    else
+                      action_type.split("_").first.capitalize
+                    end
       build_listnav_search_list(action_type)
-      filtered_item_list = @def_searches.delete_if { |search| search.id == 0 }.collect { |search| [search.id, search.description] }
+      filtered_item_list = @def_searches.delete_if { |search| search.id.zero? }.collect { |search| [search.id, search.description] }
     when "my"
       build_listnav_search_list("Vm")
       filtered_item_list = @my_searches.collect { |search| [search.id, search.description] }
@@ -356,18 +357,18 @@ module OpsController::Settings::Schedules
   def determine_filter_type_and_value(schedule)
     if schedule.sched_action && schedule.sched_action[:method] && !schedule_db_backup_or_automate(schedule)
       !%w(db_backup automation_request).include?(schedule.sched_action[:method])
-      if schedule.miq_search                         # See if a search filter is attached
+      if schedule.miq_search # See if a search filter is attached
         filter_type = schedule.miq_search.search_type == "user" ? "my" : "global"
         filter_value = schedule.miq_search.id
-      elsif schedule.filter.nil?                   # Set to All if not set
+      elsif schedule.filter.nil? # Set to All if not set
         filter_type = "all"
         filter_value = nil
       else
         key = schedule.filter.exp.keys.first
-        if key == "IS NOT NULL"                       # All
+        if key == "IS NOT NULL" # All
           filter_type = "all"
           filter_value = nil
-        elsif key == "AND"                            # Cluster name and datacenter
+        elsif key == "AND" # Cluster name and datacenter
           filter_type = "cluster"
           filter_value = schedule.filter.exp[key][0]["="]["value"] + "__" + schedule.filter.exp[key][1]["="]["value"]
         else
@@ -422,7 +423,7 @@ module OpsController::Settings::Schedules
     valid = true
     unless %w(db_backup automation_request).include?(params[:action_typ])
       if %w(global my).include?(params[:filter_typ])
-        if params[:filter_value].blank?  # Check for search filter chosen
+        if params[:filter_value].blank? # Check for search filter chosen
           add_flash(_("Filter must be selected"), :error)
           valid = false
         end
@@ -460,7 +461,7 @@ module OpsController::Settings::Schedules
 
   def build_global_and_my_filters(type)
     build_listnav_search_list(type)
-    global_filters = @def_searches.reject { |s| s.id == 0 }.collect { |s| [s.description, s.id] }
+    global_filters = @def_searches.reject { |s| s.id.zero? }.collect { |s| [s.description, s.id] }
     my_filters = @my_searches.collect { |s| [s.description, s.id] }
 
     return global_filters, my_filters
@@ -492,7 +493,7 @@ module OpsController::Settings::Schedules
           :message   => params[:object_message]
         },
         :ui         => {:ui_attrs  => ui_attrs,
-                        :ui_object => {:target_class => params[:target_class].present? ? params[:target_class] : nil,
+                        :ui_object => {:target_class => params[:target_class].presence,
                                        :target_id    => params[:target_id]}},
         :parameters => {
           :request        => params[:object_request],
@@ -500,19 +501,19 @@ module OpsController::Settings::Schedules
           :object_message => params[:object_message],
         }.merge!(ui_attrs.to_h).merge!(build_attrs_from_params(params))
       }
-    elsif %w(global my).include?(params[:filter_typ])  # Search filter chosen, set up relationship
-      schedule.filter     = nil  # Clear out existing filter expression
+    elsif %w(global my).include?(params[:filter_typ]) # Search filter chosen, set up relationship
+      schedule.filter     = nil # Clear out existing filter expression
       schedule.miq_search = params[:filter_value] ? MiqSearch.find(params[:filter_value]) : nil # Set up the search relationship
-    else  # Build the filter expression
+    else # Build the filter expression
       schedule.filter     = MiqExpression.new(build_search_filter_from_params)
-      schedule.miq_search = nil if schedule.miq_search  # Clear out any search relationship
+      schedule.miq_search = nil if schedule.miq_search # Clear out any search relationship
     end
   end
 
   def build_attrs_from_params(params)
     return {} if params[:target_class].empty?
     klass = params[:target_class].constantize
-    object = klass.find_by_id(params[:target_id])
+    object = klass.find(params[:target_id])
     { MiqAeEngine.create_automation_attribute_key(object).to_s => MiqAeEngine.create_automation_attribute_value(object) }
   end
 
@@ -528,7 +529,7 @@ module OpsController::Settings::Schedules
     when "host"
       case params[:filter_typ]
       when "cluster"
-        unless params[:filter_value].blank?
+        if params[:filter_value].present?
           {"AND" => [
             {"=" => {"field" => "Host-v_owning_cluster", "value" => params[:filter_value].split("__").first}},
             {"=" => {"field" => "Host-v_owning_datacenter", "value" => params[:filter_value].split("__").size == 1 ? "" : params[:filter_value].split("__").last}}
@@ -542,12 +543,12 @@ module OpsController::Settings::Schedules
       case params[:filter_typ]
       when "ems" then {"=" => {"field" => "ContainerImage.ext_management_system-name", "value" => params[:filter_value]}}
       when "container_image" then {"=" => {"field" => "ContainerImage-name", "value" => params[:filter_value]}}
-      else             {"IS NOT NULL" => {"field" => "ContainerImage-name"}}
+      else {"IS NOT NULL" => {"field" => "ContainerImage-name"}}
       end
     when "emscluster"
       case params[:filter_typ]
       when "cluster"
-        unless params[:filter_value].blank?
+        if params[:filter_value].present?
           {"AND" => [
             {"=" => {"field" => "EmsCluster-name", "value" => params[:filter_value].split("__").first}},
             {"=" => {"field" => "EmsCluster-v_parent_datacenter", "value" => params[:filter_value].split("__").size == 1 ? "" : params[:filter_value].split("__").last}}
@@ -559,7 +560,7 @@ module OpsController::Settings::Schedules
     when /check_compliance\z/
       case params[:filter_typ]
       when "cluster"
-        unless params[:filter_value].blank?
+        if params[:filter_value].present?
           {"AND" => [
             {"=" => {"field" => "#{params[:action_typ].split("_").first.capitalize}-v_owning_cluster", "value" => params[:filter_value].split("__").first}},
             {"=" => {"field" => "#{params[:action_typ].split("_").first.capitalize}-v_owning_datacenter", "value" => params[:filter_value].split("__").size == 1 ? "" : params[:filter_value].split("__").last}}
@@ -574,7 +575,7 @@ module OpsController::Settings::Schedules
       model = params[:action_typ].starts_with?("vm") ? "Vm" : "MiqTemplate"
       case params[:filter_typ]
       when "cluster"
-        unless params[:filter_value].blank?
+        if params[:filter_value].present?
           {"AND" => [
             {"=" => {"field" => "#{model}-v_owning_cluster", "value" => params[:filter_value].split("__").first}},
             {"=" => {"field" => "#{model}-v_owning_datacenter", "value" => params[:filter_value].split("__").size == 1 ? "" : params[:filter_value].split("__").last}}
