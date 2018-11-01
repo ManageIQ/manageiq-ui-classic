@@ -156,10 +156,12 @@ module OpsController::Settings::LabelTagMapping
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      page.replace(@refresh_div,
-                   :partial => @refresh_partial,
-                   :locals  => {:type       => "container_label_tag_mapping",
-                                :action_url => 'label_tag_mapping_field_changed'}) if @refresh_div
+      if @refresh_div
+        page.replace(@refresh_div,
+                     :partial => @refresh_partial,
+                     :locals  => {:type       => "container_label_tag_mapping",
+                                  :action_url => 'label_tag_mapping_field_changed'})
+      end
       page << javascript_for_miq_button_visibility_changed(@changed)
     end
   end
@@ -238,7 +240,7 @@ module OpsController::Settings::LabelTagMapping
       label_tag_mapping_get_all
       render :update do |page|
         page << javascript_prologue
-        page.replace_html 'settings_label_tag_mapping', :partial => 'settings_label_tag_mapping_tab'
+        page.replace_html('settings_label_tag_mapping', :partial => 'settings_label_tag_mapping_tab')
       end
     else
       mapping.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }
