@@ -65,7 +65,7 @@ function recalculateChartYAxisLabels(id) {
   var minMax = getMinMaxFromChart(this);
 
   if (minMax) {
-    var columnsData = validateMinMax(minMax[0], minMax[1], minShowed, maxShowed);
+    var columnsData = validateMinMax(minMax[0], minMax[1]);
     if (columnsData.invalid) {
       return;
     }
