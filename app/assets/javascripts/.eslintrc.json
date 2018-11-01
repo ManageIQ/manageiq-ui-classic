@@ -1,0 +1,12 @@
+{
+  "globals": {
+    "GitImport": true, // local git_import.js
+    "miqHideSearchClearButton": true // local miq_application.js
+  },
+  "rules": {
+    "camelcase": "off",
+    "key-spacing": ["error", {
+      "mode": "minimum"
+    }]
+  }
+}
