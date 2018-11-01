@@ -1388,7 +1388,7 @@ class ApplicationController < ActionController::Base
        (action_name == "show_list" && !session[:menu_click])
       adv_search_build(db)
     end
-    if @edit && !@edit[:selected] && # Load default search if search @edit hash exists
+    if @edit && !@edit[:selected] && !@edit[:tagging] && # Load default search if search @edit hash exists
        settings(:default_search, db.to_sym) # and item in listnav not selected
       load_default_search(settings(:default_search, db.to_sym))
     end
