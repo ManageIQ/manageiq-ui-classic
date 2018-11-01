@@ -19,6 +19,7 @@
 
   "globals": {
     "sendDataWithRx": false, // local: miq_observable.js
+    "listenToRx": true, // local: miq_observable.js
     "vanillaJsAPI": false, // local: http_api/api.js - deprecated
     "API": false, // local: http_api/api.js
     "ManageIQ": false, // local: mig_global.js
@@ -32,7 +33,9 @@
     "i18n": false, // gem: gettext_i18n_rails_js
     "moment": false, // npm: moment
     "numeral": false, // npm: numeral
-    "sprintf": false // npm: sprintf-js
+    "sprintf": false, // npm: sprintf-js
+    "add_flash": true, // local miq_flash
+    "miq_bootstrap": true // local miq_angular_application
   },
 
   "rules": {
