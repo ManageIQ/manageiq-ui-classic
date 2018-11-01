@@ -483,7 +483,7 @@
         }
 
         // Camelize the quadicon data received from the server
-        _.each(gtlData.rows, function(row, key) {
+        _.each(gtlData.rows, function(row) {
           row.quad = camelizeQuadicon(row.quad);
         });
 

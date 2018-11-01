@@ -166,7 +166,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
     vm.calculateTimeProfileHourValues();
   };
 
-  var timeProfileEditButtonClicked = function(buttonName, serializeFields) {
+  var timeProfileEditButtonClicked = function(buttonName) {
     miqService.sparkleOn();
     var url = '/configuration/timeprofile_update/' + vm.formId + '?button=' + buttonName;
     var timeProfileModelObj = angular.copy(vm.timeProfileModel);

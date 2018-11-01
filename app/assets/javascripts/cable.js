@@ -3,7 +3,7 @@
 var miqInitNotifications = function() {
   var cable = ActionCable.createConsumer('/ws/notifications');
 
-  var notifications = cable.subscriptions.create('NotificationChannel', {
+  return cable.subscriptions.create('NotificationChannel', {
     disconnected: function() {
       var _this = this;
       // Try to request a new ws_token if disconnected, reconnecting will happen automatically

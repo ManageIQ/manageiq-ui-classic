@@ -234,13 +234,11 @@
     },
 
     // used by datetime_ordinal
-    number_ordinal: function(val, options) {
-      options = options || {};
+    number_ordinal: function(val, _options) {
       return ordinalize(~~val);
     },
 
-    elapsed_time_human: function(val, options) {
-      options = options || {};
+    elapsed_time_human: function(val, _options) {
       val = ~~val;
 
       var names = [__('Day'), __('Hour'), __('Minute'), __('Second')];
@@ -280,8 +278,7 @@
       return (result.length > options.length) ? result.substr(0, options.length) + '...' : val;
     },
 
-    large_number_to_exponential_form: function(val, options) {
-      options = options || {};
+    large_number_to_exponential_form: function(val, _options) {
       if (Number(val) < 1.0e+15) {return val;}
       return Number(val).toPrecision(2);
     },

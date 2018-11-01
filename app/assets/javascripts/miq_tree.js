@@ -213,7 +213,6 @@ function miqOnCheckSections(_tree_name, key, checked, all_checked) {
 }
 
 function miqOnCheckGenealogy(node, treename) {
-  var count = 0;
   var tree = miqTreeObject(treename);
   // Map the selected nodes into an array of keys
   var selectedKeys = tree.getChecked().map(function(item) {

@@ -50,7 +50,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
       .then(retrievedCredentialDetails);
   };
 
-  vm.cancelClicked = function(angularForm) {
+  vm.cancelClicked = function() {
     if (credentialId === 'new') {
       getBack(__('Creation of new Credential was canceled by the user.'), true);
     } else {
@@ -65,13 +65,13 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
-  vm.saveClicked = function(angularForm) {
+  vm.saveClicked = function() {
     API.put('/api/authentications/' + credentialId, purgeModel())
       .then(getBack.bind(vm, sprintf(__('Modification of Credential "%s" has been successfully queued.'), vm.credentialModel.name), false, false))
       .catch(miqService.handleFailure);
   };
 
-  vm.addClicked = function(angularForm) {
+  vm.addClicked = function() {
     API.post('/api/authentications/', vm.credentialModel)
       .then(getBack.bind(vm, sprintf(__('Add of Credential "%s" has been successfully queued.'), vm.credentialModel.name), false, false))
       .catch(miqService.handleFailure);

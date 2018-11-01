@@ -395,7 +395,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
       });
   };
 
-  _this.updateIcons = function(response) {
+  _this.updateIcons = function() {
     return $http.get('/alerts_list/class_icons')
       .then(function(response) {
         _this.icons = response.data;
@@ -537,7 +537,6 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
     var newTypes = [];
     var retrievalTime = (new Date()).getTime();
     var alertProvider;
-    var key;
     var objectType;
     var objectName;
     var objectClassifiedType;
@@ -548,7 +547,6 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
       });
 
       if (alertProvider !== undefined) {
-        key = 'providers';
         objectType = getObjectType(alertProvider);
         objectName = alertProvider.name;
         objectClassifiedType = alertProvider.type;
@@ -579,7 +577,6 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
     // Add each alert in the appropriate group
     angular.forEach(responseData.resources, function(item) {
       var objectType;
-      var providerType;
       var foundType;
       var descriptors;
       var summaryItem;

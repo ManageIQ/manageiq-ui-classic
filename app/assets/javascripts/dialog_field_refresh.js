@@ -279,7 +279,7 @@ var dialogFieldRefresh = {
         radio.attr('title', __('This element is disabled because it is read only'));
         radio.prop('disabled', true);
       } else {
-        radio.on('click', function(event) {
+        radio.on('click', function() {
           dialogFieldRefresh.radioButtonSelectEvent(url, fieldId, function() {
             dialogFieldRefresh.triggerAutoRefresh(autoRefreshOptions);
           });

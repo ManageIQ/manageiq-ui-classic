@@ -111,9 +111,6 @@
     load: function(json, start, end) {
       var data = [];
       var one_hour = 60 * 60 * 1000;
-      var one_day = 24 * 60 * 60 * 1000;
-      var one_week = one_day * 7;
-      var one_month = one_day * 30;
       var dataHasName = false;
       for (var x in json) {
         data[x] = {};
