@@ -27,14 +27,13 @@ export function APIDelete(entity, resources, labels) {
   API.post(`/api/${entity}`, {
     action: 'delete',
     resources,
-  })
-  .then((data) => {
+  }).then((data) => {
     showMessage(generateMessages(data.results), labels);
     return data;
   });
 }
 
-export function customActionDelete(_data, _resources) {
+export function customActionDelete() {
   throw new Error('customURLDelete not implemented yet');
 }
 

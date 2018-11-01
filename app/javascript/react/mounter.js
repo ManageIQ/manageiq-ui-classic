@@ -1,3 +1,6 @@
+/**
+ * Remove this and replace all ocurances with cuurent mounting mechanism
+ */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import componentRegistry from './componentRegistry';

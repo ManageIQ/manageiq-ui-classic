@@ -9,13 +9,11 @@ ManageIQ.angular.app.component('providerDialogUser', {
     successMessage: '@',
   },
   template: '<dialog-user dialog="$ctrl.dialog" refresh-field="$ctrl.refreshField(field)" on-update="$ctrl.setDialogData(data)"></dialog-user>',
-  controller: [function() {
+  controller: [function providerDialogsCommonController() {
     let formData = {};
 
-    this.refreshField = (field) => {
-      // dynamic fields are not supported in this context
-      return Promise.resolve({values:[], options:[]});
-    };
+    // dynamic fields are not supported in this context
+    this.refreshField = () => Promise.resolve({ values: [], options: [] });
 
     this.setDialogData = (data) => {
       formData = data.data;
@@ -35,11 +33,11 @@ ManageIQ.angular.app.component('providerDialogUser', {
           addClicked: () => {
             apiCall(
               {
-                entity_name:     this.entityName,
-                action_name:     this.actionName,
+                entity_name: this.entityName,
+                action_name: this.actionName,
                 success_message: this.successMessage,
               },
-              this.formData
+              this.formData,
             );
           },
         },
@@ -74,7 +72,7 @@ function apiCall(buttonData, dialogData) {
       return;
     }
     add_flash(__(buttonData.success_message), 'success');
-  }).catch((error) => {
+  }).catch(() => {
     add_flash(__('An unknown error has occurred calling the API.'));
   });
 }
@@ -103,7 +101,7 @@ function dialogModal(dialogDefinition, buttonData) {
   renderModal(buttonData.dialog_title, inner);
 }
 
-window.listenToRx(function (buttonData) {
+window.listenToRx((buttonData) => {
   if (!buttonData || buttonData.controller !== 'provider_dialogs') {
     return;
   }

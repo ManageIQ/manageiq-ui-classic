@@ -18,13 +18,13 @@ function callMapperFunction(eventMapper, event) {
 }
 
 function subscribeToRx(eventMapper, controllerName) {
-  listenToRx(function(event) {
+  listenToRx((event) => {
     if (!event.type) {
-      return;
+      return undefined;
     }
 
     if (event.controller !== controllerName) {
-      return;
+      return undefined;
     }
 
     return callMapperFunction(eventMapper, event);
@@ -41,8 +41,8 @@ function subscribeToRx(eventMapper, controllerName) {
  * to RX with type 'example'.
  */
 const eventMapper = {
-  'delete': data => onDelete(data, getGridChecks()),
-  'generic': data => onCustomAction(data, getGridChecks()),
+  delete: data => onDelete(data, getGridChecks()),
+  generic: data => onCustomAction(data, getGridChecks()),
 };
 
 subscribeToRx(eventMapper, 'toolbarActions');
