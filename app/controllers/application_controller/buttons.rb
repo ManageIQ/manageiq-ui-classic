@@ -110,6 +110,7 @@ module ApplicationController::Buttons
 
       copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color disabled_text button_type inventory_type))
       @edit[:new][:disabled_open_url] = !(MODEL_WITH_OPEN_URL.include?(@resolve[:target_class]) && @edit[:new][:display_for] == 'single')
+      @edit[:new][:open_url] = false if @edit[:new][:disabled_open_url]
 
       @edit[:new][:dialog_id] = params[:dialog_id] == "" ? nil : params[:dialog_id] if params.keys.include?("dialog_id")
       visibility_box_edit
