@@ -50,13 +50,16 @@ engines:
   eslint:
     enabled: true
     channel: "eslint-3"
-    config:
-      ignore_warnings: true
-      config: '.eslintrc.json'
+    checks:
+      key-spacing:
+        enabled: false
       no-undefined:
         enabled: false
       quotes:
         enabled: false
+    config:
+      ignore_warnings: true
+      config: '.eslintrc.json'
   fixme:
     # let's enable later
     enabled: false
