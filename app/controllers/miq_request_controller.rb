@@ -525,7 +525,7 @@ class MiqRequestController < ApplicationController
     assert_privileges("miq_request_delete")
     miq_requests = []
     if @lastaction == "show_list" # showing a list
-      miq_requests = find_checked_items
+      miq_requests = find_records_with_rbac(MiqRequest, checked_or_params)
       if miq_requests.empty?
         add_flash(_("No Requests were selected for deletion"), :error)
       end
