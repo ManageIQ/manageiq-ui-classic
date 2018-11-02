@@ -88,7 +88,6 @@ module PxeController::PxeCustomizationTemplates
     id = params[:id] || "new"
     return unless load_edit("ct_edit__#{id}")
     template_get_form_vars
-    changed = (@edit[:new] != @edit[:current])
     if params[:button] == "cancel"
       @edit = session[:edit] = nil # clean out the saved info
       if @ct.id
@@ -98,13 +97,12 @@ module PxeController::PxeCustomizationTemplates
       end
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
-    elsif ["add", "save"].include?(params[:button])
-      if params[:id]
-        ct = find_record_with_rbac(CustomizationTemplate, params[:id])
-      else
-        ct = @edit[:new][:typ] == "CustomizationTemplateKickstart" ?
-            CustomizationTemplateKickstart.new : CustomizationTemplateSysprep.new
-      end
+    elsif %w(add save).include?(params[:button])
+      ct = if params[:id]
+             find_record_with_rbac(CustomizationTemplate, params[:id])
+           else
+             @edit[:new][:typ] == "CustomizationTemplateKickstart" ? CustomizationTemplateKickstart.new : CustomizationTemplateSysprep.new
+           end
       if @edit[:new][:name].blank?
         add_flash(_("Name is required"), :error)
       end
@@ -147,7 +145,7 @@ module PxeController::PxeCustomizationTemplates
 
   # Get variables from edit form
   def template_get_form_vars
-    @ct = @edit[:ct_id] ? CustomizationTemplate.find_by_id(@edit[:ct_id]) : CustomizationTemplate.new
+    @ct = @edit[:ct_id] ? CustomizationTemplate.find(@edit[:ct_id]) : CustomizationTemplate.new
     @edit[:new][:name] = params[:name] if params[:name]
     @edit[:new][:description] = params[:description] if params[:description]
     @edit[:new][:img_type] = params[:img_typ] if params[:img_typ]
@@ -170,12 +168,12 @@ module PxeController::PxeCustomizationTemplates
     @edit[:new][:description] = @ct.description
     @edit[:new][:typ] = @ct.type
     # in case record is being copied
-    if @ct.id || @ct.pxe_image_type_id
-      @edit[:new][:img_type] = @ct.pxe_image_type.id
-    else
-      # if new customization template, check if add button was pressed form folder level, to auto select image type
-      @edit[:new][:img_type] = x_node == "T" ? @ct.pxe_image_type : x_node.split('_')[1]
-    end
+    @edit[:new][:img_type] = if @ct.id || @ct.pxe_image_type_id
+                               @ct.pxe_image_type.id
+                             else
+                               # if new customization template, check if add button was pressed form folder level, to auto select image type
+                               x_node == "T" ? @ct.pxe_image_type : x_node.split('_')[1]
+                             end
 
     @edit[:new][:script] = @ct.script || ""
     @edit[:current] = copy_hash(@edit[:new])
@@ -186,7 +184,7 @@ module PxeController::PxeCustomizationTemplates
     ct.name = @edit[:new][:name]
     ct.description = @edit[:new][:description]
     ct.type = @edit[:new][:typ]
-    ct.pxe_image_type = PxeImageType.find_by_id(@edit[:new][:img_type])
+    ct.pxe_image_type = PxeImageType.find_by(:id => @edit[:new][:img_type])
     ct.script = @edit[:new][:script]
   end
 
@@ -210,23 +208,22 @@ module PxeController::PxeCustomizationTemplates
 
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node, :replace_trees => [:customization_templates])
-    else # showing 1 vm
-      if params[:id].nil? || CustomizationTemplate.find_by_id(params[:id]).nil?
-        add_flash(_("Customization Template no longer exists"), :error)
-        template_list
-        @refresh_partial = "layouts/gtl"
-      else
-        templates.push(params[:id])
-        ct = CustomizationTemplate.find_by_id(params[:id])  if method == 'destroy'        # need to set this for destroy method so active node can be set to image_type folder node after record is deleted
-        process_templates(templates, method)  unless templates.empty?
-        # TODO: tells callers to go back to show_list because this record may be gone
-        # Should be refactored into calling show_list right here
-        if method == 'destroy'
-          self.x_node = "xx-xx-#{ct.pxe_image_type_id}"
-        end
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:customization_templates])
+    elsif params[:id].nil? || CustomizationTemplate.find(params[:id]).nil? # showing 1 vm
+      add_flash(_("Customization Template no longer exists"), :error)
+      template_list
+      @refresh_partial = "layouts/gtl"
+    else
+      templates.push(params[:id])
+      # need to set this for destroy method so active node can be set to image_type folder node after record is deleted
+      ct = CustomizationTemplate.find(params[:id]) if method == 'destroy'
+      process_templates(templates, method) unless templates.empty?
+      # TODO: tells callers to go back to show_list because this record may be gone
+      # Should be refactored into calling show_list right here
+      if method == 'destroy'
+        self.x_node = "xx-xx-#{ct.pxe_image_type_id}"
       end
+      get_node_info(x_node)
+      replace_right_cell(:nodetype => x_node, :replace_trees => [:customization_templates])
     end
     templates.count
   end
@@ -240,15 +237,18 @@ module PxeController::PxeCustomizationTemplates
       nodes = treenodeid.split("-")
       if nodes[0] == "ct"
         @right_cell_div = "template_details"
-        @record = @ct = CustomizationTemplate.find_by_id(nodes[1])
+        @record = @ct = CustomizationTemplate.find(nodes[1])
         @right_cell_text = _("Customization Template \"%{name}\"") % {:name => @ct.name}
       else
         template_list
         pxe_img_id = x_node.split('-').last
 
-        pxe_img_type = PxeImageType.find_by_id(pxe_img_id) if pxe_img_id != "system"
-        @right_cell_text = pxe_img_id == "system" ? _("Examples (read only)") :
-                                    _("Customization Templates for System Image Types \"%{name}\"") % {:name => pxe_img_type.name}
+        pxe_img_type = PxeImageType.find(pxe_img_id) if pxe_img_id != "system"
+        @right_cell_text = if pxe_img_id == "system"
+                             _("Examples (read only)")
+                           else
+                             _("Customization Templates for System Image Types \"%{name}\"") % {:name => pxe_img_type.name}
+                           end
         @right_cell_div  = "template_list"
       end
     end
