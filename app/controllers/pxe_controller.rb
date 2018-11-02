@@ -86,8 +86,7 @@ class PxeController < ApplicationController
      {:role     => "iso_datastore_accord",
       :role_any => true,
       :name     => :iso_datastores,
-      :title    => _("ISO Datastores")},
-    ].map do |hsh|
+      :title    => _("ISO Datastores")}].map do |hsh|
       ApplicationController::Feature.new_with_hash(hsh)
     end
   end
@@ -107,7 +106,7 @@ class PxeController < ApplicationController
 
   def replace_right_cell(options = {})
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
-    replace_trees = @replace_trees if @replace_trees  # get_node_info might set this
+    replace_trees = @replace_trees if @replace_trees # get_node_info might set this
     # FIXME
 
     @explorer = true
@@ -126,10 +125,10 @@ class PxeController < ApplicationController
     case x_active_tree
     when :pxe_servers_tree
       presenter.update(:main_div, r[:partial => "pxe_server_list"])
-      if nodetype == "root"
-        right_cell_text = _("All PXE Servers")
-      else
-        right_cell_text = case nodetype
+      right_cell_text = if nodetype == "root"
+                          _("All PXE Servers")
+                        else
+                          case nodetype
                           when 'ps'
                             if @ps.id.blank?
                               _("Adding a new PXE Server")
@@ -143,7 +142,7 @@ class PxeController < ApplicationController
                           when 'wi'
                             _("Windows Image \"%{name}\"") % {:name => @wimg.name}
                           end
-      end
+                        end
     when :pxe_image_types_tree
       presenter.update(:main_div, r[:partial => "pxe_image_type_list"])
       right_cell_text = case nodetype
@@ -192,7 +191,7 @@ class PxeController < ApplicationController
     presenter[:right_cell_text] = right_cell_text || @right_cell_text
 
     if !@view || @in_a_form ||
-       (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0))
+       (@pages && (@items_per_page == ONE_MILLION || @pages[:items].zero?))
       if @in_a_form
         presenter.hide(:toolbar)
         # in case it was hidden for summary screen, and incase there were no records on show_list
@@ -212,12 +211,10 @@ class PxeController < ApplicationController
                                    when :iso_datastores_tree
                                      if x_node == "root"
                                        "iso_datastore_create"
+                                     elsif x_node.split('-').first == "isi"
+                                       ["iso_image_edit", true]
                                      else
-                                       if x_node.split('-').first == "isi"
-                                         ["iso_image_edit", true]
-                                       else
-                                         "iso_datastore_create"
-                                       end
+                                       "iso_datastore_create"
                                      end
                                    when :pxe_image_types_tree
                                      "pxe_image_type_edit"
