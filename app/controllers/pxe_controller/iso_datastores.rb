@@ -97,23 +97,21 @@ module PxeController::IsoDatastores
 
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
-    else # showing 1 vm
-      if params[:id].nil? || IsoDatastore.find_by_id(params[:id]).nil?
-        add_flash(_("ISO Datastore no longer exists"), :error)
-        iso_datastore_list
-        @refresh_partial = "layouts/x_gtl"
-      else
-        isds.push(params[:id])
-        process_iso_datastores(isds, method, display_name)  unless isds.empty?
-        # TODO: tells callers to go back to show_list because this iso_datastore may be gone
-        # Should be refactored into calling show_list right here
-        if method == 'destroy'
-          self.x_node = "root"
-          @single_delete = true unless flash_errors?
-        end
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
+    elsif params[:id].nil? || IsoDatastore.find(params[:id]).nil? # showing 1 vm
+      add_flash(_("ISO Datastore no longer exists"), :error)
+      iso_datastore_list
+      @refresh_partial = "layouts/x_gtl"
+    else
+      isds.push(params[:id])
+      process_iso_datastores(isds, method, display_name) unless isds.empty?
+      # TODO: tells callers to go back to show_list because this iso_datastore may be gone
+      # Should be refactored into calling show_list right here
+      if method == 'destroy'
+        self.x_node = "root"
+        @single_delete = true unless flash_errors?
       end
+      get_node_info(x_node)
+      replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
     end
     isds.count
   end
@@ -134,7 +132,7 @@ module PxeController::IsoDatastores
     @sortcol = session[:iso_sortcol].nil? ? 0 : session[:iso_sortcol].to_i
     @sortdir = session[:iso_sortdir].nil? ? "ASC" : session[:iso_sortdir]
 
-    @view, @pages = get_view(IsoDatastore)  # Get the records (into a view) and the paginator
+    @view, @pages = get_view(IsoDatastore) # Get the records (into a view) and the paginator
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:iso_sortcol] = @sortcol
@@ -150,7 +148,7 @@ module PxeController::IsoDatastores
     case params[:button]
     when "cancel"
       add_flash(_("Edit of ISO Image \"%{name}\" was cancelled by the user") % {:name => session[:edit][:img].name})
-      @edit = session[:edit] = nil  # clean out the saved info
+      @edit = session[:edit] = nil # clean out the saved info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
     when "save"
@@ -161,7 +159,7 @@ module PxeController::IsoDatastores
         add_flash(_("ISO Image \"%{name}\" was saved") % {:name => update_img.name})
         AuditEvent.success(build_saved_audit(update_img, @edit))
         refresh_tree = @edit[:new][:default_for_windows] == @edit[:current][:default_for_windows] ? [] : [:iso_datastore]
-        @edit = session[:edit] = nil  # clean out the saved info
+        @edit = session[:edit] = nil # clean out the saved info
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node, :replace_trees => refresh_tree)
       else
@@ -174,7 +172,7 @@ module PxeController::IsoDatastores
         return
       end
     when "reset", nil
-      @img = IsoImage.find_by_id(params[:id])
+      @img = IsoImage.find(params[:id])
       iso_img_set_form_vars
       @in_a_form = true
       session[:changed] = false
@@ -221,11 +219,11 @@ module PxeController::IsoDatastores
   end
 
   def iso_img_set_record_vars(img)
-    img.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
+    img.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find(@edit[:new][:img_type])
   end
 
   def iso_datastore_set_record_vars(isd)
-    ems = ManageIQ::Providers::Redhat::InfraManager.find_by_id(@edit[:new][:ems_id])
+    ems = ManageIQ::Providers::Redhat::InfraManager.find(@edit[:new][:ems_id])
     isd.ext_management_system = ems
     # saving name to use in flash message
     @edit[:ems_name] = ems.name
@@ -277,10 +275,10 @@ module PxeController::IsoDatastores
       nodes = treenodeid.split("-")
       if (nodes[0] == "isd" && nodes.length == 2) || (["isd_xx"].include?(nodes[1]) && nodes.length == 3)
         # on iso_datastore node OR folder node is selected
-        @record = @isd = IsoDatastore.find_by_id(nodes.last)
+        @record = @isd = IsoDatastore.find(nodes.last)
         @right_cell_text = _("ISO Datastore \"%{name}\"") % {:name => @isd.name}
       elsif nodes[0] == "isi"
-        @record = @img = IsoImage.find_by_id(nodes.last)
+        @record = @img = IsoImage.find(nodes.last)
         @right_cell_text = _("ISO Image \"%{name}\"") % {:name => @img.name}
       end
     end
