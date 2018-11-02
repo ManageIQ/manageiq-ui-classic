@@ -7,6 +7,7 @@
     "camelcase": "off",
     "key-spacing": ["error", {
       "mode": "minimum"
-    }]
+    }],
+    "no-alert": "off"
   }
 }
