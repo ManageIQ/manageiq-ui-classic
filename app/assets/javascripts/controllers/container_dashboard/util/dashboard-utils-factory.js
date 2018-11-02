@@ -83,7 +83,9 @@ angular.module('miq.util').factory('dashboardUtilsFactory', function() {
     delete statusObject.href;
 
     if (data) {
-      angular.forEach(data, function(v, k) { statusObject[k] = v; });
+      angular.forEach(data, function(v, k) {
+        statusObject[k] = v;
+      });
     }
   };
   var updateStatus = function(statusObject, data) {
