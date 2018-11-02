@@ -12,7 +12,7 @@ class OrchestrationStackController < ApplicationController
   end
 
   def index
-    redirect_to :action => 'show_list'
+    redirect_to(:action => 'show_list')
   end
 
   def self.display_methods
@@ -226,16 +226,16 @@ class OrchestrationStackController < ApplicationController
         render_flash
       else
         flash_to_session(_("Orchestration Template \"%{name}\" was saved") % {:name => ot.name})
-        javascript_redirect :controller => 'catalog',
+        javascript_redirect(:controller => 'catalog',
                             :action     => 'ot_show',
-                            :id         => ot.id
+                            :id         => ot.id)
       end
     end
   end
 
   def orchestration_templates_view
     template = find_record_with_rbac(OrchestrationStack, params[:id]).orchestration_template
-    javascript_redirect :controller => 'catalog', :action => 'ot_show', :id => template.id
+    javascript_redirect(:controller => 'catalog', :action => 'ot_show', :id => template.id)
   end
 
   def title
