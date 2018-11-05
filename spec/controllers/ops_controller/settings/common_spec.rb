@@ -277,12 +277,15 @@ describe OpsController do
         end
 
         it 'sets the server name' do
-          zone = FactoryGirl.create(:zone, :name => 'Foo Zone')
-          server = FactoryGirl.create(:miq_server, :zone => zone, :name => 'ServerName')
-          controller.instance_variable_set(:@sb, :selected_server_id => server.id)
-          controller.send(:settings_set_form_vars_server)
+          _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
+          allow(controller).to receive(:x_node).and_return("svr-#{@miq_server.id}")
+          allow(MiqServer).to receive(:my_server).and_return(OpenStruct.new('id' => 0, :name => 'name'))
+          controller.instance_variable_set(:@selected_server, @miq_server)
+          allow(MiqServer).to receive(:licensed_roles).and_return([])
+          controller.instance_variable_set(:@sb, :selected_server_id => @miq_server.id, :active_tab => "settings_server")
+          controller.send(:settings_set_form_vars)
           edit_current = assigns(:edit)
-          expect(edit_current[:current].config[:server][:name]).to eq(server.name)
+          expect(edit_current[:current].config[:server][:name]).to eq(@miq_server.name)
         end
       end
     end
