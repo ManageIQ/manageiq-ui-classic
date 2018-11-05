@@ -459,9 +459,9 @@ function miqResetSizeTimer() {
 }
 
 // Pass fields to server given a URL and fields in name/value pairs
-function miqPassFields(url, args) {
+window.miqPassFields = function (url, args) {
   return url + '?' + $.param(args);
-}
+};
 
 function miqChartLinkData(col, row, value, category, series, id, message) {
   // Create the context menu
