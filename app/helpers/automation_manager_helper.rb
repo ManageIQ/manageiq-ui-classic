@@ -128,5 +128,9 @@ module AutomationManagerHelper
     end
     h
   end
+
+  def textual_group_smart_management
+    TextualTags.new(_("Smart Management"), %i(tags))
+  end
 end
 #
