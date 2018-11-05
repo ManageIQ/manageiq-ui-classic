@@ -108,10 +108,16 @@
           %label.col-md-2.control-label
             = @edit[:new][:st_prov_type] == "generic_ansible_tower" ? _('Ansible Tower Template') : _('Container Template')
           .col-md-8
-            = select_tag('template_id',
-                          grouped_options_for_select(@edit[:new][:available_templates], @edit[:new][:template_id]),
-                          "data-miq_sparkle_on" => true,
-                          :class                => "selectpicker")
+            - if @edit[:new][:st_prov_type] == "generic_ansible_tower"
+              = select_tag('template_id',
+                            grouped_options_for_select(@edit[:new][:available_templates], @edit[:new][:template_id]),
+                            "data-miq_sparkle_on" => true,
+                            :class                => "selectpicker")
+            - else
+              = select_tag('template_id',
+                       options_for_select(@edit[:new][:available_templates], @edit[:new][:template_id]),
+                       "data-miq_sparkle_on" => true,
+                       :class                => "selectpicker")
             :javascript
               miqSelectPickerEvent('template_id', '#{url}')
     .form-group
