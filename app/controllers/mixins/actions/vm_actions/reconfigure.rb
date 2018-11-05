@@ -18,7 +18,7 @@ module Mixins
           get_reconfig_limits(reconfigure_ids)
 
           if @reconfigitems.size == 1
-            vm = Vm.find(@reconfigitems)
+            vm = @reconfigitems.first
             @vlan_options = get_vlan_options(vm.host_id)
             @avail_adapter_names = vm.try(:available_adapter_names) || []
             @iso_options = get_iso_options(vm)
