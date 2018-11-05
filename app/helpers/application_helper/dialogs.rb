@@ -52,7 +52,7 @@ module ApplicationHelper::Dialogs
 
   def textbox_tag_options(field, url, auto_refresh_options_hash)
     tag_options = {
-      :maxlength => 50,
+      :maxlength => 500,
       :class     => "dynamic-text-box-#{field.id} form-control"
     }
 
