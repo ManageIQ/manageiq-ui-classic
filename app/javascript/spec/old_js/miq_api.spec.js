@@ -1,8 +1,8 @@
-describe('miq_api.js', function() {
-  it("can base64 encode utf8 passwords", function(done) {
+describe('miq_api.js', () => {
+  it("can base64 encode utf8 passwords", done => {
     var getArgs;
 
-    spyOn(vanillaJsAPI, 'get').and.callFake(function(_url, args) {
+    jest.spyOn(vanillaJsAPI, 'get').mockImplementation(function(_url, args) {
       getArgs = args;
       return Promise.resolve({});
     });
