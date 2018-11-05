@@ -313,6 +313,7 @@ module Mixins
 
       record_showing = leaf_record
       presenter = rendering_objects
+      get_tagdata(@record) if @record.try(:taggings)
       update_partials(record_showing, presenter)
       replace_search_box(presenter)
       handle_bottom_cell(presenter)

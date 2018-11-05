@@ -5,5 +5,9 @@
   .col-md-12.col-lg-8
     = react 'TableListViewWrapper', TextualListview.data(textual_configuration_script_variables)
   .col-md-12.col-lg-8
+    #tag_group
+    :javascript
+      ManageIQ.component.componentFactory('TagGroup', '#tag_group', #{textual_tags_render_data(@record).to_json});
+  .col-md-12.col-lg-8
     - if @record.survey_spec['spec']
       = react 'TableListViewWrapper', TextualListview.data(textual_configuration_script_survey)
