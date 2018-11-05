@@ -452,15 +452,14 @@ module OpsController::Settings::Common
         if ["settings_server", "settings_authentication"].include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
           server.set_config(@update)
-          if @update.config[:server][:name] != server.name # appliance name was modified
-            begin
-              server.name = @update.config[:server][:name]
-              server.save!
-            rescue => bang
-              add_flash(_("Error when saving new server name: %{message}") % {:message => bang.message}, :error)
-              javascript_flash
-              return
-            end
+          return if @edit[:new][:server][:name] == server.name # appliance name was modified # appliance name was modified # appliance name was modified
+          begin
+            server.name = @edit[:new][:server][:name]
+            server.save!
+          rescue => bang
+            add_flash(_("Error when saving new server name: %{message}") % {:message => bang.message}, :error)
+            javascript_flash
+            return
           end
         else
           @update.save                                              # Save other settings for current server
@@ -578,6 +577,9 @@ module OpsController::Settings::Common
   end
 
   def settings_server_validate
+    if @edit[:new][:server][:name].blank?
+      add_flash(_("Appliance name must be entered."), :error)
+    end
     if @sb[:active_tab] == "settings_server" && @edit[:new][:server] && ((@edit[:new][:server][:custom_support_url].nil? || @edit[:new][:server][:custom_support_url].strip == "") && (!@edit[:new][:server][:custom_support_url_description].nil? && @edit[:new][:server][:custom_support_url_description].strip != "") ||
         (@edit[:new][:server][:custom_support_url_description].nil? || @edit[:new][:server][:custom_support_url_description].strip == "") && (!@edit[:new][:server][:custom_support_url].nil? && @edit[:new][:server][:custom_support_url].strip != ""))
       add_flash(_("Custom Support URL and Description both must be entered."), :error)
@@ -705,9 +707,9 @@ module OpsController::Settings::Common
       end
       @sb[:roles] = new[:server][:role].split(",")
       params.each do |var, val|
-        if var.starts_with?("server_roles_") && val.to_s == "true"
+        if var.to_s.starts_with?("server_roles_") && val.to_s == "true"
           @sb[:roles].push(var.split("server_roles_").last) unless @sb[:roles].include?(var.split("server_roles_").last)
-        elsif var.starts_with?("server_roles_") && val.downcase == "false"
+        elsif var.to_s.starts_with?("server_roles_") && val.downcase == "false"
           @sb[:roles].delete(var.split("server_roles_").last)
         end
         server_role = @sb[:roles].sort.join(",")

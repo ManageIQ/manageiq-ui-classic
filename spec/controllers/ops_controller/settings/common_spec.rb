@@ -287,6 +287,37 @@ describe OpsController do
           edit_current = assigns(:edit)
           expect(edit_current[:current].config[:server][:name]).to eq(@miq_server.name)
         end
+
+        context "save server name in server settings" do
+          before do
+            @miq_server = FactoryGirl.create(:miq_server)
+            allow(controller).to receive(:x_node).and_return("svr-#{@miq_server.id}")
+            controller.instance_variable_set(:@sb,
+                                             :active_tab         => 'settings_server',
+                                             :selected_server_id => @miq_server.id)
+            controller.instance_variable_set(:@_params,
+                                             :id => 'server')
+            @current = VMDB::Config.new("vmdb")
+            @new = @current.config
+            @new[:server][:name] = ''
+            controller.instance_variable_set(:@edit,
+                                             :new     => @new,
+                                             :current => @current,
+                                             :key     => "settings_server_edit__#{@miq_server.id}")
+            session[:edit] = assigns(:edit)
+            expect(controller).to receive(:render)
+          end
+          it "does not allow to save blank appliance name" do
+            controller.send(:settings_update_save)
+            expect(assigns(:flash_array).first[:message]).to include("Appliance name must be entered.")
+          end
+          it "saves new server name for server record" do
+            @new[:server][:name] = 'Foo'
+            controller.send(:settings_update_save)
+            @miq_server.reload
+            expect(@miq_server.name).to eq("Foo")
+          end
+        end
       end
     end
   end
