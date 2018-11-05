@@ -67,8 +67,12 @@
         .col-md-8
           = select_tag('dialog_id',
                         options_for_select([[_("<None>"), nil]] + Array(@edit[:new][:available_dialogs].invert).sort_by { |a| a.first.downcase }, @edit[:new][:dialog_id]),
+                        disabled: @edit[:new][:display_for] != 'single',
                         "data-miq_sparkle_on" => true,
                         :class => "selectpicker")
+          - if @edit[:new][:display_for] != 'single'
+            .note
+              = _("Only available when \"Display for\" is set to \"Single\"")
     .form-group
       %label.control-label.col-md-2
         = _('Open URL')
