@@ -384,7 +384,7 @@ module ReportController::Menus
     if !consecutive
       add_flash(_("Select only one or consecutive fields to move up"), :error)
     else
-      if first_idx > 0
+      if first_idx.positive?
         @edit[:selected_reports][first_idx..last_idx].reverse_each do |field|
           pulled = @edit[:selected_reports].delete(field)
           @edit[:selected_reports].insert(first_idx - 1, pulled)
@@ -428,7 +428,7 @@ module ReportController::Menus
     if !consecutive
       add_flash(_("Select only one or consecutive fields to move up"), :error)
     else
-      if first_idx > 0
+      if first_idx.positive?
         @edit[:selected_reports][first_idx..last_idx].reverse_each do |field|
           pulled = @edit[:selected_reports].delete(field)
           @edit[:selected_reports].unshift(pulled)
@@ -563,23 +563,18 @@ module ReportController::Menus
           # need to check if report is not owned by user add special character to the row id so it can be tracked in JS and folder cannnot be deleted in menu editor
           nodes = rep.split('/')
           val = session[:node_selected].split('__')[0]
-          if val == "b"
-            # if top node
-            if nodes[0] == row
-              # if report belongs to group
-              row_id = "i_#{row}"
-            else
-              # if report is owned by other group
-              row_id = "#{prefix}i_#{row}"
-            end
-          elsif nodes[1] == row # if second level folder node
-            # if report belongs to group
-            row_id = "i_#{row}"
-            # break
-          else
-            # if report is owned by other group
-            row_id = "#{prefix}i_#{row}"
-          end
+          row_id = if val == "b"
+                     # if top node
+                     if nodes[0] == row
+                       "i_#{row}" # if report belongs to group
+                     else
+                       "#{prefix}i_#{row}" # if report is owned by other group
+                     end
+                   elsif nodes[1] == row # if second level folder node
+                     "i_#{row}" # if report belongs to group
+                   else
+                     "#{prefix}i_#{row}" # if report is owned by other group
+                   end
         end
       end
 
