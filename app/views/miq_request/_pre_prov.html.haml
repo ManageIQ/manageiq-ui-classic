@@ -10,9 +10,6 @@
              :onclick => "miqAjax('" + url_for_only_path({:action => "vm_pre_prov", :id => id.to_s, :hide_deprecated_templates => !@edit[:hide_deprecated_templates]}) + "')",
              :checked => @edit[:hide_deprecated_templates]}
         = _('Hide deprecated')
-  -# - render_gtl_outer(false)
   = render :partial => "layouts/x_gtl"
   :javascript
-    $(function () {
-      provisioningListenToRx()
-    });
+    $(provisioningListenToRx);

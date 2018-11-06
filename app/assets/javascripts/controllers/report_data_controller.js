@@ -201,7 +201,7 @@
   };
 
   ReportDataController.prototype.gtlSetOneRowActive = function(item, event) {
-    this.gtlData.rows.map(row => { row.selected = false });
+    this.gtlData.rows.map(function(row) { row.selected = false });
     var selectedItem = _.find(this.gtlData.rows, {long_id: item.long_id});
     selectedItem.selected = true;
     this.$window.sendDataWithRx({rowSelect: selectedItem});
@@ -230,8 +230,11 @@
       return false;
     }
 
-    if (this.initObject.customAction) {
-      sendDataWithRx({type: 'GTL_CLICKED', actionType: this.initObject.customAction.type, payload: { item: item , action: this.initObject.customAction }});
+    if (this.initObject.additionalOptions.custom_action) {
+      sendDataWithRx({
+        type: 'GTL_CLICKED',
+        actionType: this.initObject.additionalOptions.custom_action.type,
+        payload: { item: item , action: this.initObject.additionalOptions.custom_action }});
       return;
     }
 

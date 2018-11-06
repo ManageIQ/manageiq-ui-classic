@@ -168,7 +168,8 @@ module ApplicationController::MiqRequestMethods
     @edit[:hide_deprecated_templates] = true if request.parameters[:controller] == "vm_cloud"
 
     unless %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
-      path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", "ProvisionTemplates.yaml").to_s
+      report_name = "ProvisionTemplates.yaml"
+      path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", report_name).to_s
       @view = MiqReport.new(YAML.load(File.open(path_to_report)))
       @view.db = get_template_kls.to_s
       report_scopes = %i(eligible_for_provisioning non_deprecated)
@@ -176,11 +177,11 @@ module ApplicationController::MiqRequestMethods
         :model          => @view.db,
         :gtl_type       => "table",
         :named_scope    => report_scopes,
-        :path_to_report => path_to_report,
-      }
-      @custom_action = {
-        :url  => "/miq_request/pre_prov/?sel_id=",
-        :type => 'provisioning'
+        :report_name    => report_name,
+        :custom_action  => {
+          :url  => "/miq_request/pre_prov/?sel_id=",
+          :type => 'provisioning'
+        }
       }
 
       @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)

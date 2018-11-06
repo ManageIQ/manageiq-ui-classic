@@ -1411,8 +1411,9 @@ class ApplicationController < ActionController::Base
 
     # Get the view for this db or use the existing one in the session
     view =
-      if options['path_to_report']
-        MiqReport.new(YAML.load(File.open(options['path_to_report'])))
+      if options['report_name']
+        path_to_report =  ManageIQ::UI::Classic::Engine.root.join("product", "views", options['report_name']).to_s
+        MiqReport.new(YAML.load(File.open(path_to_report)))
       else
         refresh_view ? get_db_view(db.gsub('::', '_'), :association => association, :view_suffix => view_suffix) : session[:view]
       end
