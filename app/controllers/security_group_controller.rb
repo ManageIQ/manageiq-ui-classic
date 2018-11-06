@@ -32,12 +32,12 @@ class SecurityGroupController < ApplicationController
     when "security_group_delete"
       delete_security_groups
     when "security_group_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id(params)
+      javascript_redirect(:action => "edit", :id => checked_item_id(params))
     when "custom_button"
       custom_buttons
     else
       if params[:pressed] == "security_group_new"
-        javascript_redirect :action => "new"
+        javascript_redirect(:action => "new")
       elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
         replace_gtl_main_div
       else
@@ -49,18 +49,18 @@ class SecurityGroupController < ApplicationController
   def cancel_action(message)
     session[:edit] = nil
     @breadcrumbs.pop if @breadcrumbs
-    javascript_redirect :action    => @lastaction,
+    javascript_redirect(:action    => @lastaction,
                         :id        => @security_group.id,
                         :display   => session[:security_group_display],
-                        :flash_msg => message
+                        :flash_msg => message)
   end
 
   def create
     assert_privileges("security_group_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Security Group was cancelled by the user")
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _('Add of new Security Group was cancelled by the user'))
     when "add"
       @security_group = SecurityGroup.new
       options = form_params
@@ -79,7 +79,7 @@ class SecurityGroupController < ApplicationController
       else
         @in_a_form = true
         add_flash(_(SecurityGroup.unsupported_reason(:create)), :error)
-        drop_breadcrumb(:name => _("Add New Security Group "), :url  => "/security_group/new")
+        drop_breadcrumb(:name => _("Add New Security Group "), :url => "/security_group/new")
         javascript_flash
       end
     end
@@ -90,7 +90,7 @@ class SecurityGroupController < ApplicationController
     security_group_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Security Group \"%{name}\" created") % { :name  => security_group_name })
+      add_flash(_("Security Group \"%{name}\" created") % { :name => security_group_name })
     else
       add_flash(_("Unable to create Security Group \"%{name}\": %{details}") % {
         :name    => security_group_name,
@@ -101,7 +101,7 @@ class SecurityGroupController < ApplicationController
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show_list"
+    javascript_redirect(:action => "show_list")
   end
 
   def delete_security_groups
@@ -143,9 +143,8 @@ class SecurityGroupController < ApplicationController
     assert_privileges("security_group_edit")
     @security_group = find_record_with_rbac(SecurityGroup, params[:id])
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Edit Security Group \"%{name}\"") % { :name  => @security_group.name},
-      :url  => "/security_group/edit/#{@security_group.id}")
+    drop_breadcrumb(:name => _("Edit Security Group \"%{name}\"") % { :name => @security_group.name},
+                    :url  => "/security_group/edit/#{@security_group.id}")
   end
 
   def new
@@ -177,7 +176,7 @@ class SecurityGroupController < ApplicationController
           end
         end
 
-        params["firewall_rules"].values.each do |rule|
+        params["firewall_rules"].each_value do |rule|
           if rule["id"] && rule["id"].empty?
             create_rule(rule)
           elsif rule["deleted"]
@@ -228,7 +227,7 @@ class SecurityGroupController < ApplicationController
     else
       @breadcrumbs.pop if @breadcrumbs
       session[:edit] = nil
-      javascript_redirect :action => "show", :id => security_group_id
+      javascript_redirect(:action => "show", :id => security_group_id)
     end
   end
 
@@ -262,9 +261,7 @@ class SecurityGroupController < ApplicationController
   end
 
   def changed?(param, field)
-    if param && !param.empty?
-      return true if field != param
-    end
+    param.present? && field != param
   end
 
   def sg_changed?(params)
