@@ -17,11 +17,11 @@ class ReportController < ApplicationController
   before_action :get_session_data
   after_action  :cleanup_action
   after_action  :set_session_data
-  layout 'application', :except => [:render_txt, :render_csv, :render_pdf]
+  layout 'application', :except => %i(render_txt render_csv render_pdf)
 
   def index
     @title = _("Reports")
-    redirect_to :action => "show"
+    redirect_to(:action => "show")
   end
 
   def export_field_changed
@@ -65,9 +65,9 @@ class ReportController < ApplicationController
   def upload
     @sb[:flash_msg] = []
     if params.fetch_path(:upload, :file) && File.size(params[:upload][:file].tempfile).zero?
-      redirect_to :action      => 'explorer',
+      redirect_to(:action      => 'explorer',
                   :flash_msg   => _("Import file cannot be empty"),
-                  :flash_error => true
+                  :flash_error => true)
       return
     end
     if params[:upload] && params[:upload][:file] && params[:upload][:file].respond_to?(:read)
@@ -77,17 +77,17 @@ class ReportController < ApplicationController
       rescue => bang
         add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
         @sb[:flash_msg] = @flash_array
-        redirect_to :action => 'explorer'
+        redirect_to(:action => 'explorer')
       else
         self.x_active_tree = :export_tree
         self.x_node ||= "root"
         @sb[:flash_msg] = mri
-        redirect_to :action => 'explorer'
+        redirect_to(:action => 'explorer')
       end
     else
-      redirect_to :action        => 'explorer',
+      redirect_to(:action        => 'explorer',
                   :flash_msg     => _("Use the Choose file button to locate an Import file"),
-                  :flash_warning => true
+                  :flash_warning => true)
     end
   end
 
@@ -158,7 +158,7 @@ class ReportController < ApplicationController
     @edit = nil
     if params[:id]
       self.x_active_accord = params[:id].sub(/_accord$/, '')
-      self.x_active_tree   = "#{self.x_active_accord}_tree"
+      self.x_active_tree   = "#{x_active_accord}_tree"
 
       # reset menu editor to show All Roles if nothing has been changed
       x_node_set("root", :roles_tree) if !@changed && tree_exists?(:roles_tree)
@@ -193,7 +193,7 @@ class ReportController < ApplicationController
     self.x_node = params[:id]
     @sb[:active_tab] = "report_info" if x_active_tree == :reports_tree && params[:action] != "reload"
     if params[:action] == "reload" && @sb[:active_tab] == "saved_reports"
-      replace_right_cell(:replace_trees => [:reports, :savedreports])
+      replace_right_cell(:replace_trees => %i(reports savedreports))
     else
       replace_right_cell
     end
@@ -214,7 +214,7 @@ class ReportController < ApplicationController
     else
       add_flash(_("At least 1 item must be selected for export"), :error)
       @sb[:flash_msg] = @flash_array
-      redirect_to :action => :explorer
+      redirect_to(:action => :explorer)
     end
   end
 
@@ -312,8 +312,7 @@ class ReportController < ApplicationController
 
      {:role  => "miq_report_export",
       :name  => :export,
-      :title => _("Import/Export")},
-    ].map do |hsh|
+      :title => _("Import/Export")}].map do |hsh|
       ApplicationController::Feature.new_with_hash(hsh)
     end
   end
@@ -322,7 +321,7 @@ class ReportController < ApplicationController
     @folders = []
     @menu.each do |r|
       @folders.push(r[0])
-      next unless @edit[:new][:filter].present?
+      next if @edit[:new][:filter].blank?
       @sub_folders ||= []
       next unless r[0] == @edit[:new][:filter]
       r[1].each do |subfolder, reps|
@@ -407,7 +406,7 @@ class ReportController < ApplicationController
   def determine_g_node_info(nodeid)
     if x_active_tree == :roles_tree
       @sb[:menu_buttons] = true
-      get_menu(nodeid) unless nodeid.blank?
+      get_menu(nodeid) if nodeid.present?
     else
       db_get_node_info
     end
@@ -429,7 +428,8 @@ class ReportController < ApplicationController
     @record = MiqReportResult.for_user(current_user).find(nodes.last)
     @right_cell_text = _("Saved Report \"%{name} - %{timestamp}\"") % {
       :name      => @record.name,
-      :timestamp => format_timezone(@record.created_on, Time.zone, "gt")}
+      :timestamp => format_timezone(@record.created_on, Time.zone, "gt")
+    }
     @right_cell_div  = "savedreports_list"
   end
 
@@ -504,7 +504,7 @@ class ReportController < ApplicationController
   # Get all info for the node about to be displayed
   def get_node_info(_node = {}, _show_list = true)
     treenodeid = valid_active_node(x_node)
-    if [:db_tree, :reports_tree, :saved_tree, :savedreports_tree, :widgets_tree].include?(x_active_tree)
+    if %i(db_tree reports_tree saved_tree savedreports_tree widgets_tree).include?(x_active_tree)
       @nodetype = case x_active_tree
                   when :savedreports_tree
                     parse_nodetype_and_id(treenodeid)[0]
@@ -627,7 +627,8 @@ class ReportController < ApplicationController
     add_nodes
   end
 
-  def replace_right_cell(options = {}) # :replace_trees key can be an array of tree symbols to be replaced
+  # :replace_trees key can be an array of tree symbols to be replaced
+  def replace_right_cell(options = {})
     @explorer = true
 
     replace_trees = options[:replace_trees] || []
@@ -637,7 +638,7 @@ class ReportController < ApplicationController
     nodetype = options[:menu_edit_action] ? options[:menu_edit_action] : x_node.split('-').first
 
     @sb[:active_tab] = params[:tab_id] ? params[:tab_id] : "report_info" if x_active_tree == :reports_tree &&
-                                                                            params[:action] != "reload" && !["miq_report_run", "saved_report_delete"].include?(params[:pressed]) # do not reset if reload saved reports buttons is pressed
+                                                                            params[:action] != "reload" && !%w(miq_report_run saved_report_delete).include?(params[:pressed]) # do not reset if reload saved reports buttons is pressed
 
     rebuild = @in_a_form ? false : rebuild_trees
     valid_trees = %i(reports schedules savedreports db widgets).find_all do |tree|
@@ -661,7 +662,7 @@ class ReportController < ApplicationController
     unless @in_a_form
       c_tb = build_toolbar(center_toolbar_filename)
       h_tb = build_toolbar("x_history_tb") unless x_active_tree == :export_tree
-      v_tb = build_toolbar("report_view_tb") if @report && [:reports_tree, :savedreports_tree].include?(x_active_tree)
+      v_tb = build_toolbar("report_view_tb") if @report && %i(reports_tree savedreports_tree).include?(x_active_tree)
     end
 
     reload_trees_by_presenter(presenter, trees)
@@ -674,12 +675,11 @@ class ReportController < ApplicationController
       case x_active_tree
       when :db_tree
         if @in_a_form
-          if @edit[:new][:dashboard_order]
-            @right_cell_text = _("Editing Dashboard sequence for \"%{name}\"") % {:name => @sb[:group_desc]}
-          else
-            @right_cell_text = @db.id ?
-                _("Editing Dashboard \"%{name}\"") % {:name => @db.name} : _("Adding a new dashboard")
-          end
+          @right_cell_text = if @edit[:new][:dashboard_order]
+                               _("Editing Dashboard sequence for \"%{name}\"") % {:name => @sb[:group_desc]}
+                             else
+                               @db.id ? _("Editing Dashboard \"%{name}\"") % {:name => @db.name} : _("Adding a new dashboard")
+                             end
           # URL to be used in miqDropComplete method
           presenter[:miq_widget_dd_url] = "report/db_widget_dd_done"
           presenter[:init_dashboard] = true
@@ -690,9 +690,7 @@ class ReportController < ApplicationController
         if params[:pressed] == "miq_report_schedule_add"
           if @in_a_form
             presenter[:build_calendar] = true
-            @right_cell_text = @schedule.id ?
-                _("Editing Schedule \"%{name}\"") % {:name => @schedule.name} :
-                _("Adding a new Schedule")
+            @right_cell_text = @schedule.id ? _("Editing Schedule \"%{name}\"") % {:name => @schedule.name} : _("Adding a new Schedule")
           end
         elsif @in_a_form
           @right_cell_text = if @rpt.id
@@ -704,9 +702,7 @@ class ReportController < ApplicationController
       when :schedules_tree
         if @in_a_form
           presenter[:build_calendar] = true
-          @right_cell_text = @schedule.id ?
-              _("Editing Schedule \"%{name}\"") % {:name => @schedule.name} :
-              _("Adding a new Schedule")
+          @right_cell_text = @schedule.id ? _("Editing Schedule \"%{name}\"") % {:name => @schedule.name} : _("Adding a new Schedule")
         end
       when :widgets_tree
         if @in_a_form
@@ -719,9 +715,7 @@ class ReportController < ApplicationController
             presenter[:miq_widget_dd_url] = 'report/widget_shortcut_dd_done'
             presenter[:init_dashboard] = true
           end
-          @right_cell_text = @widget.id ?
-              _("Editing Widget \"%{name}\"") % {:name => @widget.name} :
-              _("Adding a new Widget")
+          @right_cell_text = @widget.id ? _("Editing Widget \"%{name}\"") % {:name => @widget.name} : _("Adding a new Widget")
         end
       end
     elsif nodetype == "g"
