@@ -3,7 +3,7 @@ namespace :update do
     asset_engines.each do |engine|
       Dir.chdir engine.path do
         next unless File.file? 'package.json'
-        system("yarn") || abort("\n== yarn failed in #{engine.path} ==")
+        system("yarn --modules-folder='#{engine.node_modules}'") || abort("\n== yarn failed in #{engine.path} (output: #{engine.node_modules}) ==")
       end
     end
   end
@@ -25,6 +25,8 @@ namespace :update do
       puts "  #{engine.name}:"
       puts "    namespace: #{engine.namespace}"
       puts "    path: #{engine.path}"
+      puts "    node_modules: #{engine.node_modules}"
+      puts "    development_gem?: #{engine.development_gem?}"
     end
     puts
   end
@@ -75,7 +77,7 @@ namespace :webpack do
       :engines => asset_engines.map { |p|
                     key = p.namespace
                     value = {:root => p.path,
-                             :node_modules => File.join(p.path, 'node_modules')}
+                             :node_modules => p.node_modules}
 
                     [key, value]
                   }.to_h
