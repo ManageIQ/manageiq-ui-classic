@@ -210,7 +210,7 @@
     event.preventDefault();
 
     // nothing to do
-    if (! this.initObject.showUrl) {
+    if (!this.initObject.showUrl) {
       return false;
     }
 
@@ -336,7 +336,7 @@
         this.movePagination();
 
         // pagination doesn't update on no records (components/data-table/data-table.html:4:99), hide it instead
-        if (! this.gtlData.rows.length) {
+        if (!this.gtlData.rows.length) {
           this.setExtraClasses();
         }
 
@@ -375,7 +375,7 @@
     var mainContent = this.$document.querySelector('#main-content');
     var pagination = this.$document.querySelector('#paging_div .miq-pagination');
 
-    if (! mainContent) {
+    if (!mainContent) {
       return;
     }
 

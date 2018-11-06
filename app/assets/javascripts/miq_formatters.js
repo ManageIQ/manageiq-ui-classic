@@ -4,7 +4,7 @@
   'use strict';
 
   function apply_format_precision(val, precision) {
-    if (val == null || ! _.isNumber(val)) {
+    if (val == null || !_.isNumber(val)) {
       return val;
     }
     return sprintf('%.' + (~~precision) + 'f', val);
@@ -62,7 +62,7 @@
       format: '%u%n',
     }, options || {});
 
-    if (! ('negative_format' in options)) {
+    if (!('negative_format' in options)) {
       options.negative_format = '-' + options.format;
     }
 
@@ -187,7 +187,7 @@
     // note that we require moment-timezone so that %Z (which maps to moments z which uses zoneAbbr, which returns "UTC" or "" without moment-timezone) works
     datetime: function(val, options) {
       options = options || {};
-      if (! moment.isDate(val) && ! moment.isMoment(val)) {
+      if (!moment.isDate(val) && !moment.isMoment(val)) {
         return val;
       }
 
@@ -196,7 +196,7 @@
         val = val.tz(options.tz);
       }
 
-      if (! options.format) {
+      if (!options.format) {
         return val;
       }
 
@@ -205,10 +205,10 @@
 
     datetime_range: function(val, options) {
       options = options || {};
-      if (! options.format) {
+      if (!options.format) {
         return val;
       }
-      if (! moment.isDate(val) && ! moment.isMoment(val)) {
+      if (!moment.isDate(val) && !moment.isMoment(val)) {
         return val;
       }
 
@@ -239,7 +239,7 @@
 
     set: function(val, options) {
       options = options || {};
-      if (! _.isArray(val)) {
+      if (!_.isArray(val)) {
         return val;
       }
       return val.join(options.delimiter || ', ');

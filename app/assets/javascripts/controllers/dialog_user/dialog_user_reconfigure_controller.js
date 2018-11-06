@@ -61,6 +61,6 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
   }
 
   function saveable() {
-    return vm.isValid && ! dialogFieldRefreshService.areFieldsBeingRefreshed;
+    return vm.isValid && !dialogFieldRefreshService.areFieldsBeingRefreshed;
   }
 }]);

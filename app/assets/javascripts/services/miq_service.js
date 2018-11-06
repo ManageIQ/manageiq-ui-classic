@@ -129,7 +129,7 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     var serializedObj = angular.copy(model);
 
     for (var k in serializedObj) {
-      if (serializedObj.hasOwnProperty(k) && ! serializedObj[k]) {
+      if (serializedObj.hasOwnProperty(k) && !serializedObj[k]) {
         delete serializedObj[k];
       }
     }
@@ -141,7 +141,7 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     var serializedObj = angular.copy(model);
 
     for (var k in serializedObj) {
-      if ((ignoredFields.indexOf(k) >= 0) || (serializedObj.hasOwnProperty(k) && ! serializedObj[k])) {
+      if ((ignoredFields.indexOf(k) >= 0) || (serializedObj.hasOwnProperty(k) && !serializedObj[k])) {
         delete serializedObj[k];
       }
     }
@@ -169,7 +169,7 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
 
   this.getCloudNetworksByEms = function(callback) {
     return function(id) {
-      if (! id) {
+      if (!id) {
         callback([]);
         return;
       }
@@ -188,7 +188,7 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
 
   this.getProviderTenants = function(callback) {
     return function(id) {
-      if (! id) {
+      if (!id) {
         callback([]);
         return;
       }

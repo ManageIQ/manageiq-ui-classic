@@ -94,8 +94,8 @@ angular.module('alertsCenter').controller('alertsListController',
       }
 
       function expandRow(item) {
-        if (! item.disableRowExpansion) {
-          item.isExpanded = ! item.isExpanded;
+        if (!item.disableRowExpansion) {
+          item.isExpanded = !item.isExpanded;
         }
         return false;
       }

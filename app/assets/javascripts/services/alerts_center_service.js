@@ -171,7 +171,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
     } else if (filter.id === 'assignee') {
       found = item.assignee_name && item.assignee_name.localeCompare(filter.value);
     } else if (filter.id === 'acknowledged') {
-      found = filter.value === __('Acknowledged') ? item.acknowledged : ! item.acknowledged;
+      found = filter.value === __('Acknowledged') ? item.acknowledged : !item.acknowledged;
     } else if (filter.id === 'severityCount') {
       if (filter.value === _this.severityTitles[0]) {
         found = item.info.length > 0;
@@ -192,12 +192,12 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
       var doNotAdd = false;
       if (filters && filters.length > 0) {
         doNotAdd = _.find(filters, function(filter) {
-          if (! _this.matchesFilter(nextAlert, filter)) {
+          if (!_this.matchesFilter(nextAlert, filter)) {
             return true;
           }
         });
       }
-      if (! doNotAdd) {
+      if (!doNotAdd) {
         filteredAlerts.push(nextAlert);
       }
     });
@@ -230,7 +230,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
       }
     }
 
-    if (! isAscending) {
+    if (!isAscending) {
       compValue = compValue * -1;
     }
 
@@ -322,7 +322,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
 
   _this.getUserByIdOrUserId = function(id) {
     var foundUser;
-    for (var i = 0; i < _this.existingUsers.length && ! foundUser; i++) {
+    for (var i = 0; i < _this.existingUsers.length && !foundUser; i++) {
       if (_this.existingUsers[i].id === id || _this.existingUsers[i].userid === id) {
         foundUser = _this.existingUsers[i];
       }
@@ -589,7 +589,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
         return nextSummaryItem.id === item.ems_id;
       });
 
-      if (! summaryItem) {
+      if (!summaryItem) {
         angular.forEach(_this.providers, function(provider) {
           if (provider.id === item.ems_id) {
             summaryItem = {
@@ -617,7 +617,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
               return nextType === summaryItem.objectType;
             });
 
-            if (! foundType) {
+            if (!foundType) {
               _this.objectTypes.push(summaryItem.objectType);
             }
 
@@ -659,7 +659,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
           _this.displayFilters.push(summaryItem.displayType);
         }
 
-        if (! item.severity) {
+        if (!item.severity) {
           item.severity = 'info';
         }
         summaryItem[item.severity].push(item);

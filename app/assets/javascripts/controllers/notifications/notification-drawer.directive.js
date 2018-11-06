@@ -14,7 +14,7 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window
     },
     templateUrl: '/static/notification_drawer/notification-drawer.html',
     controller: ['$scope', function($scope) {
-      if (! $scope.allowExpand || angular.isUndefined($scope.drawerExpanded)) {
+      if (!$scope.allowExpand || angular.isUndefined($scope.drawerExpanded)) {
         $scope.drawerExpanded = false;
       }
 
@@ -63,7 +63,7 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window
       };
 
       scope.toggleExpandDrawer = function() {
-        scope.drawerExpanded = ! scope.drawerExpanded;
+        scope.drawerExpanded = !scope.drawerExpanded;
       };
 
       if (scope.groupHeight) {

@@ -26,7 +26,7 @@ function c3ChartController($timeout, $attrs) {
         chartData.bindto = '#' + $attrs.id;
         // only re-generate donut pct chart if it has a threshold object
         // because it's colors will change based on data and thresholds
-        if (! chart || ($attrs.id.indexOf('donutPctChart') !== -1 && chartData.thresholds)) {
+        if (!chart || ($attrs.id.indexOf('donutPctChart') !== -1 && chartData.thresholds)) {
           chart = c3.generate(chartData);
         } else {
           // if chart is already created, then we only need to re-load data
@@ -42,7 +42,7 @@ function c3ChartController($timeout, $attrs) {
 
   vm.$doCheck = function() {
     // do a deep compare on config
-    if (! angular.equals(vm.config, prevConfig)) {
+    if (!angular.equals(vm.config, prevConfig)) {
       vm.generateChart();
     }
   };

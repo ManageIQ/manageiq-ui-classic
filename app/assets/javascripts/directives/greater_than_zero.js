@@ -3,7 +3,7 @@ ManageIQ.angular.app.directive('greaterThanZero', function() {
     require: 'ngModel',
     link: function(_scope, _elem, _attrs, ctrl) {
       ctrl.$validators.greaterThanZero = function(viewValue) {
-        if (! viewValue) {
+        if (!viewValue) {
           return true;
         }
         return validInput(viewValue);

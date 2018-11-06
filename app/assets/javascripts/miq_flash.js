@@ -63,7 +63,7 @@ function add_flash(msg, level, options) {
   $('#flash_msg_div').append(textDiv).show();
 
   // remove dangling 'Show More' link when the alert msg is short.
-  if ( options.long_alert && ! checkElipsis(alertDiv) ) {
+  if ( options.long_alert && !checkElipsis(alertDiv) ) {
     detailsLink.hide();
   }
 }
@@ -90,7 +90,7 @@ function checkElipsis(element) {
 function expandAlert(params) {
   var viewMoreTxt = __('View More');
   var viewLessTxt = __('View Less');
-  if (! params.clicked) {
+  if (!params.clicked) {
     params.clicked = true;
     params.alert_elem.removeClass('text-overflow-pf');
     params.alert_elem.addClass('text-vertical-overflow-pf');

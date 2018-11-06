@@ -73,7 +73,7 @@ ManageIQ.angular.app.controller('flavorFormController', ['$http', 'flavorId', 'm
   var getBack = function(response) {
     var err = false;
     if (response.hasOwnProperty('results')) {
-      err = ! response.results[0].success;
+      err = !response.results[0].success;
     }
 
     if (err) {

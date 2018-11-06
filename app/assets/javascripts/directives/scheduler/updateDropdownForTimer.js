@@ -10,7 +10,7 @@ ManageIQ.angular.app.directive('updateDropdownForTimer', ['$timeout', function($
       });
 
       scope.$watch('timer_items', function() {
-        if (! scope[scope['form_' + ctrl.$name + '_timerHide']]) {
+        if (!scope[scope['form_' + ctrl.$name + '_timerHide']]) {
           $timeout(function() {
             selectPickerShow(ctrl.$name);
           }, 0);

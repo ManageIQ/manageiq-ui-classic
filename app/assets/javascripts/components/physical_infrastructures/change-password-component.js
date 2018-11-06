@@ -51,17 +51,17 @@
 
     vm.confirmation_and_new_password_are_different = function() {
       if (vm.model.confirm_password) {
-        return ! isFieldsEquals(vm.model.confirm_password, vm.model.new_password);
+        return !isFieldsEquals(vm.model.confirm_password, vm.model.new_password);
       }
       return false;
     };
 
     vm.saveable = function() {
-      return !! (vm.model.current_password
+      return !!(vm.model.current_password
             && vm.model.new_password
             && vm.model.confirm_password
-            && ! vm.confirmation_and_new_password_are_different()
-            && ! vm.current_and_new_password_are_equals());
+            && !vm.confirmation_and_new_password_are_different()
+            && !vm.current_and_new_password_are_equals());
     };
   }
 

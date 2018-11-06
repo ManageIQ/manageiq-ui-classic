@@ -8,7 +8,7 @@ angular.module('miq.notifications').controller('headerController', ['$scope', 'e
   updateTooltip();
 
   vm.toggleNotificationsList = function() {
-    vm.notificationsDrawerShown = ! vm.notificationsDrawerShown;
+    vm.notificationsDrawerShown = !vm.notificationsDrawerShown;
     sessionStorage.setItem(cookieId + '-shown', vm.notificationsDrawerShown);
     eventNotifications.setDrawerShown(vm.notificationsDrawerShown);
   };

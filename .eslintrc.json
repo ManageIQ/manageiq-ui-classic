@@ -164,7 +164,7 @@
       "words": true,
       "nonwords": false,
       "overrides": {
-        "!": true
+        "!": false
       }
     }],
     "no-unused-vars": [ "error", {

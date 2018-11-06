@@ -3,10 +3,10 @@ ManageIQ.angular.app.directive('urlValidation', ['nodeValidator', function(nodeV
     require: 'ngModel',
     link: function(_scope, _elem, _attrs, ctrl) {
       ctrl.$validators.urlValidation = function(modelValue, viewValue) {
-        if (! viewValue) {
+        if (!viewValue) {
           return true;
         }
-        return !! validUrl(viewValue);
+        return !!validUrl(viewValue);
       };
       var options = {
         protocols: ['http', 'https', 'ssh'],

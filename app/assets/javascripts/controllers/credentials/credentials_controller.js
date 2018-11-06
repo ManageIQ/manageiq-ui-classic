@@ -43,11 +43,11 @@ ManageIQ.angular.app.controller('CredentialsController', ['$scope', '$attrs', fu
   };
 
   vm.showVerify = function(userid) {
-    return vm.vmScope().newRecord || (! vm.showChangePasswordLinks(userid)) || vm.bChangeStoredPassword;
+    return vm.vmScope().newRecord || (!vm.showChangePasswordLinks(userid)) || vm.bChangeStoredPassword;
   };
 
   vm.showChangePasswordLinks = function(userid) {
-    return ! vm.vmScope().newRecord && vm.vmScope().modelCopy[userid] !== '';
+    return !vm.vmScope().newRecord && vm.vmScope().modelCopy[userid] !== '';
   };
 
   vm.resetClicked = function() {

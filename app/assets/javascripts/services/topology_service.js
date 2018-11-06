@@ -85,7 +85,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
           popup.style('top', 'auto');
           popup.style('bottom', 0);
         }
-        vm.contextMenuShowing = ! vm.contextMenuShowing;
+        vm.contextMenuShowing = !vm.contextMenuShowing;
       }
     };
 
@@ -237,7 +237,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
             $scope.searching = true;
             var svg = topologyService.getSVG($scope.d3);
             var query = $('input#search_topology')[0].value;
-            $scope.notFound = ! topologyService.searchNode(svg, query);
+            $scope.notFound = !topologyService.searchNode(svg, query);
             break;
 
           case 'resetSearch':

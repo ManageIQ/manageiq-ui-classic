@@ -93,7 +93,7 @@ angular.module('miq.debug', [])
       this.items = [];
 
       listenToRx(function(event) {
-        if (! event.error || ! event.error.data) {
+        if (!event.error || !event.error.data) {
           return;
         }
 

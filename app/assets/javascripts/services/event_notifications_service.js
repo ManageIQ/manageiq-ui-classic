@@ -1,5 +1,5 @@
 angular.module('miq.notifications').service('eventNotifications', ['$timeout', '$window', '$httpParamSerializerJQLike', 'API', function($timeout, $window, $httpParamSerializerJQLike, API) {
-  if (! ManageIQ.angular.eventNotificationsData) {
+  if (!ManageIQ.angular.eventNotificationsData) {
     ManageIQ.angular.eventNotificationsData = {
       state: {
         groups: [],
@@ -79,7 +79,7 @@ angular.module('miq.notifications').service('eventNotifications', ['$timeout', '
             events.notifications.push({
               id: resource.id,
               notificationType: _this.EVENT_NOTIFICATION,
-              unread: ! resource.seen,
+              unread: !resource.seen,
               type: resource.details.level,
               message: msg,
               data: {
@@ -171,7 +171,7 @@ angular.module('miq.notifications').service('eventNotifications', ['$timeout', '
     }
 
     if (showToast) {
-      if (! notification) {
+      if (!notification) {
         notification = {
           type: type,
           message: message,
@@ -258,7 +258,7 @@ angular.module('miq.notifications').service('eventNotifications', ['$timeout', '
       }
     }
 
-    if (! group) {
+    if (!group) {
       group = state.groups.find(function(nextGroup) {
         return notification.notificationType === nextGroup.notificationType;
       });
@@ -310,7 +310,7 @@ angular.module('miq.notifications').service('eventNotifications', ['$timeout', '
       notification.viewing = false;
       $timeout(function() {
         notification.show = false;
-        if (! notification.viewing) {
+        if (!notification.viewing) {
           $this.removeToast(notification);
         }
       }, ManageIQ.angular.eventNotificationsData.toastDelay);
@@ -319,7 +319,7 @@ angular.module('miq.notifications').service('eventNotifications', ['$timeout', '
 
   this.setViewingToast = function(notification, viewing) {
     notification.viewing = viewing;
-    if (! viewing && ! notification.show) {
+    if (!viewing && !notification.show) {
       this.removeToast(notification);
     }
   };

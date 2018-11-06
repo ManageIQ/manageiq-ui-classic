@@ -291,7 +291,7 @@ function miqCheckForChanges() {
   if (ManageIQ.angular.scope) {
     if (ManageIQ.angular.scope.angularForm !== undefined &&
       ManageIQ.angular.scope.angularForm.$dirty &&
-      ! miqDomElementExists('ignore_form_changes')) {
+      !miqDomElementExists('ignore_form_changes')) {
       var answer = confirm(__('Abandon changes?'));
       if (answer) {
         ManageIQ.angular.scope.angularForm.$setPristine(true);
@@ -301,7 +301,7 @@ function miqCheckForChanges() {
   } else if (((miqDomElementExists('buttons_on') &&
                $('#buttons_on').is(':visible')) ||
               ManageIQ.changes !== null) &&
-             ! miqDomElementExists('ignore_form_changes')) {
+             !miqDomElementExists('ignore_form_changes')) {
     return confirm(__('Abandon changes?'));
   }
   // use default browser reaction for onclick
@@ -349,7 +349,7 @@ function miqValidateButtons(h_or_s, prefix) {
 // update all checkboxes on a form when the masterToggle checkbox is changed
 // parms: button_div=<id of div with buttons to update>
 function miqUpdateAllCheckboxes(button_div) {
-  if (! miqDomElementExists('masterToggle')) {
+  if (!miqDomElementExists('masterToggle')) {
     return;
   }
 
@@ -389,7 +389,7 @@ function miqUpdateButtons(obj, button_div) {
 
   if (typeof obj.id !== 'undefined') {
     $("input[id^='check_']").each(function() {
-      if (this.checked && ! this.disabled) {
+      if (this.checked && !this.disabled) {
         count++;
       }
       if (count > 1) {
@@ -774,13 +774,13 @@ function miqAjaxExtAuth(url) {
 }
 
 function miqEnableLoginFields(enabled) {
-  $('#user_name').prop('readonly', ! enabled);
-  $('#user_password').prop('readonly', ! enabled);
+  $('#user_name').prop('readonly', !enabled);
+  $('#user_password').prop('readonly', !enabled);
   if (miqDomElementExists('user_new_password')) {
-    $('#user_new_password').prop('readonly', ! enabled);
+    $('#user_new_password').prop('readonly', !enabled);
   }
   if (miqDomElementExists('user_verify_password')) {
-    $('#user_verify_password').prop('readonly', ! enabled);
+    $('#user_verify_password').prop('readonly', !enabled);
   }
 }
 
@@ -849,7 +849,7 @@ function miqBuildCalendar() {
     var element = $(this);
     var observeDateBackup = null;
 
-    if (! element.data('datepicker')) {
+    if (!element.data('datepicker')) {
       observeDateBackup = ManageIQ.observeDate;
       ManageIQ.observeDate = function() {};
       element.datepicker();
@@ -889,8 +889,8 @@ function miqSendDateRequest(el) {
   };
 
   var options = {
-    beforeSend: !! el.attr('data-miq_sparkle_on'),
-    complete: !! el.attr('data-miq_sparkle_off'),
+    beforeSend: !!el.attr('data-miq_sparkle_on'),
+    complete: !!el.attr('data-miq_sparkle_off'),
     done: attemptAutoRefreshTrigger,
   };
 
@@ -978,7 +978,7 @@ function miq_tabs_disable_inactive(id) {
 }
 
 function miq_tabs_show_hide(tab_id, show) {
-  $(tab_id).toggleClass('hidden', ! show);
+  $(tab_id).toggleClass('hidden', !show);
 }
 
 // Send explorer search by name via ajax
@@ -1026,7 +1026,7 @@ function miqQsEnterEscape(e) {
 
 // Start/stop the JS spinner
 function miqSpinner(status) {
-  if (! miqSpinner.spinner) {
+  if (!miqSpinner.spinner) {
     miqSpinner.spinner = new Spinner({
       lines: 15, // The number of lines to draw
       length: 18, // The length of each line
@@ -1048,7 +1048,7 @@ function miqSpinner(status) {
 
 // Start/stop the search spinner
 function miqSearchSpinner(status) {
-  if (! miqSearchSpinner.spinner) {
+  if (!miqSearchSpinner.spinner) {
     miqSearchSpinner.spinner = new Spinner({
       lines: 13, // The number of lines to draw
       length: 20, // The length of each line
@@ -1060,7 +1060,7 @@ function miqSearchSpinner(status) {
     });
   }
 
-  $('#search_notification').toggle(!! status);
+  $('#search_notification').toggle(!!status);
 
   if (status) {
     var target = document.querySelector('#searching_spinner_center');
@@ -1071,7 +1071,7 @@ function miqSearchSpinner(status) {
 }
 
 function miqProcessObserveQueue() {
-  if (! ManageIQ.observe.queue.length) {
+  if (!ManageIQ.observe.queue.length) {
     return;
   }
 
@@ -1125,7 +1125,7 @@ function miqObserveRequest(url, options) {
 }
 
 function miqJqueryRequest(url, options) {
-  if ((ManageIQ.observe.processing || ManageIQ.observe.queue.length) && (! options || ! options.observe)) {
+  if ((ManageIQ.observe.processing || ManageIQ.observe.queue.length) && (!options || !options.observe)) {
     console.debug('Postponing miqJqueryRequest - waiting for the observe queue to empty first');
 
     return new Promise(function(resolve, reject) {
@@ -1204,7 +1204,7 @@ function miqInitSelectPicker() {
 }
 
 function miqInitCodemirror(options) {
-  if (! miqDomElementExists(options.text_area_id)) {
+  if (!miqDomElementExists(options.text_area_id)) {
     return;
   }
 
@@ -1235,7 +1235,7 @@ function miqInitCodemirror(options) {
   $('.CodeMirror').css('height', options.height);
   $('.CodeMirror').css('width', options.width);
 
-  if (! options.no_focus) {
+  if (!options.no_focus) {
     ManageIQ.editor.focus();
   }
 }
@@ -1243,7 +1243,7 @@ function miqInitCodemirror(options) {
 function miqSelectPickerEvent(element, url, options) {
   options = options || {};
   options.no_encoding = true;
-  var firstarg = ! url.includes('?');
+  var firstarg = !url.includes('?');
 
   $('#' + element).on('change', _.debounce(function() {
     var selected = $(this).val();
@@ -1273,7 +1273,7 @@ function miqAccordSelect(e) {
   if (ManageIQ.noCollapseEvent) { // implicitly return true when the noCollapseEvent is set
     return true;
   }
-  if (! miqCheckForChanges()) {
+  if (!miqCheckForChanges()) {
     return false;
   }
 
@@ -1292,7 +1292,7 @@ function miqInitBootstrapSwitch(element, url, options) {
     options = typeof options !== 'undefined' ? options : {};
     options.no_encoding = true;
 
-    var firstarg = ! url.includes('?');
+    var firstarg = !url.includes('?');
     miqObserveRequest(url + (firstarg ? '?' : '&') + element + '=' + state, options);
 
     return true;
@@ -1356,14 +1356,14 @@ function miqToolbarOnClick(_e) {
     return;
   }
 
-  if (button.data('confirm-tb') && ! button.data('popup')) {
-    if (! confirm(button.data('confirm-tb'))) {
+  if (button.data('confirm-tb') && !button.data('popup')) {
+    if (!confirm(button.data('confirm-tb'))) {
       return;
     }
   }
 
   if (button.data('popup')) {
-    if (! button.data('confirm-tb') || confirm(button.data('confirm-tb'))) {
+    if (!button.data('confirm-tb') || confirm(button.data('confirm-tb'))) {
       // popup windows are only supported for urls starting with '/' (non-ajax)
       popup = true;
     }
@@ -1424,13 +1424,13 @@ function miqToolbarOnClick(_e) {
 
   if (button.data('prompt')) {
     tb_url = miqSupportCasePrompt(tb_url);
-    if (! tb_url) {
+    if (!tb_url) {
       return false;
     }
   }
 
   // put url_parms into params var, if defined
-  var paramstring = getParams(button.data('url_parms'), !! button.data('send_checked'));
+  var paramstring = getParams(button.data('url_parms'), !!button.data('send_checked'));
 
   // TODO:
   // Checking for perf_reload button to not turn off spinning Q (will be done after charts are drawn).
@@ -1446,7 +1446,7 @@ function miqToolbarOnClick(_e) {
 
   var options = {
     beforeSend: true,
-    complete: ! no_complete,
+    complete: !no_complete,
     data: paramstring,
   };
 
@@ -1537,7 +1537,7 @@ function miqInitMainContent() {
 function miqHideSearchClearButton(explorer) {
   // Hide the clear button if the search input is empty
   $('.search-pf .has-clear .clear').each(function() {
-    if (! $(this).prev('.form-control').val()) {
+    if (!$(this).prev('.form-control').val()) {
       $(this).hide();
     }
   });
@@ -1580,7 +1580,7 @@ function add_expanding_icon(element) {
 
 function rbacGroupLoadTab(id) {
   var lazy = $('#' + id).hasClass('lazy');
-  if (! lazy) {
+  if (!lazy) {
     // already loaded
     return;
   }
@@ -1621,7 +1621,7 @@ function chartData(type, data, data2) {
     var changeFormat = true;
 
     var tmp = validateMinMax(min, max, minShowed, maxShowed);
-    changeFormat = ! tmp.invalid;
+    changeFormat = !tmp.invalid;
     min = tmp.min;
 
     if (changeFormat) {
@@ -1721,7 +1721,7 @@ function miqScrollToSelected(div_name) {
 }
 
 function miqFormatNotification(text, bindings) {
-  if (! text) {
+  if (!text) {
     // prevent Jed exceptions when a notification has missing text (__(undefined))
     return '';
   }

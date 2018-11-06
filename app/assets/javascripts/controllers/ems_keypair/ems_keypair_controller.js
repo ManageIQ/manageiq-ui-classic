@@ -49,12 +49,12 @@
 
   EmsKeypairController.prototype.inEditMode = function(userid) {
     return (this.newRecord
-            || ! this.showChangePrivateKeyLinks(userid)
+            || !this.showChangePrivateKeyLinks(userid)
             || this.changeKey);
   };
 
   EmsKeypairController.prototype.showChangePrivateKeyLinks = function(userid) {
-    return ! this.newRecord && this.modelCopy[userid] !== '';
+    return !this.newRecord && this.modelCopy[userid] !== '';
   };
 
   EmsKeypairController.prototype.resetClicked = function() {
@@ -66,7 +66,7 @@
     var openstackInfraAndNew = (this.model.emstype === 'openstack_infra') && this.newRecord;
     var openstackCloud = this.model.emstype === 'openstack';
     var rhevm = this.model.emstype === 'rhevm';
-    return ! ((openstackInfraAndNew || openstackCloud || rhevm) && tab === 'ssh_keypair');
+    return !((openstackInfraAndNew || openstackCloud || rhevm) && tab === 'ssh_keypair');
   };
 
   EmsKeypairController.$inject = ['$scope'];

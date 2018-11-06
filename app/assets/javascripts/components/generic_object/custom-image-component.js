@@ -71,7 +71,7 @@ function customImageComponentController($timeout) {
   };
 
   vm.changeImageSelected = function() {
-    if (! vm.changeImage) {
+    if (!vm.changeImage) {
       restoreOriginalStatus();
     }
   };

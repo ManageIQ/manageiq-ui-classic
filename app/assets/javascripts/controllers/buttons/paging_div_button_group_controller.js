@@ -47,7 +47,7 @@ ManageIQ.angular.app.controller('pagingDivButtonGroupController', ['$scope', 'mi
       compiledEnabledSave = $compile(enabledSaveHtml)($scope);
 
       $timeout(function() {
-        if (! miqDomElementExists('save_enabled')) {
+        if (!miqDomElementExists('save_enabled')) {
           $('#' + $attrs.pagingDivButtonsId).append(compiledEnabledSave);
         }
       });
@@ -63,11 +63,11 @@ ManageIQ.angular.app.controller('pagingDivButtonGroupController', ['$scope', 'mi
       compiledEnabledSave = $compile(enabledSaveHtml)($scope);
 
       $timeout(function() {
-        if (! miqDomElementExists('save_disabled')) {
+        if (!miqDomElementExists('save_disabled')) {
           $('#' + $attrs.pagingDivButtonsId).append(compiledDisabledSave);
         }
 
-        if (! miqDomElementExists('save_enabled')) {
+        if (!miqDomElementExists('save_enabled')) {
           $('#' + $attrs.pagingDivButtonsId).append(compiledEnabledSave);
         }
       });
@@ -82,7 +82,7 @@ ManageIQ.angular.app.controller('pagingDivButtonGroupController', ['$scope', 'mi
     var compiledReset = $compile(resetHtml)($scope);
 
     $timeout(function() {
-      if (! miqDomElementExists('reset_enabled_disabled')) {
+      if (!miqDomElementExists('reset_enabled_disabled')) {
         $('#' + $attrs.pagingDivButtonsId).append(compiledReset);
       }
     });
@@ -94,7 +94,7 @@ ManageIQ.angular.app.controller('pagingDivButtonGroupController', ['$scope', 'mi
     var compiledCancel = $compile(cancelHtml)($scope);
 
     $timeout(function() {
-      if (! miqDomElementExists('cancel_enabled')) {
+      if (!miqDomElementExists('cancel_enabled')) {
         $('#' + $attrs.pagingDivButtonsId).append(compiledCancel);
       }
     });

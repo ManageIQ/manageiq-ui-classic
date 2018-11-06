@@ -29,7 +29,7 @@ ManageIQ.angular.app.directive('allTimeCheck', function() {
         for (var j = 0; j < hoursArr.length; j++) {
           if (hoursArr[j] === name) {
             updatedHourArr = allQuarterArrHoursChecked(name, i, value);
-          } else if (! angular.equals(_.times(6, _.constant(true)), scope.vm.timeProfileModel[hoursArr[j]])) {
+          } else if (!angular.equals(_.times(6, _.constant(true)), scope.vm.timeProfileModel[hoursArr[j]])) {
             otherHourArrs = false;
             break;
           }

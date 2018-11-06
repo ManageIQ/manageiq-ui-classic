@@ -141,7 +141,7 @@
         .eventColor(eventColor)
         .eventPopover(handlePopover).eventClick(eventClick);
 
-      if (! dataHasName) {
+      if (!dataHasName) {
         timeline.labelWidth(60);
       }
 
@@ -165,7 +165,7 @@
 })(ManageIQ);
 
 function miqInitTimeline(json) {
-  if (! json) {
+  if (!json) {
     return;
   }
 
@@ -173,7 +173,7 @@ function miqInitTimeline(json) {
 
   var start;
   var end;
-  if (! ManageIQ.calendar.calDateFrom || ! ManageIQ.calendar.calDateTo) {
+  if (!ManageIQ.calendar.calDateFrom || !ManageIQ.calendar.calDateTo) {
     end = new Date();
     start = new Date(end - 24 * 60 * 60 * 1000 * 7);
   } else {

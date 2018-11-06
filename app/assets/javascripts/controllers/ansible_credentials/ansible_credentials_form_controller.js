@@ -83,7 +83,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
   function toggleResetFlag() {
     if (vm.reset) {
-      vm.reset = ! vm.reset;
+      vm.reset = !vm.reset;
     } else {
       vm.reset = true;
     }

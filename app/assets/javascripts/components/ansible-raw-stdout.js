@@ -10,7 +10,7 @@ ManageIQ.angular.app.component('ansibleRawStdout', {
     vm.data = null;
 
     vm.$onInit = function() {
-      if (! vm.taskId) {
+      if (!vm.taskId) {
         vm.loading = false;
         return;
       }

@@ -1,5 +1,5 @@
 // global variables
-if (! window.ManageIQ) {
+if (!window.ManageIQ) {
   window.ManageIQ = {
     actionUrl: null, // action URL used in JS function miqGridSort
     afterOnload: null, // JS code to be evaluated after onload

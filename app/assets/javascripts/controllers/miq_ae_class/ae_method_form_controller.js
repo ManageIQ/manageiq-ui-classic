@@ -198,7 +198,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
 
   vm.addKeyValue = function() {
     var valid = validateInputName(vm.aeMethodModel.provisioning_key, 0, 'add');
-    if (! valid) {
+    if (!valid) {
       return miqService.miqFlash('error', __('Inputs name must be unique'));
     }
     vm.aeMethodModel.provisioning_inputs.push(
@@ -239,7 +239,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
 
   vm.saveKeyValue = function(index) {
     var valid = validateInputName(vm.aeMethodModel.key, index, 'edit');
-    if (! valid) {
+    if (!valid) {
       return miqService.miqFlash('error', __('Input Name must be unique'));
     }
     vm.aeMethodModel.provisioning_editMode = false;

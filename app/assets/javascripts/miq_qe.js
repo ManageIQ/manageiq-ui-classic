@@ -67,7 +67,7 @@ ManageIQ.qe.anythingInFlight = function() {
 };
 
 ManageIQ.qe.spinnerPresent = function() {
-  return (! ManageIQ.qe.isHidden(document.getElementById('spinner_div'))) &&
+  return (!ManageIQ.qe.isHidden(document.getElementById('spinner_div'))) &&
      ManageIQ.qe.isHidden(document.getElementById('lightbox_div'));
 };
 

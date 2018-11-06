@@ -86,7 +86,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
         return key in value;
       });
 
-    if (! useCustomizer) {
+    if (!useCustomizer) {
       return undefined;
     }
 

@@ -31,7 +31,7 @@ function ErrorModalController($timeout) {
   }
 
   $ctrl.show = function(err, source, backendName) {
-    if (! err || ! _.isObject(err)) {
+    if (!err || !_.isObject(err)) {
       return;
     }
 

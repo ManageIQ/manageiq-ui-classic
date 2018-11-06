@@ -4,9 +4,9 @@ ManageIQ.angular.app.directive('someTimeCheck', function() {
     link: function(scope, _elem, attrs, ctrl) {
       ctrl.$validators.someTimeCheck = function(_modelValue, _viewValue) {
         if (attrs.timeType === 'day') {
-          return ! allDaysUnchecked(scope);
+          return !allDaysUnchecked(scope);
         } else if (attrs.timeType === 'hour') {
-          return ! allHoursUnchecked(scope);
+          return !allHoursUnchecked(scope);
         }
       };
 

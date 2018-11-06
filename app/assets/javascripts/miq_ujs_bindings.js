@@ -120,8 +120,8 @@ $(document).ready(function() {
       miqObserveRequest(parms.url, {
         no_encoding: true,
         data: id + '=' + value,
-        beforeSend: !! el.attr('data-miq_sparkle_on'),
-        complete: !! el.attr('data-miq_sparkle_off'),
+        beforeSend: !!el.attr('data-miq_sparkle_on'),
+        complete: !!el.attr('data-miq_sparkle_off'),
         done: attemptAutoRefreshTrigger(parms),
       });
     }, 700, {leading: true, trailing: true}));
@@ -148,8 +148,8 @@ $(document).ready(function() {
     miqObserveRequest(parms.url, {
       no_encoding: true,
       data: id + '=' + value,
-      beforeSend: !! el.attr('data-miq_sparkle_on'),
-      complete: !! el.attr('data-miq_sparkle_off'),
+      beforeSend: !!el.attr('data-miq_sparkle_on'),
+      complete: !!el.attr('data-miq_sparkle_off'),
       done: attemptAutoRefreshTrigger(parms),
     });
   });
@@ -165,8 +165,8 @@ $(document).ready(function() {
     miqObserveRequest(url, {
       no_encoding: true,
       data: id + '=' + value,
-      beforeSend: !! el.attr('data-miq_sparkle_on'),
-      complete: !! el.attr('data-miq_sparkle_off'),
+      beforeSend: !!el.attr('data-miq_sparkle_on'),
+      complete: !!el.attr('data-miq_sparkle_off'),
       done: attemptAutoRefreshTrigger(parms),
     });
 

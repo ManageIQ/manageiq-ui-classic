@@ -114,7 +114,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
 
   vm.swiftSecurityProtocolRequired = function() {
     return (miqDBBackupService.swiftBackup(vm.diagnosticsDatabaseModel) &&
-      ! vm.diagnosticsDatabaseModel.security_protocol);
+      !vm.diagnosticsDatabaseModel.security_protocol);
   };
 
   vm.credsProtocol = function() {

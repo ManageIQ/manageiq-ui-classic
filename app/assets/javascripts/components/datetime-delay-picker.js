@@ -24,7 +24,7 @@ ManageIQ.angular.app.component('datetimeDelayPicker', {
     };
 
     this.$onInit = function() {
-      if (! this.start_date) {
+      if (!this.start_date) {
         this.start_date = new Date();
       }
     };

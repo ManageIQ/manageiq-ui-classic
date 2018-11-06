@@ -157,12 +157,12 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
     var getContainerDashboardData = function(item) {
       'use strict';
       // it no data return gracefully
-      if (! item.data) {
+      if (!item.data) {
         return;
       }
 
       // make sure we have tags
-      if (! item.tags) {
+      if (!item.tags) {
         item.tags = {};
       }
 

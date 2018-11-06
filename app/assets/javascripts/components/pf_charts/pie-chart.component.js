@@ -42,7 +42,7 @@ function pieChartController(pfUtils) {
 
   vm.$doCheck = function() {
     // do a deep compare on data
-    if (! angular.equals(vm.data, prevData)) {
+    if (!angular.equals(vm.data, prevData)) {
       vm.updateAll();
     }
   };

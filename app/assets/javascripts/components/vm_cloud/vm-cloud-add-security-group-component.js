@@ -38,7 +38,7 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
       })
       .then(function(data) {
         vm.security_groups = data.resources.filter(function(securityGroup) {
-          return ! _.find(currentSecurityGroups, { id: securityGroup.id });
+          return !_.find(currentSecurityGroups, { id: securityGroup.id });
         });
 
         vm.afterGet = true;

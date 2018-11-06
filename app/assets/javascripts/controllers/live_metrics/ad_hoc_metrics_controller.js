@@ -94,7 +94,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       });
 
       // when change filter we automatically apply changes
-      if (! addOnly) {
+      if (!addOnly) {
         dash.itemSelected = false;
         dash.selectedItems = [];
         dash.items = [];
@@ -109,7 +109,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
     dash.doAddFilter = function() {
       // if field is empty return
-      if ( ! dash.filterConfig.currentValue ) {
+      if ( !dash.filterConfig.currentValue ) {
         return;
       }
       var filter = $('.filter-pf.filter-fields').scope().currentField;
@@ -127,7 +127,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
     var setAppliedFilters = function() {
       // if user did not send any tags, just exit
-      if (! dash.params.tags) {
+      if (!dash.params.tags) {
         return;
       }
 

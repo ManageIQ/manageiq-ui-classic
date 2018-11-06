@@ -46,7 +46,7 @@ function donutPctChartController(pfUtils) {
       }
     }
 
-    if (! vm.threshold || vm.threshold !== threshold) {
+    if (!vm.threshold || vm.threshold !== threshold) {
       vm.threshold = threshold;
       vm.onThresholdChange({ threshold: vm.threshold });
     }
@@ -149,7 +149,7 @@ function donutPctChartController(pfUtils) {
     }
 
     donutChartTitle = d3.select(vm.chart.element).select('text.c3-chart-arcs-title');
-    if (! donutChartTitle) {
+    if (!donutChartTitle) {
       return;
     }
 
@@ -157,7 +157,7 @@ function donutPctChartController(pfUtils) {
 
     // Remove any existing title.
     donutChartTitle.selectAll('*').remove();
-    if (centerLabelText.bigText && ! centerLabelText.smText) {
+    if (centerLabelText.bigText && !centerLabelText.smText) {
       donutChartTitle.text(centerLabelText.bigText);
     } else {
       donutChartTitle.insert('tspan').text(centerLabelText.bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0);
@@ -184,7 +184,7 @@ function donutPctChartController(pfUtils) {
 
   vm.$doCheck = function() {
     // do a deep compare on data
-    if (! angular.equals(vm.data, prevData)) {
+    if (!angular.equals(vm.data, prevData)) {
       vm.updateAll();
     }
   };

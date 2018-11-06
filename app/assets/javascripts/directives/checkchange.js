@@ -65,7 +65,7 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
         var modelDate = (ctrl.$modelValue != undefined) ? moment(ctrl.$modelValue) : null;
         var copyDate = (modelCopy()[ctrl.$name] != undefined) ? moment(modelCopy()[ctrl.$name]) : null;
 
-        if ((modelDate && copyDate && (modelDate.diff(copyDate, 'days') == 0)) || (! modelDate && ! copyDate)) {
+        if ((modelDate && copyDate && (modelDate.diff(copyDate, 'days') == 0)) || (!modelDate && !copyDate)) {
           scope.angularForm[scope['formchange_' + ctrl.$name]].$setPristine();
           scope.angularForm[scope['formchange_' + ctrl.$name]].$setUntouched();
           scope.angularForm.$pristine = true;
@@ -77,7 +77,7 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
 
       var checkForOverallFormPristinity = function(scope, ctrl) {
         // don't do anything before the model and modelCopy are actually initialized
-        if (! model() || ! modelCopy()) {
+        if (!model() || !modelCopy()) {
           return;
         }
 

@@ -113,7 +113,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
         var filtered = true;
         if (item.info.length + item.warning.length + item.error.length > 0) {
           var filter = _.find(vm.filterConfig.appliedFilters, function(filter) {
-            if (! alertsCenterService.matchesFilter(item, filter)) {
+            if (!alertsCenterService.matchesFilter(item, filter)) {
               return true;
             }
           });
@@ -148,7 +148,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
           compValue = item1.name.localeCompare(item2.name);
         }
 
-        if (! vm.toolbarConfig.sortConfig.isAscending) {
+        if (!vm.toolbarConfig.sortConfig.isAscending) {
           compValue = compValue * -1;
         }
 
@@ -156,7 +156,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
       }
 
       vm.toggleGroupOpen = function(section) {
-        section.open = ! section.open;
+        section.open = !section.open;
       };
 
       vm.showGroupAlerts = function(item, status) {
@@ -180,7 +180,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
         angular.forEach(vm.alertData, function(item) {
           if (item.displayType === vm.displayFilter) {
             var group = addGroup(item[vm.category]);
-            if (! filteredOut(item)) {
+            if (!filteredOut(item)) {
               group.hasItems = true;
               totalCount++;
               group.itemsList.push(item);
@@ -190,9 +190,9 @@ angular.module('alertsCenter').controller('alertsOverviewController',
 
         // Sort the groups
         vm.groups.sort(function(group1, group2) {
-          if (! group1.value) {
+          if (!group1.value) {
             return 1;
-          } else if (! group2.value) {
+          } else if (!group2.value) {
             return -1;
           }
 
@@ -219,7 +219,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
           });
         }
 
-        if (! foundGroup) {
+        if (!foundGroup) {
           foundGroup = {value: groupCategory, title: groupCategory, itemsList: [], open: true};
           vm.groups.push(foundGroup);
         }

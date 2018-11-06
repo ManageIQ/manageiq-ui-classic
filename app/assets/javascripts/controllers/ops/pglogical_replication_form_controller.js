@@ -37,12 +37,12 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
   $scope.saveClicked = function() {
     // remove existing subscriptions that have not changed before sending them up for save
     $scope.pglogicalReplicationModel.subscriptions.forEach(function(subscription, index, object) {
-      if (typeof subscription.id !== 'undefined' && subscription.remove !== true &&  ! subscriptionChanged(subscription, $scope.modelCopy.subscriptions[index])) {
+      if (typeof subscription.id !== 'undefined' && subscription.remove !== true &&  !subscriptionChanged(subscription, $scope.modelCopy.subscriptions[index])) {
         object.splice(index, 1);
       }
     });
     var updated_exclusion_list = '';
-    if ($scope.pglogicalReplicationModel.replication_type === 'remote' && ! angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list) ) {
+    if ($scope.pglogicalReplicationModel.replication_type === 'remote' && !angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list) ) {
       updated_exclusion_list = angular.copy($scope.pglogicalReplicationModel.exclusion_list);
     }
     pglogicalManageSubscriptionsButtonClicked('save', {
@@ -196,11 +196,11 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
   $scope.saveEnabled = function(form) {
     var saveable = false;
     if ($scope.pglogicalReplicationModel.replication_type !== 'remote') {
-      saveable = form.$dirty && form.$valid && ! $scope.pglogicalReplicationModel.addEnabled && ! $scope.pglogicalReplicationModel.updateEnabled;
+      saveable = form.$dirty && form.$valid && !$scope.pglogicalReplicationModel.addEnabled && !$scope.pglogicalReplicationModel.updateEnabled;
       // also need to enable save button when an existing subscriptions was deleted
       var subscriptions_changed = angular.equals($scope.pglogicalReplicationModel.subscriptions, $scope.modelCopy.subscriptions);
 
-      if ((saveable || ! subscriptions_changed) &&
+      if ((saveable || !subscriptions_changed) &&
         $scope.pglogicalReplicationModel.replication_type === 'global' &&
         $scope.pglogicalReplicationModel.subscriptions.length >= 1) {
         return true;
@@ -213,7 +213,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       return false;
     }
     saveable = form.$dirty && form.$valid;
-    if (saveable && (($scope.modelCopy.replication_type !== 'remote') || ! angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list))) {
+    if (saveable && (($scope.modelCopy.replication_type !== 'remote') || !angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list))) {
       return true;
     }
 

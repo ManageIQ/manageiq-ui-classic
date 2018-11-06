@@ -10,7 +10,7 @@ ManageIQ.angular.app.component('miqRequestOptions', {
     };
 
     this.appliedStatesBlank = function() {
-      return ! this.options.states.find(function(state) {
+      return !this.options.states.find(function(state) {
         return state.checked;
       });
     };

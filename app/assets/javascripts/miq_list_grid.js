@@ -2,7 +2,7 @@
 
 // Handle row click (ajax or normal html trans)
 function miqRowClick(row_id, row_url, row_url_ajax) {
-  if (! row_url) {
+  if (!row_url) {
     return;
   }
 
@@ -30,7 +30,7 @@ function miqGridGetCheckedRows(grid) {
   var crows = [];
 
   $('#' + grid + ' .list-grid-checkbox').each(function(_idx, elem) {
-    if (! $(elem).prop('checked')) {
+    if (!$(elem).prop('checked')) {
       return;
     }
 
@@ -44,7 +44,7 @@ function miqGridGetCheckedRows(grid) {
 // checks/unchecks all grid rows
 function miqGridCheckAll(state, grid) {
   grid = grid || 'list_grid';
-  state = !! state;
+  state = !!state;
 
   $('#' + grid + ' .list-grid-checkbox')
     .prop('checked', state)

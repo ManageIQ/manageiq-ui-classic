@@ -354,12 +354,12 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     }
 
     var filter_touched = $scope.angularForm.action_typ.$touched || (typeof $scope.angularForm.filter_typ !== 'undefined' && $scope.angularForm.filter_typ.$touched);
-    if (! $scope.dbBackup() && ! $scope.automateRequest() && $scope.scheduleModel.filter_typ && ! filter_touched) {
+    if (!$scope.dbBackup() && !$scope.automateRequest() && $scope.scheduleModel.filter_typ && !filter_touched) {
       // AJAX-less Reset
       $scope.toggleValueForWatch('filterValuesEmpty', false);
     }
 
-    if (! $scope.dbBackup() && !! $scope.automateRequest() && $scope.scheduleModel.filter_typ && filter_touched) {
+    if (!$scope.dbBackup() && !!$scope.automateRequest() && $scope.scheduleModel.filter_typ && filter_touched) {
       $scope.filterTypeChanged();
     }
 
@@ -382,15 +382,15 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.filterValueRequired = function(value) {
-    return ! $scope.filterValuesEmpty && ! value;
+    return !$scope.filterValuesEmpty && !value;
   };
 
   $scope.dbRequired = function(value) {
-    return $scope.dbBackup() && ! value;
+    return $scope.dbBackup() && !value;
   };
 
   $scope.sambaRequired = function(value) {
-    return $scope.sambaBackup() && ! value;
+    return $scope.sambaBackup() && !value;
   };
 
   $scope.regionSelect = function() {
@@ -410,7 +410,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.s3Required = function(value) {
-    return $scope.s3Backup() && ! value;
+    return $scope.s3Backup() && !value;
   };
 
   $scope.isBasicInfoValid = function() {

@@ -240,7 +240,7 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
   };
 
   var processData = function(data, xDataLabel, yDataLabel) {
-    if (! data) {
+    if (!data) {
       return { dataAvailable: false };
     }
     data.xData.unshift(xDataLabel);
@@ -251,7 +251,7 @@ angular.module('miq.util').factory('chartsMixin', ['$document', 'pfUtils', funct
   };
 
   var processPodUtilizationData = function(data, xDataLabel, yCreatedLabel, yDeletedLabel) {
-    if (! data) {
+    if (!data) {
       return { dataAvailable: false };
     }
 

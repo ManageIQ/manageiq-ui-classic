@@ -331,7 +331,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.emsCommonModel.azure_tenant_id !== '' && $scope.angularForm.azure_tenant_id.$valid) &&
       ($scope.emsCommonModel.default_userid !== '' && $scope.angularForm.default_userid.$valid &&
        $scope.emsCommonModel.default_password !== '' && $scope.angularForm.default_password.$valid) &&
-       ($scope.newRecord && $scope.angularForm.provider_region.$valid || ! $scope.newRecord)) {
+       ($scope.newRecord && $scope.angularForm.provider_region.$valid || !$scope.newRecord)) {
       return true;
     } else if (($scope.currentTab === 'ssh_keypair' &&
       ($scope.emsCommonModel.emstype === 'openstack' || $scope.emsCommonModel.emstype === 'openstack_infra')) &&
@@ -730,10 +730,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.setProviderOptionsDescription = function(apiResponse) {
-    if (! apiResponse.hasOwnProperty('provider_settings')) {
+    if (!apiResponse.hasOwnProperty('provider_settings')) {
       return;
     }
-    if (! apiResponse.provider_settings.hasOwnProperty($scope.emsCommonModel.emstype)) {
+    if (!apiResponse.provider_settings.hasOwnProperty($scope.emsCommonModel.emstype)) {
       return;
     }
     $scope.emsOptionsModel.provider_options = apiResponse.provider_settings[$scope.emsCommonModel.emstype];

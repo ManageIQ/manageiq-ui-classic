@@ -14,7 +14,7 @@ function miqTreeObject(tree) {
 function miqTreeFindNodeByKey(tree, key) {
   var tree = miqTreeObject(tree);
 
-  if (! tree) {
+  if (!tree) {
     console.error("miqTreeFindNodeByKey: tree '" + tree + "' does not exist.");
     return;
   }
@@ -356,7 +356,7 @@ function miqMenuChangeRow(action, elem) {
       break;
 
     case 'delete':
-      if (! selected.length) {
+      if (!selected.length) {
         break;
       }
 
@@ -439,7 +439,7 @@ function miqTreeOnNodeChecked(options, node) {
 function miqTreeState(tree, node, state) {
   // Initialize the session storage object
   var persist = JSON.parse(sessionStorage.getItem('tree_state_' + tree));
-  if (! persist) {
+  if (!persist) {
     persist = {};
   }
 
@@ -507,15 +507,15 @@ function miqInitTree(options, tree) {
     nodes.reverse();
     while (nodes.length > 0) {
       var parent = nodes.pop();
-      if (! parent.nodes) {
+      if (!parent.nodes) {
         continue;
       }
-      if (! parent.state) {
+      if (!parent.state) {
         parent.state = {};
       }
       parent.nodes.forEach(function(node) {
         if (parent.state.checked === true) {
-          if (! node.state) {
+          if (!node.state) {
             node.state = {};
           }
           node.state.checked = true;
@@ -598,7 +598,7 @@ function miqInitTree(options, tree) {
 
   // Tree state persistence correction after the tree is completely loaded
   miqTreeObject(options.tree_name).getNodes().forEach(function(node) {
-    if (miqTreeState(options.cookie_id, node.key) === ! node.state.expanded) {
+    if (miqTreeState(options.cookie_id, node.key) === !node.state.expanded) {
       miqTreeObject(options.tree_name).toggleNodeExpanded(node);
     }
   });

@@ -27,7 +27,7 @@
       }
 
       // sync changes
-      if (! this.$scope.$$phase) {
+      if (!this.$scope.$$phase) {
         this.$scope.$digest();
       }
     }.bind(this),
@@ -108,7 +108,7 @@
 
   ToolbarController.prototype.onSetCount = function(count) {
     this.MiQToolbarSettingsService.setCount(count);
-    if (! this.$scope.$$phase) {
+    if (!this.$scope.$$phase) {
       this.$scope.$digest();
     }
   };
@@ -183,21 +183,21 @@
   };
 
   ToolbarController.prototype.anyToolbarVisible = function() {
-    if (! this.toolbarItems || ! this.toolbarItems.length) {
+    if (!this.toolbarItems || !this.toolbarItems.length) {
       return false;
     }
 
     var nonEmpty = this.toolbarItems.filter(function(ary) {
-      if (! ary || ! ary.length) {
+      if (!ary || !ary.length) {
         return false;
       }
 
       return _.some(ary, function(item) {
-        return ! item.hidden;
+        return !item.hidden;
       });
     });
 
-    return !! nonEmpty.length;
+    return !!nonEmpty.length;
   };
 
   ToolbarController.prototype.showOrHide = function() {

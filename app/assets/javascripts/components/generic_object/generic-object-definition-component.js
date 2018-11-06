@@ -81,7 +81,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
 
     assignAllObjectsToKeyValueArrays(true);
 
-    vm.pictureReset = ! vm.pictureReset;
+    vm.pictureReset = !vm.pictureReset;
 
     angularForm.$setUntouched(true);
     angularForm.$setPristine(true);
