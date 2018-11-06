@@ -362,8 +362,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
        ($scope.currentTab === "kubevirt" &&
         $scope.emsCommonModel.kubevirt_hostname !== '' &&
         $scope.emsCommonModel.kubevirt_password !== '' &&
-        $scope.emsCommonModel.kubevirt_api_port !== '') ||
-      ($scope.currentTab === "proxy_settings") || ($scope.currentTab === "advanced_settings"))) {
+        $scope.emsCommonModel.kubevirt_api_port !== ''))) {
       return true;
     } else if($scope.emsCommonModel.emstype == "gce" && $scope.emsCommonModel.project != '' &&
       ($scope.currentTab == "default" ||
