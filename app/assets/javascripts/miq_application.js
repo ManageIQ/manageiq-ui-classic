@@ -1249,9 +1249,13 @@ function miqSelectPickerEvent(element, url, options) {
     var selected = $(this).val();
     var finalUrl = url + (firstarg ? '?' : '&') + element + '=' + encodeURIComponent(selected);
 
-    if (typeof $(this).attr('data-miq_sparkle_on') !== 'undefined') {options.beforeSend = $(this).attr('data-miq_sparkle_on') === 'true';}
+    if (typeof $(this).attr('data-miq_sparkle_on') !== 'undefined') {
+      options.beforeSend = $(this).attr('data-miq_sparkle_on') === 'true';
+    }
 
-    if (typeof $(this).attr('data-miq_sparkle_off') !== 'undefined') {options.complete = $(this).attr('data-miq_sparkle_off') === 'true';}
+    if (typeof $(this).attr('data-miq_sparkle_off') !== 'undefined') {
+      options.complete = $(this).attr('data-miq_sparkle_off') === 'true';
+    }
 
     if (options.callback) {
       options.done = function() {

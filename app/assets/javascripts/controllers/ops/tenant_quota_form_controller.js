@@ -48,7 +48,11 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
         var quota =  vm.tenantQuotaModel.quotas[key];
         if (quota.value) {
           var q = {};
-          if (quota.unit === 'bytes') {q.value = quota.value * GIGABYTE;} else {q.value = quota.value;}
+          if (quota.unit === 'bytes') {
+            q.value = quota.value * GIGABYTE;
+          } else {
+            q.value = quota.value;
+          }
           data[key] = q;
         }
       }
@@ -59,7 +63,9 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
   vm.check_quotas_changed = function() {
     for (var key in vm.tenantQuotaModel.quotas) {
       if (vm.tenantQuotaModel.quotas.hasOwnProperty(key)) {
-        if (vm.tenantQuotaModel.quotas[key].value !== vm.modelCopy.quotas[key].value) {return true;}
+        if (vm.tenantQuotaModel.quotas[key].value !== vm.modelCopy.quotas[key].value) {
+          return true;
+        }
       }
     }
     return false;
@@ -69,16 +75,26 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
     miqService.miqFlashClear();
     for ( var key in vm.tenantQuotaModel.quotas ) {
       if (vm.tenantQuotaModel.quotas.hasOwnProperty(key) && (key === name)) {
-        if (! vm.tenantQuotaModel.quotas[key].enforced) {vm.tenantQuotaModel.quotas[key].value = null;} else
-        if (vm.modelCopy.quotas[key].value) {vm.tenantQuotaModel.quotas[key].value = vm.modelCopy.quotas[key].value;} else {vm.tenantQuotaModel.quotas[key].value = 0;}
-        if (! vm.check_quotas_changed()) {$scope.angularForm.$setPristine(true);}
+        if (! vm.tenantQuotaModel.quotas[key].enforced) {
+          vm.tenantQuotaModel.quotas[key].value = null;
+        } else
+        if (vm.modelCopy.quotas[key].value) {
+          vm.tenantQuotaModel.quotas[key].value = vm.modelCopy.quotas[key].value;
+        } else {
+          vm.tenantQuotaModel.quotas[key].value = 0;
+        }
+        if (! vm.check_quotas_changed()) {
+          $scope.angularForm.$setPristine(true);
+        }
       }
     }
   };
 
   vm.valueChanged = function() {
     miqService.miqFlashClear();
-    if (! vm.check_quotas_changed()) {$scope.angularForm.$setPristine(true);}
+    if (! vm.check_quotas_changed()) {
+      $scope.angularForm.$setPristine(true);
+    }
   };
 
   function getTenantQuotaData(response) {

@@ -20,7 +20,11 @@ $(document).ready(function() {
       options.complete = true;
     }
     var submit = el.attr('data-submit');
-    if (typeof submit !== 'undefined') {miqJqueryRequest(url, {data: miqSerializeForm(submit)});} else {miqJqueryRequest(url, options);}
+    if (typeof submit !== 'undefined') {
+      miqJqueryRequest(url, {data: miqSerializeForm(submit)});
+    } else {
+      miqJqueryRequest(url, options);
+    }
 
     return false;
   });

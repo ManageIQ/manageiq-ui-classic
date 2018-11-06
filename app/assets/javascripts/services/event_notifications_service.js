@@ -135,7 +135,9 @@ angular.module('miq.notifications').service('eventNotifications', ['$timeout', '
     });
     if (group) {
       if (group.notifications) {
-        group.notifications.splice(_.sortedIndexBy(group.notifications, newNotification, function(x) { return -x.timeStamp; }), 0, newNotification);
+        group.notifications.splice(_.sortedIndexBy(group.notifications, newNotification, function(x) {
+          return -x.timeStamp;
+        }), 0, newNotification);
       } else {
         group.notifications = [newNotification];
       }
@@ -223,7 +225,9 @@ angular.module('miq.notifications').service('eventNotifications', ['$timeout', '
         notification.unread = false;
         _this.removeToast(notification);
         return { href: notification.href };
-      }).filter(function(notification) { return notification.href; });
+      }).filter(function(notification) {
+        return notification.href;
+      });
       if (resources.length > 0) {
         API.post('/api/notifications', {action: 'mark_as_seen', resources: resources});
       }
@@ -275,7 +279,9 @@ angular.module('miq.notifications').service('eventNotifications', ['$timeout', '
       var resources = group.notifications.map(function(notification) {
         _this.removeToast(notification);
         return { href: notification.href };
-      }).filter(function(notification) { return notification.href; });
+      }).filter(function(notification) {
+        return notification.href;
+      });
       if (resources.length > 0) {
         API.post('/api/notifications', {action: 'delete', resources: resources});
       }

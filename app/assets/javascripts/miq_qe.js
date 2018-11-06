@@ -51,7 +51,9 @@ ManageIQ.qe.setAngularJsValue = function(el, value) {
   var $parse = angular_elem.injector().get('$parse');
   var getter = $parse(elem.getAttribute('ng-model'));
   var setter = getter.assign;
-  angular_elem.scope().$apply(function($scope) { setter($scope, value); });
+  angular_elem.scope().$apply(function($scope) {
+    setter($scope, value);
+  });
 };
 
 ManageIQ.qe.anythingInFlight = function() {

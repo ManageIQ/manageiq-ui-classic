@@ -4,7 +4,9 @@
   'use strict';
 
   function apply_format_precision(val, precision) {
-    if (val == null || ! _.isNumber(val)) {return val;}
+    if (val == null || ! _.isNumber(val)) {
+      return val;
+    }
     return sprintf('%.' + (~~precision) + 'f', val);
   }
 
@@ -160,7 +162,9 @@
     boolean: function(val, options) {
       options = options || {};
 
-      if (val !== true && val !== false) {return _.capitalize( String(val) );}
+      if (val !== true && val !== false) {
+        return _.capitalize( String(val) );
+      }
 
       switch (options.format) {
         case 'yes_no':
@@ -183,20 +187,30 @@
     // note that we require moment-timezone so that %Z (which maps to moments z which uses zoneAbbr, which returns "UTC" or "" without moment-timezone) works
     datetime: function(val, options) {
       options = options || {};
-      if (! moment.isDate(val) && ! moment.isMoment(val)) {return val;}
+      if (! moment.isDate(val) && ! moment.isMoment(val)) {
+        return val;
+      }
 
       val = moment(val);
-      if (options.tz) {val = val.tz(options.tz);}
+      if (options.tz) {
+        val = val.tz(options.tz);
+      }
 
-      if (! options.format) {return val;}
+      if (! options.format) {
+        return val;
+      }
 
       return val.strftime(options.format);
     },
 
     datetime_range: function(val, options) {
       options = options || {};
-      if (! options.format) {return val;}
-      if (! moment.isDate(val) && ! moment.isMoment(val)) {return val;}
+      if (! options.format) {
+        return val;
+      }
+      if (! moment.isDate(val) && ! moment.isMoment(val)) {
+        return val;
+      }
 
       val = moment(val);
 
@@ -217,13 +231,17 @@
       }
 
       // FIXME: added for compatibility with the ruby implementation, needs fixing on both sides
-      if (_.includes(options.description || '', 'Start')) {return stime.strftime(options.format);}
+      if (_.includes(options.description || '', 'Start')) {
+        return stime.strftime(options.format);
+      }
       return '(' + stime.strftime(options.format) + ' - ' + etime.strftime(options.format) + ')';
     },
 
     set: function(val, options) {
       options = options || {};
-      if (! _.isArray(val)) {return val;}
+      if (! _.isArray(val)) {
+        return val;
+      }
       return val.join(options.delimiter || ', ');
     },
 
@@ -249,7 +267,9 @@
       var seconds = ~~(val % 60);
 
       var arr = [days, hours, minutes, seconds];
-      if (_.every(arr, 0)) {return '';}
+      if (_.every(arr, 0)) {
+        return '';
+      }
 
       var sidx = _.findIndex(arr, function(a) {
         return a > 0;
@@ -259,7 +279,9 @@
       var sep    = '';
       values.forEach(function(val, i) {
         var sfx = names[sidx + i];
-        if (val > 1 || val === 0) {sfx += 's';}
+        if (val > 1 || val === 0) {
+          sfx += 's';
+        }
 
         result += sep;
         result += values[i];
@@ -279,7 +301,9 @@
     },
 
     large_number_to_exponential_form: function(val, _options) {
-      if (Number(val) < 1.0e+15) {return val;}
+      if (Number(val) < 1.0e+15) {
+        return val;
+      }
       return Number(val).toPrecision(2);
     },
   };

@@ -4,7 +4,9 @@ angular.module('miq.util').factory('metricsConfigFactory', function() {
       if (item.selected) {
         dash.selectedItems.push(item);
       } else {
-        dash.selectedItems = dash.selectedItems.filter(function( obj ) { return obj.id !== item.id; });
+        dash.selectedItems = dash.selectedItems.filter(function( obj ) {
+          return obj.id !== item.id;
+        });
       }
 
       dash.itemSelected = dash.selectedItems.length > 0;
@@ -43,12 +45,16 @@ angular.module('miq.util').factory('metricsConfigFactory', function() {
         x: {
           tick: {
             count: 25,
-            format: function(value) { return moment(value).format(__('MM/DD/YYYY HH:mm')); },
+            format: function(value) {
+              return moment(value).format(__('MM/DD/YYYY HH:mm'));
+            },
           }},
         y: {
           tick: {
             count: 4,
-            format: function(value) { return numeral(value).format('0,0.00a'); },
+            format: function(value) {
+              return numeral(value).format('0,0.00a');
+            },
           }},
       },
       setAreaChart: true,

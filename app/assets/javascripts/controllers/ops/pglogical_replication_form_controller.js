@@ -59,8 +59,8 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
         new_subscription.user     === original_subscription.user &&
         new_subscription.password === original_subscription.password &&
         new_subscription.port     === original_subscription.port) {
-          return false
-        }
+      return false;
+    }
     return true;
   };
 
@@ -75,9 +75,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       miqService.miqFlash('warn', __('Replication will be disabled for this region'));
     } else if (original_value === 'global' && new_value === 'none') {
       miqService.miqFlash('warn', __('All current subscriptions will be removed'));
-  } else if (original_value === 'global' && new_value === 'remote') {
-    miqService.miqFlash('warn', __('Changing to remote replication role will remove all current subscriptions'));
-  }
+    } else if (original_value === 'global' && new_value === 'remote') {
+      miqService.miqFlash('warn', __('Changing to remote replication role will remove all current subscriptions'));
+    }
 
     if (new_value !== 'global') {
       $scope.pglogicalReplicationModel.subscriptions = [];
@@ -152,8 +152,12 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     var subscription = $scope.pglogicalReplicationModel.subscriptions[idx];
     if (subscription.newRecord === true) {
       $scope.pglogicalReplicationModel.subscriptions.splice(idx, 1);
-      if (angular.equals($scope.pglogicalReplicationModel.subscriptions, $scope.modelCopy.subscriptions)) {$scope.angularForm.$setPristine(true);}
-    } else if (confirm(__('Deleting a subscription will remove all replicated data which originated in the selected region. Do you want to continue?'))) {subscription.remove = true;}
+      if (angular.equals($scope.pglogicalReplicationModel.subscriptions, $scope.modelCopy.subscriptions)) {
+        $scope.angularForm.$setPristine(true);
+      }
+    } else if (confirm(__('Deleting a subscription will remove all replicated data which originated in the selected region. Do you want to continue?'))) {
+      subscription.remove = true;
+    }
   };
 
   // discard new subscription add
@@ -183,7 +187,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
         typeof $scope.pglogicalReplicationModel.host     !== 'undefined' && $scope.pglogicalReplicationModel.host     !== '' &&
         typeof $scope.pglogicalReplicationModel.user     !== 'undefined' && $scope.pglogicalReplicationModel.user     !== '' &&
         typeof $scope.pglogicalReplicationModel.password !== 'undefined' && $scope.pglogicalReplicationModel.password !== ''
-    ) {return true;}
+    ) {
+      return true;
+    }
     return false;
   };
 
@@ -216,7 +222,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   // method to set flag to disable certain buttons when add of subscription in progress
   $scope.addInProgress = function() {
-    if ($scope.pglogicalReplicationModel.addEnabled === true) {return true;}
+    if ($scope.pglogicalReplicationModel.addEnabled === true) {
+      return true;
+    }
     return false;
   };
 
@@ -247,7 +255,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
   $scope.showCancelDelete = function(idx) {
     var subscription = $scope.pglogicalReplicationModel.subscriptions[idx];
     // only show subscriptions in red if they were saved subscriptions and deleted in current edit session
-    if (subscription.remove === true) {return true;}
+    if (subscription.remove === true) {
+      return true;
+    }
     return false;
   };
 
@@ -272,14 +282,18 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       subscription = $scope.pglogicalReplicationModel.subscriptions[idx];
     }
 
-    if (typeof original_values !== 'undefined' && original_values[fieldName] !== subscription[fieldName]) {return true;}
+    if (typeof original_values !== 'undefined' && original_values[fieldName] !== subscription[fieldName]) {
+      return true;
+    }
     return false;
   };
 
   $scope.subscriptionInValidMessage = function() {
     if ($scope.pglogicalReplicationModel.replication_type === 'global' &&
       ($scope.pglogicalReplicationModel.subscriptions.length === 0 ||
-      ($scope.pglogicalReplicationModel.subscriptions.length === 1 && $scope.pglogicalReplicationModel.subscriptions[0].remove === true))) {return true;}
+      ($scope.pglogicalReplicationModel.subscriptions.length === 1 && $scope.pglogicalReplicationModel.subscriptions[0].remove === true))) {
+      return true;
+    }
     return false;
   };
 

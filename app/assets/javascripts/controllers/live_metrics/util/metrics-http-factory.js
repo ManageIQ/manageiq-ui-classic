@@ -35,13 +35,17 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       }
 
       dash.items = data.metric_definitions.filter(function(item) {
-        var findSelectedItem = dash.selectedItems.find(function( obj ) { return obj.id === item.id; });
+        var findSelectedItem = dash.selectedItems.find(function( obj ) {
+          return obj.id === item.id;
+        });
         item.selected = typeof findSelectedItem !== 'undefined';
 
         return item.id && item.type;
       });
 
-      angular.forEach(dash.items, function(item) { utils.getContainerDashboardData(item); });
+      angular.forEach(dash.items, function(item) {
+        utils.getContainerDashboardData(item);
+      });
 
       dash.pages = (data.pages > 0) ? data.pages : 1;
       dash.pagesTitle = sprintf(__('Page %d of %d'), data.page, dash.pages);
@@ -144,8 +148,12 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
 
     var setPage = function(page) {
       var _page = page || 1;
-      if (_page < 1) {_page = 1;}
-      if (_page > dash.pages) {_page = dash.pages;}
+      if (_page < 1) {
+        _page = 1;
+      }
+      if (_page > dash.pages) {
+        _page = dash.pages;
+      }
 
       if (dash.page !== _page) {
         dash.page = _page;

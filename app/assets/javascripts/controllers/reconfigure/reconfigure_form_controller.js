@@ -444,7 +444,9 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
 
   vm.fetchAvailableAdapterNetworks = function(orchestrationStackId) {
     API.get('/api/cloud_networks?expand=resources&attributes=name&filter[]=orchestration_stack_id=' + orchestrationStackId).then(function(data) {
-      vm.reconfigureModel.availableAdapterNetworks = data.resources.map(function(network) { return network.name; });
+      vm.reconfigureModel.availableAdapterNetworks = data.resources.map(function(network) {
+        return network.name;
+      });
     }).catch(miqService.handleFailure);
   };
 

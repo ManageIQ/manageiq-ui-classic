@@ -126,12 +126,16 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
   };
 
   $scope.canValidate = function() {
-    if ($scope.isBasicInfoValid() && $scope.validateFieldsDirty()) {return true;}
+    if ($scope.isBasicInfoValid() && $scope.validateFieldsDirty()) {
+      return true;
+    }
     return false;
   };
 
   $scope.canValidateBasicInfo = function() {
-    if ($scope.isBasicInfoValid()) {return true;}
+    if ($scope.isBasicInfoValid()) {
+      return true;
+    }
     return false;
   };
 

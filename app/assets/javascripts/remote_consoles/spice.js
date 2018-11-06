@@ -27,5 +27,7 @@ $(function() {
     },
   });
 
-  $('#ctrlaltdel').click(function() {sendCtrlAltDel(spice);});
+  $('#ctrlaltdel').click(function() {
+    sendCtrlAltDel(spice);
+  });
 });

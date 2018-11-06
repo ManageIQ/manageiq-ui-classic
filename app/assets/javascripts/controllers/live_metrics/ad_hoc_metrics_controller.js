@@ -109,7 +109,9 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
     dash.doAddFilter = function() {
       // if field is empty return
-      if ( ! dash.filterConfig.currentValue ) {return;}
+      if ( ! dash.filterConfig.currentValue ) {
+        return;
+      }
       var filter = $('.filter-pf.filter-fields').scope().currentField;
 
       dash.filterConfig.appliedFilters.push({
@@ -125,7 +127,9 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
     var setAppliedFilters = function() {
       // if user did not send any tags, just exit
-      if (! dash.params.tags) {return;}
+      if (! dash.params.tags) {
+        return;
+      }
 
       // add the user defined tags as filters
       var tags = JSON.parse(dash.params.tags);

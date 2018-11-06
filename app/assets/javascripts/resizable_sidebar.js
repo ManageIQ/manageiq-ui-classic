@@ -21,7 +21,9 @@ $.fn.resizableSidebar = function() {
     var maindiv = columns.find('.resizer').parent();
     var sidebar = columns.not(maindiv);
     maindiv.find('.resizer-box .btn').click(function(_event) {
-      if ($(this).hasClass('disabled')) {return false;}
+      if ($(this).hasClass('disabled')) {
+        return false;
+      }
       var left = $(this).hasClass('resize-left');
       var button = left ? $(this).next() : $(this);
       var ajax = 2; // the width of the sidebar which will be sent with an ajax request

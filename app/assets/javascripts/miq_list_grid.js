@@ -2,7 +2,9 @@
 
 // Handle row click (ajax or normal html trans)
 function miqRowClick(row_id, row_url, row_url_ajax) {
-  if (! row_url) {return;}
+  if (! row_url) {
+    return;
+  }
 
   if (row_url_ajax) {
     miqJqueryRequest(row_url + row_id, {beforeSend: true, complete: true});

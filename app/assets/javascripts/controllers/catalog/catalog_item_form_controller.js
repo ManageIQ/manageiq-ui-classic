@@ -261,16 +261,24 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement.credential_id = configData.retirement_machine_credential_id;
     }
     if (vm.catalogItemModel.retirement_playbook_id !== undefined && configData.retirement_playbook_id !== '') {
-      if (vm.catalogItemModel.retirement_execution_ttl !== undefined) {retirement.execution_ttl = configData.retirement_execution_ttl;}
+      if (vm.catalogItemModel.retirement_execution_ttl !== undefined) {
+        retirement.execution_ttl = configData.retirement_execution_ttl;
+      }
       retirement.hosts = configData.retirement_inventory;
       retirement.extra_vars = formatExtraVars(configData.retirement_variables);
       catalog_item.config_info.retirement.become_enabled = configData.retirement_become_enabled;
     }
-    if (configData.retirement_vault_credential_id !== '') {catalog_item.config_info.retirement.vault_credential_id = configData.retirement_vault_credential_id;}
+    if (configData.retirement_vault_credential_id !== '') {
+      catalog_item.config_info.retirement.vault_credential_id = configData.retirement_vault_credential_id;
+    }
 
-    if (configData.retirement_network_credential_id !== '') {catalog_item.config_info.retirement.network_credential_id = configData.retirement_network_credential_id;}
+    if (configData.retirement_network_credential_id !== '') {
+      catalog_item.config_info.retirement.network_credential_id = configData.retirement_network_credential_id;
+    }
 
-    if (configData.retirement_cloud_credential_id !== '') {catalog_item.config_info.retirement.cloud_credential_id = configData.retirement_cloud_credential_id;}
+    if (configData.retirement_cloud_credential_id !== '') {
+      catalog_item.config_info.retirement.cloud_credential_id = configData.retirement_cloud_credential_id;
+    }
 
     return catalog_item;
   };
@@ -463,7 +471,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     miqService.miqFlashClear();
     $scope.angularForm.$setValidity('unchanged', true);
 
-    if (vm.dialogs.filter(function(e) { return e.label === vm.catalogItemModel.provisioning_dialog_name; }).length > 0) {
+    if (vm.dialogs.filter(function(e) {
+      return e.label === vm.catalogItemModel.provisioning_dialog_name;
+    }).length > 0) {
       miqService.miqFlash('error', __('Dialog name already exists'));
       $scope.angularForm.$setValidity('unchanged', false);
     }

@@ -145,7 +145,9 @@ ManageIQ.explorer.miqButtons = function(data) {
 ManageIQ.explorer.focus = function(data) {
   if (_.isString(data.focus)) {
     var element = $('#' + data.focus);
-    if (element.length) { element.focus(); }
+    if (element.length) {
+      element.focus();
+    }
   }
 };
 
@@ -182,7 +184,9 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
 
   ManageIQ.explorer.miqButtons(data);
 
-  if (_.isString(data.clearTreeCookies)) { miqDeleteTreeCookies(data.clearTreeCookies); }
+  if (_.isString(data.clearTreeCookies)) {
+    miqDeleteTreeCookies(data.clearTreeCookies);
+  }
   if (_.isString(data.accordionSwap)) {
     miqAccordionSwap('#accordion .panel-collapse.collapse.in', '#' + data.accordionSwap + '_accord');
   }
@@ -225,11 +229,17 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
 
   ManageIQ.explorer.reloadTrees(data);
 
-  if (_.isObject(data.buildCalendar)) { ManageIQ.explorer.buildCalendar(data.buildCalendar); }
+  if (_.isObject(data.buildCalendar)) {
+    ManageIQ.explorer.buildCalendar(data.buildCalendar);
+  }
 
-  if (data.initDashboard) { miqInitDashboardCols(); }
+  if (data.initDashboard) {
+    miqInitDashboardCols();
+  }
 
-  if (data.clearGtlListGrid) { ManageIQ.grids.gtl_list_grid = undefined; }
+  if (data.clearGtlListGrid) {
+    ManageIQ.grids.gtl_list_grid = undefined;
+  }
 
   if (_.isObject(data.setVisibility)) {
     _.forEach(data.setVisibility, function(visible, element) {
@@ -283,9 +293,15 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     load_c3_charts();
   }
 
-  if (data.resetChanges) { ManageIQ.changes = null; }
-  if (data.resetOneTrans) { ManageIQ.oneTransition.oneTrans = 0; }
-  if (data.oneTransIE) { ManageIQ.oneTransition.IEButtonPressed = true; }
+  if (data.resetChanges) {
+    ManageIQ.changes = null;
+  }
+  if (data.resetOneTrans) {
+    ManageIQ.oneTransition.oneTrans = 0;
+  }
+  if (data.oneTransIE) {
+    ManageIQ.oneTransition.IEButtonPressed = true;
+  }
 
   ManageIQ.explorer.focus(data);
 
@@ -296,12 +312,22 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   setTimeout(miqInitMainContent);
   miqInitAccordions();
 
-  if (data.hideModal) { $('#quicksearchbox').modal('hide'); }
-  if (data.initAccords) { miqInitAccordions(); }
-  if (data.lockSidebar !== undefined) { ManageIQ.explorer.lockSidebar(data.lockSidebar); }
+  if (data.hideModal) {
+    $('#quicksearchbox').modal('hide');
+  }
+  if (data.initAccords) {
+    miqInitAccordions();
+  }
+  if (data.lockSidebar !== undefined) {
+    ManageIQ.explorer.lockSidebar(data.lockSidebar);
+  }
 
-  if (data.removeSand) { ManageIQ.explorer.removeSand(); }
-  if (data.removePaging) { ManageIQ.explorer.removePaging(); }
+  if (data.removeSand) {
+    ManageIQ.explorer.removeSand();
+  }
+  if (data.removePaging) {
+    ManageIQ.explorer.removePaging();
+  }
 
   if (_.isString(data.ajaxUrl)) {
     miqAsyncAjax(data.ajaxUrl);

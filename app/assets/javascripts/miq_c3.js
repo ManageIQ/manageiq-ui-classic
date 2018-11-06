@@ -20,12 +20,16 @@ function load_c3_charts() {
 }
 
 function load_c3_chart(data, chart_id, height) {
-  if (typeof (data.miqChart) === 'undefined') { data.miqChart = 'Line'; }
+  if (typeof (data.miqChart) === 'undefined') {
+    data.miqChart = 'Line';
+  }
 
   var generate_args = chartData(data.miqChart, data, { bindto: '#' + chart_id, size: {height: height}});
 
   generate_args.data.onclick = function(data, _i) {
-    var index = _.findIndex(generate_args.data.columns, function(col) { return col[0] === data.id; });
+    var index = _.findIndex(generate_args.data.columns, function(col) {
+      return col[0] === data.id;
+    });
     // when not Pie/Donut chart, first column doesn't contain actual data.
     var seriesIndex = ['Pie', 'Donut'].includes(generate_args.miqChart) ? index : index - 1;
     var pointIndex = ['Pie', 'Donut'].includes(generate_args.miqChart) ? index : data.index;
@@ -138,8 +142,12 @@ function getMinMaxFromChart(chart) {
     });
   });
 
-  var max = _.max(_.filter(data, function(o) { return o !== null; }));
-  var min = _.min(_.filter(data, function(o) { return o !== null; }));
+  var max = _.max(_.filter(data, function(o) {
+    return o !== null;
+  }));
+  var min = _.min(_.filter(data, function(o) {
+    return o !== null;
+  }));
   if (max === undefined || min === undefined) {
     return false;
   }
@@ -147,7 +155,9 @@ function getMinMaxFromChart(chart) {
 }
 
 function getChartColumnDataValues(columns) {
-  return _.filter(_.flatten(_.tail(columns).map(_.tail)), function(o) { return o !== null; });
+  return _.filter(_.flatten(_.tail(columns).map(_.tail)), function(o) {
+    return o !== null;
+  });
 }
 
 function getChartFormatedValue(format, value) {

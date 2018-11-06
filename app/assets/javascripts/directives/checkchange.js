@@ -25,7 +25,9 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
           } else {
             viewModelComparison(scope, ctrl);
           }
-          if (scope.angularForm.$pristine) {checkForOverallFormPristinity(scope, ctrl);}
+          if (scope.angularForm.$pristine) {
+            checkForOverallFormPristinity(scope, ctrl);
+          }
         });
       }
 
@@ -42,7 +44,9 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
         return value;
       });
 
-      if (scope.angularForm.$pristine) {scope.angularForm.$setPristine();}
+      if (scope.angularForm.$pristine) {
+        scope.angularForm.$setPristine();
+      }
 
       var viewModelComparison = function(scope, ctrl) {
         if ((Array.isArray(modelCopy()[ctrl.$name]) &&
@@ -73,7 +77,9 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
 
       var checkForOverallFormPristinity = function(scope, ctrl) {
         // don't do anything before the model and modelCopy are actually initialized
-        if (! model() || ! modelCopy()) {return;}
+        if (! model() || ! modelCopy()) {
+          return;
+        }
 
         var modelCopyObject = _.cloneDeep(modelCopy());
         delete modelCopyObject[ctrl.$name];
@@ -83,7 +89,9 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
 
         scope.angularForm.$pristine = angular.equals(modelCopyObject, modelObject);
 
-        if (scope.angularForm.$pristine) {scope.angularForm.$setPristine();}
+        if (scope.angularForm.$pristine) {
+          scope.angularForm.$setPristine();
+        }
       };
     },
   };

@@ -61,7 +61,9 @@ angular.module( 'patternfly.charts' ).controller('heatmapContainerController', [
       };
 
       for (var i in keys) {
-        if (keys[i] === 'title') { continue; }
+        if (keys[i] === 'title') {
+          continue;
+        }
         if (data[keys[i]] === null) {
           heatmapsStruct.data[heatmapTitles[keys[i]]] = [];
           vm.dataAvailable = false;

@@ -395,7 +395,11 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.cancelClicked = function($event) {
     angular.element('#button_name').val('cancel');
-    if ($scope.newRecord) {emsCommonAddButtonClicked('cancel', false, $event);} else {emsCommonEditButtonClicked('cancel', false, $event);}
+    if ($scope.newRecord) {
+      emsCommonAddButtonClicked('cancel', false, $event);
+    } else {
+      emsCommonEditButtonClicked('cancel', false, $event);
+    }
 
     $scope.angularForm.$setPristine(true);
   };
@@ -726,7 +730,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.setProviderOptionsDescription = function(apiResponse) {
-    if (! apiResponse.hasOwnProperty('provider_settings')) {return;}
+    if (! apiResponse.hasOwnProperty('provider_settings')) {
+      return;
+    }
     if (! apiResponse.provider_settings.hasOwnProperty($scope.emsCommonModel.emstype)) {
       return;
     }

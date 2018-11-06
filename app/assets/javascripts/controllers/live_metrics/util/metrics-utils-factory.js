@@ -88,8 +88,12 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
     function drawOneGraph(currentItem) {
       var switchObj = angular.element('#rate-switch');
       var showRate = switchObj.bootstrapSwitch('state');
-      var xData = currentItem.responseData.map(function(d) { return d.start; });
-      var yData = currentItem.responseData.map(function(d) { return d.avg || null; });
+      var xData = currentItem.responseData.map(function(d) {
+        return d.start;
+      });
+      var yData = currentItem.responseData.map(function(d) {
+        return d.avg || null;
+      });
 
       // if diff checkbox is on, do diff
       if (showRate) {
@@ -162,8 +166,12 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
         item.tags = {};
       }
 
-      item.data = item.data.sort(function(a, b) { return a.timestamp > b.timestamp; });
-      var maxValue = Math.max.apply(Math, item.data.map(function(o) { return o.value; }));
+      item.data = item.data.sort(function(a, b) {
+        return a.timestamp > b.timestamp;
+      });
+      var maxValue = Math.max.apply(Math, item.data.map(function(o) {
+        return o.value;
+      }));
       var m = metricPrefix(maxValue, item.tags.units || '');
 
       var id = _.uniqueId('ChartId_');

@@ -8,7 +8,9 @@ $(document).bind('keyup', 'ctrl+shift+x', miqSparkleOff);
   var duplicate = function() {
     $('[id]').each(function() {
       var ids = $('[id="' + this.id + '"]');
-      if (ids.length > 1 && $.inArray(this, ids) !== -1) {console.warn('Duplicate DOM ID #' + this.id, this);}
+      if (ids.length > 1 && $.inArray(this, ids) !== -1) {
+        console.warn('Duplicate DOM ID #' + this.id, this);
+      }
     });
   };
 
@@ -147,13 +149,21 @@ angular.module('miq.debug', [])
       };
 
       var sanitize = function(data) {
-        if (_.isPlainObject(data) && (data.error || data.message)) {return (data.error || '').toString() + ' ' + (data.message || '').toString();}
+        if (_.isPlainObject(data) && (data.error || data.message)) {
+          return (data.error || '').toString() + ' ' + (data.message || '').toString();
+        }
 
-        if (_.isPlainObject(data)) {return JSON.stringify(data);}
+        if (_.isPlainObject(data)) {
+          return JSON.stringify(data);
+        }
 
-        if (_.isArray(data) && data.length === 1) {return sanitize(data[0]);}
+        if (_.isArray(data) && data.length === 1) {
+          return sanitize(data[0]);
+        }
 
-        if (data.toString().substr(0, 8) === '[object ') {return 'Unknown error, please see the console for details';} // no i18n, devel mode only
+        if (data.toString().substr(0, 8) === '[object ') {
+          return 'Unknown error, please see the console for details';
+        } // no i18n, devel mode only
 
         return data.toString();
       };
