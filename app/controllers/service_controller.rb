@@ -15,7 +15,7 @@ class ServiceController < ApplicationController
     'service_retire'      => :service_retire,
     'service_retire_now'  => :service_retire_now,
     'service_reconfigure' => :service_reconfigure
-  }
+  }.freeze
 
   def button
     case params[:pressed]
@@ -62,9 +62,9 @@ class ServiceController < ApplicationController
 
     unless @explorer
       tree_node_id = TreeBuilder.build_node_id(@record)
-      redirect_to :controller => "service",
+      redirect_to(:controller => "service",
                   :action     => "explorer",
-                  :id         => tree_node_id
+                  :id         => tree_node_id)
       return
     end
     redirect_to(:action => 'show', :controller => @record.class.base_model.to_s.underscore, :id => @record.id)
@@ -110,7 +110,7 @@ class ServiceController < ApplicationController
     @breadcrumbs.clear if @breadcrumbs.present?
     build_accordions_and_trees(x_node_to_set)
 
-    params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms]  # Grab any explorer parm overrides
+    params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms] # Grab any explorer parm overrides
     session.delete(:exp_parms)
     @in_a_form = false
 
@@ -169,7 +169,7 @@ class ServiceController < ApplicationController
   end
 
   def service_form_fields
-    service = Service.find_by_id(params[:id])
+    service = Service.find(params[:id])
 
     render :json => {
       :name        => service.name,
@@ -207,9 +207,9 @@ class ServiceController < ApplicationController
 
     regex_map = {
       /\\'/ => "'",
-      /'/  => "\\\\'",
-      /{{/ => '\{\{',
-      /}}/ => '\}\}'
+      /'/   => "\\\\'",
+      /{{/  => '\{\{',
+      /}}/  => '\}\}'
     }
     regex_map.each_pair { |f, t| htm.gsub!(f, t) }
     htm
@@ -318,14 +318,14 @@ class ServiceController < ApplicationController
       @no_checkboxes = true
       @gtl_type = "grid"
       @items_per_page = ONE_MILLION
-      @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true)  # Get the records (into a view) and the paginator
+      @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true) # Get the records (into a view) and the paginator
     when "Hash"
       case id
       when 'asrv'
         process_show_list(:named_scope => [[:retired, false], :displayed])
         @right_cell_text = _("Active Services")
       when 'rsrv'
-        process_show_list(:named_scope => [:retired, :displayed])
+        process_show_list(:named_scope => %i(retired displayed))
         @right_cell_text = _("Retired Services")
       end
     when "MiqSearch", nil # nil if applying a filter from Advanced search - and @nodetype is root
@@ -336,7 +336,7 @@ class ServiceController < ApplicationController
     @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && @nodetype != 's'
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
 
-    if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
+    if @edit&.dig(:adv_search_applied, :qs_exp) # If qs is active, save it in history
       x_history_add_item(:id     => x_node,
                          :qs_exp => @edit[:adv_search_applied][:qs_exp],
                          :text   => @right_cell_text)
@@ -406,7 +406,7 @@ class ServiceController < ApplicationController
     @explorer = true
     partial, action_url, @right_cell_text = set_right_cell_vars(action) if action # Set partial name, action and cell header
     get_node_info(x_node) if !action && !@in_a_form && !params[:display]
-    replace_trees = @replace_trees if @replace_trees  # get_node_info might set this
+    replace_trees = @replace_trees if @replace_trees # get_node_info might set this
     type, _ = parse_nodetype_and_id(x_node)
     record_showing = type && ["Service"].include?(TreeBuilder.get_model_for_prefix(type))
     if x_active_tree == :svcs_tree && !@in_a_form && !@sb[:action]
@@ -446,7 +446,7 @@ class ServiceController < ApplicationController
       presenter.show(:form_buttons_div).remove_paging.hide(:toolbar).show(:paging_div)
       if %w(tag service_tag).include?(action)
         locals = {:action_url => action_url}
-        locals[:multi_record] = true  # need save/cancel buttons on edit screen even tho @record.id is not there
+        locals[:multi_record] = true # need save/cancel buttons on edit screen even tho @record.id is not there
         locals[:record_id]    = @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]
       elsif action == "ownership"
         locals = {:action_url => action_url}
@@ -470,7 +470,7 @@ class ServiceController < ApplicationController
 
     presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb, :custom => cb_tb)
 
-    presenter.set_visibility(h_tb.present? || c_tb.present? || !v_tb.present?, :toolbar)
+    presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.blank?, :toolbar)
 
     presenter[:record_id] = determine_record_id_for_presenter
 
@@ -523,7 +523,7 @@ class ServiceController < ApplicationController
 
   def set_session_data
     super
-    session[:prov_options]   = @options if @options
+    session[:prov_options] = @options if @options
   end
 
   menu_section :svc
