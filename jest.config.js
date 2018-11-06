@@ -2,7 +2,8 @@
 module.exports = {
   verbose: true,
   globals: {
-    __testing__: true
+    __testing__: true,
+    getJSONFixture: true,
   },
   roots: ['app/javascript'],
   setupFiles: ['./config/jest.setup.js'],
