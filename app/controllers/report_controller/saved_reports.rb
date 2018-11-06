@@ -15,8 +15,8 @@ module ReportController::SavedReports
   end
 
   def fetch_saved_report(id)
-    rr = MiqReportResult.for_user(current_user).find_by_id(id.split('-').last)
-    if rr.nil?  # Saved report no longer exists
+    rr = MiqReportResult.for_user(current_user).find(id.split('-').last)
+    if rr.nil? # Saved report no longer exists
       @report = nil
       return
     end
@@ -85,7 +85,7 @@ module ReportController::SavedReports
   def saved_report_delete
     assert_privileges("saved_report_delete")
     savedreports = find_checked_items
-    unless savedreports.present?
+    if savedreports.blank?
       report_result = x_node.split('_').last
       savedreport = report_result.split('-').last
       savedreports = Array.wrap(savedreport)
@@ -99,13 +99,12 @@ module ReportController::SavedReports
       @report = nil
       r = MiqReportResult.for_user(current_user).find(savedreports[0])
       @sb[:miq_report_id] = r.miq_report_id
-      process_saved_reports(savedreports, "destroy")  unless savedreports.empty?
+      process_saved_reports(savedreports, "destroy") unless savedreports.empty?
       add_flash(_("The selected Saved Report was deleted")) if @flash_array.nil?
       @report_deleted = true
     end
-    self.x_node = "xx-#{@sb[:miq_report_id]}" if x_active_tree == :savedreports_tree &&
-                                                         x_node.split('-').first == "rr"
-    replace_right_cell(:replace_trees => [:reports, :savedreports])
+    self.x_node = "xx-#{@sb[:miq_report_id]}" if x_active_tree == :savedreports_tree && x_node.split('-').first == "rr"
+    replace_right_cell(:replace_trees => %i(reports savedreports))
   end
 
   # get all saved reports for list view
