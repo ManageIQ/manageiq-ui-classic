@@ -8,7 +8,6 @@ import formButtonsReducer from './form-buttons-reducer';
 ManageIQ.redux.addReducer({ FormButtons: formButtonsReducer });
 
 function FormButtonsRedux(props) {
-  console.warn('If you are using plain strings form FormButtons action types, please use defined constants from ManageIQ.redux.formButtonsActions to avoid inconsistencies.');
   return <FormButtons {...props} />;
 }
 
