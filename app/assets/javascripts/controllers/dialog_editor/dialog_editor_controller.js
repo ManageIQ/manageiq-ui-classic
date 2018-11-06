@@ -65,7 +65,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     translateResponderNamesToIds(dialog.content[0]);
 
     if (requestDialogAction() === 'copy') {
-      dialog.label = dialog.content[0].label = "Copy of " + dialog.label;
+      dialog.label = dialog.content[0].label = sprintf(__('Copy of %s'), dialog.label);
     }
 
     DialogEditor.setData(dialog);
