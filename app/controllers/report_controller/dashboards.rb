@@ -5,7 +5,7 @@ module ReportController::Dashboards
     assert_privileges("db_seq_edit")
     case params[:button]
     when "cancel"
-      @edit = session[:edit] = nil  # clean out the saved info
+      @edit = session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of Dashboard Sequence was cancelled by the user"))
       replace_right_cell
     when "save"
@@ -29,7 +29,7 @@ module ReportController::Dashboards
       end
       if !err
         add_flash(_("Dashboard Sequence was saved"))
-        @edit = session[:edit] = nil    # clean out the saved info
+        @edit = session[:edit] = nil # clean out the saved info
         replace_right_cell(:replace_trees => [:db])
       else
         @in_a_form = true
@@ -84,8 +84,8 @@ module ReportController::Dashboards
           settings[:dashboard_order].push(widgetset.id) unless settings[:dashboard_order].include?(widgetset.id)
           g.save
         end
-        params[:id] = @db.id.to_s   # reset id in params for show
-        @edit = session[:edit] = nil    # clean out the saved info
+        params[:id] = @db.id.to_s # reset id in params for show
+        @edit = session[:edit] = nil # clean out the saved info
         replace_right_cell(:replace_trees => [:db])
       else
         @db.errors.each do |field, msg|
@@ -107,14 +107,12 @@ module ReportController::Dashboards
   # Delete all selected or single displayed action(s)
   def db_delete
     assert_privileges("db_delete")
-    db = MiqWidgetSet.find_by_id(params[:id])       # temp var to determine the parent node of deleted items
+    db = MiqWidgetSet.find(params[:id]) # temp var to determine the parent node of deleted items
     process_elements(db, MiqWidgetSet, "destroy")
     g = MiqGroup.find(@sb[:nodes][2].split('_').first)
     # delete dashboard id from group settings and save
     db_order = g.settings && g.settings[:dashboard_order] ? g.settings[:dashboard_order] : nil
-    if db_order
-      db_order.delete(db.id)
-    end
+    db_order&.delete(db.id)
     g.save
     nodes = x_node.split('-')
     self.x_node = "#{nodes[0]}-#{nodes[1]}-#{nodes[2].split('_').first}"
@@ -133,7 +131,7 @@ module ReportController::Dashboards
         page << "ManageIQ.widget.dashboardUrl = 'report/db_widget_dd_done'"
         page << "miqInitDashboardCols();"
       end
-      if ["up", "down"].include?(params[:button])
+      if %w(up down).include?(params[:button])
         page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
         page.replace(@refresh_div, :partial => @refresh_partial, :locals => {:action => "db_seq_edit"}) if @refresh_div
       end
@@ -265,7 +263,7 @@ module ReportController::Dashboards
   def db_get_form_vars
     @in_a_form = true
     @db = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new
-    if ["up", "down"].include?(params[:button])
+    if %w(up down).include?(params[:button])
       db_move_cols_up if params[:button] == "up"
       db_move_cols_down if params[:button] == "down"
     else
@@ -274,7 +272,7 @@ module ReportController::Dashboards
       if params[:locked]
         @edit[:new][:locked] = params[:locked].to_i == 1
       end
-      if params[:widget]                # Make sure we got a widget in
+      if params[:widget] # Make sure we got a widget in
         w = params[:widget].to_i
         if @edit[:new][:col3].length < @edit[:new][:col1].length &&
            @edit[:new][:col3].length < @edit[:new][:col2].length
@@ -294,7 +292,7 @@ module ReportController::Dashboards
     @db.name = @edit[:new][:name]
     @db.description = @edit[:new][:description]
     @db.updated_on = Time.now.utc
-    @db.set_data = Hash.new unless @db.set_data
+    @db.set_data = {} unless @db.set_data
     @db.set_data[:col1] = [] if !@db.set_data[:col1] && !@edit[:new][:col1].empty?
     @db.set_data[:col2] = [] if !@db.set_data[:col2] && !@edit[:new][:col2].empty?
     @db.set_data[:col3] = [] if !@db.set_data[:col3] && !@edit[:new][:col3].empty?
@@ -361,7 +359,7 @@ module ReportController::Dashboards
     @edit[:current] = {}
     @edit[:new][:dashboard_order] = []
     g = MiqGroup.find(@sb[:nodes][2])
-    @sb[:group_desc] = g.description    # saving for cell header
+    @sb[:group_desc] = g.description # saving for cell header
     if g.settings && g.settings[:dashboard_order]
       dbs = g.settings[:dashboard_order]
       dbs.each do |db|
@@ -419,7 +417,7 @@ module ReportController::Dashboards
 
   def db_move_cols_up
     return unless load_edit("db_edit__seq", "replace_cell__explorer")
-    if !params[:seq_fields] || params[:seq_fields].length == 0 || params[:seq_fields][0] == ""
+    if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move up"), :error)
       @refresh_div = "column_lists"
       @refresh_partial = "db_seq_form"
@@ -429,7 +427,7 @@ module ReportController::Dashboards
     if !consecutive
       add_flash(_("Select only one or consecutive fields to move up"), :error)
     else
-      if first_idx > 0
+      if first_idx.positive?
         @edit[:new][:dashboard_order][first_idx..last_idx].reverse_each do |field|
           pulled = @edit[:new][:dashboard_order].delete(field)
           @edit[:new][:dashboard_order].insert(first_idx - 1, pulled)
@@ -443,7 +441,7 @@ module ReportController::Dashboards
 
   def db_move_cols_down
     return unless load_edit("db_edit__seq", "replace_cell__explorer")
-    if !params[:seq_fields] || params[:seq_fields].length == 0 || params[:seq_fields][0] == ""
+    if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move down"), :error)
       @refresh_div = "column_lists"
       @refresh_partial = "db_seq_form"
@@ -454,7 +452,7 @@ module ReportController::Dashboards
       add_flash(_("Select only one or consecutive fields to move down"), :error)
     else
       if last_idx < @edit[:new][:dashboard_order].length - 1
-        insert_idx = last_idx + 1   # Insert before the element after the last one
+        insert_idx = last_idx + 1 # Insert before the element after the last one
         insert_idx = -1 if last_idx == @edit[:new][:dashboard_order].length - 2 # Insert at end if 1 away from end
         @edit[:new][:dashboard_order][first_idx..last_idx].each do |field|
           pulled = @edit[:new][:dashboard_order].delete(field)
