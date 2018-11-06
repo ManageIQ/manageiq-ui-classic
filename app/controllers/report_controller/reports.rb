@@ -9,7 +9,6 @@ module ReportController::Reports
     @sb[:active_tab] = "saved_reports"
     rep = MiqReport.for_user(current_user).find(params[:id])
     rep.queue_generate_table(:userid => session[:userid])
-    title = rep.name
     nodes = x_node.split('-')
     get_all_reps(nodes[4])
     @sb[:selected_rep_id] = nodes[3].split('_').last
@@ -18,17 +17,16 @@ module ReportController::Reports
       get_all_widgets("report", nodes[3].split('_').last)
     end
     add_flash(_("Report has been successfully queued to run"))
-    replace_right_cell(:replace_trees => [:reports, :savedreports])
+    replace_right_cell(:replace_trees => %i(reports savedreports))
   end
 
   def show_preview
     unless params[:task_id]                       # First time thru, kick off the report generate task
       @rpt = create_report_object                 # Build a report object from the latest edit fields
-      initiate_wait_for_task(:task_id => @rpt.async_generate_table(
-        :userid     => session[:userid],
-        :session_id => request.session_options[:id],
-        :limit      => 50,
-        :mode       => "adhoc"))
+      initiate_wait_for_task(:task_id => @rpt.async_generate_table(:userid     => session[:userid],
+                                                                   :session_id => request.session_options[:id],
+                                                                   :limit      => 50,
+                                                                   :mode       => "adhoc"))
       return
     end
     miq_task = MiqTask.find(params[:task_id])     # Not first time, read the task record
@@ -40,7 +38,7 @@ module ReportController::Reports
       rr = miq_task.miq_report_result
       @html = report_build_html_table(rr.report, rr.html_rows(:page => 1, :per_page => 100).join)
 
-      if rpt.timeline                   # If timeline present
+      if rpt.timeline # If timeline present
         @timeline                 = true
         rpt.extras[:browser_name] = browser_info(:name)
         # flag to force formatter to build timeline in xml for preview screen
@@ -50,12 +48,12 @@ module ReportController::Reports
       else
         @edit[:tl_xml]            = nil
       end
-      unless rpt.graph.nil? || rpt.graph[:type].blank?            # If graph present
+      if !rpt.graph.nil? && rpt.graph[:type].present? # If graph present
+        @edit[:chart_data] = nil
+      else
         # FIXME: UNTESTED!!!
         rpt.to_chart(settings(:display, :reporttheme), false, MiqReport.graph_options) # Generate the chart
         @edit[:chart_data] = rpt.chart
-      else
-        @edit[:chart_data] = nil
       end
     end
     miq_task.destroy
@@ -137,9 +135,7 @@ module ReportController::Reports
   # get saved reports for a specific report
   def get_all_reps(nodeid = nil)
     # set nodeid from @sb, incase sort was pressed
-    nodeid = x_active_tree == :reports_tree ?
-        x_node.split('-').last :
-        x_node.split('-').last.split('_')[0] if nodeid.nil?
+    nodeid = x_active_tree == :reports_tree ? x_node.split('-').last : x_node.split('-').last.split('_')[0] if nodeid.nil?
     @sb[:miq_report_id] = nodeid
     @record = @miq_report = MiqReport.for_user(current_user).find(@sb[:miq_report_id])
     if @sb[:active_tab] == "saved_reports" || x_active_tree == :savedreports_tree
@@ -187,28 +183,26 @@ module ReportController::Reports
     {"start"       => tl_time,
      "title"       => tl_text,
      "description" => tl_text,
-     "color"       => tl_color
-    }
+     "color"       => tl_color}
   end
 
   def menu_repname_update(old_name, new_name)
     all_roles = MiqGroup.non_tenant_groups_in_my_region
     all_roles.each do |role|
-      rec = MiqGroup.find_by_description(role.name)
+      rec = MiqGroup.find_by(:description => role.name)
       menu = rec.settings[:report_menus] if rec.settings
-      unless menu.nil?
-        menu.each_with_index do |lvl1, i|
-          lvl1[1].each_with_index do |lvl2, j|
-            lvl2[1].each_with_index do |rep, k|
-              if rep == old_name
-                menu[i][1][j][1][k] = new_name
-              end
+      next if menu.nil?
+      menu.each_with_index do |lvl1, i|
+        lvl1[1].each_with_index do |lvl2, j|
+          lvl2[1].each_with_index do |rep, k|
+            if rep == old_name
+              menu[i][1][j][1][k] = new_name
             end
           end
         end
-        rec.settings[:report_menus] = menu
-        rec.save
       end
+      rec.settings[:report_menus] = menu
+      rec.save
     end
   end
 
@@ -219,19 +213,19 @@ module ReportController::Reports
     # The rest are table names
     if tables.length > 1
       tables[1..-1].each do |t|
-        retname += "." unless retname.blank?
+        retname += "." if retname.present?
         retname += Dictionary.gettext(t, :type => :table, :notfound => :titleize)
       end
     end
-    retname = retname.blank? ? " " : retname + " : "  # Use space for base fields, add : to others
+    retname = retname.blank? ? " " : retname + " : " # Use space for base fields, add : to others
     retname
   end
 
   # Create a report object from the current edit fields
   def create_report_object
-    rpt_rec = MiqReport.new                         # Create a new report record
-    set_record_vars(rpt_rec)                        # Set the fields into the record
-    rpt_rec                                  # Create a report object from the record
+    rpt_rec = MiqReport.new  # Create a new report record
+    set_record_vars(rpt_rec) # Set the fields into the record
+    rpt_rec                  # Create a report object from the record
   end
 
   # Build the main reports tree
