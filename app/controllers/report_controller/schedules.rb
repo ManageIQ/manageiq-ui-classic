@@ -9,10 +9,10 @@ module ReportController::Schedules
     end
 
     # Get configured tz, else use user's tz
-    @timezone = (@schedule.run_at && @schedule.run_at[:tz]) ? @schedule.run_at[:tz] : session[:user_tz]
+    @timezone = @schedule.run_at && @schedule.run_at[:tz] ? @schedule.run_at[:tz] : session[:user_tz]
 
     if @schedule.filter.kind_of?(MiqExpression)
-      record      = MiqReport.find_by_id(@schedule.filter.exp["="]["value"])
+      record      = MiqReport.find(@schedule.filter.exp["="]["value"])
       @rep_filter = record.name
     end
     @breadcrumbs = []
@@ -20,7 +20,7 @@ module ReportController::Schedules
     if @schedule.sched_action[:options] && @schedule.sched_action[:options][:email]
       @email_to = []
       @schedule.sched_action[:options][:email][:to].each_with_index do |e, _e_idx|
-        u = User.find_by_email(e)
+        u = User.find_by(:email => e)
         @email_to.push(u ? "#{u.name} (#{e})" : e)
       end
     end
@@ -28,11 +28,11 @@ module ReportController::Schedules
   end
 
   def schedule_get_all
-    @schedules    = true
-    @force_no_grid_xml   = true
-    @gtl_type            = "list"
-    if params[:ppsetting]                                             # User selected new per page value
-      @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
+    @schedules = true
+    @force_no_grid_xml = true
+    @gtl_type = "list"
+    if params[:ppsetting]                                               # User selected new per page value
+      @items_per_page = params[:ppsetting].to_i                         # Set the new per page value
       @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session[:schedule_sortcol].nil? ? 0 : session[:schedule_sortcol].to_i
@@ -61,7 +61,7 @@ module ReportController::Schedules
     if @sb[:tree_typ] == "reports"
       exp                   = {}
       exp["="]              = {"field" => "MiqReport-id", "value" => @sb[:miq_report_id]}
-      @_params.delete :id   # incase add schedule button was pressed from report show screen.
+      @_params.delete(:id) # incase add schedule button was pressed from report show screen.
       @schedule.filter      = MiqExpression.new(exp)
       miq_report            = MiqReport.find(@sb[:miq_report_id])
       @schedule.name        = miq_report.name
@@ -92,7 +92,7 @@ module ReportController::Schedules
   def miq_report_schedule_run_now
     assert_privileges("miq_report_schedule_run_now")
     schedules = find_records_with_rbac(MiqSchedule, checked_or_params)
-    schedules.sort_by { |e| e.name.downcase}.each do |schedule|
+    schedules.sort_by { |e| e.name.downcase }.each do |schedule|
       MiqSchedule.queue_scheduled_work(schedule.id, nil, Time.now.utc.to_i, nil)
       audit = {
         :event        => "queue_scheduled_work",
@@ -169,11 +169,11 @@ module ReportController::Schedules
 
       if params[:timer_typ].present?
         # when timer_typ set to hourly set starting date to current day otherwise it's the day after
-        if params[:timer_typ] == 'Hourly'
-          @edit[:new][:timer].start_date = Time.zone.now.strftime("%m/%d/%Y")
-        else
-          @edit[:new][:timer].start_date = (Time.zone.now + 1.day).strftime("%m/%d/%Y")
-        end
+        @edit[:new][:timer].start_date = if params[:timer_typ] == 'Hourly'
+                                           Time.zone.now.strftime("%m/%d/%Y")
+                                         else
+                                           (Time.zone.now + 1.day).strftime("%m/%d/%Y")
+                                         end
       end
       page << "$('#miq_date_1').val('#{@edit[:new][:timer].start_date}');"
 
@@ -190,14 +190,14 @@ module ReportController::Schedules
     assert_privileges("miq_report_schedule_edit")
     case params[:button]
     when "cancel"
-      @schedule = MiqSchedule.find_by_id(session[:edit][:sched_id]) if session[:edit] && session[:edit][:sched_id]
+      @schedule = MiqSchedule.find(session[:edit][:sched_id]) if session[:edit] && session[:edit][:sched_id]
       if !@schedule || @schedule.id.blank?
         add_flash(_("Add of new Schedule was cancelled by the user"))
       else
         add_flash(_("Edit of Schedule \"%{name}\" was cancelled by the user") % {:name => @schedule.name})
       end
       @schedule = nil
-      @edit = session[:edit] = nil  # clean out the saved info
+      @edit = session[:edit] = nil # clean out the saved info
       @in_a_form = false
 
       replace_right_cell
@@ -212,10 +212,12 @@ module ReportController::Schedules
       schedule_valid?(schedule)
       if schedule.valid? && !flash_errors? && schedule.save
         AuditEvent.success(build_saved_audit(schedule, @edit))
-        @edit[:sched_id] ?
-          add_flash(_("Schedule \"%{name}\" was saved") % {:name => schedule.name}) :
+        if @edit[:sched_id]
+          add_flash(_("Schedule \"%{name}\" was saved") % {:name => schedule.name})
+        else
           add_flash(_("Schedule \"%{name}\" was added") % {:name => schedule.name})
-        params[:id] = schedule.id.to_s    # reset id in params for show
+        end
+        params[:id] = schedule.id.to_s # reset id in params for show
         @edit = session[:edit] = nil # clean out the saved info
 
         # ensure we land in the right accordion with the right tree and
@@ -239,10 +241,10 @@ module ReportController::Schedules
       if x_active_tree != :reports_tree
         # dont set these if new schedule is being added from a report show screen
         @schedule ||= if params[:id] == "new"
-                      MiqSchedule.new(:userid => session[:userid])
-                    else
-                      find_record_with_rbac(MiqSchedule, checked_or_params)
-                    end
+                        MiqSchedule.new(:userid => session[:userid])
+                      else
+                        find_record_with_rbac(MiqSchedule, checked_or_params)
+                      end
         session[:changed] = false
       end
       schedule_set_form_vars
@@ -295,8 +297,7 @@ module ReportController::Schedules
     @folders = []
 
     # Remember how this edit started
-    @edit[:type] = %w(miq_report_schedule_copy
-                      miq_report_schedule_new).include?(params[:action]) ? "schedule_new" : "schedule_edit"
+    @edit[:type] = %w(miq_report_schedule_copy miq_report_schedule_new).include?(params[:action]) ? 'schedule_new' : 'schedule_edit'
 
     # Get configured tz, default to user's tz
     @edit[:tz] = @schedule.run_at && @schedule.run_at[:tz] ? @schedule.run_at[:tz] : session[:user_tz]
@@ -311,9 +312,7 @@ module ReportController::Schedules
     @edit[:new][:name]        = @schedule.name
     @edit[:new][:description] = @schedule.description
     @edit[:new][:enabled]     = @schedule.enabled.nil? ? false : @schedule.enabled
-    @edit[:new][:send_email]  = @schedule.sched_action.nil? || !@schedule.sched_action.key?(:options) ?
-                                false :
-                                @schedule.sched_action[:options][:send_email] == true
+    @edit[:new][:send_email]  = @schedule.sched_action.nil? || !@schedule.sched_action.key?(:options) ? false : @schedule.sched_action[:options][:send_email] == true
     @edit[:new][:email]       = {}
     if @schedule.sched_action && @schedule.sched_action[:options] && @schedule.sched_action[:options][:email]
       @edit[:new][:email] = copy_hash(@schedule.sched_action[:options][:email])
@@ -324,22 +323,21 @@ module ReportController::Schedules
       # rebuild hash to hold user's email along with name if user record was found for display, defined as hash so only email id can be sent from form to be deleted from array above
       @email_to = {}
       @schedule.sched_action[:options][:email][:to].each_with_index do |e, _e_idx|
-        u = User.find_by_email(e)
+        u = User.find_by(:email => e)
         @email_to[e] = u ? "#{u.name} (#{e})" : e
       end
     end
 
     if @schedule.filter
-      record = MiqReport.find_by_id(@schedule.filter.exp["="]["value"])
+      record = MiqReport.find(@schedule.filter.exp["="]["value"])
       @menu.each do |m|
         m[1].each do |f|
           f.each do |r|
-            if r.class != String
-              r.each do |rep|
-                if rep == record.name
-                  @edit[:new][:filter] = m[0]
-                  @edit[:new][:subfilter] = f[0]
-                end
+            next if r.class == String
+            r.each do |rep|
+              if rep == record.name
+                @edit[:new][:filter] = m[0]
+                @edit[:new][:subfilter] = f[0]
               end
             end
           end
@@ -356,8 +354,7 @@ module ReportController::Schedules
 
   # Get variables from edit form
   def schedule_get_form_vars
-    @schedule = @edit[:sched_id] ? MiqSchedule.find_by_id(@edit[:sched_id]) :
-        MiqSchedule.new(:userid => session[:userid])
+    @schedule = @edit[:sched_id] ? MiqSchedule.find(@edit[:sched_id]) : MiqSchedule.new(:userid => session[:userid])
     @edit[:new][:name] = params[:name] if params[:name]
     @edit[:new][:description] = params[:description] if params[:description]
     @edit[:new][:enabled] = (params[:enabled] == "1") if params[:enabled]
@@ -432,8 +429,7 @@ module ReportController::Schedules
   end
 
   def schedule_build_edit_screen
-    @schedule = @edit[:sched_id] ? MiqSchedule.find_by_id(@edit[:sched_id]) :
-        MiqSchedule.new(:userid => session[:userid])
+    @schedule = @edit[:sched_id] ? MiqSchedule.find(@edit[:sched_id]) : MiqSchedule.new(:userid => session[:userid])
     @in_a_form = true
     build_user_emails_for_edit
   end
@@ -443,7 +439,7 @@ module ReportController::Schedules
     schedule.name = @edit[:new][:name]
     schedule.description = @edit[:new][:description]
     schedule.enabled = @edit[:new][:enabled]
-    schedule.towhat = "MiqReport"                           # Default schedules apply to MiqReport model for now
+    schedule.towhat = "MiqReport" # Default schedules apply to MiqReport model for now
 
     email_url_prefix = url_for_only_path(:controller => "report", :action => "show_saved") + "/"
     schedule_options = {
