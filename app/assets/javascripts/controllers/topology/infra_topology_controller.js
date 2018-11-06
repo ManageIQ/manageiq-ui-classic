@@ -130,5 +130,3 @@ angular.module('ManageIQ').controller('infraTopologyController', ['$scope', 'top
     }
   };
 }]);
-
-

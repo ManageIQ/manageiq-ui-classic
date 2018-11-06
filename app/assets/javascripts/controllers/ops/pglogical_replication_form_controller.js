@@ -58,7 +58,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
         new_subscription.host     === original_subscription.host &&
         new_subscription.user     === original_subscription.user &&
         new_subscription.password === original_subscription.password &&
-        new_subscription.port     === original_subscription.port) {return false;}
+        new_subscription.port     === original_subscription.port) {
+          return false
+        }
     return true;
   };
 
@@ -67,7 +69,15 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     miqService.miqFlashClear();
     var original_value = $scope.modelCopy.replication_type;
     var new_value      = $scope.pglogicalReplicationModel.replication_type;
-    if (original_value === 'none' && new_value === 'none') {miqService.miqFlash('warn', __('No replication role has been set'));} else if (original_value === 'remote' && new_value === 'none') {miqService.miqFlash('warn', __('Replication will be disabled for this region'));} else if (original_value === 'global' && new_value === 'none') {miqService.miqFlash('warn', __('All current subscriptions will be removed'));} else if (original_value === 'global' && new_value === 'remote') {miqService.miqFlash('warn', __('Changing to remote replication role will remove all current subscriptions'));}
+    if (original_value === 'none' && new_value === 'none') {
+      miqService.miqFlash('warn', __('No replication role has been set'));
+    } else if (original_value === 'remote' && new_value === 'none') {
+      miqService.miqFlash('warn', __('Replication will be disabled for this region'));
+    } else if (original_value === 'global' && new_value === 'none') {
+      miqService.miqFlash('warn', __('All current subscriptions will be removed'));
+  } else if (original_value === 'global' && new_value === 'remote') {
+    miqService.miqFlash('warn', __('Changing to remote replication role will remove all current subscriptions'));
+  }
 
     if (new_value !== 'global') {
       $scope.pglogicalReplicationModel.subscriptions = [];

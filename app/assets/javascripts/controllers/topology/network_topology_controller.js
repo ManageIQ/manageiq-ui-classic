@@ -133,5 +133,3 @@ angular.module('ManageIQ').controller('networkTopologyController', ['$scope', 't
     }
   };
 }]);
-
-
