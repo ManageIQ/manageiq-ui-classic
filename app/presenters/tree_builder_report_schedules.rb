@@ -23,12 +23,7 @@ class TreeBuilderReportSchedules < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    objects = if User.current_user.current_group.miq_user_role.name.split('-').last == 'super_administrator'
-                # Super admins see all report schedules
-                MiqSchedule.where(:towhat => 'MiqReport')
-              else
-                MiqSchedule.where(:towhat => 'MiqReport', :userid => User.current_user.userid)
-              end
+    objects = Rbac::Filterer.filtered(MiqSchedule.where(:towhat => 'MiqReport'))
     count_only_or_objects(count_only, objects, 'name')
   end
 end
