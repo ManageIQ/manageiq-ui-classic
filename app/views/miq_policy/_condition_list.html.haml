@@ -14,7 +14,7 @@
         %tbody
           - @conditions.each do |c|
             %tr{:title => _("View this Condition"),
-              :onclick => "miqTreeActivateNode('condition_tree', 'xx-#{c.towhat.camelize(:lower)}_co-#{c.id}');"}
+              :onclick => "miqTreeActivateNode('condition_tree', 'xx-#{c.resource_type.camelize(:lower)}_co-#{c.id}');"}
               %td.table-view-pf-select
                 %i.fa.fa-diamond
               %td

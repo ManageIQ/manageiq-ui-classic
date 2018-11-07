@@ -76,13 +76,13 @@
         %table.table.table-striped.table-bordered.table-hover
           %tbody
             - @profile_policies.each do |p|
-              %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
+              %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.resource_type)},
                 :onclick => "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_p-#{p.id}');"}
                 %td.table-view-pf-select
                   %i{:class => p.decorate.fonticon}
                 %td
                   %b
-                    #{ui_lookup(:model => p.towhat)} #{p.mode.capitalize}:
+                    #{ui_lookup(:model => p.resource_type)} #{p.mode.capitalize}:
                   &nbsp;
                   = h(p.description)
       %hr

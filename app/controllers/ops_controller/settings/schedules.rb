@@ -159,7 +159,7 @@ module OpsController::Settings::Schedules
     elsif schedule_automation_request?(schedule)
       action_type = schedule.sched_action[:method]
       automate_request = fetch_automate_request_vars(schedule)
-    elsif schedule.towhat.nil?
+    elsif schedule.resource_type.nil?
       action_type = "vm"
     else
       if schedule.resource_type.nil?

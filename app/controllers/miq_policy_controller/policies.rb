@@ -31,7 +31,7 @@ module MiqPolicyController::Policies
     policy.updated_by = session[:userid]
 
     if @policy.id.blank?
-      policy.towhat = @edit[:new][:towhat]
+      policy.resource_type = @edit[:new][:resource_type]
       policy.created_by = session[:userid]
     end
 
@@ -56,7 +56,7 @@ module MiqPolicyController::Policies
     end
 
     if @policy.id.blank? && policy.mode == "compliance" # New compliance policy
-      event = MiqEventDefinition.find_by(:name => "#{policy.towhat.downcase}_compliance_check") # Get the compliance event record
+      event = MiqEventDefinition.find_by(:name => "#{policy.resource_type.downcase}_compliance_check") # Get the compliance event record
       policy.sync_events([event]) # Set the default compliance event in the policy
       action_list = [[MiqAction.find_by(:name => 'compliance_failed'), {:qualifier => :failure, :synchronous => true}]]
       policy.replace_actions_for_event(event, action_list) # Add in the default action for the compliance event
@@ -149,7 +149,7 @@ module MiqPolicyController::Policies
       else
         policies.push(params[:id])
       end
-      self.x_node = @new_policy_node = policies_node(pol.mode, pol.towhat)
+      self.x_node = @new_policy_node = policies_node(pol.mode, pol.resource_type)
     end
     process_policies(policies, "destroy") unless policies.empty?
     add_flash(_("The selected Policies were deleted")) if @flash_array.nil?
@@ -188,13 +188,13 @@ module MiqPolicyController::Policies
     peca_get_all('policy', -> { get_view(MiqPolicy, :named_scope => [[:with_mode, @sb[:mode].downcase], [:with_towhat, @sb[:nodeid].camelize]]) })
   end
 
-  def policies_node(mode, towhat)
+  def policies_node(mode, resource_type)
     ["xx-#{mode.downcase}",
-     "xx-#{mode.downcase}-#{towhat.camelize(:lower)}"].join("_")
+     "xx-#{mode.downcase}-#{resource_type.camelize(:lower)}"].join("_")
   end
 
   def policy_node(policy)
-    [policies_node(policy.mode, policy.towhat), "p-#{policy.id}"].join("_")
+    [policies_node(policy.mode, policy.resource_type), "p-#{policy.id}"].join("_")
   end
 
   private
@@ -219,7 +219,7 @@ module MiqPolicyController::Policies
     @edit[:new][:description] = @policy.description
     @edit[:new][:active] = @policy.active.nil? ? true : @policy.active                    # Set active, default to true
     @edit[:new][:notes] = @policy.notes
-    @edit[:new][:towhat] = @policy.id ? @policy.towhat : @sb[:folder].split('-').last.camelize # Set the towhat model
+    @edit[:new][:resource_type] = @policy.id ? @policy.resource_type : @sb[:folder].split('-').last.camelize # Set the resource_type model
 
     case @edit[:typ]                  # Build fields based on what is being edited
     when "conditions"                 # Editing condition assignments
@@ -228,7 +228,7 @@ module MiqPolicyController::Policies
       conditions.each { |c| @edit[:new][:conditions][c.description] = c.id } # Build a hash for the members list box
 
       @edit[:choices] = {}
-      Condition.where(:towhat => @edit[:new][:towhat]).each { |c| @edit[:choices][c.description] = c.id } # Build a hash for the policies to choose from
+      Condition.where(:resource_type => @edit[:new][:resource_type]).each { |c| @edit[:choices][c.description] = c.id } # Build a hash for the policies to choose from
 
       @edit[:new][:conditions].each_key { |key| @edit[:choices].delete(key) } # Remove any choices that are in the members list box
     when "events" # Editing event assignments
@@ -241,7 +241,7 @@ module MiqPolicyController::Policies
         @edit[:allevents][e.etype.description].push([e.description, e.id.to_s])
       end
     else # Editing basic information and policy scope
-      build_expression(@policy, @edit[:new][:towhat])
+      build_expression(@policy, @edit[:new][:resource_type])
     end
 
     @edit[:current] = copy_hash(@edit[:new])

@@ -16,7 +16,7 @@ describe MiqPolicyController do
       it "Correct active tree node is saved in @sb after Policy is added" do
         new = {}
         new[:mode] = "compliance"
-        new[:towhat] = "ContainerGroup"
+        new[:resource_type] = "ContainerGroup"
         new[:description] = "Test_description"
         new[:expression] =  {">" => {"count" => "ContainerGroup.advanced_settings", "value" => "1"}}
         controller.instance_variable_set(:@edit, :new     => new,
@@ -41,7 +41,7 @@ describe MiqPolicyController do
                                                 :active_tree => :policy_tree,
                                                 :folder      => "compliance-containerGroup",
                                                 :nodeid      => "containerGroup"}}
-        session[:edit] = {:new => {:mode => "compliance", :towhat => "ContainerGroup"}}
+        session[:edit] = {:new => {:mode => "compliance", :resource_type => "ContainerGroup"}}
         post :x_button, :params => { :pressed => "policy_new", :typ => "basic" }
         expect(response).to render_template("layouts/exp_atom/_editor")
         expect(response).to render_template("layouts/_exp_editor")

@@ -232,9 +232,9 @@ describe WidgetImportService do
               :description   => "old schedule description",
               :resource_type => "MiqWidget",
               :run_at        => {
-                :start_time => Time.now,
-                :tz         => "UTC",
-                :interval   => {:unit => "daily", :value => "6"}
+                :start_time  => Time.now,
+                :tz          => "UTC",
+                :interval    => {:unit => "daily", :value => "6"}
               }
             )
 

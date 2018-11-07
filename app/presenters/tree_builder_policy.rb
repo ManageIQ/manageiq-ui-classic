@@ -71,10 +71,10 @@ class TreeBuilderPolicy < TreeBuilder
     end
 
     # level 3 - actual policies
-    mode, towhat = parent[:id].split('-')
-    towhat = towhat.camelize
-    if MiqPolicyController::UI_FOLDERS.collect(&:name).include?(towhat)
-      objects = MiqPolicy.where(:mode => mode, :towhat => towhat)
+    mode, resource_type = parent[:id].split('-')
+    resource_type = resource_type.camelize
+    if MiqPolicyController::UI_FOLDERS.collect(&:name).include?(resource_type)
+      objects = MiqPolicy.where(:mode => mode, :resource_type => resource_type)
 
       return count_only_or_objects(count_only, objects, :description)
     end
