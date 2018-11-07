@@ -1,5 +1,7 @@
-describe('resizable-sidebar.js', function () {
-  beforeEach(function () {
+require('../helpers/set_fixtures_helper.js');
+
+describe('resizable-sidebar.js', () => {
+  beforeEach(() => {
     var html = ''
     html += '<div class="container-fluid resizable-sidebar">'
     html += '  <div class="row">'
@@ -31,7 +33,7 @@ describe('resizable-sidebar.js', function () {
     });
   });
 
-  it('hide sidebar', function () {
+  it('hide sidebar', () => {
     $('.resize-left').click();
 
     expect($('#left')).not.toHaveClass('col-md-2');
@@ -45,7 +47,7 @@ describe('resizable-sidebar.js', function () {
     expect($('#right')).toHaveClass('col-md-push-0');
   });
 
-  it('show sidebar', function () {
+  it('show sidebar', () => {
     $('.resize-left').click();
     $('.resize-right').click();
 
@@ -60,7 +62,7 @@ describe('resizable-sidebar.js', function () {
     expect($('#right')).toHaveClass('col-md-push-2');
   });
 
-  it('broaden sidebar', function () {
+  it('broaden sidebar', () => {
     for (var i=2; i<=5; i++) {
       expect($('#left')).not.toHaveClass('col-md-' + (i-1));
       expect($('#left')).not.toHaveClass('col-md-pull-' + (11-i));
@@ -76,7 +78,7 @@ describe('resizable-sidebar.js', function () {
     }
   });
 
-  it('narrow sidebar', function () {
+  it('narrow sidebar', () => {
     for (var i=2; i<5; i++) {
       $('.resize-right').click();
     }
@@ -96,7 +98,7 @@ describe('resizable-sidebar.js', function () {
     }
   });
 
-  it('extend sidebar limit', function () {
+  it('extend sidebar limit', () => {
     for (var i=0; i<5; i++) {
       $('.resize-right').click();
     }
