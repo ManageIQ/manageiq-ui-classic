@@ -61,6 +61,7 @@ module.exports = {
       'es6-shim',
       'array-includes',
       'whatwg-fetch',
+      'babel-polyfill',
     ],
   },
 
