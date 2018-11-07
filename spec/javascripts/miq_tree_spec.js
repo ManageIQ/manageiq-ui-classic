@@ -1,3 +1,5 @@
+require('../helpers/set_fixtures_helper.js');
+
 describe('miq_tree', function() {
   describe('miqInitTree', function () {
     describe('post_check', function () {
