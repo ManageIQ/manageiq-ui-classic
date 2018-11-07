@@ -256,7 +256,9 @@ class ApplicationHelper::ToolbarBuilder
   def create_custom_button(input, model, record)
     button_id = input[:id]
     button_name = input[:name].to_s
-    record_id = if cb_send_checked_list
+    record_id = if cb_send_checked_list ||
+      (@display.present? &&
+       custom_button_appliable_class?(@display.camelize.singularize))
                   'LIST'
                 else
                   record.present? ? record.id : 'LIST'
@@ -275,11 +277,6 @@ class ApplicationHelper::ToolbarBuilder
     }
     button[:text] = button_name if input[:text_display]
     button[:onwhen] = '1+' if cb_enabled_for_nested
-    if record_id == 'LIST' ||
-       (@display.present? &&
-        custom_button_appliable_class?(@display.camelize.singularize))
-      button[:send_checked] = true
-    end
     button
   end
 
