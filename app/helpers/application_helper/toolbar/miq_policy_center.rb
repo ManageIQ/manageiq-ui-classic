@@ -23,7 +23,7 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
             }
           end,
           proc do
-            _('Copy this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @policy.towhat)}
+            _('Copy this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @policy.target_class_name)}
           end,
           :confirm   => proc do
                           _("Are you sure you want to create Policy [%{new_policy_description}] from this Policy?") % {
@@ -37,13 +37,13 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           :policy_delete,
           'pficon pficon-delete fa-lg',
           t = proc do
-            _('Delete this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @policy.towhat)}
+            _('Delete this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @policy.target_class_name)}
           end,
           t,
           :url_parms    => "main_div",
           :send_checked => true,
           :klass        => ApplicationHelper::Button::PolicyDelete,
-          :confirm      => proc { _("Are you sure you want to delete this %{policy_type} Policy?") % {:policy_type => ui_lookup(:model => @policy.towhat)} },
+          :confirm      => proc { _("Are you sure you want to delete this %{policy_type} Policy?") % {:policy_type => ui_lookup(:model => @policy.target_class_name)} },
           :options      => {:feature => 'policy_delete'}),
         button(
           :condition_edit,

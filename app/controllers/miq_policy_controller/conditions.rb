@@ -9,9 +9,9 @@ module MiqPolicyController::Conditions
 
       @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
       if @condition.try(:id)
-        add_flash(_("Edit of %{model} Condition \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat]), :name => @condition.description})
+        add_flash(_("Edit of %{model} Condition \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:target_class_name]), :name => @condition.description})
       else
-        add_flash(_("Add of new %{model} Condition was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat])})
+        add_flash(_("Add of new %{model} Condition was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:target_class_name])})
       end
       @sb[:action] = @edit = nil
       get_node_info(x_node)
@@ -42,7 +42,7 @@ module MiqPolicyController::Conditions
       condition = @condition # Get new or existing record
       condition.description = @edit[:new][:description]
       condition.notes = @edit[:new][:notes]
-      condition.towhat = @edit[:new][:towhat] if adding # Set the proper model if adding a record
+      condition.target_class_name = @edit[:new][:target_class_name] if adding # Set the proper model if adding a record
       exp_remove_tokens(@edit[:new][:expression])
       condition.expression = MiqExpression.new(@edit[:new][:expression])
       exp_remove_tokens(@edit[:new][:applies_to_exp])
@@ -68,11 +68,11 @@ module MiqPolicyController::Conditions
         if adding
           case x_active_tree
           when :condition_tree
-            @new_condition_node = "xx-#{condition.towhat.camelize(:lower)}_co-#{condition.id}"
+            @new_condition_node = "xx-#{condition.target_class_name.camelize(:lower)}_co-#{condition.id}"
             replace_right_cell(:nodetype => "co", :replace_trees => %i[condition], :remove_form_buttons => true)
           when :policy_tree
             node_ids = @sb[:node_ids][x_active_tree]  # Get the selected node ids
-            @new_policy_node = "xx-#{policy.mode.downcase}_xx-#{policy.mode.downcase}-#{policy.towhat.downcase}_p-#{node_ids["p"]}_co-#{condition.id}"
+            @new_policy_node = "xx-#{policy.mode.downcase}_xx-#{policy.mode.downcase}-#{policy.target_class_name.downcase}_p-#{node_ids["p"]}_co-#{condition.id}"
             replace_right_cell(:nodetype => "co", :replace_trees => %i[policy_profile policy condition], :remove_form_buttons => true)
           when :policy_profile_tree
             node_ids = @sb[:node_ids][x_active_tree]  # Get the selected node ids
@@ -127,7 +127,7 @@ module MiqPolicyController::Conditions
       add_flash(_("Condition no longer exists"), :error)
     else
       conditions.push(params[:id])
-      @new_condition_node = "xx-#{con.towhat.camelize(:lower)}"
+      @new_condition_node = "xx-#{con.target_class_name.camelize(:lower)}"
     end
     process_conditions(conditions, "destroy") unless conditions.empty?
     get_node_info(@new_condition_node)
@@ -165,10 +165,10 @@ module MiqPolicyController::Conditions
     @edit[:key] = "condition_edit__#{@condition.id || "new"}"
     @edit[:rec_id] = @condition.id || nil
 
-    @edit[:new][:towhat] = if params[:id] && params[:typ] != "new" # If editing existing condition, grab model
-                             Condition.find(params[:id]).towhat
+    @edit[:new][:target_class_name] = if params[:id] && params[:typ] != "new" # If editing existing condition, grab model
+                             Condition.find(params[:id]).target_class_name
                            else
-                             x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).towhat
+                             x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).target_class_name
                            end
 
     @edit[:condition_id] = @condition.id
@@ -192,7 +192,7 @@ module MiqPolicyController::Conditions
     @expkey = :expression # Set expression key to expression
     @edit[@expkey].history.reset(@edit[:expression][:expression])
     @edit[:expression][:exp_table] = exp_build_table(@edit[:expression][:expression])
-    @edit[:expression][:exp_model] = @edit[:new][:towhat] # Set model for the exp editor
+    @edit[:expression][:exp_model] = @edit[:new][:target_class_name] # Set model for the exp editor
 
     # Populate exp editor fields for the applies_to_exp column
     @edit[:applies_to_exp] ||= ApplicationController::Filter::Expression.new
@@ -209,7 +209,7 @@ module MiqPolicyController::Conditions
     @edit[@expkey].history.reset(@edit[:applies_to_exp][:expression])
     @edit[:applies_to_exp][:exp_table] = exp_build_table(@edit[:applies_to_exp][:expression])
     @expkey = :expression                                                           # Reset to default to editing the expression column
-    @edit[:applies_to_exp][:exp_model] = @edit[:new][:towhat]                       # Set model for the exp editor
+    @edit[:applies_to_exp][:exp_model] = @edit[:new][:target_class_name]                       # Set model for the exp editor
 
     @edit[:current] = copy_hash(@edit[:new])
 

@@ -578,11 +578,11 @@ class MiqPolicyController < ApplicationController
                         elsif @edit
                           _("Editing %{model} Condition \"%{name}\"") %
                             {:name  => @condition.description,
-                             :model => ui_lookup(:model => @edit[:new][:towhat])}
+                             :model => ui_lookup(:model => @edit[:new][:target_class_name])}
                         else
                           _("%{model} Condition \"%{name}\"") %
                             {:name  => @condition.description,
-                             :model => ui_lookup(:model => @condition.towhat)}
+                             :model => ui_lookup(:model => @condition.target_class_name)}
                         end
     when 'ev'
       presenter.update(:main_div, r[:partial => 'event_details', :locals => {:read_only => true}])
@@ -895,7 +895,7 @@ class MiqPolicyController < ApplicationController
         @right_cell_div = "policy_list"
       end
     elsif x_active_tree == :condition_tree
-      @conditions = Condition.where(:towhat => @sb[:folder].camelize).sort_by { |c| c.description.downcase }
+      @conditions = Condition.where(:target_class_name => @sb[:folder].camelize).sort_by { |c| c.description.downcase }
       set_search_text
       @conditions = apply_search_filter(@search_text, @conditions) if @search_text.present?
       @right_cell_text = _("All %{typ} Conditions") % {:typ => ui_lookup(:model => @sb[:folder].try(:camelize))}

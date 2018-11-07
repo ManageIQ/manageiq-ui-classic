@@ -86,7 +86,7 @@
         - if @edit[:typ] == "conditions"
           %h3= _("Condition Selection")
           .col-md-5
-            = _("Available %{model} Conditions:") % {:model => ui_lookup(:model => @edit[:new][:towhat])}
+            = _("Available %{model} Conditions:") % {:model => ui_lookup(:model => @edit[:new][:target_class_name])}
             %span#choices_chosen_div
               = select_tag('choices_chosen[]',
                 options_for_select(@edit[:choices].sort),

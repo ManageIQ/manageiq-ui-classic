@@ -55,7 +55,7 @@ describe TreeBuilderProtect do
       roots = @protect_tree.send(:x_get_tree_roots)
       kids = @protect_tree.send(:x_get_tree_hash_kids, roots[0], false)
       expect(kids[0][:id]).to eq("policy_#{@kids[0].id}")
-      expect(kids[0][:text]).to eq("<strong>#{ui_lookup(:model => @kids[0].towhat)} #{@kids[0].mode.capitalize}:</strong> #{@kids[0].description}".html_safe)
+      expect(kids[0][:text]).to eq("<strong>#{ui_lookup(:model => @kids[0].target_class_name)} #{@kids[0].mode.capitalize}:</strong> #{@kids[0].description}".html_safe)
       expect(kids[0][:icon]).to eq("pficon pficon-virtual-machine fa-inactive")
       expect(kids[0][:tip]).to eq(@kids[0].description)
       expect(kids[0][:hideCheckbox]).to eq(true)
