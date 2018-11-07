@@ -144,9 +144,9 @@ module ApplicationController::MiqRequestMethods
     report_scopes = [:eligible_for_provisioning]
     report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
     options = {
-      :model         => @view.db,
-      :gtl_type      => "table",
-      :named_scope   => report_scopes,
+      :model       => @view.db,
+      :gtl_type    => "table",
+      :named_scope => report_scopes,
     }
 
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
@@ -174,11 +174,11 @@ module ApplicationController::MiqRequestMethods
       @view.db = get_template_kls.to_s
       report_scopes = %i(eligible_for_provisioning non_deprecated)
       options = {
-        :model          => @view.db,
-        :gtl_type       => "table",
-        :named_scope    => report_scopes,
-        :report_name    => report_name,
-        :custom_action  => {
+        :model         => @view.db,
+        :gtl_type      => "table",
+        :named_scope   => report_scopes,
+        :report_name   => report_name,
+        :custom_action => {
           :url  => "/miq_request/pre_prov/?sel_id=",
           :type => 'provisioning'
         }

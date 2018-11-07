@@ -1,12 +1,12 @@
 window.provisioningListenToRx = () => {
-  listenToRx ( event => {
+  listenToRx((event) => {
     if (!event || !event.payload || event.type !== 'GTL_CLICKED' || event.actionType !== 'provisioning') {
       return;
     }
 
-    const {action, item} = event.payload;
+    const { action, item } = event.payload;
 
-    sendDataWithRx({item: item, type: 'gtlSetOneRowActive'});
+    sendDataWithRx({ item: item, type: 'gtlSetOneRowActive' });
     miqAjax(`${action.url}${item.id}`);
-  })
-}
+  });
+};

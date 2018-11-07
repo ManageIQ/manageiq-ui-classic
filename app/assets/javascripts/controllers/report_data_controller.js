@@ -200,14 +200,14 @@
     this.initController(this.initObject);
   };
 
-  ReportDataController.prototype.gtlSetOneRowActive = function(item, event) {
-    this.gtlData.rows.map(function(row) { row.selected = false });
+  ReportDataController.prototype.gtlSetOneRowActive = function(item, _event) {
+    this.gtlData.rows.map(function(row) { row.selected = false; });
     var selectedItem = _.find(this.gtlData.rows, {long_id: item.long_id});
     selectedItem.selected = true;
     this.$window.sendDataWithRx({rowSelect: selectedItem});
     ManageIQ.gridChecks =  [];
     ManageIQ.gridChecks.push(item.long_id);
-  }
+  };
 
   /**
   * Method for handeling clicking on item (either gliphicon or item). It will perform navigation or post message based
@@ -230,11 +230,11 @@
       return false;
     }
 
-    if (this.initObject.additionalOptions.custom_action) {
+    if (this.initObject.additionalOptions && this.initObject.additionalOptions.custom_action) {
       sendDataWithRx({
         type: 'GTL_CLICKED',
         actionType: this.initObject.additionalOptions.custom_action.type,
-        payload: { item: item , action: this.initObject.additionalOptions.custom_action }});
+        payload: { item: item, action: this.initObject.additionalOptions.custom_action }});
       return;
     }
 
