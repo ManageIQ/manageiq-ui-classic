@@ -1,6 +1,10 @@
 {
+  "globals": {
+    "getJSONFixture": true
+  },
   "rules": {
     "max-lines": "off",
-    "max-lines-per-function": "off"
+    "max-lines-per-function": "off",
+    "import/no-dynamic-require": "off"
   }
 }

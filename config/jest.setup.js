@@ -18,3 +18,6 @@ import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_obs
 ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
+
+import getJSONFixture from '../app/javascript/spec/helpers/getJSONFixtures';
+window.getJSONFixture = getJSONFixture;
