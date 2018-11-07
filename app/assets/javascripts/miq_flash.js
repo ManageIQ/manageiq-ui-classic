@@ -1,6 +1,6 @@
 // add a flash message to an existing #flash_msg_div
 // levels are error, warning, info, success
-function add_flash(msg, level, options) {
+window.add_flash = function(msg, level, options) {
   level = level || 'success';
   options = options || {};
   var cls = { alert: '', icon: '' };
@@ -68,7 +68,7 @@ function add_flash(msg, level, options) {
   }
 }
 
-function clearFlash() {
+window.clearFlash = function() {
   $('#flash_msg_div').empty();
 }
 
