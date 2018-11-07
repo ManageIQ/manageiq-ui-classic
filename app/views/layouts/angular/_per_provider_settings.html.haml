@@ -2,13 +2,11 @@
   %h3
     = _("Settings")
   %ul.nav.nav-tabs
-    = miq_tab_header('proxy_settings', nil, 'ng-click' => "changeAuthTab('proxy_settings')",
+    = miq_tab_header('proxy_settings', nil,
       'ng-if' => "emsOptionsModel.provider_options.hasOwnProperty('proxy_settings')") do
-      %i{"error-on-tab" => "proxy_settings", :style => "color:#cc0000"}
       = _("Proxy")
-    = miq_tab_header('advanced_settings', nil, 'ng-click' => "changeAuthTab('advanced_settings')",
+    = miq_tab_header('advanced_settings', nil,
       'ng-if' => "emsOptionsModel.provider_options.hasOwnProperty('advanced_settings')") do
-      %i{"error-on-tab" => "advanced_settings", :style => "color:#cc0000"}
       = _("Advanced")
 
   .tab-content
