@@ -113,8 +113,10 @@ class DialogLocalService
       cancel_endpoint = "/storage/explorer"
     when /Template/
       api_collection_name = "templates"
-      cancel_endpoint = "/vm_or_template/explorer"
-    when /Tenant/
+      cancel_endpoint = display_options[:cancel_endpoint] || "/vm_or_template/explorer"
+
+    # ^ is necessary otherwise we match CloudTenant
+    when /^Tenant/
       api_collection_name = "tenants"
       cancel_endpoint = "/ops/explorer"
     when /User/

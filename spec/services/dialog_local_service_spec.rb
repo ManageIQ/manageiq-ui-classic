@@ -296,19 +296,24 @@ describe DialogLocalService do
     context "when the object is a Storage" do
       let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Storage, :id => 123) }
 
-      it "returns a hash" do
-        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
-          :resource_action_id     => 321,
-          :target_id              => 123,
-          :target_type            => 'storage',
-          :dialog_id              => 654,
-          :force_old_dialog_use   => false,
-          :api_submit_endpoint    => "/api/datastores/123",
-          :api_action             => "custom-button-name",
-          :finish_submit_endpoint => "/storage/explorer",
-          :cancel_endpoint        => "/storage/explorer",
-          :open_url               => false,
-        )
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "storage", "datastores", "/storage/explorer"
+    end
+
+    context "when the object is a Template" do
+      context "when there is a cancel endpoint in the display options" do
+        let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Template, :id => 123) }
+        let(:display_options) { {:cancel_endpoint => "/vm_cloud/explorer"} }
+
+        include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                         "miq_template", "templates", "/vm_cloud/explorer"
+      end
+
+      context "when there is not a cancel endpoint in the display options" do
+        let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Template, :id => 123) }
+
+        include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                         "miq_template", "templates", "/vm_or_template/explorer"
       end
     end
 
