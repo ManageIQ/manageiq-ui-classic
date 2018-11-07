@@ -38,11 +38,7 @@ module ReportController::Schedules
     @sortcol = session[:schedule_sortcol].nil? ? 0 : session[:schedule_sortcol].to_i
     @sortdir = session[:schedule_sortdir].nil? ? "ASC" : session[:schedule_sortdir]
 
-    if super_admin_user? # Super admins see all user's schedules
-      @view, @pages = get_view(MiqSchedule, :named_scope => [[:with_towhat, "MiqReport"]]) # Get the records (into a view) and the paginator
-    else
-      @view, @pages = get_view(MiqSchedule, :named_scope => [[:with_towhat, "MiqReport"], [:with_userid, session[:userid]]]) # Get the records (into a view) and the paginator
-    end
+    @view, @pages = get_view(MiqSchedule, :named_scope => [[:with_towhat, "MiqReport"]]) # Get the records (into a view) and the paginator
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:schedule_sortcol] = @sortcol
