@@ -23,7 +23,7 @@ class TreeBuilderReportSchedules < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    objects = Rbac::Filterer.filtered(MiqSchedule.where(:towhat => 'MiqReport'))
+    objects = Rbac::Filterer.filtered(MiqSchedule.where(:resource_type => 'MiqReport'))
     count_only_or_objects(count_only, objects, 'name')
   end
 end
