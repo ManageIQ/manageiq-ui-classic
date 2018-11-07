@@ -9,9 +9,6 @@
 import 'proxy-polyfill';
 import { Spinner } from 'spin.js';
 import 'spin.js/spin.css';
-
-import { mount } from '../react/mounter';
-import componentRegistry from '../react/componentRegistry';
 import { API, http } from '../http_api';
 
 import * as newRegistry from '../miq-component/registry.ts';
@@ -23,11 +20,6 @@ import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
 import { initializeStore } from '../miq-redux';
 import { history } from '../miq-component/react-history.ts';
 import createReduxRoutingActions from '../miq-redux/redux-router-actions';
-
-ManageIQ.react = {
-  mount,
-  componentRegistry,
-};
 
 ManageIQ.component = {
   ...newRegistry,
