@@ -1100,8 +1100,8 @@ function miqObserveRequest(url, options) {
   return deferred.promise;
 }
 
-function miqJqueryRequest(url, options) {
-  if ((ManageIQ.observe.processing || ManageIQ.observe.queue.length) && (!options || !options.observe)) {
+window.miqJqueryRequest = function(url, options) {
+  if ((ManageIQ.observe.processing || ManageIQ.observe.queue.length) && (! options || ! options.observe)) {
     console.debug('Postponing miqJqueryRequest - waiting for the observe queue to empty first');
 
     return new Promise(function(resolve, reject) {
