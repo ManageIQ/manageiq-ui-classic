@@ -165,7 +165,7 @@ module ReportController::Reports
     end
 
     if @sb[:active_tab] == "report_info"
-      @schedules = Rbac::Filterer.filtered(MiqSchedule.where(:towhat => 'MiqReport')).select { |s| s.filter.exp["="]["value"].to_i == @miq_report.id.to_i }.sort_by(&:name)
+      @schedules = Rbac::Filterer.filtered(MiqSchedule.where(:resource_type => 'MiqReport')).select { |s| s.filter.exp["="]["value"].to_i == @miq_report.id.to_i }.sort_by(&:name)
 
       @widget_nodes = @miq_report.miq_widgets.to_a
     end
