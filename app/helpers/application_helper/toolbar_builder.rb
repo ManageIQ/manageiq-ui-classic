@@ -239,11 +239,7 @@ class ApplicationHelper::ToolbarBuilder
   end
 
   def cb_send_checked_list
-    return true if %w(generic_objects).include?(@display)
-  end
-
-  def cb_enabled_for_nested
-    return true if %w(generic_objects).include?(@display)
+    @display.present? && custom_button_appliable_class?(@display.camelize.singularize)
   end
 
   def cb_enabled_value_for_nested
@@ -256,14 +252,12 @@ class ApplicationHelper::ToolbarBuilder
   def create_custom_button(input, model, record)
     button_id = input[:id]
     button_name = input[:name].to_s
-    record_id = if cb_send_checked_list ||
-      (@display.present? &&
-       custom_button_appliable_class?(@display.camelize.singularize))
+    record_id = if cb_send_checked_list
                   'LIST'
                 else
                   record.present? ? record.id : 'LIST'
                 end
-    enabled = cb_enabled_for_nested ? cb_enabled_value_for_nested : input[:enabled]
+    enabled = cb_send_checked_list ? cb_enabled_value_for_nested : input[:enabled]
     button = {
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
@@ -276,7 +270,7 @@ class ApplicationHelper::ToolbarBuilder
       :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}"
     }
     button[:text] = button_name if input[:text_display]
-    button[:onwhen] = '1+' if cb_enabled_for_nested
+    button[:onwhen] = '1+' if cb_send_checked_list
     button
   end
 
@@ -300,7 +294,7 @@ class ApplicationHelper::ToolbarBuilder
     get_custom_buttons(model, record, toolbar_result).collect do |group|
       buttons = group[:buttons].collect { |b| create_custom_button(b, model, record) }
 
-      enabled = if cb_enabled_for_nested
+      enabled = if cb_send_checked_list
                   cb_enabled_value_for_nested
                 else
                   record ? true : buttons.all? { |button| button[:enabled] }
@@ -315,7 +309,7 @@ class ApplicationHelper::ToolbarBuilder
         :items   => buttons
       }
       props[:text] = group[:text] if group[:text_display]
-      props[:onwhen] = '1+' if cb_enabled_for_nested
+      props[:onwhen] = '1+' if cb_send_checked_list
 
       {:name => "custom_buttons_#{group[:text]}", :items => [props]}
     end
