@@ -170,7 +170,7 @@ module ApplicationController::MiqRequestMethods
     unless %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
       report_name = "ProvisionTemplates.yaml"
       path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", report_name).to_s
-      @view = MiqReport.new(YAML.load(File.open(path_to_report)))
+      @view = MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
       @view.db = get_template_kls.to_s
       report_scopes = %i(eligible_for_provisioning non_deprecated)
       options = {
