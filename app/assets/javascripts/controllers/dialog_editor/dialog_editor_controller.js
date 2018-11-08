@@ -65,6 +65,8 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     translateResponderNamesToIds(dialog.content[0]);
 
     if (requestDialogAction() === 'copy') {
+      // gettext left out intentionally
+      // the label will be rendered to all users in all locales as it was saved
       dialog.label = dialog.content[0].label = "Copy of " + dialog.label;
     }
 
