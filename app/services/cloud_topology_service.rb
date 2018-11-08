@@ -36,7 +36,7 @@ class CloudTopologyService < TopologyService
 
   def entity_status(entity)
     if entity.kind_of?(ManageIQ::Providers::CloudManager)
-      entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
+      entity.authentications.blank? ? 'Unknown' : entity.authentication_for_providers.first.status.try(:capitalize)
     elsif entity.kind_of?(Vm)
       entity.power_state.nil? ? 'Unknown' : entity.power_state.capitalize
     elsif entity.kind_of?(AvailabilityZone)
