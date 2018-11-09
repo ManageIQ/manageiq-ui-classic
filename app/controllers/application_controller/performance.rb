@@ -328,8 +328,8 @@ module ApplicationController::Performance
     new_opts = tl_session_data(request.parameters["controller"]) || ApplicationController::Timelines::Options.new
     new_opts[:model] = @perf_record.class.base_class.to_s
     new_opts.date.typ = chart_click_data.type
-    new_opts.date.daily = @perf_options[:daily_date] if chart_click_data.type == "Daily"
-    new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if chart_click_data.type == "Hourly"
+    new_opts.date.end_date = @perf_options[:daily_date] if chart_click_data.type == "Daily"
+    new_opts.date.end_date = [ts.month, ts.day, ts.year].join("/") if chart_click_data.type == "Hourly"
     new_opts[:tl_show] = "timeline"
     set_tl_session_data(new_opts, request.parameters["controller"])
     f = @perf_record.first_event
