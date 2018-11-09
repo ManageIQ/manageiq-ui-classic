@@ -5,7 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer Beta-2
+## Hammer RC-1
+
+### Added
+- Add physical switches to the Physical Server page Relationships table [(#4811)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4811)
+
+### Fixed
+- Fix bottom tooltip placement for notifications in the drawer [(#4821)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4821)
+- Only update report name in group reports menu when editing a report [(#4824)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4824)
+- Setting `@in_a_form` [(#4825)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4825)
+- Fix removing catalog items from Catalog Bundle resource list [(#4822)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4822)
+- Load correct Mixins::CustomButtons::Result when browser is refreshed [(#4835)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4835)
+- Rename tabs in the haml to match current tab in the controller scope [(#4836)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4836)
+- Move reducer initialization out of the buttons component. [(#4840)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4840)
+- Fixed feature id when checking assert_privileges. [(#4843)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4843)
+- Advanced search - use the right spinner [(#4847)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4847)
+- Display custom buttons after comming from relationship table [(#4775)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4775)
+- Rescue error when canceling job [(#4855)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4855)
+- Filter tenants and groups in Access Control by current region [(#4831)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4831)
+- No need to load default search when user is on tagging screen. [(#4856)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4856)
+- Show only servers in current region in Diagnostics [(#4849)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4849)
+- GTL - use miqSparkle-style spinner when loading [(#4844)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4844)
+- Stop spinner from spinning forever when creating a new key pair [(#4854)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4854)
+- Display Tags info on Job Template summary view. [(#4873)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4873)
+- Fixed to show grouping in drop down only for Ansible Tower type item. [(#4875)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4875)
+
+## Hammer Beta-2 - Released 2018-10-29
 
 ### Added
 - Adding back a Tag as a filter to the PhysicalInfra topology [(#4743)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4743)
