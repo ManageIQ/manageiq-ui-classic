@@ -82,10 +82,17 @@
       warning: '#E17B1C'
     };
 
+    if (typeof eventData === 'undefined' || typeof eventData.events === 'undefined') {
+      return colors.detail;
+    }
+
     if (eventData.hasOwnProperty('events')) {
       var severity = 'detail';
       var eventList = eventData.events;
       for (var i = 0; i < eventList.length; i++) {
+        if (typeof eventList[0].data.group_level === 'undefined') {
+          return colors.detail;
+        }
         severity = selectSevereer(eventList[i].data.group_level.value, severity);
       }
       return colors[severity];
