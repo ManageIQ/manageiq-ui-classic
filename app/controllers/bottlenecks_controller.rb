@@ -24,7 +24,7 @@ class BottlenecksController < ApplicationController
 
     # build timeline data when coming back to Summary tab for bottlenecks
     displaying_timeline = @sb[:active_tab] == "summary"
-    bottleneck_get_node_info(x_node) if displaying_timeline
+    get_node_info(x_node) if displaying_timeline
 
     render :update do |page|
       page << javascript_prologue
@@ -32,6 +32,22 @@ class BottlenecksController < ApplicationController
       page.replace("tl_div", :partial => "bottlenecks_tl_detail") if displaying_timeline
       page << Charting.js_load_statement
       page << "miqSparkle(false);"
+    end
+  end
+
+  # Send the current utilization report data in text, CSV, or PDF
+  def report_download
+    filename = "Bottlenecks Event Details"
+    disable_client_cache
+    case params[:typ]
+    when "txt"
+      send_data(@sb[:report].to_text,
+                :filename => "#{filename}.txt")
+    when "csv"
+      send_data(@sb[:report].to_csv,
+                :filename => "#{filename}.csv")
+    when "pdf"
+      render_pdf(@sb[:report])
     end
   end
 

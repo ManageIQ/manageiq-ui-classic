@@ -2238,9 +2238,11 @@ Rails.application.routes.draw do
     :bottlenecks              => {
       :get  => %w(
         index
+        report_download
         timeline_data
       ),
       :post => %w(
+        change_tab
         reload
         tl_chooser
         tree_autoload
