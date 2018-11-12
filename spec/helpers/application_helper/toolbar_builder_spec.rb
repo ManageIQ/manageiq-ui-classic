@@ -332,7 +332,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
   describe "update_url_parms", :type => :request do
     before do
-      MiqServer.seed
+      EvmSpecHelper.local_guid_miq_server_zone
     end
 
     context "when the given parameter exists in the request query string" do

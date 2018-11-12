@@ -6,7 +6,7 @@ shared_examples_for 'a smart state scan button' do
 
   describe '#calculate_properties' do
     before do
-      MiqServer.seed
+      EvmSpecHelper.local_guid_miq_server_zone
       server
       button.calculate_properties
     end
