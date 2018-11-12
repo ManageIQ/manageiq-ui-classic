@@ -934,8 +934,7 @@ describe ApplicationHelper do
     end
 
     it "uses restful paths for pages" do
-      FactoryGirl.create(:ems_cloud, :zone => zone)
-      @record = ManageIQ::Providers::CloudManager.first
+      @record = FactoryGirl.create(:ems_cloud, :zone => zone)
       get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
 
       expect(helper.update_paging_url_parms("show", :page => 2)).to eq("/ems_cloud/#{@record.id}?display=images&page=2")
