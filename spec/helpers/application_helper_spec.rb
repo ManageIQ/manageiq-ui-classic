@@ -932,7 +932,6 @@ describe ApplicationHelper do
       before do
         get "/vm/show_list/100", :params => "bc=VMs+running+on+2014-08-25&menu_click=Display-VMs-on_2-6-5&page=2&sb_controller=host"
         allow_any_instance_of(Object).to receive(:query_string).and_return(@request.query_string)
-        allow_message_expectations_on_nil
       end
 
       it "updates the query string with the given hash value and returns the full url path" do
@@ -946,7 +945,6 @@ describe ApplicationHelper do
         @record = ManageIQ::Providers::CloudManager.first
         get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
         allow_any_instance_of(Object).to receive(:query_string).and_return(@request.query_string)
-        allow_message_expectations_on_nil
       end
 
       it "uses restful paths for pages" do
