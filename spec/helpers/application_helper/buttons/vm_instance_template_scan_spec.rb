@@ -30,7 +30,7 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
   describe '#calculate_properties' do
     let(:has_active_proxy?) { true }
     before do
-      MiqServer.seed
+      EvmSpecHelper.local_guid_miq_server_zone
       allow(record).to receive(:has_active_proxy?).and_return(has_active_proxy?)
     end
 

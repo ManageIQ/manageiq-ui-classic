@@ -24,7 +24,7 @@ describe ApplicationHelper::Button::ZoneDelete do
 
       context 'and zone has miq_schedules' do
         let(:set_relationships) do
-          MiqServer.seed
+          EvmSpecHelper.local_guid_miq_server_zone
           selected_zone.miq_schedules << FactoryGirl.create(:miq_schedule)
         end
         it_behaves_like 'a disabled button', 'Cannot delete a Zone that has Relationships'

@@ -925,7 +925,7 @@ describe ApplicationHelper do
 
   describe "update_paging_url_parms", :type => :request do
     before do
-      MiqServer.seed
+      EvmSpecHelper.local_guid_miq_server_zone
     end
 
     context "when the given parameter is a hash" do
