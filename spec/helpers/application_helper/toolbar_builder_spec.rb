@@ -332,7 +332,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
   describe "update_url_parms", :type => :request do
     before do
-      MiqServer.seed
+      FactoryGirl.create(:miq_server)
     end
 
     context "when the given parameter exists in the request query string" do
