@@ -924,9 +924,7 @@ describe ApplicationHelper do
   end
 
   describe "update_paging_url_parms", :type => :request do
-    before do
-      EvmSpecHelper.local_guid_miq_server_zone
-    end
+    let!(:zone) { EvmSpecHelper.local_guid_miq_server_zone[2] }
 
     it "updates the query string with the given hash value and returns the full url path" do
       get "/vm/show_list/100", :params => "bc=VMs+running+on+2014-08-25&menu_click=Display-VMs-on_2-6-5&page=2&sb_controller=host"
@@ -936,7 +934,7 @@ describe ApplicationHelper do
     end
 
     it "uses restful paths for pages" do
-      FactoryGirl.create(:ems_cloud, :zone => Zone.seed)
+      FactoryGirl.create(:ems_cloud, :zone => zone)
       @record = ManageIQ::Providers::CloudManager.first
       get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
 
