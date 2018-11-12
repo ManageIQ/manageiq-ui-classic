@@ -928,26 +928,19 @@ describe ApplicationHelper do
       EvmSpecHelper.local_guid_miq_server_zone
     end
 
-    context "when the given parameter is a hash" do
-      before do
-        get "/vm/show_list/100", :params => "bc=VMs+running+on+2014-08-25&menu_click=Display-VMs-on_2-6-5&page=2&sb_controller=host"
-      end
+    it "updates the query string with the given hash value and returns the full url path" do
+      get "/vm/show_list/100", :params => "bc=VMs+running+on+2014-08-25&menu_click=Display-VMs-on_2-6-5&page=2&sb_controller=host"
 
-      it "updates the query string with the given hash value and returns the full url path" do
-        expect(helper.update_paging_url_parms("show_list", :page => 1)).to eq("/vm/show_list/100?bc=VMs+running+on+2014-08-25"\
-          "&menu_click=Display-VMs-on_2-6-5&page=1&sb_controller=host")
-      end
+      expect(helper.update_paging_url_parms("show_list", :page => 1)).to eq("/vm/show_list/100?bc=VMs+running+on+2014-08-25"\
+        "&menu_click=Display-VMs-on_2-6-5&page=1&sb_controller=host")
     end
-    context "when the controller uses restful paths" do
-      before do
-        FactoryGirl.create(:ems_cloud, :zone => Zone.seed)
-        @record = ManageIQ::Providers::CloudManager.first
-        get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
-      end
 
-      it "uses restful paths for pages" do
-        expect(helper.update_paging_url_parms("show", :page => 2)).to eq("/ems_cloud/#{@record.id}?display=images&page=2")
-      end
+    it "uses restful paths for pages" do
+      FactoryGirl.create(:ems_cloud, :zone => Zone.seed)
+      @record = ManageIQ::Providers::CloudManager.first
+      get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
+
+      expect(helper.update_paging_url_parms("show", :page => 2)).to eq("/ems_cloud/#{@record.id}?display=images&page=2")
     end
   end
 
