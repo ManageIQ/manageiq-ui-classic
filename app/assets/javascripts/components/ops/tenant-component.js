@@ -96,7 +96,7 @@ function tenantFormController(API, miqService) {
   // private functions
   function getTenantFormData(response) {
     Object.assign(vm.tenantModel, response);
-    vm.tenantModel.default = ! angular.isDefined(response.ancestry);
+    vm.tenantModel.default = !angular.isDefined(response.ancestry);
 
     vm.afterGet = true;
     vm.entity = vm.tenantModel.divisible ? __('Tenant') : __('Project');

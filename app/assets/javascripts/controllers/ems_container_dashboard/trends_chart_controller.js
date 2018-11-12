@@ -1,7 +1,7 @@
 /* global miqHttpInject */
 angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
   var vm = this;
-  vm.id = "trendsChart_" + providerId;
+  vm.id = 'trendsChart_' + providerId;
   var init = function() {
     ManageIQ.angular.scope = vm;
     vm.loadingDone = false;
@@ -32,7 +32,7 @@ angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', '
             return chartsMixin.parseDate(date);
           });
         }
-        vm.data = chartsMixin.processData(data.xy_data, 'dates', __("Network"));
+        vm.data = chartsMixin.processData(data.xy_data, 'dates', __('Network'));
       }
       vm.loadingDone = true;
     });

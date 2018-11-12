@@ -10,6 +10,7 @@
   /**
   * Private method for subscribing to rxSubject.
   * For success functuon @see ToolbarController#onRowSelect()
+  * @returns {undefined}
   */
   function subscribeToSubject() {
     listenToRx(function(event) {
@@ -26,7 +27,7 @@
       }
 
       // sync changes
-      if (! this.$scope.$$phase) {
+      if (!this.$scope.$$phase) {
         this.$scope.$digest();
       }
     }.bind(this),
@@ -40,7 +41,8 @@
 
   /**
   * Private method for setting rootPoint of MiQEndpointsService.
-  * @param MiQEndpointsService service responsible for endpoits.
+  * @param {Object} MiQEndpointsService service responsible for endpoits.
+  * @returns {undefined}
   */
   function initEndpoints(MiQEndpointsService) {
     var urlPrefix = '/' + location.pathname.split('/')[1];
@@ -49,11 +51,12 @@
 
   /**
   * Constructor of angular's miqToolbarController.
-  * @param MiQToolbarSettingsService toolbarSettings service from ui-components.
-  * @param MiQEndpointsService endpoits service from ui-components.
-  * @param $scope service for managing $scope (for apply and digest reasons).
-  * @param $location service for managing browser's location.
+  * @param {Object} MiQToolbarSettingsService toolbarSettings service from ui-components.
+  * @param {Object} MiQEndpointsService endpoits service from ui-components.
+  * @param {Object} $scope service for managing $scope (for apply and digest reasons).
+  * @param {Object} $location service for managing browser's location.
   * this contructor will assign all params to `this`, it will init endpoits, set if toolbar is used on list page.
+  * @returns {undefined}
   */
   var ToolbarController = function(MiQToolbarSettingsService, MiQEndpointsService, $scope, $location) {
     this.MiQToolbarSettingsService = MiQToolbarSettingsService;
@@ -66,6 +69,8 @@
 
   /**
   * Public method which is executed after row in gtl is selected.
+  * @param {Object} data selected row
+  * @returns {undefined}
   */
   ToolbarController.prototype.onRowSelect = function(data) {
     this.MiQToolbarSettingsService.checkboxClicked(data.checked);
@@ -73,10 +78,11 @@
 
   /**
   * Public method for setting up url of data views, based on last path param (e.g. /show_list).
+  * @returns {undefined}
   */
   ToolbarController.prototype.defaultViewUrl = function() {
     this.dataViews.forEach(function(item) {
-      if (item.url === "") {
+      if (item.url === '') {
         var lastSlash = location.pathname.lastIndexOf('/');
         item.url = (lastSlash !== -1) ? location.pathname.substring(lastSlash) : '';
       }
@@ -88,6 +94,8 @@
   * @see MiQToolbarSettingsService#getSettings for more info.
   * Settings is called with this.isList and $location search object with value of `type`.
   * No need to worry about multiple search params and no complicated function for parsing is needed.
+  * @param {function} getData callbalc for retireving toolbar data
+  * @returns {undefined}
   */
   ToolbarController.prototype.fetchData = function(getData) {
     return this.MiQToolbarSettingsService
@@ -100,7 +108,7 @@
 
   ToolbarController.prototype.onSetCount = function(count) {
     this.MiQToolbarSettingsService.setCount(count);
-    if (! this.$scope.$$phase) {
+    if (!this.$scope.$$phase) {
       this.$scope.$digest();
     }
   };
@@ -134,6 +142,9 @@
 
   /**
    * Public method for changing view over data.
+   * @param {Object} item clicked view object
+   * @param {Object} $event angular synthetic mouse event
+   * @returns {undefined}
    */
   ToolbarController.prototype.onViewClick = function(item, $event) {
     if (item.url.indexOf('/') === 0) {
@@ -172,21 +183,21 @@
   };
 
   ToolbarController.prototype.anyToolbarVisible = function() {
-    if (! this.toolbarItems || ! this.toolbarItems.length) {
+    if (!this.toolbarItems || !this.toolbarItems.length) {
       return false;
     }
 
     var nonEmpty = this.toolbarItems.filter(function(ary) {
-      if (! ary || ! ary.length) {
+      if (!ary || !ary.length) {
         return false;
       }
 
       return _.some(ary, function(item) {
-        return ! item.hidden;
+        return !item.hidden;
       });
     });
 
-    return !! nonEmpty.length;
+    return !!nonEmpty.length;
   };
 
   ToolbarController.prototype.showOrHide = function() {

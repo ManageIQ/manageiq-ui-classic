@@ -24,13 +24,13 @@ ManageIQ.angular.app.component('datetimeDelayPicker', {
     };
 
     this.$onInit = function() {
-      if (! this.start_date) {
+      if (!this.start_date) {
         this.start_date = new Date();
       }
     };
 
     this.$postLink = function() {
-      var commonAttrs = {min: 0, verticalbuttons: true, buttondown_class: "btn btn-link", buttonup_class: "btn btn-link"};
+      var commonAttrs = {min: 0, verticalbuttons: true, buttondown_class: 'btn btn-link', buttonup_class: 'btn btn-link'};
       var attrs = {months: __('Months'), weeks: __('Weeks'), days: __('Days'), hours: __('Hours')};
 
       for (var key in attrs) {

@@ -9,11 +9,12 @@ ManageIQ.angular.app.directive('validateTotal', function() {
         }
 
         var x = parseInt(viewValue, 10);
-        if (x <= parseInt(maxvalue, 10))
+        if (x <= parseInt(maxvalue, 10)) {
           return true;
+        }
 
         return false;
       };
-    }
+    },
   };
 });

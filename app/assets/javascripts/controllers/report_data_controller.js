@@ -119,13 +119,13 @@
   * @returns {undefined}
   */
   var ReportDataController = function(MiQDataTableService,
-                                      MiQEndpointsService,
-                                      $filter,
-                                      $location,
-                                      $scope,
-                                      $document,
-                                      $timeout,
-                                      $window) {
+    MiQEndpointsService,
+    $filter,
+    $location,
+    $scope,
+    $document,
+    $timeout,
+    $window) {
     var vm = this;
     vm.settings = {};
     vm.MiQDataTableService = MiQDataTableService;
@@ -210,7 +210,7 @@
     event.preventDefault();
 
     // nothing to do
-    if (! this.initObject.showUrl) {
+    if (!this.initObject.showUrl) {
       return false;
     }
 
@@ -238,7 +238,7 @@
       $.post(url).always(function() {
         this.setExtraClasses();
       }.bind(this));
-    } else if (prefix !== "true") {
+    } else if (prefix !== 'true') {
       miqSparkleOn();
       var lastChar = prefix[prefix.length - 1];
       prefix = (lastChar !== '/' && lastChar !== '=') ? prefix + '/' : prefix;
@@ -318,12 +318,12 @@
     this.initObjects(initObject);
     this.setExtraClasses(initObject.gtlType);
     return this.getData(initObject.modelName,
-                        initObject.activeTree,
-                        initObject.parentId,
-                        initObject.isExplorer,
-                        this.settings,
-                        initObject.records,
-                        initObject.additionalOptions)
+      initObject.activeTree,
+      initObject.parentId,
+      initObject.isExplorer,
+      this.settings,
+      initObject.records,
+      initObject.additionalOptions)
       .then(function(data) {
         this.settings.hideSelect = initObject.hideSelect;
         var start = (this.settings.current - 1) * this.settings.perpage;
@@ -336,7 +336,7 @@
         this.movePagination();
 
         // pagination doesn't update on no records (components/data-table/data-table.html:4:99), hide it instead
-        if (! this.gtlData.rows.length) {
+        if (!this.gtlData.rows.length) {
           this.setExtraClasses();
         }
 
@@ -375,7 +375,7 @@
     var mainContent = this.$document.querySelector('#main-content');
     var pagination = this.$document.querySelector('#paging_div .miq-pagination');
 
-    if (! mainContent) {
+    if (!mainContent) {
       return;
     }
 
@@ -462,12 +462,12 @@
   * @returns {Object} promise of retriveRowsAndColumnsFromUrl of MiQDataTableService.
   */
   ReportDataController.prototype.getData = function(modelName,
-                                                    activeTree,
-                                                    parentId,
-                                                    isExplorer,
-                                                    settings,
-                                                    records,
-                                                    additionalOptions) {
+    activeTree,
+    parentId,
+    isExplorer,
+    settings,
+    records,
+    additionalOptions) {
     var basicSettings = {
       current: 1,
       perpage: 20,
@@ -483,7 +483,7 @@
         }
 
         // Camelize the quadicon data received from the server
-        _.each(gtlData.rows, function(row, key) {
+        _.each(gtlData.rows, function(row) {
           row.quad = camelizeQuadicon(row.quad);
         });
 

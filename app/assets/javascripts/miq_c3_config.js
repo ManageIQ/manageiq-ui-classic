@@ -181,6 +181,6 @@
         legend: { show: true, position: 'right'},
       }, c3mixins.pfColorPattern,
       $().c3ChartDefaults().getDefaultAreaConfig()
-   ),
+    ),
   };
 })(ManageIQ);

@@ -24,9 +24,9 @@ function trendsChartController() {
     prevChartData = angular.copy(vm.chartData);
     prevConfig = angular.copy(vm.config);
 
-    vm.showLargeCardLayout = (! vm.config.layout || vm.config.layout === 'large');
+    vm.showLargeCardLayout = (!vm.config.layout || vm.config.layout === 'large');
     vm.showSmallCardLayout = (vm.config.layout === 'small');
-    vm.showActualValue = (! vm.config.valueType || vm.config.valueType === 'actual');
+    vm.showActualValue = (!vm.config.valueType || vm.config.valueType === 'actual');
     vm.showPercentageValue = (vm.config.valueType === 'percentage');
   };
 
@@ -61,7 +61,7 @@ function trendsChartController() {
 
   vm.$doCheck = function() {
     // do a deep compare on chartData and config
-    if (! angular.equals(vm.chartData, prevChartData) || ! angular.equals(vm.config, prevConfig)) {
+    if (!angular.equals(vm.chartData, prevChartData) || !angular.equals(vm.config, prevConfig)) {
       vm.updateAll();
     }
   };

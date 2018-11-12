@@ -14,13 +14,13 @@ function miqTreeObject(tree) {
 function miqTreeFindNodeByKey(tree, key) {
   var tree = miqTreeObject(tree);
 
-  if (! tree) {
+  if (!tree) {
     console.error("miqTreeFindNodeByKey: tree '" + tree + "' does not exist.");
     return;
   }
 
   return tree.getNodes().find(function(node) {
-    return (node.key == key);
+    return (node.key === key);
   });
 }
 
@@ -67,7 +67,7 @@ function miqRemoveNodeChildren(treename, key) {
 
 function miqOnCheckMenuRoles(id) {
   var nid = id.split('__');
-  if (nid[0] != 'r') {
+  if (nid[0] !== 'r') {
     var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
     miqJqueryRequest(url, {beforeSend: true,
       complete: true,
@@ -213,7 +213,6 @@ function miqOnCheckSections(_tree_name, key, checked, all_checked) {
 }
 
 function miqOnCheckGenealogy(node, treename) {
-  var count = 0;
   var tree = miqTreeObject(treename);
   // Map the selected nodes into an array of keys
   var selectedKeys = tree.getChecked().map(function(item) {
@@ -357,12 +356,12 @@ function miqMenuChangeRow(action, elem) {
       break;
 
     case 'delete':
-      if (! selected.length) {
+      if (!selected.length) {
         break;
       }
 
       var selected_id = selected.children()[0].id.split('|-|');
-      if (selected_id.length == 1) {
+      if (selected_id.length === 1) {
         selected.remove();
       } else {
         // just show a flash message
@@ -422,9 +421,8 @@ function miqTreeEventSafeEval(func) {
 
   if (whitelist.includes(func)) {
     return window[func];
-  } else {
-    throw new Error('Function not in whitelist: ' + func);
   }
+  throw new Error('Function not in whitelist: ' + func);
 }
 
 function miqTreeOnNodeChecked(options, node) {
@@ -441,18 +439,17 @@ function miqTreeOnNodeChecked(options, node) {
 function miqTreeState(tree, node, state) {
   // Initialize the session storage object
   var persist = JSON.parse(sessionStorage.getItem('tree_state_' + tree));
-  if (! persist) {
+  if (!persist) {
     persist = {};
   }
 
   if (state === undefined) {
     // No third argument, return the stored value or undefined
     return persist[node];
-  } else {
-    // Save the third argument as the new node state
-    persist[node] = state;
-    sessionStorage.setItem('tree_state_' + tree, JSON.stringify(persist));
   }
+  // Save the third argument as the new node state
+  persist[node] = state;
+  sessionStorage.setItem('tree_state_' + tree, JSON.stringify(persist));
 }
 
 function miqTreeClearState(tree) {
@@ -510,15 +507,15 @@ function miqInitTree(options, tree) {
     nodes.reverse();
     while (nodes.length > 0) {
       var parent = nodes.pop();
-      if (! parent.nodes) {
+      if (!parent.nodes) {
         continue;
       }
-      if (! parent.state) {
+      if (!parent.state) {
         parent.state = {};
       }
       parent.nodes.forEach(function(node) {
         if (parent.state.checked === true) {
-          if (! node.state) {
+          if (!node.state) {
             node.state = {};
           }
           node.state.checked = true;
@@ -558,7 +555,7 @@ function miqInitTree(options, tree) {
       if (options.onclick) {
         if (options.click_url) {
           miqTreeEventSafeEval(options.onclick)(node.key);
-        } else if (miqCheckForChanges() == false) {
+        } else if (miqCheckForChanges() === false) {
           node.$el.focus();
         } else {
           miqTreeEventSafeEval(options.onclick)(node.key);
@@ -601,7 +598,7 @@ function miqInitTree(options, tree) {
 
   // Tree state persistence correction after the tree is completely loaded
   miqTreeObject(options.tree_name).getNodes().forEach(function(node) {
-    if (miqTreeState(options.cookie_id, node.key) === ! node.state.expanded) {
+    if (miqTreeState(options.cookie_id, node.key) === !node.state.expanded) {
       miqTreeObject(options.tree_name).toggleNodeExpanded(node);
     }
   });

@@ -12,5 +12,5 @@ ManageIQ.angular.app.component('dropdownMenu', {
       vm.buttons = JSON.parse(vm.buttonsData);
     };
   },
-  templateUrl: "/static/dropdown-menu.html.haml",
+  templateUrl: '/static/dropdown-menu.html.haml',
 });

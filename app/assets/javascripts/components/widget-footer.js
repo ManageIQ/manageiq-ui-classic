@@ -12,5 +12,5 @@ ManageIQ.angular.app.component('widgetFooter', {
     __('Next'),
     '{{vm.widgetNextRun}}',
     '</div>',
-  ].join("\n"),
+  ].join('\n'),
 });

@@ -8,7 +8,7 @@ ManageIQ.angular.app.component('providerOptionFieldInput', {
     var ctrl = this;
 
     ctrl.$onInit = function() {
-      ctrl.elemID = "provider_options_" + ctrl.sectionName + "_" + ctrl.option.name;
+      ctrl.elemID = 'provider_options_' + ctrl.sectionName + '_' + ctrl.option.name;
     };
   },
 

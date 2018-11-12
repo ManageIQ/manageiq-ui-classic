@@ -212,7 +212,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   var loadVolume = function(id) {
     return API.get('/api/cloud_volumes/' + id + '?attributes=ext_management_system.type,availability_zone.ems_ref,base_snapshot.ems_ref')
-      .then(getCloudVolumeFormData)
+      .then(getCloudVolumeFormData);
   };
 
   var loadEBSVolumeTypes = function() {

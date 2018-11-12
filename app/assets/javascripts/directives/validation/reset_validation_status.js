@@ -10,8 +10,8 @@ ManageIQ.angular.app.directive('resetValidationStatus', ['$rootScope', function(
         adjustValidationStatus(value, _.get(getScopeOrController(scope), attrs.mainScope) || getScopeOrController(scope), ctrl, attrs, $rootScope);
         return value;
       });
-    }
-  }
+    },
+  };
 }]);
 
 function getScopeOrController(scope) {
@@ -31,7 +31,7 @@ var adjustValidationStatus = function(value, scope, ctrl, attrs, rootScope) {
     }
 
     if (scope[scope.model][attrs.resetValidationDependsOn] === '' ||
-      (value === '' && ! attrs.required) ||
+      (value === '' && !attrs.required) ||
         (value === scope.postValidationModel[attrs.prefix][ctrl.$name] && _.isMatch(modelObject, modelPostValidationObject))) {
       scope[scope.model][attrs.resetValidationStatus] = true;
       rootScope.$broadcast('clearErrorOnTab', {tab: attrs.prefix});

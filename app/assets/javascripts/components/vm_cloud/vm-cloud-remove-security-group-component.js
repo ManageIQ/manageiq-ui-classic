@@ -20,11 +20,11 @@ function vmCloudRemoveSecurityGroupFormController(API, miqService) {
     };
     vm.security_groups = [];
     vm.formId = vm.recordId;
-    vm.model = "vmCloudModel";
+    vm.model = 'vmCloudModel';
     vm.saveable = miqService.saveable;
     vm.newRecord = false;
     miqService.sparkleOn();
-    API.get("/api/instances/" + vm.recordId + "/security_groups?expand=resources&attributes=id,name").then(function(data) {
+    API.get('/api/instances/' + vm.recordId + '/security_groups?expand=resources&attributes=id,name').then(function(data) {
       vm.security_groups = data.resources;
       vm.afterGet = true;
       miqService.sparkleOff();

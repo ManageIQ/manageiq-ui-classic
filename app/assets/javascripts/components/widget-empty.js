@@ -11,5 +11,5 @@ ManageIQ.angular.app.component('widgetEmpty', {
     __('If this widget is new or has just been added to your dashboard, the data is being generated and should be available soon.'),
     '   </p>',
     '</div>',
-  ].join("\n"),
+  ].join('\n'),
 });

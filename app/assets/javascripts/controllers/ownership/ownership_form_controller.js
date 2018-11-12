@@ -3,12 +3,12 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
   var init = function() {
     vm.ownershipModel = {
       user: '',
-      group: ''
+      group: '',
     };
     vm.afterGet  = false;
     vm.newRecord = false;
     vm.modelCopy = angular.copy( vm.ownershipModel );
-    vm.model     = "ownershipModel";
+    vm.model     = 'ownershipModel';
     vm.objectIds = objectIds;
     vm.saveable = miqService.saveable;
 
@@ -20,7 +20,7 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
       .catch(miqService.handleFailure);
   };
 
-  $scope.canValidateBasicInfo = function () {
+  $scope.canValidateBasicInfo = function() {
     return vm.isBasicInfoValid();
   };
 
@@ -39,7 +39,7 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
       miqService.miqAjaxButton(url, {
         objectIds: vm.objectIds,
         user: vm.ownershipModel.user,
-        group: vm.ownershipModel.group
+        group: vm.ownershipModel.group,
       });
     }
   };
@@ -52,7 +52,7 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
   $scope.resetClicked = function() {
     vm.ownershipModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   $scope.saveClicked = function() {

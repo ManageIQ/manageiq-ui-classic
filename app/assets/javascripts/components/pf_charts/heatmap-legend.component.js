@@ -19,10 +19,10 @@ angular.module('patternfly.charts').component('pfHeatmapLegend', {
       var items = [];
 
       // Allow overriding of defaults
-      if (! vm.legendColors) {
+      if (!vm.legendColors) {
         vm.legendColors = heatmapColorPatternDefaults;
       }
-      if (! vm.legend) {
+      if (!vm.legend) {
         vm.legend = legendLabelDefaults;
       }
       for (var i = vm.legend.length - 1; i >= 0; i--) {
@@ -35,10 +35,10 @@ angular.module('patternfly.charts').component('pfHeatmapLegend', {
     };
 
     vm.$onChanges = function(changesObj) {
-      if (changesObj.legend && ! changesObj.legend.isFirstChange()) {
+      if (changesObj.legend && !changesObj.legend.isFirstChange()) {
         vm.updateAll();
       }
-      if (changesObj.legendColors && ! changesObj.legendColors.isFirstChange()) {
+      if (changesObj.legendColors && !changesObj.legendColors.isFirstChange()) {
         vm.updateAll();
       }
     };

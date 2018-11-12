@@ -47,7 +47,7 @@ function donutChartController(pfUtils) {
     var total = 0;
     angular.forEach(vm.data, function(value) {
       angular.forEach(value, function(innerValue) {
-        if (! isNaN(innerValue)) {
+        if (!isNaN(innerValue)) {
           total += Number(innerValue);
         }
       });
@@ -79,7 +79,7 @@ function donutChartController(pfUtils) {
     }
 
     donutChartTitle = d3.select(vm.chart.element).select('text.c3-chart-arcs-title');
-    if (! donutChartTitle) {
+    if (!donutChartTitle) {
       return;
     }
 
@@ -87,7 +87,7 @@ function donutChartController(pfUtils) {
 
     // Remove any existing title.
     donutChartTitle.text('');
-    if (centerLabelText.bigText && ! centerLabelText.smText) {
+    if (centerLabelText.bigText && !centerLabelText.smText) {
       donutChartTitle.text(centerLabelText.bigText);
     } else {
       donutChartTitle.insert('tspan').text(centerLabelText.bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0);
@@ -111,7 +111,7 @@ function donutChartController(pfUtils) {
 
   vm.$doCheck = function() {
     // do a deep compare on data
-    if (! angular.equals(vm.data, prevData)) {
+    if (!angular.equals(vm.data, prevData)) {
       vm.updateAll();
     }
   };

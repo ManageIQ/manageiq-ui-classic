@@ -1,9 +1,9 @@
 function logError(fn) {
-  return function (text) {
+  return function(text) {
     try {
       return fn(text);
     } catch (ex) {
-      if (typeof console !== "undefined" && typeof console.error !== "undefined") {
+      if (typeof console !== 'undefined' && typeof console.error !== 'undefined') {
         console.error('exception caught evaling RJS');
         console.error(ex);
         console.debug('script follows:', text);
@@ -13,37 +13,35 @@ function logError(fn) {
   };
 }
 
-jQuery.jsonPayload = function (text, fallback) {
+jQuery.jsonPayload = function(text, fallback) {
   var parsed_json = jQuery.parseJSON(text);
   if (parsed_json.explorer) {
     return ManageIQ.explorer.process(parsed_json); // ExplorerPresenter payload
-  } else {
-    return fallback(text);
   }
+  return fallback(text);
 };
 
 $.ajaxSetup({
   accepts: {
-    json: "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript",
+    json: 'text/javascript, application/javascript, application/ecmascript, application/x-ecmascript',
   },
   contents: {
     json: /application\/json/,
   },
   converters: {
-    "text json": logError(function (text) {
-      return jQuery.jsonPayload(text, function (text) {
+    'text json': logError(function(text) {
+      return jQuery.jsonPayload(text, function(text) {
         return jQuery.parseJSON(text);
       });
     }),
-    "text script": logError(function (text) {
+    'text script': logError(function(text) {
       if (text.match(/^{/)) {
-        return jQuery.jsonPayload(text, function (text) {
+        return jQuery.jsonPayload(text, function(text) {
           return text;
         });
-      } else { // JavaScript payload
-        jQuery.globalEval(text.slice('throw "error";'.length));
-        return text;
-      }
+      }  // JavaScript payload
+      jQuery.globalEval(text.slice('throw "error";'.length));
+      return text;
     }),
   },
 });

@@ -39,7 +39,7 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
   // private functions
   function postGenericObjectDefinitionAction() {
     var currentRecordId = toolbar.recordId || ManageIQ.record.recordId;
-    if (toolbar.action === 'delete' && ! currentRecordId) {
+    if (toolbar.action === 'delete' && !currentRecordId) {
       _.forEach(toolbar.genericObjectDefinitions, function(recordId) {
         API.get('/api/generic_object_definitions/' + recordId + '?attributes=generic_objects_count')
           .then(checkGenericObjectCountAndDelete)

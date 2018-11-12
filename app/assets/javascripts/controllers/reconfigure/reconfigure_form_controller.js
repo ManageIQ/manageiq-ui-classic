@@ -90,12 +90,12 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.isBasicInfoValid = function() {
-    if (($scope.angularForm.memory && ! $scope.angularForm.memory.$valid) ||
-      ($scope.angularForm.socket_count && ! $scope.angularForm.socket_count.$valid) ||
-      ($scope.angularForm.mem_type && ! $scope.angularForm.mem_type.$valid) ||
-      ($scope.angularForm.cores_per_socket_count && ! $scope.angularForm.cores_per_socket_count.$valid) ||
-      ($scope.angularForm.total_cpus && ! $scope.angularForm.total_cpus.$valid) ||
-      ($scope.angularForm.hdSize && ! $scope.angularForm.hdSize.$valid)) {
+    if (($scope.angularForm.memory && !$scope.angularForm.memory.$valid) ||
+      ($scope.angularForm.socket_count && !$scope.angularForm.socket_count.$valid) ||
+      ($scope.angularForm.mem_type && !$scope.angularForm.mem_type.$valid) ||
+      ($scope.angularForm.cores_per_socket_count && !$scope.angularForm.cores_per_socket_count.$valid) ||
+      ($scope.angularForm.total_cpus && !$scope.angularForm.total_cpus.$valid) ||
+      ($scope.angularForm.hdSize && !$scope.angularForm.hdSize.$valid)) {
       return false;
     }
     return true;
@@ -106,7 +106,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     var cpuUnchanged = false;
     miqService.miqFlashClear();
 
-    if (! vm.newRecord) {
+    if (!vm.newRecord) {
       return;
     }
     $scope.angularForm.$setValidity('unchanged', true);
@@ -243,9 +243,9 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.validateAddSelectedNetwork = function() {
-    if (! vm.reconfigureModel.vLan_requested && ! vm.isVmwareCloud()) {
+    if (!vm.reconfigureModel.vLan_requested && !vm.isVmwareCloud()) {
       return false;
-    } else if (! vm.reconfigureModel.name && vm.isVmwareCloud()) {
+    } else if (!vm.reconfigureModel.name && vm.isVmwareCloud()) {
       return false;
     } else if (vm.reconfigureModel.vmNetworkAdapters.length > 4) {
       return false;
@@ -293,9 +293,9 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.cancelAddRemoveNetworkAdapter = function(vmNetworkAdapter) {
-    if (vmNetworkAdapter.add_remove === "remove") {
-      vmNetworkAdapter.add_remove = "";
-    } else if (vmNetworkAdapter.add_remove === "add") {
+    if (vmNetworkAdapter.add_remove === 'remove') {
+      vmNetworkAdapter.add_remove = '';
+    } else if (vmNetworkAdapter.add_remove === 'add') {
       var index = vm.reconfigureModel.vmNetworkAdapters.indexOf(vmNetworkAdapter);
       vm.reconfigureModel.vmNetworkAdapters.splice(index, 1);
     }
@@ -443,8 +443,10 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.fetchAvailableAdapterNetworks = function(orchestrationStackId) {
-    API.get("/api/cloud_networks?expand=resources&attributes=name&filter[]=orchestration_stack_id=" + orchestrationStackId).then(function(data) {
-      vm.reconfigureModel.availableAdapterNetworks = data.resources.map(function(network) { return network.name; });
+    API.get('/api/cloud_networks?expand=resources&attributes=name&filter[]=orchestration_stack_id=' + orchestrationStackId).then(function(data) {
+      vm.reconfigureModel.availableAdapterNetworks = data.resources.map(function(network) {
+        return network.name;
+      });
     }).catch(miqService.handleFailure);
   };
 

@@ -1,4 +1,4 @@
-ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqService', '$timeout', '$interval', function($location, $http, miqService, $timeout, $interval) {
+ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqService', '$timeout', '$interval', '$window', function($location, $http, miqService, $timeout, $interval, $window) {
   this.tooltip = function tooltip(d) {
     var status = [
       __('Name: ') + d.item.name,
@@ -55,9 +55,9 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
         var mousePosition = d3.mouse(canvas.node());
 
         var popup = canvas.append('div')
-            .attr('class', 'popup')
-            .style('left', mousePosition[0] + 'px')
-            .style('top', mousePosition[1] + 'px');
+          .attr('class', 'popup')
+          .style('left', mousePosition[0] + 'px')
+          .style('top', mousePosition[1] + 'px');
         popup.append('h5').text('Actions on ' + data.item.display_kind);
 
         if (data.item.kind !== 'Tag') {
@@ -85,7 +85,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
           popup.style('top', 'auto');
           popup.style('bottom', 0);
         }
-        vm.contextMenuShowing = ! vm.contextMenuShowing;
+        vm.contextMenuShowing = !vm.contextMenuShowing;
       }
     };
 
@@ -93,7 +93,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       if (d.item.kind === 'Tag') {
         return false;
       }
-      window.location.assign(topologyService.geturl(d));
+      $window.location.assign(topologyService.geturl(d));
     };
 
     d3.select('body').on('click', function() {
@@ -237,7 +237,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
             $scope.searching = true;
             var svg = topologyService.getSVG($scope.d3);
             var query = $('input#search_topology')[0].value;
-            $scope.notFound = ! topologyService.searchNode(svg, query);
+            $scope.notFound = !topologyService.searchNode(svg, query);
             break;
 
           case 'resetSearch':
@@ -313,7 +313,7 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
   };
 
   this.mixinTopology = function(vm, $scope) {
-    vm.d3 = window.d3;
+    vm.d3 = $window.d3;
     miqHideSearchClearButton();
     vm.checkboxModel = {
       value: false,

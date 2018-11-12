@@ -205,19 +205,19 @@ function heatmapController($element, $window, $compile, $scope, $timeout) {
 
     vm.rangeOnHover = (vm.rangeOnHover === undefined || vm.rangeOnHover) ? true : false;
 
-    if (! vm.rangeTooltips) {
+    if (!vm.rangeTooltips) {
       vm.rangeTooltips = rangeTooltipDefaults;
     }
 
-    if (! vm.thresholds) {
+    if (!vm.thresholds) {
       vm.thresholds = thresholdDefaults;
     }
 
-    if (! vm.heatmapColorPattern) {
+    if (!vm.heatmapColorPattern) {
       vm.heatmapColorPattern = heatmapColorPatternDefaults;
     }
 
-    if (! vm.legendLabels) {
+    if (!vm.legendLabels) {
       vm.legendLabels = legendLabelDefaults;
     }
     vm.height = vm.height || heightDefault;
@@ -239,7 +239,7 @@ function heatmapController($element, $window, $compile, $scope, $timeout) {
   };
 
   vm.$onChanges = function(changesObj) {
-    if (changesObj.chartDataAvailable && ! changesObj.chartDataAvailable.isFirstChange()) {
+    if (changesObj.chartDataAvailable && !changesObj.chartDataAvailable.isFirstChange()) {
       setStyles();
     } else {
       vm.updateAll();
@@ -249,7 +249,7 @@ function heatmapController($element, $window, $compile, $scope, $timeout) {
 
   vm.$doCheck = function() {
     // do a deep compare on chartData and config
-    if (! angular.equals(vm.data, prevData)) {
+    if (!angular.equals(vm.data, prevData)) {
       setStyles();
       if (vm.chartDataAvailable !== false) {
         setSizes();

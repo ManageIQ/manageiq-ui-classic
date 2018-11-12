@@ -29,7 +29,9 @@
       backdrop: 'static',
       size: 'lg',
       controllerAs: '$ctrl',
-      controller: ['parent', function(parent) { this.parent = parent; }],
+      controller: ['parent', function(parent) {
+        this.parent = parent;
+      }],
       resolve: {
         parent: function() {
           return this;

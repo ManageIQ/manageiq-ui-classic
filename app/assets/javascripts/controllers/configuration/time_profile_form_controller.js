@@ -21,9 +21,9 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
       some_days_checked: true,
       some_hours_checked: true,
     };
-    vm.dayNames = [__("Sunday"), __("Monday"), __("Tuesday"), __("Wednesday"), __("Thursday"), __("Friday"), __("Saturday")];
-    vm.hourNamesFirstHalf = [__("12-1"), __("1-2"), __("2-3"), __("3-4"), __("4-5"), __("5-6")];
-    vm.hourNamesSecondHalf = [__("6-7"), __("7-8"), __("8-9"), __("9-10"), __("10-11"), __("11-12")];
+    vm.dayNames = [__('Sunday'), __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday')];
+    vm.hourNamesFirstHalf = [__('12-1'), __('1-2'), __('2-3'), __('3-4'), __('4-5'), __('5-6')];
+    vm.hourNamesSecondHalf = [__('6-7'), __('7-8'), __('8-9'), __('9-10'), __('10-11'), __('11-12')];
     vm.afterGet = false;
     vm.modelCopy = angular.copy( vm.timeProfileModel );
     vm.model = 'timeProfileModel';
@@ -42,7 +42,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
       vm.formId = timeProfileFormId;
     } else {
       vm.newRecord = true;
-      vm.formId = "new";
+      vm.formId = 'new';
     }
   };
 
@@ -101,23 +101,24 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
 
   vm.hourValuesChanged = function() {
     var tempHours = [];
-
-    for (var i = 0; i < 6; i++) {
+    var i;
+    var j;
+    for (i = 0; i < 6; i++) {
       if (vm.timeProfileModel.hourValuesAMFirstHalf[i] === true) {
         tempHours.push(i);
       }
     }
-    for (var i = 0, j = 6; i < 6, j < 12; i++, j++) {
+    for (i = 0, j = 6; i < 6, j < 12; i++, j++) {
       if (vm.timeProfileModel.hourValuesAMSecondHalf[i] === true) {
         tempHours.push(j);
       }
     }
-    for (var i = 0, j = 12; i < 6, j < 18; i++, j++) {
+    for (i = 0, j = 12; i < 6, j < 18; i++, j++) {
       if (vm.timeProfileModel.hourValuesPMFirstHalf[i] === true) {
         tempHours.push(j);
       }
     }
-    for (var i = 0, j = 18; i < 6, j < 24; i++, j++) {
+    for (i = 0, j = 18; i < 6, j < 24; i++, j++) {
       if (vm.timeProfileModel.hourValuesPMSecondHalf[i] === true) {
         tempHours.push(j);
       }
@@ -166,7 +167,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
     vm.calculateTimeProfileHourValues();
   };
 
-  var timeProfileEditButtonClicked = function(buttonName, serializeFields) {
+  var timeProfileEditButtonClicked = function(buttonName) {
     miqService.sparkleOn();
     var url = '/configuration/timeprofile_update/' + vm.formId + '?button=' + buttonName;
     var timeProfileModelObj = angular.copy(vm.timeProfileModel);
@@ -180,7 +181,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
   vm.resetClicked = function(angularForm) {
     vm.timeProfileModel = angular.copy( vm.modelCopy );
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.saveClicked = function() {
@@ -197,7 +198,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
     vm.getDaysValues();
     vm.getHoursValues();
 
-    vm.note = sprintf(__("In use by %s reports, cannot be disabled"), vm.timeProfileModel.miq_reports_count);
+    vm.note = sprintf(__('In use by %s reports, cannot be disabled'), vm.timeProfileModel.miq_reports_count);
 
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.timeProfileModel );

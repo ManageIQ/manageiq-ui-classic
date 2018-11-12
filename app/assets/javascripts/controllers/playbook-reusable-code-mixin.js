@@ -2,13 +2,13 @@ ManageIQ.angular.app.service('playbookReusableCodeMixin', playbookReusableCodeMi
 playbookReusableCodeMixin.$inject = ['API', '$q', 'miqService'];
 
 function playbookReusableCodeMixin(API, $q, miqService) {
-  var sortOptions = "&sort_by=name&sort_order=ascending";
+  var sortOptions = '&sort_by=name&sort_order=ascending';
   var allApiPromises = [];
 
   var getSortedHash = function(inputHash) {
     var sortedHash = Object.keys(inputHash)
       .map(function(key) {
-        return ({"k": key, "v": inputHash[key]});
+        return ({'k': key, 'v': inputHash[key]});
       })
       .sort(function(a, b) {
         return a.v.localeCompare(b.v);
@@ -22,20 +22,20 @@ function playbookReusableCodeMixin(API, $q, miqService) {
 
   var getVerbosityTypes = function() {
     return {
-      "0": "0 (Normal)",
-      "1": "1 (Verbose)",
-      "2": "2 (More Verbose)",
-      "3": "3 (Debug)",
-      "4": "4 (Connection Debug)",
-      "5": "5 (WinRM Debug)",
+      '0': '0 (Normal)',
+      '1': '1 (Verbose)',
+      '2': '2 (More Verbose)',
+      '3': '3 (Debug)',
+      '4': '4 (Connection Debug)',
+      '5': '5 (WinRM Debug)',
     };
   };
 
   var getLogOutputTypes = function() {
     return {
-      "on_error": __("On Error"),
-      "always": __("Always"),
-      "never": __("Never"),
+      'on_error': __('On Error'),
+      'always': __('Always'),
+      'never': __('Never'),
     };
   };
 
@@ -134,7 +134,7 @@ function playbookReusableCodeMixin(API, $q, miqService) {
           for (var i = 0; i < vm.catalogs.length; i++) {
             vm.catalogs[i].name = _.find(formOptsCatalogTenants(vm.all_catalogs), {id: vm.catalogs[i].id}).name;
           }
-          vm.catalogs.unshift({"href": "", "id": "", "name": "<Unassigned>"});
+          vm.catalogs.unshift({'href': '', 'id': '', 'name': '<Unassigned>'});
           vm._catalog = _.find(vm.catalogs, {id: vm[vm.model].catalog_id});
         })
         .catch(miqService.handleFailure)
@@ -242,15 +242,15 @@ function playbookReusableCodeMixin(API, $q, miqService) {
   };
 
   var cloudTypeChanged = function(vm, prefix, value) {
-    var valueChanged = (value !== vm[prefix + "_cloud_type"]);
+    var valueChanged = (value !== vm[prefix + '_cloud_type']);
     if (value) {
-      vm[prefix + "_cloud_type"] = value;
+      vm[prefix + '_cloud_type'] = value;
     } else {
-      vm[prefix + "_cloud_type"] = '';
+      vm[prefix + '_cloud_type'] = '';
     }
     if (valueChanged) {
-      var typ = vm[prefix + "_cloud_type"];
-      vm[vm.model][prefix + "_cloud_credential_id"] = '';
+      var typ = vm[prefix + '_cloud_type'];
+      vm[vm.model][prefix + '_cloud_credential_id'] = '';
       getCloudCredentialsforType(prefix, typ, vm);
     }
   };

@@ -14,7 +14,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
     vm.model = 'keyPairModel';
     vm.ems_choices = [];
     vm.saveable = miqService.saveable;
-    vm.newRecord = keyPairFormId == 'new';
+    vm.newRecord = keyPairFormId === 'new';
 
     ManageIQ.angular.scope = vm;
 
@@ -44,7 +44,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
   vm.resetClicked = function() {
     vm.keyPairModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.saveClicked = function() {

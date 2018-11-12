@@ -1,6 +1,6 @@
 ManageIQ.angular.app.directive('adjustErrorOnTab', ['$rootScope', function($rootScope) {
   return {
-    link: function (scope, elem, attrs) {
+    link: function(scope, elem, attrs) {
       scope.$watch(attrs.adjustErrorOnTab, function(value) {
         if (value === true) {
           $rootScope.$broadcast('clearErrorOnTab', {tab: attrs.prefix});
@@ -8,6 +8,6 @@ ManageIQ.angular.app.directive('adjustErrorOnTab', ['$rootScope', function($root
           $rootScope.$broadcast('setErrorOnTab', {tab: attrs.prefix});
         }
       });
-    }
-  }
+    },
+  };
 }]);

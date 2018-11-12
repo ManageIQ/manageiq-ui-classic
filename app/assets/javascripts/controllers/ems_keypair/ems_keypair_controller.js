@@ -6,7 +6,7 @@
     });
 
     $scope.$on('setNewRecord', function(_event, args) {
-      if (args != undefined) {
+      if (args !== undefined) {
         vm.newRecord = args.newRecord;
       } else {
         vm.newRecord = true;
@@ -14,7 +14,7 @@
     });
 
     $scope.$on('setUserId', function(_event, args) {
-      if(args != undefined) {
+      if (args !== undefined) {
         $scope.modelCopy[args.userIdName] = args.userIdValue;
       }
     });
@@ -27,7 +27,7 @@
     vm.formId = formId;
     vm.changeKey = undefined;
 
-    if (vm.formId == 'new') {
+    if (vm.formId === 'new') {
       vm.newRecord = true;
     } else {
       vm.newRecord = false;
@@ -54,7 +54,7 @@
   };
 
   EmsKeypairController.prototype.showChangePrivateKeyLinks = function(userid) {
-    return !this.newRecord && this.modelCopy[userid] != '';
+    return !this.newRecord && this.modelCopy[userid] !== '';
   };
 
   EmsKeypairController.prototype.resetClicked = function() {
@@ -66,9 +66,9 @@
     var openstackInfraAndNew = (this.model.emstype === 'openstack_infra') && this.newRecord;
     var openstackCloud = this.model.emstype === 'openstack';
     var rhevm = this.model.emstype === 'rhevm';
-    return ! ((openstackInfraAndNew || openstackCloud || rhevm) && tab === 'ssh_keypair');
+    return !((openstackInfraAndNew || openstackCloud || rhevm) && tab === 'ssh_keypair');
   };
 
-  EmsKeypairController.$inject = ["$scope"];
+  EmsKeypairController.$inject = ['$scope'];
   ManageIQ.angular.app.controller('emsKeypairController', EmsKeypairController);
 })();

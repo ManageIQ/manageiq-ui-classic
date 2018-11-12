@@ -22,6 +22,6 @@ ManageIQ.angular.app.controller('vmCloudAttachFormController', ['$scope', 'vmClo
 
   $scope.resetClicked = function() {
     vm.vmCloudModel = angular.copy(vm.modelCopy);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 }]);

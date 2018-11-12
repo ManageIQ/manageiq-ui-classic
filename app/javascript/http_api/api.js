@@ -1,6 +1,7 @@
 import { miqFetch } from './fetch';
 import { base64encode } from './compat';
-const miqDeferred = window.miqDeferred;
+
+const { miqDeferred } = window;
 
 /*
  * API.get(url, options) - use API.get('/api'), returns a Promise
@@ -28,48 +29,44 @@ const API = {
 export default API;
 
 function urlOnly(method) {
-  return function(url, options) {
-    return miqFetch({
-      ...options,
-      method,
-      url,
-      backendName: __('API'),
-    }, null);
-  };
+  return (url, options) => miqFetch({
+    ...options,
+    method,
+    url,
+    backendName: __('API'),
+  }, null);
 }
 
 function withData(method) {
-  return function(url, data, options) {
-    return miqFetch({
-      ...options,
-      method,
-      url,
-      backendName: __('API'),
-    }, data);
-  };
+  return (url, data, options) => miqFetch({
+    ...options,
+    method,
+    url,
+    backendName: __('API'),
+  }, data);
 }
 
 
-API.login = function(login, password) {
+API.login = (login, password) => {
   API.logout();
 
   return API.get('/api/auth?requester_type=ui', {
     headers: {
-      'Authorization': 'Basic ' + base64encode([login, password].join(':')),
+      Authorization: `Basic ${base64encode([login, password].join(':'))}`,
     },
     skipErrors: [401, 503],
     skipLoginRedirect: true,
   })
-    .then(function(response) {
+    .then((response) => {
       localStorage.miq_token = response.auth_token;
     });
 };
 
-API.ws_destroy = function() {
+API.ws_destroy = () => {
   document.cookie = 'ws_token=; path=/ws/notifications; Max-Age=0;';
 };
 
-API.logout = function() {
+API.logout = () => {
   // delete user allowed features data from local storage
   delete localStorage.userFeatures;
   if (localStorage.miq_token) {
@@ -83,45 +80,41 @@ API.logout = function() {
   delete localStorage.miq_token;
 };
 
-API.autorenew = function() {
-  const id = setInterval(function() {
+API.autorenew = () => {
+  const id = setInterval(() => {
     API.get('/api')
-      .then(null, function(...args) {
+      .then(null, (...args) => {
         console.warn('API autorenew fail', args);
         clearInterval(id);
       });
   }, 60 * 1000);
 
-  return function() {
-    clearInterval(id);
-  };
+  return () => clearInterval(id);
 };
 
-API.ws_init = function() {
-  return API.get('/api/auth?requester_type=ws').then(function(response) {
-    API.ws_destroy();
-    document.cookie = 'ws_token=' + response.auth_token + '; path=/ws/notifications';
-  });
-};
+API.ws_init = () => API.get('/api/auth?requester_type=ws').then((response) => {
+  API.ws_destroy();
+  document.cookie = `ws_token=${response.auth_token}; path=/ws/notifications`;
+});
 
-API.wait_for_task = function(taskId) {
+API.wait_for_task = (taskId) => {
   const deferred = miqDeferred();
 
-  const retry = function() {
-    API.get('/api/tasks/' + taskId + '?attributes=task_results')
-      .then(function(result) {
-        if (result.state === 'Finished') {  // MiqTask::STATE_FINISHED
+  const retry = () => {
+    API.get(`/api/tasks/${taskId}?attributes=task_results`)
+      .then((result) => {
+        if (result.state === 'Finished') { // MiqTask::STATE_FINISHED
           deferred.resolve(result);
         } else {
           setTimeout(retry, 1000);
         }
       })
-      .catch(function(error) {
+      .catch((error) => {
         deferred.reject(error);
       });
   };
 
-  const failOnBadStatus = function(result) {
+  const failOnBadStatus = (result) => {
     if (result.status !== 'Ok') {
       return Promise.reject(result);
     }

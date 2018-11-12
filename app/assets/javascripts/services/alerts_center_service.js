@@ -1,8 +1,4 @@
-angular.module('alertsCenter').service('alertsCenterService', alertsCenterService);
-
-alertsCenterService.$inject = ['API', '$q', '$timeout', '$document', '$uibModal', '$http'];
-
-function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
+angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$timeout', '$document', '$uibModal', '$http', function(API, $q, $timeout, $document, $uibModal, $http) {
   var _this = this;
   var providersURL = '/api/providers';
   var tagsURL = '/api/tags';
@@ -175,7 +171,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
     } else if (filter.id === 'assignee') {
       found = item.assignee_name && item.assignee_name.localeCompare(filter.value);
     } else if (filter.id === 'acknowledged') {
-      found = filter.value == __('Acknowledged') ? item.acknowledged : ! item.acknowledged;
+      found = filter.value === __('Acknowledged') ? item.acknowledged : !item.acknowledged;
     } else if (filter.id === 'severityCount') {
       if (filter.value === _this.severityTitles[0]) {
         found = item.info.length > 0;
@@ -196,12 +192,12 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
       var doNotAdd = false;
       if (filters && filters.length > 0) {
         doNotAdd = _.find(filters, function(filter) {
-          if (! _this.matchesFilter(nextAlert, filter)) {
+          if (!_this.matchesFilter(nextAlert, filter)) {
             return true;
           }
         });
       }
-      if (! doNotAdd) {
+      if (!doNotAdd) {
         filteredAlerts.push(nextAlert);
       }
     });
@@ -234,7 +230,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
       }
     }
 
-    if (! isAscending) {
+    if (!isAscending) {
       compValue = compValue * -1;
     }
 
@@ -316,9 +312,9 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
     if (action.id === 'unassign') {
       action.isVisible = item.assigned;
     } else if (action.id === 'acknowledge') {
-      action.isVisible = (item.assignee_id == _this.currentUser.id) && item.acknowledged !== true;
+      action.isVisible = (item.assignee_id === _this.currentUser.id) && item.acknowledged !== true;
     } else if (action.id === 'unacknowledge') {
-      action.isVisible = (item.assignee_id == _this.currentUser.id) && item.acknowledged === true;
+      action.isVisible = (item.assignee_id === _this.currentUser.id) && item.acknowledged === true;
     } else {
       action.isVisbile = true;
     }
@@ -326,7 +322,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
 
   _this.getUserByIdOrUserId = function(id) {
     var foundUser;
-    for (var i = 0; i < _this.existingUsers.length && ! foundUser; i++) {
+    for (var i = 0; i < _this.existingUsers.length && !foundUser; i++) {
       if (_this.existingUsers[i].id === id || _this.existingUsers[i].userid === id) {
         foundUser = _this.existingUsers[i];
       }
@@ -399,7 +395,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
       });
   };
 
-  _this.updateIcons = function(response) {
+  _this.updateIcons = function() {
     return $http.get('/alerts_list/class_icons')
       .then(function(response) {
         _this.icons = response.data;
@@ -453,8 +449,9 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
   function updateAlertStatus(updateAlert) {
     if (updateAlert && updateAlert.alert_actions && updateAlert.alert_actions.length > 0) {
       var actionUser;
+      var i;
 
-      for (var i = 0; i < updateAlert.alert_actions.length; i++) {
+      for (i = 0; i < updateAlert.alert_actions.length; i++) {
         updateAlert.alert_actions[i].created_at = convertApiTime(updateAlert.alert_actions[i].created_at);
         updateAlert.alert_actions[i].updated_at = convertApiTime(updateAlert.alert_actions[i].updated_at);
       }
@@ -469,7 +466,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
 
       // update each state
       updateAlert.numComments = 0;
-      for (var i = 0; i < updateAlert.alert_actions.length; i++) {
+      for (i = 0; i < updateAlert.alert_actions.length; i++) {
         actionUser = _this.getUserByIdOrUserId(updateAlert.alert_actions[i].user_id);
         updateAlert.alert_actions[i].username = actionUser !== undefined ? actionUser.name : '';
 
@@ -508,9 +505,9 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
       alert_actions: alertData.alert_actions,
     };
 
-    if (newAlert.severity == 'error') {
+    if (newAlert.severity === 'error') {
       newAlert.severityInfo = _this.severities.error;
-    } else if (newAlert.severity == 'warning') {
+    } else if (newAlert.severity === 'warning') {
       newAlert.severityInfo = _this.severities.warning;
     } else {
       newAlert.severityInfo = _this.severities.info;
@@ -541,7 +538,6 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
     var newTypes = [];
     var retrievalTime = (new Date()).getTime();
     var alertProvider;
-    var key;
     var objectType;
     var objectName;
     var objectClassifiedType;
@@ -552,14 +548,13 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
       });
 
       if (alertProvider !== undefined) {
-        key = 'providers';
         objectType = getObjectType(alertProvider);
         objectName = alertProvider.name;
         objectClassifiedType = alertProvider.type;
       }
 
       // Add filter for this object type
-      if (newTypes.indexOf(objectType) == -1) {
+      if (newTypes.indexOf(objectType) === -1) {
         newTypes.push(objectType);
       }
       if (item.resource) {
@@ -583,7 +578,6 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
     // Add each alert in the appropriate group
     angular.forEach(responseData.resources, function(item) {
       var objectType;
-      var providerType;
       var foundType;
       var descriptors;
       var summaryItem;
@@ -595,7 +589,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
         return nextSummaryItem.id === item.ems_id;
       });
 
-      if (! summaryItem) {
+      if (!summaryItem) {
         angular.forEach(_this.providers, function(provider) {
           if (provider.id === item.ems_id) {
             summaryItem = {
@@ -623,7 +617,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
               return nextType === summaryItem.objectType;
             });
 
-            if (! foundType) {
+            if (!foundType) {
               _this.objectTypes.push(summaryItem.objectType);
             }
 
@@ -665,7 +659,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
           _this.displayFilters.push(summaryItem.displayType);
         }
 
-        if (! item.severity) {
+        if (!item.severity) {
           item.severity = 'info';
         }
         summaryItem[item.severity].push(item);
@@ -735,7 +729,7 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
   }
 
   function doAssign() {
-    if (_this.editItem.assignee_id != _this.owner.id) {
+    if (_this.editItem.assignee_id !== _this.owner.id) {
       if (_this.owner) {
         if (_this.currentAcknowledged !== _this.editItem.acknowledged) {
           _this.doAfterStateChange = _this.currentAcknowledged ? doAcknowledge : doUnacknowledge;
@@ -812,4 +806,4 @@ function alertsCenterService(API, $q, $timeout, $document, $uibModal, $http) {
         break;
     }
   }
-}
+}]);

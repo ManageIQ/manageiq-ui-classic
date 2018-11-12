@@ -2,7 +2,7 @@
 
 ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope', 'dashboardUtilsFactory', 'chartsMixin', 'dashboardService',
   function($scope, dashboardUtilsFactory, chartsMixin, dashboardService) {
-    document.getElementById("center_div").className += " miq-body";
+    document.getElementById('center_div').className += ' miq-body';
 
     // Obj-status cards init
     $scope.objectStatus = {
@@ -29,10 +29,10 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
       dashboardUtilsFactory.updateStatus($scope.objectStatus.images,     data.status.images);
       dashboardUtilsFactory.updateStatus($scope.objectStatus.containers, data.status.containers);
 
-      if (data.project_utilization.interval_name === "daily") {
+      if (data.project_utilization.interval_name === 'daily') {
         $scope.cpuUsageConfig.tooltipFn = chartsMixin.dailyTimeTooltip;
         $scope.memoryUsageConfig.tooltipFn = chartsMixin.dailyTimeTooltip;
-      } else { //hourly
+      } else { // hourly
         $scope.cpuUsageConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
         $scope.memoryUsageConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
         $scope.cpuUsageConfig.timeFrame = __('Last 24 hours');
@@ -57,7 +57,7 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
         $scope.memoryUsageConfig.units);
 
       // Network metrics
-      if (data.network_metrics.interval_name === "daily") {
+      if (data.network_metrics.interval_name === 'daily') {
         $scope.networkUtilizationConfig = chartsMixin.chartConfig.dailyNetworkUsageConfig;
       } else {
         $scope.networkUtilizationConfig = chartsMixin.chartConfig.hourlyNetworkUsageConfig;
@@ -98,12 +98,12 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
             'used': 0,
             'total': 0,
             'dataAvailable': false,
-          }
+          },
         });
       }
 
       // Pod entity trend
-      if (data.pod_metrics.interval_name === "daily") {
+      if (data.pod_metrics.interval_name === 'daily') {
         $scope.podEntityTrendConfig = chartsMixin.chartConfig.dailyPodUsageConfig;
       } else {
         $scope.podEntityTrendConfig = chartsMixin.chartConfig.hourlyPodUsageConfig;

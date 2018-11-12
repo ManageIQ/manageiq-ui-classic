@@ -31,22 +31,22 @@ function donutPctChartController(pfUtils) {
   };
 
   vm.getStatusColor = function(used, thresholds) {
-    var threshold = "none";
+    var threshold = 'none';
     var color = pfUtils.colorPalette.blue;
 
     if (thresholds) {
-      threshold = "ok";
+      threshold = 'ok';
       color = pfUtils.colorPalette.green;
       if (used >= thresholds.error) {
-        threshold = "error";
+        threshold = 'error';
         color = pfUtils.colorPalette.red;
       } else if (used >= thresholds.warning) {
-        threshold = "warning";
+        threshold = 'warning';
         color = pfUtils.colorPalette.orange;
       }
     }
 
-    if (! vm.threshold || vm.threshold !== threshold) {
+    if (!vm.threshold || vm.threshold !== threshold) {
       vm.threshold = threshold;
       vm.onThresholdChange({ threshold: vm.threshold });
     }
@@ -149,7 +149,7 @@ function donutPctChartController(pfUtils) {
     }
 
     donutChartTitle = d3.select(vm.chart.element).select('text.c3-chart-arcs-title');
-    if (! donutChartTitle) {
+    if (!donutChartTitle) {
       return;
     }
 
@@ -157,7 +157,7 @@ function donutPctChartController(pfUtils) {
 
     // Remove any existing title.
     donutChartTitle.selectAll('*').remove();
-    if (centerLabelText.bigText && ! centerLabelText.smText) {
+    if (centerLabelText.bigText && !centerLabelText.smText) {
       donutChartTitle.text(centerLabelText.bigText);
     } else {
       donutChartTitle.insert('tspan').text(centerLabelText.bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0);
@@ -184,7 +184,7 @@ function donutPctChartController(pfUtils) {
 
   vm.$doCheck = function() {
     // do a deep compare on data
-    if (! angular.equals(vm.data, prevData)) {
+    if (!angular.equals(vm.data, prevData)) {
       vm.updateAll();
     }
   };

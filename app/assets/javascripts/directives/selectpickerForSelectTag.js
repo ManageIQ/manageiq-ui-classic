@@ -1,7 +1,7 @@
 ManageIQ.angular.app.directive('selectpickerForSelectTag', function() {
   return {
     require: 'ngModel',
-    link: function (scope, elem, attr, ctrl) {
+    link: function(scope, elem, attr, ctrl) {
       scope['form_' + ctrl.$name] = elem[0];
 
       scope.$watch(attr.ngModel, function() {
@@ -17,9 +17,9 @@ ManageIQ.angular.app.directive('selectpickerForSelectTag', function() {
         angular.element('.bootstrap-select button').removeAttr('title');
       });
 
-      scope.$on('$destroy', function () {
+      scope.$on('$destroy', function() {
         elem.selectpicker('destroy');
       });
-    }
-  }
+    },
+  };
 });

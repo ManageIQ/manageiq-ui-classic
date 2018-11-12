@@ -184,7 +184,7 @@ function sparklineChartController(pfUtils, $document) {
 
   vm.$doCheck = function() {
     // do a deep compare on chartData
-    if (! angular.equals(vm.chartData, prevChartData)) {
+    if (!angular.equals(vm.chartData, prevChartData)) {
       vm.updateAll();
     }
   };

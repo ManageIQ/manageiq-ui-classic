@@ -23,6 +23,10 @@ exclude_paths:
 - "test/"
 - "tmp/"
 - "vendor/assets/"
+checks:
+  file-lines:
+    config:
+      threshold: 400
 engines:
   brakeman:
     # very slow :sad_panda:
@@ -47,13 +51,15 @@ engines:
     enabled: true
     channel: "eslint-3"
     checks:
-      file-lines:
-        config:
-          threshold: 400
+      key-spacing:
+        enabled: false
       no-undefined:
         enabled: false
       quotes:
         enabled: false
+    config:
+      ignore_warnings: true
+      config: '.eslintrc.json'
   fixme:
     # let's enable later
     enabled: false

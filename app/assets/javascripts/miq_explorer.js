@@ -81,7 +81,7 @@ ManageIQ.explorer.processFlash = function(data) {
   ManageIQ.explorer.scrollTop(data);
   ManageIQ.explorer.focus(data);
 
-  if (! _.isUndefined(data.activateNode)) {
+  if (!_.isUndefined(data.activateNode)) {
     miqTreeActivateNode(data.activateNode.tree, data.activateNode.node);
   }
 };
@@ -93,7 +93,7 @@ ManageIQ.explorer.processRx = function(data) {
 ManageIQ.explorer.replacePartials = function(data) {
   if (_.isObject(data.replacePartials)) {
     _.forEach(data.replacePartials, function(content, element) {
-      if (! miqDomElementExists(element)) {
+      if (!miqDomElementExists(element)) {
         console.error('replacePartials: #' + element + ' does not exist in the DOM');
       }
 
@@ -105,7 +105,7 @@ ManageIQ.explorer.replacePartials = function(data) {
 ManageIQ.explorer.updatePartials = function(data) {
   if (_.isObject(data.updatePartials)) {
     _.forEach(data.updatePartials, function(content, element) {
-      if (! miqDomElementExists(element)) {
+      if (!miqDomElementExists(element)) {
         console.error('updatePartials: #' + element + ' does not exist in the DOM');
       }
 
@@ -145,7 +145,9 @@ ManageIQ.explorer.miqButtons = function(data) {
 ManageIQ.explorer.focus = function(data) {
   if (_.isString(data.focus)) {
     var element = $('#' + data.focus);
-    if (element.length) { element.focus(); }
+    if (element.length) {
+      element.focus();
+    }
   }
 };
 
@@ -162,19 +164,19 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   /* variables for the expression editor */
   if (_.isObject(data.expEditor)) {
     if (_.isObject(data.expEditor.first)) {
-      if (! _.isUndefined(data.expEditor.first.type)) {
+      if (!_.isUndefined(data.expEditor.first.type)) {
         ManageIQ.expEditor.first.type   = data.expEditor.first.type;
       }
-      if (! _.isUndefined(data.expEditor.first.title)) {
+      if (!_.isUndefined(data.expEditor.first.title)) {
         ManageIQ.expEditor.first.title  = data.expEditor.first.title;
       }
     }
 
     if (_.isObject(data.expEditor.second)) {
-      if (! _.isUndefined(data.expEditor.second.type)) {
+      if (!_.isUndefined(data.expEditor.second.type)) {
         ManageIQ.expEditor.second.type   = data.expEditor.second.type;
       }
-      if (! _.isUndefined(data.expEditor.second.title)) {
+      if (!_.isUndefined(data.expEditor.second.title)) {
         ManageIQ.expEditor.second.title  = data.expEditor.second.title;
       }
     }
@@ -182,25 +184,27 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
 
   ManageIQ.explorer.miqButtons(data);
 
-  if (_.isString(data.clearTreeCookies)) { miqDeleteTreeCookies(data.clearTreeCookies); }
+  if (_.isString(data.clearTreeCookies)) {
+    miqDeleteTreeCookies(data.clearTreeCookies);
+  }
   if (_.isString(data.accordionSwap)) {
     miqAccordionSwap('#accordion .panel-collapse.collapse.in', '#' + data.accordionSwap + '_accord');
   }
 
   /* dealing with tree nodes */
-  if (! _.isUndefined(data.addNodes)) {
+  if (!_.isUndefined(data.addNodes)) {
     if (data.addNodes.remove) {
       miqRemoveNodeChildren(data.addNodes.activeTree, data.addNodes.key);
     }
 
     miqAddNodeChildren(data.addNodes.activeTree,
-                       data.addNodes.key,
-                       data.addNodes.osf,
-                       data.addNodes.nodes);
+      data.addNodes.key,
+      data.addNodes.osf,
+      data.addNodes.nodes);
   }
 
 
-  if (! _.isUndefined(data.deleteNode)) {
+  if (!_.isUndefined(data.deleteNode)) {
     var delNode = miqTreeFindNodeByKey(data.deleteNode.activeTree, data.deleteNode.node);
     miqTreeObject(data.deleteNode.activeTree).deleteNode(delNode);
   }
@@ -225,11 +229,17 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
 
   ManageIQ.explorer.reloadTrees(data);
 
-  if (_.isObject(data.buildCalendar)) { ManageIQ.explorer.buildCalendar(data.buildCalendar); }
+  if (_.isObject(data.buildCalendar)) {
+    ManageIQ.explorer.buildCalendar(data.buildCalendar);
+  }
 
-  if (data.initDashboard) { miqInitDashboardCols(); }
+  if (data.initDashboard) {
+    miqInitDashboardCols();
+  }
 
-  if (data.clearGtlListGrid) { ManageIQ.grids.gtl_list_grid = undefined; }
+  if (data.clearGtlListGrid) {
+    ManageIQ.grids.gtl_list_grid = undefined;
+  }
 
   if (_.isObject(data.setVisibility)) {
     _.forEach(data.setVisibility, function(visible, element) {
@@ -261,7 +271,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     sendDataWithRx({
       redrawToolbar: data.reloadToolbars,
     });
-  } else if (_.isObject(data.reloadToolbars) && ! _.isArray(data.reloadToolbars)) {
+  } else if (_.isObject(data.reloadToolbars) && !_.isArray(data.reloadToolbars)) {
     // FIXME remove this branch completely once sure
     console.error('Found a toolbar using the obsolete path! Please report or fix');
 
@@ -273,7 +283,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
 
   ManageIQ.record = data.record;
 
-  if (! _.isUndefined(data.activateNode)) {
+  if (!_.isUndefined(data.activateNode)) {
     miqExpandParentNodes(data.activateNode.activeTree, data.activateNode.osf);
     miqTreeActivateNodeSilently(data.activateNode.activeTree, data.activateNode.osf);
   }
@@ -283,25 +293,41 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     load_c3_charts();
   }
 
-  if (data.resetChanges) { ManageIQ.changes = null; }
-  if (data.resetOneTrans) { ManageIQ.oneTransition.oneTrans = 0; }
-  if (data.oneTransIE) { ManageIQ.oneTransition.IEButtonPressed = true; }
+  if (data.resetChanges) {
+    ManageIQ.changes = null;
+  }
+  if (data.resetOneTrans) {
+    ManageIQ.oneTransition.oneTrans = 0;
+  }
+  if (data.oneTransIE) {
+    ManageIQ.oneTransition.IEButtonPressed = true;
+  }
 
   ManageIQ.explorer.focus(data);
 
-  if (! _.isUndefined(data.clearSearch)) {
+  if (!_.isUndefined(data.clearSearch)) {
     ManageIQ.explorer.clearSearchToggle(data.clearSearch);
   }
 
   setTimeout(miqInitMainContent);
   miqInitAccordions();
 
-  if (data.hideModal) { $('#quicksearchbox').modal('hide'); }
-  if (data.initAccords) { miqInitAccordions(); }
-  if (data.lockSidebar !== undefined) { ManageIQ.explorer.lockSidebar(data.lockSidebar); }
+  if (data.hideModal) {
+    $('#quicksearchbox').modal('hide');
+  }
+  if (data.initAccords) {
+    miqInitAccordions();
+  }
+  if (data.lockSidebar !== undefined) {
+    ManageIQ.explorer.lockSidebar(data.lockSidebar);
+  }
 
-  if (data.removeSand) { ManageIQ.explorer.removeSand(); }
-  if (data.removePaging) { ManageIQ.explorer.removePaging(); }
+  if (data.removeSand) {
+    ManageIQ.explorer.removeSand();
+  }
+  if (data.removePaging) {
+    ManageIQ.explorer.removePaging();
+  }
 
   if (_.isString(data.ajaxUrl)) {
     miqAsyncAjax(data.ajaxUrl);

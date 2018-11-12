@@ -7,7 +7,7 @@ ManageIQ.angular.app.controller('orchestrationTemplateCopyController', ['$http',
     templateName: null,
     templateDescription: null,
     templateDraft: null,
-    templateContent: null
+    templateContent: null,
   };
   vm.modelCopy = _.extend({}, vm.templateInfo);
   vm.model = 'templateInfo';

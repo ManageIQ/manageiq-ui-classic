@@ -19,6 +19,7 @@
 
   "globals": {
     "sendDataWithRx": false, // local: miq_observable.js
+    "listenToRx": true, // local: miq_observable.js
     "vanillaJsAPI": false, // local: http_api/api.js - deprecated
     "API": false, // local: http_api/api.js
     "ManageIQ": false, // local: mig_global.js
@@ -32,13 +33,15 @@
     "i18n": false, // gem: gettext_i18n_rails_js
     "moment": false, // npm: moment
     "numeral": false, // npm: numeral
-    "sprintf": false // npm: sprintf-js
+    "sprintf": false, // npm: sprintf-js
+    "add_flash": true, // local miq_flash
+    "miq_bootstrap": true // local miq_angular_application
   },
 
   "rules": {
     // {{{ this section comes from eslint-config-airbnb-es5 1.0.9
     "strict": 0,
-    "no-shadow": 2,
+    "no-shadow": 0,
     "no-shadow-restricted-names": 2,
     "no-cond-assign": [2, "always"],
     "no-console": 1,
@@ -101,7 +104,7 @@
     "yoda": 2,
     "brace-style": [2,
     "1tbs", {
-      "allowSingleLine": true
+      "allowSingleLine": false
       }],
     "camelcase": [2, {
       "properties": "never"
@@ -161,11 +164,11 @@
       "words": true,
       "nonwords": false,
       "overrides": {
-        "!": true
+        "!": false
       }
     }],
     "no-unused-vars": [ "error", {
-      "args": "all",
+      "args": "after-used",
       "argsIgnorePattern": "^_",
       "vars": "local",
       "caughtErrors": "all",

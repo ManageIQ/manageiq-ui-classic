@@ -30,7 +30,7 @@ function groupChartController() {
 
   vm.$doCheck = function() {
     // do a deep compare on chartData and config
-    if (! angular.equals(vm.chartData, prevChartData) || ! angular.equals(vm.config, prevConfig)) {
+    if (!angular.equals(vm.chartData, prevChartData) || !angular.equals(vm.config, prevConfig)) {
       vm.updateAll();
     }
   };

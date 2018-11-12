@@ -14,7 +14,7 @@ ManageIQ.angular.app.component('verifyButton', {
 
     vm.findScope = function() {
       var parentScope = $scope;
-      while (! parentScope.angularForm) {
+      while (!parentScope.angularForm) {
         parentScope = parentScope.$parent;
       }
       return parentScope.angularForm;

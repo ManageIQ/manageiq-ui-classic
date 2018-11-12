@@ -9,16 +9,16 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
   $scope.formId = hostAggregateFormId;
   $scope.afterGet = false;
   $scope.modelCopy = angular.copy( $scope.hostAggregateModel );
-  $scope.model = "hostAggregateModel";
+  $scope.model = 'hostAggregateModel';
 
   ManageIQ.angular.scope = $scope;
 
-  if (hostAggregateFormId == 'new') {
-    $scope.hostAggregateModel.name = "";
-    $scope.hostAggregateModel.ems_id = "";
-    $scope.hostAggregateModel.availability_zone = "";
-    $scope.hostAggregateModel.metadata = "";
-    $scope.hostAggregateModel.host_id = "";
+  if (hostAggregateFormId === 'new') {
+    $scope.hostAggregateModel.name = '';
+    $scope.hostAggregateModel.ems_id = '';
+    $scope.hostAggregateModel.availability_zone = '';
+    $scope.hostAggregateModel.metadata = '';
+    $scope.hostAggregateModel.host_id = '';
   } else {
     miqService.sparkleOn();
 
@@ -35,10 +35,11 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
-    if (hostAggregateFormId == 'new') {
-      var url = '/host_aggregate/create/new' + '?button=cancel';
+    var url;
+    if (hostAggregateFormId === 'new') {
+      url = '/host_aggregate/create/new' + '?button=cancel';
     } else {
-      var url = '/host_aggregate/update/' + hostAggregateFormId + '?button=cancel';
+      url = '/host_aggregate/update/' + hostAggregateFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };
@@ -76,7 +77,7 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
   $scope.resetClicked = function() {
     $scope.hostAggregateModel = angular.copy( $scope.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   function getHostAggregateFormData(response) {

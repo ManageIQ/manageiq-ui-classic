@@ -9,7 +9,7 @@
     };
     function link(_scope, _elem, _attrs, ctrl) {
       ctrl.$validators.hostnameValidation = function(_modelValue, viewValue) {
-        return ! viewValue || isHostname(viewValue) || isIpAddress(viewValue);
+        return !viewValue || isHostname(viewValue) || isIpAddress(viewValue);
       };
 
       /**

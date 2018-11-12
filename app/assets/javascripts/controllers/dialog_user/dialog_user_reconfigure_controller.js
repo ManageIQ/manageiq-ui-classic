@@ -32,7 +32,7 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
       dialogId: vm.dialogId,
       resourceActionId: resourceActionId,
       targetId: targetId,
-      targetType: "service",
+      targetType: 'service',
     };
 
     return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
@@ -61,6 +61,6 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
   }
 
   function saveable() {
-    return vm.isValid && ! dialogFieldRefreshService.areFieldsBeingRefreshed;
+    return vm.isValid && !dialogFieldRefreshService.areFieldsBeingRefreshed;
   }
 }]);

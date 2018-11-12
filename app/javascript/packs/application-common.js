@@ -7,13 +7,15 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import 'proxy-polyfill';
+import { Spinner } from 'spin.js';
+import 'spin.js/spin.css';
 
 import { mount } from '../react/mounter';
 import componentRegistry from '../react/componentRegistry';
 import { API, http } from '../http_api';
 
-import * as newRegistry from '../miq-component/registry';
-import reactBlueprint from '../miq-component/react-blueprint';
+import * as newRegistry from '../miq-component/registry.ts';
+import reactBlueprint from '../miq-component/react-blueprint.tsx';
 import * as helpers from '../miq-component/helpers';
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
@@ -57,6 +59,4 @@ require('xml_display/XMLDisplay.js');
 require('xml_display/XMLDisplay.css');
 
 // miqSpinner, miqSearchSpinner
-import {Spinner} from 'spin.js';
-import 'spin.js/spin.css';
 window.Spinner = Spinner;

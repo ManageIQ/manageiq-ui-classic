@@ -3,13 +3,14 @@
 // CTRL+SHIFT+X stops the spinner
 $(document).bind('keyup', 'ctrl+shift+x', miqSparkleOff);
 
-/// Warn for duplicate DOM IDs
-(function () {
+// / Warn for duplicate DOM IDs
+(function() {
   var duplicate = function() {
     $('[id]').each(function() {
       var ids = $('[id="' + this.id + '"]');
-      if (ids.length > 1 && $.inArray(this, ids) !== -1)
+      if (ids.length > 1 && $.inArray(this, ids) !== -1) {
         console.warn('Duplicate DOM ID #' + this.id, this);
+      }
     });
   };
 
@@ -45,13 +46,13 @@ $(function() {
     window.debug_toast('error', ev);
   }, true);
 
-  window.debug_toast = function (type, data) {
+  window.debug_toast = function(type, data) {
     // Don't display debug toasts if the user doesn't want it
     if (sessionStorage.getItem('disableDebugToasts')) {
       return false;
     }
 
-    if (type == 'warn') {
+    if (type === 'warn') {
       type = 'warning';
     }
 
@@ -86,7 +87,7 @@ angular.module('miq.debug', [])
       '',
       '  <toast-item ng-repeat="item in $ctrl.items" data="item" close="$ctrl.close"></toast-item>',
       '</div>',
-    ].join("\n"),
+    ].join('\n'),
     controller: ['$timeout', function($timeout) {
       var $ctrl = this;
       this.items = [];
@@ -111,7 +112,7 @@ angular.module('miq.debug', [])
 
       this.disable = function() {
         sessionStorage.setItem('disableDebugToasts', true);
-      }
+      };
     }],
   })
   .component('toastItem', {
@@ -129,7 +130,7 @@ angular.module('miq.debug', [])
       '    {{$ctrl.message}}',
       '  </div>',
       '</div>',
-    ].join("\n"),
+    ].join('\n'),
     controller: [function() {
       var $ctrl = this;
 
@@ -148,17 +149,21 @@ angular.module('miq.debug', [])
       };
 
       var sanitize = function(data) {
-        if (_.isPlainObject(data) && (data.error || data.message))
-          return (data.error || "").toString() + " " + (data.message || "").toString();
+        if (_.isPlainObject(data) && (data.error || data.message)) {
+          return (data.error || '').toString() + ' ' + (data.message || '').toString();
+        }
 
-        if (_.isPlainObject(data))
+        if (_.isPlainObject(data)) {
           return JSON.stringify(data);
+        }
 
-        if (_.isArray(data) && data.length == 1)
+        if (_.isArray(data) && data.length === 1) {
           return sanitize(data[0]);
+        }
 
-        if (data.toString().substr(0, 8) === '[object ')
-          return "Unknown error, please see the console for details"; // no i18n, devel mode only
+        if (data.toString().substr(0, 8) === '[object ') {
+          return 'Unknown error, please see the console for details';
+        } // no i18n, devel mode only
 
         return data.toString();
       };

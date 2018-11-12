@@ -8,8 +8,8 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$scope', 'floating
     vm.ems = [];
 
     vm.formId = floatingIpFormId;
-    vm.model = "floatingIpModel";
-    vm.newRecord = floatingIpFormId === "new";
+    vm.model = 'floatingIpModel';
+    vm.newRecord = floatingIpFormId === 'new';
     vm.saveable = miqService.saveable;
 
     vm.saveUrl = vm.newRecord ? '/floating_ip/create/new' : '/floating_ip/update/' + floatingIpFormId;
@@ -33,7 +33,7 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$scope', 'floating
           miqService.sparkleOff();
         });
     } else {
-      API.get("/api/floating_ips/" +  floatingIpFormId + "?attributes=cloud_network,cloud_tenant,ext_management_system,network_port").then(function(data) {
+      API.get('/api/floating_ips/' +  floatingIpFormId + '?attributes=cloud_network,cloud_tenant,ext_management_system,network_port').then(function(data) {
         Object.assign(vm.floatingIpModel, data);
         vm.afterGet = true;
         vm.modelCopy = angular.copy(vm.floatingIpModel);
@@ -60,7 +60,7 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$scope', 'floating
   vm.resetClicked = function() {
     vm.floatingIpModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   vm.filteredModel = function() {

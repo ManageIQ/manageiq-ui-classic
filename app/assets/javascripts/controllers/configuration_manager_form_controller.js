@@ -83,7 +83,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
     miqService.sparkleOn();
 
     var editUrl = url + '/edit/' + configurationManagerFormId + '?button=' + buttonName;
-    if (! serializeFields) {
+    if (!serializeFields) {
       miqService.miqAjaxButton(editUrl);
     } else {
       miqService.miqAjaxButton(editUrl, serializeFields);

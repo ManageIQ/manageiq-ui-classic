@@ -1,5 +1,6 @@
 import { sendDataWithRx } from '../miq_observable';
-const redirectLogin = window.redirectLogin;
+
+const { redirectLogin } = window;
 
 export function miqFetch(options, data = null) {
   const fetchOpts = {
@@ -45,7 +46,7 @@ function processOptions(options) {
 }
 
 function processData(o) {
-  if (! o || _.isString(o)) {
+  if (!o || _.isString(o)) {
     return o;
   }
 
@@ -76,10 +77,10 @@ function processResponse(response) {
 }
 
 function responseAndError(options = {}) {
-  return function(response) {
+  return (response) => {
     let ret = processResponse(response);
 
-    if ((response.status === 401) && ! options.skipLoginRedirect) {
+    if ((response.status === 401) && !options.skipLoginRedirect) {
       // Unauthorized - always redirect to dashboard#login
       redirectLogin(sprintf(__('%s logged out, redirecting to the login page'), options.backendName));
       return ret;
@@ -95,7 +96,7 @@ function responseAndError(options = {}) {
       return ret;
     }
 
-    return ret.catch(function(err) {
+    return ret.catch((err) => {
       // no skipping by default
       errorModal(err, options.skipErrors || [], options.backendName);
 
@@ -104,28 +105,24 @@ function responseAndError(options = {}) {
   };
 }
 
+// non-JSON error message, assuming html
 function tryHtmlError(response) {
-  return function() {
-    // non-JSON error message, assuming html
-    return response.text();
-  };
+  return () => response.text();
 }
 
 function rejectWithData(response) {
-  return function(obj) {
-    return Promise.reject({
-      data: obj,
-      headers: response.headers,
-      status: response.status,
-      statusText: response.statusText,
-      url: response.url,
-    });
-  };
+  return obj => Promise.reject({ // eslint-disable-line prefer-promise-reject-errors
+    data: obj,
+    headers: response.headers,
+    status: response.status,
+    statusText: response.statusText,
+    url: response.url,
+  });
 }
 
 function errorModal(err, skipErrors, backendName) {
   // only show error modal unless the status code is in the list
-  if (! skipErrors.includes(err.status)) {
+  if (!skipErrors.includes(err.status)) {
     sendDataWithRx({
       serverError: err,
       source: 'fetch',

@@ -8,5 +8,5 @@ ManageIQ.angular.app.component('widgetError', {
     __('Error: Request for data failed.'),
     '  </h1>',
     '</div>',
-  ].join("\n"),
+  ].join('\n'),
 });

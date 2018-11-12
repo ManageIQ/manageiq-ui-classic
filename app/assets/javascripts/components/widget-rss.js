@@ -24,5 +24,5 @@ ManageIQ.angular.app.component('widgetRss', {
     '  <div ng-bind-html="vm.widgetModel.content">',
     '  </div>',
     '</div>',
-  ].join("\n"),
+  ].join('\n'),
 });

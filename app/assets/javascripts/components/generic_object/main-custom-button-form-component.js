@@ -54,7 +54,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     vm.button_types = [];
     vm.ae_instances = [];
 
-    vm.attributeValueTableHeaders = [__("Name"), __("Value"), __("Actions")];
+    vm.attributeValueTableHeaders = [__('Name'), __('Value'), __('Actions')];
 
     vm.display_for = [
       {id: 'single', name: __('Single Entity')},

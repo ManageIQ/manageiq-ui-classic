@@ -1,6 +1,6 @@
 /* global miqFlashLater */
 
-ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'miqService', 'API', function(repositoryId, miqService, API) {
+ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'miqService', 'API', '$window', function(repositoryId, miqService, API, $window) {
   var vm = this;
 
   var init = function() {
@@ -50,7 +50,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
       message: message,
       level: 'warning',
     });
-    window.location.href = url;
+    $window.location.href = url;
   };
 
   vm.resetClicked = function(angularForm) {
@@ -92,14 +92,14 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
     var message = '';
     var error = false;
     if (response.hasOwnProperty('results')) {
-      error = ! response.results[0].success;
+      error = !response.results[0].success;
       if (error) {
         message = __('Unable to add Repository ') +  vm.repositoryModel.name + ' .' +  response.results[0].message;
       } else {
         message = sprintf(__('Add of Repository "%s" was successfully initiated.'), vm.repositoryModel.name);
       }
     } else {
-      error = ! response.success;
+      error = !response.success;
       if (error) {
         message = __('Unable to edit Repository') +  vm.repositoryModel.name + ' .' +  response.message;
       } else {
@@ -113,7 +113,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
       miqService.sparkleOff();
     } else {
       miqFlashLater({ message: message });
-      window.location.href = url;
+      $window.location.href = url;
     }
   };
 

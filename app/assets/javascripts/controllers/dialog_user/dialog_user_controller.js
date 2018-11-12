@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'openUrl', '$http', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, openUrl, $http) {
+ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'openUrl', '$http', '$window', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, openUrl, $http, $window) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -49,7 +49,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
       dialogId: dialogId,
       resourceActionId: resourceActionId,
       targetId: targetId,
-      targetType: targetType
+      targetType: targetType,
     };
 
     return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
@@ -73,26 +73,25 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     }
     return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]})
       .then(function(response) {
-        if (vm.openUrl === "true") {
+        if (vm.openUrl === 'true') {
           return API.wait_for_task(response.task_id)
-            .then(function(response) {
-              return $http.post("open_url_after_dialog", {targetId: vm.targetId});
+            .then(function() {
+              return $http.post('open_url_after_dialog', {targetId: vm.targetId});
             })
             .then(function(response) {
               if (response.data.open_url) {
-                window.open(response.data.open_url);
+                $window.open(response.data.open_url);
                 miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
               } else {
                 miqService.miqFlash('error', __('Automate failed to obtain URL.'));
                 miqService.sparkleOff();
-              };
+              }
             })
             .catch(function() {
               return Promise.reject({data: {error: {message: '-'.concat(__('Automate failed to obtain URL.')) }}});
             });
-        } else {
-          miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
         }
+        miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
       })
       .catch(function(err) {
         dialogUserSubmitErrorHandlerService.handleError(err);
@@ -104,6 +103,6 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   }
 
   function saveable() {
-    return vm.isValid && ! dialogFieldRefreshService.areFieldsBeingRefreshed;
+    return vm.isValid && !dialogFieldRefreshService.areFieldsBeingRefreshed;
   }
 }]);

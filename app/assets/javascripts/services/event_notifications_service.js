@@ -1,10 +1,5 @@
-angular.module('miq.notifications')
-  .service('eventNotifications', eventNotifications);
-
-eventNotifications.$inject = ['$timeout', '$window', '$httpParamSerializerJQLike', 'API'];
-
-function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) {
-  if (! ManageIQ.angular.eventNotificationsData) {
+angular.module('miq.notifications').service('eventNotifications', ['$timeout', '$window', '$httpParamSerializerJQLike', 'API', function($timeout, $window, $httpParamSerializerJQLike, API) {
+  if (!ManageIQ.angular.eventNotificationsData) {
     ManageIQ.angular.eventNotificationsData = {
       state: {
         groups: [],
@@ -78,26 +73,26 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
 
     if (seed) {
       API.get('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc&limit=100')
-      .then(function(data) {
-        data.resources.forEach(function(resource) {
-          var msg = miqFormatNotification(resource.details.text, resource.details.bindings);
-          events.notifications.push({
-            id: resource.id,
-            notificationType: _this.EVENT_NOTIFICATION,
-            unread: ! resource.seen,
-            type: resource.details.level,
-            message: msg,
-            data: {
-              link: _.get(resource.details, 'bindings.link'),
-            },
-            href: resource.href,
-            timeStamp: resource.details.created_at,
+        .then(function(data) {
+          data.resources.forEach(function(resource) {
+            var msg = miqFormatNotification(resource.details.text, resource.details.bindings);
+            events.notifications.push({
+              id: resource.id,
+              notificationType: _this.EVENT_NOTIFICATION,
+              unread: !resource.seen,
+              type: resource.details.level,
+              message: msg,
+              data: {
+                link: _.get(resource.details, 'bindings.link'),
+              },
+              href: resource.href,
+              timeStamp: resource.details.created_at,
+            });
           });
-        });
 
-        updateUnreadCount(events);
-        notifyObservers();
-      });
+          updateUnreadCount(events);
+          notifyObservers();
+        });
     }
   };
 
@@ -131,7 +126,7 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
       data: notificationData,
       actionTitle: notificationData.link ? __('View details') : undefined,
       actionCallback: notificationData.link ? this.viewDetails : undefined,
-      href: id ? window.location.origin + '/api/notifications/' + id : undefined,
+      href: id ? $window.location.origin + '/api/notifications/' + id : undefined,
       timeStamp: (new Date()).getTime(),
     };
 
@@ -140,7 +135,9 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
     });
     if (group) {
       if (group.notifications) {
-        group.notifications.splice(_.sortedIndexBy(group.notifications, newNotification, function(x) { return -x.timeStamp; }), 0, newNotification);
+        group.notifications.splice(_.sortedIndexBy(group.notifications, newNotification, function(x) {
+          return -x.timeStamp;
+        }), 0, newNotification);
       } else {
         group.notifications = [newNotification];
       }
@@ -174,7 +171,7 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
     }
 
     if (showToast) {
-      if (! notification) {
+      if (!notification) {
         notification = {
           type: type,
           message: message,
@@ -228,7 +225,9 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
         notification.unread = false;
         _this.removeToast(notification);
         return { href: notification.href };
-      }).filter(function(notification) { return notification.href; });
+      }).filter(function(notification) {
+        return notification.href;
+      });
       if (resources.length > 0) {
         API.post('/api/notifications', {action: 'mark_as_seen', resources: resources});
       }
@@ -259,7 +258,7 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
       }
     }
 
-    if (! group) {
+    if (!group) {
       group = state.groups.find(function(nextGroup) {
         return notification.notificationType === nextGroup.notificationType;
       });
@@ -280,7 +279,9 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
       var resources = group.notifications.map(function(notification) {
         _this.removeToast(notification);
         return { href: notification.href };
-      }).filter(function(notification) { return notification.href; });
+      }).filter(function(notification) {
+        return notification.href;
+      });
       if (resources.length > 0) {
         API.post('/api/notifications', {action: 'delete', resources: resources});
       }
@@ -309,7 +310,7 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
       notification.viewing = false;
       $timeout(function() {
         notification.show = false;
-        if (! notification.viewing) {
+        if (!notification.viewing) {
           $this.removeToast(notification);
         }
       }, ManageIQ.angular.eventNotificationsData.toastDelay);
@@ -318,7 +319,7 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
 
   this.setViewingToast = function(notification, viewing) {
     notification.viewing = viewing;
-    if (! viewing && ! notification.show) {
+    if (!viewing && !notification.show) {
       this.removeToast(notification);
     }
   };
@@ -336,4 +337,4 @@ function eventNotifications($timeout, $window, $httpParamSerializerJQLike, API) 
       _this.add('event', data.notification.level, msg, {link: _.get(data.notification, 'bindings.link')}, data.notification.id);
     }
   });
-}
+}]);

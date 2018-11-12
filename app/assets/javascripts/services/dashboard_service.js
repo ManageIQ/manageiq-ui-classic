@@ -2,8 +2,6 @@
  add_flash miqFlashLater miqFlashSaved */
 
 ManageIQ.angular.app.service('dashboardService', ['$http', '$interval', '$window', 'miqService', function($http, $interval, $window, miqService) {
-  var dashboardService = this;
-
   this.autoUpdateDashboard = function($scope, baseURL, callback) {
     $scope.refresh = function() {
       // get the pathname and remove trailing / if exist

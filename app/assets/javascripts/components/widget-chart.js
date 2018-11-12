@@ -30,5 +30,5 @@ ManageIQ.angular.app.component('widgetChart', {
     '    <div ng-bind-html="vm.widgetModel.content">',
     '    </div>',
     '  </div>',
-  ].join("\n"),
+  ].join('\n'),
 });

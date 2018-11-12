@@ -1,4 +1,6 @@
-import React from 'react';
+/**
+ * Remove this and replace all ocurances with current mounting mechanism
+ */
 import ReactDOM from 'react-dom';
 import componentRegistry from './componentRegistry';
 
@@ -10,8 +12,6 @@ export function mount(component, selector, data = {}) {
     ReactDOM.render(componentRegistry.markup(component, data), reactNode);
   } else {
     // eslint-disable-next-line no-console
-    console.log(
-      `Cannot find \'${selector}\' element for mounting the \'${component}\'`
-    );
+    console.log(`Cannot find '${selector}' element for mounting the '${component}'`);
   }
 }
