@@ -24,4 +24,17 @@ module OptimizeHelper
       @record = Storage.find_by(:id => nodeid)
     end
   end
+
+  def download_file(typ, report, filename)
+    case typ
+    when "txt"
+      send_data(report.to_text,
+                :filename => "#{filename}.txt")
+    when "csv"
+      send_data(report.to_csv,
+                :filename => "#{filename}.csv")
+    when "pdf"
+      render_pdf(report)
+    end
+  end
 end

@@ -39,16 +39,7 @@ class BottlenecksController < ApplicationController
   def report_download
     filename = "Bottlenecks Event Details"
     disable_client_cache
-    case params[:typ]
-    when "txt"
-      send_data(@sb[:report].to_text,
-                :filename => "#{filename}.txt")
-    when "csv"
-      send_data(@sb[:report].to_csv,
-                :filename => "#{filename}.csv")
-    when "pdf"
-      render_pdf(@sb[:report])
-    end
+    download_file(params[:typ], @sb[:report], filename)
   end
 
   def tree_select
