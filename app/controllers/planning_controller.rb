@@ -146,16 +146,7 @@ class PlanningController < ApplicationController
     @sb[:rpt].title = _("Counts of VMs (%{profile})") % {:profile => profile.join(", ")}
     filename = "VM Counts per #{ui_lookup(:model => @sb[:options][:target_typ])}"
     disable_client_cache
-    case params[:typ]
-    when "txt"
-      send_data(@sb[:rpt].to_text,
-                :filename => "#{filename}.txt")
-    when "csv"
-      send_data(@sb[:rpt].to_csv,
-                :filename => "#{filename}.csv")
-    when "pdf"
-      render_pdf(@sb[:rpt])
-    end
+    download_file(params[:typ], @sb[:rpt], filename)
   end
 
   def reset
