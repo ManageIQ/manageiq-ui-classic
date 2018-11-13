@@ -223,7 +223,7 @@ class CloudVolumeController < ApplicationController
           :name => _("Add New Cloud Volume"),
           :url  => "/cloud_volume/new"
         )
-        javascript_flash
+        javascript_flash(:spinner_off => true)
       end
 
     when "validate"
