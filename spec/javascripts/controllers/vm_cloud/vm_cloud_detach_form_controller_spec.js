@@ -30,7 +30,8 @@ describe('vmCloudDetachFormController', function() {
       setTimeout(function() {
         expect(miqService.miqAjaxButton).toHaveBeenCalledWith(
           '/vm_cloud/detach_volume/1000000000001?button=detach',
-          $scope.vm.vmCloudModel
+          $scope.vm.vmCloudModel,
+          {complete: false}
         );
         done();
       });
