@@ -9,6 +9,12 @@ describe BottlenecksController do
     end
   end
 
+  describe '#report_download' do
+    it 'routes with GET' do
+      expect(get('/bottlenecks/report_download')).to route_to('bottlenecks#report_download')
+    end
+  end
+
   describe '#timeline_data' do
     it 'routes with GET' do
       expect(get('/bottlenecks/timeline_data')).to route_to('bottlenecks#timeline_data')
@@ -30,6 +36,12 @@ describe BottlenecksController do
   describe '#tree_select' do
     it 'routes with POST' do
       expect(post('/bottlenecks/tree_select')).to route_to('bottlenecks#tree_select')
+    end
+  end
+
+  describe '#change_tab' do
+    it 'routes with POST' do
+      expect(post('/bottlenecks/change_tab')).to route_to('bottlenecks#change_tab')
     end
   end
 

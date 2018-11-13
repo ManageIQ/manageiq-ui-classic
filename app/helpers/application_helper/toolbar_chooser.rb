@@ -19,7 +19,7 @@ class ApplicationHelper::ToolbarChooser
   def x_view_toolbar_filename
     if x_gtl_view_tb_render?
       'x_gtl_view_tb'
-    elsif %w(miq_capacity_planning miq_capacity_utilization).include?(@layout)
+    elsif %w(miq_capacity_bottlenecks miq_capacity_planning miq_capacity_utilization).include?(@layout)
       'miq_capacity_view_tb'
     elsif @record && @explorer && (%w(services catalogs).include?(@layout) || %w(performance timeline).include?(@display))
       nil
