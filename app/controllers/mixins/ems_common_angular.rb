@@ -400,6 +400,7 @@ module Mixins
                          :amqp_auth_status                => amqp_auth_status,
                          :ssh_keypair_auth_status         => ssh_keypair_auth_status.nil? ? true : ssh_keypair_auth_status,
                          :service_account_auth_status     => service_account_auth_status,
+                         :non_default_current_tab         => @ems.emstype == "gce" ? "service_account" : nil,
                          :amqp_fallback_hostname1         => amqp_fallback_hostname1 ? amqp_fallback_hostname1 : "",
                          :amqp_fallback_hostname2         => amqp_fallback_hostname2 ? amqp_fallback_hostname2 : "",
                          :default_url                     => @ems.endpoints.first.url}
