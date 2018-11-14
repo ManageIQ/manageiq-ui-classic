@@ -10,7 +10,7 @@ class HostDecorator < MiqDecorator
   def quadicon
     icon = {
       :top_left     => {
-        :text    => t = vms.size,
+        :text    => t = v_total_vms,
         :tooltip => n_("%{number} Virtual Machine", "%{number} Virtual Machines", t) % {:number => t}
       },
       :top_right    => {
