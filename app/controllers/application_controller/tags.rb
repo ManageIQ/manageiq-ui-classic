@@ -18,13 +18,6 @@ module ApplicationController::Tags
     end
   end
 
-  # Get the string with proper feature name for asserting privileges
-  def feature_name
-    is_nested_list = @display && @display != 'main'
-    display_or_controller = is_nested_list ? @display.singularize : controller_for_common_methods
-    "#{display_or_controller}_tag"
-  end
-
   def service_tag
     tagging_edit('Service')
   end
@@ -71,6 +64,13 @@ module ApplicationController::Tags
   end
 
   private ############################
+
+  # Get the string with proper feature name for asserting privileges
+  def feature_name
+    is_nested_list = @display && @display != 'main'
+    display_or_controller = is_nested_list ? @display.singularize : controller_for_common_methods
+    "#{display_or_controller}_tag"
+  end
 
   def tag_set_vars_from_params
     if params[:tag_cat]

@@ -121,10 +121,38 @@ describe ApplicationController do
 
     context 'check for correct feature id when tagging selected storage thru Provider relationship' do
       let(:params) { {:db => "Storage", :id => "1"} }
+
       it 'sets @tagging properly' do
         allow(controller).to receive(:tagging_edit_tags_reset)
         controller.send(:tagging_edit)
         expect(controller.instance_variable_get(:@tagging)).not_to be_nil
+      end
+    end
+  end
+
+  describe VmInfraController do
+    before do
+      login_as FactoryGirl.create(:user, :features => %w(vm_tag))
+      allow(controller).to receive(:tagging_edit_tags_reset)
+      controller.instance_variable_set(:@display, 'main')
+      controller.instance_variable_set(:@_params, params)
+    end
+
+    context 'check for correct feature id when tagging a VM' do
+      let(:params) { {:id => '1'} }
+
+      it 'sets @tagging properly' do
+        controller.send(:tagging_edit, VmOrTemplate)
+        expect(controller.instance_variable_get(:@tagging)).not_to be_nil
+      end
+
+      context 'VM selected in a list of All VMs & Templates' do
+        let(:params) { {:miq_grid_checks => '1'} }
+
+        it 'sets @tagging properly' do
+          controller.send(:tagging_edit, VmOrTemplate)
+          expect(controller.instance_variable_get(:@tagging)).not_to be_nil
+        end
       end
     end
   end
