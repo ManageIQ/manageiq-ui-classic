@@ -100,6 +100,8 @@ class GitBasedDomainImportService
     domain = task.task_results
     error_message = if task.message == _('multiple domains')
                       _('Selected branch or tag contains more than one domain')
+                    elsif task.message == _('locked domain')
+                      _('Selected domain is locked')
                     else
                       _('Selected branch or tag does not contain a valid domain')
                     end

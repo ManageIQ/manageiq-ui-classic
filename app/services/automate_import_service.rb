@@ -11,6 +11,7 @@ class AutomateImportService
                        domain_name_to_import_to,
                        namespace_or_class_list)
     File.open("automate_temporary_zip.zip", "wb") { |file| file.write(import_file_upload.binary_blob.binary) }
+
     import_options = {
       "import_as" => domain_name_to_import_to.presence || domain_name_to_import_from,
       "overwrite" => true,
@@ -33,9 +34,9 @@ class AutomateImportService
 
     result = ae_import.import
 
-    File.delete("automate_temporary_zip.zip")
-
     result.nil? ? nil : ae_import.import_stats
+    ensure
+      File.delete("automate_temporary_zip.zip")
   end
 
   def store_for_import(file_contents)
