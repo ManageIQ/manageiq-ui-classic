@@ -52,10 +52,10 @@
     redux-form-validators "^2.7.0"
     redux-mock-store "^1.5.1"
 
-"@manageiq/ui-components@~1.1.15":
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/@manageiq/ui-components/-/ui-components-1.1.15.tgz#acc214608fb4675438bfa9a961c35c177a3a0741"
-  integrity sha512-2YpLPg0XQBccqBjrM4NeMM4thxYskca40fvYgTH7XdpKirV20fwXm2BuFYpSXq3B+lbO1sqh9WENyLhOSVcvVQ==
+"@manageiq/ui-components@1.1.18":
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/@manageiq/ui-components/-/ui-components-1.1.18.tgz#e8ee8325fb0f7aa8d5d173fbd4fabd7d2b35c2db"
+  integrity sha512-7xtGx091jlsQMKKUZ3eBXhFFqbNPNjI4X2xfKRJdZxv15Lvnu08GS6t5gtXrqTpYpfEdhBHvvy74es8jXzN4IQ==
   dependencies:
     angular-bootstrap-switch "^0.5.1"
     angular-dragdrop "^1.0.13"
@@ -10630,10 +10630,10 @@ specificity@^0.3.1:
   resolved "https://registry.yarnpkg.com/specificity/-/specificity-0.3.2.tgz#99e6511eceef0f8d9b57924937aac2cb13d13c42"
   integrity sha512-Nc/QN/A425Qog7j9aHmwOrlwX2e7pNI47ciwxwy4jOlvbbMHkNNJchit+FX+UjF3IAdiaaV5BKeWuDUnws6G1A==
 
-spice-html5-bower@~1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/spice-html5-bower/-/spice-html5-bower-1.7.2.tgz#5351c2477846b4b5166b2a5f74f3f5475c88b4d8"
-  integrity sha512-hLuJ34qI+SHuXQTbA+jNHbIsINgRFozqWsa3wWHd593InWSTsnVTXK2bO6jBRmiFKrz0OBFkS0lBVfEk8MpveQ==
+spice-html5-bower@~1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/spice-html5-bower/-/spice-html5-bower-1.7.3.tgz#f533a14ff5669228c64424c75ef688ac10cde05b"
+  integrity sha512-DYdjXqqIe3L/m6QEctdIhmmCYkDDOMs7Y+aCf9S9gKCImyPRilxYVw870YZnzEgdxXG5+6DZbbKvPzZKcMsvVA==
 
 spin.js@~4.0.0:
   version "4.0.0"
