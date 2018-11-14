@@ -894,7 +894,10 @@ module OpsController::Diagnostics
   end
 
   def build_supported_depots_for_select
-    @supported_depots_for_select = FileDepot.supported_depots.values.sort
+    depots_for_select = FileDepot.supported_depots.values.sort
+    # S3 and Swift not currently supported for Log Collection
+    not_supported_depots = ["AWS S3", "OpenStack Swift"]
+    @supported_depots_for_select = depots_for_select - not_supported_depots
   end
 
   def set_credentials
