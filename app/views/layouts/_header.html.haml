@@ -21,7 +21,7 @@
         - if menu_section.visible?
           %li.dropdown
             %a#help-menu.dropdown-toggle.nav-item-iconic{"data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
-              %span.fa.pficon-help{:title => _("Help")}
+              %span.pficon.pficon-help{:title => _("Help")}
               %span.caret
             %ul.dropdown-menu{"aria-labelledby" => "help-menu"}
               - menu_section.items.each do |menu_item|

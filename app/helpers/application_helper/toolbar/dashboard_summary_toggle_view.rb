@@ -19,7 +19,7 @@ class ApplicationHelper::Toolbar::DashboardSummaryToggleView < ApplicationHelper
     ),
     twostate(
       :view_topology,
-      'fa pficon-topology',
+      'pficon pficon-topology',
       N_('Topology View'),
       nil,
       :url       => "/",

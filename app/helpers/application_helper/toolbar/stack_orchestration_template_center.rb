@@ -20,7 +20,7 @@ class ApplicationHelper::Toolbar::StackOrchestrationTemplateCenter < Application
           :klass => ApplicationHelper::Button::OrchestrationTemplateOrderable),
         button(
           :orchestration_templates_view,
-          'fa pficon-info fa-lg',
+          'pficon pficon-info fa-lg',
           t = N_('View this Orchestration Template in Catalogs'),
           t,
           :klass => ApplicationHelper::Button::OrchestrationTemplateViewInCatalog),
