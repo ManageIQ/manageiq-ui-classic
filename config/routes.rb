@@ -1987,6 +1987,7 @@ Rails.application.routes.draw do
 
     :generic_object_definition => {
       :get => %w(
+        custom_buttons_in_set
         download_data
         download_summary_pdf
         edit
@@ -1999,6 +2000,7 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         add_button_in_group
+        add_custom_buttons_in_set
         button
         create_del
         custom_button_group_new
