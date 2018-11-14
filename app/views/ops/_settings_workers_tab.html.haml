@@ -207,7 +207,7 @@
           .col-md-8
             = select_tag('ems_refresh_worker_threshold',
                           options_for_select(@sb[:ems_refresh_threshold],
-                                              @edit[:new][:workers][:worker_base][:queue_worker_base][:ems_refresh_worker][:memory_threshold]),
+                                              @edit[:new][:workers][:worker_base][:queue_worker_base][:ems_refresh_worker][:defaults][:memory_threshold]),
                           :class    => "selectpicker")
           :javascript
             miqSelectPickerEvent('ems_refresh_worker_threshold', "#{url}")
