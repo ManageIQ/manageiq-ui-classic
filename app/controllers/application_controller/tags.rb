@@ -3,7 +3,7 @@ module ApplicationController::Tags
 
   # Edit user, group or tenant tags
   def tagging_edit(db = nil, assert = true)
-    assert_privileges("#{@display ? @display.singularize : controller_for_common_methods}_tag") if assert
+    assert_privileges(feature_name) if assert
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
     @tagging = session[:tag_db] = params[:db] ? params[:db] : db if params[:db] || db
@@ -64,6 +64,13 @@ module ApplicationController::Tags
   end
 
   private ############################
+
+  # Get the string with proper feature name for asserting privileges
+  def feature_name
+    is_nested_list = @display && @display != 'main'
+    display_or_controller = is_nested_list ? @display.singularize : controller_for_common_methods
+    "#{display_or_controller}_tag"
+  end
 
   def tag_set_vars_from_params
     if params[:tag_cat]
