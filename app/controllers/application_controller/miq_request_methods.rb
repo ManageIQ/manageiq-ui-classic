@@ -144,7 +144,7 @@ module ApplicationController::MiqRequestMethods
     report_scopes = [:eligible_for_provisioning]
     report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
     options = {
-      :model       => @view.db,
+      :model       => get_template_kls.to_s,
       :gtl_type    => "table",
       :named_scope => report_scopes,
     }
