@@ -480,6 +480,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       }
       return;
     }
+    if ($scope.emsCommonModel.emstype === 'gce') {
+      $scope.currentTab = 'service_account';
+      return;
+    }
     $scope.emsCommonModel.default_api_port = '';
     $scope.emsCommonModel.provider_region = '';
     $scope.emsCommonModel.default_security_protocol = '';
