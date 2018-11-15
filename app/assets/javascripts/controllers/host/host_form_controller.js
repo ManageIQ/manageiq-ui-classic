@@ -104,8 +104,8 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
   $scope.isBasicInfoValid = function() {
     if (($scope.currentTab === 'default') &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
-      ($scope.hostModel.default_userid !== '' && $scope.angularForm.default_userid.$valid &&
-      $scope.angularForm.default_password.$valid)) {
+      ($scope.hostModel.default_userid !== '' && $scope.angularForm.default_userid !== undefined && $scope.angularForm.default_userid.$valid &&
+        $scope.hostModel.default_password !== '' && $scope.angularForm.default_password !== undefined && $scope.angularForm.default_password.$valid)) {
       return true;
     } else if (($scope.currentTab === 'remote') &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
