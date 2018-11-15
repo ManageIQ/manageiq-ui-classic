@@ -20,6 +20,7 @@ import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
 import { initializeStore } from '../miq-redux';
 import { history } from '../miq-component/react-history.ts';
 import createReduxRoutingActions from '../miq-redux/redux-router-actions';
+import { formButtonsActionTypes, createFormButtonsActions } from '../forms/form-buttons-reducer';
 
 ManageIQ.component = {
   ...newRegistry,
@@ -34,6 +35,8 @@ ManageIQ.redux = {
   addReducer: store.injectReducers,
   history,
   ...createReduxRoutingActions(store),
+  formButtonsActions: createFormButtonsActions(store),
+  formButtonsActionTypes: { ...formButtonsActionTypes },
 };
 
 ManageIQ.angular.rxSubject = rxSubject;
