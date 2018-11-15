@@ -7,13 +7,14 @@ const VmSnapshotFormComponent = (props) => {
     nameOptional,
     createUrl,
     cancelUrl,
+    descriptionRequired,
     ...rest
   } = props;
   return (
     <VmSnapshotForm
       hideName={nameOptional}
       nameRequired
-      descriptionRequired={nameOptional}
+      descriptionRequired={nameOptional || descriptionRequired}
       onSubmit={values => window.miqAjaxButton(createUrl, values)}
       onCancel={() => window.miqAjaxButton(cancelUrl)}
       {...rest}
@@ -25,10 +26,12 @@ VmSnapshotFormComponent.propTypes = {
   nameOptional: PropTypes.bool,
   createUrl: PropTypes.string.isRequired,
   cancelUrl: PropTypes.string.isRequired,
+  descriptionRequired: PropTypes.bool,
 };
 
 VmSnapshotFormComponent.defaultProps = {
   nameOptional: false,
+  descriptionRequired: false,
 };
 
 export default VmSnapshotFormComponent;
