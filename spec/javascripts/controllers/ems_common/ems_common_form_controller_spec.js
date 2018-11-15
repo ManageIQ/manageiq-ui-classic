@@ -313,6 +313,18 @@ describe('emsCommonFormController', function() {
     });
   });
 
+  describe('#providerTypeChanged', function() {
+    beforeEach(function() {
+      $httpBackend.flush();
+      $scope.emsCommonModel.emstype = 'gce';
+      $scope.providerTypeChanged();
+    });
+
+    it('sets currentTab to service_account', function() {
+      expect($scope.currentTab).toEqual('service_account');
+    });
+  });
+
   describe('#resetClicked', function() {
     beforeEach(function() {
       $httpBackend.flush();
