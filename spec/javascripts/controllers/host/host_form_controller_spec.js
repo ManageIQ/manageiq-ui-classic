@@ -212,13 +212,13 @@ describe('hostFormController', function() {
       expect($scope.canValidateBasicInfo()).toBe(true);
     });
 
-    it('returns true if password fields are left blank', function() {
+    it('returns false if password fields are left blank', function() {
       $scope.angularForm.default_password.$setViewValue('');
-      expect($scope.canValidateBasicInfo()).toBe(true);
+      expect($scope.canValidateBasicInfo()).toBe(false);
     });
 
     it('returns true if all the Validation fields are filled in and dirty', function() {
-      $scope.angularForm.default_password.$setViewValue('');
+      $scope.angularForm.default_password.$setViewValue('abc');
       expect($scope.canValidate()).toBe(true);
     });
   });

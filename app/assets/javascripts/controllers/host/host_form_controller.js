@@ -101,29 +101,23 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
   };
 
   $scope.isBasicInfoValid = function() {
-    if(($scope.currentTab == "default") &&
-      ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
-      ($scope.hostModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
-      $scope.angularForm.default_password.$valid)) {
+    if ($scope.currentTab === 'default' && fieldValidity('default')) {
       return true;
-    } else if(($scope.currentTab == "remote") &&
-      ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
-      ($scope.hostModel.remote_userid != '' && $scope.angularForm.remote_userid.$valid &&
-      $scope.angularForm.remote_password.$valid)) {
+    } else if ($scope.currentTab === 'remote' && fieldValidity('remote')) {
       return true;
-    } else if(($scope.currentTab == "ws") &&
-      ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
-      ($scope.hostModel.ws_userid != '' && $scope.angularForm.ws_userid.$valid &&
-      $scope.angularForm.ws_password.$valid)) {
+    } else if ($scope.currentTab === 'ws' && fieldValidity('ws')) {
       return true;
-    } else if(($scope.currentTab == "ipmi") &&
-      ($scope.hostModel.ipmi_address) &&
-      ($scope.hostModel.ipmi_userid != '' && $scope.angularForm.ipmi_userid.$valid &&
-      $scope.angularForm.ipmi_password.$valid)) {
+    } else if ($scope.currentTab === 'ipmi' && fieldValidity('ipmi')) {
       return true;
     } else
       return false;
   };
+
+  function fieldValidity(fieldPrefix) {
+    return (($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
+            ($scope.hostModel[fieldPrefix + '_userid'] !== '' && $scope.angularForm[fieldPrefix + '_userid'] !== undefined && $scope.angularForm[fieldPrefix + '_userid'].$valid &&
+              $scope.hostModel[fieldPrefix + '_password'] !== '' && $scope.angularForm[fieldPrefix + '_password'] !== undefined && $scope.angularForm[fieldPrefix + '_password'].$valid));
+  }
 
   $scope.canValidate = function () {
     if ($scope.isBasicInfoValid() && $scope.validateFieldsDirty())
