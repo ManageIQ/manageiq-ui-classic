@@ -36,6 +36,13 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
         apiPromises.push(loadVolume(cloudVolumeFormId));
         break;
       case 'NEW':
+        // New can be called 
+        //   a) from a list of all storages w/o storageManagerId
+        //   b) from a nested list under a provider w/ storageManagerId
+        // In case a) we need to populate the form or it will never get populated
+        if (storageManagerId) {
+            apiPromises.push(vm.storageManagerChanged(storageManagerId));
+        }
         // Fetch StorageManagers that we can even create the new volume for.
         apiPromises.push(API.get('/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true')
           .then(getStorageManagers));
