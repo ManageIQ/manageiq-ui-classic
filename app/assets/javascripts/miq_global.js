@@ -66,10 +66,6 @@ if (!window.ManageIQ) {
       debounce_counter: 1,
       debounced: {}, // running debounces
     },
-    react: { // react component registry
-      mount: null, // mounter function
-      componentRegistry: null,  // registry
-    },
     record: {
       parentClass: null, // parent record ID for JS function miqGridSort to build URL
       parentId: null, // parent record ID for JS function miqGridSort to build URL
