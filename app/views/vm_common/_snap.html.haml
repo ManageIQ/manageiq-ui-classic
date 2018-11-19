@@ -1,9 +1,9 @@
 - @angular_form = true
-
 = render :partial => "layouts/flash_msg"
 %h3
   = _('Snapshot information')
 = react 'VmSnapshotFormComponent', {:createUrl => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "create" : nil),
                            :cancelUrl => url_for_only_path(:action => "snap_vm", :id => @record.id, :button => @edit ? "cancel" : nil),
                            :nameOptional => @record.try(:snapshot_name_optional?),
-                           :showMemorySwitch => @show_snapshot_memory_checkbox}
+                           :showMemorySwitch => @show_snapshot_memory_checkbox,
+                           :descriptionRequired => @record.vendor === "openstack"}
