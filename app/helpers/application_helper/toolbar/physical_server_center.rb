@@ -110,7 +110,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
     [
       select(
         :physical_server_remote_access_choice,
-        'fa pficon-screen fa-lg',
+        'pficon pficon-screen fa-lg',
         N_('Physical Server Remote Access'),
         N_('Access'),
         :enabled => true,

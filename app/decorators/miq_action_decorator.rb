@@ -16,7 +16,7 @@ class MiqActionDecorator < MiqDecorator
     when 'inherit_parent_tags'
       'fa fa-tags'
     when 'reconfigure_cpus'
-      'fa pficon-cpu'
+      'pficon pficon-cpu'
     when 'reconfigure_memory'
       'pficon pficon-memory'
     when 'remove_tags'

@@ -250,7 +250,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_access', [
     select(
       :vm_remote_access_choice,
-      'fa pficon-screen fa-lg',
+      'pficon pficon-screen fa-lg',
       N_('VM Remote Access'),
       N_('Access'),
       :items => [

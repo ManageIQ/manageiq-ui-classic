@@ -80,7 +80,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
   button_group('ems_physical_infra_console_access', [
     select(
       :ems_physical_infra_console_choice,
-      'fa pficon-screen fa-lg',
+      'pficon pficon-screen fa-lg',
       N_('Remote Access'),
       N_('Access'),
       :items => [

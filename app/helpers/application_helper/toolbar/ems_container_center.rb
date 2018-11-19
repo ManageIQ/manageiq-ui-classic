@@ -20,7 +20,7 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           :klass   => ApplicationHelper::Button::EmsRefresh),
         button(
           :ems_container_capture_metrics,
-          'fa pficon-import fa-lg',
+          'pficon pficon-import fa-lg',
           N_('Capture metrics related to this Containers Provider'),
           N_('Capture metrics'),
           :confirm => N_("Capture metrics related to this Containers Provider?"),
