@@ -14,13 +14,16 @@ module Mixins
         params[:miq_grid_checks].split(",").collect(&:to_i)
       else
         prefix = "check" if prefix.nil?
-        params.each_with_object([]) do |(var, val), items|
+
+        items = []
+        params.each do |var, val|
           vars = var.to_s.split("_")
           if vars[0] == prefix && val == "1"
             ids = vars[1..-1]
             items << ids.join("_")
           end
         end
+        items
       end
     end
 
