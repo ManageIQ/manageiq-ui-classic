@@ -60,7 +60,9 @@ ManageIQ.angular.app.component('authCredentials', {
     };
 
     this.showChangePasswordLinks = function(index) {
-      return !vm.newRecord && (vm.modelCopy[vm.prefix + '_protocol'] === vm.formModel[vm.prefix + '_protocol']) && vm.formModel[index];
+      var matchPassword = vm.modelCopy[vm.prefix + '_password'] === vm.formModel[vm.prefix + '_password'];
+      return vm.bChangeStoredPassword ||
+        !vm.newRecord && (vm.modelCopy[vm.prefix + '_protocol'] === vm.formModel[vm.prefix + '_protocol'] && matchPassword) && vm.formModel[index];
     };
 
     this.showVerify = function(userid) {
