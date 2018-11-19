@@ -143,17 +143,7 @@ module ApplicationController::MiqRequestMethods
   def render_updated_templates
     report_scopes = [:eligible_for_provisioning]
     report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
-    report_name = "ProvisionTemplates.yaml"
-    options = {
-      :model       => get_template_kls.to_s,
-      :gtl_type    => "table",
-      :named_scope => report_scopes,
-      :report_name   => report_name,
-      :custom_action => {
-        :url  => "/miq_request/pre_prov/?sel_id=",
-        :type => 'provisioning'
-      }
-    }
+    options = options_for_provisioning(get_template_kls.to_s, report_scopes)
 
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
     @report_data_additional_options.with_no_checkboxes(true)
@@ -179,16 +169,7 @@ module ApplicationController::MiqRequestMethods
       @view = MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
       @view.db = get_template_kls.to_s
       report_scopes = %i(eligible_for_provisioning non_deprecated)
-      options = {
-        :model         => @view.db,
-        :gtl_type      => "table",
-        :named_scope   => report_scopes,
-        :report_name   => report_name,
-        :custom_action => {
-          :url  => "/miq_request/pre_prov/?sel_id=",
-          :type => 'provisioning'
-        }
-      }
+      options = options_for_provisioning(@view.db, report_scopes)
 
       @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
       @report_data_additional_options.with_no_checkboxes(true)
@@ -1067,5 +1048,18 @@ module ApplicationController::MiqRequestMethods
     return ->(x) { !x.deprecated } if @edit[:hide_deprecated_templates]
 
     ->(_) { true } # do not apply a filter
+  end
+
+  def options_for_provisioning(db, report_scopes)
+    {
+      :model         => db,
+      :gtl_type      => "table",
+      :named_scope   => report_scopes,
+      :report_name   => "ProvisionTemplates.yaml",
+      :custom_action => {
+        :url  => "/miq_request/pre_prov/?sel_id=",
+        :type => 'provisioning'
+      }
+    }
   end
 end
