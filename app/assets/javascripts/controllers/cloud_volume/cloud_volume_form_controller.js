@@ -277,6 +277,8 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.supportsCinderVolumeTypes = data.supports_cinder_volume_types;
     if (vm.supportsCinderVolumeTypes) {
       vm.volumeTypes = data.parent_manager.cloud_volume_types;
+    } else if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {
+      loadEBSVolumeTypes();
     }
     miqService.sparkleOff();
   };
