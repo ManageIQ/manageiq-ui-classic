@@ -924,34 +924,20 @@ describe ApplicationHelper do
   end
 
   describe "update_paging_url_parms", :type => :request do
-    before do
-      EvmSpecHelper.local_guid_miq_server_zone
+    let!(:zone) { EvmSpecHelper.local_guid_miq_server_zone[2] }
+
+    it "updates the query string with the given hash value and returns the full url path" do
+      get "/vm/show_list/100", :params => "bc=VMs+running+on+2014-08-25&menu_click=Display-VMs-on_2-6-5&page=2&sb_controller=host"
+
+      expect(helper.update_paging_url_parms("show_list", :page => 1)).to eq("/vm/show_list/100?bc=VMs+running+on+2014-08-25"\
+        "&menu_click=Display-VMs-on_2-6-5&page=1&sb_controller=host")
     end
 
-    context "when the given parameter is a hash" do
-      before do
-        get "/vm/show_list/100", :params => "bc=VMs+running+on+2014-08-25&menu_click=Display-VMs-on_2-6-5&page=2&sb_controller=host"
-        allow_any_instance_of(Object).to receive(:query_string).and_return(@request.query_string)
-        allow_message_expectations_on_nil
-      end
+    it "uses restful paths for pages" do
+      @record = FactoryGirl.create(:ems_cloud, :zone => zone)
+      get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
 
-      it "updates the query string with the given hash value and returns the full url path" do
-        expect(helper.update_paging_url_parms("show_list", :page => 1)).to eq("/vm/show_list/100?bc=VMs+running+on+2014-08-25"\
-          "&menu_click=Display-VMs-on_2-6-5&page=1&sb_controller=host")
-      end
-    end
-    context "when the controller uses restful paths" do
-      before do
-        FactoryGirl.create(:ems_cloud, :zone => Zone.seed)
-        @record = ManageIQ::Providers::CloudManager.first
-        get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
-        allow_any_instance_of(Object).to receive(:query_string).and_return(@request.query_string)
-        allow_message_expectations_on_nil
-      end
-
-      it "uses restful paths for pages" do
-        expect(helper.update_paging_url_parms("show", :page => 2)).to eq("/ems_cloud/#{@record.id}?display=images&page=2")
-      end
+      expect(helper.update_paging_url_parms("show", :page => 2)).to eq("/ems_cloud/#{@record.id}?display=images&page=2")
     end
   end
 
