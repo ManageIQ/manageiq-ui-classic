@@ -25,9 +25,9 @@ cols:
 - display_type
 - display_operating_system
 - display_platform
-- display_cpu_cores
+- cpu_total_cores
 - display_memory
-- display_snapshots
+- v_total_snapshots
 - display_tenant
 - display_deprecated
 
@@ -52,12 +52,12 @@ col_order:
 - display_type
 - display_operating_system
 - display_platform
-- display_cpu_cores
+- cpu_total_cores
 - display_memory
 - allocated_disk_storage
 - display_deprecated
 - ext_management_system.name
-- display_snapshots
+- v_total_snapshots
 - display_tenant
 
 # Column titles, in order
