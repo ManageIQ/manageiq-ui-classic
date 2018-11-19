@@ -143,10 +143,16 @@ module ApplicationController::MiqRequestMethods
   def render_updated_templates
     report_scopes = [:eligible_for_provisioning]
     report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
+    report_name = "ProvisionTemplates.yaml"
     options = {
       :model       => get_template_kls.to_s,
       :gtl_type    => "table",
       :named_scope => report_scopes,
+      :report_name   => report_name,
+      :custom_action => {
+        :url  => "/miq_request/pre_prov/?sel_id=",
+        :type => 'provisioning'
+      }
     }
 
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
