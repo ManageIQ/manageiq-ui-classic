@@ -499,7 +499,7 @@ describe DashboardController do
     end
 
     it 'retains the existing value of session[:edit] after the POST request' do
-      post :csp_report, '{"csp-report":{"document-uri":"https://example.com/foo/bar"}}', :format => 'json'
+      post :csp_report, :body => '{"csp-report":{"document-uri":"https://example.com/foo/bar"}}', :format => 'json'
       expect(session[:edit]).to eq("xyz")
       expect(response.status).to eq(200)
     end
