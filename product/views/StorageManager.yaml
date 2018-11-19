@@ -15,7 +15,7 @@ title: Storage Manager
 name: Storage Manager
 
 # Main DB table report is based on
-db: StorageManager
+db: ManageIQ::Providers::StorageManager
 
 # Columns to fetch from the main table
 cols:
