@@ -143,7 +143,8 @@ module ApplicationController::MiqRequestMethods
   def render_updated_templates
     report_scopes = [:eligible_for_provisioning]
     report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
-    options = options_for_provisioning(get_template_kls.to_s, report_scopes)
+    report_name = request.parameters[:controller] == "vm_cloud" ? "ProvisionCloudTemplates.yaml" : "ProvisionInfraTemplates.yaml"
+    options = options_for_provisioning(get_template_kls.to_s, report_scopes, report_name)
 
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
     @report_data_additional_options.with_no_checkboxes(true)
@@ -164,12 +165,12 @@ module ApplicationController::MiqRequestMethods
     @edit[:hide_deprecated_templates] = true if request.parameters[:controller] == "vm_cloud"
 
     unless %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
-      report_name = "ProvisionTemplates.yaml"
+      report_name = request.parameters[:controller] == "vm_cloud" ? "ProvisionCloudTemplates.yaml" : "ProvisionInfraTemplates.yaml"
       path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", report_name).to_s
       @view = MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
       @view.db = get_template_kls.to_s
       report_scopes = %i(eligible_for_provisioning non_deprecated)
-      options = options_for_provisioning(@view.db, report_scopes)
+      options = options_for_provisioning(@view.db, report_scopes, report_name)
 
       @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
       @report_data_additional_options.with_no_checkboxes(true)
@@ -1050,12 +1051,12 @@ module ApplicationController::MiqRequestMethods
     ->(_) { true } # do not apply a filter
   end
 
-  def options_for_provisioning(db, report_scopes)
+  def options_for_provisioning(db, report_scopes, report_name)
     {
       :model         => db,
       :gtl_type      => "table",
       :named_scope   => report_scopes,
-      :report_name   => "ProvisionTemplates.yaml",
+      :report_name   => report_name,
       :custom_action => {
         :url  => "/miq_request/pre_prov/?sel_id=",
         :type => 'provisioning'

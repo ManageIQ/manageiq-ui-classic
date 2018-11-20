@@ -15,21 +15,17 @@ title: Images
 name: Images
 
 # Main DB table report is based on
-db: TemplateCloud
+db: MiqTemplate
 
 # Columns to fetch from the main table
 cols:
 - name
 - allocated_disk_storage
-- last_scan_on
-- display_type
 - display_operating_system
 - display_platform
 - cpu_total_cores
 - display_memory
 - v_total_snapshots
-- display_tenant
-- display_deprecated
 
 
 # Included tables (joined, has_one, has_many) and columns
@@ -49,30 +45,24 @@ include_for_find:
 # Order of columns (from all tables)
 col_order:
 - name
-- display_type
 - display_operating_system
 - display_platform
 - cpu_total_cores
 - display_memory
 - allocated_disk_storage
-- display_deprecated
 - ext_management_system.name
 - v_total_snapshots
-- display_tenant
 
 # Column titles, in order
 headers:
 - Name
-- Type
 - Operating System
 - Platform
 - CPUs
 - Memory
 - Disk Size
-- Deprecated
 - Provider
 - Snapshot
-- Tenant
 
 # Condition(s) string for the SQL query
 conditions:
