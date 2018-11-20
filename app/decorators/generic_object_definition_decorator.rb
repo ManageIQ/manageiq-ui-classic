@@ -6,4 +6,11 @@ class GenericObjectDefinitionDecorator < MiqDecorator
   def fileicon
     try(:picture) ? "/pictures/#{picture.basename}" : nil
   end
+
+  def quadicon
+    {
+      :fileicon => fileicon,
+      :fonticon => fileicon ? nil : fonticon
+    }
+  end
 end
