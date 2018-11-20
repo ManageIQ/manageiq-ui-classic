@@ -29,6 +29,8 @@
                                                [_("Back (ABCD...)"), "b"]],
                            @edit[:new][:display][:quad_truncate]),
                            :class    => "selectpicker")
+              :javascript
+                miqSelectPickerEvent('quad_truncate', '#{url}');
 
         %fieldset
           %h3
