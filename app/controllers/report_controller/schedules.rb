@@ -264,11 +264,19 @@ module ReportController::Schedules
     valid = true
     if sched.sched_action[:options] &&
        sched.sched_action[:options][:send_email] &&
-       sched.sched_action[:options][:email] &&
-       sched.sched_action[:options][:email][:to].blank?
-      valid = false
-      add_flash(_("At least one To E-mail address must be configured"),
-                :error)
+       sched.sched_action[:options][:email]
+      if sched.sched_action[:options][:email][:from].present? &&
+         !sched.sched_action[:options][:email][:from].email?
+        valid = false
+        add_flash(_("E-mail address 'From' is not valid"), :error)
+      end
+      if sched.sched_action[:options][:email][:to].blank?
+        valid = false
+        add_flash(_("At least one To E-mail address must be configured"), :error)
+      elsif sched.sched_action[:options][:email][:to].find { |i| !i.to_s.email? }
+        valid = false
+        add_flash(_("One of e-mail addresses 'To' is not valid"), :error)
+      end
     end
     unless flash_errors?
       if sched.run_at[:interval][:unit] == "once" &&
