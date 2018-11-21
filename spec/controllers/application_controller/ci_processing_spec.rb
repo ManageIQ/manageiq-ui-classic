@@ -1061,3 +1061,24 @@ describe OrchestrationStackController do
     end
   end
 end
+
+describe EmsCloudController do
+  describe "#delete_flavor" do
+    let!(:flavor) { FactoryGirl.create(:flavor) }
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      stub_user(:features => :all)
+    end
+
+    context 'when pressed' do
+      it 'queues deletion of selected flavors' do
+        controller.instance_variable_set(
+          :@_params,
+          :miq_grid_checks => "#{flavor.id}")
+        expect(controller).to receive(:delete_flavors).and_call_original
+        expect_any_instance_of(Flavor).to receive(:delete_flavor_queue)
+        post :button, :params => {:pressed => 'flavor_delete', :miq_grid_checks => flavor.id}
+      end
+    end
+  end
+end
