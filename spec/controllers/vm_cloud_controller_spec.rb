@@ -178,7 +178,7 @@ describe VmCloudController do
         :model_name                     => 'ManageIQ::Providers::CloudManager::Template',
         :report_data_additional_options => {
           :model         => 'ManageIQ::Providers::CloudManager::Template',
-          :report_name   => "ProvisionTemplates.yaml",
+          :report_name   => "ProvisionCloudTemplates.yaml",
           :custom_action => {
             :url  => "/miq_request/pre_prov/?sel_id=",
             :type => "provisioning"

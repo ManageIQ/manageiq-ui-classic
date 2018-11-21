@@ -49,7 +49,7 @@ describe ApplicationController do
     end
 
     it "use report_name when is passed" do
-      report_name = "ProvisionTemplates.yaml"
+      report_name = "ProvisionCloudTemplates.yaml"
       path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", report_name).to_s
       view = MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
       expect(controller).to_not receive(:get_db_view)
