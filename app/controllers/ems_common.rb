@@ -201,8 +201,8 @@ module EmsCommon
   end
 
   # provider_id can be either a provider id or a storage manager id, depending on context
-  # this method figures the storage_manager_id.
-  def storage_manager_id(provider_id)
+  # this method figures the block_storage_manager_id.
+  def block_storage_manager_id(provider_id)
     manager = find_record_with_rbac(ExtManagementSystem, provider_id)
     return nil unless manager
     return manager.id unless manager.respond_to?(:storage_managers)
@@ -430,7 +430,7 @@ module EmsCommon
     elsif params[:pressed] == "cloud_volume_new"
       javascript_redirect :controller         => "cloud_volume",
                           :action             => "new",
-                          :storage_manager_id => storage_manager_id(params[:id])
+                          :storage_manager_id => block_storage_manager_id(params[:id])
     elsif params[:pressed] == "cloud_volume_snapshot_create"
       javascript_redirect :controller => "cloud_volume",
                           :action     => "snapshot_new",
