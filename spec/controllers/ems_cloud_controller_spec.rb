@@ -727,8 +727,12 @@ describe EmsCloudController do
     end
   end
 
-  %w(availability_zones cloud_tenants security_groups instances images
-     orchestration_stacks storage_managers).each do |custom_button_class|
+  nested_lists = %w(availability_zones cloud_tenants cloud_volumes security_groups instances images
+     orchestration_stacks storage_managers)
+
+  nested_lists.each do |custom_button_class|
     include_examples "relationship table screen with custom buttons", custom_button_class
   end
+
+  it_behaves_like "relationship table screen with GTL", nested_lists, :ems_amazon
 end
