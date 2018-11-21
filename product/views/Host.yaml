@@ -32,6 +32,7 @@ cols:
 - ipmi_enabled
 - last_scan_on
 - region_description
+- authentication_status
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -56,6 +57,7 @@ col_order:
 - ipmi_enabled
 - last_scan_on
 - region_description
+- authentication_status
 
 # Column titles, in order
 headers:
@@ -72,6 +74,7 @@ headers:
 - IPMI Enabled
 - Last Analysis Time
 - Region
+- Authentication Status
 
 # Condition(s) string for the SQL query
 conditions:
