@@ -126,12 +126,16 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
   vm.saveClicked = function() {
     var saveMsg = sprintf(__('%s "%s" has been successfully saved.'), vm.entity, vm.customButtonModel.name);
-    vm.saveWithAPI('put', '/api/custom_buttons/' + vm.customButtonRecordId, vm.prepSaveObject(), saveMsg);
+    API.put('/api/custom_buttons/' + vm.customButtonRecordId, vm.prepSaveObject(), {skipErrors: [400]})
+      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
+      .catch(handleErrorMessages);
   };
 
   vm.addClicked = function() {
     var saveMsg = sprintf(__('%s "%s" has been successfully added.'), vm.entity, vm.customButtonModel.name);
-    vm.saveWithAPI('post', '/api/custom_buttons/', vm.prepSaveObject(), saveMsg);
+    API.post('/api/custom_buttons/', vm.prepSaveObject(), {skipErrors: [400]})
+      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
+      .catch(handleErrorMessages);
   };
 
   vm.prepSaveObject = function() {
@@ -204,6 +208,23 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
   };
 
   // private functions
+  function handleErrorMessages(error) {
+    if (error.status === 400) {
+      var errorMessages = error.data.error.message.split(',');
+      errorMessages.forEach(function(message) {
+        if (message.includes("Name has already been taken")) {
+          add_flash(__("Name has already been taken"), "error");
+        } else if (message.includes("Description has already been taken")) {
+          add_flash(__("Description has already been taken"), "error");
+        } else {
+          miqService.handleFailure;
+        }
+      });
+    } else {
+      miqService.handleFailure;
+    }
+  }
+
   function getCustomButtonFormData(response) {
     Object.assign(vm.customButtonModel, response);
 
