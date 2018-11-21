@@ -866,6 +866,22 @@ module ApplicationController::CiProcessing
     delete_elements(EmsCluster, :process_clusters)
   end
 
+  # Delete all selected or single displayed flavor(s)
+  def delete_flavors
+    assert_privileges('flavor_delete')
+    flavors = find_records_with_rbac(Flavor, checked_or_params)
+    flavors.each do |flavor|
+      begin
+        flavor.delete_flavor_queue(User.current_user.id)
+        add_flash(_("Delete of Flavor \"%{name}\" was successfully initiated.") % {:name => flavor.name})
+      rescue => error
+        add_flash(_("Unable to delete Flavor \"%{name}\": %{details}") % {:name    => flavor.name,
+                                                                          :details => error.message}, :error)
+      end
+    end
+  end
+
+
   # Delete all selected or single displayed RP(s)
   def deleteresourcepools
     assert_privileges("resource_pool_delete")

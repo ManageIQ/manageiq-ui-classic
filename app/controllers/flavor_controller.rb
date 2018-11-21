@@ -45,17 +45,7 @@ class FlavorController < ApplicationController
   helper_method :textual_group_list
 
   def delete_flavors
-    assert_privileges('flavor_delete')
-    flavors = find_records_with_rbac(Flavor, checked_or_params)
-    flavors.each do |flavor|
-      begin
-        flavor.delete_flavor_queue(User.current_user.id)
-        add_flash(_("Delete of Flavor \"%{name}\" was successfully initiated.") % {:name => flavor.name})
-      rescue => error
-        add_flash(_("Unable to delete Flavor \"%{name}\": %{details}") % {:name    => flavor.name,
-                                                                          :details => error.message}, :error)
-      end
-    end
+    super
     session[:flash_msgs] = @flash_array
     javascript_redirect(:action => 'show_list')
   end
