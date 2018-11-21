@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 99 ending 2018-11-19
+
+### Added
+- Add available product features local storage. [(#4756)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4756)
+
+### Fixed
+- Load ui-components for printing with asset pipeline require [(#4941)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4941)
+- Fixed to enable the download buttons on Utilization Report tab [(#4934)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4934)
+- Fixed disabled password input. [(#4932)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4932)
+- Fixed if condition to prevent undefined js error [(#4929)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4929)
+- Fixed required description for snapshot if vendor is openstack. [(#4928)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4928)
+- Remove S3 and Swift From List of Log Collection Types [(#4926)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4926)
+- Fixed reading of ems_refresh_threshold memory_threshold value [(#4925)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4925)
+- Removed an extra observer from  Edit Selected Element type drop down [(#4922)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4922)
+- fix icon font family class [(#4920)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4920)
+- Fix GCE validation [(#4911)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4911)
+- VmCloud volume detach: Let replace_right_cell turn off the spinner [(#4910)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4910)
+- Fixed code to show Bottlenecks report download buttons. [(#4903)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4903)
+- Fixed JS error bottlenecks timeline does not have group levels. [(#4902)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4902)
+- Reset session on failed CSRF token verification [(#4901)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4901)
+- Allow apostrophes in custom button names [(#4900)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4900)
+- Replaced missing timeline attributes in performance controller. [(#4899)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4899)
+- Use EmsCloud.authentication_for_providers to determine topology view status [(#4897)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4897)
+- Corrected logic for rendering custom buttons [(#4887)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4887)
+- Enabled password editing if log protocol has changed. [(#4885)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4885)
+- Remove all validation specific code from Proxy/Advanced tabs [(#4884)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4884)
+- Fixed to show grouping in drop down only for Ansible Tower type item. [(#4875)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4875)
+- Rescue error messages when executing retire action [(#4874)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4874)
+
 ## Unreleased as of Sprint 98 ending 2018-11-05
 
 ### Added
