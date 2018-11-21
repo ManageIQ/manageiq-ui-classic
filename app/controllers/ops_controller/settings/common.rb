@@ -452,14 +452,15 @@ module OpsController::Settings::Common
         if ["settings_server", "settings_authentication"].include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
           server.set_config(@update)
-          return if @edit[:new][:server][:name] == server.name # appliance name was modified # appliance name was modified # appliance name was modified
-          begin
-            server.name = @edit[:new][:server][:name]
-            server.save!
-          rescue => bang
-            add_flash(_("Error when saving new server name: %{message}") % {:message => bang.message}, :error)
-            javascript_flash
-            return
+          unless @edit[:new][:server][:name] == server.name # appliance name was modified
+            begin
+              server.name = @edit[:new][:server][:name]
+              server.save!
+            rescue => bang
+              add_flash(_("Error when saving new server name: %{message}") % {:message => bang.message}, :error)
+              javascript_flash
+              return
+            end
           end
         else
           @update.save                                              # Save other settings for current server
