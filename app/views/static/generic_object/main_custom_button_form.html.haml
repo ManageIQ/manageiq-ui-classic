@@ -36,18 +36,6 @@
           = "<#{_('Choose')}>"
       %span.help-block{"ng-show" => "angularForm.dialog_id.$error.required"}
         = _("Required")
-  .form-group{"ng-class" => "{'has-error': angularForm.display.$invalid}"}
-    %label.col-md-2.control-label{"for" => "custom_button_open_url"}
-      = _("Open URL")
-    .col-md-8
-      %input.form-control{"type"            => "checkbox",
-                          "id"              => "custom_button_open_url",
-                          "name"            => "open_url",
-                          "bs-switch"       => "",
-                          "switch-on-text"  => _('Yes'),
-                          "switch-off-text" => _('No'),
-                          :data             => {:size => 'mini'},
-                          "ng-model"        => "vm.customButtonModel.open_url"}
   .form-group{"ng-class" => "{'has-error': angularForm.display_for.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_display_for"}
       = _("Display for")
