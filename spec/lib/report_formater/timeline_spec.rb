@@ -154,23 +154,26 @@ describe ReportFormatter::TimelineMessage do
     end
 
     it 'shows correct count of timeline events based on categories' do
-      allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
-      events = ReportFormatter::ReportTimeline.new.build_document_body
+      formatter = ReportFormatter::ReportTimeline.new
+      formatter.options.mri = @report
+      events = formatter.build_document_body
       expect(JSON.parse(events)[0]["data"][0].length).to eq(30)
       expect(JSON.parse(events)[1]["data"][0].length).to eq(15)
     end
 
     it 'shows correct count of timeline events together for report object with no categories' do
       @report.rpt_options = {}
-      allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
-      events = ReportFormatter::ReportTimeline.new.build_document_body
+      formatter = ReportFormatter::ReportTimeline.new
+      formatter.options.mri = @report
+      events = formatter.build_document_body
       expect(JSON.parse(events)[0]["data"][0].length).to eq(45)
     end
 
     it 'shows correct count of timeline events for timeline based report when rpt_options is nil' do
       @report.rpt_options = nil
-      allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
-      events = ReportFormatter::ReportTimeline.new.build_document_body
+      formatter = ReportFormatter::ReportTimeline.new
+      formatter.options.mri = @report
+      events = formatter.build_document_body
       expect(JSON.parse(events)[0]["data"][0].length).to eq(45)
     end
   end
@@ -235,23 +238,26 @@ describe ReportFormatter::TimelineMessage do
     end
 
     it 'shows correct count of timeline events based on categories' do
-      allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
-      events = ReportFormatter::ReportTimeline.new.build_document_body
+      formatter = ReportFormatter::ReportTimeline.new
+      formatter.options.mri = @report
+      events = formatter.build_document_body
       expect(JSON.parse(events)[0]["data"][0].length).to eq(5)
       expect(JSON.parse(events)[1]["data"][0].length).to eq(7)
     end
 
     it 'shows correct count of timeline events together for report object with no categories' do
       @report.rpt_options = {}
-      allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
-      events = ReportFormatter::ReportTimeline.new.build_document_body
+      formatter = ReportFormatter::ReportTimeline.new
+      formatter.options.mri = @report
+      events = formatter.build_document_body
       expect(JSON.parse(events)[0]["data"][0].length).to eq(12)
     end
 
     it 'shows correct count of timeline events for timeline based report when rpt_options is nil' do
       @report.rpt_options = nil
-      allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
-      events = ReportFormatter::ReportTimeline.new.build_document_body
+      formatter = ReportFormatter::ReportTimeline.new
+      formatter.options.mri = @report
+      events = formatter.build_document_body
       expect(JSON.parse(events)[0]["data"][0].length).to eq(12)
     end
   end
@@ -291,8 +297,9 @@ describe '#set data for headers that exist in col headers' do
 
   it 'shows headers only if they exist in report col headers' do
     @report.rpt_options = nil
-    allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
-    events = ReportFormatter::ReportTimeline.new.build_document_body
+    formatter = ReportFormatter::ReportTimeline.new
+    formatter.options.mri = @report
+    events = formatter.build_document_body
     json = JSON.parse(events)[0]["data"][0][0]["event"]
     expect(json["vm_location"]["text"]).to eq("Source Instance Location")
     expect(json["vm_location"]["value"]).to eq("foo")
