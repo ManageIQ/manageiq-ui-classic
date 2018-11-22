@@ -4,8 +4,10 @@ rvm:
 - 2.3.6
 sudo: false
 cache:
-  bundler: true
   yarn: true
+  directories:
+    - vendor/bundle
+  timeout: 1800
 addons:
   postgresql: '9.5'
 env:
@@ -23,6 +25,7 @@ matrix:
   - rvm: 2.4.4
     env: TEST_SUITE=spec:jest
 bundler_args: "--no-deployment"
+install: echo "HELLO INSTEAD OF BUNDLE INSTALL"
 before_install: source tools/ci/before_install.sh
 before_script: bundle exec rake $TEST_SUITE:setup
 script: bundle exec rake $TEST_SUITE
