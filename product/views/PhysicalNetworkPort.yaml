@@ -14,14 +14,6 @@ cols:
 - port_type
 - peer_mac_address
 
-
-include:
-
-
-include_for_find:
-  :ext_management_system: {}
-
-
 col_order:
 - port_name
 - port_type
