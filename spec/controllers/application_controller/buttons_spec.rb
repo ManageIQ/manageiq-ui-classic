@@ -309,6 +309,31 @@ describe ApplicationController do
     end
   end
 
+  context "#button_set_record_vars" do
+    it "sets role visibility for custom button" do
+      role = FactoryGirl.create(:miq_user_role, :name => "foo")
+      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "5"})
+      custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
+      custom_button.uri_attributes["request"] = "test_req"
+      custom_button.save
+      edit = {
+        :uri => '/test/',
+        :new => {:name           => 'testCB',
+                 :description    => 'testCB',
+                 :button_icon    => 'img',
+                 :object_request => 'request',
+                 :open_url       => true,
+                 :visibility_typ => 'role',
+                 :roles          => [role.id.to_s],
+                 :display_for    => :list}
+      }
+      controller.instance_variable_set(:@edit, edit)
+      session[:edit] = edit
+      controller.send(:button_set_record_vars, custom_button)
+      expect(custom_button.visibility[:roles]).to eq([role.name])
+    end
+  end
+
   context "#automate_button_field_changed" do
     context 'sets dialog_id' do
       let(:resource_action) { FactoryGirl.create(:resource_action, :dialog_id => 1) }
