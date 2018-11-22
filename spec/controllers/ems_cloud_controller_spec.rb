@@ -75,9 +75,19 @@ describe EmsCloudController do
     end
 
     it "validates credentials for a new record" do
-      stub_request(:post, "https://ec2.ap-southeast-1.amazonaws.com/")
-        .with(:body => /Action\=DescribeRegions/)
-        .to_return(:status => 200, :body => "", :headers => {})
+      expect(ManageIQ::Providers::Amazon::CloudManager).to receive(:validate_credentials_task).with(
+        match_array([
+          'foo',
+          'v2:{SRpWIJC0Y1AOrUrKC0KDiw==}',
+          :EC2,
+          'ap-southeast-1',
+          nil,
+          true,
+          instance_of(URI::Generic)
+        ]),
+        User.current_user.userid,
+        zone.name
+      )
 
       post :create, :params => {
         "button"           => "validate",
