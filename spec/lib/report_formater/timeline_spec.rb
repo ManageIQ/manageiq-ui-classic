@@ -113,10 +113,10 @@ describe ReportFormatter::TimelineMessage do
   end
 
   describe '#events count for different categories' do
+    let(:ems) { FactoryGirl.create(:ems_redhat, :name => 'foobar') }
+
     def stub_ems_event(event_type)
-      ems = FactoryGirl.create(:ems_redhat)
-      ems_event = EventStream.create!(:event_type => event_type, :ems_id => ems.id)
-      ems_event
+      EventStream.new(:event_type => event_type, :ems_id => ems.id)
     end
 
     before do
@@ -179,9 +179,10 @@ describe ReportFormatter::TimelineMessage do
   end
 
   describe '#events count for regex categories' do
+    let(:ems) { FactoryGirl.create(:ems_redhat) }
+
     def stub_ems_event(event_type)
-      ems = FactoryGirl.create(:ems_redhat)
-      EventStream.create!(:event_type => event_type, :ems_id => ems.id)
+      EventStream.new(:event_type => event_type, :ems_id => ems.id)
     end
 
     before do
@@ -264,10 +265,10 @@ describe ReportFormatter::TimelineMessage do
 end
 
 describe '#set data for headers that exist in col headers' do
+  let(:ems) { FactoryGirl.create(:ems_amazon) }
+
   def stub_ems_event(event_type)
-    ems = FactoryGirl.create(:ems_amazon)
-    ems_event = EventStream.create!(:event_type => event_type, :ems_id => ems.id)
-    ems_event
+    EventStream.create!(:event_type => event_type, :ems_id => ems.id)
   end
 
   before do
