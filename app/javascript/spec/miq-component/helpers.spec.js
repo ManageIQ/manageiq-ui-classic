@@ -1,5 +1,5 @@
-import { define } from '../../miq-component/registry.ts';
-import { cleanVirtualDom } from '../../miq-component/helpers';
+import { define } from '@/miq-component/registry.ts';
+import { cleanVirtualDom } from '@/miq-component/helpers';
 
 describe('Helpers', () => {
   it('Should call instance destroy method if component mounting element is missing', () => {

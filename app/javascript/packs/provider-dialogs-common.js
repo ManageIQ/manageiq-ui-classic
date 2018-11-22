@@ -1,5 +1,5 @@
 import React from 'react';
-import renderModal from '../provider-dialogs/modal';
+import renderModal from '@/provider-dialogs/modal';
 
 ManageIQ.angular.app.component('providerDialogUser', {
   bindings: {

@@ -1,4 +1,4 @@
-import { API } from '../http_api';
+import { API } from '@/http_api';
 
 export function customActionFunction(payload, resources) {
   throw new Error(`customAction ${payload.action} not yet implemented!`, payload, resources);

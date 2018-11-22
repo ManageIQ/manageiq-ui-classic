@@ -11,13 +11,13 @@ require('../app/assets/javascripts/miq_application');
 require('../app/assets/javascripts/miq_api');
 require('../app/assets/javascripts/miq_angular_application');
 
-import { API } from '../app/javascript/http_api';
+import { API } from '@/http_api';
 window.vanillaJsAPI = API;
 
-import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
+import { rxSubject, sendDataWithRx, listenToRx } from '@/miq_observable';
 ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
 
-import getJSONFixture from '../app/javascript/spec/helpers/getJSONFixtures';
+import getJSONFixture from '@/spec/helpers/getJSONFixtures';
 window.getJSONFixture = getJSONFixture;

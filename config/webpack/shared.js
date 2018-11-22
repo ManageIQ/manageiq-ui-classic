@@ -123,7 +123,10 @@ module.exports = {
   },
 
   resolve: {
-    alias: { 'react': resolve(dirname(__filename), '../../node_modules', 'react') },
+    alias: {
+      '@': resolve(__dirname, '../../', 'app/javascript'),
+      'react': resolve(__dirname, '../../', 'node_modules', 'react'),
+    },
     extensions: settings.extensions,
     modules: [],
     plugins: [

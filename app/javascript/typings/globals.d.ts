@@ -1,6 +1,6 @@
 import { IModule } from 'angular';
-import { ComponentApi } from '../miq-component/component-typings';
-import { ReduxApi } from '../miq-redux/redux-typings';
+import { ComponentApi } from '@/miq-component/component-typings';
+import { ReduxApi } from '@/miq-redux/redux-typings';
 import 'jasmine';
 
 interface MiqAngular {

@@ -1,4 +1,4 @@
-import { API } from '../http_api';
+import { API } from '@/http_api';
 
 export function showMessage(messages, labels = { single: '', multiple: '' }) {
   Object.keys(messages).forEach((msgStatus) => {

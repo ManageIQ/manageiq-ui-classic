@@ -1,4 +1,4 @@
-import { sendDataWithRx } from '../miq_observable';
+import { sendDataWithRx } from '@/miq_observable';
 
 const { redirectLogin } = window;
 

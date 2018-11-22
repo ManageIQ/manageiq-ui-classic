@@ -1,5 +1,5 @@
-import { onDelete } from '../toolbar-actions/delete';
-import { onCustomAction } from '../toolbar-actions/custom-action';
+import { onDelete } from '@/toolbar-actions/delete';
+import { onCustomAction } from '@/toolbar-actions/custom-action';
 
 function transformResource(resource) {
   return ({ id: resource });

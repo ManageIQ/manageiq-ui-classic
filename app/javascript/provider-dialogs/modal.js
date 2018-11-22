@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Icon, Modal } from 'patternfly-react';
 import { Provider } from 'react-redux';
-import FormButtonsRedux from '../forms/form-buttons-redux';
+import FormButtonsRedux from '@/forms/form-buttons-redux';
 
 function closeModal(id) {
   /**

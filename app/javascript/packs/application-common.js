@@ -9,18 +9,18 @@
 import 'proxy-polyfill';
 import { Spinner } from 'spin.js';
 import 'spin.js/spin.css';
-import { API, http } from '../http_api';
+import { API, http } from '@/http_api';
 
-import * as newRegistry from '../miq-component/registry.ts';
-import reactBlueprint from '../miq-component/react-blueprint.tsx';
-import * as helpers from '../miq-component/helpers';
+import * as newRegistry from '@/miq-component/registry.ts';
+import reactBlueprint from '@/miq-component/react-blueprint.tsx';
+import * as helpers from '@/miq-component/helpers';
 
-import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
+import { rxSubject, sendDataWithRx, listenToRx } from '@/miq_observable';
 
-import { initializeStore } from '../miq-redux';
-import { history } from '../miq-component/react-history.ts';
-import createReduxRoutingActions from '../miq-redux/redux-router-actions';
-import { formButtonsActionTypes, createFormButtonsActions } from '../forms/form-buttons-reducer';
+import { initializeStore } from '@/miq-redux';
+import { history } from '@/miq-component/react-history.ts';
+import createReduxRoutingActions from '@/miq-redux/redux-router-actions';
+import { formButtonsActionTypes, createFormButtonsActions } from '@/forms/form-buttons-reducer';
 
 ManageIQ.component = {
   ...newRegistry,
