@@ -868,7 +868,7 @@ module ApplicationController::Buttons
       roles = []
       @edit[:new][:roles].each do |r|
         role = MiqUserRole.find_by(:id => r)
-        roles.push(role.name) if role && r == role.id
+        roles.push(role.name) if role && r == role.id.to_s
       end
       button.visibility[:roles] = roles
     else
