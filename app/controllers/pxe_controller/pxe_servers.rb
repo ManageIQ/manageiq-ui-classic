@@ -23,7 +23,6 @@ module PxeController::PxeServers
     id = params[:id] || "new"
     return unless load_edit("pxe_edit__#{id}")
     pxe_server_get_form_vars
-    changed = (@edit[:new] != @edit[:current])
     if params[:button] == "cancel"
       @edit = session[:edit] = nil # clean out the saved info
       if @ps && @ps.id
@@ -33,7 +32,7 @@ module PxeController::PxeServers
       end
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
-    elsif ["add", "save"].include?(params[:button])
+    elsif %w(add save).include?(params[:button])
       pxe = params[:id] ? find_record_with_rbac(PxeServer, params[:id]) : PxeServer.new
       pxe_server_validate_fields
       if @flash_array
@@ -85,11 +84,11 @@ module PxeController::PxeServers
       changed = (@edit[:new] != @edit[:current])
       page << javascript_for_miq_button_visibility(changed)
       session[:log_depot_log_verify_status] = @edit[:log_verify_status]
-      if @edit[:log_verify_status]
-        page << "miqValidateButtons('show', 'log_');"
-      else
-        page << "miqValidateButtons('hide', 'log_');"
-      end
+      page << if @edit[:log_verify_status]
+                "miqValidateButtons('show', 'log_');"
+              else
+                "miqValidateButtons('hide', 'log_');"
+              end
     end
   end
 
@@ -115,23 +114,21 @@ module PxeController::PxeServers
 
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node, :replace_trees => [:pxe_servers])
-    else # showing 1 vm
-      if params[:id].nil? || PxeServer.find_by_id(params[:id]).nil?
-        add_flash(_("PXE Server no longer exists"), :error)
-        pxe_server_list
-        @refresh_partial = "layouts/x_gtl"
-      else
-        pxes.push(params[:id])
-        process_pxes(pxes, method, display_name)  unless pxes.empty?
-        # TODO: tells callers to go back to show_list because this record may be gone
-        # Should be refactored into calling show_list right here
-        if method == 'destroy'
-          self.x_node = "root"
-          @single_delete = true unless flash_errors?
-        end
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:pxe_servers])
+    elsif params[:id].nil? || PxeServer.find(params[:id]).nil? # showing 1 vm
+      add_flash(_("PXE Server no longer exists"), :error)
+      pxe_server_list
+      @refresh_partial = "layouts/x_gtl"
+    else
+      pxes.push(params[:id])
+      process_pxes(pxes, method, display_name) unless pxes.empty?
+      # TODO: tells callers to go back to show_list because this record may be gone
+      # Should be refactored into calling show_list right here
+      if method == 'destroy'
+        self.x_node = "root"
+        @single_delete = true unless flash_errors?
       end
+      get_node_info(x_node)
+      replace_right_cell(:nodetype => x_node, :replace_trees => [:pxe_servers])
     end
     pxes.count
   end
@@ -166,7 +163,7 @@ module PxeController::PxeServers
     case params[:button]
     when "cancel"
       add_flash(_("Edit of PXE Image \"%{name}\" was cancelled by the user") % {:name => session[:edit][:img].name})
-      @edit = session[:edit] = nil  # clean out the saved info
+      @edit = session[:edit] = nil # clean out the saved info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
     when "save"
@@ -177,7 +174,7 @@ module PxeController::PxeServers
         add_flash(_("PXE Image \"%{name}\" was saved") % {:name => update_img.name})
         AuditEvent.success(build_saved_audit(update_img, @edit))
         refresh_trees = @edit[:new][:default_for_windows] == @edit[:current][:default_for_windows] ? [] : [:pxe_server]
-        @edit = session[:edit] = nil  # clean out the saved info
+        @edit = session[:edit] = nil # clean out the saved info
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node, :replace_trees => refresh_trees)
       else
@@ -190,7 +187,7 @@ module PxeController::PxeServers
         return
       end
     when "reset", nil
-      @img = PxeImage.find_by_id(params[:id])
+      @img = PxeImage.find(params[:id])
       pxe_img_set_form_vars
       @in_a_form = true
       session[:changed] = false
@@ -217,7 +214,7 @@ module PxeController::PxeServers
     case params[:button]
     when "cancel"
       add_flash(_("Edit of Windows Image \"%{name}\" was cancelled by the user") % {:name => session[:edit][:wimg].name})
-      @edit = session[:edit] = nil  # clean out the saved info
+      @edit = session[:edit] = nil # clean out the saved info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
     when "save"
@@ -227,7 +224,7 @@ module PxeController::PxeServers
       if update_wimg.valid? && !flash_errors? && update_wimg.save!
         add_flash(_("Windows Image \"%{name}\" was saved") % {:name => update_wimg.name})
         AuditEvent.success(build_saved_audit(update_wimg, @edit))
-        @edit = session[:edit] = nil  # clean out the saved info
+        @edit = session[:edit] = nil # clean out the saved info
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node)
       else
@@ -240,7 +237,7 @@ module PxeController::PxeServers
         return
       end
     when "reset", nil
-      @wimg = WindowsImage.find_by_id(params[:id])
+      @wimg = WindowsImage.find(params[:id])
       pxe_wimg_set_form_vars
       @in_a_form = true
       session[:changed] = false
@@ -319,7 +316,7 @@ module PxeController::PxeServers
   end
 
   def pxe_img_set_record_vars(img)
-    img.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
+    img.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find(@edit[:new][:img_type])
     img.default_for_windows = @edit[:new][:default_for_windows]
   end
 
@@ -346,7 +343,7 @@ module PxeController::PxeServers
   end
 
   def pxe_wimg_set_record_vars(wimg)
-    wimg.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find_by_id(@edit[:new][:img_type])
+    wimg.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find(@edit[:new][:img_type])
   end
 
   def pxe_server_set_record_vars(pxe, mode = nil)
@@ -364,14 +361,14 @@ module PxeController::PxeServers
     end
 
     creds = {}
-    creds[:default] = {:userid => @edit[:new][:log_userid], :password => @edit[:new][:log_password]} unless @edit[:new][:log_userid].blank?
+    creds[:default] = {:userid => @edit[:new][:log_userid], :password => @edit[:new][:log_password]} if @edit[:new][:log_userid].present?
     pxe.update_authentication(creds, :save => (mode != :validate))
     true
   end
 
   # Get variables from edit form
   def pxe_server_get_form_vars
-    @ps = @edit[:pxe_id] ? PxeServer.find_by_id(@edit[:pxe_id]) : PxeServer.new
+    @ps = @edit[:pxe_id] ? PxeServer.find(@edit[:pxe_id]) : PxeServer.new
     copy_params_if_set(@edit[:new], params, %i(name access_url uri pxe_directory windows_images_directory
                                                customization_directory log_userid log_password log_verify))
     @edit[:new][:protocol] = params[:log_protocol] if params[:log_protocol]
@@ -441,15 +438,15 @@ module PxeController::PxeServers
     else
       @right_cell_div = "pxe_server_details"
       nodes = treenodeid.split("-")
-      if (nodes[0] == "ps" && nodes.length == 2) || (["pxe_xx", "win_xx"].include?(nodes[1]) && nodes.length == 3)
+      if (nodes[0] == "ps" && nodes.length == 2) || (%w(pxe_xx win_xx).include?(nodes[1]) && nodes.length == 3)
         # on pxe server node OR folder node is selected
-        @record = @ps = PxeServer.find_by_id(nodes.last)
+        @record = @ps = PxeServer.find(nodes.last)
         @right_cell_text = _("PXE Server \"%{name}\"") % {:name => @ps.name}
       elsif nodes[0] == "pi"
-        @record = @img = PxeImage.find_by_id(nodes.last)
+        @record = @img = PxeImage.find(nodes.last)
         @right_cell_text = _("PXE Image \"%{name}\"") % {:name => @img.name}
       elsif nodes[0] == "wi"
-        @record = @wimg = WindowsImage.find_by_id(nodes[1])
+        @record = @wimg = WindowsImage.find(nodes[1])
         @right_cell_text = _("Windows Image \"%{name}\"") % {:name => @wimg.name}
       end
     end
