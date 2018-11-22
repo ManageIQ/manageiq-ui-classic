@@ -33,10 +33,10 @@ describe PhysicalSwitchController do
 
       it 'renders GTL with PhysicalSwitch model' do
         physical_switch
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name      => physical_switch.class.to_s,
           :gtl_type_string => "list",
-        )
+        ))
         post :show_list
         expect(response.status).to eq(200)
       end

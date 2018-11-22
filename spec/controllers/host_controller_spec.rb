@@ -55,12 +55,12 @@ describe HostController do
                             :display   => {:quad_truncate => 'f'},
                             :quadicons => {:host => 'foo'}}
 
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name       => 'Host',
         :gtl_type_string  => 'grid',
         :parent_id        => nil,
         :selected_records => [h1.id, h2.id]
-      )
+      ))
       get :edit
       expect(response.status).to eq(200)
     end
@@ -243,12 +243,12 @@ describe HostController do
 
     # http://localhost:3000/host/users/10000000000005?db=host
     it "renders a grid of associated Users" do
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name      => 'Account',
         :parent_id       => @host.id.to_s,
         :parent          => @host,
         :gtl_type_string => 'list'
-      )
+      ))
       get :users, :params => {:id => @host.id, :db => 'host'}
       expect(response.status).to eq(200)
     end
@@ -256,12 +256,12 @@ describe HostController do
     # http://localhost:3000/host/guest_applications/10000000000005?db=host
     it "renders a grid of associated GuestApplications" do
       @guest_application = FactoryGirl.create(:guest_application, :name => "foo", :host_id => @host.id)
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name      => 'GuestApplication',
         :parent_id       => @host.id.to_s,
         :parent          => @host,
         :gtl_type_string => 'list'
-      )
+      ))
       get :guest_applications, :params => {:id => @host.id, :db => 'host'}
       expect(response.status).to eq(200)
     end
@@ -269,7 +269,7 @@ describe HostController do
     # http://localhost:3000/host/filesystems/10000000000005?db=host
     it "renders a grid of all associated Filesystems" do
       @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name                     => 'Filesystem',
         :parent_id                      => @host.id.to_s,
         :parent                         => @host,
@@ -277,7 +277,7 @@ describe HostController do
         :report_data_additional_options => {
           :named_scope => [[:host_service_group_filesystems, @host_service_group.id]]
         }
-      )
+      ))
       get :filesystems, :params => {:id => @host.id, :db => 'host', :host_service_group => @host_service_group.id}
       expect(response.status).to eq(200)
     end
@@ -285,7 +285,7 @@ describe HostController do
     # http://localhost:3000/host/guest_applications/10000000000005?db=host?status=all
     it "renders a grid of all associated SystemServices" do
       @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name                     => 'SystemService',
         :parent_id                      => @host.id.to_s,
         :parent                         => @host,
@@ -293,7 +293,7 @@ describe HostController do
         :report_data_additional_options => {
           :named_scope => [[:host_service_group_systemd, @host_service_group.id]]
         }
-      )
+      ))
       get :host_services, :params => {:id => @host.id, :db => 'host', :host_service_group => @host_service_group.id, :status => "all"}
       expect(response.status).to eq(200)
     end
@@ -301,7 +301,7 @@ describe HostController do
     # http://localhost:3000/host/guest_applications/10000000000005?db=host?status=running
     it "renders a grid of running associated SystemServices" do
       @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name                     => 'SystemService',
         :parent_id                      => @host.id.to_s,
         :parent                         => @host,
@@ -309,7 +309,7 @@ describe HostController do
         :report_data_additional_options => {
           :named_scope => [[:host_service_group_running_systemd, @host_service_group.id]]
         }
-      )
+      ))
       get :host_services, :params => {:id => @host.id, :db => 'host', :host_service_group => @host_service_group.id, :status => 'running'}
       expect(response.status).to eq(200)
     end
@@ -317,7 +317,7 @@ describe HostController do
     # http://localhost:3000/host/guest_applications/10000000000005?db=host?status=failed
     it "renders a grid of failed associated SystemServices" do
       @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name                     => 'SystemService',
         :parent_id                      => @host.id.to_s,
         :parent                         => @host,
@@ -325,7 +325,7 @@ describe HostController do
         :report_data_additional_options => {
           :named_scope => [[:host_service_group_failed_systemd, @host_service_group.id]]
         }
-      )
+      ))
       get :host_services, :params => {:id => @host.id, :db => 'host', :host_service_group => @host_service_group.id, :status => 'failed'}
       expect(response.status).to eq(200)
     end
@@ -459,13 +459,13 @@ describe HostController do
           {:row => 0, :column => 0, :chart_index => 0, :chart_name => "Display-Hosts-on"}.to_json
         )
 
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name                     => 'Host',
           :report_data_additional_options => {
             :menu_click    => menu_click,
             :sb_controller => 'storage',
           }
-        )
+        ))
 
         # FIXME: This should rather be a POST, but it really is a GET.
         get :show_list, :params => {:menu_click => menu_click, :sb_controller => 'storage'}
@@ -475,13 +475,13 @@ describe HostController do
 
     context 'called with search text' do
       it 'render GTL with and saves search_text in the session' do
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name                     => 'Host',
           :parent_id                      => nil,
           :report_data_additional_options => {
             :lastaction => 'show_list',
           },
-        )
+        ))
         get :show_list, :params => {'search[text]' => 'foobar'}
         expect(session.fetch_path(:sandboxes, 'host', :search_text)).to eq('foobar')
         expect(response.status).to eq(200)

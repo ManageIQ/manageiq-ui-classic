@@ -275,14 +275,14 @@ describe ServiceController do
       render_views
 
       it 'renders GTL of VMs associated to the selected Service' do
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name                     => 'Vm',
           :parent_id                      => service.id.to_s,
           :report_data_additional_options => {
             :parent_class_name => 'Service',
             :parent_method     => :all_vms,
           }
-        )
+        ))
         post :tree_select, :params => {:id => "s-#{service.id}"}
         expect(response.status).to eq(200)
       end
@@ -295,12 +295,12 @@ describe ServiceController do
       render_views
 
       it 'renders GTL of Active services' do
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name                     => 'Service',
           :report_data_additional_options => {
             :named_scope => [[:retired, false], :displayed]
           }
-        )
+        ))
         post :tree_select, :params => {:id => 'xx-asrv'}
         expect(response.status).to eq(200)
       end
@@ -312,12 +312,12 @@ describe ServiceController do
       render_views
 
       it 'renders GTL of Retired services' do
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name                     => 'Service',
           :report_data_additional_options => {
             :named_scope => %i(retired displayed)
           }
-        )
+        ))
         post :tree_select, :params => {:id => 'xx-rsrv'}
         expect(response.status).to eq(200)
       end
@@ -345,13 +345,13 @@ describe ServiceController do
       let(:service_search) { FactoryGirl.create(:miq_search, :description => 'a', :db => 'Service') }
 
       it 'renders GTL of All Services, filtered by choosen filter from accordion' do
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name                     => 'Service',
           :report_data_additional_options => {
             :model       => 'Service',
             :named_scope => nil
           }
-        )
+        ))
         expect(controller).to receive(:process_show_list).once.and_call_original
         post :tree_select, :params => {:id => "ms-#{service_search.id}"}
         expect(response.status).to eq(200)

@@ -151,10 +151,10 @@ describe MiqRequestController do
     end
 
     it 'renders GTL with MiqRequest model' do
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name      => 'MiqRequest',
         :gtl_type_string => 'list',
-      )
+      ))
       get :show_list
     end
   end
@@ -256,11 +256,11 @@ describe MiqRequestController do
     # http://localhost:3000/miq_request/show/10000000000342
     it 'shows a grid with affected VMs' do
       expect(controller).to receive(:prov_set_show_vars).once.and_call_original
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name       => 'Vm',
         :gtl_type_string  => 'list',
         :selected_records => [vm.id] # vm.id is here, other_vm.id is not
-      )
+      ))
       get :show, :params => {:id => reconfigure_request.id}
       expect(response.status).to eq(200)
     end
@@ -302,7 +302,7 @@ describe MiqRequestController do
         expect(controller).to receive(:prov_set_show_vars).once.and_call_original
 
         # Verify Rails correctly initializes Angular which will then perform POST /report_data to fetch the VMs.
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(**payload)
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(**payload))
 
         get :show, :params => {:id => request.id}
         expect(response.status).to eq(200)

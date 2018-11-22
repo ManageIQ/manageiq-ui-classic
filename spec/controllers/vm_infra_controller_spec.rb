@@ -15,13 +15,13 @@ describe VmInfraController do
   render_views
 
   it 'can render the explorer' do
-    expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+    expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
       :model_name                     => 'VmOrTemplate',
       :report_data_additional_options => {
         :model      => "VmOrTemplate",
         :lastaction => 'show_list'
       }
-    )
+    ))
 
     get :explorer
     expect(response.status).to eq(200)
@@ -208,13 +208,13 @@ describe VmInfraController do
   end
 
   it 'policy management has no clickable quadicons' do
-    expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+    expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
       :model_name                     => 'VmOrTemplate',
       :report_data_additional_options => {
         :model     => "VmOrTemplate",
         :clickable => false
       }
-    )
+    ))
 
     post :x_button, :params => {:pressed => 'vm_protect', :id => vm_vmware.id}
 
@@ -223,13 +223,13 @@ describe VmInfraController do
   end
 
   it 'policy simulation has no clickable quadicons' do
-    expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+    expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
       :model_name                     => 'VmOrTemplate',
       :report_data_additional_options => {
         :model     => "VmOrTemplate",
         :clickable => false
       }
-    )
+    ))
 
     post :x_button, :params => {:pressed => 'vm_policy_sim', :id => vm_vmware.id}
 
@@ -598,11 +598,11 @@ describe VmInfraController do
     describe '#x_search_by_name' do
       it 'render GTL with and saves search_text in the session' do
         seed_session_trees('vm_infra', 'vandt_tree', 'root')
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name => 'VmOrTemplate',
           :parent_id  => nil,
           :explorer   => true,
-        )
+        ))
 
         post :x_search_by_name, :params => {:search_text => 'foobar'}
         expect(session.fetch_path(:sandboxes, 'vm_infra', :search_text)).to eq('foobar')

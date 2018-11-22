@@ -72,7 +72,13 @@ module GtlHelper
       :report_data_additional_options => @report_data_additional_options,
     }
 
-    render_gtl(options)
+    GtlHelper.render_gtl_wrapper(self, options)
+  end
+
+  # This wrapper method has been created for better testability
+  # Unfortunately the context isn't accessible from request tests and so the method cannot be mocked
+  def self.render_gtl_wrapper(context, *args)
+    context.render_gtl(*args)
   end
 
   # This is a pure function. All the generated markup depends only and fully on the `options`.

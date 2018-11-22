@@ -161,14 +161,14 @@ describe VmCloudController do
     it 'renders instance ownership gtl correctly' do
       post :explorer
       expect(response.status).to eq(200)
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name                     => 'ManageIQ::Providers::CloudManager::Vm',
         :selected_records               => [vm_openstack_tmd.id],
         :report_data_additional_options => {
           :model      => 'ManageIQ::Providers::CloudManager::Vm',
           :lastaction => 'show_list',
         }
-      )
+      ))
       post :x_button, :params => {:pressed => 'instance_ownership', "check_#{vm_openstack_tmd.id}" => "1", "check_#{vm_openstack_tme.id}" => "1"}
       expect(response.status).to eq(200)
     end

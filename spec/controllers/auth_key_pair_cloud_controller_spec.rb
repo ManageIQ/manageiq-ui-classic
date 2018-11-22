@@ -67,14 +67,14 @@ describe AuthKeyPairCloudController do
     render_views
 
     it 'sets the lastaction correctly' do
-      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+      expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
         :model_name                     => 'ManageIQ::Providers::CloudManager::AuthKeyPair',
         :report_data_additional_options => {
           :model      => "ManageIQ::Providers::CloudManager::AuthKeyPair",
           :lastaction => 'show_list',
           :gtl_dbname => :authkeypaircloud
         }
-      )
+      ))
 
       get :show_list
       expect(response.status).to eq(200)

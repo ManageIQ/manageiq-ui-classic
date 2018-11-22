@@ -25,8 +25,10 @@ describe PhysicalStorageController do
 
       it 'renders GTL with PhysicalStorage model' do
         physical_storage
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(:model_name      => physical_storage.class.to_s,
-                                                                                         :gtl_type_string => "list",)
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
+          :model_name      => physical_storage.class.to_s,
+          :gtl_type_string => "list",
+        ))
         post :show_list
         expect(response.status).to eq(200)
       end

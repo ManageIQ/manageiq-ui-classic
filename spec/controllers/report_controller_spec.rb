@@ -1265,13 +1265,13 @@ describe ReportController do
       end
 
       it "runs report and calls GTL generation" do
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name                     => 'MiqReportResult',
           :report_data_additional_options => {
             :named_scope => [[:with_current_user_groups_and_report, rpt.id.to_s]],
             :model       => 'MiqReportResult'
           }
-        )
+        ))
 
         post :x_button, :params => { :pressed => 'miq_report_run', :id => rpt.id }
 

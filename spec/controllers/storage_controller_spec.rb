@@ -171,13 +171,13 @@ describe StorageController do
                                    :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).and_return([@tag1, @tag2])
 
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name                     => 'Storage',
           :report_data_additional_options => {
             :model     => "Storage",
             :clickable => false
           }
-        )
+        ))
 
         post :x_button, :params => {:miq_grid_checks => datastore.id, :pressed => "storage_tag", :format => :js}
 
@@ -261,7 +261,7 @@ describe StorageController do
             :association       => 'all_miq_templates',
           }
         }
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(req)
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(req))
         get :show, :params => { :id => storage_with_miq_templates.id, :display => 'all_miq_templates' }
         expect(response.status).to eq(200)
       end
@@ -307,14 +307,14 @@ describe StorageController do
         storage
         storage_cluster
         seed_session_trees('storage', :storage_pod_tree, 'root')
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        expect(GtlHelper).to receive(:render_gtl_wrapper).with(anything, match_gtl_options(
           :model_name                     => 'Storage',
           :parent_id                      => storage_cluster.id.to_s,
           :report_data_additional_options => {
             :association       => 'storages',
             :parent_class_name => 'StorageCluster',
           }
-        )
+        ))
 
         post :tree_select, :params => {:id => "xx-#{storage_cluster.id}", :format => :js}
         expect(response.status).to eq(200)
