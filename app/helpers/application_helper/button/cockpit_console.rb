@@ -1,12 +1,6 @@
 class ApplicationHelper::Button::CockpitConsole < ApplicationHelper::Button::Basic
   needs :@record
 
-  def visible?
-    # disabled for Openstack as discussed in https://github.com/ManageIQ/manageiq-ui-classic/pull/4212
-    # FIXME: there should be some supports_? based check instead.
-    !@record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)
-  end
-
   def disabled?
     if !MiqRegion.my_region.role_active?('cockpit_ws')
       @error_message = _("The web-based console is not available because the 'Cockpit' role is not enabled.")
