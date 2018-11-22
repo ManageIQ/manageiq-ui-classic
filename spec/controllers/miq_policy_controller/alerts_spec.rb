@@ -145,7 +145,7 @@ describe MiqPolicyController do
         @miq_alert = FactoryGirl.create(
           :miq_alert,
           :db         => "Host",
-          :options    => {:notifications => {:email => {:to => "fred@test.com"}}},
+          :options    => {:notifications => {:email => {:to => ["fred@test.com"]}}},
           :expression => expression
         )
         edit = {
