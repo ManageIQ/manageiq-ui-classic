@@ -12,7 +12,7 @@ describe VmCloudController do
                        :ext_management_system => FactoryGirl.create(:ems_openstack, :tenant_mapping_enabled => true))
   end
 
-  before(:each) do
+  before do
     stub_user(:features => :all)
     EvmSpecHelper.create_guid_miq_server_zone
   end

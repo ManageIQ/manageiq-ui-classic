@@ -1,5 +1,5 @@
 describe MiqAeCustomizationController do
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
   context "::CustomButtons" do

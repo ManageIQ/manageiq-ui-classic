@@ -1,7 +1,7 @@
 describe CloudVolumeSnapshotController do
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       @snapshot = FactoryGirl.create(:cloud_volume_snapshot, :name => "cloud-volume-snapshot-01")
       allow(@snapshot).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")

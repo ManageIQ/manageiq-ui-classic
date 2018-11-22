@@ -1,7 +1,7 @@
 describe ReportFormatter::C3Formatter do
   include Spec::Support::ReportHelper
 
-  before(:each) do
+  before do
     allow(Charting).to receive(:backend).and_return(:c3)
     allow(Charting).to receive(:format).and_return(:c3)
   end
@@ -99,7 +99,7 @@ describe ReportFormatter::C3Formatter do
 
   context '#C&U charts without grouping' do
     let(:report) { cu_chart_without_grouping }
-    before(:each) do
+    before do
       render_report(report, &proc { |e| e.options.graph_options = { :chart_type => :performance } })
     end
 
@@ -126,7 +126,7 @@ describe ReportFormatter::C3Formatter do
 
   context '#C&U charts with grouping' do
     let(:report) { cu_chart_with_grouping }
-    before(:each) do
+    before do
       render_report(report, &proc { |e| e.options.graph_options = { :chart_type => :performance } })
     end
 
@@ -153,7 +153,7 @@ describe ReportFormatter::C3Formatter do
 
   context '#C&U charts with no data' do
     let(:report) { cu_chart_with_grouping }
-    before(:each) do
+    before do
       render_report(report, &proc { |e| e.options.graph_options = { :chart_type => :performance } })
     end
 

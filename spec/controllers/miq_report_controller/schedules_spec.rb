@@ -1,13 +1,13 @@
 describe ReportController, "::Schedules" do
   let(:user) { FactoryGirl.create(:user, :features => %w(miq_report_schedule_delete)) }
 
-  before(:each) do
+  before do
     EvmSpecHelper.create_guid_miq_server_zone
     login_as(user)
   end
 
   describe "#miq_report_schedule_delete" do
-    before(:each) do
+    before do
       allow(controller).to receive(:x_node=)
       allow(controller).to receive(:replace_right_cell)
       allow(controller).to receive(:find_checked_items).and_return(schedules)

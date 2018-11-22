@@ -2,7 +2,7 @@ describe ProviderForemanController do
   render_views
 
   let(:tags) { ["/managed/quota_max_memory/2048"] }
-  before(:each) do
+  before do
     @zone = EvmSpecHelper.local_miq_server.zone
     Tag.find_or_create_by(:name => tags.first)
 
@@ -652,7 +652,7 @@ describe ProviderForemanController do
 
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       allow(@configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")

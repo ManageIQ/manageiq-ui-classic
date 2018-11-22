@@ -162,7 +162,7 @@ describe VmOrTemplateController do
     let(:task) { FactoryGirl.create(:miq_task, :task_results => task_results) }
     subject { controller.send(:console_after_task, 'html5') }
 
-    before(:each) do
+    before do
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
     end
 

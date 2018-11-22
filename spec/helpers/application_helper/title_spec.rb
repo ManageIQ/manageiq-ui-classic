@@ -130,7 +130,7 @@ describe ApplicationHelper::Title do
   end
 
   context "#title_for_clusters" do
-    before(:each) do
+    before do
       @ems1 = FactoryGirl.create(:ems_vmware)
       @ems2 = FactoryGirl.create(:ems_openstack_infra)
     end
@@ -159,7 +159,7 @@ describe ApplicationHelper::Title do
   end
 
   context "#title_for_cluster" do
-    before(:each) do
+    before do
       @ems1 = FactoryGirl.create(:ems_vmware)
       @ems2 = FactoryGirl.create(:ems_openstack_infra)
     end

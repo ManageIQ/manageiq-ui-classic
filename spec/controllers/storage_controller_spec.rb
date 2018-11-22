@@ -342,7 +342,7 @@ describe StorageController do
 
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       @ds = FactoryGirl.create(:storage, :name => "Datastore-01")
       allow(@ds).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")

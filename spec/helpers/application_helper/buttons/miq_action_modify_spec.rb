@@ -40,7 +40,7 @@ describe ApplicationHelper::Button::MiqActionModify do
     subject { button[:title] }
 
     before { allow(view_context).to receive(:x_node).and_return("p-#{policy.id}_#{type}-1") }
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     %w(a ev u).each_with_index do |type, i|
       context "when #{type} is active" do

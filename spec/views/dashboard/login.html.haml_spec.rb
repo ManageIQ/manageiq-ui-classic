@@ -2,7 +2,7 @@ describe "dashboard/login.html.haml" do
   helper(JsHelper)
 
   context "login_div contains browser and TZ hidden fields" do
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       stub_settings(:server => {}, :session => {}, :authentication => {})
     end
@@ -30,7 +30,7 @@ describe "dashboard/login.html.haml" do
 
   context "on screen region/zone/appliance info" do
     let(:labels) { %w(Region: Zone: Appliance:) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       MiqRegion.seed
     end

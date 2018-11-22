@@ -14,7 +14,7 @@ describe ConfigurationController do
   end
 
   describe "building tabs" do
-    before(:each) do
+    before do
       controller.instance_variable_set(:@tabform, "ui_2")
       login_as FactoryGirl.create(:user, :features => "everything")
     end

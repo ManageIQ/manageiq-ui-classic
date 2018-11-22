@@ -21,7 +21,7 @@ describe ApplicationHelper::Button::VmWebmksConsole do
       allow(record).to receive(:current_state).and_return(power_state)
       allow(subject).to receive(:webmks_assets_provided?).and_return(true)
     end
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'when record.vendor == vmware (infra)' do
       let(:power_state) { 'on' }

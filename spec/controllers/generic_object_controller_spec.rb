@@ -4,7 +4,7 @@ describe GenericObjectController do
 
   describe "#show" do
     render_views
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user, :features => "none")
       generic_obj_defn = FactoryGirl.create(:generic_object_definition)
@@ -39,7 +39,7 @@ describe GenericObjectController do
   end
 
   describe "#show_list" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       generic_obj_defn = FactoryGirl.create(:generic_object_definition)
       FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
@@ -49,7 +49,7 @@ describe GenericObjectController do
   end
 
   describe "#tags_edit" do
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       user = FactoryGirl.create(:user_with_group)
       stub_user(:features => :all)

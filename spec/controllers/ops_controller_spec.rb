@@ -1,6 +1,6 @@
 describe OpsController do
   let(:user) { FactoryGirl.create(:user, :role => "super_administrator") }
-  before(:each) do
+  before do
     EvmSpecHelper.create_guid_miq_server_zone
     MiqRegion.seed
     login_as user

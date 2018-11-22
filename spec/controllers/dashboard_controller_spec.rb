@@ -298,7 +298,7 @@ describe DashboardController do
   end
 
   describe '#resize_layout' do
-    before(:each) do
+    before do
       controller.params[:sidebar] = sidebar
       controller.params[:context] = context
       expect(controller).to receive(:head).with(:ok)
@@ -399,7 +399,7 @@ describe DashboardController do
       )
     end
 
-    before(:each) do
+    before do
       login_as user
 
       controller.instance_variable_set(:@_params, :tab => wset.id)

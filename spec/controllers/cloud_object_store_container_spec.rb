@@ -7,7 +7,7 @@ describe CloudObjectStoreContainerController do
 
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       allow(@container).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryGirl.create(:classification, :name => "department", :description => "D    epartment")
       @tag1 = FactoryGirl.create(:classification_tag,

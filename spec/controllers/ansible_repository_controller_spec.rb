@@ -55,7 +55,7 @@ describe AnsibleRepositoryController do
   describe "#show_association" do
     render_views
 
-    before(:each) do
+    before do
       @repository = FactoryGirl.create(:embedded_ansible_configuration_script_source, :name => "Test Repository")
       @playbook = FactoryGirl.create(:embedded_playbook, :name => 'playbook_name', :configuration_script_source => @repository)
     end

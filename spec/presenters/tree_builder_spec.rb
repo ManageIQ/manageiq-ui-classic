@@ -195,7 +195,7 @@ describe TreeBuilder do
   end
 
   context "#hide_vms" do
-    before(:each) do
+    before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "TreeBuilder")
       login_as FactoryGirl.create(:user, :userid => 'treebuilder_wilma', :miq_groups => [@group])

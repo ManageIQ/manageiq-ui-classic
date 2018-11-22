@@ -13,7 +13,7 @@ describe CatalogController do
       FactoryGirl.create(:service_template, :miq_group => child_tenant_group, :tenant => child_tenant)
     end
 
-    before(:each) do
+    before do
       stub_user(:features => :all)
       controller.instance_variable_set(:@settings, {})
       allow_any_instance_of(ApplicationController).to receive(:fetch_path)
@@ -319,7 +319,7 @@ describe CatalogController do
     end
 
     describe "#ot_edit" do
-      before(:each) do
+      before do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "save")
         @new_name = "New Name"
@@ -419,7 +419,7 @@ describe CatalogController do
     end
 
     describe "#ot_copy" do
-      before(:each) do
+      before do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "add")
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
@@ -496,7 +496,7 @@ describe CatalogController do
     end
 
     describe "#ot_delete" do
-      before(:each) do
+      before do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :pressed => "orchestration_template_remove")
         allow(controller).to receive(:replace_right_cell)
@@ -527,7 +527,7 @@ describe CatalogController do
     end
 
     describe "#ot_create" do
-      before(:each) do
+      before do
         @new_name = "New Name"
         new_description = "New Description"
         new_type = "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate"
@@ -584,7 +584,7 @@ describe CatalogController do
     end
 
     describe "#tags_edit" do
-      before(:each) do
+      before do
         @ot = FactoryGirl.create(:orchestration_template, :name => "foo")
         allow(@ot).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
         classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
@@ -641,7 +641,7 @@ describe CatalogController do
     end
 
     describe "#service_dialog_create_from_ot" do
-      before(:each) do
+      before do
         @ot = FactoryGirl.create(:orchestration_template_amazon_in_json)
         @dialog_label = "New Dialog 01"
         session[:edit] = {
@@ -670,7 +670,7 @@ describe CatalogController do
 
     describe "#ot_rendering" do
       render_views
-      before(:each) do
+      before do
         EvmSpecHelper.create_guid_miq_server_zone
         session[:settings] = {
           :views => {:orchestrationtemplate => "grid"}
@@ -1181,7 +1181,7 @@ describe CatalogController do
 
   context "tests that need only specific rbac feature access" do
     describe "#st_tags_edit" do
-      before(:each) do
+      before do
         user = FactoryGirl.create(:user, :features => "catalogitem_tag")
         login_as user
 

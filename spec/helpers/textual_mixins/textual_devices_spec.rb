@@ -1,6 +1,6 @@
 describe TextualMixins::TextualDevices do
   let(:host) { FactoryGirl.create(:host, :hardware => hw) }
-  before(:each) do
+  before do
     assign(:record, host)
   end
 

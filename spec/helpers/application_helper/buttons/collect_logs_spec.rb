@@ -12,7 +12,7 @@ describe ApplicationHelper::Button::CollectLogs do
   describe '#calculate_properties' do
     let(:setup_log_files) {}
     let(:setup_tasks) {}
-    before(:each) do
+    before do
       setup_log_files
       setup_tasks
       button.calculate_properties

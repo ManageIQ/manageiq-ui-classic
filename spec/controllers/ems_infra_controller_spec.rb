@@ -2,7 +2,7 @@ describe EmsInfraController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryGirl.build(:zone) }
   context "#button" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
 
@@ -271,7 +271,7 @@ describe EmsInfraController do
 
   describe "#show" do
     render_views
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user, :features => "none")
       @ems = FactoryGirl.create(:ems_vmware)
@@ -379,7 +379,7 @@ describe EmsInfraController do
   end
 
   describe "#show_list" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       FactoryGirl.create(:ems_vmware)
       get :show_list
@@ -403,7 +403,7 @@ describe EmsInfraController do
   end
 
   describe "#build_credentials" do
-    before(:each) do
+    before do
       @ems = FactoryGirl.create(:ems_openstack_infra)
     end
     context "#build_credentials only contains credentials that it supports and has a username for in params" do

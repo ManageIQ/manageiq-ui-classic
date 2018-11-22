@@ -1,5 +1,5 @@
 describe OpsController do
-  before(:each) do
+  before do
     MiqRegion.seed
   end
 

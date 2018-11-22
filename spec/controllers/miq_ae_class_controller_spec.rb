@@ -424,7 +424,7 @@ describe MiqAeClassController do
   end
 
   context "#ae_class_validation" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       ns = FactoryGirl.create(:miq_ae_namespace)
       @cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)

@@ -221,7 +221,7 @@ describe OpsController do
 
     describe "#tags_edit" do
       let!(:user) { stub_user(:features => :all) }
-      before(:each) do
+      before do
         @tenant = FactoryGirl.create(:tenant,
                                      :name      => "OneTenant",
                                      :parent    => Tenant.root_tenant,

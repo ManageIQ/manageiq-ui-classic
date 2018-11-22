@@ -1,7 +1,7 @@
 describe ConfigurationJobController do
   let!(:user) { stub_user(:features => :all) }
 
-  before(:each) do
+  before do
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
@@ -38,7 +38,7 @@ describe ConfigurationJobController do
 
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       @cj = FactoryGirl.create(:ansible_tower_job, :name => "testJob")
       allow(@cj).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")

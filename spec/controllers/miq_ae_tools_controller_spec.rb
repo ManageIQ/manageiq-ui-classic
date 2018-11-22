@@ -1,5 +1,5 @@
 describe MiqAeToolsController do
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 

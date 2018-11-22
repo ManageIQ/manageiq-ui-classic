@@ -1,5 +1,5 @@
 describe ServiceController do
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
@@ -213,7 +213,7 @@ describe ServiceController do
     describe "#button" do
       render_views
 
-      before(:each) do
+      before do
         stub_user(:features => :all)
         EvmSpecHelper.create_guid_miq_server_zone
         ApplicationController.handle_exceptions = true

@@ -20,7 +20,7 @@ describe EmsCloudController do
     end
 
     context "#button" do
-      before(:each) do
+      before do
         stub_user(:features => :all)
         EvmSpecHelper.create_guid_miq_server_zone
       end
@@ -323,7 +323,7 @@ end
 describe EmsNetworkController do
   context "::EmsCommon" do
     context "#button" do
-      before(:each) do
+      before do
         stub_user(:features => :all)
         EvmSpecHelper.create_guid_miq_server_zone
       end
