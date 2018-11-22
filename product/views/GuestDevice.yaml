@@ -16,13 +16,6 @@ cols:
 - field_replaceable_unit
 
 
-include:
-
-
-include_for_find:
-  :ext_management_system: {}
-
-
 col_order:
 - device_name
 - location
