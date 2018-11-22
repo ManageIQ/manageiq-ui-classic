@@ -206,7 +206,7 @@ module EmsCommon
     manager = find_record_with_rbac(ExtManagementSystem, provider_id)
     return nil unless manager
     return manager.id unless manager.respond_to?(:storage_managers)
-    manager.storage_managers.detect { |m| m.supports_block_storage? }&.id
+    manager.storage_managers.detect(&:supports_block_storage?)&.id
   end
 
   # handle buttons pressed on the button bar
