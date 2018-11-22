@@ -4,7 +4,6 @@ describe OpsController do
   before(:each) do
     EvmSpecHelper.local_miq_server
     MiqRegion.seed
-    MiqProductFeature.seed
     stub_admin
 
     controller.instance_variable_set(:@sb, {})
