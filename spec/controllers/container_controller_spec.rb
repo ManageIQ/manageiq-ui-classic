@@ -1,6 +1,6 @@
 describe ContainerController do
   render_views
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 

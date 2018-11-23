@@ -1,7 +1,7 @@
 describe CloudVolumeTypeController do
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       @volume_type = FactoryGirl.create(:cloud_volume_type, :name => "cloud-volume-type-01")
       allow(@volume_type).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")

@@ -5,7 +5,7 @@ describe HostController do
   describe "#button" do
     render_views
 
-    before(:each) do
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
 
@@ -203,7 +203,7 @@ describe HostController do
   end
 
   describe "#show_association" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       @host = FactoryGirl.create(:host, :name =>'hostname1')
       @guest_application = FactoryGirl.create(:guest_application, :name => "foo", :host_id => @host.id)
@@ -234,7 +234,7 @@ describe HostController do
   context 'nested lists' do # these are similar to #show_association but require 'render_views'
     render_views
 
-    before(:each) do
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
 
@@ -444,7 +444,7 @@ describe HostController do
   describe "#show_list" do
     render_views
 
-    before(:each) do
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
     end
@@ -490,7 +490,7 @@ describe HostController do
   end
 
   describe '#report_data' do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
     end

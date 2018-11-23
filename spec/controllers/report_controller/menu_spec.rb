@@ -1,6 +1,6 @@
 describe ReportController do
   describe "#edit_folder" do
-    before(:each) do
+    before do
       controller.instance_variable_set(:@grid_folders, nil)
       session[:node_selected] = 'foo__bar'
       controller.instance_variable_set(:@edit, :new           => [['bar', ['baz', 'quux']], # match
@@ -69,7 +69,7 @@ describe ReportController do
   end
 
   describe "#edit_reports" do
-    before(:each) do
+    before do
       MiqUserRole.seed
 
       role = MiqUserRole.find_by(:name => "EvmRole-administrator")

@@ -55,7 +55,7 @@ describe ApplicationController do
       MiqRegion.id_to_region(id)
     end
 
-    before(:each) do
+    before do
       # setup classification/entries with same name in different regions
       clergy = FactoryGirl.create(:classification, :description => "Clergy")
       add_entry(clergy, :name => "bishop", :description => "Bishop")

@@ -4,7 +4,7 @@ describe GenericObjectDefinitionController do
 
   describe "#show" do
     render_views
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user, :features => "none")
     end
@@ -45,7 +45,7 @@ describe GenericObjectDefinitionController do
   end
 
   describe "#show_list" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       FactoryGirl.create(:generic_object_definition)
       allow(controller).to receive(:build_tree)
@@ -58,7 +58,7 @@ describe GenericObjectDefinitionController do
   context "#button" do
     render_views
 
-    before(:each) do
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       ApplicationController.handle_exceptions = true

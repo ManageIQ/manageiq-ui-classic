@@ -1,6 +1,6 @@
 describe 'ops/_rbac_group_details.html.haml' do
   context 'add new group' do
-    before(:each) do
+    before do
       miq_server = FactoryGirl.create(:miq_server)
       edit = {:new                 => {:description => ''},
               :key                 => "settings_authentication_edit__#{miq_server.id}",

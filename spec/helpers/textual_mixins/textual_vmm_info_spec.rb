@@ -1,7 +1,7 @@
 describe TextualMixins::TextualVmmInfo do
   let(:host) { FactoryGirl.create(:host, :vmm_vendor => vmm) }
 
-  before(:each) do
+  before do
     assign(:record, host)
   end
 

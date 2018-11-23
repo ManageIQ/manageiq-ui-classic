@@ -3,7 +3,7 @@ describe NetworkRouterController do
 
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       @ct = FactoryGirl.create(:network_router, :name => "router-01")
       allow(@ct).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")

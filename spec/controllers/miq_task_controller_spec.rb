@@ -806,7 +806,7 @@ describe MiqTaskController do
     end
 
     describe "building tabs" do
-      before(:each) do
+      before do
         controller.instance_variable_set(:@tabform, "ui_2")
         controller.instance_variable_set(:@settings, :perpage => {})
         allow(controller).to receive(:role_allows?).and_return(true)

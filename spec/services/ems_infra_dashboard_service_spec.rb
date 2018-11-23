@@ -1,6 +1,6 @@
 describe EmsInfraDashboardService do
   context '#recentVms' do
-    before(:each) do
+    before do
       @ems1 = FactoryGirl.create(:ems_infra)
       @vm1 = FactoryGirl.create(:vm_infra, :ext_management_system => @ems1)
       @vm2 = FactoryGirl.create(:vm_infra, :ext_management_system => @ems1, :created_on => 1.day.ago.utc)

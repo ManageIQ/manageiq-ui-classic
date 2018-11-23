@@ -11,7 +11,7 @@
 describe ReportFormatter::C3Formatter do
   include Spec::Support::ReportHelper
 
-  before(:each) do
+  before do
     allow(Charting).to receive(:backend).and_return(:c3)
     allow(Charting).to receive(:format).and_return(:c3)
   end

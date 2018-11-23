@@ -67,7 +67,7 @@ describe VmInfraController do
         }
       end
 
-      before(:each) do
+      before do
         sb = {
           :active_tree => 'foo_tree',
           :history     => {

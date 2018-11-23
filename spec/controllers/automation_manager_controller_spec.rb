@@ -7,7 +7,7 @@ describe AutomationManagerController do
   let(:automation_provider2) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest2", :url => "10.8.96.108", :zone => zone) }
   let(:automation_provider3) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest_no_cs", :url => "192.0.2.1", :zone => zone) }
 
-  before(:each) do
+  before do
     Tag.find_or_create_by(:name => tags.first)
     @automation_manager1 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider1.id)
     @automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)
@@ -600,7 +600,7 @@ describe AutomationManagerController do
   end
 
   context "#configscript_service_dialog" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       @cs = FactoryGirl.create(:ansible_configuration_script)
       @dialog_label = "New Dialog 01"
@@ -650,7 +650,7 @@ describe AutomationManagerController do
 
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       allow(@ans_configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")

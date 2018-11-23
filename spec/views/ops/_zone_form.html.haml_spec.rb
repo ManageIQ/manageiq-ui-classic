@@ -7,7 +7,7 @@ describe "ops/_zone_form.html.haml" do
   end
 
   context "zone selected" do
-    before(:each) do
+    before do
       @zone = FactoryGirl.create(:zone)
       @edit = {:zone_id               => nil,
                :new                   => {:name                => nil,

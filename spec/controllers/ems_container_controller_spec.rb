@@ -1,5 +1,5 @@
 describe EmsContainerController do
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
@@ -66,7 +66,7 @@ describe EmsContainerController do
     let(:mock_client) { double('kubeclient') }
 
     context "with route set" do
-      before(:each) do
+      before do
         EvmSpecHelper.create_guid_miq_server_zone
         # set kubeclient to return a mock route.
         allow(Kubeclient::Client).to receive(:new).and_return(mock_client)

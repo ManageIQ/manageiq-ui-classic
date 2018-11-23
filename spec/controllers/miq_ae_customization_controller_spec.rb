@@ -1,10 +1,10 @@
 describe MiqAeCustomizationController do
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
   describe "group_reorder_field_changed" do
-    before(:each) do
+    before do
       allow(controller).to receive(:load_edit).and_return(true)
       controller.instance_variable_set(:@edit, :new => {:fields => [['test', 100], ['test1', 101], ['test2', 102], ['test3', 103]]})
     end
@@ -47,7 +47,7 @@ describe MiqAeCustomizationController do
   end
 
   describe "#group_form_field_changed" do
-    before(:each) do
+    before do
       allow(controller).to receive(:load_edit).and_return(true)
       controller.instance_variable_set(:@edit, :new => {:fields => [['value', 100], ['value1', 101], ['value2', 102], ['value3', 103]]})
     end
@@ -110,7 +110,7 @@ describe MiqAeCustomizationController do
   end
 
   describe 'x_button' do
-    before(:each) do
+    before do
       ApplicationController.handle_exceptions = true
     end
 

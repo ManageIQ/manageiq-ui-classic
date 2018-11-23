@@ -6,7 +6,7 @@ describe ApplicationHelper::Button::EmsClusterTimeline do
   describe '#disabled?' do
     subject { button[:title] }
     before { allow(record).to receive(:has_events?).and_return(has_events) }
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'and record has events' do
       let(:has_events) { true }

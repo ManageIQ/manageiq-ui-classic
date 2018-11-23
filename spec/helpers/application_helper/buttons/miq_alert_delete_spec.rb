@@ -7,7 +7,7 @@ describe ApplicationHelper::Button::MiqAlertDelete do
     subject { button[:title] }
     before { allow(record).to receive(:owning_miq_actions).and_return(owning_miq_actions) }
     before { allow(record).to receive(:memberof).and_return(memberof) }
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'and record doesnt own any action and is not memberof any group' do
       let(:owning_miq_actions) { [] }

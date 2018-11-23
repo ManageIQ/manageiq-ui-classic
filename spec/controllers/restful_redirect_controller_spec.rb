@@ -1,6 +1,6 @@
 describe RestfulRedirectController do
   context "Redirects to controller correctly" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       ApplicationController.handle_exceptions = true

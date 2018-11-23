@@ -2,7 +2,7 @@ describe ContainerDashboardService do
   let(:controller) { double(:current_user => double(:get_timezone => "UTC", :id => 123)) }
   let(:time_profile) { FactoryGirl.create(:time_profile_utc) }
 
-  before(:each) do
+  before do
     MiqRegion.seed
     @zone = EvmSpecHelper.create_guid_miq_server_zone[2]
   end

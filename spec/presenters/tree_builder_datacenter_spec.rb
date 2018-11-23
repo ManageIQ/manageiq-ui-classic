@@ -1,6 +1,6 @@
 describe TreeBuilderDatacenter do
   context 'TreeBuilderDatacenter Cluster root' do
-    before(:each) do
+    before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Datacenter Group Cluster root")
       login_as FactoryGirl.create(:user, :userid => 'datacenter_wilma', :miq_groups => [@group])
@@ -34,7 +34,7 @@ describe TreeBuilderDatacenter do
   end
 
   context 'TreeBuilderDatacenter Resource pool root' do
-    before(:each) do
+    before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryGirl.create(:miq_group,
                                   :miq_user_role => role,

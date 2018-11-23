@@ -75,7 +75,7 @@ describe ApplicationController do
   end
 
   context "Verify proper methods are called for snapshot" do
-    before(:each) do
+    before do
       allow(subject).to receive(:vm_button_action).and_return(subject.method(:process_objects))
     end
 
@@ -654,7 +654,7 @@ describe ApplicationController do
 
     context "when a single is vm selected" do
       let(:supports_reconfigure_disks) { true }
-      before(:each) do
+      before do
         allow(vm).to receive(:supports_reconfigure_disks?).and_return(supports_reconfigure_disks)
         controller.instance_variable_set(:@reconfigitems, [vm])
       end
@@ -801,7 +801,7 @@ describe HostController do
   let(:zone) { FactoryGirl.create(:zone) }
 
   context "#show_association" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       @host = FactoryGirl.create(:host)
@@ -882,7 +882,7 @@ describe HostController do
   end
 
   context "#generic_button_operation" do
-    before(:each) do
+    before do
       allow(subject).to receive(:vm_button_action).and_return(subject.method(:process_objects))
       allow(controller).to receive(:render)
       EvmSpecHelper.create_guid_miq_server_zone

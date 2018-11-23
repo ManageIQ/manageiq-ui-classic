@@ -82,7 +82,7 @@ describe OpsController do
     end
 
     context "schedule addition" do
-      before(:each) do
+      before do
         EvmSpecHelper.create_guid_miq_server_zone
         expect(controller).to receive(:render)
         @schedule = FactoryGirl.create(:miq_schedule, :userid => user.userid, :towhat => "Vm")
@@ -163,7 +163,7 @@ describe OpsController do
 
     context '#forest_accept' do
       context 'adding an LDAP Trusted Forest' do
-        before(:each) do
+        before do
           EvmSpecHelper.create_guid_miq_server_zone
           @user_proxies = {:ldaphost => 'ldap.manageiq1.org',
                            :ldapport => '389',

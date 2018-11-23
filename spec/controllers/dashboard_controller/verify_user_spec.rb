@@ -3,7 +3,7 @@ describe DashboardController do
     FactoryGirl.create(:user_with_email, :password => "smartvm", :role => "super_administrator")
   end
 
-  before(:each) do
+  before do
     EvmSpecHelper.local_miq_server
     user
   end

@@ -62,7 +62,7 @@ describe EmsClusterController do
      {:name => :field6, :value => 'other string'}]
   end
 
-  before(:each) do
+  before do
     controller.instance_variable_set(:@compressed, false)
     controller.instance_variable_set(:@exists_mode, false)
   end
@@ -99,7 +99,7 @@ describe EmsClusterController do
   end
 
   context 'compares' do
-    before(:each) do
+    before do
       view.ids = compare_ids
 
       @sample_values = {}
@@ -134,7 +134,7 @@ describe EmsClusterController do
   end
 
   context 'drifts' do
-    before(:each) do
+    before do
       view.ids = drift_ids
 
       @sample_values = {}

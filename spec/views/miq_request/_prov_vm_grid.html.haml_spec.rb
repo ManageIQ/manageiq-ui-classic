@@ -1,6 +1,6 @@
 describe 'miq_request/_prov_vm_grid.html.haml' do
   context 'check for links' do
-    before(:each) do
+    before do
       @vm_user = FactoryGirl.create(:user, :role => "vm_user")
       @vms = [FactoryGirl.create(:vm_vmware)]
       edit = {:req_id     => "foo",

@@ -17,7 +17,7 @@ describe ApplicationHelper::Button::MiqRequestDelete do
     let(:requester_name) { {:requester_name => current_user.name} }
     let(:resource_type) { 'knedlik' }
 
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'requester is admin' do
       let(:requester_name) { {:requester_name => 'FrantaSkocDoPole'} }

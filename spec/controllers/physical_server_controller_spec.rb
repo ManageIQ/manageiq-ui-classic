@@ -4,7 +4,7 @@ describe PhysicalServerController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryGirl.build(:zone) }
 
-  before(:each) do
+  before do
     stub_user(:features => :all)
     EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryGirl.create(:user)
@@ -27,7 +27,7 @@ describe PhysicalServerController do
   end
 
   describe "#show_list" do
-    before(:each) do
+    before do
       FactoryGirl.create(:physical_server)
     end
 

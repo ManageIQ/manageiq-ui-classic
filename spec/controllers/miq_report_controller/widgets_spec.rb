@@ -1,5 +1,5 @@
 describe ReportController do
-  before(:each) do
+  before do
     EvmSpecHelper.create_guid_miq_server_zone
     stub_user(:features => :all)
   end

@@ -1,7 +1,7 @@
 describe TextualMixins::TextualOsInfo do
   let(:host) { FactoryGirl.create(:host) }
 
-  before(:each) do
+  before do
     assign(:record, host)
   end
 

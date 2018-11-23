@@ -26,7 +26,7 @@ describe ApplicationHelper::Button::VmVncConsole do
 
   describe '#calculate_properties?' do
     before { allow(record).to receive(:current_state).and_return(power_state) }
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'when record.vendor == vmware' do
       let(:power_state) { 'on' }

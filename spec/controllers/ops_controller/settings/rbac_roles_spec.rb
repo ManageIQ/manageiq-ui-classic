@@ -1,5 +1,5 @@
 describe OpsController do
-  before(:each) do
+  before do
     EvmSpecHelper.seed_specific_product_features(
       %w(vm vm_compare vm_delete instance instance_delete image image_delete miq_template
          miq_template_delete provider_foreman_explorer provider_foreman_view)

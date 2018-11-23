@@ -15,7 +15,7 @@ describe ApplicationController do
   end
 
   context "#report_data" do
-    before(:each) do
+    before do
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
     end
     it "should return report data for VM" do

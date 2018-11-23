@@ -38,7 +38,7 @@ describe ApplicationHelper do
 
   describe "#role_allows?" do
     let(:features) { MiqProductFeature.find_all_by_identifier("everything") }
-    before(:each) do
+    before do
       EvmSpecHelper.seed_specific_product_features("miq_report", "service")
       @user = login_as FactoryGirl.create(:user, :features => features)
     end
@@ -674,7 +674,7 @@ describe ApplicationHelper do
   end
 
   context "#set_edit_timer_from_schedule" do
-    before(:each) do
+    before do
       @edit = {:tz => 'Eastern Time (US & Canada)', :new => {}}
       @interval = '3'
       @date = "6/28/2012"
@@ -942,7 +942,7 @@ describe ApplicationHelper do
   end
 
   context "#title_for_cluster_record" do
-    before(:each) do
+    before do
       @ems1 = FactoryGirl.create(:ems_vmware)
       @ems2 = FactoryGirl.create(:ems_openstack_infra)
     end

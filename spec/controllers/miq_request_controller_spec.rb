@@ -122,7 +122,7 @@ describe MiqRequestController do
   end
 
   context "#button" do
-    before(:each) do
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       @miq_request = MiqProvisionConfiguredSystemRequest.create(:description    => "Foreman provision",
@@ -384,7 +384,7 @@ describe MiqRequestController do
   end
 
   context '#miq_request_initial_options user choice' do
-    before(:each) do
+    before do
       EvmSpecHelper.local_miq_server
       stub_settings(:server => {}, :session => {})
 
@@ -424,7 +424,7 @@ describe MiqRequestController do
   end
 
   context "requester_label" do
-    before(:each) do
+    before do
       EvmSpecHelper.local_miq_server
       stub_settings(:server => {}, :session => {})
 

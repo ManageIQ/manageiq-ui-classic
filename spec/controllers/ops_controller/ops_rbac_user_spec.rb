@@ -1,7 +1,7 @@
 describe OpsController do
   include Spec::Support::OpsUserHelper
 
-  before(:each) do
+  before do
     EvmSpecHelper.local_miq_server
     MiqRegion.seed
     stub_admin

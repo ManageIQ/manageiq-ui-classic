@@ -15,7 +15,7 @@ describe ApplicationHelper::Button::ZoneCollectLogs do
     let(:setup_log_files) {}
     let(:setup_tasks) {}
     let(:log_state) { 'not_collecting' }
-    before(:each) do
+    before do
       setup_log_files
       setup_tasks
       record.miq_servers << miq_server

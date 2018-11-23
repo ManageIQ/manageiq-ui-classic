@@ -3,7 +3,7 @@ describe FloatingIpController do
 
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       @ct = FactoryGirl.create(:floating_ip)
       allow(@ct).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
