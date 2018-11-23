@@ -784,9 +784,9 @@ class OpsController < ApplicationController
   def build_saved_audit(record, add = false)
     name = record.respond_to?(:name) ? record.name : record.description
     msg = if add
-            _("[%{name}] Record added (") % {:name => name}
+            "[%{name}] Record added (" % {:name => name}
           else
-            _("[%{name}] Record updated (") % {:name => name}
+            "[%{name}] Record updated (" % {:name => name}
           end
     event = "#{record.class.to_s.downcase}_record_#{add ? "add" : "update"}"
     i = 0
@@ -794,21 +794,21 @@ class OpsController < ApplicationController
       if @edit[:new][k] != @edit[:current][k]
         if k.to_s.ends_with?("password2", "verify")      # do nothing
         elsif k.to_s.ends_with?("password", "_pwd")  # Asterisk out password fields
-          msg = _("%{message} %{key}:[*] to [*]") % {:message => msg, :key => k.to_s}
+          msg = "%{message} %{key}:[*] to [*]" % {:message => msg, :key => k.to_s}
         else
           msg += ", " if i > 0
           i += 1
           if k == :members
-            msg = _("%{message} %{key}:[%{old_value}] to [new_value]") %
+            msg = "%{message} %{key}:[%{old_value}] to [new_value]" %
                   {:message   => msg,
                    :key       => k.to_s,
                    :old_value => @edit[:current][k].keys.join(","),
                    :new_value => @edit[:new][k].keys.join(",")}
           else
-            msg = _("%{message} %{key}:[%{old_value}] to [%{new_value}]") % {:message   => msg,
-                                                                             :key       => k.to_s,
-                                                                             :old_value => @edit[:current][k].to_s,
-                                                                             :new_value => @edit[:new][k].to_s}
+            msg = "%{message} %{key}:[%{old_value}] to [%{new_value}]" % {:message   => msg,
+                                                                          :key       => k.to_s,
+                                                                          :old_value => @edit[:current][k].to_s,
+                                                                          :new_value => @edit[:new][k].to_s}
           end
         end
       end
