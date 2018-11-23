@@ -20,3 +20,11 @@ class Webpacker::Env < Webpacker::FileLoader
     end
   end
 end
+
+if Rails.env.test?
+  module Webpacker::Helper
+    def javascript_pack_tag(_)
+      # does nothing in specs
+    end
+  end
+end

@@ -53,19 +53,30 @@ namespace :webpack do
     system(webpack_dev_server) || abort("\n== webpack-dev-server failed ==")
   end
 
-  [:compile, :clobber].each do |webpacker_task|
-    task webpacker_task do
-      # Run the `webpack:compile` tasks without a fully loaded environment,
-      # since when doing an appliance/docker build, a database isn't
-      # available for the :environment task (prerequisite for
-      # 'webpacker:compile') to function.
-      EvmRakeHelper.with_dummy_database_url_configuration do
-        Dir.chdir ManageIQ::UI::Classic::Engine.root do
-          Rake::Task["webpack:paths"].invoke
-          Rake::Task["webpacker:#{webpacker_task}"].invoke
-        end
+  def run_webpack(task)
+    if %w(spec spec:jest).include? ENV['TEST_SUITE']
+      warn "Skipping webpack:#{task} on travis #{ENV['TEST_SUITE']}"
+      return
+    end
+
+    # Run the `webpack:compile` tasks without a fully loaded environment,
+    # since when doing an appliance/docker build, a database isn't
+    # available for the :environment task (prerequisite for
+    # 'webpacker:compile') to function.
+    EvmRakeHelper.with_dummy_database_url_configuration do
+      Dir.chdir ManageIQ::UI::Classic::Engine.root do
+        Rake::Task["webpack:paths"].invoke
+        Rake::Task["webpacker:#{task}"].invoke
       end
     end
+  end
+
+  task :compile do
+    run_webpack(:compile)
+  end
+
+  task :clobber do
+    run_webpack(:clobber)
   end
 
   task :paths do
