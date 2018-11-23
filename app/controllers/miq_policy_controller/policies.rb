@@ -5,7 +5,7 @@ module MiqPolicyController::Policies
     id = params[:id] ? params[:id] : "new"
     return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
     @policy = MiqPolicy.find_by(:id => @edit[:policy_id]) if @edit[:policy_id]
-    if @policy && @policy.id
+    if @policy.present?
       add_flash(_("Edit of Policy \"%{name}\" was cancelled by the user") % {:name => @policy.description})
     else
       add_flash(_("Add of new Policy was cancelled by the user"))
@@ -118,7 +118,7 @@ module MiqPolicyController::Policies
     assert_privileges("policy_copy")
     policy = MiqPolicy.find(params[:id])
     new_desc = truncate("Copy of #{policy.description}", :length => 255, :omission => "")
-    if MiqPolicy.find_by_description(new_desc)
+    if MiqPolicy.find_by(:description => new_desc)
       add_flash(_("Policy \"%{name}\" already exists") % {:name => new_desc}, :error)
       javascript_flash
     else
@@ -163,17 +163,17 @@ module MiqPolicyController::Policies
 
     case @edit[:typ]
     when "basic"
-      @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
-      @edit[:new][:notes] = params[:notes].blank? ? nil : params[:notes] if params[:notes]
+      @edit[:new][:description] = params[:description].presence if params[:description]
+      @edit[:new][:notes] = params[:notes].presence if params[:notes]
       @edit[:new][:active] = (params[:active] == "1") if params.key?(:active)
     when "events"
-      params.keys.each do |field|
+      params.each_key do |field|
         if field.to_s.starts_with?("event_")
           event = field.to_s.split("_").last
           if params[field] == "true"
-            @edit[:new][:events].push(event)      # Add event to array
+            @edit[:new][:events].push(event)   # Add event to array
           else
-            @edit[:new][:events].delete(event)    # Delete event from array
+            @edit[:new][:events].delete(event) # Delete event from array
           end
         end
         @edit[:new][:events].uniq!
@@ -221,16 +221,16 @@ module MiqPolicyController::Policies
     @edit[:new][:notes] = @policy.notes
     @edit[:new][:towhat] = @policy.id ? @policy.towhat : @sb[:folder].split('-').last.camelize # Set the towhat model
 
-    case @edit[:typ]  # Build fields based on what is being edited
-    when "conditions" # Editing condition assignments
+    case @edit[:typ]                  # Build fields based on what is being edited
+    when "conditions"                 # Editing condition assignments
       @edit[:new][:conditions] = {}
-      conditions = @policy.conditions     # Get the condittions
-      conditions.each { |c| @edit[:new][:conditions][c.description] = c.id }   # Build a hash for the members list box
+      conditions = @policy.conditions # Get the condittions
+      conditions.each { |c| @edit[:new][:conditions][c.description] = c.id } # Build a hash for the members list box
 
       @edit[:choices] = {}
       Condition.where(:towhat => @edit[:new][:towhat]).each { |c| @edit[:choices][c.description] = c.id } # Build a hash for the policies to choose from
 
-      @edit[:new][:conditions].each_key { |key| @edit[:choices].delete(key) }  # Remove any choices that are in the members list box
+      @edit[:new][:conditions].each_key { |key| @edit[:choices].delete(key) } # Remove any choices that are in the members list box
     when "events" # Editing event assignments
       @edit[:new][:events] = @policy.miq_event_definitions.collect { |e| e.id.to_s }.uniq.sort
 
@@ -240,15 +240,15 @@ module MiqPolicyController::Policies
         @edit[:allevents][e.etype.description] ||= []
         @edit[:allevents][e.etype.description].push([e.description, e.id.to_s])
       end
-    else  # Editing basic information and policy scope
+    else # Editing basic information and policy scope
       build_expression(@policy, @edit[:new][:towhat])
     end
 
     @edit[:current] = copy_hash(@edit[:new])
 
-    @embedded = true            # don't show flash msg or check boxes in Policies partial
+    @embedded = true                                       # Don't show flash msg or check boxes in Policies partial
     @in_a_form = true
-    @edit[:current][:add] = true if @edit[:policy_id].nil?                              # Force changed to be true if adding a record
+    @edit[:current][:add] = true if @edit[:policy_id].nil? # Force changed to be true if adding a record
     session[:changed] = (@edit[:new] != @edit[:current])
   end
 
@@ -257,7 +257,7 @@ module MiqPolicyController::Policies
   end
 
   def policy_get_all_folders
-    @folders = ["Compliance", "Control"]
+    @folders = %w(Compliance Control)
     @right_cell_text = _("All Policies")
     @right_cell_div = "policy_folders"
   end

@@ -6,8 +6,8 @@ module MiqPolicyController::MiqActions
     case params[:button]
     when "cancel"
       @edit = nil
-      @action = MiqAction.find_by_id(session[:edit][:action_id]) if session[:edit] && session[:edit][:action_id]
-      if @action && @action.id
+      @action = MiqAction.find(session[:edit][:action_id]) if session[:edit] && session[:edit][:action_id]
+      if @action.present?
         add_flash(_("Edit of Action \"%{name}\" was cancelled by the user") % {:name => @action.description})
       else
         add_flash(_("Add of new Action was cancelled by the user"))
@@ -29,7 +29,7 @@ module MiqPolicyController::MiqActions
     # Load @edit/vars for other buttons
     id = params[:id] ? params[:id] : "new"
     return unless load_edit("action_edit__#{id}", "replace_cell__explorer")
-    @action = @edit[:action_id] ? MiqAction.find_by_id(@edit[:action_id]) : MiqAction.new
+    @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
     case params[:button]
     when "save", "add"
       action = @action.id.blank? ? MiqAction.new : MiqAction.find(@action.id) # Get new or existing record
@@ -70,7 +70,7 @@ module MiqPolicyController::MiqActions
     assert_privileges("action_delete")
     actions = []
     # showing 1 action, delete it
-    if params[:id].nil? || MiqAction.find_by_id(params[:id]).nil?
+    if params[:id].nil? || !MiqAction.exists?(params[:id])
       add_flash(_("Action no longer exists"), :error)
     else
       actions.push(params[:id])
@@ -83,14 +83,14 @@ module MiqPolicyController::MiqActions
 
   def action_field_changed
     return unless load_edit("action_edit__#{params[:id]}", "replace_cell__explorer")
-    @action = @edit[:action_id] ? MiqAction.find_by_id(@edit[:action_id]) : MiqAction.new
+    @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
 
-    @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
-    @edit[:new][:options][:from] = params[:from].blank? ? nil : params[:from] if params[:from]
-    @edit[:new][:options][:to] = params[:to].blank? ? nil : params[:to] if params[:to]
-    @edit[:new][:options][:name] = params[:snapshot_name].blank? ? nil : params[:snapshot_name] if params[:snapshot_name]
+    @edit[:new][:description] = params[:description].presence if params[:description]
+    @edit[:new][:options][:from] = params[:from].presence if params[:from]
+    @edit[:new][:options][:to] = params[:to].presence if params[:to]
+    @edit[:new][:options][:name] = params[:snapshot_name].presence if params[:snapshot_name]
     @edit[:new][:options][:age] = params[:snapshot_age].to_i if params.key?(:snapshot_age)
-    @edit[:new][:options][:parent_type] = params[:parent_type].blank? ? nil : params[:parent_type] if params[:parent_type]
+    @edit[:new][:options][:parent_type] = params[:parent_type].presence if params[:parent_type]
     if params[:cpu_value]
       @edit[:new][:options][:value] = params[:cpu_value]
     elsif params[:memory_value]
@@ -99,22 +99,22 @@ module MiqPolicyController::MiqActions
     @edit[:new][:options][:attribute] = params[:attribute] if params[:attribute]
     @edit[:new][:options][:value] = params[:value] if params[:value]
     @edit[:new][:options][:ae_message] = params[:object_message] if params.key?(:object_message)
-    @edit[:new][:options][:ae_request]  = params[:object_request] if params[:object_request]
+    @edit[:new][:options][:ae_request] = params[:object_request] if params[:object_request]
     params.each do |var, val|
       vars = var.split("_")
-      if (vars[0] == "attribute" || vars[0] == "value") && !val.blank?
+      if (vars[0] == "attribute" || vars[0] == "value") && val.present?
         ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
           f = ("attribute_" + (i + 1).to_s)
           v = ("value_" + (i + 1).to_s)
           @edit[:new][:attrs][i][0] = params[f] if params[f.to_sym]
           @edit[:new][:attrs][i][1] = params[v] if params[v.to_sym]
         end
-      elsif vars[0] == "cat"  # Handle category check boxes
+      elsif vars[0] == "cat" # Handle category check boxes
         @edit[:new][:options][:cats] ||= []
         if val == "1"
-          @edit[:new][:options][:cats].push(vars[1..-1].join("_"))  # Add the category
+          @edit[:new][:options][:cats].push(vars[1..-1].join("_")) # Add the category
         else
-          @edit[:new][:options][:cats].delete(vars[1..-1].join("_"))  # Remove the category
+          @edit[:new][:options][:cats].delete(vars[1..-1].join("_")) # Remove the category
           @edit[:new][:options][:cats] = nil if @edit[:new][:options][:cats].blank?
         end
       end
@@ -129,11 +129,11 @@ module MiqPolicyController::MiqActions
     @edit[:new][:options][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
     @edit[:new][:options][:hosts] = params[:hosts] if params[:hosts]
 
-    if params[:miq_action_type] && params[:miq_action_type] != @edit[:new][:action_type]  # action type was changed
+    if params[:miq_action_type] && params[:miq_action_type] != @edit[:new][:action_type] # action type was changed
       @edit[:new][:action_type] = params[:miq_action_type]
-      @edit[:new][:options] = {}  # Clear out the options
-      action_build_alert_choices if params[:miq_action_type] == "evaluate_alerts"         # Build alert choices hash
-      action_build_snmp_variables if params[:miq_action_type] == "snmp_trap"            # Build snmp_trap variables hash
+      @edit[:new][:options] = {} # Clear out the options
+      action_build_alert_choices if params[:miq_action_type] == "evaluate_alerts" # Build alert choices hash
+      action_build_snmp_variables if params[:miq_action_type] == "snmp_trap"      # Build snmp_trap variables hash
       action_initialize_playbook_variables
       if params[:miq_action_type] == "tag"
         get_tags_tree
@@ -160,7 +160,7 @@ module MiqPolicyController::MiqActions
 
   def action_tag_pressed
     @edit = session[:edit]
-    @action = @edit[:action_id] ? MiqAction.find_by_id(@edit[:action_id]) : MiqAction.new
+    @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
     _, id = parse_nodetype_and_id(params[:id])
     tag_name = Classification.find(id).tag.name
     @tag_selected = Classification.tag2human(tag_name)
@@ -224,7 +224,7 @@ module MiqPolicyController::MiqActions
         end
       end
     elsif params[:button].ends_with?("_allleft")
-      if @edit[:new][members].length == 0
+      if @edit[:new][members].empty?
         add_flash(_("No %{members} were selected to move left") %
           {:members => members.to_s.split("_").first.titleize}, :error)
       else
@@ -241,32 +241,26 @@ module MiqPolicyController::MiqActions
     @edit[:new] = {}
     @edit[:current] = {}
 
-    @action = params[:id] ? MiqAction.find(params[:id]) : MiqAction.new           # Get existing or new record
+    @action = params[:id] ? MiqAction.find(params[:id]) : MiqAction.new # Get existing or new record
     @edit[:key] = "action_edit__#{@action.id || "new"}"
     @edit[:rec_id] = @action.id || nil
 
     @edit[:action_id] = @action.id
     @edit[:new][:description] = @action.description
-    @edit[:new][:action_type] = @action.action_type.blank? ? "" : @action.action_type
-    if @action.options
-      @edit[:new][:options] = copy_hash(@action.options)
-    else
-      @edit[:new][:options] = {}
-    end
+    @edit[:new][:action_type] = @action.action_type.presence
+    @edit[:new][:options] = @action.options ? copy_hash(@action.options) : {}
 
     @edit[:new][:object_message] = @edit[:new][:options][:ae_message] unless @edit[:new][:options][:ae_message].nil?
     @edit[:new][:object_request] = @edit[:new][:options][:ae_request] unless @edit[:new][:options][:ae_request].nil?
     @edit[:new][:attrs] ||= []
     ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { @edit[:new][:attrs].push([]) }
-    unless @edit[:new][:options][:ae_hash].nil?
-      @edit[:new][:options][:ae_hash].each_with_index do |kv, i|
-        @edit[:new][:attrs][i][0] = kv[0]
-        @edit[:new][:attrs][i][1] = kv[1]
-      end
+    @edit[:new][:options][:ae_hash]&.each_with_index do |kv, i|
+      @edit[:new][:attrs][i][0] = kv[0]
+      @edit[:new][:attrs][i][1] = kv[1]
     end
 
     unless @edit[:new][:options][:tags].nil?
-      cats =  Classification.categories.select(&:show).sort_by(&:name)
+      cats = Classification.categories.select(&:show).sort_by(&:name)
       cats.each do |c|
         c.entries.each do |e|
           if e.tag.name == @edit[:new][:options][:tags][0]
@@ -280,12 +274,12 @@ module MiqPolicyController::MiqActions
 
     action_build_alert_choices
     unless @edit[:new][:options][:alert_guids].nil?
-      @edit[:new][:options][:alert_guids].each do |ag|      # Add alerts to the alert_members hash
-        alert = MiqAlert.find_by_guid(ag)
+      @edit[:new][:options][:alert_guids].each do |ag| # Add alerts to the alert_members hash
+        alert = MiqAlert.find_by(:guid => ag)
         @edit[:new][:alerts][alert.description] = ag unless alert.nil?
       end
       @edit[:new][:alerts].each do |am|
-        @edit[:choices].delete(am.first)              # Remove any choices already in the list
+        @edit[:choices].delete(am.first) # Remove any choices already in the list
       end
     end
     action_build_snmp_variables if @action.action_type == "snmp_trap"
@@ -295,8 +289,7 @@ module MiqPolicyController::MiqActions
                                  [_("Cluster / Deployment Role"), "ems_cluster"],
                                  [_("Host"), "host"],
                                  [_("Datastore"), "storage"],
-                                 [_("Resource Pool"), "parent_resource_pool"]
-                                ].sort_by { |x| x.first.downcase }
+                                 [_("Resource Pool"), "parent_resource_pool"]].sort_by { |x| x.first.downcase }
     @edit[:cats] = MiqAction.inheritable_cats.sort_by { |c| c.description.downcase }.collect { |c| [c.name, c.description] }
 
     @edit[:ansible_playbooks] = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id) || {}
@@ -306,17 +299,14 @@ module MiqPolicyController::MiqActions
     @edit[:current] = copy_hash(@edit[:new])
     get_tags_tree
     @in_a_form = true
-    @edit[:current][:add] = true if @edit[:action_id].nil?  # Force changed to be true if adding a record
+    @edit[:current][:add] = @edit[:action_id].nil? # Force changed to be true if adding a record
     session[:changed] = (@edit[:new] != @edit[:current])
   end
 
   # Build the alert choice hash for evaluate_alerts action_type
   def action_build_alert_choices
-    @edit[:choices] = {}                          # Build a new choices list for true actions
-    MiqAlert.all.each do |a|                     # Build the hash of alert choices
-      @edit[:choices][a.description] =  a.guid
-    end
-    @edit[:new][:alerts] = {}                     # Clear out the alerts hash
+    @edit[:choices] = MiqAlert.all.reduce({}) { |h, a| h[a.description] = a.guid } # Build the hash of alert choices
+    @edit[:new][:alerts] = {} # Clear out the alerts hash
   end
 
   def action_build_cat_tree
@@ -327,30 +317,27 @@ module MiqPolicyController::MiqActions
   def action_set_record_vars(action)
     action.description = @edit[:new][:description]
     action.action_type = @edit[:new][:action_type]
-    if @edit[:new][:attrs]
-      @edit[:new][:attrs].each do |pair|
-        @edit[:new][:options][:ae_hash] ||= {}
-        @edit[:new][:options][:ae_hash][pair[0]] = pair[1] if !pair[0].blank? && !pair[1].blank?
-      end
+    @edit[:new][:attrs]&.each do |pair|
+      @edit[:new][:options][:ae_hash] ||= {}
+      @edit[:new][:options][:ae_hash][pair[0]] = pair[1] if pair[0].present? && pair[1].present?
     end
     @edit[:new][:options].delete("ae_hash".to_sym) if @edit[:new][:options][:ae_hash].empty?
     @edit[:new][:object_message] = @edit[:new][:options][:ae_message] unless @edit[:new][:options][:ae_message].nil?
     @edit[:new][:object_request] = @edit[:new][:options][:ae_request] unless @edit[:new][:options][:ae_request].nil?
 
     if @edit[:new][:action_type] == "evaluate_alerts"   # Handle evaluate_alerts action type
-      @edit[:new][:options][:alert_guids] = []   # Create the array in options
+      @edit[:new][:options][:alert_guids] = []          # Create the array in options
       @edit[:new][:alerts].each_value do |a|            # Go thru the alerts hash
         @edit[:new][:options][:alert_guids].push(a)     # Add all alert guids to the array
       end
     end
 
     if @edit[:new][:options]
-      if @edit[:new][:options][:scan_item_set_name]
-        action.options = Hash.new
-        action.options[:scan_item_set_name] = @edit[:new][:options][:scan_item_set_name]
-      else
-        action.options = copy_hash(@edit[:new][:options])
-      end
+      action.options = if @edit[:new][:options][:scan_item_set_name]
+                         {:scan_item_set_name => @edit[:new][:options][:scan_item_set_name]}
+                       else
+                         copy_hash(@edit[:new][:options])
+                       end
     end
   end
 
@@ -373,8 +360,8 @@ module MiqPolicyController::MiqActions
       add_flash(_("Attribute Name is required"), :error)
     end
     edit[:attrs].each do |k, v|
-      add_flash(_("Attribute missing for %{field}") % {:field => v}, :error) if k.blank? && !v.blank?
-      add_flash(_("Value missing for %{field}") % {:field => k}, :error) if !k.blank? && v.blank?
+      add_flash(_("Attribute missing for %{field}") % {:field => v}, :error) if k.blank? && v.present?
+      add_flash(_("Value missing for %{field}") % {:field => k}, :error) if k.present? && v.blank?
     end
     if edit[:action_type] == "evaluate_alerts" && edit[:alerts].empty?
       add_flash(_("At least one Alert must be selected"), :error)
@@ -382,7 +369,7 @@ module MiqPolicyController::MiqActions
     if edit[:action_type] == "inherit_parent_tags" && options[:parent_type].blank?
       add_flash(_("Parent Type must be selected"), :error)
     end
-    if ["inherit_parent_tags", "remove_tags"].include?(edit[:action_type]) && options[:cats].blank?
+    if %w(inherit_parent_tags remove_tags).include?(edit[:action_type]) && options[:cats].blank?
       add_flash(_("At least one Category must be selected"), :error)
     end
     if edit[:action_type] == "delete_snapshots_by_age" && options[:age].blank?
