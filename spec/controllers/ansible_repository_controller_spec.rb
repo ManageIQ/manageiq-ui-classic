@@ -1,69 +1,52 @@
 describe AnsibleRepositoryController do
-  before do
-    EvmSpecHelper.assign_embedded_ansible_role
-    login_as FactoryGirl.create(:user_admin)
-  end
-
-  describe "#show" do
-    let(:repository) { FactoryGirl.create(:embedded_ansible_configuration_script_source) }
-    subject { get :show, :params => {:id => repository.id} }
-    render_views
-
-    it "return correct http response code" do
-      is_expected.to have_http_status 200
-    end
-
-    it "render view for specific repository" do
-      is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
-    end
-  end
-
-  describe "#show_output" do
-    let(:repository) { FactoryGirl.create(:embedded_ansible_configuration_script_source) }
-
-    subject { get :show, :params => {'id' => repository.id, 'display' => 'output'} }
-    render_views
-
-    it "return correct http response code" do
-      is_expected.to have_http_status 200
-    end
-
-    it "show repository last refresh output" do
-      is_expected.to render_template(:partial => "ansible_repository/_output")
-    end
-  end
-
-  describe "#show_list" do
-    let(:repository) { FactoryGirl.create(:embedded_ansible_configuration_script_source) }
-    subject { get :show_list, :params => {} }
-    render_views
-
-    it "return correct http response code" do
-      is_expected.to have_http_status 200
-    end
-
-    it "render view for list of repositories" do
-      is_expected.to render_template(:partial => "layouts/_gtl")
-    end
-
-    it 'renders the correct toolbar' do
-      expect(ApplicationHelper::Toolbar::AnsibleRepositoriesCenter).to receive(:definition).and_call_original
-      post :show_list
-    end
-  end
-
-  describe "#show_association" do
+  context 'with existing :embedded_ansible_configuration_script_source' do
     render_views
 
     before do
+      EvmSpecHelper.assign_embedded_ansible_role
+      login_as FactoryGirl.create(:user_admin)
+      # creating repository takes time, so we do it only once
       @repository = FactoryGirl.create(:embedded_ansible_configuration_script_source, :name => "Test Repository")
-      @playbook = FactoryGirl.create(:embedded_playbook, :name => 'playbook_name', :configuration_script_source => @repository)
     end
 
-    it "shows associated playbooks" do
-      get :show, :params => {:id => @repository.id, :display => 'playbooks'}
-      expect(response.status).to eq(200)
-      expect(response.body).to include("Test Repository (All Playbooks)")
+    describe "#show" do
+      subject { get :show, :params => {:id => @repository.id} }
+
+      it "render specific view" do
+        is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
+        is_expected.to have_http_status 200
+      end
+    end
+
+    describe "#show_output" do
+      subject { get :show, :params => {'id' => @repository.id, 'display' => 'output'} }
+
+      it "render specific view" do
+        is_expected.to render_template(:partial => "ansible_repository/_output")
+        is_expected.to have_http_status 200
+      end
+    end
+
+    describe "#show_list" do
+      subject { get :show_list, :params => {} }
+
+      it "render list of repositories with a toolbar" do
+        expect(ApplicationHelper::Toolbar::AnsibleRepositoriesCenter).to receive(:definition).and_call_original
+        is_expected.to render_template(:partial => "layouts/_gtl")
+        is_expected.to have_http_status 200
+      end
+    end
+
+    describe "#show_association" do
+      before do
+        @playbook = FactoryGirl.create(:embedded_playbook, :name => 'playbook_name', :configuration_script_source => @repository)
+      end
+
+      it "shows associated playbooks" do
+        get :show, :params => {:id => @repository.id, :display => 'playbooks'}
+        expect(response.body).to include("Test Repository (All Playbooks)")
+        expect(response.status).to eq(200)
+      end
     end
   end
 
