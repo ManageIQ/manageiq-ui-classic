@@ -39,33 +39,33 @@ describe VmCloudController do
 
           it "calls the appropriate method: '#{actual_method}' for action '#{actual_action}'" do
             expect(controller).to receive(actual_method)
-            get :x_button, :params => { :id => nil, :pressed => actual_action }
+
+            # Instead of calling the get below:
+            # get :x_button, :params => { :id => nil, :pressed => actual_action }
+            # we mock a bit and use `send`. This saves 10s of test run.
+            allow(controller).to receive(:performed?).and_return(true)
+            controller.instance_variable_set(:@_params, :id => nil, :pressed => actual_action)
+            controller.instance_variable_set(:@sb, {})
+            controller.send(:x_button)
           end
         end
-      end
-    end
-
-    context 'for an unknown action' do
-      render_views
-
-      it 'exception is raised for unknown action' do
-        EvmSpecHelper.create_guid_miq_server_zone
-        get :x_button, :params => { :id => nil, :pressed => 'random_dude', :format => :html }
-        expect(response).to render_template('layouts/exception')
-        expect(response.body).to include('Action not implemented')
       end
     end
   end
 
   context "with rendered views" do
-    before do
-      EvmSpecHelper.create_guid_miq_server_zone
-      get :explorer
-    end
-
     render_views
 
+    context 'for an unknown action' do
+      it 'exception is raised for unknown action' do
+        get :x_button, :params => { :id => nil, :pressed => 'random_dude', :format => :html }
+        expect(response).to render_template('layouts/exception')
+        expect(response.body).to include('Action not implemented')
+      end
+    end
+
     it 'can render the explorer' do
+      get :explorer
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
     end
@@ -174,6 +174,10 @@ describe VmCloudController do
     end
 
     context "skip or drop breadcrumb" do
+      before do
+        get :explorer
+      end
+
       subject { controller.instance_variable_get(:@breadcrumbs) }
 
       it 'skips dropping a breadcrumb when a button action is executed' do
