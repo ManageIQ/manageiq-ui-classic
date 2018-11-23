@@ -15,7 +15,11 @@ describe RestfulRedirectController do
     let(:req) { FactoryGirl.create(:miq_provision_request, :requester => user, :source => template) }
 
     before do
-      MiqDialog.seed
+      # Load just one dialog instead of calling `MiqDialog.seed`
+      MiqDialog.sync_from_file(
+        Rails.root.join('product', 'dialogs', 'miq_dialogs', 'miq_provision_dialogs.yaml').to_s,
+        Rails.root.join('product', 'dialogs', 'miq_dialogs')
+      )
     end
 
     it 'redirects' do
