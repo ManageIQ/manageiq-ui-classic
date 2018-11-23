@@ -16,8 +16,11 @@ module EmsCommonHelper
       :model  => _(table_name.humanize),
       :models => _(table_name.humanize.pluralize),
     }
-    msg = n_("'%<task>s' successfully initiated for %<model>s",
-             "'%<task>s' successfully initiated for %<models>s", emss.length) % msg_params
+    msg = if emss.length == 1
+            "'%{task}' successfully initiated for %{model}" % msg_params
+          else
+            "'%{task}' successfully initiated for %{models}" % msg_params
+          end
     audit = {
       :userid       => session[:userid],
       :event        => "#{table_name}_#{task}",
