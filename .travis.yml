@@ -6,6 +6,7 @@ sudo: false
 cache:
   bundler: true
   yarn: true
+  timeout: 600
 addons:
   postgresql: '9.5'
 env:
