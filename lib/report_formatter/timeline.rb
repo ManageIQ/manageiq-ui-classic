@@ -120,11 +120,11 @@ module ReportFormatter
                         rec[:container_node_name]
                       end
           end
-          e_title ||= ems ? ems.name : "No VM, Host, or MS"
         else
           e_title = rec[:name] ? rec[:name] : row[mri.col_order.first].to_s
         end
       end
+      e_title ||= ems ? ems.name : "No VM, Host, or MS"
 
       # manipulating column order to display timestamp at the end of the bubble.
       field = mri.timeline[:field].split("-")
