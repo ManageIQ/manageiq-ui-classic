@@ -39,9 +39,9 @@ module ReportController::Schedules
     @sortdir = session[:schedule_sortdir].nil? ? "ASC" : session[:schedule_sortdir]
 
     if super_admin_user? # Super admins see all user's schedules
-      @view, @pages = get_view(MiqSchedule, :named_scope => [[:with_towhat, "MiqReport"]]) # Get the records (into a view) and the paginator
+      @view, @pages = get_view(MiqSchedule, :named_scope => [[:with_resource_type, "MiqReport"]]) # Get the records (into a view) and the paginator
     else
-      @view, @pages = get_view(MiqSchedule, :named_scope => [[:with_towhat, "MiqReport"], [:with_userid, session[:userid]]]) # Get the records (into a view) and the paginator
+      @view, @pages = get_view(MiqSchedule, :named_scope => [[:with_resource_type, "MiqReport"], [:with_userid, session[:userid]]]) # Get the records (into a view) and the paginator
     end
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
@@ -55,9 +55,9 @@ module ReportController::Schedules
 
   def schedule_new
     assert_privileges("miq_report_schedule_add")
-    @schedule        = MiqSchedule.new(:userid => session[:userid])
-    @in_a_form       = true
-    @schedule.towhat = "MiqReport"
+    @schedule               = MiqSchedule.new(:userid => session[:userid])
+    @in_a_form              = true
+    @schedule.resource_type = "MiqReport"
     if @sb[:tree_typ] == "reports"
       exp                   = {}
       exp["="]              = {"field" => "MiqReport-id", "value" => @sb[:miq_report_id]}
@@ -439,7 +439,7 @@ module ReportController::Schedules
     schedule.name = @edit[:new][:name]
     schedule.description = @edit[:new][:description]
     schedule.enabled = @edit[:new][:enabled]
-    schedule.towhat = "MiqReport" # Default schedules apply to MiqReport model for now
+    schedule.resource_type = "MiqReport" # Default schedules apply to MiqReport model for now
 
     email_url_prefix = url_for_only_path(:controller => "report", :action => "show_saved") + "/"
     schedule_options = {

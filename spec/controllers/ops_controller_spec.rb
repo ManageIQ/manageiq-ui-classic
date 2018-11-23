@@ -164,12 +164,12 @@ describe OpsController do
       session[:settings] = {:default_search => ''}
 
       miq_schedule = FactoryGirl.create(:miq_schedule,
-                                        :name        => "test_db_schedule",
-                                        :description => "test_db_schedule_desc",
-                                        :towhat      => "DatabaseBackup",
-                                        :run_at      => {:start_time => "2015-04-19 00:00:00 UTC",
-                                                         :tz         => "UTC",
-                                                         :interval   => {:unit => "once", :value => ""}})
+                                        :name          => "test_db_schedule",
+                                        :description   => "test_db_schedule_desc",
+                                        :resource_type => "DatabaseBackup",
+                                        :run_at        => {:start_time => "2015-04-19 00:00:00 UTC",
+                                                           :tz         => "UTC",
+                                                           :interval   => {:unit => "once", :value => ""}})
       post :db_backup, :params => {
         :backup_schedule => miq_schedule.id,
         :uri             => "nfs://test_location",

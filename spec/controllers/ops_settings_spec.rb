@@ -85,7 +85,7 @@ describe OpsController do
       before do
         EvmSpecHelper.create_guid_miq_server_zone
         expect(controller).to receive(:render)
-        @schedule = FactoryGirl.create(:miq_schedule, :userid => user.userid, :towhat => "Vm")
+        @schedule = FactoryGirl.create(:miq_schedule, :userid => user.userid, :resource_type => "Vm")
         @params = {
           :action      => "schedule_edit",
           :button      => "add",
@@ -119,7 +119,7 @@ describe OpsController do
         @params[:id] = @schedule.id
         @params[:name] = "schedule01"
         controller.instance_variable_set(:@_params, @params)
-        FactoryGirl.create(:miq_schedule, :name => @params[:name], :userid => user.userid, :towhat => "Vm")
+        FactoryGirl.create(:miq_schedule, :name => @params[:name], :userid => user.userid, :resource_type => "Vm")
         controller.send(:schedule_edit)
         expect(controller.send(:flash_errors?)).to be_truthy
         expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")

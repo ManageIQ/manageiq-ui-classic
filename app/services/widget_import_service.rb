@@ -99,8 +99,8 @@ class WidgetImportService
     return if schedule_contents.blank?
 
     new_or_existing_schedule = MiqSchedule.where(
-      :name   => schedule_contents["name"],
-      :towhat => schedule_contents["towhat"]
+      :name          => schedule_contents["name"],
+      :resource_type => schedule_contents["resource_type"]
     ).first_or_initialize
     new_or_existing_schedule.update_attributes(schedule_contents) if new_or_existing_schedule.new_record?
 

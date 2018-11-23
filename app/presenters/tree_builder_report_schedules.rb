@@ -25,9 +25,9 @@ class TreeBuilderReportSchedules < TreeBuilder
   def x_get_tree_roots(count_only, _options)
     objects = if User.current_user.current_group.miq_user_role.name.split('-').last == 'super_administrator'
                 # Super admins see all report schedules
-                MiqSchedule.where(:towhat => 'MiqReport')
+                MiqSchedule.where(:resource_type => 'MiqReport')
               else
-                MiqSchedule.where(:towhat => 'MiqReport', :userid => User.current_user.userid)
+                MiqSchedule.where(:resource_type => 'MiqReport', :userid => User.current_user.userid)
               end
     count_only_or_objects(count_only, objects, 'name')
   end

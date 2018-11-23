@@ -836,9 +836,9 @@ module OpsController::Diagnostics
   def build_backup_schedule_options_for_select
     @backup_schedules = {}
     database_details
-    miq_schedules = MiqSchedule.where(:towhat => 'DatabaseBackup', :adhoc => nil)
+    miq_schedules = MiqSchedule.where(:resource_type => 'DatabaseBackup', :adhoc => nil)
     miq_schedules.sort_by { |s| s.name.downcase }.each do |s|
-      @backup_schedules[s.id] = s.name if s.towhat == "DatabaseBackup"
+      @backup_schedules[s.id] = s.name if s.resource_type == "DatabaseBackup"
     end
   end
 

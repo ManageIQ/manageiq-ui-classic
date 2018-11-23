@@ -14,14 +14,14 @@
       .col-md-10
         %p.form-control-static
           - if @selected_schedule.sched_action[:method] && @selected_schedule.sched_action[:method] == "check_compliance"
-            = h(ui_lookup(:model => @selected_schedule.towhat))
+            = h(ui_lookup(:model => @selected_schedule.resource_type))
             = _("Compliance Check")
           - elsif @selected_schedule.sched_action[:method] && @selected_schedule.sched_action[:method] == "db_backup"
             = _("Database Backup")
           - elsif @selected_schedule.sched_action[:method] && @selected_schedule.sched_action[:method] == "automation_request"
             = _("Automate Task")
           - else
-            = h(ui_lookup(:model => @selected_schedule.towhat))
+            = h(ui_lookup(:model => @selected_schedule.resource_type))
             = _("Analysis")
 
     - unless %w(automation_request db_backup).include?(@selected_schedule.sched_action[:method])
