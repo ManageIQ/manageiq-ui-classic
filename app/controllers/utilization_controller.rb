@@ -47,7 +47,7 @@ class UtilizationController < ApplicationController
         @sb[:options][:time_profile] = params[:details_time_profile].blank? ? nil : params[:details_time_profile].to_i if params.key?(:details_time_profile)
         @sb[:options][:time_profile] = params[:report_time_profile].blank? ? nil : params[:report_time_profile].to_i if params.key?(:report_time_profile)
         @sb[:options][:time_profile] = params[:summ_time_profile].blank? ? nil : params[:summ_time_profile].to_i if params.key?(:summ_time_profile)
-        tp = TimeProfile.find(@sb[:options][:time_profile]) unless @sb[:options][:time_profile].blank?
+        tp = TimeProfile.find(@sb[:options][:time_profile]) if @sb[:options][:time_profile].present?
         @sb[:options][:time_profile_tz] = @sb[:options][:time_profile].blank? ? nil : tp.tz
         @sb[:options][:time_profile_days] = @sb[:options][:time_profile].blank? ? nil : tp.days
       end
@@ -163,10 +163,10 @@ class UtilizationController < ApplicationController
       @sb[:options][:record_id] = @record.id
     end
     trenddate = edate - @sb[:options][:days].to_i.days + 1.hour # Get trend starting date
-    sdate = sdate > trenddate ? sdate : trenddate                   # Use trend date, unless earlier than first date
-    if @sb[:options][:chart_date]                            # Clear chosen chart date if out of trend range
+    sdate = sdate > trenddate ? sdate : trenddate               # Use trend date, unless earlier than first date
+    if @sb[:options][:chart_date]                               # Clear chosen chart date if out of trend range
       cdate = create_time_in_tz(@sb[:options][:chart_date], tz) # Get chart date at midnight in time zone
-      if (cdate < sdate || cdate > edate) || # Reset if chart date is before start date or after end date
+      if (cdate < sdate || cdate > edate) ||                    # Reset if chart date is before start date or after end date
          (@sb[:options][:time_profile] && !@sb[:options][:time_profile_days].include?(cdate.wday))
         @sb[:options][:chart_date] = nil
       end
@@ -195,7 +195,8 @@ class UtilizationController < ApplicationController
     @sb[:options][:chart_type] = :summary
   end
 
-  def replace_right_cell(_nodetype) # replace_trees can be an array of tree symbols to be replaced
+  # replace_trees can be an array of tree symbols to be replaced
+  def replace_right_cell(_nodetype)
     # Get the tags for this node for the Classification pulldown
     @sb[:tags] = nil unless params[:miq_date_1] || params[:miq_date_2] # Clear tags unless just changing date
     unless @nodetype == "h" || @nodetype == "s" || params[:miq_date_1] || params[:miq_date_2] # Get the tags for the pulldown, unless host, storage, or just changing the date
@@ -236,10 +237,10 @@ class UtilizationController < ApplicationController
   # Create an array of hashes from the Utilization summary report tab information
   def summ_hashes
     a = []
-    @sb[:summary][:info].each { |r| a.push("section" => _("Basic Info"), "item" => r[0], "value" => r[1]) } if @sb[:summary][:info]
-    @sb[:summary][:cpu].each { |r| a.push("section" => _("CPU"), "item" => r[0], "value" => r[1]) } if @sb[:summary][:cpu]
-    @sb[:summary][:memory].each { |r| a.push("section" => _("Memory"), "item" => r[0], "value" => r[1]) } if @sb[:summary][:memory]
-    @sb[:summary][:storage].each { |r| a.push("section" => _("Disk"), "item" => r[0], "value" => r[1]) } if @sb[:summary][:storage]
+    @sb[:summary][:info]&.each { |r| a.push("section" => _("Basic Info"), "item" => r[0], "value" => r[1]) }
+    @sb[:summary][:cpu]&.each { |r| a.push("section" => _("CPU"), "item" => r[0], "value" => r[1]) }
+    @sb[:summary][:memory]&.each { |r| a.push("section" => _("Memory"), "item" => r[0], "value" => r[1]) }
+    @sb[:summary][:storage]&.each { |r| a.push("section" => _("Disk"), "item" => r[0], "value" => r[1]) }
     a
   end
 end
