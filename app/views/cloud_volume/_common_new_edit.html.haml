@@ -7,7 +7,7 @@
             "ng-options"  => "mgr.id as mgr.name for mgr in vm.storageManagers",
             "ng-change"   => "vm.storageManagerChanged(vm.cloudVolumeModel.storage_manager_id)",
             "required"    => "",
-            "disabled"    => !@storage_manager.nil? || !@volume.id.nil?,
+            "disabled"    => @storage_manager.present? || @volume.try(:id).present?,
             :checkchange  => true,
             "miq-select"  => true}
       %option{"value" => "", "disabled" => ""}
