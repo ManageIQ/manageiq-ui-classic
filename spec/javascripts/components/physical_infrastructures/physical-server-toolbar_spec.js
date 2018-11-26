@@ -1,15 +1,13 @@
 describe('physical-server-toolbar', function() {
-
   describe('physicalServerToolbar on show page', function () {
-
     beforeEach(function() {
       ManageIQ.record.recordId = 1;
-      jasmine.spyOnFetch();
+      spyOnFetch();
       jasmine.sendToolbarAPIAction('power_on', 'physical_servers');
     });
 
     it('calls API.post with the appropriate URL', function () {
-      expect(window.fetch).toHaveBeenCalledWith(
+      expectFetch().toHaveBeenCalledWith(
         '/api/physical_servers',
         {
           method: 'POST',
@@ -26,15 +24,14 @@ describe('physical-server-toolbar', function() {
   });
 
   describe('physicalServerToolbar on show list page', function () {
-
     beforeEach(function () {
       ManageIQ.gridChecks = [1,2];
-      jasmine.spyOnFetch();
+      spyOnFetch();
       jasmine.sendToolbarAPIAction('blink_loc_led', 'physical_servers');
     });
 
     it('calls API.post with the appropriate URL', function () {
-      expect(window.fetch).toHaveBeenCalledWith(
+      expectFetch().toHaveBeenCalledWith(
         '/api/physical_servers',
         {
           method: 'POST',
