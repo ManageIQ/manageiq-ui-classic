@@ -7,7 +7,8 @@ describe('ansible-raw-stdout', function() {
     $templateCache.put('/static/ansible-raw-stdout.html.haml', '<div></div>');
 
     $scope = $rootScope.$new();
-    element = angular.element('<ansible-raw-stdout task-id="123"></ansible-raw-stdout>');
+    API.mock.ignore('/api/tasks/123');
+    var element = angular.element('<ansible-raw-stdout task-id="123"></ansible-raw-stdout>');
 
     compile = function() {
       element = $compile(element)($scope);
