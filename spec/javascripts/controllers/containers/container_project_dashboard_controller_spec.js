@@ -34,9 +34,6 @@ describe('containerProjectDashboardController gets data for one project and', fu
   });
 
   describe('data loads successfully', function() {
-    it('in single provider', function() {
-    });
-
     it('in utilization charts', function() {
       expect($scope.cpuUsageData).toBeDefined();
       expect($scope.memoryUsageData).toBeDefined();

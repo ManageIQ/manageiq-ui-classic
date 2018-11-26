@@ -46,11 +46,14 @@ describe('toolbarController', function () {
       expect(_.filter(allItems, {enabled: true}).length >= 3).toBeTruthy();
      });
 
-     it('Each dataView should have url set', function() {
+     it('Each dataView should have url set automatically', function() {
+       // there's at least one item in $controller.dataViews which means there's at least one object
+       // that has id that starts at view_ in toolbar_middleware_server_list.json
+       expect($controller.dataViews.length).not.toBe(0);
        $controller.dataViews.forEach(function(dataView) {
-         expect(dataView.url !== '').toBeTruthy();
+         expect(dataView.url).toBeTruthy();
        })
-     })
+     });
 
      it('Each button should have eventFunction set up', function() {
       _.chain($controller.toolbarItems)
