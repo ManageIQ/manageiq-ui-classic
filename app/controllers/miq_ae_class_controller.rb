@@ -1327,7 +1327,7 @@ class MiqAeClassController < ApplicationController
       add_ae_ns.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
-      javascript_flash
+      javascript_flash(:spinner_off => true)
     end
   end
 
