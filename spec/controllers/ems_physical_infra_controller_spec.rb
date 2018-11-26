@@ -33,7 +33,10 @@ describe EmsPhysicalInfraController do
 
     context "display=timeline" do
       let(:url_params) { {:display => 'timeline'} }
-      it { is_expected.to have_http_status 200 }
+      it do
+        bypass_rescue
+        is_expected.to have_http_status 200
+      end
     end
 
     context "render show dashboard partial" do

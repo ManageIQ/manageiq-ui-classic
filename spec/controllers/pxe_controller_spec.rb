@@ -80,7 +80,10 @@ describe PxeController do
     subject { post :tree_select, :params => {:id => 'root'} }
 
     render_views
-    it { is_expected.to have_http_status 200 }
+    it do
+      bypass_rescue
+      is_expected.to have_http_status 200
+    end
   end
 
   describe 'replace_right_cell' do

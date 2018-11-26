@@ -9,12 +9,9 @@ describe AnsiblePlaybookController do
     subject { get :show, :params => {:id => playbook.id} }
     render_views
 
-    it "returns status 200" do
-      is_expected.to have_http_status 200
-    end
-
     it "renders correct template" do
       is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
+      is_expected.to have_http_status 200
     end
 
     it "displays tags" do
@@ -27,12 +24,9 @@ describe AnsiblePlaybookController do
     subject { get :show_list }
     render_views
 
-    it "returns status 200" do
-      is_expected.to have_http_status 200
-    end
-
     it "renders correct template" do
       is_expected.to render_template(:partial => "layouts/_gtl")
+      is_expected.to have_http_status 200
     end
 
     it 'renders the correct toolbar' do
