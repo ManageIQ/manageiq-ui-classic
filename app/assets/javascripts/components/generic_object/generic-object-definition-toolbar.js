@@ -17,13 +17,12 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
   toolbar.$onInit = function() {
     subscription = listenToRx(function(event) {
       toolbar.action = event.type;
-      toolbar.entity = event.entity;
 
-      if (toolbar.action) {
+      if (event.entity && (toolbar.recordId || ManageIQ.gridChecks.length > 0)) {
+        toolbar.entity = event.entity;
+
         if (toolbar.recordId) {
           toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [toolbar.recordId]);
-        } else if (ManageIQ.record.recordId) {
-          toolbar.genericObjectDefinitions = _.union(toolbar.genericObjectDefinitions, [ManageIQ.record.recordId]);
         } else {
           toolbar.genericObjectDefinitions = ManageIQ.gridChecks;
         }
@@ -72,13 +71,8 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
   }
 
   function postAction(response) {
-    var entityName = toolbar.entityName || response.name;
-    var saveMsg;
-    if (entityName) {
-      saveMsg = sprintf(__('%s:"%s" was successfully deleted'), toolbar.entity, entityName);
-    } else {
-      saveMsg = sprintf(__('%s was successfully deleted'), toolbar.entity);
-    }
+    var entityName = response.name;
+    var saveMsg = sprintf(__('%s:"%s" was successfully deleted'), toolbar.entity, entityName);
     if (toolbar.redirectUrl) {
       miqService.redirectBack(saveMsg, 'success', toolbar.redirectUrl);
     } else {
