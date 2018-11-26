@@ -16,10 +16,44 @@ export function miqFetch(options, data = null) {
 miqFetch.fetch = window.fetch;
 
 export function mock(options) {
+  mock.matches = [];
+
   miqFetch.fetch = function(url, opts) {
+    if (mock.matches[url]) {
+      return mock.matches[url];
+    }
+
     throw `fetch mock: Unexpected fetch of ${url}`;
   };
+
+  return miqFetch;
 }
+
+mock.handle = function(url, promise) {
+  mock.matches[url] = promise;
+  return mock;
+}
+
+mock.ok = function(url, data) {
+  // resolves with data
+  return mock.handle(url, Promise.resolve({
+    status: 200,
+    data,
+  }));
+};
+
+mock.err = function(url, data) {
+  // rejects with data
+  return mock.handle(url, Promise.reject({
+    status: 400,
+    data,
+  }));
+};
+
+mock.ignore = function(url) {
+  // never resolves or rejects
+  return mock.handle(url, new Promise(() => null));
+};
 
 function processOptions(options) {
   const o = Object.assign({}, options);
