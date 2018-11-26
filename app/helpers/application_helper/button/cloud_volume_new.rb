@@ -12,6 +12,9 @@ class ApplicationHelper::Button::CloudVolumeNew < ApplicationHelper::Button::But
 
   # disable button if no active providers support create action
   def disabled?
-    ExtManagementSystem.all.none? { |ems| CloudVolume.class_by_ems(ems).supports_create? }
+    ExtManagementSystem.none? do |ems|
+      Module.const_defined?("#{ems.class}::CloudVolume") &&
+        ems.class::CloudVolume.supports_create?
+    end
   end
 end

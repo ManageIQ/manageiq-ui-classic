@@ -185,7 +185,6 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_new")
     assert_privileges("cloud_tenant_show_list")
 
-    @volume = CloudVolume.new
     @in_a_form = true
     if params[:storage_manager_id]
       @storage_manager = find_record_with_rbac(ExtManagementSystem, params[:storage_manager_id])
@@ -223,7 +222,7 @@ class CloudVolumeController < ApplicationController
           :name => _("Add New Cloud Volume"),
           :url  => "/cloud_volume/new"
         )
-        javascript_flash
+        javascript_flash(:spinner_off => true)
       end
 
     when "validate"
