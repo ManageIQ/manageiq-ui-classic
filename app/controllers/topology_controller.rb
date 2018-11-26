@@ -30,7 +30,7 @@ class TopologyController < ApplicationController
   end
 
   def index
-    redirect_to :action => 'show'
+    redirect_to(:action => 'show')
   end
 
   def data
