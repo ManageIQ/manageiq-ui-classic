@@ -24,7 +24,7 @@ class ServiceForm extends Component {
     const cancelUrl = `/service/service_edit/${serviceFormId}?button=cancel`;
     const submitUrl = `/service/service_edit/${serviceFormId}?button=save`;
     return (
-      <Grid fluid>
+      <Grid fluid style={{ paddingTop: 20 }}>
         <MiqFormRenderer
           initialValues={this.state.initialValues}
           schema={this.state.schema}
