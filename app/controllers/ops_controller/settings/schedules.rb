@@ -120,7 +120,7 @@ module OpsController::Settings::Schedules
     schedule = MiqSchedule.find_by_id(params[:id])
 
     if schedule_check_compliance?(schedule)
-      action_type = schedule.towhat.underscore + "_" + schedule.sched_action[:method]
+      action_type = schedule.resource_type.underscore + "_" + schedule.sched_action[:method]
     elsif schedule_db_backup?(schedule)
       require 'uri'
       action_type          = schedule.sched_action[:method]
@@ -140,10 +140,10 @@ module OpsController::Settings::Schedules
       action_type = schedule.sched_action[:method]
       automate_request = fetch_automate_request_vars(schedule)
     else
-      if schedule.towhat.nil?
+      if schedule.resource_type.nil?
         action_type = "vm"
       else
-        action_type ||= schedule.towhat == "EmsCluster" ? "emscluster" : schedule.towhat.underscore
+        action_type ||= schedule.resource_type == "EmsCluster" ? "emscluster" : schedule.resource_type.underscore
       end
     end
 
@@ -285,7 +285,7 @@ module OpsController::Settings::Schedules
     schedule.sched_action && schedule.sched_action[:method] && schedule.sched_action[:method] == "automation_request"
   end
 
-  def schedule_towhat_from_params_action
+  def schedule_resource_type_from_params_action
     case params[:action_typ]
     when "db_backup"          then "DatabaseBackup"
     when /check_compliance\z/ then (params[:action_typ].split("_") - params[:action_typ].split("_").last(2)).join("_")
@@ -467,7 +467,7 @@ module OpsController::Settings::Schedules
   end
 
   def schedule_set_record_vars(schedule)
-    schedule.towhat       = schedule_towhat_from_params_action
+    schedule.resource_type = schedule_resource_type_from_params_action
     schedule.sched_action = {:method => schedule_method_from_params_action}
 
     if params[:action_typ] == "db_backup"

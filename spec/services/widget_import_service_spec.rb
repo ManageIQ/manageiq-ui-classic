@@ -69,10 +69,10 @@ describe WidgetImportService do
 
     let(:miq_schedule_contents) do
       {
-        "name"        => "schedule name",
-        "description" => "new schedule description",
-        "towhat"      => "MiqWidget",
-        "run_at"      => {
+        "name"          => "schedule name",
+        "description"   => "new schedule description",
+        "resource_type" => "MiqWidget",
+        "run_at"        => {
           :start_time => Time.now,
           :tz         => "UTC",
           :interval   => {
@@ -255,10 +255,10 @@ describe WidgetImportService do
         context "when the schedule does exist" do
           before do
             MiqSchedule.create!(
-              :name        => "schedule name",
-              :description => "old schedule description",
-              :towhat      => "MiqWidget",
-              :run_at      => {
+              :name          => "schedule name",
+              :description   => "old schedule description",
+              :resource_type => "MiqWidget",
+              :run_at        => {
                 :start_time => Time.now,
                 :tz         => "UTC",
                 :interval   => {:unit => "daily", :value => "6"}

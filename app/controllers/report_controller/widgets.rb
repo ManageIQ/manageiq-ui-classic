@@ -615,12 +615,12 @@ module ReportController::Widgets
     end
 
     # schedule settings
-    @edit[:schedule].name         = widget.title
-    @edit[:schedule].description  = widget.description
-    @edit[:schedule].towhat       = "MiqWidget"
-    @edit[:schedule].sched_action = {:method => "generate_widget"}
-    @edit[:schedule].run_at = @edit[:new][:timer].flush_to_miq_schedule(@edit[:schedule].run_at, @edit[:tz])
-    widget.miq_schedule = @edit[:schedule]
+    @edit[:schedule].name          = widget.title
+    @edit[:schedule].description   = widget.description
+    @edit[:schedule].resource_type = "MiqWidget"
+    @edit[:schedule].sched_action  = {:method => "generate_widget"}
+    @edit[:schedule].run_at        = @edit[:new][:timer].flush_to_miq_schedule(@edit[:schedule].run_at, @edit[:tz])
+    widget.miq_schedule            = @edit[:schedule]
   end
 
   # Validate widget entries before updating record

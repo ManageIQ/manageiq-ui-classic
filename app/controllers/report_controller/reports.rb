@@ -161,7 +161,7 @@ module ReportController::Reports
     end
 
     if @sb[:active_tab] == "report_info"
-      schedules = MiqSchedule.where(:towhat => "MiqReport")
+      schedules = MiqSchedule.where(:resource_type => "MiqReport")
       schedules = schedules.where(:userid => current_userid) unless super_admin_user?
       @schedules = schedules.select { |s| s.filter.exp["="]["value"].to_i == @miq_report.id.to_i }.sort_by(&:name)
 
