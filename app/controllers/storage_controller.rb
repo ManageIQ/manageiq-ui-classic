@@ -57,8 +57,8 @@ class StorageController < ApplicationController
         action               = url[4]
       end
 
-      redirect_to :controller => redirect_controller,
-                  :action     => action
+      redirect_to(:controller => redirect_controller,
+                  :action     => action)
       return
     end
 
@@ -266,9 +266,6 @@ class StorageController < ApplicationController
       return
     end
 
-    if @record.class.base_model.to_s == "Storage"
-      rec_cls = @record.class.base_model.to_s.underscore
-    end
     return unless @display == 'main'
     @showtype = "main"
   end
@@ -320,8 +317,7 @@ class StorageController < ApplicationController
      {:role     => "storage_pod",
       :role_any => true,
       :name     => :storage_pod,
-      :title    => _("Datastore Clusters")},
-    ].map do |hsh|
+      :title    => _("Datastore Clusters")}].map do |hsh|
       ApplicationController::Feature.new_with_hash(hsh)
     end
   end
@@ -335,7 +331,7 @@ class StorageController < ApplicationController
     end
     set_right_cell_text
 
-    if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
+    if @edit&.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
       x_history_add_item(:id     => x_node,
                          :qs_exp => @edit[:adv_search_applied][:qs_exp],
                          :text   => @right_cell_text)
