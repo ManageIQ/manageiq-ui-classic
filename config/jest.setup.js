@@ -11,8 +11,9 @@ require('../app/assets/javascripts/miq_application');
 require('../app/assets/javascripts/miq_api');
 require('../app/assets/javascripts/miq_angular_application');
 
-import { API } from '../app/javascript/http_api';
+import { API, mock } from '../app/javascript/http_api';
 window.vanillaJsAPI = API;
+mock();
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
 ManageIQ.angular.rxSubject = rxSubject;

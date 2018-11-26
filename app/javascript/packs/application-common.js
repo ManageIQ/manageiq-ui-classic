@@ -9,7 +9,7 @@
 import 'proxy-polyfill';
 import { Spinner } from 'spin.js';
 import 'spin.js/spin.css';
-import { API, http } from '../http_api';
+import { API, http, mock } from '../http_api';
 
 import * as newRegistry from '../miq-component/registry.ts';
 import reactBlueprint from '../miq-component/react-blueprint.tsx';
@@ -48,6 +48,7 @@ window.listenToRx = listenToRx;
 window.API = API;
 window.vanillaJsAPI = API;
 window.http = http;
+window.API.mock = mock;
 
 // for Automate > Simulate
 require('xml_display/XMLDisplay.js');

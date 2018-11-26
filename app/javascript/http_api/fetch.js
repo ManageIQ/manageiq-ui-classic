@@ -8,8 +8,17 @@ export function miqFetch(options, data = null) {
     body: processData(data),
   };
 
-  return fetch(options.url, fetchOpts)
+  return miqFetch.fetch(options.url, fetchOpts)
     .then(responseAndError(options));
+}
+
+// allow mocking
+miqFetch.fetch = window.fetch;
+
+export function mock(options) {
+  miqFetch.fetch = function(url, opts) {
+    throw `fetch mock: Unexpected fetch of ${url}`;
+  };
 }
 
 function processOptions(options) {
