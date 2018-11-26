@@ -9,13 +9,13 @@
 #
 
 # Report title
-title: Images
+title: Templates
 
 # Menu name
-name: Images
+name: Templates
 
 # Main DB table report is based on
-db: MiqTemplate
+db: TemplateInfra
 
 # Columns to fetch from the main table
 cols:
