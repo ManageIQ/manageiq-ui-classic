@@ -3,6 +3,11 @@ namespace :update do
     asset_engines.each do |engine|
       Dir.chdir engine.path do
         next unless File.file? 'package.json'
+
+        if ENV['TEST_SUITE'] == 'spec'
+          warn "Skipping yarn install for #{engine.name} on travis #{ENV['TEST_SUITE']}"
+          next
+        end
         system("yarn") || abort("\n== yarn failed in #{engine.path} ==")
       end
     end
