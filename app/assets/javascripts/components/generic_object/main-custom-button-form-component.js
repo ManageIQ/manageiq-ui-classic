@@ -36,7 +36,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       resource_action: {},
       visibility: {},
       dialog_id: undefined,
-      open_url: false,
       display_for: 'single',
       submit_how: 'one',
       ae_instance: 'Request',
@@ -144,7 +143,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       button_color: vm.customButtonModel.button_color,
       button_type: vm.customButtonModel.button_type,
       display: vm.customButtonModel.display,
-      open_url: vm.customButtonModel.open_url,
       display_for: vm.customButtonModel.display_for,
       submit_how: vm.customButtonModel.submit_how,
     };
@@ -211,7 +209,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     vm.customButtonModel.button_color = response.options.button_color;
     vm.customButtonModel.button_type = response.options.button_type;
     vm.customButtonModel.display = response.options.display;
-    vm.customButtonModel.open_url = response.options.open_url;
     vm.customButtonModel.display_for = response.options.display_for;
     vm.customButtonModel.submit_how = response.options.submit_how;
 
