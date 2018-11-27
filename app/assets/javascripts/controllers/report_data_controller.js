@@ -201,7 +201,9 @@
   };
 
   ReportDataController.prototype.gtlSetOneRowActive = function(item, _event) {
-    this.gtlData.rows.map(function(row) { row.selected = false; });
+    this.gtlData.rows.map(function(row) {
+      row.selected = false;
+    });
     var selectedItem = _.find(this.gtlData.rows, {long_id: item.long_id});
     selectedItem.selected = true;
     this.$window.sendDataWithRx({rowSelect: selectedItem});

@@ -1064,11 +1064,11 @@ module ApplicationController::MiqRequestMethods
 
   def provisioning_report
     if request.parameters[:template_klass] == 'cloud' ||
-      %w(auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud).include?(request.parameters[:controller])
+       %w(auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud).include?(request.parameters[:controller])
       'ProvisionCloudTemplates.yaml'
     elsif request.parameters[:template_klass] == 'infra' ||
-      %w(ems_cluster ems_infra host resource_pool storage vm_infra)
-     'ProvisionInfraTemplates.yaml'
+          %w(ems_cluster ems_infra host resource_pool storage vm_infra).include?(request.parameters[:controller])
+      'ProvisionInfraTemplates.yaml'
     end
   end
 end
