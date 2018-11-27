@@ -13,6 +13,8 @@ describe('floatingIpFormController', function() {
 
     $scope = $rootScope.$new();
 
+    API.mock.ignore('/api/floating_ips/1000000000001?attributes=cloud_network,cloud_tenant,ext_management_system,network_port');
+
     vm = _$controller_('floatingIpFormController as vm', {
       $scope: $scope,
       miqService: miqService,
