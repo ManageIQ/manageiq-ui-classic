@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', '$scope', 'pglogicalReplicationFormId', 'miqService', function($http, $scope, pglogicalReplicationFormId, miqService) {
+ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', '$scope', 'pglogicalReplicationFormId', 'miqService', '$q', function($http, $scope, pglogicalReplicationFormId, miqService, $q) {
   var init = function() {
     $scope.pglogicalReplicationModel = {
       replication_type: 'none',
@@ -24,7 +24,11 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
   var pglogicalManageSubscriptionsButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
     var url = '/ops/pglogical_save_subscriptions/' + pglogicalReplicationFormId + '?button=' + buttonName;
-    miqService.miqAjaxButton(url, serializeFields);
+    return $q.when(miqJqueryRequest(url, {data: serializeFields, complete: true}))
+      .then(function() {
+        $scope.modelCopy = angular.copy( $scope.pglogicalReplicationModel );
+        $scope.angularForm.$setPristine();
+      });
   };
 
   $scope.resetClicked = function() {
