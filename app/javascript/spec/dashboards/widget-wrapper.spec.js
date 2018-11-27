@@ -9,20 +9,10 @@ describe('widget-wrapper', () => {
   beforeEach(module('ManageIQ'));
 
   beforeEach(inject((_$compile_, $rootScope, $templateCache, $http) => {
-    // FIXME: templateRequest is using $http to get the template, but angular-mocks prevents it
-    $templateCache.put('/static/dropdown-menu.html.haml', '<div></div>');
-
     $scope = $rootScope;
 
     $compile = _$compile_;
     spyOn($http, 'get').and.callFake((url) => {
-      if (url === '/static/dropdown-menu.html.haml') {
-        return Promise.resolve({
-          data: '<div></div>',
-          status: 200,
-          statusText: 'OK',
-        });
-      }
       return Promise.resolve({
         data: {
           content: '<div></div>',
