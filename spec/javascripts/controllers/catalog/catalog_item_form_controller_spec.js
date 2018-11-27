@@ -51,6 +51,14 @@ describe('catalogItemFormController', function() {
 
     spyOn(catalogItemDataFactory, 'getCatalogItemData').and.returnValue(Promise.resolve($scope.vm.catalogItemModel));
 
+    API.mock.ignore('/api/authentications');
+    API.mock.ignore('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending');
+    API.mock.ignore('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending');
+    API.mock.ignore('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending');
+    API.mock.ignore('/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name&filter[]=region_number=undefined&sort_by=name&sort_order=ascending');
+    API.mock.ignore('/api/service_catalogs/?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending');
+    API.mock.ignore('/api/service_dialogs/?expand=resources&attributes=id,label&sort_by=label&sort_order=ascending');
+
     $controller = _$controller_('catalogItemFormController', {
       $scope: $scope,
       currentRegion: currentRegion,
