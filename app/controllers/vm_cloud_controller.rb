@@ -21,7 +21,8 @@ class VmCloudController < ApplicationController
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Attach Cloud Volume to Instance \"%{instance_name}\"") % {:instance_name => @vm.name},
-      :url  => "/vm_cloud/attach")
+      :url  => "/vm_cloud/attach"
+    )
     @in_a_form = true
     @refresh_partial = "vm_common/attach"
   end
@@ -41,7 +42,8 @@ class VmCloudController < ApplicationController
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Detach Cloud Volume from Instance \"%{instance_name}\"") % {:instance_name => @vm.name},
-      :url  => "/vm_cloud/detach")
+      :url  => "/vm_cloud/detach"
+    )
     @in_a_form = true
     @refresh_partial = "vm_common/detach"
   end
@@ -53,9 +55,7 @@ class VmCloudController < ApplicationController
     @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {
-        :instance_name  => @vm.name
-      })
+      cancel_action(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
     when "attach"
       volume = find_record_with_rbac(CloudVolume, params[:volume_id])
       if volume.is_available?(:attach_volume)
@@ -107,9 +107,7 @@ class VmCloudController < ApplicationController
     @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {
-        :instance_name  => @vm.name
-      })
+      cancel_action(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
 
     when "detach"
       volume = find_record_with_rbac(CloudVolume, params[:volume_id])
@@ -180,22 +178,26 @@ class VmCloudController < ApplicationController
       ApplicationController::Feature.new_with_hash(
         :role  => "instances_accord",
         :name  => :instances,
-        :title => _("Instances by Provider")),
+        :title => _("Instances by Provider")
+      ),
 
       ApplicationController::Feature.new_with_hash(
         :role  => "images_accord",
         :name  => :images,
-        :title => _("Images by Provider")),
+        :title => _("Images by Provider")
+      ),
 
       ApplicationController::Feature.new_with_hash(
         :role  => "instances_filter_accord",
         :name  => :instances_filter,
-        :title => _("Instances"),),
+        :title => _("Instances")
+      ),
 
       ApplicationController::Feature.new_with_hash(
         :role  => "images_filter_accord",
         :name  => :images_filter,
-        :title => _("Images"),)
+        :title => _("Images")
+      )
     ]
   end
 
