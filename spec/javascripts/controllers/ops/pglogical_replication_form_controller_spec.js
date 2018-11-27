@@ -6,9 +6,9 @@ describe('pglogicalReplicationFormController', function() {
   beforeEach(inject(function($rootScope, _$controller_, _$httpBackend_, _miqService_) {
     miqService = _miqService_;
     spyOn(miqService, 'miqFlash');
-    spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
+    spyOn(window, "miqJqueryRequest");
     $scope = $rootScope.$new();
     $scope.pglogicalReplicationModel = {
       replication_type: 'none',
@@ -78,13 +78,13 @@ describe('pglogicalReplicationFormController', function() {
       expect(miqService.sparkleOn).toHaveBeenCalled();
     });
 
-    it('delegates to miqService.miqAjaxButton', function() {
+    it('delegates to miqJqueryRequest', function() {
       var submitContent = {
         replication_type: $scope.pglogicalReplicationModel.replication_type,
         subscriptions:    $scope.pglogicalReplicationModel.subscriptions,
         exclusion_list:   $scope.pglogicalReplicationModel.exclusion_list};
 
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/pglogical_save_subscriptions/new?button=save', submitContent);
+      expect(miqJqueryRequest).toHaveBeenCalledWith('/ops/pglogical_save_subscriptions/new?button=save', {data: submitContent, complete: true});
     });
   });
 });
