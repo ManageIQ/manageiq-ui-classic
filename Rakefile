@@ -35,23 +35,13 @@ if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../G
 end
 
 namespace :spec do
-  namespace :javascript do
-    desc "Setup environment for javascript specs"
-    task :setup
-  end
-
   desc "Run all javascript specs"
   task :javascript => ["app:test:initialize", :environment, "jasmine:ci"]
-
-  namespace :compile do
-    desc "Does nothing, needed by Travis"
-    task :setup
-  end
 
   desc "Try to compile assets"
   task :compile => ["app:assets:precompile"]
 
-  desc "run Jest tests"
+  desc "Run Jest tests"
   task :jest do
     system('yarn test')
     exit $CHILD_STATUS.exitstatus
@@ -65,11 +55,6 @@ namespace :spec do
       puts
       system('node --inspect-brk node_modules/.bin/jest --runInBand')
     end
-
-  end
-  namespace :jest do
-    desc "Does nothing, needed by Travis"
-    task :setup
   end
 end
 
