@@ -4,6 +4,16 @@ describe('eventNotifications', function() {
 
   beforeEach(module('miq.notifications'));
 
+  // must happen before eventNotifications service instantiation
+  beforeEach(function () {
+    API.mock.ignore('/api/notifications');
+    API.mock.ignore('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc&limit=100');
+
+    // uselessly adding origin, to fit the format returned by the API
+    API.mock.ignore(window.location.origin + '/api/notifications/1');
+    API.mock.ignore(window.location.origin + '/api/notifications/2');
+  });
+
   beforeEach(inject(function(eventNotifications, _$rootScope_) {
     testService = eventNotifications;
     $scope = _$rootScope_;
