@@ -14,6 +14,8 @@ describe('networkRouterController', function() {
       cloud_subnet_id: '',
     };
 
+    API.mock.ignore('/api/network_routers/1000000000001?attributes=name,admin_state_up,cloud_network_id,cloud_tenant.name,ext_management_system.id,ext_management_system.name,extra_attributes');
+
     vm = _$controller_('networkRouterFormController as vm', {
       $scope: $scope,
       miqService: miqService,
