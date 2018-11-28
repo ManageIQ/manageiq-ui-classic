@@ -31,14 +31,6 @@ window.miqDeferred = () => {
 // FIXME: don't mock PF functions
 $.fn.setupVerticalNavigation = () => {};
 
-require('../../../assets/javascripts/components/widget-chart');
-require('../../../assets/javascripts/components/widget-empty');
-require('../../../assets/javascripts/components/widget-error');
-require('../../../assets/javascripts/components/widget-footer');
-require('../../../assets/javascripts/components/widget-menu');
-require('../../../assets/javascripts/components/widget-report');
-require('../../../assets/javascripts/components/widget-rss');
-require('../../../assets/javascripts/components/widget-spinner');
-require('../../../assets/javascripts/components/widget-wrapper');
+require('../../angular/dashboard');
 
 export { module, inject };
