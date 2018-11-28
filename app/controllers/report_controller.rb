@@ -715,7 +715,7 @@ class ReportController < ApplicationController
             presenter[:miq_widget_dd_url] = 'report/widget_shortcut_dd_done'
             presenter[:init_dashboard] = true
           end
-          @right_cell_text = @widget.id ? _("Editing Widget \"%{name}\"") % {:name => @widget.name} : _("Adding a new Widget")
+          @right_cell_text = @widget.id ? _("Editing Widget \"%{title}\"") % {:title => @widget.title} : _("Adding a new Widget")
         end
       end
     elsif nodetype == "g"
