@@ -13,7 +13,7 @@ function miqRowClick(row_id, row_url, row_url_ajax) {
   }
 }
 
-function checkboxItemId($elem) {
+window.checkboxItemId  = function($elem) {
   var val = $elem.val();
   var name = $elem.attr('name');
 
@@ -25,7 +25,7 @@ function checkboxItemId($elem) {
 }
 
 // returns a list of checked row ids
-function miqGridGetCheckedRows(grid) {
+window.miqGridGetCheckedRows = function(grid) {
   grid = grid || 'list_grid';
   var crows = [];
 
@@ -70,7 +70,7 @@ function miqGridOnCheck(elem, button_div, grid) {
 }
 
 // Handle sort
-function miqGetSortUrl(col_id) {
+window.miqGetSortUrl = function(col_id) {
   var controller = null;
   var action = ManageIQ.actionUrl;
   var id = null;
