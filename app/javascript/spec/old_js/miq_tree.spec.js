@@ -1,9 +1,10 @@
 require('../helpers/set_fixtures_helper.js');
+require('../helpers/old_js_file_require_helper.js');
 
-describe('miq_tree', function() {
-  describe('miqInitTree', function () {
-    describe('post_check', function () {
-      it('checks child nodes', function () {
+describe('miq_tree', () => {
+  describe('miqInitTree', () => {
+    describe('post_check', () => {
+      it('checks child nodes', () => {
         $('body').append($('<miq-tree-view name="test"><div id="testbox" class="treeview"/></miq-tree-view>'));
 
         miqInitTree({tree_name: "test", tree_id: "testbox", post_check: true, hierarchical_check: true}, [

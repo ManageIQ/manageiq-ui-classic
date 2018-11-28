@@ -11,7 +11,7 @@ function miqTreeObject(tree) {
   }
 }
 
-function miqTreeFindNodeByKey(tree, key) {
+window.miqTreeFindNodeByKey = function(tree, key) {
   var tree = miqTreeObject(tree);
 
   if (!tree) {
@@ -457,7 +457,7 @@ function miqTreeClearState(tree) {
   }
 }
 
-function miqInitTree(options, tree) {
+window.miqInitTree = function(options, tree) {
   if (options.check_url) {
     ManageIQ.tree.checkUrl = options.check_url;
   }
