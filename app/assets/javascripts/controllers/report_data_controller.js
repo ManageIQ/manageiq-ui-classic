@@ -201,13 +201,16 @@
   };
 
   ReportDataController.prototype.gtlSetOneRowActive = function(item, _event) {
-    this.gtlData.rows.map(function(row) {
+    this.gtlData.rows.forEach(function(row) {
       row.selected = false;
     });
+
     var selectedItem = _.find(this.gtlData.rows, {long_id: item.long_id});
     selectedItem.selected = true;
+
     this.$window.sendDataWithRx({rowSelect: selectedItem});
-    ManageIQ.gridChecks =  [];
+
+    ManageIQ.gridChecks = [];
     ManageIQ.gridChecks.push(item.long_id);
   };
 
@@ -236,7 +239,11 @@
       sendDataWithRx({
         type: 'GTL_CLICKED',
         actionType: this.initObject.additionalOptions.custom_action.type,
-        payload: { item: item, action: this.initObject.additionalOptions.custom_action }});
+        payload: {
+          item: item,
+          action: this.initObject.additionalOptions.custom_action,
+        },
+      });
       return;
     }
 
