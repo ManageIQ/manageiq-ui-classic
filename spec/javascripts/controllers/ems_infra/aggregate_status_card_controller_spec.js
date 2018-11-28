@@ -91,13 +91,11 @@ describe('aggregateStatusCardController gets data and', function() {
         $http: $http,
       });
     });
-    it('in object statuses', function() {
-      var aggStatusData = $scope.vm.AggStatus;
-      for (var entity in aggStatusData) {
-        if (aggStatusData.hasOwnProperty(entity)) {
-          expect($scope.vm.AggStatus[entity].count).toBeGreaterThan(0);
-        }
-      }
+    it('in object statuses', function(done) {
+      setTimeout(function() {
+        expect($scope.vm.AggStatus.count).toBeGreaterThan(0);
+        done();
+      });
     });
   });
 });
