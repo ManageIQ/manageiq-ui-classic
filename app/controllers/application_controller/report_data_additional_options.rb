@@ -24,6 +24,8 @@ class ApplicationController
     :supported_features_filter,
     :clickable,
     :no_checkboxes,
+    :report_name,
+    :custom_action
   ) do
     def self.from_options(options)
       additional_options = new
@@ -38,6 +40,8 @@ class ApplicationController
       additional_options.parent_method = options[:parent_method]
       additional_options.supported_features_filter = options[:supported_features_filter]
       additional_options.clickable = options[:clickable]
+      additional_options.report_name = options[:report_name]
+      additional_options.custom_action = options[:custom_action]
       additional_options
     end
 
