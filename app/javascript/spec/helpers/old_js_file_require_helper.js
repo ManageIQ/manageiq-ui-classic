@@ -7,3 +7,4 @@ require('../../../assets/javascripts/resizable_sidebar.js');
 require('../../../assets/javascripts/miq_global.js');
 require('../../../assets/javascripts/miq_grid.js');
 require('../../../assets/javascripts/miq_tree.js');
+require('../../../assets/javascripts/miq_toolbar.js');

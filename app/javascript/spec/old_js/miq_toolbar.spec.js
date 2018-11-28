@@ -1,5 +1,8 @@
-describe('miq_toolbar.js', function () {
-  beforeEach(function () {
+require('../helpers/set_fixtures_helper.js');
+require('../helpers/old_js_file_require_helper.js');
+
+describe('miq_toolbar.js', () => {
+  beforeEach(() => {
     setFixtures('<div id="test_tb">' +
                 '  <div class="btn-group dropdown">' +
                 '    <button id="button0" data-explorer="true" name="vm_power_choice" title="VM Power Functions" data-click="vm_power_choice" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">' +
@@ -28,20 +31,20 @@ describe('miq_toolbar.js', function () {
                 '</div>');
   });
 
-  it('initializes ManageIQ.toolbars', function () {
+  it('initializes ManageIQ.toolbars', () => {
     expect(typeof ManageIQ.toolbars).toEqual('object');
   });
 
-  describe('.findByDataClick', function () {
-    it('finds a dropdown button', function () {
+  describe('.findByDataClick', () => {
+    it('finds a dropdown button', () => {
       expect( ManageIQ.toolbars.findByDataClick('#test_tb', 'vm_power_choice')[0].id ).toEqual('button0');
     });
 
-    it('finds a dropdown item', function () {
+    it('finds a dropdown item', () => {
       expect( ManageIQ.toolbars.findByDataClick('#test_tb', 'vm_power_choice__vm_guest_shutdown')[0].id ).toEqual('button1');
     });
 
-    it('finds an ordinary button', function () {
+    it('finds an ordinary button', () => {
       expect( ManageIQ.toolbars.findByDataClick('#test_tb', 'vm_vnc_console')[0].id ).toEqual('button3');
     });
   })
