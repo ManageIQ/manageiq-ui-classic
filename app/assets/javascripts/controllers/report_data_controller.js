@@ -87,6 +87,8 @@
         this.refreshData(event.data);
       } else if (event.setScope && event.setScope.name === CONTROLLER_NAME) {
         this.setScope(event.data);
+      } else if (event.type === 'gtlSetOneRowActive') {
+        this.gtlSetOneRowActive(event.item);
       }
 
       if (event.controller === CONTROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
@@ -198,6 +200,17 @@
     this.initController(this.initObject);
   };
 
+  ReportDataController.prototype.gtlSetOneRowActive = function(item, _event) {
+    this.gtlData.rows.map(function(row) {
+      row.selected = false;
+    });
+    var selectedItem = _.find(this.gtlData.rows, {long_id: item.long_id});
+    selectedItem.selected = true;
+    this.$window.sendDataWithRx({rowSelect: selectedItem});
+    ManageIQ.gridChecks =  [];
+    ManageIQ.gridChecks.push(item.long_id);
+  };
+
   /**
   * Method for handeling clicking on item (either gliphicon or item). It will perform navigation or post message based
   * on type of items.
@@ -217,6 +230,14 @@
     // clicks just outside the checkbox
     if ($(event.target).is('.is-checkbox-cell')) {
       return false;
+    }
+
+    if (this.initObject.additionalOptions && this.initObject.additionalOptions.custom_action) {
+      sendDataWithRx({
+        type: 'GTL_CLICKED',
+        actionType: this.initObject.additionalOptions.custom_action.type,
+        payload: { item: item, action: this.initObject.additionalOptions.custom_action }});
+      return;
     }
 
     var prefix = this.initObject.showUrl;

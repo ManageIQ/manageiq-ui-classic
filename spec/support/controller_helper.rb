@@ -99,6 +99,7 @@ module Spec
           'active_tree'        => options[:active_tree],
           'parent_id'          => options[:parent_id],
           'model_id'           => options[:parent_id],
+          'report_name'        => options[:report_name],
           'explorer'           => explorer,
           'additional_options' => {
             'named_scope'           => options[:named_scope],
@@ -109,6 +110,10 @@ module Spec
             'parent_class_name'     => options[:parent_model],
             'parent_method'         => options[:parent_method],
             'lastaction'            => options[:lastaction],
+            'custom_action'         => {
+              'url'  => options[:url],
+              'type' => options[:type]
+            },
             'association' => nil, 'view_suffix' => nil, 'embedded' => nil, 'showlinks' => nil, 'policy_sim' => nil
           }.compact
         }.compact

@@ -173,6 +173,22 @@ describe VmCloudController do
       expect(response.status).to eq(200)
     end
 
+    it 'renders gtl when open pre provision screen' do
+      expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
+        :model_name                     => 'ManageIQ::Providers::CloudManager::Template',
+        :report_data_additional_options => {
+          :model         => 'ManageIQ::Providers::CloudManager::Template',
+          :report_name   => "ProvisionCloudTemplates.yaml",
+          :custom_action => {
+            :url  => "/miq_request/pre_prov/?sel_id=",
+            :type => "provisioning"
+          }
+        }
+      )
+      post :x_button, :params => {:pressed => 'instance_miq_request_new'}
+      expect(response.status).to eq(200)
+    end
+
     context "skip or drop breadcrumb" do
       before do
         get :explorer

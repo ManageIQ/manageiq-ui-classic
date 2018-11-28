@@ -10,27 +10,6 @@
              :onclick => "miqAjax('" + url_for_only_path({:action => "vm_pre_prov", :id => id.to_s, :hide_deprecated_templates => !@edit[:hide_deprecated_templates]}) + "')",
              :checked => @edit[:hide_deprecated_templates]}
         = _('Hide deprecated')
-  %table.table.table-bordered.table-hover.table-striped.table-selectable
-    %thead
-      %tr
-        - id = @edit[:req_id] || "new"
-        - ["name", "image?", "operating_system.product_name", "platform",
-            "cpu_total_cores", "mem_cpu", "allocated_disk_storage", "deprecated",
-            "ext_management_system.name", "v_total_snapshots", "cloud_tenant"].each do |column_name|
-          - if @edit[:vm_headers].include?(column_name)
-            %th
-              -# Replaced to exclude non-view table fields from sorting
-              = link_to(h(@edit[:vm_headers][column_name]),
-                {:action => "vm_pre_prov", :sort_choice => column_name, :id => id.to_s},
-                "data-miq_sparkle_on"  => true,
-                "data-miq_sparkle_off" => true,
-                "data-method"          => :post,
-                :remote                => true)
-              - if column_name == @edit[:vm_sortcol]
-                %i{:class => @edit[:vm_sortdir] == 'ASC' ? 'fa fa-angle-up' : 'fa fa-angle-down'}
-    %tbody
-      - @vms.each do |row|
-        - if row.respond_to?(:volume_template?) || row.respond_to?(:volume_snapshot_template?)
-          = render :partial => "miq_request/pre_prov_volumes_snapshots", :locals => {:row => row}
-        - else
-          = render :partial => "miq_request/pre_prov_images", :locals => {:row => row}
+  = render :partial => "layouts/x_gtl"
+  :javascript
+    $(provisioningListenToRx);

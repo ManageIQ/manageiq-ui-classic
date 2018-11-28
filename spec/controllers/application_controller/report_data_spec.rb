@@ -47,5 +47,17 @@ describe ApplicationController do
       report_data = JSON.parse(controller.report_data)
       expect(report_data["settings"]["perpage"]).to eql(5)
     end
+
+    it "use report_name when is passed" do
+      report_name = "ProvisionCloudTemplates.yaml"
+      path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", report_name).to_s
+      view = MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
+      expect(controller).to_not receive(:get_db_view)
+      controller.instance_variable_set(:@_params, :active_tree => "instances_tree")
+      controller.instance_variable_set(:@_params, :model_name => "ManageIQ::Providers::CloudManager::Template")
+      controller.instance_variable_set(:@_params, :additional_options => { "report_name" => report_name })
+      controller.report_data
+      expect(assigns(:view).cols).to eq(view.cols)
+    end
   end
 end
