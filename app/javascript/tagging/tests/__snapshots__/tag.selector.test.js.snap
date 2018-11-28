@@ -1,42 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tagging modifier match snapshot 1`] = `
-<Select
-  arrowRenderer={[Function]}
-  autosize={true}
-  backspaceRemoves={true}
-  backspaceToRemoveMessage="Press backspace to remove {label}"
+<StateManager
   className="selected-option"
-  clearAllText="Clear all"
-  clearRenderer={[Function]}
-  clearValueText="Clear value"
   clearable={false}
-  closeOnSelect={true}
-  deleteRemoves={true}
-  delimiter=","
-  disabled={false}
-  escapeClearsValue={true}
+  defaultInputValue=""
+  defaultMenuIsOpen={false}
+  defaultValue={null}
   filterOptions={[Function]}
-  ignoreAccents={true}
-  ignoreCase={true}
-  inputProps={Object {}}
-  isLoading={false}
-  joinValues={false}
   label="Homer"
-  labelKey="label"
-  matchPos="any"
-  matchProp="any"
-  menuBuffer={0}
-  menuRenderer={[Function]}
-  multi={false}
   name="form-field-name"
-  noResultsText="No results found"
-  onBlurResetsInput={true}
   onChange={[Function]}
-  onCloseResetsInput={true}
-  onSelectResetsInput={true}
-  openOnClick={true}
-  optionComponent={[Function]}
   options={
     Array [
       Object {
@@ -51,18 +25,6 @@ exports[`Tagging modifier match snapshot 1`] = `
       },
     ]
   }
-  pageSize={5}
-  placeholder="Select..."
-  removeSelected={true}
-  required={false}
-  rtl={false}
-  scrollMenuIntoView={true}
-  searchable={true}
-  simpleValue={false}
-  tabSelectsValue={true}
-  trimFilter={true}
   value={1}
-  valueComponent={[Function]}
-  valueKey="value"
 />
 `;
